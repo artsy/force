@@ -15,6 +15,7 @@ SearchBarView = require '../../../components/search_bar/view.coffee'
 artistTemplate = -> require('../templates/artist.jade') arguments...
 emptyTemplate = -> require('../templates/empty.jade') arguments...
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
+artistHeaderTemplate = -> require('../templates/artist_header.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
   columnViews: []
@@ -45,9 +46,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.waypoint (direction) =>
       @nextPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
-    @$artistFeed.waypoint (direction) =>
-      @nextArtistPage() if direction is 'down'
-    , { offset: 'bottom-in-view' }
+    # @$artistFeed.waypoint (direction) =>
+    #   @nextArtistPage() if direction is 'down'
+    # , { offset: 'bottom-in-view' }
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -66,10 +67,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$spinner = @$('#notifications-feed-spinner')
     @$feed = @$('#notifications-feed')
     @$works = @$('#notifications-works')
+    @$header = @$('.notifications-works-sub-header')
     @$pins = @$('#notifications-pins')
     @$filternav = @$('#notifications-filter')
+    @$artistHeader = @$('.notifications-artist-sub-header')
     @$artistFeed = @$('#notifications-artist-feed')
-    @$artistSpinner = @$('#notifications-artist-works-spinner')
+    @$artistSpinner = @$('#notifications-artist-feed-spinner')
+    @$artistworks = @$('#notifications-artist-works')
 
   scrollToPins: ->
     @jump.scrollToPosition @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
@@ -157,12 +161,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       unless response.length
         $.waypoints 'destroy'
 
-  nextArtistPage: =>
-    @artist.related().artworks.getNextPage()?.then (response) ->
-      data: filter: @forSaleArtist
-      unless response.length
-        $.waypoints 'destroy'
-
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
 
@@ -187,7 +185,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @forSale = $('.artsy-checkbox input').prop('checked')
     @$pins.hide()
     @$feed.hide()
+    @$header.hide()
     @$artistFeed.hide()
+    @$artistHeader.hide()
     @scrollToTop()
 
     # Artist filter selected
@@ -202,15 +202,22 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
           @$artistSpinner.hide()
           if @artist.related().artworks.length
             @renderColumns @$artistFeed, @artist.related().artworks
+            @$artistHeader.html artistHeaderTemplate
+              name: @$selectedArtist.children('.filter-artist-name').html()
+              count: @artist.related().artworks.length
+              id: @artist.id
+            @$artistHeader.show()
           else
             @$artistFeed.html emptyTemplate()
           @$artistFeed.show()
+
     # Regular feed with for_sale? toggle
     else
-      @$spinner.show()
       @notifications.getFirstPage(
         data: for_sale: @forSale
-        success: => @$feed.show()
+        success: =>
+          @$feed.show()
+          @$header.show()
       )?.then @checkIfEmpty
 
   setupSearch: (options = {}) ->

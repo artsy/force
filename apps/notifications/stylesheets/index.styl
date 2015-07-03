@@ -1,8 +1,5 @@
 @import '../../../components/stylus_lib'
 
-menu-width = 20%
-content-width = 80%
-
 #notifications-page
   padding-top 50px
 
@@ -12,11 +9,14 @@ content-width = 80%
     garamond-size('xl-headline')
 
 #notifications-filter
-  float left
-  min-width menu-width
+  position absolute
+  width 250px
+  padding-right 10px
   .artsy-checkbox
     display block
-    margin 32px 0px
+    margin-top 20px
+    padding 36px 0px
+    border-top 1px solid gray-lighter-color
   .filter-artist
     display block
   .filter-artist-count
@@ -36,20 +36,46 @@ content-width = 80%
     .filter-artist-name, .filter-artist-count, .filter-artist-clear
       color purple-color
 
-.notifications-sub-header
+.notifications-sub-header, .notifications-works-sub-header
   font-size 25px
 
 #notifications-works, #notifications-artist-works
-  float left
   position absolute
   width 900px
-  margin-left 15%
+  margin-left 250px
+  .empty-content
+    padding-top 32px
+    border-top 1px solid gray-lighter-color
+
+#notifications-artist-works
+  margin-top 43px
+
+.notifications-artist-sub-header
+  display none
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  i , .artist-name
+    display inline-block
+  i
+    color gray-dark-color
+    font-size 15px
+    line-height 15px
+  .artist-header-name
+    avant-garde-size('m-headline')
+    text-decoration none
+  .artist-work-count
+    garamond-size('l-caption')
+    color gray-dark-color
+    font-style italic
+
+#notifications-artist-feed
+  width 100%
 
 #notifications-feed-spinner
   position relative
   height 250px
 
-#notifications-artist-works-spinner
+#notifications-artist-feed-spinner
   position relative
   height 250px
   display none

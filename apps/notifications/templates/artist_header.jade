@@ -1,4 +1,4 @@
-a.artist-header-name
-  .artist-name= artist.displayName()
-  .chevron-arrow-right
-.artist-work-count= artist.get('published_artworks_count')
+a.artist-header-name(href="/artist/#{id}")
+  .artist-name= name
+  i.icon-chevron-right
+.artist-work-count= count + " Works"
