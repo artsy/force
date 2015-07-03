@@ -46,9 +46,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.waypoint (direction) =>
       @nextPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
-    # @$artistFeed.waypoint (direction) =>
-    #   @nextArtistPage() if direction is 'down'
-    # , { offset: 'bottom-in-view' }
 
   params: ->
     qs.parse(location.search.substring(1))
