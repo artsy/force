@@ -9,21 +9,35 @@ append locals
 
 block body
   #notifications-page.main-layout-container
-    #notifications-header.bisected-header
-      .bisected-header-cell
-        h1 Works by Artists You Follow
-        .artsy-checkbox
-          .artsy-checkbox--checkbox
-            input( type='checkbox', id='for-sale' )
-            label( for='for-sale' )
-          label.artsy-checkbox--label( for='for-sale' ) Show only For Sale works
-      .bisected-header-cell
-        a#notifications-manage-follow.avant-garde-jump-link( href='/following/artists' )
-          | Manage who you follow
-          i.icon-chevron-small-right
+    #notifications-header
+      h1 Works by Artists You Follow
+    #notifications-filter
+      .notifications-sub-header Artists You Follow
+      .artsy-checkbox
+        .artsy-checkbox--checkbox
+          input( type='checkbox', id='for-sale' )
+          label( for='for-sale' )
+        label.artsy-checkbox--label( for='for-sale' ) Only For Sale
+      if artists
+        .notifications-artist-list
+          for artist in artists.models
+            - var artist = artist.get('artist')
+            include filter_artist
+      .notifications-search-header Follow More Artists
+      #notifications-search-container.autocomplete-input-container.is-block
+        input#notifications-search.bordered-input(
+          type='text', placeholder='Search Artists', autofocus=autofocus
+        )
+        .autocomplete-loading-indicator: .loading-spinner-small
 
-    #notifications-pins
-      //- Rendered client-side
-    #notifications-feed
-      //- Rendered client-side
+    //- Rendered client-side
+    #notifications-works
+      .notifications-works-sub-header Recently Added Works
+      #notifications-pins
+      #notifications-feed
     #notifications-feed-spinner: .loading-spinner
+    #notifications-artist-works
+      .notifications-artist-sub-header
+      #notifications-artist-feed
+    #notifications-artist-feed-spinner: .loading-spinner
+

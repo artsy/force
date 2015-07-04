@@ -1,24 +1,84 @@
 @import '../../../components/stylus_lib'
 
 #notifications-page
-  padding 40px 0
-  position relative
+  padding-top 50px
 
 #notifications-header
-  margin 20px 0
+  margin-bottom 80px
   h1
-    font-size 24px
+    garamond-size('xl-headline')
+
+#notifications-filter
+  position absolute
+  width 250px
+  padding-right 10px
   .artsy-checkbox
     display block
     margin-top 20px
+    padding 36px 0px
+    border-top 1px solid gray-lighter-color
+  .filter-artist
+    display block
+  .filter-artist-count
+    display inline
+    color gray-dark-color
+  .filter-artist-name
+    text-decoration none
+    display inline
+    line-height 2em
+  .filter-artist-clear
+    display none
+  .filter-artist[data-state=selected]
+    .filter-artist-clear
+      display inline
+      text-decoration underline
+      cursor pointer
+    .filter-artist-name, .filter-artist-count, .filter-artist-clear
+      color purple-color
+
+.notifications-sub-header, .notifications-works-sub-header
+  font-size 25px
+
+#notifications-works, #notifications-artist-works
+  position absolute
+  width 900px
+  margin-left 250px
+  .empty-content
+    padding-top 32px
+    border-top 1px solid gray-lighter-color
+
+#notifications-artist-works
+  margin-top 43px
+
+.notifications-artist-sub-header
+  display none
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  i , .artist-name
+    display inline-block
+  i
+    color gray-dark-color
+    font-size 15px
+    line-height 15px
+  .artist-header-name
+    avant-garde-size('m-headline')
+    text-decoration none
+  .artist-work-count
+    garamond-size('l-caption')
+    color gray-dark-color
+    font-style italic
+
+#notifications-artist-feed
+  width 100%
 
 #notifications-feed-spinner
   position relative
   height 250px
 
-#notifications-manage-follow
-  text-align right
-  font-size default-avant-garde-font-size
+#notifications-artist-feed-spinner
+  position relative
+  height 250px
+  display none
 
 .notifications-list-item
   margin 20px 0
@@ -33,10 +93,6 @@
   a
     text-decoration none
 
-.notifications-list-item-timestamp
-  float right
-
-.notifications-list-item-timestamp
 .notifications-works-added
   color gray-darker-color
 
@@ -45,3 +101,10 @@
   text-align right
   a
     font-size 13px
+
+.notifications-search-header
+  avant-garde('body')
+  margin 40px 0 20px 0
+
+#notifications-search-container
+  margin-bottom 50px

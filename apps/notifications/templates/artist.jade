@@ -4,12 +4,7 @@
       h4: a( href=artist.href() )= artist.get('name')
       .notifications-works-added
         | #{count} work#{count === 1 ? undefined : 's'} added
-    if publishedAt
-      .notifications-list-item-timestamp.is-pull-right
-        = publishedAt
+        if publishedAt
+          | , #{publishedAt}
   .notifications-published-artworks
     //- Rendered separately
-  .notifications-see-more
-    a.avant-garde-jump-link( href= "#{artist.href()}?sort=-published_at" )
-      | See More
-      i.icon-chevron-small-right
