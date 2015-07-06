@@ -1,0 +1,10 @@
+if artwork.related().artists.length
+  for artist in artwork.related().artists.models
+    .artwork-detail-artist
+      a.entity-link( href= artist.href() )
+        = artist.get('name')
+      a.entity-follow.artist-follow( data-id= artist.id )
+else if artwork.get('cultural_maker')
+  .artwork-detail-artist
+    span.entity-link
+      = artwork.get('cultural_maker')

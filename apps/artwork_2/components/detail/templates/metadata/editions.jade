@@ -1,0 +1,17 @@
+if artwork.isMultipleEditions()
+  form.artwork-edition-sets
+    for edition, i in artwork.editions.models
+      label.artwork-edition-set
+        if artwork.isEditionAcquireable(edition)
+          .aes-radio
+            input.aes-radio-button(
+              type= 'radio'
+              value= edition.id
+              name= 'edition'
+              checked= i === 0 ? true : undefined
+            )
+        .aes-details
+          .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
+          .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
+          .aes-edition-size= edition.get('editions')
+        .aes-price= edition.priceDisplay()

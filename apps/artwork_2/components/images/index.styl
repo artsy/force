@@ -1,0 +1,22 @@
+.artwork-image > a > img
+    margin 0 auto
+    background-color gray-color
+.artwork-image-zoom
+  cursor -moz-zoom-in
+  cursor -webkit-zoom-in
+.artwork-additional-images
+  margin 20px auto
+.artwork-additional-image
+  display inline-block
+  height 45px
+  margin 5px
+  border 3px solid white
+  background-color gray-color
+  vertical-align middle
+  transition border-color 0.125s
+  > img
+    display inline-block
+    height 100%
+  &.is-active
+  &[data-state='active']
+    border-color purple-color
