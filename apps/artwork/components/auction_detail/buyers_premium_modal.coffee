@@ -1,7 +1,7 @@
 ModalView = require '../../../../components/modal/view.coffee'
 buyersPremium = require '../../../../components/buyers_premium/index.coffee'
 
-class BuyersPremiumModal extends ModalView
+module.exports = class BuyersPremiumModal extends ModalView
   template: -> #
 
   initialize: ({ @auction }) ->

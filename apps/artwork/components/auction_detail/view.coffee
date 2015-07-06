@@ -4,6 +4,7 @@ BuyersPremiumModal = require './buyers_premium_modal.coffee'
 ContactView = require '../contact/view.coffee'
 defaultMessage = require '../../../../components/contact/default_message.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
+openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
@@ -11,7 +12,8 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   events:
     'submit .js-artwork-bid-form': 'submit'
-    'click #artwork-buyers-premium-link a': 'openBuyersPremiumModal'
+    'click .js-buyers-premium': 'openBuyersPremiumModal'
+    'click .js-auction-faqs': 'openAuctionFAQs'
 
   initialize: ({ @artwork, @user, @auction, @saleArtwork, @bidderPositions }) ->
     @partner = @artwork.related().partner
@@ -21,6 +23,10 @@ module.exports = class AuctionDetailView extends Backbone.View
 
     if @auction.isAuctionPromo()
       new ContactView el: @$el, model: @artwork
+
+  openAuctionFAQs: (e) ->
+    e.preventDefault()
+    openMultiPageModal 'auction-faqs'
 
   submit: (e) ->
     e.preventDefault()

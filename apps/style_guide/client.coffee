@@ -1,5 +1,6 @@
 _ = require 'underscore'
 activatePulldowns = require '../../components/hover_pulldown/index.coffee'
+openMultiPageModal = require '../../components/multi_page_modal/index.coffee'
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->
@@ -16,3 +17,6 @@ module.exports.init = ->
     $toggle.attr 'data-state': if $toggle.is "[data-state='on']" then 'off' else 'on'
 
   activatePulldowns()
+
+  $('.js-open-multi-page-modal').click (e) ->
+    openMultiPageModal 'auction-faqs'

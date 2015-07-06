@@ -66,9 +66,9 @@ module.exports = class ArtworkView extends Backbone.View
 
     @listenTo @artwork, 'change:sale_message', @renderDetail
     @listenTo @artwork, 'change:ecommerce', @renderDetail
-    @listenTo @artwork.related().sales, 'sync', @handleSales
-    @listenTo @artwork.related().fairs, 'sync', @handleFairs
-    @listenTo @artwork.related().shows, 'sync', @handleShows
+    @listenToOnce @artwork.related().sales, 'sync', @handleSales
+    @listenToOnce @artwork.related().fairs, 'sync', @handleFairs
+    @listenToOnce @artwork.related().shows, 'sync', @handleShows
 
     $.when.apply(null, relatedContentFetches).done =>
       relatedCollections = _.values _.pick(@artwork.related(), ['sales', 'features', 'fairs', 'shows'])
