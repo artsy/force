@@ -1,0 +1,16 @@
+.mpm-container
+  .mpm-sidebar
+    h1.mpm-title
+      = title
+    .mpm-description
+      != description
+    nav.mpm-nav.chevron-nav-list
+      for page in pages.models
+        a.js-page(
+          class= page.id === active.id ? 'is-active' : undefined
+          data-id= page.id
+        )
+          = page.get('title')
+
+  .mpm-page
+    != active.mdToHtml('content')
