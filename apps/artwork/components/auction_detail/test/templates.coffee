@@ -48,7 +48,7 @@ describe 'Artwork auction detail', ->
       asset: ->
     template.should.containEql "Buyer's Premium"
 
-  it 'doesn not show buyer premium for open auctions without a BP', ->
+  it 'does not show buyer premium for open auctions without a BP', ->
     @artwork.set acquireable: false
     auction = new Auction fabricate 'sale', buyers_premium: null
     auction.isOpen = -> true

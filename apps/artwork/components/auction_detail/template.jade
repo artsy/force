@@ -51,8 +51,9 @@ else
           input.bordered-input( name='bid', autocomplete='off', required )
 
       if auction.isOpen() && auction.get('buyers_premium')
-        p#artwork-buyers-premium-link This work has a&nbsp;
-          a( href='#' ) Buyer's Premium
+        p.artwork-buyers-premium-link
+          | This work has a&nbsp;
+          a.js-buyers-premium.fine-faux-underline( href='#' ) Buyer's Premium
 
       button.avant-garde-button-black.abf-button(
         type= 'submit'
@@ -69,12 +70,8 @@ else
       | Buy Now
 
   .abf-help
-    a( href='/auction-info' )
-      | How Bidding Works
+    a.js-auction-faqs.fine-faux-underline( href='/auction-info' )
+      | Auction FAQs
     br
-    a( href='/conditions-of-sale' )
-      | Conditions of Sale
-    br
-    br
-    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
+    a.fine-faux-underline( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
       | Ask a Specialist
