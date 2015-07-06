@@ -24,27 +24,27 @@ module.exports = class Modalize extends Backbone.View
         .emulateTransitionEnd 250
 
   render: ->
-    @$el.html template()
+    unless @__rendered__
+      @$el.html template()
+      @__rendered__ = true
     @postRender()
     this
 
   postRender: ->
-    @$('.js-modalize-dialog')
-      .css @dimensions
-
-    @$('.js-modalize-body')
-      .html @subView.render().$el
-
-    @scrollbar.disable()
-
-    @state 'open'
+    unless @__postRendered__
+      @$('.js-modalize-dialog').css @dimensions
+      @$('.js-modalize-body').html @subView.render().$el
+      @scrollbar.disable()
+      @state 'open'
+      @__postRendered__ = true
+    else
+      @subView.render().$el
 
   maybeClose: (e) ->
     @close() if $(e.target).hasClass('js-modalize-backdrop')
 
   close: (callback) ->
     @scrollbar.reenable()
-
     @state 'close', =>
       @subView?.remove?()
       @remove()
