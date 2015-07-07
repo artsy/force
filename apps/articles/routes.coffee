@@ -8,6 +8,7 @@ Verticals = require '../../collections/verticals'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @articles = (req, res, next) ->
   Q.allSettled([
@@ -35,6 +36,7 @@ request = require 'superagent'
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
+      res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
       videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
       if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.ARTICLE.vertical_id is '55550be07b8a750300db8430'
         email = res.locals.sd.CURRENT_USER?.email
