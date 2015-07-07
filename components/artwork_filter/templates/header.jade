@@ -2,9 +2,9 @@ h2
   | #{artist.get('name')}:
   = ' '
   if labels = filter.selected.labels(filter.root.attributes)
-    | #{labels} &mdash; #{filter.get('total')} works
+    | #{labels} &mdash; #{total} works
   else
-    | #{filter.get('total')} works
+    | #{total} works
 
 include ../../bordered_pulldown/mixin
 
