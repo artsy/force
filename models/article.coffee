@@ -80,3 +80,19 @@ module.exports = class Article extends Backbone.Model
 
   strip: (attr) ->
     stripTags(@get attr)
+
+  toJSONLD: ->       # article metadata tag for parse.ly
+    if @get('title')
+      creator =
+        compactObject {
+          "@context": "http://schema.org"
+          "@type": "NewsArticle"
+          "headline": @get('title')
+          "url": @href()
+          "thumbnailUrl": @get('thumbnail_image')
+          "dateCreated": @get('published_at')
+          "articleSection": "Editorial"
+          "creator": @get('author')?.name
+          "keywords": ""  # this is from the parsely specs, i'm told we don't
+          # have keywords for articles at the moment
+        }

@@ -23,7 +23,8 @@ request = require 'superagent'
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     vertical = verticals.running()?[0]
-    res.render 'articles', vertical: vertical, articles: articles
+    res.render 'articles', vertical: vertical, articles: articles, jsonLD:
+      stringifyJSONForWeb(artwork.toJSONLD())
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
