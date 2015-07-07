@@ -142,12 +142,17 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   setButtonState: ->
     length = @artworksView?.length() or 0
-    @remaining = @filter.get('total') - length
-    visibility = if length >= @filter.get('total') then 'hide' else 'show'
+    @remaining = @filter.get('total')?.value - length
+    visibility = if length >= @filter.get('total')?.value then 'hide' else 'show'
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @$header?.html headerTemplate(filter: @filter, artist: @model, mode: @viewMode.get('mode'))
+    @$header?.html headerTemplate
+      filter: @filter
+      artist: @model
+      mode: @viewMode.get('mode')
+      total: @filter.get('total')?.value
+
     @sortView?.undelegateEvents()
     @sortView = new BorderedPulldown el: @$('.bordered-pulldown')
 
@@ -161,7 +166,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @setState()
 
   pricedFilter: ->
-    (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
+    (if @filter.selected.has('for_sale') then @filter.priced() else @filter.root) or @filter.root
 
   renderFilter: ->
     @$filter.html filterTemplate(filter: @filter, pricedFilter: @pricedFilter())

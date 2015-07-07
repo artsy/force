@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
+{ fabricate, fabricate2 } = require 'antigravity'
 { resolve } = require 'path'
 Artist = require '../../../models/artist'
 
@@ -43,10 +43,10 @@ describe 'ArtworkFilterView', ->
         @view.$el.html().should.containEql 'artwork-section'
 
     it 'fetches the filter', ->
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar/suggest'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/filter/artworks'
 
     it 'fetches the artworks', ->
-      Backbone.sync.args[1][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar'
+      Backbone.sync.args[1][1].url().should.containEql '/api/v1/filter/artworks?artist_id=foo-bar'
 
     it 'removes itself if the initial filter state returns without any works', ->
       Backbone.sync.args[0][2].success {}
@@ -61,7 +61,7 @@ describe 'ArtworkFilterView', ->
 
   describe '#changeViewMode', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'sets the view mode when the toggle is clicked', ->
       @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
@@ -74,7 +74,7 @@ describe 'ArtworkFilterView', ->
 
   describe '#renderFilter', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'renders the filter template', ->
       @view.$filter.html().should.containEql '<h2>Works</h2>'
@@ -115,72 +115,72 @@ describe 'ArtworkFilterView', ->
       @view.$('#artwork-see-more').click()
       @view.artworks.params.get('page').should.equal 2
       Backbone.sync.callCount.should.equal 3
-      _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 2
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
       @view.$('#artwork-see-more').click()
       @view.artworks.params.get('page').should.equal 3
       Backbone.sync.callCount.should.equal 4
-      _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
 
     describe 'error', ->
       it 'reverts the params', ->
         @view.artworks.params.attributes.should.eql size: 9, page: 1
         @view.$('#artwork-see-more').click()
-        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 2
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
         Backbone.sync.restore()
         sinon.stub(Backbone, 'sync').yieldsTo 'error'
         # Tries to get next page but errors
         @view.$('#artwork-see-more').click()
-        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
         # Next try should have the same params
         @view.$('#artwork-see-more').click()
-        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
 
   describe '#selectCriteria', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'pulls the filter criteria out of the link and selects it', ->
       @view.$('.artwork-filter-select').first().click()
-      @view.filter.selected.attributes.should.eql medium: 'work-on-paper'
+      @view.filter.selected.attributes.should.eql medium: 'painting'
       @view.$('.artwork-filter-select').last().click()
-      @view.filter.selected.attributes.should.eql period: 2010
+      @view.filter.selected.attributes.should.eql medium: 'jewelry'
 
     it 'pulls the sort criteria out of the link and selects it', ->
       @view.$('.bordered-pulldown-options a').first().click()
-      @view.filter.selected.attributes.should.eql sort: '-date_added'
+      @view.filter.selected.attributes.should.eql sort: '-published_at'
       @view.$('.bordered-pulldown-options a').last().click()
-      @view.filter.selected.attributes.should.eql sort: '-merchandisability'
+      @view.filter.selected.attributes.should.eql sort: 'year'
 
   describe '#fetchArtworks', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'fetches the artworks, passing in the selected filters + view params', ->
       @view.$('.artwork-filter-select:eq(0)').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper'
+      _.last(Backbone.sync.args)[2].data.should.containEql medium: 'painting'
       @view.$('.artwork-filter-select:eq(1)').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture'
+      _.last(Backbone.sync.args)[2].data.should.containEql medium: 'work-on-paper'
       @view.$('.artwork-filter-select').last().click()
-      _.last(Backbone.sync.args)[2].data.should.eql period: 2010
+      _.last(Backbone.sync.args)[2].data.should.containEql medium: 'jewelry'
       @view.$('#artwork-see-more').click()
-      _.last(Backbone.sync.args)[2].data.should.eql period: 2010, size: 9, page: 2
+      _.last(Backbone.sync.args)[2].data.should.eql 'medium=jewelry&size=9&page=2'
 
   describe '#fetchArtworksFromBeginning', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'fetches resets the params before fetching artworks when a filter is clicked', ->
       @view.$('.artwork-filter-select:eq(0)').click()
       @view.$('#artwork-see-more').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper', size: 9, page: 2
+      _.last(Backbone.sync.args)[2].data.should.eql 'medium=painting&size=9&page=2'
       @view.$('#artwork-see-more').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper', size: 9, page: 3
+      _.last(Backbone.sync.args)[2].data.should.eql 'medium=painting&size=9&page=3'
       @view.$('.artwork-filter-select:eq(1)').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture'
+      _.last(Backbone.sync.args)[2].data.should.containEql medium: 'work-on-paper'
 
   describe '#toggleBoolean', ->
     beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     xit 'fetches the artworks, toggling the boolean filter criteria', ->
       @view.$('input[type="checkbox"]').first().click()
@@ -196,21 +196,21 @@ describe 'ArtworkFilterView', ->
       @view.artworksView = length: => @columnLength
 
     it 'sets the correct button state when there is 1 remaining artwork', ->
-      @view.filter.set 'total', 10
+      @view.filter.set 'total', value: 10
       @columnLength = 9
       @view.setButtonState()
       @view.$button.is(':visible').should.be.true
       @view.$button.text().should.equal 'See More (1)'
 
     it 'sets the correct button state when there are no remaining artworks', ->
-      @view.filter.set 'total', 10
+      @view.filter.set 'total', value: 10
       @columnLength = 10
       @view.setButtonState()
       @view.$button.attr('style').should.equal 'display: none;'
       @view.$button.text().should.equal 'See More (0)'
 
     it 'sets the correct state when toggled', ->
-      @view.filter.set 'total', 10
+      @view.filter.set 'total', value: 10
       @columnLength = 10
       @view.setButtonState()
       # Is hidden

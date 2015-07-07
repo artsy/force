@@ -9,13 +9,12 @@ module.exports = class Filter
   _.extend @prototype, Backbone.Events
 
   booleans:
-    'for-sale': price_range: '-1:1000000000000'
+    'for_sale': for_sale: 'true'
 
   sorts:
-    '-date_added': 'Recently Added'
-    '-date_created': 'Artwork Year (desc.)'
-    'date_created': 'Artwork Year (asc.)'
-    '-merchandisability': 'Relevance'
+    '-published_at': 'Recently Added'
+    '-year': 'Artwork Year (desc.)'
+    'year': 'Artwork Year (asc.)'
 
   constructor: ({ @model } = {}) ->
     throw new Error 'Requires a model' unless @model?
@@ -25,25 +24,25 @@ module.exports = class Filter
 
   by: (keyOrObj, value, options = {}) ->
     @engaged = true
-    @selected.reset silent: true unless keyOrObj is 'price_range'
+    @selected.reset silent: true unless keyOrObj is 'for_sale'
     @selected.set keyOrObj, value
     @newState options
 
   priced: ->
-    pricedId = @booleanId 'for-sale'
+    pricedId = @booleanId 'for_sale'
     priced = @filterStates.get pricedId
     return priced if priced?
     return if @fetchingPriced
     @fetchingPriced = true
     filterState = new FilterState { id: pricedId }, artistId: @model.id
-    filterState.fetch data: @booleans['for-sale'], success: (model, response, options) =>
+    filterState.fetch data: @booleans['for_sale'], success: (model, response, options) =>
       @fetchingPriced = false
       @filterStates.add model
       @trigger 'update:counts'
     false
 
   forSaleCount: ->
-    (if @selected.has('price_range') then @get('total') else @boolean('for-sale')?.count) or 0
+    (if @selected.has('for_sale') then @get('total').value else @get('for_sale')?.count) or 0
 
   active: ->
     @__active__() or @root
@@ -62,7 +61,7 @@ module.exports = class Filter
     @get(key)?[value]
 
   currentSort: ->
-    @sorts[@selected.get('sort') or '-date_added']
+    @sorts[@selected.get('sort') or '-published_at']
 
   buildState: ->
     new FilterState { id: @stateId() }, artistId: @model.id
@@ -98,9 +97,9 @@ module.exports = class Filter
 
   toggle: (name, boolean) ->
     if boolean
-      @by _.flatten(_.pairs(@booleans[name]))...
+      @by name, boolean
     else
-      @deselect _.first(_.keys(@booleans[name]))
+      @deselect name
 
   deselect: (key, options = {}) ->
     @selected.unset key
