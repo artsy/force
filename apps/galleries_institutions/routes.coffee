@@ -1,68 +1,67 @@
 _ = require 'underscore'
 Q = require 'q'
-Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Partner = require '../../models/partner'
 Partners = require '../../collections/partners'
 Profiles = require '../../collections/profiles'
 OrderedSets = require '../../collections/ordered_sets.coffee'
 
-fetchFeaturedProfiles = (key) ->
-  dfd = Q.defer()
-  featuredPartners = new OrderedSets key: key
-  featuredPartners.fetchAll(cache: true).then ->
-    profiles = featuredPartners.first().get 'items'
-    profiles.map (profile) ->
-      partner = new Partner(profile.get 'owner')
-      profile.set 'owner', partner
-    dfd.resolve profiles
-  dfd.promise
+fetch =
+  profiles: (key) ->
+    Q.promise (resolve) ->
+      featuredPartners = new OrderedSets key: key
+      featuredPartners.fetchAll(cache: true)
+        .then ->
+          profiles = featuredPartners.first().get 'items'
+          profiles.map (profile) ->
+            partner = new Partner profile.get 'owner'
+            profile.set 'owner', partner
+          resolve profiles
 
-fetchGalleries = ->
-  dfd = Q.defer()
-  galleries = new Partners
-  galleries.fetchUntilEndInParallel
-    data:
-      size: 20
-      active: true
-      type: 'PartnerGallery'
-      sort: 'sortable_id'
-      has_full_profile: true
-    cache: true
-    success: dfd.resolve
-    error: dfd.reject
-  dfd.promise
+  galleries: ->
+    new Partners()
+      .fetchUntilEndInParallel
+        cache: true
+        data:
+          size: 20
+          active: true
+          type: 'PartnerGallery'
+          sort: 'sortable_id'
+          has_full_profile: true
 
-fetchInstitutions = ->
-  dfd = Q.defer()
-  profiles = new Profiles
-  profiles.fetchUntilEndInParallel
-    url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
-    data: size: 20
-    cache: true
-    success: dfd.resolve
-    error: dfd.resolve
-  dfd.promise
+  institutions: ->
+    new Profiles()
+      .fetchUntilEndInParallel
+        cache: true
+        url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
+        data: size: 20
 
-@partners = (req, res) ->
-  Q.allSettled([
-    fetchFeaturedProfiles('partners:featured-galleries')
-    fetchFeaturedProfiles('partners:featured-institutions')
-  ]).then((results) ->
-    [featuredGalleries, featuredInstitutions] = _.pluck results, 'value'
-    featuredGalleries.add(featuredInstitutions.models)
+@partners = (req, res, next) ->
+  Q.all([
+    fetch.profiles 'partners:featured-galleries'
+    fetch.profiles 'partners:featured-institutions'
+  ])
+
+  .spread (galleries, institutions) ->
+    galleries.fullCollection.add institutions.fullCollection.toJSON()
+    profiles = new Profiles galleries.fullCollection.toJSON()
+
     res.render 'index',
-      featuredProfiles: featuredGalleries.take(20)
+      featuredProfiles: _.take profiles.shuffle(), 15 # Make room for partnership callout
       copy: header: 'Featured Partners'
-  ).done
 
-@galleries = (req, res) ->
-  Q.allSettled([
-    fetchFeaturedProfiles('partners:featured-galleries')
-    fetchGalleries()
-  ]).then((results) ->
-    [featuredGalleries, galleries] = _.pluck results, 'value'
+  .catch next
+  .done()
+
+@galleries = (req, res, next) ->
+  Q.all([
+    fetch.profiles 'partners:featured-galleries'
+    fetch.galleries()
+  ])
+
+  .spread (featuredGalleries, galleries) ->
     aToZGroup = galleries.groupByAlphaWithColumns 3
+
     res.render 'index',
       aToZGroup: aToZGroup
       partnerCount: '600+'
@@ -71,14 +70,17 @@ fetchInstitutions = ->
         header: 'Featured Galleries'
         adjective: 'Gallery'
         href: '/gallery-partnerships'
-  ).done()
 
-@institutions = (req, res) ->
-  Q.allSettled([
-    fetchFeaturedProfiles('partners:featured-institutions')
-    fetchInstitutions()
-  ]).then((results) ->
-    [featuredInstitutions, institutions] = _.pluck results, 'value'
+  .catch next
+  .done()
+
+@institutions = (req, res, next) ->
+  Q.all([
+    fetch.profiles 'partners:featured-institutions'
+    fetch.institutions()
+  ])
+
+  .spread (featuredInstitutions, institutions) ->
     aToZGroup = institutions.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
@@ -87,4 +89,6 @@ fetchInstitutions = ->
         header: 'Featured Museums and Institutions'
         adjective: 'Institutional'
         href: '/institution-partnerships'
-  ).done()
+
+  .catch next
+  .done()
