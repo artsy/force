@@ -1,0 +1,72 @@
+.haw-section
+  display table
+  width 100%
+  margin 40px 0
+
+.haw-section-cell
+  display table-cell
+  width 50%
+  vertical-align middle
+
+.haw-page-metadata
+  width 75%
+  margin 60px auto
+.haw-page-title
+  margin-right 40px
+  garamond-size('xl-headline')
+.haw-page-description
+  margin 20px 0
+  garamond-size('s-body')
+
+.haw-numbered-section
+  display table
+  width 75%
+  margin 20px auto
+  padding 0 20px
+.haw-ns-number
+.haw-ns-body
+  display table-cell
+  vertical-align top
+.haw-ns-number
+  width 80px
+  font-size @width
+  line-height 1
+  text-align center
+
+.haw-section-title
+  garamond-size('l-headline')
+.haw-section-description
+  margin 20px 0
+  garamond-size('s-body')
+  > p
+    block-margins(40px)
+  a
+    fine-faux-underline()
+
+.haw-bid-increments
+  position relative
+  width 75%
+  padding 40px 80px 40px 40px
+
+  // Fancy fade borders
+  &:before
+  &:after
+    content ''
+    position absolute
+    top -1px
+    right @top
+  &:before
+    bottom -1px
+    width 1px
+    background-image linear-gradient(gray-color, transparent)
+  &:after
+    left -1px
+    height 1px
+    background-image linear-gradient(left, transparent, gray-color)
+
+  > h3
+    color gray-dark-color
+    margin-bottom 10px
+  > h3
+  > .leader-dots-list
+    avant-garde-size('body')
