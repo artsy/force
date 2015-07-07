@@ -8,6 +8,7 @@ Verticals = require '../../collections/verticals'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @articles = (req, res, next) ->
   Q.allSettled([
@@ -24,7 +25,7 @@ request = require 'superagent'
     res.locals.sd.ARTICLES_COUNT = articles.count
     vertical = verticals.running()?[0]
     res.render 'articles', vertical: vertical, articles: articles, jsonLD:
-      stringifyJSONForWeb(artwork.toJSONLD())
+      stringifyJSONForWeb(article.toJSONLD())
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated

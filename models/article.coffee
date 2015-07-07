@@ -9,6 +9,7 @@ Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
+{ compactObject } = require './mixins/compact_object.coffee'
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
@@ -83,7 +84,6 @@ module.exports = class Article extends Backbone.Model
 
   toJSONLD: ->       # article metadata tag for parse.ly
     if @get('title')
-      creator =
         compactObject {
           "@context": "http://schema.org"
           "@type": "NewsArticle"
