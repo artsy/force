@@ -1,10 +1,10 @@
-.mpm-container
-  .mpm-sidebar
-    h1.mpm-title
+.mpv-container
+  .mpv-sidebar
+    h1.mpv-title
       = title
-    .mpm-description
+    .mpv-description
       != description
-    nav.mpm-nav.chevron-nav-list
+    nav.mpv-nav.chevron-nav-list
       for page in pages.models
         a.js-page(
           class= page.id === active.id ? 'is-active' : undefined
@@ -12,5 +12,6 @@
         )
           = page.get('title')
 
-  .mpm-page
-    != active.mdToHtml('content')
+  .mpv-page
+    .mpv-page-content
+      != active.mdToHtml('content')
