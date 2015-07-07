@@ -3,6 +3,24 @@
 #notifications-page
   padding-top 50px
 
+#notifications-page[data-state=loading]
+  #notifications-works, #notifications-artist-works
+    display none
+  #notifications-spinner
+    display block
+
+#notifications-page[data-state=artist]
+  #notifications-spinner, #notifications-works
+    display none
+  #notifications-artist-works
+    display block
+
+#notifications-page[data-state=recent-works]
+  #notifications-spinner, #notifications-artist-works
+    display none
+  #notifications-works
+    display block
+
 #notifications-header
   margin-bottom 80px
   h1
@@ -40,7 +58,6 @@
   font-size 25px
 
 #notifications-works, #notifications-artist-works
-  position absolute
   width 900px
   margin-left 250px
   .empty-content
@@ -71,14 +88,9 @@
 #notifications-artist-feed
   width 100%
 
-#notifications-feed-spinner
+#notifications-spinner
   position relative
   height 250px
-
-#notifications-artist-feed-spinner
-  position relative
-  height 250px
-  display none
 
 .notifications-list-item
   margin 20px 0
