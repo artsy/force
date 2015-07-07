@@ -5,7 +5,7 @@ Page = require '../../models/page.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class MultiPageView extends Backbone.View
-  className: 'multi-page-modal'
+  className: 'multi-page-view'
 
   events:
     'click .js-page': 'change'
@@ -17,6 +17,9 @@ module.exports = class MultiPageView extends Backbone.View
     @state = new Backbone.Model active: @collection.first().id
 
     @listenTo @state, 'change:active', @render
+
+    @collection.each (page) =>
+      @listenTo page, 'sync', @render
 
   change: (e) ->
     e.preventDefault()
