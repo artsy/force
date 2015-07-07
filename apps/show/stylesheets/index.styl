@@ -17,6 +17,31 @@
   garamond-size('headline')
 
 .show-press-release
-  garamond-size('s-body')
+  garamond-size('l-body')
   > p
     block-margins(10px)
+  &.show-read-more
+    position relative
+    .read-more-fade, .read-more
+      display block
+    .press-text
+      max-height 350px
+      overflow hidden
+      transition max-height 1s
+  .read-more
+    display none
+    avant-garde-size('m-headline')
+    font-weight bold
+    text-decoration underline
+    margin-top 15px
+    cursor pointer
+  .read-more-fade
+    position absolute
+    height 100px
+    width 100%
+    background-image linear-gradient(to bottom, rgba(255,255,255,0), white 83px)
+    display none
+    bottom 15px
+  &.full-press-release
+    .press-text
+      max-height none

@@ -20,6 +20,14 @@ module.exports.init = ->
   show = new PartnerShow SHOW
   show.related().artworks.reset ARTWORKS
 
+  if $('.show-press-release').height() > 350
+    $('.show-press-release').addClass 'show-read-more'
+
+  $('.read-more').click (e) ->
+    $('.show-press-release')
+      .removeClass 'show-read-more'
+      .addClass 'full-press-release'
+
   $('.js-open-show-events').click (e) ->
     e.preventDefault()
     openShowEvents(model: show, collection: show.related().showEvents)
