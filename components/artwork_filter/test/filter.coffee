@@ -56,10 +56,10 @@ describe 'Filter', ->
   describe '#priced', ->
     describe 'already fetched', ->
       beforeEach ->
-        @priced = @filter.toggle 'for-sale', true
+        @priced = @filter.toggle 'for_sale', true
         @filter.by 'foo', 'bar'
 
-      xit 'returns the already fetched priced filter state without fetching again', ->
+      it 'returns the already fetched priced filter state without fetching again', ->
         Backbone.sync.callCount.should.equal 2
         @filter.priced().should.equal @priced
         Backbone.sync.callCount.should.equal 2
