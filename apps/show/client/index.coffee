@@ -26,7 +26,7 @@ module.exports.init = ->
   $('.read-more').click (e) ->
     $('.show-press-release')
       .removeClass 'show-read-more'
-      .animate({'height': $('.show-press-release').prop('scrollHeight'), 'max-height': 9999}, 1000)
+      .addClass 'full-press-release'
 
   $('.js-open-show-events').click (e) ->
     e.preventDefault()
