@@ -12,11 +12,9 @@ emptyTemplate = -> require('../templates/empty.jade') arguments...
 module.exports = class RecentlyAddedWorksView extends Backbone.View
   columnViews: []
 
-  initialize: ({@notifications, @filterState, @loadingState}) ->
+  initialize: ({@notifications, @filterState}) ->
 
     @$feed = @$('#notifications-feed')
-    @$works = @$('#notifications-works')
-    @$header = @$('.notifications-works-sub-header')
     @$pins = @$('#notifications-pins')
 
     @listenTo @notifications, 'sync', @appendArtworks

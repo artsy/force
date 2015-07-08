@@ -11,7 +11,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState, @loadingState}) ->
+  initialize: ({@filterState}) ->
     @following = new Following [], kind: 'artist'
     @setupSearch()
 
