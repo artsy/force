@@ -21,41 +21,41 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @filterState = new Backbone.Model
       forSale: false
       artist: null
-      loading: true
+    @loadingState = new Backbone.Model loading: true
 
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
       filterState: @filterState
+      loadingState: @loadingState
     @recentlyAddedWorksView = new RecentlyAddedWorksView
       el: @$('#notifications-works')
       notifications: @notifications
       filterState: @filterState
+      loadingState: @loadingState
     @artistWorksView = new ArtistWorksView
       el: @$('#notifications-artist-works')
       filterState: @filterState
+      loadingState: @loadingState
 
     @filterState.on 'change', @render
+    # @loadingState.on 'change', @renderLoadingState
 
     @setupJumpView()
 
   render: =>
     if @filterState.get 'loading'
       @$('#notifications-page').attr 'data-state', 'loading'
+      @scrollToTop()
     else if @filterState.get 'artist'
       @$('#notifications-page').attr 'data-state', 'artist'
     else
       @$('#notifications-page').attr 'data-state', 'recent-works'
 
-  renderArtistWorks: (id) =>
-    @artistWorksView.fetchAndRender id
-
-  renderRecentlyAddedWorks: ->
-    @notifications.getFirstPage(
-      data: for_sale: @forSale
-      success: =>
-        @$feed.show()
-        @$header.show()
-    )?.then @checkIfEmpty
+  renderLoadingState: =>
+    if @loadingState.get 'loading'
+      @$('#notifications-page').attr 'data-loading', 'true'
+    else
+      @$('#notifications-page').attr 'data-loading', 'false'
 
   setupJumpView: ->
     @jump = new JumpView threshold: $(window).height(), direction: 'bottom'

@@ -11,26 +11,29 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState}) ->
+  initialize: ({@filterState, @loadingState}) ->
     @following = new Following [], kind: 'artist'
     @setupSearch()
 
   toggleForSale: (e) ->
-    # @reloadFeedWorks()
-
-    console.log 'toggleForSale'
+    @filterState.set
+      forSale: $(e.currentTarget).prop('checked')
+      loading: true
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    @filterState.set 'artist', @$selectedArtist.attr('data-artist')
+    @filterState.set
+      artist: @$selectedArtist.attr('data-artist')
+      loading: true
 
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    # @reloadFeedWorks()
-    console.log 'clearArtistWorks'
+    @filterState.set
+      artist: null
+      loading: true
 
   setupSearch: (options = {}) ->
     @searchBarView = new SearchBarView

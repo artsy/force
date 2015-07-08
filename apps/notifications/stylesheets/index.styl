@@ -10,13 +10,13 @@
     display block
 
 #notifications-page[data-state=artist]
-  #notifications-spinner, #notifications-works
+  #notifications-works, #notifications-spinner
     display none
-  #notifications-artist-works
+  #notifications-artist-works, .notifications-artist-sub-header
     display block
 
 #notifications-page[data-state=recent-works]
-  #notifications-spinner, #notifications-artist-works
+  #notifications-artist-works, .notifications-artist-sub-header
     display none
   #notifications-works
     display block
@@ -65,7 +65,8 @@
     border-top 1px solid gray-lighter-color
 
 #notifications-artist-works
-  margin-top 43px
+  margin-top 123px
+  min-height 100px
 
 .notifications-artist-sub-header
   display none
@@ -120,3 +121,6 @@
 
 #notifications-search-container
   margin-bottom 50px
+
+.artwork-column
+  min-width 270px

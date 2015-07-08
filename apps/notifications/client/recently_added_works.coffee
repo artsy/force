@@ -12,7 +12,7 @@ emptyTemplate = -> require('../templates/empty.jade') arguments...
 module.exports = class RecentlyAddedWorksView extends Backbone.View
   columnViews: []
 
-  initialize: ({@notifications}) ->
+  initialize: ({@notifications, @filterState, @loadingState}) ->
 
     @$feed = @$('#notifications-feed')
     @$works = @$('#notifications-works')
@@ -20,6 +20,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @$pins = @$('#notifications-pins')
 
     @listenTo @notifications, 'sync', @appendArtworks
+    @filterState.on 'change', @render
 
     @setup =>
       @notifications.getFirstPage()?.then @checkIfEmpty
@@ -92,13 +93,13 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   nextPage: =>
     @notifications.getNextPage(
-      data: for_sale: @forSale
+      data: for_sale: @filterState.get('forSale')
     )?.then (response) ->
       unless response.length
         $.waypoints 'destroy'
 
   isEmpty: ->
-    !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
+    !@notifications.length and (!@pinnedArtworks?.length is !@filterState.get('forSale'))
 
   checkIfEmpty: =>
     @$feed.html(emptyTemplate()) if @isEmpty()
@@ -120,3 +121,13 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     # Reset the waypoints
     $.waypoints 'destroy'
     @attachScrollHandler()
+
+  render: =>
+    return if @filterState.get 'artist'
+    return unless @filterState.get 'loading'
+    @$pins.hide() # Only relevant on initial load
+    @notifications.getFirstPage(
+      data: for_sale: @filterState.get 'forSale'
+      success: =>
+        @filterState.set('loading', false)
+    )?.then @checkIfEmpty
