@@ -17,7 +17,7 @@ module.exports = class AboutView extends Backbone.View
 
   initialize: ->
     @$window = $(window)
-    @$window.on 'scroll', @iphoneScroll
+    @$window.on 'scroll', _.throttle(@iphoneScroll, 200)
 
     @cacheSelectors()
     @setupStickyNav()
@@ -48,6 +48,8 @@ module.exports = class AboutView extends Backbone.View
     @$heroUnitNav = @$('.about-nav')
     @$genes = @$('.about-genome-work-gene')
     @$spinner = @$('#about-spinner')
+    @$iphone = @$('.about-section1-phone-container')
+    @$iphoneBg = @$('.about-section1-phone-bg')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -152,7 +154,7 @@ module.exports = class AboutView extends Backbone.View
 
   iphoneScroll: =>
     windowBottom = @$window.scrollTop() + @$window.height()
-    iphoneTop = @$('.about-section1-phone-container').offset().top
+    iphoneTop = @$iphone.offset().top
     return unless windowBottom > iphoneTop
     offset = (windowBottom - iphoneTop) * 0.4
-    @$('.about-section1-phone-bg').css transform: "translateY(-#{offset}px)"
+    @$iphoneBg.css transform: "translateY(-#{offset}px)"
