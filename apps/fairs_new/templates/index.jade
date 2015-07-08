@@ -1,0 +1,34 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'fairs'
+
+block body
+  #fairs-page.aggregate-page.main-layout-container
+    h1.aggregate-page-header Preview and Collect from Leading Art Fairs
+
+    .aggregate-page-items
+      .aggregate-page-items-featured
+        if currentFairs.length
+          #current-fairs.aggregate-page-items-featured-set
+            h2.aggregate-page-subheader Current Fairs
+            for fair in currentFairs
+              include fair
+
+        if pastFairs.length
+          #past-fairs.aggregate-page-items-featured-set
+            h2.aggregate-page-subheader Past Fairs
+            for fair in pastFairs
+              include fair
+
+      if upcomingFairs.length
+        #upcoming-fairs.aggregate-page-items-upcoming
+          h2.aggregate-page-subheader Upcoming Fairs
+          for fair in upcomingFairs
+            .ap-upcoming-item( href= fair.href() )
+              h3= fair.get('name')
+              .fpfu-location= fair.location() && fair.location().cityStateCountry()
+              .fpfu-date= fair.formatDates()
