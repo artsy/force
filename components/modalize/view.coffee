@@ -15,6 +15,7 @@ module.exports = class Modalize extends Backbone.View
   initialize: (options = {}) ->
     { @subView, @dimensions } = _.defaults options, @defaults
     @scrollbar = new Scrollbar
+    $(window).on 'keyup.modalize', @escape
 
   state: (state, callback = $.noop) ->
     _.defer =>
@@ -40,10 +41,14 @@ module.exports = class Modalize extends Backbone.View
     else
       @subView.render().$el
 
+  escape: (e) =>
+    @close() if e.which is 27
+
   maybeClose: (e) ->
     @close() if $(e.target).hasClass('js-modalize-backdrop')
 
   close: (callback) ->
+    $(window).off 'keyup.modalize'
     @scrollbar.reenable()
     @state 'close', =>
       @subView?.remove?()
