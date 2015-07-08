@@ -14,8 +14,8 @@ module.exports = class DeepZoomView extends Backbone.View
     'click .dz-close': 'return'
     'click .dz-slider-minus': 'zoomOut'
     'click .dz-slider-plus': 'zoomIn'
-    'change .dz-slider-range': 'zoomTo'
-    'mousemove': 'detectActivity'
+    'change .dz-slider-range': -> @zoomTo arguments...
+    'mousemove': -> @detectActivity arguments...
 
   initialize: ({ @artwork, @image }) ->
     @zoomTo = _.throttle @_zoomTo, 50
