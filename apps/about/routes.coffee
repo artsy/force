@@ -9,7 +9,11 @@ JSONPage = require '../../components/json_page'
   page = new JSONPage name: 'about'
   page.get (err, data) ->
     return next err if err
-    res.render 'index', _.extend {}, data, resizer
+
+    nav = _.keys(sections = data.sections).sort (a, b) ->
+      sections[a].position > sections[b].position
+
+    res.render 'index', _.extend {}, data, resizer, nav: nav
 
 @sendSMS = (req, res ,next) ->
   twilioClient = new twilio.RestClient TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN

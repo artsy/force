@@ -30,6 +30,7 @@
     },
     "sections": {
         "collecting": {
+            "position": 1,
             "callToAction": {
                 "button1": {
                     "href": "/feature/collect-with-artsy",
@@ -88,6 +89,7 @@
             "slug": "collecting"
         },
         "education": {
+            "position": 3,
             "header": "Education",
             "preamble": "Whether you’re a student, teacher, art enthusiast, curator, or collector, Artsy offers a variety of additional ways to learn about art and design.",
             "pullBlurb1": {
@@ -176,6 +178,7 @@
             "slug": "education"
         },
         "the-art-genome-project": {
+            "position": 2,
             "genomeWorks": [
                 {
                     "artist": "Mary Cassatt",
@@ -372,6 +375,7 @@
             "slug": "the-art-genome-project"
         },
         "the-art-world-online": {
+            "position": 0,
             "header": "The Art World<br>Online",
             "preamble": "Artsy features the world’s leading galleries, museum collections, foundations, artist estates, art fairs, and benefit auctions, all in one place. Our growing database of 300,000 images of art, architecture, and design by 40,000 artists spans historical, modern, and contemporary works, and includes the largest online database of contemporary art. Artsy is used by art lovers, museum-goers, patrons, collectors, students, and educators to discover, learn about, and collect art.\n",
             "pullBlurb1": {
