@@ -1,0 +1,24 @@
+if artwork.get('medium')
+  .artwork-detail-medium
+    = artwork.get('medium')
+
+if artwork.get('manufacturer')
+  .artwork-detail-manufacturer
+    = artwork.get('manufacturer')
+
+unless artwork.isMultipleEditions()
+  .artwork-detail-dimensions
+    .amd-imperial
+      != artwork.dimensions({ metric: 'in', format: 'superscript' })
+    .amd-metric
+      = artwork.dimensions({ metric: 'cm', format: 'decimal' })
+
+if artwork.editionStatus()
+  .artwork-edition-status
+    = artwork.editionStatus()
+
+if artwork.get('image_rights')
+  .artwork-meta-photo-credit
+    = artwork.get('image_rights')
+
+include metadata/editions

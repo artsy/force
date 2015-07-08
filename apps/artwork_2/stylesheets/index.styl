@@ -1,0 +1,40 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+@import '../components/related_navigation/index'
+@import '../components/images/index'
+@import '../components/detail/stylesheets'
+
+.artwork-page
+  padding 20px 0
+
+.artwork-container
+  display table
+  position relative
+  width 100%
+  height auto
+  z-index 1
+
+  // First step down
+  @media screen and (max-width: (artwork-image-size + (artwork-detail-width * 2) + (layout-side-margin * 2)))
+    .artwork-related-content
+      width artwork-related-content-smaller-width
+
+  // Second step down
+  @media screen and (max-width: (artwork-image-size + artwork-detail-width + artwork-related-content-smaller-width + (layout-side-margin * 2)))
+    .artwork-related-content
+      display none
+
+.artwork-overview
+.artwork-detail
+.artwork-related-content
+  display table-cell
+  vertical-align top
+.artwork-related-content
+.artwork-detail
+  width artwork-detail-width
+.artwork-detail
+  padding-left 20px
+.artwork-related-content
+  padding-right 20px
+.artwork-overview
+  text-align center

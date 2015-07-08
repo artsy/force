@@ -1,0 +1,30 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'artwork_2'
+
+block body
+  .artwork-page.main-layout-container
+    article.artwork-container
+      aside.artwork-related-content
+        .artwork-related-navigation.js-artwork-related-navigation
+          include ../components/related_navigation/template
+        .artwork-auction-clock.js-artwork-auction-clock
+          include ../../../components/clock/template
+
+      section.artwork-overview
+        - image = artwork.defaultImage()
+        - images = artwork.related().images
+        .artwork-images.js-artwork-images
+          include ../components/images/templates/index
+        .artwork-image-actions
+          //-
+
+      aside.artwork-detail
+        include ../components/detail/templates/index
+
+    .artwork-related-information
+      //-
