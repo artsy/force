@@ -192,19 +192,22 @@ module.exports = class PartnerShow extends Backbone.Model
   formatDaySchedule: (day) ->
     if @daySchedules()
       if _.contains ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], day
-        daySchedule = _.find (@location().get 'day_schedules'), (daySchedule) -> daySchedule['day_of_week'] is day
-        if daySchedule
-          startHour = moment().hour(daySchedule['start_time'] / 60 / 60)
-          startMinute = moment().minutes(daySchedule['start_time'] / 60)
-          endHour = moment().hour(daySchedule['end_time'] / 60 / 60)
-          endMinute = moment().minutes(daySchedule['end_time'] / 60 )
+        daySchedules = _.where (@location().get 'day_schedules'), day_of_week: day
+        if daySchedules
+          hours = []
+          for daySchedule in daySchedules
+            startHour = moment().hour(daySchedule['start_time'] / 60 / 60)
+            startMinute = moment().minutes(daySchedule['start_time'] / 60)
+            endHour = moment().hour(daySchedule['end_time'] / 60 / 60)
+            endMinute = moment().minutes(daySchedule['end_time'] / 60 )
+            hours.push "#{startHour.format('h')}\
+                    #{ if startMinute.format('mm') == '00' then '' else startMinute.format(':mm')}\
+                    #{startHour.format('a')}–\
+                    #{endHour.format('h')}\
+                    #{if endMinute.format('mm') == '00' then '' else endMinute.format(':mm')}\
+                    #{endHour.format('a')}"
           start: day
-          hours: "#{startHour.format('h')}\
-                  #{ if startMinute.format('mm') == '00' then '' else startMinute.format(':mm')}\
-                  #{startHour.format('a')}–\
-                  #{endHour.format('h')}\
-                  #{if endMinute.format('mm') == '00' then '' else endMinute.format(':mm')}\
-                  #{endHour.format('a')}"
+          hours: hours.join(', ')
         else
           start: day
           hours: 'Closed'
@@ -218,7 +221,7 @@ module.exports = class PartnerShow extends Backbone.Model
 
   # returns an array of grouped and formatted 'day schedules' objects in the format:
   # [{ days: 'Monday–Thursday, Sunday', hours: '10am - 7pm' }, { days: 'Friday', hours: '6:30am - 7pm' }]
-  formatModalDaySchedules: () ->
+  formatModalDaySchedules: ->
     if @daySchedules()
       daysOpen = [@formatDaySchedules()[0]]
       _.each @formatDaySchedules().slice(1), (daySchedule) ->
