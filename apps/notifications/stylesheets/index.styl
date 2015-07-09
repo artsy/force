@@ -3,6 +3,37 @@
 #notifications-page
   padding-top 50px
 
+#notifications-page[data-state=loading]
+  #notifications-works, #notifications-artist-works, #notifications-empty
+    display none
+  #notifications-spinner
+    display block
+
+#notifications-page[data-state=artist]
+  #notifications-works, #notifications-spinner, #notifications-empty
+    display none
+  #notifications-artist-works, .notifications-artist-sub-header
+    display block
+
+#notifications-page[data-state=recent-works]
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-empty
+    display none
+  #notifications-works
+    display block
+
+#notifications-page[data-state=empty]
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-works, #notifications-spinner
+    display none
+  #notifications-empty
+    display block
+
+#notifications-empty
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  display none
+  margin-top 123px
+  margin-left 250px
+
 #notifications-header
   margin-bottom 80px
   h1
@@ -40,7 +71,6 @@
   font-size 25px
 
 #notifications-works, #notifications-artist-works
-  position absolute
   width 900px
   margin-left 250px
   .empty-content
@@ -48,7 +78,7 @@
     border-top 1px solid gray-lighter-color
 
 #notifications-artist-works
-  margin-top 43px
+  margin-top 123px
 
 .notifications-artist-sub-header
   display none
@@ -71,14 +101,9 @@
 #notifications-artist-feed
   width 100%
 
-#notifications-feed-spinner
+#notifications-spinner
   position relative
   height 250px
-
-#notifications-artist-feed-spinner
-  position relative
-  height 250px
-  display none
 
 .notifications-list-item
   margin 20px 0
@@ -108,3 +133,6 @@
 
 #notifications-search-container
   margin-bottom 50px
+
+.artwork-column
+  min-width 270px
