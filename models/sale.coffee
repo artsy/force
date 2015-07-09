@@ -76,14 +76,17 @@ module.exports = class Sale extends Backbone.Model
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
 
   bidButtonState: (user, artwork) ->
-    if @isPreview() and !user?.get('registered_to_bid')
-      label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
-    else if @isPreview() and user?.get('registered_to_bid')
-      label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
-    else if @isOpen()
-      label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
-    else if @isClosed()
-      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: ''
+    if artwork.get('sold') and not artwork.get('acquireable')
+      label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
+    else
+      if @isPreview() and !user?.get('registered_to_bid')
+        label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
+      else if @isPreview() and user?.get('registered_to_bid')
+        label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
+      else if @isOpen()
+        label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
+      else if @isClosed()
+        label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: ''
 
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
