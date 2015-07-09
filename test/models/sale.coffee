@@ -87,6 +87,11 @@ describe 'Sale', ->
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
         @sale.set 'auction_state', 'closed'
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Online Bidding Closed'
+        # If the artwork is sold, then it's sold
+        @sale.set 'auction_state', 'open'
+        @user.set 'registered_to_bid', true
+        @artwork.set 'sold', true
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Sold'
 
   describe '#fetchArtworks', ->
 
