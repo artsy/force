@@ -66,7 +66,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     # Set bid button state
     # Set button state
     $button = @$('.artwork-item-bid')
-    state = @sale.actionButtonState @currentUser, @model
+    state = @sale.bidButtonState @currentUser, @model
     $button.
       text(state.label).
       addClass(state.classes).
