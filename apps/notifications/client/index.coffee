@@ -1,16 +1,12 @@
 _ = require 'underscore'
-qs = require 'querystring'
 Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
 Notifications = require '../../../collections/notifications.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-Artist = require '../../../models/artist.coffee'
-DateHelpers = require '../../../components/util/date_helpers.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 SidebarView = require './sidebar.coffee'
 RecentlyAddedWorksView = require './recently_added_works.coffee'
 ArtistWorksView = require './artist_works.coffee'
-emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
@@ -21,6 +17,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @filterState = new Backbone.Model
       forSale: false
       artist: null
+      loading: true
+      empty: false
 
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
@@ -38,13 +36,17 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @setupJumpView()
 
   render: =>
-    if @filterState.get 'loading'
-      @$('#notifications-page').attr 'data-state', 'loading'
-      @scrollToTop()
-    else if @filterState.get 'artist'
-      @$('#notifications-page').attr 'data-state', 'artist'
-    else
-      @$('#notifications-page').attr 'data-state', 'recent-works'
+    @$('#notifications-page').attr 'data-state', (
+      if @filterState.get 'loading'
+        'loading'
+      else if @filterState.get 'empty'
+        'empty'
+      else if @filterState.get 'artist'
+        'artist'
+      else
+        'recent-works'
+    )
+    @scrollToTop()
 
   setupJumpView: ->
     @jump = new JumpView threshold: $(window).height(), direction: 'bottom'

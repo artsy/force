@@ -4,22 +4,35 @@
   padding-top 50px
 
 #notifications-page[data-state=loading]
-  #notifications-works, #notifications-artist-works
+  #notifications-works, #notifications-artist-works, #notifications-empty
     display none
   #notifications-spinner
     display block
 
 #notifications-page[data-state=artist]
-  #notifications-works, #notifications-spinner
+  #notifications-works, #notifications-spinner, #notifications-empty
     display none
   #notifications-artist-works, .notifications-artist-sub-header
     display block
 
 #notifications-page[data-state=recent-works]
-  #notifications-artist-works, .notifications-artist-sub-header
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-empty
     display none
   #notifications-works
     display block
+
+#notifications-page[data-state=empty]
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-works, #notifications-spinner
+    display none
+  #notifications-empty
+    display block
+
+#notifications-empty
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  display none
+  margin-top 123px
+  margin-left 250px
 
 #notifications-header
   margin-bottom 80px

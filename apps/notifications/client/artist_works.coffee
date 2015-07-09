@@ -31,8 +31,7 @@ module.exports = class ArtistWorksView extends Backbone.View
             id: @artist.id
           @$artistHeader.show()
         else
-          @$artistHeader.hide()
-          @$artistFeed.html emptyTemplate()
+          @filterState.set 'empty', true
         @filterState.set 'loading', false
 
   renderColumns: ($el, artworks) ->

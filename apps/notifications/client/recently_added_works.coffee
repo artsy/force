@@ -100,7 +100,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     !@notifications.length and (!@pinnedArtworks?.length is !@filterState.get('forSale'))
 
   checkIfEmpty: =>
-    @$feed.html(emptyTemplate()) if @isEmpty()
+    @filterState.set(empty: true) if @isEmpty()
 
   attachScrollHandler: ->
     @$feed.waypoint (direction) =>
@@ -108,7 +108,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     , { offset: 'bottom-in-view' }
 
   scrollToPins: ->
-    @jump.scrollToPosition @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
+    $('body,html').scrollTop @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
 
   resetFeed: ->
     # Remove any existing column views
@@ -125,7 +125,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     return unless @filterState.get 'loading'
     @$pins.hide() # Only relevant on initial load
     @notifications.getFirstPage(
-      data: for_sale: @filterState.get 'forSale'
+      data: for_sale: @filterState.get('forSale')
       success: =>
         @filterState.set('loading', false)
     )?.then @checkIfEmpty
