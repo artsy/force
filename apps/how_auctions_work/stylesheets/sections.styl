@@ -1,3 +1,5 @@
+smallBreakpoint = 768px
+
 .haw-section
   display table
   width 100%
@@ -7,16 +9,27 @@
   display table-cell
   width 50%
   vertical-align middle
+  img
+    max-width 100%
 
 .haw-page-metadata
   width 75%
   margin 60px auto
+  @media screen and (max-width: smallBreakpoint)
+    margin 30px auto
 .haw-page-title
   margin-right 40px
   garamond-size('xl-headline')
+  @media screen and (max-width: smallBreakpoint)
+    margin-right (@margin-right / 2)
+    garamond-size('l-headline')
+
 .haw-page-description
   margin 20px 0
   garamond-size('s-body')
+  @media screen and (max-width: smallBreakpoint)
+    margin 10px 0
+    font-size garamond-l-caption-font-size
 
 .haw-numbered-section
   display table
@@ -28,13 +41,18 @@
   display table-cell
   vertical-align top
 .haw-ns-number
-  width 80px
-  font-size @width
-  line-height 1
+  garamond-size('xxl-headline')
+  padding 0 20px
   text-align center
+  @media screen and (max-width: smallBreakpoint)
+    garamond-size('l-headline')
+    padding 0 10px
 
 .haw-section-title
   garamond-size('l-headline')
+  @media screen and (max-width: smallBreakpoint)
+    garamond-size('headline')
+
 .haw-section-description
   margin 20px 0
   garamond-size('s-body')
@@ -42,11 +60,16 @@
     block-margins(40px)
   a
     fine-faux-underline()
+  @media screen and (max-width: smallBreakpoint)
+    font-size garamond-l-caption-font-size
+    > p
+      block-margins(20px)
 
 .haw-bid-increments
   position relative
-  width 75%
   padding 40px 80px 40px 40px
+  @media screen and (max-width: smallBreakpoint)
+    padding 20px 40px 20px 20px
 
   // Fancy fade borders
   &:before
@@ -70,3 +93,5 @@
   > h3
   > .leader-dots-list
     avant-garde-size('body')
+    @media screen and (max-width: smallBreakpoint)
+      avant-garde-size('s-headline')
