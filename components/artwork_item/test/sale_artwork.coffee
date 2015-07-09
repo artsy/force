@@ -43,10 +43,10 @@ describe 'SaleArtworks', ->
 
   describe 'auction states', ->
     beforeEach ->
-      sinon.stub(@sale, 'actionButtonState').returns {}
+      sinon.stub(@sale, 'bidButtonState').returns {}
 
     afterEach ->
-      @sale.actionButtonState.restore()
+      @sale.bidButtonState.restore()
 
     describe 'clockState is open', ->
       it 'only appends the auction id to links; does not hide anything', ->
