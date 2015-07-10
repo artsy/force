@@ -3,9 +3,6 @@ module.exports =
     commercial_interest: require './views/commercial_interest.coffee'
     basic_info: require './views/basic_info.coffee'
     artists_in_collection: require './views/artists_in_collection.coffee'
-    galleries_auction_houses: require './views/galleries_auction_houses.coffee'
-    art_fairs: require './views/art_fairs.coffee'
-    institutional_affliation: require './views/institutional_affliation.coffee'
     auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
     specialist: require './views/specialist.coffee'
@@ -38,9 +35,6 @@ module.exports =
           true: [
             'basic_info'
             'artists_in_collection'
-            'galleries_auction_houses'
-            'art_fairs'
-            'institutional_affliation'
             'inquiry'
             'done'
           ]
@@ -84,9 +78,6 @@ module.exports =
         is_collector:
           true: [
             'artists_in_collection'
-            'galleries_auction_houses'
-            'art_fairs'
-            'institutional_affliation'
             is_logged_in:
               true: ['done']
               false: ['auth']
