@@ -239,6 +239,11 @@ describe 'PartnerShow', ->
     beforeEach ->
       @partnerShow = new PartnerShow fabricate 'show',
         location: fabricate 'partner_location'
+      @partnerShow.get('location').day_schedules.push
+          _id: "5543d89472616978f1e40100",
+          start_time: 76000,
+          end_time: 88400,
+          day_of_week: "Tuesday"
 
     it 'returns the formatted day schedule for a day of the week with a day schedule', ->
       @partnerShow.formatDaySchedule('Monday').should.match { start: 'Monday', hours: '10am–7pm' }
@@ -246,15 +251,23 @@ describe 'PartnerShow', ->
     it 'returns the formatted day schedule for a day of the week with no day schedule', ->
       @partnerShow.formatDaySchedule('Friday').should.match { start: 'Friday', hours: 'Closed' }
 
+    it 'returns the formatted day schedule for a day with multiple schedule blocks', ->
+      @partnerShow.formatDaySchedule('Tuesday').should.match { start: 'Tuesday', hours: '10am–7pm, 9:06pm–12:33am' }
+
   describe '#formatDaySchedules', ->
     beforeEach ->
       @partnerShow = new PartnerShow fabricate 'show',
         location: fabricate 'partner_location'
+      @partnerShow.get('location').day_schedules.push
+          _id: "5543d89472616978f1e40100",
+          start_time: 76000,
+          end_time: 88400,
+          day_of_week: "Tuesday"
 
     it 'returns a formatted string describing the days open and hours for the show', ->
       @partnerShow.formatDaySchedules().should.match [
         { hours: '10am–7pm', start: 'Monday' }
-        { hours: '10am–7pm', start: 'Tuesday' }
+        { hours: '10am–7pm, 9:06pm–12:33am', start: 'Tuesday' }
         { hours: '10am–7pm', start: 'Wednesday' }
         { hours: '10am–7pm', start: 'Thursday' }
         { hours: 'Closed', start: 'Friday' }
@@ -306,3 +319,49 @@ describe 'PartnerShow', ->
         { days: 'Tuesday–Thursday', hours: '11:45am–7:09pm' }
       ]
 
+    it 'returns a correctly formatted string when a show has overlapping days and multiple time blocks', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: [
+            {
+              _id: "5543d893726169750b990100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Wednesday"
+            }, {
+              _id: "5543d8937261697591bd0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Monday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 82359,
+              end_time: 98992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d8947261690f169d0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Saturday"
+            }, {
+              _id: "5543d8947261695aea200200",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Thursday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 82359,
+              end_time: 98992,
+              day_of_week: "Wednesday"
+            }
+          ]
+      @partnerShow.formatModalDaySchedules().should.match [
+        { days: 'Monday, Saturday', hours: '12:30am–7:30pm' },
+        { days: 'Tuesday–Wednesday', hours: '11:45am–7:09pm, 10:52pm–3:29am' },
+        { days: 'Thursday', hours: '11:45am–7:09pm' }
+      ]

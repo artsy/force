@@ -193,7 +193,7 @@ module.exports = class PartnerShow extends Backbone.Model
     if @daySchedules()
       if _.contains ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], day
         daySchedules = _.where (@location().get 'day_schedules'), day_of_week: day
-        if daySchedules
+        if daySchedules.length
           hours = []
           for daySchedule in daySchedules
             startHour = moment().hour(daySchedule['start_time'] / 60 / 60)
