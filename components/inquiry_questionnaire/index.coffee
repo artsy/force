@@ -20,15 +20,9 @@ module.exports = (options = {}) ->
     # Try to get a location incase one doesn't exist,
     # don't wait for it though
     user.approximateLocation()
-    user.fetch
-      success: ->
-        if user.id?
-          # We have an existing anonymous session
-          # or a logged in user
-          done()
-        else
-          # Create an anonymous session before continuing
-          user.save().then done
+    user.instantiate()
+      .then -> user.related().collectorProfile.instantiate()
+      .then done
 
   questionnaire.state.on 'abort', ->
     modal.close()
