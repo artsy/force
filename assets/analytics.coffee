@@ -8,4 +8,4 @@ $ -> analytics.ready ->
   require '../analytics/artworks_filter.js'
   require '../analytics/artist_page.js'
   require '../analytics/home.js'
-
+  require '../analytics/show_page.js'
