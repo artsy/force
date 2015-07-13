@@ -23,17 +23,17 @@ describe 'LoggedOutUser', ->
     describe '#login', ->
       it 'logs the user in', ->
         user = new LoggedOutUser email: 'foo@bar.com', password: 'foobar'
-        user.isLoggedIn().should.be.false
+        user.isLoggedIn().should.be.false()
         user.login()
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][2].url.should.equal '/users/sign_in'
         Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com', password: 'foobar'
-        user.isLoggedIn().should.be.true
+        user.isLoggedIn().should.be.true()
 
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com', name: 'Foo Bar'
         user.login success: ->
-          true.should.be.true
+          true.should.be.true()
           done()
 
       it 'sets the accessToken in ajax settings', ->
@@ -53,7 +53,7 @@ describe 'LoggedOutUser', ->
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com', name: 'Foo Bar', password: 'foobar'
         user.signup success: ->
-          true.should.be.true
+          true.should.be.true()
           done()
 
       it 'sets the accessToken in ajax settings', ->
@@ -75,7 +75,7 @@ describe 'LoggedOutUser', ->
       it 'accepts options and overwrites the default success', (done) ->
         user = new LoggedOutUser email: 'foo@bar.com'
         user.forgot success: ->
-          true.should.be.true
+          true.should.be.true()
           done()
 
   describe '#save', ->
@@ -137,7 +137,7 @@ describe 'LoggedOutUser', ->
       it 'fetches the session directly once it has the ID', (done) ->
         @user.fetch success: =>
           @user.fetch success: ->
-            true.should.be.true
+            true.should.be.true()
             done()
           Backbone.sync.args[1][1].url().should.containEql '/api/v1/me/anonymous_session/foobar'
           Backbone.sync.args[1][2].success()

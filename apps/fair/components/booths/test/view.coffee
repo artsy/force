@@ -41,13 +41,13 @@ describe 'BoothsView', ->
 
     it 'creates a filter nav view', ->
       @view.initialize({})
-      @FilterNav.called.should.be.ok
+      @FilterNav.called.should.be.ok()
 
     it 'navigates when reseting params', ->
       @view.navigateSection = sinon.stub()
       @view.initialize()
       @view.params.trigger 'reset'
-      @view.navigateSection.called.should.be.ok
+      @view.navigateSection.called.should.be.ok()
 
     it 'sets the default sort to -featured', ->
       @view.params.get('sort').should.equal '-featured'
@@ -83,15 +83,15 @@ describe 'BoothsView', ->
 
     it 'adds a feed view', ->
       @view.renderShows new Backbone.Collection [{}]
-      @ShowsFeed.calledWithNew().should.be.ok
+      @ShowsFeed.calledWithNew().should.be.ok()
 
     it 'destroys but not removes the last feed view', ->
       @feedView = new Backbone.View
       @feedView.remove = sinon.stub()
       @feedView.destroy = sinon.stub()
       @view.renderShows new Backbone.Collection [{}]
-      @feedView.remove.called.should.not.be.ok
-      @feedView.destroy.called.should.not.be.ok
+      @feedView.remove.called.should.not.be.ok()
+      @feedView.destroy.called.should.not.be.ok()
 
   describe '#navigateSection', ->
 

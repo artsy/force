@@ -44,7 +44,7 @@ describe 'FairBrowseView', ->
   describe 'initialize', ->
 
     it 'sets up filter artwork and filter booths views', ->
-      @BoothsView.calledWithNew.should.be.ok
+      @BoothsView.calledWithNew.should.be.ok()
 
     it 'binds section changes to reset', ->
       @view.boothsSection = sinon.stub()
@@ -88,7 +88,7 @@ describe 'FairBrowseView', ->
     it 'triggers param reset to show all exhibitors', ->
       @view.boothParams.on 'reset', spy = sinon.spy()
       @view.exhibitorsGrid()
-      spy.called.should.be.ok
+      spy.called.should.be.ok()
 
   describe '#renderArtworksHeader', ->
 

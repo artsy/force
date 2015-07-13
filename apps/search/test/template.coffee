@@ -68,4 +68,4 @@ describe 'Search results template', ->
       @$template.find('.search-result').length.should.equal 5
 
     it 'highlights the search term', ->
-      @$template.find('.is-highlighted').should.be.ok
+      @$template.find('.is-highlighted').should.be.ok()

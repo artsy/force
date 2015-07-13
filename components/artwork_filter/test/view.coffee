@@ -50,11 +50,11 @@ describe 'ArtworkFilterView', ->
 
     it 'removes itself if the initial filter state returns without any works', ->
       Backbone.sync.args[0][2].success {}
-      @view.remove.called.should.be.true
+      @view.remove.called.should.be.true()
 
     it 'removes itself if the initial filter state errors', ->
       Backbone.sync.args[0][2].error {}
-      @view.remove.called.should.be.true
+      @view.remove.called.should.be.true()
 
     it 'starts in grid mode', ->
       @view.viewMode.get('mode').should.equal 'grid'
@@ -70,7 +70,7 @@ describe 'ArtworkFilterView', ->
     it 're-renders the artworks when the view mode is changed', ->
       sinon.spy @ArtworkFilterView::, 'view'
       @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
-      @ArtworkFilterView::view.called.should.be.true
+      @ArtworkFilterView::view.called.should.be.true()
 
   describe '#renderFilter', ->
     beforeEach ->
@@ -82,7 +82,7 @@ describe 'ArtworkFilterView', ->
   describe '#handleState', ->
     describe '#handleFilterState', ->
       it 'sets the state for the filter container depending on the request event', ->
-        # _.isUndefined(@view.$filter.attr 'data-state').should.be.true
+        # _.isUndefined(@view.$filter.attr 'data-state').should.be.true()
         @view.filter.trigger 'request'
         @view.$filter.attr('data-state').should.equal 'loading'
         @view.filter.trigger 'sync'
@@ -94,7 +94,7 @@ describe 'ArtworkFilterView', ->
 
     describe '#handleArtworksState', ->
       it 'sets the state for the artworks container + button depending on the request event', ->
-        _.isUndefined(@view.$artworks.attr 'data-state').should.be.true
+        _.isUndefined(@view.$artworks.attr 'data-state').should.be.true()
         @view.artworks.trigger 'request'
         @view.$artworks.attr('data-state').should.equal 'loading'
         @view.$button.attr('data-state').should.equal 'loading'
@@ -199,7 +199,7 @@ describe 'ArtworkFilterView', ->
       @view.filter.set 'total', value: 10
       @columnLength = 9
       @view.setButtonState()
-      @view.$button.is(':visible').should.be.true
+      @view.$button.is(':visible').should.be.true()
       @view.$button.text().should.equal 'See More (1)'
 
     it 'sets the correct button state when there are no remaining artworks', ->
@@ -218,5 +218,5 @@ describe 'ArtworkFilterView', ->
       @columnLength = 4
       @view.setButtonState()
       # Is now visible again
-      _.isEmpty(@view.$button.attr('style')).should.be.true
+      _.isEmpty(@view.$button.attr('style')).should.be.true()
       @view.$button.text().should.equal 'See More (6)'

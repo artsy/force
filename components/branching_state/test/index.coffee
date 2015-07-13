@@ -21,9 +21,9 @@ describe 'State', ->
         @state.next().should.equal 'second'
         @state.current().should.equal 'second'
         @state.next().should.equal 'third'
-        @state.isEnd().should.be.false
+        @state.isEnd().should.be.false()
         @state.next().should.equal 'fourth'
-        @state.isEnd().should.be.true
+        @state.isEnd().should.be.true()
         @state.next().should.equal 'fourth'
 
   describe 'complex path', ->
@@ -89,19 +89,19 @@ describe 'State', ->
         @state.position().should.equal 1
         # `total` can only be reliably displayed when on the terminal leaf of a step tree
         @state.total().should.equal 3
-        @state.isEnd().should.be.false
+        @state.isEnd().should.be.false()
 
         @state.next().should.equal 'second'
         @state.position().should.equal 2
         @state.total().should.equal 3
-        @state.isEnd().should.be.false
+        @state.isEnd().should.be.false()
 
         @state.next().should.equal 'third'
         @state.position().should.equal 3
         @state.total().should.equal 4
-        @state.isEnd().should.be.false
+        @state.isEnd().should.be.false()
 
         @state.next().should.equal 'fourth'
         @state.position().should.equal 4
         @state.total().should.equal 4
-        @state.isEnd().should.be.true
+        @state.isEnd().should.be.true()

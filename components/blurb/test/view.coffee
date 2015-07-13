@@ -24,4 +24,4 @@ describe 'BlurbView', ->
   describe '#attachEllipsis', ->
 
     it 'attaches ellipsis using dotdotdot', ->
-      @dotdotdot.calledOnce.should.be.ok
+      @dotdotdot.calledOnce.should.be.ok()

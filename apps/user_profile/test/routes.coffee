@@ -28,4 +28,4 @@ describe 'User profile routes', ->
 
     it 'doesnt pass an empty access token so a Forbidden is shown', ->
       routes.collection @req, @res
-      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
+      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok()

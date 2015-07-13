@@ -42,7 +42,7 @@ describe 'ArtworkColumns', ->
   describe '#initialize', ->
 
     it 'sets up internal state', ->
-      @view.seeMore.should.be.false
+      @view.seeMore.should.be.false()
       @view.columns[0].should.have.property 'height'
       @view.columns[0].should.have.property 'artworkCount'
 
@@ -65,14 +65,14 @@ describe 'ArtworkColumns', ->
           el: $('body')
           collection: @artworks
         @view.currentUser.should.be.instanceOf CurrentUser
-        @view.artworkCollection.should.be.ok
+        @view.artworkCollection.should.be.ok()
         CurrentUser.orNull.restore()
 
     describe 'without a current user', ->
 
       it 'leaves the collection undefined', ->
-        _.isNull(@view.currentUser).should.be.true
-        _.isUndefined(@view.artworkCollection).should.be.true
+        _.isNull(@view.currentUser).should.be.true()
+        _.isUndefined(@view.artworkCollection).should.be.true()
 
   describe '#rebalance', ->
 

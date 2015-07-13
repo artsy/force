@@ -89,10 +89,10 @@ describe 'state', ->
 
   describe '#almostDone', ->
     it 'lets you know if you are on the last step', ->
-      @state.almostDone().should.not.be.ok
+      @state.almostDone().should.not.be.ok()
       last_step = _.last @state.steps()
       @state.set current_step: last_step
-      @state.almostDone().should.be.ok
+      @state.almostDone().should.be.ok()
 
   describe '#next', ->
     beforeEach ->

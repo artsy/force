@@ -34,12 +34,12 @@ describe 'FeedbackView', ->
       @view.$('input[name="user_email"]').should.have.lengthOf 1
 
     it 'submits the feedback', ->
-      Backbone.sync.called.should.be.false
+      Backbone.sync.called.should.be.false()
       @view.$('input[name="user_name"]').val 'Iam Loggedout'
       @view.$('input[name="user_email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'My message'
       @view.$('button').click()
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/feedback'
       Backbone.sync.args[0][1].attributes.should.have.keys 'url', 'message', 'user_name', 'user_email'
       Backbone.sync.args[0][1].attributes.user_name.should.equal 'Iam Loggedout'
@@ -62,10 +62,10 @@ describe 'FeedbackView', ->
       @view.$('.scontact-from').text().should.equal 'From: Iam Loggedin (craigspaeth@gmail.com)'
 
     it 'submits the feedback', ->
-      Backbone.sync.called.should.be.false
+      Backbone.sync.called.should.be.false()
       @view.$('textarea[name="message"]').val 'My message'
       @view.$('button').click()
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/feedback'
       Backbone.sync.args[0][1].attributes.should.have.keys 'url', 'message'
       Backbone.sync.args[0][1].attributes.message.should.equal 'My message'

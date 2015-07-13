@@ -49,7 +49,7 @@ describe 'Artwork Columns template', ->
   it 'can render empty columns to be populated by the view', ->
     $ = cheerio.load render('template')({ numberOfColumns: 5 })
     $('.artwork-column').should.have.lengthOf 5
-    $('.artwork-column').is(':empty').should.be.true
+    $('.artwork-column').is(':empty').should.be.true()
 
   it 'will pass an image version for a given height to the artwork item template', ->
     threeCols = @artworks.groupByColumnsInOrder 3

@@ -27,12 +27,12 @@ describe 'Geo', ->
     it 'calls out to an external IP geolocation service when low accuracy is requested', ->
       Geo.locate(accuracy: 'low')
       Backbone.sync.args[0][2].url.should.equal 'https://freegeoip.net/json/'
-      _.isNull(Backbone.sync.args[0][2].headers).should.be.ok
+      _.isNull(Backbone.sync.args[0][2].headers).should.be.ok()
 
     it 'uses the browser geolocation API when high accuracy is requested', ->
       benv.expose navigator: geolocation: getCurrentPosition: sinon.stub()
       Geo.locate(accuracy: 'high')
-      navigator.geolocation.getCurrentPosition.called.should.be.ok
+      navigator.geolocation.getCurrentPosition.called.should.be.ok()
 
   describe '#loadGoogleMaps', ->
     beforeEach ->
@@ -41,9 +41,9 @@ describe 'Geo', ->
     it 'loads the Google Maps places library and runs the callback', (done) ->
       sinon.stub $, 'getScript', -> window.googleMapsCallback()
 
-      _.isUndefined(window.googleMapsCallback).should.be.true
+      _.isUndefined(window.googleMapsCallback).should.be.true()
       Geo.loadGoogleMaps ->
-        _.isFunction(window.googleMapsCallback).should.be.true
+        _.isFunction(window.googleMapsCallback).should.be.true()
         done()
 
       $.getScript.restore()

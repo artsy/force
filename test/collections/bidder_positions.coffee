@@ -28,7 +28,7 @@ describe 'BidderPositions', ->
 
   describe 'isHighestBidder', ->
     it 'is undefined if the bidder positions does not contain a highest bidder', ->
-      _.isUndefined(@bidderPositions.isHighestBidder()).should.be.ok
+      _.isUndefined(@bidderPositions.isHighestBidder()).should.be.ok()
 
     it 'returns the relevant bidder position if there is a highest bidder', ->
       position = @bidderPositions.last()
@@ -37,10 +37,10 @@ describe 'BidderPositions', ->
 
   describe 'isOutbid', ->
     it 'returns the most recent position if there is any positions and none are the high bidder', ->
-      _.isUndefined(new BidderPositions().isOutbid()).should.be.ok
+      _.isUndefined(new BidderPositions().isOutbid()).should.be.ok()
       @saleArtwork.set('highest_bid', id: @bidderPositions.last().get('highest_bid').id)
-      _.isUndefined(@bidderPositions.isHighestBidder()).should.not.be.ok
-      _.isUndefined(@bidderPositions.isOutbid()).should.be.ok
+      _.isUndefined(@bidderPositions.isHighestBidder()).should.not.be.ok()
+      _.isUndefined(@bidderPositions.isOutbid()).should.be.ok()
       @saleArtwork.unset('highest_bid')
       @bidderPositions.isOutbid().should.equal @bidderPositions.mostRecent()
 
@@ -50,7 +50,7 @@ describe 'BidderPositions', ->
 
   describe '#classes', ->
     it 'returns some class names used in CSS depending on the state of the collection', ->
-      _.isUndefined(new BidderPositions().classes()).should.be.ok
+      _.isUndefined(new BidderPositions().classes()).should.be.ok()
       @bidderPositions.classes().should.equal 'is-outbid'
       @saleArtwork.set('highest_bid', id: @bidderPositions.last().get('highest_bid').id)
       @bidderPositions.classes().should.equal 'is-highest'

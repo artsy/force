@@ -15,7 +15,7 @@ describe 'BidderPosition', ->
 
     it 'returns undefined when there is no highest bid', ->
       @bidderPosition.unset 'highest_bid'
-      _.isUndefined(@bidderPosition.currentBid()).should.be.ok
+      _.isUndefined(@bidderPosition.currentBid()).should.be.ok()
 
   describe '#maxBid', ->
     it 'returns a formatted currency string representing the max bid amount', ->

@@ -62,7 +62,7 @@ describe 'ArticleView', ->
 
     it 'renders the slideshow', ->
       @view.renderSlideshow()
-      @initCarousel.called.should.be.ok
+      @initCarousel.called.should.be.ok()
 
   describe '#renderArtworks', ->
 
@@ -83,4 +83,4 @@ describe 'ArticleView', ->
       @view.user.set has_partner_access: true
       @view.article.set author_id: @view.user.id
       @view.checkEditable()
-      @view.renderedEditButton.should.be.ok
+      @view.renderedEditButton.should.be.ok()

@@ -35,25 +35,25 @@ describe 'Fair routes', ->
       @res.locals.sd.FAIR = undefined
 
       routes.info @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.overview @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.forYou @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.fairArticles @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.favorites @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.follows @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.browse @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
   describe '#info', ->
 
@@ -175,7 +175,7 @@ describe '#fetchFairData', ->
   it 'fetches the fair data', ->
     routes.fetchFairData @req, @res, @next
     @success()
-    Fair::fetchOverviewData.called.should.be.ok
+    Fair::fetchOverviewData.called.should.be.ok()
 
   it 'sets a bunch of locals', ->
     routes.fetchFairData @req, @res, @next
@@ -193,8 +193,8 @@ describe '#fetchFairData', ->
   it 'caches the big blob of data', ->
     routes.fetchFairData @req, @res, @next
     @success()
-    (@cache.setHash.args[0][1].fair?).should.be.ok
-    (@cache.setHash.args[0][1].filterSuggest?).should.be.ok
+    (@cache.setHash.args[0][1].fair?).should.be.ok()
+    (@cache.setHash.args[0][1].filterSuggest?).should.be.ok()
 
 describe '#fetchFairByOrganizerYear', ->
 
@@ -219,11 +219,11 @@ describe '#fetchFairByOrganizerYear', ->
   it 'fetches the correct fair by year through the fair organizer', ->
     routes.fetchFairByOrganizerYear @req, @res, @next
     Backbone.sync.args[0][2].success @fairs
-    @next.called.should.not.be.ok
+    @next.called.should.not.be.ok()
     Backbone.sync.args[1][1].attributes.id.should.equal '2015'
 
   it 'nexts if the fair organizer does not have a fair with requested year', ->
     @req = { params: { id: 'the-armory-show', year: '2017' } }
     routes.fetchFairByOrganizerYear @req, @res, @next
     Backbone.sync.args[0][2].success @fairs
-    @next.called.should.be.ok
+    @next.called.should.be.ok()

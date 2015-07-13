@@ -37,7 +37,7 @@ describe 'BookmarksView', ->
   describe '#advance', ->
     it 'is able to advance to the next step', ->
       @view.$('.personalize-skip').click()
-      @view.advance.called.should.be.true
+      @view.advance.called.should.be.true()
 
   describe '#setSkipLabel', ->
     it 'is triggered when a collect or uncollect occurs', ->

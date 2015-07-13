@@ -73,6 +73,6 @@ describe 'CTABarView', ->
 
     describe '#previouslyDismissed', ->
       it 'returns false unless it has been dismissed previously', ->
-        @view.previouslyDismissed().should.be.false
+        @view.previouslyDismissed().should.be.false()
         @getStub.returns 'existy'
-        @view.previouslyDismissed().should.be.true
+        @view.previouslyDismissed().should.be.true()

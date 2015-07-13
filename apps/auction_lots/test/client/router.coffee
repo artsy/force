@@ -27,10 +27,10 @@ describe 'AuctionResultsRouter', ->
   describe '#details', ->
     it 'calls out to #close if the originalPath is the same as the current path', ->
       @router.details()
-      @closeStub.called.should.be.ok
+      @closeStub.called.should.be.ok()
 
     it 'news up a DetailView if the path is different', ->
       @router.originalPath = 'something/else'
       @router.details()
-      @closeStub.called.should.not.be.ok
-      @detailStub.called.should.be.ok
+      @closeStub.called.should.not.be.ok()
+      @detailStub.called.should.be.ok()

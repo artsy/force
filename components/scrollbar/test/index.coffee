@@ -24,17 +24,17 @@ describe 'Scrollbar', ->
     @scrollbar.scrollbarWidth = 15
     @scrollbar.disable()
     $('body').attr('style').should.equal 'padding-right: 15px;'
-    $('body').hasClass('is-scrolling-disabled').should.be.true
+    $('body').hasClass('is-scrolling-disabled').should.be.true()
 
   it 'removes the padding and the modal class', ->
     @scrollbar.scrollbarWidth = 15
     @scrollbar.disable()
     @scrollbar.reenable()
     $('body').attr('style').should.be.empty
-    $('body').hasClass('is-scrolling-disabled').should.be.false
+    $('body').hasClass('is-scrolling-disabled').should.be.false()
 
   it 'does not add padding (but adds modal class) if there is no scrollbar present', ->
     @scrollbar.hasScrollbar = false
     @scrollbar.disable()
     $('body').attr('style').should.be.empty
-    $('body').hasClass('is-scrolling-disabled').should.be.true
+    $('body').hasClass('is-scrolling-disabled').should.be.true()

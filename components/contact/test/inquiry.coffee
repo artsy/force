@@ -65,7 +65,7 @@ describe 'Inquiry', ->
         attributes.email.should.equal 'foo@bar.com'
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.not.be.ok # Should not contact gallery
+        attributes.contact_gallery.should.not.be.ok() # Should not contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(@analytics.track.funnel.args, 2)
@@ -79,7 +79,7 @@ describe 'Inquiry', ->
         @view.partner = new Backbone.Model(
           fabricate 'partner', directly_contactable: true)
         @view.submit()
-        @view.model.get('contact_gallery').should.be.ok
+        @view.model.get('contact_gallery').should.be.ok()
 
       it 'does not sends inquiries to artsy if the work is in an auction and ' +
          'partner is not directly contactable', ->
@@ -88,7 +88,7 @@ describe 'Inquiry', ->
         @view.partner = new Backbone.Model(
           fabricate 'partner', directly_contactable: false)
         @view.submit()
-        @view.model.get('contact_gallery').should.not.be.ok
+        @view.model.get('contact_gallery').should.not.be.ok()
 
     describe 'Logged in', ->
       beforeEach ->
@@ -103,8 +103,8 @@ describe 'Inquiry', ->
         attributes.email.should.equal @user.get('email')
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.not.be.ok # Should not contact gallery
+        attributes.contact_gallery.should.not.be.ok() # Should not contact gallery
 
   describe '#events', ->
     it 'disables click on backdrop', ->
-      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
+      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok()

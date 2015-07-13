@@ -36,8 +36,8 @@ describe 'RelatedArtistsView', ->
   describe '#render', ->
     it 'renders, sets up the template', ->
       @view.render()
-      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true
-      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true
+      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true()
+      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true()
       @view.$('#artist-related-artists-section h2').text().should.equal 'Related Artists'
       @view.$('#artist-related-contemporary-section').text().should.equal 'Suggested Contemporary Artists'
 

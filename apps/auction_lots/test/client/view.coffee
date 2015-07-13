@@ -44,9 +44,9 @@ describe 'Auction results client-side code', ->
 
   describe '#zoomImage', ->
     it 'should instantiate a new zoom when a thumbnail is clicked', ->
-      @zoomStub.called.should.be.false
+      @zoomStub.called.should.be.false()
       @view.$('.auction-lot-image-zoom').click()
-      @zoomStub.called.should.be.true
+      @zoomStub.called.should.be.true()
 
     it 'passes the original sized image to the zoom', ->
       @view.$('.auction-lot-image-zoom').click()
@@ -54,14 +54,14 @@ describe 'Auction results client-side code', ->
 
   describe '#onRowClick', ->
     it 'intercepts any clicks to the row if the user is logged out', ->
-      @mediatorStub.trigger.called.should.be.false
+      @mediatorStub.trigger.called.should.be.false()
       @view.user = null
       @view.$('.auction-lot').first().click()
       @mediatorStub.trigger.args[0][0].should.equal 'open:auth'
       @mediatorStub.trigger.args[0][1].mode.should.equal 'register'
       @view.$('.auction-lot').first().click()
-      @mediatorStub.trigger.calledTwice.should.be.true
+      @mediatorStub.trigger.calledTwice.should.be.true()
       # 'logged in'
       @view.user = 'existy'
       @view.$('.auction-lot').first().click()
-      @mediatorStub.trigger.calledThrice.should.be.false
+      @mediatorStub.trigger.calledThrice.should.be.false()

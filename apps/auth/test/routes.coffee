@@ -24,7 +24,7 @@ describe 'Auth routes', ->
     it 'redirects to the reset password page; setting the token in the session', ->
       @req.query.reset_password_token = 'existy'
       routes.resetPassword @req, @res
-      @res.redirect.called.should.be.true
+      @res.redirect.called.should.be.true()
       @req.session.reset_password_token.should.equal 'existy'
       @res.redirect.args[0][0].should.equal '/reset_password'
 
@@ -36,7 +36,7 @@ describe 'Auth routes', ->
     it 'redirects to the path set in the session', ->
       @req.session.redirectTo = '/cabbies-home-page'
       routes.redirectBack @req, @res, @next
-      @res.redirect.called.should.be.true
+      @res.redirect.called.should.be.true()
       @res.redirect.args[0][0].should.equal '/cabbies-home-page'
 
   describe '#twitterLastStep', ->

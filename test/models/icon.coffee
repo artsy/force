@@ -23,24 +23,24 @@ describe 'Icon', ->
   describe '#validate', ->
 
     it 'is valid without a file object to validate against', ->
-      @icon.isValid().should.be.true
+      @icon.isValid().should.be.true()
 
     it 'invalidates the icon if the size is greater than 3MB', ->
       @icon.set 'file', { type: '.png', size: @icon.maxFileSize }
-      @icon.isValid().should.be.true
+      @icon.isValid().should.be.true()
 
       @icon.set 'file', { type: '.png', size: @icon.maxFileSize - 1 }
-      @icon.isValid().should.be.true
+      @icon.isValid().should.be.true()
 
       @icon.set 'file', { type: '.png', size: @icon.maxFileSize + 1 }
-      @icon.isValid().should.be.false
+      @icon.isValid().should.be.false()
 
     it 'invalidates the icon if the file is not an image', ->
       @icon.set 'file', { type: '.pdf', size: @icon.maxFileSize }
-      @icon.isValid().should.be.false
+      @icon.isValid().should.be.false()
 
       @icon.set 'file', { type: '.png', size: @icon.maxFileSize }
-      @icon.isValid().should.be.true
+      @icon.isValid().should.be.true()
 
   describe '#imageUrl', ->
 

@@ -32,7 +32,7 @@ describe 'AboutRouter', ->
     it 'navigates to the top', ->
       @router.$window.scrollTop = -> 1
       @router.toTop()
-      @router.jump.scrollToTop.called.should.be.true
+      @router.jump.scrollToTop.called.should.be.true()
 
   describe '#toSection', ->
     beforeEach ->
@@ -45,6 +45,6 @@ describe 'AboutRouter', ->
 
     it 'navigates to the section', ->
       @router.toSection('section2')
-      @router.jump.scrollToPosition.called.should.be.true
+      @router.jump.scrollToPosition.called.should.be.true()
       @router.jump.scrollToPosition.args[0][0].should.equal 201
       @router.view.$spinner.data('state').should.equal 'loaded'

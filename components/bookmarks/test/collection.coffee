@@ -22,7 +22,7 @@ describe 'Bookmarks', ->
       @bookmarks.length.should.equal 2
       @bookmarks.newFromArtist new Backbone.Model id: 'qux'
       @bookmarks.length.should.equal 3
-      Backbone.sync.called.should.be.false
+      Backbone.sync.called.should.be.false()
 
     it 'rejects duplicate artists', ->
       @bookmarks.newFromArtist new Backbone.Model id: 'qux'

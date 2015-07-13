@@ -97,7 +97,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
         $.waypoints 'destroy'
 
   isEmpty: ->
-    !@notifications.length and (!@pinnedArtworks?.length is !@filterState.get('forSale'))
+    !@notifications.length and
+    !@pinnedArtworks?.length is !@filterState.get('forSale')
 
   checkIfEmpty: =>
     @filterState.set(empty: true) if @isEmpty()

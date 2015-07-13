@@ -23,13 +23,13 @@ describe 'PartnerShowButtons', ->
 
     describe '#initialize', ->
       it 'creates a follow profile button passsing in options', ->
-        @ShowInquiryModal.calledWithNew.should.be.ok
+        @ShowInquiryModal.calledWithNew.should.be.ok()
 
     describe '#contactGallery', ->
       it 'creates a new show inquiry modal', ->
         @analytics.abTest = -> false
         @view.contactGallery()
-        @ShowInquiryModal.calledWithNew.should.be.ok
+        @ShowInquiryModal.calledWithNew.should.be.ok()
 
   describe 'with invalid data', ->
     beforeEach (done) ->
@@ -48,10 +48,10 @@ describe 'PartnerShowButtons', ->
 
     describe '#initialize', ->
       it 'creates a follow profile button passsing in options', ->
-        @ShowInquiryModal.calledWithNew.should.be.ok
+        @ShowInquiryModal.calledWithNew.should.be.ok()
 
     describe '#contactGallery', ->
       it 'creates a new show inquiry modal', ->
         @analytics.abTest = -> false
         @view.contactGallery()
-        @ShowInquiryModal.calledWithNew.should.be.ok
+        @ShowInquiryModal.calledWithNew.should.be.ok()

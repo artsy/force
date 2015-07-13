@@ -38,4 +38,4 @@ describe 'ArtistRouter', ->
 
     it 'returns if a view is already rendered', ->
       @router.execute()
-      @renderStub.called.should.be.false
+      @renderStub.called.should.be.false()

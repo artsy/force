@@ -70,7 +70,7 @@ describe 'BookmarksView', ->
 
     it 'fades in the result set', (done) ->
       _.defer =>
-        @view.$collection.hasClass('is-fade-in').should.be.true
+        @view.$collection.hasClass('is-fade-in').should.be.true()
         done()
 
   describe '#uncollect', ->
@@ -89,7 +89,7 @@ describe 'BookmarksView', ->
     it 'destroys the bookmark', ->
       sinon.spy @view.bookmarks.model::, 'destroy'
       @view.$('.bookmark-artist-remove').click()
-      @view.bookmarks.model::destroy.called.should.be.true
+      @view.bookmarks.model::destroy.called.should.be.true()
 
     it 'unfollows the artist', ->
       @view.following.length.should.equal 1
@@ -111,20 +111,20 @@ describe 'BookmarksView', ->
       @view.following.follow.restore()
 
     it 'sets the persist option', ->
-      @view.persist.should.be.false
+      @view.persist.should.be.false()
 
     it 'does not fetch the bookmarks collection', ->
-      Backbone.sync.called.should.be.false
+      Backbone.sync.called.should.be.false()
 
     it 'does not persist the bookmark', ->
       @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'foobar', name: 'Foo Bar')
-      @view.bookmarks.newFromArtist.called.should.be.true
-      @view.bookmarks.createFromArtist.called.should.be.false
-      Backbone.sync.called.should.be.false
+      @view.bookmarks.newFromArtist.called.should.be.true()
+      @view.bookmarks.createFromArtist.called.should.be.false()
+      Backbone.sync.called.should.be.false()
 
     it 'does not follow the artist', ->
       @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'foobar', name: 'Foo Bar')
-      @view.following.follow.called.should.be.false
+      @view.following.follow.called.should.be.false()
 
     describe '#saveAll', ->
       beforeEach ->

@@ -43,9 +43,9 @@ describe 'ProfileForm', ->
   describe '#initialize', ->
     it 'ensures the publish favorites checkbox is kept in sync with the user model', ->
       @userEdit.set 'public_favorites', false
-      @view.$('#profile-favorites').prop('checked').should.be.false
+      @view.$('#profile-favorites').prop('checked').should.be.false()
       @userEdit.set 'public_favorites', true
-      @view.$('#profile-favorites').prop('checked').should.be.true
+      @view.$('#profile-favorites').prop('checked').should.be.true()
 
   describe 'toggleProfile', ->
     beforeEach ->
@@ -54,14 +54,14 @@ describe 'ProfileForm', ->
       @view.$('.settings-toggle-profile').click()
 
     it 'unpublishes the favorites', ->
-      $.ajax.called.should.be.true
-      @userEdit.get('public_favorites').should.be.false
+      $.ajax.called.should.be.true()
+      @userEdit.get('public_favorites').should.be.false()
 
     it 'disables the profile', ->
-      @profile.get('private').should.be.true
-      Backbone.sync.called.should.be.true
+      @profile.get('private').should.be.true()
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][0].should.equal 'update'
-      Backbone.sync.args[0][1].attributes.private.should.be.true
+      Backbone.sync.args[0][1].attributes.private.should.be.true()
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/profile/alessandra'
 
     it 'renders the private template', ->

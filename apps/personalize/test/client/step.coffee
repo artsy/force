@@ -22,7 +22,7 @@ describe 'StepView', ->
 
   describe '#initialize', ->
     it 'has a user', ->
-      @view.user.should.be.ok
+      @view.user.should.be.ok()
 
   describe '#advance', ->
     it 'triggers the state transition', ->

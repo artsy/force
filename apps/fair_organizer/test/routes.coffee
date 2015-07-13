@@ -74,7 +74,7 @@ describe 'Fair Organization routes', ->
     it 'next is called without a fair org', ->
       delete @res.locals.fairOrg
       routes.overview @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
     it 'renders the overview template', ->
       routes.overview @req, @res

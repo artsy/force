@@ -44,6 +44,6 @@ describe 'FairHeaderView', ->
     it 'sets up the view', ->
       @view.model.should.eql @profile
       @view.fair.should.eql @fair
-      @view.searchBarView.$el.length.should.be.ok
-      @view.searchBarView.$input.length.should.be.ok
+      @view.searchBarView.$el.length.should.be.ok()
+      @view.searchBarView.$input.length.should.be.ok()
       @view.searchBarView.fairId.should.equal @fair.id

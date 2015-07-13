@@ -32,28 +32,28 @@ describe 'Cycle', ->
 
     describe 'step', ->
       it 'steps the cycle', ->
-        @cycle.started.should.be.false
+        @cycle.started.should.be.false()
 
         # Step #1
         @cycle.step()
-        @cycle.started.should.be.true
+        @cycle.started.should.be.true()
 
-        @$first.hasClass('is-active').should.be.true
+        @$first.hasClass('is-active').should.be.true()
         @$first.attr('style').should.equal 'z-index: 2; opacity: 1;'
-        @$second.hasClass('is-active').should.be.false
+        @$second.hasClass('is-active').should.be.false()
 
         # Step #2
         @cycle.step()
 
-        @$first.hasClass('is-active').should.be.false
+        @$first.hasClass('is-active').should.be.false()
         @$first.attr('style').should.equal 'z-index: 1; opacity: 0;'
-        @$second.hasClass('is-active').should.be.true
+        @$second.hasClass('is-active').should.be.true()
         @$second.attr('style').should.equal 'z-index: 2; opacity: 1;'
 
         # Step #3 (loops back around)
         @cycle.step()
 
-        @$first.hasClass('is-active').should.be.true
+        @$first.hasClass('is-active').should.be.true()
         @$first.attr('style').should.equal 'z-index: 2; opacity: 1;'
-        @$second.hasClass('is-active').should.be.false
+        @$second.hasClass('is-active').should.be.false()
         @$second.attr('style').should.equal 'z-index: 1; opacity: 0;'

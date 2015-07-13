@@ -41,23 +41,23 @@ describe 'FilterNav', ->
     it 'clears active things when params change', ->
       @view.$('.filter-dropdown').addClass 'is-active'
       @view.params.trigger 'change'
-      @view.$('.filter-dropdown').hasClass('is-active').should.not.be.ok
+      @view.$('.filter-dropdown').hasClass('is-active').should.not.be.ok()
 
   describe '#renderActiveParams', ->
 
     it 'renders active params', ->
       @view.params.set price_range: '5000:10000'
       @view.renderActiveParams()
-      @view.$('.filter-dropdown').hasClass('is-active').should.be.ok
+      @view.$('.filter-dropdown').hasClass('is-active').should.be.ok()
       @view.$('.filter-nav-active-text').text().should.containEql '$5,000 to $10,000'
-      @view.$('nav a').hasClass('is-active').should.be.ok
+      @view.$('nav a').hasClass('is-active').should.be.ok()
 
 
   describe '#highlightAll', ->
 
     it 'highlights all works when the params arent specific', ->
       @view.params.clear()
-      @view.$('.filter-nav-all').hasClass('is-active').should.be.ok
+      @view.$('.filter-nav-all').hasClass('is-active').should.be.ok()
 
   describe '#filterAttr', ->
 
@@ -70,4 +70,4 @@ describe 'FilterNav', ->
     it 'makes the all nav active when there is no param set', ->
       @view.params.clear()
       @view.highlightDropdownAlls()
-      @view.$('.filter-dropdown nav a').first().hasClass('is-active').should.be.ok
+      @view.$('.filter-dropdown nav a').first().hasClass('is-active').should.be.ok()

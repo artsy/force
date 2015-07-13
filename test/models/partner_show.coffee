@@ -167,10 +167,10 @@ describe 'PartnerShow', ->
       @partnerShow.openingThisWeek().should.not.be.true
       # if today is the prior saturday and show is opening on a thursday
       @today = moment('2015-04-04T04:00:00+00:00')
-      @partnerShow.openingThisWeek(@today).should.be.true
+      @partnerShow.openingThisWeek(@today).should.be.true()
       # if today is the prior thursday and the show is opening on a thursday
       @today = moment('2015-04-02T04:00:00+00:00')
-      @partnerShow.openingThisWeek(@today).should.be.false
+      @partnerShow.openingThisWeek(@today).should.be.false()
 
   describe '#isEndingSoon', ->
     beforeEach ->
@@ -178,14 +178,14 @@ describe 'PartnerShow', ->
       @partnerShow.set 'end_at', @ending
 
     it 'returns a boolean if the show ends within the desired timeframe (default 5 days)', ->
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(3, 'days')).should.be.true
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5, 'days')).should.be.true
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.1, 'days')).should.be.false
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(6, 'days')).should.be.false
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(3, 'days')).should.be.true()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5, 'days')).should.be.true()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.1, 'days')).should.be.false()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(6, 'days')).should.be.false()
 
     it 'supports custom day values for "soon"', ->
-      @partnerShow.isEndingSoon(2, moment(@ending).subtract(3, 'days')).should.be.false
-      @partnerShow.isEndingSoon(3, moment(@ending).subtract(3, 'days')).should.be.true
+      @partnerShow.isEndingSoon(2, moment(@ending).subtract(3, 'days')).should.be.false()
+      @partnerShow.isEndingSoon(3, moment(@ending).subtract(3, 'days')).should.be.true()
 
   describe '#endingIn', ->
     beforeEach ->
@@ -203,9 +203,9 @@ describe 'PartnerShow', ->
       @partnerShow.set 'start_at', @starting
 
     it 'returns a boolean value for whether or not the show opens *today*', ->
-      @partnerShow.isOpeningToday(moment(@starting).subtract(1, 'day')).should.be.false
-      @partnerShow.isOpeningToday(moment(@starting).add(1, 'day')).should.be.false
-      @partnerShow.isOpeningToday(moment(@starting)).should.be.true
+      @partnerShow.isOpeningToday(moment(@starting).subtract(1, 'day')).should.be.false()
+      @partnerShow.isOpeningToday(moment(@starting).add(1, 'day')).should.be.false()
+      @partnerShow.isOpeningToday(moment(@starting)).should.be.true()
 
   describe '#contextualLabel', ->
     describe 'with name', ->
@@ -227,13 +227,13 @@ describe 'PartnerShow', ->
         location: fabricate 'partner_location'
 
     it 'returns true if a show has day schedules', ->
-      @partnerShow.daySchedules().should.be.true
+      @partnerShow.daySchedules().should.be.true()
 
     it 'returns false if a show has no schedules', ->
       @partnerShow = new PartnerShow fabricate 'show',
         location: fabricate 'partner_location',
           day_schedules: []
-      @partnerShow.daySchedules().should.be.false
+      @partnerShow.daySchedules().should.be.false()
 
   describe '#formatDaySchedule', ->
     beforeEach ->

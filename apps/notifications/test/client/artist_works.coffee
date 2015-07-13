@@ -60,4 +60,5 @@ describe 'ArtistWorksView', ->
         artist: 'andy-warhol'
         loading: true
         forSale: true
-      @view.filterState.get('loading').should.be.false
+      _.last(Backbone.sync.args)[2].success []
+      @view.filterState.get('loading').should.be.false()

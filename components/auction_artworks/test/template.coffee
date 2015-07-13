@@ -52,7 +52,7 @@ describe 'templates', ->
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
-          $template.find('.aabs-label').is(':empty').should.be.true
+          $template.find('.aabs-label').is(':empty').should.be.true()
           $template.find('.aabs-price').text().should.equal ' ' # &nsbp;
           $template.find('.js-bid-button').should.have.lengthOf 0
           $template.find('.avant-garde-button').text().should.equal 'Online Bidding Closed'
@@ -61,7 +61,7 @@ describe 'templates', ->
     describe 'preview state', ->
       beforeEach ->
         @auction.set auction_state: 'preview', sale_type: 'auction promo'
-        @auction.isAuctionPromo().should.be.true
+        @auction.isAuctionPromo().should.be.true()
         @data = _.extend {}, { artwork: @artwork, auction: @auction }, @artwork.related()
 
       describe 'list', ->
@@ -81,7 +81,7 @@ describe 'templates', ->
     describe 'open or closed state', ->
       beforeEach ->
         @auction.set auction_state: 'open', sale_type: 'auction promo'
-        @auction.isAuctionPromo().should.be.true
+        @auction.isAuctionPromo().should.be.true()
         @data = _.extend {}, { artwork: @artwork, auction: @auction }, @artwork.related()
 
       describe 'list', ->

@@ -33,13 +33,13 @@ describe 'AuthModalView', ->
     it 'can render custom copy a single individual mode', ->
       @view.preInitialize copy: 'Log in to foobar', mode: 'login'
       @view.templateData.copy.get('login').should.equal 'Log in to foobar'
-      @view.templateData.copy.has('register').should.be.false
+      @view.templateData.copy.has('register').should.be.false()
 
     it 'can render custom copy for the default individual mode', ->
       # 'register' is the default mode for the view's State
       @view.preInitialize copy: 'Sign up to foobar'
       @view.templateData.copy.get('register').should.equal 'Sign up to foobar'
-      @view.templateData.copy.has('login').should.be.false
+      @view.templateData.copy.has('login').should.be.false()
 
     it 'can render custom copy for multiple individual modes', ->
       @view.preInitialize copy:
@@ -113,7 +113,7 @@ describe 'AuthModalView', ->
     it 'creates a signed_in cookie', ->
       @view.state.set mode: 'login'
       @view.submit $.Event('click')
-      _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true
+      _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true()
 
     it 'redirects to /personalize when mode is register by default', ->
       @view.state.set mode: 'register'

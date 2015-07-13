@@ -9,46 +9,34 @@
     },
     "annyang": {
       "version": "1.1.0",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-65e13ade7942/cde8373079aa8cdfbfb676a2412eeca8104e1e3e",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-169ec5c82a10/cde8373079aa8cdfbfb676a2412eeca8104e1e3e",
       "resolved": "git://github.com/mzikherman/annyang.git#cde8373079aa8cdfbfb676a2412eeca8104e1e3e"
     },
     "antigravity": {
       "version": "0.1.1",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-ab0f82a421ea/bf90f2866f6f3cf6248e8bac0425b125acecf895",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-8f195c9aedf6/bf90f2866f6f3cf6248e8bac0425b125acecf895",
       "resolved": "git://github.com/artsy/antigravity.git#bf90f2866f6f3cf6248e8bac0425b125acecf895"
     },
     "artsy-backbone-mixins": {
       "version": "0.0.20",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-d76b2da3d865/53651eb7fb7c4ec3121831f2d786a27d359fa44d",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-aea0274ebc41/53651eb7fb7c4ec3121831f2d786a27d359fa44d",
       "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#53651eb7fb7c4ec3121831f2d786a27d359fa44d",
       "dependencies": {
         "marked": {
           "version": "0.3.3",
           "from": "https://registry.npmjs.org/marked/-/marked-0.3.3.tgz",
           "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.3.tgz"
-        },
-        "backbone": {
-          "version": "1.2.1",
-          "from": "backbone@1.2.1",
-          "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.1.tgz",
-          "dependencies": {
-            "underscore": {
-              "version": "1.8.3",
-              "from": "underscore@>=1.7.0",
-              "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
-            }
-          }
         }
       }
     },
     "artsy-error-handler": {
       "version": "0.0.5",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-ff67a0f22439/5cad6bfcd962e03de60f988971db2f4dbeaa7aef",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-98c2498fe192/5cad6bfcd962e03de60f988971db2f4dbeaa7aef",
       "resolved": "git://github.com/artsy/artsy-error-handler.git#5cad6bfcd962e03de60f988971db2f4dbeaa7aef"
     },
     "artsy-ezel-components": {
       "version": "0.0.4",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-030c74d34f51/3fcc170c8203c7d8a1969543a69fb6161d63d2dc",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-72439827361c/3fcc170c8203c7d8a1969543a69fb6161d63d2dc",
       "resolved": "git://github.com/artsy/artsy-ezel-components.git#3fcc170c8203c7d8a1969543a69fb6161d63d2dc"
     },
     "artsy-gemini-upload": {
@@ -58,7 +46,7 @@
     },
     "artsy-passport": {
       "version": "0.1.10",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-52a5ab6f017f/e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-a8fc3cf2fce9/e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
       "resolved": "git://github.com/artsy/artsy-passport.git#e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
       "dependencies": {
         "passport": {
@@ -164,32 +152,18 @@
     },
     "artsy-xapp": {
       "version": "1.0.3",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-40e5631ae34a/b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-1fe87fef62c9/b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9",
       "resolved": "git://github.com/artsy/artsy-xapp.git#b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9"
     },
     "backbone": {
       "version": "1.2.1",
-      "from": "backbone@1.2.1",
+      "from": "https://registry.npmjs.org/backbone/-/backbone-1.2.1.tgz",
       "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.1.tgz"
     },
     "backbone-pageable": {
       "version": "1.4.8",
       "from": "https://registry.npmjs.org/backbone-pageable/-/backbone-pageable-1.4.8.tgz",
-      "resolved": "https://registry.npmjs.org/backbone-pageable/-/backbone-pageable-1.4.8.tgz",
-      "dependencies": {
-        "backbone": {
-          "version": "1.2.1",
-          "from": "backbone@1.2.1",
-          "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.1.tgz",
-          "dependencies": {
-            "underscore": {
-              "version": "1.8.3",
-              "from": "underscore@>=1.7.0",
-              "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
-            }
-          }
-        }
-      }
+      "resolved": "https://registry.npmjs.org/backbone-pageable/-/backbone-pageable-1.4.8.tgz"
     },
     "backbone-super-sync": {
       "version": "0.0.22",
@@ -3231,7 +3205,7 @@
     },
     "geoformatter": {
       "version": "0.0.0",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-6cbee408f128/8861ae0a8efb36608a755f5be65360d4ba49ff50",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-a35b89ba7136/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
     "gmaps": {
@@ -3365,7 +3339,7 @@
               "dependencies": {
                 "asap": {
                   "version": "1.0.0",
-                  "from": "asap@1.0.0",
+                  "from": "https://registry.npmjs.org/asap/-/asap-1.0.0.tgz",
                   "resolved": "https://registry.npmjs.org/asap/-/asap-1.0.0.tgz"
                 }
               }
@@ -3560,7 +3534,7 @@
     },
     "jquery.dotdotdot": {
       "version": "0.0.1",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-c8b228afb1f6/2a48fde57c6a187dad3c9db54439f3408ba3b56a",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-5a7bc58e6038/2a48fde57c6a187dad3c9db54439f3408ba3b56a",
       "resolved": "git://github.com/mzikherman/jquery.dotdotdot.git#2a48fde57c6a187dad3c9db54439f3408ba3b56a"
     },
     "jquery.fillwidth": {
@@ -3570,7 +3544,7 @@
     },
     "jquery.transition": {
       "version": "0.1.1",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-babb51ccec71/9e1ced2d91227d54d6cc2627a4a6a32c341b2434",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-a77a59f6f13d/9e1ced2d91227d54d6cc2627a4a6a32c341b2434",
       "resolved": "git://github.com/dzucconi/jquery.transition.git#9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
     },
     "knox": {
@@ -5892,7 +5866,7 @@
     },
     "places": {
       "version": "0.0.1",
-      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-2949-21198f2a/git-cache-4a6bfd7e68cf/b157129718dd6ad399d28ae04a7d84d880b4c054",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-f62b3871a86f/b157129718dd6ad399d28ae04a7d84d880b4c054",
       "resolved": "git://github.com/artsy/places#b157129718dd6ad399d28ae04a7d84d880b4c054"
     },
     "q": {

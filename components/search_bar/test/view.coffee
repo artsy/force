@@ -69,12 +69,12 @@ describe 'SearchBarView', ->
       @view.trigger 'search:start'
       @view.$el.attr('class').should.containEql 'is-loading'
       @view.trigger 'search:complete'
-      _.isUndefined(@view.$el.attr('class')).should.be.ok
+      _.isUndefined(@view.$el.attr('class')).should.be.ok()
 
   describe '#displaySuggestions', ->
     it 'displays the feedback when the input is empty', ->
       @view.$('.autocomplete-feedback').text ''
-      _.isEmpty(@view.$('input').text()).should.be.true
+      _.isEmpty(@view.$('input').text()).should.be.true()
       @view.trigger 'search:opened'
       @view.$el.html().should.containEql 'Search Artsy'
       @view.$el.attr('class').should.containEql 'is-display-suggestions'
@@ -82,14 +82,14 @@ describe 'SearchBarView', ->
     it 'does not display the feedback when the input has text', ->
       @view.$('input').val 'Foo Bar'
       @view.trigger 'search:opened'
-      _.isEmpty(@view.$el.attr('class')).should.be.true
+      _.isEmpty(@view.$el.attr('class')).should.be.true()
 
   describe '#hideSuggestions', ->
     it 'removes the open state', ->
       @view.trigger 'search:opened'
       @view.$el.attr('class').should.containEql 'is-display-suggestions'
       @view.trigger 'search:closed'
-      _.isEmpty(@view.$el.attr('class')).should.be.true
+      _.isEmpty(@view.$el.attr('class')).should.be.true()
 
   describe '#displayFeedback', ->
     it 'does not render a message when there are results', ->
@@ -97,13 +97,13 @@ describe 'SearchBarView', ->
       @view.search.results.length.should.equal 1
       @view.trigger 'search:complete'
       @view.$el.html().should.not.containEql 'No results found'
-      _.isEmpty(@view.$el.attr 'class').should.be.true
+      _.isEmpty(@view.$el.attr 'class').should.be.true()
 
     it 'hides the message if there are results after there had previously been none', ->
       @view.trigger 'search:complete'
       @view.search.results.add(fabricate 'artist')
       @view.trigger 'search:complete'
-      _.isEmpty(@view.$el.attr 'class').should.be.true
+      _.isEmpty(@view.$el.attr 'class').should.be.true()
 
   describe '#feedbackString', ->
     it 'uses the mode if there is one available', ->

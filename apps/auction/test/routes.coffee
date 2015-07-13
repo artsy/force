@@ -37,7 +37,7 @@ describe '/auction routes', ->
       # be a different story.
       _.last(Backbone.sync.args)[1].url.should.containEql '/api/articles'
 
-      @next.called.should.be.false
+      @next.called.should.be.false()
       @res.render.args[0][0].should.equal 'index'
       _.keys(@res.render.args[0][1]).should.eql [
         'auction'
@@ -57,8 +57,8 @@ describe '/auction routes', ->
     Backbone.sync.args[0][2].success fabricate 'sale', is_auction: false
     Backbone.sync.args[1][2].success {}
     _.defer =>
-      @next.called.should.be.true
-      @res.render.called.should.be.false
+      @next.called.should.be.true()
+      @res.render.called.should.be.false()
       done()
 
   describe 'with logged in user', ->
@@ -75,4 +75,4 @@ describe '/auction routes', ->
 
     it 'sets the `registered_to_bid` attr', ->
       @userReqs[1][2].success ['existy']
-      @req.user.get('registered_to_bid').should.be.true
+      @req.user.get('registered_to_bid').should.be.true()

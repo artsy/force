@@ -24,7 +24,7 @@ describe 'ShareView', ->
   describe '#initialize', ->
     xit '#', ->
       @view.$('a').first().click()
-      @openSpy.called.should.be.ok
+      @openSpy.called.should.be.ok()
       @openSpy.args[0][0].should.equal '#share'
       @openSpy.args[0][1].should.equal 'okcupid'
       @openSpy.args[0][2].should.equal 'status=1,width=750,height=400,top=0,left=0'

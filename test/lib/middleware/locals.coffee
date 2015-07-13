@@ -13,7 +13,7 @@ describe 'locals middleware', ->
   it 'sets the hide header flag', ->
     middleware req = { url: 'localhost:3000', cookies: { 'hide-force-header': true }, session: {}, get: (->)},
       res = { locals: { sd: {} } }, ->
-    res.locals.sd.HIDE_HEADER.should.be.ok
+    res.locals.sd.HIDE_HEADER.should.be.ok()
 
   it 'adds the user agent', ->
     middleware req = { url: 'localhost:3000', get: -> 'foobar' },
@@ -28,4 +28,4 @@ describe 'locals middleware', ->
   it 'flags eigen', ->
     middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Eigen' }, get: -> },
       res = { locals: { sd: {} } }, ->
-    res.locals.sd.EIGEN.should.be.ok
+    res.locals.sd.EIGEN.should.be.ok()

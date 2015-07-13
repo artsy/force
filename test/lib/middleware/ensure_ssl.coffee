@@ -23,4 +23,4 @@ describe 'Ensure SSL middleware', ->
   it 'does not redirect https to https causing an infinite loop', ->
     @req.get = -> 'https'
     ensureSSL @req, @res, next = sinon.stub()
-    next.called.should.be.ok
+    next.called.should.be.ok()

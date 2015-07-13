@@ -44,13 +44,13 @@ describe 'Auction results routes', ->
         Backbone.sync.args[1][2].success()
         Backbone.sync.args[2][2].success()
         Backbone.sync.args[3][2].success()
-        @res.render.calledOnce.should.be.ok
+        @res.render.calledOnce.should.be.ok()
 
         # Fail
         Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
         Backbone.sync.args[1][1].set _id: 'mary-foobar'
         Backbone.sync.args[0][2].success()
-        @res.render.calledTwice.should.not.be.ok
+        @res.render.calledTwice.should.not.be.ok()
         @next.args[0][0].status.should.equal 404
         @next.args[0][0].message.should.equal 'Not Found'
 
@@ -89,16 +89,16 @@ describe 'Auction results routes', ->
         routes.artist @req, @res
         Backbone.sync.args[0][2].success {}
         Backbone.sync.args[1][2].success null
-        @renderStub.called.should.not.be.ok
-        @redirectStub.called.should.be.ok
+        @renderStub.called.should.not.be.ok()
+        @redirectStub.called.should.be.ok()
 
     describe '#artwork', ->
       it 'redirects', ->
         routes.artwork @req, @res
         Backbone.sync.args[0][2].success {}
         Backbone.sync.args[1][2].success null
-        @renderStub.called.should.not.be.ok
-        @redirectStub.called.should.be.ok
+        @renderStub.called.should.not.be.ok()
+        @redirectStub.called.should.be.ok()
 
   describe 'has results', ->
     beforeEach ->
@@ -110,13 +110,13 @@ describe 'Auction results routes', ->
         routes.artist @req, @res
         Backbone.sync.args[0][2].success {}
         Backbone.sync.args[1][2].success {}
-        @renderStub.called.should.be.ok
-        @redirectStub.called.should.not.be.ok
+        @renderStub.called.should.be.ok()
+        @redirectStub.called.should.not.be.ok()
 
     describe '#artwork', ->
       it 'renders', ->
         routes.artwork @req, @res
         Backbone.sync.args[0][2].success {}
         Backbone.sync.args[1][2].success {}
-        @renderStub.called.should.be.ok
-        @redirectStub.called.should.not.be.ok
+        @renderStub.called.should.be.ok()
+        @redirectStub.called.should.not.be.ok()
