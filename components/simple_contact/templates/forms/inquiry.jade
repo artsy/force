@@ -16,9 +16,8 @@ form.scontact-form.stacked-form
       rows='5'
       required
     )
-      if contactGallery
-        = defaultMessage
-        = "\n\n"
+      = defaultMessage
+      = '\n\n'
 
   if user && user.isWithAnonymousSession()
     input( type='hidden', name='anonymous_session_id', value= user.id )
