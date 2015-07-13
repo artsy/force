@@ -26,17 +26,9 @@ describe 'MultiPageView', ->
     @view.$('.is-active').should.have.lengthOf 1
 
   describe 'clicking nav link', ->
-    beforeEach ->
-      sinon.spy MultiPageView::, 'render'
-
-    afterEach ->
-      @view.render.restore()
-
     it 'changes the active page', ->
-      @view.render.called.should.be.false()
       @view.state.get('active').should.equal 'how-auctions-work-bidding'
       @view.$('.mpv-nav a:last').click()
-      @view.render.called.should.be.true()
       @view.state.get('active').should.equal 'how-auctions-work-conditions-of-sale'
       @view.$('.mpv-nav a:last').hasClass('is-active').should.be.true()
       @view.$('.is-active').should.have.lengthOf 1
