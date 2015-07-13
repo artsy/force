@@ -36,6 +36,7 @@ module.exports = class Article extends Backbone.Model
           author_id: '503f86e462d56000020002cc'
           published: true
           tier: 1
+          sort: '-published_at'
       )
     ]).then =>
       slideshowArtworks = new Artworks
