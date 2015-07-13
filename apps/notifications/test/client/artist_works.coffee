@@ -60,4 +60,4 @@ describe 'ArtistWorksView', ->
         artist: 'andy-warhol'
         loading: true
         forSale: true
-      @view.filterState.get('loading').should.be.false
+      @view.filterState.get('loading').should.be.false()

@@ -24,9 +24,9 @@ describe 'JumpView', ->
 
     it 'accepts a direction', ->
       jump = new JumpView direction: 'bottom'
-      jump.$el.hasClass('from-bottom').should.be.true
+      jump.$el.hasClass('from-bottom').should.be.true()
       jump = new JumpView
-      jump.$el.hasClass('from-top').should.be.true
+      jump.$el.hasClass('from-top').should.be.true()
 
   describe '#toggle', ->
     it 'toggles between view states depending on the position of the window scrollTop', ->

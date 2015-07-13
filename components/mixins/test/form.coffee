@@ -55,36 +55,36 @@ describe 'Form', ->
 
   describe '#formIsSubmitting', ->
     it 'returns false the first time it is called, true every time after', ->
-      @view.formIsSubmitting().should.be.false
-      @view.formIsSubmitting().should.be.true
-      @view.formIsSubmitting().should.be.true
-      @view.formIsSubmitting().should.be.true
+      @view.formIsSubmitting().should.be.false()
+      @view.formIsSubmitting().should.be.true()
+      @view.formIsSubmitting().should.be.true()
+      @view.formIsSubmitting().should.be.true()
 
     it 'disables the button', ->
       @view.formIsSubmitting()
-      @view.$('button').prop('disabled').should.be.true
+      @view.$('button').prop('disabled').should.be.true()
 
     it 'should work with an actual form submission', ->
-      @view.submitStub.called.should.be.false
+      @view.submitStub.called.should.be.false()
       @view.$('form').submit()
-      @view.submitStub.called.should.be.true
+      @view.submitStub.called.should.be.true()
       @view.$('form').submit()
       @view.$('form').submit()
       @view.submitStub.callCount.should.equal 1
 
   describe '#reenableForm', ->
     it 'reenables the form', ->
-      @view.formIsSubmitting().should.be.false
-      @view.formIsSubmitting().should.be.true
+      @view.formIsSubmitting().should.be.false()
+      @view.formIsSubmitting().should.be.true()
       @view.reenableForm()
-      @view.formIsSubmitting().should.be.false
-      @view.formIsSubmitting().should.be.true
+      @view.formIsSubmitting().should.be.false()
+      @view.formIsSubmitting().should.be.true()
 
     it 'removes the disabled attr from the button', ->
       @view.formIsSubmitting()
-      @view.$('button').prop('disabled').should.be.true
+      @view.$('button').prop('disabled').should.be.true()
       @view.reenableForm()
-      @view.$('button').prop('disabled').should.be.false
+      @view.$('button').prop('disabled').should.be.false()
 
   describe '#serializeForm', ->
     it 'should return all named inputs as keys regardless of values', ->
@@ -123,8 +123,8 @@ describe 'Form', ->
     it 'should set a class on the form and call the #checkValidity on the form', ->
       @view.$('form')[0].checkValidity = sinon.stub()
       @view.validateForm()
-      @view.$('form').hasClass('is-validated').should.be.ok
-      @view.$('form')[0].checkValidity.called.should.be.ok
+      @view.$('form').hasClass('is-validated').should.be.ok()
+      @view.$('form')[0].checkValidity.called.should.be.ok()
 
     describe 'with confirmable fields', ->
       beforeEach ->
@@ -136,7 +136,7 @@ describe 'Form', ->
         @view.$('input[name="password_confirmation"]').val 'bar'
         @view.$('input[name="password_confirmation"]')[0].setCustomValidity = sinon.stub()
         @view.validateForm()
-        @view.$('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true
+        @view.$('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true()
         @view.$('input[name="password_confirmation"]')[0].setCustomValidity.args[0][0].should.equal 'Password must match'
         # Resolve the validation
         @view.$('input[name="password_confirmation"]').val 'foo'

@@ -65,7 +65,7 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal 'foo@bar.com'
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.be.ok() # Should contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(@analytics.track.funnel.args, 4)
@@ -88,7 +88,7 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal @user.get('email')
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.be.ok() # Should contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(@analytics.track.funnel.args, 4)
@@ -100,7 +100,7 @@ describe 'ContactPartnerView', ->
   describe '#events', ->
 
     it 'disables click on backdrop', ->
-      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
+      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok()
 
   describe 'template', ->
     it 'does render pricing if work cant display price', ->

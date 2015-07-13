@@ -44,7 +44,7 @@ describe 'UserProfileView', ->
     xit 'sets window.opener to null', ->
       @view.model.set 'website', 'http://example.org'
       @view.openWebsite()
-      @openSpy.called.should.be.ok
+      @openSpy.called.should.be.ok()
       @openSpy.args[0][0].should.equal 'http://example.org'
       @openSpy.args[0][1].should.equal '_blank'
       @openedWindowSpy.opener?.should.be.null
@@ -68,7 +68,7 @@ describe 'UserProfileView', ->
     it 'sets up a artwork columns view', ->
       @view.favorites = new Backbone.Collection [{}]
       @view.renderFavorites()
-      @ArtworkColumnsView.calledWithNew.should.be.ok
+      @ArtworkColumnsView.calledWithNew.should.be.ok()
 
 describe 'CollectionView', ->
 
@@ -99,7 +99,7 @@ describe 'CollectionView', ->
   describe '#initialize', ->
 
     it 'sets a columns view', ->
-      (@view.columnsView?).should.be.ok
+      (@view.columnsView?).should.be.ok()
 
   describe '#nextPage', ->
 
@@ -136,7 +136,7 @@ describe 'CollectionView', ->
 
     it 'renders an emtpy state', ->
       @view.renderEmpty()
-      @FavoritesEmptyStateView.called.should.be.ok
+      @FavoritesEmptyStateView.called.should.be.ok()
 
   describe '#onRemove', ->
 
@@ -150,7 +150,7 @@ describe 'CollectionView', ->
       @view.columnsView.render = sinon.stub()
       @view.artworkCollection.artworks.reset [fabricate('artwork'), fabricate('artwork')]
       @view.onRemove @view.artworkCollection.artworks.first()
-      @view.columnsView.render.called.should.be.ok
+      @view.columnsView.render.called.should.be.ok()
 
 describe 'Slideshow', ->
 

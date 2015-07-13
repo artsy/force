@@ -40,7 +40,7 @@ describe 'BelowTheFoldView', ->
   describe '#setupFair', ->
     it 'delegates to #setupLayeredSearch and passes a fair', ->
       @view.setupFair(fair = 'fair')
-      @setupLayeredSearchSpy.called.should.be.ok
+      @setupLayeredSearchSpy.called.should.be.ok()
       @setupLayeredSearchSpy.args[0][0].fair.should.equal fair
 
   describe '#fadeIn', ->

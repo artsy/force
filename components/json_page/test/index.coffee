@@ -59,7 +59,7 @@ describe 'JSONPage', ->
 
       it 'returns a promise; rejects with the error', (done) ->
         @page.get()
-          .then -> false.should.be.true # I am not invoked
+          .then -> false.should.be.true() # I am not invoked
           .catch (err) ->
             err.message.should.equal 'cannot GET /json/wrong.json (403)'
             done()

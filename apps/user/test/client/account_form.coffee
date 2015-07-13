@@ -84,4 +84,4 @@ describe 'AccountForm', ->
           @view.$('#settings-auth-errors').text().should.equal 'Something bad.'
 
         it 'resets the button state', ->
-          _.isUndefined(@$button.attr('data-state')).should.be.true
+          _.isUndefined(@$button.attr('data-state')).should.be.true()

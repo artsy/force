@@ -38,7 +38,7 @@ describe 'PersonalizeRouter', ->
 
     it 'calls #next to figure out the initial step', ->
       router = new @PersonalizeRouter user: new CurrentUser
-      router.next.called.should.be.true
+      router.next.called.should.be.true()
 
   describe '#step', ->
     it 'steps the view', ->
@@ -53,7 +53,7 @@ describe 'PersonalizeRouter', ->
     it 'triggers the route on the state transition', ->
       @router.state.trigger 'transition:next'
       _.last(@router.navigate.args)[0].should.equal "/personalize/#{@router.state.get('current_step')}"
-      _.last(@router.navigate.args)[1].trigger.should.be.ok
+      _.last(@router.navigate.args)[1].trigger.should.be.ok()
 
   describe '#redirectLocation', ->
     it 'returns the root path if there is no destination cookie set', ->
@@ -72,6 +72,6 @@ describe 'PersonalizeRouter', ->
       @router.$el.attr.args[0][0].should.equal 'data-state'
       @router.$el.attr.args[0][1].should.equal 'loading'
 
-      @router.user.save.called.should.be.ok
+      @router.user.save.called.should.be.ok()
 
       location.assign.args[0][0].should.equal @router.redirectLocation()

@@ -63,7 +63,7 @@ describe 'Carousel', ->
   describe '#fetchInstallShotsForShow', ->
     it 'is defensive against bad data', (done) ->
       @carousel.fetchInstallShotsForShow(fabricate 'show').then (shot) ->
-        _.isUndefined(shot).should.be.true
+        _.isUndefined(shot).should.be.true()
         done()
       Backbone.sync.args[0][2].success []
 

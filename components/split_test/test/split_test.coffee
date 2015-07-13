@@ -46,5 +46,5 @@ describe 'SplitTest', ->
 
     it 'presents the admin with edge functionality', ->
       adminTest = new @SplitTest key: 'foobar', edge: 'baz', outcomes: baz: 0.0, qux: 1.0
-      adminTest.admin().should.be.true
+      adminTest.admin().should.be.true()
       adminTest.outcome().should.equal 'baz'

@@ -54,7 +54,7 @@ describe 'ArtistFillwidthList', ->
     it 'fetches the artists artworks and renders a fillwidth view', ->
       @view.renderArtist new Artist fabricate 'artist'
       _.last(Backbone.sync.args)[2].success [fabricate 'artwork']
-      FillwidthView::render.called.should.be.ok
+      FillwidthView::render.called.should.be.ok()
 
   describe '#appendPage', ->
 
@@ -76,4 +76,4 @@ describe 'ArtistFillwidthList', ->
       @view.$document = $ "<div>"
       @view.syncFollowsOnAjaxStop()
       @view.$document.trigger 'ajaxStop'
-      @view.following.syncFollows.called.should.be.ok
+      @view.following.syncFollows.called.should.be.ok()

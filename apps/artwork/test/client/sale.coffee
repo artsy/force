@@ -41,7 +41,7 @@ describe 'SaleView', ->
       text.should.containEql 'Whitney Art Party'
 
     it 'has a container for the artwork columns', ->
-      @view.$('#sale-artwork-columns').length.should.be.ok
+      @view.$('#sale-artwork-columns').length.should.be.ok()
 
     it 'links to the sale', ->
       @view.$('a').attr('href').should.equal '/sale/whtney-art-party'
@@ -56,7 +56,7 @@ describe 'SaleView', ->
 
       # Various content assertions
       link = @view.$('.artwork-item-image-link')
-      link.length.should.be.ok
+      link.length.should.be.ok()
       link.attr('href').should.equal artwork.href()
 
       @view.$('.artwork-item-blurb').text().should.containEql artwork.related().saleArtwork.get('user_notes')

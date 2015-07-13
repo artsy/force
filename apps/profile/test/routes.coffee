@@ -45,9 +45,9 @@ describe 'Profile routes', ->
     it 'does not pass an access token with no user', ->
       @req.user = null
       routes.setProfile @req, @res, next = sinon.stub()
-      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
+      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok()
 
     it 'nexts if profile already exists in locals', ->
       @res.locals.profile = new Profile fabricate 'profile'
       routes.setProfile @req, @res, next = sinon.stub()
-      next.called.should.be.ok
+      next.called.should.be.ok()

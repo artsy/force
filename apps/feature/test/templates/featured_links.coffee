@@ -40,7 +40,7 @@ describe 'Featured Links', ->
         $html = $(render('sets')(sets: [@set]))
         len = @set.get('data').length
         featuredLink = @set.get('data').first()
-        $html.find('.feature-set-item').is(".feature-set-item-#{featuredLink.layoutStyle(len)}").should.be.true
+        $html.find('.feature-set-item').is(".feature-set-item-#{featuredLink.layoutStyle(len)}").should.be.true()
         @set.get('data').add new FeaturedLink fabricate 'featured_link'
 
     it 'links elements if the model has an href attribute', ->

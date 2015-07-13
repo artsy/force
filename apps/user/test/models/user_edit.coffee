@@ -34,14 +34,14 @@ describe 'UserEdit', ->
 
   describe '#isLinkedTo', ->
     it 'determines if an account is linked to an app provider', ->
-      @userEdit.isLinkedTo('twitter').should.be.false
+      @userEdit.isLinkedTo('twitter').should.be.false()
       @userEdit.set 'authentications', @authentications
-      @userEdit.isLinkedTo('twitter').should.be.true
-      @userEdit.isLinkedTo('facebook').should.be.true
+      @userEdit.isLinkedTo('twitter').should.be.true()
+      @userEdit.isLinkedTo('facebook').should.be.true()
 
   describe '#checked', ->
     it 'translates a boolean attribute to on or off', ->
       @userEdit.set weekly_email: false, follow_email: true, offer_emails: false
-      _.isUndefined(@userEdit.checked('weekly_email')).should.be.true
-      _.isUndefined(@userEdit.checked('offer_emails')).should.be.true
-      @userEdit.checked('follow_email').should.be.true
+      _.isUndefined(@userEdit.checked('weekly_email')).should.be.true()
+      _.isUndefined(@userEdit.checked('offer_emails')).should.be.true()
+      @userEdit.checked('follow_email').should.be.true()

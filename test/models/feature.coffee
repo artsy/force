@@ -17,7 +17,7 @@ describe 'Feature', ->
 
     it 'returns false if version not there', ->
       @feature.set image_versions: []
-      @feature.hasImage('wide').should.not.be.ok
+      @feature.hasImage('wide').should.not.be.ok()
 
   describe '#fetchSets', ->
 
@@ -50,7 +50,7 @@ describe 'Feature', ->
       @feature.fetchSets
         artworkPageSuccess: successStub
         artworksSuccess: (saleFeaturedSet) =>
-          successStub.called.should.be.ok
+          successStub.called.should.be.ok()
           saleFeaturedSet.get('type').should.equal 'artworks'
           @feature.get('sale').id.should.equal sale.id
           done()

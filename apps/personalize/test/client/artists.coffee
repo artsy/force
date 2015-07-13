@@ -83,7 +83,7 @@ describe 'ArtistsView', ->
       suggestions = [fabricate('artist'), fabricate('artist')]
       sinon.stub(artist.related().artists, 'fetch').yieldsTo('success', {}, suggestions)
       @view.fetchRelatedArtists artist
-      artist.related().artists.fetch.called.should.be.ok
+      artist.related().artists.fetch.called.should.be.ok()
       @view.suggestions.at(0).id.should.equal artist.id
       @view.suggestions.at(0).get('name').should.equal "Artists related to #{artist.get('name')}"
 
@@ -91,14 +91,14 @@ describe 'ArtistsView', ->
     it 'disposes of the suggestionSet that corresponds with an artist', ->
       artist = new Artist(fabricate 'artist')
       artist.related().artists = new Backbone.Collection artist
-      _.isUndefined(@view.followButtonViews).should.be.ok
+      _.isUndefined(@view.followButtonViews).should.be.ok()
       @view.suggestions.add @view.createSuggestionSet(artist)
       suggestionSet = @view.suggestions.at(0)
       suggested = suggestionSet.get('suggestions').at(0)
       key = "#{suggestionSet.id}_#{suggested.id}"
-      _.isUndefined(@view.followButtonViews[key]).should.not.be.ok
+      _.isUndefined(@view.followButtonViews[key]).should.not.be.ok()
       @view.disposeSuggestionSet artist
-      _.isNull(@view.followButtonViews[key]).should.be.ok
+      _.isNull(@view.followButtonViews[key]).should.be.ok()
 
     it 'guards against cases where an undefined is passed in (?)', (done) ->
       @view.disposeSuggestionSet undefined
@@ -154,7 +154,7 @@ describe 'ArtistsView', ->
       it 'does not initialize bookmark artists', ->
         @user.set 'collector_level', 2
         view = new @ArtistsView state: @state, user: @user
-        view.initializeBookmarkedArtists.called.should.be.false
+        view.initializeBookmarkedArtists.called.should.be.false()
 
     describe 'collector_level 3', ->
       beforeEach ->
@@ -165,7 +165,7 @@ describe 'ArtistsView', ->
         @view.render()
 
       it 'is initializes the bookmark artists', ->
-        @view.initializeBookmarkedArtists.called.should.be.true
+        @view.initializeBookmarkedArtists.called.should.be.true()
 
       it 'fetches the bookmarks collection', ->
         Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/user_interest/artists'

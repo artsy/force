@@ -21,6 +21,6 @@ describe 'InstallShots', ->
 
   describe '#hasCaptions', ->
     it 'returns true if there is at least one caption', ->
-      @installShots.hasCaptions().should.be.false
+      @installShots.hasCaptions().should.be.false()
       @installShots.first().set 'caption', 'existy'
-      @installShots.hasCaptions().should.be.true
+      @installShots.hasCaptions().should.be.true()

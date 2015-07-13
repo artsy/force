@@ -32,25 +32,25 @@ describe '#initCarousel', ->
 
   it 'sets up the carousel', ->
     instance = initCarousel $('.js-carousel')
-    existy(instance.cells).should.be.true
-    existy(instance.navigation).should.be.true
+    existy(instance.cells).should.be.true()
+    existy(instance.navigation).should.be.true()
 
   it 'accepts a callback', (done) ->
     initCarousel $('.js-carousel'), null, (instance) ->
-      existy(instance.cells).should.be.true
-      existy(instance.navigation).should.be.true
+      existy(instance.cells).should.be.true()
+      existy(instance.navigation).should.be.true()
       done()
 
   it 'returns without an error if there is no $el', ->
     initCarousel $('.sorry')
-    true.should.be.true
+    true.should.be.true()
     initCarousel()
-    true.should.be.true
+    true.should.be.true()
 
   describe 'option `imagesLoaded` is `true`', ->
     it 'returns a thennable', (done) ->
       promise = initCarousel $('.js-carousel'), imagesLoaded: true
       promise.then (instance) ->
-        existy(instance.cells).should.be.true
-        existy(instance.navigation).should.be.true
+        existy(instance.cells).should.be.true()
+        existy(instance.navigation).should.be.true()
         done()

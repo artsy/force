@@ -57,11 +57,11 @@ describe 'AuctionDetailView', ->
       @view.$('.artwork-auction-estimate').text().should.equal 'Estimate: $6,000–$8,000'
 
     it 'does not display what it does not have', ->
-      @view.$('.artwork-bidder-position-status').length.should.not.be.ok
-      @view.$('.typed-bordered-input').length.should.be.ok
+      @view.$('.artwork-bidder-position-status').length.should.not.be.ok()
+      @view.$('.typed-bordered-input').length.should.be.ok()
       @auction.set('clockState', 'closed')
       @view.render()
-      @view.$('.typed-bordered-input').length.should.not.be.ok
+      @view.$('.typed-bordered-input').length.should.not.be.ok()
 
     describe 'renders the appropriate bid button', ->
       it 'handles an undefined user, during auction preview', ->
@@ -70,7 +70,7 @@ describe 'AuctionDetailView', ->
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Register to bid'
-        _.isUndefined($button.attr 'disabled').should.be.ok
+        _.isUndefined($button.attr 'disabled').should.be.ok()
 
       it 'handles an unregistered user, during auction preview', ->
         @auction.set 'clockState', 'preview'
@@ -78,7 +78,7 @@ describe 'AuctionDetailView', ->
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Register to bid'
-        _.isUndefined($button.attr 'disabled').should.be.ok
+        _.isUndefined($button.attr 'disabled').should.be.ok()
 
       it 'handles a registered user, during auction preview', ->
         @auction.set 'clockState', 'preview'
@@ -86,7 +86,7 @@ describe 'AuctionDetailView', ->
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Registered to bid'
-        _.isUndefined($button.attr 'disabled').should.not.be.ok
+        _.isUndefined($button.attr 'disabled').should.not.be.ok()
         $button.attr('class').should.containEql 'is-success'
         $button.attr('class').should.containEql 'is-disabled'
 
@@ -95,23 +95,23 @@ describe 'AuctionDetailView', ->
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Bid'
-        _.isUndefined($button.attr 'disabled').should.be.ok
+        _.isUndefined($button.attr 'disabled').should.be.ok()
 
       it 'handles closed auctions', ->
         @auction.set 'clockState', 'closed'
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Online Bidding Closed'
-        _.isUndefined($button.attr 'disabled').should.not.be.ok
+        _.isUndefined($button.attr 'disabled').should.not.be.ok()
         $button.attr('class').should.containEql 'is-disabled'
 
   describe '#validate', ->
     it 'validates that any input is greater than or equal to the min bid and returns the value if it is valid', ->
-      _.isUndefined(@view.validate 'foobar').should.be.ok
-      _.isUndefined(@view.validate '499').should.be.ok
-      _.isUndefined(@view.validate 499).should.be.ok
-      _.isUndefined(@view.validate '499.00').should.be.ok
-      _.isUndefined(@view.validate '4,999.00').should.be.ok
+      _.isUndefined(@view.validate 'foobar').should.be.ok()
+      _.isUndefined(@view.validate '499').should.be.ok()
+      _.isUndefined(@view.validate 499).should.be.ok()
+      _.isUndefined(@view.validate '499.00').should.be.ok()
+      _.isUndefined(@view.validate '4,999.00').should.be.ok()
 
       @view.validate(5000).should.equal 500000
       @view.validate('5000').should.equal 500000
@@ -124,7 +124,7 @@ describe 'AuctionDetailView', ->
       @view.$('.abf-validation-error').hide()
       @view.$('input').val('499')
       @view.$('form').submit()
-      @view.$('.abf-validation-error').is(':visible').should.be.ok
+      @view.$('.abf-validation-error').is(':visible').should.be.ok()
       @view.$('button').data('state').should.equal 'error'
 
   describe '#submit', ->

@@ -104,7 +104,7 @@ describe 'Article routes', ->
     it 'nexts for an error b/c it uses a root url that should be passed on', ->
       routes.vertical @req, @res, @next
       Backbone.sync.args[0][2].error()
-      @next.called.should.be.ok
+      @next.called.should.be.ok()
 
   describe '#redirectPost', ->
 

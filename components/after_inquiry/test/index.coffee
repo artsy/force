@@ -54,7 +54,7 @@ describe 'AfterInquiry', ->
         it 'assumes we already have name/email and performs a fetch for extra attributes (job/profession)', ->
           @user.set id: 'foobar'
           flow = new @AfterInquiry user: @user, inquiry: @inquiry
-          Backbone.sync.called.should.be.true
+          Backbone.sync.called.should.be.true()
           Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
           flow.remove()
 
@@ -109,7 +109,7 @@ describe 'AfterInquiry', ->
               @Cookies.set.restore()
 
             it 'unbinds the beforeunload handler', ->
-              _.isUndefined($._data($(window)[0], 'events')).should.be.ok
+              _.isUndefined($._data($(window)[0], 'events')).should.be.ok()
 
             it 'sets a destination cookie', ->
               @Cookies.set.args[0][0].should.equal 'destination'
@@ -125,18 +125,18 @@ describe 'AfterInquiry', ->
           describe 'and it was not yet sent', ->
             it 'attaches a handler for the inquiry:success event and removes on its execution', ->
               mediator.trigger 'modal:closed'
-              @flow.flash.close.called.should.be.false
+              @flow.flash.close.called.should.be.false()
               @inquiry.trigger 'sync'
-              @flow.flash.close.called.should.be.true
+              @flow.flash.close.called.should.be.true()
 
           describe 'and it was sent successfully', ->
             beforeEach ->
               @inquiry.trigger 'sync'
 
             it 'should tear everything down when the modal is closed', ->
-              @flow.flash.close.called.should.be.false
+              @flow.flash.close.called.should.be.false()
               previousNumberOfEvents = _.flatten(_.values(mediator._events)).length
               mediator.trigger 'modal:closed'
-              @flow.flash.close.called.should.be.true
+              @flow.flash.close.called.should.be.true()
               currentNumberOfEvents = _.flatten(_.values(mediator._events)).length
-              (previousNumberOfEvents > currentNumberOfEvents).should.be.true
+              (previousNumberOfEvents > currentNumberOfEvents).should.be.true()

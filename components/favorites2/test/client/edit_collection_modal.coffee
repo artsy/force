@@ -41,8 +41,8 @@ describe 'EditCollectionModal', ->
       @view.collection.save = sinon.stub()
       @view.$('input').val 'FooBarBaz'
       @view.submit()
-      @view.collection.save.called.should.be.ok
-      @view.close.called.should.be.ok
+      @view.collection.save.called.should.be.ok()
+      @view.close.called.should.be.ok()
 
   describe '#delete', ->
 
@@ -50,5 +50,5 @@ describe 'EditCollectionModal', ->
       global.confirm = -> true
       @view.collection.destroy = sinon.stub()
       @view.delete()
-      @view.collection.destroy.called.should.be.ok
+      @view.collection.destroy.called.should.be.ok()
       delete global.confirm

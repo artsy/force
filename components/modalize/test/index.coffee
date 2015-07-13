@@ -35,7 +35,7 @@ describe 'modalize', ->
 
     it 'sets the correct width', ->
       @modal.open()
-      @modal.opened.should.be.true
+      @modal.opened.should.be.true()
       $('.modalize-dialog').width().should.equal 456
 
     it 'avoids being double opened', ->
@@ -59,9 +59,9 @@ describe 'modalize', ->
   describe '#load', ->
     it 'sets the loading state; accepts a callback; removes the loading state when done', (specDone) ->
       @modal.load (modalDone) =>
-        @modal.view.$el.hasClass('is-loading').should.be.true
+        @modal.view.$el.hasClass('is-loading').should.be.true()
         modalDone()
-        @modal.view.$el.hasClass('is-loading').should.be.false
+        @modal.view.$el.hasClass('is-loading').should.be.false()
         specDone()
 
   describe 'behavior', ->

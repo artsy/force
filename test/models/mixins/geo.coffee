@@ -62,9 +62,9 @@ describe 'Geo Mixin', ->
 
   describe '#hasLocation', ->
     it 'determines whether or not there is a valid location', ->
-      @user.hasLocation().should.be.false
+      @user.hasLocation().should.be.false()
       @user.set location: city: 'existy'
-      @user.hasLocation().should.be.true
+      @user.hasLocation().should.be.true()
 
   describe '#approximateLocation, #setGeo', ->
     it 'gets the approximate location by geolocating the IP address', ->

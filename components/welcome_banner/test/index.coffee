@@ -18,8 +18,8 @@ describe 'dealWithWelcomeBanner', ->
 
   it 'removes the welcome banner (offsetting the scroll position) when a user scrolls past it', ->
     sinon.stub($.fn, 'scrollTop').returns 156
-    $('body').hasClass('body-header-fixed').should.be.false
+    $('body').hasClass('body-header-fixed').should.be.false()
     $(window).trigger 'scroll'
-    $('body').hasClass('body-header-fixed').should.be.true
+    $('body').hasClass('body-header-fixed').should.be.true()
     _.last($.fn.scrollTop.args)[0].should.equal 101
     $.fn.scrollTop.restore()

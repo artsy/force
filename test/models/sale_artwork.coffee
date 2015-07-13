@@ -44,7 +44,7 @@ describe 'SaleArtwork', ->
     it 'formats the estimate', ->
       @saleArtwork.unset 'low_estimate_cents'
       @saleArtwork.unset 'high_estimate_cents'
-      _.isUndefined(@saleArtwork.estimate()).should.be.ok
+      _.isUndefined(@saleArtwork.estimate()).should.be.ok()
       @saleArtwork.set low_estimate_cents: 20000, high_estimate_cents: 30000
       @saleArtwork.estimate().should.equal '$200–$300'
       @saleArtwork.unset 'high_estimate_cents'

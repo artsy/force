@@ -33,7 +33,7 @@ describe 'Show route', ->
         Backbone.sync.args[3][2].success []
 
         _.defer =>
-          @res.render.called.should.be.true
+          @res.render.called.should.be.true()
           @res.render.args[0][0].should.equal 'index'
 
           done()

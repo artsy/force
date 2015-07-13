@@ -39,10 +39,10 @@ describe 'FeaturedLink', ->
   describe '#hasImageForLayout', ->
     it 'check for an image that matches the needed layout', ->
       _(4).times (n) =>
-        @featuredLink.hasImageForLayout(n).should.be.true
+        @featuredLink.hasImageForLayout(n).should.be.true()
       @featuredLink.set 'image_versions', ['wide']
       _(4).times (n) =>
         if n > 1
-          @featuredLink.hasImageForLayout(n).should.be.false
+          @featuredLink.hasImageForLayout(n).should.be.false()
         if n = 1
-          @featuredLink.hasImageForLayout(n).should.be.true
+          @featuredLink.hasImageForLayout(n).should.be.true()

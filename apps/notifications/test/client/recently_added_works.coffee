@@ -130,27 +130,27 @@ describe 'RecentlyAddedWorksView', ->
     it 'returns true when there are no notifications and no pins', ->
       @view.notifications.reset()
       @view.notifications.length.should.equal 0
-      @view.pinnedArtworks?.should.be.false
-      @view.isEmpty().should.be.true
+      @view.pinnedArtworks?.should.be.false()
+      @view.isEmpty().should.be.true()
 
     it 'returns false when there are some notifications and no pins', ->
       @view.notifications.add existy: true
       @view.notifications.length.should.equal 1
-      @view.pinnedArtworks?.should.be.false
-      @view.isEmpty().should.be.false
+      @view.pinnedArtworks?.should.be.false()
+      @view.isEmpty().should.be.false()
 
     it 'returns false when there are no notifications and some pins', ->
       @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
       @view.pinnedArtworks.length.should.equal 1
       @view.notifications.length.should.equal 0
-      @view.isEmpty().should.be.false
+      @view.isEmpty().should.be.false()
 
     it 'returns true when there are no notifications and some pins and for sale is enabled', ->
       @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
       @view.pinnedArtworks.length.should.equal 1
       @view.notifications.length.should.equal 0
       @view.forSale = true
-      @view.isEmpty().should.be.true
+      @view.isEmpty().should.be.true()
 
   describe '#publishedAt', ->
     beforeEach ->
@@ -169,6 +169,6 @@ describe 'RecentlyAddedWorksView', ->
       _.isUndefined(@view.publishedAt(new Backbone.Collection [
         { published_changed_at: undefined }
         { published_changed_at: undefined }
-      ])).should.be.true
+      ])).should.be.true()
 
 

@@ -50,24 +50,24 @@ describe 'SidebarView', ->
     it 'clears artist and shows feed without for_sale selected', ->
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
-      @view.filterState.get('forSale').should.be.false
+      @view.filterState.get('forSale').should.be.false()
       (@view.filterState.get('artist') == null).should.equal true
 
     it 'clears artist and shows feed with for_sale selected', ->
       @view.$('.artsy-checkbox--checkbox input').prop 'checked', true
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
-      @view.filterState.get('forSale').should.be.true
+      @view.filterState.get('forSale').should.be.true()
       (@view.filterState.get('artist') == null).should.equal true
 
     it 'sets filterState with for_sale filter off', ->
       @view.filterState.set 'forSale', false
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
-      @view.filterState.get('forSale').should.be.false
+      @view.filterState.get('forSale').should.be.false()
       @view.filterState.get('artist').should.equal 'kina-abe'
 
     it 'sets filterState with for_sale filter on', ->
       @view.filterState.set 'forSale', true
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
-      @view.filterState.get('forSale').should.be.true
+      @view.filterState.get('forSale').should.be.true()
       @view.filterState.get('artist').should.equal 'kina-abe'

@@ -21,5 +21,5 @@ describe 'ensure www middleware', ->
   it 'doesnt care if the url is the same', ->
     robots.__set__ 'APP_URL', 'https://artsy.net'
     robots @req, @res, @next
-    @res.redirect.called.should.not.be.ok
-    @next.called.should.be.ok
+    @res.redirect.called.should.not.be.ok()
+    @next.called.should.be.ok()

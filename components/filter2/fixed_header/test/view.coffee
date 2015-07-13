@@ -24,7 +24,7 @@ describe 'FilterFixedHeader', ->
   it 'wraps the view in a container that locks the height', ->
     spy = sinon.spy $.fn, 'height'
     @view.wrap()
-    spy.called.should.be.ok
+    spy.called.should.be.ok()
 
   it 'scrolls back up if the user has scrolled past the header', ->
     @view.$bodyHtml.scrollTop = sinon.stub()

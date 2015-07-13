@@ -88,7 +88,7 @@ describe 'PartnerShowsGridView', ->
         partner: @partner
         numberOfFeatured: 0
 
-      _.isUndefined(@template.args[0][0].featured).should.be.ok
+      _.isUndefined(@template.args[0][0].featured).should.be.ok()
       @template.args[0][0].current.should.have.lengthOf 3
       @template.args[0][0].upcoming.should.have.lengthOf 2
       @template.args[0][0].past.should.have.lengthOf 5

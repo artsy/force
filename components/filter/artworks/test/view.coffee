@@ -81,4 +81,4 @@ describe 'FilterArtworksView', ->
 
     it 'renders the columns view', ->
       @view.render()
-      @ArtworkColumnsView::appendArtworks.called.should.be.ok
+      @ArtworkColumnsView::appendArtworks.called.should.be.ok()

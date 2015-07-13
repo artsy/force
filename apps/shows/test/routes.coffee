@@ -34,7 +34,7 @@ describe 'Shows routes', ->
 
     it 'nexts if the city is not valid', ->
       routes.city { params: city: 'foobar' }, @res, @next
-      @next.called.should.be.true
+      @next.called.should.be.true()
 
     it 'fetches all the shows and renders the city template', (done) ->
       routes.city { params: { city: 'new-york' }, query: {} }, @res, @next
@@ -52,7 +52,7 @@ describe 'Shows routes', ->
       Backbone.sync.args[2][2].data.displayable.should.equal true
       Backbone.sync.args[2][2].data.at_a_fair.should.equal false
       _.defer =>
-        @res.render.called.should.be.true
+        @res.render.called.should.be.true()
         @res.render.args[0][0].should.equal 'city'
         @res.render.args[0][1].city.name.should.equal 'New York'
         done()

@@ -21,7 +21,7 @@ describe 'RelatedNavigationView', ->
 
   describe 'nothing worth rendering', ->
     it 'renders correctly', ->
-      @view.render().$el.is(':empty').should.be.true
+      @view.render().$el.is(':empty').should.be.true()
 
   describe 'with a related auction', ->
     beforeEach ->
@@ -79,4 +79,4 @@ describe 'RelatedNavigationView', ->
         @view.model.related().fairs.add fabricate 'fair', has_full_feature: false, published: true
 
       it 'renders correctly', ->
-        @view.render().$el.is(':empty').should.be.true
+        @view.render().$el.is(':empty').should.be.true()

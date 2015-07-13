@@ -30,11 +30,11 @@ describe 'UserDeleteForm', ->
 
   describe 'form contents', ->
     it 'disables the submit button until a confirmation is checked', ->
-      @view.$confirm.is(':checked').should.be.false
-      @view.$button.is(':disabled').should.be.true
+      @view.$confirm.is(':checked').should.be.false()
+      @view.$button.is(':disabled').should.be.true()
       @view.$confirm.trigger 'click'
-      @view.$confirm.is(':checked').should.be.true
-      @view.$button.is(':disabled').should.be.false
+      @view.$confirm.is(':checked').should.be.true()
+      @view.$button.is(':disabled').should.be.false()
 
     it 'allows the user to enter a reason for deleting', ->
       @view.$explanation.val 'Removing an extra test account.'
@@ -60,7 +60,7 @@ describe 'UserDeleteForm', ->
         $.ajax.args[1][0].url.should.equal '/users/sign_out'
 
       it 'flashes a success notification', ->
-        @flashStub.called.should.be.true
+        @flashStub.called.should.be.true()
         @flashStub.args[0][0].href.should.eql '/'
         @flashStub.args[0][0].message.should.containEql 'Your account has been deleted, click here to continue'
 
@@ -72,13 +72,13 @@ describe 'UserDeleteForm', ->
       it 'displays the error message', ->
         @view.$confirm.click()
         @view.$button.click()
-        @flashStub.called.should.be.false
+        @flashStub.called.should.be.false()
         @view.$errors.text().should.containEql 'An error prevented us from deleting your account through this form.'
 
     it 'adds the access token to the request', ->
       @user.set 'accessToken', '10101000101010101111010101010101'
       @view.$confirm.click()
       @view.$button.click()
-      _.isUndefined($.ajax.args[0][0].data.access_token).should.be.false
+      _.isUndefined($.ajax.args[0][0].data.access_token).should.be.false()
       $.ajax.args[0][0].method.should.equal 'DELETE'
       $.ajax.args[0][0].data.access_token.should.equal @user.get('accessToken')

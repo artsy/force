@@ -37,7 +37,7 @@ describe 'ShowInquiryModal', ->
       @view.model.toJSON().inquireable_id.should.equal 'foo-gallery-show'
       @view.model.toJSON().inquireable_type.should.equal 'partner_show'
       @view.model.toJSON().contact_gallery.should.equal true
-      @ContactView::submit.called.should.be.ok
+      @ContactView::submit.called.should.be.ok()
 
   describe '#renderLocation', ->
 

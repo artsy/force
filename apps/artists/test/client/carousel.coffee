@@ -74,11 +74,11 @@ describe 'CarouselView', ->
       @view.active = -1
       @view.moveToActive()
       @view.active.should.equal 0
-      @view.setPosition.called.should.not.be.ok
+      @view.setPosition.called.should.not.be.ok()
       @view.active = @view.positions.length + 1
       @view.moveToActive()
       @view.active.should.equal @view.stopAt
-      @view.setPosition.called.should.not.be.ok
+      @view.setPosition.called.should.not.be.ok()
     it 'moves the track to the appropriate position', ->
       @view.active = 2
       @view.moveToActive()
@@ -95,7 +95,7 @@ describe 'CarouselView', ->
       @view.moveToActive = sinon.stub()
       @view.next()
       @view.next()
-      @view.moveToActive.calledTwice.should.be.ok
+      @view.moveToActive.calledTwice.should.be.ok()
 
   describe '#prev', ->
     it 'increments the active attribute', ->
@@ -109,4 +109,4 @@ describe 'CarouselView', ->
       @view.moveToActive = sinon.stub()
       @view.prev()
       @view.prev()
-      @view.moveToActive.calledTwice.should.be.ok
+      @view.moveToActive.calledTwice.should.be.ok()

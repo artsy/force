@@ -34,11 +34,11 @@ describe 'PublishModal', ->
       @view.publishEvent = 'foo:bar'
       @view.makePublic @e
       @trigger.args[0][0].should.equal 'foo:bar'
-      @close.calledOnce.should.be.ok
+      @close.calledOnce.should.be.ok()
 
     it 'closes the modal after canceling', ->
       @view.cancel @e
-      @close.calledOnce.should.be.ok
+      @close.calledOnce.should.be.ok()
 
     describe 'cookie behavior', ->
       beforeEach ->
@@ -52,4 +52,4 @@ describe 'PublishModal', ->
           name: 'foobar'
           publishEvent: 'foo:bar'
           message: 'Foo Bar'
-        @PublishModal::remove.called.should.be.true
+        @PublishModal::remove.called.should.be.true()

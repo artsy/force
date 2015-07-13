@@ -41,7 +41,7 @@ describe 'Template', ->
 
     it 'renders the template in the appropriate mode', ->
       $('.partner-profile-cover').data('mode').should.equal 'missing'
-      _.isUndefined($('.hoverable-image').attr('style')).should.be.true
+      _.isUndefined($('.hoverable-image').attr('style')).should.be.true()
 
     it 'has the initials to use in a fallback display solution', ->
       $('.hoverable-image').data('initials').should.equal 'GG'

@@ -32,11 +32,11 @@ describe 'FlashMessage', ->
     describe 'accepts the autoclose option', ->
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: true
-        flash.startTimer.called.should.be.true
+        flash.startTimer.called.should.be.true()
 
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: false
-        flash.startTimer.called.should.be.false
+        flash.startTimer.called.should.be.false()
 
   describe '#setup', ->
     beforeEach ->
@@ -52,7 +52,7 @@ describe 'FlashMessage', ->
       anotherFlash = new FlashMessage message: 'Hello world.'
       sinon.spy anotherFlash, 'update'
       _.defer =>
-        anotherFlash.update.called.should.be.true
+        anotherFlash.update.called.should.be.true()
         @flash.$container.text().should.equal 'Hello world.'
         done()
 
@@ -79,7 +79,7 @@ describe 'FlashMessage', ->
     it 'accepts a callback', (done) ->
       flash = new FlashMessage message: 'A caesura', autoclose: false
       @flash.close ->
-        true.should.be.true
+        true.should.be.true()
         done()
 
   describe '#update', ->
@@ -103,6 +103,6 @@ describe 'FlashMessage', ->
       @startTimerStub.restore()
       @startTimerStub = @sandbox.stub FlashMessage::, 'startTimer'
       secondFlash = new FlashMessage message: 'A caesura', autoclose: true
-      secondFlash.startTimer.called.should.be.false
+      secondFlash.startTimer.called.should.be.false()
       $('body').text().should.equal 'Goodbye world.'
 
