@@ -139,8 +139,9 @@ describe 'PartnerOverviewView', ->
         @partnerLocations.called.should.not.be.ok
         @artistsListView.called.should.not.be.ok
 
-      it 'renders correct sections for nonpartner galleries', ->
+      it 'renders correct sections for nonpartner galleries (top tier)', ->
         @partner.set('claimed', false)
+        @partner.set('show_promoted',true)
         @view = new @PartnerOverviewView
           profile: @profile
           partner: @partner
@@ -148,6 +149,23 @@ describe 'PartnerOverviewView', ->
           el: $ 'body'
 
         _.last(@template.args)[0].isPartner.should.not.be.ok
+        _.last(@template.args)[0].showBanner.should.not.be.ok
+        @artistsGridTemplate.calledOnce.should.not.be.ok
+        @partnerShowsGrid.calledOnce.should.be.ok
+        @partnerLocations.called.should.be.ok
+        @artistsListView.called.should.be.ok
+
+      it 'renders correct sections for nonpartner galleries (lower tier)', ->
+        @partner.set('claimed', false)
+        @partner.set('show_promoted',false)
+        @view = new @PartnerOverviewView
+          profile: @profile
+          partner: @partner
+          numberOfShows: 6
+          el: $ 'body'
+
+        _.last(@template.args)[0].isPartner.should.not.be.ok
+        _.last(@template.args)[0].showBanner.should.be.ok
         @artistsGridTemplate.calledOnce.should.not.be.ok
         @partnerShowsGrid.calledOnce.should.be.ok
         @partnerLocations.called.should.be.ok
