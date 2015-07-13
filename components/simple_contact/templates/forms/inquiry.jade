@@ -20,13 +20,16 @@ form.scontact-form.stacked-form
         = defaultMessage
         = "\n\n"
 
-  if user && user.id
-    //- Logged in
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
+  if user && user.isWithAnonymousSession()
+    input( type='hidden', name='anonymous_session_id', value= user.id )
 
+  if user && !user.isLoggedIn() && !user.isWithAnonymousSession()
     input( type='hidden', name='name', value= user.get('name') )
     input( type='hidden', name='email', value= user.get('email') )
+
+  if user && user.get('name') && user.get('email')
+    .scontact-from.stacked-form-cell
+      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     input.bordered-input(
       type='text'
