@@ -55,6 +55,10 @@ describe 'FavoritesStatusModalView', ->
       @errorHandlingForm.showError 'description', { status: 404 }
       $('.error').text().should.equal 'Registration marketplace invalid.'
 
+    it 'handles non-json responses', ->
+      @errorHandlingForm.showError 'description', { responseText: "<html><body>500!</body></html>" }
+      $('.error').text().should.equal 'description'
+
     it 'adds stripe errors', ->
       @errorHandlingForm.showError 'description', { status: 400, error: { additional: 'additional info'} }
       $('.error').text().should.equal 'Your card appears to be missing or malformed. Please try another card or contact support. additional info'
