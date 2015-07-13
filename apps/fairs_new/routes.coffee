@@ -1,9 +1,10 @@
 _ = require 'underscore'
 Q = require 'q'
+moment = require 'moment'
 Fairs = require '../../collections/fairs'
-Fair = require '../../models/fair'
-OrderedSets = require '../../collections/ordered_sets'
+Items = require '../../collections/items'
 Profile = require '../../models/profile'
+fair_fixtures = require './fixtures/fairs.js'
 
 representation = (fair) ->
   dfd = Q.defer()
@@ -22,46 +23,42 @@ profiles = (fairs) ->
     if fair.get('has_full_feature') is true
       fair.related().profile.fetch(cache: true)
 
-parseGroups = (fairs) ->
-  currentFairs: fairs.filter((fair) -> fair.isCurrent())
+parseGroups = (fairs, date) ->
+  currentFairs: fairs.chain().filter((fair) -> fair.isCurrent(date)).sortBy((fair) -> fair.get('tier')).value()
   pastFairs: fairs.chain()
-    .filter((fair) -> fair.isPast())
-    .take(6)
+    .filter((fair) -> fair.isPast(date))
+    .sortBy((fair) -> Date.parse(fair.get 'start_at'))
     .value()
   upcomingFairs: fairs.chain()
-    .filter((fair) -> fair.isUpcoming())
+    .filter((fair) -> fair.isUpcoming(date))
     .sortBy((fair) -> Date.parse(fair.get 'start_at'))
     .value()
 
 @index = (req, res) ->
-  fairs = new Fairs
-  fairs.fetch
-    cache: true
-    data: sort: '-start_at', size: 50
-    success: ->
-      Q.allSettled(profiles(fairs)).then(->
-        { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs)
+  allFairs = new Fairs fair_fixtures, parse: true
+  date = new Date(req.query.date) || new Date
+  fairs = allFairs.aroundDate date
+  featuredFairs = new Items [], id: '55a4204d72616970e40000f9'
 
-        featuredFairs = _.flatten [currentFairs, pastFairs]
-        allFairs = _.flatten [featuredFairs, upcomingFairs]
+  Q.allSettled(profiles(fairs)).then(->
+    { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs, date)
 
-        promises = _.compact _.flatten [
-          # Fetch all displayable fairs (so that we can get their location)
-          _.map(allFairs, (fair) -> fair.fetch(cache: true))
+    allFairs = _.flatten [currentFairs, pastFairs, upcomingFairs]
 
-          # Get the two smaller images to use via the fair 'explore' sets
-          # (This is a pretty ineffcient way to go about it though)
-          _.map(featuredFairs, representation)
-        ]
+    promises = _.compact _.flatten [
+      _.map(allFairs, (fair) -> fair.fetch(cache: true))
+      featuredFairs.fetch(cache: true)
+    ]
 
-        Q.allSettled(promises).then(->
+    Q.allSettled(promises).then(->
 
-          res.locals.sd.FAIRS = currentFairs
-          res.render 'index',
-            featuredFairs: featuredFairs
-            currentFairs: currentFairs
-            upcomingFairs: upcomingFairs
-            pastFairs: pastFairs
+      res.locals.sd.FAIRS = fairs
+      
+      res.render 'index',
+        featuredFairs: featuredFairs.models
+        currentFairRows: fairs.currentRows(date)
+        upcomingFairs: upcomingFairs
+        pastFairs: pastFairs
 
-        ).done()
-      ).done()
+    ).done()
+  ).done()
