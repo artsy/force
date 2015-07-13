@@ -4,31 +4,21 @@ block head
   include meta
 
 append locals
-  - assetPackage = 'fairs'
+  - assetPackage = 'fairs_new'
 
 block body
-  #fairs-page.aggregate-page.main-layout-container
-    h1.aggregate-page-header Preview and Collect from Leading Art Fairs
-
-    .aggregate-page-items
-      .aggregate-page-items-featured
-        if currentFairs.length
-          #current-fairs.aggregate-page-items-featured-set
-            h2.aggregate-page-subheader Current Fairs
-            for fair in currentFairs
-              include fair
-
-        if pastFairs.length
-          #past-fairs.aggregate-page-items-featured-set
-            h2.aggregate-page-subheader Past Fairs
-            for fair in pastFairs
-              include fair
-
-      if upcomingFairs.length
-        #upcoming-fairs.aggregate-page-items-upcoming
-          h2.aggregate-page-subheader Upcoming Fairs
-          for fair in upcomingFairs
-            .ap-upcoming-item( href= fair.href() )
-              h3= fair.get('name')
-              .fpfu-location= fair.location() && fair.location().cityStateCountry()
-              .fpfu-date= fair.formatDates()
+  #fairs-page.main-layout-container
+    if currentFairRows.length
+      .fairs__current-fairs
+        h1.fair-header Current Fairs
+        include current_fairs
+    else
+      include promo
+    .fairs__past-fairs
+      h1.fair-header.fair-header--underlined Past Fairs
+      for fair in pastFairs
+        include fair_past
+    .fairs__upcoming-fairs
+      h1.fair-header.fair-header--underlined Upcoming Fairs
+      for fair in upcomingFairs
+        include fair_upcoming

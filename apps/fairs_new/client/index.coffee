@@ -1,13 +1,11 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Fairs = require '../../../collections/fairs.coffee'
-Clock = require '../../../components/clock/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports.init = ->
-  $clocks = $('.fpff-clock')
   fairs = new Fairs sd.FAIRS
 
   user = CurrentUser.orNull()
@@ -27,7 +25,3 @@ module.exports.init = ->
     fair.related().profile.id
 
   following.syncFollows ids if user
-
-  fairs.map (fair) ->
-    clock = new Clock modelName: 'Fair', model: fair, el: $clocks.filter("[data-id='#{fair.id}']")
-    clock.start()

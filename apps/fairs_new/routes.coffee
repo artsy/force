@@ -6,16 +6,6 @@ Items = require '../../collections/items'
 Profile = require '../../models/profile'
 fair_fixtures = require './fixtures/fairs.js'
 
-representation = (fair) ->
-  dfd = Q.defer()
-  sets = new OrderedSets(owner_type: 'Fair', owner_id: fair.id, sort: 'key')
-
-  sets.fetchAll(cache: true).then ->
-    set = sets.findWhere(key: 'explore')?.get('items')
-    fair.representation = set
-    dfd.resolve set
-  dfd.promise
-
 # Get profiles of fairs that have organizers so we can
 # see if they are published or not
 profiles = (fairs) ->

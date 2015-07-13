@@ -1,0 +1,11 @@
+.fairs__promo
+  .fairs__promo__cta
+    .fairs__promo__cta__inner
+      h1 Sign up to follow fairs and be the first to preview them on Artsy
+      a.avant-garde-button-white(href="/sign_up") Sign Up
+      .dots
+  .fairs__promo__slideshow
+    each slide in featuredFairs
+      .fairs__promo__slideshow__slide
+        a.hoverable-image-link( href= slide.get('href') )
+          img( src= slide.imageUrl('large'), alt= slide.get('title') )
