@@ -15,6 +15,9 @@ Relations = require './mixins/relations/fair.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Fair extends Backbone.Model
+  defaults:
+    tier: 3
+    
   _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
@@ -207,28 +210,27 @@ module.exports = class Fair extends Backbone.Model
 
   isEventuallyEligible: ->
     @get('has_full_feature') and
-    @get('published') and
-    not @related().profile.get('published')
+    @get('published')
 
-  hasStarted: ->
-    Date.parse(@get('start_at')) < new Date
+  hasStarted: (date = new Date()) ->
+    Date.parse(@get('start_at')) < date
 
-  hasNotStarted: ->
-    Date.parse(@get('start_at')) > new Date
+  hasNotStarted: (date = new Date()) ->
+    Date.parse(@get('start_at')) > date
 
-  isNotOver: ->
-    Date.parse(@get('end_at')) > new Date
+  isNotOver: (date = new Date()) ->
+    Date.parse(@get('end_at')) > date
 
-  isOver: ->
-    Date.parse(@get('end_at')) < new Date
+  isOver: (date = new Date()) ->
+    Date.parse(@get('end_at')) < date 
 
-  isCurrent: ->
-    @isEligible() and @isNotOver()
+  isCurrent: (date) ->
+    @isEligible() and @hasStarted(date) and @isNotOver(date)
 
-  isUpcoming: ->
-    @isEventuallyEligible() and @isNotOver()
+  isUpcoming: (date)->
+    @isEligible() and @hasNotStarted(date) and @isNotOver(date)
 
-  isPast: ->
-    @isEligible() and @isOver()
+  isPast: (date) ->
+    @isEligible() and @isOver(date)
 
   
