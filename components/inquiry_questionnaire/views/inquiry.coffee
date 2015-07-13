@@ -4,7 +4,7 @@ ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
-  template: template
+  template: -> template arguments...
 
   __events__:
     'click button': 'serialize'

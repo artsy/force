@@ -3,7 +3,7 @@ BookmarksView = require '../../bookmarks/view.coffee'
 template = -> require('../templates/artists_in_collection.jade') arguments...
 
 module.exports = class ArtistsInCollection extends StepView
-  template: template
+  template: -> template arguments...
 
   __events__:
     'click button': 'serialize'
