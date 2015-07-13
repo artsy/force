@@ -24,6 +24,8 @@ request = require 'superagent'
       artists = new Artists artwork.get('artists')
 
       Q.all(artists.invoke('fetch', cache: true)).then ->
+        artist = artists.get artist.id if artists.length
+
         res.locals.sd.ARTWORK = artwork.toJSON()
         res.locals.sd.ARTISTS = artists.toJSON()
         res.locals.sd.ARTIST = artist.toJSON()
