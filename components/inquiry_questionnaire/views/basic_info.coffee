@@ -4,7 +4,7 @@ LocationSearch = require '../../location_search/index.coffee'
 template = -> require('../templates/basic_info.jade') arguments...
 
 module.exports = class BasicInfo extends StepView
-  template: template
+  template: -> template arguments...
 
   __events__:
     'click button': 'serialize'

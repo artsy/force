@@ -4,7 +4,7 @@ Artwork = require '../../models/artwork'
 @index = (req, res) ->
   artwork = new Artwork id: 'cindy-sherman-untitled-as-marilyn-monroe'
 
-  artwork.fetch success: ->
+  artwork.fetch cache: true, success: ->
     res.locals.sd.ARTWORK = artwork.toJSON()
 
     res.render 'index',

@@ -5,7 +5,7 @@ Representatives = require '../../../collections/representatives.coffee'
 template = -> require('../templates/specialist.jade') arguments...
 
 module.exports = class Specialist extends StepView
-  template: template
+  template: -> template arguments...
 
   __events__:
     'click button': 'serialize'
