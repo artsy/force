@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     "organizer": null,
     "_id": "55959d13726169642400000e",
@@ -3056,4 +3056,4 @@
     "autopublish_artworks_at": null,
     "banner_image_urls": null
   }
-]
+];
