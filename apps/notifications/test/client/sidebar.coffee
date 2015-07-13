@@ -1,3 +1,4 @@
+
 _ = require 'underscore'
 { resolve } = require 'path'
 benv = require 'benv'
@@ -51,14 +52,14 @@ describe 'SidebarView', ->
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
       @view.filterState.get('forSale').should.be.false()
-      (@view.filterState.get('artist') == null).should.equal true
+      @view.filterState.has('artist').should.be.false()
 
     it 'clears artist and shows feed with for_sale selected', ->
-      @view.$('.artsy-checkbox--checkbox input').prop 'checked', true
+      @view.$('#for-sale').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
       @view.filterState.get('forSale').should.be.true()
-      (@view.filterState.get('artist') == null).should.equal true
+      @view.filterState.has('artist').should.be.false()
 
     it 'sets filterState with for_sale filter off', ->
       @view.filterState.set 'forSale', false

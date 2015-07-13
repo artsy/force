@@ -149,7 +149,7 @@ describe 'RecentlyAddedWorksView', ->
       @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
       @view.pinnedArtworks.length.should.equal 1
       @view.notifications.length.should.equal 0
-      @view.forSale = true
+      @view.filterState.set 'forSale', true
       @view.isEmpty().should.be.true()
 
   describe '#publishedAt', ->
