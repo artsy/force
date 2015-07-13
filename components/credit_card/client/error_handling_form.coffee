@@ -12,6 +12,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     couldNotAuthorize: "Your card could not be authorized. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
+    timeout: "Processing your payment took too long. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
 
   isChecked: ($el) => $el.is(':checked')
   isCardNumber: ($el) => isCreditCard $el.val()
