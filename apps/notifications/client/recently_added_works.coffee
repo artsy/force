@@ -1,6 +1,8 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
+Q = require 'q'
+{ API_URL } = require('sharify').data
 Notifications = require '../../../collections/notifications.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
@@ -12,11 +14,12 @@ emptyTemplate = -> require('../templates/empty.jade') arguments...
 module.exports = class RecentlyAddedWorksView extends Backbone.View
   columnViews: []
 
-  initialize: ({@notifications, @filterState}) ->
+  initialize: ({@notifications, @filterState, @following}) ->
 
     @$feed = @$('#notifications-feed')
     @$pins = @$('#notifications-pins')
 
+    @backfilledArtworks = new Backbone.Collection []
     @listenTo @notifications, 'sync', @appendArtworks
     @filterState.on 'change', @render
 
@@ -103,11 +106,27 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   checkIfEmpty: =>
     if @isEmpty()
-      @fillBacklogArtists =>
-        @filterState.set(empty:true) if @isEmpty()
+      @backfillWorks =>
+        @filterState.set(empty:true) if isEmpty()
 
-  fillBacklogArtists: (cb) =>
-    cb()
+  backfillWorks: (cb) =>
+    Q.all(
+      @following.models.map (follow) =>
+        new Artist(id: follow.get('artist').id).fetch()
+    ).then (artists) =>
+      Q.all(
+        artists.map (artist) =>
+          new Artist(artist).related().artworks.fetch
+              url: "#{API_URL}/api/v1/artist/#{artist.id}/artworks"
+              data:
+                for_sale: @filterState.get('forSale')
+                sort: '-published_at'
+                size: 10
+                published: true
+      ).then (artworks) =>
+        @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> a.published_at )
+        @appendArtworks()
+        cb()
 
   attachScrollHandler: ->
     @$feed.waypoint (direction) =>
