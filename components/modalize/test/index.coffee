@@ -1,5 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
+sinon = require 'sinon'
 Backbone = require 'backbone'
 modalize = require '../index'
 
@@ -63,6 +64,22 @@ describe 'modalize', ->
         modalDone()
         @modal.view.$el.hasClass('is-loading').should.be.false()
         specDone()
+
+    describe 'rendering', ->
+      beforeEach ->
+        sinon.spy SampleView::, 'render'
+
+      afterEach ->
+        @modal.subView.render.restore()
+
+      it 'only renders the inner view once done has been called', (specDone) ->
+        @modal.subView.render.called.should.be.false()
+        @modal.load (modalDone) =>
+          @modal.subView.render.called.should.be.false()
+          modalDone()
+          @modal.subView.render.called.should.be.true()
+          @modal.subView.render.callCount.should.equal 1
+          specDone()
 
   describe 'behavior', ->
     beforeEach ->

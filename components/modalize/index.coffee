@@ -7,10 +7,11 @@ module.exports = (subView, options = {}) ->
 
   {
     view: modal
+    subView: subView
 
     load: (callback) ->
       return if @opened
-      $('body').prepend modal.render().$el.addClass 'is-loading'
+      $('body').prepend modal.__render__().$el.addClass 'is-loading'
       @opened = true
       callback =>
         modal.render().$el.removeClass 'is-loading'
