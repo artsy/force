@@ -29,26 +29,21 @@ parseGroups = (fairs, date) ->
   date = new Date(req.query.date) || new Date
   fairs = allFairs.aroundDate date
   featuredFairs = new Items [], id: '55a4204d72616970e40000f9'
+  { currentFairs, pastFairs, upcomingFairs } = {}
 
-  Q.allSettled(profiles(fairs)).then(->
+  Q.allSettled(profiles(fairs))
+  .then =>
     { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs, date)
-
     allFairs = _.flatten [currentFairs, pastFairs, upcomingFairs]
-
-    promises = _.compact _.flatten [
+    Q.all _.compact _.flatten [
       _.map(allFairs, (fair) -> fair.fetch(cache: true))
-      featuredFairs.fetch(cache: true)
+      featuredFairs.fetch(cache: false)
     ]
-
-    Q.allSettled(promises).then(->
-
-      res.locals.sd.FAIRS = fairs
-
-      res.render 'index',
-        featuredFairs: featuredFairs.models
-        currentFairRows: fairs.currentRows(date)
-        upcomingFairs: upcomingFairs
-        pastFairs: pastFairs
-
-    ).done()
-  ).done()
+  .then =>
+    res.locals.sd.FAIRS = fairs
+    res.render 'index',
+      featuredFairs: featuredFairs.models
+      currentFairRows: fairs.currentRows(date)
+      upcomingFairs: upcomingFairs
+      pastFairs: pastFairs
+  .done()

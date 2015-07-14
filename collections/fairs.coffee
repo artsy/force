@@ -34,7 +34,7 @@ module.exports = class Fairs extends Backbone.Collection
     rows = []
 
     if fairs.length is 1
-      rows.push @makeRow([fairs], 'full')
+      rows.push @makeRow(fairs, 'full')
       return rows
 
     if fairs.length is 3 and (_.every fairs, (fair) -> fair.get('tier') isnt 1)

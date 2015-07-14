@@ -1,9 +1,10 @@
 @import '../../../components/stylus_lib'
+@import '../../../components/chevron_list'
 
 #fairs-page
   clearfix()
   margin-bottom 20%
-  
+
 #fairs-page .entity-follow
   margin-left -8px
 
@@ -11,7 +12,7 @@ h1.fair-header
   garamond-size('headline')
   padding-bottom 10px
   margin-top 30px
-  
+
   &.fair-header--underlined
     border-bottom 1px solid gray-lighter-color
 
@@ -51,10 +52,23 @@ h1.fair-header
   height 100%
   vertical-align middle
 .fairs__promo__slideshow
-  float left
-  width 60%
+  float right
+  width 640px
   height 100%
-  text-align right
+
+.mgr-cell__caption
+  position absolute
+  bottom 30px
+  left 30px
+.mgr-cell__title
+  avant-garde-size('body')
+.mgr-cell__subtitle
+  garamond-size('s-body')
+
+.mgr-navigation
+  padding-top 30px
+.mgr-arrow-left, .mgr-arrow-right
+  display none
 
 .fairs__current-fair-row
   width 100%
@@ -62,22 +76,22 @@ h1.fair-header
   margin-bottom 30px
   .fairs__current-fair, .fairs__current__promo
     flex 1
-    margin 0 15px 
+    margin 0 15px
   .fairs__current-fair:first-child
     margin-left 0
   .fairs__current-fair:last-child
     margin-right 0
-  
+
 .fairs__current-fair-row--full .fairs__current-fair
   flex 1
   .hoverable-image-link
   .hoverable-image-link > .hoverable-image
     height 487px
-    
+
 .fairs__current-fair-row--two-third, .fairs__current-fair-row--two-third-promo
   .fairs__current-fair:first-child
     flex 2
-    
+
 .fairs__current__promo
   a
     text-decoration none
@@ -92,34 +106,40 @@ h1.fair-header
     margin 0 auto
 .fairs__current__promo__copy
   garamond-size('headline')
-    
+
 .fairs-fair__name
   avant-garde-size('body')
   display inline
 
 .fairs-fair__info
-  garamond-size('s-body') 
+  garamond-size('s-body')
 
 .fairs-fair__follow
   display inline-block
   margin-left 10px
-  
+
 .fairs__past-fairs
-  float left 
+  float left
   width 66.66%
   padding-right 30px
-  
+
 .fairs__past-fair
+  chevron-item()
   display table
   width 100%
   border-bottom 1px solid gray-lighter-color
-  
+  cursor pointer
+  &::after
+    font-size 40px
+  &:hover
+    background-color gray-lightest-color
+
 .fairs__past-fair__cell
   display table-cell
   padding 30px 0
   text-align left
   vertical-align middle
-  
+
 .fairs__past-fair__cell--icon
   width 138px
   text-align center
@@ -127,7 +147,7 @@ h1.fair-header
     width 80px
     min-height 80px
     margin 0 auto
-    
+
 .fairs__past-fair__cell--name
   width 50%
   > .fairs-fair__name
@@ -136,12 +156,12 @@ h1.fair-header
     padding 0 60px
   > .fairs-fair__follow
     margin-left 0px
-  
+
 .fairs__upcoming-fairs
-  float left 
+  float left
   width 33.33%
   padding-left 30px
-  
+
 .fairs__upcoming-fair
   margin 30px 0
 

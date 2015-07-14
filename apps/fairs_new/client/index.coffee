@@ -1,7 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
+Backbone = require 'backbone'
 Fairs = require '../../../collections/fairs.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
+initCarousel = require '../../../components/merry_go_round/index.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -25,3 +27,5 @@ module.exports.init = ->
     fair.related().profile.id
 
   following.syncFollows ids if user
+
+  initCarousel $('.fairs__promo__slideshow'), $navigation: $('.mgr-navigation')
