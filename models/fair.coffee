@@ -17,7 +17,7 @@ MetaOverrides = require './mixins/meta_overrides.coffee'
 module.exports = class Fair extends Backbone.Model
   defaults:
     tier: 3
-    
+
   _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
@@ -222,7 +222,7 @@ module.exports = class Fair extends Backbone.Model
     Date.parse(@get('end_at')) > date
 
   isOver: (date = new Date()) ->
-    Date.parse(@get('end_at')) < date 
+    Date.parse(@get('end_at')) < date
 
   isCurrent: (date) ->
     @isEligible() and @hasStarted(date) and @isNotOver(date)
@@ -233,4 +233,3 @@ module.exports = class Fair extends Backbone.Model
   isPast: (date) ->
     @isEligible() and @isOver(date)
 
-  

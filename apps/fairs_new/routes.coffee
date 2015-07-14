@@ -43,7 +43,7 @@ parseGroups = (fairs, date) ->
     Q.allSettled(promises).then(->
 
       res.locals.sd.FAIRS = fairs
-      
+
       res.render 'index',
         featuredFairs: featuredFairs.models
         currentFairRows: fairs.currentRows(date)
