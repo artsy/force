@@ -1,9 +1,10 @@
 h1.iq-headline
   | Please log in to save information to your profile.
 
-.iq-body
-  p We found an Artsy account associated with
-  p: span= user.get('email')
+if user.related().account.id
+  .iq-body
+    p We found an Artsy account associated with
+    p: span= user.get('email')
 
 form.stacked-form
   .iq-form-errors.js-form-errors
@@ -11,22 +12,12 @@ form.stacked-form
 
   label.avant-garde-form-label( for='password' )
     | Enter your password
-  input.bordered-input(
-    id='password'
-    name='password'
-    type='password'
-    placeholder='Password'
-    autocomplete='on'
-    pattern='.{6,}'
-    title='6 characters minimum'
-    autofocus
-    required
-  )
+  include password
 
   button.avant-garde-button-black.js-form-submit( type='submit' )
     | Log in
 
-  .auth-form-options
+  .iq-account-sub
     .artsy-checkbox
       .artsy-checkbox--checkbox
         input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
@@ -34,8 +25,14 @@ form.stacked-form
       label.artsy-checkbox--label( for='remember_me' )
         | Remember me
 
-    a.fine-faux-underline.js-mode( data-mode='forgot' )
-      | Forgot Password?
+    span
+      a.fine-faux-underline.js-mode( data-mode='forgot' )
+        | Forgot Password?
+
+      unless user.related().account.id
+        span.garamond-tab-separator.is-vertical
+        a.fine-faux-underline.js-mode( data-mode='signup' )
+          | Sign up
 
   hr.horizontal-rule-or
 

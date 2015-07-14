@@ -75,7 +75,7 @@
   color gray-darker-color
   garamond-size('s-body')
 
-.iq-auth
+.iq-account
   transition opacity 0.25s
   height 100%
   &[data-state='fade-out']
@@ -85,12 +85,19 @@
   &.is-fade-in
     opacity 1
 
-.iq-auth-logotype
+.iq-account-logotype
   display block
   margin 0 auto
   text-align center
   font-size 55px
   line-height 1
+
+.iq-account-sub
+  display flex
+  justify-content space-between
+  block-margins(20px)
+  garamond-size('s-body')
+  color gray-darker-color
 
 .iq-form-errors
   color red-color
