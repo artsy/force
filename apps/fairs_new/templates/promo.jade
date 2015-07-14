@@ -3,9 +3,14 @@
     .fairs__promo__cta__inner
       h1 Sign up to follow fairs and be the first to preview them on Artsy
       a.avant-garde-button-white(href="/sign_up") Sign Up
-      .dots
-  .fairs__promo__slideshow
-    each slide in featuredFairs
-      .fairs__promo__slideshow__slide
-        a.hoverable-image-link( href= slide.get('href') )
-          img( src= slide.imageUrl('large'), alt= slide.get('title') )
+      - length = featuredFairs.length
+      nav.mgr-navigation.js-mgr-navigation
+        include ../../../components/merry_go_round/templates/navigation
+  section.fairs__promo__slideshow
+    .mgr-cells.js-mgr-cells
+      for slide in featuredFairs
+        .mgr-cell.js-mgr-cell
+          img( src= slide.imageUrl('large'), alt= slide.get('title'))
+          .mgr-cell__caption
+            .mgr-cell__title= slide.get('title')
+            .mgr-cell__subtitle= slide.get('subtitle')
