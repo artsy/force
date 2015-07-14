@@ -13,11 +13,12 @@ module.exports = class Specialist extends StepView
   initialize: ->
     @feedback = new Feedback
     @representatives = new Representatives
+    super
+
+  setup: ->
     @representatives.fetch()
       .then => (@representative = @representatives.first()).fetch()
       .then => @render()
-
-    super
 
   serialize: (e) ->
     form = new Form model: @feedback, $form: @$('form')

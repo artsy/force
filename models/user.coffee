@@ -19,6 +19,9 @@ module.exports = class User extends Backbone.Model
   isCollector: ->
     @get('collector_level') >= 3
 
+  isCommercial: ->
+    @get('collector_level') >= 2
+
   isLoggedIn: ->
     @__isLoggedIn__
 

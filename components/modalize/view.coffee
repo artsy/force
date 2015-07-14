@@ -17,29 +17,37 @@ module.exports = class Modalize extends Backbone.View
     @scrollbar = new Scrollbar
     $(window).on 'keyup.modalize', @escape
 
-  state: (state, callback = $.noop) ->
-    _.defer =>
-      @$el
-        .attr 'data-state', state
-        .one $.support.transition.end, callback
-        .emulateTransitionEnd 250
+  state: (state, callback = $.noop) -> _.defer =>
+    @$el
+      .attr 'data-state', state
+      .one $.support.transition.end, callback
+      .emulateTransitionEnd 250
+
+  __render__: ->
+    @$el.html template()
+    @__rendered__ = true
+    @scrollbar.disable()
+    @state 'open'
+    this
 
   render: ->
     unless @__rendered__
-      @$el.html template()
-      @__rendered__ = true
+      @__render__()
     @postRender()
+    this
+
+  __postRender__: ->
+    @$('.js-modalize-dialog').css @dimensions
+    @$('.js-modalize-body').html @subView.render().$el
+    @__postRendered__ = true
     this
 
   postRender: ->
     unless @__postRendered__
-      @$('.js-modalize-dialog').css @dimensions
-      @$('.js-modalize-body').html @subView.render().$el
-      @scrollbar.disable()
-      @state 'open'
-      @__postRendered__ = true
+      @__postRender__()
     else
       @subView.render().$el
+    this
 
   escape: (e) =>
     @close() if e.which is 27

@@ -67,6 +67,8 @@ describe 'State', ->
         @state.inject some_dependency: false
         @state.next().should.equal 'false_true_false_first' # Makes dependent_decision
 
+        @state.next().should.equal 'fourth'
+
     describe '#position; #total', ->
       beforeEach ->
         @state = new State
@@ -105,3 +107,67 @@ describe 'State', ->
         @state.position().should.equal 4
         @state.total().should.equal 4
         @state.isEnd().should.be.true()
+
+  describe 'resumable paths', ->
+    beforeEach ->
+      @state = new State
+        decisions:
+          second: ->
+            true
+
+          fourth: ->
+            false
+
+          sub_fourth: ->
+            true
+
+        steps: [
+          'first'
+          second:
+            true: ['second′']
+          'third'
+          fourth:
+            false: [
+              'fourth′'
+              sub_fourth:
+                true: ['fourth″']
+            ]
+          'fifth'
+        ]
+
+    it 'resumes the primary path after travelling down multiple sub-paths', ->
+      @state.current().should.equal 'first'
+      @state.isEnd().should.be.false()
+      @state.next().should.equal 'second′'
+      @state.isEnd().should.be.false()
+      @state.next().should.equal 'third'
+      @state.isEnd().should.be.false()
+      @state.next().should.equal 'fourth′'
+      @state.isEnd().should.be.false()
+      @state.next().should.equal 'fourth″'
+      @state.isEnd().should.be.false()
+      @state.next().should.equal 'fifth'
+      @state.isEnd().should.be.true()
+
+  describe 'conditional steps', ->
+    beforeEach ->
+      @state = new State
+        decisions:
+          should_skip: ->
+            true
+
+          should_not_skip: ->
+            true
+
+        steps: [
+          'first'
+          { should_skip: false: ['skip_this_second'] }
+          { should_not_skip: true: ['land_on_this_second'] }
+          'third'
+        ]
+
+    it 'skips the second step', ->
+      @state.current().should.equal 'first'
+      @state.next().should.equal 'land_on_this_second'
+      @state.next().should.equal 'third'
+      @state.isEnd().should.be.true()

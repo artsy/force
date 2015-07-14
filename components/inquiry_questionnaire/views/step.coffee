@@ -9,7 +9,8 @@ module.exports = class StepView extends Backbone.View
     _.extend @__events__,
       'click .js-nevermind': 'dismiss'
 
-  initialize: ({ @user, @state, @artwork }) -> #
+  initialize: ({ @user, @state, @artwork }) ->
+    @__setup__()
 
   template: ->
     throw new Error 'no template provided'
@@ -25,6 +26,13 @@ module.exports = class StepView extends Backbone.View
   autofocus: -> _.defer =>
     $input = form.firstVisibleInput @$el
     form.autofocus $input
+
+  setup: -> #
+
+  __setup__: ->
+    return if @__isSetup__
+    @setup()
+    @__isSetup__ = true
 
   render: ->
     @$el.html @template
