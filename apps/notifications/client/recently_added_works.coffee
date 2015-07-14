@@ -21,7 +21,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @filterState.on 'change', @render
 
     @setup =>
-      @notifications.getFirstPage()?.then @checkIfEmpty
+      @notifications.getFirstPage()?.then(@checkIfEmpty)
 
   setup: (cb) ->
     { artist_id } = @params()
@@ -95,13 +95,19 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     )?.then (response) ->
       unless response.length
         $.waypoints 'destroy'
+        $('#notifications-spinner').hide()
 
   isEmpty: ->
     !@notifications.length and
     !@pinnedArtworks?.length is !@filterState.get('forSale')
 
   checkIfEmpty: =>
-    @filterState.set(empty: true) if @isEmpty()
+    if @isEmpty()
+      @fillBacklogArtists =>
+        @filterState.set(empty:true) if @isEmpty()
+
+  fillBacklogArtists: (cb) =>
+    cb()
 
   attachScrollHandler: ->
     @$feed.waypoint (direction) =>

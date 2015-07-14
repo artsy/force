@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 SearchBarView = require '../../../components/search_bar/view.coffee'
-Following = require '../../../components/follow_button/collection.coffee'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 
 module.exports = class SidebarView extends Backbone.View
@@ -11,8 +10,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-name' : 'toggleArtist'
     'click .filter-artist-clear' : 'clearArtistWorks'
 
-  initialize: ({@filterState}) ->
-    @following = new Following [], kind: 'artist'
+  initialize: ({@filterState, @following}) ->
     @setupSearch()
 
   toggleForSale: (e) ->
