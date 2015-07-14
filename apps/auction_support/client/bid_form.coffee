@@ -48,6 +48,7 @@ module.exports = class BidForm extends ErrorHandlingForm
         artwork_id: @saleArtwork.get('artwork').id
         max_bid_amount_cents: @getBidAmount()
       bidderPosition.save null,
+        timeout: 30000
         success: (model, response, options) =>
           _.delay =>
             @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
