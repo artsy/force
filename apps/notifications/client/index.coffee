@@ -58,6 +58,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     if @filterState.get 'empty'
       @$('#notifications-empty').html emptyTemplate
         artist: @filterState.get 'artist'
+
     @scrollToTop()
 
   setupJumpView: ->

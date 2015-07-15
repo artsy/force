@@ -6,6 +6,9 @@ artistHeaderTemplate = -> require('../templates/artist_header.jade') arguments..
 
 module.exports = class ArtistWorksView extends Backbone.View
 
+  events:
+    'click .artist-clear' : 'clearArtistWorks'
+
   initialize: ({@filterState}) ->
     @$artistHeader = @$('.notifications-artist-sub-header')
     @$artistFeed = @$('#notifications-artist-feed')
@@ -42,3 +45,6 @@ module.exports = class ArtistWorksView extends Backbone.View
       gutterWidth: 40
       allowDuplicates: true
       maxArtworkHeight: 600
+
+  clearArtistWorks: ->
+    @filterState.set 'artist', null
