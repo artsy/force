@@ -9,6 +9,7 @@ SidebarView = require './sidebar.coffee'
 RecentlyAddedWorksView = require './recently_added_works.coffee'
 ArtistWorksView = require './artist_works.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
+emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
@@ -54,6 +55,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       else
         'recent-works'
     )
+    if @filterState.get 'empty'
+      @$('#notifications-empty').html emptyTemplate
+        artist: @filterState.get 'artist'
     @scrollToTop()
 
   setupJumpView: ->

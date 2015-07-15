@@ -108,11 +108,9 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   checkIfEmpty: =>
     if @isEmpty()
-      console.log 'notifications appear to be empty'
-      @backfillWorks =>
-        @filterState.set('empty', true) if isEmpty()
+      @backfillWorks()
 
-  backfillWorks: (cb) =>
+  backfillWorks: =>
     @forSaleFormatted = if @filterState.get('forSale') then 'for_sale' else ''
     Q.all(
       @following.models.map (follow) =>
@@ -131,7 +129,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
         @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> -a.published_at )
         @appendArtworks()
         $('#notifications-feed').addClass 'end-of-content'
-        cb()
+        @filterState.set('empty', true) if @isEmpty()
 
   attachScrollHandler: ->
     @$feed.waypoint (direction) =>

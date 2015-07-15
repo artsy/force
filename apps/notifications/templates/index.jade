@@ -5,7 +5,7 @@ block head
 
 append locals
   - assetPackage = 'notifications'
-  - bodyClass = bodyClass + ' body-infinite-scroll'
+  //- - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
   #notifications-page.main-layout-container(data-state = 'recent-works')
@@ -40,5 +40,4 @@ block body
       .notifications-artist-sub-header
       #notifications-artist-feed
     #notifications-empty
-      p.empty-content Nothing here yet.
     #notifications-spinner: .loading-spinner
