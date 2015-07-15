@@ -12,6 +12,12 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNfS': MEDIUM
     '00NC0000005ROPB': Cookies.get('force-referrer')
     '00NC0000005RRYb': SESSION_ID
+    '00NC0000005RUKX': CURRENT_USER?.id
+    '00NC0000005R4cC': 'Inbound'
+    '00NC0000004ryxp': 'artsy.net/apply'
+    '00NC0000005Lkol': Date()
+    '00NC0000005Lkog': 'True'
+    '00NC0000005QV8S': 'Inbound'
 
   # There are others... but this is just so
   # we can validate any attributes
@@ -27,15 +33,15 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNdW' # Web Referrer
     '00NC0000005RNfS' # Web Medium
     '00NC0000005ROPB' # Web Source Referrer
+    '00NC0000005RUhH' # Fair Partner ID param if applying thru CMS/Folio link
+    '00NC0000005RUhM' # User ID param if applying thru CMS/Folio link
   ]
 
   @validate: (obj) ->
     _.pick obj, @::valid
 
   save: (attrs, options = {}) ->
-    attrs = _.extend {}, @attributes, attrs
-    _.each attrs, (val, key) ->
-      if _.isArray val
-        attrs[key] = val.join(';') + ';'
+    whitelisted = _.pick @attributes, 'email'
+    analytics.identify SESSION_ID, whitelisted, { 'Salesforce': true}
+    options.success()
 
-    super
