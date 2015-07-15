@@ -39,4 +39,3 @@ module.exports = class Form extends Backbone.Model
         attrs[key] = val.join(';') + ';'
 
     super
-
