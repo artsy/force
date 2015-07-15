@@ -16,10 +16,12 @@
     display block
 
 #notifications-page[data-state=recent-works]
-  #notifications-artist-works, .notifications-artist-sub-header, #notifications-empty
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-empty, #notifications-spinner
     display none
-  #notifications-works
+  #notifications-works, .notifications-feed-spinner
     display block
+  #notifications-feed.end-of-content ~ .notifications-feed-spinner
+    display none
 
 #notifications-page[data-state=empty]
   #notifications-artist-works, .notifications-artist-sub-header, #notifications-works, #notifications-spinner
@@ -42,7 +44,7 @@
 #notifications-filter
   position absolute
   width 250px
-  padding-right 10px
+  padding-right 40px
   .artsy-checkbox
     display block
     margin-top 20px
@@ -84,12 +86,9 @@
   display none
   padding 32px 0px
   border-top 1px solid gray-lighter-color
-  i , .artist-name
+  .artist-name
+    vertical-align middle
     display inline-block
-  i
-    color gray-dark-color
-    font-size 15px
-    line-height 15px
   .artist-header-name
     avant-garde-size('m-headline')
     text-decoration none
@@ -98,12 +97,23 @@
     color gray-dark-color
     font-style italic
 
+.icon-chevron-small-right
+  color gray-dark-color
+  font-size 17px
+  vertical-align middle
+  display inline-block
+
 #notifications-artist-feed
   width 100%
 
 #notifications-spinner
   position relative
   height 250px
+
+.notifications-feed-spinner
+  position relative
+  height 250px
+  display none
 
 .notifications-list-item
   margin 20px 0

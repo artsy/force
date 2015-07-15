@@ -24,7 +24,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @filterState.on 'change', @render
 
     @setup =>
-      @notifications.getFirstPage()?.then(@checkIfEmpty)
+      console.log 'setup done'
+      # @notifications.getFirstPage()?.then(@checkIfEmpty)
 
   setup: (cb) ->
     { artist_id } = @params()
@@ -48,6 +49,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     qs.parse(location.search.substring(1))
 
   appendArtworks: ->
+    console.log 'appendArtworks'
     if @notifications.state.currentPage is 1
       @resetFeed()
     else
@@ -79,7 +81,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       count: artworks.length
 
   publishedAt: (artworks) ->
-    if (timestamps = _.map _.compact(artworks.pluck('published_changed_at')), Date.parse).length
+    if (timestamps = _.map _.compact(artworks.pluck('published_at')), Date.parse).length
       DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
@@ -98,7 +100,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     )?.then (response) ->
       unless response.length
         $.waypoints 'destroy'
-        $('#notifications-spinner').hide()
+        $('#notifications-feed').addClass 'end-of-content'
 
   isEmpty: ->
     !@notifications.length and
@@ -106,10 +108,12 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   checkIfEmpty: =>
     if @isEmpty()
+      console.log 'notifications appear to be empty'
       @backfillWorks =>
-        @filterState.set(empty:true) if isEmpty()
+        @filterState.set('empty', true) if isEmpty()
 
   backfillWorks: (cb) =>
+    @forSaleFormatted = if @filterState.get('forSale') then 'for_sale' else ''
     Q.all(
       @following.models.map (follow) =>
         new Artist(id: follow.get('artist').id).fetch()
@@ -119,13 +123,14 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
           new Artist(artist).related().artworks.fetch
               url: "#{API_URL}/api/v1/artist/#{artist.id}/artworks"
               data:
-                for_sale: @filterState.get('forSale')
+                filter: [@forSaleFormatted]
                 sort: '-published_at'
                 size: 10
                 published: true
       ).then (artworks) =>
-        @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> a.published_at )
+        @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> -a.published_at )
         @appendArtworks()
+        $('#notifications-feed').addClass 'end-of-content'
         cb()
 
   attachScrollHandler: ->
@@ -149,6 +154,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
   render: =>
     return if @filterState.get 'artist'
     return unless @filterState.get 'loading'
+    console.log 'render called'
+    @notifications.state.currentPage = 1
     @$pins.hide() # Only relevant on initial load
     @notifications.getFirstPage(
       data: for_sale: @filterState.get('forSale')

@@ -1,7 +1,9 @@
 .notifications-list-item
   header.notifications-list-item-header
     .is-pull-left
-      h4: a( href=artist.href() )= artist.get('name')
+      h4
+        a( href=artist.href() )= artist.get('name')
+          i.icon-chevron-small-right
       .notifications-works-added
         | #{count} work#{count === 1 ? undefined : 's'} added
         if publishedAt

@@ -8,7 +8,7 @@ append locals
   - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
-  #notifications-page.main-layout-container
+  #notifications-page.main-layout-container(data-state = 'recent-works')
     #notifications-header
       h1 Works by Artists You Follow
     #notifications-filter
@@ -35,6 +35,7 @@ block body
       .notifications-works-sub-header Recently Added Works
       #notifications-pins
       #notifications-feed
+      .notifications-feed-spinner: .loading-spinner
     #notifications-artist-works
       .notifications-artist-sub-header
       #notifications-artist-feed

@@ -41,6 +41,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @setupJumpView()
 
+    @filterState.trigger 'change'
+
   render: =>
     @$('#notifications-page').attr 'data-state', (
       if @filterState.get 'loading'
