@@ -45,37 +45,36 @@ setupUser = (user, auction) ->
     auction.fetch(cache: true)
     saleArtworks.fetchUntilEndInParallel(cache: true)
     setupUser(user, auction)
-  ]).then(->
-    articles.fetch(cache: true, data: published: true, auction_id: auction.get('_id'))
-  ).then(->
-    return next() if auction.isSale()
+  ])
+    .then ->
+      articles.fetch(cache: true, data: published: true, auction_id: auction.get('_id'))
+    .then ->
+      return next() if auction.isSale()
 
-    artworks.reset Artworks.__fromSale__(saleArtworks)
+      artworks.reset Artworks.__fromSale__(saleArtworks)
 
-    res.locals.sd.AUCTION = auction.toJSON()
-    res.locals.sd.ARTWORKS = artworks.toJSON()
-    res.locals.sd.USER = user.toJSON() if user?
+      res.locals.sd.AUCTION = auction.toJSON()
+      res.locals.sd.ARTWORKS = artworks.toJSON()
+      res.locals.sd.USER = user.toJSON() if user?
 
-    template = if auction.isPreview() and not auction.isAuctionPromo()
-      'preview/index'
-    else
-      'index'
+      template = if auction.isPreview() and not auction.isAuctionPromo()
+        'preview/index'
+      else
+        'index'
 
-    res.render template,
-      auction: auction
-      artworks: artworks
-      saleArtworks: saleArtworks
-      articles: articles
-      user: user
-      state: state
-      displayBlurbs: displayBlurbs = artworks.hasAny('blurb')
-      maxBlurbHeight: artworks.maxBlurbHeight(displayBlurbs)
-      footerItems: footerItems
-  ).catch(->
-    err = new Error 'Not Found'
-    err.status = 404
-    next err
-  ).done()
+      res.render template,
+        auction: auction
+        artworks: artworks
+        saleArtworks: saleArtworks
+        articles: articles
+        user: user
+        state: state
+        displayBlurbs: displayBlurbs = artworks.hasAny('blurb')
+        maxBlurbHeight: artworks.maxBlurbHeight(displayBlurbs)
+        footerItems: footerItems
+
+    .catch next
+    .done()
 
 @redirect = (req, res) ->
   new Backbone.Collection().fetch

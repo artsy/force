@@ -1,4 +1,3 @@
-
 _ = require 'underscore'
 sinon = require 'sinon'
 rewire = require 'rewire'
@@ -59,6 +58,15 @@ describe '/auction routes', ->
     _.defer =>
       @next.called.should.be.true()
       @res.render.called.should.be.false()
+      done()
+
+  it 'passes down the error', (done) ->
+    routes.index @req, @res, @next
+    @next.called.should.be.false()
+    Backbone.sync.args[0][2].error()
+    Backbone.sync.args[1][2].error()
+    _.defer =>
+      @next.called.should.be.true()
       done()
 
   describe 'with logged in user', ->
