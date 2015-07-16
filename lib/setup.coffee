@@ -181,6 +181,7 @@ module.exports = (app) ->
   app.use proxySitemaps.app
   app.use redirectMobile
   app.use ensureSSL
+  app.use proxyReflection
   app.use ensureWWW
 
   # General helpers and express middleware
