@@ -8,7 +8,7 @@ Account = benv.requireWithJadeify require.resolve('../../views/account'), [
   'templates.forgot'
 ]
 
-describe 'Account', setup ->
+xdescribe 'Account', setup ->
   beforeEach ->
     @view = new Account user: @loggedOutUser, artwork: @artwork, state: @state
 
