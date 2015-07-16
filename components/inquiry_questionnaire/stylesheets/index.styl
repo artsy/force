@@ -1,4 +1,5 @@
 @import '../../stylus_lib'
+@import '../../../node_modules/artsy-ezel-components/spinners'
 
 .inquiry-questionnaire-modal
   .modalize-close
@@ -76,14 +77,16 @@
   garamond-size('s-body')
 
 .iq-account
-  transition opacity 0.25s
-  height 100%
-  &[data-state='fade-out']
-  &.is-fade-out
-    opacity 0
-  &[data-state='fade-in']
-  &.is-fade-in
+  > *
+    transition opacity 0.25s
     opacity 1
+  &.is-loading
+    &:before
+      display block
+      content ''
+      spinner(20px, 5px, black)
+    > *
+      opacity 0
 
 .iq-account-logotype
   display block
