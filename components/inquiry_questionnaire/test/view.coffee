@@ -17,7 +17,7 @@ InquiryQuestionnaireView.__set__ 'map', {
   steps: ['exampleA', 'exampleB']
 }
 
-describe 'InquiryQuestionnaireView', ->
+xdescribe 'InquiryQuestionnaireView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'

@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 setup = require './setup'
 BasicInfo = benv.requireWithJadeify require.resolve('../../views/basic_info'), ['template']
 
-describe 'BasicInfo', setup ->
+xdescribe 'BasicInfo', setup ->
   beforeEach ->
     sinon.stub BasicInfo::, 'postRender'
     @view = new BasicInfo user: @currentUser, artwork: @artwork, state: @state
