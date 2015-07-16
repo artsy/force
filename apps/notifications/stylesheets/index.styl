@@ -2,6 +2,7 @@
 
 #notifications-page
   padding-top 50px
+  margin-bottom 100px
 
 #notifications-page[data-state=loading]
   #notifications-works, #notifications-artist-works, #notifications-empty
@@ -10,16 +11,18 @@
     display block
 
 #notifications-page[data-state=artist]
-  #notifications-works, #notifications-spinner, #notifications-empty
+  #notifications-works, #notifications-spinner
     display none
   #notifications-artist-works, .notifications-artist-sub-header
     display block
 
 #notifications-page[data-state=recent-works]
-  #notifications-artist-works, .notifications-artist-sub-header, #notifications-empty
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-spinner
     display none
-  #notifications-works
+  #notifications-works, .notifications-feed-spinner
     display block
+  #notifications-feed.end-of-content ~ .notifications-feed-spinner
+    display none
 
 #notifications-page[data-state=empty]
   #notifications-artist-works, .notifications-artist-sub-header, #notifications-works, #notifications-spinner
@@ -33,6 +36,13 @@
   display none
   margin-top 123px
   margin-left 250px
+  .empty-artist
+    padding-top 32px
+  .empty-recently-added
+    font-size 35px
+    color gray-dark-color
+    margin-top 100px
+    text-align center
 
 #notifications-header
   margin-bottom 80px
@@ -42,7 +52,7 @@
 #notifications-filter
   position absolute
   width 250px
-  padding-right 10px
+  padding-right 40px
   .artsy-checkbox
     display block
     margin-top 20px
@@ -67,15 +77,17 @@
     .filter-artist-name, .filter-artist-count, .filter-artist-clear
       color purple-color
 
+.artist-clear
+  float right
+  text-decoration underline
+  cursor pointer
+
 .notifications-sub-header, .notifications-works-sub-header
   font-size 25px
 
 #notifications-works, #notifications-artist-works
   width 900px
   margin-left 250px
-  .empty-content
-    padding-top 32px
-    border-top 1px solid gray-lighter-color
 
 #notifications-artist-works
   margin-top 123px
@@ -84,12 +96,9 @@
   display none
   padding 32px 0px
   border-top 1px solid gray-lighter-color
-  i , .artist-name
+  .artist-name
+    vertical-align middle
     display inline-block
-  i
-    color gray-dark-color
-    font-size 15px
-    line-height 15px
   .artist-header-name
     avant-garde-size('m-headline')
     text-decoration none
@@ -98,12 +107,23 @@
     color gray-dark-color
     font-style italic
 
+.icon-chevron-small-right
+  color gray-dark-color
+  font-size 17px
+  vertical-align middle
+  display inline-block
+
 #notifications-artist-feed
   width 100%
 
 #notifications-spinner
   position relative
   height 250px
+
+.notifications-feed-spinner
+  position relative
+  height 250px
+  display none
 
 .notifications-list-item
   margin 20px 0

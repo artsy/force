@@ -1,6 +1,8 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
+Q = require 'q'
+{ API_URL } = require('sharify').data
 Notifications = require '../../../collections/notifications.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
@@ -12,21 +14,21 @@ emptyTemplate = -> require('../templates/empty.jade') arguments...
 module.exports = class RecentlyAddedWorksView extends Backbone.View
   columnViews: []
 
-  initialize: ({@notifications, @filterState}) ->
+  initialize: ({@notifications, @filterState, @following}) ->
 
     @$feed = @$('#notifications-feed')
     @$pins = @$('#notifications-pins')
 
+    @backfilledArtworks = new Backbone.Collection []
     @listenTo @notifications, 'sync', @appendArtworks
     @filterState.on 'change', @render
 
-    @setup =>
-      @notifications.getFirstPage()?.then @checkIfEmpty
+    @setup()
 
-  setup: (cb) ->
+  setup: ->
     { artist_id } = @params()
 
-    return cb() unless artist_id?
+    return unless artist_id?
 
     @pinnedArtist = new Artist id: artist_id
     @pinnedArtworks = @pinnedArtist.related().artworks
@@ -38,8 +40,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
-      cb()
-    , cb # Ignore errors
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -76,7 +76,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       count: artworks.length
 
   publishedAt: (artworks) ->
-    if (timestamps = _.map _.compact(artworks.pluck('published_changed_at')), Date.parse).length
+    if (timestamps = _.map _.compact(artworks.pluck('published_at')), Date.parse).length
       DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
@@ -95,13 +95,35 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     )?.then (response) ->
       unless response.length
         $.waypoints 'destroy'
+        $('#notifications-feed').addClass 'end-of-content'
 
   isEmpty: ->
-    !@notifications.length and
-    !@pinnedArtworks?.length is !@filterState.get('forSale')
+    !@notifications.length and !@pinnedArtworks?.length
 
   checkIfEmpty: =>
-    @filterState.set(empty: true) if @isEmpty()
+    @backfillWorks() if @isEmpty()
+
+  backfillWorks: =>
+    @forSaleFormatted = if @filterState.get('forSale') then 'for_sale' else ''
+    Q.all(
+      @following.models.map (follow) =>
+        new Artist(id: follow.get('artist').id).fetch()
+    ).then (artists) =>
+      Q.all(
+        artists.map (artist) =>
+          new Artist(artist).related().artworks.fetch
+              url: "#{API_URL}/api/v1/artist/#{artist.id}/artworks"
+              data:
+                filter: [@forSaleFormatted]
+                sort: '-published_at'
+                size: 10
+                published: true
+      ).then (artworks) =>
+        if artworks.length
+          @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> a.published_at ).reverse()
+          @notifications.trigger 'sync'
+          $('#notifications-feed').addClass 'end-of-content'
+        @filterState.set('empty', true) if @isEmpty()
 
   attachScrollHandler: ->
     @$feed.waypoint (direction) =>
@@ -117,6 +139,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     # Reset the DOM
     @renderMethod = 'html'
     @columnViews = []
+    $('#notifications-feed').html ''
     # Reset the waypoints
     $.waypoints 'destroy'
     @attachScrollHandler()
@@ -125,6 +148,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     return if @filterState.get 'artist'
     return unless @filterState.get 'loading'
     @$pins.hide() # Only relevant on initial load
+    @notifications.state.currentPage = 1
     @notifications.getFirstPage(
       data: for_sale: @filterState.get('forSale')
       success: =>

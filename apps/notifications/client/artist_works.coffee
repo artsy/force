@@ -2,10 +2,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artist = require '../../../models/artist.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-emptyTemplate = -> require('../templates/empty.jade') arguments...
 artistHeaderTemplate = -> require('../templates/artist_header.jade') arguments...
 
 module.exports = class ArtistWorksView extends Backbone.View
+
+  events:
+    'click .artist-clear' : 'clearArtistWorks'
 
   initialize: ({@filterState}) ->
     @$artistHeader = @$('.notifications-artist-sub-header')
@@ -43,3 +45,6 @@ module.exports = class ArtistWorksView extends Backbone.View
       gutterWidth: 40
       allowDuplicates: true
       maxArtworkHeight: 600
+
+  clearArtistWorks: =>
+    $('.filter-artist[data-state=selected] .filter-artist-clear').click()

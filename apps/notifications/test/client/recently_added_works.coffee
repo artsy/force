@@ -47,6 +47,7 @@ describe 'RecentlyAddedWorksView', ->
         el: $('body')
         filterState: @filterState
         notifications: @notifications
+      @filterState.trigger 'change'
 
     describe '#initialize', ->
       it 'makes the right API call', ->
@@ -54,9 +55,9 @@ describe 'RecentlyAddedWorksView', ->
         _.last(Backbone.sync.args)[2].data.should.containEql type: 'ArtworkPublished', since: 30, page: 1, size: 10
 
       it 'groups and renders properly', ->
-        bittyArtwork1 = fabricate 'artwork', published_changed_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
-        bittyArtwork2 = fabricate 'artwork', published_changed_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
-        percyArtwork1 = fabricate 'artwork', published_changed_at: '2012-05-06T04:00:00+00:00', artist: fabricate 'artist', { id: 'percy', name: 'Percy Z' }
+        bittyArtwork1 = fabricate 'artwork', published_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
+        bittyArtwork2 = fabricate 'artwork', published_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
+        percyArtwork1 = fabricate 'artwork', published_at: '2012-05-06T04:00:00+00:00', artist: fabricate 'artist', { id: 'percy', name: 'Percy Z' }
         _.last(Backbone.sync.args)[2].success([ bittyArtwork1, bittyArtwork2, percyArtwork1 ])
         @view.$el.find('.notifications-list-item').length.should.equal 2 # One for Bitty, One for Percy
         @view.$el.html().should.containEql 'Bitty Z'
@@ -145,13 +146,6 @@ describe 'RecentlyAddedWorksView', ->
       @view.notifications.length.should.equal 0
       @view.isEmpty().should.be.false()
 
-    it 'returns true when there are no notifications and some pins and for sale is enabled', ->
-      @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
-      @view.pinnedArtworks.length.should.equal 1
-      @view.notifications.length.should.equal 0
-      @view.filterState.set 'forSale', true
-      @view.isEmpty().should.be.true()
-
   describe '#publishedAt', ->
     beforeEach ->
       @view = new @RecentlyAddedWorksView
@@ -159,16 +153,16 @@ describe 'RecentlyAddedWorksView', ->
         filterState: @filterState
         notifications: @notifications
 
-    it 'returns the formatted maximum published_changed_at for the group of artworks', ->
+    it 'returns the formatted maximum published_at for the group of artworks', ->
       @view.publishedAt(new Backbone.Collection [
-        { published_changed_at: '2015-03-23T09:10:03.000Z' }
-        { published_changed_at: '2015-03-23T09:10:04.000Z' }
+        { published_at: '2015-03-23T09:10:03.000Z' }
+        { published_at: '2015-03-23T09:10:04.000Z' }
       ]).should.equal 'Mar. 23rd'
 
-    it 'returns undefined when there is no published_changed_at', ->
+    it 'returns undefined when there is no published_at', ->
       _.isUndefined(@view.publishedAt(new Backbone.Collection [
-        { published_changed_at: undefined }
-        { published_changed_at: undefined }
+        { published_at: undefined }
+        { published_at: undefined }
       ])).should.be.true()
 
 

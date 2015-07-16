@@ -21,7 +21,7 @@ describe 'ArtistWorksView', ->
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: null }, =>
       @ArtistWorksView = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/artist_works'), ['emptyTemplate', 'artistHeaderTemplate']
+          (resolve __dirname, '../../client/artist_works'), ['artistHeaderTemplate']
         )
       @filterState = new Backbone.Model
         forSale: false
