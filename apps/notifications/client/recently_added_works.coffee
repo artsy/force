@@ -101,8 +101,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     !@notifications.length and !@pinnedArtworks?.length
 
   checkIfEmpty: =>
-    if @isEmpty()
-      @backfillWorks()
+    @backfillWorks() if @isEmpty()
 
   backfillWorks: =>
     @forSaleFormatted = if @filterState.get('forSale') then 'for_sale' else ''
@@ -121,10 +120,9 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
                 published: true
       ).then (artworks) =>
         if artworks.length
-          @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> -a.published_at )
+          @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> a.published_at ).reverse()
           @notifications.trigger 'sync'
-
-        $('#notifications-feed').addClass 'end-of-content'
+          $('#notifications-feed').addClass 'end-of-content'
         @filterState.set('empty', true) if @isEmpty()
 
   attachScrollHandler: ->
@@ -148,7 +146,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   render: =>
     return if @filterState.get 'artist'
-    return if !@filterState.get 'loading'
+    return unless @filterState.get 'loading'
     @$pins.hide() # Only relevant on initial load
     @notifications.state.currentPage = 1
     @notifications.getFirstPage(

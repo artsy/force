@@ -48,8 +48,3 @@ module.exports = class ArtistWorksView extends Backbone.View
 
   clearArtistWorks: =>
     $('.filter-artist[data-state=selected] .filter-artist-clear').click()
-
-
-
-
-

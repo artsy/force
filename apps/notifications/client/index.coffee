@@ -39,9 +39,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       filterState: @filterState
 
     @filterState.on 'change', @render
-
     @setupJumpView()
-
     @filterState.trigger 'change'
 
   render: =>
