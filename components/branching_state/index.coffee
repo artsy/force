@@ -56,4 +56,7 @@ module.exports = class State extends Backbone.Model
 
   view: ->
     views = @get('views')
-    new views[@current()] arguments...
+    if (View = views[@current()])?
+      new View arguments...
+    else
+      console.error "view for #{@current()} is not defined"

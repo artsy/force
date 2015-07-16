@@ -7,7 +7,7 @@ BasicInfo = benv.requireWithJadeify require.resolve('../../views/basic_info'), [
 describe 'BasicInfo', setup ->
   beforeEach ->
     sinon.stub BasicInfo::, 'postRender'
-    @view = new BasicInfo user: @user, artwork: @artwork, state: @state
+    @view = new BasicInfo user: @currentUser, artwork: @artwork, state: @state
 
   afterEach ->
     @view.postRender.restore()

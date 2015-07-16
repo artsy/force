@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 templates =
@@ -17,18 +18,23 @@ module.exports = class Account extends StepView
     'click button': 'submit'
 
   initialize: ({ @user, @state, @artwork }) ->
+    @active = new Backbone.Model mode: 'auth'
+
     @listenTo @user.related().account, 'sync', @render
+    @listenTo @active, 'change:mode', @render
+    @listenTo @active, 'change:mode', @forgot
+
     super
 
   setup: ->
     @user.related().account.fetch()
+    @sendResetOnce = _.once _.bind(@user.forgot, @user)
 
-  __mode__: 'auth'
   mode: ->
-    if @__mode__ is 'auth'
+    if (mode = @active.get('mode')) is 'auth'
       if @user.related().account.id then 'login' else 'signup'
     else
-      @__mode__
+      mode
 
   submit: (e) ->
     form = new Form model: @user, $form: @$('form'), $submit: @$('.js-form-submit')
@@ -41,7 +47,10 @@ module.exports = class Account extends StepView
       success: =>
         @next()
 
+  forgot: (active, mode) ->
+    return unless mode is 'forgot'
+    @sendResetOnce()
+
   change: (e) ->
     e.preventDefault()
-    @__mode__ = $(e.currentTarget).data 'mode'
-    @render()
+    @active.set 'mode', $(e.currentTarget).data 'mode'
