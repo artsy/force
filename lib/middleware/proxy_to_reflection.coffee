@@ -20,4 +20,3 @@ reflectionUrl = (req) ->
   query = url.query?.replace(/&?_escaped_fragment_=/, '')
   dest += encodeURIComponent("?" + decodeURIComponent(query)) if query?.length
   dest
-  
