@@ -46,5 +46,10 @@ module.exports = class ArtistWorksView extends Backbone.View
       allowDuplicates: true
       maxArtworkHeight: 600
 
-  clearArtistWorks: ->
-    @filterState.set 'artist', null
+  clearArtistWorks: =>
+    $('.filter-artist[data-state=selected] .filter-artist-clear').click()
+
+
+
+
+

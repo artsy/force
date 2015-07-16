@@ -24,7 +24,7 @@ describe 'SidebarView', ->
     artist1 = get: -> { name: 'Kina', id: 'kina-abe', published_artworks_count: 4 }
     artist2 = get: -> { name: 'Kana', id: 'kana-abe', published_artworks_count: 5 }
     artists.models = [ artist1, artist2 ]
-    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: artists }, =>
+    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: { FOLLOWING: artists }, asset: (->) }, =>
       @SidebarView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/sidebar.coffee'), ['filterArtistTemplate']
         )
@@ -45,6 +45,7 @@ describe 'SidebarView', ->
   describe '#toggleArtist, #clearArtistWorks', ->
 
     it 'selects the artist when clicked', ->
+
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe]').attr('data-state').should.containEql 'selected'
 

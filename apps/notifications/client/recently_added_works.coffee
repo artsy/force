@@ -23,14 +23,12 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @listenTo @notifications, 'sync', @appendArtworks
     @filterState.on 'change', @render
 
-    @setup =>
-      console.log 'setup done'
-      # @notifications.getFirstPage()?.then(@checkIfEmpty)
+    @setup()
 
-  setup: (cb) ->
+  setup: ->
     { artist_id } = @params()
 
-    return cb() unless artist_id?
+    return unless artist_id?
 
     @pinnedArtist = new Artist id: artist_id
     @pinnedArtworks = @pinnedArtist.related().artworks
@@ -42,14 +40,11 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
-      cb()
-    , cb # Ignore errors
 
   params: ->
     qs.parse(location.search.substring(1))
 
   appendArtworks: ->
-    console.log 'appendArtworks'
     if @notifications.state.currentPage is 1
       @resetFeed()
     else
@@ -103,8 +98,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
         $('#notifications-feed').addClass 'end-of-content'
 
   isEmpty: ->
-    !@notifications.length and
-    !@pinnedArtworks?.length is !@filterState.get('forSale')
+    !@notifications.length and !@pinnedArtworks?.length
 
   checkIfEmpty: =>
     if @isEmpty()
@@ -126,8 +120,10 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
                 size: 10
                 published: true
       ).then (artworks) =>
-        @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> -a.published_at )
-        @appendArtworks()
+        if artworks.length
+          @notifications.add _.sortBy(_.flatten(artworks, true), (a) -> -a.published_at )
+          @notifications.trigger 'sync'
+
         $('#notifications-feed').addClass 'end-of-content'
         @filterState.set('empty', true) if @isEmpty()
 
@@ -145,16 +141,16 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     # Reset the DOM
     @renderMethod = 'html'
     @columnViews = []
+    $('#notifications-feed').html ''
     # Reset the waypoints
     $.waypoints 'destroy'
     @attachScrollHandler()
 
   render: =>
     return if @filterState.get 'artist'
-    return unless @filterState.get 'loading'
-    console.log 'render called'
-    @notifications.state.currentPage = 1
+    return if !@filterState.get 'loading'
     @$pins.hide() # Only relevant on initial load
+    @notifications.state.currentPage = 1
     @notifications.getFirstPage(
       data: for_sale: @filterState.get('forSale')
       success: =>
