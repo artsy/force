@@ -1,4 +1,4 @@
-
+#
 # When Google requests _escaped_fragement_ proxy to Reflection
 # https://github.com/artsy/reflection
 #
@@ -20,3 +20,4 @@ reflectionUrl = (req) ->
   query = url.query?.replace(/&?_escaped_fragment_=/, '')
   dest += encodeURIComponent("?" + decodeURIComponent(query)) if query?.length
   dest
+  
