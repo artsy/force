@@ -47,7 +47,11 @@ setupUser = (user, auction) ->
     setupUser(user, auction)
   ])
     .then ->
-      articles.fetch(cache: true, data: published: true, auction_id: auction.get('_id'))
+      Q.promise (resolve) ->
+        articles.fetch
+          cache: true
+          data: published: true, auction_id: auction.get('_id')
+          complete: resolve
     .then ->
       return next() if auction.isSale()
 
