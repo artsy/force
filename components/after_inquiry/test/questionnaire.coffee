@@ -17,13 +17,16 @@ describe 'Questionnaire', ->
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
 
       @Questionnaire = benv.requireWithJadeify resolve(__dirname, '../questionnaire'), [
-        'templateMap.initial', 'templateMap.questionnaire', 'templateMap.signup', 'templateMap.login'
+        'templateMap.initial'
+        'templateMap.questionnaire'
+        'templateMap.signup'
+        'templateMap.login'
       ]
 
       sinon.stub _, 'delay', (cb) -> cb()
       sinon.stub Backbone, 'sync'
       sinon.stub @Questionnaire::, 'attachLocationSearch'
-      sinon.stub @Questionnaire::, 'attachBookmarksView'
+      sinon.stub @Questionnaire::, 'attachUserInterestsView'
       sinon.stub @Questionnaire::, 'close'
       sinon.stub(@Questionnaire::, 'modalTemplate').returns('<div class="modal-body"></div>')
 
@@ -42,7 +45,7 @@ describe 'Questionnaire', ->
     _.delay.restore()
     Backbone.sync.restore()
     @view.attachLocationSearch.restore?()
-    @view.attachBookmarksView.restore?()
+    @view.attachUserInterestsView.restore?()
     @view.modalTemplate.restore?()
     @view.close.restore?()
 
@@ -168,7 +171,7 @@ describe 'Questionnaire', ->
 
           sinon.stub @Questionnaire::, 'close'
           sinon.stub Backbone, 'sync'
-          @view.bookmarksView = saveAll: sinon.stub()
+          @view.userInterestsView = saveAll: sinon.stub()
 
           model.success()
 
@@ -176,8 +179,8 @@ describe 'Questionnaire', ->
           Backbone.sync.called.should.be.true()
           Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
 
-        it 'saves all the bookmarks', ->
-          @view.bookmarksView.saveAll.called.should.be.true()
+        it 'saves all the userInterests', ->
+          @view.userInterestsView.saveAll.called.should.be.true()
 
         it 'closes the modal', ->
           @view.close.called.should.be.true()
@@ -221,7 +224,7 @@ describe 'Questionnaire', ->
           html = @view.$el.html()
           html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
-          @view.attachBookmarksView.called.should.be.true()
+          @view.attachUserInterestsView.called.should.be.true()
 
       describe 'collector level 2', ->
         it 'should advance to the next state on click and have the correct copy', ->
@@ -231,7 +234,7 @@ describe 'Questionnaire', ->
           html = @view.$el.html()
           html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
-          @view.attachBookmarksView.called.should.be.false()
+          @view.attachUserInterestsView.called.should.be.false()
 
     describe '#done', ->
       beforeEach ->
