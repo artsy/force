@@ -1,0 +1,7 @@
+for userInterest in userInterests.models
+  .user-interest.results-list-item
+    .user-interest-name.garamond-results-list-item-cell
+      = userInterest.related().interest.get('name')
+    .user-interest-remove.results-list-item-cell.js-user-interest-remove(
+      data-id= userInterest.related().interest.id
+    )

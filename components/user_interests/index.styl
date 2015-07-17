@@ -1,25 +1,16 @@
 @import '../stylus_lib'
 
-#bookmark-artists-results
+.user-interests-results
   margin 10px 0
-  opacity 0
-  transition opacity 0.5s
-  &.is-fade-in
-    opacity 1
+  fade-in()
   &:empty
     display none
-  &.is-pre
-    .results-list-item:last-child
+  &.is-pre .results-list-item:last-child
       border-bottom none
-  &.is-post
-    .results-list-item:first-child
+  &.is-post .results-list-item:first-child
       border-top none
-  .results-list-item-cell:first-child
-    font-family inherit
-    text-transform inherit
-    font-size inherit
 
-.bookmark-artist-remove
+.user-interest-remove
   padding 10px 10px 10px 20px
   cursor pointer
   iconfont-styling()

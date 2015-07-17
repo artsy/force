@@ -1,7 +1,8 @@
 if mode === 'pre'
-  #bookmark-artists-results.results-list.is-pre
+  .user-interests-results.results-list.is-pre.js-user-interests-results
     //- Rendered separately
-#bookmark-artists-search.autocomplete-input-container.is-block
+
+.autocomplete-input-container.is-block.js-user-interests-search
   input.bordered-input.autocomplete-input(
     type='text'
     placeholder='Add an artist you own work by'
@@ -10,6 +11,7 @@ if mode === 'pre'
   .autocomplete-loading-indicator: .loading-spinner-small
   .autocomplete-feedback
     //- Rendered separately
+
 if mode === 'post'
-  #bookmark-artists-results.results-list.is-post
+  .user-interests-results.results-list.is-post.js-user-interests-results
     //- Rendered separately

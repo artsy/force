@@ -1,6 +1,6 @@
 StepView = require './step.coffee'
 analytics = require '../../../../lib/analytics.coffee'
-BookmarksSearchView = require '../../../../components/bookmarks/view.coffee'
+UserInterestsView = require '../../../../components/user_interests/view.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
 template = -> require('../../templates/bookmarks.jade') arguments...
 
@@ -11,11 +11,16 @@ module.exports = class BookmarksView extends StepView
     'click .personalize-skip': 'advance'
 
   postRender: ->
-    @bookmarksSearchView = new BookmarksSearchView el: @$('#personalize-bookmark-artists'), autofocus: @autofocus()
-    @listenTo @bookmarksSearchView, 'collect uncollect', @setSkipLabel
-    @listenTo @bookmarksSearchView, 'collect', ->
+    @userInterestsView = new UserInterestsView autofocus: @autofocus()
+    @$('#personalize-bookmark-artists').html @userInterestsView.render().$el
+
+    @userInterests = @userInterestsView.collection
+    @userInterests.fetch()
+
+    @listenTo @userInterests, 'add remove', @setSkipLabel
+    @listenTo @userInterests, 'add', ->
       analytics.track.funnel 'Added an artist to their collection from /personalize', label: "User:#{@user.id}"
-    @listenTo @bookmarksSearchView, 'uncollect', ->
+    @listenTo @userInterestsView, 'uncollect', ->
       analytics.track.funnel 'Removed an artist from their collection from /personalize', label: "User:#{@user.id}"
 
   render: ->
@@ -24,5 +29,5 @@ module.exports = class BookmarksView extends StepView
     this
 
   remove: ->
-    @bookmarksSearchView.remove()
+    @userInterestsView.remove()
     super
