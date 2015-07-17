@@ -51,7 +51,7 @@ describe 'RelatedShowsView', ->
       Backbone.sync.args[0][2].success [relatedShow]
       @view.$('.show-related-show-title').html().should.containEql 'Test Show'
       @view.$('.show-related-show-partner').html().should.containEql 'Test Gallery'
-      @view.$('.show-related-show-running-dates').html().should.containEql 'July 12 – August 23'
+      @view.$('.show-related-show-running-dates').html().should.containEql 'Jul. 12th – Aug. 23rd 2013'
 
     xit 'displays the correct number of install shots', ->
       # this relies on a query to the width of an element on the dom
