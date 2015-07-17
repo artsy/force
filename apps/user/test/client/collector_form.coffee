@@ -1,21 +1,22 @@
-_ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Profile = require '../../../../models/profile.coffee'
 UserEdit = require '../../models/user_edit.coffee'
 CurrentUser = require '../../../../models/current_user'
-CollectorForm = benv.requireWithJadeify((resolve __dirname, '../../client/collector_form.coffee'), ['template'])
+CollectorForm = benv.requireWithJadeify require.resolve('../../client/collector_form.coffee'), ['template']
 CollectorForm.__set__ 'LocationSearchView', Backbone.View
-BookmarksView = class BookmarksView extends Backbone.View
-  initialize: -> @bookmarks = new Backbone.Collection
-CollectorForm.__set__ 'BookmarksView', BookmarksView
+UserInterestsView = benv.requireWithJadeify require.resolve('../../../../components/user_interests/view'), [
+  'template'
+  'collectionTemplate'
+]
+UserInterestsView::postRender = -> #
+CollectorForm.__set__ 'UserInterestsView', UserInterestsView
 
 describe 'CollectorForm', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
@@ -23,15 +24,13 @@ describe 'CollectorForm', ->
   after ->
     benv.teardown()
 
-  beforeEach (done) ->
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
     @user = new CurrentUser fabricate 'user'
     @userEdit = new UserEdit fabricate 'user'
     @view = new CollectorForm userEdit: @userEdit, user: @user
     @view.render()
-
-    sinon.stub Backbone, 'sync'
-
-    done()
 
   afterEach ->
     Backbone.sync.restore()
@@ -47,9 +46,9 @@ describe 'CollectorForm', ->
     afterEach ->
       @view.syncIntroduction.restore()
 
-    it 'syncs when a bookmark is destroyed', ->
-      bookmark = new Backbone.Model
-      @view.bookmarksView.bookmarks.trigger 'remove', bookmark
+    it 'syncs when a userInterest is destroyed', ->
+      userInterest = new Backbone.Model
+      @view.userInterestsView.collection.trigger 'remove', userInterest
       @view.syncIntroduction.callCount.should.equal 0
-      bookmark.trigger 'sync'
+      userInterest.trigger 'sync'
       @view.syncIntroduction.callCount.should.equal 1
