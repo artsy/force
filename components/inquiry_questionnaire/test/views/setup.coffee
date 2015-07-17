@@ -11,15 +11,14 @@ StepView = require '../../views/step'
 
 module.exports = (cb) -> _.wrap cb, (cb) ->
   before (done) ->
-    sinon.stub StepView::, 'autofocus'
-
+    sinon.stub _, 'defer', (cb) -> cb()
     benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
   after ->
-    StepView::autofocus.restore()
+    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
