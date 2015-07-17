@@ -2,7 +2,7 @@ CurrentUser = require '../../../models/current_user'
 State = require '../../branching_state'
 map = require '../map'
 
-xdescribe 'map', ->
+describe 'map', ->
   beforeEach ->
     @state = new State map
     @user = new CurrentUser # logged in user

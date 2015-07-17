@@ -1,5 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
+sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
@@ -17,14 +18,16 @@ InquiryQuestionnaireView.__set__ 'map', {
   steps: ['exampleA', 'exampleB']
 }
 
-xdescribe 'InquiryQuestionnaireView', ->
+describe 'InquiryQuestionnaireView', ->
   before (done) ->
+    sinon.stub _, 'defer', (cb) -> cb()
     benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
   after ->
+    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
