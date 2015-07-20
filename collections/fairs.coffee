@@ -14,53 +14,52 @@ module.exports = class Fairs extends Backbone.Collection
 
   url: "#{sd.API_URL}/api/v1/fairs"
 
-  aroundDate: (date) ->
-    start = moment(date).subtract(1, 'month')
-    end = moment(date).add(1, 'month')
-
-    new Fairs @filter (fair)->
-      moment(fair.get('start_at')).isBetween start, end
-
-  currentRows: (date) ->
-    fairs = @chain()
-      .filter((fair) -> fair.isCurrent(date))
-      .sortBy((fair) -> fair.get('tier'))
+  currentFairs: ->
+    @chain()
+      .filter((fair) -> fair.isCurrent())
+      .sortBy((fair) -> fair.bannerSize())
       .value()
 
-    @fillCurrentRows fairs
+  currentRows: ->
+    @fillCurrentRows @currentFairs()
 
   fillCurrentRows: (fairs) ->
-
     rows = []
 
     if fairs.length is 1
       rows.push @makeRow(fairs, 'full')
       return rows
 
-    if fairs.length is 3 and (_.every fairs, (fair) -> fair.get('tier') isnt 1)
+    if fairs.length is 3 and (_.all fairs, (fair) -> fair.bannerSize() isnt 1)
       rows.push(@makeRow(fairs, 'three-third'))
       return rows
 
     for fair in fairs
       unless fair.has('in_row')
-        switch fair.get('tier')
-          # highest tier fairs get a full row
+        switch fair.bannerSize()
+          # x-large banner_size fairs get a full row
           when 1
             rows.push @makeRow [fair], "full"
             break
-          # tier two looks for another tier 2 first,
-          # if it doesn't find one then it looks for a tier 3,
+          # banner_size 'large' looks for another banner_size 'large' first,
+          # if it doesn't find one then it looks for a banner_size 'medium' or 'small',
           # if not it settles for a two-third promo
           when 2
-            neighbor = _.find fairs, (f) ->
-
+            neighbor = _.chain(fairs)
+              .reject((f) -> f.id is fair.id)
+              .reject((f) -> f.has('in_row'))
+              .find((f) -> f.bannerSize() is 2)
+              .value()
 
             if neighbor
               rows.push @makeRow [fair, neighbor], 'half'
               break
 
-            neighbor = _.find fairs, (f) ->
-              !f.has('in_row') and (f.get('tier') is 3 or f.get('tier') is 4) and f.id isnt fair.id
+            neighbor = _.chain(fairs)
+              .reject((f) -> f.id is fair.id)
+              .reject((f) -> f.has('in_row'))
+              .find((f) -> f.bannerSize() is 3 or f.bannerSize() is 4)
+              .value()
 
             if neighbor
               rows.push @makeRow [fair, neighbor], 'two-third'
@@ -68,13 +67,14 @@ module.exports = class Fairs extends Backbone.Collection
               rows.push @makeRow [fair], 'two-third-promo'
 
             break
-          # tier 3 looks for two more fairs to complete a row,
+          # banner_size 'medium' looks for two more fairs to complete a row,
           # if not it settles for a half row,
           # if not that, it settles for a half promo
           when 3, 4
             neighbors = _.chain(fairs)
-              .filter((f) ->
-                !f.has('in_row') and (f.get('tier') is 3 or f.get('tier') is 4) and f.id isnt fair.id)
+              .filter((f) -> f.bannerSize() is 3 or f.bannerSize() is 4)
+              .reject((f) -> f.id is fair.id)
+              .reject((f) -> f.has('in_row'))
               .take(2)
               .value()
 

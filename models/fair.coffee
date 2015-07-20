@@ -15,9 +15,6 @@ Relations = require './mixins/relations/fair.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Fair extends Backbone.Model
-  defaults:
-    tier: 3
-
   _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
@@ -58,6 +55,15 @@ module.exports = class Fair extends Backbone.Model
 
   formatDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
+
+  bannerSize: ->
+    sizes =
+      'x-large' : 1
+      'large' : 2
+      'medium' : 3
+      'small' : 4
+      'x-small' : 5
+    sizes[@get('banner_size')]
 
   fetchExhibitors: (options) ->
     galleries = new @aToZCollection('show', 'partner')
@@ -210,26 +216,28 @@ module.exports = class Fair extends Backbone.Model
 
   isEventuallyEligible: ->
     @get('has_full_feature') and
-    @get('published')
+    @get('published') and
+    not @related().profile.get('published')
 
-  hasStarted: (date = new Date()) ->
-    Date.parse(@get('start_at')) < date
+  hasStarted: ->
+    Date.parse(@get('start_at')) < new Date
 
-  hasNotStarted: (date = new Date()) ->
-    Date.parse(@get('start_at')) > date
+  hasNotStarted: ->
+    Date.parse(@get('start_at')) > new Date
 
-  isNotOver: (date = new Date()) ->
-    Date.parse(@get('end_at')) > date
+  isNotOver: ->
+    Date.parse(@get('end_at')) > new Date
 
-  isOver: (date = new Date()) ->
-    Date.parse(@get('end_at')) < date
+  isOver: ->
+    Date.parse(@get('end_at')) < new Date
 
-  isCurrent: (date) ->
-    @isEligible() and @hasStarted(date) and @isNotOver(date)
+  isCurrent: ->
+    @isEligible() and @isNotOver()
 
-  isUpcoming: (date)->
-    @isEligible() and @hasNotStarted(date) and @isNotOver(date)
+  isUpcoming: ->
+    @isEventuallyEligible() and @isNotOver()
 
-  isPast: (date) ->
-    @isEligible() and @isOver(date)
+  isPast: ->
+    @isEligible() and @isOver()
+
 
