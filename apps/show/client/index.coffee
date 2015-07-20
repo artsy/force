@@ -15,18 +15,13 @@ RelatedArticlesView = require '../components/related_articles/view.coffee'
 MapModal = require '../components/map_modal/map.coffee'
 zoom = require '../../../components/zoom/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
+blurb = require '../../../components/gradient_blurb/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
   show.related().artworks.reset ARTWORKS
 
-  if $('.show-press-release').height() > 350
-    $('.show-press-release').addClass 'show-read-more'
-
-  $('.read-more').click (e) ->
-    $('.show-press-release')
-      .removeClass 'show-read-more'
-      .addClass 'full-press-release'
+  blurb $('.show-press-release'), limit: 350
 
   $('.js-open-show-events').click (e) ->
     e.preventDefault()

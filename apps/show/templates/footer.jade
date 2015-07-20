@@ -6,10 +6,7 @@ if show.get('press_release') || show.related().artists.length
           h3.show-subheadline
             | Press Release
           .show-press-release
-            .press-text
-              != show.mdToHtml('press_release')
-            .read-more-fade
-            .read-more Read More
+            != show.mdToHtml('press_release')
 
       .show-footer-cell
         h3.show-subheadline
