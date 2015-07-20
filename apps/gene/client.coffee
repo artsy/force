@@ -58,7 +58,7 @@ module.exports.init = ->
 
   gene.fetchArtists 'related'
 
-  new ShareView el: $('#gene-share-buttons')
+  new ShareView el: $('.js-gene-share-buttons')
 
   following = if user then new Following(null, kind: 'gene') else null
   new FollowButton
@@ -68,7 +68,7 @@ module.exports.init = ->
     model: gene
   following?.syncFollows [ gene.id ]
 
-  blurb $('.blurb'), limit: 250
+  blurb $('.js-gene-blurb'), limit: 250
 
   new RelatedGenesView
     el: $('.main-layout-container .related-genes')
