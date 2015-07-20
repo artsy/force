@@ -8,18 +8,23 @@ append locals
   - assetPackage = 'gene'
 
 block body
-  .main-layout-container
-    header#gene-header
-      h1.avant-garde-header-center= gene.get('name')
-      .avant-garde-button-white.follow-button
-      #gene-share-buttons
+  .gene-page.main-layout-container
+
+    header.gene-header
+      h1.gene-header-headline
+        = gene.get('name')
+
+      a.gene-header-follow-button.avant-garde-button-white.follow-button
+
+      .gene-share-buttons.js-gene-share-buttons
         +share(gene.get('name') + ' on Artsy', gene.imageUrl())
 
     .bisected-header
       if gene.get('description')
-        .bisected-header-cell.gene-blurb
+        .bisected-header-cell
           h2 About
-          .blurb!= gene.mdToHtml('description')
+          .gene-blurb.js-gene-blurb
+            != gene.mdToHtml('description')
       .bisected-header-cell
         .related-genes.related-links
           //- Rendered client-side

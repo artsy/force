@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Gene = require '../../models/gene.coffee'
 scrollFrame = require 'scroll-frame'
 CurrentUser = require '../../models/current_user.coffee'
-BlurbView = require '../../components/blurb/view.coffee'
+blurb = require '../../components/gradient_blurb/index.coffee'
 ShareView = require '../../components/share/view.coffee'
 ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
@@ -58,7 +58,7 @@ module.exports.init = ->
 
   gene.fetchArtists 'related'
 
-  new ShareView el: $('#gene-share-buttons')
+  new ShareView el: $('.js-gene-share-buttons')
 
   following = if user then new Following(null, kind: 'gene') else null
   new FollowButton
@@ -68,13 +68,7 @@ module.exports.init = ->
     model: gene
   following?.syncFollows [ gene.id ]
 
-  if ($blurb = $('.blurb')).length
-    new BlurbView
-      el: $blurb
-      lineCount: 7
-      updateOnResize: true
-
-    $blurb.css maxHeight: 'none'
+  blurb $('.js-gene-blurb'), limit: 250
 
   new RelatedGenesView
     el: $('.main-layout-container .related-genes')
