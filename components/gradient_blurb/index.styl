@@ -1,0 +1,27 @@
+@import '../../components/stylus_lib'
+
+.gradient-blurb
+  position relative
+  overflow hidden
+  transition max-height 1s
+  &:after
+    display block
+    position absolute
+    content ''
+    right 0
+    bottom 0
+    left 0
+    height 125px
+    background-image linear-gradient(to bottom, transparent, white 100px)
+
+  &.is-expanded:after
+    display none
+
+.gradient-blurb-read-more
+  display block
+  position absolute
+  bottom 0
+  left 0
+  avant-garde-size('m-headline')
+  z-index 1
+  text-decoration none
