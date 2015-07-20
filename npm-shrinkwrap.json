@@ -3208,11 +3208,6 @@
       "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-82198-83578ea3/git-cache-a35b89ba7136/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
-    "gmaps": {
-      "version": "0.4.18",
-      "from": "https://registry.npmjs.org/gmaps/-/gmaps-0.4.18.tgz",
-      "resolved": "https://registry.npmjs.org/gmaps/-/gmaps-0.4.18.tgz"
-    },
     "graceful-fs": {
       "version": "3.0.8",
       "from": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.8.tgz",
