@@ -5,9 +5,9 @@ mixin current-fair-figure(fair)
         .hoverable-image( style="background-image: url(#{fair.imageUrl('wide')});" )
       img.fairs__current-fair__image__icon( alt=fair.get('name'), title=fair.get('name'), src=fair.related().profile.icon().imageUrl('square') )
     .fairs-fair__name= fair.get('name')
-    .fairs-fair__info 
+    .fairs-fair__info
       | #{fair.formatDates()}
-      if fair.formatLocation() 
+      if fair.formatLocation()
         | , #{fair.formatLocation()}
 
 each row in currentFairRows
@@ -17,5 +17,8 @@ each row in currentFairRows
     if row.type == 'two-third-promo' || row.type == 'half-promo'
       .fairs__current__promo
         a(href="https://iphone.artsy.net/")
-          .mobile-section-iphone &nbsp;
-          .fairs__current__promo__copy Download Artsy for iPhone for a personalized guide to the show.
+          .mobile-section-iphone-large &nbsp;
+          .fairs__current__promo__copy
+            | Download Artsy for iPhone for a
+            br
+            | personalized guide to the show.
