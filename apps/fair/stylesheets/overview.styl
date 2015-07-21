@@ -76,13 +76,13 @@ gutter-size = 30px
      .fair-spacer
        display inline-block
        padding 0px 5px
-
+       
 .fair-overview-top
   min-height browse-container-height
   position relative
   max-width feed-max-width
   line-height: 151%
-  margin 25px auto 0px
+  margin 29px auto 0px
   .fair-overview-top-left
     width left-column-width - 25px
     position absolute
@@ -96,6 +96,10 @@ gutter-size = 30px
     top 0px
   .fair-name
     margin-top: 23px
+  
+html[data-useragent*="Firefox"]
+  .fair-overview-top
+    margin-top 28px
 
 .overview-heading
   color white
