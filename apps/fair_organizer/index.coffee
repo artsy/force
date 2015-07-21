@@ -14,7 +14,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 getFairOrgData = [
-  timeout('55s')
+  timeout('25s')
   routes.fetchFairOrgData
   (req, res, next) -> next() unless req.timedout
 ]
