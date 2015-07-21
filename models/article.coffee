@@ -87,7 +87,7 @@ module.exports = class Article extends Backbone.Model
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
-      "headline": @get('title')
+      "headline": @get('thumbnail_title')
       "url": @href()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
