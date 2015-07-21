@@ -252,6 +252,7 @@ module.exports = (app) ->
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
+  app.use require "../apps/sitemaps"
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->
