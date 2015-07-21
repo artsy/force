@@ -240,6 +240,7 @@ module.exports = (app) ->
   app.use require "../apps/unsupported_browser"
   # Temporary, until we update gravity and data
   app.use require "../apps/profile"
+  app.use require "../apps/organization"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
   app.use require "../apps/articles"
