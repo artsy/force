@@ -76,7 +76,7 @@ class AuctionReminderModal extends Backbone.View
       fetch
         url: "#{API_URL}/api/v1/system/time"
         success: (model) =>
-          offset = moment().diff(model.get('time'))
+          offset = moment().diff(model.get('iso8601'))
           endat = moment(@auctionEndat).add(offset)
           callback endat
 
