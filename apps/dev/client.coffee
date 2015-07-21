@@ -7,6 +7,6 @@ module.exports.init = ->
   artwork = new Artwork ARTWORK
   user = User.instantiate()
 
-  $('.js-open').click (e) ->
+  $('.js-open-inquiry-flow').click (e) ->
     user.set name: 'Damon Zucconi', email: 'damon@artsymail.com', prequalified: !$(this).data('prequalify')
     openInquiryQuestionnaireFor user: user, artwork: artwork
