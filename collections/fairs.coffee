@@ -21,9 +21,9 @@ module.exports = class Fairs extends Backbone.Collection
       .value()
 
   currentRows: ->
-    @fillCurrentRows @currentFairs()
+    @fillRows @currentFairs()
 
-  fillCurrentRows: (fairs) ->
+  fillRows: (fairs) ->
     rows = []
 
     if fairs.length is 1
@@ -88,7 +88,6 @@ module.exports = class Fairs extends Backbone.Collection
               rows.push @makeRow [fair], 'half-promo'
 
             break
-
     rows
 
   makeRow: (fairs, type) ->

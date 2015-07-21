@@ -32,20 +32,15 @@ parseGroups = (fairs) ->
       size: 50
       has_full_feature: true
     success: =>
-      console.log 'got fairs'
       featuredFairs = new Items [], id: '55a4204d72616970e40000f9'
       { currentFairs, pastFairs, upcomingFairs } = {}
 
       Q.allSettled(profiles(fairs))
       .then =>
-        console.log 'got profiles'
         { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs)
         allFairs = _.flatten [currentFairs, pastFairs, upcomingFairs]
-        Q.all _.compact _.flatten [
-          _.map(allFairs, (fair) -> fair.fetch(cache: true))
-        ]
+        Q.all _.map(allFairs, (fair) -> fair.fetch(cache: true))
       .then =>
-        console.log 'render?'
         res.locals.sd.FAIRS = fairs
         res.render 'index',
           featuredFairs: featuredFairs.models
