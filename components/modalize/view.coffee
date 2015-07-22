@@ -33,6 +33,7 @@ module.exports = class Modalize extends Backbone.View
   render: ->
     unless @__rendered__
       @__render__()
+      @trigger 'opening'
     @postRender()
     this
 
@@ -45,6 +46,7 @@ module.exports = class Modalize extends Backbone.View
   postRender: ->
     unless @__postRendered__
       @__postRender__()
+      @trigger 'opened'
     else
       @subView.render().$el
     this
@@ -58,7 +60,9 @@ module.exports = class Modalize extends Backbone.View
   close: (callback) ->
     $(window).off 'keyup.modalize'
     @scrollbar.reenable()
+    @trigger 'closing'
     @state 'close', =>
       @subView?.remove?()
       @remove()
       callback?()
+      @trigger 'closed'

@@ -9,11 +9,17 @@ module.exports = class ArtistsInCollection extends StepView
     'click button': 'next'
 
   postRender: ->
+    { collectorProfile } = @user.related()
+    { userInterests } = collectorProfile.related()
+
+    userInterests.fetch silent: true
+
     @userInterestsView = new UserInterestsView
-      collectorProfile: @user.related().collectorProfile
+      collectorProfile: collectorProfile
+      collection: userInterests
       autofocus: true
+
     @$('.js-bookmark-artists').html @userInterestsView.render().$el
-    @userInterestsView.collection.fetch()
 
   remove: ->
     @userInterestsView.remove()

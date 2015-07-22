@@ -28,7 +28,7 @@ module.exports = class UserInterestsView extends Backbone.View
       @persist,
       @collectorProfile } = _.defaults options, @defaults
 
-    @collection = new UserInterests [], collectorProfile: @collectorProfile
+    @collection ?= new UserInterests [], collectorProfile: @collectorProfile
     @following = new Following [], kind: 'artist'
 
     @listenTo @collection, 'sync add remove', @renderCollection

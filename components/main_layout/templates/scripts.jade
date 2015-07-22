@@ -25,4 +25,9 @@ if sd.SENTRY_PUBLIC_DSN
     }).install();
 
 //- Stripe
-script( type="text/javascript" src="https://js.stripe.com/v2/" )
+script( type="text/javascript", src="https://js.stripe.com/v2/" )
+
+if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+  script( src=asset('/assets/analytics.js') )
+
+script( src= asset('/assets/main_layout.js') )
