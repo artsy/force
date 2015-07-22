@@ -21,10 +21,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    if splitTest('homepage_contents').outcome() is 'featured' or @user
-      @renderArtworks()
-
-    @setupArtworkFilter() if splitTest('homepage_contents').outcome() is 'artworks'
+    @renderArtworks() if @user
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
@@ -34,26 +31,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
     return if parseInt(Cookies.get 'favorites_onboarding_dismiss_count') >= 2
     OnboardingModal = require '../../../components/favorites2/client/onboarding_modal.coffee'
     new OnboardingModal width: 1000
-
-  setupArtworkFilter: ->
-    setupFilter
-      el: $ '#home-artworks-filter'
-      aggregations: aggregationParams
-      startHistory: no
-      includeFixedHeader: no
-
-    scrollFrame '#home-artworks a'
-
-    if @user
-      position = @$('#home-artworks-section').offset().top
-    else
-      position = @$('#home-featured-artworks-section').offset().top + @$('#home-featured-artworks-section').outerHeight()
-
-    @jump = new JumpView
-      direction: 'bottom'
-      threshold: $(window).height()
-      position: position
-    @$el.append @jump.$el
 
   renderArtworks: ->
     subView = new FeaturedArtworksView user: @user
