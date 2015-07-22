@@ -35,7 +35,7 @@ describe 'Gene routes', ->
         @res.render.args[0][0].should.equal 'index'
         done()
 
-    it 'redirects to the correct URL if the gene slug has been updated', ->
+    it 'redirects to the correct URL if the gene slug has been updated', (done) ->
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'not-foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
