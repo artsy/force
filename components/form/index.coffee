@@ -44,7 +44,12 @@ module.exports = class Form
   submitting: ->
     return @__submitting__ if @__submitting__
     @__submitting__ = true
-    @$submit.prop 'disabled', true
+
+    # Defer submit disable so as to allow
+    # event handlers to finish propagating
+    _.defer =>
+      @$submit.prop 'disabled', true
+
     false
 
   reenable: (reset = false) ->
