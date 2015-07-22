@@ -9,6 +9,6 @@ meta( property="og:type", content="article" )
 meta( property="og:published_time", content=article.get('published_at') )
 meta( property="twitter:card", content="summary_large_image" )
 meta( property="og:image", content=article.get('thumbnail_image') )
-meta( property="news_keywords", content=article.get('tags').join(','))
+meta( property="news_keywords", content=article.get('tags') && article.get('tags').join(',')
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
