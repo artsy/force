@@ -1,13 +1,11 @@
 .fair-sections-container
   .sections-left
     .fair-sections-small-heading
-      | Browse 
+      | Browse
       = fair.get('name')
     .fair-search-options
-      for column in filteredSearchColumns
-        .fair-search-options-column
-          for item in column
-            a( href=item.href )= item.name
+      for gene in fair.get('filter_genes')
+        a( href=fair.href() + '/browse/artworks?related_gene=' + gene.id )= gene.name
     .a-to-z-section-links
       a( href=fair.href() + '/browse/artists') Artists A-Z
       .fair-spacer |
