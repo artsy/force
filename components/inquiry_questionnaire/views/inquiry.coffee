@@ -8,14 +8,10 @@ template = -> require('../templates/inquiry.jade') arguments...
 module.exports = class Inquiry extends StepView
   template: (data) ->
     template _.extend data,
-      defaultMessage: defaultMessage @artwork, @artwork.related().partner
+      message: @inquiry.get('message')
 
   __events__:
     'click button': 'serialize'
-
-  initialize: ->
-    @inquiry = new ArtworkInquiry
-    super
 
   serialize: (e) ->
     form = new Form model: @inquiry, $form: @$('form')
