@@ -21,19 +21,17 @@ block body
       | API_URL: #{API_URL}
       | ARTWORK_ID: #{artwork.id}
 
-    hr.is-invisible
-
-    pre.debug
-      | STEPS: [
-      for step, i in views
-        a.js-bypass( href='#', data-step= step )= step
-        unless i === views.length - 1
-          = ', '
-      |]
-
-    hr.is-invisible
-
     if (NODE_ENV === 'development' || NODE_ENV === 'staging') && API_URL === 'https://stagingapi.artsy.net'
+      hr.is-invisible
+
+      pre.debug
+        | STEPS: [
+        for step, i in views
+          a.js-bypass( href='#', data-step= step )= step
+          unless i === views.length - 1
+            = ', '
+        |]
+
       hr.is-invisible
 
       .grid-2-up
@@ -49,4 +47,4 @@ block body
           .debug-embedded-inquiry-form.js-embedded-inquiry-form-container
             include ../../components/embedded_inquiry/template
 
-    hr.is-invisible
+      hr.is-invisible
