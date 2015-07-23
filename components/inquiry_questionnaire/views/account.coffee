@@ -8,7 +8,7 @@ templates =
   forgot: -> require('../templates/account/forgot.jade') arguments...
 
 module.exports = class Account extends StepView
-  className: 'iq-account is-loading'
+  className: 'iq-account iq-loadable is-loading'
 
   template: ->
     templates[@mode()] arguments...
@@ -17,11 +17,11 @@ module.exports = class Account extends StepView
     'click .js-mode': 'change'
     'click button': 'submit'
 
-  initialize: ({ @user, @state, @artwork }) ->
+  initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @active = new Backbone.Model mode: 'auth'
 
-    @listenTo @user.related().account, 'sync', @render
-    @listenToOnce @user.related().account, 'sync', @done
+    @listenTo @user.related().account, 'sync error', @render
+    @listenToOnce @user.related().account, 'sync error', @done
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
 
