@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user'
 LoggedOutUser = require '../../../../models/logged_out_user'
 Artwork = require '../../../../models/artwork'
+ArtworkInquiry = require '../../../../models/artwork_inquiry'
 State = require '../../../branching_state/index.coffee'
 StepView = require '../../views/step'
 
@@ -25,6 +26,7 @@ module.exports = (cb) -> _.wrap cb, (cb) ->
     @currentUser = new CurrentUser fabricate 'user'
     @loggedOutUser = new LoggedOutUser fabricate 'user'
     @artwork = new Artwork fabricate 'artwork'
+    @inquiry = new ArtworkInquiry
     @state = new State
 
   cb()
