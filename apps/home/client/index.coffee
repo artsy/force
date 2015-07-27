@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-scrollFrame = require 'scroll-frame'
 Cookies = require 'cookies-js'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'

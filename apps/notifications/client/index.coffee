@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ FOLLOWING } = require('sharify').data
+{ FOLLOWING } = sd = require('sharify').data
 scrollFrame = require 'scroll-frame'
 qs = require 'querystring'
 Notifications = require '../../../collections/notifications.coffee'
@@ -70,5 +70,5 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
 module.exports.init = ->
   new NotificationsView el: $('body')
-  scrollFrame '#notifications-feed a'
+  scrollFrame '#notifications-feed a' unless sd.EIGEN
   require './analytics.coffee'
