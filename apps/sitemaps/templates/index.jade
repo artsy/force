@@ -1,0 +1,10 @@
+doctype xml
+sitemapindex(
+  xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
+)
+  for resource, i in resources
+    for n, j in new Array(allPages[i])
+      sitemap
+        loc=sd.APP_URL + '/sitemap-' + resource + '-' + j + '.xml'
+      
+

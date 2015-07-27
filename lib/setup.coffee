@@ -29,7 +29,6 @@ artsyPassport = require 'artsy-passport'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
-proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 ensureSSL = require './middleware/ensure_ssl'
@@ -179,7 +178,6 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxySitemaps.app
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL

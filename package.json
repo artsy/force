@@ -16,6 +16,7 @@
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-passport": "git://github.com/artsy/artsy-passport.git",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
+    "async": "^1.4.0",
     "backbone": "^1.2.1",
     "backbone-pageable": "*",
     "backbone-super-sync": "*",
