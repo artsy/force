@@ -28,4 +28,6 @@ module.exports.init = ->
 
   following.syncFollows ids if user
 
-  initCarousel $('.fairs__promo__slideshow'), $navigation: $('.mgr-navigation')
+  initCarousel $('.fairs__promo__slideshow'),
+    $navigation: $('.mgr-navigation')
+    autoPlay: true

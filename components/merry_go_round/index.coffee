@@ -12,8 +12,6 @@ setup = ($el, options = {}, callback) ->
   averageWidth = totalWidth / $cells.length
   options.wrapAround = (totalWidth - averageWidth) >= $(window).width()
 
-  console.log '$navigation', $navigation
-
   {
     cells: cells = new MerryGoRoundFlickity $viewport, options
     navigation: new MerryGoRoundNavView flickity: cells.flickity, el: $navigation
