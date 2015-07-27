@@ -39,7 +39,10 @@ parseGroups = (fairs) ->
       .then =>
         { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs)
         allFairs = _.flatten [currentFairs, pastFairs, upcomingFairs]
-        Q.all _.map(allFairs, (fair) -> fair.fetch(cache: true))
+        Q.all [
+          _.map(allFairs, (fair) -> fair.fetch(cache: true))
+          featuredFairs.fetch()
+        ]
       .then =>
         res.locals.sd.FAIRS = fairs
         res.render 'index',
