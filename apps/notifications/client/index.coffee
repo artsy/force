@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ FOLLOWING, API_URL } = require('sharify').data
+{ FOLLOWING, API_URL } = sd = require('sharify').data
 scrollFrame = require 'scroll-frame'
 qs = require 'querystring'
 Notifications = require '../../../collections/notifications.coffee'
