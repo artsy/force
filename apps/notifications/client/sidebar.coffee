@@ -27,7 +27,7 @@ module.exports = class SidebarView extends Backbone.View
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    window.history.pushState({}, @$selectedArtist.attr('data-artist'), "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
+    window.history.pushState({}, "Artist", "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
     @filterState.set
       artist: @$selectedArtist.attr('data-artist')
       loading: true
