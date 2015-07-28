@@ -2,6 +2,7 @@ require '../lib/analytics_hooks.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 route = require '../lib/route_helpers.coffee'
 
+require '../analytics/before_ready.js'
 $ -> analytics.ready ->
   setupSplitTests()
 
