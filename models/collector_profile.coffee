@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'q'
 Backbone = require 'backbone'
-{ SESSION_ID, API_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 Relations = require './mixins/relations/collector_profile.coffee'
 
 module.exports = class CollectorProfile extends Backbone.Model
@@ -16,13 +16,11 @@ module.exports = class CollectorProfile extends Backbone.Model
     'collector_level'
   ]
 
-  fetch: (options = {}) ->
-    options.data = _.extend options.data or {}, @pick('anonymous_session_id'), session_id: SESSION_ID
-    super options
-
-  instantiate: (options = {}) ->
+  findOrCreate: (options = {}) ->
     { success, error } = options
+
     options = _.omit options, 'success', 'error'
+
     Q.promise (resolve, reject) =>
       @fetch _.extend {}, options,
         success: ->
