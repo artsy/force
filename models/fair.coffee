@@ -235,8 +235,3 @@ module.exports = class Fair extends Backbone.Model
 
   isPast: ->
     @isEligible() and @isOver()
-
-<<<<<<< HEAD
-
-=======
->>>>>>> master
