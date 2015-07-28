@@ -5,6 +5,9 @@ module.exports = class BorderedPulldown extends Backbone.View
 
   events:
     'click .bordered-pulldown-options a': 'select'
+    'click .bordered-pulldown-toggle': (e) ->
+      console.log 'CLICK'
+      e.preventDefault()
 
   select: (e) ->
     $a = $(e.currentTarget)
