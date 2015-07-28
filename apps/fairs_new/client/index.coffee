@@ -30,4 +30,4 @@ module.exports.init = ->
 
   initCarousel $('.fairs__promo__slideshow'),
     $navigation: $('.mgr-navigation')
-    autoPlay: true
+    autoPlay: 5000
