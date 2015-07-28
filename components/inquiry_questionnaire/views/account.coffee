@@ -14,8 +14,9 @@ module.exports = class Account extends StepView
     templates[@mode()] arguments...
 
   __events__:
-    'click .js-mode': 'change'
     'click button': 'submit'
+    'click .js-mode': 'change'
+    'click .js-skip': 'next'
 
   initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @active = new Backbone.Model mode: 'auth'
@@ -46,7 +47,11 @@ module.exports = class Account extends StepView
     @user[@mode()]
       error: _.bind(form.error, form)
       success: =>
-        @next()
+        @user.findOrCreate()
+          .then =>
+            @user.reposess()
+          .then => @next()
+          .fail => @next()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'
