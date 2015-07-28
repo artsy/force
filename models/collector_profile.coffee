@@ -9,8 +9,12 @@ module.exports = class CollectorProfile extends Backbone.Model
 
   url: "#{API_URL}/api/v1/me/collector_profile"
 
-  defaults:
-    session_id: SESSION_ID
+  validHashFields: [
+    'owner'
+    'institutional_affiliations'
+    'confirmed_buyer_at'
+    'collector_level'
+  ]
 
   fetch: (options = {}) ->
     options.data = _.extend options.data or {}, @pick('anonymous_session_id'), session_id: SESSION_ID
