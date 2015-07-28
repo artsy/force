@@ -54,3 +54,11 @@ module.exports = class LoggedOutUser extends User
     new Backbone.Model()
       .save @pick('email'), _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
+
+  repossess: ->
+    # Only valid for recently logged in, LoggedOutUsers
+    return Q.resolve() unless @isLoggedIn()
+    Q.all _.flatten [
+      @user.related().userInterests.invoke 'save'
+      @user.related().collectorProfile.instantiate()
+    ]
