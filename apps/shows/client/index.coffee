@@ -20,8 +20,6 @@ module.exports.ShowsView = class ShowsView extends Backbone.View
           callback?.error()
       error: =>
         @$('#shows-feed').remove()
-    new BorderedPulldown
-      el: @$('.bordered-scrollable-pulldown')
 
 module.exports.init = ->
   new ShowsView el: $('#shows-page')

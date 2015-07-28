@@ -22,6 +22,7 @@ module.exports = ->
   setupAuctionReminder()
   listenForInvert()
   setupAnalytics()
+  eigenFixes()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -89,13 +90,24 @@ setupJquery = ->
   require '../../lib/jquery/hidehover.coffee'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)
-
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
-
   window[key] = helper for key, helper of templateModules
 
 setupAuctionReminder = ->
-  if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
+  if (sd.CHECK_FOR_AUCTION_REMINDER and
+     !(Cookies.get('closeAuctionReminder')? or
+     window.location.pathname is '/user/edit'))
     new AuctionReminderView
+
+eigenFixes = ->
+  return unless sd.EIGEN
+  # Fix quirky click event behavior on iPad for bordered-scrollable component
+  $('.bordered-scrollable-pulldown a').click (e) ->
+    e.preventDefault()
+    $pulldown = $(e.currentTarget).closest('.bordered-scrollable-pulldown')
+    location.assign $(e.currentTarget).attr('href') if $pulldown.hasClass('is-open')
+    $pulldown.addClass('is-open')
+  $('.bordered-scrollable-pulldown').on 'mouseleave', (e) ->
+    $(e.currentTarget).removeClass('is-open')
