@@ -1,21 +1,26 @@
 StepView = require './step.coffee'
-BookmarksView = require '../../bookmarks/view.coffee'
+UserInterestsView = require '../../user_interests/view.coffee'
 template = -> require('../templates/artists_in_collection.jade') arguments...
 
 module.exports = class ArtistsInCollection extends StepView
-  template: template
+  template: -> template arguments...
 
   __events__:
-    'click button': 'serialize'
+    'click button': 'next'
 
   postRender: ->
-    @bookmarksView = new BookmarksView el: @$('.js-bookmark-artists'), persist: @user.id?
+    { collectorProfile } = @user.related()
+    { userInterests } = collectorProfile.related()
 
-  serialize: (e) ->
-    e.preventDefault()
-    # @bookmarksView.bookmarks # Do something with them...
-    @next()
+    userInterests.fetch silent: true
+
+    @userInterestsView = new UserInterestsView
+      collectorProfile: collectorProfile
+      collection: userInterests
+      autofocus: true
+
+    @$('.js-bookmark-artists').html @userInterestsView.render().$el
 
   remove: ->
-    @bookmarksView.remove()
+    @userInterestsView.remove()
     super

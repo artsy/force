@@ -36,6 +36,7 @@ module.exports = class Article extends Backbone.Model
           author_id: '503f86e462d56000020002cc'
           published: true
           tier: 1
+          sort: '-published_at'
       )
     ]).then =>
       slideshowArtworks = new Artworks
@@ -83,16 +84,14 @@ module.exports = class Article extends Backbone.Model
     stripTags(@get attr)
 
   toJSONLD: ->       # article metadata tag for parse.ly
-    if @get('title')
-        compactObject {
-          "@context": "http://schema.org"
-          "@type": "NewsArticle"
-          "headline": @get('title')
-          "url": @href()
-          "thumbnailUrl": @get('thumbnail_image')
-          "dateCreated": @get('published_at')
-          "articleSection": "Editorial"
-          "creator": @get('author')?.name
-          "keywords": ""  # this is from the parsely specs, i'm told we don't
-          # have keywords for articles at the moment
-        }
+    compactObject {
+      "@context": "http://schema.org"
+      "@type": "NewsArticle"
+      "headline": @get('thumbnail_title')
+      "url": @href()
+      "thumbnailUrl": @get('thumbnail_image')
+      "dateCreated": @get('published_at')
+      "articleSection": "Editorial"
+      "creator": @get('author')?.name
+      "keywords": ""
+    }

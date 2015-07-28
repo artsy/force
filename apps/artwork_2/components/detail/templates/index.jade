@@ -1,0 +1,19 @@
+if artwork.related().saleArtwork.id
+  .artwork-detail-lot-number
+    | Lot #{artwork.related().saleArtwork.get('lot_number')}
+
+include metadata/artists
+include metadata/title
+
+if artwork.get('series')
+  .artwork-detail-series
+    | From the series <em>#{artwork.get('series')}</em>
+
+.artwork-detail-secondary-metadata
+  include secondary
+
+unless artwork.isContactable()
+  include metadata/partner
+
+unless sale && sale.isAuction() || sale && sale.isAuctionPromo()
+  include metadata/price

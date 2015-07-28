@@ -66,19 +66,26 @@ representation = (fair) ->
         )
       ]
 
+      newestFair = pastFairs.models[0]
+
       Q.allSettled(promises).then(->
-        res.locals.newestFair = res.locals.sd.FAIR = pastFairs.models[0]
+        res.locals.newestFair = res.locals.sd.FAIR = newestFair
         res.locals.sd.FAIR_IDS = pastFairs.pluck('_id')
         res.locals.sd.FAIR_ORGANIZER = fairOrg.toJSON()
         res.locals.sd.ARTICLES = articles.toJSON()
         res.locals.fairOrg = fairOrg
         res.locals.coverImage = profile.coverImage()
+        # If the fair names are not identical then
+        # we should show the name (instead of the year) on the fair representation
+        res.locals.showName = pastFairs.any (fair) ->
+          fair.get('name').replace(/\d/g,'') isnt newestFair.get('name').replace(/\d/g,'')
         # pastFairs is the array of links to the previous fairs,
         # since this should only include fairs that have microsites,
         # we filter on has_full_feature.
         # this also allows us to set a fair for the future and
         # have a countdown to the preview
-        res.locals.pastFairs = pastFairs.filter (model) -> model.get('has_full_feature')
+        res.locals.pastFairs = res.locals.sd.PAST_FAIRS = pastFairs.filter (fair) ->
+          fair.get('has_full_feature') && fair.representation?
         res.locals.articles = articles.models
         next()
       ).done()

@@ -105,7 +105,6 @@ describe 'Homepage init code', ->
     sinon.stub Backbone.history, 'start'
     sinon.stub Backbone, 'sync'
     sinon.stub @HomeView::, 'renderArtworks'
-    sinon.stub @HomeView::, 'setupArtworkFilter'
     @init()
 
   afterEach ->
@@ -121,7 +120,7 @@ describe 'Homepage init code', ->
     mediator.on 'open:auth', spy = sinon.spy()
     location.search = '?no-auth-modal=true'
     @init()
-    spy.called.should.not.be.ok
+    spy.called.should.not.be.ok()
 
 describe 'HomeAuthRouter', ->
 

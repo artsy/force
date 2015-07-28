@@ -46,16 +46,16 @@ describe 'Location Search', ->
   describe '#determineAutofocus', ->
     it 'should set the appropriate autofocus attribute', ->
       LocationSearchView.__set__ 'isTouchDevice', -> false
-      new LocationSearchView().determineAutofocus().should.be.true
+      new LocationSearchView().determineAutofocus().should.be.true()
     it 'should accept options', ->
       LocationSearchView.__set__ 'isTouchDevice', -> false
-      _.isUndefined(new LocationSearchView(autofocus: false).determineAutofocus()).should.be.true
-      new LocationSearchView(autofocus: true).determineAutofocus().should.be.true
+      _.isUndefined(new LocationSearchView(autofocus: false).determineAutofocus()).should.be.true()
+      new LocationSearchView(autofocus: true).determineAutofocus().should.be.true()
     it 'should handle touch devices', ->
       LocationSearchView.__set__ 'isTouchDevice', -> true
-      _.isUndefined(new LocationSearchView().determineAutofocus()).should.be.true
-      _.isUndefined(new LocationSearchView(autofocus: false).determineAutofocus()).should.be.true
-      _.isUndefined(new LocationSearchView(autofocus: true).determineAutofocus()).should.be.true
+      _.isUndefined(new LocationSearchView().determineAutofocus()).should.be.true()
+      _.isUndefined(new LocationSearchView(autofocus: false).determineAutofocus()).should.be.true()
+      _.isUndefined(new LocationSearchView(autofocus: true).determineAutofocus()).should.be.true()
 
   describe '#preAnnounce', ->
     it 'should announce a named location string when the input is blurred', (done) ->

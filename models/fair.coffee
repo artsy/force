@@ -193,15 +193,11 @@ module.exports = class Fair extends Backbone.Model
           galleries: null
 
         # Setup parallel callback
-        after = _.after 4, =>
+        after = _.after 3, =>
           options.success _.extend data,
             coverImage: @get('profile').coverImage()
-            filteredSearchOptions: data.filterSuggest
-            filteredSearchColumns: @filteredSearchColumns(
-              data.filterSuggest, 2, 'related_gene', 'artworks')
             exhibitorsCount: data.galleries.length
 
-        data.filterSuggest.fetch(error: options.error, success: after)
         @fetchSections(error: options.error, success: (x) => data.sections = x; after())
         @fetchExhibitors error: options.error, success: (x, y) =>
           data.exhibitorsAToZGroup = x
@@ -240,4 +236,7 @@ module.exports = class Fair extends Backbone.Model
   isPast: ->
     @isEligible() and @isOver()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master

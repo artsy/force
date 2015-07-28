@@ -12,21 +12,16 @@ attachFollowProfile = require '../components/follow_profile/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
-MapModal = require '../components/map_modal/map.coffee'
+openMapModal = require '../components/map_modal/index.coffee'
 zoom = require '../../../components/zoom/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
+blurb = require '../../../components/gradient_blurb/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
   show.related().artworks.reset ARTWORKS
 
-  if $('.show-press-release').height() > 350
-    $('.show-press-release').addClass 'show-read-more'
-
-  $('.read-more').click (e) ->
-    $('.show-press-release')
-      .removeClass 'show-read-more'
-      .addClass 'full-press-release'
+  blurb $('.show-press-release'), limit: 350
 
   $('.js-open-show-events').click (e) ->
     e.preventDefault()
@@ -45,8 +40,9 @@ module.exports.init = ->
   attachFollowArtists show.related().artists
   attachFollowProfile show.related().profile
 
-  $('.js-open-map-modal').click ->
-    new MapModal model: show, width: '820px'
+  $('.js-open-map-modal').click (e) ->
+    e.preventDefault()
+    openMapModal model: show
 
   if show.isFairBooth()
     attachRelatedShows 'fair', show

@@ -56,18 +56,13 @@ gutter-size = 30px
       vertical-align: top
       display: inline-block
   .fair-search-options
-    .fair-search-options-column
-      width: 47%
+    column-count 2
+    a
       display inline-block
-      vertical-align top
-      margin-right 3%
-      &:last-child
-        margin-right 0%
-      a
-        display block
-        text-transform: capitalize
-        text-decoration none
-        margin-bottom 5px
+      text-transform capitalize
+      text-decoration none
+      margin-bottom 5px
+      width 100%
    .a-to-z-section-links
      text-decoration none
      margin-top 10px
@@ -82,7 +77,7 @@ gutter-size = 30px
   position relative
   max-width feed-max-width
   line-height: 151%
-  margin 25px auto 0px
+  margin 29px auto 0px
   .fair-overview-top-left
     width left-column-width - 25px
     position absolute
@@ -96,6 +91,10 @@ gutter-size = 30px
     top 0px
   .fair-name
     margin-top: 23px
+
+html[data-useragent*="Firefox"]
+  .fair-overview-top
+    margin-top 28px
 
 .overview-heading
   color white

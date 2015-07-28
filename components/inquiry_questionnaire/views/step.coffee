@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ isTouchDevice } = require '../../util/device.coffee'
+form = require '../../form/utilities.coffee'
 
 module.exports = class StepView extends Backbone.View
   __events__: null
@@ -9,7 +9,8 @@ module.exports = class StepView extends Backbone.View
     _.extend @__events__,
       'click .js-nevermind': 'dismiss'
 
-  initialize: ({ @user, @state, @artwork }) -> #
+  initialize: ({ @user, @inquiry, @artwork, @state }) ->
+    @__setup__()
 
   template: ->
     throw new Error 'no template provided'
@@ -22,16 +23,23 @@ module.exports = class StepView extends Backbone.View
     e.preventDefault()
     @state.trigger 'abort'
 
-  autofocus: ->
-    unless isTouchDevice()
-      _.defer =>
-        @$el.find('input:visible, textarea:visible').first().focus()
+  autofocus: -> _.defer =>
+    $input = form.firstVisibleInput @$el
+    form.autofocus $input
+
+  setup: -> #
+
+  __setup__: ->
+    return if @__isSetup__
+    @setup()
+    @__isSetup__ = true
 
   render: ->
     @$el.html @template
       user: @user
-      state: @state
+      inquiry: @inquiry
       artwork: @artwork
+      state: @state
     @postRender()
     @autofocus()
     this

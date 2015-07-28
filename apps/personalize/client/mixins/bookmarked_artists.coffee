@@ -1,8 +1,8 @@
-Bookmarks = require '../../../../components/bookmarks/collection.coffee'
+UserInterests = require '../../../../collections/user_interests.coffee'
 
 module.exports =
   initializeBookmarkedArtists: ->
-    @bookmarks = new Bookmarks()
+    @bookmarks = new UserInterests
     @bookmarks.fetch
       success: (collection, response, options) =>
         # While although these artists *may* not actually be followed,

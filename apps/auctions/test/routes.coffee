@@ -69,5 +69,5 @@ describe 'Auctions routes', ->
           Backbone.sync.args[1][2].url.should.containEql '/api/v1/me/bidders'
           Backbone.sync.args[1][2].data.sale_id.should.equal @soonestPreviewAuction.id
           Backbone.sync.args[1][2].success [{}, {}]
-          @req.user.get('registered_to_bid').should.be.true
+          @req.user.get('registered_to_bid').should.be.true()
           done()

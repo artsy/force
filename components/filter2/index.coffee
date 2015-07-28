@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-scrollFrame = require 'scroll-frame'
 qs = require 'querystring'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 FilterView = require './view.coffee'
@@ -16,7 +15,7 @@ module.exports =
       includeFixedHeader: includeFixedHeader
       includeAllWorks: false
       hideForSale: false
-      forSale: 'true' 
+      forSale: 'true'
 
     { aggregations,
       el,

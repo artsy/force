@@ -54,7 +54,7 @@ describe 'FavoritesView', ->
         @view.$el.html().should.containEql 'Add works to your favorites'
 
       it 'shows suggested genes genes', ->
-        @SuggestedGenesView::render.calledOnce.should.be.ok
+        @SuggestedGenesView::render.calledOnce.should.be.ok()
 
   describe 'with favorites items', ->
 
@@ -99,16 +99,16 @@ describe 'FavoritesView', ->
       Backbone.sync.restore()
 
     it 'only shows the overlay saved state on hover', ->
-      @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.false
+      @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.false()
       # If we could trigger / force a hover state here...
       # @view.$('.artwork-item:first-child').hover()
-      # @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.true
+      # @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.true()
 
     describe '#loadNextPage', ->
 
       it 'uses ArtworkColumns to render the next pages individually until the end', ->
         # page 1
-        @ArtworkColumnsView.calledOnce.should.be.ok
+        @ArtworkColumnsView.calledOnce.should.be.ok()
         @view.params.get('page').should.equal 1
         artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
@@ -160,7 +160,7 @@ describe 'FavoritesView', ->
       it 'does not show the status dialog when trying to share if the favorites is public', ->
         @view.savedArtworkCollection.set private: false
         @view.$el.find('.share-to-facebook').trigger 'click'
-        @PublishModal.called.should.not.be.ok
+        @PublishModal.called.should.not.be.ok()
 
   describe 'with favorites items and variable responses', ->
 

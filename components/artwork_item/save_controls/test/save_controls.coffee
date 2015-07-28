@@ -50,7 +50,7 @@ describe 'SaveControls', ->
         @view.$button.click()
         @view.model.isSaved = -> true
         @view.artworkCollection.trigger 'add:artwork'
-        @view.artworkCollection.saveArtwork.called.should.be.ok
+        @view.artworkCollection.saveArtwork.called.should.be.ok()
         @view.artworkCollection.saveArtwork.args[0][0].should.equal model.id
         @view.$button.attr('data-state').should.equal 'saved'
 
@@ -59,10 +59,10 @@ describe 'SaveControls', ->
         @view.$button.click()
         @view.model.isSaved = -> false
         @view.artworkCollection.trigger 'remove:artwork'
-        @view.artworkCollection.unsaveArtwork.called.should.be.ok
+        @view.artworkCollection.unsaveArtwork.called.should.be.ok()
         @view.artworkCollection.unsaveArtwork.args[0][0].should.equal model.id
         @view.$button.attr('data-state').should.equal 'unsaved'
 
       it 'shows the control if the work is saved', ->
         @view.model.isSaved = -> true
-        @view.$('.overlay-button-save').is(':visible').should.be.true
+        @view.$('.overlay-button-save').is(':visible').should.be.true()

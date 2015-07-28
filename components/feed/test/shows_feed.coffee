@@ -27,7 +27,7 @@ describe 'ShowsFeed', ->
 
     it 'inits a show button for each show', ->
       @view.handleDoneFetching()
-      @PartnerShowButtons.calledWithNew.should.be.ok
+      @PartnerShowButtons.calledWithNew.should.be.ok()
 
     it 'syncs follows from the show ids', ->
       @view.followProfiles = syncFollows: sinon.stub()

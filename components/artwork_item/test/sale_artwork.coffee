@@ -43,17 +43,17 @@ describe 'SaleArtworks', ->
 
   describe 'auction states', ->
     beforeEach ->
-      sinon.stub(@sale, 'actionButtonState').returns {}
+      sinon.stub(@sale, 'bidButtonState').returns {}
 
     afterEach ->
-      @sale.actionButtonState.restore()
+      @sale.bidButtonState.restore()
 
     describe 'clockState is open', ->
       it 'only appends the auction id to links; does not hide anything', ->
         @sale.set 'clockState', 'open'
         @view.sale = @sale
         @view.setupClockState()
-        @view.appendAuctionId.called.should.be.true
+        @view.appendAuctionId.called.should.be.true()
         artworkLinks = _.map @view.$('a'), (a) -> $(a).attr('href')
         artworkLinks.should.match(new RegExp("auction_id=#{@sale.id}"))
 
@@ -62,15 +62,15 @@ describe 'SaleArtworks', ->
         @sale.set 'clockState', 'preview'
         @view.sale = @sale
         @view.setupClockState()
-        @view.appendAuctionId.called.should.be.false
-        @view.hideBuyNowButtons.called.should.be.true
-        @view.hideBidStatuses.called.should.be.false
+        @view.appendAuctionId.called.should.be.false()
+        @view.hideBuyNowButtons.called.should.be.true()
+        @view.hideBidStatuses.called.should.be.false()
 
     describe 'clockState is closed', ->
       it 'hides the buy now buttons; hides the bid status', ->
         @sale.set 'clockState', 'closed'
         @view.sale = @sale
         @view.setupClockState()
-        @view.appendAuctionId.called.should.be.false
-        @view.hideBuyNowButtons.called.should.be.true
-        @view.hideBidStatuses.called.should.be.true
+        @view.appendAuctionId.called.should.be.false()
+        @view.hideBuyNowButtons.called.should.be.true()
+        @view.hideBidStatuses.called.should.be.true()

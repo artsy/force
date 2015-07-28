@@ -196,7 +196,7 @@ describe 'analytics', ->
         el.append = sinon.stub()
         data = { id: 'test_id', fair: 'test_fair' }
         analytics.delta('test_event', data, el)
-        el.append.called.should.be.ok
+        el.append.called.should.be.ok()
         el.append.args[0][0].should.equal '<img src="' + url + '" style="display:none;" />'
 
   describe 'with a phantomjs useragent', ->

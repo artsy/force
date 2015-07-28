@@ -3,24 +3,19 @@ module.exports =
     commercial_interest: require './views/commercial_interest.coffee'
     basic_info: require './views/basic_info.coffee'
     artists_in_collection: require './views/artists_in_collection.coffee'
-    galleries_auction_houses: require './views/galleries_auction_houses.coffee'
-    art_fairs: require './views/art_fairs.coffee'
-    institutional_affliation: require './views/institutional_affliation.coffee'
-    auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
     specialist: require './views/specialist.coffee'
     inquiry: require './views/inquiry.coffee'
+    account: require './views/account.coffee'
     done: require './views/done.coffee'
 
   decisions:
-    prequalify: ({ user }) ->
-      not user.get 'prequalified'
+    pre_qualify: ({ artwork }) ->
+      artwork.related()
+        .partner.get('pre_qualify') is true
 
     is_collector: ({ user }) ->
       user.isCollector()
-
-    is_logged_in: ({ user }) ->
-      user.isLoggedIn()
 
     help_by: ({ state }) ->
       state.get 'value'
@@ -30,72 +25,68 @@ module.exports =
       user.has('location') and
       user.has('phone')
 
+    has_commercial_interest: ({ user }) ->
+      user.isCommercial()
+
+    is_logged_in: ({ user }) ->
+      user.isLoggedIn()
+
   steps: [
-    prequalify:
+    pre_qualify:
       true: [
-        'commercial_interest'
-        is_collector:
-          true: [
-            'basic_info'
-            'artists_in_collection'
-            'galleries_auction_houses'
-            'art_fairs'
-            'institutional_affliation'
-            'inquiry'
-            'done'
-          ]
-          false: [
-            'how_can_we_help'
-            help_by:
-              price: [
-                'specialist'
-                'done'
-              ]
-              purchase: [
-                has_basic_info:
-                  true: [
-                    'inquiry'
-                    'done'
-                  ]
+        { has_commercial_interest: false: ['commercial_interest'] }
+        {
+          is_collector:
+            true: [
+              { has_basic_info: false: ['basic_info'] }
+              'artists_in_collection'
+              'inquiry'
+              {
+                is_logged_in:
+                  true: ['done']
                   false: [
-                    'basic_info'
-                    'inquiry'
+                    'account'
                     'done'
                   ]
-              ]
-              student_research_question: [
-                'specialist'
-                'done'
-              ]
-              journalist_question: [
-                'inquiry' # Should be contact_partner?
-                'done'
-              ]
-              other_question: [
-                'specialist'
-                'done'
-              ]
-          ]
+              }
+            ]
+            false: [
+              'how_can_we_help'
+              {
+                help_by:
+                  price: ['specialist']
+                  purchase: [
+                    { has_basic_info: false: ['basic_info'] }
+                    'inquiry'
+                  ]
+                  student_research_question: ['specialist']
+                  journalist_question: ['inquiry']
+                  other_question: ['specialist']
+              }
+              {
+                is_logged_in:
+                  true: ['done']
+                  false: [
+                    'account'
+                    'done'
+                  ]
+              }
+            ]
+        }
       ]
 
       false: [
-        'commercial_interest'
-        'basic_info'
-        is_collector:
-          true: [
-            'artists_in_collection'
-            'galleries_auction_houses'
-            'art_fairs'
-            'institutional_affliation'
-            is_logged_in:
-              true: ['done']
-              false: ['auth']
-          ]
-          false: [
-            is_logged_in:
-              true: ['done']
-              false: ['auth']
-          ]
+        'inquiry'
+        { has_commercial_interest: false: ['commercial_interest'] }
+        { has_basic_info: false: ['basic_info'] }
+        { is_collector: true: ['artists_in_collection'] }
+        {
+          is_logged_in:
+            true: ['done']
+            false: [
+              'account'
+              'done'
+            ]
+        }
       ]
   ]
-

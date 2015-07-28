@@ -61,8 +61,8 @@ describe 'PartnerArtistsArtistView', ->
         el: $ 'body'
         noArtworks: noArtworks
 
-      @ArtworkColumnsView.calledOnce.should.be.ok
-      noArtworks.called.should.not.be.ok
+      @ArtworkColumnsView.calledOnce.should.be.ok()
+      noArtworks.called.should.not.be.ok()
 
     it 'calls the noArtworks callback if empty artworks retrieved', ->
       sinon.stub @artworks, 'fetch', (options) -> options?.success?()
@@ -73,7 +73,7 @@ describe 'PartnerArtistsArtistView', ->
         el: $ 'body'
         noArtworks: noArtworks
 
-      noArtworks.calledOnce.should.be.ok
+      noArtworks.calledOnce.should.be.ok()
 
     it 'renders all artworks of the artist with infinite scrolling', ->
 
@@ -90,7 +90,7 @@ describe 'PartnerArtistsArtistView', ->
         pageSize: 2
         allArtworks: true
 
-      @ArtworkColumnsView.calledOnce.should.be.ok
+      @ArtworkColumnsView.calledOnce.should.be.ok()
       view.nextPage.should.equal 2
 
       view.fetchNextPageArtworks()

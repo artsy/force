@@ -12,4 +12,5 @@ Artists = require '../../collections/artists.coffee'
     url: url
     data: access_token: req.user.get('accessToken')
     success: =>
-      res.render 'index', artists: @followingArtists
+      res.locals.sd.FOLLOWING = @followingArtists
+      res.render 'index'

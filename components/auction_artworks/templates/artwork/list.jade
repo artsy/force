@@ -20,22 +20,32 @@
 
   if auction.isOpen() && !auction.isAuctionPromo()
     .ala-bid-status: a( href= href )
-        unless artwork.get('acquireable')
-          strong #{saleArtwork.bidLabel()}:
-          = ' '
+      p
+        unless artwork.get('sold')
+          strong
+            = saleArtwork.bidLabel() + ': '
 
         span.ala-current-bid
-          if artwork.get('acquireable')
-            unless artwork.get('sold')
-              = artwork.saleMessage() || 'Unavailable'
+          //- Artwork may be marked sold prematurely
+          if artwork.get('sold')
+            | Sold
           else
             = saleArtwork.currentBid()
 
+      if artwork.get('acquireable') && !artwork.get('sold')
+        p
+          strong
+            = 'Buy now price: '
+
+          span.ala-current-bid
+            if artwork.get('acquireable')
+              if artwork.get('sold')
+                | Sold
+              else
+                = artwork.saleMessage() || 'Unavailable'
+
     .ala-bid-count: a( href= href )
-      if artwork.get('acquireable')
-        | &nbsp;
-      else
-        | (#{saleArtwork.bidCount()})
+      | (#{saleArtwork.bidCount()})
   else
     .ala-estimate
       if saleArtwork.estimate()
@@ -51,5 +61,5 @@
 
   unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
     .ala-bidding
-      - button = auction.actionButtonState(user, artwork)
-      .ala-bid-button: include button
+      .ala-bid-button
+        include buttons

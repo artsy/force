@@ -56,7 +56,7 @@ describe 'FeatureView', ->
       @view.$el.html().should.containEql 'Explore this bidness'
 
       # Does not include artworks
-      @view.$('.artwork-columns-sale').is(':empty').should.be.true
+      @view.$('.artwork-columns-sale').is(':empty').should.be.true()
 
     it 'redirects when it is an auction', ->
       redirectToAuction = sinon.spy @FeatureView::, 'redirectToAuction'
@@ -64,8 +64,8 @@ describe 'FeatureView', ->
       _.last(Backbone.sync.args)[2].success [fabricate 'set', name: 'Explore this bidness', id: 'abc', item_type: 'Sale']
       _.last(Backbone.sync.args)[2].success sale
       _.last(Backbone.sync.args)[2].success []
-      @view.isAuction().should.be.true
-      redirectToAuction.called.should.be.true
+      @view.isAuction().should.be.true()
+      redirectToAuction.called.should.be.true()
       redirectToAuction.restore()
 
     context 'sale with artworks', ->

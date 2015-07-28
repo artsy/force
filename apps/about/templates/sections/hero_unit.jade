@@ -5,8 +5,9 @@
         h1!= hero.header
     .a2huc-bottom
       nav.about-nav
-        for section, i in sections
-          a.about-nav-link( data-idx=i, href="/about/#{section.slug}" )
+        for key, i in nav
+          - section = sections[key]
+          a.about-nav-link( data-idx= i, href="/about/#{key}" )
             span!= section.header
 
       .about-chevron: a.icon-chevron-down.about-nav-link(

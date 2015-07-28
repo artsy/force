@@ -58,7 +58,7 @@ describe 'ProfileIconUpload', ->
       @profileIconUpload.$profileIcon.css('background-image').should.containEql Icon.DefaultUserIconUrl
 
     it 'does not render a remove action', ->
-      @profileIconUpload.$el.hasClass('has-image').should.be.false
+      @profileIconUpload.$el.hasClass('has-image').should.be.false()
 
   describe 'with a profile icon', ->
 
@@ -81,7 +81,7 @@ describe 'ProfileIconUpload', ->
         done()
 
     it 'allows the user to remove the image', ->
-      @profileIconUpload.$el.hasClass('has-image').should.be.true
+      @profileIconUpload.$el.hasClass('has-image').should.be.true()
 
     it 'saves the token during the callback', ->
       @profileIconUpload.onUploadComplete({ token: 'cat' })

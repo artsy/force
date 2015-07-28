@@ -19,3 +19,11 @@ setTimeout(function() {
 
 // Tracking Snowplow page view. TODO: Remove when we phase out Snowplow.
 snowplow('trackPageView');
+
+
+// debug tracking calls in development
+if (sd.NODE_ENV == 'development'){
+  analytics.on('track', function(){
+    console.log(arguments)
+  })
+}

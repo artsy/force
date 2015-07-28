@@ -41,7 +41,7 @@ describe 'FavoritesView', ->
   describe '#initialize', ->
 
     it 'sets up an artwork columns view with the user favorites', ->
-      (@ArtworkColumnsView.args[0][0].collection?).should.be.ok
+      (@ArtworkColumnsView.args[0][0].collection?).should.be.ok()
 
   describe '#setup', ->
 
@@ -49,7 +49,7 @@ describe 'FavoritesView', ->
       sinon.stub @view, 'showEmptyHint'
       @view.setup()
       _.last(Backbone.sync.args)[2].success []
-      @view.showEmptyHint.called.should.be.ok
+      @view.showEmptyHint.called.should.be.ok()
 
     it 'shows an empty state if there are no works in any collections', ->
       sinon.stub @view, 'showEmptyHint'
@@ -58,15 +58,15 @@ describe 'FavoritesView', ->
       _.last(Backbone.sync.args)[2].success []
       for args in _.last(Backbone.sync.args, 2)
         args[2].complete []
-      @view.showEmptyHint.called.should.be.ok
+      @view.showEmptyHint.called.should.be.ok()
 
   describe '#showEmptyHint', ->
 
     it 'adds a FavoritesEmptyStateView and removes infinite scroll', ->
       sinon.stub @view, 'endInfiniteScroll'
       @view.showEmptyHint()
-      @view.endInfiniteScroll.called.should.be.ok
-      @FavoritesEmptyStateView.called.should.be.ok
+      @view.endInfiniteScroll.called.should.be.ok()
+      @FavoritesEmptyStateView.called.should.be.ok()
 
   describe '#renderCollections', ->
 

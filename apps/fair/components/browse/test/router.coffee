@@ -25,7 +25,7 @@ describe 'BrowseRouter', ->
   describe '#initialize', ->
 
     it 'adds the browse view', ->
-      @FairBrowseView.calledWithNew.should.be.ok
+      @FairBrowseView.calledWithNew.should.be.ok()
 
   describe '#artist', ->
 
@@ -38,7 +38,7 @@ describe 'BrowseRouter', ->
     it 'triggers a change to get the booth going', ->
       @router.boothParams.on 'change', spy = sinon.spy()
       @router.booths '', 'foo'
-      spy.called.should.be.ok
+      spy.called.should.be.ok()
 
   describe '#boothsSection', ->
 

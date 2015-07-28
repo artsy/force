@@ -99,14 +99,14 @@ describe 'ArtworkView', ->
 
     describe 'when an artwork changes', ->
       it 'only renders if the artwork sale_message changes', ->
-        @renderDetailSpy.called.should.not.be.ok
+        @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'sale_message', 'SOLD'
-        @renderDetailSpy.called.should.be.ok
+        @renderDetailSpy.called.should.be.ok()
 
       it 'only renders if the artwork ecommerce changes', ->
-        @renderDetailSpy.called.should.not.be.ok
+        @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'ecommerce', true
-        @renderDetailSpy.called.should.be.ok
+        @renderDetailSpy.called.should.be.ok()
 
     describe '#initialize', ->
       it 'has an artist and an artwork', ->
@@ -114,13 +114,13 @@ describe 'ArtworkView', ->
         @view.artist.id.should.equal @artist.id
 
       it 'has a following collection if the user is logged in', ->
-        _.isUndefined(@view.following).should.not.be.ok
+        _.isUndefined(@view.following).should.not.be.ok()
 
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->
-        _.isUndefined(@view.currentUser).should.not.be.ok
-        _.isUndefined(@view.saved).should.not.be.ok
-        _.isUndefined(@view.following).should.not.be.ok
+        _.isUndefined(@view.currentUser).should.not.be.ok()
+        _.isUndefined(@view.saved).should.not.be.ok()
+        _.isUndefined(@view.following).should.not.be.ok()
 
     describe '#setupArtistArtworks', ->
       it 'fetches a sample of the artwork artist\'s works', ->
@@ -159,7 +159,7 @@ describe 'ArtworkView', ->
 
         @view.artwork.activeImage().id.should.equal @$imageLink.data('id')
 
-        @$imageLink.hasClass('is-active').should.be.ok
+        @$imageLink.hasClass('is-active').should.be.ok()
 
     describe '#setupFollowButtons', ->
       it 'syncs the following collection with the artist id', ->
@@ -171,15 +171,15 @@ describe 'ArtworkView', ->
       it 'doesnt do anything for non-video artworks', ->
         @view.artwork.set category: 'Painting'
         @view.setupVideoView()
-        @VideoView.called.should.not.be.ok
+        @VideoView.called.should.not.be.ok()
       it 'inits a video view for video artworks', ->
         @view.artwork.set category: 'Video', website: 'youtube.com/foobar'
         @view.setupVideoView()
-        @VideoView.called.should.be.ok
+        @VideoView.called.should.be.ok()
 
     describe '#selectEdition', ->
       it 'sets a private value on the view that is otherwise undefined', ->
-        _.isUndefined(@view.__selectedEdition__).should.be.ok
+        _.isUndefined(@view.__selectedEdition__).should.be.ok()
         @view.$('.aes-radio-button').last().trigger('change')
         @view.__selectedEdition__.should.equal @artwork.editions.last().id
 
@@ -193,7 +193,7 @@ describe 'ArtworkView', ->
     describe '#buy', ->
       it 'should pass in the correct arguments when the buy button is clicked', ->
         ($target = @view.$('.artwork-buy-button')).click()
-        @acquireArtworkStub.called.should.be.ok
+        @acquireArtworkStub.called.should.be.ok()
         @acquireArtworkStub.args[0][0].should.equal @artwork
         @acquireArtworkStub.args[0][1].text().should.equal $target.text()
         @acquireArtworkStub.args[0][2].should.equal @view.selectedEdition()
@@ -206,17 +206,17 @@ describe 'ArtworkView', ->
 
     describe '#initialize', ->
       it 'does not have a following collection if the user is not logged in', ->
-        _.isUndefined(@view.following).should.be.ok
+        _.isUndefined(@view.following).should.be.ok()
 
     describe '#displayZigZag', ->
       beforeEach ->
         @view.$el.append $('<div class="artwork-inquiry-button"></div>')
       it 'should display as long as the work is not acquireable and it is for sale', ->
         @view.artwork.set { 'acquireable': false, 'forsale': true}
-        @view.displayZigZag().should.be.true
+        @view.displayZigZag().should.be.true()
         @view.artwork.set { 'acquireable': true, 'forsale': true}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()
         @view.artwork.set { 'acquireable': false, 'forsale': false}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()
         @view.artwork.set { 'acquireable': true, 'forsale': false}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()

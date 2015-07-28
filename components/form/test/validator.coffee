@@ -22,8 +22,8 @@ describe 'Validator', ->
     it 'should set a class on the form and call `checkValidity`', ->
       @$form[0].checkValidity = sinon.stub()
       @validator.valid()
-      @$form.hasClass('is-validated').should.be.true
-      @$form[0].checkValidity.called.should.be.true
+      @$form.hasClass('is-validated').should.be.true()
+      @$form[0].checkValidity.called.should.be.true()
 
     describe 'with confirmable fields', ->
       beforeEach ->
@@ -34,7 +34,7 @@ describe 'Validator', ->
         @$form.find('input[name="password_confirmation"]').val 'bar'
         @$form.find('input[name="password_confirmation"]')[0].setCustomValidity = sinon.stub()
         @validator.valid()
-        @$form.find('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true
+        @$form.find('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true()
         @$form.find('input[name="password_confirmation"]')[0].setCustomValidity.args[0][0].should.equal 'Password must match'
         # Resolve the validation
         @$form.find('input[name="password_confirmation"]').val 'foo'

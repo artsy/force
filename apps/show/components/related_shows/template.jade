@@ -25,7 +25,7 @@ for show in shows
           a.entity-link( href=show.partnerHref() )
             = show.partnerName()
         .show-related-show-running-dates
-          | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
+          | #{show.runningDates()}
 
     ul.show-related-show-images
       if show.related().relatedImages

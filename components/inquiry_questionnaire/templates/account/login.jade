@@ -1,0 +1,44 @@
+h1.iq-headline
+  | Please log in to save information to your profile.
+
+if user.related().account.id
+  .iq-body
+    p We found an Artsy account associated with
+    p: span= user.get('email')
+
+form.stacked-form
+  .iq-form-errors.js-form-errors
+    //- Rendered separately
+
+  label.avant-garde-form-label( for='password' )
+    | Enter your password
+  include password
+
+  button.avant-garde-button-black.js-form-submit.js-login-email( type='submit' )
+    | Log in
+
+  .iq-account-sub
+    .artsy-checkbox
+      .artsy-checkbox--checkbox
+        input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
+        label( for='remember_me' )
+      label.artsy-checkbox--label( for='remember_me' )
+        | Remember me
+
+    span
+      a.fine-faux-underline.js-mode.js-forgot-password( data-mode='forgot' )
+        | Forgot Password?
+
+      unless user.related().account.id
+        span.garamond-tab-separator.is-vertical
+        a.fine-faux-underline.js-mode( data-mode='signup' )
+          | Sign up
+
+  hr.horizontal-rule-or
+
+  a.avant-garde-button-black.js-login-facebook( href='/users/auth/facebook', target='_blank' )
+    i.icon-facebook
+    | Log in with Facebook
+  a.avant-garde-button-black.js-login-twitter( href='/users/auth/twitter', target='_blank' )
+    i.icon-twitter
+    | Log in with Twitter

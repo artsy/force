@@ -29,7 +29,7 @@ describe 'ArticlesFeedView', ->
 
       it 'renders the empty state', ->
         @view.$('.articles-feed-item').should.have.lengthOf 1
-        @view.$('.js-articles-feed-more').is(':empty').should.be.true
+        @view.$('.js-articles-feed-more').is(':empty').should.be.true()
         @view.$('.articles-feed-item').text().should.equal 'No results. View all articles'
 
   describe 'with an articles collection', ->

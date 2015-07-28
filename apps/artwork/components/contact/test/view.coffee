@@ -64,14 +64,14 @@ describe 'ContactView', ->
             it 'nulls the attendance model', ->
               @view.fairs.trigger 'sync'
               @view.$('form').trigger 'submit'
-              _.isNull(@view.attendance).should.be.true
+              _.isNull(@view.attendance).should.be.true()
 
           describe 'is attending', ->
             it 'leaves the attendance model intact; submits the inquiry', ->
               @view.fairs.trigger 'sync'
               @view.$('#artwork-contact-form-attending').click()
               @view.$('form').trigger 'submit'
-              _.isNull(@view.attendance).should.be.false
+              _.isNull(@view.attendance).should.be.false()
 
   describe 'is logged in', ->
     beforeEach ->

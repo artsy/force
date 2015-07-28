@@ -21,7 +21,7 @@ describe 'proxyToReflection', ->
   it 'passes through when there is no escaped fragment query param', ->
     req = url: '/artwork/foo-bar', query: {}
     proxyToReflection req, @res, @next
-    @next.called.should.be.ok
+    @next.called.should.be.ok()
 
   context 'with _escaped_fragment_', ->
 
@@ -35,7 +35,7 @@ describe 'proxyToReflection', ->
       req = url: parsed.path, query: querystring.parse(parsed.query)
       proxyToReflection req, @res, @next
       endStub.args[0][0] null, status: 403
-      @next.called.should.be.ok
+      @next.called.should.be.ok()
 
     for source, dest of paths
       it "proxies #{source} to #{dest}", ->
@@ -43,4 +43,4 @@ describe 'proxyToReflection', ->
         req = url: parsed.path, query: querystring.parse(parsed.query)
         proxyToReflection req, @res, @next
         getStub.args[0][0].should.equal "#{REFLECTION_URL}#{dest}"
-        endStub.called.should.be.ok
+        endStub.called.should.be.ok()

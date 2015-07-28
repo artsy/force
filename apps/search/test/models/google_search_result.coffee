@@ -32,7 +32,7 @@ describe 'GoogleSearchResult', ->
           metatags: [{'og:type': 'gene', 'og:description': 'gene description'}]
           cse_thumbnail: [{ src: 'imgurl' }]
       })
-      _.isUndefined(result.get('about')).should.be.ok
+      _.isUndefined(result.get('about')).should.be.ok()
       result.id.should.equal 'cool-gene'
       result.get('display').should.equal 'Gene Title'
       result.get('image_url').should.equal 'imgurl'
@@ -66,7 +66,7 @@ describe 'GoogleSearchResult', ->
           cse_thumbnail: [{ src: 'imgurl' }]
       })
 
-      _.isUndefined(result.get('about')).should.be.ok
+      _.isUndefined(result.get('about')).should.be.ok()
       result.id.should.equal 'cool-artwork'
       result.get('display').should.equal 'Artwork Title, Artist'
       result.get('image_url').should.equal 'imgurl'
@@ -83,7 +83,7 @@ describe 'GoogleSearchResult', ->
           cse_thumbnail: [{ src: 'imgurl' }]
       })
 
-      _.isUndefined(result.get('about')).should.be.ok
+      _.isUndefined(result.get('about')).should.be.ok()
       result.id.should.equal 'cool-artist'
       result.get('display').should.equal 'Artist Name'
       result.get('image_url').should.equal 'imgurl'

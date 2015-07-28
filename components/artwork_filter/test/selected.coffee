@@ -33,11 +33,11 @@ describe 'Selected', ->
   describe '#isActive', ->
     it 'checks to see if a value is selected', ->
       @selected.set medium: 'works-on-paper', price_range: '-1:1000000000000', institution: 'whitney-museum'
-      @selected.isActive('whitney-museum').should.be.true
-      @selected.isActive('noodle-museum').should.be.false
+      @selected.isActive('whitney-museum').should.be.true()
+      @selected.isActive('noodle-museum').should.be.false()
 
     it 'works with numeric values', ->
       @selected.set period: 1990
-      @selected.isActive('1990').should.be.true
+      @selected.isActive('1990').should.be.true()
       @selected.set period: '1990'
-      @selected.isActive(1990).should.be.true
+      @selected.isActive(1990).should.be.true()

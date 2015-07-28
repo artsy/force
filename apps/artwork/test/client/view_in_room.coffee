@@ -34,8 +34,8 @@ describe 'ViewInRoomView', ->
 
   describe '#initialize', ->
     it 'has a bunch of stuff it needs', ->
-      @view.$container.length.should.be.ok
-      @view.$img.length.should.be.ok
+      @view.$container.length.should.be.ok()
+      @view.$img.length.should.be.ok()
       @view.artwork.id.should.equal @artwork.id
 
   describe 'rendered', ->
@@ -45,9 +45,9 @@ describe 'ViewInRoomView', ->
 
     describe '#cacheSelectors', ->
       it 'caches the selectors needed for the view', ->
-        @view.$artwork.length.should.be.ok
-        @view.$placeholder.length.should.be.ok
-        @view.$room.length.should.be.ok
+        @view.$artwork.length.should.be.ok()
+        @view.$placeholder.length.should.be.ok()
+        @view.$room.length.should.be.ok()
 
     describe '#injectImage', ->
       beforeEach ->

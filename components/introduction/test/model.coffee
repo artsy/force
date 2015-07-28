@@ -1,4 +1,3 @@
-
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -6,7 +5,7 @@ sinon = require 'sinon'
 Introduction = require '../model'
 LoggedOutUser = require '../../../models/logged_out_user'
 Artist = require '../../../models/artist'
-Bookmarks = require '../../bookmarks/collection'
+UserInterests = require '../../../collections/user_interests'
 
 describe 'Introduction', ->
   beforeEach ->
@@ -31,14 +30,14 @@ describe 'Introduction', ->
       introduction = new Introduction
       introduction.generate @user, null, null, error: -> done()
 
-    describe 'with bookmarks', ->
+    describe 'with userInterests', ->
       beforeEach ->
-        @bookmarks = new Bookmarks
-        _.times 5, => @bookmarks.newFromArtist(new Artist fabricate 'artist')
+        @userInterests = new UserInterests
+        _.times 5, => @userInterests.addInterest(new Artist fabricate 'artist')
 
       it 'makes an introduction request for logged out users', ->
         introduction = new Introduction
-        introduction.generate @user, @bookmarks
+        introduction.generate @user, @userInterests
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][1].attributes.should.eql
           name: 'Craig Spaeth'
@@ -46,7 +45,7 @@ describe 'Introduction', ->
           collector_level: '5'
           collection: ['Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso']
 
-    describe 'with user location (and no bookmarks)', ->
+    describe 'with user location (and no userInterests)', ->
       beforeEach ->
         @user.set location: city: 'New York', country: 'United States'
 

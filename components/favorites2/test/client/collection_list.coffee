@@ -61,4 +61,4 @@ describe 'CollectionList', ->
 
     it 'does not create a collection if the button is disabled', ->
       @view.newCollection(preventDefault: ->)
-      Backbone.sync.called.should.not.be.ok
+      Backbone.sync.called.should.not.be.ok()

@@ -40,7 +40,7 @@ describe 'Layers, Layer', ->
       @layers = new Layers [
         { type: 'synthetic', id: 'for-sale' }
       ], { parse: true, artwork: @artwork }
-      (@layers.first() is undefined).should.be.true
+      (@layers.first() is undefined).should.be.true()
 
   describe 'with fair', ->
     beforeEach ->
@@ -64,7 +64,7 @@ describe 'Layers, Layer', ->
 
     it 'should not contain any for-sale layers', ->
       for_sale = _.find @layers.models, (layer) -> layer.id is 'for-sale'
-      (for_sale is undefined).should.be.true
+      (for_sale is undefined).should.be.true()
 
   describe 'Layer', ->
     beforeEach ->
@@ -75,7 +75,7 @@ describe 'Layers, Layer', ->
       @layers.reset layers
 
     it 'should have a collection and subsequently an artwork_id', ->
-      @layers.first().collection.length.should.be.ok
+      @layers.first().collection.length.should.be.ok()
       @layers.first().get('artwork_id').should.equal @artwork.id
 
     it 'should have an artworks collection with the appropriate URL', ->
@@ -99,7 +99,7 @@ describe 'Layers, Layer', ->
     describe '#href', ->
       it 'synthetic has the appropriate href', ->
         @layers.add(type: 'synthetic', id: 'for-sale').href().should.equal '/browse/artworks?price_range=-1%3A1000000000000'
-        _.isUndefined(@layers.add(type: 'synthetic', id: 'main').href()).should.be.ok
+        _.isUndefined(@layers.add(type: 'synthetic', id: 'main').href()).should.be.ok()
 
       it 'tag has the appropriate href', ->
         @layers.add(type: 'tag', id: 'cool').href().should.equal '/tag/cool'

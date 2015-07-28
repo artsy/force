@@ -13,7 +13,7 @@ describe 'adminOnly middleware', ->
 
     it 'passes through without error', ->
       adminOnly @req, {}, @next
-      _.isUndefined(@next.args[0][0]).should.be.true
+      _.isUndefined(@next.args[0][0]).should.be.true()
 
   describe 'is not an admin', ->
     it 'passes through with the appropriate error', ->

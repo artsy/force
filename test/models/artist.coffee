@@ -111,4 +111,4 @@ describe 'Artist', ->
       @artist.set 'follow_count', 1000
       @artist.displayFollowers().should.equal '1,000 Followers'
       @artist.unset 'follow_count'
-      _.isUndefined(@artist.displayFollowers()).should.be.true
+      _.isUndefined(@artist.displayFollowers()).should.be.true()

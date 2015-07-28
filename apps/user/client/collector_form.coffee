@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 LocationSearchView = require '../../../components/location_search/index.coffee'
-BookmarksView = require '../../../components/bookmarks/view.coffee'
+UserInterestsView = require '../../../components/user_interests/view.coffee'
 IntroductionView = require '../../../components/introduction/index.coffee'
 SubForm = require './sub_form.coffee'
 template = -> require('../templates/collector.jade') arguments...
@@ -26,12 +26,15 @@ module.exports = class CollectorForm extends Backbone.View
     @listenTo @locationSearchView, 'location:update', (location) =>
       @userEdit.setLocation location
 
-  setupBookmarks: ->
-    @bookmarksView = new BookmarksView el: @$('#settings-collector-bookmarks')
-    @listenTo @bookmarksView.bookmarks, 'sync', @syncIntroduction
-    @listenTo @bookmarksView.bookmarks, 'remove', (bookmark) =>
+  setupUserInterests: ->
+    @userInterestsView = new UserInterestsView
+    @$('.js-settings-collector-user-interests').html @userInterestsView.render().$el
+    @userInterestsView.collection.fetch()
+
+    @listenTo @userInterestsView.collection, 'sync', @syncIntroduction
+    @listenTo @userInterestsView.collection, 'remove', (userInterest) =>
       # Wait for change to persist
-      @listenToOnce bookmark, 'sync', @syncIntroduction
+      @listenToOnce userInterest, 'sync', @syncIntroduction
 
   setupForms: ->
     @collectorForm = new SubForm el: @$('#settings-collector-form'), model: @userEdit, user: @user
@@ -39,7 +42,7 @@ module.exports = class CollectorForm extends Backbone.View
   postRender: ->
     @setupIntroduction()
     @setupLocationSearch()
-    @setupBookmarks()
+    @setupUserInterests()
     @setupForms()
 
   render: ->
@@ -49,7 +52,7 @@ module.exports = class CollectorForm extends Backbone.View
 
   remove: ->
     @locationSearchView.remove()
-    @bookmarksView.remove()
+    @userInterestsView.remove()
     @collectorForm.remove()
     @introductionView.remove()
     super

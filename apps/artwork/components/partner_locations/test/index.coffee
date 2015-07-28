@@ -30,7 +30,7 @@ describe 'PartnerLocations', ->
     it 'does nothing', ->
       @artwork.unset 'partner'
       new PartnerLocations $el: $('body'), artwork: @artwork
-      Backbone.sync.called.should.be.false
+      Backbone.sync.called.should.be.false()
 
   describe 'with partner', ->
     beforeEach ->

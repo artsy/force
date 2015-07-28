@@ -1,4 +1,6 @@
-@import '../../stylus_lib'
+@require '../../stylus_lib'
+@require '../../../node_modules/artsy-ezel-components/spinners'
+@require '../../user_interests/index'
 
 .inquiry-questionnaire-modal
   .modalize-close
@@ -75,22 +77,31 @@
   color gray-darker-color
   garamond-size('s-body')
 
-.iq-auth
-  transition opacity 0.25s
-  height 100%
-  &[data-state='fade-out']
-  &.is-fade-out
-    opacity 0
-  &[data-state='fade-in']
-  &.is-fade-in
+.iq-loadable
+  > *
+    transition opacity 0.25s
     opacity 1
+  &.is-loading
+    &:before
+      display block
+      content ''
+      spinner(20px, 5px, black)
+    > *
+      opacity 0
 
-.iq-auth-logotype
+.iq-account-logotype
   display block
   margin 0 auto
   text-align center
   font-size 55px
   line-height 1
+
+.iq-account-sub
+  display flex
+  justify-content space-between
+  block-margins(20px)
+  garamond-size('s-body')
+  color gray-darker-color
 
 .iq-form-errors
   color red-color

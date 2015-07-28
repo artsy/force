@@ -71,10 +71,10 @@ describe 'RegistrationForm', ->
       Backbone.sync.args[1][2].success()
       # Creates the bidder
       Backbone.sync.args[2][2].error { responseJSON: { message: 'Sale is already taken.' } }
-      @view.success.called.should.be.ok
+      @view.success.called.should.be.ok()
 
     it 'validates the form and displays errors', ->
-      @view.$submit.length.should.be.ok
+      @view.$submit.length.should.be.ok()
       @view.$submit.click()
       html = @view.$el.html()
       html.should.containEql 'Invalid name on card'
@@ -85,7 +85,7 @@ describe 'RegistrationForm', ->
       html.should.containEql 'Invalid zip'
       html.should.containEql 'Invalid telephone'
       html.should.containEql 'Please review the error(s) above and try again.'
-      @view.$submit.hasClass('is-loading').should.be.false
+      @view.$submit.hasClass('is-loading').should.be.false()
 
     it 'submits the form correctly', ->
       @submitValidForm()

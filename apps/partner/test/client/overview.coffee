@@ -78,7 +78,7 @@ describe 'PartnerOverviewView', ->
           @partnerArtists.add @pas
           options.success?()
         @view.initializeArtists()
-        @artistsGridTemplate.calledOnce.should.be.ok
+        @artistsGridTemplate.calledOnce.should.be.ok()
         @artistsGridTemplate.args[0][0].partner.get('name').should.equal @partner.get('name')
         @artistsGridTemplate.args[0][0].groups.should.have.lengthOf 2
         @artistsGridTemplate.args[0][0].groups[0].label.should.equal 'represented artists'
@@ -133,22 +133,40 @@ describe 'PartnerOverviewView', ->
           numberOfShows: 6
           el: $ 'body'
 
-        _.last(@template.args)[0].isPartner.should.be.ok
-        @artistsGridTemplate.calledOnce.should.be.ok
-        @partnerShowsGrid.calledOnce.should.be.ok
-        @partnerLocations.called.should.not.be.ok
-        @artistsListView.called.should.not.be.ok
+        _.last(@template.args)[0].isPartner.should.be.ok()
+        @artistsGridTemplate.calledOnce.should.be.ok()
+        @partnerShowsGrid.calledOnce.should.be.ok()
+        @partnerLocations.called.should.not.be.ok()
+        @artistsListView.called.should.not.be.ok()
 
-      it 'renders correct sections for nonpartner galleries', ->
+      it 'renders correct sections for nonpartner galleries (top tier)', ->
         @partner.set('claimed', false)
+        @partner.set('show_promoted',true)
         @view = new @PartnerOverviewView
           profile: @profile
           partner: @partner
           numberOfShows: 6
           el: $ 'body'
 
-        _.last(@template.args)[0].isPartner.should.not.be.ok
-        @artistsGridTemplate.calledOnce.should.not.be.ok
-        @partnerShowsGrid.calledOnce.should.be.ok
-        @partnerLocations.called.should.be.ok
-        @artistsListView.called.should.be.ok
+        _.last(@template.args)[0].isPartner.should.not.be.ok()
+        _.last(@template.args)[0].showBanner.should.not.be.ok()
+        @artistsGridTemplate.calledOnce.should.not.be.ok()
+        @partnerShowsGrid.calledOnce.should.be.ok()
+        @partnerLocations.called.should.be.ok()
+        @artistsListView.called.should.be.ok()
+
+      it 'renders correct sections for nonpartner galleries (lower tier)', ->
+        @partner.set('claimed', false)
+        @partner.set('show_promoted',false)
+        @view = new @PartnerOverviewView
+          profile: @profile
+          partner: @partner
+          numberOfShows: 6
+          el: $ 'body'
+
+        _.last(@template.args)[0].isPartner.should.not.be.ok()
+        _.last(@template.args)[0].showBanner.should.be.ok()
+        @artistsGridTemplate.calledOnce.should.not.be.ok()
+        @partnerShowsGrid.calledOnce.should.be.ok()
+        @partnerLocations.called.should.be.ok()
+        @artistsListView.called.should.be.ok()

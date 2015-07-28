@@ -32,21 +32,21 @@ describe 'Image Sizes Mixin', ->
 
       it 'reflects server preview state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))
         @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 2)
         @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 4)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 4)
         @model.get('clockState').should.equal 'closed'
@@ -66,21 +66,21 @@ describe 'Image Sizes Mixin', ->
 
       it 'reflects server preview state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 2)
         @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('clockState').should.equal 'open'
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))
 
       it 'reflects server closed state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 2)
         @model.get('clockState').should.equal 'closed'
@@ -100,21 +100,21 @@ describe 'Image Sizes Mixin', ->
 
       it 'reflects server preview state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 4)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 4)
         @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 2)
         @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @model.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('clockState').should.equal 'closed'
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))

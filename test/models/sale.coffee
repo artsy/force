@@ -64,33 +64,34 @@ describe 'Sale', ->
     describe 'contact', ->
       it 'returns the correct button attributes', ->
         @sale.set 'sale_type', 'auction promo'
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Contact Auction House'
+        @sale.contactButtonState(@user, @artwork).label.should.equal 'Contact Auction House'
 
     describe 'buy now', ->
       it 'returns the correct button attributes', ->
         @sale.set sale_type: 'default', auction_state: 'open'
         @artwork.set acquireable: true, sold: false
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Buy Now'
+        @sale.buyButtonState(@user, @artwork).label.should.equal 'Buy Now'
         @artwork.set 'sold', true
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Sold'
+        @sale.buyButtonState(@user, @artwork).label.should.equal 'Sold'
 
     describe 'bid', ->
       it 'returns the correct button attributes', ->
         @sale.set sale_type: 'default', auction_state: 'preview'
         @user.set 'registered_to_bid', false
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Register to bid'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Register to bid'
         @user.set 'registered_to_bid', true
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Registered to bid'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Registered to bid'
         @sale.set 'auction_state', 'open'
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Bid'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
         @user.set 'registered_to_bid', false
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Bid'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
         @sale.set 'auction_state', 'closed'
-        @sale.actionButtonState(@user, @artwork).label.should.equal 'Online Bidding Closed'
-
-    describe 'fallback', ->
-      it 'returns the correct button attributes', ->
-        @sale.actionButtonState(null, @artwork).label.should.equal 'View'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Online Bidding Closed'
+        # If the artwork is sold, then it's sold
+        @sale.set 'auction_state', 'open'
+        @user.set 'registered_to_bid', true
+        @artwork.set 'sold', true
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Sold'
 
   describe '#fetchArtworks', ->
 
@@ -119,31 +120,31 @@ describe 'Sale', ->
         @clock = sinon.useFakeTimers()
         @sale.set
           is_auction: true
-          start_at: moment().add('minutes', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
-          end_at: moment().add('minutes', 3).format("YYYY-MM-DD HH:mm:ss ZZ")
+          start_at: moment().add(1, 'minutes').format()
+          end_at: moment().add(3, 'minutes').format()
 
       afterEach ->
         @clock.restore()
 
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
         @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract('minutes', 2)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract('minutes', 2)
+        Backbone.sync.args[0][2].success { iso8601: moment().add(2, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(2, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(2, 'minutes')
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract('minutes', 4)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract('minutes', 4)
+        Backbone.sync.args[0][2].success { iso8601: moment().add(4, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(4, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(4, 'minutes')
         @sale.get('clockState').should.equal 'closed'
 
     describe 'client time open', ->
@@ -152,8 +153,8 @@ describe 'Sale', ->
         @clock = sinon.useFakeTimers()
         @sale.set
           is_auction: true
-          start_at: moment().add('minutes', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
-          end_at: moment().add('minutes', 3).format("YYYY-MM-DD HH:mm:ss ZZ")
+          start_at: moment().add(1, 'minutes').format()
+          end_at: moment().add(3, 'minutes').format()
         @clock.tick(120000)
 
       afterEach ->
@@ -161,23 +162,23 @@ describe 'Sale', ->
 
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add('minutes', 2)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add('minutes', 2)
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract(2, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(2, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(2, 'minutes')
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('clockState').should.equal 'open'
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
         @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
 
       it 'reflects server closed state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract('minutes', 2)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract('minutes', 2)
+        Backbone.sync.args[0][2].success { iso8601: moment().add(2, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(2, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(2, 'minutes')
         @sale.get('clockState').should.equal 'closed'
 
     describe 'client time closed', ->
@@ -186,8 +187,8 @@ describe 'Sale', ->
         @clock = sinon.useFakeTimers()
         @sale.set
           is_auction: true
-          start_at: moment().add('minutes', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
-          end_at: moment().add('minutes', 3).format("YYYY-MM-DD HH:mm:ss ZZ")
+          start_at: moment().add(1, 'minutes').format()
+          end_at: moment().add(3, 'minutes').format()
         @clock.tick(240000)
 
       afterEach ->
@@ -195,21 +196,21 @@ describe 'Sale', ->
 
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add('minutes', 4)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add('minutes', 4)
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract(4, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(4, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(4, 'minutes')
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add('minutes', 2)
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add('minutes', 2)
+        Backbone.sync.args[0][2].success { iso8601: moment().subtract(2, 'minutes').format() }
+        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(2, 'minutes')
+        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(2, 'minutes')
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @sale.calculateOffsetTimes()
-        Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('clockState').should.equal 'closed'
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
         @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))

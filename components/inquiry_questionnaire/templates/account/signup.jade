@@ -1,0 +1,21 @@
+h1.iq-headline
+  | To skip these steps on your next inquiry,
+  | create an account and save your information now.
+
+form.stacked-form
+  .iq-form-errors.js-form-errors
+    //- Rendered separately
+
+  label.avant-garde-form-label( for='password' )
+    | Choose a password
+  include password
+
+  button.avant-garde-button-black.js-form-submit( type='submit' )
+    | Next
+
+  .iq-account-sub
+    span
+      | Already have an account?
+      = ' '
+      a.fine-faux-underline.js-mode( data-mode='login' )
+        | Log in

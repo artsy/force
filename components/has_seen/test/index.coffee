@@ -8,8 +8,8 @@ describe 'hasSeen', ->
     @Dismisser = @hasSeen.__get__ 'Dismisser'
 
   it 'should return false the first time it is called, then true every time after that', ->
-    @hasSeen('barbaz').should.be.false
+    @hasSeen('barbaz').should.be.false()
     getStub = sinon.stub(@Dismisser::, 'get').returns 1
-    @hasSeen('barbaz').should.be.true
-    @hasSeen('barbaz').should.be.true
+    @hasSeen('barbaz').should.be.true()
+    @hasSeen('barbaz').should.be.true()
     getStub.restore()

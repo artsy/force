@@ -116,13 +116,13 @@ describe '#bid', ->
     it 'renders with isRegistered: true if is registered', ->
       @resolve()
       @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.be.ok
+      @res.render.args[0][1].isRegistered.should.be.ok()
       @res.render.args[0][1].maxBid.should.equal 500
 
     it 'renders with isRegistered: true if is not registered', ->
       @resolve(null, null, [], null)
       @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.not.be.ok
+      @res.render.args[0][1].isRegistered.should.not.be.ok()
 
     it '404 if sale is not auction', ->
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false

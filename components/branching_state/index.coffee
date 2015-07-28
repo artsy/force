@@ -16,8 +16,10 @@ module.exports = class State extends Backbone.Model
 
     if _.isObject current
       [key, outcomes] = @split current
+
+      rest = @get('steps')[@get('position') + 1...]
       decision = @decide key
-      steps = outcomes[decision]
+      steps = (outcomes[decision] or []).concat(rest or [])
 
       @set steps: steps, position: 0
       @current()
@@ -54,4 +56,7 @@ module.exports = class State extends Backbone.Model
 
   view: ->
     views = @get('views')
-    new views[@current()] arguments...
+    if (View = views[@current()])?
+      new View arguments...
+    else
+      console.error "view for #{@current()} is not defined"

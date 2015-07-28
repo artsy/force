@@ -377,11 +377,14 @@ checkbox-size = 20px
 .results-list-item-cell
   display table-cell
   vertical-align middle
-  // Account for Avant Garde baseline
-  padding 11px 0 9px 0
-  avant-garde()
-  font-size 13px
+  padding 10px 0
   &:first-child
     text-align left
   &:last-child
     text-align right
+.avant-garde-results-list-item-cell
+  @extends .results-list-item-cell
+  avant-garde-size('body')
+.garamond-results-list-item-cell
+  @extends .results-list-item-cell
+  garamond-size('s-body')

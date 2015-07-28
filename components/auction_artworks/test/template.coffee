@@ -24,7 +24,7 @@ describe 'templates', ->
       describe 'list', ->
         it 'renders correctly', ->
           $template = $(templates.list @data)
-          $template.find('.ala-bid-status strong').text().should.equal 'Current Bid:'
+          $template.find('.ala-bid-status strong').text().should.equal 'Current Bid: '
           $template.find('.ala-current-bid').text().should.equal '$1,000'
           $template.find('.ala-bid-count').text().should.equal '(0 bids)'
           $template.find('.js-bid-button').text().should.equal 'Bid'
@@ -33,7 +33,7 @@ describe 'templates', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
           $template.find('.aabs-label').text().should.equal 'Current Bid (0 bids)'
-          $template.find('.aabs-price').text().should.equal '$1,000'
+          $template.find('.aabs-price').first().text().should.equal '$1,000' # `last` contains a nbsp; for spacing hack
           $template.find('.js-bid-button').text().should.equal 'Bid'
 
     describe 'closed auction', ->
@@ -52,7 +52,7 @@ describe 'templates', ->
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
-          $template.find('.aabs-label').is(':empty').should.be.true
+          $template.find('.aabs-label').is(':empty').should.be.true()
           $template.find('.aabs-price').text().should.equal ' ' # &nsbp;
           $template.find('.js-bid-button').should.have.lengthOf 0
           $template.find('.avant-garde-button').text().should.equal 'Online Bidding Closed'
@@ -61,7 +61,7 @@ describe 'templates', ->
     describe 'preview state', ->
       beforeEach ->
         @auction.set auction_state: 'preview', sale_type: 'auction promo'
-        @auction.isAuctionPromo().should.be.true
+        @auction.isAuctionPromo().should.be.true()
         @data = _.extend {}, { artwork: @artwork, auction: @auction }, @artwork.related()
 
       describe 'list', ->
@@ -81,7 +81,7 @@ describe 'templates', ->
     describe 'open or closed state', ->
       beforeEach ->
         @auction.set auction_state: 'open', sale_type: 'auction promo'
-        @auction.isAuctionPromo().should.be.true
+        @auction.isAuctionPromo().should.be.true()
         @data = _.extend {}, { artwork: @artwork, auction: @auction }, @artwork.related()
 
       describe 'list', ->
@@ -109,13 +109,13 @@ describe 'templates', ->
         it 'renders correctly', ->
           $template = $(templates.list @data)
           $template.find('.ala-current-bid').text().should.equal '$10,000'
-          $template.find('.ala-bid-count').text().should.equal ' ' # &nsbp;
+          $template.find('.ala-bid-count').text().should.equal '(0 bids)' # Can still bid on it
           $template.find('.js-acquire-button').text().should.equal 'Buy Now'
 
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
-          $template.find('.aabs-label').text().should.equal 'Buy Now Price'
+          $template.find('.aabs-label').text().should.equal 'Starting Bid (0 bids)Buy Now Price'
           $template.find('.aabs-price').text().should.equal '$10,000'
           $template.find('.js-acquire-button').text().should.equal 'Buy Now'
 
@@ -128,13 +128,13 @@ describe 'templates', ->
       describe 'list', ->
         it 'renders correctly', ->
           $template = $(templates.list @data)
-          $template.find('.ala-bid-count').text().should.equal ' ' # &nsbp;
+          $template.find('.ala-bid-count').text().should.equal '(0 bids)' # Can still bid on it
           $template.find('.avant-garde-button').text().should.equal 'Sold'
 
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
-          $template.find('.aabs-label').text().should.equal 'Buy Now Price'
+          $template.find('.aabs-label').text().should.equal 'Starting Bid (0 bids)Buy Now Price'
           $template.find('.aabs-price').text().should.equal 'Sold'
           $template.find('.js-acquire-button').should.have.lengthOf 0
           $template.find('.avant-garde-button').text().should.equal 'Sold'

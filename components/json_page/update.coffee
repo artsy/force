@@ -1,8 +1,8 @@
 fs = require 'fs'
 JSONPage = require './index'
 
-name = 'how-auctions-work'
-fixture = require.resolve '../../apps/how_auctions_work/test/fixture'
+name = 'about'
+fixture = require.resolve '../../apps/about/test/fixture/content'
 
 page = new JSONPage name: name
 page.get (err, data) ->

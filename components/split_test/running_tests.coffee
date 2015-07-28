@@ -21,11 +21,3 @@ module.exports =
     outcomes:
       magazine: 4/5
       editorial: 1/5
-
-  homepage_contents:
-    key: 'homepage_contents'
-    outcomes:
-      featured: 0.5
-      artworks: 0.5
-    edge: 'artworks'
-    dimension: 'dimension6'

@@ -50,9 +50,9 @@ describe 'Followable', ->
       @artist = new Artist fabricate 'artist'
 
     it 'sets the skip label (once)', ->
-      @view.__labelSet__?.should.be.false
+      @view.__labelSet__?.should.be.false()
       @view.follow {}, @artist
-      @view.__labelSet__?.should.be.true
+      @view.__labelSet__?.should.be.true()
 
     it 'follows the artist', ->
       @view.follow($.Event('click'), @artist)
@@ -76,13 +76,13 @@ describe 'Followable', ->
     it 'sets the label to "next" if we are not quite done; "Done" if we are almost done', ->
       $button = @view.$('.personalize-skip')
       $button.text().should.equal 'Skip'
-      @view.state.almostDone().should.not.be.ok
+      @view.state.almostDone().should.not.be.ok()
       @view.setSkipLabel()
       $button.text().should.equal 'Next'
-      @view.__labelSet__.should.be.ok
+      @view.__labelSet__.should.be.ok()
       @view.__labelSet__ = null
       @view.state.set current_step: _.last(@view.state.get 'steps')
-      @view.state.almostDone().should.be.ok
+      @view.state.almostDone().should.be.ok()
       @view.setSkipLabel()
       $button.text().should.equal 'Done'
 

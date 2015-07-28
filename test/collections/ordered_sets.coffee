@@ -25,7 +25,7 @@ describe 'OrderedSets', ->
       @orderedSets.add [fabricate 'ordered_set']
     it 'should call #fetchItems for set in the collection', ->
       @orderedSets.fetchSets()
-      @fetchSpy.calledTwice.should.be.ok
+      @fetchSpy.calledTwice.should.be.ok()
     it 'should return a promise', ->
       @orderedSets.fetchSets().constructor.name.should.equal 'Promise'
     it 'should be thennable', (done) ->

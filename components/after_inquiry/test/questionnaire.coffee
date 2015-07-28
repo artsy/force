@@ -17,13 +17,16 @@ describe 'Questionnaire', ->
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
 
       @Questionnaire = benv.requireWithJadeify resolve(__dirname, '../questionnaire'), [
-        'templateMap.initial', 'templateMap.questionnaire', 'templateMap.signup', 'templateMap.login'
+        'templateMap.initial'
+        'templateMap.questionnaire'
+        'templateMap.signup'
+        'templateMap.login'
       ]
 
       sinon.stub _, 'delay', (cb) -> cb()
       sinon.stub Backbone, 'sync'
       sinon.stub @Questionnaire::, 'attachLocationSearch'
-      sinon.stub @Questionnaire::, 'attachBookmarksView'
+      sinon.stub @Questionnaire::, 'attachUserInterestsView'
       sinon.stub @Questionnaire::, 'close'
       sinon.stub(@Questionnaire::, 'modalTemplate').returns('<div class="modal-body"></div>')
 
@@ -42,7 +45,7 @@ describe 'Questionnaire', ->
     _.delay.restore()
     Backbone.sync.restore()
     @view.attachLocationSearch.restore?()
-    @view.attachBookmarksView.restore?()
+    @view.attachUserInterestsView.restore?()
     @view.modalTemplate.restore?()
     @view.close.restore?()
 
@@ -126,7 +129,7 @@ describe 'Questionnaire', ->
 
         it 'allows the user to skip this whole thing, sending the inquiry and closing the modal', ->
           @view.$('#auth-skip').click()
-          @view.close.called.should.be.true
+          @view.close.called.should.be.true()
 
     describe '#authError', ->
       beforeEach ->
@@ -150,10 +153,10 @@ describe 'Questionnaire', ->
         @view.user.get('accessToken').should.equal 'secret'
 
       it 'unsets the user password so that it isnt sent to the server on subsequent saves (which would error)', ->
-        @view.user.has('password').should.be.false
+        @view.user.has('password').should.be.false()
 
       it 'always sets needsOnboarding to false (for now)', ->
-        @view.user.needsOnboarding.should.be.false
+        @view.user.needsOnboarding.should.be.false()
 
       it 'saves the user with the new attributes', ->
         _.last(Backbone.sync.args)[0].should.equal 'update'
@@ -168,19 +171,19 @@ describe 'Questionnaire', ->
 
           sinon.stub @Questionnaire::, 'close'
           sinon.stub Backbone, 'sync'
-          @view.bookmarksView = saveAll: sinon.stub()
+          @view.userInterestsView = saveAll: sinon.stub()
 
           model.success()
 
         it 'syncs the user', ->
-          Backbone.sync.called.should.be.true
+          Backbone.sync.called.should.be.true()
           Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
 
-        it 'saves all the bookmarks', ->
-          @view.bookmarksView.saveAll.called.should.be.true
+        it 'saves all the userInterests', ->
+          @view.userInterestsView.saveAll.called.should.be.true()
 
         it 'closes the modal', ->
-          @view.close.called.should.be.true
+          @view.close.called.should.be.true()
 
       describe 'mode is login', ->
         beforeEach ->
@@ -188,7 +191,7 @@ describe 'Questionnaire', ->
           @view.authSuccess new Backbone.Model
 
         it 'does not set needsOnboarding on the user', ->
-          @view.user.needsOnboarding.should.be.false
+          @view.user.needsOnboarding.should.be.false()
 
     describe '#toggleMode', ->
       it 'should be able to set the mode to an arbitrary value based on a links data-mode', ->
@@ -216,22 +219,22 @@ describe 'Questionnaire', ->
       describe 'collector level 3', ->
         it 'should advance to the next state on click and have the correct copy', ->
           @view.$('a').first().click()
-          @view.attachLocationSearch.called.should.be.true
+          @view.attachLocationSearch.called.should.be.true()
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
           html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
-          @view.attachBookmarksView.called.should.be.true
+          @view.attachUserInterestsView.called.should.be.true()
 
       describe 'collector level 2', ->
         it 'should advance to the next state on click and have the correct copy', ->
           @view.$('a').last().click()
-          @view.attachLocationSearch.called.should.be.true
+          @view.attachLocationSearch.called.should.be.true()
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
           html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
-          @view.attachBookmarksView.called.should.be.false
+          @view.attachUserInterestsView.called.should.be.false()
 
     describe '#done', ->
       beforeEach ->
@@ -268,7 +271,7 @@ describe 'Questionnaire', ->
       it 'closes the modal on success', ->
         @view.$('form').submit()
         _.last(Backbone.sync.args)[2].success()
-        @view.close.called.should.be.true
+        @view.close.called.should.be.true()
 
   describe 'regardless', ->
     describe '#renderIntroduction', ->

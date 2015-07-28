@@ -67,7 +67,7 @@ describe 'Filter', ->
     describe 'not yet fetched', ->
       it 'fetches the priced filter state', ->
         Backbone.sync.callCount.should.equal 0
-        @filter.priced().should.be.false
+        @filter.priced().should.be.false()
         Backbone.sync.callCount.should.equal 1
         @filter.priced().id.should.equal 'for_sale=true'
         Backbone.sync.callCount.should.equal 1
@@ -87,16 +87,16 @@ describe 'Filter', ->
 
     it 'filters by the preset criteria if true', ->
       @filter.toggle 'for_sale', 'true'
-      @filter.by.called.should.be.true
+      @filter.by.called.should.be.true()
       @filter.by.args[0][0].should.equal 'for_sale'
       @filter.by.args[0][1].should.equal 'true'
-      @filter.deselect.called.should.be.false
+      @filter.deselect.called.should.be.false()
 
     it 'deselects the appropriate key if false', ->
       @filter.toggle 'for_sale', false
-      @filter.deselect.called.should.be.true
+      @filter.deselect.called.should.be.true()
       @filter.deselect.args[0][0].should.equal 'for_sale'
-      @filter.by.called.should.be.false
+      @filter.by.called.should.be.false()
 
   describe '#by', ->
     it 'toggles filter criteria and sends the selected criteria when fetching the filter', ->
@@ -125,10 +125,10 @@ describe 'Filter', ->
 
     it 'unsets the filter condition', ->
       Backbone.sync.callCount.should.equal 2
-      @filter.selected.has('medium').should.be.true
+      @filter.selected.has('medium').should.be.true()
       @filter.deselect 'medium'
-      @filter.selected.has('medium').should.be.false
-      @filter.engaged.should.be.true
+      @filter.selected.has('medium').should.be.false()
+      @filter.engaged.should.be.true()
       Backbone.sync.callCount.should.equal 3
       @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&for_sale=true', 'for_sale=true']
 
@@ -137,14 +137,14 @@ describe 'Filter', ->
       @filter.deselect 'medium'
       @filter.deselect 'for_sale'
       # Needs to fetch root
-      @filter.engaged.should.be.false
+      @filter.engaged.should.be.false()
       Backbone.sync.callCount.should.equal 4
       @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&for_sale=true', 'for_sale=true', 'root']
 
     describe '#forSaleCount', ->
       xit 'returns the for sale count when the for sale boolean is toggled', ->
         @filter.set 'total', 999
-        @filter.selected.has('for_sale').should.be.true
+        @filter.selected.has('for_sale').should.be.true()
         @filter.forSaleCount().should.equal 999
 
       xit 'returns the for sale count when the for sale boolean is not toggled', ->

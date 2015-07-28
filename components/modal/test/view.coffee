@@ -35,12 +35,12 @@ describe 'ModalView', ->
       @view.dimensions.should.eql width: '400px'
 
     it 'Should auto-open', ->
-      @openSpy.called.should.be.ok
+      @openSpy.called.should.be.ok()
 
   describe '#escape', ->
     it 'is triggered by the escape keyup event; publishes \'modal:close\'', (done) ->
       mediator.on 'modal:close', ->
-        true.should.be.ok
+        true.should.be.ok()
         done()
       $(window).trigger($.Event 'keyup', { which: 27 })
 
@@ -53,7 +53,7 @@ describe 'ModalView', ->
         @view.$dialog.width().should.equal 400
 
       it 'disables scrolling on the document body', ->
-        $('body').hasClass('is-scrolling-disabled').should.be.ok
+        $('body').hasClass('is-scrolling-disabled').should.be.ok()
 
       it 'sets the default classes', ->
         classes = @view.$el.attr('class')
@@ -89,8 +89,8 @@ describe 'ModalView', ->
   describe 'interaction', ->
     it 'removes itself when the close button is clicked', ->
       @view.$('.modal-close').click()
-      @closeSpy.called.should.be.ok
+      @closeSpy.called.should.be.ok()
 
     it 'removes itself when the backdrop is clicked', ->
       @view.$('.modal-backdrop').click()
-      @closeSpy.called.should.be.ok
+      @closeSpy.called.should.be.ok()

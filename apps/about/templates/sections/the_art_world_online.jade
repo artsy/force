@@ -18,7 +18,7 @@
 
     .about-section1-cta
       .about-garamond-caption: em= section.pullBlurb1.cta.h1
-      a.avant-garde-button-white.is-block.about-nav-link(
+      a.avant-garde-button-white.is-block(
         href= section.pullBlurb1.cta.button.href
       )= section.pullBlurb1.cta.button.text
 
@@ -77,8 +77,9 @@
 .about-container
   .span2
     +pull-blurb(section.pullBlurb4)
-    form#about-phone-link
-      label.avant-garde-form-label Text me a download link:
+    form#about-phone-link.stacked-form
+      label.avant-garde-form-label
+        | Text me a download link
       .bordered-input-with-button
         .about-section1-phone-error
         .about-section1-phone-success

@@ -1,5 +1,5 @@
-
 _ = require 'underscore'
+Q = require 'q'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
@@ -10,12 +10,14 @@ routes = rewire '../routes'
 describe '/auction routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub Q, 'promise'
     @req = params: id: 'foobar'
     @res = render: sinon.stub(), locals: sd: {}
     @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
+    Q.promise.restore()
 
   it 'fetches the auction data and renders the index template', (done) ->
     routes.index @req, @res, @next
@@ -30,14 +32,10 @@ describe '/auction routes', ->
     Backbone.sync.args[1][2].success {}
 
     _.defer =>
-      # A minor note to my future self:
-      # Because there is no promise being returned by the stubbed out sync
-      # this article fetch falls through and we don't have to explicitly invoke the
-      # success to move on with the spec. If it were wrapped in an `Q.all` that would
-      # be a different story.
+      Q.promise.args[0][0]()
       _.last(Backbone.sync.args)[1].url.should.containEql '/api/articles'
 
-      @next.called.should.be.false
+      @next.called.should.be.false()
       @res.render.args[0][0].should.equal 'index'
       _.keys(@res.render.args[0][1]).should.eql [
         'auction'
@@ -57,8 +55,17 @@ describe '/auction routes', ->
     Backbone.sync.args[0][2].success fabricate 'sale', is_auction: false
     Backbone.sync.args[1][2].success {}
     _.defer =>
-      @next.called.should.be.true
-      @res.render.called.should.be.false
+      @next.called.should.be.true()
+      @res.render.called.should.be.false()
+      done()
+
+  it 'passes down the error', (done) ->
+    routes.index @req, @res, @next
+    @next.called.should.be.false()
+    Backbone.sync.args[0][2].error()
+    Backbone.sync.args[1][2].error()
+    _.defer =>
+      @next.called.should.be.true()
       done()
 
   describe 'with logged in user', ->
@@ -75,4 +82,4 @@ describe '/auction routes', ->
 
     it 'sets the `registered_to_bid` attr', ->
       @userReqs[1][2].success ['existy']
-      @req.user.get('registered_to_bid').should.be.true
+      @req.user.get('registered_to_bid').should.be.true()

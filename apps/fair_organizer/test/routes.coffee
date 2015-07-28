@@ -42,17 +42,15 @@ describe 'Fair Organization routes', ->
   describe '#fetchFairOrgData', ->
     beforeEach ->
       @fairs = new Fairs [
-        fabricate('fair', id: _.uniqueId(), _id: _.uniqueId()),
-        fabricate('fair', id: _.uniqueId(), _id: _.uniqueId()),
-        fabricate('fair', id: _.uniqueId(), _id: _.uniqueId())
+        fabricate('fair', name: _.uniqueId(), id: _.uniqueId(), _id: _.uniqueId()),
+        fabricate('fair', name: _.uniqueId(), id: _.uniqueId(), _id: _.uniqueId()),
+        fabricate('fair', name: _.uniqueId(), id: _.uniqueId(), _id: _.uniqueId())
       ]
 
     it 'fetches the fair organizer and associated fairs', ->
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
-
       Backbone.sync.args[0][2].success @fairs.models
       Backbone.sync.args[1][2].success()
-
       _.defer =>
         @res.locals.sd.FAIR_IDS.should.eql @fairs.pluck('_id')
         @res.locals.sd.FAIR_ORGANIZER.should.eql @fairOrg.toJSON()
@@ -62,19 +60,25 @@ describe 'Fair Organization routes', ->
       fair.set
         start_at: moment().subtract(3, 'days').format()
         end_at: moment().add(3, 'days').format()
-
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
-
       Backbone.sync.args[0][2].success @fairs.models
-
       @res.redirect.args[0][0].should.equal '/the-armory-show/1969'
+
+    it 'sets showName if the all the fairs dont have identical names', ->
+      fair = @fairs.first()
+      fair.set name: 'modern-fair'
+      routes.fetchFairOrgData @req, @res, (next = sinon.stub())
+      Backbone.sync.args[0][2].success @fairs.models
+      Backbone.sync.args[1][2].success()
+      _.defer =>
+        @res.locals.showName.should.be.true()
 
 
   describe '#overview', ->
     it 'next is called without a fair org', ->
       delete @res.locals.fairOrg
       routes.overview @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
     it 'renders the overview template', ->
       routes.overview @req, @res

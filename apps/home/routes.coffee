@@ -57,34 +57,6 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredShows: featuredShows
   ).done()
 
-@newIndex = (req, res) ->
-  heroUnits = new HeroUnits
-  # homepage:explore
-  exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
-
-  filterArtworks = new FilterArtworks
-  filterData = { size: 0, aggregations: aggregationParams }
-
-  timeToCacheInSeconds = 300 # 5 Minutes
-
-  Q.allSettled(_.compact([
-    heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    exploreSections.fetch(cache: true) unless req.user?
-    filterArtworks.fetch(data: filterData)
-  ])).then(->
-    heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
-    res.locals.sd.HERO_UNITS = heroUnits.toJSON()
-    res.locals.sd.FILTER_ROOT = '/'
-    res.render 'new_index',
-      heroUnits: heroUnits
-      exploreSections: exploreSections
-      filterRoot: res.locals.sd.FILTER_ROOT
-      counts: filterArtworks.counts
-      params: new Backbone.Model
-      activeText: ''
-  ).done()
-
-
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"
 

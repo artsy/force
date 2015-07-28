@@ -5,7 +5,7 @@ LocationSearchView = require '../location_search/index.coffee'
 Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
-BookmarksView = require '../bookmarks/view.coffee'
+UserInterestsView = require '../user_interests/view.coffee'
 Introduction = require '../introduction/model.coffee'
 
 templateMap =
@@ -80,7 +80,7 @@ module.exports = class Questionnaire extends ModalView
 
     unless @user.id?
       # Generate logged out introduction before sending inquiry
-      @introduction.generate @user, @bookmarksView?.bookmarks, @attendance,
+      @introduction.generate @user, @userInterestsView?.collection, @attendance,
         success: =>
           @inquiry.set 'introduction', @introduction.get('introduction')
           mediator.trigger 'inquiry:send'
@@ -135,7 +135,7 @@ module.exports = class Questionnaire extends ModalView
       success: =>
         $.when.apply(null, _.compact([
           @user.refresh()
-          @bookmarksView?.saveAll?()
+          @userInterestsView?.saveAll?()
         ])).then =>
           @close() # And we're done...
 
@@ -151,7 +151,7 @@ module.exports = class Questionnaire extends ModalView
 
     if mode is 'questionnaire'
       @once 'rerendered', =>
-        @attachBookmarksView() if @user.isCollector()
+        @attachUserInterestsView() if @user.isCollector()
         @attachLocationSearch()
         @attachIntroductionPreview()
 
@@ -159,7 +159,7 @@ module.exports = class Questionnaire extends ModalView
 
   syncIntroduction: =>
     @user.set @serializeForm()
-    @introduction.generate @user, @bookmarksView?.bookmarks, @attendance
+    @introduction.generate @user, @userInterestsView?.collection, @attendance
 
   renderIntroduction: ->
     @$preview ?= @$('#after-inquiry-introduction-preview')
@@ -172,18 +172,20 @@ module.exports = class Questionnaire extends ModalView
   attachIntroductionPreview: ->
     @$('input[name="name"], input[name="profession"]').on 'keyup', _.debounce(@syncIntroduction, 500)
     @listenTo @locationSearchView, 'location:update', @syncIntroduction if @locationSearchView?
-    @listenTo @bookmarksView.bookmarks, 'sync add remove', @syncIntroduction if @bookmarksView?.bookmarks?
+    @listenTo @userInterestsView.collection, 'sync add remove', @syncIntroduction if @userInterestsView?.collection?
     @listenTo @introduction, 'sync', @renderIntroduction
     @syncIntroduction()
 
-  attachBookmarksView: ->
-    @bookmarksView = new BookmarksView
-      el: @$('#after-inquiry-bookmark-artists')
+  attachUserInterestsView: ->
+    @userInterestsView = new UserInterestsView
       mode: 'pre'
       limit: 2
       persist: @user.id?
+    @$('#after-inquiry-bookmark-artists').html @userInterestsView.render().$el
+    @userInterestsView.collection.fetch()
+
     # Height changes on render so recenter the modal
-    @bookmarksView.on 'render:collection', @updatePosition
+    @userInterestsView.on 'render:collection', @updatePosition
 
   attachLocationSearch: ->
     @locationSearchView = new LocationSearchView el: @$('#after-inquiry-collector-location'), autofocus: false
@@ -195,5 +197,5 @@ module.exports = class Questionnaire extends ModalView
     mediator.off null, null, this
     @inquiry.off null, null, this
     @locationSearchView?.remove()
-    @bookmarksView?.remove()
+    @userInterestsView?.remove()
     super

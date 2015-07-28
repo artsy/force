@@ -42,7 +42,7 @@ describe 'ArtworkCollection', ->
       artwork = new Artwork { id: 'baz', title: 'Baz' }
       len = @artworkCollection.get('artworks').length
       @artworkCollection.saveArtwork artwork.get('id')
-      @artworkCollection.isSaved(artwork).should.be.true
+      @artworkCollection.isSaved(artwork).should.be.true()
       @artworkCollection.get('artworks').length.should.equal len + 1
 
     it 'makes an API request to sync the action', ->
@@ -81,7 +81,7 @@ describe 'ArtworkCollection', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/baz'
       Backbone.sync.args[0][2].success { foo: 'bar' }
-      successCb.called.should.be.ok
+      successCb.called.should.be.ok()
 
   describe '#unsaveArtwork', ->
 
@@ -89,7 +89,7 @@ describe 'ArtworkCollection', ->
       artwork = @artworkCollection.get('artworks').first()
       len = @artworkCollection.get('artworks').length
       @artworkCollection.unsaveArtwork artwork.get('id')
-      @artworkCollection.isSaved(artwork).should.be.false
+      @artworkCollection.isSaved(artwork).should.be.false()
       @artworkCollection.get('artworks').length.should.equal len - 1
 
     it 'makes an API request to sync the action', ->
@@ -128,15 +128,15 @@ describe 'ArtworkCollection', ->
       Backbone.sync.args[0][0].should.equal 'delete'
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/foo'
       Backbone.sync.args[0][2].success { foo: 'bar' }
-      successCb.called.should.be.ok
+      successCb.called.should.be.ok()
 
   describe 'isSaved', ->
 
     it 'determines if an artwork is in the user\'s saved artworks artworkCollection', ->
       unsavedArtwork = new Artwork({ id: 'baz', title: 'Baz' })
       savedArtwork = @artworkCollection.get('artworks').first()
-      @artworkCollection.isSaved(unsavedArtwork).should.be.false
-      @artworkCollection.isSaved(savedArtwork).should.be.true
+      @artworkCollection.isSaved(unsavedArtwork).should.be.false()
+      @artworkCollection.isSaved(savedArtwork).should.be.true()
 
   describe '#broadcastSaved', ->
 
@@ -180,15 +180,15 @@ describe 'ArtworkCollection', ->
       server.respondWith("GET", "#{url}?artworks[]=moo&artworks[]=boo&artworks[]=gar", response)
       @artworkCollection.syncSavedArtworks()
       server.respond()
-      @artworkCollection.get('artworks').get('boo').should.be.true
-      @artworkCollection.get('artworks').get('moo').should.be.false
+      @artworkCollection.get('artworks').get('boo').should.be.true()
+      @artworkCollection.get('artworks').get('moo').should.be.false()
 
     xit 'cleans up when all saves are fetched', ->
       @artworkCollection.syncSavedArtworks()
-      @artworkCollection.allFetched.should.be.false
+      @artworkCollection.allFetched.should.be.false()
 
       @artworkCollection.syncSavedArtworks()
-      @artworkCollection.allFetched.should.be.true
+      @artworkCollection.allFetched.should.be.true()
       @artworkCollection.unsavedCache.length.should.equal 0
       @artworkCollection.pendingRequests.length.should.equal 0
       @artworkCollection.completedRequests.length.should.equal 0
