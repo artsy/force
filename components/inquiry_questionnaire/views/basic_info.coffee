@@ -11,8 +11,23 @@ module.exports = class BasicInfo extends StepView
 
   serialize: (e) ->
     form = new Form model: @user, $form: @$('form')
-    form.submit e, success: =>
-      @next()
+    return unless form.start()
+    e.preventDefault()
+    form.state 'loading'
+
+    @user.set form.data()
+
+    # Temporary hack around API bug surrounding valid hash fields...
+    collectorProfile = @user.related().collectorProfile
+    id = collectorProfile.id
+    collectorProfile.clear()
+    collectorProfile.set _.extend id: id, @user.pick(collectorProfile.validHashFields)
+
+    $.when.apply(null, [
+      @user.save()
+      collectorProfile.save()
+    ])
+      .always => @next()
 
   postRender: ->
     @locationSearch = new LocationSearch
