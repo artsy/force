@@ -74,7 +74,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     $.ajax
       method: 'PUT'
       url: "#{API_URL}/api/v1/me/notifications"
-      data: status: 'read'
+      data: status: 'unread'
 
 module.exports.init = ->
   new NotificationsView el: $('body')

@@ -157,3 +157,43 @@ computed-padding(font-size, target-line-height)
   &.is-fade-out
     > span
       opacity 0
+
+#hpm-bundles
+  overflow scroll
+  max-height 300px
+.bundle-item
+  padding computed-padding(18px, 40px) default-margin
+  garamond()
+  font-size 18px
+  line-height 1
+  text-transform none
+  letter-spacing 0
+  color white
+  text-decoration none
+  overflow ellipsis
+  &:hover
+    background-color gray-darkest-color
+.bundle-image
+  width 40px
+  height 40px
+  display inline-block
+  vertical-align middle
+.bundle-text, .bundle-information
+  display inline-block
+  vertical-align middle
+.bundle-text
+  padding-left 10px
+  vertical-align middle
+.bundle-information
+  float right
+.bundle-message, .bundle-date
+  avant-garde-size('s-headline')
+  color gray-color
+.bundle-actors
+  avant-garde-size('body')
+  color gray-lightest-color
+.bundle-read-status
+  border-radius 50%
+  color purple-color
+  width 5px
+  height 5px

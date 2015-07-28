@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 40 51" enable-background="new 0 0 40 51" xml:space="preserve">
+<rect id="XMLID_1_" x="-48.6" y="35.3" fill="#FFFF00" width="25" height="3.9"/>
+<g id="XMLID_5_">
+	<defs>
+		<path id="XMLID_6_" d="M-38.3,16.8c-4.1,0-7.4,3.2-7.4,7.2c0,0-0.4,11.4-2.6,11.4v3.9h19.9v-3.9c-2.6-0.3-2.6-11.4-2.6-11.4
+			C-30.9,20-34.2,16.8-38.3,16.8 M-38.3,19.5c2.5,0,4.6,2,4.6,4.5c0,0.1,0,3,0.3,5.9c0.2,1.8,0.6,4.8,2,6.7h-14
+			c1.3-1.8,1.7-4.7,1.9-6.5c0.4-2.9,0.5-5.8,0.5-5.9l0,0v0C-42.9,21.5-40.8,19.5-38.3,19.5"/>
+	</defs>
+	<use xlink:href="#XMLID_6_"  overflow="visible" fill-rule="evenodd" clip-rule="evenodd" fill="#FFF"/>
+	<clipPath id="XMLID_68_">
+		<use xlink:href="#XMLID_6_"  overflow="visible"/>
+	</clipPath>
+	<rect id="XMLID_9_" x="-53.2" y="11.8" clip-path="url(#XMLID_68_)" fill="#FFF" width="29.9" height="32.5"/>
+</g>
+<g id="XMLID_2_">
+	<defs>
+		<path id="XMLID_3_" d="M-35.6,39.3c0,1.4-1.2,2.6-2.7,2.6c-1.5,0-2.7-1.2-2.7-2.6c0-1.4,1.2-2.6,2.7-2.6
+			C-36.8,36.7-35.6,37.8-35.6,39.3"/>
+	</defs>
+	<use xlink:href="#XMLID_3_"  overflow="visible" fill-rule="evenodd" clip-rule="evenodd" fill="#FFF"/>
+	<clipPath id="XMLID_69_">
+		<use xlink:href="#XMLID_3_"  overflow="visible"/>
+	</clipPath>
+	<rect id="XMLID_4_" x="-45.9" y="31.7" clip-path="url(#XMLID_69_)" fill="#FFF" width="15.3" height="15.2"/>
+</g>
+<g id="XMLID_10_">
+	<path id="XMLID_14_" fill-rule="evenodd" clip-rule="evenodd" fill="#FFF" d="M20.5,5.3C14,5.3,8.8,10.5,8.8,16.8
+		c0,0-0.6,18.1-4.1,18.1v6.2h31.7V35c-4.1-0.4-4.1-18.1-4.1-18.1C32.3,10.5,27,5.3,20.5,5.3 M20.5,9.6c4.1,0,7.3,3.2,7.3,7.2
+		c0,0.2,0,4.7,0.5,9.4c0.3,2.8,0.9,7.7,3.2,10.6H9.3c2.1-2.8,2.7-7.5,3.1-10.4c0.6-4.7,0.8-9.3,0.8-9.5l0-0.1v-0.1
+		C13.2,12.9,16.5,9.6,20.5,9.6"/>
+	<path id="XMLID_11_" fill-rule="evenodd" clip-rule="evenodd" fill="#FFF" d="M24.8,41.2c0,2.3-1.9,4.2-4.3,4.2
+		c-2.3,0-4.3-1.9-4.3-4.2c0-2.3,1.9-4.2,4.3-4.2C22.9,37,24.8,38.9,24.8,41.2"/>
+</g>
+</svg>

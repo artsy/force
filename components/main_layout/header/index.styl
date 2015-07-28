@@ -60,13 +60,41 @@
   @extends .mlh-nav-link
   padding-left 30px
   padding-right @padding-left
+  border-left 1px solid white
   position relative
   min-width 130px
   text-align center
-  border none
   white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
+.mlh-notification
+  @extends .mlh-nav-link
+  padding 0px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left 1px solid white
+  &.hover-pulldown
+    &:before
+      border none
+  svg
+    width 25px
+    height 25px
+  .hpm-header
+    cursor default
+  .hover-pulldown-menu
+    width 300px
+.mlh-bundle-count
+  display none
+  font-size 12px
+  background-color purple-color
+  border-radius 50px
+  width 16px
+  height 16px
+  position absolute
+  top 0px
+  right 17px
+  line-height 15px
 
 .mshr-garamond-nav-link
   display inline-block
