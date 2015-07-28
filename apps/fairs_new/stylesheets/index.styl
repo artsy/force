@@ -29,8 +29,37 @@ h1.fair-header
 .fairs__current-fair__image
   position relative
   margin-bottom 15px
+  .fairs__current-fair__image__overlay
+    garamond-size('headline')
+    position absolute
+    bottom 30px
+    left 30px
+    color #fff
+    opacity 0
+    transition opacity 0.33s
+    z-index 1
+  &:hover .fairs__current-fair__image__overlay
+    opacity 1
+
 .fairs__current-fair__image__icon
-  display inline-block
+  height 80px
+  margin-right 80px
+.fairs-fair__meta
+  display table
+  vertical-align middle
+  height 80px
+  a
+    text-decoration none
+.fairs-fair__meta__profile, .fairs-fair__meta__info
+  vertical-align middle
+  display table-cell
+
+.fairs-fair__name
+  avant-garde-size('body')
+  display inline
+
+.fairs-fair__info
+  garamond-size('s-body')
 
 .fairs__promo
   width 100%
@@ -109,13 +138,6 @@ h1.fair-header
 .fairs__current__promo__copy
   garamond-size('headline')
   font-size 25px
-
-.fairs-fair__name
-  avant-garde-size('body')
-  display inline
-
-.fairs-fair__info
-  garamond-size('s-body')
 
 .fairs-fair__follow
   display inline-block
