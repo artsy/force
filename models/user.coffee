@@ -42,8 +42,9 @@ module.exports = class User extends Backbone.Model
 
     success = _.wrap success, (__success__, args...) =>
       # Wrap Backbone#sync injecting data where appropriate...
-      unless @isLoggedIn() # Provide all or none of the parameters
+      unless @isLoggedIn() or Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__
         data = session_id: SESSION_ID, anonymous_session_id: @id
+        Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__ = true
         Backbone.sync = _.wrap Backbone.sync, (sync, method, model, options = {}) ->
           switch method
             when 'read'
@@ -54,6 +55,7 @@ module.exports = class User extends Backbone.Model
             else
               @set data, silent: true
           sync method, model, options
+
       __success__? args...
 
     Q.promise (resolve, reject) =>
