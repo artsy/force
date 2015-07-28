@@ -6,5 +6,5 @@ for bundle in bundles
       .bundle-actors= bundle.actors
     .bundle-information
       .bundle-date= bundle.date
-      if bundle.status === 'unread'
+      if (bundle.status === "unread")
         .bundle-read-status
