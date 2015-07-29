@@ -1,3 +1,4 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
@@ -58,7 +59,15 @@ module.exports = class LoggedOutUser extends User
   repossess: ->
     # Only valid for recently logged in, LoggedOutUsers
     return Q.resolve() unless @isLoggedIn()
+
+    { collectorProfile } = @related()
+    { userInterests } = collectorProfile.related()
+
+    collectorProfile.setWithValidAttributes @attributes
+    userInterests.invoke 'unset', 'id'
+
     Q.all _.flatten [
-      @user.related().userInterests.invoke 'save'
-      @user.related().collectorProfile.instantiate()
+      @save()
+      collectorProfile.save()
+      userInterests.invoke 'save'
     ]
