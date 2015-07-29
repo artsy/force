@@ -16,16 +16,11 @@ module.exports = class BasicInfo extends StepView
     form.state 'loading'
 
     @user.set form.data()
-
-    # Temporary hack around API bug surrounding valid hash fields...
-    collectorProfile = @user.related().collectorProfile
-    id = collectorProfile.id
-    collectorProfile.clear()
-    collectorProfile.set _.extend id: id, @user.pick(collectorProfile.validHashFields)
+    @user.related().collectorProfile.setWithValidAttributes @user.attributes
 
     $.when.apply(null, [
       @user.save()
-      collectorProfile.save()
+      @user.related().collectorProfile.save()
     ])
       .always => @next()
 
