@@ -43,15 +43,15 @@ module.exports = class Account extends StepView
     return unless form.start()
     e.preventDefault()
     form.state 'loading'
+
     @user.set form.serializer.data()
     @user[@mode()]
-      error: _.bind(form.error, form)
+      error: form.error.bind(form)
       success: =>
-        @user.findOrCreate()
-          .then =>
-            @user.reposess()
-          .then => @next()
-          .fail => @next()
+        @user.repossess()
+          .finally =>
+            @next()
+          .done()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'
