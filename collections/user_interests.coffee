@@ -6,24 +6,28 @@ UserInterest = require '../models/user_interest.coffee'
 module.exports = class UserInterests extends Backbone.Collection
   model: UserInterest
 
+  interestType: 'Artist' # Should/will be configurable
+
   url: ->
-    if (id = @collectorProfile?.id)?
-      "#{API_URL}/api/v1/collector_profile/#{id}/user_interest"
+    if @collectorProfile?
+      "#{API_URL}/api/v1/user_interests"
+    else
+      "#{API_URL}/api/v1/me/user_interest/artists"
+
+  initialize: (models, { @collectorProfile } = {}) ->
+    @model::urlRoot = if @collectorProfile?
+      "#{API_URL}/api/v1/user_interest"
     else
       "#{API_URL}/api/v1/me/user_interest"
-
-  initialize: (models, { @collectorProfile } = {}) -> #
 
   parse: (response) ->
     _.filter response, (obj) ->
       not _.isEmpty(obj.interest)
 
   fetch: (options = {}) ->
-    options.url = "#{@url()}/artists" # Temporary hack for this non-RESTful endpoint
-
     if @collectorProfile?
-      options.data = _.extend options.data or {}, @collectorProfile.pick('anonymous_session_id')
-
+      options.data = _.extend options.data or {}, @owner(),
+        interest_type: @interestType
     super options
 
   comparator: (userInterest) ->
@@ -36,9 +40,15 @@ module.exports = class UserInterests extends Backbone.Collection
   alreadyInterested: (interest) ->
     @findByInterestId(interest.id)?
 
+  owner: ->
+    if @collectorProfile?
+      owner_id: @collectorProfile.id, owner_type: 'CollectorProfile'
+
   addInterest: (interest) ->
     return if @alreadyInterested interest
 
-    @unshift
+    @unshift _.extend {
+      interest_type: @interestType
       interest_id: interest.id
       interest: interest.attributes
+    }, @owner()
