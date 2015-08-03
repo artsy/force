@@ -6,6 +6,7 @@ ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
 AuthModalView = require '../../components/auth_modal/view.coffee'
 EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
+Logger = require '../../components/inquiry_questionnaire/logger.coffee'
 
 module.exports.init = ->
   # Force a particular step
@@ -43,3 +44,9 @@ module.exports.init = ->
   $('.js-logout').click (e) ->
     e.preventDefault()
     $.ajax url: '/users/sign_out', type: 'DELETE', success: -> location.reload()
+
+  # Reset has_seen_x without having to mess with cookies
+  $('.js-reset-logged').click (e) ->
+    e.preventDefault()
+    new Logger().reset()
+    location.reload()

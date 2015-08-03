@@ -20,6 +20,7 @@ block body
       | APPLICATION_NAME: #{APPLICATION_NAME}
       | API_URL: #{API_URL}
       | ARTWORK_ID: #{artwork.id}
+      | HAS_SEEN: <a class='js-reset-logged' href='#'>#{HAS_SEEN}</a>
 
     if (NODE_ENV === 'development' || NODE_ENV === 'staging') && API_URL === 'https://stagingapi.artsy.net'
       hr.is-invisible
