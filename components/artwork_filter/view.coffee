@@ -4,6 +4,7 @@ Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
 ArtworkTableView = require '../artwork_table/view.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 splitTest = require '../../components/split_test/index.coffee'
@@ -102,8 +103,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   changeViewMode: (e) ->
     $target = $(e.currentTarget)
-    @viewMode.set 'mode', $target.data('mode')
+    mode = $target.data('mode')
+    @viewMode.set 'mode', mode
     @artworksView = @view()
+    analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
 
   loadNextPage: (options = {}) ->
     return if @remaining is 0
