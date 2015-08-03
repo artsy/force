@@ -56,6 +56,15 @@ module.exports = class Fair extends Backbone.Model
   formatDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
 
+  bannerSize: ->
+    sizes =
+      'x-large' : 1
+      'large' : 2
+      'medium' : 3
+      'small' : 4
+      'x-small' : 5
+    sizes[@get('banner_size')]
+
   fetchExhibitors: (options) ->
     galleries = new @aToZCollection('show', 'partner')
     galleries.fetchUntilEnd
@@ -226,4 +235,3 @@ module.exports = class Fair extends Backbone.Model
 
   isPast: ->
     @isEligible() and @isOver()
-
