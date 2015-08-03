@@ -158,35 +158,3 @@ describe 'LoggedOutUser', ->
           done()
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
         Backbone.sync.args[0][2].success id: 'foobar'
-
-  describe '#repossess', ->
-    beforeEach ->
-      sinon.stub Backbone, 'sync'
-
-    afterEach ->
-      Backbone.sync.restore()
-
-    it 're-saves the relevant objects to associate them with the newly created/logged in account', ->
-      user = new LoggedOutUser
-
-      { collectorProfile } = user.related()
-      { userInterests } = collectorProfile.related()
-
-      userInterests.addInterest fabricate('artist')
-
-      userInterests.first().set 'id', 'user-interest-id'
-
-      user.__isLoggedIn__ = true
-      user.repossess()
-
-      Backbone.sync.callCount.should.equal 3
-
-      # Saves the User
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
-
-      # Saves the CollectorProfile
-      Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile'
-
-      # Creates the new UserInterests
-      Backbone.sync.args[2][1].url().should.containEql '/api/v1/user_interest'
-      Backbone.sync.args[2][1].url().should.not.containEql 'user-interest-id'
