@@ -15,7 +15,10 @@ module.exports = class UserInterests extends Backbone.Collection
       "#{API_URL}/api/v1/me/user_interest/artists"
 
   initialize: (models, { @collectorProfile } = {}) ->
-    @model::urlRoot = if @collectorProfile?
+    @model::urlRoot = @urlRoot()
+
+  urlRoot: ->
+    if @collectorProfile?
       "#{API_URL}/api/v1/user_interest"
     else
       "#{API_URL}/api/v1/me/user_interest"
