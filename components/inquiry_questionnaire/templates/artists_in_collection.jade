@@ -1,5 +1,3 @@
-include ./partials/steps
-
 h1.iq-headline
   span What artists do you collect?
   span (Optional)
@@ -10,3 +8,5 @@ form.iq-form.stacked-form
 
   button.avant-garde-button-black.iq-next( type='submit' ) Next
 
+if artwork.related().partner.get('pre_qualify')
+  include ./partials/nevermind

@@ -10,8 +10,9 @@ module.exports =
     done: require './views/done.coffee'
 
   decisions:
-    prequalify: ({ user }) ->
-      not user.get 'prequalified'
+    pre_qualify: ({ artwork }) ->
+      artwork.related()
+        .partner.get('pre_qualify') is true
 
     is_collector: ({ user }) ->
       user.isCollector()
@@ -31,13 +32,13 @@ module.exports =
       user.isLoggedIn()
 
   steps: [
-    prequalify:
+    pre_qualify:
       true: [
         { has_commercial_interest: false: ['commercial_interest'] }
         {
           is_collector:
             true: [
-              { has_basic_info: false: ['basic_info'] }
+              'basic_info'
               'artists_in_collection'
               'inquiry'
               {
@@ -75,6 +76,7 @@ module.exports =
       ]
 
       false: [
+        'inquiry'
         { has_commercial_interest: false: ['commercial_interest'] }
         { has_basic_info: false: ['basic_info'] }
         { is_collector: true: ['artists_in_collection'] }

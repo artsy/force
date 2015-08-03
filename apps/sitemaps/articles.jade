@@ -12,6 +12,6 @@ urlset(
           news:language en
         news:publication_date= article.get('published_at')
         news:title= article.get('thumbnail_title')
-        //- news:keywords business, merger, acquisition, A, B -- We'll want this
-        //- tag once keywords are supported in writer
+        news:keywords= article.get('tags')
+        
 

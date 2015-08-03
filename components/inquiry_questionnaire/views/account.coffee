@@ -8,20 +8,21 @@ templates =
   forgot: -> require('../templates/account/forgot.jade') arguments...
 
 module.exports = class Account extends StepView
-  className: 'iq-account is-loading'
+  className: 'iq-account iq-loadable is-loading'
 
   template: ->
     templates[@mode()] arguments...
 
   __events__:
-    'click .js-mode': 'change'
     'click button': 'submit'
+    'click .js-mode': 'change'
+    'click .js-skip': 'next'
 
-  initialize: ({ @user, @state, @artwork }) ->
+  initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @active = new Backbone.Model mode: 'auth'
 
-    @listenTo @user.related().account, 'sync', @render
-    @listenToOnce @user.related().account, 'sync', @done
+    @listenTo @user.related().account, 'sync error', @render
+    @listenToOnce @user.related().account, 'sync error', @done
     @listenTo @active, 'change:mode', @render
     @listenTo @active, 'change:mode', @forgot
 
@@ -42,11 +43,15 @@ module.exports = class Account extends StepView
     return unless form.start()
     e.preventDefault()
     form.state 'loading'
+
     @user.set form.serializer.data()
     @user[@mode()]
-      error: _.bind(form.error, form)
+      error: form.error.bind(form)
       success: =>
-        @next()
+        @user.repossess()
+          .finally =>
+            @next()
+          .done()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'

@@ -28,23 +28,32 @@ describe 'Gene routes', ->
   describe '#index', ->
     it 'bootstraps the gene', (done)->
       routes.index @req, @res
-      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'gene'
+      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-
       _.defer =>
-        @res.locals.sd.GENE.id.should.equal 'gene'
+        @res.locals.sd.GENE.id.should.equal 'foo'
         @res.render.args[0][0].should.equal 'index'
+        done()
+
+    it 'redirects to the correct URL if the gene slug has been updated', (done) ->
+      routes.index @req, @res
+      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'not-foo'
+      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
+      _.defer =>
+        @res.redirect.called.should.be.true()
+        @res.redirect.args[0].should.eql [301, '/gene/not-foo']
+        @res.render.called.should.be.false()
         done()
 
     it 'overrides the view mode if the path is /artworks', (done)->
       @req.path = '/gene/foo/artworks'
 
       routes.index @req, @res
-      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'gene'
+      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
 
       _.defer =>
-        @res.locals.sd.GENE.id.should.equal 'gene'
+        @res.locals.sd.GENE.id.should.equal 'foo'
         @res.locals.sd.MODE.should.equal 'artworks'
         @res.render.args[0][0].should.equal 'index'
         done()

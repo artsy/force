@@ -27,9 +27,11 @@ describe 'Form', ->
       @form.submitting().should.be.true()
       @form.submitting().should.be.true()
 
-    it 'disables the button', ->
+    it 'disables the button', (done) ->
       @form.submitting()
-      @$form.find('button').prop('disabled').should.be.true()
+      _.defer =>
+        @$form.find('button').prop('disabled').should.be.true()
+        done()
 
   describe '#submit', ->
     beforeEach ->
@@ -90,8 +92,10 @@ describe 'Form', ->
       @form.submitting().should.be.false()
       @form.submitting().should.be.true()
 
-    it 'removes the disabled attr from the button', ->
+    it 'removes the disabled attr from the button', (done) ->
       @form.submitting()
-      @$form.find('button').prop('disabled').should.be.true()
-      @form.reenable()
-      @$form.find('button').prop('disabled').should.be.false()
+      _.defer =>
+        @$form.find('button').prop('disabled').should.be.true()
+        @form.reenable()
+        @$form.find('button').prop('disabled').should.be.false()
+        done()

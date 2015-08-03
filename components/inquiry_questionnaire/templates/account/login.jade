@@ -14,7 +14,7 @@ form.stacked-form
     | Enter your password
   include password
 
-  button.avant-garde-button-black.js-form-submit( type='submit' )
+  button.avant-garde-button-black.js-form-submit.js-login-email( type='submit' )
     | Log in
 
   .iq-account-sub
@@ -26,7 +26,7 @@ form.stacked-form
         | Remember me
 
     span
-      a.fine-faux-underline.js-mode( data-mode='forgot' )
+      a.fine-faux-underline.js-mode.js-forgot-password( data-mode='forgot' )
         | Forgot Password?
 
       unless user.related().account.id
@@ -34,11 +34,5 @@ form.stacked-form
         a.fine-faux-underline.js-mode( data-mode='signup' )
           | Sign up
 
-  hr.horizontal-rule-or
-
-  a.avant-garde-button-black( href='/users/auth/facebook', target='_blank' )
-    i.icon-facebook
-    | Log in with Facebook
-  a.avant-garde-button-black( href='/users/auth/twitter', target='_blank' )
-    i.icon-twitter
-    | Log in with Twitter
+  .iq-account-sub
+    a.fine-faux-underline.js-skip No thanks don&rsquo;t save my information

@@ -8,7 +8,7 @@ ShareView = require '../../components/share/view.coffee'
 ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
-{ GENE, CURRENT_USER, API_URL, MODE } = require('sharify').data
+{ GENE, CURRENT_USER, API_URL, MODE } = sd = require('sharify').data
 { setupFilter } = require '../../components/filter2/index.coffee'
 aggregationParams = require './aggregations.coffee'
 
@@ -74,6 +74,6 @@ module.exports.init = ->
     el: $('.main-layout-container .related-genes')
     id: gene.id
 
-  scrollFrame '#gene-filter-content a'
+  scrollFrame '#gene-filter-content a' unless sd.EIGEN
 
 

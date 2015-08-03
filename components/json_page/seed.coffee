@@ -1,7 +1,7 @@
 JSONPage = require './index'
 
-name = 'about'
-data = require '../../apps/about/test/fixture/content'
+name = 'contact'
+data = require '../../apps/contact/test/fixture'
 
 page = new JSONPage name: name
 page.set data, (err, response) ->

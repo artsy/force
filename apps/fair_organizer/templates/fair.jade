@@ -1,11 +1,14 @@
 .past-fairs--fair-image-grid
-  a(href="/#{fairOrg.id}/#{fair.formatYear()}")
+  a(href="#{fair.href()}")
     .past-fairs--fair-image-grid__inner
-      .fair-large-image-left( style="background-image: url(#{fair.representation.first().imageUrl('large_square')});" )
+      .fair-large-image-left( style="background-image: url(#{fair.imageUrl('large_rectangle')});" )
       .fair-small-images-right
         if fair.representation
-          - var representations = fair.representation.slice(1,3)
+          - var representations = fair.representation.chain().shuffle().take(2).value()
           for representation in representations
             .fair-small-image
               .fair-small-image__inner( style="background-image: url(#{representation.imageUrl('small_square')});" )
-    .past-fairs--fair-year #{fair.formatYear()}
+    if showName
+      .past-fairs--fair-name #{fair.get('name')}
+    else
+      .past-fairs--fair-year #{fair.formatYear()}
