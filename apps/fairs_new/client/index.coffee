@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Fairs = require '../../../collections/fairs.coffee'
+mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 initCarousel = require '../../../components/merry_go_round/index.coffee'
 
@@ -31,3 +32,11 @@ module.exports.init = ->
   initCarousel $('.fairs__promo__slideshow'),
     $navigation: $('.mgr-navigation')
     autoPlay: 5000
+    imagesLoaded: true
+
+  $('.fairs__promo__sign-up').click (e)->
+    e.preventDefault()
+    mediator.trigger 'open:auth',
+      mode: 'register'
+      copy: "Sign up to follow fairs"
+    return false
