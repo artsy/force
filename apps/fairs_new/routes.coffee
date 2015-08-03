@@ -29,7 +29,7 @@ parseGroups = (fairs) ->
     cache: true
     data:
       sort: '-start_at'
-      size: 50
+      size: 30
       has_full_feature: true
     success: =>
       featuredFairs = new Items [], id: '55a4204d72616970e40000f9'
