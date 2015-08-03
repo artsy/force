@@ -48,12 +48,12 @@ module.exports = class HeaderView extends Backbone.View
       $.ajax
         method: 'GET'
         url: "#{sd.API_URL}/api/v1/me/notifications/feed"
-        data: status: 'unread'
         success: (bundles) =>
           unreadBundles = _.where(bundles, { status: 'unread' })
           if unreadBundles.length
+            bundleText = if unreadBundles.length > 100 then "99+" else unreadBundles.length
             $('.mlh-bundle-count')
-              .text("#{bundles.length}")
+              .text("#{bundleText}")
               .show()
           for bundle in bundles
             bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')

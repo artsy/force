@@ -140,6 +140,8 @@ computed-padding(font-size, target-line-height)
 .body-transparent-header-white
   .hover-pulldown
     color white
+    svg
+      fill white
     &:before
       border-top-color white
 
@@ -178,22 +180,26 @@ computed-padding(font-size, target-line-height)
   height 40px
   display inline-block
   vertical-align middle
-.bundle-text, .bundle-information
+.bundle-text
+  width 170px
+  padding-left 10px
   display inline-block
   vertical-align middle
-.bundle-text
-  padding-left 10px
-  vertical-align middle
 .bundle-information
-  float right
+  display inline-block
+  vertical-align middle
+  height 31px
 .bundle-message, .bundle-date
   avant-garde-size('s-headline')
   color gray-color
 .bundle-actors
   avant-garde-size('body')
   color gray-lightest-color
+  max-width 160px
+  overflow ellipsis
 .bundle-read-status
   border-radius 50%
-  color purple-color
-  width 5px
-  height 5px
+  background-color purple-color
+  width 10px
+  height 10px
+  float right

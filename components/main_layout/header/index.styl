@@ -60,7 +60,7 @@
   @extends .mlh-nav-link
   padding-left 30px
   padding-right @padding-left
-  border-left 1px solid white
+  border-left 1px solid gray-lighter-color
   position relative
   min-width 130px
   text-align center
@@ -73,11 +73,12 @@
   position relative
   text-align center
   white-space nowrap
-  border-left 1px solid white
+  border-left 1px solid gray-lighter-color
   &.hover-pulldown
     &:before
       border none
   svg
+    fill black
     width 25px
     height 25px
   .hpm-header
@@ -95,12 +96,13 @@
   font-size 12px
   background-color purple-color
   border-radius 50px
-  width 16px
-  height 16px
+  width 18px
+  height 18px
   position absolute
-  top 0px
-  right 17px
-  line-height 15px
+  top -4px
+  right 15px
+  line-height 17px
+  color white
 
 .mshr-garamond-nav-link
   display inline-block
