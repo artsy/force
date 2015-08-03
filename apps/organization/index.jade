@@ -7,5 +7,7 @@ append locals
   - assetPackage = 'organization'
 
 block body
-  #organization= organization.get('name')
-  #organization-feed
+  header.organization-header
+    img( src=organization.get('icon_url') )
+    h1= organization.get('name')
+  .organization-feed
