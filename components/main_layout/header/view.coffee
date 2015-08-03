@@ -48,17 +48,18 @@ module.exports = class HeaderView extends Backbone.View
       $.ajax
         method: 'GET'
         url: "#{sd.API_URL}/api/v1/me/notifications/feed"
-        success: (bundles) =>
-          unreadBundles = _.where(bundles, { status: 'unread' })
-          if unreadBundles.length
-            bundleText = if unreadBundles.length > 100 then "99+" else unreadBundles.length
+        data: size: 100
+        success: (result) =>
+          if result.total_unread > 0
+            bundleText = if result.total_unread >= 100 then "99+" else result.total_unread
             $('.mlh-bundle-count')
               .text("#{bundleText}")
               .show()
-          for bundle in bundles
+            $('.mlh-notification').addClass 'hoverable'
+          for bundle in result.feed
             bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
           $('#hpm-bundles').html bundleTemplate
-            bundles: bundles
+            bundles: result.feed
 
   showProfilePrivateDialog: (event) =>
     # Displaying the dialog on tap causes confusion on touch devices

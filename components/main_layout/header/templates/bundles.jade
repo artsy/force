@@ -1,10 +1,11 @@
 for bundle in bundles
-  .bundle-item
-    img.bundle-image(src="#{bundle.object.images[0].image_urls.square}")
-    .bundle-text
-      .bundle-message= bundle.message
-      .bundle-actors= bundle.actors
-    .bundle-information
-      .bundle-date= bundle.date
-      if (bundle.status === "unread")
-        .bundle-read-status
+  a(href="/works-for-you?artist_id=#{bundle.object.artist.id}")
+    .bundle-item
+      img.bundle-image(src="#{bundle.object.images[0].image_urls.square}")
+      .bundle-text
+        .bundle-message= bundle.message
+        .bundle-actors= bundle.actors
+      .bundle-information
+        .bundle-date= bundle.date
+        if (bundle.status === "unread")
+          .bundle-read-status
