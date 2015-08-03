@@ -4,20 +4,21 @@ moment = require 'moment'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Fair = require '../../../models/fair'
+Fairs = require '../../../collections/fairs'
 Items = require '../../../collections/items'
 
 describe 'Fairs template', ->
   before ->
-    @currentFairs = _.times 2, ->
-      fair = new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
-      fair.representation = new Items [fabricate 'featured_link']
+    @currentFairs = new Fairs _.times 2, ->
+      fair = new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'), banner_size: 'large')
       fair
     @pastFairs = _.times 4, ->
       fair = new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
-      fair.representation = new Items [fabricate 'featured_link']
       fair
     @upcomingFairs = _.times 3, ->
       new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
+
+    @rows = @currentFairs.fillRows @currentFairs.models
 
   describe 'with current fairs', ->
     before (done) ->
@@ -30,14 +31,19 @@ describe 'Fairs template', ->
           currentFairs: @currentFairs
           pastFairs: @pastFairs
           upcomingFairs: @upcomingFairs
+          currentFairRows: @rows
         done()
 
     after ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('#current-fairs h2').text().should.equal 'Current Fairs'
-      $('.ap-featured-item').length.should.equal 6
+      $('.fairs__current-fairs h1.fair-header').text().should.equal 'Current Fairs'
+      $('.fairs__current-fair').length.should.equal 2
+
+    it 'groups the splits the current fairs into one row', ->
+      $('.fairs__current-fair-row--half').length.should.equal 1
+      $('.fairs__current-fair-row--half .fairs__current-fair').length.should.equal 2
 
   describe 'without current fairs', ->
     before (done) ->
@@ -50,11 +56,13 @@ describe 'Fairs template', ->
           currentFairs: []
           pastFairs: @pastFairs
           upcomingFairs: @upcomingFairs
+          currentFairRows: []
         done()
 
     after ->
       benv.teardown()
 
-    it 'renders correctly', ->
-      $('#past-fairs h2').text().should.equal 'Past Fairs'
-      $('.ap-featured-item').length.should.equal 4
+    it 'renders correctly, with a fair promo', ->
+      $('.fairs__promo').length.should.equal 1
+      $('.fairs__past-fairs h1.fair-header').text().should.equal 'Past Fairs'
+      $('.fairs__past-fair').length.should.equal 4

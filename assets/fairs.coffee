@@ -1,2 +1,2 @@
 require('backbone').$ = $
-$ require('../apps/fairs/client/index.coffee').init
+$ require('../apps/fairs_new/client/index.coffee').init
