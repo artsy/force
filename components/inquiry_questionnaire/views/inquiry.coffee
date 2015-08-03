@@ -15,5 +15,8 @@ module.exports = class Inquiry extends StepView
 
   serialize: (e) ->
     form = new Form model: @inquiry, $form: @$('form')
-    form.submit e, success: =>
-      @next()
+    return unless form.start()
+    e.preventDefault()
+
+    @inquiry.set _.extend { contact_gallery: true }, form.data()
+    @next()

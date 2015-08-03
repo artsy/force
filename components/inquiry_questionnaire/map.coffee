@@ -38,7 +38,7 @@ module.exports =
         {
           is_collector:
             true: [
-              { has_basic_info: false: ['basic_info'] }
+              'basic_info'
               'artists_in_collection'
               'inquiry'
               {

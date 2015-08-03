@@ -1,19 +1,20 @@
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
-Feedback = require '../../../models/feedback.coffee'
 Representatives = require '../../../collections/representatives.coffee'
 template = -> require('../templates/specialist.jade') arguments...
 
 module.exports = class Specialist extends StepView
   className: 'iq-loadable is-loading'
 
-  template: -> template arguments...
+  template: (data) ->
+    template _.extend data,
+      message: @inquiry.get('message')
+      representative: @representative
 
   __events__:
     'click button': 'serialize'
 
   initialize: ->
-    @feedback = new Feedback
     @representatives = new Representatives
     super
 
@@ -24,15 +25,9 @@ module.exports = class Specialist extends StepView
         @render().$el.removeClass 'is-loading'
 
   serialize: (e) ->
-    form = new Form model: @feedback, $form: @$('form')
-    form.submit e, success: =>
-      @next()
+    form = new Form model: @inquiry, $form: @$('form')
+    return unless form.start()
+    e.preventDefault()
 
-  render: ->
-    @$el.html @template
-      user: @user
-      inquiry: @inquiry
-      artwork: @artwork
-      representative: @representative
-    @autofocus()
-    this
+    @inquiry.set _.extend { contact_gallery: false }, form.data()
+    @next()

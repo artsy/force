@@ -3,7 +3,7 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports =
   context: (modal) ->
-    { state, user, artwork } = modal.subView
+    { user, artwork, inquiry, state } = modal.subView
     { collectorProfile } = user.related()
     { userInterests } = collectorProfile.related()
 
@@ -11,11 +11,12 @@ module.exports =
     # + pass into event handlers
     {
       modal: modal.view
-      state: state
       user: user
       artwork: artwork
+      inquiry: inquiry
       collectorProfile: collectorProfile
       userInterests: userInterests
+      state: state
     }
 
   attach: (modal) ->

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'q'
 Backbone = require 'backbone'
-{ SESSION_ID, API_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 Relations = require './mixins/relations/collector_profile.coffee'
 
 module.exports = class CollectorProfile extends Backbone.Model
@@ -9,16 +9,24 @@ module.exports = class CollectorProfile extends Backbone.Model
 
   url: "#{API_URL}/api/v1/me/collector_profile"
 
-  defaults:
-    session_id: SESSION_ID
+  # Temporary hack around API bug surrounding valid hash fields...
+  validHashFields: [
+    'institutional_affiliations'
+    'confirmed_buyer_at'
+    'collector_level'
+  ]
 
-  fetch: (options = {}) ->
-    options.data = _.extend options.data or {}, @pick('anonymous_session_id'), session_id: SESSION_ID
-    super options
+  # Ibid.
+  setWithValidAttributes: (attributes = {}) ->
+    existing = _.extend id: @id, _.pick(@attributes, @validHashFields)
+    @clear()
+    @set _.extend existing, _.pick(attributes, @validHashFields)
 
-  instantiate: (options = {}) ->
+  findOrCreate: (options = {}) ->
     { success, error } = options
+
     options = _.omit options, 'success', 'error'
+
     Q.promise (resolve, reject) =>
       @fetch _.extend {}, options,
         success: ->

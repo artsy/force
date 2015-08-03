@@ -1,3 +1,4 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
@@ -54,3 +55,27 @@ module.exports = class LoggedOutUser extends User
     new Backbone.Model()
       .save @pick('email'), _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
+
+  repossess: ->
+    # Only valid for recently logged in, LoggedOutUsers
+    return Q.resolve() unless @isLoggedIn()
+
+    { collectorProfile } = @related()
+    { userInterests } = collectorProfile.related()
+
+    @unset 'password'
+    @unset 'phone'
+
+    collectorProfile.setWithValidAttributes @attributes
+    collectorProfile.unset 'id'
+
+    userInterests.collectorProfile = null
+    userInterests.each (x) ->
+      x.unset 'id'
+      x.urlRoot = userInterests.urlRoot()
+
+    Q.all _.flatten [
+      @save()
+      collectorProfile.findOrCreate()
+      userInterests.invoke 'save'
+    ]
