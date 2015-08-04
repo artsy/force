@@ -16,6 +16,10 @@ module.exports = class CollectorProfile extends Backbone.Model
     'collector_level'
   ]
 
+  fetch: (options = {}) ->
+    options.data = _.extend options.data or {}, @pick('anonymous_session_id')
+    super options
+
   # Ibid.
   setWithValidAttributes: (attributes = {}) ->
     existing = _.extend id: @id, _.pick(@attributes, @validHashFields)

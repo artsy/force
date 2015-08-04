@@ -4,11 +4,13 @@ Backbone = require 'backbone'
 
 module.exports =
   related: ->
+    @__related__?.collectorProfile?.set({ anonymous_session_id: @id } unless @isLoggedIn())
+
     return @__related__ if @__related__?
 
     CollectorProfile = require '../../collector_profile.coffee'
 
-    collectorProfile = new CollectorProfile
+    collectorProfile = new CollectorProfile({ anonymous_session_id: @id } unless @isLoggedIn())
 
     account = new Backbone.Model
     account.url = "#{API_URL}/api/v1/user"
