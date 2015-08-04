@@ -52,7 +52,7 @@ computed-padding(font-size, target-line-height)
       // Slighty overlap menu with tip
       margin-top (menu-tip-size + (menu-tip-size * 1.5) - 1)
 
-  &[data-mode='hover']:hover
+  &[data-mode='hover']:hover:not(.nohover)
   &[data-state='active']
     &:after
     .hover-pulldown-menu

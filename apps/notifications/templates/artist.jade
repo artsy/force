@@ -1,6 +1,9 @@
 .notifications-list-item
   header.notifications-list-item-header
     .is-pull-left
+      if unread
+        .notifications-new-work New Work Added
+          .bundle-read-status
       h4
         a( href=artist.href() )= artist.get('name')
           i.icon-chevron-small-right

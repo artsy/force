@@ -14,11 +14,25 @@ Artists = require '../../collections/artists.coffee'
     url: url
     data: access_token: req.user.get('accessToken')
     success: =>
-      markReadNotifications (cb) ->
+      fetchUnreadNotifications req.user.get('accessToken'), (unreadNotifications) ->
+      #   markReadNotifications req.user.get('accessToken'), (cb) ->
+        # console.log unreadNotifications
+        res.locals.sd.UNREAD_NOTIFICATIONS = unreadNotifications
         res.locals.sd.FOLLOWING = @followingArtists
         res.render 'index'
 
-markReadNotifications = (cb) ->
-  request.put("#{API_URL}/api/v1/me/notifications")
-    .send({status: 'unread'})
-    .end(cb)
+fetchUnreadNotifications = (token, cb) ->
+  request.get("#{API_URL}/api/v1/me/notifications")
+    .query(
+      type: 'ArtworkPublished'
+      unread: true
+      size: 100
+      access_token: token
+    )
+    .end (err, res) ->
+      cb res.body
+
+# markReadNotifications = (token, cb) ->
+#   request.put("#{API_URL}/api/v1/me/notifications")
+#     .send({status: 'unread', access_token: token})
+#     .end (err, res) -> cb()

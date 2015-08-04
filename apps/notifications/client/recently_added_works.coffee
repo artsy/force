@@ -2,7 +2,7 @@ _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
 Q = require 'q'
-{ API_URL } = require('sharify').data
+{ API_URL } = sd = require('sharify').data
 Notifications = require '../../../collections/notifications.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
@@ -20,6 +20,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @$pins = @$('#notifications-pins')
 
     @backfilledArtworks = new Backbone.Collection []
+    @unreadNotifications = new Artworks sd.UNREAD_NOTIFICATIONS
+    @initiallyLoaded = false
     @listenTo @notifications, 'sync', @appendArtworks
     @filterState.on 'change', @render
 
@@ -37,7 +39,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @pinnedArtist.fetch()
       @pinnedArtworks.fetch(data: size: 6, sort: '-published_at')
     ])?.then =>
-      @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks)
+      @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, true)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
       @initiallyLoaded = true
@@ -56,7 +58,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       continue unless artworks.length
       artist = new Artist artworks.first().get('artist')
 
-      @$feed[@renderMethod] $container = @renderContainerTemplate(artist, artworks)
+      unread = !@initiallyLoaded and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
+      @$feed[@renderMethod] $container = @renderContainerTemplate(artist, artworks, unread)
       # Only reset the DOM on the first iteration
       @renderMethod = 'append'
 
@@ -70,14 +73,15 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     _.reject artworks, (artwork) =>
       _.contains @pinnedIds, artwork.id
 
-  renderContainerTemplate: (artist, artworks) ->
+  renderContainerTemplate: (artist, artworks, unread) ->
     $ artistTemplate
       artist: artist
       publishedAt: @publishedAt(artworks)
       count: artworks.length
+      unread: unread
 
   publishedAt: (artworks) ->
-    if (timestamps = _.map _.compact(artworks.pluck('published_at')), Date.parse).length
+    if (timestamps = _.map _.compact(artworks.pluck('published_changed_at')), Date.parse).length
       DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->

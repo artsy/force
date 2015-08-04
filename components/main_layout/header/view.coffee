@@ -55,11 +55,12 @@ module.exports = class HeaderView extends Backbone.View
             $('.mlh-bundle-count')
               .text("#{bundleText}")
               .show()
-            $('.mlh-notification').addClass 'hoverable'
-          for bundle in result.feed
-            bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
-          $('#hpm-bundles').html bundleTemplate
-            bundles: result.feed
+            for bundle in result.feed
+              bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
+            $('#hpm-bundles').html bundleTemplate
+              bundles: result.feed
+          else
+            $('.mlh-notification').addClass 'nohover'
 
   showProfilePrivateDialog: (event) =>
     # Displaying the dialog on tap causes confusion on touch devices
