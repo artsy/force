@@ -29,8 +29,7 @@ module.exports.init = ->
 
   following.syncFollows ids if user
 
-  initCarousel $('.fairs__promo__slideshow'),
-    $navigation: $('.mgr-navigation')
+  initCarousel $('.js-fairs-promo-carousel'),
     autoPlay: 5000
     imagesLoaded: true
 
