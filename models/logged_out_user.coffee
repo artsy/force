@@ -79,3 +79,23 @@ module.exports = class LoggedOutUser extends User
       collectorProfile.findOrCreate()
       userInterests.invoke 'save'
     ]
+
+  findOrCreate: (options = {}) ->
+    options.success = _.wrap options.success, (__success__, args...) =>
+      # Wrap Backbone#sync injecting data where appropriate...
+      unless Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__
+        data = session_id: SESSION_ID #, anonymous_session_id: @id
+        Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__ = true
+        Backbone.sync = _.wrap Backbone.sync, (sync, method, model, options = {}) ->
+          switch method
+            when 'read'
+              options.data = _.extend options.data or {}, data
+            when 'delete'
+              options.processData = true
+              options.data = data
+            else
+              @set data, silent: true
+          sync method, model, options
+      __success__? args...
+
+    @save {}, options

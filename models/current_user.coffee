@@ -149,3 +149,6 @@ module.exports = class CurrentUser extends User
         request.put(url)
           .send({status: 'read', access_token: @get('accessToken')})
           .end (err, res) -> options?.success unreadNotifications
+
+  findOrCreate: (options = {}) ->
+    @fetch options
