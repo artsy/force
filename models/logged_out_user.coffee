@@ -98,4 +98,4 @@ module.exports = class LoggedOutUser extends User
           sync method, model, options
       __success__? args...
 
-    @save {}, options
+    Q(@save {}, options)

@@ -1,3 +1,4 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'
@@ -151,4 +152,4 @@ module.exports = class CurrentUser extends User
           .end (err, res) -> options?.success unreadNotifications
 
   findOrCreate: (options = {}) ->
-    @fetch options
+    Q(@fetch options)
