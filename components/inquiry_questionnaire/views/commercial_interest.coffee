@@ -9,6 +9,14 @@ module.exports = class CommercialInterest extends StepView
 
   serialize: (e) ->
     e.preventDefault()
+
     { name, value } = e.currentTarget
-    @user.set name, value
-    @next()
+
+    ($target = $(e.currentTarget))
+      .attr 'data-state', 'loading'
+
+    attributes = {}
+    attributes[name] = value
+
+    @user.related().collectorProfile.save(attributes)
+      .always => @next()
