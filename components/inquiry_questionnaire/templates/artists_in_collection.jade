@@ -6,10 +6,14 @@ h1.iq-headline
     span (Optional)
 
 form.iq-form.stacked-form
-  .js-bookmark-artists
+  .js-user-interests
     //- Rendered separately
 
-  button.avant-garde-button-black.iq-next( type='submit' ) Next
+  //- Spacer
+  hr.is-invisible( style='height: 150px' )
 
-if artwork.related().partner.get('pre_qualify')
-  include ./partials/nevermind
+  .iq-sticky-bottom
+    button.avant-garde-button-black.is-block.iq-next( type='submit' ) Next
+
+    if artwork.related().partner.get('pre_qualify')
+      include ./partials/nevermind

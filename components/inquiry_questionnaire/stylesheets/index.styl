@@ -6,11 +6,7 @@
   .modalize-close
     display none
   .modalize-body
-    min-height 100%
     padding 40px 35px
-
-.inquiry-questionnaire
-  height 100%
 
 .iq-headline
 .iq-headline-caption
@@ -107,3 +103,26 @@
   color red-color
   &:first-letter
     text-transform uppercase
+
+.iq-sticky-bottom
+  position absolute
+  right 0
+  bottom 0
+  left 0
+  // Same LR padding as .modalize-body
+  padding 40px 35px
+  background-color white
+  // Fade
+  &:after
+    position absolute
+    content ''
+    top 0
+    left 0
+    right 0
+    height 60px
+    margin-top -(@height)
+    background linear-gradient(top, rgba(white, 0), white)
+    pointer-events none
+
+  > .iq-next
+    margin 0 !important
