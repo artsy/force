@@ -65,21 +65,18 @@ module.exports = class LoggedOutUser extends User
     { userInterests } = collectorProfile.related()
 
     @unset 'password'
-    @unset 'phone'
 
-    collectorProfile.set @attributes
     collectorProfile.unset 'id'
+    userInterests.invoke 'unset', 'id'
 
-    userInterests.collectorProfile = null
-    userInterests.each (x) ->
-      x.unset 'id'
-      x.urlRoot = userInterests.urlRoot()
+    collectorProfile.findOrCreate().then =>
+      userInterests.each (x) ->
+        x.collectorProfile = collectorProfile
 
-    Q.all _.flatten [
-      @save()
-      collectorProfile.findOrCreate()
-      userInterests.invoke 'save'
-    ]
+      Q.all _.flatten [
+        @save()
+        userInterests.invoke 'save'
+      ]
 
   findOrCreate: (options = {}) ->
     Q(@save {}, options)
