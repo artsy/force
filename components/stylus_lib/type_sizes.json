@@ -16,6 +16,10 @@
       "font-size": "30px",
       "line-height": 1.25
     },
+    "s-headline": {
+      "font-size": "25px",
+      "line-height": 1.4
+    },
     "l-body": {
       "font-size": "20px",
       "line-height": 1.33
