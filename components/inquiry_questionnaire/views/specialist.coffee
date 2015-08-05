@@ -29,7 +29,7 @@ module.exports = class Specialist extends StepView
     return unless form.start()
     e.preventDefault()
 
-    @inquiry.set _.extend { contact_gallery: true }, form.data()
+    @inquiry.set _.extend { contact_gallery: false }, form.data()
     @user.set @inquiry.pick('name', 'email')
 
     @next()
