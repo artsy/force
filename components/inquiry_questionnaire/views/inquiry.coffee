@@ -19,4 +19,6 @@ module.exports = class Inquiry extends StepView
     e.preventDefault()
 
     @inquiry.set _.extend { contact_gallery: true }, form.data()
+    @user.set @inquiry.pick('name', 'email')
+
     @next()
