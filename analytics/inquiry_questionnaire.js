@@ -32,13 +32,6 @@
     });
   });
 
-  $document.on('click', '.js-choice', function() {
-    var choice = $(this).data('value');
-    track('Clicked on how_can_we_help option', {
-      choice: choice
-    });
-  });
-
   $document.on('click', '.js-nevermind', function() {
     track('Clicked on "Nevermind"');
   });
@@ -49,14 +42,6 @@
 
   $document.on('click', '.js-login-email', function() {
     track('Clicked "Log in"');
-  });
-
-  $document.on('click', '.js-login-facebook', function() {
-    track('Clicked "Log in with Facebook"');
-  });
-
-  $document.on('click', '.js-login-twitter', function() {
-    track('Clicked "Log in with Twitter"');
   });
 
   $document.on('click', '.js-forgot-password', function() {
@@ -100,6 +85,24 @@
   bind('user:change:collector_level', function(context) {
     track('User set collector_level', {
       collector_level: context.user.get('collector_level')
+    });
+  });
+
+  bind('user:change:profession', function(context) {
+    track('User set profession', {
+      profession: context.user.get('profession')
+    });
+  });
+
+  bind('user:change:location', function(context) {
+    track('User set location', {
+      location: context.user.get('location')
+    });
+  });
+
+  bind('user:change:phone', function(context) {
+    track('User set phone', {
+      phone: context.user.get('phone')
     });
   });
 
