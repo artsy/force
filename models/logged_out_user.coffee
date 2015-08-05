@@ -1,14 +1,15 @@
 Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL, SESSION_ID } = require('sharify').data
+{ API_URL } = require('sharify').data
+syncWithSessionId = require '../lib/sync_with_session_id.coffee'
 User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
 
-  defaults:
-    session_id: SESSION_ID
+  initialize: ->
+    syncWithSessionId()
 
   url: ->
     if @isLoggedIn()
@@ -20,13 +21,13 @@ module.exports = class LoggedOutUser extends User
 
   fetch: (options = {}) ->
     if @isLoggedIn() or @id?
-      options.data = _.extend options.data or {}, @pick('email', 'session_id')
+      options.data = _.extend options.data or {}, @pick('email')
       super options
     else
       new Backbone.Collection()
         .fetch _.extend {}, options,
           url: "#{API_URL}/api/v1/me/anonymous_sessions"
-          data: _.extend options.data or {}, @pick('email', 'session_id')
+          data: _.extend options.data or {}, @pick('email')
           success: _.wrap options.success, (success, args...) =>
             collection = args[0]
             @set collection.first().toJSON() if collection.length
@@ -66,7 +67,7 @@ module.exports = class LoggedOutUser extends User
     @unset 'password'
     @unset 'phone'
 
-    collectorProfile.setWithValidAttributes @attributes
+    collectorProfile.set @attributes
     collectorProfile.unset 'id'
 
     userInterests.collectorProfile = null
@@ -81,21 +82,4 @@ module.exports = class LoggedOutUser extends User
     ]
 
   findOrCreate: (options = {}) ->
-    options.success = _.wrap options.success, (__success__, args...) =>
-      # Wrap Backbone#sync injecting data where appropriate...
-      unless Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__
-        data = session_id: SESSION_ID #, anonymous_session_id: @id
-        Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__ = true
-        Backbone.sync = _.wrap Backbone.sync, (sync, method, model, options = {}) ->
-          switch method
-            when 'read'
-              options.data = _.extend options.data or {}, data
-            when 'delete'
-              options.processData = true
-              options.data = data
-            else
-              @set data, silent: true
-          sync method, model, options
-      __success__? args...
-
     Q(@save {}, options)

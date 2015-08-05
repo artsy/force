@@ -119,7 +119,7 @@ describe 'LoggedOutUser', ->
       it 'tries to find the anonymous session on the first fetch', ->
         @user.fetch()
         Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/anonymous_sessions'
-        Backbone.sync.args[0][2].data.should.have.keys 'email', 'session_id'
+        Backbone.sync.args[0][2].data.should.have.keys 'email'
 
       it 'yields to the success option and sets the attributes using the first model in the response', (done) ->
         @user.fetch success: =>
