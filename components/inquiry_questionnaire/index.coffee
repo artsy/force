@@ -6,6 +6,20 @@ FlashMessage::template = -> "<span>#{@message}</span>"
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
 
+closeWithError = (modal) ->
+  modal.close ->
+    new FlashMessage
+      message: 'There has been an error. Click here to contact support@artsy.net'
+      href: 'mailto:support@artsy.net'
+      autoclose: false
+
+closeWithSuccess = (modal) ->
+  modal.close ->
+    new FlashMessage message: '
+      Your inquiry has been sent.<br>
+      Thank you for completing your profile.
+    '
+
 module.exports = (options = {}) ->
   { user, inquiry } = options
 
@@ -32,11 +46,7 @@ module.exports = (options = {}) ->
         user.related().collectorProfile.findOrCreate()
       .then done
       .fail ->
-        modal.close ->
-          new FlashMessage
-            message: 'There has been an error. Click here to contact support@artsy.net'
-            href: 'mailto:support@artsy.net'
-            autoclose: false
+        closeWithError modal
       .done()
 
   # Abort by clicking 'nevermind'
@@ -46,14 +56,10 @@ module.exports = (options = {}) ->
   # End of complete flow
   questionnaire.state.on 'done', ->
     # Send the inquiry
-    inquiry.save()
-
-    # Simultaneously close the modal and
-    # display a success message, regardless
-    modal.close ->
-      new FlashMessage message: '
-        Your inquiry has been sent.<br>
-        Thank you for completing your profile.
-      '
+    inquiry.save {},
+      error: ->
+        closeWithError modal
+      success: ->
+        closeWithSuccess modal
 
   modal
