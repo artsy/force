@@ -39,8 +39,7 @@ describe 'Header template', ->
     html.should.containEql 'cms.com'
 
   it 'shows the notification link for users logged in', ->
-    user = new CurrentUser(fabricate 'user')
-    html = render('index')(sd: {}, user: user)
+    html = render('index')(sd: { CURRENT_USER: { type: 'Admin' } })
     html.should.containEql 'mlh-notification'
 
 describe 'Microsite template', ->
