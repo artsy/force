@@ -1,5 +1,6 @@
 - size = 'large'
 - dimensions = image.imageSizeDimensionsFor(size)
+- src = image.bestImageUrl(['large', 'larger', 'medium', 'small'])
 
 .artwork-image
   a(
@@ -9,10 +10,13 @@
     data-client
   )
     img#the-artwork-image(
-      alt= artwork.get('title')
+      alt= artwork.toAltText()
       title= artwork.get('title')
       nopin= artwork.noPinAttr()
-      src= image.bestImageUrl(['large', 'larger', 'medium', 'small'])
+      src= src
       width= dimensions.width
       height= dimensions.height
+      data-pin-url= artwork.href()
+      data-pin-media= src
+      data-pin-description= artwork.toAltText()
     )
