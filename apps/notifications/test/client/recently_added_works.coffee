@@ -155,14 +155,6 @@ describe 'RecentlyAddedWorksView', ->
 
     it 'returns the formatted maximum published_at for the group of artworks', ->
       @view.publishedAt(new Backbone.Collection [
-        { published_at: '2015-03-23T09:10:03.000Z' }
-        { published_at: '2015-03-23T09:10:04.000Z' }
+        { published_changed_at: '2015-03-23T09:10:03.000Z' }
+        { published_changed_at: '2015-03-23T09:10:04.000Z' }
       ]).should.equal 'Mar. 23rd'
-
-    it 'returns undefined when there is no published_at', ->
-      _.isUndefined(@view.publishedAt(new Backbone.Collection [
-        { published_at: undefined }
-        { published_at: undefined }
-      ])).should.be.true()
-
-
