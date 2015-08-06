@@ -77,6 +77,10 @@ artsyXapp = require 'artsy-xapp'
       res.set('Content-Type', 'text/xml')
       res.render('artworks', pretty: true, slugs: slugs)
 
+@misc = (req, res, next) ->
+  res.set('Content-Type', 'text/xml')
+  res.render('misc', pretty: true)
+
 @articlesPage = (req, res, next) ->
   request
     .get(POSITRON_URL + '/api/articles')

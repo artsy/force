@@ -6,6 +6,12 @@ urlset(
     url
       loc=sd.APP_URL + '/artist/' + slug
     url
+      loc=sd.APP_URL + '/artist/' + slug + '/works'  //not every artist will have works, shows, etc; in that case these URLs will just redirect to /artist/slug
+    url
+      loc=sd.APP_URL + '/artist/' + slug + '/shows'
+    url
+      loc=sd.APP_URL + '/artist/' + slug + '/related-artists'
+    url
       loc=sd.APP_URL + '/artist/' + slug + '/auction-results'
       priority 0.3
     
