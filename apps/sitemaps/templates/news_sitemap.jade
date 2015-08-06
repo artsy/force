@@ -3,15 +3,15 @@ urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
   xmlns:news='http://www.google.com/schemas/sitemap-news/0.9'
 )
-  url
     for article in articles
-      loc= 'https://www.artsy.net/article/' + article.get('slug')
-      news:news
-        news:publication
-          news:name Artsy
-          news:language en
-        news:publication_date= article.get('published_at')
-        news:title= article.get('thumbnail_title')
-        news:keywords= article.get('tags')
+      url
+        loc= 'https://www.artsy.net/article/' + article.get('slug')
+        news:news
+          news:publication
+            news:name Artsy
+            news:language en
+          news:publication_date= article.get('published_at')
+          news:title= article.get('thumbnail_title')
+          news:keywords= article.get('tags')
         
 
