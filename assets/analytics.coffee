@@ -1,6 +1,7 @@
 require '../lib/analytics_hooks.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 route = require '../lib/route_helpers.coffee'
+window._ = require 'underscore'
 
 require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
