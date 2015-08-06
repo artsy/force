@@ -1,4 +1,4 @@
-if user
+if sd.CURRENT_USER && sd.CURRENT_USER.type == 'Admin'
   span.mlh-notification.hover-pulldown( data-anchor='right', data-mode='hover')
     a(href="/works-for-you")
       include ../../public/icons/bell.svg

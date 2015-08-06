@@ -4,7 +4,7 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 mediator = require '../../../../lib/mediator.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 { fabricate } = require 'antigravity'
 
 { resolve } = require 'path'
@@ -13,7 +13,6 @@ describe 'HeaderView', ->
 
   before (done) ->
     benv.setup =>
-      @user = new CurrentUser fabricate('user')
       benv.expose
         $: benv.require('jquery')
       Backbone.$ = $
@@ -23,9 +22,8 @@ describe 'HeaderView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    sinon.stub $, 'ajax'
-    sd = { HIDE_HEADER: false, CURRENT_USER: @user }
-    benv.render resolve(__dirname, '../templates/index.jade'), { sd: sd, user: @user }, =>
+    @sd = { HIDE_HEADER: false, HEADER_CLASS: 'stub' }
+    benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
       @HeaderView = benv.requireWithJadeify(
           resolve(__dirname, '../view')
           ['bundleTemplate']
@@ -33,7 +31,7 @@ describe 'HeaderView', ->
       @HeaderView.__set__ 'SearchBarView', Backbone.View
       @HeaderView.__set__ 'AuthModalView', sinon.stub()
       @HeaderView.__set__ 'FlashMessage', sinon.stub()
-      @HeaderView.__set__ 'sd', sd
+      @HeaderView.__set__ 'sd', @sd
       @view = new @HeaderView
         el: $('#main-layout-header')
         $window: @$window =
@@ -45,7 +43,6 @@ describe 'HeaderView', ->
 
   afterEach ->
     Backbone.sync.restore()
-    $.ajax.restore()
 
   describe '#openAuth', ->
     it 'opens with custom copy', ->
@@ -70,7 +67,7 @@ describe 'HeaderView', ->
 
   describe 'with flash message', ->
     before (done) ->
-      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
+      benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
         $.support.transition = { end: 'transitionend' }
         $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
         @HeaderView = rewire '../view'
@@ -93,10 +90,32 @@ describe 'HeaderView', ->
 
   describe '#checkForNotifications', ->
 
+    before (done) ->
+      @user = new CurrentUser fabricate('user')
+      @user.type = 'Admin'
+      sd = { HIDE_HEADER: false, CURRENT_USER: @user}
+      benv.render resolve(__dirname, '../templates/index.jade'), { sd: sd }, =>
+        @HeaderView = benv.requireWithJadeify(
+            resolve(__dirname, '../view')
+            ['bundleTemplate']
+          )
+        @HeaderView.__set__ 'CurrentUser', { orNull: => @user }
+        @HeaderView.__set__ 'SearchBarView', Backbone.View
+        @HeaderView.__set__ 'AuthModalView', sinon.stub()
+        @HeaderView.__set__ 'FlashMessage', sinon.stub()
+        @HeaderView.__set__ 'sd', sd
+        @view = new @HeaderView
+          el: $('#main-layout-header')
+          $window: @$window =
+            on: sinon.stub()
+            off: sinon.stub()
+            scrollTop: -> 55
+          $body: $('body')
+        done()
+
     it 'sets the notification count and renders the hover pulldown', ->
       @view.checkForNotifications()
-      $.ajax.called.should.be.true()
-      $.ajax.args[0][0].success
+      Backbone.sync.args[0][2].success
         total_unread: 10
         feed: [
           actors: "Kana"
@@ -105,22 +124,22 @@ describe 'HeaderView', ->
           date: "2015-08-04T16:44:28.000Z"
           object: fabricate('artwork', { images: [ image_urls: square: 'http://foo.jpg'] })
         ]
-      $('.mlh-bundle-count').text().should.containEql '10'
-      $('.bundle-message').text().should.containEql '1 Work Added'
-      $('.bundle-actors').text().should.containEql 'Kana'
-      $('.bundle-date').text().should.containEql 'Aug 4'
-      $('#hpm-bundles a')[0].href.should.containEql 'artist_id=andy-warhol'
+      @view.$('.mlh-bundle-count').text().should.containEql '10'
+      @view.$('.bundle-message').text().should.containEql '1 Work Added'
+      @view.$('.bundle-actors').text().should.containEql 'Kana'
+      @view.$('.bundle-date').text().should.containEql 'Aug 4'
+      @view.$('#hpm-bundles a')[0].href.should.containEql 'artist_id=andy-warhol'
 
     it 'disables the hover-pulldown when there are no notifications', ->
       @view.checkForNotifications()
-      $.ajax.args[0][0].success
+      Backbone.sync.args[0][2].success
         total_unread: 0
         feed: []
-      $('.mlh-notification').hasClass('nohover').should.be.true()
+      @view.$('.mlh-notification').hasClass('nohover').should.be.true()
 
     it 'sets bundle count to 99+ when there are more than 100 unread notifications', ->
       @view.checkForNotifications()
-      $.ajax.args[0][0].success
+      Backbone.sync.args[0][2].success
         total_unread: 120
         feed: []
-      $('.mlh-bundle-count').text().should.containEql '99+'
+      @view.$('.mlh-bundle-count').text().should.containEql '99+'

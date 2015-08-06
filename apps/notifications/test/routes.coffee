@@ -12,7 +12,10 @@ describe 'Notification Routing', ->
   beforeEach ->
     sinon.stub(Backbone, 'sync').returns('fetchUntilEnd').yieldsTo 'success', []
     @req = { url: '/works-for-you' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { APP_URL: 'http://localhost:5000'} } }
+    @res =
+      render: sinon.stub()
+      redirect: sinon.stub()
+      locals: { sd: { APP_URL: 'http://localhost:5000'} }
 
   afterEach ->
     Backbone.sync.restore()
@@ -24,11 +27,16 @@ describe 'Notification Routing', ->
       @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=/works-for-you'
 
     it 'renders with a user and makes fetch for artists and marks/fetches notifications', ->
-      @req.user = new CurrentUser fabricate 'user', accessToken: 'aaa'
-      routes.__set__ 'fetchUnreadNotifications', (accessToken, cb) -> cb [fabricate('artwork')]
-      routes.__set__ 'markReadNotifications', (accessToken, cb) -> cb true
+      @req.user = new CurrentUser fabricate 'user',
+        followingArtists: sinon.stub().yieldsTo 'success'
+        fetchAndMarkNotifications: sinon.stub().yieldsTo 'success'
       routes.worksForYou @req, @res
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/follow/artists'
+      Backbone.sync.args[0][2].success [fabricate('artist')]
+      Backbone.sync.args[1][2].url.should.containEql '/api/v1/me/notifications'
+      Backbone.sync.args[1][2].success [fabricate('artwork')]
       _.defer =>
-        @res.locals.sd.UNREAD_NOTIFICATIONS.length.should.equal 1
-        @res.render.args[0][0].should.equal 'index'
+        _.defer =>
+          @res.locals.sd.UNREAD_NOTIFICATIONS.length.should.equal 1
+          @res.locals.sd.FOLLOWING.length.should.equal 1
+          @res.render.args[0][0].should.equal 'index'
