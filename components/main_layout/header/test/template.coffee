@@ -38,6 +38,11 @@ describe 'Header template', ->
     html.should.not.containEql 'main-layout-welcome-header'
     html.should.containEql 'cms.com'
 
+  it 'shows the notification link for users logged in', ->
+    user = new CurrentUser(fabricate 'user')
+    html = render('index')(sd: {}, user: user)
+    html.should.containEql 'mlh-notification'
+
 describe 'Microsite template', ->
   it 'does not render the welcome header', ->
     render('microsite')(sd: { HIDE_HEADER: true }, user: undefined).should.not.containEql 'main-layout-welcome-header'

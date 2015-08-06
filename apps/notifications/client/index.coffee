@@ -26,6 +26,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       artist: artist or null
       loading: true
       empty: false
+      initialLoad: true
 
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
@@ -43,8 +44,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @filterState.on 'change', @render
     @setupJumpView()
     @filterState.trigger 'change'
-
-    # @submitReadNotification()
 
   render: =>
     @$('#notifications-page').attr 'data-state', (
@@ -69,12 +68,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   scrollToTop: ->
     @jump.scrollToPosition 0
-
-  # submitReadNotification: ->
-  #   $.ajax
-  #     method: 'PUT'
-  #     url: "#{API_URL}/api/v1/me/notifications"
-  #     data: status: 'unread'
 
 module.exports.init = ->
   new NotificationsView el: $('body')

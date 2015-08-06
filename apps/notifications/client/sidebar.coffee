@@ -22,6 +22,7 @@ module.exports = class SidebarView extends Backbone.View
       forSale: $(e.currentTarget).prop('checked')
       loading: true
       empty: false
+      initialLoad: false
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
@@ -32,6 +33,7 @@ module.exports = class SidebarView extends Backbone.View
       artist: @$selectedArtist.attr('data-artist')
       loading: true
       empty: false
+      initialLoad: false
 
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
@@ -41,6 +43,7 @@ module.exports = class SidebarView extends Backbone.View
       artist: null
       loading: true
       empty: false
+      initialLoad: false
 
   setupSearch: (options = {}) ->
     @searchBarView = new SearchBarView

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'
-{ API_URL } = require('sharify').data
+{ API_URL } = sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
 
 @worksForYou = (req, res) ->
@@ -15,11 +15,10 @@ Artists = require '../../collections/artists.coffee'
     data: access_token: req.user.get('accessToken')
     success: =>
       fetchUnreadNotifications req.user.get('accessToken'), (unreadNotifications) ->
-      #   markReadNotifications req.user.get('accessToken'), (cb) ->
-        # console.log unreadNotifications
-        res.locals.sd.UNREAD_NOTIFICATIONS = unreadNotifications
-        res.locals.sd.FOLLOWING = @followingArtists
-        res.render 'index'
+        markReadNotifications req.user.get('accessToken'), (cb) ->
+          res.locals.sd.UNREAD_NOTIFICATIONS = unreadNotifications
+          res.locals.sd.FOLLOWING = @followingArtists
+          res.render 'index'
 
 fetchUnreadNotifications = (token, cb) ->
   request.get("#{API_URL}/api/v1/me/notifications")
@@ -32,7 +31,7 @@ fetchUnreadNotifications = (token, cb) ->
     .end (err, res) ->
       cb res.body
 
-# markReadNotifications = (token, cb) ->
-#   request.put("#{API_URL}/api/v1/me/notifications")
-#     .send({status: 'unread', access_token: token})
-#     .end (err, res) -> cb()
+markReadNotifications = (token, cb) ->
+  request.put("#{API_URL}/api/v1/me/notifications")
+    .send({status: 'read', access_token: token})
+    .end (err, res) -> cb()

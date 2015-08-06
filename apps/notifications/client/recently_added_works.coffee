@@ -21,7 +21,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
     @backfilledArtworks = new Backbone.Collection []
     @unreadNotifications = new Artworks sd.UNREAD_NOTIFICATIONS
-    @initiallyLoaded = false
     @listenTo @notifications, 'sync', @appendArtworks
     @filterState.on 'change', @render
 
@@ -42,7 +41,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, true)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
-      @initiallyLoaded = true
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -58,7 +56,8 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       continue unless artworks.length
       artist = new Artist artworks.first().get('artist')
 
-      unread = !@initiallyLoaded and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
+      unread = @filterState.get('initialLoad') and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
+
       @$feed[@renderMethod] $container = @renderContainerTemplate(artist, artworks, unread)
       # Only reset the DOM on the first iteration
       @renderMethod = 'append'
@@ -152,7 +151,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
   render: =>
     return if @filterState.get 'artist'
     return unless @filterState.get 'loading'
-    @$pins.hide() if @initiallyLoaded
+    @$pins.hide() if !@filterState.get('initialLoad')
     @notifications.state.currentPage = 1
     @notifications.getFirstPage(
       data: for_sale: @filterState.get('forSale')
