@@ -1,3 +1,4 @@
+_ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 Representatives = require '../../../collections/representatives.coffee'
