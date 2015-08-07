@@ -75,6 +75,70 @@ computed-padding(font-size, target-line-height)
       left inherit
       right 10px
 
+.mlh-pulldown-top-link
+  display none
+
+.mlh-pulldown-top
+  display none
+
+@media (max-width: 1225px)
+  .mlh-pulldown-top
+    display block
+  [data-priority='1']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 1125px)
+  [data-priority='2']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 1025px)
+  [data-priority='3']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 925px)
+  [data-priority='4']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 825px)
+  [data-priority='5']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 725px)
+  [data-priority='6']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 625px)
+  [data-priority='7']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
+@media (max-width: 525px)
+  [data-priority='8']
+    &.mlh-top-nav-link
+      display none
+    &.mlh-pulldown-top-link
+      display block
+
 .hover-pulldown-menu
   visibility hidden
   position absolute
@@ -84,12 +148,12 @@ computed-padding(font-size, target-line-height)
   top 100%
   margin-top (menu-tip-size + (menu-tip-size * 1.5))
   margin-left -(menu-width / 2)
-  padding 25px 0 30px 0
+  padding 20px default-margin 0 default-margin
   text-align left
   background-color black
   opacity 0
   transition opacity 0.25s
-  > span
+
   .hpm-header
     display block
     padding computed-padding(11px, 40px) default-margin
@@ -99,17 +163,16 @@ computed-padding(font-size, target-line-height)
     color white
     overflow ellipsis
     cursor pointer
-  > a
-    display block
-    padding computed-padding(18px, 40px) default-margin
-    garamond()
-    font-size 18px
+  a
+    padding computed-padding(18px, 40px) 0
     line-height 1
     text-transform none
     letter-spacing 0
     color white
     text-decoration none
     overflow ellipsis
+    &:not(.mlh-pulldown-top-link)
+      display block
     &:hover
       background-color gray-darkest-color
   > hr
@@ -127,6 +190,13 @@ computed-padding(font-size, target-line-height)
     bottom 100%
     left 0
 
+  .mlh-pulldown-top-link
+    avant-garde()
+
+  .mlh-pulldown-bottom-link
+    garamond()
+    font-size 18px
+
 .hover-pulldown-backdrop
   position fixed
   top 0
@@ -135,6 +205,13 @@ computed-padding(font-size, target-line-height)
   left 0
   z-index (zindex-hover-pulldown - 10)
   height 100vh
+
+.mlh-pulldown-top
+  border-bottom 1px solid gray-lighter-color
+  padding 22px 0
+
+.mlh-pulldown-bottom
+  padding 12px 0
 
 // For dark banners and backgrounds
 .body-transparent-header-white
@@ -148,7 +225,7 @@ computed-padding(font-size, target-line-height)
   @extends .hover-pulldown-menu
   padding 25px 0
   > span
-    @extends .hover-pulldown-menu > a
+    @extends .hover-pulldown-menu a
     white-space normal
     line-height 1.2
     transition opacity 0.25s

@@ -16,26 +16,36 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
     #main-layout-header-left.mlh-navbar-cell
       include ../../../search_bar/templates/index
     #main-layout-header-center.mlh-navbar-cell
-      a.mlh-top-nav-link( href='/artists', class= activeClass('/artists') ) Artists
-      a.mlh-top-nav-link( href='/browse', class= activeClass('/browse') ) Artworks
-      a.mlh-top-nav-link( href='/shows', class= activeClass('/shows') ) Shows
-      a.mlh-top-nav-link( href='/galleries', class= activeClass('/galleries') ) Galleries
-      a.mlh-top-nav-link( href='/institutions', class= activeClass('/institutions') ) Museums
-      a.mlh-top-nav-link( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
-      a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
-      a.mlh-top-nav-link.js--post-split-test( href='/articles', class= activeClass('/articles') )= sd.POSTS_SECTION_NAME
+      a.mlh-top-nav-link( data-priority='8' href='/artists', class= activeClass('/artists') ) Artists
+      a.mlh-top-nav-link( data-priority='7' href='/browse', class= activeClass('/browse') ) Artworks
+      a.mlh-top-nav-link( data-priority='3' href='/shows', class= activeClass('/shows') ) Shows
+      a.mlh-top-nav-link( data-priority='2' href='/galleries', class= activeClass('/galleries') ) Galleries
+      a.mlh-top-nav-link( data-priority='1' href='/institutions', class= activeClass('/institutions') ) Museums
+      a.mlh-top-nav-link( data-priority='4' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
+      a.mlh-top-nav-link( data-priority='6' href='/auctions', class= activeClass('/auctions') ) Auctions
+      a.mlh-top-nav-link.js--post-split-test( data-priority='5' href='/articles', class= activeClass('/articles') )= sd.POSTS_SECTION_NAME
 
       span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
         | More
         .hover-pulldown-menu
-          a( href='/about' ) About Artsy
-          a( href='/gallery-partnerships' ) Artsy for Galleries
-          a( href='/institution-partnerships' ) Artsy for Museums
-          a( href='/feature/artsy-education' ) Artsy for Education
-          a( href='/categories' ) The Art Genome Project
-          a( href='/about/jobs' ) Jobs
-          a( href='/press' ) Press
-          a( href='/contact' ) Contact Artsy
+          div.mlh-pulldown-top
+            a.mlh-pulldown-top-link( data-priority='8' href='/artists', class= activeClass('/artists') ) Artists
+            a.mlh-pulldown-top-link( data-priority='7' href='/browse', class= activeClass('/browse') ) Artworks
+            a.mlh-pulldown-top-link( data-priority='3' href='/shows', class= activeClass('/shows') ) Shows
+            a.mlh-pulldown-top-link( data-priority='2' href='/galleries', class= activeClass('/galleries') ) Galleries
+            a.mlh-pulldown-top-link( data-priority='1' href='/institutions', class= activeClass('/institutions') ) Museums
+            a.mlh-pulldown-top-link( data-priority='4' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
+            a.mlh-pulldown-top-link( data-priority='6' href='/auctions', class= activeClass('/auctions') ) Auctions
+            a.mlh-pulldown-top-link.js--post-split-test( data-priority='5' href='/articles', class= activeClass('/articles') )= sd.POSTS_SECTION_NAME
+          div.mlh-pulldown-bottom
+            a.mlh-pulldown-bottom-link( href='/about' ) About Artsy
+            a.mlh-pulldown-bottom-link( href='/gallery-partnerships' ) Artsy for Galleries
+            a.mlh-pulldown-bottom-link( href='/institution-partnerships' ) Artsy for Museums
+            a.mlh-pulldown-bottom-link( href='/feature/artsy-education' ) Artsy for Education
+            a.mlh-pulldown-bottom-link( href='/categories' ) The Art Genome Project
+            a.mlh-pulldown-bottom-link( href='/about/jobs' ) Jobs
+            a.mlh-pulldown-bottom-link( href='/press' ) Press
+            a.mlh-pulldown-bottom-link( href='/contact' ) Contact Artsy
 
     #main-layout-header-right.mlh-navbar-cell
       include ./user

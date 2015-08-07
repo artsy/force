@@ -28,13 +28,14 @@
     font-size default-icon-font-size
     line-height home-logo-size
 #main-layout-header-center
-  padding 0 20px
+  padding 0 20px 0 10px
 #main-layout-header-center
 #main-layout-header-right
   avant-garde()
 #main-layout-header-right
   flex 1
   text-align right
+  margin-right 20px
 
 .mlh-nav-link
   position relative
@@ -52,10 +53,6 @@
   &:active
   &:focus
     color purple-color
-.mlh-login
-  padding-left 20px
-.mlh-signup
-  padding-right 20px
 .mlh-user-name
   @extends .mlh-nav-link
   padding-left 30px
