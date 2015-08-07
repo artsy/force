@@ -50,11 +50,12 @@ module.exports = class HeaderView extends Backbone.View
       @currentUser.fetchNotificationBundles
         success: (result) =>
           totalUnread = result.get('total_unread')
-          if totalUnread > 0
-            bundleText = if totalUnread >= 100 then "99+" else totalUnread
-            @$('.mlh-bundle-count')
-              .text("#{bundleText}")
-              .show()
+          if result.get('feed').length > 0
+            if totalUnread > 0
+              bundleText = if totalUnread >= 100 then "99+" else totalUnread
+              @$('.mlh-bundle-count')
+                .text("#{bundleText}")
+                .show()
             for bundle in result.get('feed')
               bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
             @$('#hpm-bundles').html bundleTemplate
