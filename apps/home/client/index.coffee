@@ -20,7 +20,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    @renderArtworks() if @user
+    @renderArtworks()
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
