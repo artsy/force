@@ -60,13 +60,49 @@
   @extends .mlh-nav-link
   padding-left 30px
   padding-right @padding-left
+  border-left 1px solid gray-lighter-color
   position relative
   min-width 130px
   text-align center
-  border none
   white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
+.mlh-notification
+  @extends .mlh-nav-link
+  padding 8px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left 1px solid gray-lighter-color
+  &.hover-pulldown
+    &:before
+      border none
+  svg
+    fill black
+    width 25px
+    height 25px
+  .hpm-header
+    cursor default
+  .hover-pulldown-menu
+    width 300px
+    padding-bottom 0px
+  .hpm-view-all
+    text-align center
+    border-top 1px solid gray-dark-color
+    padding 20px 0px
+    avant-garde-size('body')
+.mlh-bundle-count
+  display none
+  font-size 10px
+  background-color purple-color
+  border-radius 50px
+  width 19px
+  height 19px
+  position absolute
+  top 4px
+  right 15px
+  line-height 19px
+  color white
 
 .mshr-garamond-nav-link
   display inline-block

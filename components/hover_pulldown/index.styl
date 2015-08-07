@@ -52,7 +52,7 @@ computed-padding(font-size, target-line-height)
       // Slighty overlap menu with tip
       margin-top (menu-tip-size + (menu-tip-size * 1.5) - 1)
 
-  &[data-mode='hover']:hover
+  &[data-mode='hover']:hover:not(.nohover)
   &[data-state='active']
     &:after
     .hover-pulldown-menu
@@ -140,6 +140,8 @@ computed-padding(font-size, target-line-height)
 .body-transparent-header-white
   .hover-pulldown
     color white
+    svg
+      fill white
     &:before
       border-top-color white
 
@@ -157,3 +159,47 @@ computed-padding(font-size, target-line-height)
   &.is-fade-out
     > span
       opacity 0
+
+#hpm-bundles
+  overflow scroll
+  max-height 280px
+.bundle-item
+  padding computed-padding(18px, 40px) default-margin
+  garamond()
+  font-size 18px
+  line-height 1
+  text-transform none
+  letter-spacing 0
+  color white
+  text-decoration none
+  overflow ellipsis
+  &:hover
+    background-color gray-darkest-color
+.bundle-image
+  width 40px
+  height 40px
+  display inline-block
+  vertical-align middle
+.bundle-text
+  width 170px
+  padding-left 10px
+  display inline-block
+  vertical-align middle
+.bundle-information
+  display inline-block
+  vertical-align middle
+  height 31px
+.bundle-message, .bundle-date
+  avant-garde-size('s-headline')
+  color gray-color
+.bundle-actors
+  avant-garde-size('body')
+  color gray-lightest-color
+  max-width 160px
+  overflow ellipsis
+.bundle-read-status
+  border-radius 50%
+  background-color purple-color
+  width 10px
+  height 10px
+  float right

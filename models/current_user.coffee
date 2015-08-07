@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+request = require 'superagent'
 ArtworkCollection = require './artwork_collection.coffee'
 Genes = require '../collections/genes.coffee'
 Artists = require '../collections/artists.coffee'
@@ -126,3 +127,25 @@ module.exports = class CurrentUser extends User
     return false unless sd.EDITORIAL_ADMINS?
     @get('type') is 'Admin' and
     @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')
+
+  fetchNotificationBundles: (options) ->
+    new Backbone.Model().fetch
+      url: "#{@url()}/notifications/feed"
+      data:
+        size: 50
+        access_token: @get('accessToken')
+      success: options?.success
+
+  fetchAndMarkNotifications: (options) ->
+    url = "#{@url()}/notifications"
+    new Backbone.Collection().fetch
+      url: url
+      data:
+        type: 'ArtworkPublished'
+        unread: true
+        size: 100
+        access_token: @get('accessToken')
+      success: (unreadNotifications) =>
+        request.put(url)
+          .send({status: 'read', access_token: @get('accessToken')})
+          .end (err, res) -> options?.success unreadNotifications
