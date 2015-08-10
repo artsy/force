@@ -113,9 +113,6 @@ describe 'HeaderView', ->
           $body: $('body')
         done()
 
-      after: ->
-        benv.teardown()
-
     it 'sets the notification count and renders the hover pulldown', ->
       @view.checkForNotifications()
       Backbone.sync.args[0][2].success
