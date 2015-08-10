@@ -141,5 +141,11 @@ describe 'HeaderView', ->
       @view.checkForNotifications()
       Backbone.sync.args[0][2].success
         total_unread: 120
-        feed: []
+        feed: [
+          actors: "Kana"
+          message: "1 Work Added"
+          status: "unread"
+          date: "2015-08-04T16:44:28.000Z"
+          object: fabricate('artwork', { images: [ image_urls: square: 'http://foo.jpg'] })
+        ]
       @view.$('.mlh-bundle-count').text().should.containEql '99+'
