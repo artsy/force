@@ -75,6 +75,28 @@ computed-padding(font-size, target-line-height)
       left inherit
       right 10px
 
+.mlh-pulldown-top-link
+  display none
+
+.mlh-pulldown-top
+  display none
+
+
+for num in (1..8)
+  delta = (num - 1) * 100
+  pixels = 750px + delta
+  string_number = "'"+num+"'"
+  @media (max-width: pixels)
+    first-break = num==8
+    if first-break
+      .mlh-pulldown-top
+        display block
+    [data-priority={string_number}]
+      &.mlh-top-nav-link
+        display none
+      &.mlh-pulldown-top-link
+        display block
+
 .hover-pulldown-menu
   visibility hidden
   position absolute
@@ -89,7 +111,7 @@ computed-padding(font-size, target-line-height)
   background-color black
   opacity 0
   transition opacity 0.25s
-  > span
+
   .hpm-header
     display block
     padding computed-padding(11px, 40px) default-margin
@@ -99,19 +121,23 @@ computed-padding(font-size, target-line-height)
     color white
     overflow ellipsis
     cursor pointer
-  > a
-    display block
+  a
     padding computed-padding(18px, 40px) default-margin
-    garamond()
-    font-size 18px
     line-height 1
     text-transform none
     letter-spacing 0
     color white
     text-decoration none
     overflow ellipsis
+    garamond()
+    font-size 18px
+    &:not(.mlh-pulldown-top-link)
+      display block
     &:hover
       background-color gray-darkest-color
+  .mlh-pulldown-top-link
+    avant-garde()
+    font-size 13px
   > hr
     height 2px
     margin computed-padding(2px, 40px) default-margin
@@ -150,7 +176,7 @@ computed-padding(font-size, target-line-height)
   @extends .hover-pulldown-menu
   padding 25px 0
   > span
-    @extends .hover-pulldown-menu > a
+    @extends .hover-pulldown-menu a
     white-space normal
     line-height 1.2
     transition opacity 0.25s
@@ -163,8 +189,10 @@ computed-padding(font-size, target-line-height)
 #hpm-bundles
   overflow scroll
   max-height 280px
+  > a
+    padding 0 0 0 default-margin
 .bundle-item
-  padding computed-padding(18px, 40px) default-margin
+  padding computed-padding(18px, 40px) 0
   garamond()
   font-size 18px
   line-height 1
