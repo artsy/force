@@ -24,7 +24,8 @@ var visibleArtworkIds = function() {
 };
 
 var trackImpressions = function() {
-  analytics.track('Artwork impressions', { ids: visibleArtworkIds() });
+  var ids = visibleArtworkIds();
+  if (ids.length > 0) analytics.track('Artwork impressions', { ids: ids });
 };
 
 trackImpressions();
