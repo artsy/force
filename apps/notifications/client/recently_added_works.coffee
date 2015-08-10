@@ -36,9 +36,9 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
     $.when.apply(null, [
       @pinnedArtist.fetch()
-      @pinnedArtworks.fetch(data: size: 6, sort: '-published_at')
+      @pinnedArtworks.fetch(data: sort: '-published_at', size: 6 )
     ])?.then =>
-      @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, true)
+      @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, @containsNewArtwork(@pinnedArtworks))
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
 
@@ -56,15 +56,16 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       continue unless artworks.length
       artist = new Artist artworks.first().get('artist')
 
-      unread = @filterState.get('initialLoad') and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
-
-      @$feed[@renderMethod] $container = @renderContainerTemplate(artist, artworks, unread)
+      @$feed[@renderMethod] $container = @renderContainerTemplate(artist, artworks, @containsNewArtwork(artworks))
       # Only reset the DOM on the first iteration
       @renderMethod = 'append'
 
       @columnViews.push @renderColumns($container.find('.notifications-published-artworks'), artworks)
 
     $.waypoints 'refresh'
+
+  containsNewArtwork: (artworks) =>
+    @filterState.get('initialLoad') and _.intersection(@unreadNotifications.pluck('id'), artworks.pluck('id')).length > 0
 
   filterForPinned: (artworks) ->
     return artworks unless @pinnedArtworks?.length
@@ -89,7 +90,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       collection: artworks
       artworkSize: 'large'
       numberOfColumns: 3
-      gutterWidth: 40
+      gutterWidth: 35
       allowDuplicates: true
       maxArtworkHeight: 600
 
