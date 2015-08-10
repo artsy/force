@@ -1,0 +1,32 @@
+nav.mlh-navbar-small-screen
+  a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
+
+  #main-layout-header-left.mlh-navbar-cell
+    include ../../../search_bar/templates/index
+
+  #main-layout-header-right.mlh-navbar-cell
+    span.mlh-notification.hover-pulldown( data-anchor='right', data-mode='hover')
+      include ../../public/icons/list.svg
+      .hover-pulldown-menu
+        .hpm-header Activity
+
+      //- .hover-pulldown-menu
+      //-   div.mlh-pulldown-top
+      //-     a.mlh-pulldown-top-link( data-priority='8' href='/artists', class= activeClass('/artists') ) Artists
+      //-     a.mlh-pulldown-top-link( data-priority='7' href='/browse', class= activeClass('/browse') ) Artworks
+      //-     a.mlh-pulldown-top-link( data-priority='3' href='/shows', class= activeClass('/shows') ) Shows
+      //-     a.mlh-pulldown-top-link( data-priority='2' href='/galleries', class= activeClass('/galleries') ) Galleries
+      //-     a.mlh-pulldown-top-link( data-priority='1' href='/institutions', class= activeClass('/institutions') ) Museums
+      //-     a.mlh-pulldown-top-link( data-priority='4' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
+      //-     a.mlh-pulldown-top-link( data-priority='6' href='/auctions', class= activeClass('/auctions') ) Auctions
+      //-     a.mlh-pulldown-top-link.js--post-split-test( data-priority='5' href='/articles', class= activeClass('/articles') )= sd.POSTS_SECTION_NAME
+      //-   hr.mlh-pulldown-top
+      //-   div.mlh-pulldown-bottom
+      //-     a.mlh-pulldown-bottom-link( href='/about' ) About Artsy
+      //-     a.mlh-pulldown-bottom-link( href='/gallery-partnerships' ) Artsy for Galleries
+      //-     a.mlh-pulldown-bottom-link( href='/institution-partnerships' ) Artsy for Museums
+      //-     a.mlh-pulldown-bottom-link( href='/feature/artsy-education' ) Artsy for Education
+      //-     a.mlh-pulldown-bottom-link( href='/categories' ) The Art Genome Project
+      //-     a.mlh-pulldown-bottom-link( href='/about/jobs' ) Jobs
+      //-     a.mlh-pulldown-bottom-link( href='/press' ) Press
+      //-     a.mlh-pulldown-bottom-link( href='/contact' ) Contact Artsy

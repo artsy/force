@@ -10,9 +10,19 @@
   background white
   border-bottom 1px solid gray-lighter-color
 
+.mlh-navbar, .mlh-navbar-small-screen
+  align-items center
+
+.mlh-navbar-small-screen
+  display none
+  @media (max-width: 550px)
+    display flex
+
 .mlh-navbar
   display flex
-  align-items center
+  @media (max-width: 550px)
+    display none
+
 .mlh-navbar-cell
   white-space nowrap
 
