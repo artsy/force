@@ -84,9 +84,13 @@ computed-padding(font-size, target-line-height)
 
 for num in (1..8)
   delta = (num - 1) * 100
-  pixels = 525px + delta
+  pixels = 750px + delta
   string_number = "'"+num+"'"
   @media (max-width: pixels)
+    first-break = num==8
+    if first-break
+      .mlh-pulldown-top
+        display block
     [data-priority={string_number}]
       &.mlh-top-nav-link
         display none
@@ -102,7 +106,7 @@ for num in (1..8)
   top 100%
   margin-top (menu-tip-size + (menu-tip-size * 1.5))
   margin-left -(menu-width / 2)
-  padding 20px default-margin 0 default-margin
+  padding 25px 0 30px 0
   text-align left
   background-color black
   opacity 0
@@ -118,17 +122,22 @@ for num in (1..8)
     overflow ellipsis
     cursor pointer
   a
-    padding computed-padding(18px, 40px) 0
+    padding computed-padding(18px, 40px) default-margin
     line-height 1
     text-transform none
     letter-spacing 0
     color white
     text-decoration none
     overflow ellipsis
+    garamond()
+    font-size 18px
     &:not(.mlh-pulldown-top-link)
       display block
     &:hover
       background-color gray-darkest-color
+  .mlh-pulldown-top-link
+    avant-garde()
+    font-size 13px
   > hr
     height 2px
     margin computed-padding(2px, 40px) default-margin
@@ -144,13 +153,6 @@ for num in (1..8)
     bottom 100%
     left 0
 
-  .mlh-pulldown-top-link
-    avant-garde()
-
-  .mlh-pulldown-bottom-link
-    garamond()
-    font-size 18px
-
 .hover-pulldown-backdrop
   position fixed
   top 0
@@ -159,13 +161,6 @@ for num in (1..8)
   left 0
   z-index (zindex-hover-pulldown - 10)
   height 100vh
-
-.mlh-pulldown-top
-  border-bottom 1px solid gray-lighter-color
-  padding 22px 0
-
-.mlh-pulldown-bottom
-  padding 12px 0
 
 // For dark banners and backgrounds
 .body-transparent-header-white
@@ -194,8 +189,10 @@ for num in (1..8)
 #hpm-bundles
   overflow scroll
   max-height 280px
+  > a
+    padding 0 0 0 default-margin
 .bundle-item
-  padding computed-padding(18px, 40px) default-margin
+  padding computed-padding(18px, 40px) 0
   garamond()
   font-size 18px
   line-height 1
