@@ -17,8 +17,10 @@
   white-space nowrap
 
 #main-layout-header-left
-  flex 1
+  flex-grow 1
+
 #main-layout-header-home-logo
+  flex-shrink 0
   display inline-block
   width home-logo-size
   text-align center
@@ -29,11 +31,12 @@
     line-height home-logo-size
 #main-layout-header-center
   padding 0 20px
+  flex-grow 1
 #main-layout-header-center
 #main-layout-header-right
   avant-garde()
 #main-layout-header-right
-  flex 1
+  flex-shrink 0
   text-align right
 
 .mlh-nav-link
