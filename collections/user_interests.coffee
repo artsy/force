@@ -6,31 +6,17 @@ UserInterest = require '../models/user_interest.coffee'
 module.exports = class UserInterests extends Backbone.Collection
   model: UserInterest
 
-  interestType: 'Artist' # Should/will be configurable
+  interestType: 'Artist'
 
-  url: ->
-    if @collectorProfile?
-      "#{API_URL}/api/v1/user_interests"
-    else
-      "#{API_URL}/api/v1/me/user_interest/artists"
-
-  initialize: (models, { @collectorProfile } = {}) ->
-    @model::urlRoot = @urlRoot()
-
-  urlRoot: ->
-    if @collectorProfile?
-      "#{API_URL}/api/v1/user_interest"
-    else
-      "#{API_URL}/api/v1/me/user_interest"
+  url: "#{API_URL}/api/v1/me/user_interests"
 
   parse: (response) ->
     _.filter response, (obj) ->
       not _.isEmpty(obj.interest)
 
   fetch: (options = {}) ->
-    if @collectorProfile?
-      options.data = _.extend options.data or {}, @owner(),
-        interest_type: @interestType
+    options.data = _.extend options.data or {},
+      interest_type: @interestType
     super options
 
   comparator: (userInterest) ->
@@ -43,15 +29,10 @@ module.exports = class UserInterests extends Backbone.Collection
   alreadyInterested: (interest) ->
     @findByInterestId(interest.id)?
 
-  owner: ->
-    if @collectorProfile?
-      owner_id: @collectorProfile.id, owner_type: 'CollectorProfile'
-
   addInterest: (interest) ->
     return if @alreadyInterested interest
 
-    @unshift _.extend {
+    @unshift
       interest_type: @interestType
       interest_id: interest.id
       interest: interest.attributes
-    }, @owner()
