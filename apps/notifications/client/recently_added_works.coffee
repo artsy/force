@@ -40,6 +40,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
+      @initiallyLoaded = true
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -147,7 +148,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
   render: =>
     return if @filterState.get 'artist'
     return unless @filterState.get 'loading'
-    @$pins.hide() # Only relevant on initial load
+    @$pins.hide() if @initiallyLoaded
     @notifications.state.currentPage = 1
     @notifications.getFirstPage(
       data: for_sale: @filterState.get('forSale')

@@ -53,3 +53,9 @@ To sync data with the bucket:
 ```
 foreman run node_modules/.bin/coffee components/json_page/seed.coffee
 ```
+
+To update the fixture from the bucket data
+
+```
+foreman run node_modules/.bin/coffee components/json_page/update.coffee
+```

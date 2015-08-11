@@ -51,7 +51,7 @@ block body
       for gene in featuredGenes.models
         .artists-featured-genes-gene
           h4
-            a.avant-garde-jump-link( href="/gene/#{gene.id}" )
+            a.avant-garde-jump-link( href="/gene/#{gene.id}/artists" )
               = gene.get('name')
               i.icon-chevron-small-right
           .grid-4-up

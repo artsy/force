@@ -117,4 +117,12 @@
   bind('user_interests:remove', function(context) {
     track('User removed an interest in artist');
   });
+
+  bind('inquiry:sync', function(context) {
+    track('Inquiry successfully sent');
+  });
+
+  bind('inquiry:error', function(context) {
+    track('Problem sending inquiry', context.inquiry.attributes);
+  });
 })();

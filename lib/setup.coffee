@@ -214,6 +214,7 @@ module.exports = (app) ->
   app.use require "../apps/about"
   app.use require "../apps/browse"
   app.use require "../apps/categories"
+  app.use require "../apps/contact"
   app.use require "../apps/dev"
   app.use require "../apps/how_auctions_work"
   app.use require "../apps/fairs"
@@ -236,8 +237,8 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
-  # Temporary, until we update gravity and data
   app.use require "../apps/profile"
+  app.use require "../apps/organization"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
   app.use require "../apps/articles"
@@ -247,7 +248,6 @@ module.exports = (app) ->
   app.use require "../apps/style_guide"
   app.use require "../apps/auth"
   app.use require "../apps/static"
-  # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"

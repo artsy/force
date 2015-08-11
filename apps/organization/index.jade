@@ -1,0 +1,13 @@
+extends ../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'organization'
+
+block body
+  header.organization-header
+    img( src=organization.get('icon_url') )
+    h1= organization.get('name')
+  .organization-feed
