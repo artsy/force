@@ -38,9 +38,9 @@ module.exports = (options = {}) ->
     # don't wait for it though
     user.approximateLocation()
 
-    user.findOrCreate()
+    user.findOrCreate(silent: true)
       .then ->
-        user.related().collectorProfile.findOrCreate()
+        user.related().collectorProfile.findOrCreate(silent: true)
       .then done
       .fail ->
         closeWithError modal

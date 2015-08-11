@@ -11,7 +11,7 @@ h1.iq-headline
 form.iq-form.stacked-form
   label.avant-garde-form-label( for='profession' )
     | Profession <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
-  input.bordered-input(
+  input.bordered-input.js-iq-profession(
     name='profession'
     id='profession'
     value= user.get('profession')
@@ -25,7 +25,7 @@ form.iq-form.stacked-form
 
   label.avant-garde-form-label( for='phone' )
     | Phone Number <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
-  input.bordered-input(
+  input.bordered-input.js-iq-phone(
     name='phone'
     id='phone'
     type='tel'

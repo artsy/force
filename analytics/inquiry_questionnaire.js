@@ -36,8 +36,14 @@
     track('Clicked on "Nevermind"');
   });
 
+  $document.on('click', '.js-iq-collector-level', function(e) {
+    track('Clicked "Yes" or "No" button on commercial_interest', {
+      collector_level: e.currentTarget.value
+    });
+  });
+
   $document.one('input', '.js-user-interests-search-input', function(e) {
-    track('Started to type artist name in autocomplete field')
+    track('Started to type artist name in autocomplete field');
   });
 
   $document.on('click', '.js-login-email', function() {
@@ -54,6 +60,10 @@
 
   $document.one('input', '.js-inquiry-message', function(e) {
     track('User changed inquiry message from default');
+  });
+
+  $document.on('click', '.js-iq-save-skip', function() {
+    track('Clicked on "No thanks don’t save my information"');
   });
 
   // Proxied events
@@ -82,12 +92,6 @@
     });
   });
 
-  bind('user:change:collector_level', function(context) {
-    track('User set collector_level', {
-      collector_level: context.user.get('collector_level')
-    });
-  });
-
   bind('user:change:profession', function(context) {
     track('User set profession', {
       profession: context.user.get('profession')
@@ -108,6 +112,10 @@
 
   bind('user:sync', function(context) {
     track('User data saved');
+  });
+
+  bind('collector_profile:sync', function(context) {
+    track('CollectorProfile data saved');
   });
 
   bind('user_interests:add', function(context) {

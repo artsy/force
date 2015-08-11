@@ -16,7 +16,7 @@ module.exports = class Account extends StepView
   __events__:
     'click button': 'submit'
     'click .js-mode': 'change'
-    'click .js-skip': 'next'
+    'click .js-iq-save-skip': 'next'
 
   initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @active = new Backbone.Model mode: 'auth'
