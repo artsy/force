@@ -45,16 +45,15 @@ describe 'SidebarView', ->
   describe '#toggleArtist, #clearArtistWorks', ->
 
     it 'selects the artist when clicked', ->
+
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe]').attr('data-state').should.containEql 'selected'
-      location.search.should.containEql 'artist=kina-abe'
 
     it 'clears artist and shows feed without for_sale selected', ->
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
       @view.filterState.get('forSale').should.be.false()
       @view.filterState.has('artist').should.be.false()
-      location.search.should.not.containEql 'artist=kina-abe'
 
     it 'clears artist and shows feed with for_sale selected', ->
       @view.$('#for-sale').click()
@@ -62,18 +61,15 @@ describe 'SidebarView', ->
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-clear').click()
       @view.filterState.get('forSale').should.be.true()
       @view.filterState.has('artist').should.be.false()
-      location.search.should.not.containEql 'artist=kina-abe'
 
     it 'sets filterState with for_sale filter off', ->
       @view.filterState.set 'forSale', false
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.filterState.get('forSale').should.be.false()
       @view.filterState.get('artist').should.equal 'kina-abe'
-      location.search.should.containEql 'artist=kina-abe'
 
     it 'sets filterState with for_sale filter on', ->
       @view.filterState.set 'forSale', true
       @view.$('.filter-artist[data-artist=kina-abe] .filter-artist-name').click()
       @view.filterState.get('forSale').should.be.true()
       @view.filterState.get('artist').should.equal 'kina-abe'
-      location.search.should.containEql 'artist=kina-abe'

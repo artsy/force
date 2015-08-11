@@ -1,52 +1,12 @@
-_ = require 'underscore'
 { ARTWORK } = require('sharify').data
 User = require '../../models/user.coffee'
 Artwork = require '../../models/artwork.coffee'
-ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
-AuthModalView = require '../../components/auth_modal/view.coffee'
-EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
-Logger = require '../../components/inquiry_questionnaire/logger.coffee'
 
 module.exports.init = ->
-  # Force a particular step
-  $('.js-bypass').click (e) ->
-    e.preventDefault()
-    step = $(e.currentTarget).data 'step'
-    user = User.instantiate()
-    user.set name: $('input[name="name"]').val(), email: $('input[name="email"]').val()
-    openInquiryQuestionnaireFor
-      user: user
-      artwork: new Artwork ARTWORK
-      inquiry: new ArtworkInquiry
-      bypass: step
-
-  # Setup pre-qualified:
-  artwork = new Artwork _.extend {}, ARTWORK,
-    partner: _.extend {}, ARTWORK.partner, pre_qualify: true
-  view = new EmbeddedInquiryView artwork: artwork
-  $('.js-embedded-inquiry-form-prequalified-container').html view.render().$el
-
-  # Setup default
   artwork = new Artwork ARTWORK
-  view = new EmbeddedInquiryView artwork: artwork
-  $('.js-embedded-inquiry-form-container').html view.render().$el
+  user = User.instantiate()
 
-  # Pre-fill for easy debugging:
-  $('input[name="name"]').val 'Jane Doe'
-  $('input[name="email"]').val 'jane@example.com'
-  $('textarea[name="message"]').val 'Hello, I want to buy this artwork. (This is just an example message)'
-
-  # Handle login/out
-  $('.js-login').click (e) ->
-    e.preventDefault()
-    new AuthModalView width: '500px', mode: 'login'
-  $('.js-logout').click (e) ->
-    e.preventDefault()
-    $.ajax url: '/users/sign_out', type: 'DELETE', success: -> location.reload()
-
-  # Reset has_seen_x without having to mess with cookies
-  $('.js-reset-logged').click (e) ->
-    e.preventDefault()
-    new Logger().reset()
-    location.reload()
+  $('.js-open-inquiry-flow').click (e) ->
+    user.set name: 'Damon Zucconi', email: 'damon@artsymail.com', prequalified: !$(this).data('prequalify')
+    openInquiryQuestionnaireFor user: user, artwork: artwork

@@ -1,192 +1,59 @@
 @import '../../../components/stylus_lib'
-@import '../../../components/chevron_list'
 
-#fairs-page
-  clearfix()
-  margin-bottom 20%
+.fpff-fair-image-grid
+.fpff-fair-cell-left
+.fpff-fair-cell-center
+.fpff-fair-cell-right
+  float left
+  height 100%
+.fpff-fair-image-grid
+  width 75%
+  &:hover .hoverable-image-link:after
+    opacity 0.5
+.fpff-fair-cell-right
+  width 25%
+  padding-left 20px
+  position relative
+.fpff-fair-cell-left
+  width 75%
+.fpff-fair-cell-center
+  width 25%
+  padding-left 5px
 
-#fairs-page .entity-follow
-  margin-left -8px
+// Featured fair components
+.ap-featured-item
+  height 350px
 
-h1.fair-header
-  garamond-size('headline')
-  padding-bottom 10px
-  margin-top 30px
+.fpff-button
+  margin 20px 0
 
-  &.fair-header--underlined
-    border-bottom 1px solid gray-lighter-color
+.fpff-fair-small-image
+  width 100%
+  height calc('50% - 2.5px')
+  &:last-child
+    margin-top 5px
 
-.fairs__current-fair
-  margin-bottom 30px
-  vertical-align top
-  .hoverable-image-link
-  .hoverable-image-link > .hoverable-image
+.fpff-fair-small-image
+.fpff-fair-cell-left
+  > .hoverable-image-link
+  > .hoverable-image-link > .hoverable-image
     width 100%
-    height 333px
+    height 100%
     background-size cover
     background-position center center
     prevent-content-shift()
-.fairs__current-fair__image
-  position relative
-  margin-bottom 15px
-  .fairs__current-fair__image__overlay
-    garamond-size('headline')
-    position absolute
-    bottom 30px
-    left 30px
-    color #fff
-    opacity 0
-    transition opacity 0.33s
-    z-index 1
-  &:hover .fairs__current-fair__image__overlay
-    opacity 1
 
-.fairs__current-fair__image__icon
-  height 80px
-  margin-right 80px
-.fairs-fair__meta
-  display table
-  vertical-align middle
-  height 80px
-  a
-    text-decoration none
-.fairs-fair__meta__profile, .fairs-fair__meta__info
-  vertical-align middle
-  display table-cell
+.fpff-fair-cell-right
+  // Clock overrides
+  .clock
+    margin 20px 0
+    text-align left
+  .clock-header
+    margin 5px 0
+    text-transform none
+    font-size default-garamond-font-size
 
-.fairs-fair__name
-  avant-garde-size('body')
-  display inline
-
-.fairs-fair__info
-  garamond-size('s-body')
-
-.fairs__promo
-  width 100%
-  height 490px
-  margin 30px 0
-.fairs__promo__cta
-  display table
-  height 100%
-  width 40%
-  text-align center
-  float left
-  garamond-size('headline')
-  h1
-    padding 30px 45px
-.fairs__promo__cta__inner
-  display table-cell
-  height 100%
-  vertical-align middle
-.fairs__promo__slideshow
-  float right
-  width 640px
-  height 100%
-
-.mgr-cell__caption
-  position absolute
-  bottom 30px
-  left 30px
-.mgr-cell__title
-  avant-garde-size('body')
-.mgr-cell__subtitle
-  garamond-size('s-body')
-
-.mgr-navigation
-  padding-top 30px
-.mgr-arrow-left, .mgr-arrow-right
-  display none
-
-.fairs__current-fair-row
-  width 100%
-  display flex
-  margin-bottom 30px
-  .fairs__current-fair, .fairs__current__promo
-    flex 1
-    margin 0 15px
-  .fairs__current-fair:first-child
-    margin-left 0
-  .fairs__current-fair:last-child
-    margin-right 0
-
-.fairs__current-fair-row--full .fairs__current-fair
-  flex 1
-  .hoverable-image-link
-  .hoverable-image-link > .hoverable-image
-    height 487px
-
-.fairs__current-fair-row--two-third, .fairs__current-fair-row--two-third-promo
-  .fairs__current-fair:first-child
-    flex 2
-
-.fairs__current__promo
-  text-align center
-
-  a
-    text-decoration none
-    position relative
-  .mobile-section-iphone-large
-    width 155px
-    height 255px
-    vertical-align bottom
-    display inline-block
-    background-repeat no-repeat
-    background-position center
-    background-size contain
-    margin 0 auto
-
-.fairs__current__promo__copy
-  garamond-size('headline')
-  font-size 25px
-
-.fairs-fair__follow
-  display inline-block
-  margin-left 10px
-
-.fairs__past-fairs
-  float left
-  width 66.66%
-  padding-right 30px
-
-.fairs__past-fair
-  chevron-item()
-  display table
-  width 100%
-  border-bottom 1px solid gray-lighter-color
-  cursor pointer
-  &::after
-    font-size 40px
-  &:hover
-    background-color gray-lightest-color
-
-.fairs__past-fair__cell
-  display table-cell
-  padding 30px 0
-  text-align left
-  vertical-align middle
-
-.fairs__past-fair__cell--icon
-  width 138px
-  text-align center
-  > img
-    width 80px
-    min-height 80px
-    margin 0 auto
-
-.fairs__past-fair__cell--name
-  width 50%
-  > .fairs-fair__name
-    display block
-  > div
-    padding 0 60px
-  > .fairs-fair__follow
-    margin-left 0px
-
-.fairs__upcoming-fairs
-  float left
-  width 33.33%
-  padding-left 30px
-
-.fairs__upcoming-fair
-  margin 30px 0
-
+.fpff-fair-name
+  margin-bottom 20px
+  avant-garde()
+  font-size default-avant-garde-font-size-font-size

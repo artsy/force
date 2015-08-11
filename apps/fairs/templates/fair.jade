@@ -1,0 +1,27 @@
+.ap-featured-item
+  .fpff-fair-image-grid
+    .fpff-fair-cell-left
+      a.hoverable-image-link( href= fair.href() )
+        .hoverable-image( style="background-image: url(#{fair.imageUrl('large_rectangle')});" )
+    .fpff-fair-cell-center
+      if fair.representation
+        - var representations = fair.representation.chain().shuffle().take(2).value()
+        for representation in representations
+          .fpff-fair-small-image
+            a.hoverable-image-link( href= fair.href() )
+              .hoverable-image( style="background-image: url(#{representation.imageUrl('medium_square')});" )
+
+  .fpff-fair-cell-right
+    .fpff-fair-name
+      = fair.get('name')
+    .fpff-location
+      = fair.location() && fair.location().cityStateCountry()
+    .fpff-date
+      = fair.formatDates()
+    if fair.isNotOver()
+      .fpff-clock( data-id= fair.id )
+        //- This is weird and should be rendered client-side
+        include ../../../components/clock/template
+    .fpff-button
+      a.avant-garde-button-black( href= fair.href() )
+        | Go to fair

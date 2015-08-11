@@ -7,7 +7,7 @@ InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
 
 module.exports = (options = {}) ->
-  { user, inquiry } = options
+  { user } = options
 
   questionnaire = new InquiryQuestionnaireView options
   modal = modalize questionnaire,
@@ -26,18 +26,9 @@ module.exports = (options = {}) ->
     # Try to get a location incase one doesn't exist,
     # don't wait for it though
     user.approximateLocation()
-
-    user.findOrCreate()
-      .then ->
-        user.related().collectorProfile.findOrCreate()
+    user.instantiate()
+      .then -> user.related().collectorProfile.instantiate()
       .then done
-      .fail ->
-        modal.close ->
-          new FlashMessage
-            message: 'There has been an error. Click here to contact support@artsy.net'
-            href: 'mailto:support@artsy.net'
-            autoclose: false
-      .done()
 
   # Abort by clicking 'nevermind'
   questionnaire.state.on 'abort', ->
@@ -45,11 +36,6 @@ module.exports = (options = {}) ->
 
   # End of complete flow
   questionnaire.state.on 'done', ->
-    # Send the inquiry
-    inquiry.save()
-
-    # Simultaneously close the modal and
-    # display a success message, regardless
     modal.close ->
       new FlashMessage message: '
         Your inquiry has been sent.<br>

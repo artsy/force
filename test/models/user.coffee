@@ -47,7 +47,7 @@ describe 'User', ->
         @user.set 'collector_level', 4
         @user.isCollector().should.be.true()
 
-  describe '#findOrCreate', ->
+  describe '#instantiate', ->
     describe 'CurrentUser', ->
       beforeEach ->
         sinon.stub Backbone, 'sync'
@@ -60,7 +60,7 @@ describe 'User', ->
 
       describe 'success', ->
         it 'fetches the user; returns a promise; calls a success callback', (done) ->
-          promise = @user.findOrCreate success: (model) ->
+          promise = @user.instantiate success: (model) ->
             model.id.should.equal 'current-user'
             promise.isFulfilled().should.be.true()
             done()
@@ -70,7 +70,7 @@ describe 'User', ->
 
       describe 'error', ->
         it 'fetches the user; returns a promise; calls a success callback', (done) ->
-          promise = @user.findOrCreate error: ->
+          promise = @user.instantiate error: ->
             promise.isRejected().should.be.true()
             done()
           promise.isFulfilled().should.be.false()
@@ -80,7 +80,6 @@ describe 'User', ->
     describe 'LoggedOutUser', ->
       beforeEach ->
         sinon.stub Backbone, 'sync'
-        Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__ = true
         sinon.stub(User, 'instantiate').returns new LoggedOutUser
         @user = User.instantiate()
 
@@ -90,7 +89,7 @@ describe 'User', ->
 
       describe 'existing session', ->
         it 'tries to get the anonymous session', (done) ->
-          promise = @user.findOrCreate success: (collection) =>
+          promise = @user.instantiate success: (collection) =>
             @user.id.should.equal 'anonymous-session-id'
             promise.isFulfilled().should.be.true()
             done()
@@ -100,7 +99,7 @@ describe 'User', ->
 
       describe 'no previous session', ->
         it 'tries to get the session and if it comes up empty it creates one', (done) ->
-          promise = @user.findOrCreate success: =>
+          promise = @user.instantiate success: =>
             @user.id.should.equal 'fresh-anonymous-session-id'
             promise.isFulfilled().should.be.true()
             done()

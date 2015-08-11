@@ -8,7 +8,7 @@ module.exports =
     model.url = "#{sd.API_URL}/api/v1/system/time"
     model.fetch
       success: (response) =>
-        offset = moment().diff(response.get('iso8601'))
+        offset = moment().diff(response.get('time'))
         @set('offsetStartAtMoment', moment(@get 'start_at').add(offset))
         @set('offsetEndAtMoment', moment(@get 'end_at').add(offset))
         @updateState()

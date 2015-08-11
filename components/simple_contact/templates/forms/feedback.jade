@@ -4,9 +4,6 @@ form.scontact-form.stacked-form
 
   input( type='hidden', name='url', value= window.location.href )
 
-  if artwork
-    input( type='hidden', name='artwork', value= artwork.id )
-
   textarea.bordered-input(
     name='message'
     placeholder='Leave your comments'
@@ -14,7 +11,6 @@ form.scontact-form.stacked-form
     autofocus
     required
   )
-    = message
 
   if user && user.id
     //- Logged in

@@ -28,36 +28,16 @@ module.exports = class User extends Backbone.Model
   isWithAnonymousSession: ->
     @id? and not @isLoggedIn()
 
-  @instantiate: (attributes = {}) ->
+  @instantiate: ->
     CurrentUser = require './current_user.coffee'
     LoggedOutUser = require './logged_out_user.coffee'
 
     CurrentUser.orNull() or
-    new LoggedOutUser attributes
+    new LoggedOutUser session_id: SESSION_ID
 
-  findOrCreate: (options = {}) ->
+  instantiate: (options = {}) ->
     { success, error } = options
-
     options = _.omit options, 'success', 'error'
-
-    success = _.wrap success, (__success__, args...) =>
-      # Wrap Backbone#sync injecting data where appropriate...
-      unless @isLoggedIn() or Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__
-        data = session_id: SESSION_ID, anonymous_session_id: @id
-        Backbone.__ANONYMOUS_SESSION_SYNC_WRAPPED__ = true
-        Backbone.sync = _.wrap Backbone.sync, (sync, method, model, options = {}) ->
-          switch method
-            when 'read'
-              options.data = _.extend options.data or {}, data
-            when 'delete'
-              options.processData = true
-              options.data = data
-            else
-              @set data, silent: true
-          sync method, model, options
-
-      __success__? args...
-
     Q.promise (resolve, reject) =>
       @fetch _.extend {}, options,
         error: ->

@@ -9,24 +9,13 @@ module.exports = class CollectorProfile extends Backbone.Model
 
   url: "#{API_URL}/api/v1/me/collector_profile"
 
-  # Temporary hack around API bug surrounding valid hash fields...
-  validHashFields: [
-    'institutional_affiliations'
-    'confirmed_buyer_at'
-    'collector_level'
-  ]
+  fetch: (options = {}) ->
+    options.data = _.extend options.data or {}, @pick('anonymous_session_id')
+    super options
 
-  # Ibid.
-  setWithValidAttributes: (attributes = {}) ->
-    existing = _.extend id: @id, _.pick(@attributes, @validHashFields)
-    @clear()
-    @set _.extend existing, _.pick(attributes, @validHashFields)
-
-  findOrCreate: (options = {}) ->
+  instantiate: (options = {}) ->
     { success, error } = options
-
     options = _.omit options, 'success', 'error'
-
     Q.promise (resolve, reject) =>
       @fetch _.extend {}, options,
         success: ->

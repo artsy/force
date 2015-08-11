@@ -2,7 +2,7 @@
 
 module.exports =
   firstVisibleInput: ($el) ->
-    $el.find('input:visible, textarea:visible').first()
+    $el.find('input:hidden, textarea:hidden').first()
 
   moveCursorToEnd: ($input) ->
     val = $input.val()

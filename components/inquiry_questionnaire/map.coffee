@@ -10,9 +10,8 @@ module.exports =
     done: require './views/done.coffee'
 
   decisions:
-    pre_qualify: ({ artwork }) ->
-      artwork.related()
-        .partner.get('pre_qualify') is true
+    prequalify: ({ user }) ->
+      not user.get 'prequalified'
 
     is_collector: ({ user }) ->
       user.isCollector()
@@ -25,28 +24,30 @@ module.exports =
       user.has('location') and
       user.has('phone')
 
+    has_commercial_interest: ({ user }) ->
+      user.isCommercial()
+
     is_logged_in: ({ user }) ->
       user.isLoggedIn()
 
-    has_seen_commercial_interest: ({ logger }) ->
-      logger.hasLogged 'commercial_interest'
-
-    has_seen_basic_info: ({ logger }) ->
-      logger.hasLogged 'basic_info'
-
-    has_seen_artists_in_collection: ({ logger }) ->
-      logger.hasLogged 'artists_in_collection'
-
   steps: [
-    pre_qualify: {
+    prequalify:
       true: [
-        { has_seen_commercial_interest: false: ['commercial_interest'] }
+        { has_commercial_interest: false: ['commercial_interest'] }
         {
           is_collector:
             true: [
               { has_basic_info: false: ['basic_info'] }
-              { has_seen_artists_in_collection: false: ['artists_in_collection'] }
+              'artists_in_collection'
               'inquiry'
+              {
+                is_logged_in:
+                  true: ['done']
+                  false: [
+                    'account'
+                    'done'
+                  ]
+              }
             ]
             false: [
               'how_can_we_help'
@@ -61,20 +62,29 @@ module.exports =
                   journalist_question: ['inquiry']
                   other_question: ['specialist']
               }
+              {
+                is_logged_in:
+                  true: ['done']
+                  false: [
+                    'account'
+                    'done'
+                  ]
+              }
             ]
         }
       ]
+
       false: [
-        'inquiry'
-        { has_seen_commercial_interest: false: ['commercial_interest'] }
-        { has_seen_basic_info: false: ['basic_info'] }
+        { has_commercial_interest: false: ['commercial_interest'] }
+        { has_basic_info: false: ['basic_info'] }
+        { is_collector: true: ['artists_in_collection'] }
         {
-          is_collector: true: [
-            has_seen_artists_in_collection: false: ['artists_in_collection']
-          ]
+          is_logged_in:
+            true: ['done']
+            false: [
+              'account'
+              'done'
+            ]
         }
       ]
-    }
-    { is_logged_in: false: ['account'] }
-    'done'
   ]

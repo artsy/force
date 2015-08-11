@@ -20,7 +20,6 @@ module.exports = class ArtistWorksView extends Backbone.View
     return unless @filterState.get('loading')
 
     @artist = new Artist id: @filterState.get 'artist'
-
     @forSaleArtist = if @filterState.get('forSale') then 'for_sale' else ''
     @artist.related().artworks.fetchUntilEnd
       data:

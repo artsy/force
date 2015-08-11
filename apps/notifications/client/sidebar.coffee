@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-qs = require 'querystring'
 SearchBarView = require '../../../components/search_bar/view.coffee'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 
@@ -12,9 +11,6 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-clear' : 'clearArtistWorks'
 
   initialize: ({@filterState, @following}) ->
-    if @filterState.get 'artist'
-      @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
-      @$selectedArtist.attr 'data-state', 'selected'
     @setupSearch()
 
   toggleForSale: (e) ->
@@ -27,7 +23,6 @@ module.exports = class SidebarView extends Backbone.View
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    window.history.pushState({}, "Artist", "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
     @filterState.set
       artist: @$selectedArtist.attr('data-artist')
       loading: true
@@ -36,7 +31,6 @@ module.exports = class SidebarView extends Backbone.View
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    window.history.pushState({},"Clear","/works-for-you")
     @filterState.set
       artist: null
       loading: true

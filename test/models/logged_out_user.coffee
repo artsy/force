@@ -1,8 +1,6 @@
-_ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ fabricate } = require 'antigravity'
 LoggedOutUser = require '../../models/logged_out_user'
 
 describe 'LoggedOutUser', ->

@@ -24,7 +24,7 @@ aggregationParams = require './components/browse/aggregations.coffee'
   res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
   filterArtworks.fetch
     data: filterData
-    success: ->
+    success: -> 
       res.render 'overview',
         counts: filterArtworks.counts
         params: params
@@ -144,12 +144,16 @@ aggregationParams = require './components/browse/aggregations.coffee'
       res.locals.primarySets = primarySets
       end = (data) ->
         res.locals[k] = v for k, v of data
+        res.locals.mediums = data.filterSuggest.mediumsHash()
         res.locals.sd.EXHIBITORS_COUNT = data.galleries.length
         res.locals.sd.FAIR = data.fair.toJSON()
         next()
       key = "fair:#{req.params.id}"
       cache.getHash key, {
         fair: require '../../models/fair'
+        filterSuggest: require '../../models/filter_suggest'
+        filteredSearchOptions: require '../../models/filter_suggest'
+        filteredSearchColumns: null # Vanilla JS object
         sections: require('backbone').Collection
         galleries: require('backbone').Collection
         exhibitorsCount: null # Just a Number

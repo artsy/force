@@ -26,9 +26,6 @@
 
   .artwork-detail-secondary-metadata
     h2.artwork-detail-medium= artwork.get('medium')
-    if artwork.get('duration')
-      .artwork-detail-duration
-        = artwork.get('duration')
     if artwork.get('manufacturer')
       .artwork-detail-manufacturer
         = artwork.get('manufacturer')

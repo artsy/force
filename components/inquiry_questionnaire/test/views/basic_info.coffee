@@ -14,7 +14,6 @@ describe 'BasicInfo', setup ->
 
   describe '#render', ->
     beforeEach ->
-      @artwork.related().partner.set 'pre_qualify', true
       @view.render()
 
     it 'renders the form', ->
@@ -22,7 +21,7 @@ describe 'BasicInfo', setup ->
         .should.containEql 'Gagosian Gallery asks for some additional information before placing an inquiry'
       @view.$('input').map(-> $(this).attr('name')).get()
         .should.eql ['profession', 'phone']
-      @view.$('.js-nevermind').text().should.equal 'Nevermind, cancel my inquiry' # pre_qualify
+      @view.$('.js-nevermind').text().should.equal 'Nevermind, cancel my inquiry'
 
   describe 'next', ->
     beforeEach ->

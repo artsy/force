@@ -1,7 +1,4 @@
 form.scontact-form.stacked-form.js-inquiry-form
-  .scontact-errors.js-form-errors
-    //- Rendered separately
-
   .stacked-form-cell
     input( type='hidden', name='artwork', value= artwork.id )
 
@@ -15,11 +12,12 @@ form.scontact-form.stacked-form.js-inquiry-form
       | Your message
     textarea.bordered-input.is-block.js-inquiry-message(
       name='message'
-      placeholder='Provide the gallery with some details about your interest in this work.'
+      placeholder='Your message'
       rows='5'
       required
     )
-      = message
+      = defaultMessage
+      = '\n\n'
 
   if user && user.isWithAnonymousSession()
     input( type='hidden', name='anonymous_session_id', value= user.id )

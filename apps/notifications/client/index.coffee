@@ -1,8 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ FOLLOWING, API_URL } = sd = require('sharify').data
+{ FOLLOWING } = require('sharify').data
 scrollFrame = require 'scroll-frame'
-qs = require 'querystring'
 Notifications = require '../../../collections/notifications.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 JumpView = require '../../../components/jump/view.coffee'
@@ -19,11 +18,10 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
     @following = new Following FOLLOWING, kind: 'artist'
-    { artist } = qs.parse(location.search.substring(1))
 
     @filterState = new Backbone.Model
       forSale: false
-      artist: artist or null
+      artist: null
       loading: true
       empty: false
 
@@ -43,8 +41,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @filterState.on 'change', @render
     @setupJumpView()
     @filterState.trigger 'change'
-
-    @submitReadNotification()
 
   render: =>
     @$('#notifications-page').attr 'data-state', (
@@ -70,13 +66,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   scrollToTop: ->
     @jump.scrollToPosition 0
 
-  submitReadNotification: ->
-    $.ajax
-      method: 'PUT'
-      url: "#{API_URL}/api/v1/me/notifications"
-      data: status: 'read'
-
 module.exports.init = ->
   new NotificationsView el: $('body')
-  scrollFrame '#notifications-feed a' unless sd.EIGEN
+  scrollFrame '#notifications-feed a'
   require './analytics.coffee'

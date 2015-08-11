@@ -40,9 +40,10 @@ describe 'Fair', ->
       _.last(Backbone.sync.args)[2].success new Backbone.Model fabricate 'profile'
       urls = (_.result(call[1], 'url') or call[2].url for call in Backbone.sync.args)
       urls[0].should.match /// api/v1/fair/.* ///
-      urls[1].should.match /// api/v1/fair/.*/sections ///
-      urls[2].should.match /// api/v1/fair/.*/partners ///
-      urls[3].should.match /// api/v1/fair/.*/artists ///
+      urls[1].should.match /// api/v1/search/filtered/fair/.*/suggest ///
+      urls[2].should.match /// api/v1/fair/.*/sections ///
+      urls[3].should.match /// api/v1/fair/.*/partners ///
+      urls[4].should.match /// api/v1/fair/.*/artists ///
 
   describe '#itemsToColumns', ->
 

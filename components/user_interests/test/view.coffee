@@ -46,7 +46,7 @@ describe 'UserInterestsView', ->
       @view.render()
 
     it 'renders the base template', ->
-      @view.$el.html().should.containEql 'Add artists you own work by'
+      @view.$el.html().should.containEql 'Add an artist you own work by'
 
     it 'sets up the autocomplete view', ->
       @view.autocomplete.mode.should.equal 'artists'
