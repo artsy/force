@@ -12,7 +12,7 @@ _ = require 'underscore'
 config = require '../config'
 sharify = require 'sharify'
 
-sharify.data = _.extend sharify.data, _.pick(config, 'APP_URL', 'POSITRON_URL',
+sharify.data = _.extend _.pick(config, 'APP_URL', 'POSITRON_URL',
   'API_URL', 'NODE_ENV', 'MOBILE_MEDIA_QUERY', 'CANONICAL_MOBILE_URL',
   'MOBILE_URL', 'FACEBOOK_APP_NAMESPACE', 'SECURE_IMAGES_URL',
   'IMAGES_URL_PREFIX', 'GOOGLE_ANALYTICS_ID', 'SNOWPLOW_COLLECTOR_HOST',
