@@ -1,8 +1,5 @@
 modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
-# We intentionally escape HTML in the template due to an XSS vulnerability.
-# Consciously and manually override that here for this instance:
-FlashMessage::template = -> "<span>#{@message}</span>"
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
 
@@ -15,7 +12,7 @@ closeWithError = (modal) ->
 
 closeWithSuccess = (modal) ->
   modal.close ->
-    new FlashMessage message: '
+    new FlashMessage safe: false, message: '
       Your inquiry has been sent.<br>
       Thank you for completing your profile.
     '

@@ -96,6 +96,10 @@ describe 'FlashMessage', ->
       flash = new FlashMessage message: '><img src=x onerror=alert("PWN")>'
       $('body').text().should.equal '><img src=x onerror=alert("PWN")>'
 
+    it 'allows for HTML when passed the `safe: false` option', ->
+      flash = new FlashMessage safe: false, message: '<strong>I <em>am</em> strong</strong>'
+      $('body').text().should.equal 'I am strong'
+
   describe '#open', ->
     it 'checks to see if the container is empty before starting the timer', ->
       firstFlash = new FlashMessage message: 'Goodbye world.'
