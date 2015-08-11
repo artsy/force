@@ -44,9 +44,9 @@ cache = require './cache'
 timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
-CurrentUser = require '../models/current_user'
 
 require './setup_sharify.coffee'
+CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
 
