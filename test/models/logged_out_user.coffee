@@ -158,3 +158,24 @@ describe 'LoggedOutUser', ->
           done()
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
         Backbone.sync.args[0][2].success id: 'foobar'
+
+  describe '#repossess', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+      @user = new LoggedOutUser
+        id: 'anonymous-session-id', email: 'cab@example.com'
+      @user.__isLoggedIn__ = true
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'saves the anonymous_session explicitly setting the subsequent_user_id; returns a thennable', (specDone) ->
+      promise = @user.repossess('some-user-id')
+
+      Backbone.sync.args[0][2].url
+        .should.containEql '/api/v1/me/anonymous_session/anonymous-session-id'
+
+      promise.finally ->
+        true.should.be.true()
+        specDone()
+      .done()
