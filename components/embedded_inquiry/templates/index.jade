@@ -1,6 +1,5 @@
 - partner = artwork.related().partner
 
-//- Embedded inquiry form
 form.stacked-form.js-embedded-inquiry-form
   //- Only button is displayed for pre-qualification
   unless partner.get('pre_qualify')
@@ -21,7 +20,7 @@ form.stacked-form.js-embedded-inquiry-form
         required
       )
 
-    textarea.bordered-input.is-persistplaceholder(
+    textarea.bordered-input(
       rows='5'
       name='message'
       required
@@ -29,6 +28,9 @@ form.stacked-form.js-embedded-inquiry-form
       if defaultMessage
         = defaultMessage
         = ' '
+
+    if fair
+      include ./attendance
 
     .js-form-errors
       //- Rendered client-side
