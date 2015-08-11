@@ -7,7 +7,7 @@ Vertical = require '../../models/vertical'
 Verticals = require '../../collections/verticals'
 embedVideo = require 'embed-video'
 request = require 'superagent'
-{ POST_TO_ARTICLE_SLUGS } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @articles = (req, res, next) ->
@@ -78,7 +78,7 @@ request = require 'superagent'
 @form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
     .send(
-      apikey: sd.MAILCHIMP_KEY
+      apikey: MAILCHIMP_KEY
       id: sd.GALLERY_INSIGHTS_LIST
       email: email: req.body.email
       send_welcome: true
@@ -97,7 +97,7 @@ request = require 'superagent'
 subscribed = (email, callback) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
     .query(
-      apikey: sd.MAILCHIMP_KEY
+      apikey: MAILCHIMP_KEY
       id: sd.GALLERY_INSIGHTS_LIST
     ).query("emails[0][email]=#{email}").end (err, response) ->
       callback response.body.success_count is 1
