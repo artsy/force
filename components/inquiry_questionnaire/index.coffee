@@ -33,6 +33,12 @@ module.exports = (options = {}) ->
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
+  # Prevent escape
+  $(window).on 'beforeunload', ->
+    'Your inquiry has not been sent yet.'
+  modal.view.on 'closed', ->
+    $(window).off 'beforeunload'
+
   modal.load (done) ->
     # Try to get a location incase one doesn't exist,
     # don't wait for it though
