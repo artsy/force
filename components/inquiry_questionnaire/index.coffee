@@ -1,10 +1,21 @@
 modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
-# We intentionally escape HTML in the template due to an XSS vulnerability.
-# Consciously and manually override that here for this instance:
-FlashMessage::template = -> "<span>#{@message}</span>"
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
+
+closeWithError = (modal) ->
+  modal.close ->
+    new FlashMessage
+      message: 'There has been an error. Click here to contact support@artsy.net'
+      href: 'mailto:support@artsy.net'
+      autoclose: false
+
+closeWithSuccess = (modal) ->
+  modal.close ->
+    new FlashMessage safe: false, message: '
+      Your inquiry has been sent.<br>
+      Thank you for completing your profile.
+    '
 
 module.exports = (options = {}) ->
   { user, inquiry } = options
@@ -27,16 +38,12 @@ module.exports = (options = {}) ->
     # don't wait for it though
     user.approximateLocation()
 
-    user.findOrCreate()
+    user.findOrCreate(silent: true)
       .then ->
-        user.related().collectorProfile.findOrCreate()
+        user.related().collectorProfile.findOrCreate(silent: true)
       .then done
       .fail ->
-        modal.close ->
-          new FlashMessage
-            message: 'There has been an error. Click here to contact support@artsy.net'
-            href: 'mailto:support@artsy.net'
-            autoclose: false
+        closeWithError modal
       .done()
 
   # Abort by clicking 'nevermind'
@@ -46,14 +53,10 @@ module.exports = (options = {}) ->
   # End of complete flow
   questionnaire.state.on 'done', ->
     # Send the inquiry
-    inquiry.save()
-
-    # Simultaneously close the modal and
-    # display a success message, regardless
-    modal.close ->
-      new FlashMessage message: '
-        Your inquiry has been sent.<br>
-        Thank you for completing your profile.
-      '
+    inquiry.save {},
+      error: ->
+        closeWithError modal
+      success: ->
+        closeWithSuccess modal
 
   modal

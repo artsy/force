@@ -14,6 +14,15 @@ describe 'Fair', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#nameSansYear', ->
+    it 'returns the name without the year', ->
+      new Fair name: 'Foo Fair 2015'
+        .nameSansYear().should.equal 'Foo Fair'
+      new Fair name: 'Bar Fair'
+        .nameSansYear().should.equal 'Bar Fair'
+      new Fair name: 'Baz 2015 Fair'
+        .nameSansYear().should.equal 'Baz 2015 Fair'
+
   describe '#href', ->
 
     it "returns the client link to this fair", ->

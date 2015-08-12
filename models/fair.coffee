@@ -1,5 +1,6 @@
 sd = require('sharify').data
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 PartnerLocation = require './partner_location.coffee'
@@ -235,3 +236,6 @@ module.exports = class Fair extends Backbone.Model
 
   isPast: ->
     @isEligible() and @isOver()
+
+  nameSansYear: ->
+    _s.rtrim @get('name'), /\s[0-9]/

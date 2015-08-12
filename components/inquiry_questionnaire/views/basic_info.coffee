@@ -15,13 +15,7 @@ module.exports = class BasicInfo extends StepView
     e.preventDefault()
     form.state 'loading'
 
-    @user.set form.data()
-    @user.related().collectorProfile.setWithValidAttributes @user.attributes
-
-    $.when.apply(null, [
-      @user.save()
-      @user.related().collectorProfile.save()
-    ])
+    @user.save(form.data())
       .always => @next()
 
   postRender: ->

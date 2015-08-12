@@ -1,21 +1,32 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
+safe = _.template "<span><%- message %></span>"
+unsafe = _.template "<span><%= message %></span>"
 
 module.exports = class FlashMessage extends Backbone.View
   container: '#main-layout-flash'
   className: 'fullscreen-flash-message'
-  visibleDuration: 2000
+
+  defaults:
+    safe: true
+    visibleDuration: 2000
+    autoclose: true
 
   events:
     'click': 'close'
 
-  template: _.template "<span><%- message %></span>"
+  template: ->
+    if @safe then (safe arguments...) else (unsafe arguments...)
 
   initialize: (options = {}) ->
     throw new Error('You must pass a message option') unless options.message
 
-    { @message, @autoclose, @href } = _.defaults options, autoclose: true
+    { @message
+      @autoclose
+      @href
+      @safe
+      @visibleDuration } = _.defaults options, @defaults
 
     @listenTo mediator, 'flash:close', @close
 

@@ -7,6 +7,7 @@ AuthModalView = require '../../components/auth_modal/view.coffee'
 EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../components/inquiry_questionnaire/logger.coffee'
+defaultMessage = require '../../components/contact/default_message.coffee'
 
 module.exports.init = ->
   # Force a particular step
@@ -35,7 +36,7 @@ module.exports.init = ->
   # Pre-fill for easy debugging:
   $('input[name="name"]').val 'Jane Doe'
   $('input[name="email"]').val 'jane@example.com'
-  $('textarea[name="message"]').val 'Hello, I want to buy this artwork. (This is just an example message)'
+  $('textarea[name="message"]').val defaultMessage(artwork, artwork.related().partner)
 
   # Handle login/out
   $('.js-login').click (e) ->

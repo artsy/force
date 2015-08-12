@@ -1,10 +1,10 @@
 h1.iq-headline
   | Please log in to save information to your profile.
-
-if user.related().account.id
-  .iq-body
-    p We found an Artsy account associated with
-    p: span= user.get('email')
+  if user.related().account.id
+    = ' '
+    | We found an Artsy account associated with
+    = ' '
+    em= user.get('email')
 
 form.stacked-form
   .iq-form-errors.js-form-errors
@@ -35,4 +35,5 @@ form.stacked-form
           | Sign up
 
   .iq-account-sub
-    a.fine-faux-underline.js-skip No thanks don&rsquo;t save my information
+    a.fine-faux-underline.js-iq-save-skip
+      | No thanks don&rsquo;t save my information

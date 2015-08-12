@@ -11,7 +11,8 @@ module.exports =
     geo.locate
       accuracy: 'low'
       success: _.wrap options.success, (success, geoFormatted) =>
-        @setGeo(geoFormatted) unless @hasLocation()
+        unless @hasLocation()
+          @setGeo geoFormatted, silent: true
         success?()
 
   # Gravity runs a delayed job after user saves that geolocates
@@ -40,7 +41,7 @@ module.exports =
     else
       @setGeo new GeoFormatter(obj)
 
-  setGeo: (geoFormatted) ->
+  setGeo: (geoFormatted, options = {}) ->
     @set location:
       city: geoFormatted.getCity() or ''
       state: geoFormatted.getState() or ''
@@ -48,3 +49,4 @@ module.exports =
       postal_code: geoFormatted.getPostalCode() or ''
       coordinates: geoFormatted.getCoordinates() or null
       country: geoFormatted.getCountry() or ''
+    , options

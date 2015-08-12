@@ -16,7 +16,7 @@ module.exports = class Account extends StepView
   __events__:
     'click button': 'submit'
     'click .js-mode': 'change'
-    'click .js-skip': 'next'
+    'click .js-iq-save-skip': 'next'
 
   initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @active = new Backbone.Model mode: 'auth'
@@ -45,13 +45,11 @@ module.exports = class Account extends StepView
     form.state 'loading'
 
     @user.set form.serializer.data()
-    @user[@mode()]
+    @user[@mode()] # `login` or `signup`
       error: form.error.bind(form)
-      success: =>
-        @user.repossess()
-          .finally =>
-            @next()
-          .done()
+      success: (model, { user }) =>
+        @user.repossess(user.id)
+          .finally => @next()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'

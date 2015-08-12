@@ -1,3 +1,4 @@
+_ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 Representatives = require '../../../collections/representatives.coffee'
@@ -30,4 +31,6 @@ module.exports = class Specialist extends StepView
     e.preventDefault()
 
     @inquiry.set _.extend { contact_gallery: false }, form.data()
+    @user.set @inquiry.pick('name', 'email')
+
     @next()

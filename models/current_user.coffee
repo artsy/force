@@ -1,3 +1,4 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'
@@ -149,3 +150,6 @@ module.exports = class CurrentUser extends User
         request.put(url)
           .send({status: 'read', access_token: @get('accessToken')})
           .end (err, res) -> options?.success unreadNotifications
+
+  findOrCreate: (options = {}) ->
+    Q(@fetch options)
