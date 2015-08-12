@@ -36,7 +36,6 @@ module.exports.init = ->
   # Pre-fill for easy debugging:
   $('input[name="name"]').val 'Jane Doe'
   $('input[name="email"]').val 'jane@example.com'
-  $('textarea[name="message"]').val defaultMessage(artwork, artwork.related().partner)
 
   # Handle login/out
   $('.js-login').click (e) ->

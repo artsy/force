@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 Form = require '../form/index.coffee'
 User = require '../../models/user.coffee'
 ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
+defaultMessage = require '../contact/default_message.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
@@ -46,4 +47,5 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
       user: @user
       inquiry: @inquiry
       artwork: @artwork
+      defaultMessage: defaultMessage(@artwork, @artwork.related().partner)
     this
