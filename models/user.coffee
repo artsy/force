@@ -17,10 +17,12 @@ module.exports = class User extends Backbone.Model
     @fetch _.extend(url: '/user/refresh', options)
 
   isCollector: ->
-    @get('collector_level') >= 3
+    @get('collector_level') >= 3 or
+    @related().collectorProfile.isCollector()
 
   isCommercial: ->
-    @get('collector_level') >= 2
+    @get('collector_level') >= 2 or
+    @related().collectorProfile.isCommercial()
 
   isLoggedIn: ->
     @__isLoggedIn__
