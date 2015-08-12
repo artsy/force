@@ -11,5 +11,11 @@ module.exports = class CollectorProfile extends Backbone.Model
 
   isNew: -> false # Always use PUT
 
+  isCollector: ->
+    @get('collector_level') >= 3
+
+  isCommercial: ->
+    @get('collector_level') >= 2
+
   findOrCreate: (options = {}) ->
     Q(@save {}, options)
