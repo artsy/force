@@ -1,0 +1,33 @@
+// Events ported from apps/artwork/components/contact.coffee
+// & components/contact/inquiry.coffee
+
+(function() {
+  'use strict';
+
+  // DOM events
+  var $document = $(document);
+
+  $document.on('click', '.js-send-embedded-inquiry', function() {
+    analytics.track('Clicked "Contact Gallery" button', {
+      id: $(this).data('artwork-id')
+    });
+  });
+
+  $document.on('mouseover', '.js-send-embedded-inquiry', function() {
+    analytics.track('Hovered over contact form \'Send\' button', {
+      id: $(this).data('artwork-id')
+    });
+  });
+
+  // Proxied events
+  var bind = function(name, handler) {
+    analyticsHooks.on('inquiry_questionnaire:' + name, handler);
+  };
+
+  bind('inquiry:sync', function(context) {
+    analytics.track('Sent artwork inquiry', {
+      label: 'Artwork:' + context.artwork.id
+    });
+  });
+
+})();
