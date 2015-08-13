@@ -134,6 +134,19 @@ describe 'Artwork', ->
       @artwork.set { forsale: true, partner: undefined, acquireable: false }
       @artwork.isContactable().should.be.false()
 
+      @artwork.related().sales.reset()
+      @artwork.set { forsale: true, partner: 'existy', acquireable: true }
+      @artwork.isContactable().should.be.false()
+      @artwork.related().sales.add is_auction: true, sale_type: 'auction promo'
+      @artwork.isContactable().should.be.true()
+
+    it 'might be part of an auction promo', ->
+      @artwork.related().sales.reset()
+      @artwork.related().sales.add is_auction: true
+      @artwork.isPartOfAuctionPromo().should.be.false()
+      @artwork.related().sales.add is_auction: true, sale_type: 'auction promo'
+      @artwork.isPartOfAuctionPromo().should.be.true()
+
     it 'might be unavailable... but inquireable', ->
       @artwork.set { forsale: false, inquireable: true, sold: false }
       @artwork.isUnavailableButInquireable().should.be.true()
