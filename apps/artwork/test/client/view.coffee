@@ -53,6 +53,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       @ArtworkView.__set__ 'RelatedNavigationView', Backbone.View
+      @ArtworkView.__set__ 'EmbeddedInquiryView', Backbone.View
 
       stubChildClasses mod, @, ['VideoView'], []
 
