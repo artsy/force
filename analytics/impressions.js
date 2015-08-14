@@ -25,7 +25,7 @@ var visibleArtworkIds = function() {
 
 var trackImpressions = function() {
   var ids = visibleArtworkIds();
-  if (ids.length > 0) analytics.track('Artwork impressions', { ids: ids });
+  if (ids.length > 0) analytics.track('Artwork impressions', { ids: ids, nonInteraction: 1 });
 };
 
 trackImpressions();
