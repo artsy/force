@@ -2,25 +2,19 @@
 @import '../../../components/search_bar'
 
 #main-layout-header
+  height home-logo-size
+  background-color white
   position absolute
   width 100%
   top 0
   left 0
   z-index zindex-primary-nav
-  background white
   border-bottom 1px solid gray-lighter-color
 
-.mlh-navbar, .mlh-navbar-small-screen
-  align-items center
-
-.mlh-navbar-small-screen
-  display none
-  @media (max-width: 550px)
-    display flex
-
 .mlh-navbar
+  align-items center
   display flex
-  @media (max-width: 550px)
+  @media (max-width: nav-bar-break - 1)
     display none
 
 .mlh-navbar-cell
@@ -46,6 +40,7 @@
 #main-layout-header-right
   avant-garde()
 #main-layout-header-right
+  height 100%
   flex-shrink 0
   text-align right
 
@@ -80,13 +75,24 @@
   white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
+.mlh-hamburger
+  @extends .mlh-nav-link
+  padding 8px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left  1px solid gray-lighter-color
+  svg
+    fill black
+    width 25px
+    height 30px
 .mlh-notification
   @extends .mlh-nav-link
   padding 8px 20px
   position relative
   text-align center
   white-space nowrap
-  border-left 1px solid gray-lighter-color
+  border-left  1px solid gray-lighter-color
   &.hover-pulldown
     &:before
       border none

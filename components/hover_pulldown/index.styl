@@ -13,7 +13,7 @@ computed-padding(font-size, target-line-height)
   cursor pointer
 
   // Small tip
-  &:before
+  &:not(.mlh-hamburger):before
     size = 4px
     display block
     position absolute
@@ -171,13 +171,14 @@ for num in (1..8)
   height 100vh
 
 // For dark banners and backgrounds
-.body-transparent-header-white
-  .hover-pulldown
-    color white
-    svg
-      fill white
-    &:before
-      border-top-color white
+@media(min-width: 550px)
+  .body-transparent-header-white
+    .hover-pulldown
+      color white
+      svg
+        fill white
+      &:before
+        border-top-color white
 
 // Persistent tooltip
 .hover-pulldown-static

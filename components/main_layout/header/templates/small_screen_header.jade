@@ -1,15 +1,23 @@
 nav.mlh-navbar-small-screen
   a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
-
-  #main-layout-header-left.mlh-navbar-cell
-    include ../../../search_bar/templates/index
-
-  #main-layout-header-right.mlh-navbar-cell
-    span.mlh-notification.hover-pulldown( data-anchor='right', data-mode='hover')
-      include ../../public/icons/list.svg
-      .hover-pulldown-menu
-        .hpm-header Activity
-
+  form#main-header-search-form( action='/search', method='GET' )
+    input#main-header-search-box(
+      placeholder='Search',
+      name='term',
+      value=mainHeaderSearchBoxValue,
+      type='search'
+    )
+    button#main-header-search-button.avant-garde-box-button Search
+  a#main-header-menu( href= '#' )
+    #main-header-menu-icon
+  //-
+  //- #main-layout-header-center.mlh-navbar-cell
+  //-   include ../../../search_bar_small/templates/index
+  //- #main-layout-header-right.mlh-navbar-cell
+  //-   span.mlh-hamburger.hover-pulldown( data-anchor='right', data-mode='hover')
+  //-     include ../../public/icons/list.svg
+  //-     .hover-pulldown-menu
+  //-       .hpm-header Activity
       //- .hover-pulldown-menu
       //-   div.mlh-pulldown-top
       //-     a.mlh-pulldown-top-link( data-priority='8' href='/artists', class= activeClass('/artists') ) Artists
