@@ -12,6 +12,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     couldNotAuthorize: "Your card could not be authorized. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
+    timeout: "Processing your payment took too long. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
 
   isChecked: ($el) => $el.is(':checked')
   isCardNumber: ($el) => isCreditCard $el.val()
@@ -35,9 +36,17 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     _.isEmpty(errors)
 
   showError: (description, response={}) =>
-    if response.responseText?
-      errorJson = JSON.parse response.responseText
-      message = if errorJson.type == 'payment_error' then @errors.paymentError else @errors.other
+    if response.responseText? and (errorJson = try JSON.parse response.responseText)
+      switch errorJson.type
+        when 'payment_error'
+          message = @errors.paymentError
+        when 'param_error'
+          message = errorJson.message
+        else
+          message = @errors.other
+      message = errorJson.error if errorJson.error?
+    else if response.statusText == 'timeout'
+      message = @errors.timeout
     else if response.status == 400 or response.status == 403
       message = @errors.missingOrMalformed
       description = "Registration card missing or malformed."
@@ -52,7 +61,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     else
       message = @errors.other
 
-    # Display balanced errors
+    # Display stripe errors
     message += " #{response.error.additional}" if response?.error?.additional
 
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"

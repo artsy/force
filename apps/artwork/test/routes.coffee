@@ -20,35 +20,56 @@ describe 'Artwork routes', ->
     request.get.restore()
 
   describe '#index', ->
-    it 'bootstraps the artwork', ->
+    it 'bootstraps the artwork', (done) ->
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
-      @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-      @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
-      @res.render.args[0][0].should.equal 'index'
+      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
+      _.defer =>
+        _.last(Backbone.sync.args)[2].success fabricate 'artist'
+        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
+        @res.render.args[0][0].should.equal 'index'
+        done()
 
-    it 'works without an artist', ->
+    it 'works without an artist', (done) ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: null
-      @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-      @res.render.args[0][0].should.equal 'index'
+      _.defer =>
+        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+        @res.render.args[0][0].should.equal 'index'
+        done()
 
-    it 'works with client side routes', ->
+    it 'works with multiple artists', (done) ->
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'artwork',
+        id: 'andy-foobar'
+        artist: id: 'andy-foobar-artist'
+        artists: [{ id: 'andy-foobar-artist' }, { id: 'andy-barbaz-artist' }]
+      _.defer =>
+        fetches = _.last(Backbone.sync.args, 2)
+        fetches[0][2].success fabricate 'artist'
+        fetches[1][2].success fabricate 'artist'
+        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
+        _.pluck(@res.locals.sd.ARTISTS, 'id')
+          .should.eql ['andy-foobar-artist', 'andy-barbaz-artist']
+        @res.render.args[0][0].should.equal 'index'
+        done()
+
+    it 'works with client side routes', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar/inquire'
       @req.params.tab = 'inquire'
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
-      @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-      @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
-      @res.render.args[0][0].should.equal 'index'
+      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
+      _.defer =>
+        _.last(Backbone.sync.args)[2].success fabricate 'artist'
+        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
+        @res.render.args[0][0].should.equal 'index'
+        done()
 
     it 'redirects to the correct artwork url', ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
       @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
 
     it 'redirects to the correct artwork page for client side routes fetched with a changed slug', ->
@@ -56,7 +77,6 @@ describe 'Artwork routes', ->
       @req.params.tab = 'inquire'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
       @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
 
   describe '#save', ->
@@ -76,7 +96,7 @@ describe 'Artwork routes', ->
 
         it 'downloads the artwork', ->
           routes.download @req, @res, @next
-          request.get.called.should.be.true
+          request.get.called.should.be.true()
 
       describe 'when the image is not downloadable', ->
         beforeEach ->
@@ -86,8 +106,8 @@ describe 'Artwork routes', ->
 
         it '403s', ->
           routes.download @req, @res, @next
-          request.get.called.should.be.false
-          @next.called.should.be.true
+          request.get.called.should.be.false()
+          @next.called.should.be.true()
           @res.status.args[0][0].should.equal 403
 
     describe 'when admin', ->
@@ -100,4 +120,4 @@ describe 'Artwork routes', ->
 
         it 'downloads the artwork', ->
           routes.download @req, @res, @next
-          request.get.called.should.be.true
+          request.get.called.should.be.true()

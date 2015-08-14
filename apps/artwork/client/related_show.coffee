@@ -13,10 +13,9 @@ module.exports = class RelatedShowView extends Backbone.View
     { @artwork, @model, @currentUser } = options
 
     @show = new Show @model.attributes
-    @partner = @show.partner()
-    @show.fetchArtworks
-      success: (collection) =>
-        @setup collection
+    @partner = @show.related().partner
+    @show.related().artworks.fetchUntilEndInParallel success: (collection) =>
+      @setup collection
 
   setupFollowButton: ->
     @following = new Following(null, kind: 'profile')

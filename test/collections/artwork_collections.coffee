@@ -29,7 +29,7 @@ describe 'ArtworkCollections', ->
         @collections.add { id: 'saved-artwork' }
         @collections.first().artworks.add fabricate 'artwork'
         @collections.first().artworks.first().destroy()
-        spy.called.should.be.ok
+        spy.called.should.be.ok()
 
     it 'fetches artworks by recently saved', ->
       @collections.add { id: 'saved-artwork' }
@@ -96,7 +96,7 @@ describe 'ArtworkCollections', ->
         {}
       )
       _.last(Backbone.sync.args)[2].success [{ id: 'foos-for-my-bar' }]
-      (@collections.get('foos-for-my-bar').artworks.get('andy-foobar-skull')?).should.be.ok
+      (@collections.get('foos-for-my-bar').artworks.get('andy-foobar-skull')?).should.be.ok()
 
   describe '#public', ->
 

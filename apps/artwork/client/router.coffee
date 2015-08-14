@@ -23,9 +23,8 @@ module.exports = class ArtworkRouter extends Backbone.Router
     'artwork/:id/view-in-room': 'viewInRoom'
     'artwork/:id/zoom': 'zoom'
 
-  initialize: (options) ->
-    { @artwork, @artist } = options
-    @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist
+  initialize: ({ @artwork, @artist, @artists }) ->
+    @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist, artists: @artists
 
   # Called prior to any of the routing callbacks
   execute: ->

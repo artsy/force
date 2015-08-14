@@ -23,14 +23,6 @@ artwork-detail-item-height = 36px
   cursor -moz-zoom-in
   cursor -webkit-zoom-in
 
-#artwork-feature-navigation
-  opacity 0
-  transition opacity 0.5s
-  a
-    text-decoration none
-  &:not(:empty)
-    opacity 1
-
 .artwork-container
   display table
   position relative
@@ -208,18 +200,20 @@ artwork-detail-item-height = 36px
   iframe
     z-index 1
     position relative
+    display none
+  &.is-loaded iframe
+    display block
 
 #artwork-buyers-premium-link
-  margin-top 10px
+  margin 10px 0
+  garamond-size('s-body')
   font-weight bold
-  font-size 15px
-  a
+  > a
     color currentColor
 
 #artwork-lot-number
   avant-garde()
   font-size 13px
-  padding-bottom 5px
 
 @import './deep_zoom'
 @import './circle_buttons'
@@ -229,3 +223,5 @@ artwork-detail-item-height = 36px
 @import './related_articles'
 @import '../components/contact'
 @import '../components/partner_phone_number'
+@import '../components/related_navigation'
+@import '../components/auction_detail'

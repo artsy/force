@@ -1,0 +1,92 @@
+- section = sections['the-art-world-online']
+
+.about-container
+  include header
+  p.about-section-preamble= section.preamble
+
+//- "Our collection comes from leading..."
+.about-container
+  #about-section1-images1-left.span3
+    +pull-blurb(section.pullBlurb1)
+    for image in secondHalf(section.pullBlurb1.images)
+      a.about-image-container.is-pin-right( href= image.href )
+        img( data-src= image.src )
+        .about-avant-garde-caption
+          = image.caption.split(' - ')[0]
+          em= image.caption.split(' - ')[1]
+        .about-garamond-caption: em!= image.credit
+
+    .about-section1-cta
+      .about-garamond-caption: em= section.pullBlurb1.cta.h1
+      a.avant-garde-button-white.is-block(
+        href= section.pullBlurb1.cta.button.href
+      )= section.pullBlurb1.cta.button.text
+
+    .about-section1-cta
+      for button in [section.pullBlurb1.button1, section.pullBlurb1.button2]
+        a.avant-garde-button-white.is-block(
+          href= button.href
+        )= button.text
+
+  #about-section1-images1-right.span3
+    for image in firstHalf(section.pullBlurb1.images)
+      a.about-image-container( href= image.href )
+        img( data-src= image.src )
+        .about-avant-garde-caption
+          = image.caption.split(' - ')[0]
+          em= image.caption.split(' - ')[1]
+        .about-garamond-caption: em!= image.credit
+
+//- "We cover international show..."
+.about-container
+  #about-section1-images2-left.span3
+    for image in section.pullBlurb2.leftImages
+      a.about-image-container.is-pin-right( href= image.href )
+        img( data-src= image.src )
+        .about-garamond-caption: em= image.caption
+  .span3
+    +pull-blurb(section.pullBlurb2)
+    for image in section.pullBlurb2.rightImages
+      a.about-image-container.span2( href=image.href )
+        img( data-src= image.src )
+        .about-avant-garde-caption= image.author
+        p= image.caption
+
+//- "Save works and curate sets on Artsy..."
+.about-container
+  .span2
+    +pull-blurb(section.pullBlurb3)
+    unless user
+      button.avant-garde-button-white.about-signup-button
+        = section.pullBlurb3.button
+  #about-section1-pull-blurb-3-artworks.span4
+    .span2
+      for artwork in firstHalf(section.pullBlurb3.artworks)
+        a.about-image-container( href= artwork.href )
+          img( data-src=artwork.src )
+          .icon-heart
+          include artwork_details
+    .span2
+      for artwork in secondHalf(section.pullBlurb3.artworks)
+        a.about-image-container( href= artwork.href )
+          img( data-src=artwork.src )
+          .icon-heart
+          include artwork_details
+
+//- "Access from anywhere..."
+.about-container
+  .span2
+    +pull-blurb(section.pullBlurb4)
+    form#about-phone-link.stacked-form
+      label.avant-garde-form-label
+        | Text me a download link
+      .bordered-input-with-button
+        .about-section1-phone-error
+        .about-section1-phone-success
+        input.bordered-input( placeholder='Enter your phone number', type='tel', required )
+        button.avant-garde-button-black Send
+  .span2
+    .about-section1-phone-container
+      .about-section1-phone-plate
+      .about-section1-phone-img-wrapper
+        .about-section1-phone-bg

@@ -13,7 +13,12 @@ describe 'RegistrationForm', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require('jquery'),
+        Stripe: @Stripe =
+          setPublishableKey: sinon.stub()
+          card:
+            createToken: sinon.stub()
       Backbone.$ = $
       done()
 
@@ -36,14 +41,8 @@ describe 'RegistrationForm', ->
       @view = new RegistrationForm
         el: $('#auction-registration-page')
         model: @sale
-        success: =>
-          window.location = '/registration/was/successful'
+        success: sinon.stub()
       @view.currentUser = new CurrentUser fabricate 'user'
-      @view.balanced =
-        init: sinon.stub()
-        card:
-          create: (data, cb) ->
-            cb status: 201, data: uri: 'foobar'
       done()
 
   afterEach ->
@@ -65,8 +64,17 @@ describe 'RegistrationForm', ->
         @view.$('input[name="telephone"]').val '555-555-5555'
         @view.$submit.click()
 
+    it 'still succeeds if the API throws an error for having already created a bidder', ->
+      @submitValidForm()
+      @Stripe.card.createToken.args[0][1](200, {})
+      # Save credit card
+      Backbone.sync.args[1][2].success()
+      # Creates the bidder
+      Backbone.sync.args[2][2].error { responseJSON: { message: 'Sale is already taken.' } }
+      @view.success.called.should.be.ok()
+
     it 'validates the form and displays errors', ->
-      @view.$submit.length.should.be.ok
+      @view.$submit.length.should.be.ok()
       @view.$submit.click()
       html = @view.$el.html()
       html.should.containEql 'Invalid name on card'
@@ -77,36 +85,19 @@ describe 'RegistrationForm', ->
       html.should.containEql 'Invalid zip'
       html.should.containEql 'Invalid telephone'
       html.should.containEql 'Please review the error(s) above and try again.'
-      @view.$submit.hasClass('is-loading').should.be.false
+      @view.$submit.hasClass('is-loading').should.be.false()
 
     it 'submits the form correctly', ->
       @submitValidForm()
+      @Stripe.card.createToken.args[0][1](200, {})
 
       # Saves the phone number
-      Backbone.sync.args[1][1].changed.phone.should.equal '555-555-5555'
-
-      # Fetches the marketplace
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/marketplace'
-
-      Backbone.sync.args[0][1].set uri: (marketplaceUri = '/v1/marketplaces/TEST-FOOBAR')
-      Backbone.sync.args[0][2].success()
-      @view.balanced.init.args[0][0].should.equal marketplaceUri
+      Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
 
       # Saves the credit card
-      Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/credit_cards'
-      Backbone.sync.args[2][2].success()
+      Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'
+      Backbone.sync.args[1][2].success()
 
       # Creates the bidder
-      Backbone.sync.args[3][1].attributes.sale_id.should.equal @sale.id
-      Backbone.sync.args[3][2].url.should.containEql '/api/v1/bidder'
-
-    it 'still succeeds if the API throws an error for having already created a bidder', ->
-      @view.success = sinon.stub()
-      @submitValidForm()
-      # Fetch marketplace
-      Backbone.sync.args[0][2].success()
-      # Save credit card
-      Backbone.sync.args[2][2].success()
-      # Creates the bidder
-      Backbone.sync.args[3][2].error { responseJSON: { message: 'Sale is already taken.' } }
-      @view.success.called.should.be.ok
+      Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
+      Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'

@@ -1,0 +1,19 @@
+h1.iq-headline
+  if artwork.related().partner.get('pre_qualify')
+    | What artists do you collect?
+  else
+    span What artists do you collect?
+    span (Optional)
+
+form.iq-form.stacked-form
+  .js-user-interests
+    //- Rendered separately
+
+  //- Spacer
+  hr.is-invisible( style='height: 150px' )
+
+  .iq-sticky-bottom
+    button.avant-garde-button-black.is-block.iq-next( type='submit' ) Next
+
+    if artwork.related().partner.get('pre_qualify')
+      include ./partials/nevermind

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Transition = require '../../../components/mixins/transition.coffee'
-getScript = require '../../../lib/get_script.coffee'
 template = -> require('../templates/deep_zoom.jade') arguments...
 
 module.exports = class DeepZoomView extends Backbone.View
@@ -15,8 +14,8 @@ module.exports = class DeepZoomView extends Backbone.View
     'click .dz-close': 'return'
     'click .dz-slider-minus': 'zoomOut'
     'click .dz-slider-plus': 'zoomIn'
-    'change .dz-slider-range': 'zoomTo'
-    'mousemove': 'detectActivity'
+    'change .dz-slider-range': -> @zoomTo arguments...
+    'mousemove': -> @detectActivity arguments...
 
   initialize: ({ @artwork, @image }) ->
     @zoomTo = _.throttle @_zoomTo, 50
@@ -37,7 +36,7 @@ module.exports = class DeepZoomView extends Backbone.View
     @$el.html(template).
       attr 'data-state', 'loading'
 
-    getScript 'openseadragon', =>
+    $.getScript '/javascripts/openseadragon.min.js', =>
       @viewer = OpenSeadragon
         id: @id
         debugMode: false
@@ -105,6 +104,7 @@ module.exports = class DeepZoomView extends Backbone.View
   # Invoked by the router
   remove: ->
     @viewer?.destroy()
+    @viewer = null # Important
 
     Transition.fade @$el,
       duration: 500

@@ -3,10 +3,13 @@ Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
+Profile = require '../../../models/profile.coffee'
+FairOrganizer = require '../../../models/fair_organizer.coffee'
 Articles = require '../../../collections/articles.coffee'
 Clock = require '../../../components/clock/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 
 module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
@@ -32,7 +35,6 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
 
   events:
     'click #fair-organizer-more-articles': 'moreArticles'
-    'click .fair-organizer-top__notify': 'onGetNotified'
 
   moreArticles: ->
     @articles.fetch
@@ -42,18 +44,29 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
         published: true
         offset: 10 * (@page += 1)
 
-  onGetNotified: ->
-    mediator.trigger 'open:auth', mode: 'login'
-    false
-
 module.exports.init = ->
-  @fair = new Fair sd.FAIR
+  fair = new Fair sd.FAIR
+  fairOrg = new FairOrganizer sd.FAIR_ORGANIZER
+
   @clock = new Clock
     modelName: "Fair"
-    model: @fair
+    model: fair
     el: $('.fair-organizer-top__countdown__clock')
     closedText: 'TBA'
   @clock.start()
+
   new FairOrganizerView
     articles: new Articles(sd.ARTICLES)
     el: $('body')
+
+  following = new Following null, kind: 'profile' if sd.CURRENT_USER
+  profile = new Profile id: fairOrg.get('profile_id')
+
+  new FollowButton
+    el: $('#fair-organizer-follow')
+    following: following
+    model: profile
+    modelName: 'profile'
+    label: fairOrg.get('name')
+
+  following?.syncFollows [fairOrg.get('profile_id')]

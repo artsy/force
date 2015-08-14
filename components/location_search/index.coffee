@@ -10,8 +10,7 @@ module.exports = class LocationSearchView extends Backbone.View
   events:
     'blur input': 'preAnnounce'
 
-  initialize: (options = {}) ->
-    { @autofocus } = options
+  initialize: ({ @autofocus, @required } = {}) -> #
 
   announce: (location) ->
     @trigger 'location:update', location
@@ -34,7 +33,10 @@ module.exports = class LocationSearchView extends Backbone.View
     if isTouchDevice() then undefined else true
 
   render: (value = null) ->
-    @$el.html template(autofocus: @determineAutofocus(), value: value)
+    @$el.html template
+      autofocus: @determineAutofocus()
+      required: @required
+      value: value
     @postRender()
     this
 

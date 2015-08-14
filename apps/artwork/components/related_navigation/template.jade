@@ -1,0 +1,46 @@
+if sale && sale.isAuction()
+  //- Auction
+  a( href= sale.href() )
+    p
+      | Work offered by
+      = ' '
+      = sale.get('name')
+    .avant-garde-jump-link
+      | Go to auction
+
+else if sale && sale.isSale()
+  //- Sale
+  a( href= sale.href() )
+    p
+      | Work offered by
+      = ' '
+      = sale.get('name')
+    .avant-garde-jump-link
+      | Go to sale
+
+else if sale && sale.isAuctionPromo()
+  //- Auction promo
+  a( href= sale.href() )
+    p
+      | Work offered by
+      = ' '
+      if sale.has('profile')
+        = sale.related().profile.displayName()
+      else
+        = sale.get('name')
+
+    if sale.has('profile')
+      p: img( src= sale.related().profile.iconImageUrl() )
+    else
+      .avant-garde-jump-link
+        | Go to sale
+
+else if fair && fair.get('has_full_feature') && fair.get('published')
+  //- Fair
+  a( href= fair.href() )
+    p
+      | Work offered by
+      = ' '
+      = fair.get('name')
+    .avant-garde-jump-link
+      | Go to fair

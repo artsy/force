@@ -1,20 +1,48 @@
+Q = require 'q'
+_s = require 'underscore.string'
+qs = require 'qs'
+Backbone = require 'backbone'
 Gene = require '../../models/gene'
+FilterArtworks = require '../../collections/filter_artworks'
+aggregationParams = require './aggregations.coffee'
 
 @index = (req, res, next) ->
-  new Gene(id: req.params.id).fetch
-    success: (gene) ->
-      res.locals.sd.GENE = gene.toJSON()
+  gene = new Gene id: req.params.id
+  params = new Backbone.Model gene: gene.id
+  filterArtworks = new FilterArtworks
+  filterData = size: 0, gene_id: req.params.id, aggregations: aggregationParams
 
-      # Do not include fragment meta tag for urls that reflection does not crawl (/gene/:id/artworks*)
-      #
-      # If the head of a page has both a meta fragment and a canonical
-      # tag, google's crawler will use the meta fragment FIRST
-      # (re-crawling with ?_escaped_fragment_=). It then respects the
-      # canonical tag in the escaped_fragment html.
-      includeMetaFragment = !req.originalUrl.match('/artworks')
+  Q.all [
+    gene.fetch cache: true
+    filterArtworks.fetch data: filterData
+  ]
 
-      res.render 'index',
-        gene: gene
-        filterRoot: gene.href() + '/artworks'
-        includeMetaFragment: includeMetaFragment
-    error: res.backboneError
+  .then ->
+    # Permanently redirect to the new location
+    # if the gene slug has been updated
+    if gene.id isnt req.params.id
+      return res.redirect 301, gene.href()
+
+    # override mode if path is set
+    if _s.contains req.path, 'artworks'
+      mode = 'artworks'
+    else if _s.contains req.path, 'artist'
+      mode = 'artist'
+    else
+      mode = gene.mode()
+
+    res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
+    res.locals.sd.GENE = gene.toJSON()
+    res.locals.sd.MODE = mode
+    res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
+
+    res.render 'index',
+      gene: gene
+      filterRoot: res.locals.sd.FILTER_ROOT
+      counts: counts
+      params: params
+      activeText: ''
+      mode: mode
+
+  .catch next
+  .done()

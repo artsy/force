@@ -1,10 +1,29 @@
 _ = require 'underscore'
+qs = require 'qs'
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class FilterArtworks extends Artworks
-  url: "#{API_URL}/api/v1/filter/artworks?aggregations=true"
+  defaults:
+    mapppedParams:
+      related_gene: 'gene_id'
+      gallery: 'partner_id'
+      institution: 'partner_id'
+
+  url: "#{API_URL}/api/v1/filter/artworks"
+
+  initialize: ( models, options = {} ) ->
+    { @mapppedParams } = _.defaults options, @defaults
+    super
+
+  sync: (method, collection, options) =>
+    for k, v of @mapppedParams
+      if val = options.data[k]
+        options.data[v] = val
+        delete options.data[k]
+    options.data = decodeURIComponent qs.stringify(options.data, { arrayFormat: 'brackets' })
+    super
 
   parse: (data) ->
     @counts = @prepareCounts data.aggregations
@@ -14,6 +33,9 @@ module.exports = class FilterArtworks extends Artworks
     # _.map destroys the keys, hence the iteration
     for k, v of aggregations
       aggregations[k] = @prepareAggregate v, k
+
+    # remove this inferior for sale filter now, pls
+    delete aggregations['price_range']?['*-*']
 
     aggregations
 
@@ -30,7 +52,6 @@ module.exports = class FilterArtworks extends Artworks
       # sorts the price_range from lowest to highest
       'price_range': (aggregate) ->
         keys = _.sortBy _.keys(aggregate), (key) ->
-          return -1 if key is "*-*"
           [from, to] = key.split('-')
           return 0 if from is "*"
           return parseInt from
@@ -41,5 +62,12 @@ module.exports = class FilterArtworks extends Artworks
         keys = _.sortBy _.keys(aggregate), (key) -> key
         mapKeys keys, aggregate
       'total': (aggregate) -> aggregate
+      'period': (aggregate) ->
+        for k, v of aggregate
+          aggregate[k].name = "#{aggregate[k].name}s"
+        aggregate
+      'gallery': (aggregate) -> aggregate
+      'institution': (aggregate) -> aggregate
+      'for_sale': (aggregate) -> aggregate
 
     aggregateMap[name]? aggregate

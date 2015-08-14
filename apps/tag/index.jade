@@ -28,5 +28,7 @@ block body
           em
             span.filter-artworks-num
             | &nbsp;Works
-        include ../../components/filter/artworks_nav/template.jade
-      include ../../components/filter/artworks/template.jade
+        span#tag-filter-artworks-nav
+          include ../../components/filter2/dropdown_group/template
+      #tag-artworks
+        include ../../components/filter2/template

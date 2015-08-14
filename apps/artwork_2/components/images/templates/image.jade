@@ -1,0 +1,22 @@
+- size = 'large'
+- dimensions = image.imageSizeDimensionsFor(size)
+- src = image.bestImageUrl(['large', 'larger', 'medium', 'small'])
+
+.artwork-image
+  a(
+    class= image.canDeepZoom() ? 'artwork-image-zoom' : undefined
+    href= image.canDeepZoom() ? '#{artwork.href()}/zoom' : undefined
+    rel='nofollow'
+    data-client
+  )
+    img(
+      alt= artwork.toAltText()
+      title= artwork.get('title')
+      nopin= artwork.noPinAttr()
+      src= src
+      width= dimensions.width
+      height= dimensions.height
+      data-pin-url= artwork.href()
+      data-pin-media= src
+      data-pin-description= artwork.toAltText()
+    )

@@ -1,8 +1,5 @@
 _ = require 'underscore'
 jade = require 'jade'
-path = require 'path'
-fs = require 'fs'
-sd = require('sharify').data
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
@@ -11,157 +8,147 @@ Profile = require '../../../models/profile'
 AdditionalImage = require '../../../models/additional_image'
 Artwork = require '../../../models/artwork'
 Artworks = require '../../../collections/artworks'
-InstallShots = require '../../../collections/install_shots'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(
-    fs.readFileSync(filename),
-    { filename: filename }
-  )
+  jade.compileFile(require.resolve "../templates/#{templateName}.jade")
+
+describe 'metadata', ->
+  describe 'events', ->
+    describe 'with multiple events', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        events.should.have.lengthOf 2
+        show = new PartnerShow events: events
+        html = render('metadata/events') show: show
+        html.should.containEql 'js-open-show-events'
+        html.should.containEql 'Multiple events for this show'
+
+    describe 'a single events, with a description', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        show = new PartnerShow events: [_.extend {}, events[0], description: 'Existy']
+        html = render('metadata/events') show: show
+        html.should.containEql 'js-open-show-events'
+        html.should.not.containEql 'Multiple events for this show'
+        html.should.containEql 'Opening Reception'
+
+    describe 'a single events, without a description', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        show = new PartnerShow events: [_.extend {}, events[0], description: null]
+        html = render('metadata/events') show: show
+        html.should.not.containEql 'js-open-show-events'
+        html.should.not.containEql 'Multiple events for this show'
+        html.should.containEql 'Opening Reception'
 
 describe 'Partner Show', ->
-  describe 'with a public profile', ->
-    beforeEach ->
+  describe 'an average show', ->
+    before ->
       @show = new PartnerShow fabricate('show')
-      @profile = new Profile fabricate 'partner_profile'
       @html = render('index')
-        fair: @show.fair()
-        location: @show.location()
-        partner: @show.partner()
-        sd: sd
+        sd: {}
         asset: (->)
         show: @show
-        profile: @profile
-        installShots: new InstallShots
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: @show.related().fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
 
-    describe 'template', ->
-      it 'renders a show title', ->
-        $ = cheerio.load @html
-        $('.show-heading-title').text().should.equal @show.title()
+    it 'renders a show title', ->
+      @$('.show-title').text().should.equal @show.title()
 
-      it 'renders show details', ->
-        $ = cheerio.load @html
-        $('.show-header__left').text().should.containEql @show.get('partner').name
-        $('.show-header__left').text().should.containEql @show.location().singleLine()
-        $('.show-header__left').text().should.containEql @show.runningDates()
-        $(".show-header__left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
+    it 'renders show details', ->
+      @$('.show-partner').text().should.containEql @show.related().partner.get('name')
+      @$('.show-location').text().should.containEql @show.location().singleLine()
+      @$('.show-dates').text().should.containEql @show.runningDates()
 
-      it 'renders back navigation', ->
-        @show.set fair: fabricate('fair')
-        @html = render('index')({
-          fair: @show.fair()
-          location: @show.location()
-          partner: @show.partner()
-          sd: sd
-          asset: (->)
-          show: @show
-          profile: @profile
-          context: 'fair'
-          installShots: new InstallShots
-        })
-        $ = cheerio.load @html
-        $('.show-metadata__fair-organizer').should.have.lengthOf 1
-        $('.show-metadata__fair-organizer').text().should.containEql @show.fair().get('name')
+    it 'renders social sharing links', ->
+      @$('.show-share').should.have.lengthOf 1
+      @$('.show-share .share-to-facebook').should.have.lengthOf 1
+      @$('.show-share .share-to-twitter').should.have.lengthOf 1
 
-      it 'renders back navigation without fair organizer', ->
-        @show.set fair: fabricate('fair')
-        @show.fair().set organizer: undefined
-        @html = render('index')({
-          fair: @show.fair()
-          location: @show.location()
-          partner: @show.partner()
-          sd: sd
-          asset: (->)
-          show: @show
-          profile: @profile
-          context: 'fair'
-          installShots: new InstallShots
-        })
-        $ = cheerio.load @html
-        $('.show-metadata__fair-organizer').should.have.lengthOf 1
-        $('.show-metadata__fair-organizer').text().should.containEql @show.fair().get('name')
+    it 'renders a container for artwork columns', ->
+      @$('.show-artworks-columns').should.have.lengthOf 1
 
-      it 'renders social sharing links', ->
-        $ = cheerio.load @html
-        $('.show-share').should.have.lengthOf 1
-        $('.show-share .share-to-facebook').should.have.lengthOf 1
-        $('.show-share .share-to-twitter').should.have.lengthOf 1
+    it 'does not render a press release', ->
+      @$('.show-press-release').should.have.lengthOf 0
 
-      it 'renders a container for artwork columns', ->
-        $ = cheerio.load @html
-        $(".artworks-columns").should.have.lengthOf 1
-
-  describe 'with a private profile', ->
-    beforeEach ->
+  describe 'a show that is in an unfeatured fair', ->
+    before ->
       @show = new PartnerShow fabricate('show')
-      @show.partner().default_profile_public = false
-      @html = render('index')({
-        fair: @show.fair()
-        location: @show.location()
-        partner: @show.partner()
-        sd: sd
+      fair = @show.related().fair.set 'has_full_feature', false
+      @html = render('index')
+        sd: {}
         asset: (->)
         show: @show
-        installShots: new InstallShots
-      })
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
 
-    describe 'template', ->
-      it 'doesnt render a small profile badge', ->
-        $ = cheerio.load @html
-        $('.profile-badge-small').should.have.lengthOf 0
-
-      it 'renders social sharing links', ->
-        $ = cheerio.load @html
-        $('.show-share').should.have.lengthOf 1
-        $('.show-share .share-to-facebook').should.have.lengthOf 1
-        $('.show-share .share-to-twitter').should.have.lengthOf 1
-
-      it 'renders a show title', ->
-        $ = cheerio.load @html
-        $('.show-heading-title').text().should.equal @show.title()
-
-      it 'renders show details', ->
-        $ = cheerio.load @html
-        $('.show-header__left').text().should.containEql @show.get('partner').name
-        $('.show-header__left').text().should.containEql @show.location().singleLine()
-        $('.show-header__left').text().should.containEql @show.runningDates()
-        $(".show-header__left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
-
-      it 'renders a container for artwork columns', ->
-        $ = cheerio.load @html
-        $(".artworks-columns").should.have.lengthOf 1
-
+    it 'does not render a link for the fair', ->
+      @$('.show-fair-link').should.have.lengthOf 0
 
   describe 'with 1 installation shot', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
+      @show.related().installShots.reset [fabricate 'show_install_shot']
       @html = render('index')
-        fair: @show.fair()
-        location: @show.location()
-        partner: @show.partner()
-        sd: sd
+        sd: {}
         asset: (->)
         show: @show
-        installShots: new InstallShots [fabricate 'show_install_shot']
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: @show.related().fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
 
     it 'does not render the carousel', ->
-      $ = cheerio.load @html
-      $('#show-installation-shot-carousel').should.have.lengthOf 0
+      @$('.show-installation-shot-carousel').should.have.lengthOf 0
 
   describe 'with 3 or more installation shots', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
+      @show.related().installShots.reset _.times 3, -> fabricate 'show_install_shot'
       @html = render('index')
-        fair: @show.fair()
-        location: @show.location()
-        partner: @show.partner()
-        sd: sd
+        sd: {}
         asset: (->)
         show: @show
-        installShots: new InstallShots _.times 3, -> fabricate('show_install_shot')
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: @show.related().fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
 
     it 'renders installation shots', ->
-      $ = cheerio.load @html
-      $('#show-installation-shot-carousel').should.have.lengthOf 1
-      $('.carousel-figure').should.have.lengthOf 9
+      @$('.show-installation-shot-carousel').should.have.lengthOf 1
+      @$('.mgr-cell').should.have.lengthOf 3
+
+  describe 'with a press release', ->
+    before ->
+      @show = new PartnerShow fabricate('show', press_release: '*Existy*')
+      @html = render('index')
+        sd: {}
+        asset: (->)
+        show: @show
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: @show.related().fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
+
+    it 'renders the press release', ->
+      @$('.show-press-release').should.have.lengthOf 1
+      @$('.show-press-release').html().should.containEql '<p><em>Existy</em></p>'

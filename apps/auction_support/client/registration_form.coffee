@@ -1,7 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../lib/analytics.coffee'
-Marketplace = require '../../../models/marketplace.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 ModalPageView = require '../../../components/modal/page.coffee'
@@ -9,8 +8,6 @@ ModalPageView = require '../../../components/modal/page.coffee'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class RegistrationForm extends ErrorHandlingForm
-
-  balanced: false
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
@@ -42,11 +39,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
-  cardCallback: (response) =>
-    if response.status == 201
+  cardCallback: (status, data) =>
+    if status is 200
       card = new Backbone.Model
       card.url = "#{sd.API_URL}/api/v1/me/credit_cards"
-      card.save token: response.data.uri,
+      card.save { token: data.id, provider: 'stripe' },
         success: =>
           success = =>
             @success()
@@ -58,31 +55,27 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               if xhr.responseJSON?.message is 'Sale is already taken.'
                 return success()
               @showError "Registration submission error", xhr
-        error: =>
-          @showError "Error adding your credit card", response
+        error: (m, xhr) =>
+          @showError xhr.responseJSON?.message
       analytics.track.funnel 'Registration card validated'
     else
-      @showError "Registration card - other error", response
+      @showError data.error.message
 
   cardData: ->
     name: @fields['name on card'].el.val()
-    card_number: @fields['card number'].el.val()
-    expiration_month: @fields.month.el.first().val()
-    expiration_year: @fields.year.el.last().val()
-    security_code: @fields['security code'].el.val()
-    street_address: @fields.street.el.val()
-    postal_code: @fields.zip.el.val()
-    country: @$("select[name='billing_address[country]']").val()
+    number: @fields['card number'].el.val()
+    exp_month: @fields.month.el.first().val()
+    exp_year: @fields.year.el.last().val()
+    cvc: @fields['security code'].el.val()
+    address_line1: @fields.street.el.val()
+    address_city: @fields.city.el.val()
+    address_state: @fields.state.el.val()
+    address_zip: @fields.zip.el.val()
+    address_country: @$("select[name='address[country]']").val()
 
   tokenizeCard: =>
-    marketplace = new Marketplace
-    marketplace.fetch
-      success: (marketplace) =>
-        @balanced ||= require('../../../lib/vendor/balanced.js')
-        @balanced.init marketplace.get('uri')
-        @balanced.card.create @cardData(), @cardCallback
-      error: (xhr) =>
-        @showError "Error fetching the balanced marketplace", xhr
+    Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
+    Stripe.card.createToken @cardData(), @cardCallback
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0
@@ -91,9 +84,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
-
     analytics.track.funnel 'Registration submit billing address'
-
     if @validateForm()
       @tokenizeCard()
       @savePhoneNumber()

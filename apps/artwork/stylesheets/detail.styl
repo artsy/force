@@ -9,8 +9,9 @@ artwork-detail-item-height = 36px
   .avant-garde-button-black
     display block
     width 100%
-    padding 13px 30px 10px
-    &[data-state='loading'], &.is-loading
+    padding 13px
+    &[data-state='loading']
+    &.is-loading
       &::before
         width 20px
         height 5px
@@ -21,6 +22,10 @@ artwork-detail-item-height = 36px
     .artwork-inquiry
     .artwork-contact-button
     #artwork-detail-contact
+      display none
+  &.is-auction-promo
+    // Hide some elements
+    .artwork-meta-price
       display none
   .artwork-detail-header
     avant-garde()
@@ -34,13 +39,11 @@ artwork-detail-item-height = 36px
     background-color transparent
 
 .artwork-detail-artist
-  avant-garde()
-  margin-right 5px
-  display inline-block
-  > a
-    text-decoration none
-    &:hover
-      text-decoration underline
+  margin 10px 0
+  > .entity-follow
+    display block
+    // Offset icon spacing from within 32px square
+    margin-left -8px
 
 .artwork-detail-title
   display block
@@ -139,23 +142,10 @@ artwork-detail-item-height = 36px
 .abf-help
   margin 10px 0
   > a
-    font-size 15px
+    garamond-size('s-body')
 
 #artwork-clock
   margin 20px 0
-  .clock-value > li > small
-    color transparify(#aaa, black)
-
-  .clock-header
-    text-align left
-    letter-spacing 1px
-    font-size 13px
-  .clock-value
-    text-align left
-    margin-top 6px
-    font-size 24px
-    li small
-      text-align center
 
 #auction-detail
 #artwork-clock
@@ -236,10 +226,6 @@ artwork-detail-item-height = 36px
       margin-left 0.5em
       // Tone down superscript a bit
       vertical-align 4px
-    .icon-code
-      font-size 12px
-      font-size 20px
-      padding-left 5px
     &:hover
       background-color purple-color
       border-color @background-color

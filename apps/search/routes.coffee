@@ -2,6 +2,15 @@ Search = require '../../collections/search'
 GoogleSearchResults = require './collections/google_search_results.coffee'
 removeDiacritics = require('diacritics').remove
 { crop, fill } = require '../../components/resizer'
+request = require 'superagent'
+imageUrl = require './components/image_url'
+
+@image = (req, res, next) ->
+  url = imageUrl req.params.model, req.params.id
+  imgReq = request.get url
+  imgReq.on 'end', ->
+    res.status imgReq.res.statusCode
+  req.pipe(imgReq).pipe res
 
 @index = (req, res) ->
   return res.redirect("/") unless req.query.q

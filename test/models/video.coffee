@@ -9,14 +9,14 @@ describe 'Video', ->
   describe '#hasImage', ->
 
     it 'returns true if the version exists', ->
-      @video.hasImage('large_cinematic').should.be.ok
+      @video.hasImage('large_cinematic').should.be.ok()
 
     it 'returns false if the version does not exist', ->
-      @video.hasImage('something-dummy').should.not.be.ok
+      @video.hasImage('something-dummy').should.not.be.ok()
 
     it 'returns false if image versions do not exist', ->
       @video.unset 'image_versions'
-      @video.hasImage('large_cinematic').should.not.be.ok
+      @video.hasImage('large_cinematic').should.not.be.ok()
 
   describe '#imageUrl', ->
 

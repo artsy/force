@@ -1,0 +1,20 @@
+include lib
+
+#about-spinner.about-spinner
+  .loading-spinner-white
+
+include hero_unit
+
+.about-foreground
+  include nav
+  .about-section( id='the-art-world-online', data-href='/about/the-art-world-online')
+    include the_art_world_online
+  .about-section( id='collecting', data-href='/about/collecting')
+    include collecting
+  .about-section( id='the-art-genome-project', data-href='/about/the-art-genome-project')
+    include the_art_genome_project
+  .about-section( id='education', data-href='/about/education')
+    include education
+
+  //- Re-include it gets covered by the foreground
+  include ../../../../components/main_layout/footer/template.jade

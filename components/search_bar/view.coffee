@@ -5,7 +5,6 @@ sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
-{ fill } = require '../resizer/index.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
@@ -15,13 +14,21 @@ module.exports = class SearchBarView extends Backbone.View
     autoselect: false
     displayKind: true
     displayEmptyItem: false
+    shouldDisplaySuggestions: true
 
   initialize: (options) ->
     return unless @$el.length
 
-    # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayKind, @displayEmptyItem } =
-      _.defaults options, @defaults
+    { @mode,
+      @restrictType,
+      @$input,
+      @fairId,
+      @includePrivateResults,
+      @limit,
+      @autoselect,
+      @displayKind,
+      @displayEmptyItem
+      @shouldDisplaySuggestions } = _.defaults options, @defaults
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
@@ -91,7 +98,7 @@ module.exports = class SearchBarView extends Backbone.View
     _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
-    if @isEmpty()
+    if @isEmpty() and @shouldDisplaySuggestions
       @renderFeedback()
       @$el.addClass 'is-display-suggestions'
 
@@ -99,7 +106,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-display-suggestions'
 
   suggestionTemplate: (item) =>
-    itemTemplate fill: fill, item: item, displayKind: @displayKind
+    itemTemplate item: item, displayKind: @displayKind
 
   emptyItemTemplate: (options) =>
     if @displayEmptyItem

@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Artwork = require '../../../models/artwork'
+Partner = require '../../../models/partner'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
@@ -20,7 +21,7 @@ describe 'ContactPartnerView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork'
-    @partner = fabricate 'partner', locations: null
+    @partner = new Partner fabricate 'partner', locations: null
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
       @analytics = ContactPartnerView.__get__('analytics')
@@ -64,7 +65,7 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal 'foo@bar.com'
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.be.ok() # Should contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(@analytics.track.funnel.args, 4)
@@ -87,7 +88,7 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal @user.get('email')
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.be.ok() # Should contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(@analytics.track.funnel.args, 4)
@@ -99,15 +100,15 @@ describe 'ContactPartnerView', ->
   describe '#events', ->
 
     it 'disables click on backdrop', ->
-      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
+      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok()
 
   describe 'template', ->
     it 'does render pricing if work cant display price', ->
       @view.artwork.isPriceDisplayable = -> false
       @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.containEql 'and price'
+      @view.$el.html().should.containEql 'please share the asking price'
 
     it 'doesnt render pricing question if work can display price', ->
       @view.artwork.isPriceDisplayable = -> true
       @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.not.containEql 'and price'
+      @view.$el.html().should.not.containEql 'please share the asking price'

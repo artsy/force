@@ -13,7 +13,7 @@ render = (templateName) ->
 describe 'Featured Sets', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       done()
 
   after ->
@@ -48,8 +48,8 @@ describe 'Featured Sets', ->
       $html = $(render('sets')(sets: [@set]))
       $html.find('.feature-set-title').should.have.lengthOf 0
       $html.find('.feature-set-description').should.have.lengthOf 0
-      $html.is('.feature-set').should.be.true
-      $html.is(':empty').should.be.true
+      $html.is('.feature-set').should.be.true()
+      $html.is(':empty').should.be.true()
 
   describe "fetured links", ->
     it 'renders a featured link', ->

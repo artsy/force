@@ -3,10 +3,12 @@ Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
+mediator = require '../../lib/mediator.coffee'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
+templateModules = require '../../lib/template_modules.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
 setupSplitTests = require '../split_test/setup.coffee'
 listenForInvert = require '../eggs/invert/index.coffee'
@@ -19,6 +21,7 @@ module.exports = ->
   syncAuth()
   setupAuctionReminder()
   listenForInvert()
+  setupAnalytics()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -41,17 +44,13 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupAnalytics = ->
-  # Initialize analytics & track page view if we included mixpanel
-  # (not included in test environment).
-  return if not mixpanel? or mixpanel is 'undefined'
-  analytics(mixpanel: mixpanel, ga: ga)
-  analytics.registerCurrentUser()
-  setupSplitTests()
-  analytics.trackPageview()
-
+  window.analytics?.ready ->
+    analytics(mixpanel: (mixpanel ? null), ga: ga)
+    analytics.registerCurrentUser()
   # Log a visit once per session
   unless Cookies.get('active_session')?
     Cookies.set 'active_session', true
+    mediator.trigger 'session:start'
     analytics.track.funnel if sd.CURRENT_USER
       'Visited logged in'
     else
@@ -76,7 +75,7 @@ setupReferrerTracking = ->
     Cookies.set 'force-session-start', window.location.href
 
 setupViews = ->
-  new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
+  new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
 
 setupJquery = ->
@@ -93,8 +92,10 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
+  window[key] = helper for key, helper of templateModules
 
 setupAuctionReminder = ->
-  if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
+  if (sd.CHECK_FOR_AUCTION_REMINDER and
+     !(Cookies.get('closeAuctionReminder')? or
+     window.location.pathname is '/user/edit'))
     new AuctionReminderView
-setupAnalytics()

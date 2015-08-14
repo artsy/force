@@ -1,6 +1,8 @@
 h2.avant-garde-header-center
-  | Works from&nbsp;
-  a( href="/feature/#{sale.id}" )
+  | Works from
+  = ' '
+  a( href= sale.href() )
     = sale.get('name')
 
 #sale-artwork-columns.artwork-columns-sale
+  //- Rendered elsewhere

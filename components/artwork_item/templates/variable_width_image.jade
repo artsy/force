@@ -1,17 +1,16 @@
 - image = artwork.defaultImage()
+- imageSizes = (artworkSize instanceof Array ? artworkSize : [artworkSize]).concat(['tall', 'large', 'larger', 'medium', 'small'])
 
-unless image.isCropped(artworkSize)
-  .artwork-item-image(
-    style= "padding-bottom: #{image.factor() * 100}%"
-  )
+if !image.isCropped(artworkSize) && image.hasDimensions()
+  .artwork-item-image( style= "padding-bottom: #{image.factor() * 100}%" )
     img(
-      src= image.imageUrl(artworkSize)
+      src= image.bestImageUrl(imageSizes)
       nopin= artwork.noPinAttr()
       alt= artwork.toAltText()
     )
 else
   img.artwork-item-image(
-    src= image.imageUrl(artworkSize)
+    src= image.bestImageUrl(imageSizes)
     nopin= artwork.noPinAttr()
     alt= artwork.toAltText()
   )

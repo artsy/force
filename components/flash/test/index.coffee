@@ -32,11 +32,11 @@ describe 'FlashMessage', ->
     describe 'accepts the autoclose option', ->
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: true
-        flash.startTimer.called.should.be.true
+        flash.startTimer.called.should.be.true()
 
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: false
-        flash.startTimer.called.should.be.false
+        flash.startTimer.called.should.be.false()
 
   describe '#setup', ->
     beforeEach ->
@@ -52,7 +52,7 @@ describe 'FlashMessage', ->
       anotherFlash = new FlashMessage message: 'Hello world.'
       sinon.spy anotherFlash, 'update'
       _.defer =>
-        anotherFlash.update.called.should.be.true
+        anotherFlash.update.called.should.be.true()
         @flash.$container.text().should.equal 'Hello world.'
         done()
 
@@ -76,6 +76,12 @@ describe 'FlashMessage', ->
           done()
       @flash.$el.click()
 
+    it 'accepts a callback', (done) ->
+      flash = new FlashMessage message: 'A caesura', autoclose: false
+      @flash.close ->
+        true.should.be.true()
+        done()
+
   describe '#update', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
@@ -90,6 +96,10 @@ describe 'FlashMessage', ->
       flash = new FlashMessage message: '><img src=x onerror=alert("PWN")>'
       $('body').text().should.equal '><img src=x onerror=alert("PWN")>'
 
+    it 'allows for HTML when passed the `safe: false` option', ->
+      flash = new FlashMessage safe: false, message: '<strong>I <em>am</em> strong</strong>'
+      $('body').text().should.equal 'I am strong'
+
   describe '#open', ->
     it 'checks to see if the container is empty before starting the timer', ->
       firstFlash = new FlashMessage message: 'Goodbye world.'
@@ -97,6 +107,6 @@ describe 'FlashMessage', ->
       @startTimerStub.restore()
       @startTimerStub = @sandbox.stub FlashMessage::, 'startTimer'
       secondFlash = new FlashMessage message: 'A caesura', autoclose: true
-      secondFlash.startTimer.called.should.be.false
+      secondFlash.startTimer.called.should.be.false()
       $('body').text().should.equal 'Goodbye world.'
 

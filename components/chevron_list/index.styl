@@ -1,0 +1,59 @@
+@import '../../components/stylus_lib'
+
+overlapping-border(border-color = gray-lighter-color)
+  border-top 1px solid border-color
+  border-bottom @border-top
+  margin-top -1px
+  &:first-child
+    margin-top 0
+
+chevron()
+  position relative
+  &::after
+    iconfont-styling()
+    content '\e607'
+    color gray-color
+    vertical-align middle
+    position absolute
+    top 50%
+    right 0
+    font-size 20px
+    transform translateY(-50%)
+    transition color 0.125s
+
+chevron-item()
+  chevron()
+  display block
+  text-decoration none
+
+// Variants
+// --------
+
+// Small
+.small-chevron-list a
+  chevron-item()
+  overlapping-border()
+  padding 15px 5px
+
+// Nav
+.chevron-nav-list a
+  chevron-item()
+  overlapping-border()
+  avant-garde-size('m-headline', true)
+  padding 14px 0
+  &.is-active
+    color purple-color
+
+// Large
+.large-chevron-list a
+  chevron-item()
+  overlapping-border()
+  padding 40px 80px 40px 40px
+  &::after
+    content '\e61c'
+    font-size 40px
+    right 10px
+  &:hover
+    background-color gray-lightest-color
+    border-color @background-color
+    z-index 1

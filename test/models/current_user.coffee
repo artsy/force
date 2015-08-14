@@ -64,4 +64,33 @@ describe 'CurrentUser', ->
         quantity: 1
         success: sinon.stub()
         error: sinon.stub()
-      _.isUndefined(_.last(Backbone.sync.args)[1].attributes.session_id).should.be.ok
+      _.isUndefined(_.last(Backbone.sync.args)[1].attributes.session_id).should.be.ok()
+
+  describe '#checkRegisteredForAuction', ->
+    it 'makes the correct API call, accepts normal options', (done) ->
+      @user.checkRegisteredForAuction
+        saleId: 'an-auction'
+        success: (status) ->
+          status.should.be.true()
+          done()
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/bidders'
+      Backbone.sync.args[0][2].data.sale_id.should.equal 'an-auction'
+      Backbone.sync.args[0][2].success ['existy']
+
+  describe '#fetchNotifications', ->
+    it 'makes the correct API call and has default size of 50', ->
+      @user.fetchNotificationBundles
+        success: (status) ->
+          status.should.be.true()
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/notifications/feed'
+      Backbone.sync.args[0][2].data.size.should.equal 50
+
+  describe '#fetchAndMarkNotifications', ->
+    it 'makes the correct API call and has defaults', ->
+      @user.fetchAndMarkNotifications
+        success: (status) ->
+          status.should.be.true()
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/notifications'
+      Backbone.sync.args[0][2].data.type.should.equal 'ArtworkPublished'
+      Backbone.sync.args[0][2].data.unread.should.be.true()
+      Backbone.sync.args[0][2].data.size.should.equal 100

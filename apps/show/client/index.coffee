@@ -1,60 +1,60 @@
 _ = require 'underscore'
-sd = require('sharify').data
-Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
-CarouselView = require '../../../components/carousel/view.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+Q = require 'q'
+{ SHOW, ARTWORKS } = require('sharify').data
+{ Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../models/partner_show.coffee'
+PartnerShows = require '../../../collections/partner_shows.coffee'
 ShareView = require '../../../components/share/view.coffee'
-PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
-artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
-trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
-
-module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
-  initialize: (options) ->
-    @setupCurrentUser()
-
-    new ShareView el: @$('.show-share')
-    new PartnerShowButtons el: @$('.show-header'), model: @model
-
-    @carouselView = new CarouselView el: @$('#show-installation-shot-carousel'), height: 480, align: 'left'
-    @carouselView.postRender()
-
-    @$showArtworks = @$('.show-artworks')
-    @model.fetchArtworks
-      success: (artworks) =>
-        if artworks.length > 0
-          @collection = artworks
-          @$showArtworks.html artworkColumns
-            artworkColumns: artworks.groupByColumnsInOrder(3)
-            artworkSize: 'large'
-          @setupArtworkSaveControls()
-          @setupArtworkImpressionTracking()
-        else
-          @$showArtworks.remove()
-      error: => @$showArtworks.remove()
-
-  setupCurrentUser: ->
-    @currentUser = CurrentUser.orNull()
-    @currentUser?.initializeDefaultArtworkCollection()
-    @artworkCollection = @currentUser?.defaultArtworkCollection()
-
-  setupArtworkImpressionTracking: (artworks=@collection.models) ->
-    trackArtworkImpressions artworks, @$showArtworks
-
-  setupArtworkSaveControls: ->
-    listItems =
-      for artwork, index in @collection.models
-        overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
-        new SaveControls
-          artworkCollection: @artworkCollection
-          el: overlay
-          model: artwork
-    if @artworkCollection
-      @artworkCollection.addRepoArtworks @collection
-      @artworkCollection.syncSavedArtworks()
+initCarousel = require '../../../components/merry_go_round/index.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+attachFollowArtists = require '../components/follow_artists/index.coffee'
+attachFollowProfile = require '../components/follow_profile/index.coffee'
+attachRelatedShows = require '../components/related_shows/index.coffee'
+setupSaveControls = require '../components/save_artworks/index.coffee'
+RelatedArticlesView = require '../components/related_articles/view.coffee'
+openMapModal = require '../components/map_modal/index.coffee'
+zoom = require '../../../components/zoom/index.coffee'
+openShowEvents = require '../components/events_modal/index.coffee'
+blurb = require '../../../components/gradient_blurb/index.coffee'
 
 module.exports.init = ->
-  show = new PartnerShow sd.SHOW
-  new PartnerShowView el: $('#show'), model: show
+  show = new PartnerShow SHOW
+  show.related().artworks.reset ARTWORKS
+
+  blurb $('.show-press-release'), limit: 350
+
+  $('.js-open-show-events').click (e) ->
+    e.preventDefault()
+    openShowEvents(model: show, collection: show.related().showEvents)
+
+  if $('.js-show-installation-shot-carousel').length
+    initCarousel $('.js-show-installation-shot-carousel'), {
+      setGallerySize: false
+      imagesLoaded: true
+    }, (instance) ->
+      instance.cells.flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
+        if src = $(cellElement).find('img').attr('src')
+          zoom src
+
+  setupSaveControls show.related().artworks
+  attachFollowArtists show.related().artists
+  attachFollowProfile show.related().profile
+
+  $('.js-open-map-modal').click (e) ->
+    e.preventDefault()
+    openMapModal model: show
+
+  if show.isFairBooth()
+    attachRelatedShows 'fair', show
+  else
+    if location.search.match "from-show-guide"
+      attachRelatedShows 'city', show
+      attachRelatedShows 'featured', show
+    else
+      attachRelatedShows 'gallery', show
+
+  relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
+  $('.artwork-column').first().prepend relatedArticlesView.$el
+  show.related().articles.fetch()
+
+  new ShareView el: $('.js-show-share')

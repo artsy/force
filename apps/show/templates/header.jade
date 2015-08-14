@@ -1,49 +1,6 @@
-mixin back(href, text)
-  a.contextual-return-link( href= href )
-    i.icon-chevron-small-left
-    | Back to #{text}
-
-header.show-header.show-container
-  .show-header__left
-    case context
-      when 'home'
-        +back('/', 'Homepage')
-      when 'fair'
-        +back('/' + fair.get('default_profile_id'), fair.get('name'))
-      when 'partner'
-        +back(partner.href(), partner.get('name'))
-
-    .show-metadata
-      .show-metadata__partner
-        span.show-metadata__partner-link
-          if partner.isLinkable()
-            a( href= partner.href() )= partner.get('name')
-          else
-            = partner.get('name')
-
-        span.show-metadata__follow-button
-          .plus-follow-button
-            .icon-follow-circle
-            .follow-button-text
-
-      if show.has('fair')
-        .show-metadata__fair-organizer
-          a( href="/#{fair.get('default_profile_id')}" )
-            = fair.get('name')
-        .show-metadata__fair-dates
-          = fair.formatDates()
-        if show.get('fair_location')
-          .show-metadata__fair-location
-            = show.get('fair_location').display
-      else
-        .show-metadata__running-dates
-          = show.runningDates()
-        if location
-          .show-metadata__location
-            = location.singleLine()
-
-  .show-header__center
-    h1.show-heading-title
+header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
+  .show-header-cell
+    h1.show-title
       if show.has('fair')
         = partner.get('name')
         br
@@ -52,11 +9,29 @@ header.show-header.show-container
         = show.title()
 
     if show.get('description')
-      .show-description.garamond-header-center
+      .show-description
         != show.mdToHtml('description')
 
-    #show-main-buttons.show-main-buttons
-      include ../../../components/partner_buttons/show_buttons
+  .show-header-cell
+    .show-partner
+      .entity-with-follow
+        if partner.isLinkable()
+          a.entity-link( href= partner.href() )
+            = partner.get('name')
+        else
+          span.entity-link= partner.get('name')
+        a.entity-follow.profile-follow( data-id= partner.get('default_profile_id') )
 
-  .show-header__right
-    nav.show-share: +share(show.shareTitle())
+      nav.show-share.js-show-share
+        +share(show.shareTitle())
+
+    .show-metadata
+      if show.has('fair')
+        include metadata/fair
+      else
+        .show-dates
+          = show.runningDates()
+        if location
+          include metadata/location
+        if show.related().showEvents.length
+          include metadata/events

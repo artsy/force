@@ -35,11 +35,11 @@ describe 'FollowProfiles', ->
 
     it 'returns true if the profile is in this collection', ->
       profile = new Profile @followProfile1.get('profile')
-      @followProfiles.isFollowing(profile).should.be.true
+      @followProfiles.isFollowing(profile).should.be.true()
 
     it 'returns false if the profile is not in this collection', ->
       profile = new Profile @followProfile2.get('profile')
-      @followProfiles.isFollowing(profile).should.be.false
+      @followProfiles.isFollowing(profile).should.be.false()
 
   describe "#findByProfileId", ->
 
@@ -82,12 +82,12 @@ describe 'FollowProfiles', ->
 
       it 'should not cache the result and retain models', ->
         @followProfiles.syncFollows [@profileId]
-        Backbone.sync.args[0][2].cache.should.be.false
+        Backbone.sync.args[0][2].cache.should.be.false()
 
       it 'should retain the models when fetching', ->
         @followProfiles.syncFollows [@profileId]
-        Backbone.sync.args[0][2].remove.should.be.false
-        Backbone.sync.args[0][2].merge.should.be.true
+        Backbone.sync.args[0][2].remove.should.be.false()
+        Backbone.sync.args[0][2].merge.should.be.true()
 
       it 'breaks sync requests up so that no more than @maxSyncSize are requested at a time', ->
         profileIds = []

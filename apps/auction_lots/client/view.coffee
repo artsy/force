@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-ZoomView = require '../../../components/modal/zoom.coffee'
+zoom = require '../../../components/zoom/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'
@@ -53,7 +53,7 @@ module.exports = class AuctionResultsView extends Backbone.View
 
   zoomImage: (e) ->
     e.preventDefault()
-    new ZoomView imgSrc: $(e.currentTarget).attr 'href'
+    zoom $(e.currentTarget).attr('href')
 
   signUp: (e) ->
     e.preventDefault()

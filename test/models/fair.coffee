@@ -14,6 +14,15 @@ describe 'Fair', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#nameSansYear', ->
+    it 'returns the name without the year', ->
+      new Fair name: 'Foo Fair 2015'
+        .nameSansYear().should.equal 'Foo Fair'
+      new Fair name: 'Bar Fair'
+        .nameSansYear().should.equal 'Bar Fair'
+      new Fair name: 'Baz 2015 Fair'
+        .nameSansYear().should.equal 'Baz 2015 Fair'
+
   describe '#href', ->
 
     it "returns the client link to this fair", ->
@@ -40,10 +49,9 @@ describe 'Fair', ->
       _.last(Backbone.sync.args)[2].success new Backbone.Model fabricate 'profile'
       urls = (_.result(call[1], 'url') or call[2].url for call in Backbone.sync.args)
       urls[0].should.match /// api/v1/fair/.* ///
-      urls[1].should.match /// api/v1/search/filtered/fair/.*/suggest ///
-      urls[2].should.match /// api/v1/fair/.*/sections ///
-      urls[3].should.match /// api/v1/fair/.*/partners ///
-      urls[4].should.match /// api/v1/fair/.*/artists ///
+      urls[1].should.match /// api/v1/fair/.*/sections ///
+      urls[2].should.match /// api/v1/fair/.*/partners ///
+      urls[3].should.match /// api/v1/fair/.*/artists ///
 
   describe '#itemsToColumns', ->
 

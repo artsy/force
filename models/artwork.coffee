@@ -26,7 +26,6 @@ module.exports = class Artwork extends Backbone.Model
     Articles = require '../collections/articles.coffee'
     @relatedArticles = new Articles
     @relatedArticles.url += "?artwork_id=#{@get '_id'}&published=true"
-    @setupRelatedCollections()
 
   parse: (response, options) ->
     @editions = new Backbone.Collection response?.edition_sets, model: Edition
@@ -35,9 +34,6 @@ module.exports = class Artwork extends Backbone.Model
   defaultImage: ->
     @related().images.default() or
     new AdditionalImage
-
-  embedUrl: ->
-    "#{sd.ARTWORK_EMBED_URL}#{sd.APP_URL}#{@href()}"
 
   defaultImageUrl: (version = 'medium') ->
     @defaultImage().imageUrl version
@@ -306,27 +302,7 @@ module.exports = class Artwork extends Backbone.Model
     not _.isFunction @saleMessage
 
   showActionsList: (user) ->
-    @get('website') or @isDownloadable() or (user and user.isAdmin()) or @isEmbeddableByUser(user)
-
-  isEmbeddableByUser: (user) ->
-    user?.hasLabFeature('Embed') and @get('absolutely_embeddable')
-
-  # Sets up related collections and makes them available
-  # under an object so we can access/iterate over them later
-  #
-  # e.g. @relatedCollections['sales'] # => Backbone.Collection
-  setupRelatedCollections: ->
-    @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
-      memo[aspect] = @[aspect] = new Backbone.Collection
-      @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}&active=true"
-      @[aspect].url += "&cache_bust=#{Math.random()}" if aspect is 'sales'
-      @[aspect].kind = aspect
-      memo
-    , {}
-
-  fetchRelatedCollections: (options = {}) ->
-    _.map @relatedCollections, (collection) ->
-      collection.fetch options
+    @get('website') or @isDownloadable() or (user and user.isAdmin())
 
   toJSONLD: ->
     if @get('artist')
@@ -357,6 +333,6 @@ module.exports = class Artwork extends Backbone.Model
 
   fetchPartnerAndSales: (options) ->
     Q.allSettled([
-      (partner = new Partner @get 'partner').fetch()
-      (sales = @relatedCollections.sales).fetch()
+      (partner = @related().partner).fetch()
+      (sales = @related().sales).fetch()
     ]).fail(options.error).then -> options.success partner, sales

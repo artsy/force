@@ -18,3 +18,9 @@ describe 'InstallShots', ->
   it 'is comformtable there are no vertsions, as well', ->
     @installShots.reset([{ id: 'bad' }, fabricate 'show_install_shot'], parse: true)
     @installShots.should.have.lengthOf
+
+  describe '#hasCaptions', ->
+    it 'returns true if there is at least one caption', ->
+      @installShots.hasCaptions().should.be.false()
+      @installShots.first().set 'caption', 'existy'
+      @installShots.hasCaptions().should.be.true()

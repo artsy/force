@@ -54,7 +54,7 @@ describe 'FeedbackView', ->
         attributes.user_name.should.equal 'Foo Bar'
         attributes.user_email.should.equal 'foo@bar.com'
         attributes.message.should.equal 'My message'
-        _.isUndefined(attributes.url).should.be.false
+        _.isUndefined(attributes.url).should.be.false()
 
     describe 'Logged in', ->
       beforeEach ->

@@ -1,0 +1,14 @@
+header.scontact-header
+  h1.scontact-headline
+    | Send message to #{artwork.related().partner.displayType().toLowerCase()}
+
+  hr
+
+  p.scontact-description
+    | To: #{artwork.related().partner.get('name')}
+    span.js-contact-location
+      //- Rendered separately?
+
+hr
+
+include forms/inquiry

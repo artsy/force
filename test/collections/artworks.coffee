@@ -62,3 +62,18 @@ describe 'Artworks', ->
         highest_bid_amount_cents: 1000
       }]
       artworks.first().related().saleArtwork.currentBid().should.containEql '$10'
+
+  describe '#hasAny', ->
+    it 'returns true if any artworks have a blurb', ->
+      @artworks.hasAny('blurb').should.be.false()
+      @artworks.first().set 'blurb', 'Existence!'
+      @artworks.hasAny('blurb').should.be.true()
+
+  describe '#maxBlurbHeight', ->
+    it 'returns a pixel value based on the estimated height of the longest blurb', ->
+      @artworks.maxBlurbHeight(true).should.equal '26px' # A single line
+      _.isUndefined(@artworks.maxBlurbHeight(false)).should.be.true()
+      @artworks.first().set 'blurb', 'Existence!'
+      @artworks.maxBlurbHeight(true).should.equal '31px'
+      @artworks.last().set 'blurb', 'Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence!'
+      @artworks.maxBlurbHeight(true).should.equal '82px'

@@ -13,7 +13,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
 
   routes:
     'auction-registration/:id': 'register'
-    'feature/:id/bid/:artwork': 'bid'
+    'auction/:id/bid/:artwork': 'bid'
 
   initialize: (options) ->
     { @sale, @saleArtwork, @registered, @bidderPositions } = options

@@ -26,12 +26,12 @@ describe 'AuctionLot', ->
 
   describe '#hasDimensions', ->
     it 'returns true if there is any dimension attributes present', ->
-      @lot.hasDimensions().should.be.ok
+      @lot.hasDimensions().should.be.ok()
       @lot.unset 'dimensions'
-      @lot.hasDimensions().should.not.be.ok
+      @lot.hasDimensions().should.not.be.ok()
       @lot.set 'dimensions', 'foobar'
-      @lot.hasDimensions().should.not.be.ok
+      @lot.hasDimensions().should.not.be.ok()
       @lot.set 'dimensions', in: 'foo'
-      @lot.hasDimensions().should.be.ok
+      @lot.hasDimensions().should.be.ok()
       @lot.set 'dimensions', cm: 'foo'
-      @lot.hasDimensions().should.be.ok
+      @lot.hasDimensions().should.be.ok()

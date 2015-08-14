@@ -28,9 +28,7 @@ module.exports = class SaleArtworkView extends Backbone.View
 
   contactSeller: (e) ->
     e.preventDefault()
-    new ContactPartnerView
-      artwork: @model
-      partner: @model.get 'partner'
+    new ContactPartnerView artwork: @model, partner: @model.related().partner
 
   acquire: (e) ->
     e.preventDefault()

@@ -5,6 +5,10 @@ CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
+JumpView = require '../../../components/jump/view.coffee'
+{ setupFilter } = require '../../../components/filter2/index.coffee'
+aggregationParams = require '../aggregations.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: (options) ->

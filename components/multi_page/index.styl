@@ -1,0 +1,47 @@
+@import '../stylus_lib'
+
+.multi-page-view
+  position relative
+
+.mpv-container
+  display table
+  width 100%
+  height 100%
+.mpv-sidebar
+.mpv-page
+  display table-cell
+  height 100%
+  vertical-align top
+  overflow-y auto
+.mpv-sidebar
+  width 33.33%
+  padding-right 40px
+.mpv-page
+  width 66.66%
+  border-left 1px solid gray-lighter-color
+  padding-left 40px
+
+.mpv-title
+  garamond-size('l-headline')
+.mpv-description
+  margin 20px 0
+  garamond-size('s-body')
+  > p
+    block-margins(10px)
+
+.mpv-nav
+  margin 20px 0
+  > a
+    avant-garde-size('s-headline')
+    padding-right 30px
+
+.mpv-page-content
+  h1
+    block-margins(10px)
+    avant-garde-size('s-headline', true)
+  h2
+    garamond-size('s-body')
+    font-weight bold
+  p
+    margin-bottom 20px
+    garamond-size('s-body')

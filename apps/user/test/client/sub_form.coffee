@@ -56,7 +56,7 @@ describe 'SubForm', ->
       @view.$button.attr('data-state').should.equal 'loading'
 
     it 'submits the form', ->
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.equal '/api/v1/fixture'
       Backbone.sync.args[0][1].attributes.should.eql foo: 'Foo', bar: 'Bar'
@@ -69,7 +69,7 @@ describe 'SubForm', ->
         @view.$button.click()
 
       it 'reenables the form', ->
-        _.isUndefined(@view.$button.attr 'data-state').should.be.true
+        _.isUndefined(@view.$button.attr 'data-state').should.be.true()
 
       it 'refreshes the user', ->
         Backbone.sync.callCount.should.equal 2

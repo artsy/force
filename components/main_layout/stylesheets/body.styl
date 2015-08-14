@@ -24,7 +24,6 @@ search-bar-input-placeholder-white()
     force-hardware-acceleration()
     &.force-position-absolute
       position absolute
-      min-width 950px
 
 html[data-useragent*="iPad"]
   .body-header-fixed #main-layout-header
@@ -42,23 +41,18 @@ html[data-useragent*="iPad"]
   #main-layout-header-home-logo
     border-right 1px solid gray-lighter-color
 
-// Some elements need to break out of the standard side and top margins to fill
-// the full viewport. (Removes all side margins and content-margin-top)
-.body-no-margins
-  #main-layout-container
-    margin-top (welcome-header-height + main-header-height)
-    margin-left 0
-    margin-right 0
-  &.body-header-fixed
-    #main-layout-container
-      margin-top main-header-height
-
 // Simply hides the header
 .body-no-header
   #main-layout-header
     display none
   #main-layout-container
     margin-top 0 !important
+
+// same as fixed header but with no annoying 10px extra margin
+.body-header-fixed-no-margin
+  @extend .body-header-fixed
+  #main-layout-container
+    margin-top main-header-height !important
 
 // View in room and home page hero units will sit underneath a transparent
 // header.
@@ -70,7 +64,7 @@ html[data-useragent*="iPad"]
 .body-transparent-header
   #main-layout-header
     border-color rgba(black, 0.1)
-    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+    *:not(.tt-suggestion):not(.tt-dropdown-menu):not(.hover-pulldown-menu *)
       border-color rgba(black, 0.1)
     #main-layout-search-bar-container
       border-color black
@@ -112,8 +106,9 @@ html[data-useragent*="iPad"]
   #main-layout-footer, #main-layout-header
     display none !important
   #main-layout-container
-    margin-top 0
+    margin-top 0 !important
     padding 0 layout-side-margin
+
 
 
 // Loosens up some styling like min-widths so the page can be responsive
@@ -121,3 +116,18 @@ html[data-useragent*="iPad"]
   min-width inherit
   #main-layout-container
     margin 30px 20px
+
+// Some elements need to break out of the standard side and top margins to fill
+// the full viewport. (Removes all side margins and content-margin-top)
+.body-no-margins
+  #main-layout-container
+    margin-top (welcome-header-height + main-header-height)
+    margin-left 0
+    margin-right 0
+  &.body-header-fixed
+    #main-layout-container
+      margin-top main-header-height
+
+.body-no-padding
+  #main-layout-container
+    padding 0

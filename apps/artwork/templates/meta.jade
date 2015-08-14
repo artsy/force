@@ -7,14 +7,13 @@ link( rel="alternate", media= sd.MOBILE_MEDIA_QUERY, href="#{sd.CANONICAL_MOBILE
 link( rel="canonical", href="#{sd.APP_URL}/artwork/#{artwork.get('id')}" )
 meta( property="og:url", content="#{sd.APP_URL}/artwork/#{artwork.get('id')}" )
 meta( property="og:type", content="#{sd.FACEBOOK_APP_NAMESPACE}:artwork" )
-
 if artwork.get('can_share_image') && artwork.defaultImage().hasImage('large')
   meta( property="twitter:card", content="summary_large_image" )
   meta( property="og:image", content= artwork.defaultImageUrl('large') )
+  meta( name="thumbnail", content= artwork.defaultImageUrl('large') )
 else
   meta( property="twitter:card", content="summary" )
   meta( property="og:image", content=asset('/images/icon-152.png') )
-
 if sd.INCLUDE_ESCAPED_FRAGMENT
   unless tab
     meta( name="fragment", content="!" )

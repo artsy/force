@@ -1,0 +1,22 @@
+@import '../multi_page/index'
+
+occupy(pos)
+  display block
+  position absolute
+  top pos
+  right pos
+  bottom pos
+  left pos
+  overflow hidden
+
+.multi-page-modal .multi-page-view
+  occupy(50px)
+  > .mpv-container
+    occupy(0)
+    clearfix()
+    > .mpv-sidebar
+    > .mpv-page
+      display block
+      float left
+      overflow-y auto
+      -webkit-overflow-scrolling touch

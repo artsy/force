@@ -27,7 +27,6 @@ ReferrerParser = require 'referer-parser'
     carousel.fetch(cache: true)
     statuses.fetch(cache: true)
   ]).spread((artistRequest, carouselRequest, statusesRequest) ->
-
     nav = new Nav artist: artist, statuses: statusesRequest.value
 
     if artistRequest.state is 'rejected'
@@ -40,7 +39,7 @@ ReferrerParser = require 'referer-parser'
         res.locals.sd.STATUSES = statuses = statusesRequest.value
         res.locals.sd.MEDIUM = medium if medium?
 
-        res.render 'index',
+        res.render "index",
           artist: artist
           carousel: carousel
           tab: tab

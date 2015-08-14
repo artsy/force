@@ -1,14 +1,16 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artist = require '../../../models/artist.coffee'
+Artists = require '../../../collections/artists.coffee'
 Artwork = require '../../../models/artwork.coffee'
 ArtworkRouter = require './router.coffee'
 { track } = require '../../../lib/analytics.coffee'
 
 module.exports.init = ->
   artist = new Artist sd.ARTIST
+  artists = new Artists sd.ARTISTS
   artwork = new Artwork sd.ARTWORK, parse: true
-  new ArtworkRouter artwork: artwork, artist: artist
+  new ArtworkRouter artwork: artwork, artist: artist, artists: artists
   Backbone.history.start pushState: true
 
   track.impression 'Artwork page', id: artwork.id

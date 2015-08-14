@@ -1,24 +1,129 @@
 @import '../../../components/stylus_lib'
 
 #notifications-page
-  padding 40px 0
-  position relative
+  padding-top 50px
+  margin-bottom 100px
+
+#notifications-page[data-state=loading]
+  #notifications-works, #notifications-artist-works, #notifications-empty
+    display none
+  #notifications-spinner
+    display block
+
+#notifications-page[data-state=artist]
+  #notifications-works, #notifications-spinner
+    display none
+  #notifications-artist-works, .notifications-artist-sub-header
+    display block
+
+#notifications-page[data-state=recent-works]
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-spinner
+    display none
+  #notifications-works, .notifications-feed-spinner
+    display block
+  #notifications-feed.end-of-content ~ .notifications-feed-spinner
+    display none
+
+#notifications-page[data-state=empty]
+  #notifications-artist-works, .notifications-artist-sub-header, #notifications-works, #notifications-spinner
+    display none
+  #notifications-empty
+    display block
+
+#notifications-empty
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  display none
+  margin-top 123px
+  margin-left 250px
+  .empty-artist
+    padding-top 32px
+  .empty-recently-added
+    font-size 35px
+    color gray-dark-color
+    margin-top 100px
+    text-align center
 
 #notifications-header
-  margin 20px 0
+  margin-bottom 80px
   h1
-    font-size 24px
+    garamond-size('xl-headline')
+
+#notifications-filter
+  position absolute
+  width 250px
+  padding-right 40px
   .artsy-checkbox
     display block
     margin-top 20px
+    padding 36px 0px
+    border-top 1px solid gray-lighter-color
+  .filter-artist
+    display block
+  .filter-artist-count
+    display inline
+    color gray-dark-color
+  .filter-artist-name
+    text-decoration none
+    display inline
+    line-height 2em
+  .filter-artist-clear
+    display none
+  .filter-artist[data-state=selected]
+    .filter-artist-clear
+      display inline
+      text-decoration underline
+      cursor pointer
+    .filter-artist-name, .filter-artist-count, .filter-artist-clear
+      color purple-color
 
-#notifications-feed-spinner
+.artist-clear
+  float right
+  text-decoration underline
+  cursor pointer
+
+.notifications-sub-header, .notifications-works-sub-header
+  font-size 25px
+
+#notifications-works, #notifications-artist-works
+  width 900px
+  margin-left 250px
+
+#notifications-artist-works
+  margin-top 123px
+
+.notifications-artist-sub-header
+  display none
+  padding 32px 0px
+  border-top 1px solid gray-lighter-color
+  .artist-name
+    vertical-align middle
+    display inline-block
+  .artist-header-name
+    avant-garde-size('m-headline')
+    text-decoration none
+  .artist-work-count
+    garamond-size('l-caption')
+    color gray-dark-color
+    font-style italic
+
+.icon-chevron-small-right
+  color gray-dark-color
+  font-size 17px
+  vertical-align middle
+  display inline-block
+
+#notifications-artist-feed
+  width 100%
+
+#notifications-spinner
   position relative
   height 250px
 
-#notifications-manage-follow
-  text-align right
-  font-size default-avant-garde-font-size
+.notifications-feed-spinner
+  position relative
+  height 250px
+  display none
 
 .notifications-list-item
   margin 20px 0
@@ -33,10 +138,6 @@
   a
     text-decoration none
 
-.notifications-list-item-timestamp
-  float right
-
-.notifications-list-item-timestamp
 .notifications-works-added
   color gray-darker-color
 
@@ -45,3 +146,21 @@
   text-align right
   a
     font-size 13px
+
+.notifications-search-header
+  avant-garde('body')
+  margin 40px 0 20px 0
+
+#notifications-search-container
+  margin-bottom 50px
+
+.notifications-new-work
+  avant-garde-size('s-headline')
+  color gray-darker-color
+  display inline-block
+  line-height 11px
+  .bundle-read-status
+    margin-left 5px
+
+.artwork-column
+  min-width 270px

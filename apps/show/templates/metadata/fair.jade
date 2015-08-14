@@ -1,0 +1,12 @@
+//- Temporary naïve check
+if fair.get('published') && fair.get('has_full_feature')
+  a.show-entity-link( href= fair.href() )
+    span= fair.get('name')
+    i.icon-circle-chevron
+else
+  = fair.get('name')
+.show-dates
+  = fair.formatDates()
+if show.get('fair_location')
+  .show-location
+    = show.get('fair_location').display

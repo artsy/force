@@ -12,7 +12,7 @@ describe 'AdditionalImages', ->
   describe '#parse', ->
     it 'should put the default in the first position', ->
       @collection.first().get('position').should.equal 0
-      @collection.first().get('is_default').should.be.true
+      @collection.first().get('is_default').should.be.true()
 
     it 'soaks up missing data', ->
       @collection.set [{}]
@@ -20,16 +20,16 @@ describe 'AdditionalImages', ->
       
   describe '#default', ->
     it 'returns the default image', ->
-      @collection.default().get('is_default').should.be.true
+      @collection.default().get('is_default').should.be.true()
 
   describe 'setActive', ->
     it 'sets the active image', ->
-      @collection.first().get('is_active')?.should.be.false
+      @collection.first().get('is_active')?.should.be.false()
       @collection.setActive(@collection.first().id)
-      @collection.first().get('is_active').should.be.true
+      @collection.first().get('is_active').should.be.true()
       @collection.setActive(@collection.last().id)
-      @collection.first().get('is_active').should.be.false
-      @collection.last().get('is_active').should.be.true
+      @collection.first().get('is_active').should.be.false()
+      @collection.last().get('is_active').should.be.true()
 
   describe '#active', ->
     describe 'with an active image', ->
@@ -37,4 +37,4 @@ describe 'AdditionalImages', ->
         @collection.setActive(@collection.first().id)
 
       it 'returns the active image', ->
-        @collection.active().get('is_active').should.be.true
+        @collection.active().get('is_active').should.be.true()

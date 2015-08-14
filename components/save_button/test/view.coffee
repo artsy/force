@@ -46,7 +46,7 @@ describe 'SaveButton', ->
         @view.$el.click()
         @view.model.isSaved = -> true
         @view.saved.trigger 'add:artwork'
-        @view.saved.saveArtwork.called.should.be.ok
+        @view.saved.saveArtwork.called.should.be.ok()
         @view.saved.saveArtwork.args[0][0].should.equal model.id
         @view.$el.attr('data-state').should.equal 'saved'
 
@@ -55,6 +55,6 @@ describe 'SaveButton', ->
         @view.$el.click()
         @view.model.isSaved = -> false
         @view.saved.trigger 'remove:artwork'
-        @view.saved.unsaveArtwork.called.should.be.ok
+        @view.saved.unsaveArtwork.called.should.be.ok()
         @view.saved.unsaveArtwork.args[0][0].should.equal model.id
         @view.$el.attr('data-state').should.equal 'unsaved'

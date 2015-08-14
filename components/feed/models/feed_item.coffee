@@ -33,13 +33,11 @@ module.exports = class FeedItem extends Backbone.Model
 
   artworks: (max) =>
     artworks = new Artworks(@get('artworks'))
-    if max then artworks[..max] else artworks
 
   flagged: -> @get('flagged')
 
   initialArtworks: ->
-    artworks = _.first(@get('artworks'), @get('initialArtworkSize'))
-    new Artworks(artworks)
+    @artworks()
 
   toChildModel: =>
     if @get('_type')

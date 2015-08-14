@@ -73,7 +73,7 @@ describe 'PartnerCollectionView', ->
     describe '#loadNextPage', ->
 
       it 'calls ArtworkColumnsView to render the first page', ->
-        @ArtworkColumnsView::appendArtworks.calledOnce.should.be.true
+        @ArtworkColumnsView::appendArtworks.calledOnce.should.be.true()
         @view.nextPage.should.equal 2
 
       it 'uses ArtworkColumns to render the next pages individually until the end', ->

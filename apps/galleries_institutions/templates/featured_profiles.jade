@@ -1,10 +1,9 @@
 section.galleries-institutions-featured-profiles.grid-4-up
-
   if (featuredProfiles.length % 4 !== 0)
     .grid-item: .gallery-partnerships-callout: .gpc-inner: .vam-outer: .vam-inner
       | Interested in partnering with Artsy?
       = ' '
-      a.faux-underline( href='/gallery-partnerships' ) Learn&nbsp;More
+      a.faux-underline( href= copy.href ) Learn&nbsp;More
 
   for profile in featuredProfiles
     - var partner = profile.get('owner')

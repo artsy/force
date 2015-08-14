@@ -1,4 +1,11 @@
 module.exports =
+  urlMap:
+    signup: '/sign_up'
+    login: '/log_in'
+    register: '/sign_up'
+    forgot: '/forgot'
+    reset: '/forgot'
+
   templateMap:
     signup: -> require('./templates/signup.jade') arguments...
     login: -> require('./templates/login.jade') arguments...

@@ -7,12 +7,15 @@ FillwidthView = require '../fillwidth_row/view.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 
 module.exports = class ArtistFillwidthList extends Backbone.View
+  defaults:
+    page: 1
+    per: 10
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
     { @user } = options
+    { @page, @per } = _.defaults @defaults, options
     @$document = $(document)
     @user?.initializeDefaultArtworkCollection()
-    @page = 1
     @following = new Following(null, kind: 'artist') if @user
     @
 
@@ -22,7 +25,11 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     @syncFollowsOnAjaxStop()
 
   appendPage: (col, res) =>
-    @$('.avant-garde-button-text').removeClass('is-loading')
+    if res.length < @per
+      @$('.artist-fillwidth-list-see-more').hide()
+    else
+      @$('.avant-garde-button-text').removeClass('is-loading')
+
     @collection.add artists = new Artists(res)
     @$('.artist-fillwidth-list').append listTemplate artists: artists.models
     artists.each @renderArtist
@@ -66,5 +73,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     @$('.avant-garde-button-text').addClass('is-loading')
     @collection.fetch
       remove: false
-      data: { page: @page = @page + 1 }
+      data:
+        page: @page = @page + 1
+        size: @per
       success: @appendPage

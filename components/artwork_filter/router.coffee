@@ -18,7 +18,7 @@ module.exports = class ArtworkFilterRouter extends Backbone.Router
     fragment
 
   params: ->
-    qs.stringify @view.filter.selected.attributes
+    qs.stringify _.pick @view.filter.selected.attributes, @view.filter.selected.visibleAttributes()
 
   searchString: ->
     location.search.substring(1)

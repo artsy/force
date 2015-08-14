@@ -1,0 +1,31 @@
+header.auction-header
+  .auction-header-primary
+    if auction.get('image_versions') && auction.get('image_versions').length
+      //- 9:4 ratio
+      .auction-cover-image.responsive-image-container: img(
+        src= auction.cropUrlFor({ width: 1440, height: 640 })
+        alt= auction.get('name')
+      )
+
+    if auction.isAuctionPromo()
+      h4.auction-sub-header
+        | Sale Preview
+
+    h1.auction-title
+      = auction.get('name')
+    .auction-description
+      != auction.mdToHtml('description')
+
+  .auction-header-metadata
+    .auction-header-metadata-cell
+      .auction-header-clock.js-auction-clock( data-id= auction.id )
+        include ../../../components/clock/template
+
+      unless auction.isAuctionPromo()
+        .auction-header-register-button
+          .auction-info-register-button
+            include ./registration_button
+
+    include metadata/note
+    include metadata/event
+    include metadata/contact

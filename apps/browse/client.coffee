@@ -1,11 +1,10 @@
-Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
-FilterArtworksView = require '../../components/filter2/artworks/view.coffee'
-{ API_URL } = require('sharify').data
+{ setupFilter } = require '../../components/filter2/index.coffee'
+aggregationParams = require './aggregations.coffee'
+sd = require('sharify').data
 
 module.exports.init = ->
-  new FilterArtworksView
+  setupFilter
     el: $ '#browse-filter'
-    urlRoot: 'browse'
-  Backbone.history.start pushState: true
-  scrollFrame '#browse-filter a'
+    aggregations: aggregationParams
+  scrollFrame '#browse-filter a' unless sd.EIGEN

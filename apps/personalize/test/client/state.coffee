@@ -40,6 +40,10 @@ describe 'state', ->
         @user.set price_range: 'existy'
         @state.completedSteps().should.eql ['price_range']
 
+      it 'doesnt skip when the price range is the default returned by the server', ->
+        @user.set price_range: '-1:1000000000000'
+        @state.completedSteps().should.be.empty
+
       it 'handles some combination of completed steps', ->
         @user.set collector_level: 2
         @state.completedSteps().should.eql ['collect']
@@ -85,10 +89,10 @@ describe 'state', ->
 
   describe '#almostDone', ->
     it 'lets you know if you are on the last step', ->
-      @state.almostDone().should.not.be.ok
+      @state.almostDone().should.not.be.ok()
       last_step = _.last @state.steps()
       @state.set current_step: last_step
-      @state.almostDone().should.be.ok
+      @state.almostDone().should.be.ok()
 
   describe '#next', ->
     beforeEach ->
@@ -116,10 +120,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
@@ -134,10 +134,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that buys art (level 3)', (done) ->
@@ -150,10 +146,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'bookmarks'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
     describe 'existing users (reonboarding)', ->
@@ -167,10 +159,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
@@ -185,10 +173,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that buys art (level 3)', (done) ->
@@ -201,8 +185,4 @@ describe 'state', ->
         state.get('current_step').should.equal 'bookmarks'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done

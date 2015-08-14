@@ -1,14 +1,32 @@
 .vam-outer: .vam-inner
-  h3.cta-bar-headline
-    = headline
 
   if mode === 'link'
+    h3.cta-bar-headline
+      = headline
     a.cta-bar-button.avant-garde-button-dark( href='/sign_up' )
       | Join Artsy Now
+    .cta-bar-defer: a( href='#' )
+      | Maybe Later
+  else if mode === 'smaller-with-email'
+    .cta-bar-container
+      .cta-bar-small
+        .cta-bar-header
+          h2= headline
+          h3= subHeadline
+        .cta-bar-small-form
+          input.bordered-input( id ="cta-bar-form-input" placeholder='Enter your email', type='email', name='email', required value="#{email}")
+          button.avant-garde-button-dark.js-articles-insights-subscribe Subscribe
+          .cta-bar-defer: a( href='#' )
+            | Close
+      .cta-bar-thanks
+        .cta-bar-header
+          h2 Thank you.
+          h3 You are now subscribed to Artsy Insights for Galleries
   else
+    h3.cta-bar-headline
+      = headline
     form.cta-bar-form
-      input.bordered-input( placeholder='Enter your email', type='email', name='email', required )
+      input.bordered-input( id="cta-bar-form-input" placeholder='Enter your email', type='email', name='email', required )
       button.avant-garde-button-dark Join Now
-
-  .cta-bar-defer: a( href='#' )
-    | Maybe Later
+    .cta-bar-defer: a( href='#' )
+      | Maybe Later

@@ -1,0 +1,70 @@
+.auction-preview-cover-image
+  // 3:1 ratio
+  padding-bottom 33.33%
+  margin-bottom 40px
+
+.auction-preview-primary-metadata
+  margin 30px 0 0 0
+  > .auction-header-metadata-cell
+    display inline-block
+    width 33.33%
+    margin 0
+    padding-right 20px
+    vertical-align top
+
+.auction-preview-clock
+  margin 30px auto
+
+.auction-preview-registration
+  text-align center
+  garamond-size('headline')
+.auction-preview-registration-button
+  width 25%
+  margin 40px auto 0
+
+.auction-preview-footer
+  display table
+  width 100%
+  table-layout fixed
+
+.auction-preview-footer-item
+  display table-cell
+  height 120px
+  width (100% / 3)
+  vertical-align middle
+  text-decoration none
+  border-right 1px solid gray-lighter-color
+  border-left @border-right
+  text-align center
+  line-height 0
+  &:first-child
+    border-left none
+  &:last-child
+    border-right none
+
+.auction-preview-footer-item-wrap
+  display inline-block
+  width 75%
+  line-height 1.5
+  text-decoration none
+  text-align left
+
+.auction-preview-footer-item-image
+.auction-preview-footer-item-metadata
+  display table-cell
+  height 100%
+  vertical-align middle
+.auction-preview-footer-item-image
+  width (100% / 3)
+  text-align center
+  img
+    max-width 100%
+    max-height 100%
+.auction-preview-footer-item-metadata
+  padding 0 20px
+  garamond-size('l-body')
+.auction-preview-footer-item-title
+  &.is-large
+    garamond-size('headline')
+.auction-preview-footer-item-subtitle
+  font-style italic

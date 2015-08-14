@@ -84,7 +84,7 @@ describe 'PartnerArtistsView', ->
     describe '#fetchAllArtists', ->
 
       it 'uses the cached partner artists instead of fetching again', ->
-        @partnerArtists.fetchUntilEnd.called.should.not.be.ok
+        @partnerArtists.fetchUntilEnd.called.should.not.be.ok()
 
       it 'passes a parameter to filter partner artists that should not be displayed', ->
         @view.initialize

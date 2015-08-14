@@ -1,5 +1,7 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
+request = require 'superagent'
 ArtworkCollection = require './artwork_collection.coffee'
 Genes = require '../collections/genes.coffee'
 Artists = require '../collections/artists.coffee'
@@ -15,6 +17,8 @@ User = require './user.coffee'
 
 module.exports = class CurrentUser extends User
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
+
+  __isLoggedIn__: true
 
   url: ->
     "#{sd.API_URL}/api/v1/me"
@@ -106,14 +110,11 @@ module.exports = class CurrentUser extends User
       success: options?.success
 
   checkRegisteredForAuction: (options) ->
-    new Backbone.Collection().fetch
+    new Backbone.Collection().fetch _.extend {}, options,
       url: "#{sd.API_URL}/api/v1/me/bidders"
-      data:
-        access_token: @get('accessToken')
-        sale_id: options.saleId
-      success: (response) ->
-        options?.success response.length > 0
-      error: options?.error
+      data: sale_id: options.saleId, access_token: @get('accessToken')
+      success: _.wrap options.success, (success, collection) ->
+        success collection.length > 0
 
   createBidder: (options) ->
     # For posts and puts, add access_token to model attributes, for gets it goes in the data
@@ -122,3 +123,33 @@ module.exports = class CurrentUser extends User
       url: "#{sd.API_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
+
+  isEditorialAdmin: ->
+    return false unless sd.EDITORIAL_ADMINS?
+    @get('type') is 'Admin' and
+    @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')
+
+  fetchNotificationBundles: (options) ->
+    new Backbone.Model().fetch
+      url: "#{@url()}/notifications/feed"
+      data:
+        size: 50
+        access_token: @get('accessToken')
+      success: options?.success
+
+  fetchAndMarkNotifications: (options) ->
+    url = "#{@url()}/notifications"
+    new Backbone.Collection().fetch
+      url: url
+      data:
+        type: 'ArtworkPublished'
+        unread: true
+        size: 100
+        access_token: @get('accessToken')
+      success: (unreadNotifications) =>
+        request.put(url)
+          .send({status: 'read', access_token: @get('accessToken')})
+          .end (err, res) -> options?.success unreadNotifications
+
+  findOrCreate: (options = {}) ->
+    Q(@fetch options)

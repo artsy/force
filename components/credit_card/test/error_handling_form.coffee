@@ -23,6 +23,14 @@ describe 'FavoritesStatusModalView', ->
     afterEach ->
       $('.error').html ''
 
+    it 'handles API param_errors', ->
+      @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"param_error\", \"message\": \"Meow meow meow\" } " }
+      $('.error').text().should.equal 'Meow meow meow'
+
+    it 'handles generic API errors', ->
+      @errorHandlingForm.showError 'description', { responseText: "{ \"error\": \"This is a boring error message\"}" }
+      $('.error').text().should.equal 'This is a boring error message'
+
     it 'handles API errors', ->
       @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"payment_error\" }" }
       $('.error').text().should.equal 'Your payment could not be processed. Please try again or contact support.'
@@ -47,6 +55,14 @@ describe 'FavoritesStatusModalView', ->
       @errorHandlingForm.showError 'description', { status: 404 }
       $('.error').text().should.equal 'Registration marketplace invalid.'
 
-    it 'adds balanced errors', ->
+    it 'handles non-json responses', ->
+      @errorHandlingForm.showError 'description', { responseText: "<html><body>500!</body></html>" }
+      $('.error').text().should.equal 'description'
+
+    it 'handles timeouts', ->
+      @errorHandlingForm.showError 'description', { statusText: "timeout" }
+      $('.error').text().should.containEql 'too long'
+
+    it 'adds stripe errors', ->
       @errorHandlingForm.showError 'description', { status: 400, error: { additional: 'additional info'} }
       $('.error').text().should.equal 'Your card appears to be missing or malformed. Please try another card or contact support. additional info'

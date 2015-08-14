@@ -47,10 +47,12 @@ module.exports = class Statuses
       success: =>
         @artist.related().articles.fetch
           cache: @cache
-          data: limit: 1
+          data: limit: 50
           error: -> dfd.resolve articles: false
-          success: (collection, response) ->
-            dfd.resolve articles: !!response?.count
+          success: (articles, response) ->
+            dfd.resolve
+              articles: !!response?.count
+              biography: articles.biography()?
 
     dfd.promise
 

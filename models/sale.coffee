@@ -1,55 +1,47 @@
 _ = require 'underscore'
-sd = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL } = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch, Markdown, Image } = require 'artsy-backbone-mixins'
+
 Clock = require './mixins/clock.coffee'
-SaleArtworks = require '../collections/sale_artworks.coffee'
 Relations = require './mixins/relations/sale.coffee'
+ImageSizes = require './mixins/image_sizes.coffee'
+Eventable = require './mixins/eventable.coffee'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock
   _.extend @prototype, Relations
+  _.extend @prototype, Markdown
+  _.extend @prototype, Image(SECURE_IMAGES_URL)
+  _.extend @prototype, ImageSizes
+  _.extend @prototype, Eventable
 
-  urlRoot: "#{sd.API_URL}/api/v1/sale"
+  urlRoot: "#{API_URL}/api/v1/sale"
 
-  href: -> "/feature/#{@get('id')}"
-  registrationSuccessUrl: -> "#{@href()}/confirm-registration"
+  parse: (response) ->
+    response.auction_state = @calculateAuctionState response.start_at, response.end_at
+    response
 
-  fetchArtworks: (options = {}) ->
-    @artworks = new SaleArtworks [], id: @id
-    @artworks.fetchUntilEnd options
+  href: ->
+    if @isSale()
+      "/sale/#{@id}"
+    else
+      "/auction/#{@id}"
 
-  calculateOffsetTimes: (options = {}) ->
-    new Backbone.Model().
-      fetch
-        url: "#{sd.API_URL}/api/v1/system/time"
-        success: (model) =>
-          offset = moment().diff(model.get('time'))
-          @set('offsetStartAtMoment', moment(@get 'start_at').add(offset))
-          @set('offsetEndAtMoment', moment(@get 'end_at').add(offset))
-          @updateState()
-          options.success() if options?.success?
-        error: options?.error
+  registrationSuccessUrl: ->
+    "#{@href()}/confirm-registration"
 
-  updateState: ->
-    @set('clockState', (
-      if moment().isAfter(@get 'offsetEndAtMoment')
-        'closed'
-      else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
-        'open'
-      else if moment().isBefore(@get 'offsetStartAtMoment')
-        'preview'
-    ))
+  buyersPremiumUrl: ->
+    "#{@href()}/buyers-premium"
 
   registerUrl: (redirectUrl) ->
     url = "/auction-registration/#{@id}"
-    if redirectUrl
-      url += "?redirect_uri=#{redirectUrl}"
+    url += "?redirect_uri=#{redirectUrl}" if redirectUrl
     url
 
   bidUrl: (artwork) ->
-    "/feature/#{@id}/bid/#{artwork.id}"
+    "#{@href()}/bid/#{artwork.id}"
 
   redirectUrl: (artwork) ->
     if @isBidable() and artwork?
@@ -57,9 +49,45 @@ module.exports = class Sale extends Backbone.Model
     else
       @href()
 
-  # NOTE
-  # auction_state helpers are used serverside of if updateState hasn't been run
-  # clockState used after updateState is run
+  calculateAuctionState: (start_at, end_at, offset = 0) ->
+    start = moment(start_at).add(offset, 'milliseconds')
+    end = moment(end_at).add(offset, 'milliseconds')
+    if moment().isAfter(end) or moment().isSame(end)
+      'closed'
+    else if moment().isBetween(start, end)
+      'open'
+    else if moment().isBefore(start) or moment().isSame(start)
+      'preview'
+
+  state: ->
+    if @has('clockState') then @get('clockState') else @get('auction_state')
+
+  auctionState: ->
+    @calculateAuctionState _.values(@pick('start_at', 'end_at', 'offset'))...
+
+  contactButtonState: (user, artwork) ->
+    if @isAuctionPromo()
+      label: "Contact #{@related().profile.displayName() or 'Auction House'}", enabled: true, classes: 'js-inquiry-button'
+
+  buyButtonState: (user, artwork) ->
+    if @isOpen() and artwork.get('acquireable') and not artwork.get('sold')
+      label: 'Buy Now', enabled: true, classes: 'js-acquire-button', href: ''
+    else if @isOpen() and artwork.get('acquireable') and artwork.get('sold')
+      label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
+
+  bidButtonState: (user, artwork) ->
+    if artwork.get('sold') and not artwork.get('acquireable')
+      label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
+    else
+      if @isPreview() and !user?.get('registered_to_bid')
+        label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
+      else if @isPreview() and user?.get('registered_to_bid')
+        label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
+      else if @isOpen()
+        label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
+      else if @isClosed()
+        label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: ''
+
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
@@ -81,23 +109,19 @@ module.exports = class Sale extends Backbone.Model
   isClosed: ->
     @state() is 'closed'
 
-  # We desire a state when accessing from the server
-  state: ->
-    if @has('clockState') then @get('clockState') else @get('auction_state')
+  isAuctionPromo: ->
+    @get('sale_type') is 'auction promo'
 
-  # @param {CurrentUser, Artwork (optional)}
-  # @return {Object}
-  bidButtonState: (user, artwork) ->
-    if @isPreview() and !user?.get('registered_to_bid')
-      label: 'Register to bid', enabled: true, classes: undefined, href: @registerUrl()
-    else if @isPreview() and user?.get('registered_to_bid')
-      label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: undefined
-    else if @isOpen()
-      label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
-    else if @isClosed()
-      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: undefined
-    else
-      {}
+  isSale: ->
+    not @isAuction() and
+    not @isAuctionPromo()
 
-  date: (attr) ->
-    moment(@get attr)
+  isPreliminaryAuction: ->
+    @get('is_auction') and @get('is_preliminary')
+
+  isAuctionPromoInquirable: ->
+    @isAuctionPromo() and @isPreview()
+
+  # Support for Feature in artsy-backbone-mixins
+  fetchArtworks: ->
+    @related().saleArtworks.fetchUntilEnd arguments...

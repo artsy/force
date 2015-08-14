@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
@@ -7,92 +8,82 @@ Profile = require '../../models/profile'
 SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
 OrderedSets = require '../../collections/ordered_sets'
+Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
-
-determineFeature = (id, err, next) ->
-  new Backbone.Collection().fetch
-    cache: true
-    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{id}"
-    error: err
-    success: (collection, response, options) ->
-      next collection.first().get('owner')
-
-fetchPartner = (saleArtworks, options = {}) ->
-  dfd = Q.defer()
-
-  saleArtworks.fetch
-    cache: options.cache
-    data: size: 1
-    error: dfd.resolve
-    success: (collection, response, options) ->
-      return dfd.resolve(new Profile) if collection.length is 0
-
-      { default_profile_id } = collection.first().get('artwork')?.partner
-      profile = new Profile id: default_profile_id
-
-      profile.fetch
-        cache: options.cache
-        complete: ->
-          dfd.resolve profile
-
-  dfd.promise
+footerItems = require './footer_items'
 
 setupUser = (user, auction) ->
-  dfd = Q.defer()
-
   if user?
-    Q.all([
-      user.fetch()
-      user.checkRegisteredForAuction saleId: auction.id, success: (boolean) ->
-        user.set 'registered_to_bid', boolean
-    ]).done ->
-      dfd.resolve user
+    Q.all [
+      user.fetch() # Complete-fetch required to get at bidder number
+      user.checkRegisteredForAuction
+        saleId: auction.id
+        success: (boolean) ->
+          user.set 'registered_to_bid', boolean
+        error: ->
+          user.set 'registered_to_bid', false
+    ]
   else
-    dfd.resolve user
+    Q.resolve()
 
-  dfd.promise
-
-@index = (req, res) ->
+@index = (req, res, next) ->
   id = req.params.id
+  user = req.user
+  auction = new Auction id: id
+  saleArtworks = new SaleArtworks [], id: id
+  articles = new Articles
+  state = new State
+  artworks = new Artworks
 
-  determineFeature id, res.backboneError, (owner) ->
-    feature = new Feature id: owner.id
-    auction = new Auction id: id
-    saleArtworks = new SaleArtworks [], id: id
-    artworks = new Artworks
-    artworks.comparator = (artwork) ->
-      (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
-    sets = new OrderedSets
-    state = new State
+  artworks.comparator = (artwork) ->
+    saleArtwork = artwork.related().saleArtwork
+    saleArtwork.get('lot_number') or
+    saleArtwork.get('position') or
+    saleArtwork.id
 
-    Q.all([
+  Q.all([
+    auction.fetch(cache: true)
+    saleArtworks.fetchUntilEndInParallel(cache: true)
+    setupUser(user, auction)
+  ])
+    .then ->
+      Q.promise (resolve) ->
+        articles.fetch
+          cache: true
+          data: published: true, auction_id: auction.get('_id')
+          complete: resolve
+    .then ->
+      return next() if auction.isSale()
 
-      auction.fetch(cache: true)
-      feature.fetch(cache: true)
-      fetchPartner(saleArtworks, cache: true)
-      saleArtworks.fetchUntilEndInParallel(cache: true)
-      sets.fetchItemsByOwner('Feature', owner.id, {
-        cache: true
-        data: display_on_desktop: true, item_type: 'FeaturedLink'
-      })
-      setupUser(req.user, auction)
-
-    ]).spread((a, b, profile, c, d, user) ->
       artworks.reset Artworks.__fromSale__(saleArtworks)
 
-      res.locals.sd.FEATURE = feature.toJSON()
       res.locals.sd.AUCTION = auction.toJSON()
       res.locals.sd.ARTWORKS = artworks.toJSON()
       res.locals.sd.USER = user.toJSON() if user?
 
-      res.render 'index',
+      template = if auction.isPreview() and not auction.isAuctionPromo()
+        'preview/index'
+      else
+        'index'
+
+      res.render template,
         auction: auction
-        feature: feature
-        profile: profile
         artworks: artworks
         saleArtworks: saleArtworks
+        articles: articles
         user: user
-        sets: sets
         state: state
+        displayBlurbs: displayBlurbs = artworks.hasAny('blurb')
+        maxBlurbHeight: artworks.maxBlurbHeight(displayBlurbs)
+        footerItems: footerItems
 
-    ).done()
+    .catch next
+    .done()
+
+@redirect = (req, res) ->
+  new Backbone.Collection().fetch
+    cache: true
+    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
+    error: res.backboneError
+    success: (collection, response, options) ->
+      res.redirect "/feature/#{collection.first().get('owner').id}"

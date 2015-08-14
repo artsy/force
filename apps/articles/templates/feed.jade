@@ -1,5 +1,0 @@
-include ../../../components/article_figure/mixin
-
-for article in articles
-  .article-feed-item( data-tier= article.get('tier') )
-    +article-figure(article, (article.isTopTier() ? 800 : 400), true, true)

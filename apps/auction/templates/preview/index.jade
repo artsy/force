@@ -1,0 +1,43 @@
+extends ../../../../components/main_layout/templates/index
+
+block head
+  include ../meta
+
+append locals
+  - assetPackage = 'auction'
+
+block body
+  .auction-page.main-layout-container
+    if auction.get('image_versions') && auction.get('image_versions').length
+      // 3:1 ratio
+      .auction-preview-cover-image.responsive-image-container: img(
+        src= auction.cropUrlFor({ width: 1500, height: 500 })
+        alt= auction.get('name')
+      )
+
+    header.auction-header
+      .auction-header-primary
+        h1.auction-title
+          = auction.get('name')
+        .auction-description
+          != auction.mdToHtml('description')
+
+        .auction-preview-primary-metadata
+          include ../metadata/event
+          include ../metadata/contact
+
+      .auction-header-metadata
+        //- Profile logo here
+        .auction-preview-clock.js-auction-clock( data-id= auction.id )
+          include ../../../../components/clock/template
+
+    section.auction-preview-registration.auction-page-section
+      | Register now to be notified when the auction begins
+      .auction-preview-registration-button
+        include ../registration_button
+
+    include ../associated_auction
+
+    footer.auction-preview-footer.auction-page-section
+      for item in footerItems
+        include footer_item

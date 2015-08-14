@@ -1,0 +1,25 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/article_figure/mixin
+include ../../../components/share/template
+include ./mixin
+
+block head
+  include meta/vertical
+
+append locals
+  - assetPackage = 'articles'
+
+block body
+  header.articles-vertical-header.main-layout-container
+    .articles-vertical-header-left
+      a( href='/posts' ) Magazine
+      h1= vertical.get('title')
+      p!= vertical.mdToHtml('description')
+    if vertical.get('partner_logo_url')
+      .articles-vertical-header-right
+        | In Partnership With
+        a( href=vertical.get('partner_website_url') target='_blank' )
+          img( src=vertical.get('partner_logo_url') )
+        hr
+        +share(vertical.get('title') + ' on Artsy')
+  include full_feed

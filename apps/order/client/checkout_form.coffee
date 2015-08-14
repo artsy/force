@@ -1,13 +1,10 @@
 Backbone = require 'backbone'
 analytics = require '../../../lib/analytics.coffee'
-Marketplace = require '../../../models/marketplace.coffee'
 sd = require('sharify').data
 ShippingForm = require('./shipping_form.coffee')
 { SESSION_ID } = require('sharify').data
 
 module.exports = class CheckoutForm extends ShippingForm
-
-  balanced: false
 
   events:
     'click .order-form-button': 'onSubmit'
@@ -33,48 +30,42 @@ module.exports = class CheckoutForm extends ShippingForm
       conditions: { el: @$('.order-form-conditions input'), validator: @isChecked, message: 'Conditions must be accepted' }
     @internationalizeFields()
 
-  cardCallback: (response) =>
-    switch response.status
-      when 201
-        data = @model.getSessionData(SESSION_ID)
-        data.credit_card_uri = response.data.uri
-        @model.save data,
-          url: "#{@model.url()}/submit"
-          success: =>
-            analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-            @success()
-            @$el.addClass 'order-page-complete'
-            @$('.checkout-form').hide()
-            @$('.success-form').show()
-            $('body').removeClass 'minimal-header'
-            $('html, body').scrollTop(0)
-          error: (xhr) => @showError "Order submission error"
-        analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-      when 400, 403 then @showError "Order card missing or malformed"
-      when 402 then @showError "Order card could not be authorized"
-      when 404 then @showError "Order marketplace invalid"
-      else
-        @showError "Order card - other error"
+  cardCallback: (status, res) =>
+    if status is 200
+      data = @model.getSessionData(SESSION_ID)
+      data.credit_card_token = res.id
+      data.provider = 'stripe'
+      @model.save data,
+        url: "#{@model.url()}/submit"
+        success: =>
+          analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+          @success()
+          @$el.addClass 'order-page-complete'
+          @$('.checkout-form').hide()
+          @$('.success-form').show()
+          $('body').removeClass 'minimal-header'
+          $('html, body').scrollTop(0)
+        error: (m, xhr) =>
+          @showError xhr.responseJSON?.message
+      analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    else
+      @showError res.error?.message
 
   cardData: ->
     name: @fields['name on card'].el.val()
-    card_number: @fields['card number'].el.val()
-    expiration_month: @fields.month.el.first().val()
-    expiration_year: @fields.year.el.last().val()
-    security_code: @fields['security code'].el.val()
-    street_address: @fields.billing_street.el.val()
-    postal_code: @fields.billing_zip.el.val()
-    country: @$("select[name='billing_address[country]']").val()
+    number: @fields['card number'].el.val()
+    exp_month: @fields.month.el.first().val()
+    exp_year: @fields.year.el.last().val()
+    cvc: @fields['security code'].el.val()
+    address_line1: @fields.billing_street.el.val()
+    address_city: @fields.billing_city.el.val()
+    address_state: @fields.billing_state.el.val()
+    address_zip: @fields.billing_zip.el.val()
+    address_country: @$("select[name='billing_address[country]']").val()
 
   tokenizeCard: =>
-    marketplace = new Marketplace
-    marketplace.fetch
-      success: (marketplace) =>
-        @balanced ||= require('../../../lib/vendor/balanced.js')
-        @balanced.init marketplace.get('uri')
-        @balanced.card.create @cardData(), @cardCallback
-      error: =>
-        @showError @errors.other, "Error fetching the balanced marketplace"
+    Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
+    Stripe.card.createToken @cardData(), @cardCallback
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')

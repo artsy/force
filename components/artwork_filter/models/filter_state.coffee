@@ -4,14 +4,38 @@ Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Selected = require './selected.coffee'
 deslugify = require '../../deslugify/index.coffee'
+aggregations = require '../aggregations.coffee'
 sectionMap = require '../sections.coffee'
 
 module.exports = class FilterState extends Backbone.Model
-  url: ->
-    "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}/suggest"
+  mapppedParams:
+    related_gene: 'gene_id'
+    gallery: 'partner_id'
+    institution: 'partner_id'
 
-  initialize: (attributes, { @modelId }) ->
-    throw new Error 'Requires an modelId' unless @modelId?
+  url: -> "#{API_URL}/api/v1/filter/artworks"
+
+  initialize: (attributes, { @artistId }) ->
+    throw new Error 'Requires an artistId' unless @artistId?
+
+  sync: (method, model, options) =>
+    data = _.clone options.data
+
+    _.extend data,
+      size: 0
+      aggregations: aggregations
+      artist_id: @artistId
+
+    for k, v of @mapppedParams
+      if val = data[k]
+        data[v] = val
+        delete data[k]
+
+    options.data = data
+
+    super
+
+  parse: (data) -> data.aggregations
 
   criteria: ->
     _.reduce _.keys(@attributes), (criteria, x) =>

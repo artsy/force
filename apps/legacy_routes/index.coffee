@@ -8,6 +8,12 @@ app.get '/genes', to '/categories'
 app.get '/partner-application', to '/apply'
 app.get '/fair-application', to '/apply/fair'
 app.get '/fairs', to 'art-fairs'
+app.get '/feature/art-fairs', to 'art-fairs'
 app.get '/settings', to '/user/edit'
-# Temporary: Can remove once 2015 sale is over. Due to an email error.
-app.get '/feature/public-art-fund-2014-spring-benefit', to '/feature/public-art-fund-2015-spring-benefit'
+app.get '/_=_', to '/' # Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
+app.get '/press', to '/press/press-releases'
+app.get '/about/press', to '/press/press-releases'
+app.get '/about/page/press', to '/press/press-releases'
+app.get '/about/page/events', to '/press/in-the-media'
+app.get '/about/jobs', to '/jobs'
+app.get '/lama', to '/auction/los-angeles-modern-auctions-march-2015' # HACK: Redirect the "auction" profile to the LAMA auction

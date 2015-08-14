@@ -24,7 +24,13 @@ redirect = (req, res, next) ->
     next()
 
 router.get '/apply*', isResponsive
-router.get '/gallery-insights*', isResponsive
+router.get '/gallery-insights/opt-in' , isResponsive
 router.get '/auction/:id/buyers-premium', isResponsive
+router.get '/auction-registration/:id', isResponsive
+router.get '/order', isResponsive
+router.get '/christies-spring-auctions-2015', isResponsive
+router.get '/jobs', isResponsive
+router.get '/press/*', isResponsive
+router.get '/how-auctions-work', isResponsive
 router.use redirect
 module.exports = router

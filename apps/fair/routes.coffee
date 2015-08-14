@@ -1,17 +1,36 @@
 _ = require 'underscore'
+moment = require 'moment'
+Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
+Fairs = require '../../collections/fairs.coffee'
+FairOrganizer = require '../../models/fair_organizer.coffee'
 Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
+FilterArtworks = require '../../collections/filter_artworks'
+aggregationParams = require './components/browse/aggregations.coffee'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
+  filterArtworks = new FilterArtworks
+  fair = res.locals.fair
+  params = new Backbone.Model fair: fair.id
+  filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'
-  res.render 'overview'
+  res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
+  filterArtworks.fetch
+    data: filterData
+    success: ->
+      res.render 'overview',
+        counts: filterArtworks.counts
+        params: params
+        filterRoot: res.locals.sd.FILTER_ROOT
+        hideForSale: true
+        includeAllWorks: true
 
 @info = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -25,8 +44,22 @@ kinds = require '../favorites_follows/kinds'
 
 @browse = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
-  res.locals.sd.SECTION = 'browse'
-  res.render 'index'
+  filterArtworks = new FilterArtworks
+  fair = res.locals.fair
+  params = new Backbone.Model fair: fair.id
+  filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
+  filterArtworks.fetch
+    data: filterData
+    success: ->
+      res.locals.sd.SECTION = 'browse'
+      res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
+
+      res.render 'index',
+        counts: filterArtworks.counts
+        params: params
+        filterRoot: res.locals.sd.FILTER_ROOT
+        hideForSale: true
+        includeAllWorks: true
 
 @forYou = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -96,7 +129,7 @@ kinds = require '../favorites_follows/kinds'
 @fetchFairData = (req, res, next) ->
   profile = res.locals.profile
 
-  return next() unless profile?.isFairOrOrganizer()
+  return next() unless profile?.isFair()
 
   fair = new Fair id: profile.fairOwnerId()
 
@@ -111,16 +144,12 @@ kinds = require '../favorites_follows/kinds'
       res.locals.primarySets = primarySets
       end = (data) ->
         res.locals[k] = v for k, v of data
-        res.locals.mediums = data.filterSuggest.mediumsHash()
         res.locals.sd.EXHIBITORS_COUNT = data.galleries.length
         res.locals.sd.FAIR = data.fair.toJSON()
         next()
       key = "fair:#{req.params.id}"
       cache.getHash key, {
         fair: require '../../models/fair'
-        filterSuggest: require '../../models/filter_suggest'
-        filteredSearchOptions: require '../../models/filter_suggest'
-        filteredSearchColumns: null # Vanilla JS object
         sections: require('backbone').Collection
         galleries: require('backbone').Collection
         exhibitorsCount: null # Just a Number
@@ -135,3 +164,35 @@ kinds = require '../favorites_follows/kinds'
           success: (data) ->
             cache.setHash key, data
             end data
+
+@fetchFairByOrganizerYear = (req, res, next) ->
+  profile = res.locals.profile
+
+  return next() unless profile?.isFairOrganizer()
+
+  fairOrg = new FairOrganizer profile.get('owner')
+
+  # Get all fairs for the requested fair organizer
+  pastFairs = new Fairs
+  pastFairs.fetch
+    cache: true
+    data:
+      fair_organizer_id: fairOrg.id
+    success: ->
+      # find the fair whose year matches the requested year
+      fair = pastFairs.find (fair) ->
+        fair.formatYear() is parseInt req.params.year
+
+      return next() unless fair
+
+      # if we get a fair, fetch its profile and next to @fetchFairData
+      data = {}
+      data.access_token = req.user.get('accessToken') if req.user
+      new Profile(id: fair.get('default_profile_id')).fetch
+        data: data
+        cache: true
+        cacheTime: 300
+        success: (profile) ->
+          res.locals.profile = profile
+          req.params.id = profile.fairOwnerId()
+          next()

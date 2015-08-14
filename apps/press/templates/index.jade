@@ -1,0 +1,22 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/util/activator
+
+append locals
+  - assetPackage = 'press'
+
+block body
+  .press-page.responsive-layout-container: .main-layout-container
+    header.press-header.bisected-header
+      h1.press-header-headline.bisected-header-cell
+        | Artsy Press
+      .press-header-contact.bisected-header-cell
+        | contact: press@artsy.net
+
+    nav.press-tablist.garamond-tablist
+      a.garamond-tab( href='/press/press-releases', class= activeClass('/press/press-releases') )
+        | News & Press Releases
+      span.garamond-tab-separator
+      a.garamond-tab( href='/press/in-the-media', class= activeClass('/press/in-the-media') )
+        | Artsy in the Media
+
+    block content

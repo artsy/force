@@ -18,21 +18,48 @@
     .ala-lot-number: a( href= href )
       | Lot #{saleArtwork.get('lot_number')}
 
-  if auction.isOpen()
+  if auction.isOpen() && !auction.isAuctionPromo()
     .ala-bid-status: a( href= href )
-      strong #{saleArtwork.bidLabel()}:
-      = ' '
-      span.ala-current-bid
-        = saleArtwork.currentBid()
+      p
+        unless artwork.get('sold')
+          strong
+            = saleArtwork.bidLabel() + ': '
+
+        span.ala-current-bid
+          //- Artwork may be marked sold prematurely
+          if artwork.get('sold')
+            | Sold
+          else
+            = saleArtwork.currentBid()
+
+      if artwork.get('acquireable') && !artwork.get('sold')
+        p
+          strong
+            = 'Buy now price: '
+
+          span.ala-current-bid
+            if artwork.get('acquireable')
+              if artwork.get('sold')
+                | Sold
+              else
+                = artwork.saleMessage() || 'Unavailable'
+
     .ala-bid-count: a( href= href )
       | (#{saleArtwork.bidCount()})
   else
-    .ala-estimate: a( href= href )
-      = saleArtwork.estimate()
-    .ala-sale-message
-      a.ala-current-bid( href= href )
-        = artwork.saleMessage()
+    .ala-estimate
+      if saleArtwork.estimate()
+        a( href= href )
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
+      else
+        | &nbsp;
 
-  .ala-bidding
-    - button = auction.bidButtonState(user, artwork)
-    .ala-bid-button: include button
+    if artwork.saleMessage()
+      .ala-sale-message
+        a.ala-current-bid( href= href )
+          = artwork.saleMessage()
+
+  unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
+    .ala-bidding
+      .ala-bid-button
+        include buttons

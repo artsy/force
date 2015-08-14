@@ -1,0 +1,17 @@
+if mode === 'pre'
+  .user-interests-results.results-list.is-pre.js-user-interests-results
+    //- Rendered separately
+
+.autocomplete-input-container.is-block.js-user-interests-search
+  input.bordered-input.autocomplete-input.js-user-interests-search-input(
+    type='text'
+    placeholder='Search Artist'
+    autofocus= autofocus
+  )
+  .autocomplete-loading-indicator: .loading-spinner-small
+  .autocomplete-feedback
+    //- Rendered separately
+
+if mode === 'post'
+  .user-interests-results.results-list.is-post.js-user-interests-results
+    //- Rendered separately

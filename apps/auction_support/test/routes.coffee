@@ -4,6 +4,13 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
+moment = require 'moment'
+openSale = fabricate 'sale',
+  name: 'Awesome Sale'
+  is_auction: true
+  auction_state: 'open'
+  start_at: moment().subtract(1, 'minutes').format()
+  end_at: moment().add(3, 'minutes').format()
 
 describe '#auctionRegistration', ->
 
@@ -34,16 +41,17 @@ describe '#auctionRegistration', ->
 
     it 'redirects to success url if sale is registerable and user has already registered', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
+
       Backbone.sync.args[1][2].success [{foo: 'bar'}]
 
       routes.auctionRegistration @req, @res
 
-      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
+      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
 
     it 'renders registration form if sale is registerable and user has no credit cards on file', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[2][2].success []
 
@@ -52,12 +60,12 @@ describe '#auctionRegistration', ->
 
     it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[2][2].success [{foo: 'bar'}]
       Backbone.sync.args[3][2].success [{}]
 
-      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
+      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
 
     it 'renders registration error page if sale is an auction and is not registerable', ->
       routes.auctionRegistration @req, @res
@@ -92,13 +100,13 @@ describe '#bid', ->
 
   it 'redirects to login without user', ->
     routes.bid @req, @res
-    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/feature/awesome-sale/bid/artwork-id"
+    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/auction/awesome-sale/bid/artwork-id"
 
   describe 'with current user', ->
 
     beforeEach ->
       @resolve = (a, b, c, d) =>
-        Backbone.sync.args[0][2].success a or fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+        Backbone.sync.args[0][2].success a or openSale
         Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
         Backbone.sync.args[2][2].success c or [{foo: 'bar'}]
         Backbone.sync.args[3][2].success d or [fabricate('bidder_position')]
@@ -108,13 +116,13 @@ describe '#bid', ->
     it 'renders with isRegistered: true if is registered', ->
       @resolve()
       @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.be.ok
+      @res.render.args[0][1].isRegistered.should.be.ok()
       @res.render.args[0][1].maxBid.should.equal 500
 
     it 'renders with isRegistered: true if is not registered', ->
       @resolve(null, null, [], null)
       @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.not.be.ok
+      @res.render.args[0][1].isRegistered.should.not.be.ok()
 
     it '404 if sale is not auction', ->
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false

@@ -8,15 +8,14 @@ append locals
   - assetPackage = 'show'
 
 block body
-  #show
+  - hasCarousel = installShots.length >= 3
+
+  if hasCarousel
+    include carousel
+
+  .responsive-layout-container: .main-layout-container
     include header
-
-    if installShots.length >= 3
-      section#show-installation-shot-carousel.show-installation-shot-carousel
-        - var carouselFigures = installShots.models
-        include ../../../components/carousel/template
-
-    section.show-container.show-artworks.artworks-columns
-      .loading-spinner
+    include columns
+    include footer
 
   include ../../../components/main_layout/templates/json_ld

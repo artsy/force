@@ -8,11 +8,16 @@ mixin tab(options, state)
 
 nav.auction-artworks-display-nav.garamond-tablist
   span.garamond-tab-label Sort by:
-  +tab({ mode: 'grid', sort: 'default', label: 'Grid'}, state)
+  +tab({ mode: 'grid', sort: 'default', label: 'Default' }, state)
   +tab({ mode: 'list', sort: 'name_asc', label: 'Artists A–Z' }, state )
-  unless auction.isPreview()
-    +tab({ mode: 'list', sort: 'bids_desc', label: 'Most Bids' }, state )
-    +tab({ mode: 'list', sort: 'bids_asc', label: 'Least Bids' }, state )
-  - qualifier = auction.isPreview() ? 'Starting' : ''
-  +tab({ mode: 'list', sort: 'amount_desc', label: 'Highest ' + qualifier + ' Bid' }, state )
-  +tab({ mode: 'list', sort: 'amount_asc', label: 'Lowest ' + qualifier + ' Bid' }, state )
+  if auction.isAuctionPromo()
+    +tab({ mode: 'list', sort: 'estimate_desc', label: 'Highest Estimate' }, state )
+    +tab({ mode: 'list', sort: 'estimate_asc', label: 'Lowest Estimate' }, state )
+  else
+    unless auction.isPreview()
+      +tab({ mode: 'list', sort: 'bids_desc', label: 'Most Bids' }, state )
+      +tab({ mode: 'list', sort: 'bids_asc', label: 'Least Bids' }, state )
+
+    - qualifier = auction.isPreview() ? 'Starting' : ''
+    +tab({ mode: 'list', sort: 'amount_desc', label: 'Highest ' + qualifier + ' Bid' }, state )
+    +tab({ mode: 'list', sort: 'amount_asc', label: 'Lowest ' + qualifier + ' Bid' }, state )

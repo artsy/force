@@ -8,22 +8,19 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  #articles-articles-page.main-layout-container
-    if (featuredArticles = articles.featured()).length
-      header.am-featured
-        .am-featured-hero
-          - article = featuredArticles[0]
-           +article-figure(article, 1000, false, false)
-
-        aside.am-featured-also
-          for article in featuredArticles.slice(1)
-            +article-figure(article, 300, false, false)
-
-    #articles-articles-feed.articles-feed
-      .articles-feed-articles.js-articles-feed-articles
-        for article in articles.feed()
-          .articles-feed-item( data-tier= article.get('tier') )
-            include ../../../components/articles_feed/templates/article
-
-      .js-articles-feed-more
-        include ../../../components/articles_feed/templates/button
+  if vertical
+    header.articles-vertical-notice-header.main-layout-container
+      a.articles-vertical-notice-header-thumbnail( href=vertical.get('slug') )
+        img( src=vertical.get('thumbnail_url') )
+        .articles-vertical-notice-header-thumbnail-text
+          h3 Featured Coverage
+          h4= vertical.get('title')
+      if vertical.get('partner_logo_url')
+        .articles-vertical-notice-header-partner-logo
+          p In partnership with
+          a( href=vertical.get('partner_website_url') target='_blank' )
+            img( src= vertical.get('partner_logo_url') )
+      .articles-vertical-notice-header-explore
+        a( href=vertical.get('slug') ) Explore
+        .icon-chevron-small-right
+  include full_feed

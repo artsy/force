@@ -4,6 +4,7 @@ Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
 ArtworkTableView = require '../artwork_table/view.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 splitTest = require '../../components/split_test/index.coffee'
@@ -47,7 +48,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     , viewModes[@viewMode.get('mode')]
 
   initialize: ({ @mode }) ->
-    @artworks = new ArtworkColumns [], modelId: @model.id
+    @artworks = new ArtworkColumns [], artistId: @model.id
     @filter = new Filter model: @model
     @viewMode = new Backbone.Model mode: @mode
 
@@ -62,6 +63,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @viewMode, 'change', @renderHeader
 
     @render()
+
     @filter.fetchRoot
       success: (model, response, options) =>
         mediator.trigger 'artwork_filter:filter:sync', model
@@ -92,7 +94,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
-    console.log "$target.attr('name')", $target.attr('name')
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
@@ -100,10 +101,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     e.preventDefault()
     @loadNextPage()
 
-  changeViewMode: (e)->
+  changeViewMode: (e) ->
     $target = $(e.currentTarget)
-    @viewMode.set 'mode', $target.data('mode')
+    mode = $target.data('mode')
+    @viewMode.set 'mode', mode
     @artworksView = @view()
+    analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
 
   loadNextPage: (options = {}) ->
     return if @remaining is 0
@@ -142,12 +145,17 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   setButtonState: ->
     length = @artworksView?.length() or 0
-    @remaining = @filter.get('total') - length
-    visibility = if length >= @filter.get('total') then 'hide' else 'show'
+    @remaining = @filter.get('total')?.value - length
+    visibility = if length >= @filter.get('total')?.value then 'hide' else 'show'
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @$header?.html headerTemplate(filter: @filter, artist: @model, mode: @viewMode.get('mode'))
+    @$header?.html headerTemplate
+      filter: @filter
+      artist: @model
+      mode: @viewMode.get('mode')
+      total: @filter.get('total')?.value
+
     @sortView?.undelegateEvents()
     @sortView = new BorderedPulldown el: @$('.bordered-pulldown')
 
@@ -161,7 +169,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @setState()
 
   pricedFilter: ->
-    (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
+    (if @filter.selected.has('for_sale') then @filter.priced() else @filter.root) or @filter.root
 
   renderFilter: ->
     @$filter.html filterTemplate(filter: @filter, pricedFilter: @pricedFilter())

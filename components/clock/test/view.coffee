@@ -45,26 +45,26 @@ describe 'ClockView', ->
     it 'renders correct time until the sale starts', ->
       @view.model.set
         is_auction: true
-        start_at: moment().subtract('minutes', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
-        end_at: moment().add('minutes', 3).add('months', 1).add('hours', 1).add('seconds', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
+        start_at: moment().subtract(1, 'minutes').format()
+        end_at: moment().add(3, 'minutes').add(1, 'months').add(1, 'hours').add(1, 'seconds').format()
 
       @view.model.calculateOffsetTimes()
-      Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+      Backbone.sync.args[0][2].success { time: moment().format() }
 
       @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @view.$el.html().should.containEql 'days'
-      @view.$el.html().should.containEql 'months'
+      @view.$el.html().should.containEql 'mos'
       @view.$el.html().should.not.containEql '00'
 
     it 'excludes months sectoin if sale starts 0 months from now', ->
       @view.model.set
         is_auction: true
-        start_at: moment().subtract('minutes', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
-        end_at: moment().add('minutes', 3).add('hours', 1).format("YYYY-MM-DD HH:mm:ss ZZ")
+        start_at: moment().subtract(1, 'minutes').format()
+        end_at: moment().add(3, 'minutes').add(1, 'hours').format()
 
       @view.model.calculateOffsetTimes()
-      Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+      Backbone.sync.args[0][2].success { time: moment().format() }
 
       @view.$el.html '<div class="clock-value"></div>'
       @view.render()

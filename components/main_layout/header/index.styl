@@ -17,8 +17,10 @@
   white-space nowrap
 
 #main-layout-header-left
-  flex 1
+  flex-grow 1
+
 #main-layout-header-home-logo
+  flex-shrink 0
   display inline-block
   width home-logo-size
   text-align center
@@ -29,11 +31,12 @@
     line-height home-logo-size
 #main-layout-header-center
   padding 0 20px
+  flex-grow 1
 #main-layout-header-center
 #main-layout-header-right
   avant-garde()
 #main-layout-header-right
-  flex 1
+  flex-shrink 0
   text-align right
 
 .mlh-nav-link
@@ -60,13 +63,55 @@
   @extends .mlh-nav-link
   padding-left 30px
   padding-right @padding-left
+  border-left 1px solid gray-lighter-color
   position relative
   min-width 130px
   text-align center
-  border none
   white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
+.mlh-notification
+  @extends .mlh-nav-link
+  padding 8px 20px
+  position relative
+  text-align center
+  white-space nowrap
+  border-left 1px solid gray-lighter-color
+  &.hover-pulldown
+    &:before
+      border none
+  svg
+    fill black
+    width 25px
+    height 25px
+  .hpm-header
+    cursor default
+  .hover-pulldown-menu
+    width 300px
+    padding-bottom 0px
+  .hpm-view-all
+    text-align center
+    border-top 1px solid gray-dark-color
+    padding 20px 0px
+    avant-garde-size('body')
+.mlh-bundle-count
+  display none
+  font-size 10px
+  background-color purple-color
+  border-radius 50px
+  width 19px
+  height 19px
+  position absolute
+  top 4px
+  right 15px
+  line-height 19px
+  color white
+
+.mshr-garamond-nav-link
+  display inline-block
+  margin 0 10px
+  text-decoration none
+  vertical-align middle
 
 // Temporary welcome header
 #main-layout-welcome-header

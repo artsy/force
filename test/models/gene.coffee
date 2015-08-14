@@ -17,7 +17,7 @@ describe "Gene", ->
 
     it 'checks against the gene type name', ->
       @gene.set type: { name: 'D3 - Photography/Film Technique' }
-      @gene.isSubjectMatter().should.be.ok
+      @gene.isSubjectMatter().should.be.ok()
 
   describe '#fetchFilterSuggest', ->
 

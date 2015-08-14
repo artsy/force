@@ -1,0 +1,70 @@
+@import '../stylus_lib'
+
+.mgr-cells
+  white-space nowrap
+  overflow hidden
+.mgr-cell
+  display inline-block
+  padding 0 10px
+  vertical-align top
+  font-size 0
+  > *
+    font-size inherit
+  img
+    display inline-block
+    background-color gray-color
+
+.mgr-navigation
+  display table
+  width 100%
+  margin 10px auto
+  padding 0 10px
+  user-select none
+.mgr-arrow-left
+.mgr-arrow-right
+.mgr-dots
+  display table-cell
+  vertical-align middle
+
+.mgr-arrow-left
+.mgr-arrow-right
+  width 45px
+  height @width
+  text-align center
+  border 3px solid transparent
+  transition border-color 0.125s
+  cursor pointer
+  &:hover
+    border-color black
+
+.mgr-dots
+  text-align center
+  font-family Verdana, sans-serif
+  font-size 20px
+  line-height 1
+.mgr-dot
+  display inline-block
+  margin 0 2px
+  color gray-color
+  cursor pointer
+  transition color 0.2s ease-in-out
+  &:hover
+  &.is-active
+    color black
+
+// Flickity-specific styling
+// (We're not including their CSS)
+.flickity-enabled
+  position relative
+  &:focus
+    outline none
+  &.is-draggable
+    user-select none
+.flickity-viewport
+  overflow hidden
+  position relative
+  height 100%
+.flickity-slider
+  position absolute
+  width 100%
+  height 100%

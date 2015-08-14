@@ -10,7 +10,7 @@ CurrentUser = require '../../../models/current_user'
 describe 'AfterInquiryMixin', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -41,7 +41,7 @@ describe 'AfterInquiryMixin', ->
       @view.eligibleForAfterInquiryFlow = false
       @view.maybeSend @inquiry
       Backbone.sync.callCount.should.equal 1
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][1].url.should.equal '/api/v1/me/artwork_inquiry_request'
 
     it 'should send the inquiry unencumbered if the user has already seen the after-inquiry flow', ->
@@ -49,7 +49,7 @@ describe 'AfterInquiryMixin', ->
       @AfterInquiryMixin.__set__ 'hasSeen', sinon.stub().returns true
       @view.maybeSend @inquiry
       Backbone.sync.callCount.should.equal 1
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][1].url.should.equal '/api/v1/me/artwork_inquiry_request'
 
     describe 'should pass on success and error callbacks to the inquiry', ->
@@ -88,7 +88,7 @@ describe 'AfterInquiryMixin', ->
     it 'should close the modal (with the initialize callback) view before initializing the AfterInquiry flow', ->
       @View::close = closeStub = sinon.stub()
       @view.maybeSend @inquiry
-      closeStub.called.should.be.ok
+      closeStub.called.should.be.ok()
       closeStub.args[0][0].should.be.an.instanceOf Function
 
     describe '#initializeAfterInquiry', ->
@@ -99,14 +99,14 @@ describe 'AfterInquiryMixin', ->
 
       it 'attaches an event handler to the mediator that sends the inquiry', ->
         @view.maybeSend @inquiry
-        Backbone.sync.called.should.be.false
+        Backbone.sync.called.should.be.false()
         mediator.trigger 'inquiry:send'
-        Backbone.sync.called.should.be.true
+        Backbone.sync.called.should.be.true()
 
   describe '#send', ->
     it 'should send the inquiry', ->
       @view.send()
-      Backbone.sync.called.should.be.true
+      Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.equal '/api/v1/me/artwork_inquiry_request'
 

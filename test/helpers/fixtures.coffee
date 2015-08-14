@@ -1,5 +1,14 @@
 moment = require 'moment'
 
+@vertical =
+  id: '55356a9deca560a0137aa4b7'
+  title: 'Vennice Biennalez'
+  description: 'The coolest biennale'
+  slug: 'vennice-biennale'
+  partner_logo_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
+
 @article =
   id: '54276766fd4f50996aeca2b8'
   author_id: '4d8cd73191a5c50ce210002a'

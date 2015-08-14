@@ -2,8 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
 Transition = require '../mixins/transition.coffee'
-{ isTouchDevice } = require '../../components/util/device.coffee'
-Scrollbar = require '../../lib/scrollbar.coffee'
+{ isTouchDevice } = require '../util/device.coffee'
+Scrollbar = require '../scrollbar/index.coffee'
 modalTemplate = -> require('./modal.jade') arguments...
 
 module.exports = class ModalView extends Backbone.View
@@ -17,6 +17,12 @@ module.exports = class ModalView extends Backbone.View
 
   templateData: {}
 
+  __defaults__:
+    transition: 'fade'
+    backdrop: true
+    dimensions:
+      width: '400px'
+
   events: ->
     'click.handler .modal-backdrop': 'onClickBackdrop'
     'click.handler .modal-close': 'close'
@@ -24,10 +30,7 @@ module.exports = class ModalView extends Backbone.View
     'click.internal .modal-backdrop': '__announceBackdropClick__'
 
   initialize: (options = {}) ->
-    { @dimensions, @width, @transition, @backdrop } = _.defaults options,
-      dimensions: width: '400px'
-      transition: 'fade'
-      backdrop: true
+    { @dimensions, @width, @transition, @backdrop } = _.defaults options, @__defaults__
 
     @dimensions.width = @width if @width
 
@@ -39,7 +42,7 @@ module.exports = class ModalView extends Backbone.View
     @$window.on 'keyup', @escape
     @$window.on 'resize', @resize
 
-    @scrollbar = new Scrollbar $els: $('#main-layout-header')
+    @scrollbar = new Scrollbar
 
     mediator.on 'modal:close', @close, this
     mediator.on 'modal:opened', @updatePosition, this
@@ -108,7 +111,7 @@ module.exports = class ModalView extends Backbone.View
     @postRender()
 
     # Disable scroll on body
-    @scrollbar.set()
+    @scrollbar.disable()
 
     # Fade in
     _.defer => @$el.attr 'data-state', 'open'
@@ -138,7 +141,7 @@ module.exports = class ModalView extends Backbone.View
       attr('data-state', 'closed').
       one($.support.transition.end, =>
         # Re-enable scrolling
-        @scrollbar.reset()
+        @scrollbar.reenable()
 
         mediator.trigger 'modal:closed', { view: this }
 

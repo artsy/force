@@ -1,18 +1,22 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../models/current_user.coffee'
-{ fabricate } = require 'antigravity'
-{ resolve } = require 'path'
+UserInterestsView = benv.requireWithJadeify require.resolve('../../../../components/user_interests/view'), [
+  'template'
+  'collectionTemplate'
+]
+UserInterestsView::postRender = -> #
 
 describe 'BookmarksView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @BookmarksView = benv.requireWithJadeify resolve(__dirname, '../../client/views/bookmarks'), ['template']
-      @BookmarksView.__set__ 'BookmarksSearchView', Backbone.View
+      @BookmarksView = benv.requireWithJadeify require.resolve('../../client/views/bookmarks'), ['template']
+      @BookmarksView.__set__ 'UserInterestsView', UserInterestsView
       done()
 
   after ->
@@ -22,7 +26,7 @@ describe 'BookmarksView', ->
     sinon.stub @BookmarksView::, 'advance'
     @user = new CurrentUser fabricate 'user'
     @state = new PersonalizeState user: @user
-    @view = new @BookmarksView(state: @state, user: @user)
+    @view = new @BookmarksView state: @state, user: @user
     @view.render()
 
   afterEach ->
@@ -37,9 +41,9 @@ describe 'BookmarksView', ->
   describe '#advance', ->
     it 'is able to advance to the next step', ->
       @view.$('.personalize-skip').click()
-      @view.advance.called.should.be.true
+      @view.advance.called.should.be.true()
 
   describe '#setSkipLabel', ->
-    it 'is triggered when a collect or uncollect occurs', ->
-      @view.bookmarksSearchView.trigger 'collect'
+    it 'is triggered when a user expresses an artist interest', ->
+      @view.userInterestsView.collection.addInterest fabricate 'artist'
       @view.$('.personalize-skip').text().should.equal 'Next'

@@ -18,6 +18,7 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
+
     @$window = $(window)
 
     # Set up artworks, a params model that stores the state of the filter
@@ -78,7 +79,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @giveUpCount++ if res?.length is 0
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
-      else if @giveUpCount > 100 then 'finished-paging'
+      else if @giveUpCount > 5 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else ''
     @newColumnsView() unless @columnsView?
@@ -88,9 +89,6 @@ module.exports = class FilterArtworksView extends Backbone.View
     countsFormat = _s.numberFormat @counts.get('total')
     @$('.filter-artworks-num').html countsFormat
 
-    # Update meta description
-    $('meta[name=description]').remove()
-    $('head').append("<meta name='description' content='Collect #{countsFormat} artworks. Purchase online or connect with over 1,500 top galleries.'>")
 
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or

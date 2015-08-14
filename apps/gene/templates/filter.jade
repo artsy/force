@@ -1,4 +1,4 @@
-#gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
+#gene-filter( data-state=mode )
   #gene-filter-nav.filter-fixed-header-nav
     .filter-fixed-header-left
       = gene.get('name')
@@ -8,12 +8,13 @@
         | &nbsp;Works
     unless gene.isSubjectMatter()
       label By Artists:&nbsp;
-      a#gene-filter-all-artists.filter-button.is-active All Artists
+      a#gene-filter-all-artists.filter-button(href="#{gene.href()}") All Artists
       label By Work:&nbsp;
     span#gene-filter-artworks-nav
-      include ../../../components/filter/artworks_nav/template.jade
-  unless gene.isSubjectMatter()
-    #gene-artists
-      .loading-spinner
-  #gene-artworks
-    include ../../../components/filter/artworks/template.jade
+      include ../../../components/filter2/dropdown_group/template
+  #gene-filter-content
+    unless gene.isSubjectMatter()
+      #gene-artists
+        .loading-spinner
+    #gene-artworks
+      include ../../../components/filter2/template

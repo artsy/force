@@ -4,11 +4,11 @@ Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
-ClockView = require '../../../components/clock/view.coffee'
 SpecialistView = require '../../../components/contact/general_specialist.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
+setupClocks = require './clocks.coffee'
 
 module.exports.init = ->
   feature = new Feature FEATURE
@@ -28,8 +28,7 @@ module.exports.init = ->
   saleArtworks.fetchUntilEndInParallel success: ->
     artworks.reset Artworks.__fromSale__ saleArtworks
 
-  clock = new ClockView el: $('.js-auction-clock'), model: auction, modelName: 'Auction'
-  clock.start()
+  setupClocks [auction, auction.related().sale]
 
   $('.js-specialist-contact-link').click (e) ->
     e.preventDefault()

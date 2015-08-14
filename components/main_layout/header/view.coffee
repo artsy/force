@@ -1,16 +1,20 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require 'cookies-js'
 SearchBarView = require '../../search_bar/view.coffee'
 AuthModalView = require '../../auth_modal/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 sd = require('sharify').data
+moment = require 'moment'
 { isTouchDevice } = require '../../util/device.coffee'
 analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 activatePulldowns = require '../../hover_pulldown/index.coffee'
+maybePopUpPolicyNotice = require './policy.coffee'
+dealWithWelcomeBanner = require '../../welcome_banner/index.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -19,9 +23,11 @@ module.exports = class HeaderView extends Backbone.View
     'click .user-nav-profile-link': 'showProfilePrivateDialog'
     'click .mlh-logout': 'logout'
 
-  initialize: ({ @$window, @$body }) ->
-    @$welcomeHeader = @$('#main-layout-welcome-header')
-
+  initialize: ->
+    maybePopUpPolicyNotice()
+    dealWithWelcomeBanner()
+    @currentUser = CurrentUser.orNull()
+    @checkForNotifications()
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
       $input: @$('#main-layout-search-bar-input')
@@ -33,22 +39,29 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    if isTouchDevice()
-      @removeWelcomeHeader()
-    else unless sd.HIDE_HEADER # Already hidden
-      @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
-
     mediator.on 'open:auth', @openAuth, @
 
-    @checkRemoveWelcomeHeader()
     @checkForFlash()
 
     activatePulldowns()
 
-  checkRemoveWelcomeHeader: =>
-    if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
-      unless $('body').hasClass 'is-microsite'
-        @removeWelcomeHeader()
+  checkForNotifications: =>
+    if @currentUser and @currentUser.isAdmin()
+      @currentUser.fetchNotificationBundles
+        success: (result) =>
+          totalUnread = result.get('total_unread')
+          if result.get('feed').length > 0
+            if totalUnread > 0
+              bundleText = if totalUnread >= 100 then "99+" else totalUnread
+              @$('.mlh-bundle-count')
+                .text("#{bundleText}")
+                .show()
+            for bundle in result.get('feed')
+              bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
+            @$('#hpm-bundles').html bundleTemplate
+              bundles: result.get('feed')
+          else
+            @$('.mlh-notification').addClass 'nohover'
 
   showProfilePrivateDialog: (event) =>
     # Displaying the dialog on tap causes confusion on touch devices
@@ -80,15 +93,6 @@ module.exports = class HeaderView extends Backbone.View
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
-
-  removeWelcomeHeader: ->
-    @$body.addClass 'body-header-fixed'
-    @$window.off '.welcome-header'
-
-    unless isTouchDevice()
-      @$window.scrollTop(0)
-
-    Cookies.set 'hide-force-header', true, expires: 60 * 60 * 24 * 365
 
   signup: (e) ->
     e.preventDefault()

@@ -1,30 +1,22 @@
 _ = require 'underscore'
+Q = require 'q'
 sd = require('sharify').data
-Artworks = require '../collections/artworks.coffee'
-Backbone = require 'backbone'
-Fair = require './fair.coffee'
-FairLocation = require './fair_location.coffee'
-InstallShot = require './install_shot.coffee'
-Partner = require './partner.coffee'
-Artists = require '../collections/artists.coffee'
-PartnerLocation = require './partner_location.coffee'
-DateHelpers = require '../components/util/date_helpers.coffee'
-{ Image } = require 'artsy-backbone-mixins'
-{ compactObject } = require './mixins/compact_object.coffee'
-{ Fetch, Markdown } = require 'artsy-backbone-mixins'
-{ fetchUntilEnd } = Fetch(sd.API_URL)
 moment = require 'moment'
+Backbone = require 'backbone'
+{ Image, Markdown } = require 'artsy-backbone-mixins'
+DateHelpers = require '../components/util/date_helpers.coffee'
+{ compactObject } = require './mixins/compact_object.coffee'
+FairLocation = require './fair_location.coffee'
+PartnerLocation = require './partner_location.coffee'
+Artworks = require '../collections/artworks.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
+Relations = require './mixins/relations/partner_show.coffee'
 
 module.exports = class PartnerShow extends Backbone.Model
-
-  maxDisplayedArtists: 5
-  fairDisplayUpdatedDayLimit: 14
-  maxFeedArtworks: 8
-
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, ImageSizes
   _.extend @prototype, Markdown
+  _.extend @prototype, Relations
 
   url: ->
     if @has('partner')
@@ -32,12 +24,13 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{sd.API_URL}/api/v1/show/#{@get('id')}"
 
-  href: -> "/show/#{@get('id')}"
+  href: ->
+    "/show/#{@get('id')}"
 
   toPageTitle: ->
     _.compact([
       @title()
-      @get('partner')?.name || ''
+      @get('partner')?.name or ''
       "Artsy"
     ]).join(' | ')
 
@@ -49,10 +42,10 @@ module.exports = class PartnerShow extends Backbone.Model
 
     info = _.compact([
       'at'
-      @get('partner')?.name || ''
-      @get('fair')?.name || ''
-      @location()?.singleLine() || ''
-      @runningDates() || ''
+      @related().partner.get('name')
+      @related().fair.get('name')
+      @location()?.singleLine() or ''
+      @runningDates() or ''
     ]).join(' ')
 
     _.compact([
@@ -62,19 +55,12 @@ module.exports = class PartnerShow extends Backbone.Model
     ]).join(' ')
 
   formatArtistText: ->
-    artists = []
-    if @get('artists')
-      artists =
-        _.compact(for artist in @get('artists')
-          artist.name
-        )
-
+    artists = _.compact(@related().artists.pluck 'name')
     if artists.length > 1
       artistText = "#{artists[0...(artists.length - 1)].join(', ')} and #{artists[artists.length - 1]}"
     else if artists.length == 1
       artistText = "#{artists[0]}"
 
-  #
   # Get the poster image url of the show (e.g. used in the shows tab in
   # partner profile.)
   #
@@ -129,9 +115,6 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "See \"#{@get('name')}\" on @artsy"
 
-  href: -> "/show/#{@get('id')}"
-  canonicalUrl: -> sd.APP_URL + @href()
-
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
 
@@ -146,33 +129,6 @@ module.exports = class PartnerShow extends Backbone.Model
     formatString += ', YYYY' unless @isSameYear(date)
     date.format formatString
 
-  fetchInstallShots: (callbacks) ->
-    throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
-    @installShots = new Backbone.Collection [], { model: InstallShot }
-    options =
-      data: { default: false }
-      url: "#{sd.API_URL}/api/v1/partner_show/#{@get('id')}/images"
-    _.extend options, callbacks
-    fetchUntilEnd.call @installShots, options
-
-  fetchArtworks: (callbacks) ->
-    throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
-    @artworks = new Artworks []
-    options =
-      data: { size: 10, published: true }
-      url: "#{@url()}/artworks"
-    _.extend options, callbacks
-    @artworks.fetchUntilEnd options
-
-  #
-  # Related model generators... factories... ?
-  #
-  fair: ->
-    if @has 'fair'
-      new Fair @get 'fair'
-    else
-      null
-
   location: ->
     if @has 'location'
       new PartnerLocation @get 'location'
@@ -181,24 +137,18 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       null
 
-  partner: ->
-    if @has 'partner'
-      new Partner @get 'partner'
-    else
-      null
-
   partnerName: ->
-    @get('partner')?.name
+    @related().partner.get('name')
 
   partnerHref: ->
-    if @get('partner')?.default_profile_public
-      "/#{@get('partner')?.default_profile_id}"
+    if @related().partner.get 'default_profile_public'
+      @related().profile.href()
 
   fairName: ->
-    @get('fair').name
+    @related().fair.get 'name'
 
   # Show json is different in the feed and includes an array of artist's short json
-  formatArtists: (max=Infinity) ->
+  formatArtists: (max = Infinity) ->
     return "" unless @has('artists')
     artists = @get('artists').map (artist) -> "<a href='/artist/#{artist.id}'>#{artist.name}</a>"
     if artists?.length <= max
@@ -206,7 +156,8 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"
 
-  artists: -> new Artists(@get('artists'))
+  artists: ->
+    @related().artists
 
   formatCity: =>
     @get('location')?.city?.trim()
@@ -214,9 +165,9 @@ module.exports = class PartnerShow extends Backbone.Model
   formatStreetAddress: ->
     @get('location')?.address?.trim()
 
-  formatFeedItemHeading: ->
+  formatFeedItemHeading: (max = 5) ->
     return @get('name') if @get('name')?.length > 0
-    @formatArtists @maxDisplayedArtists
+    @formatArtists max
 
   formatLeadHeading: ->
     status =
@@ -226,11 +177,6 @@ module.exports = class PartnerShow extends Backbone.Model
     type = if @get('fair') then 'fair booth' else 'show'
     "#{status} #{type}"
 
-  getSortValue: ->
-    if @upcoming() then return 2
-    if @running() then return 1
-    if @closed() then return 0
-
   fairLocationDisplay: ->
     city = @formatCity()
     if city
@@ -238,9 +184,73 @@ module.exports = class PartnerShow extends Backbone.Model
     display = @get('fair_location')?.display or ''
     _.compact([city, display]).join('')
 
-  upcoming: -> @get('status') is 'upcoming'
-  running: -> @get('status') is 'running'
-  closed: -> @get('status') is 'closed'
+  daySchedules: ->
+    @location()?.get('day_schedules')?.length > 0
+
+  # Takes a day of the week as a string and returns a formatted schedule for a day of the week or closed:
+  # { start: 'Monday', hours: '10:30am–7pm' } or { start: 'Tuesday', hours: 'Closed'}
+  formatDaySchedule: (day) ->
+    if @daySchedules()
+      if _.contains ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], day
+        daySchedules = _.where (@location().get 'day_schedules'), day_of_week: day
+        if daySchedules.length
+          hours = []
+          for daySchedule in daySchedules
+            startHour = moment().hour(daySchedule['start_time'] / 60 / 60)
+            startMinute = moment().minutes(daySchedule['start_time'] / 60)
+            endHour = moment().hour(daySchedule['end_time'] / 60 / 60)
+            endMinute = moment().minutes(daySchedule['end_time'] / 60 )
+            hours.push "#{startHour.format('h')}\
+                    #{ if startMinute.format('mm') == '00' then '' else startMinute.format(':mm')}\
+                    #{startHour.format('a')}–\
+                    #{endHour.format('h')}\
+                    #{if endMinute.format('mm') == '00' then '' else endMinute.format(':mm')}\
+                    #{endHour.format('a')}"
+          start: day
+          hours: hours.join(', ')
+        else
+          start: day
+          hours: 'Closed'
+
+  # Returns an array of formatted 'day schedule' objects for a 7 day week:
+  # [{ start: 'Monday', hours: '10am – 7pm'}, {start: 'Tuesday, hours: 'Closed'}, ... ]
+  formatDaySchedules: ->
+    if @daySchedules()
+      _.map ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], (day) =>
+        @formatDaySchedule(day)
+
+  # returns an array of grouped and formatted 'day schedules' objects in the format:
+  # [{ days: 'Monday–Thursday, Sunday', hours: '10am - 7pm' }, { days: 'Friday', hours: '6:30am - 7pm' }]
+  formatModalDaySchedules: ->
+    if @daySchedules()
+      daysOpen = [@formatDaySchedules()[0]]
+      _.each @formatDaySchedules().slice(1), (daySchedule) ->
+        if daySchedule['hours'] is _.last(daysOpen)['hours']
+          _.extend _.last(daysOpen), end: "#{daySchedule['start']}"
+        else
+          daysOpen.push {start: daySchedule['start'], hours: daySchedule['hours']}
+      _.chain (daysOpen)
+        .groupBy 'hours'
+        .map (schedule) ->
+          _.chain(schedule)
+            .map (day) ->
+              days: if day['end'] then "#{day['start']}–#{day['end']}" else "#{day['start']}"
+              hours: schedule[0]['hours']
+            .reduce (memo, iteratee) ->
+              memo['days'] = memo['days'] + ", #{iteratee['days']}"
+              return memo
+            .value()
+        .reject (day_schedule) -> day_schedule['hours'] is 'Closed'
+        .value()
+
+  upcoming: ->
+    @get('status') is 'upcoming'
+
+  running: ->
+    @get('status') is 'running'
+
+  closed: ->
+    @get('status') is 'closed'
 
   # opens at any time between the previous monday and the next sunday if today is between monday and thursday,
   # if between friday and sunday opens between previous monday and friday of the next week

@@ -32,10 +32,11 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
 @redirectBack = (req, res, next) ->
   url = req.body['redirect-to'] or
         req.query['redirect-to'] or
-        req.param('redirect_uri') or
-        parse(req.get('Referrer') or '').path or
+        req.params.redirect_uri or
+        req.session.redirectTo or
         '/'
+
   res.redirect sanitizeRedirect(url)
 
 @logout = (req, res, next) ->
-  res.send 200, { msg: "success" }
+  res.status(200).send msg: 'success'

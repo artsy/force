@@ -79,5 +79,5 @@ describe 'RelatedLinksView', ->
       it 'renders nothing + removes itself', ->
         @collection.fetch()
         Backbone.sync.args[0][2].success()
-        @view.remove.called.should.be.true
+        @view.remove.called.should.be.true()
         @view.$el.html().should.be.empty

@@ -1,9 +1,10 @@
-Cookies = require '../cookies/index.coffee'
+Dismisser = require './dismisser.coffee'
 
 # Default expires is one year from now in seconds
 module.exports = (name, expires = 31536000) ->
-  if Cookies.get(name)?
+  dismisser = new Dismisser name: name, limit: 1, expires: expires
+  if dismisser.dismissed()
     true
   else
-    Cookies.set name, true, expires: expires
+    dismisser.dismiss()
     false

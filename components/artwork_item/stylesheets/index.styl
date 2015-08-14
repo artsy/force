@@ -12,6 +12,7 @@
   display block
   background-color gray-color
   > img
+    pointer-events none
     position absolute
     top 0
     left 0
@@ -24,6 +25,7 @@
   overflow hidden
 
 .artwork-item-caption
+  min-height 55px
   color gray-darker-color
   font-size 15px
   line-height 1.3
@@ -43,6 +45,11 @@
 
 .artwork-item-artist
   font-weight bold
+  a
+    &:after
+      content ', '
+    &:last-child:after
+      content ''
 
 .artwork-item-sale-metadata
   margin 20px 0 10px

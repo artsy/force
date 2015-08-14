@@ -1,0 +1,21 @@
+.ap-featured-item--small
+  .ap-featured-item__thumb
+    if auction.hasImage('source')
+      a( href= auction.href() ): img.af-thumbnail(
+          src= auction.cropUrlFor({ width: 252, height: 175 })
+          alt= auction.get('name')
+          title= auction.get('name')
+        )
+  .ap-featured-item__title
+    a( href= auction.href() )
+      if auction.has('profile')
+        .ap-featured-item__logo
+          img( src= auction.related().profile.iconImageUrl(), alt= auction.get('name') )
+
+      h3.af-name= auction.get('name')
+
+  .ap-featured-item__clock
+    if auction.isOpen()
+      .af-clock( data-id= auction.id )
+        include ../../../components/clock/template
+

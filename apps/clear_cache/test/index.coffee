@@ -8,7 +8,7 @@ describe 'clear cache app', ->
   it 'clears the cache when POSTed to', ->
     app.__set__ 'flushall', stub = sinon.stub()
     app.__get__('post')()
-    stub.called.should.be.ok
+    stub.called.should.be.ok()
 
   it 'doesnt allow non-admins', ->
     app.__get__('all')({ user: new Backbone.Model(type: 'User') }, { status: -> },

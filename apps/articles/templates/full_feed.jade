@@ -1,0 +1,33 @@
+.articles-articles-page.main-layout-container
+  if (featuredArticles = articles.featured()).length
+    header.am-featured
+      .am-featured-hero
+        - article = featuredArticles[0]
+         +article-figure(article, 1000, false, false)
+
+      aside.am-featured-also
+        for article in featuredArticles.slice(1)
+          +article-figure(article, 300, false, false)
+
+  if sd.CURRENT_PATH != '/articles' && vertical && vertical.get('featured_links')
+    section.articles-featured-vertical-articles
+      h4= vertical.get('featured_links_header')
+      ul.grid-4-up
+        for link in vertical.get('featured_links')
+          li.grid-item
+            a( href="#{link.url}" )
+              img( src=crop(link.thumbnail_url, { width: 70, height: 70 }) )
+              p= link.title
+        +remainingStickies(vertical, articles, 70, 70)
+
+  .articles-articles-feed.articles-feed
+    .articles-feed-articles.js-articles-feed-articles
+      for article in articles.feed()
+        .articles-feed-item( data-tier= article.get('tier') )
+          include ../../../components/articles_feed/templates/article
+
+    .js-articles-feed-more
+      include ../../../components/articles_feed/templates/button
+  if vertical && vertical.get('slug') == sd.GALLERY_INSIGHTS_SLUG
+    .articles-insights-vertical
+      include gallery_insights_form

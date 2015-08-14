@@ -37,11 +37,11 @@ describe '/user', ->
         Backbone.sync.args[0][2].success @req.user
 
       it 'calls req.login to refresh the session', ->
-        @req.login.calledOnce.should.be.true
+        @req.login.calledOnce.should.be.true()
         @req.login.args[0][1]()
         @next.calledOnce.should.not.be.true
         @req.login.args[0][1](true)
-        @next.calledOnce.should.be.true
+        @next.calledOnce.should.be.true()
 
   describe '#settings', ->
 
@@ -77,7 +77,7 @@ describe '/user', ->
     describe 'with a logged in user', ->
 
       it 'renders the account delete form', ->
-        @req = { user: new CurrentUser fabricate 'user' }
+        @req = { user: new CurrentUser fabricate 'user', type: 'User' }
         routes.delete @req, @res
         @res.render.args[0][0].should.containEql 'delete'
         @res.render.args[0][1].user.should.equal @req.user

@@ -47,19 +47,17 @@ bordered-input-placeholder()
   garamond()
   font-size default-garamond-font-size
   color gray-dark-color
-  transition opacity 0.5s
-bordered-input-placeholder--focus()
-  opacity 0
-bordered-input-placeholder--autofocus-focus()
-  opacity 1
 
 .avant-garde-form-label
-  avant-garde()
   display block
-  font-size 12px
-  line-height 1.5
+  avant-garde-size('s-headline', true)
   & + input
     margin-top 5px
+  > span
+    garamond-size('l-caption', true)
+    text-transform none
+    letter-spacing 0
+    color gray-darker-color
 
 .bordered-input
   margin 0
@@ -72,19 +70,14 @@ bordered-input-placeholder--autofocus-focus()
   background-color transparent
   transition border-color 0.25s
   placeholder(bordered-input-placeholder)
-  &:focus, &:active
+  &:focus
+  &:active
     border-color purple-color
     outline none
     transition border-color 0.5s
-    placeholder(bordered-input-placeholder--focus)
 
   &:disabled
     border dotted 2px gray-lighter-color
-
-  // Autofocused inputs should retain placeholders
-  &[autofocus]:focus
-  &.is-persistplaceholder:focus
-    placeholder(bordered-input-placeholder--autofocus-focus)
 
   &[data-state='error']
   &.is-error
@@ -360,8 +353,8 @@ checkbox-size = 20px
   top 100%
   left 0
   right 0
-  padding 0 (logo-size / 2)
-  line-height logo-size
+  padding 0 (home-logo-size / 2)
+  line-height home-logo-size
   text-align left
   opacity 0
   border 2px solid gray-lighter-color
@@ -384,11 +377,14 @@ checkbox-size = 20px
 .results-list-item-cell
   display table-cell
   vertical-align middle
-  // Account for Avant Garde baseline
-  padding 11px 0 9px 0
-  avant-garde()
-  font-size 13px
+  padding 10px 0
   &:first-child
     text-align left
   &:last-child
     text-align right
+.avant-garde-results-list-item-cell
+  @extends .results-list-item-cell
+  avant-garde-size('body')
+.garamond-results-list-item-cell
+  @extends .results-list-item-cell
+  garamond-size('s-body')

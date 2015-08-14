@@ -167,10 +167,10 @@ describe 'PartnerShow', ->
       @partnerShow.openingThisWeek().should.not.be.true
       # if today is the prior saturday and show is opening on a thursday
       @today = moment('2015-04-04T04:00:00+00:00')
-      @partnerShow.openingThisWeek(@today).should.be.true
+      @partnerShow.openingThisWeek(@today).should.be.true()
       # if today is the prior thursday and the show is opening on a thursday
       @today = moment('2015-04-02T04:00:00+00:00')
-      @partnerShow.openingThisWeek(@today).should.be.false
+      @partnerShow.openingThisWeek(@today).should.be.false()
 
   describe '#isEndingSoon', ->
     beforeEach ->
@@ -178,14 +178,14 @@ describe 'PartnerShow', ->
       @partnerShow.set 'end_at', @ending
 
     it 'returns a boolean if the show ends within the desired timeframe (default 5 days)', ->
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(3, 'days')).should.be.true
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5, 'days')).should.be.true
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.1, 'days')).should.be.false
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(6, 'days')).should.be.false
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(3, 'days')).should.be.true()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5, 'days')).should.be.true()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.1, 'days')).should.be.false()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(6, 'days')).should.be.false()
 
     it 'supports custom day values for "soon"', ->
-      @partnerShow.isEndingSoon(2, moment(@ending).subtract(3, 'days')).should.be.false
-      @partnerShow.isEndingSoon(3, moment(@ending).subtract(3, 'days')).should.be.true
+      @partnerShow.isEndingSoon(2, moment(@ending).subtract(3, 'days')).should.be.false()
+      @partnerShow.isEndingSoon(3, moment(@ending).subtract(3, 'days')).should.be.true()
 
   describe '#endingIn', ->
     beforeEach ->
@@ -203,9 +203,9 @@ describe 'PartnerShow', ->
       @partnerShow.set 'start_at', @starting
 
     it 'returns a boolean value for whether or not the show opens *today*', ->
-      @partnerShow.isOpeningToday(moment(@starting).subtract(1, 'day')).should.be.false
-      @partnerShow.isOpeningToday(moment(@starting).add(1, 'day')).should.be.false
-      @partnerShow.isOpeningToday(moment(@starting)).should.be.true
+      @partnerShow.isOpeningToday(moment(@starting).subtract(1, 'day')).should.be.false()
+      @partnerShow.isOpeningToday(moment(@starting).add(1, 'day')).should.be.false()
+      @partnerShow.isOpeningToday(moment(@starting)).should.be.true()
 
   describe '#contextualLabel', ->
     describe 'with name', ->
@@ -220,3 +220,148 @@ describe 'PartnerShow', ->
         new PartnerShow(artists: [0], fair: null).contextualLabel().should.equal 'Solo Show'
         new PartnerShow(artists: [0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
         new PartnerShow(artists: [0, 0, 0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
+
+  describe '#daySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns true if a show has day schedules', ->
+      @partnerShow.daySchedules().should.be.true()
+
+    it 'returns false if a show has no schedules', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: []
+      @partnerShow.daySchedules().should.be.false()
+
+  describe '#formatDaySchedule', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+      @partnerShow.get('location').day_schedules.push
+          _id: "5543d89472616978f1e40100",
+          start_time: 76000,
+          end_time: 88400,
+          day_of_week: "Tuesday"
+
+    it 'returns the formatted day schedule for a day of the week with a day schedule', ->
+      @partnerShow.formatDaySchedule('Monday').should.match { start: 'Monday', hours: '10am–7pm' }
+
+    it 'returns the formatted day schedule for a day of the week with no day schedule', ->
+      @partnerShow.formatDaySchedule('Friday').should.match { start: 'Friday', hours: 'Closed' }
+
+    it 'returns the formatted day schedule for a day with multiple schedule blocks', ->
+      @partnerShow.formatDaySchedule('Tuesday').should.match { start: 'Tuesday', hours: '10am–7pm, 9:06pm–12:33am' }
+
+  describe '#formatDaySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+      @partnerShow.get('location').day_schedules.push
+          _id: "5543d89472616978f1e40100",
+          start_time: 76000,
+          end_time: 88400,
+          day_of_week: "Tuesday"
+
+    it 'returns a formatted string describing the days open and hours for the show', ->
+      @partnerShow.formatDaySchedules().should.match [
+        { hours: '10am–7pm', start: 'Monday' }
+        { hours: '10am–7pm, 9:06pm–12:33am', start: 'Tuesday' }
+        { hours: '10am–7pm', start: 'Wednesday' }
+        { hours: '10am–7pm', start: 'Thursday' }
+        { hours: 'Closed', start: 'Friday' }
+        { hours: 'Closed', start: 'Saturday' }
+        { hours: '10am–7pm', start: 'Sunday' }
+      ]
+
+  describe '#formatModalDaySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns a formatted string describing the days open and hours for the show', ->
+      @partnerShow.formatModalDaySchedules().should.match [ days: 'Monday–Thursday, Sunday', hours: '10am–7pm' ]
+
+    it 'returns a correctly formatted string when a show has unusual hours', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: [
+            {
+              _id: "5543d893726169750b990100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Wednesday"
+            }, {
+              _id: "5543d8937261697591bd0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Monday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d8947261690f169d0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Saturday"
+            }, {
+              _id: "5543d8947261695aea200200",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Thursday"
+            }
+          ]
+      @partnerShow.formatModalDaySchedules().should.match [
+        { days: 'Monday, Saturday', hours: '12:30am–7:30pm' }
+        { days: 'Tuesday–Thursday', hours: '11:45am–7:09pm' }
+      ]
+
+    it 'returns a correctly formatted string when a show has overlapping days and multiple time blocks', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: [
+            {
+              _id: "5543d893726169750b990100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Wednesday"
+            }, {
+              _id: "5543d8937261697591bd0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Monday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 82359,
+              end_time: 98992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d8947261690f169d0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Saturday"
+            }, {
+              _id: "5543d8947261695aea200200",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Thursday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 82359,
+              end_time: 98992,
+              day_of_week: "Wednesday"
+            }
+          ]
+      @partnerShow.formatModalDaySchedules().should.match [
+        { days: 'Monday, Saturday', hours: '12:30am–7:30pm' },
+        { days: 'Tuesday–Wednesday', hours: '11:45am–7:09pm, 10:52pm–3:29am' },
+        { days: 'Thursday', hours: '11:45am–7:09pm' }
+      ]

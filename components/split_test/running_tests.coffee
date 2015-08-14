@@ -15,26 +15,9 @@
 # module.exports = {}
 
 module.exports =
-  gallery_partnerships_apply:
-    key: 'gallery_partnerships_apply'
-    outcomes:
-      inline: 0.5
-      link: 0.5
-    edge: 'inline'
 
-  inquiry_flow:
-    key: 'inquiry_flow'
+  posts_section_name:
+    key: 'posts_section_name'
     outcomes:
-      original_flow: 0.5
-      updated_flow: 0.5
-    edge: 'updated_flow'
-
-  artist_cta:
-    key: 'artist_cta'
-    outcomes:
-      zig_zag: 1/4
-      footer_modal_link: 1/4
-      footer_modal_inline: 1/4
-      control: 1/4
-    dimension: 'dimension4'
-    scope: 'local'
+      magazine: 4/5
+      editorial: 1/5

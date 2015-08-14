@@ -27,24 +27,6 @@ module.exports = (options) =>
 module.exports.getUserAgent = ->
   window?.navigator?.userAgent
 
-module.exports.trackPageview = =>
-  # Don't send pageviews for admins
-  return if sd.CURRENT_USER?.type is 'Admin'
-
-  @ga? 'send', 'pageview'
-
-  # Track 15 second bounce rate
-  setTimeout =>
-    @ga? 'send', 'event', '15 Seconds', 'time on page more than 15 seconds'
-  , 15000
-
-  # Track 3 Minute bounce rate
-  setTimeout =>
-    @ga? 'send', 'event', '3 Minutes', 'time on page more than 3 minutes'
-  , 180000
-
-  snowplow?('trackPageView')
-
 module.exports.snowplowStruct = (category, action, label, property, value = '0.0', contexts = {}) ->
   # Don't track admins
   return if sd.CURRENT_USER?.type is 'Admin'
@@ -207,6 +189,5 @@ module.exports.load = (callback) ->
     return if called
     called = true
     callback()
-  window.mixpanel ?= {}
-  if mixpanel.__loaded then cb() else mixpanel.set_config?(loaded: cb)
+  if mixpanel?.__loaded then cb() else window.analytics.ready cb
   setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not

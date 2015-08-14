@@ -7,9 +7,8 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
+Artists = require '../../../../collections/artists'
 Artwork = require '../../../../models/artwork'
-Fair = require '../../../../models/fair'
-Sale = require '../../../../models/sale'
 CurrentUser = require '../../../../models/current_user'
 
 describe 'ArtworkView', ->
@@ -25,7 +24,8 @@ describe 'ArtworkView', ->
     benv.teardown false
 
   beforeEach (done) ->
-    @artist = new Artist(fabricate 'artist')
+    @artists = new Artists [fabricate 'artist']
+    @artist = @artists.first()
     sinon.stub @artist.related().artworks, 'fetch'
 
     # Interestingly: jQuery "Every attempt is made to convert the string to a
@@ -42,6 +42,7 @@ describe 'ArtworkView', ->
       sd: {}
       artist: @artist
       artwork: @artwork
+      artists: @artists
       asset: (->)
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
@@ -51,8 +52,9 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
+      @ArtworkView.__set__ 'RelatedNavigationView', Backbone.View
 
-      stubChildClasses mod, @, ['BlurbView', 'VideoView'], []
+      stubChildClasses mod, @, ['VideoView'], []
 
       @artworkColumnsView = { appendArtworks: sinon.stub() }
       @ArtworkColumnsView = sinon.stub()
@@ -71,7 +73,7 @@ describe 'ArtworkView', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->), snowplowStruct: sinon.stub() }
-      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
@@ -97,14 +99,14 @@ describe 'ArtworkView', ->
 
     describe 'when an artwork changes', ->
       it 'only renders if the artwork sale_message changes', ->
-        @renderDetailSpy.called.should.not.be.ok
+        @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'sale_message', 'SOLD'
-        @renderDetailSpy.called.should.be.ok
+        @renderDetailSpy.called.should.be.ok()
 
       it 'only renders if the artwork ecommerce changes', ->
-        @renderDetailSpy.called.should.not.be.ok
+        @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'ecommerce', true
-        @renderDetailSpy.called.should.be.ok
+        @renderDetailSpy.called.should.be.ok()
 
     describe '#initialize', ->
       it 'has an artist and an artwork', ->
@@ -112,78 +114,13 @@ describe 'ArtworkView', ->
         @view.artist.id.should.equal @artist.id
 
       it 'has a following collection if the user is logged in', ->
-        _.isUndefined(@view.following).should.not.be.ok
-
-    describe '#setupRelatedLayers', ->
-      describe 'has no relations', ->
-        beforeEach ->
-          @artwork.fetchRelatedCollections = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
-
-        it 'sets up layered search by default', ->
-          @view.setupRelatedLayers()
-          @view.belowTheFoldView.setupLayeredSearch.called.should.be.ok
-
-      describe 'has relations', ->
-        beforeEach ->
-          @view.belowTheFoldView.setupFair = sinon.stub()
-          @view.belowTheFoldView.setupSale = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
-          @view.setupFeatureNavigation = sinon.stub()
-          @artwork.fetchRelatedCollections = sinon.stub()
-          @view.deltaTrackPageView = sinon.stub()
-
-          fairs = new Backbone.Collection [new Fair(id: 'i am a fair')]
-          fairs.kind = 'fairs'
-          sales = new Backbone.Collection [new Sale(id: 'i am a sale')]
-          sales.kind = 'sales'
-
-          @artwork.relatedCollections = [sales, fairs]
-
-        it 'sets up for the appropriate relations', ->
-          @view.setupRelatedLayers()
-          @view.belowTheFoldView.setupFair.called.should.be.ok
-          @view.belowTheFoldView.setupFair.args[0][0].get('id').should.equal 'i am a fair'
-          @view.setupFeatureNavigation.called.should.be.ok
-          @view.setupFeatureNavigation.args[0][0].model.get('id').should.equal 'i am a fair'
-          @view.setupFeatureNavigation.args[0][0].kind.should.equal 'fair'
-          @view.belowTheFoldView.setupSale.called.should.be.ok
-          @view.belowTheFoldView.setupSale.args[0][0].sale.get('id').should.equal 'i am a sale'
-          @view.belowTheFoldView.setupSale.args[0][0].saved.constructor.name.should.equal 'ArtworkCollection'
-          @view.deltaTrackPageView.called.should.be.ok
-          @view.deltaTrackPageView.args[0][0].get('id').should.equal 'i am a fair'
-
-        describe 'zig zag', ->
-          beforeEach ->
-            @sales = new Backbone.Collection [new Sale id: 'i am a sale']
-            @sales.kind = 'sales'
-            @artwork.relatedCollections = [@sales]
-            @view.setupZigZag = sinon.stub()
-            @view.setupAuctionDetailView = sinon.stub()
-
-          describe '#hasAnyAuctions', ->
-            it 'returns true or false if there is auction or not', ->
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
-              @sales.first().set 'is_auction', true
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.true
-              @sales.first().set 'is_auction', false
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
-
-          it 'displays if there is no auction', ->
-            @sales.first().set 'is_auction', false
-            @view.setupRelatedLayers()
-            @view.setupZigZag.called.should.be.true
-
-          it 'does not display if there is an auction', ->
-            @sales.first().set 'is_auction', true
-            @view.setupRelatedLayers()
-            @view.setupZigZag.called.should.be.false
+        _.isUndefined(@view.following).should.not.be.ok()
 
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->
-        _.isUndefined(@view.currentUser).should.not.be.ok
-        _.isUndefined(@view.saved).should.not.be.ok
-        _.isUndefined(@view.following).should.not.be.ok
+        _.isUndefined(@view.currentUser).should.not.be.ok()
+        _.isUndefined(@view.saved).should.not.be.ok()
+        _.isUndefined(@view.following).should.not.be.ok()
 
     describe '#setupArtistArtworks', ->
       it 'fetches a sample of the artwork artist\'s works', ->
@@ -222,27 +159,27 @@ describe 'ArtworkView', ->
 
         @view.artwork.activeImage().id.should.equal @$imageLink.data('id')
 
-        @$imageLink.hasClass('is-active').should.be.ok
+        @$imageLink.hasClass('is-active').should.be.ok()
 
-    describe '#setupFollowButton', ->
+    describe '#setupFollowButtons', ->
       it 'syncs the following collection with the artist id', ->
         syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
-        @view.setupFollowButton()
+        @view.setupFollowButtons()
         syncFollowsSpy.args[0][0].should.containEql @artist.id
 
     describe '#setupVideoView', ->
       it 'doesnt do anything for non-video artworks', ->
         @view.artwork.set category: 'Painting'
         @view.setupVideoView()
-        @VideoView.called.should.not.be.ok
+        @VideoView.called.should.not.be.ok()
       it 'inits a video view for video artworks', ->
         @view.artwork.set category: 'Video', website: 'youtube.com/foobar'
         @view.setupVideoView()
-        @VideoView.called.should.be.ok
+        @VideoView.called.should.be.ok()
 
     describe '#selectEdition', ->
       it 'sets a private value on the view that is otherwise undefined', ->
-        _.isUndefined(@view.__selectedEdition__).should.be.ok
+        _.isUndefined(@view.__selectedEdition__).should.be.ok()
         @view.$('.aes-radio-button').last().trigger('change')
         @view.__selectedEdition__.should.equal @artwork.editions.last().id
 
@@ -256,7 +193,7 @@ describe 'ArtworkView', ->
     describe '#buy', ->
       it 'should pass in the correct arguments when the buy button is clicked', ->
         ($target = @view.$('.artwork-buy-button')).click()
-        @acquireArtworkStub.called.should.be.ok
+        @acquireArtworkStub.called.should.be.ok()
         @acquireArtworkStub.args[0][0].should.equal @artwork
         @acquireArtworkStub.args[0][1].text().should.equal $target.text()
         @acquireArtworkStub.args[0][2].should.equal @view.selectedEdition()
@@ -265,21 +202,21 @@ describe 'ArtworkView', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> null }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
-      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
 
     describe '#initialize', ->
       it 'does not have a following collection if the user is not logged in', ->
-        _.isUndefined(@view.following).should.be.ok
+        _.isUndefined(@view.following).should.be.ok()
 
     describe '#displayZigZag', ->
       beforeEach ->
         @view.$el.append $('<div class="artwork-inquiry-button"></div>')
       it 'should display as long as the work is not acquireable and it is for sale', ->
         @view.artwork.set { 'acquireable': false, 'forsale': true}
-        @view.displayZigZag().should.be.true
+        @view.displayZigZag().should.be.true()
         @view.artwork.set { 'acquireable': true, 'forsale': true}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()
         @view.artwork.set { 'acquireable': false, 'forsale': false}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()
         @view.artwork.set { 'acquireable': true, 'forsale': false}
-        @view.displayZigZag().should.be.false
+        @view.displayZigZag().should.be.false()

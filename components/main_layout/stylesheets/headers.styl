@@ -35,8 +35,7 @@
 .bisected-header-cell
   float left
   text-align left
-  font-size 17px
-  line-height 26px
+  garamond-size('s-body')
   &:last-child
     width 40%
   &:first-child
@@ -44,5 +43,15 @@
     padding-right 20px
   h2
     margin 5px 0
-    avant-garde()
-    font-size default-avant-garde-font-size
+    avant-garde-size('body')
+  @media screen and (max-width: 768px)
+    float none
+    block-margins(20px)
+    &:first-child
+    &:last-child
+      width 100% !important
+.evenly-bisected-header-cell
+  @extends .bisected-header-cell
+  &:last-child
+  &:first-child
+    width 50%

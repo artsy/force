@@ -37,7 +37,7 @@ module.exports = ->
         </div>
       </div>
     """
-    $('.about-2-foreground').append $section
+    $('.about-foreground').append $section
     video = $('#carter-video')[0]
     $('#carter-section-container .about-pull-blurb').waypoint
       handler: (dir) ->

@@ -8,10 +8,7 @@ track = require('../../../lib/analytics.coffee').track
 Cookies = require 'cookies-js'
 views =
   CollectView: require './views/collect.coffee'
-  LocationView: require './views/location.coffee'
   ArtistsView: require './views/artists.coffee'
-  GalleriesView: require './views/galleries.coffee'
-  InstitutionsView: require './views/institutions.coffee'
   PriceRangeView: require './views/price_range.coffee'
   CategoriesView: require './views/categories.coffee'
   BookmarksView: require './views/bookmarks.coffee'

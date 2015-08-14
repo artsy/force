@@ -1,80 +1,85 @@
 _ = require 'underscore'
+Q = require 'q'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
-routes = require '../routes'
+CurrentUser = require '../../../models/current_user'
+routes = rewire '../routes'
 
 describe '/auction routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-
+    sinon.stub Q, 'promise'
     @req = params: id: 'foobar'
     @res = render: sinon.stub(), locals: sd: {}
+    @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
+    Q.promise.restore()
 
-  it 'first fetches the feature', ->
-    routes.index @req, @res
-    Backbone.sync.args[0][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=foobar'
+  it 'fetches the auction data and renders the index template', (done) ->
+    routes.index @req, @res, @next
 
-  it 'then fetches the remaining aspects of the auction', (done) ->
-    routes.index @req, @res
-    Backbone.sync.args[0][2].success [{ owner: {} }]
+    Backbone.sync.callCount.should.equal 2
+
+    Backbone.sync.args[0][1].url().should.containEql '/api/v1/sale/foobar'
+    Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
+    Backbone.sync.args[1][2].data.should.equal 'total_count=1&size=10'
+
+    Backbone.sync.args[0][2].success fabricate 'sale', is_auction: true
+    Backbone.sync.args[1][2].success {}
+
     _.defer =>
-      Backbone.sync.callCount.should.equal 6
+      Q.promise.args[0][0]()
+      _.last(Backbone.sync.args)[1].url.should.containEql '/api/articles'
 
-      Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/foobar'
-
-      Backbone.sync.args[2][1].url().should.containEql '/api/v1/feature'
-
-      # Start of fetchPartner
-      Backbone.sync.args[3][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
-      Backbone.sync.args[3][2].data.should.eql size: 1
-
-      Backbone.sync.args[4][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
-      Backbone.sync.args[4][2].data.should.equal 'total_count=1&size=10'
-
+      @next.called.should.be.false()
+      @res.render.args[0][0].should.equal 'index'
+      _.keys(@res.render.args[0][1]).should.eql [
+        'auction'
+        'artworks'
+        'saleArtworks'
+        'articles'
+        'user'
+        'state'
+        'displayBlurbs'
+        'maxBlurbHeight'
+        'footerItems'
+      ]
       done()
 
-  xit 'renders the index template', (done) ->
-    routes.index @req, @res
-    Backbone.sync.args[0][2].success [{ owner: {} }]
+  it 'fetches the auction data and nexts to the sale if it is a sale', (done) ->
+    routes.index @req, @res, @next
+    Backbone.sync.args[0][2].success fabricate 'sale', is_auction: false
+    Backbone.sync.args[1][2].success {}
     _.defer =>
-      successes = _.map Backbone.sync.args[1..-1], (args) -> args[2].success
-      successes[0]({})
-      successes[1]({})
-      successes[2]([])
-      successes[3]([])
-      successes[4]([])
-      _.defer =>
-        @res.render.args[0][0].should.equal 'index'
-        _.keys(@res.render.args[0][1]).should.eql [
-          'auction'
-          'feature'
-          'profile'
-          'artworks'
-          'saleArtworks'
-          'user'
-          'sets'
-        ]
-        done()
+      @next.called.should.be.true()
+      @res.render.called.should.be.false()
+      done()
+
+  it 'passes down the error', (done) ->
+    routes.index @req, @res, @next
+    @next.called.should.be.false()
+    Backbone.sync.args[0][2].error()
+    Backbone.sync.args[1][2].error()
+    _.defer =>
+      @next.called.should.be.true()
+      done()
 
   describe 'with logged in user', ->
     beforeEach (done) ->
       @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
-      routes.index @req, @res
-      Backbone.sync.args[0][2].success [{ owner: {} }]
+      routes.index @req, @res, @next
       _.defer =>
         @userReqs = _.last Backbone.sync.args, 2
         done()
 
-    it 'fetches the full user & bidder positions', ->
-      @userReqs[0][1].url().should.containEql '/api/v1/me'
+    it 'fetches the bidder positions', ->
       @userReqs[1][2].url.should.containEql '/api/v1/me/bidders'
       @userReqs[1][2].data.sale_id.should.equal 'foobar'
 
     it 'sets the `registered_to_bid` attr', ->
-      @userReqs[1][2].success [{}]
-      @req.user.get('registered_to_bid').should.be.true
+      @userReqs[1][2].success ['existy']
+      @req.user.get('registered_to_bid').should.be.true()

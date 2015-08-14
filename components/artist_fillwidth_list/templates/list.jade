@@ -1,8 +1,9 @@
 for artist in artists
-  .artist-fillwidth-list-item( data-id=artist.get('id') )
-    h4: a.faux-underline-hover-large( href=artist.href() )= artist.get('name')
-    .plus-follow-button
-      .icon-follow-circle
-      .follow-button-text
-    .artist-fillwidth-list-artworks
-      .loading-spinner
+  if artist.get('id')
+    .artist-fillwidth-list-item( data-id=artist.get('id') )
+      h4: a.faux-underline-hover-large( href=artist.href() )= artist.get('name')
+      .plus-follow-button
+        .icon-follow-circle
+        .follow-button-text
+      .artist-fillwidth-list-artworks
+        .loading-spinner

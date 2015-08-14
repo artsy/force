@@ -1,0 +1,13 @@
+.articles-insights-container
+  .articles-insights
+    .articles-insights-mainheader Artsy Insights for Galleries
+    .articles-insights-subheader Recieve periodical insights from Artsy's Gallery Team
+    .articles-insights-form
+      - var email = ''
+      if sd.CURRENT_USER && sd.CURRENT_USER.email
+        - email = sd.CURRENT_USER.email
+      input.js-articles-insights-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your Email', required value="#{email}")
+      button.avant-garde-button-black.js-articles-insights-subscribe Subscribe
+  .articles-insights-thanks
+    .articles-insights-mainheader Thank you.
+    .articles-insights-subheader You are now subscribed to Artsy Insights for Galleries.

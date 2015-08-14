@@ -1,0 +1,12 @@
+- index = index || 0
+
+.mgr-arrow-left.icon-chevron-left.js-mgr-prev
+
+.mgr-dots
+  for x, i in new Array(length)
+    .mgr-dot.js-mgr-select(
+      class= (index === i ? 'is-active' : undefined)
+      data-index= i
+    ) •
+
+.mgr-arrow-right.icon-chevron-right.js-mgr-next

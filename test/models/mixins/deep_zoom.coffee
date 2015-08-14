@@ -16,13 +16,13 @@ describe 'Deep Zoom mixin', ->
 
     describe '#canDeepZoom', ->
       it 'should be deep-zoomable if *all* the deep zoom attributes are present', ->
-        @image.canDeepZoom().should.be.ok
+        @image.canDeepZoom().should.be.ok()
         deepZoomAttrs = ['tile_base_url', 'tile_size', 'tile_overlap', 'tile_format', 'max_tiled_height', 'max_tiled_width']
 
         # Select an attribute and random and unset it
         attr = deepZoomAttrs[Math.floor(Math.random() * deepZoomAttrs.length)]
         @image.unset attr
-        @image.canDeepZoom().should.not.be.ok
+        @image.canDeepZoom().should.not.be.ok()
 
       it 'ensures a trailing slash', ->
         @image.set 'tile_base_url', 'http://static0.artsy.net/additional_images/4e7cb83e1c80dd00010038e2/1/dztiles-512-0'

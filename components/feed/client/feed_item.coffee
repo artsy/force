@@ -21,13 +21,21 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   artworksPage: 1
   artworksPageSize: 8
 
-  initialize: (options) ->
+  initialize: ({@additionalParams, @artworkCollection}) ->
     throw 'requires a model' unless @model
     throw 'requires an $el' unless @$el.length > 0
-    @artworkCollection = options.artworkCollection
+    @hideArtworks()
     _.defer =>
       @setupArtworkSaveControls()
       @setupArtworkImpressionTracking()
+
+  hideArtworks: ->
+    _.each(@model.artworks().rest(@model.get('initialArtworkSize')), ((artwork) =>
+      @$el.find("figure[data-artwork='#{artwork.get('id')}']").hide()))
+
+  showArtworks: ->
+    @$el.find(".artwork-item:not(:visible)").fadeIn('fast')
+    @$el.find(".feed-item-see-more").hide()
 
   moreArtworksClick: (event) =>
     analytics.track.click "Clicked show all artworks on feed item"
@@ -36,9 +44,19 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
     @$seeMore.addClass 'is-loading'
-    @model.toChildModel().fetchArtworks
-      success: (artworks) =>
-        @$seeMore.remove()
+    @artworksPage++
+    @model.toChildModel().related().artworks.fetch
+      data:
+        size: @artworksPageSize * @artworksPage
+      success: (artworks, response, options) =>
+        artworksLeft = @model.get('eligible_artworks_count') - artworks.length
+
+        if artworksLeft
+          @$seeMore.html "See #{artworksLeft} more artworks"
+          @$seeMore.removeClass 'is-loading'
+        else
+          @$seeMore.remove()
+
         @$('.feed-large-artworks-columns').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(4)
         @setupArtworkSaveControls artworks
     false
@@ -79,5 +97,5 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
       success: (artwork) =>
           new ContactPartnerView
             artwork: artwork
-            partner: artwork.get('partner')
+            partner: artwork.related().partner
     false

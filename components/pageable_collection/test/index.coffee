@@ -20,4 +20,4 @@ describe 'DerivedCollection', ->
 
   describe '#fetchUntilEnd', ->
     it 'does not throw', ->
-      @collection.fetchUntilEnd().should.be.true
+      @collection.fetchUntilEnd().should.be.true()

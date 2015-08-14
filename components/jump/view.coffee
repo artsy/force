@@ -11,9 +11,15 @@ module.exports = class JumpView extends Backbone.View
     duration: 500 # Scroll animation duration
     threshold: 400 # Point at which to hide the navigation
     frequency: 150 # How often scroll position is checked
+    position: 0 # where the button scrolls to
 
   initialize: (options = {}) ->
-    { @duration, @threshold, @frequency, @direction } = _.defaults options, @defaults
+    {
+      @duration,
+      @threshold,
+      @frequency,
+      @direction,
+      @position } = _.defaults options, @defaults
 
     @$el.addClass "from-#{@direction}"
     @isScrolling = false
@@ -58,7 +64,7 @@ module.exports = class JumpView extends Backbone.View
   # and hides the jump navigation
   scrollToTop: ->
     @shouldBe 'hidden'
-    @scrollToPosition 0
+    @scrollToPosition @position
     analytics.track.click 'Clicked filter scrollToTop'
 
   remove: ->

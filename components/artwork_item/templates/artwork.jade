@@ -6,7 +6,7 @@
 - displayPrice != null ? displayPrice : displayPrice = true
 - saleArtwork = artwork.related().saleArtwork
 
-figure.artwork-item( data-artwork=artwork.get('id') )
+figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
       if imageWidth
@@ -23,12 +23,13 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else
         include ../save_controls/template
   figcaption.artwork-item-caption
-    if artwork.has('artist')
+    if artwork.related().artists.length
       p.artwork-item-artist.artwork-item-overflow
-        if artwork.get('artist').public
-          a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
-        else
-          = artwork.artistName()
+        for artist in artwork.related().artists.models
+          if artist.get('public')
+            a.faux-underline-hover( href=artist.href() )= artist.displayName()
+          else
+            = artist.displayName()
     if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
       .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
@@ -46,10 +47,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
 
     //- Auction estimate
     if saleArtwork.id && isAuction
-      - var estimate = saleArtwork.estimate()
-      if estimate
+      if saleArtwork.estimate()
         .artwork-item-estimate
-          | #{estimate}
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
     //- Auction related pricing information
     - var displayBidStatus = saleArtwork.id && isAuction

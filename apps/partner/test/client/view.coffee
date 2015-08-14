@@ -70,9 +70,9 @@ describe 'PartnerView', ->
 
       it 'uses the right default params to initialize the view', ->
         @view.renderSection('collection')
-        @CollectionView.args[0][0].isForSale.should.not.be.ok
+        @CollectionView.args[0][0].isForSale.should.not.be.ok()
 
       it 'overrides default params when passing in extra params', ->
         @view.renderSection('collection', { isForSale: true, feature: 'giant' })
-        @CollectionView.args[0][0].isForSale.should.be.ok
+        @CollectionView.args[0][0].isForSale.should.be.ok()
         @CollectionView.args[0][0].feature.should.equal 'giant'

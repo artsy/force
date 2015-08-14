@@ -2,9 +2,10 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
-FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
-deslugify = require '../../../../components/deslugify/index.coffee'
+{ setupFilter } = require '../../../../components/filter2/index.coffee'
+humanize = require('underscore.string').humanize
 { API_URL, SECTION } = require('sharify').data
+aggregationParams = require './aggregations.coffee'
 
 module.exports = class FairBrowseView extends Backbone.View
 
@@ -12,15 +13,14 @@ module.exports = class FairBrowseView extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
-    @filterArtworksView = new FilterArtworksView
-      el: $ '.fair-page-content'
-      artworksUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
-      countsUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
-      urlRoot: "#{@profile.id}/browse"
-      skipReset: true
-      customPageTitle: @profile.displayName()
-    @artworkParams = @filterArtworksView.params
-    @counts = @filterArtworksView.counts
+
+    @setupBoothView()
+    @setupArtworkView()
+    @setupArtworkParams()
+
+    @highlightHome()
+
+  setupBoothView: ->
     @boothsView = new BoothsView
       el: $ '.fair-page-content'
       fair: @fair
@@ -29,21 +29,22 @@ module.exports = class FairBrowseView extends Backbone.View
     @boothParams = @boothsView.params
     @boothParams.on 'change reset', @boothsSection
     @boothParams.on 'change reset', @updateBoothPageTitle
+
+  setupArtworkView: ->
+    { params } = setupFilter
+      el: $ '.fair-page-content'
+      stuckFacet: @fair
+      stuckParam: 'fair_id'
+      aggregations: aggregationParams
+      hideForSale: true
+      includeAllWorks: true
+      startHistory: false
+
+    @artworkParams = params
+
+  setupArtworkParams: ->
     @artworkParams.on 'change reset', @artworksSection
     @artworkParams.on 'change reset', @renderArtworksHeader
-    @artworkParams.on 'change reset', @updateFilterPageTitle
-    @counts.fetch
-      success: =>
-        # The order here is very important
-        #
-        # We wait until we have all the required information and then
-        # give the router the last say about which panel to display.
-        Backbone.history.start pushState: true
-
-    @highlightHome()
-
-  updateFilterPageTitle: =>
-    @updatePageTitle "Browse #{@counts.get('total')} Artworks"
 
   updateBoothPageTitle: =>
     @updatePageTitle(
@@ -74,7 +75,7 @@ module.exports = class FairBrowseView extends Backbone.View
   renderArtworksHeader: =>
     @$('#fair-browse-artworks-header').text(
       if @artworkParams.get 'related_gene'
-        geneName = deslugify @artworkParams.get('related_gene')
+        geneName = humanize @artworkParams.get('related_gene')
       else
         ''
     )

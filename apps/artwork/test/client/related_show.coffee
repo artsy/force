@@ -40,16 +40,22 @@ describe 'RelatedShowView', ->
   describe '#setup', ->
     it 'ensures the current artwork is not present in the rendered collection', ->
       @view.collection.length.should.equal 2
-      _.contains(@view.collection.pluck 'id', @artwork.id).should.not.be.ok
+      _.contains(@view.collection.pluck 'id', @artwork.id).should.not.be.ok()
     it 'fades in the el', ->
-      @view.$el.hasClass('is-fade-in').should.be.ok
+      @view.$el.hasClass('is-fade-in').should.be.ok()
 
   describe '#render', ->
     it 'ensures the el is visible', ->
-      @view.$el.is(':visible').should.be.ok
+      @view.$el.is(':visible').should.be.ok()
 
     it 'renders the partner metadata and artworks shell', ->
       html = @view.$el.html()
       html.should.containEql 'Other works in show'
       html.should.containEql @view.show.get('partner').name
-      @view.$('#artwork-related-show-artworks').length.should.be.ok
+      @view.$('#artwork-related-show-artworks').length.should.be.ok()
+
+    it 'calls the show a booth if its in a fair', ->
+      @view.show.set 'fair', {id: 'cabbies-fair'}
+      @view.render()
+      html = @view.$el.html()
+      html.should.containEql 'Other works in booth'

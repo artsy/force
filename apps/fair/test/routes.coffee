@@ -1,4 +1,4 @@
-{ fabricate } = require 'antigravity'
+{ fabricate, fabricate2 } = require 'antigravity'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -6,6 +6,8 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
+Fairs = require '../../../collections/fairs.coffee'
+FairOrganizer = require '../../../models/fair_organizer.coffee'
 Profile = require '../../../models/profile.coffee'
 FilterSuggest = require '../../../models/filter_suggest'
 FilteredSearchOptions = require '../../../models/filter_suggest'
@@ -33,25 +35,25 @@ describe 'Fair routes', ->
       @res.locals.sd.FAIR = undefined
 
       routes.info @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.overview @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.forYou @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.fairArticles @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.favorites @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.follows @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
       routes.browse @req, @res, (next = sinon.stub())
-      next.called.should.be.ok
+      next.called.should.be.ok()
 
   describe '#info', ->
 
@@ -64,6 +66,7 @@ describe 'Fair routes', ->
 
     it 'renders the overview template', ->
       routes.overview @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       @res.locals.sd.SECTION.should.equal 'overview'
       @res.render.args[0][0].should.equal 'overview'
 
@@ -121,8 +124,8 @@ describe 'Fair routes', ->
 
     it 'renders index', ->
       routes.browse @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       @res.render.args[0][0].should.equal 'index'
-
 
   describe '#showRedirect', ->
 
@@ -172,7 +175,7 @@ describe '#fetchFairData', ->
   it 'fetches the fair data', ->
     routes.fetchFairData @req, @res, @next
     @success()
-    Fair::fetchOverviewData.called.should.be.ok
+    Fair::fetchOverviewData.called.should.be.ok()
 
   it 'sets a bunch of locals', ->
     routes.fetchFairData @req, @res, @next
@@ -190,5 +193,37 @@ describe '#fetchFairData', ->
   it 'caches the big blob of data', ->
     routes.fetchFairData @req, @res, @next
     @success()
-    (@cache.setHash.args[0][1].fair?).should.be.ok
-    (@cache.setHash.args[0][1].filterSuggest?).should.be.ok
+    (@cache.setHash.args[0][1].fair?).should.be.ok()
+    (@cache.setHash.args[0][1].filterSuggest?).should.be.ok()
+
+describe '#fetchFairByOrganizerYear', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+    profile = new Profile _.extend fabricate('fair_organizer_profile'), owner:fabricate('fair_organizer')
+
+    @fairs = [
+      fabricate('fair', start_at: new Date("2-2-2014"), id: '2014', default_profile_id: '2014'),
+      fabricate('fair', start_at: new Date("2-2-2015"), id: '2015', default_profile_id: '2015'),
+      fabricate('fair', start_at: new Date("2-2-2016"), id: '2016', default_profile_id: '2016')
+    ]
+
+    @req = { params: { id: 'the-armory-show', year: '2015' } }
+    @res = { locals: { sd: {}, profile: profile } }
+    @next = sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'fetches the correct fair by year through the fair organizer', ->
+    routes.fetchFairByOrganizerYear @req, @res, @next
+    Backbone.sync.args[0][2].success @fairs
+    @next.called.should.not.be.ok()
+    Backbone.sync.args[1][1].attributes.id.should.equal '2015'
+
+  it 'nexts if the fair organizer does not have a fair with requested year', ->
+    @req = { params: { id: 'the-armory-show', year: '2017' } }
+    routes.fetchFairByOrganizerYear @req, @res, @next
+    Backbone.sync.args[0][2].success @fairs
+    @next.called.should.be.ok()

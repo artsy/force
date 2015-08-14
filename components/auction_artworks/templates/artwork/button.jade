@@ -1,8 +1,8 @@
 //- Only when the button is enabled use the black state.
 //- The disabled black state has been deemed unsuitable for this context...
-a.is-block.js-bid-button(
+a.is-block(
   data-id= artwork.id
   href= button.href
-  class= button.enabled ? 'avant-garde-button-black' : 'avant-garde-button'
+  class= button.classes + ' ' + (button.enabled ? 'avant-garde-button-black' : 'avant-garde-button')
   disabled= !button.enabled
 )= button.label

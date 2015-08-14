@@ -15,10 +15,6 @@ module.exports = class AuctionLot extends Backbone.Model
     "/artist/#{artist.id}/auction-result/#{@id}"
 
   # @return {Boolean}
-  hasImage: ->
-    @get('image_url') isnt '/assets/shared/missing_image.png'
-
-  # @return {Boolean}
   hasDimensions: ->
     (@get('dimensions')?.in or @get('dimensions')?.cm)?
 

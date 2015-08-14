@@ -30,6 +30,7 @@ describe 'DeepZoomView', ->
       Backbone.$ = $
       $.support.transition = { end: 'transitionend' }
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      $.getScript = (url, cb) -> cb()
       done()
 
   after ->
@@ -43,7 +44,6 @@ describe 'DeepZoomView', ->
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/deep_zoom.jade'), {}, =>
       DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../../client/deep_zoom'), ['template']
-      DeepZoomView.__set__ 'getScript', (x, cb) -> cb()
 
       @view = new DeepZoomView artwork: @artwork, image: @artwork.related().images.active()
       done()
@@ -56,8 +56,8 @@ describe 'DeepZoomView', ->
       @view.artwork.id.should.equal @artwork.id
 
     it 'creates throttled versions of #_zoomTo and #_detectActivity', ->
-      _.isFunction(@view.zoomTo).should.be.ok
-      _.isFunction(@view.detectActivity).should.be.ok
+      _.isFunction(@view.zoomTo).should.be.ok()
+      _.isFunction(@view.detectActivity).should.be.ok()
 
   describe '#render', ->
     describe 'when artwork#canDeepZoom is false', ->
@@ -65,7 +65,7 @@ describe 'DeepZoomView', ->
         @view.postRender = sinon.stub()
         imageStub = sinon.stub(@view.image, 'canDeepZoom').returns(false)
         @view.render()
-        @view.postRender.called.should.not.be.ok
+        @view.postRender.called.should.not.be.ok()
         imageStub.restore()
 
     describe 'when artwork#canDeepZoom is true', ->
@@ -82,10 +82,10 @@ describe 'DeepZoomView', ->
         html.should.containEql 'dz-close'
 
       it 'sets up the OpenSeadragon viewer', ->
-        _.isObject(@view.viewer).should.be.ok
+        _.isObject(@view.viewer).should.be.ok()
 
       it 'calls #postRender', ->
-        @view.postRender.called.should.be.ok
+        @view.postRender.called.should.be.ok()
 
   describe '#setupSlider', ->
     beforeEach ->
@@ -116,7 +116,7 @@ describe 'DeepZoomView', ->
     it 'sets the viewport zoom and applies constraints', ->
       @view.zoomBy (args = 1.5)
       @view.viewer.viewport.zoomBy.args[0][0].should.equal args
-      @view.viewer.viewport.applyConstraints.called.should.be.ok
+      @view.viewer.viewport.applyConstraints.called.should.be.ok()
 
   describe '#zoomIn', ->
     beforeEach ->

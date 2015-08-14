@@ -1,23 +1,23 @@
-{ API_URL, TAG } = require('sharify').data
-Tag = require '../../models/tag.coffee'
+_ = require 'underscore'
 Backbone = require 'backbone'
-FilterArtworksView = require '../../components/filter/artworks/view.coffee'
+Tag = require '../../models/tag.coffee'
 scrollFrame = require 'scroll-frame'
-
-module.exports.TagView = class TagView extends Backbone.View
-
-  initialize: ->
-    @filterView = new FilterArtworksView
-      el: $ '#tag-filter'
-      artworksUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
-      countsUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
-      urlRoot: "tag/#{@model.id}"
-      title: "Artwork related to \"#{@model.get('name')}\""
-    @filterView.reset()
+ShareView = require '../../components/share/view.coffee'
+{ TAG } = sd = require('sharify').data
+{ setupFilter } = require '../../components/filter2/index.coffee'
+aggregationParams = require './aggregations.coffee'
 
 module.exports.init = ->
-  new TagView
-    el: $ 'body'
-    model: tag = new Tag TAG
-  Backbone.history.start pushState: true
-  scrollFrame '#tag-filter a'
+  tag = new Tag TAG
+
+  new ShareView
+    el: $('#tag-share-buttons')
+
+  scrollFrame '#tag-filter a' unless sd.EIGEN
+
+  { params } = setupFilter
+    el: $ '#tag-filter'
+    stuckFacet: tag
+    stuckParam: 'tag_id'
+    aggregations: aggregationParams
+    forSale: 'false'

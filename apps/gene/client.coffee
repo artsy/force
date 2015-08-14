@@ -1,105 +1,79 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Gene = require '../../models/gene.coffee'
-CurrentUser = require '../../models/current_user.coffee'
-ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
-{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
-ShareView = require '../../components/share/view.coffee'
-FilterArtworksView = require '../../components/filter/artworks/view.coffee'
-{ GENE, CURRENT_USER, API_URL } = require('sharify').data
 scrollFrame = require 'scroll-frame'
-BlurbView = require '../../components/blurb/view.coffee'
-RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
+CurrentUser = require '../../models/current_user.coffee'
+blurb = require '../../components/gradient_blurb/index.coffee'
+ShareView = require '../../components/share/view.coffee'
+ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
+{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
+{ GENE, CURRENT_USER, API_URL, MODE } = sd = require('sharify').data
+{ setupFilter } = require '../../components/filter2/index.coffee'
+aggregationParams = require './aggregations.coffee'
+
+RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
 
 module.exports.GeneView = class GeneView extends Backbone.View
-  initialize: (options) ->
-    { @user } = options
-    @$window = $ window
-    @document = document.documentElement
-    @mainHeaderHeight = $('#main-layout-header').height()
-    following = if @user then new Following(null, kind: 'gene') else null
-    new FollowButton
-      el: $('.follow-button')
-      following: following
-      modelName: 'categorie' # followButton pluralizes by adding 's'
-      model: @model
-    following?.syncFollows [@model.get('id')]
-    new ShareView el: @$('#gene-share-buttons')
-    new RelatedGenesView el: @$('.main-layout-container .related-genes'), id: @model.id
-    { @router, @params } = new FilterArtworksView
-      el: $ '#gene-filter'
-      artworksUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-      countsUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
-      urlRoot: "gene/#{@model.id}"
-      title: @model.get('name')
 
-    @setupMode()
-    @onFollowRoute()
-    @setupBlurb()
-    @fetchRelatedArtists()
+  initialize: ({ @user, @relatedArtists, @mode, @params }) ->
+    @listenTo @relatedArtists, 'sync', @renderRelatedArtists
+    @listenTo @params, 'change', => @mode.set mode: 'artworks'
+    @listenTo @mode, 'change', =>
+      @$('#gene-filter').attr 'data-state', @mode.get('mode')
 
-  setupBlurb: ->
-    if ($blurb = @$('.blurb')).length
-      new BlurbView el: $blurb, lineCount: 7, updateOnResize: true
-      $blurb.css maxHeight: 'none'
-    @on 'relatedArtistsFetched', =>
-      @$('.related-artists').html(RelatedArtistsTemplate(artists: @relatedArtists.models[...10])).addClass 'is-fade-in'
+  renderRelatedArtists: (artists) ->
+    @$('.related-artists').html(
+      RelatedArtistsTemplate
+        artists: artists.models[...10]
+      ).addClass 'is-fade-in'
 
-  setupMode: ->
-    if @model.isSubjectMatter() or location.pathname.match('/artworks')
-      @params.trigger('reset') if @model.isSubjectMatter()
-      @artworksMode()
-    else
-      @artistMode()
-
-  onFollowRoute: ->
-    @$('.follow-button').click() if location.pathname.match('/follow')
-
-  setupArtistFillwidth: _.once ->
-    @on 'relatedArtistsFetched', =>
-      if @user and not @model.isSubjectMatter()
-        @user.initializeDefaultArtworkCollection().always @renderArtistFillwidth
-      else if not @model.isSubjectMatter()
-        @renderArtistFillwidth()
-
-  fetchRelatedArtists: ->
-    @model.fetchArtists 'related', success: (artists) =>
-      @relatedArtists = artists
-      @trigger 'relatedArtistsFetched'
-
-  renderArtistFillwidth: =>
-    new ArtistFillwidthList(
-      collection: @relatedArtists
-      el: $('#gene-artists')
-      user: @user
-    ).fetchAndRender()
-
-  events:
-    'click #gene-filter-all-artists': 'artistMode'
-    'click #gene-filter-artworks-nav': 'artworksMode'
-
-  artistMode: ->
-    @$el.removeClass 'body-infinite-scroll'
-    @$('#gene-filter-artworks-nav a').removeClass 'is-active'
-    @$('#gene-filter').attr 'data-state', 'artists'
-    @router.navigate "/gene/#{@model.get 'id'}"
-    @setupArtistFillwidth()
-    return unless @$window.scrollTop() > @$('#gene-filter').offset().top
-    _.defer => @document.scrollTop = @$('#gene-artists').offset().top - @$('#gene-filter-nav').height() - 45
-
-  artworksMode: =>
-    @$el.addClass 'body-infinite-scroll'
-    @$('#gene-filter-all-artists').removeClass 'is-active'
-    @$('#gene-filter').attr 'data-state', 'artworks'
-    return false unless @$window.scrollTop() > @$('#gene-filter').offset().top
-    _.defer => @document.scrollTop = @$('#gene-artworks').offset().top - @$('#gene-filter-nav').height() - 50
+    if @model.mode() is 'artist'
+      new ArtistFillwidthList(
+        collection: @relatedArtists
+        el: $('#gene-artists')
+        user: @user
+      ).fetchAndRender()
 
 module.exports.init = ->
   gene = new Gene GENE
-  new GeneView
-    user: CurrentUser.orNull()
+  user = CurrentUser.orNull()
+
+  { params } = setupFilter
+    el: $ '#gene-filter'
+    stuckFacet: gene
+    stuckParam: 'gene_id'
+    aggregations: aggregationParams
+    forSale: 'false'
+
+  view = new GeneView
+    user: user
     el: $ 'body'
     model: gene
-  Backbone.history.start pushState: true
-  scrollFrame '#gene-filter a'
+    relatedArtists: gene.relatedArtists
+    mode: new Backbone.Model
+    params: params
+
+  view.mode.set mode: MODE
+
+  gene.fetchArtists 'related'
+
+  new ShareView el: $('.js-gene-share-buttons')
+
+  following = if user then new Following(null, kind: 'gene') else null
+  new FollowButton
+    el: $('.follow-button')
+    following: following
+    modelName: 'categorie'
+    model: gene
+  following?.syncFollows [ gene.id ]
+
+  blurb $('.js-gene-blurb'), limit: 250
+
+  new RelatedGenesView
+    el: $('.main-layout-container .related-genes')
+    id: gene.id
+
+  scrollFrame '#gene-filter-content a' unless sd.EIGEN
+
+

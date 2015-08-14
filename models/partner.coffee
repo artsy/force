@@ -3,10 +3,29 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Icon = require './icon.coffee'
 PartnerLocations = require '../collections/partner_locations.coffee'
+Relations = require './mixins/relations/partner.coffee'
 
 module.exports = class Partner extends Backbone.Model
+  _.extend @prototype, Relations
 
   urlRoot: "#{sd.API_URL}/api/v1/partner"
+
+  @types:
+    'Auction': 'Auction House'
+    'Demo': 'Demo'
+    'Gallery': 'Gallery'
+    'Museum': 'Museum'
+    'Artist Estate': 'Artist Estate'
+    'Private Collection': 'Private Collection'
+    'Private Collector': 'Private Collector'
+    'Private Dealer': 'Gallery'
+    'Foundation': 'Foundation'
+    'Public Domain': 'Public Domain'
+    'Image Archive': 'Image Archive'
+    'Non Profit': 'Non-Profit'
+
+  displayType: ->
+    @constructor.types[@get 'type'] or 'Gallery'
 
   icon: ->
     new Icon @get('icon'), profileId: @get('id')

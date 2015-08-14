@@ -1,5 +1,6 @@
 benv = require 'benv'
 _ = require 'underscore'
+_s = require 'underscore.string'
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
@@ -36,6 +37,7 @@ describe 'Search results template', ->
         results: @search.models
         term: 'foobar'
         crop: sinon.stub()
+        _s: _s
       )
 
     it 'displays a message to the user that nothing can be found', ->
@@ -57,6 +59,7 @@ describe 'Search results template', ->
         results: @search.models
         term: 'skull'
         crop: sinon.stub()
+        _s: _s
       )
 
       @$template = $(template)
@@ -65,4 +68,4 @@ describe 'Search results template', ->
       @$template.find('.search-result').length.should.equal 5
 
     it 'highlights the search term', ->
-      @$template.find('.is-highlighted').should.be.ok
+      @$template.find('.is-highlighted').should.be.ok()

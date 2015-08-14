@@ -13,7 +13,7 @@ module.exports = class SaleView extends Backbone.View
   initialize: (options) ->
     { @artwork, @currentUser, @saved, @sale } = options
 
-    @sale.fetchArtworks
+    @sale.related().saleArtworks.fetchUntilEndInParallel
       success: (collection, response, options) =>
         collection.remove @artwork
         @artworks = Artworks.fromSale collection

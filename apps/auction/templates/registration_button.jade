@@ -1,0 +1,6 @@
+if user && user.get('registered_to_bid')
+  a.avant-garde-button-black.is-block.js-register-button( disabled ) You&rsquo;re Registered to Bid
+else
+  a.avant-garde-button-black.is-block.js-register-button(
+    href= auction.registerUrl()
+  ) Register to bid

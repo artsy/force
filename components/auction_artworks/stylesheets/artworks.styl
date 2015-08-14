@@ -19,10 +19,14 @@ list-row-size = (list-max-thumbnail-size + 40px)
   padding 15px
   text-align left
   border-bottom 1px solid gray-lighter-color
+  garamond-size('s-body')
   a
     text-decoration none
 .aga-image
   height grid-max-thumbnail-size
+  // Due to API funny-business the `medium` image version may not be used
+  // It *may* fall back to an image version with unbounded height.
+  overflow-y hidden
   a
     display block
     > img
@@ -34,12 +38,10 @@ list-row-size = (list-max-thumbnail-size + 40px)
   > *
     overflow ellipsis
 .aga-lot-number
-  avant-garde()
-  font-size 12px
+  avant-garde-size('body', true)
 .aga-artist
   margin-bottom 10px
-  avant-garde()
-  font-size 16px
+  avant-garde-size('m-headline', true)
   text-decoration none
 .aga-bidding
   margin-top 15px
@@ -52,10 +54,15 @@ list-row-size = (list-max-thumbnail-size + 40px)
 .aga-bid-button
   width 100%
   text-align center
+  height 100px
+  > a
+    block-margins(5px)
 .aga-bid-status
   display table
   width 100%
   margin-bottom 15px
+  &:first-child
+    margin-bottom 10px
 .aabs-label
 .aabs-price
   display table-cell
@@ -63,14 +70,12 @@ list-row-size = (list-max-thumbnail-size + 40px)
   line-height 1
 .aabs-price
   text-align right
-  avant-garde()
-  font-size 15px
+  avant-garde-size('m-headline', true)
 
 .aga-blurb
   margin 15px 0
   height 220px
   overflow-y hidden
-  bottom-cover-gradient(2em)
   > p
     block-margins(10px)
 
@@ -79,6 +84,7 @@ list-row-size = (list-max-thumbnail-size + 40px)
   display table-row
   height list-row-size
   text-align left
+  garamond-size('s-body')
   &:last-child
     border-bottom none
   > div
@@ -105,15 +111,11 @@ list-row-size = (list-max-thumbnail-size + 40px)
 .ala-primary-information
   padding-right 30px !important
 .ala-artist
-  avant-garde()
-  font-size 15px
-.ala-lot-number
-  avant-garde()
-  font-size 13px
-  text-align center
 .ala-current-bid
-  avant-garde()
-  font-size 15px
+  avant-garde-size('m-headline', true)
+.ala-lot-number
+  avant-garde-size('body', true)
+  text-align center
 .ala-lot-number
 .ala-estimate
 .ala-bid-count
@@ -121,3 +123,7 @@ list-row-size = (list-max-thumbnail-size + 40px)
 .ala-sale-message
 .ala-bid-button
   white-space nowrap
+
+.ala-bid-button
+  > a
+    block-margins(5px)

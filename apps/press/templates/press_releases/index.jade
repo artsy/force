@@ -1,0 +1,13 @@
+extends ../index
+
+block head
+  include meta
+
+block content
+  section.press-items
+    for year in years
+      for month in year.months
+        h2.press-date #{year.year} #{month.month}
+        section.press-items-list.large-chevron-list
+          for item in month.items
+            include ../item

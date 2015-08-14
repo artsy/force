@@ -9,7 +9,7 @@ describe 'HeroUnit', ->
     @heroUnit = new HeroUnit fabricate 'hero_unit'
 
   it 'should guard against null values (returning undefined)', ->
-    _.isUndefined(@heroUnit.backgroundImageUrl()).should.be.ok
+    _.isUndefined(@heroUnit.backgroundImageUrl()).should.be.ok()
 
   it 'should return the value if not null', ->
     @heroUnit.set 'background_image_url', 'http://static1.artsy.net/existy.jpg'
