@@ -6,5 +6,6 @@ urlset(
     url
       loc=sd.APP_URL + '/artwork/' + slug
     url
-      loc=sd.APP_URL + '/artwork/' + slug + '/auction-results' //redirects to '/artwork/slug' if there are no auction results
+      //-redirects to '/artwork/slug' if there are no auction results
+      loc=sd.APP_URL + '/artwork/' + slug + '/auction-results'
     

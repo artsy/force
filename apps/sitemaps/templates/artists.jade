@@ -5,8 +5,9 @@ urlset(
   for slug in slugs
     url
       loc=sd.APP_URL + '/artist/' + slug
-    url
-      loc=sd.APP_URL + '/artist/' + slug + '/works'  //not every artist will have works, shows, etc; in that case these URLs will just redirect to /artist/slug
+    url 
+      //-not every artist will have works, shows, etc; in that case these URLs will just redirect to /artist/slug
+      loc=sd.APP_URL + '/artist/' + slug + '/works'  
     url
       loc=sd.APP_URL + '/artist/' + slug + '/shows'
     url

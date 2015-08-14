@@ -1,0 +1,55 @@
+doctype xml
+urlset(
+  xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
+)
+  for artwork in artworks
+    if artwork.published && artwork.artist && !artwork.private
+    url
+      loc='https://www.artsy.net/artwork/' + artwork.slug
+      hostPageUrl='https://www.artsy.net/artwork/' + artwork.slug
+      image:image
+        //-per Google: 'make sure that the hosting site is verified in Search Console OR that you submit your sitemap using robots.txt
+        image:loc=artwork.images[0].images_urls.large
+        contentURL=artwork.images[0].images_urls.large      
+        image:title=artwork.title
+        image:caption=artwork.title + ' was created by ' + artwork.artist + ' in ' + artwork.date + '.' 
+      title=artwork.title
+      name=artwork.title
+      //-Not sure what these are
+      author
+        alternateName=''
+        url=''
+      description=artwork.title + ' was created by ' + artwork.artist + ' in ' + artwork.date + '.' 
+      encodingFormat='jpeg'
+      height=artwork.height
+      width=artwork.width
+      //-do we have this in the API?
+      contentSize=''
+      thumbnail
+        url=artwork.images[0].images_urls.large      
+        height=artwork.height
+        width=artwork.width
+      //-bing folks said they can take care of this field
+      bing:isFamilyFriendly=
+      keywords= artwork.tags..replace(/\[|\]/, '') + ', ' + artwork.title + ', ' + artwork.artist.first + artwork.artist.last
+      datePublished=artwork.published_at
+      dateModified=artwork.published_changed_at
+      //- not sure how best to quantify these
+      aggregateRating
+        ratingCount=''
+        ratingValue=''
+      //-do we have this in the API?
+      license=''
+      copyrightHolder=artwork.image_rights
+      //-do we have this in the API?
+      copyrightYear=''
+      //-don't think we have one of these yet
+      CollectionPage=''
+      //-don't think we have this
+      geo
+        lat=''
+        long=''
+
+
+
+    
