@@ -8,14 +8,14 @@ urlset(
       loc='https://www.artsy.net/artwork/' + artwork.slug
       hostPageUrl='https://www.artsy.net/artwork/' + artwork.slug
       image:image
-        //-per Google: 'make sure that the hosting site is verified in Search Console OR that you submit your sitemap using robots.txt
+        //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
         image:loc=artwork.images[0].images_urls.large
         contentURL=artwork.images[0].images_urls.large      
         image:title=artwork.title
         image:caption=artwork.title + ' was created by ' + artwork.artist + ' in ' + artwork.date + '.' 
       title=artwork.title
       name=artwork.title
-      //-Not sure what these are
+      //-reqs from Bing -- not exactly sure what these are
       author
         alternateName=''
         url=''
@@ -23,7 +23,7 @@ urlset(
       encodingFormat='jpeg'
       height=artwork.height
       width=artwork.width
-      //-do we have this in the API?
+      //-do we have this in the API? refers to file size in bytes
       contentSize=''
       thumbnail
         url=artwork.images[0].images_urls.large      
@@ -34,7 +34,7 @@ urlset(
       keywords= artwork.tags..replace(/\[|\]/, '') + ', ' + artwork.title + ', ' + artwork.artist.first + artwork.artist.last
       datePublished=artwork.published_at
       dateModified=artwork.published_changed_at
-      //- not sure how best to quantify these
+      //- bing fields - not sure how best to quantify these
       aggregateRating
         ratingCount=''
         ratingValue=''
@@ -43,9 +43,9 @@ urlset(
       copyrightHolder=artwork.image_rights
       //-do we have this in the API?
       copyrightYear=''
-      //-don't think we have one of these yet
+      //-i think this will come from bing
       CollectionPage=''
-      //-don't think we have this
+      //-don't think we have this/i'm not even sure how we'd define it
       geo
         lat=''
         long=''
