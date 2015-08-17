@@ -21,10 +21,6 @@
   // DOM events
   var $document = $(document);
 
-  $('.js-open-inquiry-flow').click(function() {
-    track('Clicked link to open inquiry flow');
-  });
-
   $document.on('click', '.js-choice', function() {
     var choice = $(this).data('value');
     track('Clicked on how_can_we_help option', {

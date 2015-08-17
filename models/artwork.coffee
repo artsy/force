@@ -107,7 +107,11 @@ module.exports = class Artwork extends Backbone.Model
   #
   # return {Boolean}
   isContactable: ->
-    @get('forsale') and @has('partner') and not @get('acquireable')
+    (@get('forsale') and @has('partner') and not @get('acquireable')) or
+    @isPartOfAuctionPromo()
+
+  isPartOfAuctionPromo: ->
+    @related().sales.firstAuctionPromo()?
 
   # The work is not for sale but a buyer may be interested
   # in related works

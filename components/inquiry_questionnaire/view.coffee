@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 State = require '../branching_state/index.coffee'
 map = require './map.coffee'
-debug = require './debug.coffee'
 Logger = require './logger.coffee'
 
 module.exports = class InquiryQuestionnaireView extends Backbone.View
@@ -27,8 +26,6 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
     @listenTo @state, 'next', @render
 
   render: ->
-    debug @state
-
     @view?.remove()
     @view = @state.view @context
     @$el.html @view.render().$el
