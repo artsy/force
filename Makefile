@@ -12,7 +12,6 @@ BIN = node_modules/.bin
 s:
 	$(BIN)/coffee index.coffee
 
-
 # Start the server using forever
 sf:
 	$(BIN)/forever $(BIN)/coffee index.coffee
