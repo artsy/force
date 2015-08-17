@@ -73,7 +73,7 @@ metaOverrides =
     description: 'Find the best Alec Monopoly art for sale, and explore his current shows, events & biography. Street artist Alec Monopoly takes ...'
 
   'chuck-close':
-    title: 'Chuck Close - 202 Artworks, Biography & more on Artsy'
+    title: 'Chuck Close - #{@pageTitleArtworksCount()}, Biography & more on Artsy'
     description: 'Find the best of Chuck Close including his biography, paintings & prints for sale, shows and articles on Artsy. Chuck Close reinvented painting with his monumental portraits...'
 
   'jeff-koons':
