@@ -23,7 +23,8 @@ artsyXapp = require 'artsy-xapp'
 
 @index = (req, res, next) -> 
   #need to include users/filter out auto-generated users per Joey's suggestion
-  resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs', 'artworks']
+  resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs', 
+    'artworks', 'profiles']
   async.parallel [
     # Get articles counts
     (cb) ->
