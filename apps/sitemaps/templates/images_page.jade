@@ -3,35 +3,37 @@ urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
 )
   for artwork in artworks
-    if artwork.published && artwork.artist && !artwork.private
     url
-      loc='https://www.artsy.net/artwork/' + artwork.slug
-      hostPageUrl='https://www.artsy.net/artwork/' + artwork.slug
+      loc='https://www.artsy.net/artwork/' + artwork.id
+      hostPageUrl='https://www.artsy.net/artwork/' + artwork.id
       image:image
         //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
-        image:loc=artwork.images[0].images_urls.large
-        contentURL=artwork.images[0].images_urls.large      
+        image:loc=artwork.images[0].image_urls.large
+        contentURL=artwork.images[0].image_urls.large      
         image:title=artwork.title
-        image:caption=artwork.title + ' was created by ' + artwork.artist + ' in ' + artwork.date + '.' 
+        if artwork.artist
+          image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
+        else
+          image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.' 
       title=artwork.title
       name=artwork.title
       //-reqs from Bing -- not exactly sure what these are
       author
         alternateName=''
         url=''
-      description=artwork.title + ' was created by ' + artwork.artist + ' in ' + artwork.date + '.' 
+      description=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
       encodingFormat='jpeg'
       height=artwork.height
       width=artwork.width
       //-do we have this in the API? refers to file size in bytes
       contentSize=''
       thumbnail
-        url=artwork.images[0].images_urls.large      
+        url=artwork.images[0].image_urls.large      
         height=artwork.height
         width=artwork.width
       //-bing folks said they can take care of this field
-      bing:isFamilyFriendly=
-      keywords= artwork.tags..replace(/\[|\]/, '') + ', ' + artwork.title + ', ' + artwork.artist.first + artwork.artist.last
+      bing:isFamilyFriendly=''
+      keywords=artwork.tags.join(',') + ', ' + artwork.title + ', ' + (artwork.artist && artwork.artist.name)
       datePublished=artwork.published_at
       dateModified=artwork.published_changed_at
       //- bing fields - not sure how best to quantify these

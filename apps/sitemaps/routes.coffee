@@ -6,6 +6,7 @@ async = require 'async'
 { Cities } = require 'places'
 { API_URL, POSITRON_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
+PAGE_SIZE = PAGE_SIZE
 
 @articles = (req, res, next) ->
   new Articles().fetch
@@ -13,7 +14,7 @@ artsyXapp = require 'artsy-xapp'
       published: true
       sort: '-published_at'
       exclude_google_news: false
-      limit: 100
+      limit: PAGE_SIZE
     error: res.backboneError
     success: (articles) ->
       recentArticles = articles.filter (article) ->
@@ -22,7 +23,6 @@ artsyXapp = require 'artsy-xapp'
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
 
 @index = (req, res, next) -> 
-  #need to include users/filter out auto-generated users per Joey's suggestion
   resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs', 
     'artworks', 'profiles']
   async.parallel [
@@ -33,7 +33,7 @@ artsyXapp = require 'artsy-xapp'
         .query(published: true, limit: 1)
         .end (err, sres) ->
           return cb(err) if err
-          totalCount = Math.ceil sres.body.count / 100
+          totalCount = Math.ceil sres.body.count / PAGE_SIZE
           cb null, totalCount
     # Get the rest of the resource counts
     (cb) ->
@@ -45,9 +45,9 @@ artsyXapp = require 'artsy-xapp'
           .end(cb)
       ), (err, results) ->
         return cb(err) if err
-        allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / 100
+        allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / PAGE_SIZE
         cb null, allPages
-  ], (err, [artworkPages, articlePages, allPages]) ->
+  ], (err, [articlePages, allPages]) ->
     return next(err) if err
     res.set('Content-Type', 'text/xml')
     res.render('index', { 
@@ -58,16 +58,6 @@ artsyXapp = require 'artsy-xapp'
       citySlugs: _.pluck(Cities, 'slug')
     })  
 
-# @artworksPage = (req, res, next) ->
-#   request
-#     .get(API_URL + '/api/v1/filter/artworks')
-#     .set('X-XAPP-TOKEN': artsyXapp.token)
-#     .query(page: req.params.page, size: 100)
-#     .end (err, sres) ->
-#       slugs = _.pluck(sres.body.hits, 'id')
-#       res.set('Content-Type', 'text/xml')
-#       res.render('artworks', pretty: true, slugs: slugs)
-
 @misc = (req, res, next) ->
   res.set('Content-Type', 'text/xml')
   res.render('misc', pretty: true)
@@ -75,7 +65,7 @@ artsyXapp = require 'artsy-xapp'
 @articlesPage = (req, res, next) ->
   request
     .get(POSITRON_URL + '/api/articles')
-    .query(offset: req.params.page * 100, limit: 100, published: true)
+    .query(offset: req.params.page * PAGE_SIZE, limit: PAGE_SIZE, published: true)
     .end (err, sres) ->
       return next err if err
       slugs = _.pluck(sres.body.results, 'slug')
@@ -86,7 +76,7 @@ artsyXapp = require 'artsy-xapp'
   request
     .get(API_URL + '/api/v1/' + req.params.resource)
     .set('X-XAPP-TOKEN': artsyXapp.token)
-    .query(page: req.params.page, visible: req.params.resource is 'artworks')
+    .query(page: req.params.page, size: PAGE_SIZE)
     .end (err, sres) ->
       return next err if err
       slugs = _.pluck(sres.body, 'id')
@@ -97,7 +87,7 @@ artsyXapp = require 'artsy-xapp'
   request
     .get(API_URL + '/api/v1/artworks')
     .set('X-XAPP-TOKEN': artsyXapp.token)
-    .query(visible: true, size: 100, page: req.params.page)
+    .query(size: PAGE_SIZE, page: req.params.page)
     .end (err, sres) ->
       return next err if err
       res.set('Content-Type', 'text/xml')
