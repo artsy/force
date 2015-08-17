@@ -54,6 +54,8 @@ module.exports =
   GEMINI_S3_ACCESS_KEY: null
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_ACCOUNT_KEY: 'admin'
+  GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
+  DISABLE_GEMINI_PROXY: false
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
   SENTRY_DSN: null
