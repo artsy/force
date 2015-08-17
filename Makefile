@@ -10,7 +10,7 @@ BIN = node_modules/.bin
 
 # Start the server
 s:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development foreman start
+	$(BIN)/coffee index.coffee
 
 
 # Start the server using forever
