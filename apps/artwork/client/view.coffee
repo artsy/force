@@ -20,7 +20,7 @@ Sale = require '../../../models/sale.coffee'
 ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
 Auction = require './mixins/auction.coffee'
 RelatedShowView = require './related_show.coffee'
-ContactView = require '../components/contact/view.coffee'
+EmbeddedInquiryView = require '../../../components/embedded_inquiry/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 VideoView = require './video.coffee'
 ImagesView = require '../components/images/view.coffee'
@@ -148,7 +148,10 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupEmbeddedInquiryForm: ->
     return if @suppressInquiry
-    new ContactView el: @$('#artwork-detail-contact'), model: @artwork
+
+    new EmbeddedInquiryView
+      el: @$('.js-artwork-detail-contact')
+      artwork: @artwork
 
   displayZigZag: ->
     (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
