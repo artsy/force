@@ -29,7 +29,7 @@ if (location.pathname.match('/gallery-partnerships')) {
     analytics.track('Clicked nav apply on gallery partnerships')
   })
 
-  $('.apply-button').click(function(e){
+  $('.js-gallery-partnerships-apply-submit').click(function(e){
     analytics.track('Clicked bottom apply on gallery partnerships', {
       test_copy: sd.PARTNER_APPLICATION_COPY
     })
