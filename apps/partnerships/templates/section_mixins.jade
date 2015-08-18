@@ -157,7 +157,10 @@ mixin apply(section)
       .gallery-partnerships-apply-form
         header
           h3 Interested in partnering with Artsy?
-          aside Join a network of the world&rsquo;s premier art galleries &amp; collectors
+          if sd.PARTNER_APPLICATION_COPY == 'join'
+            aside Join a network of the world&rsquo;s premier art galleries &amp; collectors
+          else
+            aside Apply to join Artsy&rsquo;s invitation-only subscription service for galleries
 
         form.stacked-form.js-gallery-partnerships-apply-form(
           action='/apply/gallery/2'
