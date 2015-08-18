@@ -46,7 +46,7 @@ describe 'ClockView', ->
       @view.model.set
         is_auction: true
         start_at: moment().subtract(1, 'minutes').format()
-        end_at: moment().add(3, 'minutes').add(1, 'months').add(1, 'hours').add(1, 'seconds').format()
+        end_at: moment().add(3, 'minutes').add(1, 'months').add(1, 'hours').add(1, 'seconds').add(1, 'days').format()
 
       @view.model.calculateOffsetTimes()
       Backbone.sync.args[0][2].success { time: moment().format() }

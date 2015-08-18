@@ -21,3 +21,11 @@ module.exports =
     outcomes:
       magazine: 4/5
       editorial: 1/5
+
+  partner_application_copy:
+    key: 'partner_application_copy'
+    outcomes:
+      join: 0.5
+      apply: 0.5
+
+
