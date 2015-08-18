@@ -1,6 +1,8 @@
+_ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 LoggedOutUser = require '../../models/logged_out_user'
 
 describe 'LoggedOutUser', ->
@@ -117,7 +119,7 @@ describe 'LoggedOutUser', ->
       it 'tries to find the anonymous session on the first fetch', ->
         @user.fetch()
         Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/anonymous_sessions'
-        Backbone.sync.args[0][2].data.should.have.keys 'email', 'session_id'
+        Backbone.sync.args[0][2].data.should.have.keys 'email'
 
       it 'yields to the success option and sets the attributes using the first model in the response', (done) ->
         @user.fetch success: =>
@@ -156,3 +158,24 @@ describe 'LoggedOutUser', ->
           done()
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
         Backbone.sync.args[0][2].success id: 'foobar'
+
+  describe '#repossess', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+      @user = new LoggedOutUser
+        id: 'anonymous-session-id', email: 'cab@example.com'
+      @user.__isLoggedIn__ = true
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'saves the anonymous_session explicitly setting the subsequent_user_id; returns a thennable', (specDone) ->
+      promise = @user.repossess('some-user-id')
+
+      Backbone.sync.args[0][2].url
+        .should.containEql '/api/v1/me/anonymous_session/anonymous-session-id'
+
+      promise.finally ->
+        true.should.be.true()
+        specDone()
+      .done()

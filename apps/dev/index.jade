@@ -5,22 +5,44 @@ append locals
 
 block body
   if NODE_ENV === 'development' || NODE_ENV === 'staging'
-    .debug.js-debug
-      | ...
-
     hr.is-invisible
 
-  .main-layout-container
+  .main-layout-container: .responsive-layout-container
     pre.debug
-      | LOGGED_IN: #{user ? 'true' : 'false' }
+      if user
+        | LOGGED_IN: <a class='js-logout' href='#'>true</a> (#{user.get('email')})<br>
+      else
+        | LOGGED_IN: <a class='js-login' href='#'>false</a><br>
       | NODE_ENV: #{NODE_ENV}
       | APPLICATION_NAME: #{APPLICATION_NAME}
       | API_URL: #{API_URL}
+      | ARTWORK_ID: #{artwork.id}
+      | HAS_SEEN: <a class='js-reset-logged' href='#'>#{HAS_SEEN}</a>
 
     if (NODE_ENV === 'development' || NODE_ENV === 'staging') && API_URL === 'https://stagingapi.artsy.net'
       hr.is-invisible
 
-      .is-center-aligned: nav.garamond-tablist
-        a.js-open-inquiry-flow( data-prequalify='false' ) Open Default
-        span.garamond-tab-separator
-        a.js-open-inquiry-flow( data-prequalify='true' ) Open Prequalifcation
+      pre.debug
+        | STEPS: [
+        for step, i in views
+          a.js-bypass( href='#', data-step= step )= step
+          unless i === views.length - 1
+            = ', '
+        |]
+
+      hr.is-invisible
+
+      .grid-2-up
+        .grid-item
+          strong With pre-qualification turned on
+          hr
+          .debug-embedded-inquiry-form.js-embedded-inquiry-form-prequalified-container
+            include ../../components/embedded_inquiry/templates/index
+
+        .grid-item
+          strong Default
+          hr
+          .debug-embedded-inquiry-form.js-embedded-inquiry-form-container
+            include ../../components/embedded_inquiry/templates/index
+
+      hr.is-invisible

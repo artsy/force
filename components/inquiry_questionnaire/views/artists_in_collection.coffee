@@ -19,7 +19,7 @@ module.exports = class ArtistsInCollection extends StepView
       collection: userInterests
       autofocus: true
 
-    @$('.js-bookmark-artists').html @userInterestsView.render().$el
+    @$('.js-user-interests').html @userInterestsView.render().$el
 
   remove: ->
     @userInterestsView.remove()

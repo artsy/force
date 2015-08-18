@@ -1,16 +1,17 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL } = require('sharify').data
+Q = require 'q'
+sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
 
 @worksForYou = (req, res) ->
   return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
 
-  url = "#{API_URL}/api/v1/me/follow/artists"
-  @followingArtists = new Artists
-  @followingArtists.fetchUntilEnd
-    url: url
-    data: access_token: req.user.get('accessToken')
-    success: =>
-      res.locals.sd.FOLLOWING = @followingArtists
-      res.render 'index'
+  Q.allSettled([
+    req.user.followingArtists()
+    req.user.fetchAndMarkNotifications()
+  ]).then ->
+    res.locals.sd.UNREAD_NOTIFICATIONS = req.user.get('unreadNotifications')
+    res.locals.sd.FOLLOWING = req.user.get('followArtists')
+    res.locals.sd.NOTIFICATION_COUNT = null
+    res.render 'index'

@@ -6,24 +6,17 @@ UserInterest = require '../models/user_interest.coffee'
 module.exports = class UserInterests extends Backbone.Collection
   model: UserInterest
 
-  url: ->
-    if (id = @collectorProfile?.id)?
-      "#{API_URL}/api/v1/collector_profile/#{id}/user_interest"
-    else
-      "#{API_URL}/api/v1/me/user_interest"
+  interestType: 'Artist'
 
-  initialize: (models, { @collectorProfile } = {}) -> #
+  url: "#{API_URL}/api/v1/me/user_interests"
 
   parse: (response) ->
     _.filter response, (obj) ->
       not _.isEmpty(obj.interest)
 
   fetch: (options = {}) ->
-    options.url = "#{@url()}/artists" # Temporary hack for this non-RESTful endpoint
-
-    if @collectorProfile?
-      options.data = _.extend options.data or {}, @collectorProfile.pick('anonymous_session_id')
-
+    options.data = _.extend options.data or {},
+      interest_type: @interestType
     super options
 
   comparator: (userInterest) ->
@@ -40,5 +33,6 @@ module.exports = class UserInterests extends Backbone.Collection
     return if @alreadyInterested interest
 
     @unshift
+      interest_type: @interestType
       interest_id: interest.id
       interest: interest.attributes

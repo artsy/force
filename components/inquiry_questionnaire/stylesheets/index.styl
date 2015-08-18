@@ -6,16 +6,7 @@
   .modalize-close
     display none
   .modalize-body
-    min-height 100%
-    padding 40px 35px
-
-.inquiry-questionnaire
-  height 100%
-
-.iq-steps
-  avant-garde-size('s-headline', true)
-  > span
-    text-transform lowercase
+    padding 30px 35px 35px 35px
 
 .iq-headline
 .iq-headline-caption
@@ -70,14 +61,18 @@
 .iq-next
   margin 30px 0 !important
 
+.iq-push-down
 .iq-nevermind
   display block
-  margin-top 40px
+  margin-top 20px
   text-decoration none
-  color gray-darker-color
   garamond-size('s-body')
 
-.iq-account
+.iq-nevermind
+  &, a
+    color gray-darker-color
+
+.iq-loadable
   > *
     transition opacity 0.25s
     opacity 1
@@ -101,9 +96,33 @@
   justify-content space-between
   block-margins(20px)
   garamond-size('s-body')
-  color gray-darker-color
+  &, a
+    color gray-darker-color
 
 .iq-form-errors
   color red-color
   &:first-letter
     text-transform uppercase
+
+.iq-sticky-bottom
+  position absolute
+  right 0
+  bottom 0
+  left 0
+  // Same LR padding as .modalize-body
+  padding 40px 35px
+  background-color white
+  // Fade
+  &:after
+    position absolute
+    content ''
+    top 0
+    left 0
+    right 0
+    height 60px
+    margin-top -(@height)
+    background linear-gradient(top, rgba(white, 0), white)
+    pointer-events none
+
+  > .iq-next
+    margin 0 !important

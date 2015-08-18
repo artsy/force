@@ -17,10 +17,12 @@ module.exports = class User extends Backbone.Model
     @fetch _.extend(url: '/user/refresh', options)
 
   isCollector: ->
-    @get('collector_level') >= 3
+    @get('collector_level') >= 3 or
+    @related().collectorProfile.isCollector()
 
   isCommercial: ->
-    @get('collector_level') >= 2
+    @get('collector_level') >= 2 or
+    @related().collectorProfile.isCommercial()
 
   isLoggedIn: ->
     @__isLoggedIn__
@@ -28,33 +30,9 @@ module.exports = class User extends Backbone.Model
   isWithAnonymousSession: ->
     @id? and not @isLoggedIn()
 
-  @instantiate: ->
+  @instantiate: (attributes = {}) ->
     CurrentUser = require './current_user.coffee'
     LoggedOutUser = require './logged_out_user.coffee'
 
     CurrentUser.orNull() or
-    new LoggedOutUser session_id: SESSION_ID
-
-  instantiate: (options = {}) ->
-    { success, error } = options
-    options = _.omit options, 'success', 'error'
-    Q.promise (resolve, reject) =>
-      @fetch _.extend {}, options,
-        error: ->
-          reject arguments...
-          error? arguments...
-        success: =>
-          if @id?
-            # We have an existing anonymous session
-            # or a logged in user
-            resolve arguments...
-            success? arguments...
-          else
-            # Create an anonymous session before continuing
-            @save {},
-              success: ->
-                resolve arguments...
-                success? arguments...
-              error: ->
-                reject arguments...
-                error? arguments...
+    new LoggedOutUser attributes

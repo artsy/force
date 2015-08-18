@@ -35,9 +35,9 @@ module.exports = class UserInterestsView extends Backbone.View
 
   interested: (e, model) ->
     userInterest = @collection.addInterest model
+
     if @persist
-      options = @collectorProfile.pick('anonymous_session_id') if @collectorProfile?
-      userInterest.save options or {}
+      userInterest.save()
 
     if @persist and CURRENT_USER?
       @following.follow model.id
@@ -49,13 +49,7 @@ module.exports = class UserInterestsView extends Backbone.View
   uninterested: (e) ->
     id = $(e.currentTarget).data 'id'
     model = @collection.findByInterestId id
-
-    if @collectorProfile?
-      options =
-        data: @collectorProfile.pick('anonymous_session_id')
-        processData: true
-
-    model.destroy options or {}
+    model.destroy()
 
     @autocomplete.$input.focus()
 

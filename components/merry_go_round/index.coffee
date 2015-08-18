@@ -5,8 +5,8 @@ MerryGoRoundFlickity = require './wrapper.coffee'
 
 setup = ($el, options = {}, callback) ->
   $viewport = $el.find options.selector or '.js-mgr-cells'
-  $navigation = $el.find options.navigationSelector or '.js-mgr-navigation'
   $cells = $viewport.find options.cellSelector or '.js-mgr-cell'
+  $navigation = $el.find options.navigationSelector or '.js-mgr-navigation'
 
   totalWidth = _.reduce $cells, ((memo, el) -> $(el).width() + memo), 0
   averageWidth = totalWidth / $cells.length

@@ -6,7 +6,7 @@
 - displayPrice != null ? displayPrice : displayPrice = true
 - saleArtwork = artwork.related().saleArtwork
 
-figure.artwork-item( data-artwork=artwork.get('id') )
+figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
       if imageWidth

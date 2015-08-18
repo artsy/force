@@ -5,39 +5,29 @@ CollectorProfile = require '../../models/collector_profile'
 describe 'CollectorProfile', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @collectorProfile = new CollectorProfile anonymous_session_id: 'anonymous-session-id'
+    @collectorProfile = new CollectorProfile
 
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#fetch', ->
-    it 'injects the anonymous session id into the request data', ->
-      @collectorProfile.fetch()
-      Backbone.sync.args[0][2].data.anonymous_session_id.should.equal 'anonymous-session-id'
+  describe '#findOrCreate', ->
+    it 'PUTs', ->
+      @collectorProfile.findOrCreate()
+      Backbone.sync.args[0][0].should.equal 'update'
 
-  describe '#instantiate', ->
-    describe 'existing collector profile', ->
-      it 'fetches the existing collector profile', (done) ->
-        promise = @collectorProfile.instantiate success: =>
-          @collectorProfile.id.should.equal 'existing-collector-profile-id'
-          promise.isFulfilled().should.be.true()
-          done()
-        promise.isFulfilled().should.be.false()
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/collector_profile'
-        Backbone.sync.args[0][2].success id: 'existing-collector-profile-id'
+  describe '#isCollector', ->
+    it 'returns false if the collector level is blank', ->
+      @collectorProfile.unset 'collector_level'
+      @collectorProfile.isCollector().should.be.false()
 
-    describe 'collector profile does not yet exist', ->
-      it 'fetches the profile; that errors as it does not exist; so it creates a new one', (done) ->
-        promise = @collectorProfile.instantiate success: =>
-          @collectorProfile.id.should.equal 'fresh-collector-profile-id'
-          promise.isFulfilled().should.be.true()
-          done()
-        promise.isFulfilled().should.be.false()
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/collector_profile'
-        Backbone.sync.args[0][2].error()
-        promise.isFulfilled().should.be.false()
-        promise.isRejected().should.be.false()
-        Backbone.sync.args[1][0].should.equal 'create'
-        Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile'
-        Backbone.sync.args[1][1].attributes.anonymous_session_id.should.equal 'anonymous-session-id'
-        Backbone.sync.args[1][2].success id: 'fresh-collector-profile-id'
+    it 'returns false if the collector level below 3', ->
+      @collectorProfile.set 'collector_level', 2
+      @collectorProfile.isCollector().should.be.false()
+
+    it 'returns true if the collector level is 3', ->
+      @collectorProfile.set 'collector_level', 3
+      @collectorProfile.isCollector().should.be.true()
+
+    it 'returns true if the collector level above 3', ->
+      @collectorProfile.set 'collector_level', 4
+      @collectorProfile.isCollector().should.be.true()

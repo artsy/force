@@ -9,7 +9,7 @@ module.exports = class StepView extends Backbone.View
     _.extend @__events__,
       'click .js-nevermind': 'dismiss'
 
-  initialize: ({ @user, @state, @artwork }) ->
+  initialize: ({ @user, @inquiry, @artwork, @state }) ->
     @__setup__()
 
   template: ->
@@ -37,8 +37,9 @@ module.exports = class StepView extends Backbone.View
   render: ->
     @$el.html @template
       user: @user
-      state: @state
+      inquiry: @inquiry
       artwork: @artwork
+      state: @state
     @postRender()
     @autofocus()
     this

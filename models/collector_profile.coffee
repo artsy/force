@@ -9,23 +9,13 @@ module.exports = class CollectorProfile extends Backbone.Model
 
   url: "#{API_URL}/api/v1/me/collector_profile"
 
-  fetch: (options = {}) ->
-    options.data = _.extend options.data or {}, @pick('anonymous_session_id')
-    super options
+  isNew: -> false # Always use PUT
 
-  instantiate: (options = {}) ->
-    { success, error } = options
-    options = _.omit options, 'success', 'error'
-    Q.promise (resolve, reject) =>
-      @fetch _.extend {}, options,
-        success: ->
-          resolve arguments...
-          success? arguments...
-        error: =>
-          @save {},
-            success: ->
-              resolve arguments...
-              success? arguments...
-            error: ->
-              reject arguments...
-              error? arguments...
+  isCollector: ->
+    @get('collector_level') >= 3
+
+  isCommercial: ->
+    @get('collector_level') >= 2
+
+  findOrCreate: (options = {}) ->
+    Q(@save {}, options)

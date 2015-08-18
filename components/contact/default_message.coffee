@@ -1,5 +1,3 @@
-{ INQUIRY_FLOW } = require('sharify').data
-
 module.exports = (artwork, partner) ->
   switch partner?.get('type')
     when 'Auction'

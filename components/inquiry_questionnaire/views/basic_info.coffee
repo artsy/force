@@ -11,14 +11,18 @@ module.exports = class BasicInfo extends StepView
 
   serialize: (e) ->
     form = new Form model: @user, $form: @$('form')
-    form.submit e, success: =>
-      @next()
+    return unless form.start()
+    e.preventDefault()
+    form.state 'loading'
+
+    @user.save(form.data())
+      .always => @next()
 
   postRender: ->
     @locationSearch = new LocationSearch
       el: @$('.js-location-search')
       autofocus: false
-      required: !@user.get('prequalified')
+      required: @artwork.related().partner.get('pre_qualify')
 
     @locationSearch.render @user.location()?.cityStateCountry()
 

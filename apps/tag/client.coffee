@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Tag = require '../../models/tag.coffee'
 scrollFrame = require 'scroll-frame'
 ShareView = require '../../components/share/view.coffee'
-{ TAG } = require('sharify').data
+{ TAG } = sd = require('sharify').data
 { setupFilter } = require '../../components/filter2/index.coffee'
 aggregationParams = require './aggregations.coffee'
 
@@ -13,7 +13,7 @@ module.exports.init = ->
   new ShareView
     el: $('#tag-share-buttons')
 
-  scrollFrame '#tag-filter a'
+  scrollFrame '#tag-filter a' unless sd.EIGEN
 
   { params } = setupFilter
     el: $ '#tag-filter'

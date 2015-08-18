@@ -1,0 +1,46 @@
+form.scontact-form.stacked-form
+  .scontact-errors.js-form-errors
+    //- Rendered separately
+
+  input( type='hidden', name='url', value= window.location.href )
+
+  if artwork
+    input( type='hidden', name='artwork', value= artwork.id )
+
+  textarea.bordered-input(
+    name='message'
+    placeholder='Leave your comments'
+    rows='7'
+    autofocus
+    required
+  )
+    = message
+
+  if user && user.get('name') && user.get('email')
+    input( type='hidden', name='name', value= user.get('name') )
+    input( type='hidden', name='email', value= user.get('email') )
+
+    .scontact-from.stacked-form-cell
+      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
+  else
+    input.bordered-input(
+      type='text'
+      name='name'
+      placeholder='Your full name'
+      val= user ? user.get('name') : undefined
+      required
+    )
+    input.bordered-input(
+      type='email'
+      name='email'
+      placeholder='Your email address'
+      val= user ? user.get('email') : undefined
+      required
+    )
+
+    p.scontact-privacy
+      | By clicking send, you accept our
+      | <a class='fine-faux-underline' href='/privacy' target='_blank'>Privacy Policy</a>.
+
+  button.avant-garde-button-black
+    | Send

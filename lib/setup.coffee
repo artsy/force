@@ -5,19 +5,8 @@
 #
 
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, PORT, FACEBOOK_APP_NAMESPACE,
-  MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, OPENREDIS_URL, DEFAULT_CACHE_TIME,
-  CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
-  GOOGLE_ANALYTICS_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX,
-  GOOGLE_SEARCH_KEY, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY,
-  ADMIN_URL, CMS_URL, MAX_SOCKETS, ARTWORK_EMBED_URL, DELTA_HOST,
-  ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SESSION_COOKIE_KEY, SENTRY_DSN,
-  SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER, EMPTY_COLLECTION_SET_ID,
-  GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
-  BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
-  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL,
-  EDITORIAL_ADMINS, STRIPE_PUBLISHABLE_KEY,
-  SEGMENT_WRITE_KEY, MAILCHIMP_KEY, GALLERY_INSIGHTS_SLUG, GALLERY_INSIGHTS_LIST } = config = require "../config"
+  SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
+  SESSION_COOKIE_KEY, SENTRY_DSN } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -55,52 +44,7 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 
-# Setup sharify constants & require dependencies that use sharify data
-sharify.data =
-  JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js.cgz" else ".js")
-  CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
-  APP_URL: APP_URL
-  POSITRON_URL: POSITRON_URL
-  API_URL: API_URL
-  NODE_ENV: NODE_ENV
-  MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
-  CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
-  MOBILE_URL: MOBILE_URL
-  FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
-  SECURE_IMAGES_URL: SECURE_IMAGES_URL
-  IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
-  GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
-  SNOWPLOW_COLLECTOR_HOST: SNOWPLOW_COLLECTOR_HOST
-  AUTO_GRAVITY_LOGIN: AUTO_GRAVITY_LOGIN
-  GOOGLE_MAPS_API_KEY: GOOGLE_MAPS_API_KEY
-  ADMIN_URL: ADMIN_URL
-  GENOME_URL: GENOME_URL
-  CMS_URL: CMS_URL
-  DELTA_HOST: DELTA_HOST
-  ENABLE_AB_TEST: ENABLE_AB_TEST
-  KIOSK_PAGE: KIOSK_PAGE
-  KIOSK_MODE: KIOSK_MODE
-  EMPTY_COLLECTION_SET_ID: EMPTY_COLLECTION_SET_ID
-  GEMINI_S3_ACCESS_KEY: GEMINI_S3_ACCESS_KEY
-  GEMINI_APP: GEMINI_APP
-  GEMINI_ACCOUNT_KEY: GEMINI_ACCOUNT_KEY
-  BIDDER_H1_COPY: BIDDER_H1_COPY
-  BIDDER_H2_COPY: BIDDER_H2_COPY
-  SENTRY_PUBLIC_DSN: SENTRY_PUBLIC_DSN
-  GOOGLE_SEARCH_CX: GOOGLE_SEARCH_CX
-  APPLICATION_NAME: APPLICATION_NAME
-  EMBEDLY_KEY: EMBEDLY_KEY
-  DISABLE_IMAGE_PROXY: DISABLE_IMAGE_PROXY
-  SHOW_AUCTIONS_IN_HEADER: SHOW_AUCTIONS_IN_HEADER
-  CDN_URL: process.env.CDN_URL
-  CHECK_FOR_AUCTION_REMINDER: CHECK_FOR_AUCTION_REMINDER
-  EDITORIAL_ADMINS: EDITORIAL_ADMINS
-  STRIPE_PUBLISHABLE_KEY: STRIPE_PUBLISHABLE_KEY
-  SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY
-  MAILCHIMP_KEY: MAILCHIMP_KEY
-  GALLERY_INSIGHTS_SLUG: GALLERY_INSIGHTS_SLUG
-  GALLERY_INSIGHTS_LIST: GALLERY_INSIGHTS_LIST
-
+require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -214,6 +158,7 @@ module.exports = (app) ->
   app.use require "../apps/about"
   app.use require "../apps/browse"
   app.use require "../apps/categories"
+  app.use require "../apps/contact"
   app.use require "../apps/dev"
   app.use require "../apps/how_auctions_work"
   app.use require "../apps/fairs"
@@ -236,8 +181,8 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
-  # Temporary, until we update gravity and data
   app.use require "../apps/profile"
+  app.use require "../apps/organization"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
   app.use require "../apps/articles"
@@ -247,7 +192,6 @@ module.exports = (app) ->
   app.use require "../apps/style_guide"
   app.use require "../apps/auth"
   app.use require "../apps/static"
-  # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"

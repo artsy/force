@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-scrollFrame = require 'scroll-frame'
 Cookies = require 'cookies-js'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -21,7 +20,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    @renderArtworks() if @user
+    @renderArtworks()
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')

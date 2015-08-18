@@ -1,36 +1,39 @@
+- partner = artwork.related().partner
+
 h1.iq-headline
-  if user.get('prequalified')
+  if partner.get('pre_qualify')
+    | #{partner.get('name')} requests additional information before placing an inquiry.
+    | You only have to do this once.
+  else
     | Please complete profile information to be shared with the gallery.
     | You only need to fill this out once.
-  else
-    | #{artwork.related().partner.get('name')} asks for some additional information before placing an inquiry.
-    | You only have to do this once.
 
 form.iq-form.stacked-form
   label.avant-garde-form-label( for='profession' )
-    | Profession <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
-  input.bordered-input(
+    | Profession <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
+  input.bordered-input.js-iq-profession(
     name='profession'
     id='profession'
     value= user.get('profession')
-    required= !user.get('prequalified')
+    required= partner.get('pre_qualify')
   )
 
   label.avant-garde-form-label( for='location' )
-    | Location <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
+    | Location <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
   .js-location-search
     //- Rendered separately
 
   label.avant-garde-form-label( for='phone' )
-    | Phone Number <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
-  input.bordered-input(
+    | Phone Number <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
+  input.bordered-input.js-iq-phone(
     name='phone'
     id='phone'
     type='tel'
     value= user.get('phone')
-    required= !user.get('prequalified')
+    required= partner.get('pre_qualify')
   )
 
   button.avant-garde-button-black.iq-next( type='submit' ) Next
 
-include ./partials/nevermind
+if artwork.related().partner.get('pre_qualify')
+  include ./partials/nevermind

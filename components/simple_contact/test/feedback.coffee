@@ -67,5 +67,5 @@ describe 'FeedbackView', ->
       @view.$('button').click()
       Backbone.sync.called.should.be.true()
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/feedback'
-      Backbone.sync.args[0][1].attributes.should.have.keys 'url', 'message'
+      Backbone.sync.args[0][1].attributes.should.have.keys 'url', 'message', 'user_name', 'user_email'
       Backbone.sync.args[0][1].attributes.message.should.equal 'My message'

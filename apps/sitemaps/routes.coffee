@@ -6,7 +6,7 @@ async = require 'async'
 { Cities } = require 'places'
 { API_URL, POSITRON_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
-PAGE_SIZE = PAGE_SIZE
+PAGE_SIZE = 100
 
 @articles = (req, res, next) ->
   new Articles().fetch
@@ -46,10 +46,12 @@ PAGE_SIZE = PAGE_SIZE
       ), (err, results) ->
         return cb(err) if err
         allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / PAGE_SIZE
+        console.log(allPages)
         cb null, allPages
   ], (err, [articlePages, allPages]) ->
     return next(err) if err
     res.set('Content-Type', 'text/xml')
+    console.log(allPages)
     res.render('index', { 
       pretty: true 
       articlePages: articlePages

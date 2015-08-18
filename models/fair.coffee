@@ -1,5 +1,6 @@
 sd = require('sharify').data
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 PartnerLocation = require './partner_location.coffee'
@@ -55,6 +56,15 @@ module.exports = class Fair extends Backbone.Model
 
   formatDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
+
+  bannerSize: ->
+    sizes =
+      'x-large' : 1
+      'large' : 2
+      'medium' : 3
+      'small' : 4
+      'x-small' : 5
+    sizes[@get('banner_size')]
 
   fetchExhibitors: (options) ->
     galleries = new @aToZCollection('show', 'partner')
@@ -184,15 +194,11 @@ module.exports = class Fair extends Backbone.Model
           galleries: null
 
         # Setup parallel callback
-        after = _.after 4, =>
+        after = _.after 3, =>
           options.success _.extend data,
             coverImage: @get('profile').coverImage()
-            filteredSearchOptions: data.filterSuggest
-            filteredSearchColumns: @filteredSearchColumns(
-              data.filterSuggest, 2, 'related_gene', 'artworks')
             exhibitorsCount: data.galleries.length
 
-        data.filterSuggest.fetch(error: options.error, success: after)
         @fetchSections(error: options.error, success: (x) => data.sections = x; after())
         @fetchExhibitors error: options.error, success: (x, y) =>
           data.exhibitorsAToZGroup = x
@@ -231,4 +237,5 @@ module.exports = class Fair extends Backbone.Model
   isPast: ->
     @isEligible() and @isOver()
 
-  
+  nameSansYear: ->
+    _s.rtrim @get('name'), /\s[0-9]/

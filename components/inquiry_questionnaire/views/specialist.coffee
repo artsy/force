@@ -1,33 +1,36 @@
+_ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
-Feedback = require '../../../models/feedback.coffee'
 Representatives = require '../../../collections/representatives.coffee'
 template = -> require('../templates/specialist.jade') arguments...
 
 module.exports = class Specialist extends StepView
-  template: -> template arguments...
+  className: 'iq-loadable is-loading'
+
+  template: (data) ->
+    template _.extend data,
+      message: @inquiry.get('message')
+      representative: @representative
 
   __events__:
     'click button': 'serialize'
 
   initialize: ->
-    @feedback = new Feedback
     @representatives = new Representatives
     super
 
   setup: ->
     @representatives.fetch()
       .then => (@representative = @representatives.first()).fetch()
-      .then => @render()
+      .then =>
+        @render().$el.removeClass 'is-loading'
 
   serialize: (e) ->
-    form = new Form model: @feedback, $form: @$('form')
-    form.submit e, success: =>
-      @next()
+    form = new Form model: @inquiry, $form: @$('form')
+    return unless form.start()
+    e.preventDefault()
 
-  render: ->
-    @$el.html @template
-      user: @user
-      representative: @representative
-    @autofocus()
-    this
+    @inquiry.set _.extend { contact_gallery: false }, form.data()
+    @user.set @inquiry.pick('name', 'email')
+
+    @next()

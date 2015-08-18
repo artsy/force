@@ -1,13 +1,15 @@
+Q = require 'q'
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL, SESSION_ID } = require('sharify').data
+{ API_URL } = require('sharify').data
+syncWithSessionId = require '../lib/sync_with_session_id.coffee'
 User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
 
-  defaults:
-    session_id: SESSION_ID
+  initialize: ->
+    syncWithSessionId()
 
   url: ->
     if @isLoggedIn()
@@ -19,13 +21,13 @@ module.exports = class LoggedOutUser extends User
 
   fetch: (options = {}) ->
     if @isLoggedIn() or @id?
-      options.data = _.extend options.data or {}, @pick('email', 'session_id')
+      options.data = _.extend options.data or {}, @pick('email')
       super options
     else
       new Backbone.Collection()
         .fetch _.extend {}, options,
           url: "#{API_URL}/api/v1/me/anonymous_sessions"
-          data: _.extend options.data or {}, @pick('email', 'session_id')
+          data: _.extend options.data or {}, @pick('email')
           success: _.wrap options.success, (success, args...) =>
             collection = args[0]
             @set collection.first().toJSON() if collection.length
@@ -54,3 +56,12 @@ module.exports = class LoggedOutUser extends User
     new Backbone.Model()
       .save @pick('email'), _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
+
+  repossess: (subsequent_user_id, options = {}) ->
+    # Only valid for recently logged in LoggedOutUsers
+    return Q.resolve() unless @isLoggedIn()
+    edit = new Backbone.Model _.extend { subsequent_user_id: subsequent_user_id }, @pick('id')
+    Q(edit.save null, _.extend options, url: "#{API_URL}/api/v1/me/anonymous_session/#{@id}")
+
+  findOrCreate: (options = {}) ->
+    Q(@save {}, options)

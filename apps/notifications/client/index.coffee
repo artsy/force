@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ FOLLOWING } = require('sharify').data
+{ FOLLOWING, API_URL } = sd = require('sharify').data
 scrollFrame = require 'scroll-frame'
+qs = require 'querystring'
 Notifications = require '../../../collections/notifications.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 JumpView = require '../../../components/jump/view.coffee'
@@ -9,6 +10,7 @@ SidebarView = require './sidebar.coffee'
 RecentlyAddedWorksView = require './recently_added_works.coffee'
 ArtistWorksView = require './artist_works.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
+Cookies = require '../../../components/cookies/index.coffee'
 emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
@@ -18,12 +20,15 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
     @following = new Following FOLLOWING, kind: 'artist'
+    { artist } = qs.parse(location.search.substring(1))
+    Cookies.expire('notification-count')
 
     @filterState = new Backbone.Model
       forSale: false
-      artist: null
+      artist: artist or null
       loading: true
       empty: false
+      initialLoad: true
 
     @sidebarView = new SidebarView
       el: @$('#notifications-filter')
@@ -68,5 +73,5 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
 module.exports.init = ->
   new NotificationsView el: $('body')
-  scrollFrame '#notifications-feed a'
+  scrollFrame '#notifications-feed a' unless sd.EIGEN
   require './analytics.coffee'
