@@ -104,8 +104,9 @@
     #artwork-partner-phone-container
       //- Rendered client-side
 
-  #artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
-    include ../../../components/embedded_inquiry/templates/index
+    //- Embedded inquiry form
+    #artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
+      include ../../../components/embedded_inquiry/templates/index
 
   //- Buy
   if artwork.get('acquireable')
