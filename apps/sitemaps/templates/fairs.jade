@@ -2,16 +2,17 @@ doctype xml
 urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
 )
-  for slug in slugs
-    url
-      loc=sd.APP_URL + '/' + slug
-      priority='0.75'
-    url
-      loc=sd.APP_URL + '/' + slug + '/browse/booths'
-    url
-      loc=sd.APP_URL + '/' + slug + '/articles'
-    url
-      loc=sd.APP_URL + '/' + slug + '/info'
+  for fair in models
+    if fair.has_full_feature
+      url
+        loc=sd.APP_URL + '/' + fair.default_profile_id
+        priority='0.75'
+      url
+        loc=sd.APP_URL + '/' + fair.default_profile_id + '/browse/booths'
+      url
+        loc=sd.APP_URL + '/' + fair.default_profile_id + '/articles'
+      url
+        loc=sd.APP_URL + '/' + fair.default_profile_id + '/info'
 
 
 

@@ -81,9 +81,8 @@ PAGE_SIZE = 100
     .query(page: req.params.page, size: PAGE_SIZE)
     .end (err, sres) ->
       return next err if err
-      slugs = _.pluck(sres.body, 'id')
       res.set('Content-Type', 'text/xml')
-      res.render(req.params.resource, pretty: true, slugs: slugs)
+      res.render(req.params.resource, pretty: true, models: sres.body)
 
 @imagesPage = (req, res, next) ->
   request
