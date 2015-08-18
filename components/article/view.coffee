@@ -59,7 +59,7 @@ module.exports = class ArticleView extends Backbone.View
       gutterSize: 30
       apply: (img) ->
         img.$el.closest('li').css(padding: '0 15px').width(img.width)
-      done: (imgs) ->
+      done: ->
         # Make sure the captions line up in case rounding off skewed things
         tallest = _.max $list.find('.artwork-item-image-container').map(->
           $(this).height()).toArray()
