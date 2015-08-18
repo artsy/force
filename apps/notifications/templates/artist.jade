@@ -2,7 +2,7 @@
   header.notifications-list-item-header
     .is-pull-left
       if unread
-        .notifications-new-work New Work Added
+        .notifications-new-work New Work#{count === 1 ? undefined : 's'} Added
           .bundle-read-status
       h4
         a( href=artist.href() )= artist.get('name')
