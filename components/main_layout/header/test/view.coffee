@@ -16,6 +16,7 @@ describe 'HeaderView', ->
       benv.expose
         $: benv.require('jquery')
       Backbone.$ = $
+      @Cookies = require '../../../cookies/index.coffee'
       done()
 
   after -> benv.teardown()
@@ -129,6 +130,7 @@ describe 'HeaderView', ->
       @view.$('.bundle-actors').text().should.containEql 'Kana'
       @view.$('.bundle-date').text().should.containEql 'Aug 4'
       @view.$('#hpm-bundles a')[0].href.should.containEql 'artist_id=andy-warhol'
+      @Cookies.set.should.be.calledOnce
 
     it 'disables the hover-pulldown when there are no notifications', ->
       @view.checkForNotifications()

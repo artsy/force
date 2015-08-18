@@ -31,5 +31,6 @@ module.exports = (req, res, next) ->
   res.locals.sd.HIDE_HEADER = req.cookies?['hide-force-header']?
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Eigen')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
+  res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
 
   next()

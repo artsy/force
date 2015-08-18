@@ -19,7 +19,7 @@
 #notifications-page[data-state=recent-works]
   #notifications-artist-works, .notifications-artist-sub-header, #notifications-spinner
     display none
-  #notifications-works, .notifications-feed-spinner
+  #notifications-works, .notifications-feed-spinner, .notifications-works-sub-header
     display block
   #notifications-feed.end-of-content ~ .notifications-feed-spinner
     display none
@@ -84,6 +84,9 @@
 
 .notifications-sub-header, .notifications-works-sub-header
   font-size 25px
+
+.notifications-works-sub-header
+  display none
 
 #notifications-works, #notifications-artist-works
   width 900px
@@ -161,6 +164,7 @@
   line-height 11px
   .bundle-read-status
     margin-left 5px
+    margin-top 0
 
 .artwork-column
   min-width 270px

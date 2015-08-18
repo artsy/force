@@ -36,6 +36,7 @@ describe 'NotificationsView', ->
       mod.__set__ 'RecentlyAddedWorksView', sinon.stub()
       mod.__set__ 'ArtistWorksView', sinon.stub()
       mod.__set__ 'scrollFrame', sinon.stub()
+      mod.__set__ 'Cookies', { expire: (->) }
       done()
 
   afterEach ->
