@@ -13,4 +13,5 @@ Artists = require '../../collections/artists.coffee'
   ]).then ->
     res.locals.sd.UNREAD_NOTIFICATIONS = req.user.get('unreadNotifications')
     res.locals.sd.FOLLOWING = req.user.get('followArtists')
+    res.locals.sd.NOTIFICATION_COUNT = null
     res.render 'index'
