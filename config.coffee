@@ -68,8 +68,6 @@ module.exports =
   SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
   POST_TO_ARTICLE_SLUGS: []
-  HEAPDUMP: false
-  TESTING_MEMORY_LEAK: false
   CHECK_FOR_AUCTION_REMINDER: false
   RESTART_INTERVAL: 1000 * 60 * 60
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly'
