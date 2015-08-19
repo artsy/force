@@ -34,7 +34,6 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
-editRequest = require './edit_request'
 raven = require 'raven'
 artsyXapp = require 'artsy-xapp'
 fs = require 'fs'
@@ -58,8 +57,11 @@ module.exports = (app) ->
 
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
-  Backbone.sync = require "backbone-super-sync"
-  Backbone.sync.editRequest = editRequest
+  sync = Backbone.sync = require "backbone-super-sync"
+  Backbone.sync = (method, model, options) ->
+    options.headers ?= {}
+    options.headers['X-XAPP-TOKEN'] = artsyXapp.token or ''
+    sync method, model, options
   Backbone.sync.cacheClient = cache.client
   Backbone.sync.defaultCacheTime = DEFAULT_CACHE_TIME
 

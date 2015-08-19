@@ -8,8 +8,6 @@
 artsyXapp = require 'artsy-xapp'
 require 'newrelic' if NODE_ENV in ['production','staging']
 
-require './findleak'
-
 express = require "express"
 setup = require "./lib/setup"
 cache = require './lib/cache'
