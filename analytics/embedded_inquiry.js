@@ -9,7 +9,8 @@
 
   $document.on('click', '.js-send-embedded-inquiry', function() {
     analytics.track('Clicked "Contact Gallery" button', {
-      id: $(this).data('artwork-id')
+      id: $(this).data('artwork-id'),
+      prequalify: (sd.ARTWORK && sd.ARTWORK.partner && sd.ARTWORK.partner.pre_qualify)
     });
   });
 
