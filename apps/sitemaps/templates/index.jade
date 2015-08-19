@@ -7,7 +7,7 @@ sitemapindex(
   for resource, i in resources
     for n, j in new Array(allPages[i])
       sitemap
-        loc=sd.APP_URL + '/sitemap-' + resource + '-' + j + '.xml'
+        loc=sd.APP_URL + '/sitemap-' + resource + '-' + (j + 1) + '.xml'
 
   for slug in citySlugs
     url
