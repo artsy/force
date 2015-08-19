@@ -23,7 +23,7 @@ module.exports = (options = {}) ->
   questionnaire = new InquiryQuestionnaireView options
   modal = modalize questionnaire,
     className: 'modalize inquiry-questionnaire-modal'
-    dimensions: width: '500px', height: '580px'
+    dimensions: width: '500px', height: 'auto'
 
   # Attach/teardown analytics events
   analytics.attach modal
@@ -32,6 +32,12 @@ module.exports = (options = {}) ->
 
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
+
+  # Prevent escape
+  $(window).on 'beforeunload', ->
+    'Your inquiry has not been sent yet.'
+  modal.view.on 'closed', ->
+    $(window).off 'beforeunload'
 
   modal.load (done) ->
     # Try to get a location incase one doesn't exist,

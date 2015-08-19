@@ -10,6 +10,7 @@ SidebarView = require './sidebar.coffee'
 RecentlyAddedWorksView = require './recently_added_works.coffee'
 ArtistWorksView = require './artist_works.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
+Cookies = require '../../../components/cookies/index.coffee'
 emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
@@ -20,6 +21,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
     @following = new Following FOLLOWING, kind: 'artist'
     { artist } = qs.parse(location.search.substring(1))
+    Cookies.expire('notification-count')
 
     @filterState = new Backbone.Model
       forSale: false

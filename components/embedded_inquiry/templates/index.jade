@@ -35,5 +35,6 @@ form.stacked-form.js-embedded-inquiry-form
     .js-form-errors
       //- Rendered client-side
 
-  button.avant-garde-button-black.js-send-embedded-inquiry
-    | Contact #{partner.displayType()}
+  button.avant-garde-button-black.js-send-embedded-inquiry(
+    data-artwork-id= artwork.id
+  ) Contact #{partner.displayType()}

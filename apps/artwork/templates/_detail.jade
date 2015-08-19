@@ -90,8 +90,28 @@
 
 .artwork-actions
   //- Contact info
-  #artwork-detail-contact
-    include ../components/contact/templates/index
+  if artwork.isContactable()
+    - partner = artwork.related().partner
+
+    //- Gallery/Institution link
+    if artwork.partnerLink()
+      h2.artwork-detail-header
+        = partner.get('name')
+      span#artwork-partner-locations
+        //- Rendered client-side
+
+    //- Phone number
+    #artwork-partner-phone-container
+      //- Rendered client-side
+
+    //- Embedded inquiry form
+    #artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
+      include ../../../components/embedded_inquiry/templates/index
+
+  //- Buy
+  if artwork.get('acquireable')
+    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+      | Buy
 
   if artwork.showActionsList(user)
     nav.artwork-actions-list

@@ -10,3 +10,9 @@ module.exports = class Sales extends Backbone.Collection
 
   hasAuctions: ->
     _.any @pluck('is_auction')
+
+  firstAuction: ->
+    @find (sale) -> sale.isAuction()
+
+  firstAuctionPromo: ->
+    @find (sale) -> sale.isAuctionPromo()

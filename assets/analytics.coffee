@@ -16,5 +16,6 @@ $ -> analytics.ready ->
   require '../analytics/home.js'
   require '../analytics/show_page.js'
 
-  if route.test /\/dev/
+  if route.test(/^\/dev/) or route.test(/^\/artwork\/.*/)
+    require '../analytics/embedded_inquiry.js'
     require '../analytics/inquiry_questionnaire.js'

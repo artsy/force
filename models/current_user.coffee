@@ -78,7 +78,7 @@ module.exports = class CurrentUser extends User
     url = "#{@url()}/follow/artists"
     data = access_token: @get('accessToken')
     @set followArtists: new Artists()
-    @get('followArtists').fetchUntilEnd(_.extend { url: url, data: data }, options)
+    @get('followArtists').fetchUntilEndInParallel(_.extend { url: url, data: data }, options)
 
   # Retreive a list of genes the user is following
   #
@@ -139,17 +139,18 @@ module.exports = class CurrentUser extends User
 
   fetchAndMarkNotifications: (options) ->
     url = "#{@url()}/notifications"
-    new Backbone.Collection().fetch
+    @set unreadNotifications: new Backbone.Collection()
+    @get('unreadNotifications').fetch
       url: url
       data:
         type: 'ArtworkPublished'
         unread: true
         size: 100
         access_token: @get('accessToken')
-      success: (unreadNotifications) =>
+      success: =>
         request.put(url)
           .send({status: 'read', access_token: @get('accessToken')})
-          .end (err, res) -> options?.success unreadNotifications
+          .end (err, res) -> options?.success
 
   findOrCreate: (options = {}) ->
     Q(@fetch options)

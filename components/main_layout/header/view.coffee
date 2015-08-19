@@ -14,6 +14,7 @@ activatePulldowns = require '../../hover_pulldown/index.coffee'
 maybePopUpPolicyNotice = require './policy.coffee'
 dealWithWelcomeBanner = require '../../welcome_banner/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
+Cookies = require '../../cookies/index.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
@@ -46,16 +47,17 @@ module.exports = class HeaderView extends Backbone.View
     activatePulldowns()
 
   checkForNotifications: =>
-    if @currentUser and @currentUser.isAdmin()
+    if @currentUser
       @currentUser.fetchNotificationBundles
         success: (result) =>
           totalUnread = result.get('total_unread')
           if result.get('feed').length > 0
-            if totalUnread > 0
+            if totalUnread > 0 && Cookies.get('notification-count') != totalUnread
               bundleText = if totalUnread >= 100 then "99+" else totalUnread
               @$('.mlh-bundle-count')
                 .text("#{bundleText}")
                 .show()
+              Cookies.set('notification-count', totalUnread)
             for bundle in result.get('feed')
               bundle.date = if moment().isSame(moment(bundle.date),'d') then 'Today' else moment(bundle.date).format('MMM D')
             @$('#hpm-bundles').html bundleTemplate

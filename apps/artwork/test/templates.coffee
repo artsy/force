@@ -108,3 +108,15 @@ describe 'Artwork', ->
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql 'From the series&#xA0;<em>Paris</em>'
+
+    it 'does not render the embedded inquiry form for non-isContactable artworks', ->
+      @artwork.isContactable = -> false
+      template = render('index')
+        sd: @sd
+        artwork: @artwork
+        artist: @artist
+        artists: @artists
+        auctionId: 'two-x-two'
+        asset: ->
+      @$template = cheerio.load template
+      @$template.html().should.not.containEql 'artwork-detail-contact'
