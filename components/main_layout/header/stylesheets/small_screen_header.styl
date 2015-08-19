@@ -1,15 +1,58 @@
-.mlh-navbar-small-screen
-  align-items center
-
-.mlh-navbar-small-screen
-  display flex
+.mlh-small-screen
   @media (min-width: nav-bar-break)
     display none
+
+#main-header-menu-small-screen, body > :not(#main-layout-header)
+  transition transform 0.2s @ease-out-cubic
+
+#main-header-menu-small-screen
+  z-index 0
+  position absolute
+  top logo-size
+  left 0
+  right 0
+  background-color black
+  visibility hidden
+
+  // initally retracted
+  transform translate3d(0, -100%,  0)
+  &.is-active
+    visibility visible
+
+  a
+    color white
+    display block
+
+  .mlh-small-screen-menu-logged-in
+    border-top 1px solid gray-darkest-color
+
+  .mlh-small-screen-menu-inner
+    padding 20px
+    clearfix()
+
+  .mlh-small-screen-menu-username
+    avant-garde()
+    font-size 16px
+    color white
+
+  .mlh-small-screen-menu-item
+    width 50%
+    float left
+    garamond()
+    font-size 20px
+    line-height 2
+    text-decoration none
+
+#main-header-small-screen
+  background-color white
+  position relative
+  align-items center
+  z-index 1
 
   #main-header-search-box
     position relative
     height logo-size
-    padding 18px 12px 15px 12px
+    padding 18px 80px 14px 70px
     border 0
     margin 0
     background transparent
@@ -17,6 +60,8 @@
     font-size 16px
 
   #main-layout-header-home-logo
+    z-index 1
+    position absolute
     width logo-size + 1
     border-right 1px solid gray-lighter-color
 
@@ -34,14 +79,13 @@
     box-shadow inset 0 0 0 7px,0 -7px,0 7px
     margin 16px 7px
 
-  #main-header-menu
+  #main-header-menu-button
     padding 8px
     position absolute
     right 0
     top 0
     width logo-size
     border-left 1px solid gray-lighter-color
-    z-index 1
     -webkit-tap-highlight-color rgba(0,0,0,0)
 
   #main-header-search-box-cancel
@@ -63,12 +107,15 @@
     display none
 
   #main-header-search-button
+    z-index 4
+    line-height 34px
+    font-size 14px
+    padding 12px
+    background-color white
     position absolute
     top 0
     right 0
     width 100px
     height 100%
-    border-top 0
-    border-bottom 0
-    line-height logo-size
+    border-left 1px solid gray-lighter-color
     display none

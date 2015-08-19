@@ -1,4 +1,4 @@
-nav.mlh-navbar-small-screen
+nav.mlh-small-screen#main-header-small-screen
   a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
   form#main-header-search-form( action='/search', method='GET' )
     input#main-header-search-box(
@@ -7,34 +7,25 @@ nav.mlh-navbar-small-screen
       value=mainHeaderSearchBoxValue,
       type='search'
     )
-    button#main-header-search-button.avant-garde-box-button Search
-  a#main-header-menu( href= '#' )
+  button#main-header-search-button.avant-garde-button(form="main-header-search-form") Search
+
+  //- include ./small_screen_menu
+  a#main-header-menu-button
     #main-header-menu-icon
-  //-
-  //- #main-layout-header-center.mlh-navbar-cell
-  //-   include ../../../search_bar_small/templates/index
-  //- #main-layout-header-right.mlh-navbar-cell
-  //-   span.mlh-hamburger.hover-pulldown( data-anchor='right', data-mode='hover')
-  //-     include ../../public/icons/list.svg
-  //-     .hover-pulldown-menu
-  //-       .hpm-header Activity
-      //- .hover-pulldown-menu
-      //-   div.mlh-pulldown-top
-      //-     a.mlh-pulldown-top-link( data-priority='8' href='/artists', class= activeClass('/artists') ) Artists
-      //-     a.mlh-pulldown-top-link( data-priority='7' href='/browse', class= activeClass('/browse') ) Artworks
-      //-     a.mlh-pulldown-top-link( data-priority='3' href='/shows', class= activeClass('/shows') ) Shows
-      //-     a.mlh-pulldown-top-link( data-priority='2' href='/galleries', class= activeClass('/galleries') ) Galleries
-      //-     a.mlh-pulldown-top-link( data-priority='1' href='/institutions', class= activeClass('/institutions') ) Museums
-      //-     a.mlh-pulldown-top-link( data-priority='4' href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
-      //-     a.mlh-pulldown-top-link( data-priority='6' href='/auctions', class= activeClass('/auctions') ) Auctions
-      //-     a.mlh-pulldown-top-link.js--post-split-test( data-priority='5' href='/articles', class= activeClass('/articles') )= sd.POSTS_SECTION_NAME
-      //-   hr.mlh-pulldown-top
-      //-   div.mlh-pulldown-bottom
-      //-     a.mlh-pulldown-bottom-link( href='/about' ) About Artsy
-      //-     a.mlh-pulldown-bottom-link( href='/gallery-partnerships' ) Artsy for Galleries
-      //-     a.mlh-pulldown-bottom-link( href='/institution-partnerships' ) Artsy for Museums
-      //-     a.mlh-pulldown-bottom-link( href='/feature/artsy-education' ) Artsy for Education
-      //-     a.mlh-pulldown-bottom-link( href='/categories' ) The Art Genome Project
-      //-     a.mlh-pulldown-bottom-link( href='/about/jobs' ) Jobs
-      //-     a.mlh-pulldown-bottom-link( href='/press' ) Press
-      //-     a.mlh-pulldown-bottom-link( href='/contact' ) Contact Artsy
+
+nav.mlh-small-screen#main-header-menu-small-screen
+  .mlh-small-screen-menu-inner
+    a.mlh-small-screen-menu-item( href='/' ) Home
+    a.mlh-small-screen-menu-item( href='/institutions' ) Museums
+    a.mlh-small-screen-menu-item( href='/artists' ) Artists
+    a.mlh-small-screen-menu-item( href='/articles' ) Articles
+    a.mlh-small-screen-menu-item( href='/shows' ) Show Guide
+    a.mlh-small-screen-menu-item( href='/art-fairs' ) Art Fairs
+    a.mlh-small-screen-menu-item( href='/galleries' ) Galleries
+    a.mlh-small-screen-menu-item( href='/auctions' ) Auctions
+
+  if user
+    .mlh-small-screen-menu-logged-in.mlh-small-screen-menu-inner
+      .mlh-small-screen-menu-username
+        = user.get('name')
+      a.mlh-small-screen-menu-item( href='/user/edit' ) Account
