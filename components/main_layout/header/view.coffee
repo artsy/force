@@ -52,7 +52,7 @@ module.exports = class HeaderView extends Backbone.View
         success: (result) =>
           totalUnread = result.get('total_unread')
           if result.get('feed').length > 0
-            if totalUnread > 0 && Cookies.get('notification-count') != totalUnread
+            if totalUnread > 0 and (Cookies.get('notification-count') != totalUnread)
               bundleText = if totalUnread >= 100 then "99+" else totalUnread
               @$('.mlh-bundle-count')
                 .text("#{bundleText}")
@@ -64,6 +64,10 @@ module.exports = class HeaderView extends Backbone.View
               bundles: result.get('feed')
           else
             @$('.mlh-notification').addClass 'nohover'
+          # Handles switching between user accounts
+          if totalUnread < 1
+            @$('.mlh-bundle-count').attr('data-visible', false)
+            Cookies.expire('notification-count')
 
   showProfilePrivateDialog: (event) =>
     # Displaying the dialog on tap causes confusion on touch devices

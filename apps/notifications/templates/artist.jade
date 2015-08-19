@@ -2,13 +2,13 @@
   header.notifications-list-item-header
     .is-pull-left
       if unread
-        .notifications-new-work New Work#{count === 1 ? undefined : 's'} Added
+        .notifications-new-work New Work#{count < 2 ? '' : 's'} Added
           .bundle-read-status
       h4
         a( href=artist.href() )= artist.get('name')
           i.icon-chevron-small-right
       .notifications-works-added
-        | #{count} work#{count === 1 ? undefined : 's'} added
+        | #{count} work#{count < 2 ? '' : 's'} added
         if publishedAt
           | , #{publishedAt}
   .notifications-published-artworks

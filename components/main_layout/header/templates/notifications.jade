@@ -2,7 +2,7 @@ if sd.CURRENT_USER
   span.mlh-notification.hover-pulldown( data-anchor='right', data-mode='hover')
     a(href="/works-for-you")
       include ../../public/icons/bell.svg
-    .mlh-bundle-count( data-visible="#{sd.NOTIFICATION_COUNT != null}" )= sd.NOTIFICATION_COUNT
+    .mlh-bundle-count( data-visible="#{sd.NOTIFICATION_COUNT !== undefined }" )= sd.NOTIFICATION_COUNT
     .hover-pulldown-menu
       .hpm-header Activity
       #hpm-bundles
