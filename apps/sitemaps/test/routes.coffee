@@ -15,7 +15,7 @@ describe 'Sitemaps', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#articles', ->
+  describe '#news_sitemap', ->
 
     it 'displays the sitemap for articles < 5 days old', ->
       routes.articles(@req, @res)
@@ -28,5 +28,5 @@ describe 'Sitemaps', ->
         ]
 
       }
-      @res.render.args[0][0].should.equal('articles')
+      @res.render.args[0][0].should.equal('news_sitemap')
       @res.render.args[0][1].articles.length.should.equal(1)
