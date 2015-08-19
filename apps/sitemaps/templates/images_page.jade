@@ -21,7 +21,10 @@ urlset(
       author
         alternateName=''
         url=''
-      description=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
+      if artwork.artist
+        description=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
+      else
+        image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.' 
       encodingFormat='jpeg'
       height=artwork.height
       width=artwork.width
