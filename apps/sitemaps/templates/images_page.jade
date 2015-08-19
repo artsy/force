@@ -36,6 +36,7 @@ urlset(
         width=artwork.width
       //-bing folks said they can take care of this field
       bing:isFamilyFriendly=''
+      //-tag field on most artworks is an empty array
       keywords=artwork.tags.join(',') + ', ' + artwork.title + ', ' + (artwork.artist && artwork.artist.name)
       datePublished=artwork.published_at
       dateModified=artwork.published_changed_at

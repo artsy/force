@@ -11,6 +11,7 @@ PAGE_SIZE = 100
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
+      author_id: "503f86e462d56000020002cc" # id for "Artsy Editorial" (exclude partner posts)
       published: true
       sort: '-published_at'
       exclude_google_news: false

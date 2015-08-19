@@ -30,3 +30,7 @@ describe 'Sitemaps', ->
       }
       @res.render.args[0][0].should.equal('news_sitemap')
       @res.render.args[0][1].articles.length.should.equal(1)
+
+    it 'only displays articles from Artsy Editorial', ->
+      routes.articles(@req, @res)
+      Backbone.sync.args[0][2].data.author_id.should.equal('503f86e462d56000020002cc')
