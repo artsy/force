@@ -98,6 +98,14 @@ for num in (1..8)
         display block
 
 .hover-pulldown-menu
+  ::-webkit-scrollbar
+    background-color black
+    width 8px
+  ::-webkit-scrollbar-corner
+    display none
+  ::-webkit-scrollbar-thumb
+    border-radius 10px
+    background-color gray-darkest-color
   visibility hidden
   position absolute
   z-index zindex-hover-pulldown
