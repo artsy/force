@@ -46,12 +46,10 @@ PAGE_SIZE = 100
       ), (err, results) ->
         return cb(err) if err
         allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / PAGE_SIZE
-        console.log(allPages)
         cb null, allPages
   ], (err, [articlePages, allPages]) ->
     return next(err) if err
     res.set('Content-Type', 'text/xml')
-    console.log(allPages)
     res.render('index', { 
       pretty: true 
       articlePages: articlePages
