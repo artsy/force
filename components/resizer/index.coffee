@@ -17,7 +17,7 @@ module.exports =
     if DISABLE_GEMINI_PROXY
       fetch 'resize', _.omit _.defaults(options, quality: 95, grow: false, url: url, key: EMBEDLY_KEY), 'token', 'resize_to'
     else
-      fetchGemini options
+      fetchGemini _.defaults(options, quality: 95)
 
   crop: (url, options = {}) ->
     fetch 'crop', _.defaults(options, quality: 95, url: url, key: EMBEDLY_KEY)

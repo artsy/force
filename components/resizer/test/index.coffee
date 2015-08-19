@@ -50,7 +50,7 @@ describe 'using the gemini proxy', ->
   describe '#resizeWithGemini', ->
     it 'returns the appropriate URL', ->
       resizeWithGemini(null, resize_to: 'height', height: 32, token: 'percy').
-        should.equal 'https://cat.com/?resize_to=height&height=32&token=percy'
+        should.equal 'https://cat.com/?resize_to=height&height=32&token=percy&quality=95'
 
   describe 'when disabled', ->
     beforeEach ->
