@@ -101,3 +101,4 @@ subscribed = (email, callback) ->
       id: sd.GALLERY_INSIGHTS_LIST
     ).query("emails[0][email]=#{email}").end (err, response) ->
       callback response.body.success_count is 1
+  return
