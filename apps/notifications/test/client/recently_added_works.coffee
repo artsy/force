@@ -106,7 +106,6 @@ describe 'RecentlyAddedWorksView', ->
   describe 'with an artist_id param', ->
     beforeEach ->
       sinon.stub(@RecentlyAddedWorksView::, 'params').returns artist_id: 'foobar'
-      sinon.stub(@RecentlyAddedWorksView::, 'scrollToPins').returns true
       @view = new @RecentlyAddedWorksView
         el: $('body')
         filterState: @filterState
@@ -114,7 +113,6 @@ describe 'RecentlyAddedWorksView', ->
 
     afterEach ->
       @view.params.restore()
-      @view.scrollToPins.restore()
 
     it 'fetches the artist slug first; pins it', ->
       @view.$pins.find('.notifications-list-item').length.should.equal 1

@@ -47,7 +47,7 @@ module.exports = class HeaderView extends Backbone.View
     activatePulldowns()
 
   checkForNotifications: =>
-    if @currentUser and @currentUser.isAdmin()
+    if @currentUser
       @currentUser.fetchNotificationBundles
         success: (result) =>
           totalUnread = result.get('total_unread')

@@ -40,7 +40,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     ])?.then =>
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks, @containsNewArtwork(@pinnedArtworks))
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
-      @scrollToPins()
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -135,9 +134,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
     @$feed.waypoint (direction) =>
       @nextPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
-
-  scrollToPins: ->
-    $('body,html').scrollTop @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
 
   resetFeed: ->
     # Remove any existing column views

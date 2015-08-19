@@ -155,6 +155,11 @@
       "from": "git://github.com/artsy/artsy-xapp.git",
       "resolved": "git://github.com/artsy/artsy-xapp.git#b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9"
     },
+    "async": {
+      "version": "1.4.2",
+      "from": "async@>=1.4.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/async/-/async-1.4.2.tgz"
+    },
     "backbone": {
       "version": "1.2.1",
       "from": "backbone@>=1.2.1 <2.0.0",
@@ -367,14 +372,7 @@
                 "form-data": {
                   "version": "1.0.0-rc3",
                   "from": "form-data@>=1.0.0-rc1 <1.1.0",
-                  "resolved": "https://registry.npmjs.org/form-data/-/form-data-1.0.0-rc3.tgz",
-                  "dependencies": {
-                    "async": {
-                      "version": "1.4.2",
-                      "from": "async@>=1.4.0 <2.0.0",
-                      "resolved": "https://registry.npmjs.org/async/-/async-1.4.2.tgz"
-                    }
-                  }
+                  "resolved": "https://registry.npmjs.org/form-data/-/form-data-1.0.0-rc3.tgz"
                 },
                 "json-stringify-safe": {
                   "version": "5.0.1",
@@ -2786,14 +2784,7 @@
     "ezel-assets": {
       "version": "0.0.13",
       "from": "ezel-assets@*",
-      "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-0.0.13.tgz",
-      "dependencies": {
-        "async": {
-          "version": "1.4.2",
-          "from": "async@*",
-          "resolved": "https://registry.npmjs.org/async/-/async-1.4.2.tgz"
-        }
-      }
+      "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-0.0.13.tgz"
     },
     "flickity": {
       "version": "1.1.0",
@@ -6461,9 +6452,9 @@
               "resolved": "https://registry.npmjs.org/window-size/-/window-size-0.1.2.tgz"
             },
             "y18n": {
-              "version": "3.0.0",
+              "version": "3.1.0",
               "from": "y18n@>=3.0.0 <4.0.0",
-              "resolved": "https://registry.npmjs.org/y18n/-/y18n-3.0.0.tgz"
+              "resolved": "https://registry.npmjs.org/y18n/-/y18n-3.1.0.tgz"
             }
           }
         }
@@ -6706,7 +6697,7 @@
           "dependencies": {
             "inherits": {
               "version": "2.0.1",
-              "from": "inherits@>=2.0.1 <2.1.0",
+              "from": "inherits@>=2.0.0 <3.0.0",
               "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
             },
             "minimatch": {
@@ -7317,7 +7308,7 @@
         },
         "bluebird": {
           "version": "2.9.34",
-          "from": "bluebird@>=2.9.30 <3.0.0",
+          "from": "bluebird@>=2.0.0 <3.0.0",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz"
         },
         "debug": {
@@ -7658,14 +7649,7 @@
             "form-data": {
               "version": "1.0.0-rc3",
               "from": "form-data@>=1.0.0-rc1 <1.1.0",
-              "resolved": "https://registry.npmjs.org/form-data/-/form-data-1.0.0-rc3.tgz",
-              "dependencies": {
-                "async": {
-                  "version": "1.4.2",
-                  "from": "async@>=1.4.0 <2.0.0",
-                  "resolved": "https://registry.npmjs.org/async/-/async-1.4.2.tgz"
-                }
-              }
+              "resolved": "https://registry.npmjs.org/form-data/-/form-data-1.0.0-rc3.tgz"
             },
             "json-stringify-safe": {
               "version": "5.0.1",
