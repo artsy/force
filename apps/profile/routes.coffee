@@ -14,8 +14,6 @@ Following = require '../../components/follow_button/collection.coffee'
   return next() if res.locals.profile
   new Profile(id: req.params.id).fetch
     data: data
-    cache: true
-    cacheTime: 300 # 5 mins
     success: (profile) ->
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()
