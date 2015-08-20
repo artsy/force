@@ -56,10 +56,11 @@ html[data-useragent*="iPad"]
 
 // View in room and home page hero units will sit underneath a transparent
 // header.
-.body-transparent-header-white
-.body-transparent-header
-  #main-layout-header
-    background transparent
+@media(min-width: nav-bar-break)
+  .body-transparent-header-white
+  .body-transparent-header
+    #main-layout-header
+      background transparent
 
 .body-transparent-header
   #main-layout-header
@@ -74,27 +75,23 @@ html[data-useragent*="iPad"]
 
 // Dark banners and backgrounds need the header it to be white text and outlines
 // for visiblity.
-.body-transparent-header-white
-  #main-layout-header-center a
-  #main-layout-header-right a
-  .mlh-user-name
-  #main-layout-header-home-logo
-  #main-layout-welcome-header
-  #main-layout-search-bar-icon
-  #main-layout-search-bar-input
-    color white
-  #main-layout-search-bar-input
-    placeholder(search-bar-input-placeholder-white)
-  #main-layout-header
-    border-color rgba(white, 0.3)
-    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+@media(min-width: nav-bar-break)
+  .body-transparent-header-white
+    #main-layout-header-center a, #main-layout-header-right a, .mlh-user-name, #main-layout-header-home-logo
+    #main-layout-welcome-header, #main-layout-search-bar-icon, #main-layout-search-bar-input
+      color white
+    #main-layout-search-bar-input
+      placeholder(search-bar-input-placeholder-white)
+    #main-layout-header
       border-color rgba(white, 0.3)
-    #main-layout-search-bar-container
+      *:not(.tt-suggestion):not(.tt-dropdown-menu)
+        border-color rgba(white, 0.3)
+      #main-layout-search-bar-container
+        border-color white
+    #main-layout-search-bar-container.is-loading .loading-spinner-small
+      background white
+    #main-layout-header-home-logo::after
       border-color white
-  #main-layout-search-bar-container.is-loading .loading-spinner-small
-    background white
-  #main-layout-header-home-logo::after
-    border-color white
 
 // A page that infinite scrolls will hide the footer
 .body-infinite-scroll

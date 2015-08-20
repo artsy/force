@@ -15,6 +15,7 @@ maybePopUpPolicyNotice = require './policy.coffee'
 dealWithWelcomeBanner = require '../../welcome_banner/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
+MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
@@ -29,6 +30,8 @@ module.exports = class HeaderView extends Backbone.View
     dealWithWelcomeBanner()
     @currentUser = CurrentUser.orNull()
     @checkForNotifications()
+    @mobileHeaderView = new MobileHeaderView
+      el : @$('#main-header-small-screen')
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
       $input: @$('#main-layout-search-bar-input')
