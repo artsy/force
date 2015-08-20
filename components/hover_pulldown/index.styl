@@ -96,15 +96,18 @@ for num in (1..8)
       &.mlh-pulldown-top-link
         display block
 
-.hover-pulldown-menu
-  ::-webkit-scrollbar
+.hover-pulldown-menu > *
+  overflow-x hidden
+  &::-webkit-scrollbar
     background-color black
     width 8px
-  ::-webkit-scrollbar-corner
+  &::-webkit-scrollbar-corner
     display none
-  ::-webkit-scrollbar-thumb
+  &::-webkit-scrollbar-thumb
     border-radius 10px
     background-color gray-darkest-color
+
+.hover-pulldown-menu
   visibility hidden
   position absolute
   z-index zindex-hover-pulldown
@@ -195,7 +198,7 @@ for num in (1..8)
       opacity 0
 
 #hpm-bundles
-  overflow scroll
+  overflow-y scroll
   max-height 280px
   > a
     padding 0 0 0 default-margin
