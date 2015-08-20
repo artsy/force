@@ -16,13 +16,3 @@ $('.article-social:eq(1) > a').click(function() {
     service: $(this).attr('data-service')
   })
 })
-
-if (location.pathname.match('/articles')) {
-  var start = Date.now();
-  window.onbeforeunload = function(){
-    analytics.track("Spent time on articles page" , {
-      label: "News",
-      timeOnPage: Date.now() - start
-    })
-  };
-}
