@@ -17,15 +17,11 @@ $('.article-social:eq(1) > a').click(function() {
   })
 })
 
-analytics.trackLink( $('.js--post-split-test') ,"Clicked posts link", {
-  label: sd.POSTS_SECTION_NAME
-})
-
 if (location.pathname.match('/articles')) {
   var start = Date.now();
   window.onbeforeunload = function(){
     analytics.track("Spent time on articles page" , {
-      label: sd.POSTS_SECTION_NAME,
+      label: "News",
       timeOnPage: Date.now() - start
     })
   };
