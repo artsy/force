@@ -41,7 +41,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   initialize: ({ @artwork, @artist, @artists }) ->
     @checkQueryStringForAuction()
-    @setupEmbeddedInquiryForm()
     @setupCurrentUser()
     @setupRelatedArticles()
     @setupArtistArtworks()
@@ -49,7 +48,6 @@ module.exports = class ArtworkView extends Backbone.View
     @setupBelowTheFold()
     @setupMainSaveButton()
     @setupVideoView()
-    @setupPartnerLocations()
     @setupAnnyang()
     @setupMonocleView()
     @preventRightClick()
@@ -67,6 +65,8 @@ module.exports = class ArtworkView extends Backbone.View
     @listenTo @artwork, 'change:sale_message', @renderDetail
     @listenTo @artwork, 'change:ecommerce', @renderDetail
     @listenToOnce @artwork.related().sales, 'sync', @handleSales
+    @listenToOnce @artwork.related().sales, 'sync', @setupPartnerLocations
+    @listenToOnce @artwork.related().sales, 'sync', @setupEmbeddedInquiryForm
     @listenToOnce @artwork.related().fairs, 'sync', @handleFairs
     @listenToOnce @artwork.related().shows, 'sync', @handleShows
 
@@ -147,11 +147,14 @@ module.exports = class ArtworkView extends Backbone.View
     ).addClass 'is-fade-in'
 
   setupEmbeddedInquiryForm: ->
-    return if @suppressInquiry
+    return if @suppressInquiry or
+      (@artwork.related().sales.first() and @artwork.related().sales.first().isClosed())
 
-    new EmbeddedInquiryView
+    view = new EmbeddedInquiryView
       el: @$('.js-artwork-detail-contact')
       artwork: @artwork
+
+    view.render()
 
   displayZigZag: ->
     (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())

@@ -2,14 +2,19 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../../../models/artwork'
-PartnerLocations = require '../index'
+PartnerLocations = rewire '../index'
+PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_phone_number/view.coffee'), [
+  'template'
+]
 
 describe 'PartnerLocations', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
+      Backbone.$ = $
       done()
 
   after ->
@@ -20,8 +25,11 @@ describe 'PartnerLocations', ->
       <div id='artwork-partner-locations'></div>
       <div id='artwork-partner-phone-container'></div>
     """
+
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork', partner: id: 'foobar'
+
+    PartnerLocations.__set__ 'PartnerPhoneNumberView', PartnerPhoneNumberView
 
   afterEach ->
     Backbone.sync.restore()
@@ -39,6 +47,25 @@ describe 'PartnerLocations', ->
 
     it 'fetches the partner locations', ->
       Backbone.sync.args[0][1].url.should.containEql '/api/v1/partner/foobar/locations'
+
+    describe 'in an auction promo', ->
+      before ->
+        sinon.stub(@artwork, "isPartOfAuctionPromo").returns(true)
+
+      after ->
+        sinon.restore(@artwork, "isPartOfAuctionPromo")
+
+      it '#setupPhoneNumbers does not render phone number', ->
+        @partnerLocations.setupPhoneNumbers()
+        $('#artwork-partner-phone-container').text().should.eql ''
+
+    describe 'for sale in a normal auction', ->
+      it '#setupPhoneNumbers should render phone number', ->
+        @artwork.set forsale: true, acquireable: false
+        @locations.add fabricate('partner_location', city: 'New York', phone: '(713) 666-1216')
+        @partnerLocations.setupPhoneNumbers @locations
+        @locations.trigger 'sync'
+        $('#artwork-partner-phone-container').text().should.containEql '(713) 666-1216'
 
     describe '#renderLocations', ->
       it 'returns an appropriate string when there are less than 3 locations', ->

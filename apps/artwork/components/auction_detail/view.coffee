@@ -21,7 +21,7 @@ module.exports = class AuctionDetailView extends Backbone.View
 
     @partnerPhoneNumberView = new PartnerPhoneNumberView model: @artwork, collection: @locations
 
-    if @auction.isAuctionPromo()
+    if @auction.isAuctionPromo() and @auction.isOpen()
       new ContactView el: @$el, model: @artwork
 
   openAuctionFAQs: (e) ->
@@ -68,8 +68,9 @@ module.exports = class AuctionDetailView extends Backbone.View
     $('#artwork-lot-number')
       .html 'Lot ' + num if num = @saleArtwork.get('lot_number')
 
-    @$('.js-artwork-auction-detail-phone-number')
-      .html @partnerPhoneNumberView.render().$el
+    if @auction.isOpen()
+      @$('.js-artwork-auction-detail-phone-number')
+        .html @partnerPhoneNumberView.render().$el
 
     this
 

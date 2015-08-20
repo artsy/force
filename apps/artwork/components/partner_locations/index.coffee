@@ -34,8 +34,10 @@ module.exports = class PartnerLocations
     _s.toSentence(cities, ', ', ' & ') if cities.length
 
   setupPhoneNumbers: (locations) ->
-    if @artwork.isContactable() and @$el.find('#artwork-partner-phone-container').length
-      new PartnerPhoneNumberView
-        el: @$el.find('#artwork-partner-phone-container')
-        collection: locations
-        model: @artwork
+    if @artwork.isContactable() and
+      @$el.find('#artwork-partner-phone-container').length and
+      not @artwork.isPartOfAuctionPromo()
+        new PartnerPhoneNumberView
+          el: @$el.find('#artwork-partner-phone-container')
+          collection: locations
+          model: @artwork
