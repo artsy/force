@@ -63,7 +63,7 @@
             "title": "General"
         },
         {
-            "description": "<a href='#' class='js-multi-page-modal' data-id='auction-faqs'>Auction FAQ</a>",
+            "description": "<a href='#' class='js-multi-page-modal' data-id='auction-faqs'>Auction FAQ</a><br/><a href='#' class='js-multi-page-modal' data-id='artist-faqs'>Artist FAQ</a><br/><a href='#' class='js-multi-page-modal' data-id='collector-faqs'>Collector FAQ</a>",
             "title": "FAQs"
         }
     ],
