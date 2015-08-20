@@ -16,12 +16,6 @@
 
 module.exports =
 
-  posts_section_name:
-    key: 'posts_section_name'
-    outcomes:
-      magazine: 4/5
-      editorial: 1/5
-
   partner_application_copy:
     key: 'partner_application_copy'
     outcomes:
