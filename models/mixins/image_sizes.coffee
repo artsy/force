@@ -89,7 +89,7 @@ module.exports =
     resizer.resize @sourceUrl(attr), arguments...
 
   resizeUrlWithGemini: (options = {}) ->
-    resizer.resizeWithGemini @imageUrlForMaxSize, _.extend options, token: @get('gemini_token')
+    resizer.resizeWithGemini @imageUrlForMaxSize(), arguments...
 
   cropUrlFor: (options = {}, attr) ->
     resizer.crop @sourceUrl(attr), options

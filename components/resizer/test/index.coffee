@@ -49,8 +49,8 @@ describe 'using the gemini proxy', ->
 
   describe '#resizeWithGemini', ->
     it 'returns the appropriate URL', ->
-      resizeWithGemini(null, resize_to: 'height', height: 32, token: 'percy').
-        should.equal 'https://cat.com/?resize_to=height&height=32&token=percy&quality=95'
+      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
+        should.equal 'https://cat.com/?resize_to=height&height=32&quality=95&src=http%3A%2F%2Ffoobar.jpg'
 
   describe 'when disabled', ->
     beforeEach ->
@@ -59,5 +59,5 @@ describe 'using the gemini proxy', ->
       resizer.__set__ 'DISABLE_IMAGE_PROXY', false
 
     it 'returns the embedly URL', ->
-      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32, token: 'percy').
+      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
         should.equal 'https://i.embed.ly/1/display/resize?height=32&quality=95&grow=false&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
