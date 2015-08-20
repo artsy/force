@@ -11,4 +11,5 @@ app.get '/sitemap-articles-:page.xml', routes.articlesPage
 app.get '/sitemap-images-:page.xml', routes.imagesPage
 app.get '/sitemap.xml', routes.index
 app.get '/sitemap-:resource-:page.xml', routes.resourcePage
+app.get '/sitemap-cities.xml', routes.cities
 

@@ -4,17 +4,16 @@ sitemapindex(
 )
   sitemap
     loc=sd.APP_URL + '/sitemap-misc.xml'
+  
+  sitemap
+    loc=sd.APP_URL + '/sitemap-cities.xml'
+ 
   for resource, i in resources
     for n, j in new Array(allPages[i])
       sitemap
         loc=sd.APP_URL + '/sitemap-' + resource + '-' + (j + 1) + '.xml'
 
-  for slug in citySlugs
-    url
-      loc=sd.APP_URL + '/shows/' + slug
-
   for n, i in new Array(articlePages)
     sitemap
       loc=sd.APP_URL + '/sitemap-articles-' + i + '.xml'
       
-
