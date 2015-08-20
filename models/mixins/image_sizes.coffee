@@ -88,6 +88,9 @@ module.exports =
   resizeUrlFor: (options = {}, attr) ->
     resizer.resize @sourceUrl(attr), arguments...
 
+  resizeUrlWithGemini: (options = {}) ->
+    resizer.resizeWithGemini @imageUrlForMaxSize(), arguments...
+
   cropUrlFor: (options = {}, attr) ->
     resizer.crop @sourceUrl(attr), options
 

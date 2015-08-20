@@ -5,7 +5,7 @@
         - var dimensions = figure.resizeDimensionsFor({ height: 300 })
         a( href= figure.get('href') )
           img(
-            src= figure.resizeUrlFor({ height: 300 })
+            src= figure.resizeUrlWithGemini({ resize_to: 'height', height: 300 })
             alt= figure.get('title')
             width= dimensions.width
             height= dimensions.height

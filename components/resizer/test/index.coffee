@@ -1,9 +1,9 @@
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
-{ fill, crop, resize } = resizer = rewire '../index'
+{ fill, crop, resize, resizeWithGemini } = resizer = rewire '../index'
 
-describe 'using the proxy', ->
+describe 'using the embedly proxy', ->
   before ->
     resizer.__set__ 'EMBEDLY_KEY', 'xxx'
 
@@ -42,3 +42,22 @@ describe 'using the proxy', ->
       resize('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
       crop('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
       fill('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
+
+describe 'using the gemini proxy', ->
+  before ->
+    resizer.__set__ 'GEMINI_CLOUDFRONT_URL', 'https://cat.com'
+
+  describe '#resizeWithGemini', ->
+    it 'returns the appropriate URL', ->
+      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
+        should.equal 'https://cat.com/?resize_to=height&height=32&quality=95&src=http%3A%2F%2Ffoobar.jpg'
+
+  describe 'when disabled', ->
+    beforeEach ->
+      resizer.__set__ 'DISABLE_GEMINI_PROXY', true
+      resizer.__set__ 'EMBEDLY_KEY', 'xxx'
+      resizer.__set__ 'DISABLE_IMAGE_PROXY', false
+
+    it 'returns the embedly URL', ->
+      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
+        should.equal 'https://i.embed.ly/1/display/resize?height=32&quality=95&grow=false&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
