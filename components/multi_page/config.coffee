@@ -11,3 +11,22 @@ module.exports =
       'Payments and Shipping': 'how-auctions-work-payments-and-shipping'
       'Emails and alerts': 'how-auctions-work-emails-and-alerts'
       'Conditions of sale': 'how-auctions-work-conditions-of-sale'
+  'collector-faqs':
+    title: 'Collector FAQs'
+    description: '
+      How can we help you? Below are answers to some of the most common questions from collectors.\n\n
+      Need more immediate assistance? Please [contact us](mailto:support@artsy.net)
+    '
+    pages:
+      'Selling On Artsy': 'collector-faqs-selling-on-artsy'
+      'Other Requests': 'collector-faqs-other-requests'
+  'artist-faqs':
+    title: 'Artist FAQs'
+    description: '
+      How can we help you? Below are answers to some of the most common questions from artists.\n\n
+      Need more immediate assistance? Please [contact us](mailto:support@artsy.net)
+    '
+    pages:
+      'How Artsy Works': 'artist-faqs-how-artsy-works'
+      'Listing Artworks': 'artist-faqs-listing-artworks'
+      'Other Requests': 'artist-faqs-other-requests'
