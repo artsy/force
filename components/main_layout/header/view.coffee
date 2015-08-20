@@ -52,7 +52,7 @@ module.exports = class HeaderView extends Backbone.View
         success: (result) =>
           totalUnread = result.get('total_unread')
           if result.get('feed').length > 0
-            if totalUnread > 0 and (Cookies.get('notification-count') not totalUnread)
+            if totalUnread > 0 and (Cookies.get('notification-count') != totalUnread)
               bundleText = if totalUnread >= 100 then "99+" else totalUnread
               @$('.mlh-bundle-count')
                 .text("#{bundleText}")
