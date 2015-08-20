@@ -49,6 +49,12 @@
   align-items center
   z-index 1
 
+  #main-layout-header-home-logo
+    z-index 1
+    position absolute
+    width logo-size + 1
+    border-right 1px solid gray-lighter-color
+
   #main-header-search-box
     position relative
     height logo-size
@@ -59,11 +65,22 @@
     width 100%
     font-size 16px
 
-  #main-layout-header-home-logo
-    z-index 1
+  #main-header-search-box::-webkit-search-cancel-button
+    display none
+
+  #main-header-search-button
+    z-index 4
+    line-height 34px
+    font-size 14px
+    padding 12px
+    background-color white
     position absolute
-    width logo-size + 1
-    border-right 1px solid gray-lighter-color
+    top 0
+    right 0
+    width 100px
+    height 100%
+    border-left 1px solid gray-lighter-color
+    display none
 
   #main-header-menu-icon
     display inline-block
@@ -87,35 +104,3 @@
     width logo-size
     border-left 1px solid gray-lighter-color
     -webkit-tap-highlight-color rgba(0,0,0,0)
-
-  #main-header-search-box-cancel
-    background #bbb
-    color white
-    border-radius 10px
-    font-size 15px
-    padding 2px 4px 6px 4px
-    position absolute
-    right 13px
-    top 21px
-    font-family Helvetica
-    font-weight bold
-    line-height 8px
-    border none
-    font-smoothing antialiased
-
-  #main-header-search-box::-webkit-search-cancel-button
-    display none
-
-  #main-header-search-button
-    z-index 4
-    line-height 34px
-    font-size 14px
-    padding 12px
-    background-color white
-    position absolute
-    top 0
-    right 0
-    width 100px
-    height 100%
-    border-left 1px solid gray-lighter-color
-    display none

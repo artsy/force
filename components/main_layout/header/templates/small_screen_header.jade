@@ -9,23 +9,7 @@ nav.mlh-small-screen#main-header-small-screen
     )
   button#main-header-search-button.avant-garde-button(form="main-header-search-form") Search
 
-  //- include ./small_screen_menu
   a#main-header-menu-button
     #main-header-menu-icon
 
-nav.mlh-small-screen#main-header-menu-small-screen
-  .mlh-small-screen-menu-inner
-    a.mlh-small-screen-menu-item( href='/' ) Home
-    a.mlh-small-screen-menu-item( href='/institutions' ) Museums
-    a.mlh-small-screen-menu-item( href='/artists' ) Artists
-    a.mlh-small-screen-menu-item( href='/articles' ) Articles
-    a.mlh-small-screen-menu-item( href='/shows' ) Show Guide
-    a.mlh-small-screen-menu-item( href='/art-fairs' ) Art Fairs
-    a.mlh-small-screen-menu-item( href='/galleries' ) Galleries
-    a.mlh-small-screen-menu-item( href='/auctions' ) Auctions
-
-  if user
-    .mlh-small-screen-menu-logged-in.mlh-small-screen-menu-inner
-      .mlh-small-screen-menu-username
-        = user.get('name')
-      a.mlh-small-screen-menu-item( href='/user/edit' ) Account
+include ./small_screen_dropdown_menu

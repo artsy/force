@@ -19,11 +19,11 @@ MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
 
 module.exports = class HeaderView extends Backbone.View
-  # events:
-  #   'click .mlh-login': 'login'
-  #   'click .mlh-signup': 'signup'
-  #   'click .user-nav-profile-link': 'showProfilePrivateDialog'
-  #   'click .mlh-logout': 'logout'
+  events:
+    'click .mlh-login': 'login'
+    'click .mlh-signup': 'signup'
+    'click .user-nav-profile-link': 'showProfilePrivateDialog'
+    'click .mlh-logout': 'logout'
 
   initialize: ->
     maybePopUpPolicyNotice()

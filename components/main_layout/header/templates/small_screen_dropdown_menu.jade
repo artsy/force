@@ -1,0 +1,16 @@
+nav.mlh-small-screen#main-header-menu-small-screen
+  .mlh-small-screen-menu-inner
+    a.mlh-small-screen-menu-item( href='/' ) Home
+    a.mlh-small-screen-menu-item( href='/institutions' ) Museums
+    a.mlh-small-screen-menu-item( href='/artists' ) Artists
+    a.mlh-small-screen-menu-item( href='/articles' ) Articles
+    a.mlh-small-screen-menu-item( href='/shows' ) Show Guide
+    a.mlh-small-screen-menu-item( href='/art-fairs' ) Art Fairs
+    a.mlh-small-screen-menu-item( href='/galleries' ) Galleries
+    a.mlh-small-screen-menu-item( href='/auctions' ) Auctions
+
+  if user
+    .mlh-small-screen-menu-logged-in.mlh-small-screen-menu-inner
+      .mlh-small-screen-menu-username
+        = user.get('name')
+      a.mlh-small-screen-menu-item( href='/user/edit' ) Account
