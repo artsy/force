@@ -4,7 +4,6 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
-{ stubChildClasses } = require '../../../../../test/helpers/stubs'
 Artwork = require '../../../../../models/artwork'
 PartnerLocations = rewire '../index'
 PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_phone_number/view.coffee'), [
