@@ -56,12 +56,15 @@ PAGE_SIZE = 100
       articlePages: articlePages
       allPages: allPages 
       resources: resources
-      citySlugs: _.pluck(Cities, 'slug')
     })  
 
 @misc = (req, res, next) ->
   res.set('Content-Type', 'text/xml')
   res.render('misc', pretty: true)
+
+@cities = (req, res, next) ->
+  res.set('Content-Type', 'text/xml')
+  res.render('cities', pretty: true, citySlugs: _.pluck(Cities, 'slug'))
 
 @articlesPage = (req, res, next) ->
   request
