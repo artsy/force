@@ -23,6 +23,8 @@ describe 'FairsView', ->
       done()
 
   after ->
+    Backbone.sync.restore()
+    Fair.prototype.isPast.restore()
     benv.teardown()
 
   beforeEach (done) ->
