@@ -49,7 +49,7 @@ describe 'Fairs routes', ->
       it 'fetches the fairs and renders the index template', (done) ->
         routes.index {}, @res
         Backbone.sync.args[0][1].url.should.containEql 'api/v1/fairs'
-        Backbone.sync.args[0][2].data.size.should.equal 30
+        Backbone.sync.args[0][2].data.size.should.equal 40
         Backbone.sync.args[0][2].success(@fairs)
         _.defer =>
           @res.render.args[0][1].currentFairRows.should.eql @rows
@@ -69,7 +69,7 @@ describe 'Fairs routes', ->
       it 'fetches the fairs and renders the index template', (done) ->
         routes.index {}, @res
         Backbone.sync.args[0][1].url.should.containEql 'api/v1/fairs'
-        Backbone.sync.args[0][2].data.size.should.equal 30
+        Backbone.sync.args[0][2].data.size.should.equal 40
         Backbone.sync.args[0][2].success(@fairs)
         _.defer =>
           @res.render.args[0][1].currentFairRows.should.eql []
