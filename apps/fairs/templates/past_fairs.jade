@@ -1,0 +1,11 @@
+for fair in pastFairs
+  a.fairs__past-fair(href=fair.href())
+    .fairs__past-fair__cell.fairs__past-fair__cell--icon
+      img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=fair.profileImage() )
+    .fairs__past-fair__cell.fairs__past-fair__cell--name
+      .fairs-fair__name= fair.get('name')
+      .fairs-fair__follow
+        .entity-follow.profile-follow( data-id= fair.get('default_profile_id') )
+    .fairs__past-fair__cell.fairs__past-fair__cell--info
+      .fairs-fair__info #{fair.formatDates()}
+      .fairs-fair__info #{fair.formatLocation()}

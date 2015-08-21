@@ -16,8 +16,10 @@ block body
       include promo
     .fairs__past-fairs
       h1.fair-header.fair-header--underlined Past Fairs
-      for fair in pastFairs
-        include fair_past
+      .fairs__past-fairs-list
+        include past_fairs
+      button#fairs-see-more.avant-garde-button-white.is-block
+        | View More
     .fairs__upcoming-fairs
       h1.fair-header.fair-header--underlined Upcoming Fairs
       for fair in upcomingFairs
