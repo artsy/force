@@ -25,10 +25,10 @@ module.exports = class Fair extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/fair"
 
   href: ->
-    if @get('default_profile_id')
-      "/#{@get('default_profile_id')}"
-    else
-     "/#{@get('organizer')?.profile_id}"
+    "/#{@profileId()}"
+
+  profileId: ->
+    @get('default_profile_id') || @get('organizer')?.profile_id
 
   fairOrgHref: ->
     "/#{@get('organizer')?.profile_id}/#{@formatYear()}"
@@ -40,8 +40,8 @@ module.exports = class Fair extends Backbone.Model
     if @get('location')
       new PartnerLocation @get('location')
 
-  profileImage: (profile_id) ->
-    url = "#{sd.API_URL}/api/v1/profile/#{profile_id}/image"
+  profileImage: (version = 'square140')->
+    url = "#{sd.API_URL}/api/v1/profile/#{@get('default_profile_id')}/image/#{version}"
     url = "#{url}?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
     url
 
