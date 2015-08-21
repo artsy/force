@@ -21,6 +21,7 @@ parseGroups = (fairs) ->
   upcomingFairs: fairs.chain()
     .filter((fair) -> fair.isUpcoming())
     .sortBy((fair) -> Date.parse(fair.get 'start_at'))
+    .take(10)
     .value()
 
 @index = (req, res) ->
