@@ -19,9 +19,20 @@ PAGE_SIZE = 100
     error: res.backboneError
     success: (articles) ->
       recentArticles = articles.filter (article) ->
-        moment(article.get 'published_at').isAfter(moment().subtract(5, 'days'))
+        moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
       res.set('Content-Type', 'text/xml')
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
+
+@imagesIndex = (req, res, next) ->
+    request
+      .head(API_URL + '/api/v1/artworks')
+      .set('X-XAPP-TOKEN': artsyXapp.token)
+      .query(total_count: 1)
+      .end (err, results) ->
+        return next err if err
+        artworkPages = Math.ceil results.headers['x-total-count'] / PAGE_SIZE
+        res.set('Content-Type', 'text/xml')
+        res.render('images_index', { pretty: true, artworkPages: artworkPages })
 
 @index = (req, res, next) -> 
   resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs', 
@@ -90,7 +101,7 @@ PAGE_SIZE = 100
   request
     .get(API_URL + '/api/v1/artworks')
     .set('X-XAPP-TOKEN': artsyXapp.token)
-    .query(size: PAGE_SIZE, page: req.params.page)
+    .query(page: req.params.page, size: PAGE_SIZE)
     .end (err, sres) ->
       return next err if err
       res.set('Content-Type', 'text/xml')

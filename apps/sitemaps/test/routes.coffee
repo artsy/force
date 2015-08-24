@@ -17,7 +17,7 @@ describe 'Sitemaps', ->
 
   describe '#news_sitemap', ->
 
-    it 'displays the sitemap for articles < 5 days old', ->
+    it 'displays the sitemap for articles < 2 days old', ->
       routes.articles(@req, @res)
       Backbone.sync.args[0][2].success {
         total: 16088,

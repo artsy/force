@@ -1,60 +1,19 @@
 doctype xml
 urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
 )
   for artwork in artworks
     url
       loc='https://www.artsy.net/artwork/' + artwork.id
-      hostPageUrl='https://www.artsy.net/artwork/' + artwork.id
       image:image
         //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
         image:loc=artwork.images[0].image_urls.large
-        contentURL=artwork.images[0].image_urls.large      
         image:title=artwork.title
         if artwork.artist
           image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
         else
-          image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.' 
-      title=artwork.title
-      name=artwork.title
-      //-reqs from Bing -- not exactly sure what these are
-      author
-        alternateName=''
-        url=''
-      if artwork.artist
-        description=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
-      else
-        image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.' 
-      encodingFormat='jpeg'
-      height=artwork.height
-      width=artwork.width
-      //-do we have this in the API? refers to file size in bytes
-      contentSize=''
-      thumbnail
-        url=artwork.images[0].image_urls.large      
-        height=artwork.height
-        width=artwork.width
-      //-bing folks said they can take care of this field
-      bing:isFamilyFriendly=''
-      //-tag field on most artworks is an empty array
-      keywords=artwork.tags.join(',') + ', ' + artwork.title + ', ' + (artwork.artist && artwork.artist.name)
-      datePublished=artwork.published_at
-      dateModified=artwork.published_changed_at
-      //- bing fields - not sure how best to quantify these
-      aggregateRating
-        ratingCount=''
-        ratingValue=''
-      //-do we have this in the API?
-      license=''
-      copyrightHolder=artwork.image_rights
-      //-do we have this in the API?
-      copyrightYear=''
-      //-i think this will come from bing
-      CollectionPage=''
-      //-don't think we have this/i'm not even sure how we'd define it
-      geo
-        lat=''
-        long=''
+          image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.'
 
 
 
