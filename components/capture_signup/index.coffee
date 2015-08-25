@@ -12,8 +12,6 @@ module.exports =
 
     { profile, notes, message, duration } = _.defaults options, defaults
 
-    console.log 'profile', profile, notes
-
     if CURRENT_USER?
       following = new Following(null, kind: 'profile')
       following.follow profile.id,
