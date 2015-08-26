@@ -1,8 +1,8 @@
 request = require 'superagent'
-{ MAILCHIMP_KEY, CURRENT_USER, GALLERY_INSIGHTS_LIST } = require '../../config'
+{ MAILCHIMP_KEY, GALLERY_INSIGHTS_LIST } = require '../../config'
 
 @index = (req, res) ->
-  email = res.locals.CURRENT_USER?.email
+  email = req.user?.get('email')
   subscribed email, (cb) ->
     res.locals.sd.MAILCHIMP_SUBSCRIBED = if cb then 'subscribed' else 'unsubscribed'
     res.render 'index'
