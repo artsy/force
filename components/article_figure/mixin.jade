@@ -17,6 +17,11 @@ mixin article-figure(article, width, showDate, showShare)
       a.article-figure-author( href= article.authorHref() )
         = article.get('author') ? article.get('author').name : ''
 
+      - var contributing_authors = { [ { id: 'fdfd', name: 'Kana', profile_id: 'kana' } ] }
+      for contributor in contributing_authors
+        a.article-figure-contributing( href= "#{sd.APP_URL}/#{contributor.profile_id}")
+          = contributor.name
+
       if showShare
         .article-figure-share.js-article-figure-share
           +share(
