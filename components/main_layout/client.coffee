@@ -12,6 +12,7 @@ templateModules = require '../../lib/template_modules.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
 setupSplitTests = require '../split_test/setup.coffee'
 listenForInvert = require '../eggs/invert/index.coffee'
+listenForBounce = require '../eggs/bounce/index.coffee'
 
 module.exports = ->
   setupJquery()
@@ -21,6 +22,7 @@ module.exports = ->
   syncAuth()
   setupAuctionReminder()
   listenForInvert()
+  listenForBounce()
   setupAnalytics()
 
 ensureFreshUser = (data) ->
