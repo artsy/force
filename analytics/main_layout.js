@@ -4,7 +4,11 @@
 //
 
 // Track pageview
-analytics.page({path: location.pathname});
+if(sd.ARTICLE){
+  analytics.page('Editorial', sd.ARTICLE.thumbnail_title, { author: sd.ARTICLE.author.name, path: location.pathname });
+}else{
+  analytics.page({path: location.pathname});
+}
 
 // Track 15 second bounce rate
 setTimeout(function() {
