@@ -20,8 +20,8 @@ setTimeout(function() {
 snowplow('trackPageView');
 
 // debug tracking calls in development
-if (sd.NODE_ENV == 'development'){
+if (sd.NODE_ENV != 'production'){
   analytics.on('track', function(){
-    console.log(arguments)
+    console.log('TRACKED: ', arguments[0], JSON.stringify(arguments[1]));
   })
 }
