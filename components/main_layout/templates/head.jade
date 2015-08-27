@@ -23,3 +23,9 @@ if sd.SNOWPLOW_COLLECTOR_HOST
      appId: "#{sd.APPLICATION_NAME}",
      cookieDomain: 'artsy'
     });
+
+//- Chartbeat analytics for Editorial
+
+if sd.ARTICLE
+  script( type='text/javascript' ).
+    var _sf_startpt=(new Date()).getTime()
