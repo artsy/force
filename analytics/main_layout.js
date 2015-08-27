@@ -16,9 +16,6 @@ setTimeout(function() {
   analytics.track('time on page more than 3 minutes', { category: '3 Minutes' });
 }, 180000);
 
-// Tracking Snowplow page view. TODO: Remove when we phase out Snowplow.
-snowplow('trackPageView');
-
 // debug tracking calls in development
 if (sd.NODE_ENV != 'production'){
   analytics.on('track', function(){

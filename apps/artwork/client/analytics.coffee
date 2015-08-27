@@ -1,6 +1,4 @@
-analytics = require '../../../lib/analytics.coffee'
-track = analytics.track
-trackSnowplow = analytics.snowplowStruct
+{ track } = require '../../../lib/analytics.coffee'
 
 $document = $(document)
 
@@ -16,7 +14,6 @@ module.exports = (artwork) ->
 
   $document.on 'click', '.abf-button', ->
     track.click 'Clicked "Bid" on the artwork page'
-    trackSnowplow 'bid', 'click', artwork.get('_id'), 'artwork'
 
   $document.on 'click', '.artwork-buy-button', ->
     track.click 'Clicked "Buy" on the artwork page'
@@ -26,9 +23,3 @@ module.exports = (artwork) ->
 
   $document.on 'click', '.artwork-auction-results-button', ->
     track.click "Viewed 'Comparables'"
-
-  $document.on 'click', '#layered-search-results .artwork-item', ->
-    trackSnowplow 'genome', 'click_related_artwork', artwork.get('_id'), 'artwork'
-
-  $document.on 'click', '#artist-artworks-section .artwork-item', ->
-    trackSnowplow 'artwork', 'click_artwork_by_artist', artwork.get('_id'), 'artwork'

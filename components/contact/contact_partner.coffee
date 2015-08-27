@@ -72,7 +72,6 @@ module.exports = class ContactPartnerView extends ContactView
     changed = if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"
     analytics.track.funnel "Inquiry: Original Flow", SESSION_ID
-    analytics.snowplowStruct 'inquiry_original_flow', 'saw', SESSION_ID, 'user'
 
   postRender: =>
     @isLoading()

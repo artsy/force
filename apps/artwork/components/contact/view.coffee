@@ -83,7 +83,6 @@ module.exports = class ContactView extends Backbone.View
 
     e.preventDefault()
     analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
-    analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
 
     @maybeWaitForAttendance =>
       new ConfirmInquiryView

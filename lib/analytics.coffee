@@ -10,7 +10,6 @@ sd = require('sharify').data
 qs = require('querystring')
 sparkMd5Hash = require('spark-md5').hash
 Cookies = require '../components/cookies/index.coffee'
-Grouper = require "../components/util/grouper.coffee"
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -26,13 +25,6 @@ module.exports = (options) =>
 
 module.exports.getUserAgent = ->
   window?.navigator?.userAgent
-
-module.exports.snowplowStruct = (category, action, label, property, value = '0.0', contexts = {}) ->
-  # Don't track admins
-  return if sd.CURRENT_USER?.type is 'Admin'
-  # in general: https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#custom-structured-events
-  # contexts json: http://snowplowanalytics.com/blog/2014/01/27/snowplow-custom-contexts-guide/#contexts
-  snowplow?('trackStructEvent', category, action, label, property, value, contexts)
 
 # Delta tracking pixel
 module.exports.delta = (event, data, el) ->
@@ -50,7 +42,6 @@ module.exports.registerCurrentUser = ->
 
   ga?('set', 'dimension1', userType)
   mixpanel?.register?("User Type": userType)
-  snowplow?('setUserId', sd.CURRENT_USER?.id) if sd.CURRENT_USER?
 
 # This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity
@@ -149,7 +140,6 @@ module.exports.multi = (description, modelName, ids) ->
 
   # chunk ids by maxTrackableMultiIds and maxUnhashedTrackableLength
   chunkedIds = _.groupBy(ids, (a, b) => return Math.floor(b / maxTrackableMultiIds))
-  snowplowChunkedIds = Grouper.groupByConcatLength(ids, maxUnhashedTrackableLength)
 
   for chunk, index in _.toArray(chunkedIds)
     # Fire log events at 1/2 second intervals
@@ -158,11 +148,6 @@ module.exports.multi = (description, modelName, ids) ->
         @trackMulti description, @modelNameAndIdToLabel(modelName, encodedIds)
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
-
-  for chunk, index in _.toArray(snowplowChunkedIds)
-    _.delay( =>
-      @snowplowStruct 'impression', null, chunk.join(','), modelName
-    , (500 * index) + 1)
 
 # Code using this function should cope with it returning undefined
 module.exports.getProperty = (property) =>

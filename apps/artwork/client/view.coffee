@@ -309,7 +309,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   openShare: (e) ->
     e.preventDefault()
-    analytics.snowplowStruct 'share', 'click', @artwork.get('_id'), 'artwork'
     new ShareModal
       width: '350px'
       media: @artwork.defaultImageUrl('large')
