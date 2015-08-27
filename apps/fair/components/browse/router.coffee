@@ -3,14 +3,16 @@ Backbone = require 'backbone'
 qs = require 'querystring'
 FairBrowseView = require './view.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-{ captureSignup } = require '../../../../components/capture_signup/index.coffee'
+{ humanize } = require 'underscore.string'
+{ captureSignup, validActions } = require '../capture_signup/index.coffee'
 
 module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
     ':id(/)': 'booths'
     ':id/sign_up': 'signup'
-    ':id/capture': 'capture'
+    ':id/sign_up/:action': 'signup'
+    ':id/capture/:action': 'capture'
     ':id/overview(/)': 'booths'
     ':id/browse/artists(/)': 'artists'
     ':id/browse/artist/:artist_id(/)': 'artist'
@@ -38,15 +40,16 @@ module.exports = class BrowseRouter extends Backbone.Router
   artist: (id, artistId) =>
     @boothParams.set artist: artistId
 
-  signup: =>
+  signup: (id, action = "attendee") =>
+    return unless humanize(action) in validActions
+
     mediator.trigger 'open:auth',
       mode: 'register'
       copy: "Sign up to follow #{@fair.get('name')}"
-      redirectTo: "#{@fair.href()}/capture"
+      redirectTo: "#{@fair.href()}/capture/#{action}"
 
-  capture: =>
-    captureSignup
-      profile: @profile
+  capture: (id, action)=>
+    captureSignup fair: @fair, action: action
 
   booths: =>
     @boothParams.trigger 'change'
