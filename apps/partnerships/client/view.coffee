@@ -84,10 +84,13 @@ module.exports = class PartnershipsView extends Backbone.View
         activateNavLink(this) if direction is 'down'
       , offset: $nav.outerHeight()).waypoint((direction) ->
         activateNavLink(this) if direction is 'up'
-      , offset: -> -$(this).height() - $nav.outerHeight()).waypoint((direction) ->
-        debugger
-        activateNavLink(this) if $('.partnerships-section').last() == this and direction is 'down'
-      , offset: -> $(this).height())
+      , offset: -> -$(this).height() - $nav.outerHeight())
+
+    # Waypoint for last element, whose top will never be able to reach the top of the window.
+    @$sections.last().waypoint((direction) ->
+      activateNavLink(this) if direction is 'down'
+      activateNavLink(this.previousSibling) if direction is 'up'
+    , offset: -> $(window).height() - $(this).outerHeight())
 
   setupHeroUnitSlideshow: ->
     @setupSlideshow @$heroUnitsContainer, @$heroUnitsSlides, 'heroUnit'

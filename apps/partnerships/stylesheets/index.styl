@@ -101,12 +101,6 @@ separator-color = #d4d4d4
     > nav
       width container-width
       margin 0 auto
-    .partnerships-nav-link:not(.avant-garde-button-black)
-      color gray-color
-      &.is-active
-        color purple-color
-      &:hover
-        color highlight-color
   > nav
     display flex
     justify-content space-between
@@ -117,10 +111,20 @@ separator-color = #d4d4d4
   font-size 13px
   line-height 14px
   padding 10px
-  &.internal:hover
-    color highlight-color
+  &:not(.avant-garde-button-black)
+    color gray-color
+    &.is-active
+      color purple-color
+    &:hover
+      color highlight-color
+    &.internal:hover
+      color highlight-color
   &.avant-garde-button-black.is-small
     font-size 13px
+    &.is-active
+      background-color purple-color
+    &:focus:not(.is-active)
+      background-color black
 
 .partnerships-all-link
   display block
