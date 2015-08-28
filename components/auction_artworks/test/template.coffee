@@ -18,7 +18,7 @@ describe 'templates', ->
     describe 'open auction', ->
       beforeEach ->
         @auction.set auction_state: 'open'
-        @artwork.set acquireable: false, sold: false, sale_artwork: highest_bid_amount_cents: 100000
+        @artwork.set acquireable: false, sold: false, sale_artwork: highest_bid_amount_cents: 100000, display_highest_bid_amount_dollars: '$1,000'
         @data = _.extend {}, { artwork: @artwork, auction: @auction }, @artwork.related()
 
       describe 'list', ->

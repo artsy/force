@@ -40,4 +40,7 @@ module.exports = class BidderPositions extends Backbone.Collection
     )
 
   minBid: ->
-    formatMoney @minBidCents() / 100, '$', 0
+    if @saleArtwork.get('minimum_next_bid_cents') >= (@first()?.get('suggested_next_bid_cents') or -Infinity)
+      @saleArtwork.get('display_minimum_next_bid_dollars')
+    else
+      @first()?.get('display_suggested_next_bid_dollars')

@@ -27,14 +27,14 @@ module.exports = class SaleArtwork extends Backbone.Model
     formatMoney(@get(attr) / 100, '$', 0) if @has attr
 
   currentBid: ->
-    @money('highest_bid_amount_cents') or @money('opening_bid_cents')
+    @get('display_highest_bid_amount_dollars') || @get('display_opening_bid_dollars')
 
   minBid: ->
-    @money('minimum_next_bid_cents')
+    @get('display_minimum_next_bid_dollars')
 
   estimate: ->
-    _.compact([@money('low_estimate_cents'), @money('high_estimate_cents')]).join('–') or
-    @money 'estimate_cents'
+    _.compact([@get('display_low_estimate_dollars'), @get('display_high_estimate_dollars')]).join('–') or
+    @get 'display_estimate_dollars'
 
   estimateLabel: ->
     if @has('estimate_cents') and (not @has('low_estimate_cents') or not @has('high_estimate_cents'))

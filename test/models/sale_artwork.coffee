@@ -15,13 +15,9 @@ describe 'SaleArtwork', ->
 
   describe '#currentBid', ->
 
-    it 'formats the highest_bid_amount_cents', ->
-      @saleArtwork.set highest_bid_amount_cents: 10000
-      @saleArtwork.currentBid().should.equal '$100'
-
-    it 'defaults to opening_bid_cents', ->
-      @saleArtwork.set highest_bid_amount_cents: null, opening_bid_cents: 200
-      @saleArtwork.currentBid().should.equal '$2'
+    it 'defaults to display_opening_bid_dollars', ->
+      @saleArtwork.set display_highest_bid_amount_dollars: null, display_opening_bid_dollars: "$200"
+      @saleArtwork.currentBid().should.equal '$200'
 
   describe '#bidLabel', ->
 
@@ -33,27 +29,21 @@ describe 'SaleArtwork', ->
       @saleArtwork.unset 'highest_bid_amount_cents'
       @saleArtwork.bidLabel().should.equal 'Starting Bid'
 
-  describe '#minBid', ->
-
-    it 'formats the minimum bid', ->
-      @saleArtwork.set minimum_next_bid_cents: 1000
-      @saleArtwork.minBid().should.equal '$10'
-
   describe '#estimate', ->
 
     it 'formats the estimate', ->
-      @saleArtwork.unset 'low_estimate_cents'
-      @saleArtwork.unset 'high_estimate_cents'
+      @saleArtwork.unset 'display_low_estimate_dollars'
+      @saleArtwork.unset 'display_high_estimate_dollars'
       _.isUndefined(@saleArtwork.estimate()).should.be.ok()
-      @saleArtwork.set low_estimate_cents: 20000, high_estimate_cents: 30000
+      @saleArtwork.set display_low_estimate_dollars: '$200', display_high_estimate_dollars: '$300'
       @saleArtwork.estimate().should.equal '$200–$300'
-      @saleArtwork.unset 'high_estimate_cents'
+      @saleArtwork.unset 'display_high_estimate_dollars'
       @saleArtwork.estimate().should.equal '$200'
 
     it 'falls back on to `estimate_cents`', ->
-      @saleArtwork.set low_estimate_cents: 20000, estimate_cents: 60000
+      @saleArtwork.set display_low_estimate_dollars: '$200', display_estimate_dollars: '$600'
       @saleArtwork.estimate().should.equal '$200'
-      @saleArtwork.unset 'low_estimate_cents'
+      @saleArtwork.unset 'display_low_estimate_dollars'
       @saleArtwork.estimate().should.equal '$600'
 
   describe '#bidCount', ->

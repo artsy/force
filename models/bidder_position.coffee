@@ -9,11 +9,7 @@ module.exports = class BidderPosition extends Backbone.Model
 
   currentBid: ->
     return unless @has('highest_bid')
-    accounting.formatMoney(
-      @get('highest_bid').amount_cents / 100, '$', 0
-    )
+    @get('highest_bid').display_amount_dollars
 
   maxBid: ->
-    accounting.formatMoney(
-      @get('max_bid_amount_cents') / 100, '$', 0
-    )
+    @get('display_max_bid_amount_dollars')

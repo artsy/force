@@ -26,9 +26,9 @@ describe 'BidForm', ->
 
     @order = new Order()
     @sale = new Sale fabricate 'sale'
-    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 10000
+    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 10000, display_minimum_next_bid_dollars: '$100'
     @artwork = new Artwork fabricate 'artwork'
-    @bidderPositions = new BidderPositions([fabricate('bidder_position', suggested_next_bid_cents: 0)],
+    @bidderPositions = new BidderPositions([fabricate('bidder_position', suggested_next_bid_cents: 0, display_suggested_next_bid_dollars: '$0')],
       { sale: @sale, saleArtwork: @saleArtwork })
 
     benv.render resolve(__dirname, '../../templates/bid-form.jade'), {
@@ -78,7 +78,7 @@ describe 'BidForm', ->
       @view.$('.error').text().should.equal ""
 
     it 'validates against the bidder position min', ->
-      @view.bidderPositions.first().set suggested_next_bid_cents: 100000
+      @view.bidderPositions.first().set suggested_next_bid_cents: 100000, display_suggested_next_bid_dollars: '$1,000'
       @view.$('input.max-bid').val '$50.00'
       @view.placeBid()
       html = @view.$el.html()
