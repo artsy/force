@@ -160,7 +160,7 @@ describe 'Artwork Item template', ->
 
     it 'displays estimate', ->
       @artwork = new Artwork fabricate 'artwork'
-      @artwork.set 'sale_artwork', fabricate 'sale_artwork', { low_estimate_cents: 300000, high_estimate_cents: 700000 }
+      @artwork.set 'sale_artwork', fabricate 'sale_artwork', { display_low_estimate_dollars: '$3,000', display_high_estimate_dollars: '$7,000' }
       $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
       $('.artwork-item-estimate').text().should.containEql 'Estimate: $3,000–$7,000'
 

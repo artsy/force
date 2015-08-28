@@ -59,7 +59,7 @@ describe 'Artworks', ->
     it 'sets the current bid', ->
       artworks = Artworks.fromSale new Backbone.Collection [{
         artwork: fabricate 'artwork'
-        highest_bid_amount_cents: 1000
+        display_highest_bid_amount_dollars: '$10'
       }]
       artworks.first().related().saleArtwork.currentBid().should.containEql '$10'
 

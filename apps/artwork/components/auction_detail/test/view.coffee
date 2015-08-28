@@ -27,7 +27,7 @@ describe 'AuctionDetailView', ->
     AuctionDetailView.__set__ 'mediator', trigger: @triggerSpy
     AuctionDetailView.__set__ 'PartnerPhoneNumberView', Backbone.View
 
-    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve'
+    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve', display_minimum_next_bid_dollars: '$5,000', display_low_estimate_dollars: '$6,000', display_high_estimate_dollars: '$8,000'
     @auction = new Auction fabricate 'sale', is_auction: true
 
     @auction.set 'clockState', 'open'
