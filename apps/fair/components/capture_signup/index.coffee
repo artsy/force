@@ -26,12 +26,12 @@ module.exports =
     return unless (action = humanize(action)) in validActions
 
     if CURRENT_USER?
-      fair_action = new CurrentUserFairAction
+      fairAction = new CurrentUserFairAction
         action: action
         fair_id: fair.id
 
-      fair_action.save null,
-        complete: ->
+      fairAction.save null,
+        complete: (err, response)->
           new FlashMessage
             message: message
             visibleDuration: duration
