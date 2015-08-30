@@ -19,7 +19,7 @@
     "async": "^1.4.0",
     "backbone": "^1.2.1",
     "backbone-pageable": "*",
-    "backbone-super-sync": "*",
+    "backbone-super-sync": "git://github.com/craigspaeth/backbone-super-sync.git",
     "body-parser": "*",
     "bucket-assets": "*",
     "coffee-script": "*",
