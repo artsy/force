@@ -14,7 +14,7 @@ s:
 
 # Start the server using forever
 sf:
-	$(BIN)/forever $(BIN)/coffee index.coffee
+	$(BIN)/forever $(BIN)/coffee --nodejs --max_old_space_size=512 index.coffee
 
 # Start the server pointing to staging
 ss:
