@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { SESSION_ID } = require('sharify').data
 Geo = require './mixins/geo.coffee'

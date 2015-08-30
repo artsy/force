@@ -13,7 +13,7 @@ CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
-Q = require 'q'
+Q = require 'bluebird-q'
 editTemplate = -> require('./templates/edit.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Partner = require '../../models/partner'
 Partners = require '../../collections/partners'

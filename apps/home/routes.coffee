@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 { parse } = require 'url'
 Backbone = require 'backbone'
 sd = require('sharify').data

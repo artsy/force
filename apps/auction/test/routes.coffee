@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'

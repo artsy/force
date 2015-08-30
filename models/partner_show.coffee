@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'

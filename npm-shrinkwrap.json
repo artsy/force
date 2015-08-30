@@ -26,6 +26,11 @@
           "version": "0.3.5",
           "from": "marked@*",
           "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.5.tgz"
+        },
+        "q": {
+          "version": "1.4.1",
+          "from": "q@>=1.1.2 <2.0.0",
+          "resolved": "https://registry.npmjs.org/q/-/q-1.4.1.tgz"
         }
       }
     },
@@ -171,16 +176,8 @@
       "resolved": "https://registry.npmjs.org/backbone-pageable/-/backbone-pageable-1.4.8.tgz"
     },
     "backbone-super-sync": {
-      "version": "1.0.1",
-      "from": "git://github.com/craigspaeth/backbone-super-sync.git",
-      "resolved": "git://github.com/craigspaeth/backbone-super-sync.git#ac8b7537f3a42f306b1129f30d67900a317a0691",
-      "dependencies": {
-        "bluebird": {
-          "version": "2.9.34",
-          "from": "bluebird@*",
-          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz"
-        }
-      }
+      "version": "1.1.0",
+      "from": "backbone-super-sync@*"
     },
     "benv": {
       "version": "1.1.0",
@@ -701,6 +698,16 @@
           }
         }
       }
+    },
+    "bluebird": {
+      "version": "2.8.2",
+      "from": "bluebird@>=2.8.0 <2.9.0",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.8.2.tgz"
+    },
+    "bluebird-q": {
+      "version": "1.0.3",
+      "from": "bluebird-q@*",
+      "resolved": "https://registry.npmjs.org/bluebird-q/-/bluebird-q-1.0.3.tgz"
     },
     "body-parser": {
       "version": "1.13.3",
@@ -1707,7 +1714,7 @@
           "dependencies": {
             "readable-stream": {
               "version": "1.1.13",
-              "from": "readable-stream@>=1.1.13-1 <1.2.0-0",
+              "from": "readable-stream@>=1.1.9 <1.2.0",
               "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz",
               "dependencies": {
                 "core-util-is": {
@@ -4807,9 +4814,9 @@
           "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.0.tgz"
         },
         "rc": {
-          "version": "1.1.0",
+          "version": "1.1.1",
           "from": "rc@>=1.0.1 <2.0.0",
-          "resolved": "https://registry.npmjs.org/rc/-/rc-1.1.0.tgz",
+          "resolved": "https://registry.npmjs.org/rc/-/rc-1.1.1.tgz",
           "dependencies": {
             "minimist": {
               "version": "1.2.0",
@@ -4857,7 +4864,7 @@
           "dependencies": {
             "nan": {
               "version": "2.0.8",
-              "from": "nan@>=2.0.4 <3.0.0",
+              "from": "nan@>=2.0.5 <2.1.0",
               "resolved": "https://registry.npmjs.org/nan/-/nan-2.0.8.tgz"
             },
             "node-pre-gyp": {
@@ -6408,7 +6415,7 @@
                   "dependencies": {
                     "align-text": {
                       "version": "0.1.3",
-                      "from": "align-text@>=0.1.0 <0.2.0",
+                      "from": "align-text@>=0.1.1 <0.2.0",
                       "resolved": "https://registry.npmjs.org/align-text/-/align-text-0.1.3.tgz",
                       "dependencies": {
                         "kind-of": {
@@ -6444,7 +6451,7 @@
                   "dependencies": {
                     "align-text": {
                       "version": "0.1.3",
-                      "from": "align-text@>=0.1.0 <0.2.0",
+                      "from": "align-text@>=0.1.1 <0.2.0",
                       "resolved": "https://registry.npmjs.org/align-text/-/align-text-0.1.3.tgz",
                       "dependencies": {
                         "kind-of": {
@@ -6605,11 +6612,6 @@
       "version": "0.0.1",
       "from": "git://github.com/artsy/places.git",
       "resolved": "git://github.com/artsy/places.git#d7a9d53abee91b27714a6dbfdee54caab8efcf27"
-    },
-    "q": {
-      "version": "1.4.1",
-      "from": "q@*",
-      "resolved": "https://registry.npmjs.org/q/-/q-1.4.1.tgz"
     },
     "qs": {
       "version": "2.4.2",
@@ -7349,7 +7351,7 @@
         },
         "through": {
           "version": "2.3.8",
-          "from": "through@>=2.3.4 <2.4.0",
+          "from": "through@>=2.3.6 <3.0.0",
           "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
         },
         "uglify-js": {
@@ -7441,11 +7443,6 @@
               "resolved": "https://registry.npmjs.org/core-js/-/core-js-0.6.1.tgz"
             }
           }
-        },
-        "bluebird": {
-          "version": "2.9.34",
-          "from": "bluebird@>=2.0.0 <3.0.0",
-          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz"
         },
         "debug": {
           "version": "2.2.0",
@@ -7900,6 +7897,11 @@
               "from": "har-validator@>=1.6.1 <2.0.0",
               "resolved": "https://registry.npmjs.org/har-validator/-/har-validator-1.8.0.tgz",
               "dependencies": {
+                "bluebird": {
+                  "version": "2.9.34",
+                  "from": "bluebird@>=2.9.30 <3.0.0",
+                  "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz"
+                },
                 "chalk": {
                   "version": "1.1.1",
                   "from": "chalk@>=1.0.0 <2.0.0",
@@ -8030,7 +8032,7 @@
               "dependencies": {
                 "bindings": {
                   "version": "1.2.1",
-                  "from": "bindings@*",
+                  "from": "bindings@>=1.2.0 <1.3.0",
                   "resolved": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz"
                 },
                 "nan": {
@@ -8047,7 +8049,7 @@
               "dependencies": {
                 "bindings": {
                   "version": "1.2.1",
-                  "from": "bindings@*",
+                  "from": "bindings@>=1.2.0 <1.3.0",
                   "resolved": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz"
                 },
                 "nan": {

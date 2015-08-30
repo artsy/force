@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'

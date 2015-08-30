@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 Items = require '../../collections/items'
 PartnerShows = require './shows'
 { Cities, FeaturedCities } = require 'places'

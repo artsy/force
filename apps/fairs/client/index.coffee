@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Fairs = require '../../../collections/fairs.coffee'

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
 Auction = require '../../models/auction'

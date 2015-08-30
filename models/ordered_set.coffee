@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Items = require '../collections/items.coffee'
 LayoutSyle = require './mixins/layout_style.coffee'
