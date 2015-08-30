@@ -54,7 +54,7 @@ describe 'Artwork routes', ->
         @res.render.args[0][0].should.equal 'index'
         done()
 
-    it 'works with client side routes', (done) ->
+    xit 'works with client side routes', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar/inquire'
       @req.params.tab = 'inquire'
       routes.index @req, @res
