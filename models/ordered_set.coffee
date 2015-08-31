@@ -14,5 +14,5 @@ module.exports = class OrderedSet extends Backbone.Model
     Q.allSettled(items.fetch(cache: cache).then ->
       items.map (item) ->
         if _.isFunction(item.fetchItems) then item.fetchItems(cache) else item
-    ).then dfd.resolve
+    ).finally dfd.resolve
     dfd.promise

@@ -51,10 +51,10 @@ describe 'CTABarView', ->
     describe '#transitionIn, #transitionOut', ->
       it 'transitions the template in/out', (done) ->
         @view.render().transitionIn()
-        _.defer =>
+        _.defer => _.defer =>
           @view.$el.attr('data-state').should.equal 'in'
           @view.render().transitionOut()
-          _.defer =>
+          _.defer => _.defer =>
             @view.$el.attr('data-state').should.equal 'out'
             done()
 

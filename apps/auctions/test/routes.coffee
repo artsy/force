@@ -46,7 +46,7 @@ describe 'Auctions routes', ->
 
         Backbone.sync.callCount.should.equal 1
 
-        _.defer =>
+        _.defer => _.defer =>
           @res.render.args[0][0].should.equal 'index'
           _.pluck(@res.render.args[0][1].pastAuctions, 'id').should.eql [@closedAuction.id, @closedPromoAuction.id]
           _.pluck(@res.render.args[0][1].currentAuctions, 'id').should.eql [@openAuction.id]
@@ -64,7 +64,7 @@ describe 'Auctions routes', ->
         routes.index @req, @res
         Backbone.sync.args[0][2].success @sales
 
-        _.defer =>
+        _.defer => _.defer =>
           # Checks to see if you are registered to bid in the upcoming sale
           Backbone.sync.args[1][2].url.should.containEql '/api/v1/me/bidders'
           Backbone.sync.args[1][2].data.sale_id.should.equal @soonestPreviewAuction.id

@@ -68,7 +68,7 @@ describe 'UserInterestsView', ->
       _.last($.fn.typeahead.args)[1].should.equal ''
 
     it 'fades in the result set', (done) ->
-      _.defer =>
+      _.defer => _.defer =>
         @view.$collection.hasClass('is-fade-in').should.be.true()
         done()
 

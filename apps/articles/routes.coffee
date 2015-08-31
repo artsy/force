@@ -20,7 +20,7 @@ request = require 'superagent'
         sort: '-published_at'
         featured: true
     )
-  ]).fail(next).then =>
+  ]).catch(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     vertical = verticals.running()?[0]

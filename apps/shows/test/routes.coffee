@@ -51,7 +51,7 @@ describe 'Shows routes', ->
       Backbone.sync.args[2][2].data.status.should.equal 'closed'
       Backbone.sync.args[2][2].data.displayable.should.equal true
       Backbone.sync.args[2][2].data.at_a_fair.should.equal false
-      _.defer =>
+      _.defer => _.defer =>
         @res.render.called.should.be.true()
         @res.render.args[0][0].should.equal 'city'
         @res.render.args[0][1].city.name.should.equal 'New York'
@@ -70,7 +70,7 @@ describe 'Shows routes', ->
       Backbone.sync.args[1][2].success shows
       Backbone.sync.args[2][2].success shows
 
-      _.defer =>
+      _.defer => _.defer =>
         _.first(@res.render.args[0][1].upcoming).should.equal showOpeningFirst
         _.last(@res.render.args[0][1].upcoming).should.equal showOpeningLast
 
