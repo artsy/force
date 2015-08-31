@@ -13,21 +13,21 @@ module.exports = class Form
     throw new Error 'requires `model`' unless @model?
     throw new Error 'requires `$form`' unless @$form?
 
-    { @$submit, @$errors } = _.defaults options,
+    { @$submit, @$errors } = settings = _.defaults options,
       $submit: @$form.find('button')
       $errors: @$form.find('.js-form-errors')
 
     @serializer = new Serializer @$form
-    @validator = new Validator @$form
+    @validator = new Validator settings
     @errors = new Errors @$form
 
-  start: ->
-    @validator.valid() and not @submitting()
+  isReady: ->
+    @validator.isValid() and not @submitting()
 
   submit: (e, options = {}, send = 'save') ->
-    return unless @start()
-
     e?.preventDefault()
+
+    return unless @isReady()
 
     options.error = _.wrap options.error, (error, args...) =>
       @error args...

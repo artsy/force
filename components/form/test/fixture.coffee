@@ -1,11 +1,18 @@
 module.exports =
   template: "
     <form>
-      <input name='name'>
-      <input name='email' required>
+      <div class='js-form-errors'></div>
+
+      <label for='name'>Name</label>
+      <input id='name' name='name' pattern='.{6,}' title='6 characters minimum'>
+
+      <input name='email' type='email' required>
+
       <textarea name='comment' required></textarea>
+
       <input name='yes' type='checkbox' checked>
       <input name='no' type='checkbox'>
+
       <button>Submit</button>
     </form>
   "
