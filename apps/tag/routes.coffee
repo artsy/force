@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
 FilterArtworks = require '../../collections/filter_artworks'

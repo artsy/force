@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'q'
+Q = require 'bluebird-q'
 OrderedSets = require '../../collections/ordered_sets'
 Artist = require '../../models/artist'
 ArtistsByLetter = require './collections/artists_by_letter'

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 moment = require 'moment'
 Profile = require '../../models/profile.coffee'
 FairOrganizer = require '../../models/fair_organizer.coffee'

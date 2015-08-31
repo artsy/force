@@ -7,7 +7,7 @@ Sets up a view of filtered artworks with a filter and sort bar. This component u
 The initial render of the component is done server side. Using the tag app as an example:
 
 ```coffeescript
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
 FilterArtworks = require '../../collections/filter_artworks'

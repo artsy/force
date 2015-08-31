@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
@@ -20,7 +20,7 @@ request = require 'superagent'
         sort: '-published_at'
         featured: true
     )
-  ]).fail(next).then =>
+  ]).catch(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     vertical = verticals.running()?[0]

@@ -6,7 +6,7 @@
 
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN } = config = require "../config"
+  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -63,6 +63,7 @@ module.exports = (app) ->
     options.headers ?= {}
     options.headers['X-XAPP-TOKEN'] = artsyXapp.token or ''
     sync method, model, options
+  Backbone.sync.timeout = API_REQUEST_TIMEOUT
   Backbone.sync.cacheClient = cache.client
   Backbone.sync.defaultCacheTime = DEFAULT_CACHE_TIME
 

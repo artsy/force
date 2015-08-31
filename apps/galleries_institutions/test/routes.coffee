@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'

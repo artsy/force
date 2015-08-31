@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Relations = require './mixins/relations/collector_profile.coffee'

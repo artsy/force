@@ -5,7 +5,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 { fabricate } = require 'antigravity'
 
-Q = require 'q'
+Q = require 'bluebird-q'
 totalCount = sinon.stub()
 totalCount.returns(Q.resolve(100))
 routes.__set__ 'totalCount', totalCount

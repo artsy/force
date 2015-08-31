@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Items = require '../collections/items.coffee'
 LayoutSyle = require './mixins/layout_style.coffee'
@@ -14,5 +14,5 @@ module.exports = class OrderedSet extends Backbone.Model
     Q.allSettled(items.fetch(cache: cache).then ->
       items.map (item) ->
         if _.isFunction(item.fetchItems) then item.fetchItems(cache) else item
-    ).then dfd.resolve
+    ).finally dfd.resolve
     dfd.promise

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 moment = require 'moment'
 Fairs = require '../../collections/fairs'
 Items = require '../../collections/items'

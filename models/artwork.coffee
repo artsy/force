@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'

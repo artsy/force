@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'

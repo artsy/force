@@ -6,7 +6,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnits = require '../../../collections/hero_units'
-Q = require 'q'
+Q = require 'bluebird-q'
 
 describe 'Home routes', ->
   beforeEach ->

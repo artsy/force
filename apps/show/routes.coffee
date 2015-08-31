@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 PartnerShow = require '../../models/partner_show'
 
