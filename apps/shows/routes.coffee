@@ -38,7 +38,7 @@ PartnerShows = require './shows'
     upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', criteria))
     current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
     past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
-  ]).then ->
+  ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
 
     res.render 'city',
@@ -49,3 +49,4 @@ PartnerShows = require './shows'
       upcoming: opening.false or []
       current: current
       past: past
+  ).done()

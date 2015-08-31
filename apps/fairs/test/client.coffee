@@ -50,7 +50,7 @@ describe 'FairsView', ->
     beforeEach ->
       @view.initialize({ el: $('body'), fair: @fair })
 
-    xit 'appends the additional fair(s)', (done)->
+    it 'appends the additional fair(s)', (done)->
       @view.$('.fairs__past-fairs-list a').length.should.eql 1
       @view.renderPastFairs @fairs, [fabricate('fair')]
       Backbone.sync.args[0][1].id.should.eql 'the-armory-show'

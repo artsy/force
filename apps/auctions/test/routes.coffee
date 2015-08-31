@@ -37,7 +37,7 @@ describe 'Auctions routes', ->
       before ->
         @res = render: sinon.stub(), locals: sd: {}
 
-      xit 'fetches the relevant auction data and renders the index template', (done) ->
+      it 'fetches the relevant auction data and renders the index template', (done) ->
         routes.index {}, @res
 
         Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
@@ -60,7 +60,7 @@ describe 'Auctions routes', ->
         @req = user: new CurrentUser fabricate 'user'
         @res = render: sinon.stub(), locals: sd: {}
 
-      xit 'fetches the relevant auction data in addition to the user bid status and renders the index template', (done) ->
+      it 'fetches the relevant auction data in addition to the user bid status and renders the index template', (done) ->
         routes.index @req, @res
         Backbone.sync.args[0][2].success @sales
 

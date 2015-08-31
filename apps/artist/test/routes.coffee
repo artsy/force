@@ -44,7 +44,7 @@ describe 'Artist routes', ->
         @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
         done()
 
-    xit 'redirects to canonical url', (done) ->
+    it 'redirects to canonical url', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
