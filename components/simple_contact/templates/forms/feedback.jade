@@ -7,7 +7,10 @@ form.scontact-form.stacked-form
   if artwork
     input( type='hidden', name='artwork', value= artwork.id )
 
+  label.avant-garde-form-label( for='message' )
+    | Your message
   textarea.bordered-input(
+    id='message'
     name='message'
     placeholder='Leave your comments'
     rows='7'
