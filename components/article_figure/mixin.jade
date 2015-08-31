@@ -14,13 +14,14 @@ mixin article-figure(article, width, showDate, showShare)
       a.article-figure-title( href= article.href() )
         = article.get('thumbnail_title')
 
-      a.article-figure-author( href= article.authorHref() )
-        = article.get('author') ? article.get('author').name : ''
+      .article-author-section
+        if !(article.get('contributing_authors') != null && article.get('author_id') === '503f86e462d56000020002cc' && sd.CURRENT_PATH === '/articles')
+          a.article-figure-author( href= article.authorHref() )
+            = article.get('author') ? article.get('author').name : ''
 
-      - var contributing_authors = { [ { id: 'fdfd', name: 'Kana', profile_id: 'kana' } ] }
-      for contributor in contributing_authors
-        a.article-figure-contributing( href= "#{sd.APP_URL}/#{contributor.profile_id}")
-          = contributor.name
+        if article.get('contributing_authors')
+          .article-figure-contributing
+            include ./contributing_author.jade
 
       if showShare
         .article-figure-share.js-article-figure-share

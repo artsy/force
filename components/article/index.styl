@@ -21,7 +21,7 @@ play-button-size = 30px
 .article-author, .article-social
   vertical-align middle
 
-.article-author, .article-date
+.article-author, .article-date, .article-contributing-author
   text-align center
   a
     text-decoration none
@@ -63,8 +63,10 @@ play-button-size = 30px
   color gray-darker-color
 
 .article-author
-  avant-garde()
-  font-size default-avant-garde-font-size
+  avant-garde-size('s-headline')
+
+.article-contributing-author
+  avant-garde-size('m-headline')
 
 .article-social
   text-align center
