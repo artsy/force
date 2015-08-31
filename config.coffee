@@ -30,6 +30,7 @@ module.exports =
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   S3_KEY: null
   S3_SECRET: null
+  ENABLE_NEWRELIC: true
   NEW_RELIC_LICENSE_KEY: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   FACEBOOK_APP_NAMESPACE: "artsyinc"
