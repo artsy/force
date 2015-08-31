@@ -30,7 +30,7 @@ describe 'Tag routes', ->
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'tag'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
 
-      _.defer =>
+      _.defer => _.defer =>
         @res.locals.sd.TAG.id.should.equal 'tag'
         @res.render.args[0][0].should.equal 'index'
         done()

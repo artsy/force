@@ -55,7 +55,7 @@ describe 'FairsView', ->
       @view.renderPastFairs @fairs, [fabricate('fair')]
       Backbone.sync.args[0][1].id.should.eql 'the-armory-show'
       Backbone.sync.args[0][2].success()
-      _.defer =>
+      _.defer => _.defer =>
         @view.$('.fairs__past-fairs-list a').length.should.eql 2
         done()
 

@@ -33,7 +33,7 @@ describe 'Step2View', ->
     @view.$('h1').text().should.equal 'Which Artsy partnership features interest you most?'
 
   it 'renders the correct sub-template', (done) ->
-    _.defer =>
+    _.defer => _.defer =>
       @view.$('input[type="checkbox"]').first().attr('value').should.equal 'Gallery profile page'
       @state.set 'mode', 'institution'
       @view.renderMode()

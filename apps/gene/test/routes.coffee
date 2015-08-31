@@ -30,7 +30,7 @@ describe 'Gene routes', ->
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-      _.defer =>
+      _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'foo'
         @res.render.args[0][0].should.equal 'index'
         done()
@@ -39,7 +39,7 @@ describe 'Gene routes', ->
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'not-foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-      _.defer =>
+      _.defer => _.defer =>
         @res.redirect.called.should.be.true()
         @res.redirect.args[0].should.eql [301, '/gene/not-foo']
         @res.render.called.should.be.false()
@@ -52,7 +52,7 @@ describe 'Gene routes', ->
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
 
-      _.defer =>
+      _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'foo'
         @res.locals.sd.MODE.should.equal 'artworks'
         @res.render.args[0][0].should.equal 'index'

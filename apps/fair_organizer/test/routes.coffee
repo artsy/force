@@ -51,7 +51,7 @@ describe 'Fair Organization routes', ->
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
       Backbone.sync.args[0][2].success @fairs.models
       Backbone.sync.args[1][2].success()
-      _.defer =>
+      _.defer => _.defer =>
         @res.locals.sd.FAIR_IDS.should.eql @fairs.pluck('_id')
         @res.locals.sd.FAIR_ORGANIZER.should.eql @fairOrg.toJSON()
 
@@ -70,7 +70,7 @@ describe 'Fair Organization routes', ->
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
       Backbone.sync.args[0][2].success @fairs.models
       Backbone.sync.args[1][2].success()
-      _.defer =>
+      _.defer => _.defer =>
         @res.locals.showName.should.be.true()
 
 

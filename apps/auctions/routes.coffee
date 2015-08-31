@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
 

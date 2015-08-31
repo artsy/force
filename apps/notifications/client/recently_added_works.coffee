@@ -1,7 +1,7 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
-Q = require 'q'
+Q = require 'bluebird-q'
 { API_URL } = sd = require('sharify').data
 Notifications = require '../../../collections/notifications.coffee'
 Artworks = require '../../../collections/artworks.coffee'

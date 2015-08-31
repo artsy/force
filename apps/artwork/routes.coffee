@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 Artwork = require '../../models/artwork'
 Artist = require '../../models/artist'
 Artists = require '../../collections/artists'

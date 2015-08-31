@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Q = require 'q'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
 

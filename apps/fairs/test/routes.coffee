@@ -51,7 +51,7 @@ describe 'Fairs routes', ->
         Backbone.sync.args[0][1].url.should.containEql 'api/v1/fairs'
         Backbone.sync.args[0][2].data.size.should.equal 40
         Backbone.sync.args[0][2].success(@fairs)
-        _.defer =>
+        _.defer => _.defer =>
           @res.render.args[0][1].currentFairRows.should.eql @rows
           @res.render.args[0][1].upcomingFairs.should.eql @upcomingFairs
           @res.render.args[0][1].pastFairs.should.eql @pastFairs
@@ -71,7 +71,7 @@ describe 'Fairs routes', ->
         Backbone.sync.args[0][1].url.should.containEql 'api/v1/fairs'
         Backbone.sync.args[0][2].data.size.should.equal 40
         Backbone.sync.args[0][2].success(@fairs)
-        _.defer =>
+        _.defer => _.defer =>
           @res.render.args[0][1].currentFairRows.should.eql []
           @res.render.args[0][1].upcomingFairs.should.eql @upcomingFairs
           @res.render.args[0][1].pastFairs.should.eql @pastFairs

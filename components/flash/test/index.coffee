@@ -51,7 +51,7 @@ describe 'FlashMessage', ->
       @flash.$container.text().should.equal 'Goodbye world.'
       anotherFlash = new FlashMessage message: 'Hello world.'
       sinon.spy anotherFlash, 'update'
-      _.defer =>
+      _.defer => _.defer =>
         anotherFlash.update.called.should.be.true()
         @flash.$container.text().should.equal 'Hello world.'
         done()

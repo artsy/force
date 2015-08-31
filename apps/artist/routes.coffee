@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 fs = require 'fs'
 { resolve } = require 'path'
 Backbone = require 'backbone'

@@ -35,8 +35,8 @@ describe 'Notification Routing', ->
       Backbone.sync.args[0][2].success [fabricate('artist')]
       Backbone.sync.args[1][2].url.should.containEql '/api/v1/me/notifications'
       Backbone.sync.args[1][2].success [fabricate('artwork')]
-      _.defer =>
-        _.defer =>
+      _.defer => _.defer =>
+        _.defer => _.defer =>
           @res.locals.sd.UNREAD_NOTIFICATIONS.length.should.equal 1
           @res.locals.sd.FOLLOWING.length.should.equal 1
           @res.locals.sd.NOTIFICATION_COUNT?.should.be.false

@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 _s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'

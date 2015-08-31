@@ -29,7 +29,7 @@ describe 'Form', ->
 
     it 'disables the button', (done) ->
       @form.submitting()
-      _.defer =>
+      _.defer => _.defer =>
         @$form.find('button').prop('disabled').should.be.true()
         done()
 
@@ -94,7 +94,7 @@ describe 'Form', ->
 
     it 'removes the disabled attr from the button', (done) ->
       @form.submitting()
-      _.defer =>
+      _.defer => _.defer =>
         @$form.find('button').prop('disabled').should.be.true()
         @form.reenable()
         @$form.find('button').prop('disabled').should.be.false()

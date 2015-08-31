@@ -46,9 +46,9 @@ describe 'Step1View', ->
   it 'changes the address forms when the country is changed', (done) ->
     @state.set 'mode', 'institution'
     @view.selectCountry $.Event(currentTarget: val: 'United States')
-    _.defer =>
+    _.defer => _.defer =>
       @view.$('input[name="state"]').length.should.equal 1
       @view.selectCountry $.Event(currentTarget: val: 'Canada')
-      _.defer =>
+      _.defer => _.defer =>
         @view.$('input[name="state"]').length.should.equal 0
         done()

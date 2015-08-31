@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 Artwork = require '../../models/artwork'
 
 @index = (req, res, next) ->

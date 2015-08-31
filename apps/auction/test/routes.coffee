@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
@@ -31,7 +31,7 @@ describe '/auction routes', ->
     Backbone.sync.args[0][2].success fabricate 'sale', is_auction: true
     Backbone.sync.args[1][2].success {}
 
-    _.defer =>
+    _.defer => _.defer =>
       Q.promise.args[0][0]()
       _.last(Backbone.sync.args)[1].url.should.containEql '/api/articles'
 
@@ -54,7 +54,7 @@ describe '/auction routes', ->
     routes.index @req, @res, @next
     Backbone.sync.args[0][2].success fabricate 'sale', is_auction: false
     Backbone.sync.args[1][2].success {}
-    _.defer =>
+    _.defer => _.defer =>
       @next.called.should.be.true()
       @res.render.called.should.be.false()
       done()
@@ -64,7 +64,7 @@ describe '/auction routes', ->
     @next.called.should.be.false()
     Backbone.sync.args[0][2].error()
     Backbone.sync.args[1][2].error()
-    _.defer =>
+    _.defer => _.defer =>
       @next.called.should.be.true()
       done()
 
@@ -72,7 +72,7 @@ describe '/auction routes', ->
     beforeEach (done) ->
       @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
       routes.index @req, @res, @next
-      _.defer =>
+      _.defer => _.defer =>
         @userReqs = _.last Backbone.sync.args, 2
         done()
 

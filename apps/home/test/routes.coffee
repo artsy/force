@@ -6,7 +6,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnits = require '../../../collections/hero_units'
-Q = require 'q'
+Q = require 'bluebird-q'
 
 describe 'Home routes', ->
   beforeEach ->
@@ -26,7 +26,7 @@ describe 'Home routes', ->
           Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
           Backbone.sync.args[1][2].success [fabricate 'featured_link']
           Backbone.sync.args[2][2].success [fabricate 'featured_link']
-          _.defer =>
+          _.defer => _.defer =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.at(0).get('description').should.equal 'Sign up to get updates on your favorite artists'
             @res.render.args[0][1].heroUnits.at(1).get('description').should.equal 'My hero'
@@ -41,7 +41,7 @@ describe 'Home routes', ->
           Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
           Backbone.sync.args[1][2].success [fabricate 'featured_link']
           Backbone.sync.args[2][2].success [fabricate 'featured_link']
-          _.defer =>
+          _.defer => _.defer =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.last().get('description').should.equal 'Sign up to get updates on your favorite artists'
             done()
@@ -51,7 +51,7 @@ describe 'Home routes', ->
         routes.index _.extend({ user: 'existy' }, @req), @res
         Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
         Backbone.sync.args[1][2].success [fabricate 'featured_link']
-        _.defer =>
+        _.defer => _.defer =>
           @res.render.args[0][0].should.equal 'index'
           @res.render.args[0][1].heroUnits.first().get('description').should.equal 'My hero'
           done()

@@ -25,14 +25,14 @@ describe 'Show route', ->
       Backbone.sync.args[1][1].url.should.containEql '/api/v1/partner_show/foobar/images'
       Backbone.sync.args[1][2].success []
 
-      _.defer =>
+      _.defer => _.defer =>
         Backbone.sync.args[2][1].url().should.containEql '/api/v1/partner/foobar-partner/show/foobar'
         Backbone.sync.args[2][2].data.should.have.keys ['cacheBust']
         Backbone.sync.args[2][2].success()
         Backbone.sync.args[3][1].url().should.containEql '/show/foobar/artworks?published=true'
         Backbone.sync.args[3][2].success []
 
-        _.defer =>
+        _.defer => _.defer =>
           @res.render.called.should.be.true()
           @res.render.args[0][0].should.equal 'index'
 

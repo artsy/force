@@ -81,7 +81,7 @@ describe 'EmbeddedInquiryView', ->
         @view.$('button').is(':disabled').should.be.false()
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
-        _.defer =>
+        _.defer => _.defer =>
           @view.$('button').is(':disabled').should.be.true()
           @view.modal.view.trigger 'closed'
           @view.$('button').is(':disabled').should.be.false()

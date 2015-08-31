@@ -1,4 +1,4 @@
-Q = require 'q'
+Q = require 'bluebird-q'
 knox = require 'knox'
 request = require 'superagent'
 { S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config'

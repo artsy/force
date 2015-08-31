@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Q = require 'q'
+Q = require 'bluebird-q'
 { SHOW, ARTWORKS } = require('sharify').data
 { Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../models/partner_show.coffee'
