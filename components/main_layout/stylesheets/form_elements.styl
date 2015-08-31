@@ -21,6 +21,7 @@
   > .bordered-multiple-select
   .stacked-form-cell
     display block
+    position relative
     width 100%
     margin 10px auto
     &:first-child
@@ -55,9 +56,14 @@ bordered-input-placeholder()
     margin-top 5px
   > span
     garamond-size('l-caption', true)
+    line-height 0
     text-transform none
     letter-spacing 0
     color gray-darker-color
+    &:before
+      content ' '
+    &.is-error
+      color red-color
 
 .bordered-input
   margin 0
@@ -388,3 +394,8 @@ checkbox-size = 20px
 .garamond-results-list-item-cell
   @extends .results-list-item-cell
   garamond-size('s-body')
+
+.form-errors
+  margin 10px 0
+  color red-color
+  garamond-size('l-caption')

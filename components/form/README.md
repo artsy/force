@@ -38,10 +38,10 @@ Form = require '../../components/form/index.coffee'
 
 class SomeView extends BackboneView
   submit: (e) ->
-    form = new Form model: @model, $form: @$('form')
-    return unless form.start()
-
     e.preventDefault()
+
+    form = new Form model: @model, $form: @$('form')
+    return unless form.isReady()
 
     form.state 'loading'
 

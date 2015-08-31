@@ -10,9 +10,11 @@ module.exports = class BasicInfo extends StepView
     'click button': 'serialize'
 
   serialize: (e) ->
-    form = new Form model: @user, $form: @$('form')
-    return unless form.start()
     e.preventDefault()
+
+    form = new Form model: @user, $form: @$('form')
+    return unless form.isReady()
+
     form.state 'loading'
 
     @user.save(form.data())

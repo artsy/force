@@ -39,9 +39,11 @@ module.exports = class Account extends StepView
       mode
 
   submit: (e) ->
-    form = new Form model: @user, $form: @$('form'), $submit: @$('.js-form-submit')
-    return unless form.start()
     e.preventDefault()
+
+    form = new Form model: @user, $form: @$('form'), $submit: @$('.js-form-submit')
+    return unless form.isReady()
+
     form.state 'loading'
 
     @user.set form.serializer.data()

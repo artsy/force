@@ -15,13 +15,13 @@ describe 'Validator', ->
 
   beforeEach ->
     @$form = $(template).prepend confirmables
-    @validator = new Validator @$form
+    @validator = new Validator $form: @$form
 
   describe '#valid', ->
     # Note: https://github.com/tmpvar/jsdom/issues/544
     it 'should set a class on the form and call `checkValidity`', ->
       @$form[0].checkValidity = sinon.stub()
-      @validator.valid()
+      @validator.isValid()
       @$form.hasClass('is-validated').should.be.true()
       @$form[0].checkValidity.called.should.be.true()
 
@@ -33,11 +33,11 @@ describe 'Validator', ->
         @$form.find('input[name="password"]').val 'foo'
         @$form.find('input[name="password_confirmation"]').val 'bar'
         @$form.find('input[name="password_confirmation"]')[0].setCustomValidity = sinon.stub()
-        @validator.valid()
+        @validator.isValid()
         @$form.find('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true()
         @$form.find('input[name="password_confirmation"]')[0].setCustomValidity.args[0][0].should.equal 'Password must match'
         # Resolve the validation
         @$form.find('input[name="password_confirmation"]').val 'foo'
-        @validator.valid()
+        @validator.isValid()
         # Empty string clears the custom validation
         _.last(@$form.find('input[name="password_confirmation"]')[0].setCustomValidity.args)[0].should.equal ''

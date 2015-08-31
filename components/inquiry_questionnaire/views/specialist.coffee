@@ -26,9 +26,10 @@ module.exports = class Specialist extends StepView
         @render().$el.removeClass 'is-loading'
 
   serialize: (e) ->
-    form = new Form model: @inquiry, $form: @$('form')
-    return unless form.start()
     e.preventDefault()
+
+    form = new Form model: @inquiry, $form: @$('form')
+    return unless form.isReady()
 
     @inquiry.set _.extend { contact_gallery: false }, form.data()
     @user.set @inquiry.pick('name', 'email')

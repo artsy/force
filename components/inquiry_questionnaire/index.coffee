@@ -23,7 +23,7 @@ module.exports = (options = {}) ->
   questionnaire = new InquiryQuestionnaireView options
   modal = modalize questionnaire,
     className: 'modalize inquiry-questionnaire-modal'
-    dimensions: width: '500px', height: 'auto'
+    dimensions: width: '500px', height: '640px'
 
   # Attach/teardown analytics events
   analytics.attach modal
