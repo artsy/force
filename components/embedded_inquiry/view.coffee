@@ -18,9 +18,11 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
     @user ?= User.instantiate()
 
   submit: (e) ->
-    form = new Form model: @inquiry, $form: @$('form')
-    return unless form.start()
     e.preventDefault()
+
+    form = new Form model: @inquiry, $form: @$('form')
+    return unless form.isReady()
+
     form.state 'loading'
 
     data = form.serializer.data()
