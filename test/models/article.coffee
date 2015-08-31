@@ -26,7 +26,7 @@ describe "Article", ->
       @article.fetchWithRelated success: (data) ->
         # It looks like there's a very tight race condition here between
         # the success callback and the promise resolution.
-        _.defer =>
+        _.defer => _.defer =>
           data.slideshowArtworks.first().get('title').should.equal 'foobar'
           done()
       Backbone.sync.args[0][2].success _.extend {}, fixtures.article,
