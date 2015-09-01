@@ -25,7 +25,6 @@ if sd.SNOWPLOW_COLLECTOR_HOST
     });
 
 //- Chartbeat analytics for Editorial
-
-if sd.ARTICLE
+if sd.ARTICLE || sd.VERTICAL || sd.CURRENT_PATH === '/' || sd.CURRENT_PATH === '/articles'
   script( type='text/javascript' ).
     var _sf_startpt=(new Date()).getTime()

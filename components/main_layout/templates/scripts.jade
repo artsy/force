@@ -34,15 +34,27 @@ script( src= asset('/assets/main_layout.js') )
 
 //- Chartbeat analytics for editorial
 
-if sd.ARTICLE
+if sd.ARTICLE || sd.VERTICAL || sd.CURRENT_PATH === '/' || sd.CURRENT_PATH === '/articles'
   script( type="text/javascript" ).
     var _sf_async_config = _sf_async_config || {};
     /** CONFIGURATION START **/
     _sf_async_config.uid = 61369;
     _sf_async_config.domain = 'artsy.net';
     _sf_async_config.useCanonical = true;
-    _sf_async_config.sections = 'Editorial';
-    _sf_async_config.authors = sd.ARTICLE.author.name;
+
+    if(sd.ARTICLE){
+      _sf_async_config.sections = 'Editorial';
+      _sf_async_config.authors = sd.ARTICLE.author.name;
+    }else{
+      _sf_async_config.sections = 'Overview';
+      if(sd.VERTICAL){
+        _sf_async_config.authors = sd.VERTICAL.slug;
+      }else if(sd.CURRENT_PATH === '/articles'){
+        _sf_async_config.authors = 'Magazine';
+      }else{
+        _sf_async_config.authors = 'Home';
+      }
+    }
     /** CONFIGURATION END **/
     (function() {
         function loadChartbeat() {
