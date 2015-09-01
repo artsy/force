@@ -14,19 +14,21 @@ module.exports =
       infiniteScroll: true
       includeFixedHeader: includeFixedHeader
       includeAllWorks: false
-      hideForSale: false
+      hideForSaleButton: false
       forSale: 'true'
 
     { aggregations,
       el,
       stuckParam,
-      stuckFacet,
+      defaultHeading,
       startHistory,
       infiniteScroll,
+      filterRoot,
       includeFixedHeader,
       includeAllWorks,
       forSale,
-      hideForSale } = _.defaults options, defaults
+      facets,
+      hideForSaleButton } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -36,25 +38,27 @@ module.exports =
       aggregations: aggregations
 
     if stuckParam
-      params.set stuckParam, stuckFacet.id
+      _.extend params, stuckParam
 
     collection = new FilterArtworks
 
+    filterRoot = FILTER_ROOT || filterRoot
     view = new FilterView
       el: el
       collection: collection
       params: params
-      stuckFacet: stuckFacet
-      stuckParam: stuckParam
-      hideForSale: hideForSale
+      defaultHeading: defaultHeading
+      filterRoot: filterRoot
+      hideForSaleButton: hideForSaleButton
       includeAllWorks: includeAllWorks
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
+      facets: facets
 
     router = new FilterRouter
       params: params
-      urlRoot: FILTER_ROOT
-      stuckParam: stuckParam
+      urlRoot: filterRoot
+      stuckParamKey: stuckParam.keys.first
 
     collection.fetch
       data: params.toJSON()

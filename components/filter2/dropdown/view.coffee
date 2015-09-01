@@ -29,6 +29,9 @@ module.exports = class DropdownView extends Backbone.View
       success: @renderCounts
 
   renderCounts: (collection) =>
+    console.log @params
+    console.log collection
+    console.log @facet
     counts = collection.counts[@facet]
     activeText = counts[@params.get(@facet)]?.name
 

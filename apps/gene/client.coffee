@@ -41,8 +41,8 @@ module.exports.init = ->
 
   { params } = setupFilter
     el: $ '#gene-filter'
-    stuckFacet: gene
-    stuckParam: 'gene_id'
+    defaultHeading: gene.name()
+    stuckParam: { 'gene_id': gene.id }
     aggregations: aggregationParams
     forSale: 'false'
 

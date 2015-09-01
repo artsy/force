@@ -29,7 +29,7 @@ aggregationParams = require './components/browse/aggregations.coffee'
         counts: filterArtworks.counts
         params: params
         filterRoot: res.locals.sd.FILTER_ROOT
-        hideForSale: true
+        hideForSaleButton: true
         includeAllWorks: true
 
 @info = (req, res, next) ->
@@ -58,7 +58,7 @@ aggregationParams = require './components/browse/aggregations.coffee'
         counts: filterArtworks.counts
         params: params
         filterRoot: res.locals.sd.FILTER_ROOT
-        hideForSale: true
+        hideForSaleButtonButton: true
         includeAllWorks: true
 
 @forYou = (req, res, next) ->

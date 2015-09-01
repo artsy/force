@@ -1,5 +1,8 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
+FilterArtworks = require '../../../collections/filter_artworks.coffee'
+Q = require 'q'
+filterSettings = require './filter_settings.coffee'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:
@@ -34,13 +37,25 @@ module.exports = class PartnerRouter extends Backbone.Router
     @baseView.renderSection 'artists', { artistId: artistId }
 
   collection: ->
-    @baseView.renderSection 'collection', { isForSale: false }
+    filterArtworks = new FilterArtworks
+    aggregations = filterSettings.collection.aggregations
+    filterData = { size: 0, gallery: @partner.id, aggregations: aggregations }
+    Q.all([
+      filterArtworks.fetch(data: filterData)
+    ]).done =>
+      @baseView.renderSection 'collection', _.extend( { counts: filterArtworks.counts }, filterSettings.collection)
 
   articles: ->
     @baseView.renderSection 'articles'
 
   shop: ->
-    @baseView.renderSection 'shop', { isForSale: true }
+    filterArtworks = new FilterArtworks
+    aggregations = filterSettings.shop.aggregations
+    filterData = { size: 0, gallery: @partner.id, aggregations: aggregations }
+    Q.all([
+      filterArtworks.fetch(data: filterData)
+    ]).done =>
+      @baseView.renderSection 'shop', _.extend( { counts: filterArtworks.counts }, filterSettings.shop)
 
   contact: ->
     @baseView.renderSection 'contact'

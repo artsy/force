@@ -17,7 +17,7 @@ module.exports.init = ->
 
   { params } = setupFilter
     el: $ '#tag-filter'
-    stuckFacet: tag
-    stuckParam: 'tag_id'
+    defaultHeading: tag.name()
+    stuckParam: { 'tag_id': tag.id }
     aggregations: aggregationParams
     forSale: 'false'
