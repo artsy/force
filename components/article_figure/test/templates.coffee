@@ -28,7 +28,7 @@ describe 'article figure template', ->
         author_id: '503f86e462d56000020002cc'
         contributing_authors: [ {name: 'Kana', profile_id: 'user345'} ]
       sd: {CURRENT_PATH: '/articles'}
-    html.should.not.containEql 'article-figure-author'
+    html.should.not.containEql "\"article-figure-author\""
 
   it 'handles contributing author not from Artsy Editorial', ->
     html = render('template')
