@@ -133,3 +133,60 @@ describe 'EmbeddedInquiryView', ->
       view = new EmbeddedInquiryView artwork: artwork
       view.render().$('button').text()
         .should.equal 'Contact Auction House'
+
+  describe 'fair context', ->
+    beforeEach ->
+      @artwork = new Artwork fabricate 'artwork'
+      @artwork.related().fairs.add fabricate 'fair'
+      @view = new EmbeddedInquiryView artwork: @artwork
+      @view.render()
+
+    it 'renders the attendance checkbox', ->
+      html = @view.$el.html()
+      html.should.containEql 'I will attend Armory Show'
+      html.should.containEql 'This artwork is part of the art fair—Armory Show.'
+
+    it 'renders if the sync comes post-render', ->
+      artwork = new Artwork fabricate 'artwork'
+
+      view = new EmbeddedInquiryView artwork: artwork
+      view.render().$el.html()
+        .should.not.containEql 'Async Fair'
+
+      artwork.related().fairs.add fabricate 'fair', name: 'Async Fair'
+      artwork.related().fairs.trigger 'sync'
+
+      view.$el.html()
+        .should.containEql 'Async Fair'
+
+    describe 'user is not attending', ->
+      it 'does not add a user fair action', ->
+        @view.$('input[name="name"]').val 'Not Attending'
+        @view.$('button').click()
+
+        @view.user.get 'name'
+          .should.equal 'Not Attending'
+
+        userFairAction = @view.user.related()
+          .collectorProfile.related()
+          .userFairActions
+            .should.have.lengthOf 0
+
+    describe 'user is attending', ->
+      it 'adds a user fair action, when the box is checked', ->
+        @view.$('input[name="name"]').val 'Is Attending'
+        @view.$('input[type="checkbox"]').click()
+        @view.$('button').click()
+
+        @view.user.get 'name'
+          .should.equal 'Is Attending'
+
+        userFairAction = @view.user.related()
+          .collectorProfile.related()
+          .userFairActions.first()
+
+        userFairAction.attributes
+          .should.eql {
+            action: 'Attendee'
+            fair_id: 'armory-show-2013'
+          }

@@ -17,6 +17,12 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
     @inquiry = new ArtworkInquiry
     @user ?= User.instantiate()
 
+    { @fairs } = @artwork.related()
+    { collectorProfile } = @user.related()
+    { @userFairActions } = collectorProfile.related()
+
+    @listenTo @fairs, 'sync', @render
+
   submit: (e) ->
     e.preventDefault()
 
@@ -25,10 +31,13 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
 
     form.state 'loading'
 
-    data = form.serializer.data()
+    { attending } = data = form.serializer.data()
 
     @user.set _.pick data, 'name', 'email'
     @inquiry.set _.pick data, 'message'
+
+    if attending
+      @userFairActions.attendFair @fairs.first()
 
     @modal = openInquiryQuestionnaireFor
       user: @user
@@ -49,5 +58,6 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
       user: @user
       inquiry: @inquiry
       artwork: @artwork
+      fair: @fairs.first()
       defaultMessage: defaultMessage(@artwork, @artwork.related().partner)
     this
