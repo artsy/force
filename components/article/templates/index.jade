@@ -34,6 +34,8 @@ mixin image(image)
   .article-author
     a( href="/#{article.related().author.get('profile_handle')}" )
       = article.related().author.get('name')
+  .article-contributing-author
+    include ../../article_figure/contributing_author.jade
   .article-date
     = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
   .article-social

@@ -1,0 +1,15 @@
+if article.get('contributing_authors')
+  .article-figure-contributing-name= "By "
+    - var a = article.get('contributing_authors')
+    - var l = a.length
+    - var delimiter = ''
+    - for(var i = 0; i < l; i++)
+      if l > 1 && i == l - 2
+        - delimiter = "&nbspand&nbsp"
+      else if l == 1 || i == l-1
+        - delimiter = ''
+      else
+        - delimiter = ",&nbsp"
+      if a[i].name && a[i].profile_id
+        a.article-figure-contributing-name( href= "/#{a[i].profile_id}")= a[i].name
+        .article-figure-contributing-name !{delimiter}
