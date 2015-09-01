@@ -6,11 +6,10 @@ if article.get('contributing_authors')
     - for(var i = 0; i < l; i++)
       if l > 1 && i == l - 2
         - delimiter = "&nbspand&nbsp"
-      else if l == 1
-        - delimiter = ''
-      else if i == l-1
+      else if l == 1 || i == l-1
         - delimiter = ''
       else
         - delimiter = ",&nbsp"
-      a.article-figure-contributing-name( href= "/#{a[i].profile_id}")= a[i].name
-      .article-figure-contributing-name !{delimiter}
+      if a[i].name && a[i].profile_id
+        a.article-figure-contributing-name( href= "/#{a[i].profile_id}")= a[i].name
+        .article-figure-contributing-name !{delimiter}
