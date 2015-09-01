@@ -2,6 +2,7 @@ modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
+Q = require 'bluebird-q'
 
 closeWithError = (modal) ->
   modal.close ->
@@ -25,6 +26,10 @@ module.exports = (options = {}) ->
     className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '640px'
 
+  # Try to get a location incase one doesn't exist
+  # Don't bother waiting for it
+  user.approximateLocation()
+
   # Attach/teardown analytics events
   analytics.attach modal
   modal.view.on 'closed', ->
@@ -40,15 +45,15 @@ module.exports = (options = {}) ->
     $(window).off 'beforeunload'
 
   modal.load (done) ->
-    # Try to get a location incase one doesn't exist,
-    # don't wait for it though
-    user.approximateLocation()
+    { collectorProfile } = user.related()
 
-    user.findOrCreate(silent: true)
+    user.findOrCreate silent: true
       .then ->
-        user.related().collectorProfile.findOrCreate(silent: true)
-      .then done
-      .fail ->
+        collectorProfile.findOrCreate silent: true
+      .then ->
+        collectorProfile.related().userFairActions.invoke 'save'
+        done()
+      .catch ->
         closeWithError modal
       .done()
 
