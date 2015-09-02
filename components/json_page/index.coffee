@@ -4,7 +4,8 @@ request = require 'superagent'
 { S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config'
 
 module.exports = class JSONPage
-  constructor: ({ @name, @paths }) ->
+  constructor: ({ @name, @paths, @bucket }) ->
+    @bucket ?= APPLICATION_NAME
     throw new Error 'Requires a `name`' unless @name?
 
   path: ->
@@ -15,7 +16,7 @@ module.exports = class JSONPage
       knox.createClient
         key: S3_KEY
         secret: S3_SECRET
-        bucket: APPLICATION_NAME
+        bucket: @bucket
 
   get: (callback) ->
     Q.promise (resolve, reject) =>
@@ -25,7 +26,7 @@ module.exports = class JSONPage
         callback err
 
       request
-        .get "http://#{APPLICATION_NAME}.s3.amazonaws.com#{@path()}"
+        .get "http://#{@bucket}.s3.amazonaws.com#{@path()}"
         .end (err, res) =>
           if res.ok
             try

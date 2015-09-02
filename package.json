@@ -73,6 +73,7 @@
     "cookies-js": "*",
     "ezel-assets": "*",
     "imagesloaded": "*",
+    "inquirer": "^0.9.0",
     "jadeify": "*",
     "jquery": "*",
     "jquery-fillwidth-lite": "*",
