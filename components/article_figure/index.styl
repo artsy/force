@@ -37,23 +37,33 @@
 
 .article-figure-date
 .article-figure-title
-.article-figure-author
+.article-figure-author-link
 .article-figure-contributing
   display block
+
 .article-figure-date
   garamond-size('s-body')
   color gray-dark-color
+
 .article-figure-title
   margin 10px 0
   garamond-size('headline')
+
 .article-figure-author-section
   margin 10px 0 20px 0
+
 .article-figure-contributing-name
-.article-figure-author
   avant-garde-size('body', true)
   display inline-block
-.article-figure-contributing
-  margin-top 10px
+
+.article-figure-author-link
+  avant-garde-size('body', true)
+  display inline-block
+
+.article-figure-author-section div:not(:only-child)
+  .article-figure-author-link
+    avant-garde-size('s-headline', true)
+
 .article-figure-share
   .share-to-pinterest
     display none
