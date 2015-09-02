@@ -16,8 +16,9 @@ mixin article-figure(article, width, showDate, showShare)
 
       .article-figure-author-section
         if !(article.get('contributing_authors') != null && article.get('author_id') === '503f86e462d56000020002cc' && sd.CURRENT_PATH === '/articles')
-          a.article-figure-author( href= article.authorHref() )
-            = article.get('author') ? article.get('author').name : ''
+          .article-figure-author
+            a.article-figure-author-link( href= article.authorHref() )
+              = article.get('author') ? article.get('author').name : ''
 
         if article.get('contributing_authors')
           .article-figure-contributing
