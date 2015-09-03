@@ -76,6 +76,14 @@ describe 'ArticleView', ->
           _id: '5321b73dc9dc2458c4000196'
       @view.$el.html().should.containEql 'Andy Foobar Flowers'
 
+    it 'does not render an artwork if unpublished', ->
+      Backbone.sync.restore()
+      sinon.stub Backbone, 'sync'
+      @view.renderArtworks()
+      for arg in Backbone.sync.args
+        arg[2].error()
+      @view.$('.article-section-artworks ul').html().length.should.equal 0
+
   describe '#checkEditable', ->
 
     it 'shows the edit button when the author_id matches user and the user has \
