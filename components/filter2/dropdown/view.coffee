@@ -10,7 +10,7 @@ module.exports = class DropdownView extends Backbone.View
   events:
     'click a[data-attr]': 'onSelect'
 
-  initialize: ({@collection, @params, @facet, @el, @facets}) ->
+  initialize: ({@collection, @params, @facet, @el, @facets, @filterRoot}) ->
     @listenTo @collection, 'initial:fetch', @updateCounts
     @listenTo @params, "change:#{@facet}", @renderActiveParam
 
@@ -38,7 +38,7 @@ module.exports = class DropdownView extends Backbone.View
     html = template
       filter: counts
       name: @facet
-      filterRoot:  sd.FILTER_ROOT
+      filterRoot:  @filterRoot
       params: @params
       activeText: activeText
 

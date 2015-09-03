@@ -13,12 +13,11 @@ aggregationParams = require './aggregations.coffee'
     tag.fetch(cache: true)
     filterArtworks.fetch(data: filterData)
   ]).done ->
-    res.locals.sd.FILTER_ROOT = tag.href() + '/artworks'
     res.locals.sd.TAG = tag.toJSON()
 
     res.render 'index',
       tag: tag
-      filterRoot: res.locals.sd.FILTER_ROOT
+      filterRoot: tag.href() + '/artworks'
       counts: filterArtworks.counts
       params: params
       activeText: ''

@@ -33,14 +33,11 @@ describe 'PartnerView', ->
         PartnerView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/view'), ['tablistTemplate']
         )
-
+        mod.__set__("sectionToView", {});
         @profile = new Profile fabricate 'partner_profile'
         @partner = new Partner @profile.get('owner')
         @tablistTemplate = sinon.stub()
-        @CollectionView = sinon.stub()
-        @CollectionView.returns @CollectionView
         mod.__set__ 'tablistTemplate', @tablistTemplate
-        mod.__set__ 'sectionToView', { collection: @CollectionView }
 
         @view = new PartnerView
           model: @profile
@@ -65,14 +62,3 @@ describe 'PartnerView', ->
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
         _.last(@tablistTemplate.args)[0].sections.should.eql ['shows', 'articles', 'about']
-
-    describe '#renderSection', ->
-
-      it 'uses the right default params to initialize the view', ->
-        @view.renderSection('collection')
-        @CollectionView.args[0][0].isForSale.should.not.be.ok()
-
-      it 'overrides default params when passing in extra params', ->
-        @view.renderSection('collection', { isForSale: true, feature: 'giant' })
-        @CollectionView.args[0][0].isForSale.should.be.ok()
-        @CollectionView.args[0][0].feature.should.equal 'giant'

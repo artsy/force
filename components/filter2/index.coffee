@@ -4,7 +4,6 @@ qs = require 'querystring'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 FilterView = require './view.coffee'
 FilterRouter = require './router/index.coffee'
-{ FILTER_ROOT } = require('sharify').data
 
 module.exports =
 
@@ -28,7 +27,8 @@ module.exports =
       includeAllWorks,
       forSale,
       facets,
-      hideForSaleButton } = _.defaults options, defaults
+      hideForSaleButton,
+    } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -42,7 +42,6 @@ module.exports =
 
     collection = new FilterArtworks
 
-    filterRoot = FILTER_ROOT || filterRoot
     view = new FilterView
       el: el
       collection: collection
@@ -58,7 +57,7 @@ module.exports =
     router = new FilterRouter
       params: params
       urlRoot: filterRoot
-      stuckParamKey: stuckParam.keys.first
+      stuckParamKey: _.first(_.keys(stuckParam))
 
     collection.fetch
       data: params.toJSON()

@@ -1,8 +1,9 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
-Q = require 'q'
 filterSettings = require './filter_settings.coffee'
+Q = require 'q'
+_ = require 'underscore'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:
@@ -13,6 +14,7 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/artists': 'artists'          #      x
     ':id/artist/:artistId': 'artists' #      x
     ':id/collection': 'collection'    #                x
+    ':id/works': 'works'              #      x
     ':id/articles': 'articles'        #      x         x
     ':id/articles': 'articles'        #      x         x
     ':id/shop': 'shop'                #                x
@@ -36,26 +38,24 @@ module.exports = class PartnerRouter extends Backbone.Router
   artists: (id, artistId) ->
     @baseView.renderSection 'artists', { artistId: artistId }
 
-  collection: ->
+  filterArtworks: (section, settings) ->
     filterArtworks = new FilterArtworks
-    aggregations = filterSettings.collection.aggregations
-    filterData = { size: 0, gallery: @partner.id, aggregations: aggregations }
-    Q.all([
-      filterArtworks.fetch(data: filterData)
-    ]).done =>
-      @baseView.renderSection 'collection', _.extend( { counts: filterArtworks.counts }, filterSettings.collection)
+    filterData = { size: 0, gallery: @partner.id, aggregations: settings.aggregations }
+
+    filterArtworks.fetch data: filterData, success: =>
+      @baseView.renderSection section, _.extend( { counts: filterArtworks.counts }, settings)
+
+  collection: ->
+    @filterArtworks('collection', filterSettings.settings(@partner, 'collection'))
+
+  shop: ->
+    @filterArtworks('shop', filterSettings.settings(@partner, 'shop'))
+
+  works: ->
+    @filterArtworks('works', filterSettings.settings(@partner, 'works'))
 
   articles: ->
     @baseView.renderSection 'articles'
-
-  shop: ->
-    filterArtworks = new FilterArtworks
-    aggregations = filterSettings.shop.aggregations
-    filterData = { size: 0, gallery: @partner.id, aggregations: aggregations }
-    Q.all([
-      filterArtworks.fetch(data: filterData)
-    ]).done =>
-      @baseView.renderSection 'shop', _.extend( { counts: filterArtworks.counts }, filterSettings.shop)
 
   contact: ->
     @baseView.renderSection 'contact'

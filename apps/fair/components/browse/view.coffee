@@ -38,6 +38,7 @@ module.exports = class FairBrowseView extends Backbone.View
       hideForSaleButton: true
       includeAllWorks: true
       startHistory: false
+      filterRoot: fair.href() + '/browse/artworks'
 
     @artworkParams = params
 

@@ -10,16 +10,15 @@ template = -> require('../templates/collection.jade') arguments...
 module.exports = class PartnerArtworksView extends Backbone.View
 
   initialize: (options={}) ->
-    { @profile, @partner, @aggregations, @forSaleOnly, @hideForSaleButton, @counts } = options
+    { @profile, @partner, @aggregations, @forSaleOnly, @hideForSaleButton, @counts, @filterRoot } = options
     params = new Backbone.Model partner_id: @partner.id
     @$el.html template
       hideForSaleButton: @hideForSaleButton
       partner: @partner
-      filterRoot: @partner.href() + '/collection'
+      filterRoot: @filterRoot
       counts: @counts
       params: params
       activeText: ''
-
 
     scrollFrame '#partner-filter a' unless sd.EIGEN
 
@@ -30,4 +29,5 @@ module.exports = class PartnerArtworksView extends Backbone.View
       aggregations: @aggregations
       startHistory: false
       forSale: @forSaleOnly
+      filterRoot: @filterRoot
 

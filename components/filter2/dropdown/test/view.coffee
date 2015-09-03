@@ -14,8 +14,6 @@ describe 'Filter / Dropdown', ->
         $: benv.require 'jquery'
         _s: require('underscore.string')
         filterLabelMap: require '../label_map.coffee'
-        sd:
-          FILTER_ROOT: '/browse'
       Backbone.$ = $
       DropdownView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
       @view = new DropdownView
@@ -24,6 +22,7 @@ describe 'Filter / Dropdown', ->
         collection: new FilterArtworks fabricate2('filter_artworks'), parse: true
         facets: ['price_range', 'dimension_range', 'medium']
         facet: 'price_range'
+        filterRoot: '/browse'
 
       done()
 

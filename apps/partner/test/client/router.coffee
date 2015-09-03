@@ -1,0 +1,63 @@
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+CurrentUser = require '../../../../models/current_user.coffee'
+Artworks = require '../../../../collections/artworks.coffee'
+Partner = require '../../../../models/partner.coffee'
+Profile = require '../../../../models/profile.coffee'
+_ = require 'underscore'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
+counts = require './test_counts'
+
+describe 'PartnerRouter', ->
+
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      Backbone.$ = $
+      @PartnerRouter = benv.require resolve(__dirname, '../../client/router.coffee')
+      done()
+
+  after ->
+    benv.teardown()
+
+  describe 'artworks', ->
+    beforeEach (done) ->
+      sinon.stub Backbone, 'sync'
+
+      @profile = new Profile (fabricate 'partner_profile')
+
+      benv.render resolve(__dirname, '../../templates/index.jade'), {
+        sd: {}
+        profile: @profile
+        asset: (->)
+        params: {}
+      }, =>
+        stubChildClasses @PartnerRouter, this, ['PartnerView'], ['renderSection']
+        stubChildClasses @PartnerRouter, this, ['PartnerView'], ['renderSection']
+
+        done()
+
+    it 'initializes', ->
+      @router = new @PartnerRouter {profile: @profile, partner: @profile.get('owner')}
+
+      settings = {
+        'aggregations': ['dimension_range', 'medium', 'price_range', 'total', 'for_sale']
+        'forSaleOnly': false
+        'hideForSaleButton': false
+        'filterRoot': '/partner-id/section-id'
+      }
+
+      @router.filterArtworks 'section-name', settings
+
+      Backbone.sync.args[0][2].success aggregations: counts
+
+      @router.baseView.renderSection.called.should.be.ok()
+      @router.baseView.renderSection.args[0][0].should.equal('section-name')
+      @router.baseView.renderSection.args[0][1].aggregations.should.equal(settings.aggregations)
+      @router.baseView.renderSection.args[0][1].forSaleOnly.should.equal(settings.forSaleOnly)
+      @router.baseView.renderSection.args[0][1].hideForSaleButton.should.equal(settings.hideForSaleButton)
+      @router.baseView.renderSection.args[0][1].filterRoot.should.equal(settings.filterRoot)
+      @router.baseView.renderSection.args[0][1].counts.should.equal(counts)

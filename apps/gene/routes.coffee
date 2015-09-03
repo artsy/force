@@ -31,14 +31,13 @@ aggregationParams = require './aggregations.coffee'
     else
       mode = gene.mode()
 
-    res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
     res.locals.sd.GENE = gene.toJSON()
     res.locals.sd.MODE = mode
     res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
 
     res.render 'index',
       gene: gene
-      filterRoot: res.locals.sd.FILTER_ROOT
+      filterRoot: gene.href() + '/artworks'
       counts: counts
       params: params
       activeText: ''

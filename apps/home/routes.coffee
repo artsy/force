@@ -8,7 +8,6 @@ Items = require '../../collections/items'
 { client } = require '../../lib/cache'
 welcomeHero = require './welcome'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './aggregations.coffee'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or

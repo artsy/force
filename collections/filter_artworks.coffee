@@ -61,7 +61,7 @@ module.exports = class FilterArtworks extends Artworks
       'medium': (aggregate) ->
         keys = _.sortBy _.keys(aggregate), (key) -> key
         mapKeys keys, aggregate
-      'total': (aggregate) -> aggregate
+      'total': (aggregate) -> aggregatex
       'period': (aggregate) ->
         for k, v of aggregate
           aggregate[k].name = "#{aggregate[k].name}s"

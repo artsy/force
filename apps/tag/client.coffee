@@ -17,7 +17,8 @@ module.exports.init = ->
 
   { params } = setupFilter
     el: $ '#tag-filter'
-    defaultHeading: tag.name()
+    defaultHeading: tag.displayName()
     stuckParam: { 'tag_id': tag.id }
     aggregations: aggregationParams
     forSale: 'false'
+    filterRoot: tag.href() + '/artworks'

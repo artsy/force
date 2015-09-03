@@ -21,6 +21,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     numberOfShows: 6
 
   initialize: (options={}) ->
+    console.log 'initialize'
     { @profile, @partner } = _.defaults options, @defaults
     @isPartner = @partner.get('claimed') isnt false
     @showBanner = not @isPartner and not @partner.get 'show_promoted'

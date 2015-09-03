@@ -33,7 +33,8 @@ module.exports = class FilterView extends Backbone.View
       @hideForSaleButton,
       @includeAllWorks
       @infiniteScroll,
-      @pageSize } = _.defaults options, @defaults
+      @pageSize,
+      @filterRoot } = _.defaults options, @defaults
     @initSubViews()
 
     @listenTo @collection, 'sync', @render
@@ -60,6 +61,7 @@ module.exports = class FilterView extends Backbone.View
       facets: @facets
       hideForSaleButton: @hideForSaleButton
       includeAllWorks: @includeAllWorks
+      filterRoot: @filterRoot
 
     new HeadlineView
       el: @$('.filter-heading')

@@ -41,10 +41,11 @@ module.exports.init = ->
 
   { params } = setupFilter
     el: $ '#gene-filter'
-    defaultHeading: gene.name()
+    defaultHeading: gene.displayName()
     stuckParam: { 'gene_id': gene.id }
     aggregations: aggregationParams
     forSale: 'false'
+    filterRoot: gene.href() + '/artworks'
 
   view = new GeneView
     user: user
