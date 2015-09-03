@@ -35,10 +35,6 @@ module.exports = class Search
       items
 
   parse: (items, query) ->
-    # Remove tags
-    items = _.filter items, (item) ->
-      item.model isnt 'tag'
-
     @results.reset _.map @parseResults(items), (item) =>
       item.model = @mode?.slice(0,-1) unless item.model?
       item
