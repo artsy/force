@@ -33,13 +33,17 @@ module.exports = class ArticleView extends Backbone.View
 
   renderArtworks: ->
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
-      Q.all(
+      Q.allSettled(
         for id in section.ids
-          new Artwork(id: id).fetch success: (artwork) =>
-            @$("[data-id=#{artwork.get '_id'}]").html(
-              artworkItemTemplate artwork: artwork, artworkSize: ['larger', 'large']
-            )
+          new Artwork(id: id).fetch
+            success: (artwork) =>
+              @$("[data-id=#{artwork.get '_id'}]").html(
+                artworkItemTemplate artwork: artwork, artworkSize: ['larger', 'large']
+              )
+            error: (artwork) =>
+              @$("[data-id=#{artwork.get 'id'}]").remove()
       ).spread (artworks...) =>
+        artworks = _.pluck(_.reject(artworks, (artwork) -> artwork.state is 'rejected'), 'value')
         artworks = new Artworks artworks
         $el = @$("[data-layout=overflow_fillwidth]" +
           " li[data-id=#{artworks.first().get '_id'}]").parent()
