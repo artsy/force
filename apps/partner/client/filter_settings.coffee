@@ -19,9 +19,7 @@ module.exports =
       'hideForSaleButton': true
 
   filterRoot: (partner, section) ->
-    debugger
     return "#{partner.href()}/#{section}"
 
   settings: (partner, section) ->
-    debugger
     return _.extend @defaults[section], {filterRoot: @filterRoot(partner, section)}

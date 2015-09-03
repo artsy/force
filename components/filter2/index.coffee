@@ -12,7 +12,7 @@ module.exports =
       startHistory: yes
       infiniteScroll: true
       includeFixedHeader: includeFixedHeader
-      includeAllWorks: false
+      includeAllWorksButton: false
       hideForSaleButton: false
       forSale: 'true'
 
@@ -24,7 +24,7 @@ module.exports =
       infiniteScroll,
       filterRoot,
       includeFixedHeader,
-      includeAllWorks,
+      includeAllWorksButton,
       forSale,
       facets,
       hideForSaleButton,
@@ -49,7 +49,7 @@ module.exports =
       defaultHeading: defaultHeading
       filterRoot: filterRoot
       hideForSaleButton: hideForSaleButton
-      includeAllWorks: includeAllWorks
+      includeAllWorksButton: includeAllWorksButton
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
       facets: facets

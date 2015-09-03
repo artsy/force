@@ -6,7 +6,7 @@ nav.filter-nav.filter-artworks-nav
         label( for='only-for-sale' )
       label( for='only-for-sale' ) Only for sale
 
-  if includeAllWorks
+  if includeAllWorksButton
     a.filter-button.filter-nav-all( href=filterRoot ) All Works
   if counts
     each filter, name in counts

@@ -29,7 +29,7 @@ aggregationParams = require './components/browse/aggregations.coffee'
         params: params
         filterRoot: fair.href() + '/browse/artworks'
         hideForSaleButton: true
-        includeAllWorks: true
+        includeAllWorksButton: true
 
 @info = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -56,8 +56,8 @@ aggregationParams = require './components/browse/aggregations.coffee'
         counts: filterArtworks.counts
         params: params
         filterRoot: fair.href() + '/browse/artworks'
-        hideForSaleButtonButton: true
-        includeAllWorks: true
+        hideForSaleButton: true
+        includeAllWorksButton: true
 
 @forYou = (req, res, next) ->
   return next() unless res.locals.sd.FAIR

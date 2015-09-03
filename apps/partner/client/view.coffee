@@ -34,6 +34,7 @@ module.exports = class PartnerView extends Backbone.View
     currentSection: 'overview'
 
   initialize: (options={}) ->
+    @currentUser = CurrentUser.orNull()
     { @currentSection, @partner } = _.defaults options, @defaults
     @profile = @model # alias
     @listenTo @partner, 'sync', @initializeTablistAndContent

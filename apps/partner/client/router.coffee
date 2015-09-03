@@ -2,7 +2,6 @@ Backbone = require 'backbone'
 PartnerView = require './view.coffee'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 filterSettings = require './filter_settings.coffee'
-Q = require 'q'
 _ = require 'underscore'
 
 module.exports = class PartnerRouter extends Backbone.Router

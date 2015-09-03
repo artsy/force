@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 Partner = require '../../../models/partner.coffee'
 { setupFilter } = require '../../../components/filter2/index.coffee'
 
-template = -> require('../templates/collection.jade') arguments...
+template = -> require('../templates/artworks_filter.jade') arguments...
 
 module.exports = class PartnerArtworksView extends Backbone.View
 

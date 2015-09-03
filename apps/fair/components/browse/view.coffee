@@ -36,7 +36,7 @@ module.exports = class FairBrowseView extends Backbone.View
       stuckParam: { 'fair_id': @fair.id }
       aggregations: aggregationParams
       hideForSaleButton: true
-      includeAllWorks: true
+      includeAllWorksButton: true
       startHistory: false
       filterRoot: fair.href() + '/browse/artworks'
 
