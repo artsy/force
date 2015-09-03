@@ -24,8 +24,8 @@ describe 'RelatedArtistsView', ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub(Backbone, 'sync').yieldsTo('success').returns([fabricate('artist')])
     stubChildClasses @RelatedArtistsView, this,
-      ['PartnerView']
-      []
+      ['ArtistFillwidthList']
+      ['fetchAndRender', 'remove']
     @view = new @RelatedArtistsView model: @model
 
   afterEach ->

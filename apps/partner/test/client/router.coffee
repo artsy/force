@@ -23,7 +23,7 @@ describe 'PartnerRouter', ->
   after ->
     benv.teardown()
 
-  describe 'artworks', ->
+  describe 'filterArtworks', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
 
@@ -37,10 +37,12 @@ describe 'PartnerRouter', ->
       }, =>
         stubChildClasses @PartnerRouter, this, ['PartnerView'], ['renderSection']
         stubChildClasses @PartnerRouter, this, ['PartnerView'], ['renderSection']
-
         done()
 
-    it 'initializes', ->
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'renders correct section with parameters', ->
       @router = new @PartnerRouter {profile: @profile, partner: @profile.get('owner')}
 
       settings = {
