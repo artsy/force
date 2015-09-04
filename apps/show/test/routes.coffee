@@ -37,3 +37,43 @@ describe 'Show route', ->
           @res.render.args[0][0].should.equal 'index'
 
           done()
+
+    describe 'with a fair', ->
+      beforeEach ->
+        @fair = _.extend(fabricate('fair'))
+        @show = _.extend(fabricate('show'), fair: @fair, id: 'foobar', partner: id: 'foobar-partner')
+
+      it 'should fetch the fair profile', (done) ->
+        routes.index @req, @res, @next
+
+        Backbone.sync.args[0][2].success @show
+        Backbone.sync.args[1][2].success []
+
+        _.defer => _.defer =>
+          Backbone.sync.args[2][2].success()
+          Backbone.sync.args[3][2].success []
+
+          _.defer => _.defer =>
+            Backbone.sync.args[4][1].id.should.equal 'the-armory-show'
+
+            done()
+
+      it 'should mark the fair as unpublished if the profile fetch fails', (done) ->
+        routes.index @req, @res, @next
+
+        Backbone.sync.args[0][2].success @show
+        Backbone.sync.args[1][2].success []
+
+        _.defer => _.defer =>
+          Backbone.sync.args[2][2].success()
+          Backbone.sync.args[3][2].success []
+
+          _.defer => _.defer =>
+            Backbone.sync.args[4][1].id.should.equal 'the-armory-show'
+            Backbone.sync.args[4][2].error []
+
+            @res.render.args[0][1]['fair'].get('published').should.equal false
+
+            done()
+
+

@@ -24,8 +24,13 @@ PartnerShow = require '../../models/partner_show'
       ])
     else
       Q.promise.reject()
-
   .then ->
+    return unless show.has('fair')
+    show.related().fair.related().profile.fetch
+      cache: true
+      error: ->
+        show.related().fair.set published: false
+  .finally ->
     res.locals.sd.SHOW = show.toJSON()
     res.locals.sd.ARTWORKS = show.related().artworks.toJSON()
 
