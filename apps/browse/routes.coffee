@@ -9,9 +9,8 @@ aggregationParams = require './aggregations.coffee'
   filterArtworks.fetch
     data: filterData
     success: ->
-      res.locals.sd.FILTER_ROOT = '/browse/artworks'
       res.render 'index',
-        filterRoot: res.locals.sd.FILTER_ROOT
+        filterRoot: '/browse/artworks'
         counts: filterArtworks.counts
         params: new Backbone.Model
         activeText: ''

@@ -21,16 +21,15 @@ aggregationParams = require './components/browse/aggregations.coffee'
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'
-  res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
   filterArtworks.fetch
     data: filterData
     success: ->
       res.render 'overview',
         counts: filterArtworks.counts
         params: params
-        filterRoot: res.locals.sd.FILTER_ROOT
-        hideForSale: true
-        includeAllWorks: true
+        filterRoot: fair.href() + '/browse/artworks'
+        hideForSaleButton: true
+        includeAllWorksButton: true
 
 @info = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -52,14 +51,13 @@ aggregationParams = require './components/browse/aggregations.coffee'
     data: filterData
     success: ->
       res.locals.sd.SECTION = 'browse'
-      res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
 
       res.render 'index',
         counts: filterArtworks.counts
         params: params
-        filterRoot: res.locals.sd.FILTER_ROOT
-        hideForSale: true
-        includeAllWorks: true
+        filterRoot: fair.href() + '/browse/artworks'
+        hideForSaleButton: true
+        includeAllWorksButton: true
 
 @forYou = (req, res, next) ->
   return next() unless res.locals.sd.FAIR

@@ -33,12 +33,12 @@ module.exports = class FairBrowseView extends Backbone.View
   setupArtworkView: ->
     { params } = setupFilter
       el: $ '.fair-page-content'
-      stuckFacet: @fair
-      stuckParam: 'fair_id'
+      stuckParam: { 'fair_id': @fair.id }
       aggregations: aggregationParams
-      hideForSale: true
-      includeAllWorks: true
+      hideForSaleButton: true
+      includeAllWorksButton: true
       startHistory: false
+      filterRoot: fair.href() + '/browse/artworks'
 
     @artworkParams = params
 

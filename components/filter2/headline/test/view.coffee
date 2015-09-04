@@ -15,13 +15,13 @@ describe 'Filter / Headline', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       HeadlineView = benv.require resolve(__dirname, '../view')
+      fair = new Fair fabricate 'fair'
       @view = new HeadlineView
         el: $ "<div></div>"
         params: new Backbone.Model
         collection: new FilterArtworks fabricate2('filter_artworks'), parse: true
         facets: ['price_range', 'dimension_range', 'medium']
-        stuckParam: 'fair_id'
-        stuckFacet: new Fair fabricate 'fair'
+        stuckParam: { 'fair_id': fair.id }
 
       done()
 
@@ -46,10 +46,10 @@ describe 'Filter / Headline', ->
   it 'says nothing if no params are set', ->
     @view.$el.text().should.equal ''
 
-  it 'uses a stuckFacet in place of a medium', ->
-    @view.stuckFacet = new Gene fabricate 'gene'
+  it 'uses a defaultHeading in place of a medium', ->
+    @view.defaultHeading = 'Thing'
     @view.params.set
       price_range: '*-1000'
       dimension_range: '*-24.0'
 
-    @view.$el.text().should.equal 'Small Pop Art Under $1,000'
+    @view.$el.text().should.equal 'Small Thing Under $1,000'

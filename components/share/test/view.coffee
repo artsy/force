@@ -11,7 +11,7 @@ describe 'ShareView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @openSpy = sinon.spy window, 'open'
+      window.open = sinon.stub()
       @view = new ShareView el: $("""
         <div>
           <a href='#share' data-service='okcupid'></a>
@@ -19,11 +19,13 @@ describe 'ShareView', ->
       """)
       done()
 
-  after -> benv.teardown()
+  after ->
+    benv.teardown()
 
   describe '#initialize', ->
     xit '#', ->
       @view.$('a').first().click()
+      @openSpy = window.open
       @openSpy.called.should.be.ok()
       @openSpy.args[0][0].should.equal '#share'
       @openSpy.args[0][1].should.equal 'okcupid'

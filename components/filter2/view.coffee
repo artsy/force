@@ -16,8 +16,8 @@ module.exports = class FilterView extends Backbone.View
     columnWidth: 300
     includeFixedHeader: true
     facets: ['price_range', 'dimension_range', 'medium']
-    hideForSale: false
-    includeAllWorks: false
+    hideForSaleButton: false
+    includeAllWorksButton: false
     infiniteScroll: true
     pageSize: 10
 
@@ -25,16 +25,16 @@ module.exports = class FilterView extends Backbone.View
     'click .filter-artworks-see-more' : 'nextPage'
 
   initialize: (options) ->
-    { @collection, @params, @stuckFacet, @stuckParam } = options
+    { @collection, @params, @defaultHeading } = options
     { @giveUpCount,
       @columnWidth,
       @includeFixedHeader,
       @facets,
-      @hideForSale,
-      @includeAllWorks
+      @hideForSaleButton,
+      @includeAllWorksButton
       @infiniteScroll,
-      @pageSize } = _.defaults options, @defaults
-
+      @pageSize,
+      @filterRoot } = _.defaults options, @defaults
     @initSubViews()
 
     @listenTo @collection, 'sync', @render
@@ -59,16 +59,16 @@ module.exports = class FilterView extends Backbone.View
       collection: @collection
       params: @params
       facets: @facets
-      hideForSale: @hideForSale
-      includeAllWorks: @includeAllWorks
+      hideForSaleButton: @hideForSaleButton
+      includeAllWorksButton: @includeAllWorksButton
+      filterRoot: @filterRoot
 
     new HeadlineView
       el: @$('.filter-heading')
       collection: @collection
       params: @params
       facets: @facets
-      stuckFacet: @stuckFacet
-      stuckParam: @stuckParam
+      defaultHeading: @defaultHeading
 
     new CountView
       el: @$('.filter-sort-count-count')

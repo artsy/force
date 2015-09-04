@@ -27,6 +27,11 @@
   res.locals.sd.SECTION = 'shop'
   res.render 'index', params: req.params
 
+@works = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'works'
+  res.render 'index', params: req.params
+
 @shows = (req, res, next) ->
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'shows'

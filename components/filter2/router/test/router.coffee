@@ -9,7 +9,7 @@ describe 'FilterRouter', ->
   beforeEach ->
     @router = new FilterRouter
       params: new Backbone.Model
-      stuckParam: 'stuck'
+      stuckParam: { 'stuck' : 'stuck_id' }
       urlRoot: '/artworks'
 
   afterEach ->

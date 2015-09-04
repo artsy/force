@@ -5,28 +5,24 @@ CurrentUser = require '../../../models/current_user.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
 ContactView = require './contact.coffee'
-CollectionView = require './collection.coffee'
+FilteredArtworks = require './artworks_filter.coffee'
 ShowsView = require './shows.coffee'
 ArticlesView = require './articles.coffee'
 ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
-
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 sectionToView =
   contact: ContactView
   about: ContactView
-  collection: CollectionView
-  shop: CollectionView
+  collection: FilteredArtworks
+  shop: FilteredArtworks
+  works: FilteredArtworks
   shows: ShowsView
   articles: ArticlesView
   artists: ArtistsView
   overview: OverviewView
-
-sectionViewParams =
-  collection: { isForSale: false }
-  shop: { isForSale: true }
 
 module.exports = class PartnerView extends Backbone.View
 
@@ -38,6 +34,7 @@ module.exports = class PartnerView extends Backbone.View
     currentSection: 'overview'
 
   initialize: (options={}) ->
+    @currentUser = CurrentUser.orNull()
     { @currentSection, @partner } = _.defaults options, @defaults
     @profile = @model # alias
     @listenTo @partner, 'sync', @initializeTablistAndContent
@@ -45,8 +42,7 @@ module.exports = class PartnerView extends Backbone.View
     @initializePartner()
     @initializeFollows()
 
-  renderSection: (section, extraParams={}) ->
-    _.extend (@sectionViewParams = sectionViewParams[section] or {}), extraParams
+  renderSection: (section, @sectionViewParams={}) ->
     @highlightTab (@currentSection = section)
     $(window).off '.partner' # reset events under .partner namespace
 
@@ -54,7 +50,6 @@ module.exports = class PartnerView extends Backbone.View
     # overview), delay the content initialization after @partner is synced.
     # Otherwise, we can just go ahead and render the content.
     return unless @isPartnerFetched or @currentSection isnt 'overview'
-
     new sectionToView[@currentSection]?( _.extend(
       el: @$('.partner-content')
       profile: @profile
@@ -132,7 +127,7 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     # The order in the array will be used for presentation
-    gallery = ['overview', 'shows', 'artists', 'articles', 'contact']
+    gallery = ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
     institution = ['shows', 'collection', 'articles', 'shop', 'about']
     nonPartnerGallery = ['overview']
 
@@ -150,6 +145,7 @@ module.exports = class PartnerView extends Backbone.View
       overview: => true
       shows: => @partner.get('displayable_shows_count') > 0
       artists: => @partner.get('partner_artists_count') > 0
+      works: => @currentUser?.isAdmin()
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
       contact: => true
       about: => true

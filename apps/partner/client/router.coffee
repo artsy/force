@@ -1,5 +1,8 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
+FilterArtworks = require '../../../collections/filter_artworks.coffee'
+filterSettings = require './filter_settings.coffee'
+_ = require 'underscore'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:
@@ -10,6 +13,7 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/artists': 'artists'          #      x
     ':id/artist/:artistId': 'artists' #      x
     ':id/collection': 'collection'    #                x
+    ':id/works': 'works'              #      X
     ':id/articles': 'articles'        #      x         x
     ':id/articles': 'articles'        #      x         x
     ':id/shop': 'shop'                #                x
@@ -33,14 +37,31 @@ module.exports = class PartnerRouter extends Backbone.Router
   artists: (id, artistId) ->
     @baseView.renderSection 'artists', { artistId: artistId }
 
+  filterArtworks: (section, settings) ->
+    render = (filterArtworks) =>
+      @baseView.renderSection section, _.extend( { counts: filterArtworks.counts }, settings)
+
+    if filterArtworks = @[section + 'FilterArtworks']
+      render(filterArtworks)
+    else
+      filterArtworks = new FilterArtworks
+      filterData = { size: 0, gallery: @partner.id, aggregations: settings.aggregations }
+
+      filterArtworks.fetch data: filterData, success: =>
+        render(filterArtworks)
+        @[section + 'FilterArtworks'] = filterArtworks
+
   collection: ->
-    @baseView.renderSection 'collection', { isForSale: false }
+    @filterArtworks('collection', filterSettings.settings(@partner, 'collection'))
+
+  shop: ->
+    @filterArtworks('shop', filterSettings.settings(@partner, 'shop'))
+
+  works: ->
+    @filterArtworks('works', filterSettings.settings(@partner, 'works'))
 
   articles: ->
     @baseView.renderSection 'articles'
-
-  shop: ->
-    @baseView.renderSection 'shop', { isForSale: true }
 
   contact: ->
     @baseView.renderSection 'contact'

@@ -4,7 +4,6 @@ qs = require 'querystring'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 FilterView = require './view.coffee'
 FilterRouter = require './router/index.coffee'
-{ FILTER_ROOT } = require('sharify').data
 
 module.exports =
 
@@ -13,20 +12,23 @@ module.exports =
       startHistory: yes
       infiniteScroll: true
       includeFixedHeader: includeFixedHeader
-      includeAllWorks: false
-      hideForSale: false
+      includeAllWorksButton: false
+      hideForSaleButton: false
       forSale: 'true'
 
     { aggregations,
       el,
       stuckParam,
-      stuckFacet,
+      defaultHeading,
       startHistory,
       infiniteScroll,
+      filterRoot,
       includeFixedHeader,
-      includeAllWorks,
+      includeAllWorksButton,
       forSale,
-      hideForSale } = _.defaults options, defaults
+      facets,
+      hideForSaleButton,
+    } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -36,7 +38,7 @@ module.exports =
       aggregations: aggregations
 
     if stuckParam
-      params.set stuckParam, stuckFacet.id
+      _.extend params, stuckParam
 
     collection = new FilterArtworks
 
@@ -44,17 +46,18 @@ module.exports =
       el: el
       collection: collection
       params: params
-      stuckFacet: stuckFacet
-      stuckParam: stuckParam
-      hideForSale: hideForSale
-      includeAllWorks: includeAllWorks
+      defaultHeading: defaultHeading
+      filterRoot: filterRoot
+      hideForSaleButton: hideForSaleButton
+      includeAllWorksButton: includeAllWorksButton
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
+      facets: facets
 
     router = new FilterRouter
       params: params
-      urlRoot: FILTER_ROOT
-      stuckParam: stuckParam
+      urlRoot: filterRoot
+      stuckParamKey: _.first(_.keys(stuckParam))
 
     collection.fetch
       data: params.toJSON()

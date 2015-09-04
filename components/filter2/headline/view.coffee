@@ -4,7 +4,7 @@ _s = require 'underscore.string'
 
 module.exports = class HeadlineView extends Backbone.View
 
-  initialize: ({ @collection, @params, @facets, @stuckFacet, @stuckParam }) ->
+  initialize: ({ @collection, @params, @facets, @defaultHeading}) ->
     @listenTo @collection, "initial:fetch", @setHeadline, @
 
     for facet in @facets
@@ -14,10 +14,8 @@ module.exports = class HeadlineView extends Backbone.View
     @listenTo @params, "change:for_sale", @setTitle, @
     @listenTo @params, "change:for_sale", @setHeadline, @
 
-    @stuckFacet = null if @stuckParam is 'fair_id'
-
   setHeadline: ->
-    if @anyFacetsSelected() || @stuckFacet
+    if @anyFacetsSelected() || @defaultHeading
       @$el.text(@paramsToHeading()).show()
     else
       @$el.text("").hide()
@@ -39,19 +37,13 @@ module.exports = class HeadlineView extends Backbone.View
     _s.humanize(@params.get('medium')).replace('slash', '/')
 
   displayMedium: ->
-    if @stuckFacet
-      if @params.has('medium')
-        @humanizeMedium()
-      else
-        @stuckFacet.get('name')
-    else
-      @humanizeMedium() || 'Artworks'
+    return @humanizeMedium() || @defaultHeading || 'Artworks'
 
   displayForSale: ->
     "For Sale" if @params.get('for_sale') is 'true'
 
   paramsToHeading: ->
-    if @anyFacetsSelected() || @stuckFacet
+    if @anyFacetsSelected() || @defaultHeading
       _.compact([
         @facetName('dimension_range'),
         (@displayMedium()),
