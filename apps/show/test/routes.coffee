@@ -56,9 +56,6 @@ describe 'Show route', ->
           _.defer => _.defer =>
             Backbone.sync.args[4][1].id.should.equal 'the-armory-show'
 
-            @res.render.called.should.be.true()
-            @res.render.args[0][0].should.equal 'index'
-
             done()
 
       it 'should mark the fair as unpublished if the profile fetch fails', (done) ->
@@ -71,14 +68,11 @@ describe 'Show route', ->
           Backbone.sync.args[2][2].success()
           Backbone.sync.args[3][2].success []
 
-          _.defer => _.defer => _.defer =>
+          _.defer => _.defer =>
             Backbone.sync.args[4][1].id.should.equal 'the-armory-show'
             Backbone.sync.args[4][2].error []
 
-            console.log @res.render.args[0][1]['fair']
-
-            @res.render.called.should.be.true()
-            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1]['fair'].get('published').should.equal false
 
             done()
 
