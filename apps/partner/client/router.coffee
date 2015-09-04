@@ -38,11 +38,18 @@ module.exports = class PartnerRouter extends Backbone.Router
     @baseView.renderSection 'artists', { artistId: artistId }
 
   filterArtworks: (section, settings) ->
-    filterArtworks = new FilterArtworks
-    filterData = { size: 0, gallery: @partner.id, aggregations: settings.aggregations }
-
-    filterArtworks.fetch data: filterData, success: =>
+    render = (filterArtworks) =>
       @baseView.renderSection section, _.extend( { counts: filterArtworks.counts }, settings)
+
+    if filterArtworks = @[section + 'FilterArtworks']
+      render(filterArtworks)
+    else
+      filterArtworks = new FilterArtworks
+      filterData = { size: 0, gallery: @partner.id, aggregations: settings.aggregations }
+
+      filterArtworks.fetch data: filterData, success: =>
+        render(filterArtworks)
+        @[section + 'FilterArtworks'] = filterArtworks
 
   collection: ->
     @filterArtworks('collection', filterSettings.settings(@partner, 'collection'))

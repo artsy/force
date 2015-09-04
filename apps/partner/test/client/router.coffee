@@ -6,10 +6,11 @@ Artworks = require '../../../../collections/artworks.coffee'
 Partner = require '../../../../models/partner.coffee'
 Profile = require '../../../../models/profile.coffee'
 _ = require 'underscore'
+fixtures = require '../../../../test/helpers/fixtures'
+
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
-counts = require './test_counts'
 
 describe 'PartnerRouter', ->
 
@@ -53,6 +54,7 @@ describe 'PartnerRouter', ->
       }
 
       @router.filterArtworks 'section-name', settings
+      counts = fixtures.counts
 
       Backbone.sync.args[0][2].success aggregations: counts
 

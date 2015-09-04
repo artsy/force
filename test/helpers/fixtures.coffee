@@ -1,5 +1,67 @@
 moment = require 'moment'
 
+@counts =
+  "hits": []
+  "aggregations":
+    "total":
+      "value": 32
+
+    "dimension_range":
+      "*-24.0":
+        "name": "Small"
+        "count": 8
+
+      "24.0-48.0":
+        "name": "Medium"
+        "count": 3
+
+      "48.0-84.0":
+        "name": "Large"
+        "count": 2
+
+      "84.0-*":
+        "name": "Very Large"
+        "count": 0
+
+    "price_range":
+      "*-*":
+        "name": "for Sale"
+        "count": 11
+
+      "1000-5000":
+        "name": "between $1,000 & $5,000"
+        "count": 7
+
+      "5000-10000":
+        "name": "between $5,000 & $10,000"
+        "count": 3
+
+      "*-1000":
+        "name": "Under $1,000"
+        "count": 1
+
+    "medium":
+      "painting":
+        "name": "Painting"
+        "count": 15
+
+      "prints":
+        "name": "Prints"
+        "count": 7
+
+      "sculpture":
+        "name": "Sculpture"
+        "count": 3
+
+      "photography":
+        "name": "Photography"
+        "count": 2
+
+      "work-on-paper":
+        "name": "Work on Paper"
+        "count": 1
+
+
 @vertical =
   id: '55356a9deca560a0137aa4b7'
   title: 'Vennice Biennalez'
