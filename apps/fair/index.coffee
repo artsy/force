@@ -33,6 +33,10 @@ app.get '/:id/browse', getFairData, routes.browse
 app.get '/:id/browse/*', getFairData, routes.browse
 app.get '/:id/following/:type', getFairData, routes.follows
 app.get '/:id/favorites', getFairData, routes.favorites
+app.get '/:id/sign_up', getFairData, routes.overview
+app.get '/:id/sign_up/:action', getFairData, routes.overview
+app.get '/:id/capture', getFairData, routes.overview
+app.get '/:id/capture/:action', getFairData, routes.overview
 # Handle microgravity urls that get crawled by google
 app.get '/:id/programming', getFairData, routes.overview
 
