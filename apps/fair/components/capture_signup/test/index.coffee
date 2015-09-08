@@ -36,10 +36,10 @@ describe 'captureSignup', ->
 
   it 'shows a FlashMessage after the FairAction is successfully saved', =>
     Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/user_fair_action'
-    Backbone.sync.args[0][2].complete()
+    Backbone.sync.args[0][2].success()
     @flashSpy.called.should.be.true
 
   it 'logs the user out after the flash message displays', =>
-    Backbone.sync.args[0][2].complete()
+    Backbone.sync.args[0][2].success()
     $.ajax.args[0][0].type.should.eql 'DELETE'
     $.ajax.args[0][0].url.should.containEql '/users/sign_out'
