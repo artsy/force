@@ -68,7 +68,7 @@ describe 'Artwork Item template', ->
       @artwork.related().artists = new Artists [@artist, @artist2]
       @artist.set 'public', true
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-artist').text().should.equal 'Pablo PicassoKana'
+      $('.artwork-item-artist').text().should.equal 'Pablo Picasso, Kana'
       $('.artwork-item-artist a').should.have.lengthOf 2
 
     it 'links to the artist if it\'s public', ->
