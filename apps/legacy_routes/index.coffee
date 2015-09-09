@@ -17,3 +17,5 @@ app.get '/about/page/press', to '/press/press-releases'
 app.get '/about/page/events', to '/press/in-the-media'
 app.get '/about/jobs', to '/jobs'
 app.get '/lama', to '/auction/los-angeles-modern-auctions-march-2015' # HACK: Redirect the "auction" profile to the LAMA auction
+app.get '/home/featured_works', to '/tag/apple/artworks'
+app.get '/home/featured%20works', to '/tag/apple/artworks'
