@@ -20,6 +20,46 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'chart-art-fair-2015':
+    title: 'CHART Art Fair 2015 | Artsy'
+    description: 'Browse artwork from select Nordic galleries at the third edition of the fair in Copenhagen.'
+
+  'artinternational-2015':
+    title: 'ArtInternational 2015 | Artsy'
+    description: 'Explore work from over 85 international galleries converging in Istanbul, a city bridging East and West.'
+
+  'moving-image-istanbul-2015':
+    title: 'Moving Image Istanbul 2015 | Artsy'
+    description: 'Discover video, film, and digital artwork from 22 select exhibitors at the fair\'s second edition in the city.'
+
+  'west-bund-art-and-design-2015':
+    title: 'Westbund Art + Design 2015 | Artsy'
+    description: 'Discover highlights from the second edition of China\'s influential art and design fair, bringing top international galleries to the Bund on Shanghai\'s Xuhui Waterfront.'
+
+  'photo-shanghai-2015':
+    title: 'Photo Shanghai 2015 | Artsy'
+    description: 'Preview photographs by Britta Jaschinski, Li Wei, and Henri Cartier-Bresson before the opening of the Asia-Pacific\'s first international fair dedicated to photography.'
+
+  'sydney-contemporary-2015':
+    title: 'Sydney Contemporary 2015 | Artsy'
+    description: 'Explore a swath of artists—including Rhys Lee, Saskia Folk, and Fiona Hall—at Australia\'s largest multi-arts center.'
+
+  'artrio-2015':
+    title: 'ArtRio 2015 | Artsy'
+    description: 'Browse works by established and up-and-coming artists—such as Gisele Camargo, Alejandro Ospina, and Chico Togni—on display side by side at this highly anticipated fair.'
+
+  'ida-2015':
+    title: 'IDA 2015 | Artsy'
+    description: 'Get a first look at the main design art event in Brazil, now in its second iteration.'
+
+  'fnb-joburgartfair-2015':
+    title: 'FNB JoburgArtFair 2015 | Artsy'
+    description: 'Explore the first international art fair on the African continent, which plays a pivotal role in supporting the burgeoning contemporary arts landscape in Africa.'
+
+  'cosmoscow-2015':
+    title: 'Cosmoscow 2015 | Artsy'
+    description: 'A first look at works by artists—including Pavel Pepperstein, Olga Bulgakova, and Alex Katz—on display at Russia\'s only international contemporary fair.'
+
   'nada-new-york-2015':
     title: 'NADA New York 2015 | Artsy'
     description: 'Explore young galleries and artists to watch at NADA New York on Artsy.net.'
