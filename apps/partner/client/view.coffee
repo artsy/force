@@ -12,6 +12,7 @@ ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 sectionToView =
   contact: ContactView
@@ -82,14 +83,14 @@ module.exports = class PartnerView extends Backbone.View
       currentSection: @currentSection
     )
 
-    # Only render content for centain tabs
-    if @currentSection is 'overview'
-      @renderSection @currentSection, @sectionViewParams
-
     # If the the tab isn't displayable, display the first tab content
     # of displayable tabs.
     unless _.contains @sections, @currentSection
-      @renderSection (@currentSection = @sections?[0]), @sectionViewParams
+      mediator.trigger 'change:route', @sections?[0]
+
+    # Only render content for centain tabs
+    else if @currentSection is 'overview'
+      @renderSection @currentSection, @sectionViewParams
 
     # hide articles tab if this partner has no articles
     $.ajax

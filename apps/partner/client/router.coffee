@@ -3,6 +3,8 @@ PartnerView = require './view.coffee'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 filterSettings = require './filter_settings.coffee'
 _ = require 'underscore'
+sd = require('sharify').data
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:
@@ -21,7 +23,9 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/about': 'about'              #                x
 
   initialize: ({ @profile, @partner }) ->
-    @baseView = new PartnerView el: $('#partner'), model: @profile, partner: @partner
+    @baseView = new PartnerView el: $('#partner'), model: @profile, partner: @partner, currentSection: sd.SECTION
+    mediator.on 'change:route', (route) =>
+      @navigate("#{@partner.id}/" + route, { trigger: true, replace: true })
 
   index: ->
     section = 'overview' # default for galleries
