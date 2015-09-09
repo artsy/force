@@ -43,6 +43,7 @@ cache = require './cache'
 timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
+hardcodedRedirects = require './routers/hardcoded_redirects'
 
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
@@ -127,6 +128,7 @@ module.exports = (app) ->
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
   app.use proxySitemaps.app
+  app.use hardcodedRedirects
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
@@ -148,7 +150,6 @@ module.exports = (app) ->
   app.use splitTestMiddleware
 
   # Mount apps
-  app.use require "../apps/legacy_routes"
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"

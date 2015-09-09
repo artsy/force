@@ -1,5 +1,5 @@
 sinon = require 'sinon'
-to = require '../to'
+to = require '../../lib/to'
 
 describe 'to', ->
   it 'returns a function that permanently redirects to the specified path', ->
