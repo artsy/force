@@ -13,8 +13,9 @@ nav.shows-page-cities-nav.horizontal-list-nav
         class= activeClass("/shows/#{city.slug}")
       )= city.name
   .hln-cell
-    +bordered-scrollable-pulldown('All Cities', null)
-      a( href='/shows' ) All Cities
-      for city in cities
-        a( href="/shows/#{city.slug}" )
-          = city.name
+    label.bordered-select
+      select( onChange='window.location.href=this.value' )
+        option( value='/shows' ) All Cities
+        for city in cities
+          option( value='/shows/#{city.slug}' )
+            = city.name
