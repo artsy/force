@@ -132,4 +132,18 @@
   bind('inquiry:error', function(context) {
     track('Problem sending inquiry', context.inquiry.attributes);
   });
+
+  bind('user:login', function(context) {
+    analytics.track('Successfully logged in', {
+      context: 'inquiry_questionnaire'
+    });
+  });
+
+  bind('user:signup', function(context) {
+    if (context.user.isRecentlyRegistered()) return;
+    analytics.track('Created account', {
+      context: 'inquiry_questionnaire'
+    });
+  });
+
 })();

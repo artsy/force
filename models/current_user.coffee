@@ -19,6 +19,7 @@ module.exports = class CurrentUser extends User
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
 
   __isLoggedIn__: true
+  __isRecentlyRegistered__: false
 
   url: ->
     "#{sd.API_URL}/api/v1/me"

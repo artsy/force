@@ -7,6 +7,7 @@ User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
+  __isRecentlyRegistered__: false
 
   initialize: ->
     syncWithSessionId()
@@ -39,6 +40,7 @@ module.exports = class LoggedOutUser extends User
         url: '/users/sign_in'
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
+          @trigger 'login'
           $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
             'X-ACCESS-TOKEN': response.user.accessToken
           success? model, response, options
@@ -48,6 +50,8 @@ module.exports = class LoggedOutUser extends User
       .save @pick('name', 'email', 'password'), _.extend {}, options,
         url: "#{API_URL}/api/v1/user"
         success: =>
+          @__isRecentlyRegistered__ = true
+          @trigger 'signup'
           @login(_.pick options, 'success')
 
   register: @::signup
