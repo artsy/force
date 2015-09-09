@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "23KMWZ572J.net.artsy.artsy",
+        "paths": [ "*" ]
+      },
+      {
+        "appID": "ZH8TGFYKDK.net.artsy.artsy.dev",
+        "paths": [ "*" ]
+      },
+      {
+        "appID": "ZH8TGFYKDK.net.artsy.artsy.beta",
+        "paths": [ "*" ]
+      }
+    ]
+  }
+}
