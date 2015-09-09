@@ -5,9 +5,6 @@
 if (location.pathname.match('/gallery-partnerships')) {
 
   analytics.page('Gallery Partnerships');
-  // Explicit page track to snowplow to send the session id for joining
-  // salesforce and snowplow later.
-  snowplow('trackStructEvent', 'partner_application', 'page_view', sd.SESSION_ID);
 
   analytics.trackForm(
     $('.js-gallery-partnerships-apply-form')[0],
@@ -15,7 +12,7 @@ if (location.pathname.match('/gallery-partnerships')) {
     {
       session_id: sd.SESSION_ID,
       user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
-      test_copy: sd.PARTNER_APPLICATION_COPY 
+      test_copy: sd.PARTNER_APPLICATION_COPY
     }
   );
 

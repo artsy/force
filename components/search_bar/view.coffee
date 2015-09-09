@@ -174,7 +174,6 @@ module.exports = class SearchBarView extends Backbone.View
     analytics.track.click 'Selected item from search',
       query: @query
       label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
-    analytics.snowplowStruct 'search', 'click', model.get('_id'), model.get('display_model'), '0.0', { 'query' : { 'value' : @query }}
     @selected = true
     location.assign model.href()
 

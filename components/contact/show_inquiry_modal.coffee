@@ -43,7 +43,6 @@ module.exports = class ShowInquiryModal extends ContactView
   submit: (e) ->
     analytics.track.funnel 'Sent show inquiry',
       label: analytics.modelNameAndIdToLabel('show', @show.get('id'))
-    analytics.snowplowStruct 'inquiry', 'submit', @show.get('_id'), 'show', '0.0', { 'inquiry' : { 'inquiry_id' : @model.get('_id') }}
     @model.set
       inquireable_id: @show.get('id')
       inquireable_type: 'partner_show'

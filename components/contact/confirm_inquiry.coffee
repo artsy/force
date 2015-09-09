@@ -97,13 +97,10 @@ module.exports = class ConfirmInquiryView extends ContactView
   inquirySentAnalytics: =>
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
-    analytics.snowplowStruct 'inquiry', 'submit', @artwork.get('id'), 'artwork', '0.0'
     analytics.track.funnel "Submit confirm inquiry modal", @artwork.attributes
-    analytics.snowplowStruct 'confirm_inquiry_modal', 'submit', @artwork.get('id'), 'artwork'
     changed = if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"
     analytics.track.funnel "Inquiry: Updated Flow", SESSION_ID
-    analytics.snowplowStruct 'inquiry_updated_flow', 'saw', SESSION_ID, 'user'
 
   postRender: =>
     @isLoading()

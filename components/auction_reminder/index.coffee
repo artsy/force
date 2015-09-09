@@ -69,7 +69,6 @@ class AuctionReminderModal extends Backbone.View
 
     Cookies.set('closeAuctionReminder', true)
     track.click 'Closed Auction Reminder'
-    analytics.snowplowStruct 'auction_reminder', 'dismiss', @auctionId, 'feature'
 
   calculateOffsetEndAtMoment: (callback) ->
     new Backbone.Model().
@@ -91,7 +90,6 @@ class AuctionReminderModal extends Backbone.View
     e.preventDefault()
     Cookies.set('closeAuctionReminder', true)
     track.click 'Clicked Auction Reminder'
-    analytics.snowplowStruct 'auction_reminder', 'click', @auctionId, 'feature'
     location.assign("/auction/#{@auctionId}")
 
 module.exports = (callBack) ->
