@@ -21,6 +21,7 @@ module.exports = class Tag extends Backbone.Model
     , options
 
   toPageTitle: -> "#{@get('name')} | Artsy"
+
   toPageDescription: ->
     if @get('description')
       _s.clean(@mdToHtmlToText('description'))

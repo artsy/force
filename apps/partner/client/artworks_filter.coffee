@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+qs = require 'querystring'
 scrollFrame = require 'scroll-frame'
 Backbone = require 'backbone'
 Partner = require '../../../models/partner.coffee'
@@ -10,8 +11,23 @@ template = -> require('../templates/artworks_filter.jade') arguments...
 module.exports = class PartnerArtworksView extends Backbone.View
 
   initialize: (options={}) ->
-    { @profile, @partner, @aggregations, @forSaleOnly, @hideForSaleButton, @counts, @filterRoot } = options
-    params = new Backbone.Model partner_id: @partner.id
+    {
+      @profile,
+      @partner,
+      @aggregations,
+      @forSaleOnly,
+      @hideForSaleButton,
+      @counts,
+      @filterRoot
+    } = options
+
+    queryParams = qs.parse(location.search.replace(/^\?/, ''))
+    params = new Backbone.Model _.extend queryParams,
+      page: 1
+      size: 10
+      aggregations: @aggregations
+      partner_id: @partner.id
+
     @$el.html template
       hideForSaleButton: @hideForSaleButton
       partner: @partner
@@ -24,7 +40,7 @@ module.exports = class PartnerArtworksView extends Backbone.View
 
     { params } = setupFilter
       el: $ '#partner-filter'
-      stuckParam: { 'partner_id': partner.id }
+      stuckParam: { 'partner_id': @partner.id }
       facets: @aggregations
       aggregations: @aggregations
       startHistory: false

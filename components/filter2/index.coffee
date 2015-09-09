@@ -38,7 +38,7 @@ module.exports =
       aggregations: aggregations
 
     if stuckParam
-      _.extend params, stuckParam
+      params.set stuckParam
 
     collection = new FilterArtworks
 
