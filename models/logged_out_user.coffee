@@ -7,6 +7,7 @@ User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
+  __isRecentlyRegistered__: false
 
   initialize: ->
     syncWithSessionId()
@@ -48,6 +49,7 @@ module.exports = class LoggedOutUser extends User
       .save @pick('name', 'email', 'password'), _.extend {}, options,
         url: "#{API_URL}/api/v1/user"
         success: =>
+          @__isRecentlyRegistered__ = true
           @login(_.pick options, 'success')
 
   register: @::signup

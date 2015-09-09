@@ -30,6 +30,9 @@ module.exports = class User extends Backbone.Model
   isWithAnonymousSession: ->
     @id? and not @isLoggedIn()
 
+  isRecentlyRegistered: ->
+    @__isRecentlyRegistered__
+
   @instantiate: (attributes = {}) ->
     CurrentUser = require './current_user.coffee'
     LoggedOutUser = require './logged_out_user.coffee'
