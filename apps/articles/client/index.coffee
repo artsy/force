@@ -15,7 +15,7 @@ module.exports.init = ->
       mode: 'smaller-with-email'
       name: 'gallery-insights-signup'
       persist: true
-      subHeadline: "Recieve periodical insights from Artsy's Gallery Team"
+      subHeadline: "Receive periodical insights from Artsy's Gallery Team"
       email: sd.CURRENT_USER?.email or ''
     unless ctaBarView.previouslyDismissed()
       $('body').append ctaBarView.render().$el
