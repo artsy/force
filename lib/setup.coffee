@@ -122,8 +122,12 @@ module.exports = (app) ->
     app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
   fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
     app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
-  app.use express.static(path.resolve __dirname, '../public')
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
+  app.use express.static(path.resolve(__dirname, '../public'),
+    setHeaders: (res, file, stat) ->
+      if path.basename(file) == "apple-app-site-association"
+        res.setHeader("Content-Type", "application/pkcs7-mime")
+  )
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)

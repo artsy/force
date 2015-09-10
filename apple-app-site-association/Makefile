@@ -1,4 +1,7 @@
 #
+# To support iOS 8’s Handoff/Shared Web Credentials features, this file needs to be signed.
+# Starting from iOS 9 the signing is no longer required, so this can be removed when we drop iOS 8 support.
+#
 # Get the artsy.net SSL certificate files from the 1password engineering vault and place them in a directory.
 # Then create the signed file like so:
 #
