@@ -13,6 +13,7 @@ module.exports = (auction, callback) ->
       [hammerPerc, portionPerc] = _.pluck(
         auction.get('buyers_premium').schedule, 'percent'
       )
+      symbol = auction.get('buyers_premium').symbol
       callback null, """
         <div class='buyers-premium'>
           <div class='buyers-premium-page markdown-content'>
@@ -21,7 +22,7 @@ module.exports = (auction, callback) ->
               <li>
                 <div class='buyers-premium-pre'>
                   On the hammer price up to and including \
-                  #{formatMoney(maxCents / 100, '$', 0)}
+                  #{formatMoney(maxCents / 100, symbol, 0)}
                 </div>
                 <div class='buyers-premium-dots'></div>
                 <div class='buyers-premium-perc'>#{hammerPerc * 100}%</div>
@@ -29,7 +30,7 @@ module.exports = (auction, callback) ->
               <li>
                 <div class='buyers-premium-pre'>
                   On the portion of the hammer price in excess of \
-                  #{formatMoney(maxCents / 100, '$', 0)}
+                  #{formatMoney(maxCents / 100, symbol, 0)}
                 </div>
                 <div class='buyers-premium-dots'></div>
                 <div class='buyers-premium-perc'>#{portionPerc * 100}%</div>
