@@ -37,7 +37,6 @@
     "forever": "*",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "graceful-fs": "*",
-    "heapdump": "*",
     "http-proxy": "*",
     "jade": "*",
     "knox": "*",
