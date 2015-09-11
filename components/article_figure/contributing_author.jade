@@ -1,4 +1,4 @@
-if article.get('contributing_authors')
+if article.get('contributing_authors') && article.get('contributing_authors').length
   .article-figure-contributing-name= "By "
     - var a = article.get('contributing_authors')
     - var l = a.length

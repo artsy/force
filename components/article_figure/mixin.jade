@@ -15,7 +15,7 @@ mixin article-figure(article, width, showDate, showShare)
         = article.get('thumbnail_title')
 
       .article-figure-author-section
-        if !(article.get('contributing_authors') != null && article.get('author_id') === '503f86e462d56000020002cc' && sd.CURRENT_PATH === '/articles')
+        if !(article.get('contributing_authors') != null && article.get('contributing_authors').length && article.get('author_id') === '503f86e462d56000020002cc' && sd.CURRENT_PATH === '/articles')
           .article-figure-author
             a.article-figure-author-link( href= article.authorHref() )
               = article.get('author') ? article.get('author').name : ''
