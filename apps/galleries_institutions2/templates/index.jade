@@ -1,0 +1,15 @@
+include ../components/partner_cell/index
+
+extends ../../../components/main_layout/templates/index
+
+append locals
+  - assetPackage = 'galleries_institutions2'
+
+block body
+  header.galleries-institutions2-header
+    h1 Browse Galleries
+    .galleries-institutions2-right
+      a(href='/gallery-partnerships') Partner with Artsy
+      a(href='/gallery-insights') Gallery Insights
+
+  +partner-cell(partner)
