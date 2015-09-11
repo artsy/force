@@ -35,6 +35,9 @@ module.exports = class Search
       items
 
   parse: (items, query) ->
+    # HACK filter out image rights sensitive results
+    items = _.reject items, (item) ->
+      JSON.stringify(item).match(/kippenberger|zoe.*leonard/i)
     @results.reset _.map @parseResults(items), (item) =>
       item.model = @mode?.slice(0,-1) unless item.model?
       item
