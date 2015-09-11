@@ -156,6 +156,7 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
+  app.use require "../apps/toolkit"
   app.use require "../apps/apply"
   app.use require "../apps/auction"
   app.use require "../apps/auction_lots"
@@ -204,6 +205,7 @@ module.exports = (app) ->
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"
+
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->

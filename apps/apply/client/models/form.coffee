@@ -12,6 +12,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNfS': MEDIUM
     '00NC0000005ROPB': Cookies.get('force-referrer')
     '00NC0000005RRYb': SESSION_ID
+    '00NC0000005Lkol': new Date()
 
   # There are others... but this is just so
   # we can validate any attributes
@@ -27,6 +28,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNdW' # Web Referrer
     '00NC0000005RNfS' # Web Medium
     '00NC0000005ROPB' # Web Source Referrer
+    '00NC0000005Lkol' # Date
   ]
 
   @validate: (obj) ->

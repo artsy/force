@@ -1,0 +1,32 @@
+gutter-size = 44px
+main-width = 696px
+aside-width = 400px
+header-height = 400px
+aside-margin = 100px
+
+.toolkit-header
+  height header-height
+  width 100%
+  background url('/toolkit_background.jpg')
+  
+.toolkit-container
+  max-width (gutter-size + main-width + aside-width)
+  margin auto
+  
+.toolkit-main
+  max-width main-width
+  
+.toolkit-aside
+  width aside-width
+  height "calc(100% - %s)" % aside-margin
+  padding gutter-size
+  position position
+  top aside-margin
+  background white
+  box-shadow 0px 0px 20px black
+
+.toolkit-main, .toolkit-aside
+  display inline-block
+  vertical-align top
+  
+  

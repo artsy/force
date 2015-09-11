@@ -1,0 +1,24 @@
+extends ../../components/main_layout/templates/blank
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'toolkit'
+
+block body
+  header.toolkit-header
+    h1 Social Media Toolkit for Galleries
+  .toolkit-container
+    main.toolkit-main
+      p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
+      img(src='/toolkit_stack.jpg')
+      p This new toolkit will help you:
+      ul
+        li Build an audience of collectors on Instagram
+        li Launch successful campaigns on Facebook
+        li Compose Tweets that will get your gallery noticed
+    aside.toolkit-aside
+      p Get the toolkit
+
+
