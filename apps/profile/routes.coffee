@@ -20,3 +20,6 @@ Following = require '../../components/follow_button/collection.coffee'
       res.locals.jsonLD = profile.toJSONLD()
       res.locals.tab = req.params.tab
     complete: -> next()
+
+@redirectEditorial = (req, res, next) ->
+  res.redirect 301, req.url.replace 'editorial', 'articles'
