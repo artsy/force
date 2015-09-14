@@ -54,11 +54,11 @@ class AuctionReminderModal extends Backbone.View
       $('.modal-dialog').addClass('is-close-out')
 
     # Transition based on if they've seen the reminder already
-    if Cookies.get('firstAuctionReminderSeen')
+    if Cookies.get('AuctionReminderSeen')
       @$('.modal-dialog').addClass('is-static-open')
     else
       cookieValue = "#{@auctionName}|#{@auctionId}|#{@auctionImage}|#{@auctionEndat}"
-      Cookies.set('firstAuctionReminderSeen', cookieValue, { expires: @cookieExpiration })
+      Cookies.set('AuctionReminderSeen', cookieValue, { expires: @cookieExpiration })
       activate = => @$dialog.addClass("is-spring-in")
       _.delay(activate,5000)
 
@@ -93,8 +93,8 @@ class AuctionReminderModal extends Backbone.View
     location.assign("/auction/#{@auctionId}")
 
 module.exports = (callBack) ->
-  if Cookies.get 'firstAuctionReminderSeen'
-    [ auctionName, auctionId, auctionImage, auctionEndat ] = Cookies.get('firstAuctionReminderSeen').split("|")
+  if Cookies.get 'AuctionReminderSeen'
+    [ auctionName, auctionId, auctionImage, auctionEndat ] = Cookies.get('AuctionReminderSeen').split("|")
     new AuctionReminderModal
       auctionName: auctionName
       auctionId: auctionId
