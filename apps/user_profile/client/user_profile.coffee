@@ -24,12 +24,10 @@ module.exports = class UserProfileView extends Backbone.View
     @following?.syncFollows [@model.get('id')]
 
     @articles = new Articles
-    @articles.url = "#{@articles.url}?all_by_author=#{@model.get('owner').id}&published=true"
+    @articles.url = "#{@articles.url}?all_by_author=#{@model.get('owner').id}&published=true&sort=-published_at"
 
     @model.fetchFavorites(success: ((@favorites) =>), complete: => @render())
     @articles.fetch
-      data:
-        sort: '-published_at'
       complete: => @render()
 
   openWebsite: ->
