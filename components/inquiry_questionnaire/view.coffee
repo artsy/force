@@ -27,6 +27,10 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
 
   render: ->
     @view?.remove()
+
+    # Give any subviews access to the outer modal
+    @context.modal = @modal
+
     @view = @state.view @context
     @$el.html @view.render().$el
 

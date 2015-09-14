@@ -101,3 +101,11 @@ describe 'modalize', ->
       _.defer ->
         $('.modalize').should.have.lengthOf 0
         done()
+
+    it 'allows the dialog to be visually transitioned', (done) ->
+      (view = @modal.view)
+        .dialog 'slide-out', ->
+          view.$dialog.attr('data-state').should.equal 'slide-out'
+          view.dialog 'slide-in', ->
+            view.$dialog.attr('data-state').should.equal 'slide-in'
+            done()

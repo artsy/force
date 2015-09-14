@@ -10,8 +10,10 @@ module.exports = class FlashMessage extends Backbone.View
 
   defaults:
     safe: true
-    visibleDuration: 2000
     autoclose: true
+    autoopen: true
+    backdrop: true
+    visibleDuration: 2000
 
   events:
     'click': 'close'
@@ -24,13 +26,15 @@ module.exports = class FlashMessage extends Backbone.View
 
     { @message
       @autoclose
+      @autoopen
       @href
       @safe
-      @visibleDuration } = _.defaults options, @defaults
+      @visibleDuration
+      @backdrop } = _.defaults options, @defaults
 
     @listenTo mediator, 'flash:close', @close
 
-    @open()
+    @open() if @autoopen
 
   open: ->
     @setup()
@@ -64,18 +68,23 @@ module.exports = class FlashMessage extends Backbone.View
     @render()
 
   render: ->
-    @$el.html @template(message: @message)
+    @$el
+      .addClass if not @backdrop then 'is-sans-backdrop' else ''
+      .html @template
+        message: @message
+
     this
 
   maybeRedirect: ->
     location.assign @href if @href
 
   close: (callback) =>
-    @$el.
-      attr('data-state', 'closed').
-      one($.support.transition.end, =>
+    @$el
+      .attr 'data-state', 'closed'
+      .one $.support.transition.end, =>
         @remove()
         @stopTimer()
         @maybeRedirect()
         callback?()
-      ).emulateTransitionEnd 500
+        @trigger 'closed'
+      .emulateTransitionEnd 500

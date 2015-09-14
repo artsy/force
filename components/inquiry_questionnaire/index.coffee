@@ -2,7 +2,6 @@ modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
-Q = require 'bluebird-q'
 
 closeWithError = (modal) ->
   modal.close ->
@@ -53,8 +52,9 @@ module.exports = (options = {}) ->
       .then ->
         collectorProfile.related().userFairActions.invoke 'save'
         done()
-      .catch ->
+      .catch (e) ->
         closeWithError modal
+        console.error e
       .done()
 
   # Abort by clicking 'nevermind'

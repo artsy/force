@@ -38,6 +38,20 @@ describe 'FlashMessage', ->
         flash = new FlashMessage message: 'A caesura', autoclose: false
         flash.startTimer.called.should.be.false()
 
+    describe 'accepts a backdrop option', ->
+      it 'defaults to true', (done) ->
+        # `backdrop` defaults to true
+        flash = new FlashMessage message: 'A caesura'
+        _.defer ->
+          flash.$el.hasClass('is-sans-backdrop').should.be.false()
+          done()
+
+      it 'may be false', (done) ->
+        flash = new FlashMessage message: 'A caesura', backdrop: false
+        _.defer ->
+          flash.$el.hasClass('is-sans-backdrop').should.be.true()
+          done()
+
   describe '#setup', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
@@ -51,7 +65,7 @@ describe 'FlashMessage', ->
       @flash.$container.text().should.equal 'Goodbye world.'
       anotherFlash = new FlashMessage message: 'Hello world.'
       sinon.spy anotherFlash, 'update'
-      _.defer => _.defer =>
+      _.defer =>
         anotherFlash.update.called.should.be.true()
         @flash.$container.text().should.equal 'Hello world.'
         done()

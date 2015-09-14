@@ -23,6 +23,16 @@ module.exports = class Modalize extends Backbone.View
       .one $.support.transition.end, callback
       .emulateTransitionEnd 250
 
+  dialog: (state, callback = $.noop) ->
+    duration = {
+      slide: 500, fade: 250
+    }[state.replace /-in|-out$/, '']
+
+    @$dialog
+      .attr 'data-state', state
+      .one $.support.transition.end, callback
+      .emulateTransitionEnd duration
+
   __render__: ->
     @$el.html template()
     @__rendered__ = true
@@ -38,8 +48,8 @@ module.exports = class Modalize extends Backbone.View
     this
 
   __postRender__: ->
-    @$('.js-modalize-dialog').css @dimensions
-    @$('.js-modalize-body').html @subView.render().$el
+    (@$dialog = @$('.js-modalize-dialog')).css @dimensions
+    (@$body = @$('.js-modalize-body')).html @subView.render().$el
     @__postRendered__ = true
     this
 
