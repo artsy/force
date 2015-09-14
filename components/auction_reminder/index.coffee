@@ -13,6 +13,7 @@ Sale = require '../../models/sale.coffee'
 AuctionClock = require './clock/view.coffee'
 
 class AuctionReminderModal extends Backbone.View
+  cookieExpiration: 600
 
   events: ->
     'click .modal-close': 'close'
@@ -21,7 +22,7 @@ class AuctionReminderModal extends Backbone.View
   initialize: ({ @auctionName, @auctionId, @auctionImage, @auctionEndat }) ->
 
     # Reminder doesn't show on auction page
-    if window.location.pathname == @auctionId
+    if window.location.pathname == "/auction/#{@auctionId}"
       return
     # Reminder only shows if 24 hours until end
     diff = moment(@auctionEndat).diff(moment(),'hours')
@@ -53,12 +54,11 @@ class AuctionReminderModal extends Backbone.View
       $('.modal-dialog').addClass('is-close-out')
 
     # Transition based on if they've seen the reminder already
-    if Cookies.get('firstAuctionReminderSeen')
+    if Cookies.get('AuctionReminderSeen')
       @$('.modal-dialog').addClass('is-static-open')
     else
       cookieValue = "#{@auctionName}|#{@auctionId}|#{@auctionImage}|#{@auctionEndat}"
-      cookieExpiration = moment.duration(moment(@offsetEndAtMoment).diff(moment()))._milliseconds
-      Cookies.set('firstAuctionReminderSeen', cookieValue, { expires: cookieExpiration })
+      Cookies.set('AuctionReminderSeen', cookieValue, { expires: @cookieExpiration })
       activate = => @$dialog.addClass("is-spring-in")
       _.delay(activate,5000)
 
@@ -93,8 +93,8 @@ class AuctionReminderModal extends Backbone.View
     location.assign("/auction/#{@auctionId}")
 
 module.exports = (callBack) ->
-  if Cookies.get 'firstAuctionReminderSeen'
-    [ auctionName, auctionId, auctionImage, auctionEndat ] = Cookies.get('firstAuctionReminderSeen').split("|")
+  if Cookies.get 'AuctionReminderSeen'
+    [ auctionName, auctionId, auctionImage, auctionEndat ] = Cookies.get('AuctionReminderSeen').split("|")
     new AuctionReminderModal
       auctionName: auctionName
       auctionId: auctionId
