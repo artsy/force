@@ -84,7 +84,6 @@
     "mailcheck": "*",
     "mocha": "*",
     "nib": "*",
-    "node-inspector": "*",
     "rewire": "2.2.x",
     "scroll-frame": "*",
     "should": "^7.0.2",

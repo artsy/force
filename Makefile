@@ -32,14 +32,6 @@ sp:
 spc:
 	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
 
-# Start server in debug mode pointing to staging & open node inspector
-ssd:
-	$(BIN)/node-inspector & API_URL=http://stagingapi.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
-
-# Start server in debug mode pointing to production & open node inspector
-spd:
-	$(BIN)/node-inspector & API_URL=https://api.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
-
 # Run all of the project-level tests, followed by app-level tests
 test:
 	$(BIN)/ezel-assets
@@ -61,14 +53,5 @@ deploy:
 	$(BIN)/bucket-assets --bucket force-$(env)
 	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
 	git push --force git@heroku.com:force-$(env).git
-
-# Runs all the necessary build tasks to push the currently checked out branch
-# to a personal heroku app.
-# Run with `make deploy_custom app=app_name`.
-deploy_custom:
-	$(BIN)/ezel-assets
-	$(BIN)/bucket-assets --bucket $(app)
-	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=$(app)
-	git push -f git@heroku.com:$(app).git $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD):master
 
 .PHONY: test
