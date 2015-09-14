@@ -38,8 +38,8 @@ module.exports = class Modalize extends Backbone.View
     this
 
   __postRender__: ->
-    @$('.js-modalize-dialog').css @dimensions
-    @$('.js-modalize-body').html @subView.render().$el
+    (@$dialog = @$('.js-modalize-dialog')).css @dimensions
+    (@$body = @$('.js-modalize-body')).html @subView.render().$el
     @__postRendered__ = true
     this
 
