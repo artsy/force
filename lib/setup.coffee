@@ -175,6 +175,7 @@ module.exports = (app) ->
   app.use require "../apps/feature"
   app.use require "../apps/flash"
   app.use require "../apps/galleries_institutions"
+  app.use require "../apps/galleries_institutions2"
   app.use require "../apps/gallery_insights"
   app.use require "../apps/partnerships"
   app.use require "../apps/gene"
