@@ -52,8 +52,9 @@ module.exports = (options = {}) ->
       .then ->
         collectorProfile.related().userFairActions.invoke 'save'
         done()
-      .catch ->
+      .catch (e) ->
         closeWithError modal
+        console.error e
       .done()
 
   # Abort by clicking 'nevermind'
