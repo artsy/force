@@ -50,7 +50,7 @@ module.exports = class ClockView extends Backbone.View
         false
       else
         """
-          <li>
+          <li class='clock-#{unit}'>
             #{if diff < 10 then '0' + diff else diff}
             <small>#{label}</small>
           </li>
