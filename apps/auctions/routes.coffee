@@ -1,6 +1,7 @@
 Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
+AuctionReminders = require '../../components/auction_reminders/fetch'
 
 setupUser = (user, auction) ->
   Q.promise (resolve) ->
@@ -35,3 +36,12 @@ setupUser = (user, auction) ->
   )
   .catch(next)
   .done()
+
+@reminders = (req, res, next) ->
+  reminders = new AuctionReminders
+  reminders.fetch()
+    .then (response) ->
+      res.send response
+
+    .catch(next)
+    .done()
