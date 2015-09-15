@@ -56,3 +56,7 @@ module.exports = class ClockView extends Backbone.View
           </li>
         """
     )).join '<li>:</li>'
+
+  remove: ->
+    clearInterval @interval
+    super
