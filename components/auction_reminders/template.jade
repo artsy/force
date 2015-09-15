@@ -1,0 +1,19 @@
+.auction-reminder-close.js-dismiss
+  i.icon-close.js-dismiss
+
+if auction.isWithHeaderImage()
+  .auction-reminder-image
+     img(
+      width='90'
+      height='90'
+      src= auction.cropUrlFor({ width: 90, height: 90 })
+      alt= auction.get('name')
+    )
+
+.auction-reminder-metadata
+  h4 Closing Soon
+  h3= auction.get('name')
+  h4 Go to auction
+
+.auction-reminder-clock.js-auction-reminder-clock
+  include ../clock/template

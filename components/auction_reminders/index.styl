@@ -1,0 +1,60 @@
+@import '../stylus_lib'
+
+reminder-width = 500px
+reminder-height = 120px
+
+.auction-reminders
+  position fixed
+  bottom 40px
+  right 40px
+  z-index zindex-modal
+
+.auction-reminder
+  position relative
+  display flex
+  width reminder-width
+  height reminder-height
+  block-margins(15px)
+  padding 15px 90px 15px 15px
+  align-items center
+  justify-content space-between
+  background-color white
+  border 1px solid gray-lighter-color
+  text-decoration none
+  transition opacity 0.25s, transform 0.5s
+
+  &[data-state='open']
+    opacity 1
+    transform translateY(0)
+
+  &, &[data-state='closed']
+    opacity 0
+    transform translateY(reminder-height / 2)
+
+.auction-reminder-metadata
+  margin 0 20px
+  > h4
+    avant-garde-size('s-headline')
+  > h3
+    margin 3px 0
+    garamond-size('s-body')
+
+.auction-reminder-clock
+  white-space nowrap
+  // Hide some bits of the clock
+  .clock-header
+  .clock-days
+  .clock-days + li
+    display none
+
+.auction-reminder-close
+  position absolute
+  top 0
+  right 0
+  padding 20px
+  color gray-color
+  &:hover
+    color gray-lighter-color
+  > .icon-close
+    font-size 26px
+    line-height @font-size
