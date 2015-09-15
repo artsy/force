@@ -15,6 +15,27 @@ describe 'Sale', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#isClosingSoon', ->
+    it 'returns false if the sale is closing soon', ->
+      new Sale end_at: moment().add(12, 'hours').format()
+        .isClosingSoon().should.be.true()
+
+      new Sale end_at: moment().add(20, 'minutes').format()
+        .isClosingSoon().should.be.true()
+
+      new Sale end_at: moment().add(30, 'seconds').format()
+        .isClosingSoon().should.be.true()
+
+    it 'returns false if the sale is not closing soon or is already over', ->
+      new Sale end_at: moment().add(5, 'second').format()
+        .isClosingSoon().should.be.false()
+
+      new Sale end_at: moment().add(2, 'days').format()
+        .isClosingSoon().should.be.false()
+
+      new Sale end_at: moment().subtract(1, 'day').format()
+        .isClosingSoon().should.be.false()
+
   describe '#calculateAuctionState', ->
     before ->
       # moment#unix returns seconds
