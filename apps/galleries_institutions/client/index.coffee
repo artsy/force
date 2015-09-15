@@ -23,5 +23,5 @@ module.exports.init = ->
   $('.gip-location').each ->
     id = ($el = $(this)).data 'id'
     partner = new Partner id: id
-    partner.locations().fetch success: =>
+    partner.related().locations.fetch success: =>
       $el.text partner.displayLocations()

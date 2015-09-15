@@ -1,7 +1,13 @@
 PartnerCell = require '../components/partner_cell/view.coffee'
 sd = require('sharify').data
 Partner = require '../../../models/partner.coffee'
+Partners = require '../../../collections/partners.coffee'
+
 module.exports.init = ->
-  new PartnerCell
-    el: $('.partner-cell')
-    partner: new Partner sd.PARTNER
+  partners = new Partners sd.PARTNERS
+
+  _.each $('.partner-cell'), (el) ->
+    $el = $(el)
+    new PartnerCell
+      $el: $el
+      partner: partners.get $el.data('id')

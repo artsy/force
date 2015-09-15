@@ -11,7 +11,7 @@ module.exports = class PartnerContactView extends Backbone.View
     { @profile, @partner } = options
 
     @listenTo @partner, 'sync', @renderAdditionalInfo
-    @partner.fetchLocations @renderLocations
+    @partner.related().locations.fetchUntilEnd success: @renderLocations
     @render()
 
   render: ->

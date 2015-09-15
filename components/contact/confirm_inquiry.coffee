@@ -52,7 +52,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     @inputEmail = options.inputEmail
     @partner = new Partner options.partner
     @inputMessage = options.inputMessage ?= defaultMessage(@artwork, @partner)
-    @partner.locations().fetch complete: =>
+    @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -62,7 +62,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     super
 
   renderLocation: =>
-    return if @partner.locations().length > 1
+    return if @partner.related().locations.length > 1
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
