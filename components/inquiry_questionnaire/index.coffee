@@ -2,13 +2,11 @@ modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
 InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
+openErrorFlash = require './error.coffee'
 
-closeWithError = (modal) ->
+closeWithError = (modal, xhr) ->
   modal.close ->
-    new FlashMessage
-      message: 'There has been an error. Click here to contact support@artsy.net'
-      href: 'mailto:support@artsy.net'
-      autoclose: false
+    openErrorFlash xhr
 
 closeWithSuccess = (modal) ->
   modal.close ->
@@ -65,8 +63,8 @@ module.exports = (options = {}) ->
   questionnaire.state.on 'done', ->
     # Send the inquiry
     inquiry.save {},
-      error: ->
-        closeWithError modal
+      error: (model, response, options) ->
+        closeWithError modal, response
       success: ->
         closeWithSuccess modal
 
