@@ -1,3 +1,5 @@
+@import '../components/tooltips'
+
 gutter-size = 44px
 main-width = 696px
 aside-width = 400px
@@ -8,10 +10,17 @@ aside-margin = 100px
   height header-height
   width 100%
   background url('/toolkit_background.jpg')
+  background-size cover
+  position relative
   h1
     font-size 60pt
+    width 700px
     font-family garamond
     color white
+    position absolute
+    bottom 20px
+    left 30px
+    line-height 65pt
   
 .toolkit-container
   max-width (gutter-size + main-width + aside-width)
@@ -19,6 +28,8 @@ aside-margin = 100px
   
 .toolkit-main
   max-width main-width
+  font-size 21pt
+  position relative
   
 .toolkit-aside
   width aside-width
@@ -35,18 +46,17 @@ aside-margin = 100px
 
 .toolkit-list
   position absolute
+  margin-left gutter-size
+  font-size 14pt
 
 .get-toolkit
-  font-family garamond-size('s-headline')
-
-#download-button
-  background black
-  color white
-  font-family avant-garde-size('body')
-  border-color black
+  garamond-size('s-headline')
   
 .form-footer-text
-  font-family garamond-size('l-caption')
+  font-size 17pt
+  color lightgray
+  
+.toolkit-thank-you
   
   
   

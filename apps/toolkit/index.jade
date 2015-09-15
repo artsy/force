@@ -1,5 +1,12 @@
 extends ../../components/main_layout/templates/blank
 
+if sd.CURRENT_USER && sd.CURRENT_USER.email && sd.CURRENT_USER.name
+  - var email = sd.CURRENT_USER.email || ''
+  - var fname = sd.CURRENT_USER.name.split(' ')[0] || ''
+  - var lname = sd.CURRENT_USER.name.split(' ')[1] || ''
+else
+  - var email = fname = lname = ''
+
 block head
   include meta
 
@@ -11,38 +18,56 @@ block body
     h1 Social Media Toolkit For Galleries
   .toolkit-container
     main.toolkit-main
+      br
       p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
       img(src='/toolkit_stack.jpg')
       div.toolkit-list
         p This new toolkit will help you:
+        br
         ul
           li - Build an audience of collectors on Instagram
           li - Launch successful campaigns on Facebook
           li - Compose Tweets that will get your gallery noticed
     aside.toolkit-aside
       p.get-toolkit Get the toolkit
-      form.download-form(name='toolkit-download', method='post')
-        label.form-label First Name
+      br
+      .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
+        
+        .stacked-form-cell
+          label.avant-garde-form-label( for='FNAME' ) First Name
+          input#FNAME.bordered-input.is-block( type='text', name='FNAME' )
+        
+        .stacked-form-cell
+          label.avant-garde-form-label( for='LNAME' ) Last Name
+          input#LNAME.bordered-input.is-block( type='email', name='LNAME', required )
+
+        .stacked-form-cell
+          label.avant-garde-form-label Email Address
+          input#EMAIL.bordered-input.is-block( type='text', name='EMAIL' )
+
+        .stacked-form-cell
+          label.avant-garde-form-label( for='GALLERYNAME' ) Gallery Name
+          input#GALLERYNAME.bordered-input.is-block( type='text', name='GALLERYNAME' )
+
+        .stacked-form-cell
+          label.avant-garde-form-label( for='URL' ) Website
+          input#URL.bordered-input.is-block( type='url', name='URL' )
         br
-        input(type='text', name='first_name', value='', required)
-        br
-        label.form-label Last Name
-        br
-        input(type='text', name='last_name', value='', required)
-        br
-        label.form-label Email Address
-        br
-        input(type='email', name='email', value='', required)
-        br
-        label.form-label Gallery Name
-        br
-        input(type='text', name='gallery_name', value='', required)
-        br
-        label.form-label Website
-        br
-        input(type='url', name='website', value='', required)
-        br
-        input#download-button(type='submit', value='Download')
+
+        hr.is-invisible
+        h3.toolkit-error
+        button.avant-garde-button-black.js-toolkit-download Download
+        
+        .toolkit-thank-you
+          h1 Thanks for downloading Artsy's Social Media Tookit For Galleries.
+          p We've also emailed you a link to the toolkit and an invitation to Artsy's
+          a( href='' ) Social Media Webinar
+          | .
+          p The toolkit is a guide for anyone in the art world who wants to improve their social media presence.
+          p You can share it with your network via social media, or via email here:
+          a.black-tooltip( data-message='Post to Facebook' ): i.icon-facebook
+          a.black-tooltip( data-message='Share on Twitter' ): i.icon-twitter
+          //- need email/LinkedIn tooltips 
         br
         p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
 
