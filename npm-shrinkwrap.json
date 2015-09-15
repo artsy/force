@@ -29,6 +29,11 @@
         }
       }
     },
+    "artsy-eigen-web-association": {
+      "version": "1.0.0",
+      "from": "git://github.com/artsy/artsy-eigen-web-association.git",
+      "resolved": "git://github.com/artsy/artsy-eigen-web-association.git#40b8aec1fe3a571a7da8f7785d6d2048a5e8f2ff"
+    },
     "artsy-error-handler": {
       "version": "0.0.5",
       "from": "git://github.com/artsy/artsy-error-handler.git",

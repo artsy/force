@@ -15,6 +15,7 @@ sharify = require "sharify"
 http = require 'http'
 path = require "path"
 artsyPassport = require 'artsy-passport'
+artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
@@ -123,11 +124,8 @@ module.exports = (app) ->
   fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
     app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
-  app.use express.static(path.resolve(__dirname, '../public'),
-    setHeaders: (res, file, stat) ->
-      if path.basename(file) == "apple-app-site-association"
-        res.setHeader("Content-Type", "application/pkcs7-mime")
-  )
+  app.use express.static(path.resolve __dirname, '../public')
+  app.use '/apple-app-site-association', artsyEigenWebAssociation
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
