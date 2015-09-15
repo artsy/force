@@ -13,14 +13,21 @@ aside-margin = 100px
   background-size cover
   position relative
   h1
-    font-size 60pt
-    width 700px
+    font-size 60px
+    max-width (gutter-size + main-width + aside-width)
+    margin auto
     font-family garamond
     color white
     position absolute
     bottom 20px
-    left 30px
-    line-height 65pt
+    left 0
+    line-height 65px
+
+.toolkit-wrapper
+  max-width (gutter-size + main-width + aside-width)
+  margin auto
+  height 100%
+  position relative
   
 .toolkit-container
   max-width (gutter-size + main-width + aside-width)
@@ -28,8 +35,21 @@ aside-margin = 100px
   
 .toolkit-main
   max-width main-width
-  font-size 21pt
+  font-size 21px
+  line-height 32px
   position relative
+  padding-right gutter-size
+  
+.toolkit-stack-img
+  float left
+  margin-right gutter-size
+
+.toolkit-stack-img, .toolkit-list
+  margin-top (gutter-size - 4px)
+  
+.toolkit-ul li::before
+  content "\2014"
+  margin-right 5px
   
 .toolkit-aside
   width aside-width
@@ -44,19 +64,17 @@ aside-margin = 100px
   display inline-block
   vertical-align top
 
-.toolkit-list
-  position absolute
-  margin-left gutter-size
-  font-size 14pt
-
 .get-toolkit
   garamond-size('s-headline')
   
 .form-footer-text
-  font-size 17pt
+  font-size 17px
   color lightgray
   
 .toolkit-thank-you
+  h3
+    font-size 24px
+  display none
   
   
   

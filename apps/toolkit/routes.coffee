@@ -1,6 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 request = require 'superagent'
+{ MAILCHIMP_KEY, TOOLKIT_LIST } = require '../../config'
+
 
 @index = (req, res) ->
   res.render 'index'
@@ -8,8 +10,8 @@ request = require 'superagent'
 @form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
     .send(
-      apikey: sd.MAILCHIMP_KEY
-      id: sd.GALLERY_INSIGHTS_LIST
+      apikey: MAILCHIMP_KEY
+      id: TOOLKIT_LIST
       email: email: req.body.email
       send_welcome: true
       merge_vars:
@@ -19,7 +21,4 @@ request = require 'superagent'
       double_optin: false
       send_welcome: true
     ).end (err, response) ->
-      if (response.ok)
-        res.send req.body
-      else
-        res.send(response.status, response.body.error)
+      res.send(success: true)
