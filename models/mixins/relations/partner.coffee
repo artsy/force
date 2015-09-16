@@ -6,7 +6,7 @@ module.exports =
     Shows = require '../../../collections/partner_shows.coffee'
 
     locations = new PartnerLocations
-    locations.url = "#{@url()}/locations"
+    locations.url = "#{@url()}/locations?size=20"
 
     shows = new Shows [], partnerId: @id
     shows.url = "#{@url()}/shows?sort=-featured,-end_at"

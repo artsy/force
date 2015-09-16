@@ -12,7 +12,7 @@ module.exports = class PartnerLocations
     @partner = @artwork.related().partner
     @locations = @partner.related().locations
 
-    @locations.fetchUntilEnd success: =>
+    @locations.fetch success: =>
       @renderLocations @locations
       @setupPhoneNumbers @locations
 
