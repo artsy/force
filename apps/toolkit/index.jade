@@ -20,24 +20,15 @@ block body
     .toolkit-wrapper
       h1 Social Media Toolkit <br> For Galleries
   .toolkit-container
-    main.toolkit-main
-      br
-      p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
-      img.toolkit-stack-img(src='/toolkit_stack.jpg')
-      p.toolkit-list This new toolkit will help you:
-      ul.toolkit-ul
-        li Build an audience of collectors on Instagram
-        li Launch successful campaigns on Facebook
-        li Compose Tweets that will get your gallery noticed
     aside.toolkit-aside
       .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
         p.get-toolkit Get the toolkit
         br
-        
+
         .stacked-form-cell
           label.avant-garde-form-label( for='FNAME' ) First Name
           input#FNAME.bordered-input.is-block( type='text', name='FNAME' )
-        
+
         .stacked-form-cell
           label.avant-garde-form-label( for='LNAME' ) Last Name
           input#LNAME.bordered-input.is-block( type='email', name='LNAME' )
@@ -53,15 +44,15 @@ block body
         .stacked-form-cell
           label.avant-garde-form-label( for='GSITE' ) Website
           input#GSITE.bordered-input.is-block( type='url', name='GSITE' )
-        
+
         br
 
         button.avant-garde-button-black.js-toolkit-download Download
         br
         p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
-        hr.is-invisible 
+        hr.is-invisible
         //-need to handle form error?
-        
+
       .toolkit-thank-you
         h3 Thanks for downloading Artsy's Social Media Tookit For Galleries.
         br
@@ -75,7 +66,16 @@ block body
         p You can share it with your network via social media, or via email here:
         br
         .toolkit-share: +share('Download Artsy\'s Social Media Toolkit for Galleries')
-        //- need email/LinkedIn tooltips 
+        //- need email/LinkedIn tooltips
+    main.toolkit-main
+      br
+      p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
+      img.toolkit-stack-img(src='/toolkit_stack.jpg')
+      p.toolkit-list This new toolkit will help you:
+      ul.toolkit-ul
+        li Build an audience of collectors on Instagram
+        li Launch successful campaigns on Facebook
+        li Compose Tweets that will get your gallery noticed
 
 
 
