@@ -16,6 +16,7 @@ append locals
 
 block body
   header.toolkit-header
+    img.toolkit-artsy-logo(src='/toolkit_artsy_white_logo.png')
     .toolkit-wrapper
       h1 Social Media Toolkit <br> For Galleries
   .toolkit-container
@@ -46,20 +47,20 @@ block body
           input#EMAIL.bordered-input.is-block( type='text', name='EMAIL' )
 
         .stacked-form-cell
-          label.avant-garde-form-label( for='GALLERYNAME' ) Gallery Name
-          input#GALLERYNAME.bordered-input.is-block( type='text', name='GALLERYNAME' )
+          label.avant-garde-form-label( for='GNAME' ) Gallery Name
+          input#GNAME.bordered-input.is-block( type='text', name='GNAME' )
 
         .stacked-form-cell
-          label.avant-garde-form-label( for='URL' ) Website
-          input#URL.bordered-input.is-block( type='url', name='URL' )
+          label.avant-garde-form-label( for='GSITE' ) Website
+          input#GSITE.bordered-input.is-block( type='url', name='GSITE' )
         
         br
 
         button.avant-garde-button-black.js-toolkit-download Download
         br
         p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
-        hr.is-invisible
-        h2.toolkit-error
+        hr.is-invisible 
+        //-need to handle form error?
         
       .toolkit-thank-you
         h3 Thanks for downloading Artsy's Social Media Tookit For Galleries.

@@ -16,8 +16,8 @@ module.exports.init = ->
         fname: $('input[name=FNAME]').val()
         lname: $('input[name=LNAME]').val()
         email: $('input[name=EMAIL]').val()
-        galleryname: $('input[name=GALLERYNAME]').val()
-        url: $('input[name=URL]').val()
+        gname: $('input[name=GNAME]').val()
+        gsite: $('input[name=GSITE]').val()
       # error: (xhr) ->
       #   $(e.currentTarget).attr 'data-state', 'error'
       #   $('.toolkit-error').text(xhr.responseText) **handle this error once Mailchimp endpoint issue is
