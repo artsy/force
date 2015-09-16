@@ -40,10 +40,17 @@ block body
                 span= auction.date('end_at').format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
-        h2.aggregate-page-subheader How Auctions Work
-        .ap-upcoming-item
-          a.fine-faux-underline.js-auctions-learn-link( href='/auction-info' )
-            | Learn about Bidding Increments, Max Bids, Reserves, and more
+        a.auction-cta-group(href="https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080")
+          .auction-cta-group__left
+            img(src="images/mobile-cta.png", alt="Bid from your phone")
+          .auction-cta-group__right
+            h1 Bid from your phone
+            h2 Download Artsy for iPhone
+        a.auction-cta-group(href="/how-auctions-work")
+          .auction-cta-group__left
+            img(src="images/kiosk-cta.png", alt="How to Bid on Artsy")
+          .auction-cta-group__right
+            h1 How to Bid on Artsy
 
         if upcomingAuctions.length && currentAuctions.length
           h2.aggregate-page-subheader Upcoming Auctions
