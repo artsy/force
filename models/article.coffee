@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
-Vertical = require '../models/vertical.coffee'
+Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
@@ -50,19 +50,19 @@ module.exports = class Article extends Backbone.Model
             data: access_token: options.accessToken
             success: (artwork) ->
               slideshowArtworks.add(artwork)
-      # Get related vertical content if a part of one
-      if @get('vertical_id')
-        dfds.push (vertical = new Vertical(id: @get('vertical_id'))).fetch()
-        dfds.push (verticalArticles = new Articles).fetch(
-          data: vertical_id: @get('vertical_id'), published: true, limit: 50
+      # Get related section content if a part of one
+      if @get('section_ids').length
+        dfds.push (section = new Section(id: @get('section_ids')[0])).fetch()
+        dfds.push (sectionArticles = new Articles).fetch(
+          data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
       Q.allSettled(dfds).fin =>
         options.success(
           article: this
           footerArticles: footerArticles
           slideshowArtworks: slideshowArtworks
-          vertical: vertical
-          allVerticalArticles: verticalArticles if vertical
+          section: section
+          allSectionArticles: sectionArticles if section
         )
 
   isTopTier: ->

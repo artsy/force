@@ -35,14 +35,14 @@ describe "Article", ->
       _.defer =>
         Backbone.sync.args[2][2].success fabricate 'artwork', title: 'foobar'
 
-    it 'fetches vertical content if need be', ->
+    it 'fetches section content if need be', ->
       @article.fetchWithRelated success: (data) ->
         data.slideshowArtworks.first().get('title').should.equal 'foobar'
         done()
-      Backbone.sync.args[0][2].success _.extend {}, fixtures.article, title: 'Moo', vertical_id: 'foo'
+      Backbone.sync.args[0][2].success _.extend {}, fixtures.article, title: 'Moo', section_ids: ['foo']
       Backbone.sync.args[1][2].success [fixtures.article]
       _.defer =>
-        Backbone.sync.args[2][2].success fixtures.vertical
+        Backbone.sync.args[2][2].success fixtures.section
         Backbone.sync.args[3][2].success [fixtures.articles]
 
     it 'works for those rare sectionless articles', (done) ->

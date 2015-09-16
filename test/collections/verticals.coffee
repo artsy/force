@@ -3,28 +3,28 @@ moment = require 'moment'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 fixtures = require '../helpers/fixtures'
-Verticals = require '../../collections/verticals'
+Sections = require '../../collections/sections'
 
-describe 'Verticals', ->
+describe 'Sections', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @verticals = new Verticals [fixtures.vertical]
+    @sections = new Sections [fixtures.section]
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#running', ->
 
-    it 'pulls the currently running verticals', ->
-      @verticals.reset [
-        _.extend(_.clone(fixtures.vertical),
+    it 'pulls the currently running sections', ->
+      @sections.reset [
+        _.extend(_.clone(fixtures.section),
           start_at: moment().subtract(1, 'days').format()
           end_at: moment().add(1, 'days').format()
           title: "Andy Foobar's Retrospective"
         )
-        fixtures.vertical
+        fixtures.section
       ]
-      @verticals.running().length.should.equal 1
-      @verticals.running()[0].get('title')
+      @sections.running().length.should.equal 1
+      @sections.running()[0].get('title')
         .should.equal "Andy Foobar's Retrospective"

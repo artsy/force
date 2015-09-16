@@ -1,5 +1,5 @@
 //
-// Styles for everything involved with verticals, including headers on the
+// Styles for everything involved with sections, including headers on the
 // main feed and in an article page.
 //
 
@@ -7,7 +7,7 @@
 
 gutter-size = 30px
 
-.articles-vertical-notice-header
+.articles-section-notice-header
   width 100%
   border-bottom 1px solid gray-lighter-color
   padding-top 11px
@@ -15,7 +15,7 @@ gutter-size = 30px
   flex-direction row
   position relative
 
-.articles-vertical-notice-header-thumbnail
+.articles-section-notice-header-thumbnail
   clearfix()
   padding-right gutter-size
   border-right 1px solid gray-lighter-color
@@ -30,13 +30,13 @@ gutter-size = 30px
     margin-bottom 5px
   h4
     font-size 30px
-  .articles-vertical-notice-header-thumbnail-text
+  .articles-section-notice-header-thumbnail-text
     padding-top (gutter-size / 2)
-  img, .articles-vertical-notice-header-thumbnail-text
+  img, .articles-section-notice-header-thumbnail-text
     display inline-block
     vertical-align top
 
-.articles-vertical-notice-header-partner-logo
+.articles-section-notice-header-partner-logo
   padding gutter-size
   avant-garde()
   font-size 13px
@@ -47,7 +47,7 @@ gutter-size = 30px
     display inline-block
     vertical-align middle
 
-.articles-vertical-notice-header-explore
+.articles-section-notice-header-explore
   position absolute
   right 0
   font-size 30px
@@ -63,11 +63,11 @@ gutter-size = 30px
     right -45px
     font-size 26px
 
-.articles-vertical-header
+.articles-section-header
   padding 10px 0 20px 0
   position relative
 
-.articles-vertical-header-left
+.articles-section-header-left
   width 60%
   h1
     font-size 40px
@@ -78,7 +78,7 @@ gutter-size = 30px
   a
     fine-faux-underline()
 
-.articles-vertical-header-right
+.articles-section-header-right
   clearfix()
   padding-bottom 10px
   avant-garde()
@@ -93,13 +93,13 @@ gutter-size = 30px
     display inline
     vertical-align middle
 
-.articles-vertical-show-header
+.articles-section-show-header
   border-bottom 1px solid gray-lighter-color
   position relative
   top -50px
   padding-bottom 20px
 
-.articles-vertical-show-header-left
+.articles-section-show-header-left
   display inline-block
   width 30%
   h2, h3
@@ -119,7 +119,7 @@ gutter-size = 30px
   h3, img
     display inline-block
 
-.articles-vertical-show-header-right
+.articles-section-show-header-right
   padding-left gutter-size - 1
   overflow hidden
   position relative
@@ -127,9 +127,9 @@ gutter-size = 30px
   &.is-over
     ul
       margin-left -100%
-    .articles-vertical-right-chevron
+    .articles-section-right-chevron
       opacity 0
-    .articles-vertical-left-chevron
+    .articles-section-left-chevron
       opacity 1
   img
     width 120px
@@ -156,7 +156,7 @@ gutter-size = 30px
       &:nth-child(2)
         margin-right gutter-size
 
-.articles-vertical-right-chevron, .articles-vertical-left-chevron
+.articles-section-right-chevron, .articles-section-left-chevron
   position absolute
   top 0
   height 100%
@@ -167,18 +167,18 @@ gutter-size = 30px
   cursor pointer
   transition opacity 0.2s ease-in-out 0.2s
 
-.articles-vertical-left-chevron
+.articles-section-left-chevron
   left 0
   opacity 0
 
-.articles-vertical-right-chevron
+.articles-section-right-chevron
   right 0
 
-.articles-vertical-show-header-left, .articles-vertical-show-header-right
+.articles-section-show-header-left, .articles-section-show-header-right
   vertical-align middle
   display inline-block
 
-.articles-featured-vertical-articles
+.articles-featured-section-articles
   margin gutter-size 0
   padding 20px 0
   border-bottom 1px solid gray-lighter-color
@@ -204,7 +204,7 @@ gutter-size = 30px
       display inline-block
       vertical-align middle
 
-.articles-insights-vertical
+.articles-insights-section
   display none
   padding 0 15%
   margin 0 30px

@@ -62,7 +62,7 @@ moment = require 'moment'
         "count": 1
 
 
-@vertical =
+@section =
   id: '55356a9deca560a0137aa4b7'
   title: 'Vennice Biennalez'
   description: 'The coolest biennale'
@@ -122,3 +122,4 @@ moment = require 'moment'
   featured_artist_ids: ['5086df098523e60002000012']
   featured_artwork_ids: ['5321b71c275b24bcaa0001a5']
   gravity_id: '502a6debe8b6470002000004'
+  section_ids: []

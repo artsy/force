@@ -10,30 +10,30 @@ append locals
 block body
   #articles-show.main-layout-container
 
-    //- Verical header
-    if article.get('vertical_id')
-      header.articles-vertical-show-header
+    //- Section header
+    if article.get('section_ids').length
+      header.articles-section-show-header
         section
-          .articles-vertical-show-header-left
+          .articles-section-show-header-left
             h2
-              a( href='/' + vertical.get('slug') )= vertical.get('title')
-            h4= vertical.get('slogan')
-            if vertical.get('partner_logo_url')
+              a( href='/' + section.get('slug') )= section.get('title')
+            h4= section.get('slogan')
+            if section.get('partner_logo_url')
               h3 In Partnership With
-              a( href=vertical.get('partner_website_url') target='_blank' )
-                img( src=vertical.get('partner_logo_url') )
-          .articles-vertical-show-header-right
-            button.articles-vertical-left-chevron.icon-chevron-small-left
+              a( href=section.get('partner_website_url') target='_blank' )
+                img( src=section.get('partner_logo_url') )
+          .articles-section-show-header-right
+            button.articles-section-left-chevron.icon-chevron-small-left
             ul
-              for link in vertical.get('featured_links')
+              for link in section.get('featured_links')
                 li
                   a( href=link.url )
                     img( src=resize(link.thumbnail_url, {
                       height: 80, width: 120 }) )
                     p= link.title
               //- Fills sticky nav with tier 1 articles if not enough featured links
-              +remainingStickies(vertical, allVerticalArticles, 120, 80)
-            button.articles-vertical-right-chevron.icon-chevron-small-right
+              +remainingStickies(section, allSectionArticles, 120, 80)
+            button.articles-section-right-chevron.icon-chevron-small-right
 
     //- Article body
     #articles-body-container
@@ -41,21 +41,20 @@ block body
 
   //- Article footer content
   section#articles-footer
-    if article.get('vertical_id')
-      if article.get('vertical_id') == '55550be07b8a750300db8430'
+    if article.get('section_ids').length
+      if article.get('section_ids')[0] === '55550be07b8a750300db8430'
         .articles-insights-show
           include gallery_insights_form
-      h1 More From #{vertical.get('title')}
+      h1 More From #{section.get('title')}
       ul#articles-footer-list
-        for verticalArticle in allVerticalArticles.models
-          unless article.id === verticalArticle.get('id')
-            +article-figure(verticalArticle, 220, false, false)
+        for sectionArticle in allSectionArticles.models
+          unless article.id === sectionArticle.get('id')
+            +article-figure(sectionArticle, 220, false, false)
     else
       h1 What to Read Next
       ul#articles-footer-list
         for footerArticle in footerArticles.models
           unless article.id === footerArticle.get('id')
             +article-figure(footerArticle, 220, false, false)
-
 
   include ../../../components/main_layout/templates/json_ld

@@ -3,11 +3,11 @@ sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 
 module.exports.init = ->
-  if (sd.ARTICLE?.vertical_id is '55550be07b8a750300db8430' or sd.VERTICAL?.id is '55550be07b8a750300db8430') and sd.MAILCHIMP_SUBSCRIBED is false
+  if (_.contains(sd.ARTICLE?.section_ids,'55550be07b8a750300db8430') or sd.SECTION?.id is '55550be07b8a750300db8430') and sd.MAILCHIMP_SUBSCRIBED is false
 
     #Show input forms
     $('.articles-insights-show').show()
-    $('.articles-insights-vertical').show()
+    $('.articles-insights-section').show()
 
     # CTA Bar
     ctaBarView = new CTABarView
