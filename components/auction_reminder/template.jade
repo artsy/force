@@ -3,7 +3,8 @@
     a.modal-close: i.icon-close
   section.modal-body
     a.auction-reminder-container(href="/auction/#{auctionId}")
-      img.auction-reminder-image(src="#{auctionImage}")
+      .auction-reminder-image-container
+        img.auction-reminder-image(src="#{auctionImage}")
       .auction-reminder-details
         p.avant-garde-header-small Closing Soon
         p.auction-reminder-name #{auctionName}
