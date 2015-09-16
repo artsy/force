@@ -57,7 +57,6 @@ module.exports = class PartnerCell extends Backbone.View
     @$image.addClass('is-missing')
 
   getImage: ->
-    console.log 'getImage'
     @getFeaturedShowImage(
       success: @setImage,
       failure: =>
