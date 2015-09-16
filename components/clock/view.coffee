@@ -16,7 +16,7 @@ module.exports = class ClockView extends Backbone.View
   initialize: ({ @closedText, @modelName }) ->
     @closedText ?= 'Online Bidding Closed'
 
-  start: ->
+  start: (callback = $.noop) ->
     @model.calculateOffsetTimes
       success: =>
         @model.on('change:clockState', ->
@@ -24,6 +24,7 @@ module.exports = class ClockView extends Backbone.View
           location?.reload()
         )
         @render()
+        callback()
 
   render: =>
     switch @model.get('clockState')
@@ -49,9 +50,13 @@ module.exports = class ClockView extends Backbone.View
         false
       else
         """
-          <li>
+          <li class='clock-#{unit}'>
             #{if diff < 10 then '0' + diff else diff}
             <small>#{label}</small>
           </li>
         """
     )).join '<li>:</li>'
+
+  remove: ->
+    clearInterval @interval
+    super

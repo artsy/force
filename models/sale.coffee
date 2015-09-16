@@ -122,6 +122,18 @@ module.exports = class Sale extends Backbone.Model
   isAuctionPromoInquirable: ->
     @isAuctionPromo() and @isPreview()
 
+  # Between 24 hours left and 10 seconds remaining
+  isClosingSoon: (offset = 0) ->
+    end = @date('end_at').add offset, 'milliseconds'
+
+    twentyFourHours = end.clone().subtract 24, 'hours'
+    tenSeconds = end.clone().subtract 10, 'seconds'
+
+    moment().isBetween twentyFourHours, tenSeconds
+
+  isWithHeaderImage: ->
+    @get('image_versions')?.length > 0
+
   # Support for Feature in artsy-backbone-mixins
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
