@@ -1,0 +1,86 @@
+@import '../components/tooltips'
+
+gutter-size = 44px
+main-width = 696px
+aside-width = 400px
+header-height = 400px
+aside-margin = 100px
+
+.toolkit-header
+  height header-height
+  width 100%
+  background url('/toolkit_background.jpg')
+  background-size cover
+  position relative
+  h1
+    font-size 60px
+    max-width (gutter-size + main-width + aside-width)
+    margin auto
+    font-family garamond
+    color white
+    position absolute
+    bottom 20px
+    left 0
+    line-height 65px
+  img
+    margin-top 20px
+    margin-left 20px
+    width 130px
+    float left
+    
+.toolkit-wrapper
+  max-width (gutter-size + main-width + aside-width)
+  margin auto
+  height 100%
+  position relative
+  
+.toolkit-container
+  max-width (gutter-size + main-width + aside-width)
+  margin auto
+  
+.toolkit-main
+  max-width main-width
+  font-size 21px
+  line-height 32px
+  position relative
+  padding-right gutter-size
+  
+.toolkit-stack-img
+  float left
+  margin-right gutter-size
+
+.toolkit-stack-img, .toolkit-list
+  margin-top (gutter-size - 4px)
+  
+.toolkit-ul li::before
+  content "\2014"
+  margin-right 5px
+  
+.toolkit-aside
+  width aside-width
+  height "calc(100% - %s)" % aside-margin
+  padding gutter-size
+  position position
+  top aside-margin
+  background white
+  box-shadow 0px 0px 20px black
+
+.toolkit-main, .toolkit-aside
+  display inline-block
+  vertical-align top
+
+.get-toolkit
+  garamond-size('s-headline')
+  
+.form-footer-text
+  font-size 17px
+  color lightgray
+  
+.toolkit-thank-you
+  h3
+    font-size 24px
+  display none
+  
+  
+  
+  
