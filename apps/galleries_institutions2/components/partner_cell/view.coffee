@@ -8,6 +8,7 @@ Q = require 'bluebird-q'
 module.exports = class PartnerCell extends Backbone.View
   initialize: ({ @partner, @$el }) ->
     @profile = new Profile id: @partner.get('default_profile_id')
+    @$image = @$('.hoverable-image')
 
     @fetchMetadata()
 
@@ -21,13 +22,52 @@ module.exports = class PartnerCell extends Backbone.View
 
     following?.syncFollows followIds.get()
 
-  fetchMetadata: ->
-    Q.all([
-      @partner.related().locations.fetch()
-      @partner.related().shows.fetch()
-    ]).then =>
-      featuredShow = @partner.related().shows.featured()
-      if featuredShow
-        @$('.hoverable-image').css backgroundImage: "url(#{featuredShow.posterImageUrl()})"
-
+  getLocation: ->
+    @partner.related().locations.fetch success: =>
       @$('.partner-cell-location').text @partner.displayLocations()
+
+  getFeaturedShowImage: (options = {})->
+    @partner.related().shows.fetch(
+      success: (shows) ->
+        show = shows.featured() || shows.models[0]
+        imageUrl = show?.posterImageUrl()
+        if imageUrl and not /missing_image.png/.test(imageUrl)
+          options.success(imageUrl)
+        else options.failure()
+
+      failure: options.failure
+    )
+
+  getProfileCoverImage: (options = {})->
+    @profile.fetch(
+      success: (profile) ->
+        imageUrl = profile.coverImage()?.imageUrl('wide')
+        if imageUrl and not /missing_image.png/.test(imageUrl)
+          options.success(imageUrl)
+        else options.failure()
+
+      failure: options.failure
+    )
+
+  setImage: (imageUrl, failure) =>
+    @$image.css backgroundImage: "url(#{imageUrl})"
+
+  setInitials: =>
+    @$image.attr 'data-initials', @profile.defaultIconInitials()
+    @$image.addClass('is-missing')
+
+  getImage: ->
+    console.log 'getImage'
+    @getFeaturedShowImage(
+      success: @setImage,
+      failure: =>
+        @getProfileCoverImage(
+          success: @setImage
+          failure: @setInitials
+      )
+    )
+
+  fetchMetadata: ->
+    @getLocation()
+    @getImage()
+
