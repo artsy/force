@@ -36,8 +36,11 @@ describe 'Auctions template', ->
       $('.af-name').should.have.lengthOf 1
       # Past auctions
       $('.leader-dots-list-item').should.have.lengthOf 1
-      # 'How auctions work' link & Upcoming auctions
-      $('.ap-upcoming-item').should.have.lengthOf 2
+      # Upcoming auctions
+      $('.ap-upcoming-item').should.have.lengthOf 1
+      # How Auctions Work
+      $('.auction-cta-group').should.have.lengthOf 2
+
 
   xdescribe 'without current auctions', ->
     before (done) ->
