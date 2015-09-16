@@ -131,6 +131,9 @@ module.exports = class Sale extends Backbone.Model
 
     moment().isBetween twentyFourHours, tenSeconds
 
+  isWithHeaderImage: ->
+    @get('image_versions')?.length > 0
+
   # Support for Feature in artsy-backbone-mixins
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
