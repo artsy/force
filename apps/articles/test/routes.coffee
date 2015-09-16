@@ -6,8 +6,6 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 routes = require '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
-{ fabricate } = require 'antigravity'
-
 describe 'Article routes', ->
 
   beforeEach ->
@@ -48,7 +46,7 @@ describe 'Article routes', ->
 
     it 'fetches published articles', (done) ->
       routes.articles @req, @res, @next
-      Backbone.sync.args[0][2].success results: [fixtures.vertical]
+      Backbone.sync.args[0][2].success results: [fixtures.section]
       Backbone.sync.args[1][2].success results: [
         { tier: 1, id: 'a' }
         { tier: 1, id: 'b' }
@@ -63,14 +61,14 @@ describe 'Article routes', ->
         @res.render.args[0][1].articles.should.have.lengthOf 8
         done()
 
-    xit 'gets the running vertical', (done) ->
+    xit 'gets the running section', (done) ->
       routes.articles @req, @res, @next
-      vert = _.extend(_.clone(fixtures.vertical), {
+      section = _.extend(_.clone(fixtures.section), {
         title: 'Foo Bar'
         start_at: moment().subtract(1, 'days')
         end_at: moment().add(1, 'days')
       })
-      Backbone.sync.args[0][2].success results: [vert]
+      Backbone.sync.args[0][2].success results: [section]
       Backbone.sync.args[1][2].success results: [
         { tier: 1, id: 'a' }
         { tier: 1, id: 'b' }
@@ -82,27 +80,27 @@ describe 'Article routes', ->
         { tier: 2, id: 'h' }
       ]
       setTimeout =>
-        @res.render.args[0][1].vertical.get('title').should.equal 'Foo Bar'
+        @res.render.args[0][1].section.get('title').should.equal 'Foo Bar'
         done()
 
     it 'requests less than 100 pages!', ->
       routes.articles @req, @res, @next
       Backbone.sync.args[1][2].data.limit.should.be.below 100
 
-  describe '#vertical', ->
+  describe '#section', ->
 
-    it 'renders the vertical with its articles', ->
-      vert = _.extend _.clone(fixtures.vertical), slug: 'foo'
+    it 'renders the section with its articles', ->
+      section = _.extend _.clone(fixtures.section), slug: 'foo'
       @req.params.slug = 'foo'
-      routes.vertical @req, @res, @next
-      Backbone.sync.args[0][2].success vert
-      Backbone.sync.args[1][2].data.vertical_id.should.equal vert.id
+      routes.section @req, @res, @next
+      Backbone.sync.args[0][2].success section
+      Backbone.sync.args[1][2].data.section_id.should.equal section.id
       Backbone.sync.args[1][2].success fixtures.articles
-      @res.render.args[0][0].should.equal 'vertical'
-      @res.render.args[0][1].vertical.get('title').should.equal vert.title
+      @res.render.args[0][0].should.equal 'section'
+      @res.render.args[0][1].section.get('title').should.equal section.title
 
     it 'nexts for an error b/c it uses a root url that should be passed on', ->
-      routes.vertical @req, @res, @next
+      routes.section @req, @res, @next
       Backbone.sync.args[0][2].error()
       @next.called.should.be.ok()
 

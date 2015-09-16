@@ -1,5 +1,5 @@
-mixin remainingStickies(vertical, articles, width, height)
-  - var remainingArticles = 4 - vertical.get('featured_links').length
+mixin remainingStickies(section, articles, width, height)
+  - var remainingArticles = 4 - section.get('featured_links').length
   - var i = 0
   - var topTierArticles = articles.filter(function(article){return article.get('tier') === 1})
   while remainingArticles > 0

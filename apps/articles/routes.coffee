@@ -3,8 +3,8 @@ Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
-Vertical = require '../../models/vertical'
-Verticals = require '../../collections/verticals'
+Section = require '../../models/section'
+Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY } = require '../../config'
@@ -12,7 +12,7 @@ request = require 'superagent'
 
 @articles = (req, res, next) ->
   Q.allSettled([
-    (verticals = new Verticals).fetch(data: featured: true)
+    (sections = new Sections).fetch(data: featured: true)
     (articles = new Articles).fetch(
       data:
         published: true
@@ -23,8 +23,8 @@ request = require 'superagent'
   ]).catch(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
-    vertical = verticals.running()?[0]
-    res.render 'articles', vertical: vertical, articles: articles
+    section = sections.running()?[0]
+    res.render 'articles', section: section, articles: articles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
@@ -38,7 +38,7 @@ request = require 'superagent'
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
       videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
-      if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.ARTICLE.vertical_id is '55550be07b8a750300db8430'
+      if res.locals.sd.CURRENT_USER?.email? and _.contains res.locals.sd.ARTICLE.section_ids, '55550be07b8a750300db8430'
         email = res.locals.sd.CURRENT_USER?.email
         subscribed email, (cb) ->
           res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
@@ -50,30 +50,30 @@ request = require 'superagent'
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'
 
-@vertical = (req, res, next) ->
-  new Vertical(id: req.params.slug).fetch
+@section = (req, res, next) ->
+  new Section(id: req.params.slug).fetch
     error: -> next()
-    success: (vertical) ->
-      return next() unless req.params.slug is vertical.get('slug')
+    success: (section) ->
+      return next() unless req.params.slug is section.get('slug')
       new Articles().fetch
         data:
           published: true
           limit: 100
           sort: '-published_at'
-          vertical_id: vertical.get('id')
+          section_id: section.get('id')
         error: res.backboneError
         success: (articles) ->
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.ARTICLES_COUNT = articles.count
-          res.locals.sd.VERTICAL = vertical.toJSON()
-          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.VERTICAL.id is '55550be07b8a750300db8430'
+          res.locals.sd.SECTION = section.toJSON()
+          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is '55550be07b8a750300db8430'
             email = res.locals.sd.CURRENT_USER?.email
             subscribed email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-              res.render 'vertical', vertical: vertical, articles: articles
+              res.render 'section', section: section, articles: articles
           else
             res.locals.sd.MAILCHIMP_SUBSCRIBED = false
-            res.render 'vertical', vertical: vertical, articles: articles
+            res.render 'section', section: section, articles: articles
 
 @form = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')

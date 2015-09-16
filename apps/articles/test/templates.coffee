@@ -6,7 +6,7 @@ fs = require 'fs'
 moment = require 'moment'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-Vertical = require '../../../models/vertical'
+Section = require '../../../models/section'
 fixtures = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
@@ -26,27 +26,27 @@ describe 'article figure template', ->
       sd: {}
     html.should.containEql '/article/foobar'
 
-describe 'vertical template', ->
+describe 'section template', ->
 
-  it 'renders the vertical title', ->
-    html = render('vertical')
+  it 'renders the section title', ->
+    html = render('section')
       articles: new Articles([_.extend(fixtures.article, slug: 'foobar')])
       crop: (url) -> url
       moment: moment
       sd: {}
       asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical),
+      section: new Section _.extend _.clone(fixtures.section),
         title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
 
   it 'renders extra stickies if featured ones are missing', ->
-    html = render('vertical')
+    html = render('section')
       articles: new Articles([_.extend(fixtures.article, tier: 1)])
       crop: (url) -> url
       moment: moment
       sd: {}
       asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical),
+      section: new Section _.extend _.clone(fixtures.section),
         title: 'Moo Bar'
     html.should.containEql '<li class="grid-item"><a href="/article/foobar">'
 
@@ -54,10 +54,10 @@ describe 'show template', ->
 
   it "renders related footer articles", ->
     html = render('show')
-      article: new Article title: 'hi', sections: []
+      article: new Article title: 'hi', sections: [], section_ids: []
       footerArticles: new Articles [_.extend(_.clone(fixtures.article),
         thumbnail_title: "This is a footer article"
-        vertical_id: null)]
+        section_ids: [])]
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
@@ -65,14 +65,14 @@ describe 'show template', ->
       asset: ->
     html.should.containEql 'This is a footer article'
 
-  it 'renders extra stickies if featured ones are missing and article is part of a vertical', ->
+  it 'renders extra stickies if featured ones are missing and article is part of a section', ->
     html = render('show')
-      article: new Article title: 'hi', sections: [], vertical_id: '55356a9deca560a0137aa4b7'
+      article: new Article title: 'hi', sections: [], section_ids: ['55356a9deca560a0137aa4b7']
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
       sd: {}
       asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical), title: 'Moo Bar'
-      allVerticalArticles: new Articles([_.extend(fixtures.article, tier: 1)])
+      section: new Section _.extend _.clone(fixtures.section), title: 'Moo Bar'
+      allSectionArticles: new Articles([_.extend(fixtures.article, tier: 1)])
     html.should.containEql '<li class="grid-item"><a href="/article/foobar">'

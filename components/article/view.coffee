@@ -83,12 +83,12 @@ module.exports = class ArticleView extends Backbone.View
       )
 
   events:
-    'click .articles-vertical-right-chevron, \
-    .articles-vertical-left-chevron': 'toggleVerticalCarousel'
+    'click .articles-section-right-chevron, \
+    .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
 
-  toggleVerticalCarousel: (e) ->
-    @$('.articles-vertical-show-header-right').toggleClass('is-over')
+  toggleSectionCarousel: (e) ->
+    @$('.articles-section-show-header-right').toggleClass('is-over')
 
   playVideo: (e) ->
     $cover = $(e.currentTarget).parent()

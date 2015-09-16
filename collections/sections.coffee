@@ -1,23 +1,23 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Vertical = require '../models/vertical.coffee'
+Section = require '../models/section.coffee'
 moment = require 'moment'
 
-module.exports = class Verticals extends Backbone.Collection
+module.exports = class Sections extends Backbone.Collection
 
-  url: "#{sd.POSITRON_URL}/api/verticals"
+  url: "#{sd.POSITRON_URL}/api/sections"
 
-  model: Vertical
+  model: Section
 
   parse: (data = {}) ->
     { @total, @count } = data
     data.results
 
   running: ->
-    @select (vertical) ->
+    @select (section) ->
       moment().isBetween(
-        moment(vertical.get('start_at'))
-        moment(vertical.get('end_at'))
+        moment(section.get('start_at'))
+        moment(section.get('end_at'))
       )
 
   sync: (method, model, options) ->

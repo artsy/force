@@ -8,19 +8,19 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  if vertical
-    header.articles-vertical-notice-header.main-layout-container
-      a.articles-vertical-notice-header-thumbnail( href=vertical.get('slug') )
-        img( src=vertical.get('thumbnail_url') )
-        .articles-vertical-notice-header-thumbnail-text
+  if section
+    header.articles-section-notice-header.main-layout-container
+      a.articles-section-notice-header-thumbnail( href=section.get('slug') )
+        img( src=section.get('thumbnail_url') )
+        .articles-section-notice-header-thumbnail-text
           h3 Featured Coverage
-          h4= vertical.get('title')
-      if vertical.get('partner_logo_url')
-        .articles-vertical-notice-header-partner-logo
+          h4= section.get('title')
+      if section.get('partner_logo_url')
+        .articles-section-notice-header-partner-logo
           p In partnership with
-          a( href=vertical.get('partner_website_url') target='_blank' )
-            img( src= vertical.get('partner_logo_url') )
-      .articles-vertical-notice-header-explore
-        a( href=vertical.get('slug') ) Explore
+          a( href=section.get('partner_website_url') target='_blank' )
+            img( src= section.get('partner_logo_url') )
+      .articles-section-notice-header-explore
+        a( href=section.get('slug') ) Explore
         .icon-chevron-small-right
   include full_feed
