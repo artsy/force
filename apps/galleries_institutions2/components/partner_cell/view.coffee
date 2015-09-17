@@ -33,9 +33,9 @@ module.exports = class PartnerCell extends Backbone.View
         imageUrl = show?.posterImageUrl()
         if imageUrl and not /missing_image.png/.test(imageUrl)
           options.success(imageUrl)
-        else options.failure()
+        else options.error()
 
-      failure: options.failure
+      error: options.error
     )
 
   getProfileCoverImage: (options = {})->
@@ -44,12 +44,12 @@ module.exports = class PartnerCell extends Backbone.View
         imageUrl = profile.coverImage()?.imageUrl('wide')
         if imageUrl and not /missing_image.png/.test(imageUrl)
           options.success(imageUrl)
-        else options.failure()
+        else options.error()
 
-      failure: options.failure
+      error: options.error
     )
 
-  setImage: (imageUrl, failure) =>
+  setImage: (imageUrl, error) =>
     @$image.css backgroundImage: "url(#{imageUrl})"
 
   setInitials: =>
@@ -59,10 +59,10 @@ module.exports = class PartnerCell extends Backbone.View
   getImage: ->
     @getFeaturedShowImage(
       success: @setImage,
-      failure: =>
+      error: =>
         @getProfileCoverImage(
           success: @setImage
-          failure: @setInitials
+          error: @setInitials
       )
     )
 

@@ -111,13 +111,10 @@ describe 'PartnerOverviewView', ->
         @template = sinon.stub()
         @artistsGridTemplate = sinon.stub()
         @partnerShowsGrid = sinon.stub()
-        @partnerLocations = sinon.stub()
-        @partnerLocations.returns { fetchUntilEnd: -> }
         @artistsListView = sinon.stub()
         mod.__set__ 'template', @template
         mod.__set__ 'artistsGridTemplate', @artistsGridTemplate
         mod.__set__ 'PartnerShowsGrid', @partnerShowsGrid
-        mod.__set__ 'PartnerLocations', @partnerLocations
         mod.__set__ 'ArtistsListView', @artistsListView
         done()
 
@@ -136,7 +133,6 @@ describe 'PartnerOverviewView', ->
         _.last(@template.args)[0].isPartner.should.be.ok()
         @artistsGridTemplate.calledOnce.should.be.ok()
         @partnerShowsGrid.calledOnce.should.be.ok()
-        @partnerLocations.called.should.not.be.ok()
         @artistsListView.called.should.not.be.ok()
 
       it 'renders correct sections for nonpartner galleries (top tier)', ->
@@ -152,7 +148,6 @@ describe 'PartnerOverviewView', ->
         _.last(@template.args)[0].showBanner.should.not.be.ok()
         @artistsGridTemplate.calledOnce.should.not.be.ok()
         @partnerShowsGrid.calledOnce.should.be.ok()
-        @partnerLocations.called.should.be.ok()
         @artistsListView.called.should.be.ok()
 
       it 'renders correct sections for nonpartner galleries (lower tier)', ->
@@ -168,5 +163,4 @@ describe 'PartnerOverviewView', ->
         _.last(@template.args)[0].showBanner.should.be.ok()
         @artistsGridTemplate.calledOnce.should.not.be.ok()
         @partnerShowsGrid.calledOnce.should.be.ok()
-        @partnerLocations.called.should.be.ok()
         @artistsListView.called.should.be.ok()
