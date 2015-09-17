@@ -6,6 +6,7 @@ module.exports =
     '^/user/edit'
     '^/sale/.*'
     '^/auction/.*'
+    '^/dev$'
   ]
 
   check: ->
