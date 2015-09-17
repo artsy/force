@@ -5,6 +5,7 @@ main-width = 696px
 aside-width = 400px
 header-height = 400px
 aside-margin = 100px
+mobile-padding = 20px
 
 .toolkit-header
   height header-height
@@ -16,7 +17,6 @@ aside-margin = 100px
     font-size 60px
     max-width (gutter-size + main-width + aside-width)
     margin auto
-    font-family garamond
     color white
     position absolute
     bottom 20px
@@ -27,43 +27,46 @@ aside-margin = 100px
     margin-left 20px
     width 130px
     float left
-    
+
 .toolkit-wrapper
   max-width (gutter-size + main-width + aside-width)
   margin auto
   height 100%
   position relative
-  
+
 .toolkit-container
   max-width (gutter-size + main-width + aside-width)
   margin auto
-  
+  position relative
+
 .toolkit-main
   max-width main-width
   font-size 21px
   line-height 32px
   position relative
   padding-right gutter-size
-  
+
 .toolkit-stack-img
   float left
   margin-right gutter-size
 
 .toolkit-stack-img, .toolkit-list
   margin-top (gutter-size - 4px)
-  
+
 .toolkit-ul li::before
   content "\2014"
   margin-right 5px
-  
+
 .toolkit-aside
   width aside-width
   height "calc(100% - %s)" % aside-margin
+  min-height 800px
   padding gutter-size
-  position position
-  top aside-margin
+  position absolute
+  top -(header-height - aside-margin)
+  right 0
   background white
-  box-shadow 0px 0px 20px black
+  box-shadow 2px -4px 20px rgba(0,0,0,0.3)
 
 .toolkit-main, .toolkit-aside
   display inline-block
@@ -71,16 +74,45 @@ aside-margin = 100px
 
 .get-toolkit
   garamond-size('s-headline')
-  
+
 .form-footer-text
   font-size 17px
-  color lightgray
-  
+  color gray-dark-color
+
 .toolkit-thank-you
   h3
     font-size 24px
   display none
-  
-  
-  
-  
+
+@media (max-width: 600px)
+
+  .toolkit-header
+    height 160px
+
+  .toolkit-artsy-logo
+    display none
+
+  .toolkit-wrapper h1
+    padding mobile-padding
+    font-size 40px
+    line-height 1.2em
+    bottom 0
+
+  .toolkit-main, .toolkit-aside
+    position relative
+    display block
+    margin 0
+    width 100%
+    padding 0 mobile-padding
+
+  .toolkit-aside
+    margin-top mobile-padding
+    box-shadow none
+    min-height 0
+    top 0
+
+  .toolkit-main
+    margin-bottom 60px
+
+  .toolkit-stack-img
+    float none
