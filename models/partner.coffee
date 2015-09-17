@@ -30,13 +30,6 @@ module.exports = class Partner extends Backbone.Model
   icon: ->
     new Icon @get('icon'), profileId: @get('id')
 
-  locations: ->
-    return @get('locations') if @has('locations')
-    locations = new PartnerLocations
-    locations.url = "#{@url()}/locations"
-    @set 'locations', locations
-    locations
-
   isLinkable: -> @get('default_profile_id') and @get('default_profile_public')
 
   alphaSortKey: ->
@@ -54,24 +47,9 @@ module.exports = class Partner extends Backbone.Model
       @displayLocations()
     ]).join(', ')
 
-  fetchLocations: (success) ->
-    locations = new PartnerLocations()
-    locations.url = "#{@url()}/locations"
-    locations.fetchUntilEnd success: success
-
   # @param {String} preferredLocation (optional)
   displayLocations: (preferredLocation) ->
-    if @get('locations')?.length
-      string =
-        @get('locations').findWhere(city: preferredLocation)?.get('city') or
-        @get('locations').first().get('city') or
-        @get('locations').first().get('country')
-
-      if @get('locations').length > 1
-        string += " + #{@get('locations').length - 1} other location"
-        string += "s" unless @get('locations').length is 2
-
-      string
+    @related().locations.displayLocations(preferredLocation)
 
   getMailTo: ->
     return "" unless @has('email') && @get('email').length > 0

@@ -78,9 +78,8 @@ module.exports = class PartnerOverviewView extends Backbone.View
   initializeLocations: ->
     return @$('.partner-overview-locations').hide() if @isPartner
 
-    locations = new PartnerLocations()
-    locations.url = "#{@partner.url()}/locations"
-    locations.fetchUntilEnd success: =>
+    locations = @partner.related().locations
+    locations.fetch success: =>
       return @$('.partner-overview-locations').hide() if locations.length is 0
 
       locationsArray = []

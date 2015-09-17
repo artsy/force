@@ -1,0 +1,33 @@
+@import '../../../../components/stylus_lib'
+.partner-featured-image .hoverable-image
+  background-size cover
+.partner-cell-metadata
+  margin-top 30px
+  position  relative
+.partner-cell-name
+  avant-garde()
+  avant-garde-size('m-headline')
+  text-decoration none
+.partner-cell-follow-button
+  font-size 10px
+  position absolute
+  right 0
+  top 50%
+  transform translateY(-50%)
+
+.hoverable-image.is-missing
+  position relative
+  background-color gray-lightest-color
+  border 1px solid gray-lighter-color
+  &:before
+    position absolute
+    content attr(data-initials)
+    color gray-dark-color
+    avant-garde()
+    font-size 27px
+    line-height 0
+    // 2% offset for Avant Garde baseline
+    top 52%
+    left 0
+    right 0
+    text-align center

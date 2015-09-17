@@ -6,10 +6,14 @@ append locals
   - assetPackage = 'galleries_institutions2'
 
 block body
-  header.galleries-institutions2-header
-    h1 Browse Galleries
-    .galleries-institutions2-right
-      a(href='/gallery-partnerships') Partner with Artsy
-      a(href='/gallery-insights') Gallery Insights
+  #galleries-page.galleries-page.main-layout-container
+    header.galleries-institutions2-header
+      h1 Browse Galleries
+      .galleries-institutions2-right
+        a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
+        a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
 
-  +partner-cell(partner)
+    .grid-3-up
+      each partner in partners
+        .partner-cell.grid-item(data-id=partner.id)
+          +partner-cell(partner)

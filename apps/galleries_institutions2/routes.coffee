@@ -1,7 +1,9 @@
-Partner = require '../../models/partner'
+Partners = require '../../collections/partners'
+Profile = require '../../models/profile'
 
 @galleries = (req, res, next) ->
-  partner = new Partner(id: 'gagosian-gallery')
-  partner.fetch error: res.backboneError, success: ->
-    res.locals.sd.PARTNER = partner.toJSON()
-    res.render 'index', partner: partner
+  partners = new Partners()
+  partners.fetch error: res.backboneError, success: ->
+    res.locals.sd.PARTNERS = partners.toJSON()
+    res.render 'index', partners: partners.models
+

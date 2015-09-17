@@ -18,8 +18,8 @@ describe 'ShowInquiryModal', ->
       sinon.stub @ShowInquiryView::, 'initialize'
       @view = new @ShowInquiryView
       @view.show = new Backbone.Model fabricate 'show'
-      @view.partner = new Partner fabricate 'partner',
-        locations: new Backbone.Collection [fabricate 'location']
+      @view.partner = new Partner fabricate 'partner'
+      @view.partner.related().locations.add fabricate 'location'
       @view.model = new Backbone.Model
       @view.model.url = ''
       done()
