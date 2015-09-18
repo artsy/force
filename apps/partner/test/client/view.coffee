@@ -50,10 +50,68 @@ describe 'PartnerView', ->
       Backbone.sync.restore()
 
     describe '#getDisplayableSections', ->
+      describe 'with minimal data to display', ->
+        beforeEach ->
+          @partner.set {
+            partner_artists_count: 0
+            displayable_shows_count: 0
+            published_not_for_sale_artworks_count: 0
+            published_for_sale_artworks_count: 0
+          }
+        it 'gallery', ->
+          @partner.set type: 'Gallery'
+          @partner.set claimed: true
+          @profile.set owner_type: 'PartnerGallery'
+          sections = @view.getDisplayableSections @view.getSections()
+          sections.should.eql ['overview', 'articles', 'contact']
 
-      it 'filters and gets the sections needed in the tabs', ->
-        sections = @view.getDisplayableSections @view.getSections()
-        sections.should.eql ['shows', 'articles', 'about']
+        it 'institution', ->
+          @partner.set type: 'Institution'
+          @profile.set owner_type: 'PartnerInstitution'
+          sections = @view.getDisplayableSections @view.getSections()
+          sections.should.eql ['articles', 'about']
+
+      describe 'with maximum data to display', ->
+        beforeEach ->
+          @partner.set {
+            partner_artists_count: 1
+            displayable_shows_count: 1
+            published_not_for_sale_artworks_count: 1
+            published_for_sale_artworks_count: 1
+          }
+
+        describe 'gallery', ->
+          beforeEach ->
+            @partner.set type: 'Gallery'
+            @partner.set claimed: true
+            @profile.set owner_type: 'PartnerGallery'
+
+          it 'display works section is disabled', ->
+            @partner.set display_works_section: false
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'artists', 'articles', 'contact']
+
+          it 'display work section is enabled', ->
+            @partner.set display_works_section: true
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
+
+
+        describe 'institution', ->
+          beforeEach ->
+            @partner.set type: 'Institution'
+            @profile.set owner_type: 'PartnerInstitution'
+
+          it 'display works section is disabled', ->
+            @partner.set display_works_section: false
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['shows', 'articles', 'shop', 'about']
+
+          it 'display work section is enabled', ->
+            @partner.set display_works_section: true
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['shows', 'collection', 'articles', 'shop', 'about']
+
 
     describe '#initializeTablistAndContent', ->
 
