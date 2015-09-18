@@ -10,8 +10,6 @@ formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
 module.exports = class ContactPartnerView extends ContactView
-  eligibleForAfterInquiryFlow: true
-
   # Prevents clicks on the backdrop from closing
   # the contact form
   events: -> _.extend super,

@@ -7,8 +7,6 @@ formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 { SESSION_ID, API_URL } = sd = require('sharify').data
 
 module.exports = class InquiryView extends ContactView
-  eligibleForAfterInquiryFlow: true
-
   # Prevents clicks on the backdrop from closing
   # the contact form
   events: -> _.extend super,
