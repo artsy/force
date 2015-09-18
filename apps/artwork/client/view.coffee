@@ -147,8 +147,7 @@ module.exports = class ArtworkView extends Backbone.View
     ).addClass 'is-fade-in'
 
   setupEmbeddedInquiryForm: ->
-    return if @suppressInquiry or
-      (@artwork.related().sales.first() and @artwork.related().sales.first().isClosed())
+    return if @suppressInquiry or not @artwork.isContactable()
 
     view = new EmbeddedInquiryView
       el: @$('.js-artwork-detail-contact')

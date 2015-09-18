@@ -3,7 +3,6 @@ Artwork = require '../../models/artwork'
 Artist = require '../../models/artist'
 Artists = require '../../collections/artists'
 Backbone = require 'backbone'
-defaultMessage = require '../../components/contact/default_message.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { client } = require '../../lib/cache'
 request = require 'superagent'
@@ -37,7 +36,6 @@ request = require 'superagent'
           tab: req.params.tab
           auctionId: req.query?.auction_id
           jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
-          defaultMessage: defaultMessage(artwork, artwork.related().partner)
           # HACK: Hide auction results for ADAA
           inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
       , ->

@@ -3,19 +3,13 @@ if auction.isAuctionPromo()
     .artwork-auction-estimate
       | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
-  if auction.isPreview() || auction.isOpen()
+  if auction.isPreview()
     .artwork-auction-promo-sale-message
       | Contact auction house to bid
 
-  if auction.isPreview()
-    include ../contact/templates/index
-
-  else if auction.isOpen()
+  if auction.isOpen()
     .artwork-auction-promo-open-message
       | This auction is currently open. To bid please call the auction house.
-
-  else
-    //- Auction is closed. Do nothing.
 
   .artwork-auction-detail-phone-number.js-artwork-auction-detail-phone-number
     //- Rendered separately
