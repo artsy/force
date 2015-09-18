@@ -12,8 +12,7 @@ module.exports =
   PROXY_API_URL: null
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
-  FUSION_URL: 'https://fusion.artsy.net'
-  PROXY_SITEMAPS: false
+  FUSION_URL: null
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'

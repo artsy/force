@@ -44,7 +44,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
         res.render('images_index', { pretty: true, artworkPages: artworkPages })
 
 @index = (req, res, next) ->
-  resources = ['artists']
+  resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs']
   async.parallel [
     # Get artworks between 3 month date ranges
     (cb) ->

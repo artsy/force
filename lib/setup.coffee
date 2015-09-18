@@ -7,7 +7,7 @@
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
   SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT,
-  PROXY_SITEMAPS } = config = require "../config"
+  FUSION_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -130,7 +130,7 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxySitemaps.app if PROXY_SITEMAPS
+  app.use proxySitemaps.app if FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
   app.use proxyReflection
