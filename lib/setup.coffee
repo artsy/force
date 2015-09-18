@@ -130,7 +130,7 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxySitemaps.app if FUSION_URL
+  app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
   app.use proxyReflection
