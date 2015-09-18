@@ -1,7 +1,7 @@
 @import '../components/tooltips'
 
 gutter-size = 44px
-main-width = 696px
+main-width = 696px + (gutter-size * 3)
 aside-width = 400px
 header-height = 400px
 aside-margin = 100px
@@ -40,6 +40,7 @@ mobile-padding = 20px
 
 .toolkit-main
   max-width main-width
+  margin-right aside-width
   font-size 21px
   line-height 32px
   position relative
@@ -83,13 +84,22 @@ mobile-padding = 20px
 
 .toolkit-thank-you
   h3
-    font-size 24px
+    garamond-size('headline')
   display none
+  
+.toolkit-header, .toolkit-main
+  padding-left gutter-size
 
-@media (max-width: 600px)
+@media (max-width: 900px)
+
+  .toolkit-stack-img
+    display none
+
+@media (max-width: 750px)
 
   .toolkit-header
     height 160px
+    padding-left 0px
 
   .toolkit-artsy-logo
     display none
@@ -116,5 +126,3 @@ mobile-padding = 20px
   .toolkit-main
     margin-bottom 60px
 
-  .toolkit-stack-img
-    float none

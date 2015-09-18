@@ -22,4 +22,5 @@ request = require 'superagent'
       double_optin: false
       send_welcome: false
     ).end (err, response) ->
-      res.send(response.status, response.body)
+      return next err if err
+      res.send(response?.status, response?.body or response?.text or err)
