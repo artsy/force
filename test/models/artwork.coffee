@@ -124,28 +124,64 @@ describe 'Artwork', ->
       @artwork.set 'diameter', 1
       @artwork.isHangable().should.not.be.true
 
-    it 'can be contacted', ->
-      @artwork.set { forsale: true, partner: 'existy', acquireable: false }
-      @artwork.isContactable().should.be.true()
-      @artwork.set { forsale: true, partner: 'existy', acquireable: true }
-      @artwork.isContactable().should.be.false()
-      @artwork.set { forsale: false, partner: 'existy', acquireable: false }
-      @artwork.isContactable().should.be.false()
-      @artwork.set { forsale: true, partner: undefined, acquireable: false }
-      @artwork.isContactable().should.be.false()
+    describe '#isPartOfAuction', ->
+      beforeEach ->
+        @artwork.related().sales.reset()
 
-      @artwork.related().sales.reset()
-      @artwork.set { forsale: true, partner: 'existy', acquireable: true }
-      @artwork.isContactable().should.be.false()
-      @artwork.related().sales.add is_auction: true, sale_type: 'auction promo'
-      @artwork.isContactable().should.be.true()
+      it 'returns true if the artwork has a related auction', ->
+        @artwork.isPartOfAuction().should.be.false()
+        # Adds a promo
+        @artwork.related().sales.add sale_type: 'auction promo', auction_state: 'preview'
+        @artwork.isPartOfAuction().should.be.false()
+        # Adds auction
+        @artwork.related().sales.add is_auction: true
+        @artwork.isPartOfAuction().should.be.true()
 
-    it 'might be part of an auction promo', ->
-      @artwork.related().sales.reset()
-      @artwork.related().sales.add is_auction: true
-      @artwork.isPartOfAuctionPromo().should.be.false()
-      @artwork.related().sales.add is_auction: true, sale_type: 'auction promo'
-      @artwork.isPartOfAuctionPromo().should.be.true()
+    describe '#isPartOfAuctionPromo', ->
+      beforeEach ->
+        @artwork.related().sales.reset()
+
+      it 'might be part of an auction promo', ->
+        @artwork.related().sales.add is_auction: true
+        @artwork.isPartOfAuctionPromo().should.be.false()
+        @artwork.related().sales.add sale_type: 'auction promo'
+        @artwork.isPartOfAuctionPromo().should.be.true()
+
+    describe '#isContactable', ->
+      it 'can be contacted given the correct flags', ->
+        @artwork.set forsale: true, partner: 'existy', acquireable: false
+        @artwork.isContactable().should.be.true()
+        @artwork.set forsale: true, partner: 'existy', acquireable: true
+        @artwork.isContactable().should.be.false()
+        @artwork.set forsale: false, partner: 'existy', acquireable: false
+        @artwork.isContactable().should.be.false()
+        @artwork.set forsale: true, partner: undefined, acquireable: false
+        @artwork.isContactable().should.be.false()
+
+      describe 'with auction promo', ->
+        beforeEach ->
+          @artwork.related().sales.reset()
+
+        it 'is contactable given an auction promo in the preview state', ->
+          @artwork.set forsale: true, partner: 'existy', acquireable: true
+          # Despite being normally uncontactable
+          @artwork.isContactable().should.be.false()
+          # Becomes contactable in the presence of a previeable promo
+          @artwork.related().sales.add sale_type: 'auction promo', auction_state: 'preview'
+          @artwork.isContactable().should.be.true()
+
+      describe 'with an auction', ->
+        beforeEach ->
+          @artwork.related().sales.reset()
+
+        it 'is not contactable at all', ->
+          @artwork.set forsale: true, partner: 'existy', acquireable: false
+          # Contactable at first
+          @artwork.isContactable().should.be.true()
+          # Auction enters
+          @artwork.related().sales.add is_auction: true
+          # No longer contactable
+          @artwork.isContactable().should.be.false()
 
     it 'might be unavailable... but inquireable', ->
       @artwork.set { forsale: false, inquireable: true, sold: false }
