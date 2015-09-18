@@ -7,7 +7,7 @@ async = require 'async'
 { API_URL, POSITRON_URL, FUSION_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
-FUSION_PAGE_SIZE = 10000
+FUSION_PAGE_SIZE = 1000
 
 epoch = -> moment('2010,9,1')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
@@ -103,7 +103,6 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
   res.render('cities', pretty: true, citySlugs: _.pluck(Cities, 'slug'))
 
 @artworksPage = (req, res, next) ->
-  console.log req.params
   request
     .get("#{FUSION_URL}/api/v1/artworks")
     .query(
