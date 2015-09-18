@@ -6,11 +6,12 @@ Backbone = require 'backbone'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { client } = require '../../lib/cache'
 request = require 'superagent'
+{ FUSION_URL } = require '../../config'
 
 @index = (req, res, next) ->
   artwork = new Artwork id: req.params.id
   artwork.fetch
-    cache: true
+    cache: not FUSION_URL?
     error: res.backboneError
     success: (model, response, options) ->
       # Remove the current artwork tab from the path to more easily test against artwork.href()
