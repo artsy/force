@@ -7,7 +7,7 @@ async = require 'async'
 { API_URL, POSITRON_URL, FUSION_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
-FUSION_PAGE_SIZE = 1000
+FUSION_PAGE_SIZE = 10000
 
 epoch = -> moment('2010,9,1')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
@@ -46,7 +46,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
 @index = (req, res, next) ->
   resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs']
   async.parallel [
-    # Get artworks between 3 month date ranges
+    # Get artworks between month date ranges
     (cb) ->
       async.map buckets, (bucket, cb) ->
         request
