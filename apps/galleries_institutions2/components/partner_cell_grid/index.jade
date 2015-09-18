@@ -1,0 +1,6 @@
+include ../partner_cell/index
+
+mixin partner-cell-grid(partners)
+  .partner-cell-grid.partner-cell-grid-3-up
+    each partner in partners
+      +partner-cell(partner)

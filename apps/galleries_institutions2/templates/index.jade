@@ -1,4 +1,4 @@
-include ../components/partner_cell/index
+include ../components/partner_cell_grid/index
 
 extends ../../../components/main_layout/templates/index
 
@@ -13,7 +13,4 @@ block body
         a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
         a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
 
-    .grid-3-up
-      each partner in partners
-        .partner-cell.grid-item(data-id=partner.id)
-          +partner-cell(partner)
+    +partner-cell-grid(partners)

@@ -1,0 +1,11 @@
+@import '../../../../components/stylus_lib'
+@import '../../../../components/grid'
+
+row-gap = 60px
+
+.partner-cell-grid-3-up
+  grid-3-up(20px, 30px)
+.partner-cell-grid-3-up > .grid-item
+  margin-top row-gap
+  @media screen and (max-width: 1024px)
+    margin-top row-gap/2
