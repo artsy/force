@@ -16,57 +16,10 @@ append locals
 
 block body
   header.toolkit-header
-    img.toolkit-artsy-logo(src='/toolkit_artsy_white_logo.png')
     .toolkit-wrapper
+      img.toolkit-artsy-logo(src='/toolkit_artsy_white_logo.png')
       h1 Social Media Toolkit <br> For Galleries
   .toolkit-container
-    aside.toolkit-aside
-      .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
-        p.get-toolkit Get the toolkit
-        br
-
-        .stacked-form-cell
-          label.avant-garde-form-label( for='FNAME' ) First Name
-          input#FNAME.bordered-input.is-block( type='text', name='FNAME' )
-
-        .stacked-form-cell
-          label.avant-garde-form-label( for='LNAME' ) Last Name
-          input#LNAME.bordered-input.is-block( type='email', name='LNAME' )
-
-        .stacked-form-cell
-          label.avant-garde-form-label Email Address
-          input#EMAIL.bordered-input.is-block( type='text', name='EMAIL' )
-
-        .stacked-form-cell
-          label.avant-garde-form-label( for='GNAME' ) Gallery Name
-          input#GNAME.bordered-input.is-block( type='text', name='GNAME' )
-
-        .stacked-form-cell
-          label.avant-garde-form-label( for='GSITE' ) Website
-          input#GSITE.bordered-input.is-block( type='url', name='GSITE' )
-
-        br
-
-        button.avant-garde-button-black.js-toolkit-download Download
-        br
-        p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
-        hr.is-invisible
-        //-need to handle form error?
-
-      .toolkit-thank-you
-        h3 Thanks for downloading Artsy's Social Media Tookit For Galleries.
-        br
-        p We've also emailed you a link to the toolkit and an invitation to Artsy's
-        a( href='' ) Social Media Webinar
-        | .
-        br
-        br
-        p The toolkit is a guide for anyone in the art world who wants to improve their social media presence.
-        br
-        p You can share it with your network via social media, or via email here:
-        br
-        .toolkit-share: +share('Download Artsy\'s Social Media Toolkit for Galleries')
-        //- need email/LinkedIn tooltips
     main.toolkit-main
       br
       p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
@@ -76,6 +29,54 @@ block body
         li Build an audience of collectors on Instagram
         li Launch successful campaigns on Facebook
         li Compose Tweets that will get your gallery noticed
+    aside.toolkit-aside
+      .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
+        p.get-toolkit Get the toolkit
+        br
+        
+        .stacked-form-cell
+          label.avant-garde-form-label( for='FNAME' ) First Name
+          input#FNAME.bordered-input.is-block( type='text', name='FNAME', required value=fname)
+        
+        .stacked-form-cell
+          label.avant-garde-form-label( for='LNAME' ) Last Name
+          input#LNAME.bordered-input.is-block( type='email', name='LNAME', required value=lname )
+
+        .stacked-form-cell
+          label.avant-garde-form-label Email Address
+          input#EMAIL.bordered-input.is-block( type='text', name='EMAIL', required value=email )
+
+        .stacked-form-cell
+          label.avant-garde-form-label( for='GNAME' ) Gallery Name
+          input#GNAME.bordered-input.is-block( type='text', name='GNAME' value=gname )
+
+        .stacked-form-cell
+          label.avant-garde-form-label( for='GSITE' ) Website
+          input#GSITE.bordered-input.is-block( type='url', name='GSITE' value=gsite )
+        
+        br
+        a( href='http://files.artsy.net/documents/artsysocialmediatoolkit_sept2015.pdf' download='ArtsySocialMediaToolkit.pdf' )
+          //-replace with toolkit PDF/link when the time comes
+          button.avant-garde-button-black.toolkit-button.js-toolkit-download Download
+        br
+        p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
+        hr.is-invisible 
+        //-need to handle form error?
+        
+      .toolkit-thank-you
+        h3 Thanks for downloading Artsy's Social Media Tookit For Galleries.
+        br
+        p We've also emailed you a link to the toolkit and an invitation to Artsy's
+        a( href='https://www.eventbrite.com/e/artsy-gallery-insights-social-media-for-the-art-design-world-tickets-18119000418' ) Social Media Webinar
+        | .
+        br
+        br
+        p The toolkit is a guide for anyone in the art world who wants to improve their social media presence.
+        br
+        p You can share it with your network via social media, or via email here:
+        br
+        .toolkit-share: +share('Download Artsy\'s Social Media Toolkit for Galleries')
+        //- need email/LinkedIn tooltips 
 
 
 

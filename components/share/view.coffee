@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 
 module.exports = class ShareView extends Backbone.View
   events:
-    'click a': 'popUp'
+    'click a:not(.share-by-email)': 'popUp'
 
   # Pops up the URL and centers the crap out of it
   popUp: (e) ->

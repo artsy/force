@@ -78,7 +78,6 @@ module.exports =
   MAILCHIMP_KEY: null
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
   GALLERY_INSIGHTS_LIST: null
-  TOOLKIT_LIST: 'foo' #update this w/ name of mailchip toolkit list
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
