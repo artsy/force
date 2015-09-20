@@ -33,5 +33,6 @@ router.get '/jobs', isResponsive
 router.get '/press/*', isResponsive
 router.get '/how-auctions-work', isResponsive
 router.get '/social-media-toolkit', isResponsive
+router.post '/social-media-toolkit', isResponsive
 router.use redirect
 module.exports = router
