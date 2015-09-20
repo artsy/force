@@ -28,7 +28,7 @@ mobile-padding = 20px
     float left
 
 .toolkit-wrapper
-  max-width (gutter-size + main-width + aside-width)
+  max-width (main-width + aside-width)
   margin auto
   height 100%
   position relative
@@ -74,7 +74,7 @@ mobile-padding = 20px
 
 .get-toolkit
   garamond-size('s-headline')
-  
+
 .toolkit-button
   width 100%
 
@@ -86,9 +86,12 @@ mobile-padding = 20px
   h3
     garamond-size('headline')
   display none
-  
+
 .toolkit-header, .toolkit-main
   padding-left gutter-size
+
+.toolkit-error
+  color red-color
 
 @media (max-width: 900px)
 

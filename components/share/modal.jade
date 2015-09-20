@@ -2,14 +2,6 @@ h1.avant-garde-header-center Share
 
 .stacked-button-menu.share-menu
   .share-menu-buttons
-    a.share-by-email(
-      data-message='Share via email',
-      data-service='email',
-      href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}",
-      target='_blank'
-      )
-      i.icon-email
-        | Email
     a.share-to-facebook(
       data-message='Post to Facebook',
       data-service='facebook',
@@ -43,7 +35,13 @@ h1.avant-garde-header-center Share
     )
       i.icon-tumblr
       | Tumblr
-
+    a.share-by-email(
+      data-message='Share via email',
+      data-service='email',
+      href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}",
+    )
+      i.icon-mail
+      | Email
   span
     i.icon-link
     input.bordered-input(

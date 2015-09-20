@@ -18,9 +18,10 @@ module.exports.init = ->
         email: $('input[name=EMAIL]').val()
         gname: $('input[name=GNAME]').val()
         gsite: $('input[name=GSITE]').val()
-      # error: (xhr) ->
-      #   $(e.currentTarget).attr 'data-state', 'error'
-      #   $('.toolkit-error').text(xhr.responseText) **handle this error once Mailchimp endpoint issue is
+      error: (xhr) ->
+        $(e.currentTarget).attr 'data-state', 'error'
+        $('.toolkit-error').text JSON.parse(xhr.responseText).error
+        setTimeout (-> $(e.currentTarget).attr 'data-state', ''), 1000
       success: (res) =>
         $(e.currentTarget).attr 'data-state', null
         $('.toolkit-form').fadeOut ->
