@@ -4,9 +4,7 @@ ShareView = require '../../components/share/view.coffee'
 
 module.exports.init = ->
   $('body').css background: 'white'
-
   new ShareView el: $('.toolkit-share')
-
   $('.js-toolkit-download').click (e)->
     $(e.currentTarget).attr 'data-state', 'loading'
     $.ajax
@@ -23,6 +21,6 @@ module.exports.init = ->
         $('.toolkit-error').text JSON.parse(xhr.responseText).error
         setTimeout (-> $(e.currentTarget).attr 'data-state', ''), 1000
       success: (res) =>
+        open('ArtsySocialMediaToolkit.pdf', '_parent')
         $(e.currentTarget).attr 'data-state', null
-        $('.toolkit-form').fadeOut ->
-          $('.toolkit-thank-you').fadeIn()
+        $('.toolkit-form').fadeOut -> $('.toolkit-thank-you').fadeIn()
