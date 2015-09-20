@@ -33,11 +33,11 @@ block body
       .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
         p.get-toolkit Get the toolkit
         br
-        
+
         .stacked-form-cell
           label.avant-garde-form-label( for='FNAME' ) First Name
           input#FNAME.bordered-input.is-block( type='text', name='FNAME', required value=fname)
-        
+
         .stacked-form-cell
           label.avant-garde-form-label( for='LNAME' ) Last Name
           input#LNAME.bordered-input.is-block( type='email', name='LNAME', required value=lname )
@@ -53,16 +53,17 @@ block body
         .stacked-form-cell
           label.avant-garde-form-label( for='GSITE' ) Website
           input#GSITE.bordered-input.is-block( type='url', name='GSITE' value=gsite )
-        
+
         br
-        a( href='http://files.artsy.net/documents/artsysocialmediatoolkit_sept2015.pdf' download='ArtsySocialMediaToolkit.pdf' )
-          //-replace with toolkit PDF/link when the time comes
-          button.avant-garde-button-black.toolkit-button.js-toolkit-download Download
+        p.toolkit-error
+        a(
+          href='http://files.artsy.net/documents/artsysocialmediatoolkit_sept2015.pdf'
+          download='ArtsySocialMediaToolkit.pdf'
+        ).avant-garde-button-black.toolkit-button.js-toolkit-download Download
         br
         p.form-footer-text Download the Toolkit and receive Artsy's Gallery Insights monthly.
-        hr.is-invisible 
-        //-need to handle form error?
-        
+        hr.is-invisible
+
       .toolkit-thank-you
         h3 Thanks for downloading Artsy's Social Media Tookit For Galleries.
         br
@@ -76,7 +77,7 @@ block body
         p You can share it with your network via social media, or via email here:
         br
         .toolkit-share: +share('Download Artsy\'s Social Media Toolkit for Galleries')
-        //- need email/LinkedIn tooltips 
+        //- need email/LinkedIn tooltips
 
 
 
