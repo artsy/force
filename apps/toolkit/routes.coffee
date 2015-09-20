@@ -23,3 +23,8 @@ request = require 'superagent'
       send_welcome: false
     ).end (err, response) ->
       res.send(response?.status, response?.body or response?.text or err.body)
+
+@pdf = (req, res, next) ->
+  res
+    .set('Content-Disposition': 'attachment')
+    .sendFile __dirname + '/public/toolkit.pdf'
