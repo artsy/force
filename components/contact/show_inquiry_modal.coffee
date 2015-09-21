@@ -25,7 +25,7 @@ module.exports = class ShowInquiryModal extends ContactView
   initialize: (options) ->
     { @show } = options
     @partner = new Partner @show.get('partner')
-    @partner.locations().fetch complete: =>
+    @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -36,7 +36,7 @@ module.exports = class ShowInquiryModal extends ContactView
     @isLoading()
 
   renderLocation: =>
-    return if @partner.locations().length > 1
+    return if @partner.related().locations.length > 1
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 

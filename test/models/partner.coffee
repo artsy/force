@@ -1,5 +1,4 @@
 { fabricate } = require 'antigravity'
-Backbone = require 'backbone'
 Partner = require '../../models/partner'
 
 describe 'Partner', ->
@@ -8,7 +7,7 @@ describe 'Partner', ->
       type: 'Gallery'
       sortable_id: 'gagosian-gallery'
       default_profile_id: 'gagosian'
-      locations: new Backbone.Collection [fabricate 'location']
+    @partner.related().locations.add fabricate 'location'
 
   describe '#displayType', ->
     it 'returns the correct type string (1)', ->
@@ -17,19 +16,6 @@ describe 'Partner', ->
     it 'returns the correct type string (2)', ->
       @partner.set 'type', 'Auction'
       @partner.displayType().should.equal 'Auction House'
-
-  describe '#locations', ->
-    it 'creates an empty collection that can fetch the locations if none exist', ->
-      partner = new Partner
-      locations = partner.locations()
-      locations.length.should.equal 0
-      locations.url.should.equal "#{partner.url()}/locations"
-      locations.should.have.property 'models'
-
-    it 'returns a location collection if it exists', ->
-      locations = @partner.locations()
-      locations.length.should.equal 1
-      locations.first().attributes.should.have.property 'city'
 
   describe '#alphaSortKey', ->
     it "returns the partner model's sortable_id", ->
@@ -43,22 +29,14 @@ describe 'Partner', ->
     it "returns the partner's name", ->
       @partner.displayName().should.equal @partner.get('name')
 
+  describe 'partner locations', ->
+    it "has related PartnerLocations collection", ->
+      @partner.related().locations.length.should.equal(1)
+
   describe '#displayLocations', ->
+    it "acts as a proxy to partner.related().locations", ->
+      @partner.displayLocations().should.equal @partner.related().locations.displayLocations()
+
     it "returns a string representing the partner's locations", ->
       @partner.displayLocations().should.equal 'New York'
 
-    it 'handles 2 locations', ->
-      @partner.get('locations').add fabricate 'location'
-      @partner.displayLocations().should.equal 'New York + 1 other location'
-
-    it 'handles n locations', ->
-      @partner.get('locations').add fabricate 'location'
-      @partner.get('locations').add fabricate 'location'
-      @partner.get('locations').add fabricate 'location', city: 'Paris'
-      @partner.displayLocations().should.equal 'New York + 3 other locations'
-
-    it 'displays a preferred location if passed in', ->
-      @partner.get('locations').add fabricate 'location'
-      @partner.get('locations').add fabricate 'location'
-      @partner.get('locations').add fabricate 'location', city: 'Paris'
-      @partner.displayLocations('Paris').should.equal 'Paris + 3 other locations'

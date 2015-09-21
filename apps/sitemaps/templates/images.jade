@@ -3,7 +3,7 @@ urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
 )
-  for artwork in artworks
+  for artwork in models
     url
       loc='https://www.artsy.net/artwork/' + artwork.id
       image:image
@@ -11,10 +11,9 @@ urlset(
         image:loc=artwork.images[0].image_urls.large
         image:title=artwork.title
         if artwork.artist
-          image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.' 
+          image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.'
         else
           image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.'
 
 
 
-    

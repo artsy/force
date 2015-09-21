@@ -1,4 +1,4 @@
-include ../components/partner_cell/index
+include ../components/partner_cell_grid/index
 
 extends ../../../components/main_layout/templates/index
 
@@ -6,10 +6,11 @@ append locals
   - assetPackage = 'galleries_institutions2'
 
 block body
-  header.galleries-institutions2-header
-    h1 Browse Galleries
-    .galleries-institutions2-right
-      a(href='/gallery-partnerships') Partner with Artsy
-      a(href='/gallery-insights') Gallery Insights
+  #galleries-page.galleries-page.main-layout-container
+    header.galleries-institutions2-header
+      h1 Browse Galleries
+      .galleries-institutions2-right
+        a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
+        a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
 
-  +partner-cell(partner)
+    +partner-cell-grid(partners)

@@ -9,3 +9,16 @@ module.exports = class PartnerLocations extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)
 
   model: PartnerLocation
+
+  displayLocations: (preferredLocation) ->
+    if @length
+      string =
+        @findWhere(city: preferredLocation)?.get('city') or
+        @first().get('city') or
+        @first().get('country')
+
+      if @length > 1
+        string += " + #{@length - 1} other location"
+        string += "s" unless @length is 2
+
+      string

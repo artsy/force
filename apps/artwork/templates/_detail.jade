@@ -104,9 +104,13 @@
     #artwork-partner-phone-container
       //- Rendered client-side
 
-    //- Embedded inquiry form
-    #artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
-      //- rendered client side
+  //- Embedded inquiry form
+  //-
+  //- Intentionally not nested under the `isContactable` flag
+  //- May become contactable later on depending on the state
+  //- of any related auctions(-promos)
+  #artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
+    //- Rendered client-side
 
   //- Buy
   if artwork.get('acquireable')

@@ -28,7 +28,6 @@ describe 'Inquiry', ->
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
       sinon.stub Inquiry.prototype, 'isLoaded'
-      sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
       @view.renderTemplates()
       done()

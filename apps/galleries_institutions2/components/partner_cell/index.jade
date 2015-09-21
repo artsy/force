@@ -1,4 +1,14 @@
 mixin partner-cell(partner)
-  .partner-cell
-    h1= partner.get('name')
-    button.partner-cell-follow-button.avant-garde-button-white.follow-button
+  - var profileId = partner.get('default_profile_id')
+  - var profileHref = "/" + profileId
+
+  .partner-cell.grid-item(data-id=partner.id)
+    a.partner-featured-image.hoverable-image-link(
+      href= profileHref
+    )
+      .hoverable-image.is-three-two
+
+    .partner-cell-metadata
+      a.partner-cell-name.avant-garde-header( href= profileHref )= partner.get('name')
+      .partner-cell-location
+      button.partner-cell-follow-button.avant-garde-button-white.is-small.follow-button( data-id= profileId )

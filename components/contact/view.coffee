@@ -8,17 +8,13 @@ CurrentUser = require '../../models/current_user.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 analytics = require '../../lib/analytics.coffee'
 FlashMessage = require '../flash/index.coffee'
-AfterInquiry = require '../after_inquiry/mixin.coffee'
 
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ContactView extends ModalView
   _.extend @prototype, Form
-  _.extend @prototype, AfterInquiry
 
   className: 'contact'
-
-  eligibleForAfterInquiryFlow: false
 
   template: template
   headerTemplate: -> 'Comments'
@@ -78,7 +74,7 @@ module.exports = class ContactView extends ModalView
     # Set the data but don't persist it yet
     @model.set @serializeForm()
 
-    @maybeSend @model,
+    @model.save null,
       success: =>
         @close =>
           new FlashMessage message: @options.successMessage

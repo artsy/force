@@ -4,9 +4,7 @@ ShareView = require '../../components/share/view.coffee'
 
 module.exports.init = ->
   $('body').css background: 'white'
-
   new ShareView el: $('.toolkit-share')
-
   $('.js-toolkit-download').click (e)->
     $(e.currentTarget).attr 'data-state', 'loading'
     $.ajax
@@ -18,10 +16,11 @@ module.exports.init = ->
         email: $('input[name=EMAIL]').val()
         gname: $('input[name=GNAME]').val()
         gsite: $('input[name=GSITE]').val()
-      # error: (xhr) ->
-      #   $(e.currentTarget).attr 'data-state', 'error'
-      #   $('.toolkit-error').text(xhr.responseText) **handle this error once Mailchimp endpoint issue is
+      error: (xhr) ->
+        $(e.currentTarget).attr 'data-state', 'error'
+        $('.toolkit-error').text JSON.parse(xhr.responseText).error
+        setTimeout (-> $(e.currentTarget).attr 'data-state', ''), 1000
       success: (res) =>
+        open('ArtsySocialMediaToolkit.pdf', '_parent')
         $(e.currentTarget).attr 'data-state', null
-        $('.toolkit-form').fadeOut ->
-          $('.toolkit-thank-you').fadeIn()
+        $('.toolkit-form').fadeOut -> $('.toolkit-thank-you').fadeIn()

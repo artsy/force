@@ -18,7 +18,7 @@ module.exports = class Artwork extends Backbone.Model
   _.extend @prototype, Relations
 
   urlRoot: ->
-    "#{sd.API_URL}/api/v1/artwork"
+    "#{sd.FUSION_URL or sd.API_URL}/api/v1/artwork"
 
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
@@ -103,15 +103,26 @@ module.exports = class Artwork extends Backbone.Model
     return true if @hasDimension('width') and @hasDimension('height') and not @tooBig()
     false
 
-  # Should we include a button to contact the partner?
-  #
-  # return {Boolean}
-  isContactable: ->
-    (@get('forsale') and @has('partner') and not @get('acquireable')) or
-    @isPartOfAuctionPromo()
-
   isPartOfAuctionPromo: ->
     @related().sales.firstAuctionPromo()?
+
+  # Should we include a form or button to contact the partner?
+  #
+  isContactable: ->
+    return true if @isPartOfContactableAuctionPromo()
+    return false if @isPartOfAuction()
+    @isArtworkContactable()
+
+  isPartOfAuction: ->
+    @related().sales.firstAuction()?
+
+  # Independent of a related sale context: is the work contactable
+  isArtworkContactable: ->
+    @get('forsale') and @has('partner') and not @get('acquireable')
+
+  # Works within promos can only be contactable if the promo is still a preview
+  isPartOfContactableAuctionPromo: ->
+    (auctionPromo = @related().sales.firstAuctionPromo())? and auctionPromo.isPreview()
 
   # The work is not for sale but a buyer may be interested
   # in related works

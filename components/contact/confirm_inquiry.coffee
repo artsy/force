@@ -4,7 +4,6 @@ ContactView = require './view.coffee'
 analytics = require('../../lib/analytics.coffee')
 Partner = require '../../models/partner.coffee'
 Cookies = require 'cookies-js'
-AfterInquiry = require '../after_inquiry/mixin.coffee'
 Form = require '../mixins/form.coffee'
 defaultMessage = require './default_message.coffee'
 
@@ -15,9 +14,6 @@ headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments
 
 module.exports = class ConfirmInquiryView extends ContactView
   _.extend @prototype, Form
-  _.extend @prototype, AfterInquiry
-
-  eligibleForAfterInquiryFlow: true
 
   events: -> _.extend super,
     'click.handler .modal-backdrop': undefined
@@ -52,7 +48,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     @inputEmail = options.inputEmail
     @partner = new Partner options.partner
     @inputMessage = options.inputMessage ?= defaultMessage(@artwork, @partner)
-    @partner.locations().fetch complete: =>
+    @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -62,7 +58,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     super
 
   renderLocation: =>
-    return if @partner.locations().length > 1
+    return if @partner.related().locations.length > 1
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
@@ -84,7 +80,7 @@ module.exports = class ConfirmInquiryView extends ContactView
       inquiry_url: window.location.href
       user: @user
 
-    @maybeSend @model,
+    @model.save null,
       success: =>
         @inquirySentAnalytics()
         @close()

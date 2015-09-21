@@ -3,6 +3,11 @@ mixin share(description, media, url)
   - description = description || ''
   - media = media || ''
 
+  a.share-by-email.black-tooltip(
+    data-message='Share via email'
+    data-service='email'
+    href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}"
+    ): i.icon-mail
   a.share-to-facebook.black-tooltip(
     data-message='Post to Facebook'
     data-service='facebook'
@@ -15,3 +20,4 @@ mixin share(description, media, url)
     href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy"
     target='_blank'
   ): i.icon-twitter
+

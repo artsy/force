@@ -10,8 +10,6 @@ formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
 module.exports = class ContactPartnerView extends ContactView
-  eligibleForAfterInquiryFlow: true
-
   # Prevents clicks on the backdrop from closing
   # the contact form
   events: -> _.extend super,
@@ -37,7 +35,7 @@ module.exports = class ContactPartnerView extends ContactView
   initialize: (options) ->
     { @artwork, @partner } = options
 
-    @partner.locations().fetch complete: =>
+    @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -51,7 +49,7 @@ module.exports = class ContactPartnerView extends ContactView
     super
 
   renderLocation: =>
-    return if @partner.locations().length > 1
+    return if @partner.related().locations.length > 1
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 

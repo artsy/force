@@ -7,7 +7,6 @@ AuthModalView = require '../../components/auth_modal/view.coffee'
 EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
 Logger = require '../../components/inquiry_questionnaire/logger.coffee'
-defaultMessage = require '../../components/contact/default_message.coffee'
 
 module.exports.init = ->
   # Force a particular step

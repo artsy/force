@@ -1,8 +1,6 @@
 Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
 BuyersPremiumModal = require './buyers_premium_modal.coffee'
-ContactView = require '../contact/view.coffee'
-defaultMessage = require '../../../../components/contact/default_message.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 template = -> require('./template.jade') arguments...
@@ -18,11 +16,6 @@ module.exports = class AuctionDetailView extends Backbone.View
   initialize: ({ @artwork, @user, @auction, @saleArtwork, @bidderPositions }) ->
     @partner = @artwork.related().partner
     @locations = @partner.related().locations
-
-    @partnerPhoneNumberView = new PartnerPhoneNumberView model: @artwork, collection: @locations
-
-    if @auction.isAuctionPromo() and @auction.isOpen()
-      new ContactView el: @$el, model: @artwork
 
   openAuctionFAQs: (e) ->
     e.preventDefault()
@@ -62,13 +55,15 @@ module.exports = class AuctionDetailView extends Backbone.View
       saleArtwork: @saleArtwork
       artwork: @saleArtwork.artwork()
       bidderPositions: @bidderPositions
-      defaultMessage: defaultMessage(@artwork, @artwork.related().partner)
     ).addClass 'is-fade-in'
 
     $('#artwork-lot-number')
       .html 'Lot ' + num if num = @saleArtwork.get('lot_number')
 
     if @auction.isOpen()
+      @partnerPhoneNumberView = new PartnerPhoneNumberView
+        model: @artwork
+        collection: @locations
       @$('.js-artwork-auction-detail-phone-number')
         .html @partnerPhoneNumberView.render().$el
 

@@ -24,7 +24,7 @@ module.exports = class ShippingForm extends ErrorHandlingForm
 
   renderPartnerLocations: ->
     for partner in @model.getLineItemPartners()
-      locations = partner.locations()
+      locations = partner.related().locations
       locations.fetch
         success: ->
           $('.order-seller-section .name').text partner.displayNameAndLocation()

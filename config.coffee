@@ -12,6 +12,7 @@ module.exports =
   PROXY_API_URL: null
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
+  FUSION_URL: null
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
@@ -77,7 +78,6 @@ module.exports =
   MAILCHIMP_KEY: null
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
   GALLERY_INSIGHTS_LIST: null
-  TOOLKIT_LIST: 'foo' #update this w/ name of mailchip toolkit list
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

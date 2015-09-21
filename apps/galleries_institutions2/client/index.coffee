@@ -1,7 +1,10 @@
-PartnerCell = require '../components/partner_cell/view.coffee'
+PartnerCellGrid = require '../components/partner_cell_grid/view.coffee'
 sd = require('sharify').data
 Partner = require '../../../models/partner.coffee'
+Partners = require '../../../collections/partners.coffee'
+
 module.exports.init = ->
-  new PartnerCell
-    el: $('.partner-cell')
-    partner: new Partner sd.PARTNER
+  partners = new Partners sd.PARTNERS
+  new PartnerCellGrid
+    partners: partners
+    $el: $('.partner-cell-grid')

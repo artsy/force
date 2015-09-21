@@ -31,7 +31,6 @@ describe 'ContactPartnerView', ->
       sinon.stub ContactPartnerView.prototype, 'isLoaded'
       sinon.stub ContactPartnerView.prototype, 'open'
       sinon.stub ContactPartnerView.prototype, 'updatePosition'
-      sinon.stub(ContactPartnerView.prototype, 'displayAfterInquiryFlow').returns false
       ContactPartnerView.__set__ 'SESSION_ID', '1111'
       @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
       _.last(Backbone.sync.args)[2].complete [fabricate('location')]

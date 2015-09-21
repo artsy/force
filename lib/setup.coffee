@@ -6,7 +6,8 @@
 
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT } = config = require "../config"
+  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT,
+  FUSION_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -15,6 +16,7 @@ sharify = require "sharify"
 http = require 'http'
 path = require "path"
 artsyPassport = require 'artsy-passport'
+artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
@@ -123,15 +125,12 @@ module.exports = (app) ->
   fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
     app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
-  app.use express.static(path.resolve(__dirname, '../public'),
-    setHeaders: (res, file, stat) ->
-      if path.basename(file) == "apple-app-site-association"
-        res.setHeader("Content-Type", "application/pkcs7-mime")
-  )
+  app.use express.static(path.resolve __dirname, '../public')
+  app.use '/apple-app-site-association', artsyEigenWebAssociation
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxySitemaps.app
+  app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
   app.use proxyReflection
