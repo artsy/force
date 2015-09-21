@@ -19,6 +19,7 @@ request = require 'superagent'
         GSITE: req.body.gsite
         GNAME: req.body.gname
         TKDL: 'Yes'
+      update_existing: true
       double_optin: false
       send_welcome: false
     ).end (err, response) ->
