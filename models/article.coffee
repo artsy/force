@@ -99,3 +99,4 @@ module.exports = class Article extends Backbone.Model
       "creator": creator
       "keywords": @get('tags') if @get('tags').length
     }
+ 
