@@ -9,7 +9,7 @@ artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 FUSION_PAGE_SIZE = 10000
 
-epoch = -> moment('2010,9,1')
+epoch = -> moment('2010 9 1', 'YYYY MM DD')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
   {
     start: epoch().add(i, 'months').format('YYYY-MM-DD')
