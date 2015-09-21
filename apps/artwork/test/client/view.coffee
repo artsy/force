@@ -47,7 +47,7 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['detailTemplate', 'auctionPlaceholderTemplate']
+        ['detailTemplate', 'auctionPlaceholderTemplate', 'actionsTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
@@ -75,6 +75,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->) }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
+      @artwork.related().sales.trigger 'sync', {}
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
