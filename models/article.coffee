@@ -57,6 +57,7 @@ module.exports = class Article extends Backbone.Model
           data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
       Q.allSettled(dfds).fin =>
+        @set('section', section) if section
         options.success(
           article: this
           footerArticles: footerArticles
@@ -84,6 +85,9 @@ module.exports = class Article extends Backbone.Model
     stripTags(@get attr)
 
   toJSONLD: ->       # article metadata tag for parse.ly
+    creator = []
+    creator.push @get('author').name if @get('author')
+    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
@@ -91,7 +95,8 @@ module.exports = class Article extends Backbone.Model
       "url": @href()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
-      "articleSection": "Editorial"
-      "creator": @get('author')?.name
-      "keywords": ""
+      "articleSection": if @get('section') then @get('section').get('title') else "Editorial"
+      "creator": creator
+      "keywords": @get('tags') if @get('tags').length
     }
+ 
