@@ -1,0 +1,55 @@
+//- Contact info
+if artwork.isContactable()
+  - partner = artwork.related().partner
+
+  //- Gallery/Institution link
+  if artwork.partnerLink()
+    h2.artwork-detail-header
+      = partner.get('name')
+    span#artwork-partner-locations
+      //- Rendered client-side
+
+  //- Phone number
+  #artwork-partner-phone-container
+    //- Rendered client-side
+
+//- Embedded inquiry form
+//-
+//- Intentionally not nested under the `isContactable` flag
+//- May become contactable later on depending on the state
+//- of any related auctions(-promos)
+#artwork-detail-contact.artwork-contact-form.js-artwork-detail-contact
+  //- Rendered client-side
+
+//- Buy
+if artwork.get('acquireable') && !artwork.isPartOfAuction()
+  a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+    | Buy
+
+if artwork.showActionsList(user)
+  nav.artwork-actions-list
+    if artwork.get('website')
+      a( href= artwork.get('website'), target='_blank' )
+        i.icon-website
+        | Visit Website
+
+    if artwork.isDownloadable(user)
+      a.artwork-download-button(
+        href= "#{artwork.href()}/download/#{artwork.downloadableFilename()}"
+        target='_blank'
+        download
+      )
+        i.icon-download
+        if artwork.defaultImage().get('downloadable')
+          | Download Image
+        else
+          | Admin Download
+
+    //- Administrative actions
+    if user && user.isAdmin()
+      a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
+        i.icon-edit
+        | Edit
+      a( href="#{sd.GENOME_URL}/genome/artworks?artwork_ids=#{artwork.id}", target='_blank' )
+        i.icon-link
+        | Genome
