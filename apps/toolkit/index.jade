@@ -1,4 +1,3 @@
-include ../../components/share/template
 extends ../../components/main_layout/templates/blank
 
 if sd.CURRENT_USER && sd.CURRENT_USER.email && sd.CURRENT_USER.name
@@ -22,13 +21,13 @@ block body
   .toolkit-container
     main.toolkit-main
       br
-      p Find out what the top art galleries are doing succesfully on social media. Artsy's new Social Media Toolkit for Galleries includes tips on how to drive more inquiries and improve engagement on social channels, including Instagram, Facebook, and Twitter.
-      img.toolkit-stack-img(src='/toolkit_stack.jpg')
+      p What are best practices for using social media as a gallery? Artsy’s new Social Media Toolkit for Galleries includes tips on how to drive more interest from your networks and increase engagement on social channels, including Instagram, Facebook, and Twitter.
+      img.toolkit-stack-img(src='/toolkit_image_360.jpg')
       p.toolkit-list This new toolkit will help you:
       ul.toolkit-ul
         li Build an audience of collectors on Instagram
         li Launch successful campaigns on Facebook
-        li Compose Tweets that will get your gallery noticed
+        li Craft tweets that will get your gallery noticed
     aside.toolkit-aside
       .toolkit-form.stacked-form(name='toolkit-download', action='', method='post', target='_blank')
         p.get-toolkit Get the toolkit
@@ -72,8 +71,24 @@ block body
         br
         p You can share it with your network via social media, or via email here:
         br
-        .toolkit-share: +share('Download Artsy\'s Social Media Toolkit for Galleries')
-        //- need email/LinkedIn tooltips
+        .toolkit-share
+        a.share-by-email.black-tooltip(
+          data-message='Share via email'
+          data-service='email'
+          href="mailto:?subject=You%20might%20be%20interested%20in%20this%20social%20media%20toolkit%20for%20galleries&amp;body=Hi%2C%0A%0AI%20just%20downloaded%20Artsy%E2%80%99s%20new%20guide%20on%20how%20successful%20galleries%20use%20social%20media%2C%20and%20thought%20you%E2%80%99d%20like%20to%20check%20it%20out%20too.%20The%20toolkit%20includes%3A%0A%0A-%20How%20to%20build%20your%20reach%20with%20collectors%20on%20Instagram%0A-%20Tips%20for%20building%20a%20successful%20campaign%20on%20Facebook%0A-%209%20kinds%20of%20Tweets%20that%20will%20get%20your%20gallery%20noticed%0A%0AYou%20can%20get%20your%20copy%20here%3A%20https%3A%2F%2Fwww.artsy.net%2Fsocial-media-toolkit%3Futm_source%3Dshare%26utm_campaign%3DArtsy_Gallery_Insights_Toolkit%26utm_medium%3Demailshare"
+          ): i.icon-mail
+        a.share-to-facebook.black-tooltip(
+          data-message='Post to Facebook'
+          data-service='facebook'
+          href="https://www.facebook.com/sharer/sharer.php?u=https://www.artsy.net/social-media-toolkit"
+          target='_blank'
+          ): i.icon-facebook
+        a.share-to-twitter.black-tooltip(
+          data-message='Share on Twitter'
+          data-service='twitter'
+          href="https://twitter.com/intent/tweet?original_referer=https://www.artsy.net/social-media-toolkit&text=Learn%20how%20top%20galleries%20use%20Twitter%2C%20Facebook%2C%20%26%20Instagram%20to%20reach%20collectors%20with%20%40Artsy%E2%80%99s%20Social%20Media%20Toolkit%3A&url=https%3A%2F%2Fwww.artsy.net%2Fsocial-media-toolkit%3Futm_source%3Dshare%26utm_campaign%3DArtsy_Gallery_Insights_Toolkit&utm_medium=twitter"
+          target='_blank'
+          ): i.icon-twitter
 
 
 
