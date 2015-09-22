@@ -28,6 +28,7 @@ PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedNavigationView = require '../components/related_navigation/view.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
+actionsTemplate = -> require('../templates/_actions.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
 
 module.exports = class ArtworkView extends Backbone.View
@@ -64,6 +65,7 @@ module.exports = class ArtworkView extends Backbone.View
 
     @listenTo @artwork, 'change:sale_message', @renderDetail
     @listenTo @artwork, 'change:ecommerce', @renderDetail
+    @listenToOnce @artwork.related().sales, 'sync', @renderActions
     @listenToOnce @artwork.related().sales, 'sync', @handleSales
     @listenToOnce @artwork.related().sales, 'sync', @setupPartnerLocations
     @listenToOnce @artwork.related().sales, 'sync', @setupEmbeddedInquiryForm
@@ -197,6 +199,14 @@ module.exports = class ArtworkView extends Backbone.View
       artworkSize: 'tall'
 
     trackArtworkImpressions @artist.related().artworks.models, @$('#artwork-artist-artworks-container')
+
+  renderActions: ->
+    @$('.artwork-actions').html actionsTemplate
+      sd: require('sharify').data
+      artwork: @artwork
+      artist: @artist
+      artists: @artists
+      user: @currentUser
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate
