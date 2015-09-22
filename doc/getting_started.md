@@ -30,7 +30,7 @@ Visit the [Heroku Toolbelt website](https://toolbelt.heroku.com/) and install th
 
 ## Download the .env file
 
-Force uses a .env file & Foreman to store sensitive config (allowing it to be open source). We have a private force_env.env gist under the Artsy IT Github account. Log in to gists.github.com as Artsy IT to find it, or ask someone on Slack for a link. Once you find the gist write a .env file and copy + paste the env variables into it.
+Force uses a .env file & Foreman to store sensitive config (allowing it to be open source). A copy of an .env file can be found in 1Password Engineering Vault under _Force staging .env_.
 
 ## Run the Server
 
