@@ -66,6 +66,8 @@ module.exports = class ArtworkView extends Backbone.View
     @listenTo @artwork, 'change:sale_message', @renderDetail
     @listenTo @artwork, 'change:ecommerce', @renderDetail
     @listenToOnce @artwork.related().sales, 'sync', @afterSalesFetch
+    @listenToOnce @artwork.related().fairs, 'sync', @handleFairs
+    @listenToOnce @artwork.related().shows, 'sync', @handleShows
 
     $.when.apply(null, relatedContentFetches).done =>
       relatedCollections = _.values _.pick(@artwork.related(), ['sales', 'features', 'fairs', 'shows'])
@@ -81,13 +83,11 @@ module.exports = class ArtworkView extends Backbone.View
       model: @artwork
       collection: @artwork.related().images
 
-  afterSalesFetch: ->
+  afterSalesFetch: (sales) ->
     @renderActions()
-    @handleSales()
+    @handleSales sales
     @setupPartnerLocations()
     @setupEmbeddedInquiryForm()
-    @handleFairs()
-    @handleShows()
 
   handleFairs: (fairs) ->
     return unless fairs.length
