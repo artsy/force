@@ -47,7 +47,7 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['detailTemplate', 'auctionPlaceholderTemplate', 'actionTemplate']
+        ['detailTemplate', 'auctionPlaceholderTemplate', 'actionsTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
