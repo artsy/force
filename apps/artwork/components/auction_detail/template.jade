@@ -56,7 +56,7 @@ else
       )
         = auction.bidButtonState(user, artwork).label
 
-  if auction.isOpen() && artwork.get('acquireable') && saleArtwork.bidCount() < 1
+  if auction.isOpen() && artwork.get('acquireable')
     .artwork-meta-price
       .artwork-meta-price-label.is-not-sold Buy Now Price
       .artwork-meta-price-amount= artwork.priceDisplay()
