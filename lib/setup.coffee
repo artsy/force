@@ -205,6 +205,7 @@ module.exports = (app) ->
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"
+  app.use require "../apps/rss"
 
 
   # route to ping for system time

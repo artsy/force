@@ -1,0 +1,24 @@
+doctype xml
+rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
+  channel
+    title Artsy News
+    link
+      a(href='#{sd.APP_URL}')
+    atom:link(href='#{sd.APP_URL}/rss/news', rel='self', type='application/rss+xml')
+    description Featured Artsy articles.
+    language en-US
+    if articles.length
+      lastBuildDate= articles[0].get('published_at')
+    each article in articles
+      item
+        title= article.get('thumbnail_title')
+        link
+          a(href="#{sd.APP_URL}/article/#{article.get('slug')}")
+        description
+          | <![CDATA[
+          | !{article.get('thumbnail_teaser')}
+          p: a(href="#{sd.APP_URL}/article/#{article.get('slug')}") 'Read more &raquo;'
+          | ]]>
+        pubDate= article.get('published_at')
+        guid(isPermaLink='false')
+          a(href="#{sd.APP_URL}/article/#{article.get('slug')}")
