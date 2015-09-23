@@ -1,8 +1,10 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
+waitForPromises = _.partial _.delay, _, 2
 Artwork = require '../../../models/artwork'
 CurrentUser = require '../../../models/current_user'
 EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
@@ -24,7 +26,14 @@ describe 'EmbeddedInquiryView', ->
     @questionnaire = sinon.stub()
       .returns view: new Backbone.View
 
+    sinon.stub Backbone, 'sync'
+      .yieldsTo 'success'
+      .returns Q.resolve()
+
     EmbeddedInquiryView.__set__ 'openInquiryQuestionnaireFor', @questionnaire
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe 'logged in', ->
     beforeEach ->
@@ -38,6 +47,7 @@ describe 'EmbeddedInquiryView', ->
       it 'renders the template correctly', ->
         @view.$('input, textarea').map(-> $(this).attr('name')).get()
           .should.eql [
+            'artwork'
             'message'
           ]
 
@@ -45,46 +55,63 @@ describe 'EmbeddedInquiryView', ->
           .should.equal 'Contact Gallery'
 
     describe 'submit', ->
-      it 'sets the form data on the appropriate models and opens the questionnaire', ->
+      it 'sets the form data on the appropriate models, saves everything, and opens the questionnaire', (done) ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
+        @view.inquiry.get('artwork').should.equal @artwork.id
         @view.inquiry.get('message').should.equal 'I want to buy this artwork'
+
         @view.user.get('name').should.equal 'Bar Baz'
         @view.user.get('email').should.equal 'barbaz@example.com'
 
-        @questionnaire.called.should.be.true()
+        waitForPromises =>
+          Backbone.sync.callCount.should.equal 3
 
-        Object.keys(@questionnaire.args[0][0])
-          .should.eql [
-            'user'
-            'inquiry'
-            'artwork'
-          ]
+          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me',
+          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile',
+          Backbone.sync.args[2][1].url().should.containEql '/api/v1/me/artwork_inquiry_request'
 
-      it 'ultimately renders a success message once the inquiry is synced', ->
-        sinon.stub Backbone, 'sync'
-          .yieldsTo 'success'
+          @view.inquiry.get 'notification_delay'
+            .should.equal 600
 
+          @questionnaire.called.should.be.true()
+
+          Object.keys(@questionnaire.args[0][0])
+            .should.eql [
+              'user'
+              'inquiry'
+              'artwork'
+            ]
+
+          done()
+
+      it 'ultimately renders a success message once the inquiry is synced', (done) ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
-        @view.inquiry.save() # Saved somewhere out of band
+        waitForPromises =>
+          @view.$el.html().should.not.containEql 'Inquiry Sent'
 
-        (html = @view.$el.html()).should.containEql 'Inquiry Sent'
-        html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
-        html.should.containEql 'If you want to follow up with the gallery, simply reply to this email.'
+          @view.inquiry.save() # Saved somewhere out of band
 
-        Backbone.sync.restore()
+          html = @view.$el.html()
+          html.should.containEql 'Inquiry Sent'
+          html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
+          html.should.containEql 'If you want to follow up with the gallery, simply reply to this email.'
+
+          done()
 
       it 're-enables the form if the modal is aborted or errors (and subsequently closes)', (done) ->
         @view.$('button').is(':disabled').should.be.false()
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
-        _.defer => _.defer =>
+
+        waitForPromises =>
           @view.$('button').is(':disabled').should.be.true()
           @view.modal.view.trigger 'closed'
           @view.$('button').is(':disabled').should.be.false()
+
           done()
 
   describe 'logged out', ->
@@ -97,6 +124,7 @@ describe 'EmbeddedInquiryView', ->
       it 'renders the template correctly', ->
         @view.$('input, textarea').map(-> $(this).attr('name')).get()
           .should.eql [
+            'artwork'
             'name'
             'email'
             'message'
@@ -106,7 +134,7 @@ describe 'EmbeddedInquiryView', ->
           .should.equal 'Contact Gallery'
 
     describe '#submit', ->
-      it 'sets the form data on the appropriate models and opens the questionnaire', ->
+      it 'sets the form data on the appropriate models and opens the questionnaire', (done) ->
         @questionnaire.called.should.be.false()
 
         @view.$('input[name="name"]').val 'Foo Bar'
@@ -114,18 +142,32 @@ describe 'EmbeddedInquiryView', ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
+        @view.inquiry.get('artwork').should.equal @artwork.id
         @view.inquiry.get('message').should.equal 'I want to buy this artwork'
+
         @view.user.get('name').should.equal 'Foo Bar'
         @view.user.get('email').should.equal 'foobar@example.com'
 
-        @questionnaire.called.should.be.true()
+        waitForPromises =>
+          Backbone.sync.callCount.should.equal 3
 
-        Object.keys(@questionnaire.args[0][0])
-          .should.eql [
-            'user'
-            'inquiry'
-            'artwork'
-          ]
+          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me',
+          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile',
+          Backbone.sync.args[2][1].url().should.containEql '/api/v1/me/artwork_inquiry_request'
+
+          @view.inquiry.get 'notification_delay'
+            .should.equal 600
+
+          @questionnaire.called.should.be.true()
+
+          Object.keys(@questionnaire.args[0][0])
+            .should.eql [
+              'user'
+              'inquiry'
+              'artwork'
+            ]
+
+          done()
 
   describe 'alternate partner types', ->
     it 'renders the correct button copy', ->

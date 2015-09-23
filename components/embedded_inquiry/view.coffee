@@ -13,40 +13,60 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
   events:
     'click button': 'submit'
 
+  delayBy: 600 # 10 minutes
+
   initialize: ({ @artwork, @user } = {}) ->
     @inquiry = new ArtworkInquiry
     @user ?= User.instantiate()
 
     { @fairs } = @artwork.related()
-    { collectorProfile } = @user.related()
-    { @userFairActions } = collectorProfile.related()
+    { @collectorProfile } = @user.related()
+    { @userFairActions } = @collectorProfile.related()
 
     @listenTo @fairs, 'sync', @render
 
   submit: (e) ->
     e.preventDefault()
 
-    form = new Form model: @inquiry, $form: @$('form')
-    return unless form.isReady()
+    @form = new Form model: @inquiry, $form: @$('form')
+    return unless @form.isReady()
 
-    form.state 'loading'
+    @form.state 'loading'
 
-    { attending } = data = form.serializer.data()
+    { attending } = data = @form.serializer.data()
 
     @user.set _.pick data, 'name', 'email'
-    @inquiry.set _.pick data, 'message'
+    @inquiry.set data
 
     if attending
       @userFairActions.attendFair @fairs.first()
 
+    @user.findOrCreate silent: true
+      .then =>
+        @collectorProfile.findOrCreate silent: true
+      .then =>
+        @userFairActions.invoke 'save'
+      .then =>
+        @inquiry.save notification_delay: @delayBy
+      .then =>
+        @openModal()
+        @form.state 'default'
+
+      .catch (e) =>
+        @form.error null, e
+        console.error e
+
+      .done()
+
+  openModal: ->
     @modal = openInquiryQuestionnaireFor
       user: @user
       inquiry: @inquiry
       artwork: @artwork
 
     # Abort or error
-    @listenToOnce @modal.view, 'closed', ->
-      form.reenable true
+    @listenToOnce @modal.view, 'closed', =>
+      @form.reenable true
 
     # Success
     @listenToOnce @inquiry, 'sync', =>
