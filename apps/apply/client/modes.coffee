@@ -44,6 +44,16 @@ module.exports =
     values:
       type: 'Art Fair'
 
+  auction:
+    slug: 'auction'
+    copy:
+      type: 'Auction'
+      company: 'Auction House or Organization Name'
+      title: 'Title at org.'
+      success: 'Auctions Team'
+    values:
+      type: 'Auction'
+
   general:
     slug: 'general'
     copy:
