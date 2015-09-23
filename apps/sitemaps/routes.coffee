@@ -1,13 +1,14 @@
 _ = require 'underscore'
 Articles = require '../../collections/articles'
+Artwork = require '../../models/artwork'
 request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
 { Cities } = require 'places'
-{ API_URL, POSITRON_URL, FUSION_URL } = require('sharify').data
+{ API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
-FUSION_PAGE_SIZE = 10000
+FUSION_PAGE_SIZE = 1000
 
 epoch = -> moment('2010 9 1', 'YYYY MM DD')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
@@ -134,3 +135,61 @@ getArtworkBuckets = (callback) ->
       return next err if err
       res.set('Content-Type', 'text/xml')
       res.render(req.params.resource, pretty: true, models: sres.body)
+
+@bingjson = (req, res, next) ->
+  res.set('Content-Disposition': 'attachment').write('[')
+  getArtworkBuckets (err, buckets) ->
+    async.mapSeries buckets.reverse()[0..10], (bucket, callback) ->
+      iterator = (page, callback) ->
+        request
+          .get("#{FUSION_URL}/api/v1/artworks")
+          .query(
+            published_at_since: bucket.startDate
+            published_at_before: moment(bucket.startDate).add(1, 'months').format('YYYY-MM-DD')
+            offset: page * FUSION_PAGE_SIZE
+            limit: FUSION_PAGE_SIZE
+          )
+          .end (err, sres) ->
+            return next err if err
+            return callback() if sres.body.results.length is 0
+            streamResults sres.body.results, res
+            callback()
+      async.timesSeries(bucket.pages + 1, iterator, callback)
+    , -> res.write ']'
+
+streamResults = (results, res) ->
+  results.forEach (artwork) ->
+    artwork = new Artwork artwork
+    dimensions = artwork.defaultImage().resizeDimensionsFor(width: 1024, height: 1024)
+    json = {
+      "@context":{
+        "bing":"http://www.bing.com/images/api/imagefeed/v1.0/"
+      }
+      "@type":"https://schema.org/ImageObject"
+      "hostPageUrl":"#{APP_URL}/artwork/#{artwork.id}"
+      "contentUrl":artwork.imageUrl()
+      "name":artwork.get('title')
+      "author":{
+        "alternateName":artwork.related().artist.get('name')
+        "url":"#{APP_URL}/artwork/#{artwork.related().artist.get('id')}"
+      }
+      "description":artwork.toPageDescription()
+      "encodingFormat":"jpeg"
+      "height": dimensions.height
+      "width": dimensions.widths
+      "keywords": artwork.toPageDescription().split(', ')
+      "datePublished":artwork.get('published_at')
+      "dateModified":artwork.defaultImage().get('updated_at')
+      "copyrightHolder":{
+        "@type":"Organization"
+        "name":artwork.related().artist.get('image_rights')
+      }
+      "CollectionPage":[
+        {
+          "@type":"CollectionPage"
+          "url":"#{APP_URL}/artwork/#{artwork.related().artist.get('id')}"
+        }
+      ]
+    }
+    res.write JSON.stringify json
+
