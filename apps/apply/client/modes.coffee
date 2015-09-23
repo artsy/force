@@ -34,16 +34,6 @@ module.exports =
     values:
       type: 'Museum/Institution'
 
-  fair:
-    slug: 'fair'
-    copy:
-      type: 'Fair'
-      company: 'Fair Name'
-      title: 'Title'
-      success: 'Fairs Team'
-    values:
-      type: 'Art Fair'
-
   auction:
     slug: 'auction'
     copy:
@@ -53,6 +43,16 @@ module.exports =
       success: 'Auctions Team'
     values:
       type: 'Auction'
+
+  fair:
+    slug: 'fair'
+    copy:
+      type: 'Fair'
+      company: 'Fair Name'
+      title: 'Title'
+      success: 'Fairs Team'
+    values:
+      type: 'Art Fair'
 
   general:
     slug: 'general'
