@@ -97,5 +97,5 @@ module.exports = class Article extends Backbone.Model
       "dateCreated": @get('published_at')
       "articleSection": if @get('section') then @get('section').get('title') else "Editorial"
       "creator": creator
-      "keywords": @get('tags') if @get('tags').length
+      "keywords": @get('tags')
     }
