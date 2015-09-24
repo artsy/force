@@ -26,11 +26,21 @@ nvm alias default 0.10
 
 ## Install the Heroku Toolbelt
 
-Visit the [Heroku Toolbelt website](https://toolbelt.heroku.com/) and install the package. This will let you manage staging/production and gives us [Foreman](https://github.com/ddollar/foreman).
+Visit the [Heroku Toolbelt website](https://toolbelt.heroku.com/) and install the package. This will let you manage staging/production.
+
+## Install [Foreman](https://github.com/ddollar/foreman).
+```
+gem install foreman
+```
 
 ## Download the .env file
 
 Force uses a .env file & Foreman to store sensitive config (allowing it to be open source). A copy of an .env file can be found in 1Password Engineering Vault under _Force staging .env_.
+
+## Install dependencies
+```
+npm install
+```
 
 ## Run the Server
 
