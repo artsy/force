@@ -35,7 +35,7 @@ PartnerShows = require './shows'
     at_a_fair: false
 
   Q.allSettled([
-    upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', criteria))
+    upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria))
     current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
     past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
   ]).then ->

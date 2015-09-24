@@ -41,14 +41,17 @@ describe 'Shows routes', ->
       Backbone.sync.callCount.should.equal 3
       Backbone.sync.args[0][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[0][2].data.status.should.equal 'upcoming'
+      Backbone.sync.args[0][2].data.sort.should.equal 'start_at'
       Backbone.sync.args[0][2].data.displayable.should.equal true
       Backbone.sync.args[0][2].data.at_a_fair.should.equal false
       Backbone.sync.args[1][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[1][2].data.status.should.equal 'running'
+      Backbone.sync.args[1][2].data.sort.should.equal 'end_at'
       Backbone.sync.args[1][2].data.displayable.should.equal true
       Backbone.sync.args[1][2].data.at_a_fair.should.equal false
       Backbone.sync.args[2][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[2][2].data.status.should.equal 'closed'
+      Backbone.sync.args[2][2].data.sort.should.equal '-start_at'
       Backbone.sync.args[2][2].data.displayable.should.equal true
       Backbone.sync.args[2][2].data.at_a_fair.should.equal false
       _.defer => _.defer =>
