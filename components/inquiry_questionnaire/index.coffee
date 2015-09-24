@@ -4,17 +4,6 @@ InquiryQuestionnaireView = require './view.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
 
-closeWithError = (modal, xhr) ->
-  modal.close ->
-    openErrorFlash xhr
-
-closeWithSuccess = (modal) ->
-  modal.close ->
-    new FlashMessage safe: false, message: '
-      Your inquiry has been sent.<br>
-      Thank you for completing your profile.
-    '
-
 module.exports = (options = {}) ->
   { user, inquiry } = options
 
@@ -35,37 +24,30 @@ module.exports = (options = {}) ->
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
-  # Prevent escape
-  $(window).on 'beforeunload', ->
-    'Your inquiry has not been sent yet.'
-  modal.view.on 'closed', ->
-    $(window).off 'beforeunload'
-
-  modal.load (done) ->
-    { collectorProfile } = user.related()
-
-    user.findOrCreate silent: true
-      .then ->
-        collectorProfile.findOrCreate silent: true
-      .then ->
-        collectorProfile.related().userFairActions.invoke 'save'
-        done()
-      .catch (e) ->
-        closeWithError modal
-        console.error e
-      .done()
-
   # Abort by clicking 'nevermind'
   questionnaire.state.on 'abort', ->
     modal.close()
+    modal.view.logger.reset()
 
   # End of complete flow
   questionnaire.state.on 'done', ->
-    # Send the inquiry
-    inquiry.save {},
-      error: (model, response, options) ->
-        closeWithError modal, response
+    # Send the inquiry immediately
+    inquiry.send {},
       success: ->
-        closeWithSuccess modal
+        modal.close()
+      error: (model, response, options) ->
+        modal.close ->
+          openErrorFlash response
+
+  # Prepare the user and open the modal
+  modal.load (open) ->
+    user.prepareForInquiry()
+      .then ->
+        open()
+      .catch (e) ->
+        modal.close ->
+          openErrorFlash e
+        console.error e
+      .done()
 
   modal
