@@ -19,6 +19,7 @@ module.exports = class BasicInfo extends StepView
 
     @user.save(form.data())
       .always => @next()
+      .done()
 
   postRender: ->
     @locationSearch = new LocationSearch

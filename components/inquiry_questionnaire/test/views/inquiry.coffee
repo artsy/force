@@ -1,6 +1,10 @@
 benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
 setup = require './setup'
-Inquiry = benv.requireWithJadeify require.resolve('../../views/inquiry'), ['template']
+Inquiry = benv.requireWithJadeify require.resolve('../../views/inquiry'), [
+  'template'
+]
 
 describe 'Inquiry', setup ->
   describe '#render', ->
@@ -53,6 +57,8 @@ describe 'Inquiry', setup ->
 
   describe 'next', ->
     beforeEach ->
+      sinon.stub Backbone, 'sync'
+
       @state.set 'steps', ['inquiry', 'after_inquiry']
 
       @loggedOutUser.unset 'name'
@@ -66,7 +72,10 @@ describe 'Inquiry', setup ->
 
       @view.render()
 
-    it 'sets up the inquiry and ensures the user has contact details', ->
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'sets up the inquiry and ensures the user has contact details', (done) ->
       @view.$('input[name="name"]').val 'Foo Bar'
       @view.$('input[name="email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
@@ -81,5 +90,15 @@ describe 'Inquiry', setup ->
       @loggedOutUser.get('name').should.equal 'Foo Bar'
       @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-      # Next
-      @view.state.current().should.equal 'after_inquiry'
+      Backbone.sync.callCount.should.equal 2
+
+      Backbone.sync.args[0][1].url()
+        .should.containEql '/api/v1/me/artwork_inquiry_request'
+      Backbone.sync.args[1][1].url()
+        .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+
+      @wait =>
+        # Next
+        @view.state.current().should.equal 'after_inquiry'
+
+        done()

@@ -20,3 +20,4 @@ module.exports = class CommercialInterest extends StepView
 
     @user.related().collectorProfile.save(attributes)
       .always => @next()
+      .done()

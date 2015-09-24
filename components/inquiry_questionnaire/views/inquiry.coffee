@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
@@ -18,7 +19,14 @@ module.exports = class Inquiry extends StepView
     form = new Form model: @inquiry, $form: @$('form')
     return unless form.isReady()
 
-    @inquiry.set _.extend { contact_gallery: true }, form.data()
-    @user.set @inquiry.pick('name', 'email')
+    form.state 'loading'
 
-    @next()
+    Q.all [
+      @inquiry.save _.extend { contact_gallery: true }, form.data()
+      @user.save @inquiry.pick('name', 'email')
+    ]
+      .then =>
+        @next()
+      .catch (e) =>
+        form.error null, e
+      .done()

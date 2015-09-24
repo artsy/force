@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -6,40 +7,45 @@ setup = require './setup'
 Specialist = benv.requireWithJadeify require.resolve('../../views/specialist'), ['template']
 
 describe 'Specialist', setup ->
+  beforeEach ->
+    @representative = owner: fabricate 'profile', name: 'Foo Bar'
+
+    sinon.stub Backbone, 'sync'
+      .onCall 0
+      .yieldsTo 'success', [@representative]
+      .returns Q.resolve [@representative]
+
+  afterEach ->
+    Backbone.sync.restore()
+
   describe '#render', ->
     describe 'user with email and name', ->
       beforeEach ->
-        sinon.stub Backbone, 'sync'
-          .returns $.Deferred().promise()
-
         @view = new Specialist
           user: @currentUser
           artwork: @artwork
           inquiry: @inquiry
           state: @state
 
-        @view.representatives.add owner: fabricate 'profile', name: 'Foo Bar'
-        @view.representative = @view.representatives.first()
-
         @view.render()
 
-      afterEach ->
-        Backbone.sync.restore()
-
-      it 'loads the representative then renders the template', ->
+      it 'loads the representative then renders the template', (done) ->
         Backbone.sync.args[0][1].url
           .should.containEql '/api/v1/admins/available_representatives'
 
-        @view.$('h1').text()
-          .should.equal 'Send message to Artsy'
-        @view.$('.scontact-description').text()
-          .should.equal 'Foo Bar, an Artsy Specialist, is available to answer your questions and help you collect through Artsy.'
-        @view.$('input[type="text"][name="name"]')
-          .should.have.lengthOf 0
-        @view.$('input[type="email"][name="email"]')
-          .should.have.lengthOf 0
-        @view.$('.scontact-from').text()
-          .should.equal 'From: Craig Spaeth (craigspaeth@gmail.com)'
+        @wait =>
+          @view.$('h1').text()
+            .should.equal 'Send message to Artsy'
+          @view.$('.scontact-description').text()
+            .should.equal 'Foo Bar, an Artsy Specialist, is available to answer your questions and help you collect through Artsy.'
+          @view.$('input[type="text"][name="name"]')
+            .should.have.lengthOf 0
+          @view.$('input[type="email"][name="email"]')
+            .should.have.lengthOf 0
+          @view.$('.scontact-from').text()
+            .should.equal 'From: Craig Spaeth (craigspaeth@gmail.com)'
+
+          done()
 
     describe 'user without contact details', ->
       beforeEach ->
@@ -79,7 +85,7 @@ describe 'Specialist', setup ->
 
       @view.render()
 
-    it 'sets up the inquiry and ensures the user has contact details', ->
+    it 'sets up the inquiry and ensures the user has contact details', (done) ->
       @view.$('input[name="name"]').val 'Foo Bar'
       @view.$('input[name="email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
@@ -94,5 +100,17 @@ describe 'Specialist', setup ->
       @loggedOutUser.get('name').should.equal 'Foo Bar'
       @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-      # Next
-      @view.state.current().should.equal 'after_specialist'
+      Backbone.sync.callCount.should.equal 3
+
+      Backbone.sync.args[0][1].url
+        .should.containEql '/api/v1/admins/available_representatives'
+      Backbone.sync.args[1][1].url()
+        .should.containEql '/api/v1/me/artwork_inquiry_request'
+      Backbone.sync.args[2][1].url()
+        .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+
+      @wait =>
+        # Next
+        @view.state.current().should.equal 'after_specialist'
+
+        done()

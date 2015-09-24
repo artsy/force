@@ -6,6 +6,8 @@ module.exports = class Logger
 
   expires: 31536000
 
+  session: []
+
   constructor: ->
     unless (logged = @get())?
       @reset()
@@ -16,6 +18,8 @@ module.exports = class Logger
   log: (step) ->
     logged = @get()
     logged.push step
+    @session.push step
+    @session = _.uniq @session
     @set(_.uniq logged)
 
   get: ->
@@ -24,5 +28,15 @@ module.exports = class Logger
   set: (value) ->
     Cookies.set @name, JSON.stringify(value), expires: @expires
 
-  hasLogged: (step) ->
-    _.contains @get(), step
+  __hasLogged__: (arr, steps...) ->
+    _.every _.map steps, (step) ->
+      _.contains arr, step
+
+  hasLogged: (steps...) ->
+    @__hasLogged__ @get(), steps...
+
+  hasLoggedThisSession: (steps...) ->
+    @__hasLogged__ @session, steps...
+
+  hasLoggedAnythingThisSession: ->
+    @session.length > 0

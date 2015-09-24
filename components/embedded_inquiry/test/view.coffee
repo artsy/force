@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
@@ -38,6 +39,7 @@ describe 'EmbeddedInquiryView', ->
       it 'renders the template correctly', ->
         @view.$('input, textarea').map(-> $(this).attr('name')).get()
           .should.eql [
+            'artwork'
             'message'
           ]
 
@@ -45,13 +47,18 @@ describe 'EmbeddedInquiryView', ->
           .should.equal 'Contact Gallery'
 
     describe 'submit', ->
-      it 'sets the form data on the appropriate models and opens the questionnaire', ->
+      it 'sets the form data on the appropriate models, saves everything, and opens the questionnaire', ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
+        @view.inquiry.get('artwork').should.equal @artwork.id
         @view.inquiry.get('message').should.equal 'I want to buy this artwork'
+
         @view.user.get('name').should.equal 'Bar Baz'
         @view.user.get('email').should.equal 'barbaz@example.com'
+
+        @view.inquiry.get 'notification_delay'
+          .should.equal 600
 
         @questionnaire.called.should.be.true()
 
@@ -69,9 +76,12 @@ describe 'EmbeddedInquiryView', ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
+        @view.$el.html().should.not.containEql 'Inquiry Sent'
+
         @view.inquiry.save() # Saved somewhere out of band
 
-        (html = @view.$el.html()).should.containEql 'Inquiry Sent'
+        html = @view.$el.html()
+        html.should.containEql 'Inquiry Sent'
         html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
         html.should.containEql 'If you want to follow up with the gallery, simply reply to this email.'
 
@@ -80,12 +90,27 @@ describe 'EmbeddedInquiryView', ->
       it 're-enables the form if the modal is aborted or errors (and subsequently closes)', (done) ->
         @view.$('button').is(':disabled').should.be.false()
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
+
         @view.$('button').click()
-        _.defer => _.defer =>
+
+        _.defer =>
           @view.$('button').is(':disabled').should.be.true()
           @view.modal.view.trigger 'closed'
           @view.$('button').is(':disabled').should.be.false()
+
           done()
+
+      it 'stops the button spinner once the modal opens', ->
+        @view.$('textarea[name="message"]').val 'I want to buy this artwork'
+        @view.$('button').click()
+
+        @view.$('button').attr 'data-state'
+          .should.equal 'loading'
+
+        @view.modal.view.trigger 'opened'
+
+        @view.$('button').attr 'data-state'
+          .should.equal 'default'
 
   describe 'logged out', ->
     beforeEach ->
@@ -97,6 +122,7 @@ describe 'EmbeddedInquiryView', ->
       it 'renders the template correctly', ->
         @view.$('input, textarea').map(-> $(this).attr('name')).get()
           .should.eql [
+            'artwork'
             'name'
             'email'
             'message'
@@ -114,9 +140,14 @@ describe 'EmbeddedInquiryView', ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
+        @view.inquiry.get('artwork').should.equal @artwork.id
         @view.inquiry.get('message').should.equal 'I want to buy this artwork'
+
         @view.user.get('name').should.equal 'Foo Bar'
         @view.user.get('email').should.equal 'foobar@example.com'
+
+        @view.inquiry.get 'notification_delay'
+          .should.equal 600
 
         @questionnaire.called.should.be.true()
 

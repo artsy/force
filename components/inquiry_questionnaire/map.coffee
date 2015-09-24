@@ -1,5 +1,6 @@
 module.exports =
   views:
+    confirmation: require './views/confirmation.coffee'
     commercial_interest: require './views/commercial_interest.coffee'
     basic_info: require './views/basic_info.coffee'
     artists_in_collection: require './views/artists_in_collection.coffee'
@@ -37,6 +38,14 @@ module.exports =
     has_seen_artists_in_collection: ({ logger }) ->
       logger.hasLogged 'artists_in_collection'
 
+    has_completed_profile: ({ logger, user }) ->
+      steps = ['commercial_interest', 'basic_info']
+      steps.push 'artists_in_collection' if user.isCollector()
+      logger.hasLogged steps...
+
+    has_seen_confirmation: ({ logger }) ->
+      logger.hasLogged 'confirmation'
+
   steps: [
     pre_qualify: {
       true: [
@@ -66,6 +75,7 @@ module.exports =
       ]
       false: [
         'inquiry'
+        { has_completed_profile: false: ['confirmation'] }
         { has_seen_commercial_interest: false: ['commercial_interest'] }
         { has_seen_basic_info: false: ['basic_info'] }
         {
@@ -75,6 +85,11 @@ module.exports =
         }
       ]
     }
-    { is_logged_in: false: ['account'] }
+    {
+      is_logged_in: false: [
+        { has_seen_confirmation: false: ['confirmation'] }
+        'account'
+      ]
+    }
     'done'
   ]
