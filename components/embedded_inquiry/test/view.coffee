@@ -4,7 +4,6 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-waitForPromises = _.partial _.delay, _, 2
 Artwork = require '../../../models/artwork'
 CurrentUser = require '../../../models/current_user'
 EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
@@ -26,14 +25,7 @@ describe 'EmbeddedInquiryView', ->
     @questionnaire = sinon.stub()
       .returns view: new Backbone.View
 
-    sinon.stub Backbone, 'sync'
-      .yieldsTo 'success'
-      .returns Q.resolve()
-
     EmbeddedInquiryView.__set__ 'openInquiryQuestionnaireFor', @questionnaire
-
-  afterEach ->
-    Backbone.sync.restore()
 
   describe 'logged in', ->
     beforeEach ->
@@ -55,7 +47,7 @@ describe 'EmbeddedInquiryView', ->
           .should.equal 'Contact Gallery'
 
     describe 'submit', ->
-      it 'sets the form data on the appropriate models, saves everything, and opens the questionnaire', (done) ->
+      it 'sets the form data on the appropriate models, saves everything, and opens the questionnaire', ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
@@ -65,54 +57,60 @@ describe 'EmbeddedInquiryView', ->
         @view.user.get('name').should.equal 'Bar Baz'
         @view.user.get('email').should.equal 'barbaz@example.com'
 
-        waitForPromises =>
-          Backbone.sync.callCount.should.equal 3
+        @view.inquiry.get 'notification_delay'
+          .should.equal 600
 
-          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me',
-          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile',
-          Backbone.sync.args[2][1].url().should.containEql '/api/v1/me/artwork_inquiry_request'
+        @questionnaire.called.should.be.true()
 
-          @view.inquiry.get 'notification_delay'
-            .should.equal 600
+        Object.keys(@questionnaire.args[0][0])
+          .should.eql [
+            'user'
+            'inquiry'
+            'artwork'
+          ]
 
-          @questionnaire.called.should.be.true()
+      it 'ultimately renders a success message once the inquiry is synced', ->
+        sinon.stub Backbone, 'sync'
+          .yieldsTo 'success'
 
-          Object.keys(@questionnaire.args[0][0])
-            .should.eql [
-              'user'
-              'inquiry'
-              'artwork'
-            ]
-
-          done()
-
-      it 'ultimately renders a success message once the inquiry is synced', (done) ->
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
         @view.$('button').click()
 
-        waitForPromises =>
-          @view.$el.html().should.not.containEql 'Inquiry Sent'
+        @view.$el.html().should.not.containEql 'Inquiry Sent'
 
-          @view.inquiry.save() # Saved somewhere out of band
+        @view.inquiry.save() # Saved somewhere out of band
 
-          html = @view.$el.html()
-          html.should.containEql 'Inquiry Sent'
-          html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
-          html.should.containEql 'If you want to follow up with the gallery, simply reply to this email.'
+        html = @view.$el.html()
+        html.should.containEql 'Inquiry Sent'
+        html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
+        html.should.containEql 'If you want to follow up with the gallery, simply reply to this email.'
 
-          done()
+        Backbone.sync.restore()
 
       it 're-enables the form if the modal is aborted or errors (and subsequently closes)', (done) ->
         @view.$('button').is(':disabled').should.be.false()
         @view.$('textarea[name="message"]').val 'I want to buy this artwork'
+
         @view.$('button').click()
 
-        waitForPromises =>
+        _.defer =>
           @view.$('button').is(':disabled').should.be.true()
           @view.modal.view.trigger 'closed'
           @view.$('button').is(':disabled').should.be.false()
 
           done()
+
+      it 'stops the button spinner once the modal opens', ->
+        @view.$('textarea[name="message"]').val 'I want to buy this artwork'
+        @view.$('button').click()
+
+        @view.$('button').attr 'data-state'
+          .should.equal 'loading'
+
+        @view.modal.view.trigger 'opened'
+
+        @view.$('button').attr 'data-state'
+          .should.equal 'default'
 
   describe 'logged out', ->
     beforeEach ->
@@ -134,7 +132,7 @@ describe 'EmbeddedInquiryView', ->
           .should.equal 'Contact Gallery'
 
     describe '#submit', ->
-      it 'sets the form data on the appropriate models and opens the questionnaire', (done) ->
+      it 'sets the form data on the appropriate models and opens the questionnaire', ->
         @questionnaire.called.should.be.false()
 
         @view.$('input[name="name"]').val 'Foo Bar'
@@ -148,26 +146,17 @@ describe 'EmbeddedInquiryView', ->
         @view.user.get('name').should.equal 'Foo Bar'
         @view.user.get('email').should.equal 'foobar@example.com'
 
-        waitForPromises =>
-          Backbone.sync.callCount.should.equal 3
+        @view.inquiry.get 'notification_delay'
+          .should.equal 600
 
-          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me',
-          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/collector_profile',
-          Backbone.sync.args[2][1].url().should.containEql '/api/v1/me/artwork_inquiry_request'
+        @questionnaire.called.should.be.true()
 
-          @view.inquiry.get 'notification_delay'
-            .should.equal 600
-
-          @questionnaire.called.should.be.true()
-
-          Object.keys(@questionnaire.args[0][0])
-            .should.eql [
-              'user'
-              'inquiry'
-              'artwork'
-            ]
-
-          done()
+        Object.keys(@questionnaire.args[0][0])
+          .should.eql [
+            'user'
+            'inquiry'
+            'artwork'
+          ]
 
   describe 'alternate partner types', ->
     it 'renders the correct button copy', ->

@@ -28,45 +28,31 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
   submit: (e) ->
     e.preventDefault()
 
-    @form = new Form model: @inquiry, $form: @$('form')
-    return unless @form.isReady()
+    form = new Form model: @inquiry, $form: @$('form')
+    return unless form.isReady()
 
-    @form.state 'loading'
+    form.state 'loading'
 
-    { attending } = data = @form.serializer.data()
+    { attending } = data = form.serializer.data()
 
     @user.set _.pick data, 'name', 'email'
-    @inquiry.set data
+    @inquiry.set _.extend { notification_delay: @delayBy }, data
 
     if attending
       @userFairActions.attendFair @fairs.first()
 
-    @user.findOrCreate silent: true
-      .then =>
-        @collectorProfile.findOrCreate silent: true
-      .then =>
-        @userFairActions.invoke 'save'
-      .then =>
-        @inquiry.save notification_delay: @delayBy
-      .then =>
-        @openModal()
-        @form.state 'default'
-
-      .catch (e) =>
-        @form.error null, e
-        console.error e
-
-      .done()
-
-  openModal: ->
     @modal = openInquiryQuestionnaireFor
       user: @user
       inquiry: @inquiry
       artwork: @artwork
 
+    # Stop the spinner once the modal opens
+    @listenToOnce @modal.view, 'opened', ->
+      form.state 'default'
+
     # Abort or error
-    @listenToOnce @modal.view, 'closed', =>
-      @form.reenable true
+    @listenToOnce @modal.view, 'closed', ->
+      form.reenable true
 
     # Success
     @listenToOnce @inquiry, 'sync', =>
