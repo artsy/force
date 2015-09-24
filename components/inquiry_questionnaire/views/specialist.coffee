@@ -22,7 +22,7 @@ module.exports = class Specialist extends StepView
 
   setup: ->
     @representatives.fetch()
-      .then => (@representative = @representatives.first()).fetch()
+      .then => (@representative = @representatives.first())?.fetch()
       .then =>
         @render().$el.removeClass 'is-loading'
       .done()
