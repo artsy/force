@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -10,7 +11,7 @@ describe 'Specialist', setup ->
     describe 'user with email and name', ->
       beforeEach ->
         sinon.stub Backbone, 'sync'
-          .returns $.Deferred().promise()
+          .returns Q.resolve()
 
         @view = new Specialist
           user: @currentUser
@@ -52,6 +53,9 @@ describe 'Specialist', setup ->
           inquiry: @inquiry
           state: @state
 
+        @view.representatives.add owner: fabricate 'profile', name: 'Foo Bar'
+        @view.representative = @view.representatives.first()
+
         @view.render()
 
       it 'renders the template', ->
@@ -66,6 +70,9 @@ describe 'Specialist', setup ->
 
   describe 'next', ->
     beforeEach ->
+      sinon.stub Backbone, 'sync'
+        .returns Q.resolve()
+
       @state.set 'steps', ['specialist', 'after_specialist']
 
       @loggedOutUser.unset 'name'
@@ -79,7 +86,10 @@ describe 'Specialist', setup ->
 
       @view.render()
 
-    it 'sets up the inquiry and ensures the user has contact details', ->
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'sets up the inquiry and ensures the user has contact details', (done) ->
       @view.$('input[name="name"]').val 'Foo Bar'
       @view.$('input[name="email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
@@ -94,5 +104,17 @@ describe 'Specialist', setup ->
       @loggedOutUser.get('name').should.equal 'Foo Bar'
       @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-      # Next
-      @view.state.current().should.equal 'after_specialist'
+      Backbone.sync.callCount.should.equal 3
+
+      Backbone.sync.args[0][1].url
+        .should.containEql '/api/v1/admins/available_representatives'
+      Backbone.sync.args[1][1].url()
+        .should.containEql '/api/v1/me/artwork_inquiry_request'
+      Backbone.sync.args[2][1].url()
+        .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+
+      @wait =>
+        # Next
+        @view.state.current().should.equal 'after_specialist'
+
+        done()

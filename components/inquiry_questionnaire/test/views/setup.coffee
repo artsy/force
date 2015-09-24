@@ -29,4 +29,7 @@ module.exports = (cb) -> _.wrap cb, (cb) ->
     @inquiry = new ArtworkInquiry
     @state = new State
 
+    # Helper to wait for promises...
+    @wait = _.partial _.delay, _, 2
+
   cb()
