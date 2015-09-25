@@ -160,38 +160,46 @@ getArtworkBuckets = (callback) ->
 streamResults = (results, res) ->
   results.forEach (artwork) ->
     artwork = new Artwork artwork
-    dimensions = artwork.defaultImage().resizeDimensionsFor(width: 1024, height: 1024)
     json = {
-      "@context":{
-        "bing":"http://www.bing.com/images/api/imagefeed/v1.0/"
+      "@context": {
+        "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
       }
-      "@type":"https://schema.org/ImageObject"
-      "hostPageUrl":"#{APP_URL}/artwork/#{artwork.id}"
-      "contentUrl":artwork.imageUrl() #returns "/images/missing_image.png" for all artworks
-      "name":artwork.get('title')
-      "author":{
-        "alternateName":artwork.related().artist.get('name')
-        "url":"#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
-      }
-      "description":artwork.get('title') + " is a work of art created by " + 
-        artwork.related().artist.get('name') + " in " + artwork.get('date') + 
-        ". The medium is " + artwork.get('medium').toLowerCase() + '.'
-      "encodingFormat":"jpeg"
-      "height": dimensions.height
-      "width": dimensions.width
+      "@type": "https://schema.org/ImageObject"
+      "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
+      "contentUrl": artwork.imageUrl()
+      "name": artwork.get('title')
+      "description": "
+        #{artwork.get('title')} is a work of art created
+        #{if name = artwork.related().artist.get('name') then " by #{name}" else ''}
+        #{if date = artwork.get('date') then "in #{date}. " else '. '}
+        #{if med = artwork.get('medium') then "The medium is #{med.toLowerCase()}" else ''}.
+      "
+      "encodingFormat": "jpeg"
       "keywords": artwork.toPageDescription().split(', ')
-      "datePublished":artwork.get('published_at')
-      "dateModified":artwork.get('published_changed_at')
-      "copyrightHolder":{
-        "@type":"Organization"
-        "name":artwork.related().artist.get('image_rights')
+      "datePublished": artwork.get('published_at')
+      "dateModified": artwork.get('published_changed_at')
+      "copyrightHolder": {
+        "@type": "Organization"
+        "name": artwork.related().artist.get('image_rights')
       }
-      "CollectionPage":[
-        {
-          "@type":"CollectionPage"
-          "url":"#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
-        }
-      ]
     }
+    if artwork.get('artist')
+      json = _.extend json, {
+        "author": {
+          "alternateName": artwork.related().artist.get('name')
+          "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+        }
+        "CollectionPage":[
+          {
+            "@type": "CollectionPage"
+            "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+          }
+        ]
+      }
+    if img = artwork.defaultImage()
+      dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
+      json = _.extend json, {
+        "height": dimensions.height
+        "width": dimensions.width
+      }
     res.write JSON.stringify json
-
