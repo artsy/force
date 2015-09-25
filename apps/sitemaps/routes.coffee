@@ -167,19 +167,21 @@ streamResults = (results, res) ->
       }
       "@type":"https://schema.org/ImageObject"
       "hostPageUrl":"#{APP_URL}/artwork/#{artwork.id}"
-      "contentUrl":artwork.imageUrl()
+      "contentUrl":artwork.imageUrl() #returns "/images/missing_image.png" for all artworks
       "name":artwork.get('title')
       "author":{
         "alternateName":artwork.related().artist.get('name')
-        "url":"#{APP_URL}/artwork/#{artwork.related().artist.get('id')}"
+        "url":"#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
       }
-      "description":artwork.toPageDescription()
+      "description":artwork.get('title') + " is a work of art created by " + 
+        artwork.related().artist.get('name') + " in " + artwork.get('date') + 
+        ". The medium is " + artwork.get('medium').toLowerCase() + '.'
       "encodingFormat":"jpeg"
       "height": dimensions.height
-      "width": dimensions.widths
+      "width": dimensions.width
       "keywords": artwork.toPageDescription().split(', ')
       "datePublished":artwork.get('published_at')
-      "dateModified":artwork.defaultImage().get('updated_at')
+      "dateModified":artwork.get('published_changed_at')
       "copyrightHolder":{
         "@type":"Organization"
         "name":artwork.related().artist.get('image_rights')
@@ -187,7 +189,7 @@ streamResults = (results, res) ->
       "CollectionPage":[
         {
           "@type":"CollectionPage"
-          "url":"#{APP_URL}/artwork/#{artwork.related().artist.get('id')}"
+          "url":"#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
         }
       ]
     }
