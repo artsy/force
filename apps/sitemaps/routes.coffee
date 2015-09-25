@@ -8,7 +8,7 @@ async = require 'async'
 { API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
-FUSION_PAGE_SIZE = 1000
+FUSION_PAGE_SIZE = 5000
 
 epoch = -> moment('2010 9 1', 'YYYY MM DD')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
@@ -139,7 +139,7 @@ getArtworkBuckets = (callback) ->
 @bingjson = (req, res, next) ->
   res.set('Content-Disposition': 'attachment').write('[')
   getArtworkBuckets (err, buckets) ->
-    async.mapSeries buckets.reverse()[0..10], (bucket, callback) ->
+    async.mapSeries buckets.reverse(), (bucket, callback) ->
       iterator = (page, callback) ->
         request
           .get("#{FUSION_URL}/api/v1/artworks")
@@ -155,7 +155,9 @@ getArtworkBuckets = (callback) ->
             streamResults sres.body.results, res
             callback()
       async.timesSeries(bucket.pages + 1, iterator, callback)
-    , -> res.write ']'
+    , ->
+      res.write('{}]')
+      res.end()
 
 streamResults = (results, res) ->
   results.forEach (artwork) ->
@@ -202,4 +204,4 @@ streamResults = (results, res) ->
         "height": dimensions.height
         "width": dimensions.width
       }
-    res.write JSON.stringify json
+    res.write JSON.stringify(json) + ','
