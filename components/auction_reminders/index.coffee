@@ -24,7 +24,10 @@ module.exports = ->
 
     reminders.map (auction) ->
       name = "reminder_#{auction.id}"
-      secondsLeft = auction.date('end_at').diff moment(), 'seconds'
+      end = auction.date 'end_at'
+      secondsLeft = end.diff moment(), 'seconds'
+
+      return if end.isBefore()
 
       dismisser = new Dismisser
         limit: 1
