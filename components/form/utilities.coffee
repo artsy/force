@@ -1,3 +1,4 @@
+_ = require 'underscore'
 { isTouchDevice } = require '../util/device.coffee'
 
 module.exports =
@@ -8,7 +9,11 @@ module.exports =
     val = $input.val()
     $input.val('').val val
 
-  autofocus: ($input) ->
+  autofocus: ($input, defer = false) ->
     return if isTouchDevice()
-    $input.focus()
-    @moveCursorToEnd $input
+
+    focus = =>
+      $input.focus()
+      @moveCursorToEnd $input
+
+    if defer then _.defer(focus) else focus()
