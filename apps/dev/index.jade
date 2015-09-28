@@ -23,12 +23,11 @@ block body
       hr.is-invisible
 
       pre.debug
-        | STEPS: [
+        | STEPS:
+        br
         for step, i in views
           a.js-bypass( href='#', data-step= step )= step
-          unless i === views.length - 1
-            = ', '
-        |]
+          br
 
       hr.is-invisible
 
