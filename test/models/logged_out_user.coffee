@@ -198,7 +198,7 @@ describe 'LoggedOutUser', ->
     it 'creates or persists everything needed to make an inquiry', (done) ->
       @user.prepareForInquiry()
 
-      _.defer ->
+      _.partial(_.delay, _, 2) ->
         Backbone.sync.callCount.should.equal 3
 
         Backbone.sync.args[0][1].url()
