@@ -53,6 +53,9 @@ fetch =
   .catch next
   .done()
 
+@redirectPartner = (req, res, next) ->
+  res.redirect 301, req.url.replace 'partner', 'partners'
+
 @galleries = (req, res, next) ->
   Q.all([
     fetch.profiles 'partners:featured-galleries'
@@ -74,6 +77,9 @@ fetch =
   .catch next
   .done()
 
+@redirectGallery = (req, res, next) ->
+  res.redirect 301, req.url.replace 'gallery', 'galleries'
+
 @institutions = (req, res, next) ->
   Q.all([
     fetch.profiles 'partners:featured-institutions'
@@ -92,3 +98,7 @@ fetch =
 
   .catch next
   .done()
+
+@redirectInstitution = (req, res, next) ->
+  res.redirect 301, req.url.replace 'institution', 'institutions'
+

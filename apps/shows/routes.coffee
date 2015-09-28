@@ -13,6 +13,9 @@ PartnerShows = require './shows'
       shows: shows.take 8 # 2, 3, 3
   shows.fetch success: render, error: render
 
+@redirectShow = (req, res) ->
+  res.redirect 301, req.url.replace 'show', 'shows'
+
 @city = (req, res, next) ->
   city = _.findWhere(Cities, slug: req.params.city)
   return next() unless city?

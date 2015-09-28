@@ -16,6 +16,7 @@ app.locals.crop = crop
 app.get '/posts', routes.redirectPost
 app.get '/post/:id', routes.redirectPost
 app.get '/:id/posts', routes.redirectPost
+app.get '/article', routes.redirectArticle
 app.get '/articles', routes.articles
 app.get '/article/:slug', routes.show
 app.get '/:slug', routes.section
