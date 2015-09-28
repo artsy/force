@@ -20,7 +20,7 @@ module.exports = class UserInterests extends Backbone.Collection
     super options
 
   comparator: (userInterest) ->
-    -Date.parse(userInterest.get 'updated_at')
+    Date.parse(userInterest.get 'updated_at')
 
   findByInterestId: (id) ->
     @find (userInterest) ->
@@ -32,7 +32,7 @@ module.exports = class UserInterests extends Backbone.Collection
   addInterest: (interest) ->
     return if @alreadyInterested interest
 
-    @unshift
+    @add
       interest_type: @interestType
       interest_id: interest.id
       interest: interest.attributes
