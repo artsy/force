@@ -17,19 +17,20 @@ describe 'RSS', ->
 
   describe '#news', ->
 
-    it 'displays the rss feed for news < 2 days old', ->
+    it 'renders the rss feed for news', ->
       routes.news(@req, @res)
+
       Backbone.sync.args[0][2].success {
         total: 16088,
-        count: 12,
+        count: 2,
         results: [
           fabricate('article', { published_at: new Date().toISOString() })
-          fabricate('article', { published_at: '2015-01-21T22:02:03.808Z' })
+          fabricate('article', { published_at: new Date().toISOString() })
         ]
-
       }
+
       @res.render.args[0][0].should.equal('news')
-      @res.render.args[0][1].articles.length.should.equal(1)
+      @res.render.args[0][1].articles.length.should.equal(2)
 
     it 'only displays articles from Artsy Editorial', ->
       routes.news(@req, @res)
