@@ -257,7 +257,7 @@ describe 'Artwork', ->
     it 'works if there are no images', ->
       @artwork.unset('images')
       @artwork.related().images.reset()
-      @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
+      @artwork.defaultImageUrl().should.equal @artwork.defaultImage().missingImageUrl()
 
   describe '#defaultImage', ->
     it 'works if artwork.images is null but has images', ->
