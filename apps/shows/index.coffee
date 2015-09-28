@@ -12,6 +12,7 @@ app.set 'view engine', 'jade'
 
 app.get '/shows', routes.index
 app.get '/shows/:city', routes.city
+app.get '/show', routes.redirectShow
 
 # Redirect all old location routes
 for city in Cities

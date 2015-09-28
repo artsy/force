@@ -7,3 +7,4 @@ app.set 'view engine', 'jade'
 
 app.get '/auctions', routes.index
 app.get '/auctions/reminders', routes.reminders
+app.get '/auction', routes.redirectAuction

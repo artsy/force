@@ -37,6 +37,9 @@ setupUser = (user, auction) ->
   .catch(next)
   .done()
 
+@redirectAuction = (req, res) ->
+  res.redirect 301, req.url.replace 'auction', 'auctions'
+
 @reminders = (req, res, next) ->
   reminders = new AuctionReminders
   reminders.fetch()

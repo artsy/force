@@ -57,3 +57,6 @@ parseGenes = (collection) ->
       artists: artists
       letterRange: artists.range
       letter: _s.capitalize(letter)
+
+@redirectArtist = (req, res) ->
+  res.redirect 301, req.url.replace 'artist', 'artists'

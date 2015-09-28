@@ -20,3 +20,9 @@ OrderedSets = require '../../collections/ordered_sets'
       featuredGenes: featuredGenes
       geneCategories: geneCategories
       aToZGroup: aToZGroup
+
+@redirectCategory = (req, res) ->
+  res.redirect 301, req.url.replace 'category', 'categories'
+
+@redirectGene = (req, res) ->
+  res.redirect 301, req.url.replace 'gene', 'categories'
