@@ -3,22 +3,29 @@ Backbone = require 'backbone'
 PartnerCell = require '../partner_cell/view.coffee'
 { Following } = require '../../../../components/follow_button/index.coffee'
 Profile = require '../../../../models/profile.coffee'
+template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCellGrid extends Backbone.View
-  initialize: ( options = {} ) ->
-    @$el = options.$el
-    partners = options.partners
+  initialize: ( options = {  } ) ->
+    @partners = options.partners
+
+  setupFollowing: ->
+    @following = new Following([], kind: 'profile') if CURRENT_USER?
     profileIds = partners.pluck('default_profile_id')
+    @following?.syncFollows profileIds
 
-    following = new Following([], kind: 'profile') if CURRENT_USER?
+  postRender: ->
+    @cells = @$('.partner-cell').map (el) =>
+      id = ($el = $(el)).data 'id'
+      cell = new PartnerCell
+        partner: @partners.get(id)
+        following: @following
+      $el.html = cell.render().$el
+      cell
+    this
 
-    following?.syncFollows profileIds
-
-    @$('.partner-cell').each ->
-      id = ($el = $(this)).data 'id'
-      new PartnerCell
-        $el: $el
-        partner: partners.get id
-        following: following
-
-
+  render: ->
+    @$el.html template partners:partners
+    _.defer => @postRender()
+    this
+    

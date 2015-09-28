@@ -1,0 +1,61 @@
+@import '../../../../components/stylus_lib'
+@import '../../../../components/grid'
+@import '../partner_cell'
+
+arrow-width = 40px
+arrow-offset = -30px
+body-height = 200px
+  
+
+.partner-cell-grid-3-up
+  grid-3-up(20px, 30px)
+.partner-cell-grid-3-up > .grid-item
+  margin-top row-gap
+  @media screen and (max-width: 1024px)
+    margin-top row-gap/2
+
+.partner-carousel .partner-cell-grid-3-up > .grid-item
+  margin-top 0
+
+.partner-cell-carousel-header > *
+  position absolute
+  
+.partner-cell-carousel-header
+  position relative
+  border-bottom 2px solid gray-lighter-color
+  margin-bottom 30px
+  height 55px
+  garamond()
+  
+.partner-cell-carousel-header-left
+  garamond-size('headline')
+  bottom 12px
+  left 0
+  
+.partner-cell-carousel-header-right
+  bottom 20px
+  right 0
+  
+.partner-cell-carousel-body
+  position relative
+
+.partner-cell-carousel-content
+  white-space nowrap
+  overflow hidden
+  
+.partner-cell-carousel-arrow-left
+  left arrow-offset
+  
+.partner-cell-carousel-arrow-right
+  text-align right
+  right arrow-offset
+  
+.partner-cell-carousel-arrow
+  position absolute
+  width arrow-width
+  offset = (partner-cell-metadata-height + partner-cell-metadata-margin) / 2
+  top calc('50% - %s' % offset)
+  transform translateY(-50%)
+  
+.partner-cell-carousel .partner-cell
+  display inline-block

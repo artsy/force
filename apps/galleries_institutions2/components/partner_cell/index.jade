@@ -1,14 +1,12 @@
-mixin partner-cell(partner)
-  - var profileId = partner.get('default_profile_id')
-  - var profileHref = "/" + profileId
+//- partner, imageUrl
+- var profile = partner.related().profile
 
-  .partner-cell.grid-item(data-id=partner.id)
-    a.partner-featured-image.hoverable-image-link(
-      href= profileHref
-    )
-      .hoverable-image.is-three-two
+a.partner-featured-image.hoverable-image-link(
+  href= profile.href()
+)
+  .hoverable-image.is-three-two(class= imageUrl ? "" : "is-missing", data-initials= profile.defaultIconInitials())
 
-    .partner-cell-metadata
-      a.partner-cell-name.avant-garde-header( href= profileHref )= partner.get('name')
-      .partner-cell-location
-      button.partner-cell-follow-button.avant-garde-button-white.is-small.follow-button( data-id= profileId )
+.partner-cell-metadata
+  a.partner-cell-name.avant-garde-header( href= profile.href() )= partner.get('name')
+  .partner-cell-location=partner.displayLocations() || ""
+  button.partner-cell-follow-button.avant-garde-button-white.is-small.follow-button( data-id= profile.get('id') )
