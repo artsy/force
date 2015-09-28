@@ -15,6 +15,4 @@ PAGE_SIZE = 100
     error: res.backboneError
     success: (articles) ->
       res.set('Content-Type', 'text/xml')
-      publishedArticles = articles.filter (article) ->
-        article.has('published_at')
-      res.render('news', { articles: publishedArticles })
+      res.render('news', { articles: articles })

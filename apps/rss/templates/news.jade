@@ -7,14 +7,14 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
     description Featured Artsy articles.
     language en-US
     if articles.length
-      lastBuildDate= new Date(articles[0].get('published_at')).toUTCString()
-    each article in articles
+      lastBuildDate= new Date(articles.first().get('published_at')).toUTCString()
+    each article in articles.models
       item
         title= article.get('thumbnail_title')
         link #{sd.APP_URL}/article/#{article.get('slug')}
         description
           | <![CDATA[
-          | !{article.get('thumbnail_teaser')}
+          | !{article.get('lead_paragraph')}
           p: a(href="#{sd.APP_URL}/article/#{article.get('slug')}") Read more &raquo;
           | ]]>
         pubDate= new Date(article.get('published_at')).toUTCString()
