@@ -1,0 +1,14 @@
+- title= "Artsy - Discover, Research, and Collect the World's Best Art Online"
+- description= "Artsy is the online resource for art collecting and education. Discover, learn about, and buy art you'll love, featuring fine art, design, and photography from leading galleries, museums, art fairs, and auctions"
+title= title
+meta( property="og:title", content=title )
+meta( name="description", content=description )
+meta( property="og:description", content=description )
+meta( property="twitter:description", content=description )
+meta( property="og:type", content="website" )
+meta( property="og:site_name", content="Artsy" )
+link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_URL + (req ? req.path : "")) )
+link( rel="canonical", href=(sd.APP_URL + (req ? req.path : "")) )
+meta( property="og:url", content=(sd.APP_URL + (req ? req.path : "")) )
+meta( property="og:image", content=asset('/images/og_image.jpg') )
+meta( property="twitter:card", content="summary" )
