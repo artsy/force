@@ -16,6 +16,9 @@ module.exports =
   isCropped: (version) ->
     _.contains @croppedSizes, version
 
+  isWithImages: ->
+    @defaultImageVersion?()?
+
   publicVersions: ->
     _.without(@get('image_versions'), 'normalized')
 

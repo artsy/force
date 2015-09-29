@@ -5,6 +5,8 @@ template = -> require('../templates/artists_in_collection.jade') arguments...
 module.exports = class ArtistsInCollection extends StepView
   template: -> template arguments...
 
+  shouldAutofocus: false
+
   __events__:
     'click button': 'next'
 

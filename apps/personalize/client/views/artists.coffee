@@ -143,6 +143,6 @@ module.exports = class ArtistsView extends StepView
     this
 
   remove: ->
-    @searchBarView.remove()
+    @typeahead.remove()
     @suggestions.each (suggestionSet) => @disposeSuggestionSet(suggestionSet)
     super

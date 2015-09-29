@@ -1,6 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
+moment = require 'moment'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 setupAuctionReminder = rewire '../index'
@@ -22,8 +23,9 @@ describe 'setupAuctionReminder', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
       .yieldsTo 'success', [
-        fabricate 'sale', id: 'first'
-        fabricate 'sale', id: 'second'
+        fabricate 'sale', id: 'first', end_at: moment().add(1, 'hour').format()
+        fabricate 'sale', id: 'second', end_at: moment().add(1, 'hour').format()
+        fabricate 'sale', id: 'is-over-but-cached-and-being-returned', end_at: moment().subtract(1, 'hour').format()
       ]
 
     setupAuctionReminder()
