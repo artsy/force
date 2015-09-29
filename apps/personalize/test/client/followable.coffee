@@ -40,8 +40,6 @@ describe 'Followable', ->
 
     @view.render()
 
-    @view.$searchInput = $('<input>')
-
   afterEach ->
     Backbone.sync.restore()
 
@@ -51,11 +49,11 @@ describe 'Followable', ->
 
     it 'sets the skip label (once)', ->
       @view.__labelSet__?.should.be.false()
-      @view.follow {}, @artist
+      @view.follow @artist
       @view.__labelSet__?.should.be.true()
 
     it 'follows the artist', ->
-      @view.follow($.Event('click'), @artist)
+      @view.follow @artist
       @view.following.at(0).get('artist').id.should.equal @artist.id
       @view.followed.at(0).id.should.equal @artist.id
 
@@ -64,7 +62,7 @@ describe 'Followable', ->
       artist = new Artist fabricate 'artist'
       e = $.Event('click')
       e.currentTarget = $('<a></a>').data('id', artist.id)
-      @view.follow e, artist
+      @view.follow artist
       @view.followed.length.should.equal 1
       @view.following.length.should.equal 1
 

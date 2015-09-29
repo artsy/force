@@ -2,7 +2,7 @@ _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../lib/analytics.coffee'
-SearchBarView = require '../search_bar/view.coffee'
+TypeaheadView = require '../typeahead/view.coffee'
 Following = require '../follow_button/collection.coffee'
 UserInterests = require '../../collections/user_interests.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -18,13 +18,13 @@ module.exports = class UserInterestsView extends Backbone.View
     'click .js-user-interest-remove': 'uninterested'
 
   defaults:
+    autofocus: false
     persist: true
-    mode: 'post'
+    # When `null` a logged in CurrentUser must be present
+    collectorProfile: null
 
   initialize: (options = {}) ->
-    { @limit,
-      @autofocus,
-      @mode,
+    { @autofocus,
       @persist,
       @collectorProfile } = _.defaults options, @defaults
 
@@ -32,17 +32,17 @@ module.exports = class UserInterestsView extends Backbone.View
     @following = new Following [], kind: 'artist'
 
     @listenTo @collection, 'sync add remove', @renderCollection
+    @listenTo @collection, 'sync add remove', @syncExclusions
 
-  interested: (e, model) ->
+  syncExclusions: ->
+    @typeahead?.selected = @collection.map (x) ->
+      x.related().interest.id
+
+  interested: (model) ->
     userInterest = @collection.addInterest model
+    userInterest.save()
 
-    if @persist
-      userInterest.save()
-
-    if @persist and CURRENT_USER?
-      @following.follow model.id
-
-    @autocomplete.clear()
+    @following.follow model.id if CURRENT_USER?
 
     analytics.track.other 'Added an artist to their collection'
 
@@ -51,12 +51,7 @@ module.exports = class UserInterestsView extends Backbone.View
     model = @collection.findByInterestId id
     model.destroy()
 
-    @autocomplete.$input.focus()
-
     analytics.track.other 'Removed an artist from their collection'
-
-  saveAll: ->
-    @collection.invoke 'save'
 
   renderCollection: ->
     @trigger 'render:collection'
@@ -69,23 +64,21 @@ module.exports = class UserInterestsView extends Backbone.View
       @$collection.addClass 'is-fade-in'
 
   postRender: ->
-    @autocomplete = new SearchBarView
-      el: @$('.js-user-interests-search')
-      mode: 'artists'
-      limit: @limit
-      autoselect: true
-      displayKind: false
-      shouldDisplaySuggestions: false
+    @typeahead = new TypeaheadView
+      autofocus: @autofocus
+      kind: 'artists'
+      placeholder: 'Search artists'
 
-    @listenTo @autocomplete, 'search:selected', @interested
+    @$('.js-user-interests-search')
+      .html @typeahead.render().$el
+
+    @listenTo @typeahead, 'selected', @interested
 
   render: ->
-    @$el.html @template
-      autofocus: @autofocus
-      mode: @mode
+    @$el.html @template()
     @postRender()
     this
 
   remove: ->
-    @autocomplete.remove()
+    @typeahead.remove()
     super

@@ -1,0 +1,11 @@
+if suggestion.isWithImages()
+  span.typeahead-suggestion-thumbnail
+    span: img(
+      src= suggestion.cropUrlFor({ width: 32, height: 32 })
+      width='32'
+      height='32'
+      onerror='this.style.display="none";'
+    )
+
+span.typeahead-suggestion-name
+  = suggestion.get('name')
