@@ -1,3 +1,4 @@
+- dimensions = artwork.defaultImage() && artwork.defaultImage().resizeDimensionsFor({ width: 640, height: 640 })
 title= artwork.toPageTitle()
 meta( property="og:title", content= artwork.toPageTitle() )
 meta( name="description", content= artwork.toPageDescription(155) )
@@ -11,6 +12,9 @@ if artwork.get('can_share_image') && artwork.defaultImage().hasImage('large')
   meta( property="twitter:card", content="summary_large_image" )
   meta( property="og:image", content= artwork.defaultImageUrl('large') )
   meta( name="thumbnail", content= artwork.defaultImageUrl('large') )
+  if dimensions
+    meta( property="og:image:width" content=dimensions.width )
+    meta( property="og:image:height" content=dimensions.height )
 else
   meta( property="twitter:card", content="summary" )
   meta( property="og:image", content=asset('/images/icon-152.png') )
