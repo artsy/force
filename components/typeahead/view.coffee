@@ -29,6 +29,7 @@ module.exports = class AutocompleteView extends Backbone.View
     param: 'term'
     wildcard: ':query'
     url: null
+    path: null
 
     # Convenience for default collection
     kind: null
@@ -59,6 +60,11 @@ module.exports = class AutocompleteView extends Backbone.View
     @$('.tt-suggestion:first').addClass 'tt-cursor'
 
   parse: (response) ->
+    if @path?
+      response = _.reduce @path.split('.'), (memo, key) ->
+        return memo[key]
+      , response
+
     @collection.reset _.map response, (suggestion) =>
       suggestion.name = suggestion[@nameAttr]
       suggestion

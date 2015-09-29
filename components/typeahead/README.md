@@ -31,7 +31,9 @@ TypeaheadView = require '../../components/typeahead/view.coffee'
   # Specify a `url` instead of of `kind` (which configures the default Gravity /match endpoint)
   url: "#{GALAXY_ENDPOINT}/galleries"
   # Specify a named query parameter that will get populated with the value from the input
-  param: 'query'
+  param: 'term'
+  # Specify a path to walk down to get the array of results
+  path: '_embedded.galleries'
 
 @$('.js-typeahead').html @typeahead.render().$el
 
