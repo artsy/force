@@ -17,9 +17,9 @@ module.exports = class BasicInfo extends StepView
 
     form.state 'loading'
 
-    @user.save(form.data())
-      .always => @next()
-      .done()
+    @user.save form.data(),
+      success: => @next()
+      error: form.error.bind form
 
   postRender: ->
     @locationSearch = new LocationSearch
