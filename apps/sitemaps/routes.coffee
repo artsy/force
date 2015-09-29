@@ -171,10 +171,10 @@ streamResults = (results, res) ->
       "contentUrl": artwork.imageUrl()
       "name": artwork.get('title')
       "description": "
-        #{artwork.get('title')} is a work of art created
-        #{if name = artwork.related().artist.get('name') then " by #{name}" else ''}
-        #{if date = artwork.get('date') then "in #{date}. " else '. '}
-        #{if med = artwork.get('medium') then "The medium is #{med.toLowerCase()}" else ''}.
+        #{if title = artwork.get('title') then "#{title}" else "This work"}
+        #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
+        #{if date = artwork.get('date') then "in #{date}." else '. '}
+        #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
       "
       "encodingFormat": "jpeg"
       "keywords": artwork.toPageDescription().split(', ')
