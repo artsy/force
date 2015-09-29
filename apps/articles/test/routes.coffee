@@ -57,7 +57,7 @@ describe 'Article routes', ->
         { tier: 1, id: 'g' }
         { tier: 2, id: 'h' }
       ]
-      setTimeout =>
+      _.defer => _.defer =>
         @res.render.args[0][1].articles.should.have.lengthOf 8
         done()
 
