@@ -32,6 +32,7 @@ describe 'Artwork', ->
       JS_EXT: '.js.gz'
       NODE_ENV: 'test'
       FACEBOOK_APP_NAMESPACE: 'artsyinc'
+      CURRENT_PATH: '/artwork/foo'
     @artwork = new Artwork fabricate 'artwork', sale_message: '$6,000'
     @artist = new Artist fabricate 'artist'
     @artists = new Artists [@artist]
