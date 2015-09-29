@@ -27,8 +27,7 @@ module.exports = class StepView extends Backbone.View
 
   autofocus: ->
     return unless @shouldAutofocus
-    $input = form.firstVisibleInput @$el
-    form.autofocus $input, true
+    form.autofocus @$el, true
 
   setup: -> #
 
