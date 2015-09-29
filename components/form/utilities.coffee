@@ -9,11 +9,17 @@ module.exports =
     val = $input.val()
     $input.val('').val val
 
-  autofocus: ($input, defer = false) ->
+  isFocusable: ($el) ->
+    $el.is('input') or $el.is('textarea')
+
+  autofocus: ($el, defer = false) ->
     return if isTouchDevice()
 
     focus = =>
-      $input.focus()
-      @moveCursorToEnd $input
+      if not @isFocusable $el
+        $el = @firstVisibleInput $el
+
+      $el.focus()
+      @moveCursorToEnd $el
 
     if defer then _.defer(focus) else focus()
