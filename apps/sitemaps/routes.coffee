@@ -5,7 +5,7 @@ request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
 { Cities } = require 'places'
-{ API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
+{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 FUSION_PAGE_SIZE = 5000
@@ -205,3 +205,11 @@ streamResults = (results, res) ->
         "width": dimensions.width
       }
     res.write JSON.stringify(json) + ','
+
+@robots = (req, res) ->
+  res.set 'Content-Type', 'text/plain'
+  res.send switch NODE_ENV
+    when 'production'
+      "Sitemap: #{APP_URL}/sitemap.xml"
+    else
+      "User-agent: *\nDisallow: /"
