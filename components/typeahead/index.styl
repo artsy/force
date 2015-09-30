@@ -47,8 +47,12 @@ suggestion-height = suggestion-thumbnail-size + 20px
   .tt-suggestion
     cursor pointer
     &.is-empty
-      color red-color
-      background-color gray-lightest-color
+      cursor normal
+      &
+      &:hover
+      &.tt-hint
+        color red-color
+        background-color gray-lightest-color
 
   .tt-cursor
   .tt-suggestion:hover
