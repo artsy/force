@@ -16,7 +16,18 @@ block body
       )
 
     header.auction-header
-      .auction-header-primary
+      .auction-preview-sidebar
+        .auction-preview-sidebar-label
+          | Opening Soon
+        .auction-preview-sidebar-text
+          | Receive an email invitation when the auction begins on Artsy  
+        .auction-preview-sidebar-email-placeholder
+          i email here  
+        //- Profile logo here
+        .auction-preview-clock.js-auction-clock( data-id= auction.id )
+          include ../../../../components/clock/template
+
+      .auction-preview-header-primary
         h1.auction-title
           = auction.get('name')
         .auction-description
@@ -25,16 +36,6 @@ block body
         .auction-preview-primary-metadata
           include ../metadata/event
           include ../metadata/contact
-
-      .auction-header-metadata
-        //- Profile logo here
-        .auction-preview-clock.js-auction-clock( data-id= auction.id )
-          include ../../../../components/clock/template
-
-    section.auction-preview-registration.auction-page-section
-      | Register now to be notified when the auction begins
-      .auction-preview-registration-button
-        include ../registration_button
 
     include ../associated_auction
 
