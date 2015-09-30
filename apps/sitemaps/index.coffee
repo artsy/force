@@ -5,6 +5,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
+app.get '/robots.txt', routes.robots
 app.get '/articles/sitemap.xml', routes.articles #news sitemap (articles < 5 days old)
 app.get '/sitemap-misc.xml', routes.misc
 app.get '/sitemap-articles-:page.xml', routes.articlesPage #archive of all articles (for main sitemap, not news-specific sitemap)
