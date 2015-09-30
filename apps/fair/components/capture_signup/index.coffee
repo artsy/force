@@ -4,7 +4,6 @@ Q = require 'bluebird-q'
 { humanize } = require 'underscore.string'
 { Following } = require '../../../../components/follow_button/index.coffee'
 FlashMessage = require '../../../../components/flash/index.coffee'
-CollectorProfile = require '../../../../models/collector_profile.coffee'
 
 module.exports =
   validActions: validActions = [
