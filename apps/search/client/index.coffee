@@ -4,8 +4,9 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
+Artwork = require '../../../models/artwork.coffee'
 
-imageTemplate = require '../image-template.jade'
+imageTemplate = require '../templates/image-template.jade'
 
 module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
 
@@ -21,6 +22,8 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
           @initializeArtistRow result
         else if result.display_model is 'category'
           @initializeGeneRow result
+        else if result.display_model is 'artwork'
+          @refreshRenderArtworks result
 
   initializeArtistRow: (result) ->
     new Artist(id: result.id).fetchArtworks
@@ -45,6 +48,11 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
         artwork.defaultImageUrl('tall')
     if imageUrls.length > 0
       @$(".search-result[data-id=#{id}] .search-result-images").html imageTemplate(imageUrls: imageUrls)
+
+  refreshRenderArtworks: (result) ->
+    new Artwork(id: result.id).fetch
+      success: (artwork) ->
+        @$(".search-result[data-id=#{result.id}] img").html "src", artwork.defaultImageUrl('small')
 
   trackClick: ->
     analytics.track.click "Selected item from results page", query: $('#main-layout-search-bar-input').val()

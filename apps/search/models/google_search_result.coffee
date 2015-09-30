@@ -30,6 +30,9 @@ module.exports = class GooogleSearchResult extends Backbone.Model
       .replace('#!', '')
 
   imageUrl: ->
+    # console.log @get('pagemap')?.cse_image?[0]
+    return "" if @get('display_model') == 'artwork'
+
     @get('pagemap')?.cse_thumbnail?[0].src or @get('pagemap')?.cse_image?[0].src
 
   ogType: ->
