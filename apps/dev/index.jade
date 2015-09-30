@@ -22,12 +22,11 @@ block body
     if (NODE_ENV === 'development' || NODE_ENV === 'staging') && API_URL === 'https://stagingapi.artsy.net'
       hr.is-invisible
 
-      pre.debug
-        | STEPS:
-        br
-        for step, i in views
-          a.js-bypass( href='#', data-step= step )= step
-          br
+      label.bordered-select: select.js-bypass
+        option Steps
+        for step in views
+          option( value= step )= step
+
 
       hr.is-invisible
 
