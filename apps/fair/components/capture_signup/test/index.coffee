@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 Fair = require '../../../../../models/fair.coffee'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
+CurrentUser = require '../../../../../models/current_user.coffee'
 capture = rewire '../index.coffee'
 
 describe 'captureSignup', ->
@@ -15,8 +16,6 @@ describe 'captureSignup', ->
         $: benv.require 'jquery'
 
       @flashSpy = sinon.spy()
-
-      capture.__set__ 'CURRENT_USER', id: 'foo'
       capture.__set__ 'FlashMessage', @flashSpy
       sinon.stub _, 'delay', (cb) -> cb()
       done()
@@ -24,18 +23,22 @@ describe 'captureSignup', ->
   after ->
     benv.teardown()
 
-  beforeEach ->
+  beforeEach =>
     sinon.stub Backbone, 'sync'
     sinon.stub $, 'ajax'
-    fair = new Fair fabricate 'fair'
-    capture.captureSignup fair: fair, action: "attendee"
+    @fair = new Fair fabricate 'fair'
+    capture.captureSignup
+      fair: @fair
+      action: "attendee"
+      user: new CurrentUser fabricate 'user'
 
-  afterEach ->
+  afterEach =>
     Backbone.sync.restore()
     $.ajax.restore()
 
   it 'shows a FlashMessage after the FairAction is successfully saved', =>
-    Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/user_fair_action'
+    Backbone.sync.args[0][1].get('fair_id').should.eql @fair.id
+    Backbone.sync.args[0][1].get('action').should.eql "Attendee"
     Backbone.sync.args[0][2].success()
     @flashSpy.called.should.be.true
 
