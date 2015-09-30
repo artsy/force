@@ -1,0 +1,17 @@
+@import '../stylus_lib'
+
+.result-remove
+  iconfont-styling()
+  padding 10px 10px 10px 20px
+  cursor pointer
+  user-select none
+  font-size 14px
+  line-height 1
+  &:before
+    // .icon-check
+    content '\e627'
+  &:hover:before
+    color red-color
+    vendor('text-stroke-width', 1px)
+    // .icon-close
+    content '\e614'
