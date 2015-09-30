@@ -10,9 +10,9 @@ Logger = require '../../components/inquiry_questionnaire/logger.coffee'
 
 module.exports.init = ->
   # Force a particular step
-  $('.js-bypass').click (e) ->
+  $('.js-bypass').change (e) ->
     e.preventDefault()
-    step = $(e.currentTarget).data 'step'
+    step = $(e.currentTarget).val()
     user = User.instantiate()
     user.set name: $('input[name="name"]').val(), email: $('input[name="email"]').val()
     openInquiryQuestionnaireFor

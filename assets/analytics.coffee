@@ -8,6 +8,7 @@ require '../analytics/before_ready.js'
 $ -> analytics.ready ->
   setupSplitTests()
 
+  require '../analytics/global.js'
   require '../analytics/impressions.js'
   require '../analytics/articles.js'
   require '../analytics/gallery_partnerships.js'

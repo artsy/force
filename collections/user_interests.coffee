@@ -19,6 +19,10 @@ module.exports = class UserInterests extends Backbone.Collection
       interest_type: @interestType
     super options
 
+  interests: ->
+    @map (userInterest) ->
+      userInterest.related().interest
+
   comparator: (userInterest) ->
     Date.parse(userInterest.get 'updated_at')
 

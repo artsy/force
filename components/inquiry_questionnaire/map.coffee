@@ -4,6 +4,7 @@ module.exports =
     commercial_interest: require './views/commercial_interest.coffee'
     basic_info: require './views/basic_info.coffee'
     artists_in_collection: require './views/artists_in_collection.coffee'
+    galleries_you_work_with: require './views/galleries_you_work_with.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
     specialist: require './views/specialist.coffee'
     inquiry: require './views/inquiry.coffee'

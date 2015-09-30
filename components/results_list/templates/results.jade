@@ -1,0 +1,8 @@
+for result in results
+  .results-list-item
+    .garamond-results-list-item-cell
+      = result.get('name')
+
+    .results-list-item-cell.result-remove.js-remove(
+      data-id= result.id
+    )

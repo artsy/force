@@ -20,9 +20,7 @@ describe 'TypeaheadView', ->
     benv.teardown()
 
   beforeEach ->
-    @view = new TypeaheadView
-      placeholder: 'Search Foobars...'
-    @view.engine = initialize: (->)
+    @view = new TypeaheadView placeholder: 'Search Foobars...'
     @view.render()
 
   afterEach ->
@@ -33,10 +31,12 @@ describe 'TypeaheadView', ->
       @view.options.should.eql
         placeholder: 'Search Foobars...'
         autofocus: false
+        headers: {}
         highlight: false
         hint: true
         nameAttr: 'name'
         param: 'term'
+        path: null
         wildcard: ':query'
         url: null
         kind: null
@@ -89,3 +89,23 @@ describe 'TypeaheadView', ->
       @view.selected.should.eql []
       @view.input().trigger 'typeahead:selected', id: 'foobar'
       @view.selected.should.eql ['foobar']
+
+  describe 'parsing results', ->
+    it 'accepts a `path` and a `nameAttr` option for pulling out result sets', ->
+      view = new TypeaheadView
+        nameAttr: 'display'
+        path: '_embedded.galleries'
+
+      models = view.parse {
+        _embedded: {
+          galleries: [
+            { id: 'some-gallery', display: 'Some Gallery' }
+            { id: 'some-other-gallery', display: 'Some Other Gallery' }
+          ]
+        }
+      }
+
+      models[0].get 'name'
+        .should.equal 'Some Gallery'
+      models[1].get 'name'
+        .should.equal 'Some Other Gallery'

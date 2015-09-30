@@ -1,5 +1,7 @@
 StepView = require './step.coffee'
+Galaxy = require '../../../lib/galaxy.coffee'
 TypeaheadView = require '../../typeahead/view.coffee'
+ResultsListView = require '../../results_list/view.coffee'
 template = -> require('../templates/galleries_you_work_with.jade') arguments...
 
 module.exports = class GalleriesYouWorkWith extends StepView
@@ -8,21 +10,41 @@ module.exports = class GalleriesYouWorkWith extends StepView
   shouldAutofocus: false
 
   __events__:
-    'click button': 'next'
+    'click button': 'serialize'
+
+  setup: ->
+    ids = @user.related()
+      .collectorProfile.get 'affiliated_gallery_ids'
+
+    @resultsList = new ResultsListView
+      typeahead: new TypeaheadView
+        autofocus: true
+        headers: Galaxy.headers
+        url: Galaxy.url('galleries')
+        path: '_embedded.galleries'
+        selected: ids
+
+    if ids?.length
+      $.ajax
+        method: 'GET'
+        headers: Galaxy.headers
+        data: ids: ids
+        url: Galaxy.url('galleries')
+        success: ({ _embedded }) =>
+          @resultsList.collection.reset _embedded.galleries
 
   postRender: ->
-    @typeahead = new TypeaheadView
-      autofocus: true
-      url: '/galaxy?type=galleries'
+    @$('.js-user-interests').html @resultsList.render().$el
 
-    @$('.js-user-interests')
-      .html @typeahead.render().$el
+  serialize: (e) ->
+    e.preventDefault()
 
-    @listenTo @typeahead, 'selected', @select
+    ids = @resultsList.collection.pluck 'id'
 
-  select: (suggestion) ->
-    console.log suggestion
+    @user.related().collectorProfile
+      .save affiliated_gallery_ids: ids,
+        complete: => @next()
 
   remove: ->
-    @typeahead.remove()
+    @resultsList.remove()
     super
