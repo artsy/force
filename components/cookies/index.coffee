@@ -1,6 +1,5 @@
 _ = require 'underscore'
-{ NODE_ENV } = require('sharify').data
-IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
+IS_TEST_ENV = require '../../lib/is_test_env.coffee'
 methods = ['get', 'set', 'expire']
 
 cookies = ->

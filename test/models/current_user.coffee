@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -94,3 +95,31 @@ describe 'CurrentUser', ->
       Backbone.sync.args[0][2].data.type.should.equal 'ArtworkPublished'
       Backbone.sync.args[0][2].data.unread.should.be.true()
       Backbone.sync.args[0][2].data.size.should.equal 100
+
+  describe '#prepareForInquiry', ->
+    beforeEach ->
+      Backbone.sync.restore()
+
+      @user = new CurrentUser
+
+      @user.related()
+        .collectorProfile.related()
+          .userFairActions.attendFair fabricate 'fair'
+
+      sinon.stub Backbone, 'sync'
+        .returns Q.resolve()
+
+    it 'creates or persists everything needed to make an inquiry', (done) ->
+      @user.prepareForInquiry()
+
+      _.partial(_.delay, _, 2) ->
+        Backbone.sync.callCount.should.equal 3
+
+        Backbone.sync.args[0][1].url()
+          .should.containEql '/api/v1/me'
+        Backbone.sync.args[1][1].url
+          .should.containEql '/api/v1/me/collector_profile'
+        Backbone.sync.args[2][1].url()
+          .should.containEql '/api/v1/me/user_fair_action'
+
+        done()

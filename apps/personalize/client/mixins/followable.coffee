@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-SearchBarView = require '../../../../components/search_bar/view.coffee'
+TypeaheadView = require '../../../../components/typeahead/view.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 followedTemplate = -> require('../../templates/followed.jade') arguments...
 
@@ -13,16 +13,15 @@ module.exports =
 
     throw 'Followable requires a @following collection' unless @following?
 
-  setupSearch: (options = {}) ->
-    @searchBarView = new SearchBarView
-      mode: options.mode
-      restrictType: options.restrictType
-      el: @$('#personalize-search-container')
-      $input: @$searchInput ?= @$('#personalize-search')
-      autoselect: true
-      displayKind: false
+  setupSearch: ({ mode }) ->
+    @typeahead = new TypeaheadView
+      kind: mode
+      autofocus: true
+      placeholder: 'Search artists'
 
-    @listenTo @searchBarView, 'search:selected', @follow
+    @$('#personalize-search-container').html @typeahead.render().$el
+
+    @listenTo @typeahead, 'selected', @follow
 
   renderFollowed: ->
     @$('#personalize-followed').html followedTemplate(models: @followed.models)
@@ -33,9 +32,8 @@ module.exports =
     @$('.personalize-skip').text label
     @__labelSet__ = true
 
-  follow: (e, model) ->
+  follow: (model) ->
     @setSkipLabel()
-    @searchBarView?.clear()
     @followed.unshift model.toJSON()
     @following.follow model.get('id'), { notes: 'Followed from /personalize' }
 

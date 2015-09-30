@@ -1,0 +1,94 @@
+@import '../stylus_lib'
+
+suggestion-thumbnail-size = default-icon-font-size
+suggestion-height = suggestion-thumbnail-size + 20px
+
+.typeahead
+  position relative
+
+  .twitter-typeahead
+    display block
+    width 100%
+    height 100%
+
+  .icon-search
+    position absolute
+    top 50%
+    left 10px
+    font-size 20px
+    transform translateY(-50%)
+    color gray-color
+
+  .bordered-input
+    display block
+    width 100%
+    height 100%
+    padding-left suggestion-thumbnail-size
+
+  &[data-state='loading'] > .typeahead-loading-indicator
+    display block
+    > .loading-spinner-small
+      background-color purple-color
+
+  .tt-hint
+    color rgba(black, 0.25)
+
+  .tt-dropdown-menu
+    width 100%
+    background-color white
+    border 2px solid purple-color
+    border-top none
+    text-align left
+    z-index zindex-modal
+
+  .tt-suggestions
+    //
+
+  .tt-suggestion
+    cursor pointer
+    &.is-empty
+      cursor normal
+      &
+      &:hover
+      &.tt-hint
+        color red-color
+        background-color gray-lightest-color
+
+  .tt-cursor
+  .tt-suggestion:hover
+    background-color black
+    color white
+
+.typeahead-loading-indicator
+  display none
+  position absolute
+  top 0
+  right 0
+  width 50px
+  height 100%
+
+.typeahead-suggestion-thumbnail
+.typeahead-suggestion-name
+  display inline-block
+  height suggestion-height
+  line-height suggestion-thumbnail-size
+  vertical-align middle
+  &:first-child
+    padding-left 10px
+
+.typeahead-suggestion-thumbnail
+  width suggestion-height
+  padding 10px
+  // Fallback (gray square)
+  > span
+    display inline-block
+    background-color gray-color
+    width suggestion-thumbnail-size
+    height @width
+
+.typeahead-suggestion-name
+  padding 10px 10px 10px 0
+  // Calc width necessary for overflow ellipsis
+  width calc('100% - %s' % suggestion-height)
+  overflow ellipsis
+  white-space nowrap !important

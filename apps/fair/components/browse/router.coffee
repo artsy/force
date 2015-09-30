@@ -49,7 +49,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       redirectTo: "#{@fair.href()}/capture/#{action}"
 
   capture: (id, action)=>
-    captureSignup fair: @fair, action: action
+    captureSignup fair: @fair, action: action, user: CurrentUser.orNull()
 
   booths: =>
     @boothParams.trigger 'change'

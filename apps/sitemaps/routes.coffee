@@ -1,13 +1,14 @@
 _ = require 'underscore'
 Articles = require '../../collections/articles'
+Artwork = require '../../models/artwork'
 request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
 { Cities } = require 'places'
-{ API_URL, POSITRON_URL, FUSION_URL } = require('sharify').data
+{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
-FUSION_PAGE_SIZE = 10000
+FUSION_PAGE_SIZE = 5000
 
 epoch = -> moment('2010 9 1', 'YYYY MM DD')
 buckets = _.times moment().diff(epoch(), 'months'), (i) ->
@@ -134,3 +135,81 @@ getArtworkBuckets = (callback) ->
       return next err if err
       res.set('Content-Type', 'text/xml')
       res.render(req.params.resource, pretty: true, models: sres.body)
+
+@bingjson = (req, res, next) ->
+  res.set('Content-Disposition': 'attachment').write('[')
+  getArtworkBuckets (err, buckets) ->
+    async.mapSeries buckets.reverse(), (bucket, callback) ->
+      iterator = (page, callback) ->
+        request
+          .get("#{FUSION_URL}/api/v1/artworks")
+          .query(
+            published_at_since: bucket.startDate
+            published_at_before: moment(bucket.startDate).add(1, 'months').format('YYYY-MM-DD')
+            offset: page * FUSION_PAGE_SIZE
+            limit: FUSION_PAGE_SIZE
+          )
+          .end (err, sres) ->
+            return next err if err
+            return callback() if sres.body.results.length is 0
+            streamResults sres.body.results, res
+            callback()
+      async.timesSeries(bucket.pages + 1, iterator, callback)
+    , ->
+      res.write('{}]')
+      res.end()
+
+streamResults = (results, res) ->
+  results.forEach (artwork) ->
+    artwork = new Artwork artwork
+    json = {
+      "@context": {
+        "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
+      }
+      "@type": "https://schema.org/ImageObject"
+      "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
+      "contentUrl": artwork.imageUrl()
+      "name": artwork.get('title')
+      "description": "
+        #{if title = artwork.get('title') then "#{title}" else "This work"}
+        #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
+        #{if date = artwork.get('date') then "in #{date}." else '. '}
+        #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
+      "
+      "encodingFormat": "jpeg"
+      "keywords": artwork.toPageDescription().split(', ')
+      "datePublished": artwork.get('published_at')
+      "dateModified": artwork.get('published_changed_at')
+      "copyrightHolder": {
+        "@type": "Organization"
+        "name": artwork.related().artist.get('image_rights')
+      }
+    }
+    if artwork.get('artist')
+      json = _.extend json, {
+        "author": {
+          "alternateName": artwork.related().artist.get('name')
+          "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+        }
+        "CollectionPage":[
+          {
+            "@type": "CollectionPage"
+            "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+          }
+        ]
+      }
+    if img = artwork.defaultImage()
+      dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
+      json = _.extend json, {
+        "height": dimensions.height
+        "width": dimensions.width
+      }
+    res.write JSON.stringify(json) + ','
+
+@robots = (req, res) ->
+  res.set 'Content-Type', 'text/plain'
+  res.send switch NODE_ENV
+    when 'production'
+      "Sitemap: #{APP_URL}/sitemap.xml"
+    else
+      "User-agent: *\nDisallow: /"

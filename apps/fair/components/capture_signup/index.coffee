@@ -3,9 +3,7 @@ qs = require 'querystring'
 Q = require 'bluebird-q'
 { humanize } = require 'underscore.string'
 { Following } = require '../../../../components/follow_button/index.coffee'
-{ CURRENT_USER } = require('sharify').data
 FlashMessage = require '../../../../components/flash/index.coffee'
-CurrentUserFairAction = require '../../../../models/current_user_fair_action.coffee'
 
 module.exports =
   validActions: validActions = [
@@ -21,20 +19,21 @@ module.exports =
       action: "Attendee"
       message: "Thank you for signing up.<br><br>You are not logged in. Log in with your details on Artsy.net or on our iPhone and iPad apps."
       duration: 10000
+      user: null
 
-    { fair, action, message, duration } = _.defaults options, defaults
+    { fair, action, message, duration, user } = _.defaults options, defaults
 
     return unless (action = humanize(action)) in validActions
-
-    if CURRENT_USER?
-      fairAction = new CurrentUserFairAction
-        action: action
-        fair_id: fair.id
+    if user
+      { collectorProfile } = user.related()
+      { userFairActions } = collectorProfile.related()
 
       following = new Following(null, kind: 'profile')
 
       Q.all [
-        fairAction.save null
+        userFairActions.create
+          fair_id: fair.id
+          action: action
         following.follow fair.profileId()
       ]
       .then ->

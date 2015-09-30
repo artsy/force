@@ -1,91 +1,51 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
 Backbone = require 'backbone'
-analytics = require '../../lib/analytics.coffee'
-SearchBarView = require '../search_bar/view.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 Following = require '../follow_button/collection.coffee'
 UserInterests = require '../../collections/user_interests.coffee'
-template = -> require('./templates/index.jade') arguments...
-collectionTemplate = -> require('./templates/collection.jade') arguments...
+TypeaheadView = require '../typeahead/view.coffee'
+ResultsListView = require '../results_list/view.coffee'
 
 module.exports = class UserInterestsView extends Backbone.View
-  template: ->
-    template arguments...
-  collectionTemplate: ->
-    collectionTemplate arguments...
-
-  events:
-    'click .js-user-interest-remove': 'uninterested'
-
   defaults:
-    persist: true
-    mode: 'post'
+    autofocus: false
+    # When `null` a logged in CurrentUser must be present
+    collectorProfile: null
 
   initialize: (options = {}) ->
-    { @limit,
-      @autofocus,
-      @mode,
-      @persist,
-      @collectorProfile } = _.defaults options, @defaults
+    @options = _.defaults options, @defaults
+    _.map @defaults, (v, k) => this[k] = @options[k]
 
     @collection ?= new UserInterests [], collectorProfile: @collectorProfile
     @following = new Following [], kind: 'artist'
 
-    @listenTo @collection, 'sync add remove', @renderCollection
+    @resultsList = new ResultsListView
+      typeahead: new TypeaheadView
+        autofocus: @autofocus
+        placeholder: 'Search artists'
+        kind: 'artists'
 
-  interested: (e, model) ->
-    userInterest = @collection.addInterest model
+    @listenTo @resultsList, 'add', @interested
+    @listenTo @resultsList, 'remove', @uninterested
+    @listenTo @collection, 'sync', ->
+      @resultsList.reset @collection.interests()
 
-    if @persist
-      userInterest.save()
+  interested: (interest) ->
+    userInterest = @collection.addInterest interest
+    userInterest.save()
+    @following.follow interest.id if CURRENT_USER?
+    analyticsHooks.trigger 'user_interests:add', interest: interest
 
-    if @persist and CURRENT_USER?
-      @following.follow model.id
-
-    @autocomplete.clear()
-
-    analytics.track.other 'Added an artist to their collection'
-
-  uninterested: (e) ->
-    id = $(e.currentTarget).data 'id'
-    model = @collection.findByInterestId id
-    model.destroy()
-
-    @autocomplete.$input.focus()
-
-    analytics.track.other 'Removed an artist from their collection'
-
-  saveAll: ->
-    @collection.invoke 'save'
-
-  renderCollection: ->
-    @trigger 'render:collection'
-
-    (@$collection ?= @$('.js-user-interests-results'))
-      .html @collectionTemplate
-        userInterests: @collection
-
-    _.defer =>
-      @$collection.addClass 'is-fade-in'
-
-  postRender: ->
-    @autocomplete = new SearchBarView
-      el: @$('.js-user-interests-search')
-      mode: 'artists'
-      limit: @limit
-      autoselect: true
-      displayKind: false
-      shouldDisplaySuggestions: false
-
-    @listenTo @autocomplete, 'search:selected', @interested
+  uninterested: (interest) ->
+    userInterest = @collection.findByInterestId interest.id
+    userInterest.destroy()
+    analyticsHooks.trigger 'user_interests:remove', interest: interest
 
   render: ->
-    @$el.html @template
-      autofocus: @autofocus
-      mode: @mode
-    @postRender()
+    @$el.html @resultsList.render().$el
     this
 
   remove: ->
-    @autocomplete.remove()
+    @resultsList.remove()
     super

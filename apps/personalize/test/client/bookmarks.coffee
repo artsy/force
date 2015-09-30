@@ -1,14 +1,13 @@
 benv = require 'benv'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../models/current_user.coffee'
-UserInterestsView = benv.requireWithJadeify require.resolve('../../../../components/user_interests/view'), [
-  'template'
-  'collectionTemplate'
-]
-UserInterestsView::postRender = -> #
+UserInterestsView = rewire '../../../../components/user_interests/view'
+UserInterestsView.__set__ 'TypeaheadView', Backbone.View
+UserInterestsView.__set__ 'ResultsListView', Backbone.View
 
 describe 'BookmarksView', ->
   before (done) ->

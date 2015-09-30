@@ -9,3 +9,6 @@ page = new JSONPage name: 'jobs'
     return next err if err
     page.data.categories = _.groupBy page.data.jobs, 'category'
     res.render 'index', _.extend {}, page.data, resizer, markdown: markdown
+
+@redirectJob = (req, res, next) ->
+  res.redirect 301, req.url.replace 'job', 'jobs'

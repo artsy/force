@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
-SearchBarView = require '../../../components/search_bar/view.coffee'
+TypeaheadView = require '../../../components/typeahead/view.coffee'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 
 module.exports = class SidebarView extends Backbone.View
@@ -46,17 +46,15 @@ module.exports = class SidebarView extends Backbone.View
       initialLoad: false
 
   setupSearch: (options = {}) ->
-    @searchBarView = new SearchBarView
-      mode: 'artists'
-      el: @$('#notifications-search-container')
-      $input: @$searchInput ?= @$('#notifications-search')
+    @typeahead = new TypeaheadView
+      kind: 'artists'
       autoselect: true
-      displayKind: false
 
-    @listenTo @searchBarView, 'search:selected', @follow
+    @$('#notifications-search-container').html @typeahead.render().$el
 
-  follow: (e, model) ->
-    @searchBarView?.clear()
+    @listenTo @typeahead, 'selected', @follow
+
+  follow: (model) ->
     @following.follow model.get('id')
     @$('.notifications-artist-list').prepend filterArtistTemplate
       artist:

@@ -26,16 +26,3 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
       @html.should.containEql "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 × 20 × 30in"
       @html.should.containEql "<meta property=\"og:title\" content=\"Andy Warhol, Skull (1999) | Related Auction Results | Artsy"
-
-  describe 'with an image', ->
-
-    beforeEach ->
-      @artwork = new Artwork fabricate 'artwork'
-      @artwork.set image_versions: ["large"]
-      @html = jade.render fs.readFileSync(@file).toString(),
-        artwork: @artwork
-        sd: @sd
-
-    it 'includes og:image and twitter card', ->
-      @html.should.containEql "<meta property=\"og:image\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}.jpg"
-      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"

@@ -3,6 +3,7 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 moment = require 'moment'
+{ crop, fill } = require '../../../components/resizer/index.coffee'
 
 module.exports = class GooogleSearchResult extends Backbone.Model
 
@@ -30,10 +31,12 @@ module.exports = class GooogleSearchResult extends Backbone.Model
       .replace('#!', '')
 
   imageUrl: ->
-    # console.log @get('pagemap')?.cse_image?[0]
     return "" if @get('display_model') == 'artwork'
-
-    @get('pagemap')?.cse_thumbnail?[0].src or @get('pagemap')?.cse_image?[0].src
+    src = @get('pagemap')?.cse_thumbnail?[0].src or @get('pagemap')?.cse_image?[0].src
+    if @get('display_model') is 'Gallery'
+      fill src, width: 70, height: 70, color: 'fff'
+    else
+      crop src, width: 70, height: 70
 
   ogType: ->
     return @get('ogType') if @get('ogType')

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ SESSION_ID, NODE_ENV } = require('sharify').data
-IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
+{ SESSION_ID } = require('sharify').data
+IS_TEST_ENV = require './is_test_env.coffee'
 
 module.exports = ->
   unless Backbone.__SESSION_SYNC_WRAPPED__ or IS_TEST_ENV

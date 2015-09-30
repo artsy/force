@@ -1,9 +1,28 @@
 { fabricate } = require 'antigravity'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 
 describe 'Sitemaps', ->
+  describe '#robots', ->
+    beforeEach ->
+      @res = set: sinon.stub(), send: sinon.stub()
+
+    afterEach ->
+      routes.__set__ 'NODE_ENV', 'test'
+
+    it 'renders a disallow in anything but production', ->
+      routes.__set__ 'NODE_ENV', 'staging'
+      routes.robots null, @res
+      @res.send.args[0][0]
+        .should.equal  'User-agent: *\nDisallow: /'
+
+    it 'renders the normal robots with sitemap in production', ->
+      routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
+      routes.robots null, @res
+      @res.send.args[0][0]
+        .should.equal  'Sitemap: https://www.artsy.net/sitemap.xml'
 
   beforeEach ->
     sinon.stub Backbone, 'sync'

@@ -7,3 +7,5 @@ app.set 'view engine', 'jade'
 
 app.get '/browse', routes.index
 app.get '/browse/artworks*', routes.index
+app.get '/artwork', routes.redirectArtwork
+app.get '/artworks', routes.redirectArtworks

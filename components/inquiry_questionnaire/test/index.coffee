@@ -1,16 +1,21 @@
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user'
 Artwork = require '../../../models/artwork'
 ArtworkInquiry = require '../../../models/artwork_inquiry'
-openInquiryQuestionnaireFor = require '../index'
+openInquiryQuestionnaireFor = rewire '../index'
 
 describe 'openInquiryQuestionnaireFor', ->
   before (done) ->
     sinon.stub _, 'defer', (cb) -> cb()
+
+    @InquiryQuestionnaireView = openInquiryQuestionnaireFor.__get__ 'InquiryQuestionnaireView'
+    @render = sinon.stub @InquiryQuestionnaireView::, 'render', -> this
+
     benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
@@ -21,6 +26,7 @@ describe 'openInquiryQuestionnaireFor', ->
   after ->
     _.defer.restore()
     benv.teardown()
+    @render.restore()
 
   beforeEach ->
     sinon.stub Backbone, 'sync'

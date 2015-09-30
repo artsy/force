@@ -1,6 +1,9 @@
 _ = require 'underscore'
-activatePulldowns = require '../../components/hover_pulldown/index.coffee'
-openMultiPageModal = require '../../components/multi_page_modal/index.coffee'
+activatePulldowns = require '../../../components/hover_pulldown/index.coffee'
+ResultsListView = require '../../../components/results_list/view.coffee'
+TypeaheadView = require '../../../components/typeahead/view.coffee'
+User = require '../../../models/user.coffee'
+stage = require './stage.coffee'
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->
@@ -18,5 +21,4 @@ module.exports.init = ->
 
   activatePulldowns()
 
-  $('.js-open-multi-page-modal').click (e) ->
-    openMultiPageModal 'auction-faqs'
+  stage()

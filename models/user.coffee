@@ -39,3 +39,15 @@ module.exports = class User extends Backbone.Model
 
     CurrentUser.orNull() or
     new LoggedOutUser attributes
+
+  prepareForInquiry: ->
+    @findOrCreate silent: true
+      .then =>
+        @related()
+          .collectorProfile.findOrCreate silent: true
+      .then =>
+        Q.all(
+          @related().collectorProfile
+            .related()
+            .userFairActions.invoke 'save'
+        )

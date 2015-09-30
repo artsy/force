@@ -14,3 +14,9 @@ aggregationParams = require './aggregations.coffee'
         counts: filterArtworks.counts
         params: new Backbone.Model
         activeText: ''
+
+@redirectArtwork = (req, res) ->
+  res.redirect 301, req.url.replace 'artwork', 'browse'
+
+@redirectArtworks = (req, res) ->
+  res.redirect 301, req.url.replace 'artworks', 'browse'

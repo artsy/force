@@ -1,17 +1,16 @@
 benv = require 'benv'
-Backbone = require 'backbone'
 sinon = require 'sinon'
+rewire = require 'rewire'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Profile = require '../../../../models/profile.coffee'
 UserEdit = require '../../models/user_edit.coffee'
 CurrentUser = require '../../../../models/current_user'
 CollectorForm = benv.requireWithJadeify require.resolve('../../client/collector_form.coffee'), ['template']
 CollectorForm.__set__ 'LocationSearchView', Backbone.View
-UserInterestsView = benv.requireWithJadeify require.resolve('../../../../components/user_interests/view'), [
-  'template'
-  'collectionTemplate'
-]
-UserInterestsView::postRender = -> #
+UserInterestsView = rewire '../../../../components/user_interests/view'
+UserInterestsView.__set__ 'TypeaheadView', Backbone.View
+UserInterestsView.__set__ 'ResultsListView', Backbone.View
 CollectorForm.__set__ 'UserInterestsView', UserInterestsView
 
 describe 'CollectorForm', ->

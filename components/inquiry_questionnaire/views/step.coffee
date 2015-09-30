@@ -23,9 +23,11 @@ module.exports = class StepView extends Backbone.View
     e.preventDefault()
     @state.trigger 'abort'
 
-  autofocus: -> _.defer =>
-    $input = form.firstVisibleInput @$el
-    form.autofocus $input
+  shouldAutofocus: true
+
+  autofocus: ->
+    return unless @shouldAutofocus
+    form.autofocus @$el, true
 
   setup: -> #
 

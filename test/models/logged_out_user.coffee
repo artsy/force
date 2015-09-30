@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
@@ -179,3 +180,32 @@ describe 'LoggedOutUser', ->
         true.should.be.true()
         specDone()
       .done()
+
+  describe '#prepareForInquiry', ->
+    beforeEach ->
+      @user = new LoggedOutUser
+
+      @user.related()
+        .collectorProfile.related()
+          .userFairActions.attendFair fabricate 'fair'
+
+      sinon.stub Backbone, 'sync'
+        .returns Q.resolve()
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'creates or persists everything needed to make an inquiry', (done) ->
+      @user.prepareForInquiry()
+
+      _.partial(_.delay, _, 2) ->
+        Backbone.sync.callCount.should.equal 3
+
+        Backbone.sync.args[0][1].url()
+          .should.containEql '/api/v1/me/anonymous_session'
+        Backbone.sync.args[1][1].url
+          .should.containEql '/api/v1/me/collector_profile'
+        Backbone.sync.args[2][1].url()
+          .should.containEql '/api/v1/me/user_fair_action'
+
+        done()

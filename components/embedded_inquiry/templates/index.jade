@@ -1,6 +1,8 @@
 - partner = artwork.related().partner
 
 form.stacked-form.js-embedded-inquiry-form
+  input( type='hidden', name='artwork', value= artwork.id )
+
   //- Only button is displayed for pre-qualification
   unless partner.get('pre_qualify')
     .form-errors.js-form-errors

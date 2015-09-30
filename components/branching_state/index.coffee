@@ -38,8 +38,9 @@ module.exports = class State extends Backbone.Model
   next: ->
     @set('moves', (@get('moves') + 1))
     @set('position', @get('position') + 1) unless @isEnd()
-    @trigger 'next'
-    @current()
+    current = @current()
+    @trigger 'next', current
+    current
 
   total: ->
     offset = @get('moves') - @get('position')
