@@ -1,7 +1,7 @@
 _ = require 'underscore'
-{ CURRENT_USER, NODE_ENV } = require('sharify').data
+{ CURRENT_USER } = require('sharify').data
 { load, getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
-IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
+IS_TEST_ENV = require '../../lib/is_test_env.coffee'
 
 module.exports = class SplitTest
   constructor: ({ @key, @outcomes, @edge, @dimension }) ->
