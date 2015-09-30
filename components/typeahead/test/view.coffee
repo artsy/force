@@ -20,9 +20,7 @@ describe 'TypeaheadView', ->
     benv.teardown()
 
   beforeEach ->
-    @view = new TypeaheadView
-      placeholder: 'Search Foobars...'
-    @view.engine = initialize: (->)
+    @view = new TypeaheadView placeholder: 'Search Foobars...'
     @view.render()
 
   afterEach ->
@@ -33,6 +31,7 @@ describe 'TypeaheadView', ->
       @view.options.should.eql
         placeholder: 'Search Foobars...'
         autofocus: false
+        headers: {}
         highlight: false
         hint: true
         nameAttr: 'name'

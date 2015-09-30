@@ -30,6 +30,7 @@ module.exports = class AutocompleteView extends Backbone.View
     wildcard: ':query'
     url: null
     path: null
+    headers: {}
 
     # Convenience for default collection
     kind: null
@@ -79,7 +80,10 @@ module.exports = class AutocompleteView extends Backbone.View
     filter: @parse.bind this
     wildcard: encodeURIComponent @wildcard
     ajax:
-      beforeSend: => @trigger 'asyncrequest'
+      beforeSend: (xhr) =>
+        _.map @headers, (value, key) ->
+          xhr.setRequestHeader key, value
+        @trigger 'asyncrequest'
       complete: => @trigger 'asyncreceive'
 
   typeaheadOptions: ->
@@ -128,6 +132,7 @@ module.exports = class AutocompleteView extends Backbone.View
     @input()
       .typeahead @typeaheadOptions(), @dataset()
       .on 'typeahead:selected', (e, suggestion) =>
+        return unless suggestion?
         @trigger 'selected', suggestion
         @exclude suggestion.id
         @clear()
