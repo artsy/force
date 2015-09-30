@@ -115,7 +115,7 @@
   });
 
   bind('user_interests:add', function(context) {
-    var userInterest = context.userInterests.first();
+    var userInterest = context.userInterests.last();
     track('User added an interest in artist', {
       artist_id: userInterest.related().interest.id
     })
