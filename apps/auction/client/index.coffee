@@ -1,4 +1,4 @@
-{ FEATURE, AUCTION, ARTWORKS, CURRENT_USER, USER } = require('sharify').data
+{ FEATURE, AUCTION, ARTWORKS, CURRENT_USER, USER, MAILCHIMP_WELCOME_LIST_ID } = require('sharify').data
 Feature = require '../../../models/feature.coffee'
 Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -22,9 +22,25 @@ module.exports.init = ->
   if window.location.pathname.match('/confirm-registration') and USER?
     new ConfirmRegistrationModal paddleNumber: user.get('paddle_number')
 
-  new AuctionArtworksView el: $('.js-auction-artworks-section'), model: auction, collection: artworks, user: user
+  new AuctionArtworksView
+    el: $('.js-auction-artworks-section')
+    model: auction
+    collection: artworks
+    user: user
 
-  (new EmailView el: $('.auction-preview-sidebar-email'), buttonText: 'Notify me', autofocus: true).render()
+  emailView = new EmailView
+    el: $('.auction-preview-sidebar-email')
+    listId: MAILCHIMP_WELCOME_LIST_ID
+    buttonText: 'Notify me'
+    autofocus: true
+    mergeVars:
+      "AUCTION_#{auction.id}": true
+
+  emailView.whenSubmitted.then ->
+    console.log('pop up register to bid')
+  , ->
+    window.location.reload()
+
 
   # Re-fetch due to cache
   saleArtworks = new SaleArtworks [], id: auction.id

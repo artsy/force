@@ -80,6 +80,7 @@ module.exports =
   GALLERY_INSIGHTS_LIST: null
   GALAXY_URL: null
   GALAXY_TOKEN: null
+  MAILCHIMP_WELCOME_LIST_ID: '8e345ac211'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
