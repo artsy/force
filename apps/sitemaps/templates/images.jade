@@ -8,7 +8,10 @@ urlset(
       loc='https://www.artsy.net/artwork/' + artwork.id
       image:image
         //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
-        image:loc=artwork.images[0].image_urls.large
+        if artwork.images[0].image_urls.large
+          image:loc=artwork.images[0].image_urls.large
+        else
+          image:loc=artwork.images[0].image_urls.square
         image:title=artwork.title
         if artwork.artist
           image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.'
