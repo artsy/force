@@ -114,7 +114,8 @@ getArtworkBuckets = (callback) ->
     .end (err, sres) ->
       return next err if err
       res.set('Content-Type', 'text/xml')
-      res.render(template, pretty: true, models: sres.body.results)
+      models = _.map(sres.body.results, (artwork) -> new Artwork artwork)
+      res.render(template, pretty: true, models: models)
 
 @articlesPage = (req, res, next) ->
   request
