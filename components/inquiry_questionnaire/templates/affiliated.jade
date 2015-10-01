@@ -1,5 +1,3 @@
-- var title = 'What galleries do you work with?'
-
 h1.iq-headline
   if artwork.related().partner.get('pre_qualify')
     = title
@@ -7,7 +5,10 @@ h1.iq-headline
     span= title
     span (Optional)
 
-.iq-form.stacked-form
+form.iq-form.stacked-form
+  .iq-form-errors.js-form-errors
+    //- Rendered separately
+
   .js-user-interests
     //- Rendered separately
 
