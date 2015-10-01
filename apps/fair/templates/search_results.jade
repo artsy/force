@@ -7,24 +7,24 @@
           em
             | &ldquo;
             span#search-term= term
-            | &rdquo; 
-          | at 
+            | &rdquo;
+          | at
           = fair.get('name')
 
     .search-results
       if fairResults.length > 0
         for result in fairResults
-          include ../../search/search_result
+          include ../../search/templates/search_result
       else
         .garamond-header-center
-          | Sorry, no results for 
+          | Sorry, no results for
           em
             | &ldquo;
             span#search-term= term
-            | &rdquo; 
-          | at 
+            | &rdquo;
+          | at
           = fair.get('name')
-  
+
   .artsy-search-results
     if results.length > 0
       .search-query
@@ -33,20 +33,20 @@
           em
             | &ldquo;
             span#search-term= term
-            | &rdquo; 
+            | &rdquo;
           | on Artsy
 
     .search-results
       if results.length > 0
         for result in results
           .artsy-search-result
-            include ../../search/search_result
+            include ../../search/templates/search_result
             .search-result-artsy-link Visit On Artsy
       else
         .garamond-header-center
-          | Sorry, no results for 
+          | Sorry, no results for
           em
             | &ldquo;
             span#search-term= term
-            | &rdquo; 
+            | &rdquo;
           | on Artsy

@@ -11,7 +11,7 @@ SearchResult = require '../../../models/search_result'
 sinon = require 'sinon'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../#{templateName}.jade"
+  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
