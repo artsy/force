@@ -36,6 +36,14 @@ describe 'Logger', ->
     logger.log 'bar'
     @logger.get().should.eql ['foo', 'bar']
 
+  it 'unlogs things', ->
+    @logger.log 'foo'
+    @logger.log 'bar'
+    @logger.log 'baz'
+    @logger.get().should.eql ['foo', 'bar', 'baz']
+    @logger.unlog 'bar'
+    @logger.get().should.eql ['foo', 'baz']
+
   describe '#hasLogged', ->
     it 'tells you if you logged something or not', ->
       @logger.log 'foo'
@@ -58,7 +66,7 @@ describe 'Logger', ->
       @logger.hasLogged 'foo', 'bar', 'baz'
         .should.be.false()
 
-  describe '#hasLoggedAnythingThisSession', ->
+  describe '#hasLoggedThisSession, #hasLoggedAnythingThisSession', ->
     beforeEach ->
       sinon.stub @logger, 'get'
         .returns ['foo', 'bar']
