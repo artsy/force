@@ -4,7 +4,8 @@ setupSplitTests = require '../components/split_test/setup.coffee'
 route = require '../lib/route_helpers.coffee'
 window._ = require 'underscore'
 
-mediator.on 'all', -> analyticsHooks.trigger arguments...
+mediator.on 'all', (name, data) ->
+  analyticsHooks.trigger "mediator:#{name}", data
 require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
 $ -> analytics.ready ->

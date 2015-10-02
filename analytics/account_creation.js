@@ -1,5 +1,5 @@
 //
-// Generic events for tracking events around form creation.
+// Generic events for tracking events around account creation.
 //
 
 // Created account
@@ -30,7 +30,7 @@ $('.mlh-signup').click(function() {
 var trackViewSignup = function() {
   analytics.track('Viewed sign up options');
 }
-analyticsHooks.on('open:auth', function(options) {
+analyticsHooks.on('mediator:open:auth', function(options) {
   if (options.mode == 'signup') trackViewSignup();
 });
 $('#auth-footer [href*=sign_up]').click(trackViewSignup);
