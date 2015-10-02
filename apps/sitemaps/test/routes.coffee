@@ -5,6 +5,17 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 
 describe 'Sitemaps', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req = {}
+    @res =
+      render: sinon.stub()
+      set: sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
   describe '#robots', ->
     beforeEach ->
       @res = set: sinon.stub(), send: sinon.stub()
@@ -23,16 +34,6 @@ describe 'Sitemaps', ->
       routes.robots null, @res
       @res.send.args[0][0]
         .should.equal  'Sitemap: https://www.artsy.net/sitemap.xml'
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @req = {}
-    @res =
-      render: sinon.stub()
-      set: sinon.stub()
-
-  afterEach ->
-    Backbone.sync.restore()
 
   describe '#news_sitemap', ->
 
@@ -53,3 +54,16 @@ describe 'Sitemaps', ->
     it 'only displays articles from Artsy Editorial', ->
       routes.articles(@req, @res)
       Backbone.sync.args[0][2].data.author_id.should.equal('503f86e462d56000020002cc')
+
+  describe '#artworks', ->
+
+    it 'displays the correct artwork URLs in the sitemap', ->
+      routes.__set__ 'request', get: -> query: -> end: (cb) ->
+        cb(null, { body: results: [fabricate 'artwork', { id: 'foo'}] })
+      @req = 
+        params:
+          date: '2012-01-01'
+          page: 3
+      routes.artworksPage('artworks')(@req, @res)
+      @res.render.args[0][0].should.equal('artworks')
+      @res.render.args[0][1].models[0].id.should.equal('foo')
