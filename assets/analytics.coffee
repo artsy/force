@@ -1,8 +1,11 @@
 require '../lib/analytics_hooks.coffee'
+mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 route = require '../lib/route_helpers.coffee'
 window._ = require 'underscore'
 
+mediator.on 'all', (name, data) ->
+  analyticsHooks.trigger "mediator:#{name}", data
 require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
 $ -> analytics.ready ->
@@ -16,6 +19,7 @@ $ -> analytics.ready ->
   require '../analytics/artist_page.js'
   require '../analytics/home.js'
   require '../analytics/show_page.js'
+  require '../analytics/account_creation.js'
 
   if route.test(/^\/dev/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'

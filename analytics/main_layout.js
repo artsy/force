@@ -20,5 +20,8 @@ setTimeout(function() {
 if (sd.NODE_ENV != 'production'){
   analytics.on('track', function(){
     console.log('TRACKED: ', arguments[0], JSON.stringify(arguments[1]));
-  })
+  });
+  analyticsHooks.on('all', function(name, data){
+    console.log('ANALYTICS HOOK: ', name, data);
+  });
 }
