@@ -3,13 +3,12 @@ cheerio = require 'cheerio'
 path = require 'path'
 jade = require 'jade'
 fs = require 'fs'
-moment = require 'moment'
+{ fabricate } = require 'antigravity'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 Artwork = require '../../../models/artwork'
 Artworks = require '../../../collections/artworks'
 Section = require '../../../models/section'
-fixtures = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -18,15 +17,33 @@ render = (templateName) ->
     { filename: filename }
   )
 
-describe 'articles sitemap template', ->
+describe 'artwork sitemap template', ->
 
-  it 'renders the correct article URLs', ->
-    xml = render('articles')
-      articles: new Articles([_.extend(fixtures.article, slug: 'foobar')])
-      crop: (url) -> url
-      moment: moment
+  it 'renders the correct artwork URLs', ->
+    xml = render('artworks')
+      models: new Artworks([fabricate 'artwork', id: 'foobar']).models
+      _: _
       sd: {}
-    xml.should.containEql '/article/foobar'
+    xml.should.containEql '/artwork/foobar'
+
+describe 'image sitemap template', ->
+
+  it 'renders the correct image URLs', ->
+    xml = render('images')
+      models: new Artworks([fabricate('artwork', {
+        images: 
+          [{image_urls: {
+            medium: 'foo.jpg'
+            small: 'baz.jpg'
+            }
+          }]
+        })
+      ]).models
+      _: _
+      sd: {}
+    xml.should.containEql 'foo.jpg'
+
+
 
 
 

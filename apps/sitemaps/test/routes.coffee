@@ -53,3 +53,16 @@ describe 'Sitemaps', ->
     it 'only displays articles from Artsy Editorial', ->
       routes.articles(@req, @res)
       Backbone.sync.args[0][2].data.author_id.should.equal('503f86e462d56000020002cc')
+
+  describe '#artworks', ->
+
+    it 'displays the correct artwork URLs in the sitemap', ->
+      routes.artworksPage('artworks')(@req, @res)
+      Backbone.sync.args[0][2].success {
+        results: [
+          fabricate('artwork', { id: 'foo' })
+        ]
+      }
+
+      @res.render.args[0][0].should.equal('artworks')
+      @res.render.args[0][1].artworks[0].id.should.equal('foo')
