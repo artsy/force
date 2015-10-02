@@ -111,13 +111,13 @@ module.exports = class AuthModalView extends ModalView
       error: (model, response, options) =>
         @reenableForm()
         message = @errorMessage response
-        @showError message
+        mediator.trigger 'auth:error', message
 
   onSubmitSuccess: (model, response, options) =>
     @reenableForm null, reset: false
 
     if response.error?
-      @showError _s.capitalize response.error
+      mediator.trigger 'auth:error', _s.capitalize response.error
     else
       Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 

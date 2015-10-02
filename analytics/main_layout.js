@@ -17,11 +17,13 @@ setTimeout(function() {
 }, 180000);
 
 // debug tracking calls in development
-if (sd.NODE_ENV != 'production'){
+if (sd.NODE_ENV != 'production') {
   analytics.on('track', function(){
-    console.log('TRACKED: ', arguments[0], JSON.stringify(arguments[1]));
+    console.debug('TRACKED: ', arguments[0], JSON.stringify(arguments[1]));
   });
+}
+if (sd.NODE_ENV == 'development') {
   analyticsHooks.on('all', function(name, data){
-    console.log('ANALYTICS HOOK: ', name, data);
+    console.debug('ANALYTICS HOOK: ', name, data);
   });
 }
