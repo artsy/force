@@ -27,7 +27,7 @@ module.exports = (options = {}) ->
   # Abort by clicking 'nevermind'
   questionnaire.state.on 'abort', ->
     modal.close()
-    modal.view.logger.reset()
+    modal.subView.logger.reset()
 
   # End of complete flow
   questionnaire.state.on 'done', ->
