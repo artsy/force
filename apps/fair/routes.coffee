@@ -1,14 +1,17 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 moment = require 'moment'
 Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Fairs = require '../../collections/fairs.coffee'
 FairOrganizer = require '../../models/fair_organizer.coffee'
+FollowProfile = require '../../models/follow_profile.coffee'
 Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
+{ captureSignup, validActions } = require './components/capture_signup/index.coffee'
 FilterArtworks = require '../../collections/filter_artworks'
 aggregationParams = require './components/browse/aggregations.coffee'
 
@@ -122,6 +125,34 @@ aggregationParams = require './components/browse/aggregations.coffee'
   fair.fetchShowForPartner req.params.partner_id,
     error: res.backboneError
     success: (show) -> res.redirect "/show/#{show.id}"
+
+# Captures fair-specific sign-up.
+# Adds a user fair action to the users collector profile and follows the fair profile.
+# If the user is an attendee, redirect to fair page with flash message (found in ./components/capture_signup)
+# Otherwise, go to normal signup flow
+@captureSignup = (req, res, next) ->
+  action = req.params.action || 'attendee'
+  return next() unless res.locals.fair and req.user and validActions[action]
+
+  { collectorProfile } = req.user.related()
+  { userFairActions } = collectorProfile.related()
+
+  followProfile = new FollowProfile profile_id: res.locals.fair.profileId()
+
+  Q.all [
+    userFairActions.create
+      fair_id: res.locals.fair.id
+      action: action
+    followProfile.save
+      access_token: req.user.get 'accessToken'
+  ]
+  .then ->
+    switch action
+      when "attendee"
+        return next()
+      else
+        return res.redirect '/personalize'
+  .catch next
 
 # Fetches and caches fair data to be used across the fair app
 @fetchFairData = (req, res, next) ->
