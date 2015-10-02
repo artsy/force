@@ -24,7 +24,7 @@ if (!sd.CURRENT_USER) {
 // Clicked sign up via the header
 $('.mlh-signup').click(function() {
   analytics.track('Clicked sign up via the header');
-})
+});
 
 // Viewed sign up options
 var trackViewSignup = function() {
