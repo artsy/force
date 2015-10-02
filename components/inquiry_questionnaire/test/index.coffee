@@ -45,3 +45,14 @@ describe 'openInquiryQuestionnaireFor', ->
 
   it 'opens the modal', ->
     @modal.opened.should.be.true()
+
+  describe 'abort', ->
+    it 'aborts without error, clearing the logger', (done) ->
+      logger = @modal.subView.logger
+      sinon.spy logger, 'reset'
+      @modal.view.once 'closed', -> _.partial(_.delay, _, 2) ->
+        logger.reset.called.should.be.true()
+        logger.reset.reset()
+        done()
+      @modal.subView.state.trigger 'abort'
+
