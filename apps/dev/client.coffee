@@ -9,6 +9,14 @@ openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/in
 Logger = require '../../components/inquiry_questionnaire/logger.coffee'
 
 module.exports.init = ->
+  logger = new Logger()
+
+  $('.js-unlog').change (e) ->
+    e.preventDefault()
+    step = $(e.currentTarget).val()
+    logger.unlog step
+    location.reload()
+
   # Force a particular step
   $('.js-bypass').change (e) ->
     e.preventDefault()
@@ -47,5 +55,5 @@ module.exports.init = ->
   # Reset has_seen_x without having to mess with cookies
   $('.js-reset-logged').click (e) ->
     e.preventDefault()
-    new Logger().reset()
+    logger.reset()
     location.reload()
