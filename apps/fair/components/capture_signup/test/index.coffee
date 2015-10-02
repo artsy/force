@@ -24,25 +24,19 @@ describe 'captureSignup', ->
     benv.teardown()
 
   beforeEach =>
-    sinon.stub Backbone, 'sync'
     sinon.stub $, 'ajax'
     @fair = new Fair fabricate 'fair'
-    capture.captureSignup
+    capture.signupSuccess
       fair: @fair
       action: "attendee"
       user: new CurrentUser fabricate 'user'
 
   afterEach =>
-    Backbone.sync.restore()
     $.ajax.restore()
 
-  it 'shows a FlashMessage after the FairAction is successfully saved', =>
-    Backbone.sync.args[0][1].get('fair_id').should.eql @fair.id
-    Backbone.sync.args[0][1].get('action').should.eql "Attendee"
-    Backbone.sync.args[0][2].success()
+  it 'shows a FlashMessage', =>
     @flashSpy.called.should.be.true
 
   it 'logs the user out after the flash message displays', =>
-    Backbone.sync.args[0][2].success()
     $.ajax.args[0][0].type.should.eql 'DELETE'
     $.ajax.args[0][0].url.should.containEql '/users/sign_out'

@@ -4,7 +4,8 @@ qs = require 'querystring'
 FairBrowseView = require './view.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 { humanize } = require 'underscore.string'
-{ captureSignup, validActions } = require '../capture_signup/index.coffee'
+{ signupSuccess, validActions } = require '../capture_signup/index.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -41,7 +42,7 @@ module.exports = class BrowseRouter extends Backbone.Router
     @boothParams.set artist: artistId
 
   signup: (id, action = "attendee") =>
-    return unless humanize(action) in validActions
+    return unless validActions[action]
 
     mediator.trigger 'open:auth',
       mode: 'register'
@@ -49,7 +50,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       redirectTo: "#{@fair.href()}/capture/#{action}"
 
   capture: (id, action)=>
-    captureSignup fair: @fair, action: action, user: CurrentUser.orNull()
+    signupSuccess fair: @fair, action: action, user: CurrentUser.orNull()
 
   booths: =>
     @boothParams.trigger 'change'
