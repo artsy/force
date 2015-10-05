@@ -24,6 +24,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   initialize: (options) ->
     { @saleArtwork, @bidderPositions } = options
+
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     if options.submitImmediately
       @placeBid()
@@ -63,7 +64,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   pollForBidderPositionProcessed: (bidderPosition) ->
     bidderPosition.fetch
       success: (bidderPosition) =>
-        if bidderPosition.has('processed_at') or 
+        if bidderPosition.has('processed_at') or
            @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
           @showSuccessfulBidMessage()
         else
