@@ -11,6 +11,7 @@ Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
+Sticky = require '../sticky/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 Q = require 'bluebird-q'
@@ -22,11 +23,13 @@ module.exports = class ArticleView extends Backbone.View
     @user = CurrentUser.orNull()
     { @article } = options
     new ShareView el: @$('.article-social')
+    @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks()
     @breakCaptions()
     @checkEditable()
     @sizeVideo()
+    @setupStickyShare()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -127,3 +130,8 @@ module.exports = class ArticleView extends Backbone.View
 
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
+
+  setupStickyShare: ->
+    if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current"
+      $el = $(".article-share-fixed[data-path='#{sd.CURRENT_PATH}']")
+      @sticky.add $el

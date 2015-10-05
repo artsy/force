@@ -18,10 +18,6 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
-.article-share-fixed-container
-  //- Article Share Fixed Nav
-  if sd.SCROLL_SHARE_ARTICLE !== "static_current" && sd.SCROLL_SHARE_ARTICLE !== "infinite_current"
-    +share-fixed(article.get('title'),article.get('thumbnail_image'))
 .article-container
   //- Article lead content
   if article.get('hero_section') && article.get('hero_section').type === 'video'
@@ -49,23 +45,27 @@ mixin image(image)
   if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
     .article-carousel
       include carousel
-  for section, i in article.get('sections')
-    .article-section-container
-      case section.type
-        when 'text'
-          .article-section-text!= section.body
-        when 'artworks'
-          .article-section-artworks.is-loading( data-layout=section.layout )
-            .loading-spinner
-            ul
-              for id in section.ids
-                li( data-id=id )
-        when 'image'
-          .article-section-image
-            +image(section)
-        when 'video'
-          .article-section-video
-            +video(section)
+  .article-sections-container
+    //- Article Share Fixed Nav
+    if sd.SCROLL_SHARE_ARTICLE !== "static_current" && sd.SCROLL_SHARE_ARTICLE !== "infinite_current"
+      +share-fixed(article.get('title'),article.get('thumbnail_image'))
+    for section, i in article.get('sections')
+      .article-section-container
+        case section.type
+          when 'text'
+            .article-section-text!= section.body
+          when 'artworks'
+            .article-section-artworks.is-loading( data-layout=section.layout )
+              .loading-spinner
+              ul
+                for id in section.ids
+                  li( data-id=id )
+          when 'image'
+            .article-section-image
+              +image(section)
+          when 'video'
+            .article-section-video
+              +video(section)
 
   //- Footer social buttons
   .article-social.add-bottom
