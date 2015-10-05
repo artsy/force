@@ -88,3 +88,16 @@ describe 'ClockView', ->
       @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @triggerSpy.args[0][0].should.equal 'clock:is-almost-over'
+
+    it 'triggers is-over when clock is over', ->
+      @view.model.set
+        is_auction: true
+        start_at: moment().subtract(2, 'minutes').format()
+        end_at: moment().subtract(1, 'minutes').format()
+
+      @view.model.calculateOffsetTimes()
+      Backbone.sync.args[0][2].success { time: moment().format() }
+
+      @view.$el.html '<div class="clock-value"></div>'
+      @view.render()
+      @triggerSpy.args[0][0].should.equal 'clock:is-over'
