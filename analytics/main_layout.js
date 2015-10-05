@@ -24,6 +24,6 @@ if (sd.NODE_ENV != 'production') {
 }
 if (sd.NODE_ENV == 'development') {
   analyticsHooks.on('all', function(name, data){
-    console.debug('ANALYTICS HOOK: ', name, data);
+    console.info('ANALYTICS HOOK: ', name, data);
   });
 }

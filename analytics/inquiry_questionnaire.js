@@ -38,10 +38,6 @@
     });
   });
 
-  $document.one('input', '.js-user-interests-search-input', function(e) {
-    track('Started to type artist name in autocomplete field');
-  });
-
   $document.on('click', '.js-login-email', function() {
     track('Clicked "Log in"');
   });
@@ -133,6 +129,31 @@
     track('Problem sending inquiry', context.inquiry.attributes);
   });
 
+  bind('collector_profile:change:affiliated_gallery_ids', function(context) {
+    track('Changed collector_profile:affiliated_gallery_ids', {
+      ids: context.collectorProfile.get('affiliated_gallery_ids')
+    });
+  });
+
+  bind('collector_profile:change:affiliated_auction_house_ids', function(context) {
+    track('Changed collector_profile:affiliated_auction_house_ids', {
+      ids: context.collectorProfile.get('affiliated_auction_house_ids')
+    });
+  });
+
+  bind('collector_profile:change:affiliated_fair_ids', function(context) {
+    track('Changed collector_profile:affiliated_fair_ids', {
+      ids: context.collectorProfile.get('affiliated_fair_ids')
+    });
+  });
+
+  bind('collector_profile:change:institutional_affiliations', function(context) {
+    track('Changed collector_profile:institutional_affiliations', {
+      value: context.collectorProfile.get('institutional_affiliations')
+    });
+  });
+
+  // Non-namespaced events
   bind('user:login', function(context) {
     analytics.track('Successfully logged in', {
       context: 'inquiry_questionnaire'
