@@ -60,7 +60,7 @@ module.exports = class ClockView extends Backbone.View
     )).join '<li>:</li>'
 
     # emit event every render when timer is almost over
-    if @toDate?.diff(moment(), unit) < @almostOver
+    if @toDate?.diff(moment(), 'seconds') < @almostOver
       mediator.trigger 'clock:is-almost-over'
 
   remove: ->
