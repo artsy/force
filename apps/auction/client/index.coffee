@@ -6,10 +6,12 @@ Artworks = require '../../../collections/artworks.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
 SpecialistView = require '../../../components/contact/general_specialist.coffee'
 EmailView = require '../../../components/email/view.coffee'
+modalize = require '../../../components/modalize/index.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 setupClocks = require './clocks.coffee'
+EmailToRegistrationTransitionView = require './email_to_registration_transition.coffee'
 
 module.exports.init = ->
   feature = new Feature FEATURE
@@ -36,10 +38,29 @@ module.exports.init = ->
     mergeVars:
       "AUCTION_#{auction.id}": true
 
-  emailView.whenSubmitted.then ->
-    console.log('pop up register to bid')
-  , ->
+  emailView.result
+  .then ->
+    transitionView = new EmailToRegistrationTransitionView
+    modal = modalize transitionView, dimensions: width: '400px'
+    modal.open()
+    transitionView.result
+  .then (willRegister) ->
+    authModalView = new AuthModalView
+
+    # Propagate the willRegister result of the transition view if login succeeds
+    authModalView.open().result.then ->
+      willRegister
+  .then (willRegister) ->
+    if willRegister
+      # TODO Redirect to bidder registration
+      console.log('bidder registration')
+    else
+      # TODO Redirect to onboarding
+      console.log('onboarding')
+  .catch ->
     window.location.reload()
+  .done()
+
 
 
   # Re-fetch due to cache

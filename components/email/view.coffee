@@ -6,13 +6,16 @@ Q = require 'bluebird-q'
 Mailcheck = require '../mailcheck/index.coffee'
 
 module.exports = class EmailView extends Backbone.View
+  deferred = Q.defer()
+
   events:
     'submit form': 'submit'
 
   initialize: ({ @el, @buttonText = 'Submit', @listId, @mergeVars, @email = '', @autofocus = false }) ->
     @render()
     Mailcheck.run('#js-email-view-input', '#js-email-view-hint', false)
-    @whenSubmitted = Q.defer().promise
+
+    @result = deferred.promise
 
   render: ->
     @$el.html template
@@ -26,6 +29,6 @@ module.exports = class EmailView extends Backbone.View
       mergeVars: @mergeVars
       email: @$('input[name=email]').val()
 
-    subscribePromise.then @whenSubmitted.resolve, @whenSubmitted.reject
+    subscribePromise.then deferred.resolve, deferred.reject
 
     false
