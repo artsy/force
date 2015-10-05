@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
+mediator = require '../../lib/mediator.coffee'
 
 UNIT_MAP =
   'months': 'mos'
@@ -10,7 +11,7 @@ UNIT_MAP =
   'seconds': 'sec'
 
 module.exports = class ClockView extends Backbone.View
-
+  almostOver: 60
   modelName: 'Auction'
 
   initialize: ({ @closedText, @modelName }) ->
@@ -35,6 +36,7 @@ module.exports = class ClockView extends Backbone.View
         @$('.clock-header').html "#{@modelName} closes in:"
         @toDate = @model.get 'offsetEndAtMoment'
       when 'closed'
+        mediator.trigger 'clock:is-over'
         @$el.html "<div class='clock-header clock-closed'>#{@closedText}</div>"
         return
     @renderClock()
@@ -56,6 +58,10 @@ module.exports = class ClockView extends Backbone.View
           </li>
         """
     )).join '<li>:</li>'
+
+    # emit event every render when timer is almost over
+    if @toDate?.diff(moment(), unit) < @almostOver
+      mediator.trigger 'clock:is-almost-over'
 
   remove: ->
     clearInterval @interval
