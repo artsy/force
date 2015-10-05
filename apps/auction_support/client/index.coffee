@@ -8,6 +8,9 @@ BidderPosition = require '../../../models/bidder_position.coffee'
 BidderPositions = require '../../../collections/bidder_positions.coffee'
 RegistrationForm = require './registration_form.coffee'
 BidForm = require './bid_form.coffee'
+setupClocks = require '../../auction/client/clocks.coffee'
+mediator = require '../../../lib/mediator.coffee'
+
 
 module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
 
@@ -49,4 +52,13 @@ module.exports.init = ->
     bidderPositions: new BidderPositions(sd.BIDDER_POSITIONS,
       { sale: sale, saleArtwork: saleArtwork })
     registered: sd.REGISTERED
+
   Backbone.history.start(pushState: true)
+
+  setupClocks [sale]
+
+  mediator.once 'clock:is-almost-over', ->
+    $('.js-auction-clock').addClass 'is-almost-over'
+
+  mediator.once 'clock:is-over', ->
+    $('.avant-garde-button-black').addClass 'is-disabled'

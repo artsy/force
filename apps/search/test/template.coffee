@@ -48,7 +48,7 @@ describe 'Search results template', ->
       @artworks = _.times 2, ->
         new SearchResult(fabricate('artwork', model: 'artwork'))
       @artists = _.times 3, ->
-        new SearchResult(fabricate('artist', model: 'artist'))
+        new SearchResult(fabricate('artist', model: 'artist', display_model: 'artwork'))
 
       @search.add @artworks
       @search.add @artists

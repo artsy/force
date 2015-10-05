@@ -5,6 +5,8 @@ append locals
 
 block body
   #auction-registration-page
+    .auction-bid-clock-container.js-auction-clock(data-id='#{sale.id}')
+      include ../../../components/clock/template
     .auction-bid-form-container
       h2.garamond-header-center Confirm Your Bid
       .auction-bid-form.credit-card-form
