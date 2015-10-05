@@ -21,3 +21,13 @@ describe 'BidderPosition', ->
   describe '#maxBid', ->
     it 'returns a formatted currency string representing the max bid amount', ->
       @bidderPosition.maxBid().should.equal '$3,100'
+
+  describe '#url()', ->
+    it 'generates the right url with an id', ->
+      @bidderPosition.set(id: 'cat')
+      @bidderPosition.url().should.containEql '/api/v1/me/bidder_position/cat'
+
+    it 'generates the right url when a new model', ->
+      newPosition = new BidderPosition
+      sd.API_URL = 'https://api.artsy.net'
+      newPosition.url().should.equal 'https://api.artsy.net/api/v1/me/bidder_position'
