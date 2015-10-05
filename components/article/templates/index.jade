@@ -18,6 +18,10 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
+.article-share-fixed-container
+  //- Article Share Fixed Nav
+  if sd.SCROLL_SHARE_ARTICLE !== "static_current" && sd.SCROLL_SHARE_ARTICLE !== "infinite_current"
+    +share-fixed(article.get('title'),article.get('thumbnail_image'))
 .article-container
   //- Article lead content
   if article.get('hero_section') && article.get('hero_section').type === 'video'
