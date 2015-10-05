@@ -3,14 +3,13 @@
 //
 
 // Clicked “Bid” button on artwork item from auction feature page
-$('.auction-artworks .aga-bid-button').click(function() {
-  analytics.track('Clicked “Bid” button on artwork item from auction feature page');
+$('.auction-artworks .aga-bid-button').each(function(i, el) {
+  analytics.trackLink(el, 'Clicked “Bid” button on artwork item from auction feature page');
 });
 
 // Clicked “Register to bid” on the auction feature page
-$('.auction-header-register-button').click(function() {
-  analytics.track('Clicked “Register to bid” on the auction feature page');
-});
+analytics.trackLink($('.auction-header-register-button a')[0],
+  'Clicked “Register to bid” on the auction feature page');
 
 // Clicked “Bid” on the artwork page
 $('.artwork-bid-form .abf-button').click(function() {
