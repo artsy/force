@@ -6,8 +6,8 @@ Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
 
-imageTemplate = require '../templates/image-template.jade'
-resolvedImage = require '../templates/image.jade'
+imageTemplate = -> require('../templates/image-template.jade') arguments...
+resolvedImage = -> require('../templates/image.jade') arguments...
 
 module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
 
@@ -54,7 +54,7 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
     artwork = new Artwork(id: result.id)
     artwork.fetch
       success: ->
-        @$(".search-result[data-id=#{result.id}] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
+        @$(".search-result[data-id='#{result.id}'] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
 
   trackClick: ->
     analytics.track.click "Selected item from results page", query: $('#main-layout-search-bar-input').val()

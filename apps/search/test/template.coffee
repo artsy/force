@@ -9,6 +9,7 @@ Backbone = require 'backbone'
 Search = require '../../../collections/search'
 SearchResult = require '../../../models/search_result'
 sinon = require 'sinon'
+fixture = require '../../../test/helpers/fixtures.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -45,18 +46,31 @@ describe 'Search results template', ->
 
   describe 'Has results', ->
     beforeEach ->
-      @artworks = _.times 2, ->
-        new SearchResult(fabricate('artwork', model: 'artwork'))
-      @artists = _.times 3, ->
-        new SearchResult(fabricate('artist', model: 'artist'))
-
-      @search.add @artworks
-      @search.add @artists
-
+      @results = _.times 3, ->
+        new SearchResult(fixture.searchResult)
       template = render('template')(
         sd: {}
         asset: (->)
-        results: @search.models
+        results: @results
+        term: 'skull'
+        crop: sinon.stub()
+        _s: _s
+      )
+      @$template = $(template)
+
+    it 'renders the search results', ->
+      @$template.find('.search-result').length.should.equal 3
+
+    it 'highlights the search term', ->
+      @$template.find('.is-highlighted').should.be.ok()
+
+  describe 'Creates img tag with empty string', ->
+    beforeEach ->
+      @result = new SearchResult fixture.searchResult
+
+      template = render('search_result')(
+        sd: {}
+        result: @result
         term: 'skull'
         crop: sinon.stub()
         _s: _s
@@ -64,8 +78,5 @@ describe 'Search results template', ->
 
       @$template = $(template)
 
-    it 'renders the search results', ->
-      @$template.find('.search-result').length.should.equal 5
-
-    it 'highlights the search term', ->
-      @$template.find('.is-highlighted').should.be.ok()
+    it 'creates img tag', ->
+      @$template.find('.search-result-thumbnail-fallback img').length.should.equal 1
