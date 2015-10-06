@@ -49,12 +49,12 @@ block body
       ul#articles-footer-list
         for sectionArticle in allSectionArticles.models
           unless article.id === sectionArticle.get('id')
-            +article-figure(sectionArticle, 220, false, false)
+            +article-figure(sectionArticle, 440, false, false)
     else
       h1 What to Read Next
       ul#articles-footer-list
         for footerArticle in footerArticles.models
           unless article.id === footerArticle.get('id')
-            +article-figure(footerArticle, 220, false, false)
+            +article-figure(footerArticle, 440, false, false)
 
   include ../../../components/main_layout/templates/json_ld
