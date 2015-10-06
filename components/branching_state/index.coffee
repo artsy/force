@@ -29,11 +29,13 @@ module.exports = class State extends Backbone.Model
   split: (obj) ->
     [_.first(_.keys obj), _.first(_.values obj)]
 
-  inject: ->
-    @__inject__ = arguments
+  context: {}
+
+  inject: (context) ->
+    _.extend @context, context
 
   decide: (key) ->
-    @get('decisions')[key](@__inject__...)
+    @get('decisions')[key](@context)
 
   next: ->
     @set('moves', (@get('moves') + 1))
@@ -58,6 +60,6 @@ module.exports = class State extends Backbone.Model
   view: ->
     views = @get('views')
     if (View = views[@current()])?
-      new View arguments...
+      new View @context
     else
       console.error "view for #{@current()} is not defined"
