@@ -43,6 +43,12 @@ describe 'image sitemap template', ->
       sd: {}
     xml.should.containEql 'foo.jpg'
 
+  it 'renders the correct caption data', ->
+    xml = render('images')
+       models: new Artworks([fabricate 'artwork', title: 'Moo']).models
+      _: _
+      sd: {}
+    xml.should.containEql 'Moo'
 
 
 
