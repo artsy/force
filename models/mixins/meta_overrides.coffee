@@ -20,6 +20,34 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'unseen-photo-fair-2015':
+    title: 'Unseen Photo Fair 2015 | Artsy'
+    description: 'Your first look at the Amsterdam fair celebrating photography in all its forms—with works by Erwin Olaf, Letha Wilson, Christto & Andrew, and more.'
+
+  'viennacontemporary-2015':
+    title: 'viennacontemporary 2015 | Artsy'
+    description: 'Preview the works on display in the Austrian capital by artists including Marina Abramović, Günther Förg, and Imi Knoebel.'
+
+  'zona-maco-foto-and-zona-maco-sal-n-del-anticuario-2015':
+    title: 'ZsONA MACO: FOTO and SALÓN DEL ANTICUARIO 2015 | Artsy'
+    description: 'Preview prized photographs and antiques from local and international galleries gathering in Mexico City.'
+
+  'artbo-2015':
+    title: 'ArtBO 2015 | Artsy'
+    description: 'Preview Bogotá\’s global art fair, featuring local and international talent including works by Yeni & Nan, Jesús Rafael Soto, and Niki de Saint Phalle.'
+
+  'kiaf-2015':
+    title: 'KIAF 2015 | Artsy'
+    description: 'U-Ram Choe, Eva Armisen, and Park Seo Bo are among the leading Asian artists to discover at the 14th edition of this fair.'
+
+  'frieze-london-2015':
+    title: 'Frieze London 2015 | Artsy'
+    description: 'Browse work by up-and-coming and iconic artists at this touchstone of the contemporary art world featuring over 160 international galleries.'
+
+  'frieze-masters-2015':
+    title: 'Frieze Masters 2015 | Artsy'
+    description: 'View historic and modern masterworks by Egon Schiele, Yves Klein, and Sam Gilliam displayed at the fair.'
+
   'chart-art-fair-2015':
     title: 'CHART Art Fair 2015 | Artsy'
     description: 'Browse artwork from select Nordic galleries at the third edition of the fair in Copenhagen.'
