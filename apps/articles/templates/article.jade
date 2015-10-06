@@ -39,22 +39,23 @@ block body
     #articles-body-container
       include ../../../components/article/templates/index
 
-  //- Article footer content
-  section#articles-footer
-    if article.get('section_ids').length
-      if article.get('section_ids')[0] === '55550be07b8a750300db8430'
-        .articles-insights-show
-          include gallery_insights_form
-      h1 More From #{section.get('title')}
-      ul#articles-footer-list
-        for sectionArticle in allSectionArticles.models
-          unless article.id === sectionArticle.get('id')
-            +article-figure(sectionArticle, 440, false, false)
-    else
-      h1 What to Read Next
-      ul#articles-footer-list
-        for footerArticle in footerArticles.models
-          unless article.id === footerArticle.get('id')
-            +article-figure(footerArticle, 440, false, false)
+  if sd.SCROLL_SHARE_ARTICLE === "static_fixed" || sd.SCROLL_SHARE_ARTICLE === "static_current_fixed" || sd.SCROLL_SHARE_ARTICLE === "static_current"
+    //- Article footer content
+    section#articles-footer
+      if article.get('section_ids').length
+        if article.get('section_ids')[0] === '55550be07b8a750300db8430'
+          .articles-insights-show
+            include gallery_insights_form
+        h1 More From #{section.get('title')}
+        ul#articles-footer-list
+          for sectionArticle in allSectionArticles.models
+            unless article.id === sectionArticle.get('id')
+              +article-figure(sectionArticle, 440, false, false)
+      else
+        h1 What to Read Next
+        ul#articles-footer-list
+          for footerArticle in footerArticles.models
+            unless article.id === footerArticle.get('id')
+              +article-figure(footerArticle, 440, false, false)
 
   include ../../../components/main_layout/templates/json_ld

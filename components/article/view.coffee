@@ -12,10 +12,12 @@ ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
 Sticky = require '../sticky/index.coffee'
+Q = require 'bluebird-q'
+{ resize } = require '../resizer/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
-Q = require 'bluebird-q'
 editTemplate = -> require('./templates/edit.jade') arguments...
+relatedTemplate = -> require('./templates/related.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -30,6 +32,7 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
     @sizeVideo()
     @setupStickyShare()
+    @setupInfiniteArticle()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -135,3 +138,11 @@ module.exports = class ArticleView extends Backbone.View
     if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current"
       $el = $(".article-share-fixed[data-path='#{sd.CURRENT_PATH}']")
       @sticky.add $el
+
+  setupInfiniteArticle: ->
+    if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
+      # Setup Related Articles
+      $('.article-related-widget').html relatedTemplate
+        related: sd.FOOTER_ARTICLES.slice(0,4)
+        resize: resize
+      # Setup Next Article with Read More

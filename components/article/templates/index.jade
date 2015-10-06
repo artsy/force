@@ -19,6 +19,10 @@ mixin image(image)
       figcaption!= image.caption
 
 .article-container
+  //- Article Share Fixed Nav -- Solo
+  if sd.SCROLL_SHARE_ARTICLE === "static_fixed" || sd.SCROLL_SHARE_ARTICLE === "infinite_fixed"
+    .article-share-fixed(data-path=sd.CURRENT_PATH)
+      +share-fixed(article.get('title'),article.get('thumbnail_image'))
   //- Article lead content
   if article.get('hero_section') && article.get('hero_section').type === 'video'
     if article.get('hero_section').cover_image_url
@@ -38,36 +42,41 @@ mixin image(image)
     include ../../article_figure/contributing_author.jade
   .article-date
     = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-  .article-social
-    +share(article.get('title'), article.get('thumbnail_image'))
+  if sd.SCROLL_SHARE_ARTICLE !== "static_fixed" && sd.SCROLL_SHARE_ARTICLE !== "infinite_fixed"
+    .article-social
+      +share(article.get('title'), article.get('thumbnail_image'))
 
   //- Article body content
   if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
     .article-carousel
       include carousel
-  .article-sections-container
-    //- Article Share Fixed Nav
-    if sd.SCROLL_SHARE_ARTICLE !== "static_current" && sd.SCROLL_SHARE_ARTICLE !== "infinite_current"
+  //- Article Share Fixed Nav -- Mixed
+  if sd.SCROLL_SHARE_ARTICLE === "static_current_fixed" || sd.SCROLL_SHARE_ARTICLE === "infinite_current_fixed"
+    .article-share-fixed(data-path=sd.CURRENT_PATH)
       +share-fixed(article.get('title'),article.get('thumbnail_image'))
-    for section, i in article.get('sections')
-      .article-section-container
-        case section.type
-          when 'text'
-            .article-section-text!= section.body
-          when 'artworks'
-            .article-section-artworks.is-loading( data-layout=section.layout )
-              .loading-spinner
-              ul
-                for id in section.ids
-                  li( data-id=id )
-          when 'image'
-            .article-section-image
-              +image(section)
-          when 'video'
-            .article-section-video
-              +video(section)
+  for section, i in article.get('sections')
+    .article-section-container
+      case section.type
+        when 'text'
+          .article-section-text!= section.body
+        when 'artworks'
+          .article-section-artworks.is-loading( data-layout=section.layout )
+            .loading-spinner
+            ul
+              for id in section.ids
+                li( data-id=id )
+        when 'image'
+          .article-section-image
+            +image(section)
+        when 'video'
+          .article-section-video
+            +video(section)
 
-  //- Footer social buttons
-  .article-social.add-bottom
-    h2.article-social__header Share this article
-    +share(article.get('title'), article.get('thumbnail_image'))
+  if sd.SCROLL_SHARE_ARTICLE !== "static_fixed" && sd.SCROLL_SHARE_ARTICLE !== "infinite_fixed"
+    //- Footer social buttons
+    .article-social.add-bottom
+      h2.article-social__header Share this article
+      +share(article.get('title'), article.get('thumbnail_image'))
+
+.article-related-widget.articles-featured-section-articles
+  //- Rendered on client
