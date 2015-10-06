@@ -124,3 +124,23 @@ moment = require 'moment'
   featured_artwork_ids: ['5321b71c275b24bcaa0001a5']
   gravity_id: '502a6debe8b6470002000004'
   section_ids: []
+
+@searchResult =
+  kind: 'customsearch#result'
+  title: 'Maya Hayuk - 42 Artworks, Bio & Shows on Artsy'
+  htmlTitle: '<b>Maya Hayuk</b> - 42 Artworks, Bio &amp; Show'
+  link: 'https://www.artsy.net/artist/maya-hayuk-untitled'
+  displayLink: 'www.artsy.net'
+  snippet: 'Aug 1, 2015 ... Browse the best of Maya Hayuk, in'
+  htmlSnippet: 'Aug 1, 2015 <b>...</b> Browse the best of <b>'
+  cacheId: 'Y7fLCT5DzrgJ'
+  formattedUrl: 'https://www.artsy.net/artist/maya-hayuk-untitled'
+  htmlFormattedUrl: 'https://www.artsy.net/artist/<b>maya</b>'
+  pagemap: {},
+  ogType: 'artwork'
+  id: 'maya-hayuk-untitled'
+  display: 'Maya Hayuk - 42 Artworks, Bio & Shows on Artsy'
+  image_url: 'https://i.embed.ly/1/display/crop?width=70&heig'
+  display_model: 'artwork'
+  location: '/artist/maya-hayuk-untitled'
+  about: undefined

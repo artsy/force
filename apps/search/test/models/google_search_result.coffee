@@ -3,6 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 GoogleSearchResult = require '../../models/google_search_result.coffee'
+fixture = require '../../../../test/helpers/fixtures.coffee'
 
 describe 'GoogleSearchResult', ->
 
@@ -72,6 +73,12 @@ describe 'GoogleSearchResult', ->
       result.get('image_url').should.equal 'https://i.embed.ly/1/display/crop?width=70&height=70&quality=95&url=imgurl&key='
       result.get('location').should.equal '/artwork/cool-artwork'
       result.get('display_model').should.equal 'artwork'
+
+    it 'handles artwork image', ->
+      result = new GoogleSearchResult fixture.searchResult
+
+      result.imageUrl().should.equal ''
+
 
     it 'handles artist', ->
       result = new GoogleSearchResult({
