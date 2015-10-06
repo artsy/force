@@ -1,43 +1,72 @@
 modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
-InquiryQuestionnaireView = require './view.coffee'
+State = require '../branching_state/index.coffee'
+StateView = require '../branching_state/view.coffee'
+Logger = require '../logger/index.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
+map = require './map.coffee'
 
-module.exports = (options = {}) ->
-  { user, inquiry } = options
+module.exports = ({ user, artwork, inquiry, bypass }) ->
+  { collectorProfile } = user.related()
+  { userInterests } = collectorProfile.related()
 
-  questionnaire = new InquiryQuestionnaireView options
+  user.approximateLocation()
+
+  # Allow us to trigger individual steps for debugging
+  # by passing the named step as a `bypass` option
+  map = if bypass
+    _.extend {}, map, steps: [bypass]
+  else
+    map
+
+  state = new State map
+  logger = new Logger 'inquiry-questionnaire-log'
+
+  questionnaire = new StateView
+    state: state
+    className: 'inquiry-questionnaire'
+
   modal = modalize questionnaire,
     className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '640px'
 
-  # Try to get a location incase one doesn't exist
-  # Don't bother waiting for it
-  user.approximateLocation()
+  state.inject
+    user: user
+    artwork: artwork
+    inquiry: inquiry
+    logger: logger
+    modal: modal.view
+    collectorProfile: collectorProfile
+    userInterests: userInterests
+    state: state
 
   # Attach/teardown analytics events
-  analytics.attach modal
+  analytics.attach state.context
   modal.view.on 'closed', ->
-    analytics.teardown modal
+    analytics.teardown state.context
 
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
-  # Abort by clicking 'nevermind'
-  questionnaire.state.on 'abort', ->
-    modal.close()
-    modal.subView.logger.reset()
+  state
+    # Log each step
+    .on 'next', logger.log.bind(logger)
 
-  # End of complete flow
-  questionnaire.state.on 'done', ->
-    # Send the inquiry immediately
-    inquiry.send {},
-      success: ->
-        modal.close()
-      error: (model, response, options) ->
-        modal.close ->
-          openErrorFlash response
+    # Abort by clicking 'nevermind'
+    .on 'abort', ->
+      modal.close()
+      logger.reset()
+
+    # End of complete flow
+    .on 'done', ->
+      # Send the inquiry immediately
+      inquiry.send {},
+        success: ->
+          modal.close()
+        error: (model, response, options) ->
+          modal.close ->
+            openErrorFlash response
 
   # Prepare the user and open the modal
   modal.load (open) ->

@@ -7,12 +7,12 @@ map = require '../map'
 
 describe 'map', ->
   beforeEach ->
-    @Logger = rewire '../logger'
+    @Logger = rewire '../../logger'
     @Cookies = @Logger.__get__ 'Cookies'
     store = {}
     @Cookies.set = (name, value) -> store[name] = value
     @Cookies.get = (name) -> store[name]
-    @logger = new @Logger
+    @logger = new @Logger 'map'
 
     @state = new State map
     @user = new CurrentUser # logged in user

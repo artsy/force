@@ -37,7 +37,7 @@ module.exports = class Specialist extends StepView
       @inquiry.save _.extend { contact_gallery: false }, form.data()
       @user.save @inquiry.pick('name', 'email')
     ]
-      .then => @next()
-      .catch (e) =>
+      .done =>
+        @next()
+      , (e) ->
         form.error null, e
-      .done()

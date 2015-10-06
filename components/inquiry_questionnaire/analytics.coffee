@@ -1,29 +1,26 @@
+_ = require 'underscore'
 { underscored } = require 'underscore.string'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports =
-  context: (modal) ->
-    { user, artwork, inquiry, state } = modal.subView
-    { collectorProfile } = user.related()
-    { userInterests } = collectorProfile.related()
+  # Select eventable objects you want to proxy
+  proxy: [
+    'user'
+    'artwork'
+    'inquiry'
+    'modal'
+    'collectorProfile'
+    'userInterests'
+    'state'
+  ]
 
-    modal: modal.view
-    user: user
-    artwork: artwork
-    inquiry: inquiry
-    collectorProfile: collectorProfile
-    userInterests: userInterests
-    state: state
-
-  attach: (modal) ->
-    context = @context modal
-
+  attach: (context) ->
     trigger = (kind) -> (name) ->
       analyticsHooks.trigger "inquiry_questionnaire:#{kind}:#{name}", context
 
-    for k, v of context
+    for k, v of _.pick(context, @proxy...)
       context[k].on 'all', trigger(underscored k), this
 
-  teardown: (modal) ->
-    for x, v of @context modal
+  teardown: (context) ->
+    for x, v of _.pick(context, @proxy...)
       v.off null, null, this

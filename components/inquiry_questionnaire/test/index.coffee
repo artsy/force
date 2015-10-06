@@ -13,8 +13,10 @@ describe 'openInquiryQuestionnaireFor', ->
   before (done) ->
     sinon.stub _, 'defer', (cb) -> cb()
 
-    @InquiryQuestionnaireView = openInquiryQuestionnaireFor.__get__ 'InquiryQuestionnaireView'
-    @render = sinon.stub @InquiryQuestionnaireView::, 'render', -> this
+    @StateView = openInquiryQuestionnaireFor.__get__ 'StateView'
+    @render = sinon.stub @StateView::, 'render', -> this
+
+    @Logger = openInquiryQuestionnaireFor.__get__ 'Logger'
 
     benv.setup ->
       benv.expose $: benv.require 'jquery'
@@ -48,11 +50,11 @@ describe 'openInquiryQuestionnaireFor', ->
 
   describe 'abort', ->
     it 'aborts without error, clearing the logger', (done) ->
-      logger = @modal.subView.logger
-      sinon.spy logger, 'reset'
-      @modal.view.once 'closed', -> _.partial(_.delay, _, 2) ->
-        logger.reset.called.should.be.true()
-        logger.reset.reset()
-        done()
-      @modal.subView.state.trigger 'abort'
+      resetSpy = sinon.spy @Logger::, 'reset'
 
+      @modal.view.once 'closed', -> _.partial(_.delay, _, 2) ->
+        resetSpy.called.should.be.true()
+        resetSpy.restore()
+        done()
+
+      @modal.subView.state.trigger 'abort'
