@@ -9,11 +9,11 @@ urlset(
       image:image
         //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
         image:loc=artwork.imageUrl()
-        image:title=artwork.title
-        if artwork.artist
-          image:caption=artwork.title + ' is a work of art created by ' + artwork.artist.name + ' in ' + artwork.date + '.'
+        image:title=artwork.get('title')
+        if artwork.get('artist')
+          image:caption=artwork.get('title') + ' is a work of art created by ' + artwork.related().artist.get('name') + ' in ' + artwork.get('date') + '.'
         else
-          image:caption=artwork.title + ' is a work of art created in ' + artwork.date + '.'
+          image:caption=artwork.get('title') + ' is a work of art created in ' + artwork.get('date') + '.'
 
 
 

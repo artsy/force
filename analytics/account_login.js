@@ -17,17 +17,13 @@ $('.mlh-login').click(function() {
 });
 
 // Login: The password you entered is incorrect.
-// Login: Sorry, we couldn’t find an account with that email.
-// Login: Please enter your email and password.
-// Login: Please enter your password.
-// Login: Your account is locked. Please try again in a few minutes.
 analyticsHooks.on('mediator:auth:error', function(message) {
   if (message == 'invalid email or password')
     analytics.track('Login: The password you entered is incorrect.');
 });
 
 // Visited logged in
-if (sd.CURRENT_USER) analytics.track('Visited logged in');
+if (sd.CURRENT_USER) analytics.track('Visited logged in', { nonInteraction: 1 });
 
 // Visited logged out
-if (!sd.CURRENT_USER) analytics.track('Visited logged out');
+if (!sd.CURRENT_USER) analytics.track('Visited logged out', { nonInteraction: 1 });

@@ -1,7 +1,7 @@
 include ../share/template
 
 mixin article-figure(article, width, showDate, showShare)
-  - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.7), quality: 90 })
+  - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.7), quality: 95 })
   figure.article-figure: .article-figure-container
     a.article-figure-img-container( href= article.href() )
       .article-figure-img( style="background-image: url(#{imgUrl})" )

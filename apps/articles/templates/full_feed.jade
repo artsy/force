@@ -7,7 +7,7 @@
 
       aside.am-featured-also
         for article in featuredArticles.slice(1)
-          +article-figure(article, 300, false, false)
+          +article-figure(article, 600, false, false)
 
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
     section.articles-featured-section-articles
