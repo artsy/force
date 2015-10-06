@@ -48,6 +48,7 @@ describe 'Search results template', ->
     beforeEach ->
       @results = _.times 3, ->
         new SearchResult(fixture.searchResult)
+
       template = render('template')(
         sd: {}
         asset: (->)

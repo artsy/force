@@ -24,6 +24,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   initialize: (options) ->
     { @saleArtwork, @bidderPositions } = options
+
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     if options.submitImmediately
       @placeBid()
@@ -50,7 +51,7 @@ module.exports = class BidForm extends ErrorHandlingForm
         timeout: 30000
         success: (model, response, options) =>
           _.delay =>
-            @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
+            @pollForBidderPositionProcessed(model)
           , 1000
           analytics.track.funnel 'Confirmed bid on bid page'
         error: (model, response) =>
@@ -60,16 +61,16 @@ module.exports = class BidForm extends ErrorHandlingForm
 
     analytics.track.click 'Clicked "Confirm Bid" on bid page'
 
-  pollForBidPlacement: (minimumBidAmountInCents) ->
-    @saleArtwork.fetch
-      success: (saleArtwork) =>
-        if @saleArtwork.get('highest_bid_amount_cents') >= minimumBidAmountInCents or
+  pollForBidderPositionProcessed: (bidderPosition) ->
+    bidderPosition.fetch
+      success: (bidderPosition) =>
+        if bidderPosition.has('processed_at') or
            @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
           @showSuccessfulBidMessage()
         else
-          @timesPolledForBidPlacement = @timesPolledForBidPlacement + 1
+          @timesPolledForBidPlacement += 1
           _.delay =>
-            @pollForBidPlacement minimumBidAmountInCents
+            @pollForBidderPositionProcessed bidderPosition
           , 1000
 
   showSuccessfulBidMessage: =>

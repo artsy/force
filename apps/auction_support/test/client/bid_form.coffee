@@ -1,5 +1,6 @@
 benv = require 'benv'
 Backbone = require 'backbone'
+_ = require 'underscore'
 sinon = require 'sinon'
 CurrentUser = require '../../../../models/current_user'
 Order = require '../../../../models/order'
@@ -23,7 +24,7 @@ describe 'BidForm', ->
 
   beforeEach (done) ->
     sinon.stub(Backbone, 'sync')
-
+    sinon.stub _, 'delay', (cb) -> cb()
     @order = new Order()
     @sale = new Sale fabricate 'sale'
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 10000, display_minimum_next_bid_dollars: '$100'
@@ -51,6 +52,7 @@ describe 'BidForm', ->
 
   afterEach ->
     Backbone.sync.restore()
+    _.delay.restore()
 
   describe '#placeBid', ->
 
@@ -83,3 +85,21 @@ describe 'BidForm', ->
       @view.placeBid()
       html = @view.$el.html()
       @view.$('.error').text().should.equal "Your bid must be higher than $1,000"
+
+    describe 'polling', ->
+      beforeEach ->
+        @view.$('input.max-bid').val '$150.12'
+        @messageSpy = sinon.spy @view, 'showSuccessfulBidMessage'
+        @view.placeBid()
+        Backbone.sync.args[0][2].success fabricate('bidder_position', id: 'cat') # Bid successfully placed
+
+      afterEach ->
+        @messageSpy.restore()
+
+      it 'polls for the bidder position', ->
+        Backbone.sync.args[1][1].url().should.containEql '/api/v1/me/bidder_position/cat'
+        @messageSpy.called.should.be.not.ok()
+
+      it 'shows the bidder message when processed', ->
+        Backbone.sync.args[1][2].success fabricate('bidder_position', processed_at: '2015-04-20T16:20:00-05:00')
+        @messageSpy.called.should.be.ok()

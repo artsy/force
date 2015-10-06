@@ -22,6 +22,9 @@ module.exports = class Logger
     @session = _.uniq @session
     @set(_.uniq logged)
 
+  unlog: (steps...) ->
+    @set _.without(@get(), steps...)
+
   get: ->
     JSON.parse(Cookies.get(@name) or '[]')
 

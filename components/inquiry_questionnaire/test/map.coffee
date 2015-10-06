@@ -31,52 +31,69 @@ describe 'map', ->
     @state.off 'next'
 
   describe 'logged in user', ->
-    describe 'default', ->
-      beforeEach ->
-        @user.related()
-          .collectorProfile.set collector_level: 1
+    beforeEach ->
+       @user.related().collectorProfile.set collector_level: 1 # 'Looking and learning' or default
 
+    describe 'default (partner does not have pre-qualification on)', ->
       it 'follows the path to the end', ->
         @state.current().should.equal 'inquiry'
         @state.next().should.equal 'confirmation'
+
         @state.next().should.equal 'commercial_interest'
-        @user.set collector_level: 3 # is_collector => true
+        @user.related().collectorProfile.set collector_level: 3 # 'Yes'
+        @user.isCollector().should.be.true()
+
         @state.next().should.equal 'basic_info'
         @state.next().should.equal 'artists_in_collection'
+        @state.next().should.equal 'galleries_you_work_with'
+        @state.next().should.equal 'auction_houses_you_work_with'
+        @state.next().should.equal 'fairs_you_attend'
+        @state.next().should.equal 'institutional_affiliations'
+
         @state.next().should.equal 'done'
         @state.isEnd().should.be.true()
 
-    describe 'pre_qualify', ->
+    describe 'the partner has turned on pre-qualification', ->
       beforeEach ->
         @artwork.related().partner.set 'pre_qualify', true
-        @user.related()
-          .collectorProfile.set collector_level: 1
 
-      it 'follows the path to the end', ->
-        @state.current().should.equal 'commercial_interest'
-        @user.set collector_level: 2 # is_collector => false
-        @state.next().should.equal 'how_can_we_help'
-        @state.set 'value', 'purchase'
-        @state.next().should.equal 'basic_info'
-        @state.next().should.equal 'inquiry'
-        # Skips confirmation, straight to `done`
-        @state.next().should.equal 'done'
-        @state.isEnd().should.be.true()
+      describe 'a user that responseds "Not yet" to the commercial_interest step', ->
+        it 'follows the path to the end', ->
+          @state.current().should.equal 'commercial_interest'
+          @user.related().collectorProfile.set collector_level: 2 # 'Not yet'
+          @user.isCollector().should.be.false()
 
-    describe "I've… seen things... you people wouldn't believe.", ->
+          @state.next().should.equal 'how_can_we_help'
+          @state.set 'value', 'purchase' # 'I want to purchase this work'
+
+          # Dispatch to basic_info + inquiry
+          @state.next().should.equal 'basic_info'
+          @state.next().should.equal 'inquiry'
+
+          # No more steps, skips confirmation, move straight to `done`
+          @state.next().should.equal 'done'
+          @state.isEnd().should.be.true()
+
+    describe 'A user that has previously seen some steps', ->
       beforeEach ->
-        @user.related()
-          .collectorProfile.set collector_level: 1
-
-        # Has already seen the artists_in_collection step
         @logger.log 'artists_in_collection'
+        @logger.log 'auction_houses_you_work_with'
 
       it 'follows the path to the end', ->
         @state.current().should.equal 'inquiry'
         @state.next().should.equal 'confirmation'
+
         @state.next().should.equal 'commercial_interest'
-        @user.set collector_level: 3 # is_collector => true
+        @user.related().collectorProfile.set collector_level: 3 # 'Yes'
+        @user.isCollector().should.be.true()
+
         @state.next().should.equal 'basic_info'
+
         # Skips over `artists_in_collection`
+        @state.next().should.equal 'galleries_you_work_with'
+        # Skips over `auction_houses_you_work_with`
+        @state.next().should.equal 'fairs_you_attend'
+        @state.next().should.equal 'institutional_affiliations'
+
         @state.next().should.equal 'done'
         @state.isEnd().should.be.true()

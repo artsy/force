@@ -4,7 +4,7 @@ sd = require('sharify').data
 accounting = require 'accounting'
 
 module.exports = class BidderPosition extends Backbone.Model
-  url: ->
+  urlRoot: ->
     "#{sd.API_URL}/api/v1/me/bidder_position"
 
   currentBid: ->

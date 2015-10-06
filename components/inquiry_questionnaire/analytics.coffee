@@ -7,17 +7,13 @@ module.exports =
     { collectorProfile } = user.related()
     { userInterests } = collectorProfile.related()
 
-    # Export a hash of objects to listen to
-    # + pass into event handlers
-    {
-      modal: modal.view
-      user: user
-      artwork: artwork
-      inquiry: inquiry
-      collectorProfile: collectorProfile
-      userInterests: userInterests
-      state: state
-    }
+    modal: modal.view
+    user: user
+    artwork: artwork
+    inquiry: inquiry
+    collectorProfile: collectorProfile
+    userInterests: userInterests
+    state: state
 
   attach: (modal) ->
     context = @context modal
