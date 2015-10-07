@@ -7,6 +7,7 @@ module.exports =
     '^/sale/.*'
     '^/auction/.*'
     '^/dev$'
+    '^/inquiry/.*'
   ]
 
   check: ->

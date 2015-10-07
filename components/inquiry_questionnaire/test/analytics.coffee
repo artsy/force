@@ -12,19 +12,21 @@ describe 'analytics proxy', ->
     @hooks = analytics.__get__ 'analyticsHooks'
     sinon.stub @hooks, 'trigger'
 
-    @modal =
-      view: @view = on: sinon.stub(), off: sinon.stub()
-      subView:
-        user: @user = new CurrentUser fabricate 'user'
-        artwork: @artwork = new Artwork fabricate 'artwork'
-        inquiry: @inquiry = new ArtworkInquiry
-        state: @state = new Backbone.Model
+    @context =
+      modal: on: sinon.stub(), off: sinon.stub()
+      user: new CurrentUser fabricate 'user'
+      artwork: new Artwork fabricate 'artwork'
+      inquiry: @inquiry = new ArtworkInquiry
+      collectorProfile: new Backbone.Model
+      userInterests: new Backbone.Model
+      state: new Backbone.Model
+      foo: 'not eventable'
 
-    analytics.attach @modal
+    analytics.attach @context
 
   afterEach ->
     @hooks.trigger.restore()
-    analytics.teardown @modal
+    analytics.teardown @context
 
   describe '#attach', ->
     it 'proxies all the events with a namespace', ->
@@ -44,4 +46,5 @@ describe 'analytics proxy', ->
         'collectorProfile'
         'userInterests'
         'state'
+        'foo'
       ]

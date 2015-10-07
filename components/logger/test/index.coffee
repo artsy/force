@@ -3,14 +3,14 @@ rewire = require 'rewire'
 
 describe 'Logger', ->
   beforeEach ->
-    @Logger = rewire '../logger'
+    @Logger = rewire '../index'
     @Cookies = @Logger.__get__ 'Cookies'
 
     store = {}
     @Cookies.set = (name, value) -> store[name] = value
     @Cookies.get = (name) -> store[name]
 
-    @logger = new @Logger
+    @logger = new @Logger 'test-logger'
 
   it 'initializes the value as empty array', ->
     @logger.get().should.eql []
@@ -26,15 +26,21 @@ describe 'Logger', ->
     @logger.log 'foo'
     @logger.get().should.eql ['foo', 'bar', 'baz']
 
-  it 'logs things across instances', ->
+  it 'logs things across instances of the same name', ->
     @logger.log 'foo'
     @logger.get().should.eql ['foo']
 
-    logger = new @Logger
+    logger = new @Logger 'test-logger'
+    otherLogger = new @Logger 'other-test-logger'
+
+    otherLogger.get().should.eql []
+
     logger.get().should.eql ['foo']
 
     logger.log 'bar'
     @logger.get().should.eql ['foo', 'bar']
+
+    otherLogger.get().should.eql []
 
   it 'unlogs things', ->
     @logger.log 'foo'

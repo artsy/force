@@ -1,9 +1,7 @@
-StepView = require './step.coffee'
+Backbone = require 'backbone'
 FlashMessage = require '../../flash/index.coffee'
 
-module.exports = class Done extends StepView
-  template: -> ''
-
+module.exports = class Done extends Backbone.View
   initialize: ({ @modal, @state, @logger }) ->
     @modal.dialog 'slide-out', =>
       message = {

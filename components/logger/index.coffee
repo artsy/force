@@ -2,13 +2,15 @@ _ = require 'underscore'
 Cookies = require '../cookies/index.coffee'
 
 module.exports = class Logger
-  name: 'inquiry-questionnaire-log'
-
   expires: 31536000
 
   session: []
 
-  constructor: ->
+  constructor: (name) ->
+    throw new Error 'requires name' unless name?
+
+    @name = name
+
     unless (logged = @get())?
       @reset()
 

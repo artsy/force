@@ -25,8 +25,7 @@ module.exports = class Inquiry extends StepView
       @inquiry.save _.extend { contact_gallery: true }, form.data()
       @user.save @inquiry.pick('name', 'email')
     ]
-      .then =>
+      .done =>
         @next()
-      .catch (e) =>
+      , (e) ->
         form.error null, e
-      .done()
