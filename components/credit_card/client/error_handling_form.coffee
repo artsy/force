@@ -44,7 +44,10 @@ module.exports = class ErrorHandlingForm extends Backbone.View
           message = errorJson.message
         else
           message = @errors.other
-      message = errorJson.error if errorJson.error?
+      # Differently formatted errors from gravity,
+      # we either want to override or fallback to the message sent from gravity
+      if errorJson.error?
+        message = @errors[errorJson.error] || errorJson.error
     else if response.statusText == 'timeout'
       message = @errors.timeout
     else if response.status == 400 or response.status == 403
