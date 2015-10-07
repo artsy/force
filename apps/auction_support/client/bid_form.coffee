@@ -11,26 +11,26 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   timesPolledForBidPlacement: 0
   maxTimesPolledForBidPlacement: 6
+  errors:
+    "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
     'click .bidding-question': 'showBiddingDialog'
+
+  initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
+    @$submit = @$('.registration-form-content .avant-garde-button-black')
+    @placeBid() if @submitImmediately
+    @$('input.max-bid').focus() unless @submitImmediately
+
+    # extend form's errors with our own
+    @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
   showBiddingDialog: (e) ->
     e.preventDefault()
     new ModalPageView
       width: '700px'
       pageId: 'auction-info'
-
-  initialize: (options) ->
-    { @saleArtwork, @bidderPositions } = options
-
-    @$submit = @$('.registration-form-content .avant-garde-button-black')
-    if options.submitImmediately
-      @placeBid()
-    else
-      # This field already has autofocus but for some reason doesn't autofocus
-      @$('input.max-bid').focus()
 
   getBidAmount: =>
     val = @$('input.max-bid').val()
