@@ -1,9 +1,8 @@
 h4 Related Content
-ul.grid-4-up
+ul.grid-3-up
   for article in related
-    - console.log(article)
     li.grid-item
-      a( href="/article/#{article.slug}" )
-        img( src=resize(article.thumbnail_image, {
+      a( href="/article/#{article.get('slug')}" )
+        img( src=resize(article.get('thumbnail_image'), {
           height: 80, width: 120 }) )
-        p= article.thumbnail_title
+        p= article.get('thumbnail_title')

@@ -18,10 +18,10 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
-.article-container
+.article-container(data-id=article.get('id'))
   //- Article Share Fixed Nav -- Solo
   if sd.SCROLL_SHARE_ARTICLE === "static_fixed" || sd.SCROLL_SHARE_ARTICLE === "infinite_fixed"
-    .article-share-fixed(data-path=sd.CURRENT_PATH)
+    .article-share-fixed
       +share-fixed(article.get('title'),article.get('thumbnail_image'))
   //- Article lead content
   if article.get('hero_section') && article.get('hero_section').type === 'video'

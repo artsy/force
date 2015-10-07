@@ -12,12 +12,14 @@ ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
 Sticky = require '../sticky/index.coffee'
+blurb = require '../gradient_blurb/index.coffee'
 Q = require 'bluebird-q'
 { resize } = require '../resizer/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
 relatedTemplate = -> require('./templates/related.jade') arguments...
+articleTemplate = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -32,7 +34,7 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
     @sizeVideo()
     @setupStickyShare()
-    @setupInfiniteArticle()
+    @setupFooterArticles()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -136,13 +138,24 @@ module.exports = class ArticleView extends Backbone.View
 
   setupStickyShare: ->
     if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current"
-      $el = $(".article-share-fixed[data-path='#{sd.CURRENT_PATH}']")
-      @sticky.add $el
+      @sticky.add $(".article-container[data-path='#{sd.CURRENT_PATH}'] .article-share-fixed")
 
-  setupInfiniteArticle: ->
+  setupFooterArticles: ->
     if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
-      # Setup Related Articles
-      $('.article-related-widget').html relatedTemplate
-        related: sd.FOOTER_ARTICLES.slice(0,4)
-        resize: resize
-      # Setup Next Article with Read More
+      (related = new Articles).fetch
+        data:
+          tags: if @article.get('tags')?.length then @article.get('tags') else [null]
+          sort: '-published_at'
+          published: true
+        success: =>
+          safeRelated = _.union related.models, (new Articles sd.FOOTER_ARTICLES).models
+          $('.article-related-widget').html relatedTemplate
+            related: safeRelated.slice(0,3)
+            resize: resize
+
+  renderSelf: ($el) ->
+    $el.append articleTemplate
+      article: @article
+      sd: sd
+      resize: resize
+    # blurb $(".article-container[data-id=#{@article.get('id')}]"), limit: 350

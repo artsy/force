@@ -1,10 +1,11 @@
 _ = require 'underscore'
 
 module.exports = ($el, options = {}) ->
+  console.log $el.length
   return unless $el.length
 
   options = _.defaults options, limit: 300, label: 'Read More'
-
+  console.log $el.outerHeight()
   return unless (height = $el.outerHeight()) > options.limit
 
   $button = $("<a class='gradient-blurb-read-more' href='#'>#{options.label}</a>")
