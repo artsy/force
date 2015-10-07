@@ -97,17 +97,10 @@ describe 'ContactPartnerView', ->
         events[3][1].should.equal '1111'
 
   describe '#events', ->
-
     it 'disables click on backdrop', ->
       (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok()
 
   describe 'template', ->
-    it 'does render pricing if work cant display price', ->
-      @view.artwork.isPriceDisplayable = -> false
+    it 'renders the template correctly', ->
       @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.containEql 'please share the asking price'
-
-    it 'doesnt render pricing question if work can display price', ->
-      @view.artwork.isPriceDisplayable = -> true
-      @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.not.containEql 'please share the asking price'
+      @view.$el.html().should.containEql 'Could you please provide more information about the piece?'
