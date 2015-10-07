@@ -6,10 +6,10 @@ ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
 AuthModalView = require '../../components/auth_modal/view.coffee'
 EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
-Logger = require '../../components/inquiry_questionnaire/logger.coffee'
+Logger = require '../../components/logger/index.coffee'
 
 module.exports.init = ->
-  logger = new Logger()
+  logger = new Logger 'inquiry-questionnaire-log'
 
   $('.js-unlog').change (e) ->
     e.preventDefault()
