@@ -102,6 +102,10 @@ module.exports = class HeaderView extends Backbone.View
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
+    if options.redirectTo
+      @modal.result.then (redirectTo) ->
+        if redirectTo
+          window.location = redirectTo
 
   signup: (e) ->
     e.preventDefault()

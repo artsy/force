@@ -205,6 +205,8 @@ module.exports = (app) ->
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"
   app.use require "../apps/rss"
+  app.use require "../apps/galaxy"
+  app.use require "../apps/mailchimp_subscribe"
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->
