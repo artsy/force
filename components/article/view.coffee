@@ -12,20 +12,19 @@ ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
 Sticky = require '../sticky/index.coffee'
-blurb = require '../gradient_blurb/index.coffee'
 Q = require 'bluebird-q'
 { resize } = require '../resizer/index.coffee'
+blurb = require '../gradient_blurb/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
 relatedTemplate = -> require('./templates/related.jade') arguments...
-articleTemplate = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    { @article } = options
+    { @article, @gradient } = options
     new ShareView el: @$('.article-social')
     @sticky = new Sticky
     @renderSlideshow()
@@ -39,7 +38,7 @@ module.exports = class ArticleView extends Backbone.View
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
 
-  renderArtworks: ->
+  renderArtworks: =>
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
       Q.allSettled(
         for id in section.ids
@@ -53,19 +52,22 @@ module.exports = class ArticleView extends Backbone.View
       ).spread (artworks...) =>
         artworks = _.pluck(_.reject(artworks, (artwork) -> artwork.state is 'rejected'), 'value')
         artworks = new Artworks artworks
-        $el = @$("[data-layout=overflow_fillwidth]" +
-          " li[data-id=#{artworks.first().get '_id'}]").parent()
-        return unless $el.length
-        @fillwidth $el
-    )
+        if artworks.length
+          $el = @$("[data-layout=overflow_fillwidth]" +
+            " li[data-id=#{artworks.first().get '_id'}]").parent()
+        Q.nfcall @fillwidth, $el
+    ).done =>
+      @addReadMore() if @gradient
 
   breakCaptions: ->
     @$('.article-section-image').each ->
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
-  fillwidth: (el) ->
-    return @$(el).parent().removeClass('is-loading') if $(window).width() < 700
+  fillwidth: (el, cb) ->
+    if @$(el).length < 1 or $(window).width() < 700
+      @$(el).parent().removeClass('is-loading')
+      cb()
     $list = @$(el)
     $list.fillwidthLite
       gutterSize: 30
@@ -78,6 +80,7 @@ module.exports = class ArticleView extends Backbone.View
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Remove loading state
         $list.parent().removeClass('is-loading')
+        cb()
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -138,7 +141,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupStickyShare: ->
     if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current"
-      @sticky.add $(".article-container[data-path='#{sd.CURRENT_PATH}'] .article-share-fixed")
+      @sticky.add $(".article-container[data-id=#{@article.get('id')}] .article-share-fixed")
 
   setupFooterArticles: ->
     if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
@@ -153,9 +156,5 @@ module.exports = class ArticleView extends Backbone.View
             related: safeRelated.slice(0,3)
             resize: resize
 
-  renderSelf: ($el) ->
-    $el.append articleTemplate
-      article: @article
-      sd: sd
-      resize: resize
-    # blurb $(".article-container[data-id=#{@article.get('id')}]"), limit: 350
+  addReadMore: =>
+    blurb $(".article-container[data-id=#{@article.get('id')}]"), lineCount: 15, isArticle: true

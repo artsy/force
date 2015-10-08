@@ -4,6 +4,8 @@ sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
+{ resize } = require '../../../components/resizer/index.coffee'
+articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 
 module.exports = class ArticleIndexView extends Backbone.View
 
@@ -19,28 +21,42 @@ module.exports = class ArticleIndexView extends Backbone.View
       cache: true
       data: @params.toJSON()
 
+    # Main Article
     new ArticleView
       el: $('body')
       article: @article
+      gradient: true
 
-    @listenTo @collection, 'sync', @render
+    if sd.SCROLL_SHARE_ARTICLE.indexOf('infinite') >= 0
+      @listenTo @collection, 'sync', @render
 
-    @listenTo @params, 'change:offset', =>
-      @$('#articles-show').addClass 'is-loading'
-      @collection.fetch
-        cache: true
-        remove: false
-        data: @params.toJSON()
-        complete: => @$('#articles-show').removeClass 'is-loading'
+      @listenTo @params, 'change:offset', =>
+        @$('#articles-show').addClass 'is-loading'
+        @collection.fetch
+          cache: true
+          remove: false
+          data: @params.toJSON()
+          complete: => @$('#articles-show').removeClass 'is-loading'
 
-    $.onInfiniteScroll(@nextPage)
+      # $(window).scroll ->
+      #   $('.article-container').each ->
+      #     if $(window).scrollTop() >= $(this).offset().top
+      #       console.log $(this).data('id')
+
+      $.onInfiniteScroll(@nextPage)
 
   render: (collection, response) =>
-    for article in response.results
-      tempArticle = new ArticleView
-        el: $('#articles-body-container')
-        article: new Article article
-      tempArticle.renderSelf $('#articles-body-container')
+    articles = _.reject response.results, (a) => a.id is @article.id
+    for article in articles
+      article = new Article article
+      $("#articles-body-container").append articleTemplate
+        article: article
+        sd: sd
+        resize: resize
+      feedArticle = new ArticleView
+        el: $(".article-container[data-id=#{article.get('id')}]")
+        article: article
+        gradient: true
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 10) or 0
