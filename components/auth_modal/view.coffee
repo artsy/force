@@ -1,5 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 { parse } = require 'url'
@@ -19,6 +20,8 @@ class State extends Backbone.Model
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
 
+  deferred = Q.defer()
+
   className: 'auth'
 
   template: ->
@@ -35,6 +38,7 @@ module.exports = class AuthModalView extends ModalView
     { @destination } = options
     @redirectTo = sanitizeRedirect(options.redirectTo) if options.redirectTo
     @preInitialize options
+    @result = deferred.promise
 
     super
 
@@ -125,12 +129,12 @@ module.exports = class AuthModalView extends ModalView
         when 'login'
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
           if @redirectTo
-            location.href = @redirectTo
+            deferred.resolve(@redirectTo)
           else
             location.reload()
         when 'register'
           mediator.trigger 'auth:sign_up:success'
-          location.href = @redirectTo or '/personalize'
+          deferred.resolve(@redirectTo or '/personalize')
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 
@@ -142,4 +146,5 @@ module.exports = class AuthModalView extends ModalView
     mediator.off 'auth:change:mode'
     mediator.off 'auth:error'
     mediator.off 'modal:closed'
+    deferred.reject()
     super

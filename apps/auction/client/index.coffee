@@ -39,16 +39,23 @@ module.exports.init = ->
       "AUCTION_#{auction.id}": true
 
   emailView.result
-  .then ->
+  .then (emailAddress) ->
     transitionView = new EmailToRegistrationTransitionView
     modal = modalize transitionView, dimensions: width: '400px'
+    transitionView.on 'done', -> modal.close()
     modal.open()
-    transitionView.result
-  .then (willRegister) ->
-    authModalView = new AuthModalView
 
-    # Propagate the willRegister result of the transition view if login succeeds
-    authModalView.open().result.then ->
+    # Bundle together the user will make in the view with the email address they provided
+    transitionView.result.then (willRegister) -> { emailAddress: emailAddress, willRegister: willRegister }
+  .then ({emailAddress, willRegister}) ->
+    # TODO ideally we would open this view with in the right login/sign-up
+    # state based on the email, but this may not be feasible.
+    authModalView = new AuthModalView { width: '500px', redirectTo: '', userData: { email: emailAddress } }
+
+    authModalView.result.then ->
+      authModalView.close()
+
+      # Propagate the willRegister result of the transition view if login succeeds
       willRegister
   .then (willRegister) ->
     if willRegister

@@ -24,11 +24,14 @@ module.exports = class EmailView extends Backbone.View
       autofocus: @autofocus
 
   submit: ->
+    emailAddress = @$('input[name=email]').val()
     subscribePromise = $.post "#{APP_URL}/mailchimp_subscribe",
       listId: @listId
       mergeVars: @mergeVars
       email: @$('input[name=email]').val()
 
-    subscribePromise.then deferred.resolve, deferred.reject
+    subscribePromise.then ->
+      deferred.resolve emailAddress
+    , deferred.reject
 
     false
