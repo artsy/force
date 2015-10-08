@@ -1,6 +1,7 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+moment = require 'moment'
 { fabricate } = require 'antigravity'
 Fair = require '../../models/fair'
 Fairs = require '../../collections/fairs'
@@ -38,3 +39,23 @@ describe 'Fairs', ->
       rows[0].fairs.length.should.eql 1
       rows[1].type.should.eql 'half'
       rows[1].fairs.length.should.eql 2
+
+  describe '#pastYearRoundFairs', ->
+    it 'should not display upcoming fairs', ->
+      fairs = new Fairs([
+        fabricate('fair',
+          { id: 'fair1', end_at: moment(), has_full_feature: true })
+        fabricate('fair',
+          { id: 'fair1', end_at: moment().add(7, 'days'), has_full_feature: true })
+        fabricate('fair',
+          { id: 'fair2', end_at: moment().startOf('year'), has_full_feature: true })
+        fabricate('fair3',
+          { id: 'fair3', end_at: moment().startOf('month'), has_full_feature: true })
+      ])
+
+      fairs.each (fair) ->
+        fair.representation = true
+
+      pastFairs = fairs.pastYearRoundFairs()
+
+      pastFairs.length.should.eql 2
