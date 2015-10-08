@@ -5,4 +5,6 @@ module.exports =
     Accept: 'application/vnd.galaxy-public+json'
 
   url: (kind) ->
-    "#{GALAXY_URL}/#{kind}?token=#{GALAXY_PUBLISHABLE_TOKEN}"
+    url = "#{GALAXY_URL}/#{kind}?token=#{GALAXY_PUBLISHABLE_TOKEN}"
+    url += '&artsy_only=true' if kind is 'galleries' # Temporarily limit gallery results
+    url
