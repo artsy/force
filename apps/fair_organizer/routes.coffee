@@ -35,11 +35,11 @@ representation = (fair) ->
   # profile fetch
   fairOrg = new FairOrganizer profile.get('owner')
 
-  pastFairs = new Fairs
+  fairs = new Fairs
 
   # This grabs all the past fairs by passing fair_organizer_id
   # to the /fairs endpoint
-  pastFairs.fetch
+  fairs.fetch
     cache: true
     data:
       fair_organizer_id: fairOrg.get('_id')
@@ -47,7 +47,7 @@ representation = (fair) ->
       articles = new Articles()
 
       # find if we have a current fair
-      current = pastFairs.find (fair)->
+      current = fairs.find (fair)->
         moment().isBetween fair.get('start_at'), fair.get('end_at')
 
       # redirect to fair if there is a fair currently running.
@@ -57,35 +57,30 @@ representation = (fair) ->
       # to get the two small images
       # also, grab all the articles associated with the fair from positron
       promises = _.compact _.flatten [
-        pastFairs.map representation
+        fairs.map representation
         articles.fetch(
           data:
             published: true
-            fair_ids: pastFairs.pluck('_id')
+            fair_ids: fairs.pluck('_id')
             sort: '-published_at'
         )
       ]
 
-      newestFair = pastFairs.models[0]
+      newestFair = fairs.models[0]
 
       Q.allSettled(promises).then(->
         res.locals.newestFair = res.locals.sd.FAIR = newestFair
-        res.locals.sd.FAIR_IDS = pastFairs.pluck('_id')
+        res.locals.sd.FAIR_IDS = fairs.pluck('_id')
         res.locals.sd.FAIR_ORGANIZER = fairOrg.toJSON()
         res.locals.sd.ARTICLES = articles.toJSON()
         res.locals.fairOrg = fairOrg
         res.locals.coverImage = profile.coverImage()
         # If the fair names are not identical then
         # we should show the name (instead of the year) on the fair representation
-        res.locals.showName = pastFairs.any (fair) ->
+        res.locals.showName = fairs.any (fair) ->
           fair.get('name').replace(/\d/g,'') isnt newestFair.get('name').replace(/\d/g,'')
-        # pastFairs is the array of links to the previous fairs,
-        # since this should only include fairs that have microsites,
-        # we filter on has_full_feature.
-        # this also allows us to set a fair for the future and
-        # have a countdown to the preview
-        res.locals.pastFairs = res.locals.sd.PAST_FAIRS = pastFairs.filter (fair) ->
-          fair.get('has_full_feature') && fair.representation?
+
+        res.locals.pastFairs = res.locals.sd.PAST_FAIRS = fairs.pastYearRoundFairs()
         res.locals.articles = articles.models
         next()
       ).done()

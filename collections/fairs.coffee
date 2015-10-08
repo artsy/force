@@ -60,6 +60,15 @@ module.exports = class Fairs extends Backbone.Collection
       type: type
     }
 
+  # pastFairs is the array of links to the previous fairs,
+  # since this should only include fairs that have microsites,
+  # we filter on has_full_feature.
+  # this also allows us to set a fair for the future and
+  # have a countdown to the preview
+  pastYearRoundFairs: ->
+    @filter (fair) ->
+      moment(fair.get('end_at')).isBefore(moment()) &&
+      fair.get('has_full_feature') && fair.representation?
 
 
 
