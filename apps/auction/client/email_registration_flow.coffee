@@ -1,7 +1,7 @@
 { MAILCHIMP_WELCOME_LIST_ID } = require('sharify').data
-EmailToRegistrationTransitionView = require './email_to_registration_transition.coffee'
+ThankYouView = require './thank_you_view.coffee'
 EmailView = require '../../../components/email/view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 modalize = require '../../../components/modalize/index.coffee'
 
@@ -16,15 +16,18 @@ module.exports = (auction) ->
 
   emailView.result
   .then (emailAddress) ->
+    # Trigger analytics event
     analyticsHooks.trigger 'auction:notify-me', { email: emailAddress }
-    transitionView = new EmailToRegistrationTransitionView
-    modal = modalize transitionView, dimensions: width: '400px'
-    transitionView.on 'done', -> modal.close()
+
+    # Open "Thank You" modal
+    thankYouView = new ThankYouView
+    modal = modalize ThankYouView, dimensions: width: '400px'
+    thankYouView.on 'done', -> modal.close()
     modal.open()
 
     # Bundle together the user will make in the view
     # with the email address they provided
-    transitionView.result.then (willRegister) ->
+    thankYouView.result.then (willRegister) ->
       {
         emailAddress: emailAddress
         willRegister: willRegister
@@ -35,6 +38,7 @@ module.exports = (auction) ->
       redirectTo: if willRegister then auction.registerUrl() else '/personalize'
       userData:
         email: emailAddress
-  .catch ->
+  .catch (err)->
+    console.log 'getting caught', err
     window.location.reload()
   .done()
