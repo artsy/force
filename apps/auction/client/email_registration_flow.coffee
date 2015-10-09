@@ -1,4 +1,4 @@
-{ MAILCHIMP_WELCOME_LIST_ID } = require('sharify').data
+{ MAILCHIMP_AUCTION_LIST_ID } = require('sharify').data
 ThankYouView = require './thank_you_view.coffee'
 EmailView = require '../../../components/email/view.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
@@ -8,7 +8,7 @@ modalize = require '../../../components/modalize/index.coffee'
 module.exports = (auction) ->
   emailView = new EmailView
     el: $('.auction-preview-sidebar-email')
-    listId: MAILCHIMP_WELCOME_LIST_ID
+    listId: MAILCHIMP_AUCTION_LIST_ID
     buttonText: 'Notify me'
     autofocus: true
     mergeVars:
