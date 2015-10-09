@@ -21,7 +21,7 @@ module.exports = (auction) ->
 
     # Open "Thank You" modal
     thankYouView = new ThankYouView
-    modal = modalize ThankYouView, dimensions: width: '400px'
+    modal = modalize thankYouView, dimensions: width: '400px'
     thankYouView.on 'done', -> modal.close()
     modal.open()
 
@@ -39,6 +39,5 @@ module.exports = (auction) ->
       userData:
         email: emailAddress
   .catch (err)->
-    console.log 'getting caught', err
     window.location.reload()
   .done()
