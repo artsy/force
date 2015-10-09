@@ -39,5 +39,5 @@ describe 'Notification Routing', ->
         _.defer => _.defer =>
           @res.locals.sd.UNREAD_NOTIFICATIONS.length.should.equal 1
           @res.locals.sd.FOLLOWING.length.should.equal 1
-          @res.locals.sd.NOTIFICATION_COUNT?.should.be.false
+          @res.locals.sd.NOTIFICATION_COUNT?.should.be.false()
           @res.render.args[0][0].should.equal 'index'

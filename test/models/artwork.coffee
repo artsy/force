@@ -109,20 +109,20 @@ describe 'Artwork', ->
     it 'can be hung', ->
       @artwork.set { depth: undefined, height: 1, width: '1' }
       @artwork.set 'category', 'Design'
-      @artwork.isHangable().should.not.be.true
+      @artwork.isHangable().should.be.false()
       @artwork.set 'category', 'Painting'
       @artwork.isHangable().should.be.true()
       @artwork.set 'depth', 1
-      @artwork.isHangable().should.not.be.true
+      @artwork.isHangable().should.be.false()
       @artwork.unset 'depth'
       @artwork.set dimensions: in: '600 × 20in'
       @artwork.isHangable().should.be.true()
       @artwork.set dimensions: in: '601 × 20in'
-      @artwork.isHangable().should.not.be.true
+      @artwork.isHangable().should.be.false()
       @artwork.set dimensions: in: '600 × 20in'
       @artwork.isHangable().should.be.true()
       @artwork.set 'diameter', 1
-      @artwork.isHangable().should.not.be.true
+      @artwork.isHangable().should.be.false()
 
     describe '#isPartOfAuction', ->
       beforeEach ->
