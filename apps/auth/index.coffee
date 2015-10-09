@@ -19,7 +19,6 @@ app.post loginPath, routes.redirectBack
 app.post signupPath, routes.redirectBack
 app.get twitterCallbackPath, routes.redirectBack
 app.get facebookCallbackPath, routes.redirectBack
-app.post '/users/sign_in_trust_token', routes.loginWithTrustToken, routes.redirectBack
 
 # Log out
 app.delete logoutPath, routes.logout

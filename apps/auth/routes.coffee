@@ -12,20 +12,6 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
   else
     res.render 'reset_password', reset_password_token: req.session.reset_password_token
 
-@loginWithTrustToken = (req, res, next) ->
-  request.post(API_URL + '/oauth2/access_token').send(
-    grant_type: 'trust_token'
-    client_id: ARTSY_ID
-    client_secret: ARTSY_SECRET
-    code: req.query['token']
-  )
-  .on('error', next)
-  .end (err, response) ->
-    # Delete all connect cookies - we have some under artsy.net and others under .artsy.net.
-    res.clearCookie 'connect.sess'
-    req.login new CurrentUser(accessToken: response?.body.access_token), ->
-      next()
-
 @twitterLastStep = (req, res) ->
   res.render 'twitter_email'
 

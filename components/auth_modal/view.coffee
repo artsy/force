@@ -106,6 +106,7 @@ module.exports = class AuthModalView extends ModalView
     analytics.track.funnel successEvent if successEvent
 
     @user.set (data = @serializeForm())
+
     @user[@state.get 'mode']
       success: @onSubmitSuccess
       error: (model, response, options) =>
