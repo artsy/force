@@ -145,16 +145,22 @@ module.exports = class ArticleView extends Backbone.View
 
   setupFooterArticles: ->
     if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
-      (related = new Articles).fetch
-        data:
-          tags: if @article.get('tags')?.length then @article.get('tags') else [null]
-          sort: '-published_at'
-          published: true
-        success: =>
-          safeRelated = _.union related.models, (new Articles sd.FOOTER_ARTICLES).models
-          $('.article-related-widget').html relatedTemplate
-            related: safeRelated.slice(0,3)
-            resize: resize
+      Q.allSettled(
+        (tagRelated = new Articles).fetch
+          data:
+            tags: if @article.get('tags')?.length then @article.get('tags') else [null]
+            sort: '-published_at'
+            published: true
+        (artistRelated = new Articles).fetch
+          data:
+            artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
+            sort: '-published_at'
+            published: true
+      ).done =>
+        safeRelated = _.union tagRelated.models, _.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models
+        $('.article-related-widget').html relatedTemplate
+          related: safeRelated.slice(0,3)
+          resize: resize
 
   addReadMore: =>
     blurb $(".article-container[data-id=#{@article.get('id')}]"), lineCount: 15, isArticle: true
