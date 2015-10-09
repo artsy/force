@@ -35,7 +35,7 @@ describe 'captureSignup', ->
     $.ajax.restore()
 
   it 'shows a FlashMessage', =>
-    @flashSpy.called.should.be.true
+    @flashSpy.called.should.be.true()
 
   it 'logs the user out after the flash message displays', =>
     $.ajax.args[0][0].type.should.eql 'DELETE'

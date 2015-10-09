@@ -45,6 +45,7 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
+trustTokenMiddleware = require './middleware/trust_token'
 
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
@@ -135,6 +136,7 @@ module.exports = (app) ->
   app.use proxyReflection
   app.use ensureSSL
   app.use ensureWWW
+  app.use trustTokenMiddleware
 
   # General helpers and express middleware
   app.use bucketAssets()
