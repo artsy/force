@@ -32,8 +32,18 @@
 .auction-preview-sidebar-email-placeholder
   height 120px
 
+.auction-preview-sidebar-email, .auction-preview-sidebar-email button, .auction-preview-register-button
+  margin-top 20px
+
+.auction-preview-sidebar-email label
+    avant-garde-size('s-headline', true)
+
 .auction-preview-clock
   margin 30px auto
+  text-align center
+
+  .clock .clock-header
+    text-align center
 
 .auction-description
   h3 // "Featuring works by"
@@ -42,17 +52,17 @@
     line-height 17pt
     avant-garde-size('body', true)
     text-transform uppercase
-    
+
   li // Featured artists list
     display inline-block
     float left
     width 214px
-    
+
     &:last-child
       margin-bottom 20px
-  
+
   p // Dodge the featured artists lists, but not the sidebar
-    clear left    
+    clear left
 
 .auction-preview-registration
   text-align center
