@@ -1,7 +1,8 @@
 .auction-preview-cover-image
   // 3:1 ratio
   padding-bottom 33.33%
-  margin-bottom 40px
+
+.auction-preview-header-primary
 
 .auction-preview-primary-metadata
   margin 30px 0 0 0
@@ -12,8 +13,56 @@
     padding-right 20px
     vertical-align top
 
+.auction-preview-sidebar
+  position relative
+  float right
+  top -180px
+  width 358px
+  padding 44px
+  margin-right 66px
+  background-color white
+
+.auction-preview-sidebar-label
+  garamond-size('s-headline')
+  margin-bottom 5px
+
+.auction-preview-sidebar-text
+  garamond-size('s-body')
+
+.auction-preview-sidebar-email-placeholder
+  height 120px
+
+.auction-preview-sidebar-email, .auction-preview-sidebar-email button, .auction-preview-register-button
+  margin-top 20px
+
+.auction-preview-sidebar-email label
+    avant-garde-size('s-headline', true)
+
 .auction-preview-clock
   margin 30px auto
+  text-align center
+
+  .clock .clock-header
+    text-align center
+
+.auction-description
+  h3 // "Featuring works by"
+    margin-bottom 10px
+    font-size 13pt
+    line-height 17pt
+    avant-garde-size('body', true)
+    text-transform uppercase
+
+  li // Featured artists list
+    display inline-block
+    float left
+    width 214px
+
+    &:last-child
+      margin-bottom 20px
+
+  p // Dodge the featured artists lists, but not the sidebar
+    clear left
 
 .auction-preview-registration
   text-align center

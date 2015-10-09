@@ -16,7 +16,37 @@ block body
       )
 
     header.auction-header
-      .auction-header-primary
+      .auction-preview-sidebar
+        if user
+          if user.get('registered_to_bid')
+            .auction-preview-sidebar-label
+              | You're registered to bid for this auction.
+            .auction-preview-sidebar-text
+              | You are now registered to bid at the #{auction.get('name')}.
+              br
+              br
+              | We will send you an email notification when the auction begins.
+          else
+            .auction-preview-sidebar-label
+              | Register to Bid
+            .auction-preview-sidebar-text
+              | To bid on artworks, please register to bid for the auction. You will be notified when the auction begins.
+            .auction-preview-register-button
+              a.avant-garde-button-black.is-block.js-register-button(
+                href= auction.registerUrl()
+              ) Register to bid
+        else
+          .auction-preview-sidebar-label
+            | Opening Soon
+          .auction-preview-sidebar-text
+            | Receive an email invitation when the auction begins on Artsy
+          .auction-preview-sidebar-email
+
+        //- Profile logo here
+        .auction-preview-clock.js-auction-clock( data-id= auction.id )
+          include ../../../../components/clock/template
+
+      .auction-preview-header-primary
         h1.auction-title
           = auction.get('name')
         .auction-description
@@ -25,16 +55,6 @@ block body
         .auction-preview-primary-metadata
           include ../metadata/event
           include ../metadata/contact
-
-      .auction-header-metadata
-        //- Profile logo here
-        .auction-preview-clock.js-auction-clock( data-id= auction.id )
-          include ../../../../components/clock/template
-
-    section.auction-preview-registration.auction-page-section
-      | Register now to be notified when the auction begins
-      .auction-preview-registration-button
-        include ../registration_button
 
     include ../associated_auction
 

@@ -5,10 +5,10 @@ CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
 SpecialistView = require '../../../components/contact/general_specialist.coffee'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 setupClocks = require './clocks.coffee'
+setupEmailRegistration = require './email_registration_flow.coffee'
 
 module.exports.init = ->
   feature = new Feature FEATURE
@@ -21,7 +21,13 @@ module.exports.init = ->
   if window.location.pathname.match('/confirm-registration') and USER?
     new ConfirmRegistrationModal paddleNumber: user.get('paddle_number')
 
-  new AuctionArtworksView el: $('.js-auction-artworks-section'), model: auction, collection: artworks, user: user
+  new AuctionArtworksView
+    el: $('.js-auction-artworks-section')
+    model: auction
+    collection: artworks
+    user: user
+
+  setupEmailRegistration(auction) unless user.id
 
   # Re-fetch due to cache
   saleArtworks = new SaleArtworks [], id: auction.id
