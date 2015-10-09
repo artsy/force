@@ -37,12 +37,6 @@ module.exports = class ArticleIndexView extends Backbone.View
           data: @params.toJSON()
           complete: => @$('#articles-show').removeClass 'is-loading'
 
-      # window.history.start
-      # $(".article-container").waypoint (direction) ->
-      #   window.history.pushState() if direction is 'up'
-        # console.log this
-        # window.history.pushState({},'/article/') if direction is 'down'
-
       $.onInfiniteScroll(@nextPage)
 
   render: (collection, response) =>
@@ -53,6 +47,8 @@ module.exports = class ArticleIndexView extends Backbone.View
         article: article
         sd: sd
         resize: resize
+      $(".article-container[data-id=#{article.get('id')}]").waypoint (direction) ->
+        window.history.pushState({}, article.get('id'), article.href()) if direction is 'down'
       feedArticle = new ArticleView
         el: $(".article-container[data-id=#{article.get('id')}]")
         article: article

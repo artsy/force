@@ -145,7 +145,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupFooterArticles: ->
     if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
-      Q.allSettled(
+      Q.allSettled([
         (tagRelated = new Articles).fetch
           data:
             tags: if @article.get('tags')?.length then @article.get('tags') else [null]
@@ -156,7 +156,7 @@ module.exports = class ArticleView extends Backbone.View
             artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
             sort: '-published_at'
             published: true
-      ).done =>
+      ]).then ->
         safeRelated = _.union tagRelated.models, _.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models
         $('.article-related-widget').html relatedTemplate
           related: safeRelated.slice(0,3)
