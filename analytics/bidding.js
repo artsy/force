@@ -7,6 +7,21 @@ $('.auction-artworks .aga-bid-button').each(function(i, el) {
   analytics.trackLink(el, 'Clicked “Bid” button on artwork item from auction feature page');
 });
 
+// "Notify me" was either clicked or the form was submitted
+analyticsHooks.on('auction:notify-me', function(data) {
+  analytics.track('Notify me form submitted on the auction registration page', data);
+});
+
+// Clicked "Register" in the Thank You / Auction modal
+$('.email-to-registration-transition-register').click(function() {
+  analytics.track('Clicked "Register" in the Thank You / Auction modal');
+});
+
+// Clicked "Skip" in the Thank You / Auction modal
+$('.email-to-registration-transition-skip').click(function() {
+  analytics.track('Clicked "Skip" in the Thank You / Auction modal');
+});
+
 // Clicked “Register to bid” on the auction feature page
 analytics.trackLink($('.auction-header-register-button a')[0],
   'Clicked “Register to bid” on the auction feature page');
@@ -26,8 +41,8 @@ $('.registration-form-content .avant-garde-button-black').click(function() {
   });
 
   // Error placing your bid
-  $(document).one('ajaxError', function(e) {
-    analytics.track('Error placing your bid');
+  $(document).one('ajaxError', function(e, jqXHR, settings, error) {
+    analytics.track('Error placing your bid', jqXHR.responseText);
   });
 });
 

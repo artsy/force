@@ -1,11 +1,11 @@
 { MAILCHIMP_WELCOME_LIST_ID } = require('sharify').data
 EmailToRegistrationTransitionView = require './email_to_registration_transition.coffee'
 EmailView = require '../../../components/email/view.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 modalize = require '../../../components/modalize/index.coffee'
 
 module.exports = (auction) ->
-  console.log 'auctio', auction
   emailView = new EmailView
     el: $('.auction-preview-sidebar-email')
     listId: MAILCHIMP_WELCOME_LIST_ID
@@ -16,6 +16,7 @@ module.exports = (auction) ->
 
   emailView.result
   .then (emailAddress) ->
+    analyticsHooks.trigger 'auction:notify-me', { email: emailAddress }
     transitionView = new EmailToRegistrationTransitionView
     modal = modalize transitionView, dimensions: width: '400px'
     transitionView.on 'done', -> modal.close()
