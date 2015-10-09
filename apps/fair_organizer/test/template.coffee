@@ -66,4 +66,21 @@ describe 'Fair Organizer', ->
       @$template.html().should.not.containEql 'undefined'
       @$template.html().should.containEql 'Explore Armory Show Fair Organizer'
 
+describe 'Meta tags', ->
+  describe 'Profile', ->
+    before ->
+      @sd =
+        API_URL: "http://localhost:5000"
+        CURRENT_PATH: '/cool-profile/info'
+      @file = path.resolve __dirname, "../templates/meta.jade"
+      @profile = new Profile fabricate('profile')
+      @html = jade.render fs.readFileSync(@file).toString(),
+        sd: @sd
+        profile: @profile
 
+    it 'includes canonical url, twitter card, og tags, and title and respects current_path', ->
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{@sd.APP_URL}/cool-profile/info"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}/cool-profile/info"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@profile.metaTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@profile.metaDescription()}"
