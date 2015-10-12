@@ -116,12 +116,6 @@ describe 'BoothsView', ->
       @view.sort target: $ '<div data-sort="foo">'
       @view.params.get('sort').should.equal 'foo'
 
-  describe '#toggleBoothCount', ->
-
-    it 'hides the counts when in a section', ->
-      @view.params.set section: 'VISTA'
-      @view.$('.fair-booths-count-container').attr('style').should.containEql 'display: none'
-
   describe '#fetchShows', ->
 
     it 'ensures there is always artworks: true regardless of params', ->
