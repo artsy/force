@@ -4,7 +4,7 @@
 # be abstracted into modules under /lib.
 #
 
-{ PORT, NODE_ENV, RESTART_INTERVAL, API_URL, ARTSY_ID, ARTSY_SECRET,
+{ PORT, NODE_ENV, API_URL, ARTSY_ID, ARTSY_SECRET,
   ENABLE_NEWRELIC } = require "./config"
 artsyXapp = require 'artsy-xapp'
 require 'newrelic' if ENABLE_NEWRELIC and NODE_ENV in ['production','staging']
@@ -30,7 +30,4 @@ cache.setup ->
       process.send? "listening"
 
 # Crash if we can't get/refresh an xapp token
-artsyXapp.on 'error', process.exit
-
-# Reboot for memory leak (╥﹏╥)
-setTimeout process.exit, RESTART_INTERVAL
+artsyXapp.on 'error', (e) -> console.warn(e); process.exit(1)

@@ -46,6 +46,7 @@ describe 'NotificationsView', ->
   describe '#initialize', ->
 
     beforeEach ->
+      location.search = ''
       @view = new @NotificationsView el: $('body')
 
     it 'should create a filterState model with defaults', ->

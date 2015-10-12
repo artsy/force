@@ -30,7 +30,7 @@ describe 'Geo', ->
       _.isNull(Backbone.sync.args[0][2].headers).should.be.ok()
 
     it 'uses the browser geolocation API when high accuracy is requested', ->
-      benv.expose navigator: geolocation: getCurrentPosition: sinon.stub()
+      navigator.geolocation = getCurrentPosition: sinon.stub()
       Geo.locate(accuracy: 'high')
       navigator.geolocation.getCurrentPosition.called.should.be.ok()
 

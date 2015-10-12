@@ -72,7 +72,6 @@ module.exports =
   API_REQUEST_TIMEOUT: 5000
   POST_TO_ARTICLE_SLUGS: []
   CHECK_FOR_AUCTION_REMINDER: false
-  RESTART_INTERVAL: 1000 * 60 * 60
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly'
   STRIPE_PUBLISHABLE_KEY: null
   MAILCHIMP_KEY: null

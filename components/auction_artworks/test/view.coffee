@@ -9,34 +9,31 @@ Artworks = require '../../../collections/artworks'
 AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 describe 'AuctionArtworksView', ->
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      @$el = $ """
+        <section>
+          <a class='js-toggle-artworks-sort' href='#' data-mode='grid' data-sort='default'>Grid</a>
+          <a class='js-toggle-artworks-sort' href='#' data-mode='list' data-sort='name_asc'>Artists A–Z</a>
+          <div class='js-auction-artworks'></div>
+        </section>
+      """
+      @user = new Backbone.Model
+      @artworks = new Artworks [
+        fabricate 'artwork', id: 'z-z', artist: sortable_id: 'z-z'
+        fabricate 'artwork', id: 'a-a', artist: sortable_id: 'a-a'
+      ]
       done()
 
-  after ->
+  afterEach ->
     benv.teardown()
-
-  beforeEach ->
-    $('body').html """
-      <section>
-        <a class='js-toggle-artworks-sort' href='#' data-mode='grid' data-sort='default'>Grid</a>
-        <a class='js-toggle-artworks-sort' href='#' data-mode='list' data-sort='name_asc'>Artists A–Z</a>
-        <div class='js-auction-artworks'></div>
-      </section>
-    """
-
-    @user = new Backbone.Model
-    @artworks = new Artworks [
-      fabricate 'artwork', id: 'z-z', artist: sortable_id: 'z-z'
-      fabricate 'artwork', id: 'a-a', artist: sortable_id: 'a-a'
-    ]
 
   describe 'default auction', ->
     beforeEach ->
       @view = new AuctionArtworksView
-        el: $('section')
+        el: @$el
         model: @auction = new Auction fabricate 'sale', auction_state: 'open'
         collection: @artworks
         user: @user
@@ -84,7 +81,7 @@ describe 'AuctionArtworksView', ->
   describe 'auction promo', ->
     beforeEach ->
       @view = new AuctionArtworksView
-        el: $('section')
+        el: @$el
         model: @auction = new Auction fabricate 'sale', sale_type: 'auction promo'
         collection: @artworks
         user: @user

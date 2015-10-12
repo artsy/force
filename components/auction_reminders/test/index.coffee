@@ -9,29 +9,25 @@ setupAuctionReminder.__set__ 'AuctionReminderView',
   benv.requireWithJadeify require.resolve('../view'), ['template']
 
 describe 'setupAuctionReminder', ->
-  before (done) ->
+
+  beforeEach (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      sinon.stub Backbone, 'sync'
+        .yieldsTo 'success', [
+          fabricate 'sale', id: 'first', end_at: moment().add(1, 'hour').format()
+          fabricate 'sale', id: 'second', end_at: moment().add(1, 'hour').format()
+          fabricate 'sale', id: 'is-over-but-cached-and-being-returned', end_at: moment().subtract(1, 'hour').format()
+        ]
+      setupAuctionReminder()
       done()
-
-  after ->
-    benv.teardown()
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-      .yieldsTo 'success', [
-        fabricate 'sale', id: 'first', end_at: moment().add(1, 'hour').format()
-        fabricate 'sale', id: 'second', end_at: moment().add(1, 'hour').format()
-        fabricate 'sale', id: 'is-over-but-cached-and-being-returned', end_at: moment().subtract(1, 'hour').format()
-      ]
-
-    setupAuctionReminder()
 
   afterEach ->
     Backbone.sync.restore()
+    benv.teardown()
 
   it 'sets up the reminders', ->
     Backbone.sync.args[0][1].url

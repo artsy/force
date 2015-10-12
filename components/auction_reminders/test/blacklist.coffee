@@ -21,12 +21,17 @@ urls =
   ]
 
 describe 'blacklist', ->
-  afterEach ->
-    delete global['location']
+
+  before ->
+    @__location__ = global.location
+    global.location = {}
+
+  after ->
+    global.location = @__location__
 
   it 'blacklists routes that are forbidden', ->
     allTrue = urls.bad.map (pathname) ->
-      global['location'] = pathname: pathname
+      global.location.pathname = pathname
       [pathname, blacklist.check()]
 
     allTrue.should.eql [
