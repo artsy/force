@@ -24,7 +24,7 @@ module.exports = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    { @article, @gradient } = options
+    { @article, @gradient, @waypointUrls } = options
     new ShareView el: @$('.article-social')
     @sticky = new Sticky
     @renderSlideshow()
@@ -58,6 +58,7 @@ module.exports = class ArticleView extends Backbone.View
         Q.nfcall @fillwidth, $el
     ).done =>
       @addReadMore() if @gradient
+      @setupWaypointUrls() if @waypointUrls
 
   breakCaptions: ->
     @$('.article-section-image').each ->
@@ -164,3 +165,10 @@ module.exports = class ArticleView extends Backbone.View
 
   addReadMore: =>
     blurb $(".article-container[data-id=#{@article.get('id')}]"), lineCount: 15, isArticle: true
+
+  setupWaypointUrls: =>
+    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
+    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
+    , { offset: 'bottom-in-view' }

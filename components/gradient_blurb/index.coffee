@@ -36,3 +36,5 @@ module.exports = ($el, options = {}) ->
     $el
       .addClass 'is-expanded'
       .css 'max-height', height
+      .on 'transitionend', ->
+        $.waypoints 'refresh'

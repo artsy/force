@@ -42,17 +42,19 @@ module.exports = class ArticleIndexView extends Backbone.View
   render: (collection, response) =>
     articles = _.reject response.results, (a) => a.id is @article.id
     for article in articles
+      # Setup and append article template
       article = new Article article
       $("#articles-body-container").append articleTemplate
         article: article
         sd: sd
         resize: resize
-      $(".article-container[data-id=#{article.get('id')}]").waypoint (direction) ->
-        window.history.pushState({}, article.get('id'), article.href()) if direction is 'down'
+
+      # Initialize client
       feedArticle = new ArticleView
         el: $(".article-container[data-id=#{article.get('id')}]")
         article: article
         gradient: true
+        waypointUrls: true
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 10) or 0
