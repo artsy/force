@@ -156,9 +156,9 @@ module.exports = class ArticleView extends Backbone.View
             artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
             sort: '-published_at'
             published: true
-      ]).then ->
-        safeRelated = _.union tagRelated.models, _.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models
-        $('.article-related-widget').html relatedTemplate
+      ]).then =>
+        safeRelated = _.reject((_.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models, tagRelated.model), (a) => a.get('id') is @article.get('id') )
+        $(".article-related-widget[data-id=#{@article.get('id')}]").html relatedTemplate
           related: safeRelated.slice(0,3)
           resize: resize
 

@@ -78,5 +78,5 @@ mixin image(image)
       h2.article-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'))
 
-.article-related-widget.articles-featured-section-articles
+.articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
   //- Rendered on client
