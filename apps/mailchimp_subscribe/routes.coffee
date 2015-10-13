@@ -14,4 +14,4 @@ request = require 'superagent'
       if (response.ok)
         res.send req.body
       else
-        res.send(response.status, response.body.error)
+        res.send(response.status, error: response.body.error)

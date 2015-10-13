@@ -4,6 +4,7 @@ template = -> require('./template.jade') arguments...
 Q = require 'bluebird-q'
 { APP_URL } = require('sharify').data
 Mailcheck = require '../mailcheck/index.coffee'
+Form = require '../form/index.coffee'
 
 module.exports = class EmailView extends Backbone.View
   deferred = Q.defer()
@@ -23,15 +24,16 @@ module.exports = class EmailView extends Backbone.View
       buttonText: @buttonText
       autofocus: @autofocus
 
-  submit: ->
-    emailAddress = @$('input[name=email]').val()
-    subscribePromise = $.post "#{APP_URL}/mailchimp_subscribe",
+  submit: (e) ->
+    model = new Backbone.Model
       listId: @listId
       mergeVars: @mergeVars
-      email: @$('input[name=email]').val()
 
-    subscribePromise.then ->
-      deferred.resolve emailAddress
-    , deferred.reject
+    model.url = "#{APP_URL}/mailchimp_subscribe"
+
+    form = new Form model: model, $form: @$('form')
+    form.submit e,
+      success: =>
+        deferred.resolve form.data()['email']
 
     false

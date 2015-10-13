@@ -38,6 +38,6 @@ module.exports = (auction) ->
       redirectTo: if willRegister then auction.registerUrl() else '/personalize'
       userData:
         email: emailAddress
-  .catch (err)->
+  .catch (err, response)->
     window.location.reload()
   .done()
