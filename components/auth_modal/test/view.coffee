@@ -6,6 +6,16 @@ Backbone = require 'backbone'
 mediator = require '../../../lib/mediator'
 LoggedOutUser = require '../../../models/logged_out_user'
 rewire = require 'rewire'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+
+render = (templateName) ->
+  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
+  jade.compile(
+    fs.readFileSync(filename),
+    { filename: filename }
+  )
 
 describe 'AuthModalView', ->
   before (done) ->
@@ -116,3 +126,12 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       location.href.should.containEql '/personalize'
+
+    it 'sends a CSRF token', ->
+      @view.$el.html $ "<form>" + render('register')(
+        copy: new Backbone.Model
+        sd: CSRF_TOKEN: 'csrfoo'
+      ) + "</form>"
+      @view.state.set mode: 'register'
+      @view.submit $.Event('click')
+      Backbone.sync.args[1][1].toJSON()._csrf.should.equal 'csrfoo'
