@@ -51,8 +51,7 @@ module.exports = (id, bypass) ->
       # Send the inquiry immediately
       inquiry.send {},
         success: ->
-          # Do something...
-          # Like re-direct back to Microgravity
+          location.href = artwork.href()
         error: (model, response, options) ->
           openErrorFlash response
 
