@@ -17,13 +17,9 @@
 .fair-overview-below-top-container
   .fair-overview-below-top
     .container-left
-      a.large-section( href=profile.href() + "/for-you" )
-        if user
-          .large-section-heading Works for You
-          .large-section-subheading See works by artists you follow at the fair
-        else
-          .large-section-heading Personalize Your Experience
-          .large-section-subheading Sign up for Artsy to save works, follow artists and exhibitors.
+      .fair-follow
+        p Follow the fair for updates, exclusive content and personalized recommendations.
+        button.avant-garde-button-white.follow-button.no-touch( id='fair-follow-button', data-id= fair.get('default_profile_id') )
       if primarySets.where({ key: 'explore' })
         for set in primarySets.where({ key: 'explore' })
           for item in set.get('items').models.slice(0,2)

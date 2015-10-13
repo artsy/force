@@ -51,3 +51,14 @@ xdescribe 'ForYouView', ->
 
       view.$('.container-left .large-section-subheading').length.should.equal 1
       view.$('.container-left .large-section-subheading').text().should.containEql 'Pablo Picasso'
+
+
+    it 'syncs the following collection with the fair id', ->
+      view = new @OverviewView
+        el: @$el
+        fair: @fair
+        model: @model
+
+      syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
+      @view.setupFollowButtons()
+      syncFollowsSpy.args[0][0].should.containEql @fair.id

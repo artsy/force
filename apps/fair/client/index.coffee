@@ -12,6 +12,7 @@ FairBrowseView = require '../components/browse/view.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
 Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 { FavoritesView } = require '../../../components/favorites/client/favorites.coffee'
 { FollowsView } = require '../../../components/favorites/client/follows.coffee'
 scrollFrame = require 'scroll-frame'
@@ -33,6 +34,7 @@ module.exports.FairView = class FairView extends Backbone.View
 
   initialize: (options) ->
     @fair = options.fair
+    @user = options.user
     @setupSearch @model, @fair # via SearchBar mixin
     return if options.currentSection is 'browse'
     if @sectionHash[options.currentSection]
@@ -41,6 +43,7 @@ module.exports.FairView = class FairView extends Backbone.View
         model: @model
         fair: @fair
         el: el
+        user: @user
 
       if options.currentSection == 'follows' or options.currentSection == 'favorites'
         @fixFavoritesFollowingTabs @model
@@ -58,10 +61,12 @@ module.exports.FairView = class FairView extends Backbone.View
 
 module.exports.init = ->
   fair = new Fair sd.FAIR
+  user = CurrentUser.orNull()
   profile = new Profile sd.PROFILE
   new FairView
     model: profile
     fair: fair
+    user: user
     el: $('#fair-page')
     currentSection: sd.SECTION
 
