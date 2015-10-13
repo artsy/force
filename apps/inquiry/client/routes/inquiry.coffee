@@ -38,9 +38,9 @@ module.exports = (id, bypass) ->
   # To do: analytics
 
   state
-    # Log each step
     .on 'next', (step) ->
       logger.log step
+      window.scrollTo 0, 0
 
     # Abort by clicking 'nevermind'
     .on 'abort', ->
