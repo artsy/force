@@ -49,7 +49,6 @@
     "bluebird": "2.8.x",
     "bluebird-q": "*",
     "qs": "^2.4.1",
-    "raven": "*",
     "redis": "*",
     "referer-parser": "*",
     "serve-favicon": "*",
