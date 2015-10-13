@@ -5,6 +5,7 @@ Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
+moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 
 module.exports = class ArticleIndexView extends Backbone.View
@@ -25,36 +26,39 @@ module.exports = class ArticleIndexView extends Backbone.View
     new ArticleView
       el: $('body')
       article: @article
+      waypointUrls: true
 
     if sd.SCROLL_SHARE_ARTICLE.indexOf('infinite') >= 0
       @listenTo @collection, 'sync', @render
 
       @listenTo @params, 'change:offset', =>
-        @$('#articles-show').addClass 'is-loading'
+        $('#articles-show').addClass 'is-loading'
         @collection.fetch
           cache: true
           remove: false
           data: @params.toJSON()
-          complete: => @$('#articles-show').removeClass 'is-loading'
+          complete: => $('#articles-show').removeClass 'is-loading'
 
       $.onInfiniteScroll(@nextPage)
 
   render: (collection, response) =>
-    articles = _.reject response.results, (a) => a.id is @article.id
-    for article in articles
-      # Setup and append article template
-      article = new Article article
-      $("#articles-body-container").append articleTemplate
-        article: article
-        sd: sd
-        resize: resize
+    if response
+      articles = _.reject response.results, (a) => a.id is @article.id
+      for article in articles
+        # Setup and append article template
+        article = new Article article
+        $("#articles-body-container").append articleTemplate
+          article: article
+          sd: sd
+          resize: resize
+          moment: moment
 
-      # Initialize client
-      feedArticle = new ArticleView
-        el: $(".article-container[data-id=#{article.get('id')}]")
-        article: article
-        gradient: true
-        waypointUrls: true
+        # Initialize client
+        feedArticle = new ArticleView
+          el: $(".article-container[data-id=#{article.get('id')}]")
+          article: article
+          gradient: true
+          waypointUrls: true
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 10) or 0

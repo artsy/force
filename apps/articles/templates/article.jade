@@ -39,6 +39,9 @@ block body
     #articles-body-container
       include ../../../components/article/templates/index
 
+    if sd.SCROLL_SHARE_ARTICLE.indexOf("infinite") >= 0
+      #article-loading: .loading-spinner
+
   if sd.SCROLL_SHARE_ARTICLE.indexOf("static") >= 0
     //- Article footer content
     section#articles-footer

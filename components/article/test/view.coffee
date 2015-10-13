@@ -6,6 +6,7 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+sd = require('sharify').data
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
@@ -17,6 +18,7 @@ describe 'ArticleView', ->
       benv.expose $: benv.require 'jquery'
       $.fn.imagesLoaded = sinon.stub()
       Backbone.$ = $
+      sd.SCROLL_SHARE_ARTICLE = 'static_current'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../view')
         ['artworkItemTemplate', 'editTemplate']
@@ -40,7 +42,7 @@ describe 'ArticleView', ->
             }
         ]
         author: new Backbone.Model fabricate 'user'
-        sd: {}
+        sd: { SCROLL_SHARE_ARTICLE: 'static_current' }
         asset: (->)
         embedVideo: require('embed-video')
         moment: require('moment')

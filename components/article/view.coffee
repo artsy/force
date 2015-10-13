@@ -11,10 +11,10 @@ Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
-Sticky = require '../sticky/index.coffee'
 Q = require 'bluebird-q'
-{ resize } = require '../resizer/index.coffee'
+{ resize, crop } = require '../resizer/index.coffee'
 blurb = require '../gradient_blurb/index.coffee'
+Sticky = require '../sticky/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
@@ -32,7 +32,6 @@ module.exports = class ArticleView extends Backbone.View
     @breakCaptions()
     @checkEditable()
     @sizeVideo()
-    @setupStickyShare()
     @setupFooterArticles()
 
   renderSlideshow: =>
@@ -59,6 +58,7 @@ module.exports = class ArticleView extends Backbone.View
     ).done =>
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls
+      @setupStickyShare()
 
   breakCaptions: ->
     @$('.article-section-image').each ->
@@ -141,7 +141,7 @@ module.exports = class ArticleView extends Backbone.View
     resizeVideo()
 
   setupStickyShare: ->
-    if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current"
+    if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current" and @sticky
       @sticky.add $(".article-container[data-id=#{@article.get('id')}] .article-share-fixed")
 
   setupFooterArticles: ->
@@ -161,7 +161,9 @@ module.exports = class ArticleView extends Backbone.View
         safeRelated = _.reject((_.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models, tagRelated.model), (a) => a.get('id') is @article.get('id') )
         $(".article-related-widget[data-id=#{@article.get('id')}]").html relatedTemplate
           related: safeRelated.slice(0,3)
-          resize: resize
+          crop: crop
+    else
+      $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
 
   addReadMore: =>
     blurb $(".article-container[data-id=#{@article.get('id')}]"), lineCount: 15, isArticle: true
