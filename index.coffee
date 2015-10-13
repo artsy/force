@@ -4,9 +4,9 @@
 # be abstracted into modules under /lib.
 #
 
-{ PORT, NODE_ENV, API_URL, ARTSY_ID, ARTSY_SECRET, ENABLE_NEWRELIC } = require "./config"
+{ PORT, NODE_ENV, API_URL, ARTSY_ID, ARTSY_SECRET } = require "./config"
+require 'newrelic'
 artsyXapp = require 'artsy-xapp'
-require 'newrelic' if ENABLE_NEWRELIC and NODE_ENV in ['production','staging']
 
 express = require "express"
 setup = require "./lib/setup"
