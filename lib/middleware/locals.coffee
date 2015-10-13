@@ -11,6 +11,7 @@ moment = require 'moment'
 helpers = require '../template_helpers'
 templateModules = require '../template_modules'
 artsyXapp = require 'artsy-xapp'
+newrelic = require 'newrelic'
 
 module.exports = (req, res, next) ->
 
@@ -19,6 +20,7 @@ module.exports = (req, res, next) ->
   res.locals.moment = moment
   res.locals.helpers = helpers
   res.locals[key] = helper for key, helper of templateModules
+  res.locals.newrelicScript = try newrelic.getBrowserTimingHeader()
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')
