@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 ResultsView = require './views/results.coffee'
+device = require '../util/device.coffee'
 
 module.exports = class ResultsListView extends Backbone.View
   initialize: ({ @typeahead }) ->
@@ -22,10 +23,10 @@ module.exports = class ResultsListView extends Backbone.View
     @typeahead.selected = @collection.pluck 'id'
 
   render: ->
-    @$el.html [
-      @typeahead.render().$el
-      @results.render().$el
-    ]
+    send = if device.isPhoneLike() then 'unshift' else 'push'
+    $els = [@typeahead.render().$el]
+    $els[send] @results.render().$el
+    @$el.html $els
     this
 
   remove: ->
