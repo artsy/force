@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 form = require '../form/utilities.coffee'
 Engine = require './bloodhound.coffee'
 Match = require '../../collections/match.coffee'
+device = require '../util/device.coffee'
 templates =
   index: -> require('./templates/index.jade') arguments...
   empty: -> require('./templates/empty.jade') arguments...
@@ -14,6 +15,7 @@ module.exports = class AutocompleteView extends Backbone.View
 
   defaults:
     # UI settings
+    autoselect: true
     autofocus: false
     highlight: false
     hint: true
@@ -57,8 +59,11 @@ module.exports = class AutocompleteView extends Backbone.View
 
   doneLoading: ->
     @$el.attr 'data-state', 'done'
-    # Highlight the top result as selected
-    @$('.tt-suggestion:first').addClass 'tt-cursor'
+    @select() if @autoselect and not device.isPhoneLike()
+
+  select: (idx = 0) ->
+    $(@$('.tt-suggestion')[idx])
+      .addClass 'tt-cursor'
 
   parse: (response) ->
     if @path?
