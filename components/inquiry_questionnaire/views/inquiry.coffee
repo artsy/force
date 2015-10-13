@@ -2,13 +2,15 @@ Q = require 'bluebird-q'
 _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
+defaultMessage = require '../../contact/default_message.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
   template: (data) ->
     template _.extend data,
-      message: @inquiry.get('message')
+      message: @inquiry.get('message') or
+        defaultMessage @artwork, @artwork.related().partner
 
   __events__:
     'click button': 'serialize'
