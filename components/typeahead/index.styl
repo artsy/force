@@ -1,4 +1,4 @@
-@import '../stylus_lib'
+@require '../stylus_lib'
 
 suggestion-thumbnail-size = default-icon-font-size
 suggestion-height = suggestion-thumbnail-size + 20px
@@ -45,6 +45,8 @@ suggestion-height = suggestion-thumbnail-size + 20px
     //
 
   .tt-suggestion
+    display flex
+    align-items center
     cursor pointer
     &.is-empty
       cursor normal
@@ -69,7 +71,6 @@ suggestion-height = suggestion-thumbnail-size + 20px
 
 .typeahead-suggestion-thumbnail
 .typeahead-suggestion-name
-  display inline-block
   height suggestion-height
   line-height suggestion-thumbnail-size
   vertical-align middle
@@ -87,8 +88,14 @@ suggestion-height = suggestion-thumbnail-size + 20px
     height @width
 
 .typeahead-suggestion-name
+  flex 1
+  position relative
   padding 10px 10px 10px 0
-  // Calc width necessary for overflow ellipsis
-  width calc('100% - %s' % suggestion-height)
   overflow ellipsis
   white-space nowrap !important
+
+.typeahead-suggestion-affordance
+  margin-right 10px
+  display none
+  @media (max-width: 768px)
+    display inherit

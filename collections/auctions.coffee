@@ -21,7 +21,11 @@ module.exports = class Auctions extends Sales
     .select (auction) ->
       auction.isAuction() and auction.isOpen()
     .sortBy (auction) ->
-      -(Date.parse auction.get('end_at'))
+      # hardcode sotheby's auction to appear at the top
+      if auction.id in ['input-output', 'input-slash-output']
+        return -1000000000000000000000
+      else
+        -(Date.parse auction.get('end_at'))
     .value()
 
   closeds: ->

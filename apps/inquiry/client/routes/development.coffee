@@ -1,14 +1,14 @@
 _ = require 'underscore'
 { ARTWORK } = require('sharify').data
-User = require '../../models/user.coffee'
-Artwork = require '../../models/artwork.coffee'
-ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
-AuthModalView = require '../../components/auth_modal/view.coffee'
-EmbeddedInquiryView = require '../../components/embedded_inquiry/view.coffee'
-openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
-Logger = require '../../components/logger/index.coffee'
+User = require '../../../../models/user.coffee'
+Artwork = require '../../../../models/artwork.coffee'
+ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
+AuthModalView = require '../../../../components/auth_modal/view.coffee'
+EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
+openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
+Logger = require '../../../../components/logger/index.coffee'
 
-module.exports.init = ->
+module.exports = ->
   logger = new Logger 'inquiry-questionnaire-log'
 
   $('.js-unlog').change (e) ->

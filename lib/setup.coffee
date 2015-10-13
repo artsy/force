@@ -36,7 +36,6 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
-raven = require 'raven'
 artsyXapp = require 'artsy-xapp'
 fs = require 'fs'
 artsyError = require 'artsy-error-handler'
@@ -45,8 +44,7 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
-trustTokenMiddleware = require './middleware/trust_token'
-
+newrelic = require 'newrelic'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
 
@@ -114,7 +112,7 @@ module.exports = (app) ->
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     signupRedirect: '/personalize'
-    SECURE_ARTSY_URL: API_URL
+    ARTSY_URL: API_URL
     XAPP_TOKEN: artsyXapp.token
 
   # Static file middleware above apps & redirects to ensure we don't try to
@@ -136,7 +134,6 @@ module.exports = (app) ->
   app.use proxyReflection
   app.use ensureSSL
   app.use ensureWWW
-  app.use trustTokenMiddleware
 
   # General helpers and express middleware
   app.use bucketAssets()
@@ -169,7 +166,6 @@ module.exports = (app) ->
   app.use require "../apps/browse"
   app.use require "../apps/categories"
   app.use require "../apps/contact"
-  app.use require "../apps/dev"
   app.use require "../apps/how_auctions_work"
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
@@ -217,14 +213,12 @@ module.exports = (app) ->
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
 
-  if SENTRY_DSN
-    client = new raven.Client SENTRY_DSN, {
-      stackFunction: Error.prepareStackTrace
-    }
-    app.use raven.middleware.express(client)
-    client.patchGlobal ->
-      console.log('Uncaught Exception. Process exited by raven.patchGlobal.')
-      process.exit(1)
+  # Log uncaught exceptions
+  process.on 'uncaughtException', (err) ->
+    console.warn "Uncaught exception, process exited."
+    console.warn err.stack
+    newrelic.noticeError err
+    process.exit 1
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.

@@ -1,5 +1,5 @@
-@import '../../stylus_lib'
-@import '../../typeahead'
+@require '../../stylus_lib'
+@require '../../typeahead'
 @require '../../results_list'
 
 .stacked-form
@@ -81,6 +81,7 @@ bordered-input-placeholder()
   placeholder(bordered-input-placeholder)
   &:focus
   &:active
+  &.is-active
     border-color purple-color
     outline none
     transition border-color 0.5s

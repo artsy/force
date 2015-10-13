@@ -32,6 +32,6 @@ describe 'FilterRouter', ->
   describe '#artworks', ->
 
     it 'sets the filter params', ->
-      global.location = search: "?foo=bar"
+      global.location.search = "?foo=bar"
       @router.artworks()
       @router.params.get('foo').should.equal 'bar'

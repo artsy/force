@@ -19,8 +19,7 @@ form.iq-form.stacked-form
   )
     = user.related().collectorProfile.get('institutional_affiliations')
 
-  .iq-sticky-bottom
-    button.avant-garde-button-black.is-block.iq-next( type='submit' ) Next
+  button.avant-garde-button-black.is-block.iq-next( type='submit' ) Next
 
-    if artwork.related().partner.get('pre_qualify')
-      include ./partials/nevermind
+  if artwork.related().partner.get('pre_qualify')
+    include ./partials/nevermind
