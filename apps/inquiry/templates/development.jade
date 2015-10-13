@@ -1,7 +1,7 @@
-extends ../../components/main_layout/templates/blank
+extends ../../../components/main_layout/templates/blank
 
 append locals
-  - assetPackage = 'dev'
+  - assetPackage = 'inquiry'
 
 block body
   if NODE_ENV === 'development' || NODE_ENV === 'staging'
@@ -23,7 +23,6 @@ block body
       hr
 
       .grid-3-up
-
         .grid-item: a.avant-garde-button.js-reset-logged
           | Reset Logger
 
@@ -50,12 +49,12 @@ block body
           strong With pre-qualification turned on
           hr
           .debug-embedded-inquiry-form.js-embedded-inquiry-form-prequalified-container
-            include ../../components/embedded_inquiry/templates/index
+            include ../../../components/embedded_inquiry/templates/index
 
         .grid-item
           strong Default
           hr
           .debug-embedded-inquiry-form.js-embedded-inquiry-form-container
-            include ../../components/embedded_inquiry/templates/index
+            include ../../../components/embedded_inquiry/templates/index
 
       hr.is-invisible

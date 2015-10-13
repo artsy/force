@@ -25,6 +25,7 @@ redirects =
   '/lama': '/auction/los-angeles-modern-auctions-march-2015' # HACK: Redirect the "auction" profile to the LAMA auction
   '/home/featured_works': '/tag/apple/artworks'
   '/home/featured%20works': '/tag/apple/artworks'
+  '/dev': '/inquiry/development'
 
 for from, path of redirects
   router.get from, to(path)

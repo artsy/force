@@ -1,5 +1,5 @@
 if suggestion.isWithImages()
-  span.typeahead-suggestion-thumbnail
+  .typeahead-suggestion-thumbnail
     span: img(
       src= suggestion.cropUrlFor({ width: 32, height: 32 })
       width='32'
@@ -7,5 +7,9 @@ if suggestion.isWithImages()
       onerror='this.style.display="none";'
     )
 
-span.typeahead-suggestion-name
+.typeahead-suggestion-name
   = suggestion.get('name')
+
+.typeahead-suggestion-affordance
+  .avant-garde-button-black.is-tiny
+    | Add

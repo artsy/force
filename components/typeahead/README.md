@@ -49,6 +49,9 @@ TypeaheadView = require '../../components/typeahead/view.coffee'
 # Autofocus input
 autofocus: false
 
+# Autoselect first result
+autoselect: true # Always `false` on touch devices
+
 # Whether or not the typed text should be bolded on the results drop down
 highlight: false
 

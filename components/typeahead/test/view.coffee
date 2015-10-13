@@ -31,6 +31,7 @@ describe 'TypeaheadView', ->
       @view.options.should.eql
         placeholder: 'Search Foobars...'
         autofocus: false
+        autoselect: true
         headers: {}
         highlight: false
         hint: true

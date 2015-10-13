@@ -7,6 +7,9 @@ module.exports =
   isTouchDevice: ->
     'ontouchstart' of window or 'onmsgesturechange' of window
 
+  isPhoneLike: ->
+    @isTouchDevice() and not @isIPad()
+
   autofocus: ->
     if @isTouchDevice() then undefined else true
 
