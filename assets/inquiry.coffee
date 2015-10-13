@@ -1,2 +1,2 @@
 require('backbone').$ = $
-$ require('../apps/inquiry/client/index.coffee').init
+$ require('../apps/inquiry/client/index.coffee')
