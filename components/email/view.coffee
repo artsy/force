@@ -35,6 +35,5 @@ module.exports = class EmailView extends Backbone.View
     form.submit e,
       success: =>
         deferred.resolve form.data()['email']
-      error: deferred.reject
 
     false

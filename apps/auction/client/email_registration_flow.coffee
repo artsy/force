@@ -39,6 +39,5 @@ module.exports = (auction) ->
       userData:
         email: emailAddress
   .catch (err, response)->
-    console.error err, response
-    # window.location.reload()
+    window.location.reload()
   .done()
