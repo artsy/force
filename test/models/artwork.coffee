@@ -303,11 +303,11 @@ describe 'Artwork', ->
       @artwork.get('partner').default_profile_id = 'profile-id'
       @artwork.partnerLink().should.equal '/profile-id'
 
-    it "partner website if profile and profile is private", ->
+    it "doesn't render an external website", ->
       @artwork.get('partner').default_profile_public = false
       @artwork.get('partner').default_profile_id = 'profile-id'
       @artwork.get('partner').website = 'mah-website.com'
-      @artwork.partnerLink().should.equal 'mah-website.com'
+      should.strictEqual(undefined, @artwork.partnerLink())
 
     it "partner website if profile and profile is private", ->
       @artwork.get('partner').type = 'Auction'
