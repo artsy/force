@@ -41,7 +41,7 @@ describe 'ArticleIndexView', ->
       done()
 
   after ->
-    benv.teardown(false)
+    benv.teardown()
     Backbone.sync.restore()
 
   describe '#initialize static articles', ->

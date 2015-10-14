@@ -44,6 +44,7 @@ module.exports = class ArticleIndexView extends Backbone.View
   render: (collection, response) =>
     if response
       articles = _.reject response.results, (a) => a.id is @article.id
+
       for article in articles
         # Setup and append article template
         article = new Article article

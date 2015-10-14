@@ -12,7 +12,7 @@ ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
 Q = require 'bluebird-q'
-{ resize, crop } = require '../resizer/index.coffee'
+{ crop } = require '../resizer/index.coffee'
 blurb = require '../gradient_blurb/index.coffee'
 Sticky = require '../sticky/index.coffee'
 artworkItemTemplate = -> require(
@@ -29,10 +29,11 @@ module.exports = class ArticleView extends Backbone.View
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks()
-    @breakCaptions()
     @checkEditable()
+    @breakCaptions()
     @sizeVideo()
     @setupFooterArticles()
+    @setupStickyShare()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -58,7 +59,7 @@ module.exports = class ArticleView extends Backbone.View
     ).done =>
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls
-      @setupStickyShare()
+      @sticky.rebuild()
 
   breakCaptions: ->
     @$('.article-section-image').each ->
@@ -142,7 +143,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupStickyShare: ->
     if sd.SHARE_ARTICLE isnt "current"
-      @sticky.add $(".article-container[data-id=#{@article.get('id')}] .article-share-fixed")
+      @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: ->
     if sd.SCROLL_ARTICLE is 'infinite'
@@ -166,7 +167,7 @@ module.exports = class ArticleView extends Backbone.View
       $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
 
   addReadMore: =>
-    blurb $(".article-container[data-id=#{@article.get('id')}]"), lineCount: 15, isArticle: true
+    blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), isArticle: true
 
   setupWaypointUrls: =>
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
