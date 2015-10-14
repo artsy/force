@@ -23,14 +23,14 @@ describe 'StateView', ->
       sinon.stub view::, 'render', -> this
       sinon.stub view::, 'remove'
 
-    @state = new State
-      steps: ['first', 'second', 'third']
+    @state = new State steps: ['first', 'second', 'noview', 'third']
+
+    @stateView = new StateView
+      state: @state
       views:
         first: FirstView
         second: SecondView
         third: ThirdView
-
-    @stateView = new StateView state: @state
 
   afterEach ->
     for view in @views
@@ -50,6 +50,12 @@ describe 'StateView', ->
     @FirstView::remove.called.should.be.true()
     @SecondView::remove.called.should.be.false()
     @SecondView::render.called.should.be.true()
+
+    # It also works on steps without views
+    @state.on 'next', (step) =>
+      if step is 'noview'
+        step.should.equal 'noview'
+        @state.next()
 
     @state.next()
 
