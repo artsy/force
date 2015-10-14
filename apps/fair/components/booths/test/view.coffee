@@ -67,18 +67,6 @@ describe 'BoothsView', ->
       }]
       @view.$el.html().should.containEql 'FOCUS'
 
-  describe '#renderHeader', ->
-
-    it 'renders the header', ->
-      @view.params.set section: 'FOCUS'
-      @view.renderHeader()
-      @view.$el.html().should.containEql 'Exhibitors at FOCUS'
-
-    it 'renders the artist state header', ->
-      @view.params.set artist: 'andy-foobar'
-      @view.renderHeader()
-      @view.$el.html().should.containEql 'Andy Foobar'
-
   describe '#renderShows', ->
 
     it 'adds a feed view', ->
