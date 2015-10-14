@@ -8,12 +8,12 @@ analytics.page({path: location.pathname});
 
 // Track 15 second bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 15 seconds', { category: '15 Seconds' });
+  analytics.track('time on page more than 15 seconds', { category: '15 Seconds', scroll: sd.SCROLL_ARTICLE, share: sd.SHARE_ARTICLE, message: sd.CURRENT_PATH });
 }, 15000);
 
 // Track 3 Minute bounce rate
 setTimeout(function() {
-  analytics.track('time on page more than 3 minutes', { category: '3 Minutes' });
+  analytics.track('time on page more than 3 minutes', { category: '3 Minutes', scroll: sd.SCROLL_ARTICLE, share: sd.SHARE_ARTICLE, message: sd.CURRENT_PATH });
 }, 180000);
 
 // debug tracking calls in development

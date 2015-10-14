@@ -141,11 +141,11 @@ module.exports = class ArticleView extends Backbone.View
     resizeVideo()
 
   setupStickyShare: ->
-    if sd.SCROLL_SHARE_ARTICLE isnt "static_current" and sd.SCROLL_SHARE_ARTICLE isnt "infinite_current" and @sticky
+    if sd.SHARE_ARTICLE isnt "current"
       @sticky.add $(".article-container[data-id=#{@article.get('id')}] .article-share-fixed")
 
   setupFooterArticles: ->
-    if sd.SCROLL_SHARE_ARTICLE.indexOf("static") < 0
+    if sd.SCROLL_ARTICLE is 'infinite'
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data:

@@ -33,7 +33,9 @@ describe 'article show template', ->
       footerArticles: new Articles
       crop: (url) -> url
       moment: moment
-      sd: { SCROLL_SHARE_ARTICLE: 'static_fixed' }
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'fixed'
       asset: ->
     html.should.containEql 'article-share-fixed'
     html.should.not.containEql 'article-social'
@@ -44,7 +46,9 @@ describe 'article show template', ->
       footerArticles: new Articles
       crop: (url) -> url
       moment: moment
-      sd: { SCROLL_SHARE_ARTICLE: 'static_current_fixed' }
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current_fixed'
       asset: ->
     html.should.containEql 'article-share-fixed'
     html.should.containEql 'article-social'
@@ -55,7 +59,9 @@ describe 'article show template', ->
       footerArticles: new Articles
       crop: (url) -> url
       moment: moment
-      sd: { SCROLL_SHARE_ARTICLE: 'static_current' }
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current'
       asset: ->
     html.should.not.containEql 'article-share-fixed'
     html.should.containEql 'article-social'

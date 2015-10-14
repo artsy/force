@@ -28,7 +28,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       article: @article
       waypointUrls: true
 
-    if sd.SCROLL_SHARE_ARTICLE.indexOf('infinite') >= 0
+    if sd.SCROLL_ARTICLE is 'infinite'
       @listenTo @collection, 'sync', @render
 
       @listenTo @params, 'change:offset', =>

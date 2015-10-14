@@ -61,7 +61,9 @@ describe 'article template', ->
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
-      sd: { SCROLL_SHARE_ARTICLE: 'static_current' }
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current'
       asset: ->
     html.should.containEql 'This is a footer article'
 
@@ -71,7 +73,9 @@ describe 'article template', ->
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
-      sd: { SCROLL_SHARE_ARTICLE: 'static_current' }
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current'
       asset: ->
       section: new Section _.extend _.clone(fixtures.section), title: 'Moo Bar'
       allSectionArticles: new Articles([_.extend(fixtures.article, tier: 1)])

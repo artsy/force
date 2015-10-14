@@ -22,13 +22,16 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  scroll_share_article:
-    key: 'scroll_share_article'
+  share_article:
+    key: 'share_article'
     outcomes:
-      static_current: 0.16
-      static_current_fixed: 0.17
-      static_fixed: 0.17
-      infinite_current: 0.16
-      infinite_current_fixed: 0.17
-      infinite_fixed: 0.17
+      current: 0.33
+      current_fixed: 0.33
+      fixed: 0.34
+
+  scroll_article:
+    key: 'scroll_article'
+    outcomes:
+      infinite: 0.5
+      static: 0.5
 

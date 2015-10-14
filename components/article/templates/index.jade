@@ -20,7 +20,7 @@ mixin image(image)
 
 .article-container(data-id=article.get('id'))
   //- Article Share Fixed Nav -- Solo
-  if sd.SCROLL_SHARE_ARTICLE === "static_fixed" || sd.SCROLL_SHARE_ARTICLE === "infinite_fixed"
+  if sd.SHARE_ARTICLE === "fixed"
     .article-share-fixed
       +share-fixed(article.get('title'),article.get('thumbnail_image'))
   //- Article lead content
@@ -42,7 +42,7 @@ mixin image(image)
     include ../../article_figure/contributing_author.jade
   .article-date
     = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-  if sd.SCROLL_SHARE_ARTICLE !== "static_fixed" && sd.SCROLL_SHARE_ARTICLE !== "infinite_fixed"
+  if sd.SHARE_ARTICLE !== "fixed"
     .article-social
       +share(article.get('title'), article.get('thumbnail_image'))
 
@@ -51,7 +51,7 @@ mixin image(image)
     .article-carousel
       include carousel
   //- Article Share Fixed Nav -- Mixed
-  if sd.SCROLL_SHARE_ARTICLE === "static_current_fixed" || sd.SCROLL_SHARE_ARTICLE === "infinite_current_fixed"
+  if sd.SHARE_ARTICLE === "current_fixed"
     .article-share-fixed(data-path=sd.CURRENT_PATH)
       +share-fixed(article.get('title'),article.get('thumbnail_image'))
   for section, i in article.get('sections')
@@ -72,7 +72,7 @@ mixin image(image)
           .article-section-video
             +video(section)
 
-  if sd.SCROLL_SHARE_ARTICLE !== "static_fixed" && sd.SCROLL_SHARE_ARTICLE !== "infinite_fixed"
+  if sd.SHARE_ARTICLE !== "fixed"
     //- Footer social buttons
     .article-social.add-bottom
       h2.article-social__header Share this article
