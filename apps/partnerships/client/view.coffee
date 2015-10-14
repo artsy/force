@@ -18,8 +18,11 @@ module.exports = class PartnershipsView extends Backbone.View
     @setupLiaisonsFading()
 
   intercept: (e) ->
-    e.preventDefault()
-    Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
+    if $(e.currentTarget).attr('href') != '/apply/institution'
+      e.preventDefault()
+      Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
+      if $(e.currentTarget).hasClass('partnerships-nav-apply-link')
+        $('#apply-name-field').focus()
 
   cacheSelectors: ->
     @$nav = @$ '.partnerships-section-nav'
