@@ -44,7 +44,6 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
-newrelic = require 'newrelic'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
 
@@ -212,13 +211,6 @@ module.exports = (app) ->
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
-
-  # Log uncaught exceptions
-  process.on 'uncaughtException', (err) ->
-    console.warn "Uncaught exception, process exited."
-    console.warn err.stack
-    newrelic.noticeError err
-    process.exit 1
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
