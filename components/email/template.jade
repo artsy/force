@@ -1,8 +1,8 @@
 form.email-form
-  .email-errors
   label( for='email' ) Email
   input.bordered-input.is-block#js-email-view-input(
     name='email', type='email', value= email, required, autofocus= autofocus
   )
   #js-email-view-hint
+  .form-errors.js-form-errors
   button.avant-garde-button-black.is-block= buttonText
