@@ -9,6 +9,10 @@ module.exports = class State extends Backbone.Model
     views: null
     decisions: null
 
+  initialize: (attributes, options = {}) ->
+    @inject state: this
+    super
+
   current: ->
     return unless @has('steps') and _.isArray(@get 'steps')
 

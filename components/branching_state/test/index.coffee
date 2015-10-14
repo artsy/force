@@ -3,6 +3,24 @@ Backbone = require 'backbone'
 State = require '../index'
 
 describe 'State', ->
+  describe 'context', ->
+    it 'always includes a reference to itself', ->
+      state = new State
+      state.context.state.should.equal state
+
+    describe '#inject', ->
+      it 'lets you inject additions to the context at any point', ->
+        state = new State
+        state.inject foo: 'bar', bar: baz: 'foo'
+        state.inject baz: 'qux'
+        Object.keys state.context
+          .should.eql [
+            'state', 'foo', 'bar', 'baz'
+          ]
+        state.context.foo.should.equal 'bar'
+        state.context.bar.should.eql baz: 'foo'
+        state.context.baz.should.equal 'qux'
+
   describe 'single path', ->
     beforeEach ->
       @state = new State steps: [

@@ -39,7 +39,6 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
     modal: modal.view
     collectorProfile: collectorProfile
     userInterests: userInterests
-    state: state
 
   # Attach/teardown analytics events
   analytics.attach state.context
