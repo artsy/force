@@ -5,14 +5,14 @@
 #
 
 { PORT, NODE_ENV, API_URL, ARTSY_ID, ARTSY_SECRET } = require "./config"
-require 'newrelic'
+newrelic = require 'artsy-newrelic'
 artsyXapp = require 'artsy-xapp'
-
 express = require "express"
 setup = require "./lib/setup"
 cache = require './lib/cache'
 
 app = module.exports = express()
+app.use newrelic
 app.set 'view engine', 'jade'
 
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
