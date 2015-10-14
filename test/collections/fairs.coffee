@@ -55,4 +55,4 @@ describe 'Fairs', ->
       ])
 
       pastFairs = fairs.pastYearRoundFairs()
-      pastFairs.length.should.eql 2
+      pastFairs.length.should.eql 1
