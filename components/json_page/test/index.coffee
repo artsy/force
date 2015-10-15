@@ -63,6 +63,7 @@ describe 'JSONPage', ->
           .catch (err) ->
             err.message.should.equal 'cannot GET /json/wrong.json (403)'
             done()
+          .done()
 
   describe '#set', ->
     beforeEach ->
