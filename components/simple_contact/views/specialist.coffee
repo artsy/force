@@ -17,4 +17,5 @@ module.exports = class SpecialistView extends ContactView
     @$el.html @template
       user: @user
       representative: @representatives.first()
+    @autofocus()
     this

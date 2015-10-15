@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 Form = require '../../form/index.coffee'
+form = require '../../form/utilities.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 
 module.exports = class ContactView extends Backbone.View
@@ -17,6 +18,10 @@ module.exports = class ContactView extends Backbone.View
     @form ?= new Form model: @model, $form: @$('form')
     @form.submit e
 
+  autofocus: ->
+    form.autofocus @$el, true
+
   render: ->
     @$el.html @template(user: @user)
+    @autofocus()
     this
