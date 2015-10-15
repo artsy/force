@@ -5,7 +5,7 @@ StateView = require '../branching_state/view.coffee'
 Logger = require '../logger/index.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
-map = require './map.coffee'
+{ steps, decisions, views } = require './map.coffee'
 
 module.exports = ({ user, artwork, inquiry, bypass }) ->
   { collectorProfile } = user.related()
@@ -15,17 +15,15 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
 
   # Allow us to trigger individual steps for debugging
   # by passing the named step as a `bypass` option
-  map = if bypass
-    _.extend {}, map, steps: [bypass]
-  else
-    map
+  steps = [bypass] if bypass
 
-  state = new State map
+  state = new State steps: steps, decisions: decisions
   logger = new Logger 'inquiry-questionnaire-log'
 
   questionnaire = new StateView
-    state: state
     className: 'inquiry-questionnaire'
+    state: state
+    views: views
 
   modal = modalize questionnaire,
     className: 'modalize inquiry-questionnaire-modal'
