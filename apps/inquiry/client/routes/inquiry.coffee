@@ -7,10 +7,10 @@ State = require '../../../../components/branching_state/index.coffee'
 StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
 Logger = require '../../../../components/logger/index.coffee'
-map = require '../map.coffee'
+{ steps, decisions, views } = require '../map.coffee'
 
 module.exports = (id, bypass) ->
-  map = _.extend {}, map, steps: [bypass] if bypass
+  steps = [bypass] if bypass
 
   $el = $('.js-embedded-inquiry')
 
@@ -23,7 +23,7 @@ module.exports = (id, bypass) ->
 
   user.approximateLocation()
 
-  state = new State map
+  state = new State steps: steps, decisions: decisions
   logger = new Logger 'inquiry-questionnaire-log'
 
   state.inject
@@ -56,8 +56,9 @@ module.exports = (id, bypass) ->
           openErrorFlash response
 
   questionnaire = new StateView
-    state: state
     className: 'inquiry-questionnaire'
+    state: state
+    views: views
 
   $el.html questionnaire.$el
 

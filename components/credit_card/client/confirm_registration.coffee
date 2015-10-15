@@ -20,4 +20,5 @@ module.exports = class ConfirmRegistration extends ModalView
     _.extend @templateData,
       artwork: @options.artwork
       paddleNumber: @options.paddleNumber
+      auction: @model
     super @options

@@ -67,8 +67,7 @@ module.exports = class Fairs extends Backbone.Collection
   # have a countdown to the preview
   pastYearRoundFairs: ->
     @filter (fair) ->
-      moment(fair.get('end_at')).isBefore(moment()) &&
-      fair.get('has_full_feature') && fair.representation?
+      fair.isOver() && fair.get('has_full_feature')
 
 
 
