@@ -53,18 +53,24 @@ state.next() # => 'something_else'
 state.next() # => 'end'
 ```
 
+# Driving view lifecycles
+
 ```coffeescript
 state = new State
   steps: ['first', 'second']
+
+# Inject some common data to be passed to each
+state.inject model: model
+
+stateView = new StateView
+  state: state
   views:
     first: require '../views/first.coffee'
     second: require '../views/second.coffee'
 
 state.current() # => 'first'
-# Construct FirstView
-state.view(model: @model)
+stateView.render().$el # => 'first view'
 
 state.next() # => 'second'
-# Construct SecondView
-state.view(model: @model)
+stateView.render().$el # => 'second view'
 ```

@@ -9,6 +9,10 @@ module.exports = class State extends Backbone.Model
     views: null
     decisions: null
 
+  initialize: (attributes, options = {}) ->
+    @inject state: this
+    super
+
   current: ->
     return unless @has('steps') and _.isArray(@get 'steps')
 
@@ -56,10 +60,3 @@ module.exports = class State extends Backbone.Model
 
   end: ->
     @get('steps').length - 1
-
-  view: ->
-    views = @get('views')
-    if (View = views[@current()])?
-      new View @context
-    else
-      console.error "view for #{@current()} is not defined"
