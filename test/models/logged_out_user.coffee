@@ -196,9 +196,7 @@ describe 'LoggedOutUser', ->
       Backbone.sync.restore()
 
     it 'creates or persists everything needed to make an inquiry', (done) ->
-      @user.prepareForInquiry()
-
-      _.partial(_.delay, _, 2) ->
+      @user.prepareForInquiry().then ->
         Backbone.sync.callCount.should.equal 3
 
         Backbone.sync.args[0][1].url()
@@ -209,3 +207,33 @@ describe 'LoggedOutUser', ->
           .should.containEql '/api/v1/me/user_fair_action'
 
         done()
+
+    describe 'on a UserFairAction error', ->
+      beforeEach ->
+        @user = new LoggedOutUser
+
+        @user.related()
+          .collectorProfile.related()
+            .userFairActions.attendFair fabricate 'fair'
+
+        Backbone.sync
+          .onCall 0
+            .returns Q.resolve()
+          .onCall 1
+            .returns Q.resolve()
+          .onCall 2
+            .returns Q.reject('Action already taken')
+
+      it 'creates or persists everything needed to make an inquiry', (done) ->
+        @user.prepareForInquiry()
+          .done ->
+            Backbone.sync.callCount.should.equal 3
+
+            Backbone.sync.args[0][1].url()
+              .should.containEql '/api/v1/me/anonymous_session'
+            Backbone.sync.args[1][1].url
+              .should.containEql '/api/v1/me/collector_profile'
+            Backbone.sync.args[2][1].url()
+              .should.containEql '/api/v1/me/user_fair_action'
+
+            done()

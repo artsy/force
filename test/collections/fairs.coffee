@@ -42,7 +42,10 @@ describe 'Fairs', ->
 
   describe '#pastYearRoundFairs', ->
     beforeEach ->
-      sinon.useFakeTimers()
+      @clock = sinon.useFakeTimers()
+
+    afterEach ->
+      @clock.restore()
 
     it 'should not display upcoming fairs', ->
       fairs = new Fairs([
