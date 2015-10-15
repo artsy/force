@@ -49,3 +49,11 @@ $('.registration-form-content .avant-garde-button-black').click(function() {
 // Showed ‘Confirm bid on artwork page’
 if (location.pathname.match(/artwork\/.*\/confirm-bid/))
   analytics.track("Showed 'Confirm bid on artwork page'", { nonInteraction: 1 });
+
+// Auction Page Pageview
+if (location.pathname.match(new RegExp('auction/.*')) &&
+   !location.pathname.match(new RegExp('auction/.*/'))) {
+  analytics.track("Auction Page Pageview", {
+    slug: sd.AUCTION.id, preview: sd.AUCTION.auction_state
+  });
+}
