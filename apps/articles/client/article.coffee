@@ -60,6 +60,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           article: article
           gradient: true
           waypointUrls: true
+          seenArticleIds: _.pluck articles, 'id'
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 10) or 0

@@ -36,6 +36,7 @@ describe 'ArticleIndexView', ->
         footerArticles: new Backbone.Collection
       }
       $.onInfiniteScroll = sinon.stub()
+      $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../client/article'), ['articleTemplate']
       done()

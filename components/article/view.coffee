@@ -24,7 +24,7 @@ module.exports = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    { @article, @gradient, @waypointUrls } = options
+    { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     @sticky = new Sticky
     @renderSlideshow()
@@ -145,7 +145,7 @@ module.exports = class ArticleView extends Backbone.View
     if sd.SHARE_ARTICLE isnt "current"
       @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
-  setupFooterArticles: ->
+  setupFooterArticles: =>
     if sd.SCROLL_ARTICLE is 'infinite'
       Q.allSettled([
         (tagRelated = new Articles).fetch
@@ -153,13 +153,20 @@ module.exports = class ArticleView extends Backbone.View
             tags: if @article.get('tags')?.length then @article.get('tags') else [null]
             sort: '-published_at'
             published: true
+            tier: 1
+            author_id: '503f86e462d56000020002cc'
         (artistRelated = new Articles).fetch
           data:
             artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
             sort: '-published_at'
             published: true
+            tier: 1
+            author_id: '503f86e462d56000020002cc'
       ]).then =>
-        safeRelated = _.reject((_.union artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models, tagRelated.model), (a) => a.get('id') is @article.get('id') )
+        safeRelated = _.reject((_.union tagRelated.models, artistRelated.models, (new Articles sd.FOOTER_ARTICLES).models), (a) => a.get('id') is @article.get('id') )
+        safeRelated = _.reject safeRelated, (a) => _.contains @seenArticleIds, a.get('id')
+
+
         $(".article-related-widget[data-id=#{@article.get('id')}]").html relatedTemplate
           related: safeRelated.slice(0,3)
           crop: crop
@@ -167,7 +174,21 @@ module.exports = class ArticleView extends Backbone.View
       $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
 
   addReadMore: =>
-    blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), isArticle: true
+    $el = $(".article-container[data-id=#{@article.get('id')}] .article-content")
+    imagesLoaded $el, =>
+      maxTextHeight = 405 # line-height * line-count
+      limit = 0
+      textHeight = 0
+
+      # Computes the height of the div where the blur should begin
+      # based on the line count excluding images and video
+      for section in $el.children()
+        if $(section).children().hasClass('article-section-text')
+          textHeight = textHeight + $(section).children().height()
+        if textHeight >= maxTextHeight
+          limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
+          blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), { limit: limit }
+          break
 
   setupWaypointUrls: =>
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>

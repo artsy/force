@@ -24,6 +24,7 @@ module.exports =
 
   share_article:
     key: 'share_article'
+    edge: 'current_fixed'
     outcomes:
       current: 0.33
       current_fixed: 0.33
@@ -31,7 +32,7 @@ module.exports =
 
   scroll_article:
     key: 'scroll_article'
+    edge: 'infinite'
     outcomes:
       infinite: 0.5
       static: 0.5
-
