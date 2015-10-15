@@ -14,12 +14,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports =
-
-  partner_application_copy:
-    key: 'partner_application_copy'
-    outcomes:
-      join: 0.5
-      apply: 0.5
-
-
+module.exports = {}
