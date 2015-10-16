@@ -1,0 +1,20 @@
+@require '../../stylus_lib'
+
+@keyframes alertable-input
+  100%
+    background-color transparent
+
+.alertable-input
+  &[data-alert]
+    background-color yellow-light-color
+    margin -10px
+    padding 10px
+    animation alertable-input 1s forwards
+    animation-delay 0.5s
+    &:after
+      display block
+      content attr(data-alert)
+      margin 10px 10px 0 10px
+    > input
+    > textarea
+      background-color white
