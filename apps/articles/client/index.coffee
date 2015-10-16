@@ -19,10 +19,10 @@ module.exports.init = ->
       email: sd.CURRENT_USER?.email or ''
     unless ctaBarView.previouslyDismissed()
       $('body').append ctaBarView.render().$el
-      $('.article-container').waypoint (direction) ->
+      $(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
       , { offset: -200 }
-      $('.article-container').waypoint (direction) ->
+      $(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) ->
         ctaBarView.transitionOut() if direction is 'down'
         ctaBarView.transitionIn() if direction is 'up'
       , { offset: 'bottom-in-view' }

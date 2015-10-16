@@ -18,52 +18,65 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
-.article-container
-  //- Article lead content
-  if article.get('hero_section') && article.get('hero_section').type === 'video'
-    if article.get('hero_section').cover_image_url
-    .article-large-format-video-container
-      +video(article.get('hero_section'))
-  if article.get('hero_section') && article.get('hero_section').type === 'image'
-    .article-large-format-image
-      +image(article.get('hero_section'))
-  h1.large-garamond-header= article.get('title')
-  if article.strip('lead_paragraph')
-    .article-lead-paragraph
-      != article.get('lead_paragraph')
-  .article-author
-    a( href="/#{article.related().author.get('profile_handle')}" )
-      = article.related().author.get('name')
-  .article-contributing-author
-    include ../../article_figure/contributing_author.jade
-  .article-date
-    = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-  .article-social
-    +share(article.get('title'), article.get('thumbnail_image'))
+.article-container(data-id=article.get('id'))
 
-  //- Article body content
-  if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
-    .article-carousel
-      include carousel
-  for section, i in article.get('sections')
-    .article-section-container
-      case section.type
-        when 'text'
-          .article-section-text!= section.body
-        when 'artworks'
-          .article-section-artworks.is-loading( data-layout=section.layout )
-            .loading-spinner
-            ul
-              for id in section.ids
-                li( data-id=id )
-        when 'image'
-          .article-section-image
-            +image(section)
-        when 'video'
-          .article-section-video
-            +video(section)
+  //- Article Share Fixed Nav
+  if sd.SHARE_ARTICLE !== "current"
+    .article-share-fixed(data-id=article.get('id'))
+      +share-fixed(article.get('title'),article.get('thumbnail_image'))
 
-  //- Footer social buttons
-  .article-social.add-bottom
-    h2.article-social__header Share this article
-    +share(article.get('title'), article.get('thumbnail_image'))
+  .article-content
+    //- Article lead content
+    if article.get('hero_section') && article.get('hero_section').type === 'video'
+      if article.get('hero_section').cover_image_url
+      .article-large-format-video-container
+        +video(article.get('hero_section'))
+    if article.get('hero_section') && article.get('hero_section').type === 'image'
+      .article-large-format-image
+        +image(article.get('hero_section'))
+    h1.large-garamond-header= article.get('title')
+    if article.strip('lead_paragraph')
+      .article-lead-paragraph
+        != article.get('lead_paragraph')
+    .article-author
+      a( href="/#{article.related().author.get('profile_handle')}" )
+        = article.related().author.get('name')
+    .article-contributing-author
+      include ../../article_figure/contributing_author.jade
+    .article-date
+      = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+    if sd.SHARE_ARTICLE !== "fixed"
+      .article-social
+        +share(article.get('title'), article.get('thumbnail_image'))
+
+
+    //- Article body content
+    if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
+      .article-carousel
+        include carousel
+    for section, i in article.get('sections')
+      .article-section-container
+        case section.type
+          when 'text'
+            .article-section-text!= section.body
+          when 'artworks'
+            .article-section-artworks.is-loading( data-layout=section.layout )
+              .loading-spinner
+              ul
+                for id in section.ids
+                  li( data-id=id )
+          when 'image'
+            .article-section-image
+              +image(section)
+          when 'video'
+            .article-section-video
+              +video(section)
+
+    if sd.SHARE_ARTICLE !== "fixed"
+      //- Footer social buttons
+      .article-social.add-bottom
+        h2.article-social__header Share this article
+        +share(article.get('title'), article.get('thumbnail_image'))
+
+.articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
+  //- Rendered on client
