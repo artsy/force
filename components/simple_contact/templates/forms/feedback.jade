@@ -23,8 +23,6 @@ form.scontact-form.stacked-form
     input( type='hidden', name='user_name', value= user.get('name') )
     input( type='hidden', name='user_email', value= user.get('email') )
 
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     //- Note these attribute names are different
     //- for the feedback endpoint vs inquiries (sigh)

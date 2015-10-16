@@ -22,6 +22,8 @@ module.exports = class ContactView extends Backbone.View
     form.autofocus @$el, true
 
   render: ->
-    @$el.html @template(user: @user)
+    @$el.html @template
+      user: @user
+      message: null
     @autofocus()
     this
