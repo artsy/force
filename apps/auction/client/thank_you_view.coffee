@@ -17,12 +17,10 @@ module.exports = class ThankYouView extends Backbone.View
     this
 
   register: ->
-    analyticsHooks.trigger 'auction:thank-you:register'
     @trigger('done')
     deferred.resolve(true)
 
   skip: ->
-    analyticsHooks.trigger 'auction:thank-you:register'
     @trigger('done')
     deferred.resolve(false)
 
