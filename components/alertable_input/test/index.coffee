@@ -49,3 +49,22 @@ describe 'alertable', ->
 
     xit 'unwraps (and dismisses) the alert when the input is subsequently focused', ->
       console.log 'JSDOM + focus/blur is annoying. It works, trust me.'
+
+  describe 'with submit button', ->
+    it 'alters the button label', ->
+      $input = $('input[name="email"]')
+        .val 'foobar@example.com'
+
+      $submit = $('button')
+
+      $submit.text().should.equal 'Submit'
+
+      alertable {
+        $input: $input
+        message: "Please change your email."
+        $submit: $submit
+        label: 'Are you sure?'
+      }, (value) ->
+        value is 'foobar@example.com'
+
+      $submit.text().should.equal 'Are you sure?'

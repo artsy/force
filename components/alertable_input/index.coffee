@@ -1,9 +1,13 @@
 module.exports = (options = {}, predicate) ->
-  { $input, message } = options
+  { $input, message, $submit, label } = options
 
   if predicate $input.val()
     $alertable = $('<div class="alertable-input"/>')
       .attr 'data-alert', message
+
+    if $submit? and label?
+      original = $submit.text()
+      $submit.text label
 
     $input
       .wrap $alertable
@@ -11,6 +15,9 @@ module.exports = (options = {}, predicate) ->
         $input
           .unwrap()
           .focus()
+
+        if original?
+          $submit.text original
 
     true
   else
