@@ -12,6 +12,7 @@ form.scontact-form.stacked-form.js-inquiry-form
 
   label.avant-garde-form-label( for='message' )
     | Your message
+
   textarea.bordered-input.is-block.js-inquiry-message(
     id='message'
     name='message'
@@ -25,8 +26,6 @@ form.scontact-form.stacked-form.js-inquiry-form
     input( type='hidden', name='name', value= user.get('name') )
     input( type='hidden', name='email', value= user.get('email') )
 
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     input.bordered-input(
       type='text'

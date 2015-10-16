@@ -23,8 +23,6 @@ form.scontact-form.stacked-form
     input( type='hidden', name='name', value= user.get('name') )
     input( type='hidden', name='email', value= user.get('email') )
 
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     input.bordered-input(
       type='text'
