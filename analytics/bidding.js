@@ -13,12 +13,12 @@ analyticsHooks.on('auction:notify-me', function(data) {
 });
 
 // Clicked "Register" in the Thank You / Auction modal
-$('.email-to-registration-transition-register').click(function() {
+analyticsHooks.on('auction:thank-you:register', function() {
   analytics.track('Clicked "Register" in the Thank You / Auction modal');
 });
 
 // Clicked "Skip" in the Thank You / Auction modal
-$('.email-to-registration-transition-skip').click(function() {
+analyticsHooks.on('auction:thank-you:skip', function() {
   analytics.track('Clicked "Skip" in the Thank You / Auction modal');
 });
 
