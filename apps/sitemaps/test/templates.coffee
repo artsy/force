@@ -28,12 +28,12 @@ describe 'artwork sitemap template', ->
 
 describe 'image sitemap template', ->
 
-  it 'renders the correct image URLs', ->
+  it 'renders the correct image URLs under the cname', ->
     xml = render('images')
       models: new Artworks([fabricate('artwork', {
         images: 
           [{image_urls: {
-            medium: 'foo.jpg'
+            medium: 'https://d32dm0rphc51dk.cloudfront.net/foo.jpg'
             small: 'baz.jpg'
             }
           }]
@@ -41,7 +41,7 @@ describe 'image sitemap template', ->
       ]).models
       _: _
       sd: {}
-    xml.should.containEql 'foo.jpg'
+    xml.should.containEql 'http://media-assets.artsy.net/foo.jpg'
 
   it 'renders the correct caption data', ->
     xml = render('images')
