@@ -53,6 +53,7 @@ module.exports = class SaleArtwork extends Backbone.Model
 
   bidCount: ->
     n = @get('bidder_positions_count') or 0
+    n = 0 unless @get('highest_bid_amount_cents')
     count = "#{n} bid"
     count += if n is 1 then '' else 's'
     count
