@@ -33,6 +33,8 @@ module.exports = class Specialist extends StepView
     form = new Form model: @inquiry, $form: @$('form')
     return unless form.isReady()
 
+    form.state 'loading'
+
     Q.all [
       @inquiry.save _.extend { contact_gallery: false }, form.data()
       @user.save @inquiry.pick('name', 'email')
