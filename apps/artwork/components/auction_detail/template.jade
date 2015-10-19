@@ -64,8 +64,11 @@ else
       | Buy Now
 
   .abf-help
-    a.js-auction-faqs.fine-faux-underline( href='/auction-info' )
+    a.js-auction-modal.fine-faux-underline( data-id='how-auctions-work-bidding' href='/auction-info' )
       | Auction FAQs
+    br
+    a.js-auction-modal.fine-faux-underline( data-id='how-auctions-work-conditions-of-sale' href='/conditions-of-sale' )
+      | Conditions of Sale
     br
     a.fine-faux-underline( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
       | Ask a Specialist

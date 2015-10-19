@@ -11,15 +11,15 @@ module.exports = class AuctionDetailView extends Backbone.View
   events:
     'submit .js-artwork-bid-form': 'submit'
     'click .js-buyers-premium': 'openBuyersPremiumModal'
-    'click .js-auction-faqs': 'openAuctionFAQs'
+    'click .js-auction-modal': 'openAuctionModal'
 
   initialize: ({ @artwork, @user, @auction, @saleArtwork, @bidderPositions }) ->
     @partner = @artwork.related().partner
     @locations = @partner.related().locations
 
-  openAuctionFAQs: (e) ->
+  openAuctionModal: (e) ->
     e.preventDefault()
-    openMultiPageModal 'auction-faqs'
+    openMultiPageModal 'auction-faqs', $(e.currentTarget).data('id')
 
   submit: (e) ->
     e.preventDefault()
