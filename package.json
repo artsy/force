@@ -84,7 +84,7 @@
     "mailcheck": "^1.1.1",
     "mocha": "^2.3.3",
     "nib": "^1.1.0",
-    "rewire": "^2.3.4",
+    "rewire": "2.2.0",
     "scroll-frame": "0.0.11",
     "should": "^7.1.0",
     "sinon": "^1.17.1",
