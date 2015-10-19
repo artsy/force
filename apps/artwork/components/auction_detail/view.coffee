@@ -19,7 +19,8 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   openAuctionModal: (e) ->
     e.preventDefault()
-    openMultiPageModal 'auction-faqs', $(e.currentTarget).data('id')
+    openMultiPageModal 'auction-faqs', ({view}) ->
+      view.subView.state.set 'active', $(e.currentTarget).data('id')
 
   submit: (e) ->
     e.preventDefault()
