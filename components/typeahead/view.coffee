@@ -136,6 +136,8 @@ module.exports = class AutocompleteView extends Backbone.View
 
     @input()
       .typeahead @typeaheadOptions(), @dataset()
+      .on 'focus', (e) => @trigger 'focus', e
+      .on 'blur', (e) => @trigger 'blur', e
       .on 'typeahead:selected', (e, suggestion) =>
         return unless suggestion?
         @trigger 'selected', suggestion
