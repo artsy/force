@@ -26,6 +26,7 @@ module.exports = class ArticleView extends Backbone.View
     @user = CurrentUser.orNull()
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
+    new ShareView el: @$('.article-share-fixed')
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks =>
