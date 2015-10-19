@@ -1,5 +1,5 @@
 openMultiPageModal = require '../../../components/multi_page_modal/index.coffee'
-openSpecialistModal = require '../../../components/simple_contact/specialist.coffee'
+openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 openFeedbackModal = require '../../../components/feedback_modal/index.coffee'
 
 module.exports.init = ->
