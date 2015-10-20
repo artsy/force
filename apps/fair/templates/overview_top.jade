@@ -4,6 +4,8 @@
     h1.fair-name= fair.get('name')
     .fair-location= fair.formatLocation()
     .fair-dates= fair.formatDates()
+    if fair.has('tagline')
+      .fair-tagline= fair.get('tagline')
     if profile.get('bio')
       .profile-bio!= profile.mdToHtml('bio') + ' '
     include ../../../components/clock/template
