@@ -14,5 +14,5 @@ PAGE_SIZE = 100
       limit: PAGE_SIZE
     error: res.backboneError
     success: (articles) ->
-      res.set('Content-Type', 'text/xml')
+      res.set('Content-Type', 'application/rss+xml')
       res.render('news', { articles: articles })
