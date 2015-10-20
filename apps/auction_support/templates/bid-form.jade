@@ -19,7 +19,7 @@ block body
             .bid-group-content
               .bid-input-container
                 label.bid-dollar-sign $
-                input.max-bid.bordered-input( name='bid', autocomplete='off', autofocus='true', value=maxBid )
+                input.max-bid.bordered-input( name='bid', autocomplete='off', autofocus='true', value=maxBid, pattern="\d*" )
               .bid-input-help-text
                 | Enter #{bidderPositions.minBid()} or higher
               a.bidding-question How Bidding Works

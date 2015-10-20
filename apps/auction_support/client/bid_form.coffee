@@ -13,6 +13,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   maxTimesPolledForBidPlacement: 6
   errors:
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
+    connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'

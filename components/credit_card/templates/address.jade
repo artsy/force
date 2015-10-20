@@ -28,8 +28,8 @@ if showName
 
 .postal-code.order-input-section
   label Zip code
-  input.bordered-input.postal-code( name=(scope + '[postal_code]'), type='text', value=(address.postal_code || ''), autocomplete='postal-code' )
+  input.bordered-input.postal-code( name=(scope + '[postal_code]'), type='text', value=(address.postal_code || ''), autocomplete='postal-code', pattern="\d*" )
 
 .telephone.order-input-section
   label Telephone
-  input.bordered-input.telephone( type='tel', name='telephone', value=(telephone || ''), autocomplete='tel' )
+  input.bordered-input.telephone( type='tel', name='telephone', value=(telephone || ''), autocomplete='tel', pattern="\d*" )
