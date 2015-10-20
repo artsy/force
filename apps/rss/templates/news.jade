@@ -13,7 +13,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
         title= article.get('thumbnail_title')
         link #{sd.APP_URL}/article/#{article.get('slug')}
         description
-          - article.emptyArtworkSection()
+          - article.emptyArtworkSections()
           include ../../../components/article/templates/index.jade
         pubDate= new Date(article.get('published_at')).toUTCString()
         guid(isPermaLink='false') #{sd.APP_URL}/article/#{article.get('slug')}
