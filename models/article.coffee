@@ -19,6 +19,11 @@ module.exports = class Article extends Backbone.Model
   defaults:
     sections: [{ type: 'text', body: '' }]
 
+  emptyArtworkSection: ->
+    @set sections: (section for section in @get('sections') \
+      when section.type isnt 'artworks')
+
+
   fetchWithRelated: (options = {}) ->
     # Deferred require
     Articles = require '../collections/articles.coffee'
