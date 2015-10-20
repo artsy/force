@@ -8,6 +8,6 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 app.locals.resize = resize
 app.locals.crop = crop
-app.local.embedVideo = embedVideo
+app.locals.embedVideo = embedVideo
 
 app.get '/rss/news', routes.news
