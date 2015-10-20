@@ -9,11 +9,13 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
     if articles.length
       lastBuildDate= new Date(articles.first().get('published_at')).toUTCString()
     each article in articles.models
+      - article.emptyArtworkSections()
       item
         title= article.get('thumbnail_title')
         link #{sd.APP_URL}/article/#{article.get('slug')}
         description
-          - article.emptyArtworkSections()
+          | <![CDATA[
           include ../../../components/article/templates/index.jade
+          | ]]>
         pubDate= new Date(article.get('published_at')).toUTCString()
         guid(isPermaLink='false') #{sd.APP_URL}/article/#{article.get('slug')}
