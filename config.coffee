@@ -73,7 +73,7 @@ module.exports =
   API_REQUEST_TIMEOUT: 5000
   POST_TO_ARTICLE_SLUGS: []
   CHECK_FOR_AUCTION_REMINDER: false
-  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly'
+  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,kana'
   STRIPE_PUBLISHABLE_KEY: null
   MAILCHIMP_KEY: null
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
