@@ -14,7 +14,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
         link #{sd.APP_URL}/article/#{article.get('slug')}
         description
           | <![CDATA[
-          | !{article.get('lead_paragraph')}
+          include article
           | ]]>
         pubDate= new Date(article.get('published_at')).toUTCString()
         guid(isPermaLink='false') #{sd.APP_URL}/article/#{article.get('slug')}

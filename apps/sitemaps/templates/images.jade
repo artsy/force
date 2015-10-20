@@ -7,13 +7,10 @@ urlset(
     url
       loc='https://www.artsy.net/artwork/' + artwork.id
       image:image
-        //-per Google: 'make sure that the hosting site (i.e. cloudfront) is verified in Search Console OR that you submit your sitemap using robots.txt
-        image:loc=artwork.imageUrl()
+        //- Use CDN cname
+        image:loc=(artwork.imageUrl()).replace('https://d32dm0rphc51dk.cloudfront.net', 'http://media-assets.artsy.net')
         image:title=artwork.get('title')
         if artwork.get('artist')
           image:caption=artwork.get('title') + ' is a work of art created by ' + artwork.related().artist.get('name') + ' in ' + artwork.get('date') + '.'
         else
           image:caption=artwork.get('title') + ' is a work of art created in ' + artwork.get('date') + '.'
-
-
-

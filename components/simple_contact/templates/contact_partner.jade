@@ -1,10 +1,2 @@
-header.scontact-header
-  h1.scontact-headline
-    | Send message to #{artwork.related().partner.displayType().toLowerCase()}
-
-  p.scontact-description
-    | To: #{artwork.related().partner.get('name')}
-    span.js-contact-location
-      //- Rendered separately?
-
+include headers/contact_partner
 include forms/inquiry

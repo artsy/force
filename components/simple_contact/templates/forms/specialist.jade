@@ -1,8 +1,10 @@
+//- Does not display artwork preview or a message referencing the gallery
+//- Includes 'message', 'name' and 'email' attributes along with optional
+//- hidden 'artwork' field, populated by the artwork ID
+
 form.scontact-form.stacked-form
   .scontact-errors.js-form-errors
     //- Rendered separately
-
-  input( type='hidden', name='url', value= window.location.href )
 
   if artwork
     input( type='hidden', name='artwork', value= artwork.id )
@@ -23,8 +25,6 @@ form.scontact-form.stacked-form
     input( type='hidden', name='name', value= user.get('name') )
     input( type='hidden', name='email', value= user.get('email') )
 
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     input.bordered-input(
       type='text'

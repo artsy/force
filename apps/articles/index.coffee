@@ -18,6 +18,6 @@ app.get '/post/:id', routes.redirectPost
 app.get '/:id/posts', routes.redirectPost
 app.get '/article', routes.redirectArticle
 app.get '/articles', routes.articles
-app.get '/article/:slug', routes.show
+app.get '/article/:slug', routes.article
 app.get '/:slug', routes.section
 app.post '/gallery-insights/form', routes.form

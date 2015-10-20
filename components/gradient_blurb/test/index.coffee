@@ -1,10 +1,12 @@
 benv = require 'benv'
 blurb = require '../index'
+sinon = require 'sinon'
 
 describe 'blurb', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
+      $.fn.imagesLoaded = (cb) -> cb()
       done()
 
   after ->
@@ -19,7 +21,6 @@ describe 'blurb', ->
 
     it 'blurbifies the text', ->
       blurb @$el, limit: 399, label: 'Read more by clicking here'
-
       @$el.css('max-height').should.equal '399px'
       @$el.hasClass('gradient-blurb').should.be.true()
       @$el.find('.gradient-blurb-read-more').should.have.lengthOf 1

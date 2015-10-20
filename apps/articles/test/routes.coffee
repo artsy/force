@@ -19,11 +19,11 @@ describe 'Article routes', ->
     Backbone.sync.restore()
     Article::fetchWithRelated.restore()
 
-  describe '#show', ->
+  describe '#article', ->
 
     it 'redirects old slugs', ->
       @req.params.slug = 'foo'
-      routes.show @req, @res
+      routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
         article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
         footerArticles: new Articles([_.extend fixtures.article, title: 'Bar'])
@@ -32,12 +32,12 @@ describe 'Article routes', ->
 
    it 'fetches an article, its related content, and renders it', ->
       @req.params.slug = 'bar'
-      routes.show @req, @res
+      routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
         article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
         footerArticles: new Articles([_.extend fixtures.article, title: 'Bar'])
       )
-      @res.render.args[0][0].should.equal 'show'
+      @res.render.args[0][0].should.equal 'article'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
       @res.render.args[0][1].footerArticles.first().get('title')
         .should.equal 'Bar'

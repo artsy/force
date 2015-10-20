@@ -11,27 +11,39 @@ Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
+Q = require 'bluebird-q'
+{ crop } = require '../resizer/index.coffee'
+blurb = require '../gradient_blurb/index.coffee'
+Sticky = require '../sticky/index.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
-Q = require 'bluebird-q'
 editTemplate = -> require('./templates/edit.jade') arguments...
+relatedTemplate = -> require('./templates/related.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    { @article } = options
+    { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
+    new ShareView el: @$('.article-share-fixed')
+    @sticky = new Sticky
     @renderSlideshow()
-    @renderArtworks()
-    @breakCaptions()
+    @renderArtworks =>
+      imagesLoaded @$(".article-container[data-id=#{@article.get('id')}] .article-content"), =>
+        @addReadMore() if @gradient
+        @setupWaypointUrls() if @waypointUrls
+        @sticky.rebuild()
     @checkEditable()
+    @breakCaptions()
     @sizeVideo()
+    @setupFooterArticles()
+    @setupStickyShare()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
 
-  renderArtworks: ->
+  renderArtworks: (cb) =>
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
       Q.allSettled(
         for id in section.ids
@@ -45,19 +57,22 @@ module.exports = class ArticleView extends Backbone.View
       ).spread (artworks...) =>
         artworks = _.pluck(_.reject(artworks, (artwork) -> artwork.state is 'rejected'), 'value')
         artworks = new Artworks artworks
-        $el = @$("[data-layout=overflow_fillwidth]" +
-          " li[data-id=#{artworks.first().get '_id'}]").parent()
-        return unless $el.length
-        @fillwidth $el
-    )
+        if artworks.length
+          $el = @$("[data-layout=overflow_fillwidth]" +
+            " li[data-id=#{artworks.first().get '_id'}]").parent()
+        Q.nfcall @fillwidth, $el
+    ).done =>
+      cb()
 
   breakCaptions: ->
     @$('.article-section-image').each ->
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
-  fillwidth: (el) ->
-    return @$(el).parent().removeClass('is-loading') if $(window).width() < 700
+  fillwidth: (el, cb) ->
+    if @$(el).length < 1 or $(window).width() < 700
+      @$(el).parent().removeClass('is-loading')
+      cb()
     $list = @$(el)
     $list.fillwidthLite
       gutterSize: 30
@@ -70,6 +85,7 @@ module.exports = class ArticleView extends Backbone.View
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Remove loading state
         $list.parent().removeClass('is-loading')
+        cb()
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -127,3 +143,63 @@ module.exports = class ArticleView extends Backbone.View
 
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
+
+  setupStickyShare: ->
+    if sd.SHARE_ARTICLE isnt "current"
+      @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
+
+  setupFooterArticles: =>
+    if sd.SCROLL_ARTICLE is 'infinite'
+      Q.allSettled([
+        (tagRelated = new Articles).fetch
+          data:
+            tags: if @article.get('tags')?.length then @article.get('tags') else [null]
+            sort: '-published_at'
+            published: true
+            tier: 1
+            author_id: '503f86e462d56000020002cc'
+        (artistRelated = new Articles).fetch
+          data:
+            artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
+            sort: '-published_at'
+            published: true
+            tier: 1
+            author_id: '503f86e462d56000020002cc'
+        (feed = new Articles).fetch
+          data:
+            author_id: '503f86e462d56000020002cc'
+            published: true
+            tier: 1
+            sort: '-published_at'
+            limit: 20
+      ]).then =>
+        safeRelated = _.union tagRelated.models, artistRelated.models, feed.models
+        safeRelated = _.reject safeRelated, (a) =>
+            a.get('id') is @article.get('id') or _.contains @seenArticleIds, a.get('id')
+        $(".article-related-widget[data-id=#{@article.get('id')}]").html relatedTemplate
+          related: _.shuffle safeRelated.slice(0,3)
+          crop: crop
+    else
+      $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
+
+  addReadMore: =>
+    maxTextHeight = 405 # line-height * line-count
+    limit = 0
+    textHeight = 0
+
+    # Computes the height of the div where the blur should begin
+    # based on the line count excluding images and video
+    for section in $(".article-container[data-id=#{@article.get('id')}] .article-content").children()
+      if $(section).children().hasClass('article-section-text')
+        textHeight = textHeight + $(section).children().height()
+      if textHeight >= maxTextHeight
+        limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
+        blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), { limit: limit }
+        break
+
+  setupWaypointUrls: =>
+    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
+    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
+    , { offset: 'bottom-in-view' }

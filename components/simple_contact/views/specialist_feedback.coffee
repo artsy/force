@@ -1,9 +1,9 @@
 ContactView = require './index.coffee'
 Feedback = require '../../../models/feedback.coffee'
 Representatives = require '../../../collections/representatives.coffee'
-template = -> require('../templates/specialist.jade') arguments...
+template = -> require('../templates/specialist_feedback.jade') arguments...
 
-module.exports = class SpecialistView extends ContactView
+module.exports = class SpecialistFeedbackView extends ContactView
   template: ->
     template arguments...
 
@@ -17,5 +17,6 @@ module.exports = class SpecialistView extends ContactView
     @$el.html @template
       user: @user
       representative: @representatives.first()
+      message: null
     @autofocus()
     this

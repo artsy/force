@@ -9,7 +9,7 @@ request = require 'superagent'
       email: email: req.body.email
       merge_vars: req.body.mergeVars
       double_optin: false
-      send_welcome: true
+      send_welcome: false
     ).end (err, response) ->
       if (response.ok)
         res.send req.body

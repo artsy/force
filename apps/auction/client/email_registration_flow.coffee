@@ -41,3 +41,10 @@ module.exports = (auction) ->
   .catch (err, response)->
     window.location.reload()
   .done()
+
+  # adds handling for clicking "register now"
+  $('.auction-preview-register-now a').click (e)->
+    e.preventDefault()
+    authModalView = new AuthModalView
+      width: '500px'
+      redirectTo: auction.registerUrl()

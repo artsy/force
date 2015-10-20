@@ -1,3 +1,6 @@
+//- Inlcudes 'user_name', 'user_email', and 'message' attributes along with
+//- a hidden 'url' attribute populated by the current location href
+
 form.scontact-form.stacked-form
   .scontact-errors.js-form-errors
     //- Rendered separately
@@ -23,8 +26,6 @@ form.scontact-form.stacked-form
     input( type='hidden', name='user_name', value= user.get('name') )
     input( type='hidden', name='user_email', value= user.get('email') )
 
-    .scontact-from.stacked-form-cell
-      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
   else
     //- Note these attribute names are different
     //- for the feedback endpoint vs inquiries (sigh)

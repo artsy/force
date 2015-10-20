@@ -102,3 +102,19 @@ describe 'Inquiry', setup ->
         @view.state.current().should.equal 'after_inquiry'
 
         done()
+
+    it 'prevents an initial send (but not subsequent) when submitting the default message', ->
+      @view.$('textarea[name="message"]').val()
+        .should.containEql 'Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?'
+
+      @view.$('button').click()
+
+      Backbone.sync.callCount.should.equal 0
+
+      @view.$('.alertable-input').data 'alert'
+        .should.equal 'We recommend personalizing your message to get a faster answer from the gallery.'
+
+      @view.$('button').text().should.equal 'Send Anyway?'
+      @view.$('button').click()
+
+      Backbone.sync.callCount.should.equal 2
