@@ -13,6 +13,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     timeout: "Processing your payment took too long. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
+    connection: "Please check your network connectivity and try again."
 
   isChecked: ($el) => $el.is(':checked')
   isCardNumber: ($el) => isCreditCard $el.val()
@@ -58,6 +59,9 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       description = "Registration card could not be authorized."
     else if response.status == 404
       message = "Registration marketplace invalid."
+      description = message
+    else if response.status == 0
+      message = @errors.connection
       description = message
     else if typeof(description) == 'string'
       message = description
