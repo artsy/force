@@ -33,16 +33,16 @@ block body
               a.avant-garde-button-black.is-block.js-register-button(
                 href= auction.registerUrl()
               ) Register to bid
+          .auction-preview-clock.js-auction-clock( data-id= auction.id )
+            include ../../../../components/clock/template
         else
-          .auction-preview-sidebar-label
-            | Opening Soon
+          .auction-preview-clock.js-auction-clock.is-logged-out( data-id= auction.id )
+            include ../../../../components/clock/template
           .auction-preview-sidebar-text
-            | Receive an email invitation when the auction begins on Artsy
+            | Receive an email invitation when the auction begins.
           .auction-preview-sidebar-email
+            //- rendered on the client
 
-        //- Profile logo here
-        .auction-preview-clock.js-auction-clock( data-id= auction.id )
-          include ../../../../components/clock/template
 
       .auction-preview-header-primary
         h1.auction-title
