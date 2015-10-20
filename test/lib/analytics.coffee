@@ -7,7 +7,7 @@ sd = require('sharify').data
 benv = require 'benv'
 _ = require 'underscore'
 
-describe 'analytics', ->
+xdescribe 'analytics', ->
 
   describe 'with a standard useragent', ->
 

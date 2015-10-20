@@ -41,8 +41,6 @@ describe 'Fairs', ->
       rows[1].fairs.length.should.eql 2
 
   describe '#pastYearRoundFairs', ->
-    beforeEach ->
-      sinon.useFakeTimers()
 
     it 'should not display upcoming fairs', ->
       fairs = new Fairs([

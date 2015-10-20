@@ -218,5 +218,6 @@ describe 'ArtworkFilterView', ->
       @columnLength = 4
       @view.setButtonState()
       # Is now visible again
+      console.log @view.$button.attr('style')
       _.isEmpty(@view.$button.attr('style')).should.be.true()
       @view.$button.text().should.equal 'See More (6)'
