@@ -4,7 +4,6 @@ PAGE_SIZE = 100
 
 @news = (req, res, next) ->
   new Articles().fetch
-    cache: true
     data:
       # id for "Artsy Editorial" (exclude partner posts)
       author_id: "503f86e462d56000020002cc"
