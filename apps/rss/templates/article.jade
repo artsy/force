@@ -7,7 +7,7 @@ if hero
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
-        figcaption!= hero.caption
+        p!= hero.caption
 
 //- Title & Lead Paragraph
 h1= article.get('title')
@@ -38,7 +38,7 @@ for section, i in article.get('sections')
     when 'image'
       img( src=resize(section.url, { width: 1100 }) )
       if section.caption
-        figcaption!= section.caption
+        p!= section.caption
     when 'video'
       != embedVideo(section.url)
     //- TODO
