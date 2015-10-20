@@ -6,6 +6,7 @@ sd =
 { fabricate } = require 'antigravity'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
+moment = require 'moment'
 
 describe '/rss', ->
   describe 'news', ->
@@ -20,7 +21,7 @@ describe '/rss', ->
         new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString()),
         new Article(thumbnail_title: 'World', published_at: new Date().toISOString())
       ]
-      rendered = template(sd: sd, articles: articles)
+      rendered = template(sd: sd, articles: articles, moment: moment)
       rendered.should.containEql '<title>Artsy News</title>'
       rendered.should.containEql '<atom:link href="http://localhost/rss/news" rel="self" type="application/rss+xml">'
       rendered.should.containEql '<description>Featured Artsy articles.</description>'
