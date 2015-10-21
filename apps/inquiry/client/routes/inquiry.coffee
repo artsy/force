@@ -10,7 +10,7 @@ Logger = require '../../../../components/logger/index.coffee'
 { steps, decisions, views } = require '../map.coffee'
 
 module.exports = (id, bypass) ->
-  steps = [bypass] if bypass
+  steps = [bypass] if bypass and _.contains(_.keys(views), bypass)
 
   $el = $('.js-embedded-inquiry')
 
