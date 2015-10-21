@@ -1,4 +1,5 @@
 _ = require 'underscore'
+attachFastClick = -> require('fastclick') arguments...
 { ARTWORK } = require('sharify').data
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
@@ -11,6 +12,8 @@ analytics = require '../../../../components/inquiry_questionnaire/analytics.coff
 { steps, decisions, views } = require '../map.coffee'
 
 module.exports = (id, bypass) ->
+  attachFastClick document.body
+
   steps = [bypass] if bypass and _.contains(_.keys(views), bypass)
 
   $el = $('.js-embedded-inquiry')

@@ -3,6 +3,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 initializeInquiry = rewire '../../client/routes/inquiry'
+initializeInquiry.__set__ 'attachFastClick', sinon.stub()
 
 describe 'mobile inquiry flow initialization', ->
   before (done) ->
