@@ -46,6 +46,7 @@ module.exports = (id, bypass) ->
     # Abort by clicking 'nevermind'
     .on 'abort', ->
       logger.reset()
+      location.href = artwork.href()
 
     # End of complete flow
     .on 'done', ->
