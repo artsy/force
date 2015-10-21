@@ -67,7 +67,7 @@
   @extends .mlh-nav-link
   padding-left 30px
   padding-right @padding-left
-  border-left 1px solid gray-lighter-color
+  border-left 1px solid transparify(gray-lighter-color, black)
   position relative
   min-width 130px
   text-align center
@@ -80,7 +80,7 @@
   position relative
   text-align center
   white-space nowrap
-  border-left  1px solid gray-lighter-color
+  border-left  1px solid transparify(gray-lighter-color, black)
   svg
     fill black
     width 25px
@@ -91,7 +91,7 @@
   position relative
   text-align center
   white-space nowrap
-  border-left  1px solid gray-lighter-color
+  border-left  1px solid transparify(gray-lighter-color, black)
   &.hover-pulldown
     &:before
       border none
