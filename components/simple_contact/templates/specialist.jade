@@ -1,20 +1,2 @@
-header.scontact-header
-  h1.scontact-headline
-    | Send message to Artsy
-
-  if representative
-    .scontact-description.vam-outer
-      .vam-cell
-        if name = representative.related().owner.get('name')
-          | #{representative.related().owner.get('name')}, an Artsy Specialist,
-        else
-          | An Artsy Specialist
-        |  is available to answer your questions and help you collect through Artsy.
-      .vam-cell: img(
-        src= representative.iconImageUrl()
-        alt= representative.get('name')
-        width='60'
-        height='60'
-      )
-
+include headers/specialist
 include forms/specialist

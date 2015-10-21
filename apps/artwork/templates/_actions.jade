@@ -3,10 +3,9 @@ if artwork.isContactable()
   - partner = artwork.related().partner
 
   //- Gallery/Institution link
-  if artwork.partnerLink()
-    h2.artwork-detail-header
-      = partner.get('name')
-    span#artwork-partner-locations
+  h2.artwork-detail-header
+    = partner.get('name')
+  span#artwork-partner-locations
       //- Rendered client-side
 
   //- Phone number

@@ -1,7 +1,7 @@
 sd = require('sharify').data
 require('backbone').$ = $
 articleIndex = require '../apps/articles/client/articles.coffee'
-articleShow = require '../apps/articles/client/show.coffee'
+articleShow = require '../apps/articles/client/article.coffee'
 articleShowAndIndex = require '../apps/articles/client/index.coffee'
 
 $ ->

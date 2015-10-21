@@ -18,6 +18,9 @@ play-button-size = 30px
   text-align center
   margin-bottom gutter-size
 
+.article-container
+  position relative
+
 .article-author, .article-social
   vertical-align middle
 
@@ -76,7 +79,8 @@ play-button-size = 30px
     font-size default-avant-garde-font-size
     margin-bottom 10px
   &.add-bottom
-    margin gutter-size auto (gutter-size * 3)
+    margin gutter-size auto (gutter-size * 2)
+    padding-bottom 50px
 
 .article-section-image
   width overflow-width
@@ -251,3 +255,14 @@ play-button-size = 30px
   display inline-block
   vertical-align middle
 
+.article-share-fixed
+  padding-top 60px
+  margin-left -30px
+  margin-top 300px
+  float left
+  a
+    text-decoration none
+    display block
+    color gray-dark-color
+  a:hover
+    color gray-darker-color

@@ -17,8 +17,8 @@
 
 .card-number.order-input-section
   label( for='card_number' ) Credit Card Number
-  input.bordered-input( type='text', name='card_number', value=number, autocomplte="cc-number" )
+  input.bordered-input( type='text', name='card_number', value=number, autocomplete="cc-number", pattern="\d*" )
 
 .card-security-code.order-input-section
   label( for='card_security_code' ) Security Code
-  input.bordered-input( type='text', name='card_security_code', value=security_code, autocomplte="cc-csc" )
+  input.bordered-input( type='text', name='card_security_code', value=security_code, autocomplete="cc-csc", pattern="\d*" )

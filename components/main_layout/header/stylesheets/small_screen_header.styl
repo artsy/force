@@ -2,7 +2,8 @@
   @media (min-width: nav-bar-break)
     display none
 
-#main-header-menu-small-screen, body > :not(#main-layout-header)
+#main-header-menu-small-screen
+#main-layout-container
   transition transform 0.2s @ease-out-cubic
 
 #main-header-menu-small-screen
@@ -80,15 +81,13 @@
 
   #main-header-search-button
     z-index 4
-    line-height 34px
-    font-size 14px
-    padding 12px
     background-color white
     position absolute
     top 0
+    bottom 0
     right 0
-    width 100px
-    height 100%
+    padding-left 15px
+    padding-right @padding-left
     border-left 1px solid gray-lighter-color
     display none
 

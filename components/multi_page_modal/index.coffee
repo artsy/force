@@ -1,7 +1,7 @@
 modalize = require '../modalize/index.coffee'
 multiPageView = require '../multi_page/index.coffee'
 
-module.exports = (key) ->
+module.exports = (key, cb = null) ->
   view = multiPageView key
 
   modal = modalize view,
@@ -10,6 +10,8 @@ module.exports = (key) ->
 
   modal.load (done) ->
     $.when.apply(null, view.collection.invoke 'fetch')
+      .then ->
+        cb(modal) if cb
       .then done
       .fail ->
         modal.close()

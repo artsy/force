@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var namespace, track, bind;
+  var namespace, track, bind, bindOnce;
 
   namespace = function(name) {
     return 'inquiry_questionnaire:' + name;
@@ -16,6 +16,10 @@
 
   bind = function(name, handler) {
     analyticsHooks.on(namespace(name), handler);
+  };
+
+  bindOnce = function(name, handler) {
+    analyticsHooks.once(namespace(name), handler);
   };
 
   // DOM events
@@ -121,7 +125,7 @@
     track('User removed an interest in artist');
   });
 
-  bind('inquiry:sync', function(context) {
+  bindOnce('inquiry:sync', function(context) {
     track('Inquiry successfully sent');
   });
 
@@ -164,6 +168,12 @@
     if (context.user.isRecentlyRegistered()) return;
     analytics.track('Created account', {
       context: 'inquiry_questionnaire'
+    });
+  });
+
+  bindOnce('inquiry:sync', function(context) {
+    analytics.track('Sent artwork inquiry', {
+      label: 'Artwork:' + context.artwork.id
     });
   });
 

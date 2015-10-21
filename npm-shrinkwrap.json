@@ -421,7 +421,7 @@
             },
             "cssstyle": {
               "version": "0.2.29",
-              "from": "cssstyle@>=0.2.23 <0.3.0",
+              "from": "cssstyle@>=0.2.29 <0.3.0",
               "resolved": "https://registry.npmjs.org/cssstyle/-/cssstyle-0.2.29.tgz"
             },
             "escodegen": {
@@ -570,7 +570,7 @@
             },
             "nwmatcher": {
               "version": "1.3.6",
-              "from": "nwmatcher@>=1.3.6 <2.0.0",
+              "from": "nwmatcher@>=1.3.4 <2.0.0",
               "resolved": "https://registry.npmjs.org/nwmatcher/-/nwmatcher-1.3.6.tgz"
             },
             "parse5": {
@@ -3889,6 +3889,11 @@
       "from": "ezel-assets@0.0.13",
       "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-0.0.13.tgz"
     },
+    "fastclick": {
+      "version": "1.0.6",
+      "from": "fastclick@>=1.0.6 <2.0.0",
+      "resolved": "https://registry.npmjs.org/fastclick/-/fastclick-1.0.6.tgz"
+    },
     "flickity": {
       "version": "1.1.1",
       "from": "flickity@>=1.1.1 <2.0.0",
@@ -4004,7 +4009,7 @@
           "dependencies": {
             "broadway": {
               "version": "0.3.6",
-              "from": "broadway@>=0.3.2 <0.4.0",
+              "from": "broadway@>=0.3.6 <0.4.0",
               "resolved": "https://registry.npmjs.org/broadway/-/broadway-0.3.6.tgz",
               "dependencies": {
                 "cliff": {
@@ -4118,7 +4123,7 @@
           "dependencies": {
             "broadway": {
               "version": "0.3.6",
-              "from": "broadway@>=0.3.2 <0.4.0",
+              "from": "broadway@>=0.3.6 <0.4.0",
               "resolved": "https://registry.npmjs.org/broadway/-/broadway-0.3.6.tgz",
               "dependencies": {
                 "cliff": {
@@ -6381,7 +6386,7 @@
               "dependencies": {
                 "inherits": {
                   "version": "2.0.1",
-                  "from": "inherits@>=2.0.1 <2.1.0",
+                  "from": "inherits@>=2.0.0 <3.0.0",
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                 },
                 "minimatch": {
@@ -6845,7 +6850,7 @@
             },
             "forever-agent": {
               "version": "0.6.1",
-              "from": "forever-agent@>=0.6.0 <0.7.0",
+              "from": "forever-agent@>=0.6.1 <0.7.0",
               "resolved": "https://registry.npmjs.org/forever-agent/-/forever-agent-0.6.1.tgz"
             },
             "form-data": {
@@ -6931,7 +6936,7 @@
                 },
                 "boom": {
                   "version": "2.9.0",
-                  "from": "boom@>=2.0.0 <3.0.0",
+                  "from": "boom@>=2.8.0 <3.0.0",
                   "resolved": "https://registry.npmjs.org/boom/-/boom-2.9.0.tgz"
                 },
                 "cryptiles": {
@@ -6970,7 +6975,7 @@
             },
             "isstream": {
               "version": "0.1.2",
-              "from": "isstream@>=0.1.1 <0.2.0",
+              "from": "isstream@>=0.1.2 <0.2.0",
               "resolved": "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz"
             },
             "har-validator": {
@@ -7038,7 +7043,7 @@
                 },
                 "is-my-json-valid": {
                   "version": "2.12.2",
-                  "from": "is-my-json-valid@>=2.12.2 <3.0.0",
+                  "from": "is-my-json-valid@>=2.12.0 <3.0.0",
                   "resolved": "https://registry.npmjs.org/is-my-json-valid/-/is-my-json-valid-2.12.2.tgz",
                   "dependencies": {
                     "generate-function": {
@@ -7152,7 +7157,7 @@
         },
         "through": {
           "version": "2.3.8",
-          "from": "through@>=2.3.4 <2.4.0",
+          "from": "through@>=2.3.6 <3.0.0",
           "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
         },
         "uglify-js": {
@@ -7313,7 +7318,7 @@
             },
             "cssstyle": {
               "version": "0.2.29",
-              "from": "cssstyle@>=0.2.23 <0.3.0",
+              "from": "cssstyle@>=0.2.29 <0.3.0",
               "resolved": "https://registry.npmjs.org/cssstyle/-/cssstyle-0.2.29.tgz"
             },
             "escodegen": {
@@ -7462,7 +7467,7 @@
             },
             "nwmatcher": {
               "version": "1.3.6",
-              "from": "nwmatcher@>=1.3.6 <2.0.0",
+              "from": "nwmatcher@>=1.3.4 <2.0.0",
               "resolved": "https://registry.npmjs.org/nwmatcher/-/nwmatcher-1.3.6.tgz"
             },
             "parse5": {
@@ -7570,7 +7575,7 @@
             },
             "forever-agent": {
               "version": "0.6.1",
-              "from": "forever-agent@>=0.6.0 <0.7.0",
+              "from": "forever-agent@>=0.6.1 <0.7.0",
               "resolved": "https://registry.npmjs.org/forever-agent/-/forever-agent-0.6.1.tgz"
             },
             "form-data": {
@@ -7678,7 +7683,7 @@
             },
             "isstream": {
               "version": "0.1.2",
-              "from": "isstream@>=0.1.1 <0.2.0",
+              "from": "isstream@>=0.1.2 <0.2.0",
               "resolved": "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz"
             },
             "har-validator": {
@@ -7688,7 +7693,7 @@
               "dependencies": {
                 "chalk": {
                   "version": "1.1.1",
-                  "from": "chalk@>=1.0.0 <2.0.0",
+                  "from": "chalk@>=1.1.1 <2.0.0",
                   "resolved": "https://registry.npmjs.org/chalk/-/chalk-1.1.1.tgz",
                   "dependencies": {
                     "ansi-styles": {

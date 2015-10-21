@@ -11,8 +11,7 @@ if (location.pathname.match('/gallery-partnerships')) {
     '/gallery-partnerships CTA',
     {
       session_id: sd.SESSION_ID,
-      user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
-      test_copy: sd.PARTNER_APPLICATION_COPY
+      user_id: sd.CURRENT_USER && sd.CURRENT_USER.id
     }
   );
 
@@ -27,8 +26,6 @@ if (location.pathname.match('/gallery-partnerships')) {
   })
 
   $('.js-gallery-partnerships-apply-submit').click(function(e){
-    analytics.track('Clicked bottom apply on gallery partnerships', {
-      test_copy: sd.PARTNER_APPLICATION_COPY
-    })
+    analytics.track('Clicked bottom apply on gallery partnerships')
   })
 }

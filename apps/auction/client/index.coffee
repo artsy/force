@@ -4,7 +4,7 @@ Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
-SpecialistView = require '../../../components/contact/general_specialist.coffee'
+openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 setupClocks = require './clocks.coffee'
@@ -19,7 +19,7 @@ module.exports.init = ->
   # If we are on the confirm-registration path then pop up a modal
   # Page is otherwise unchanged
   if window.location.pathname.match('/confirm-registration') and USER?
-    new ConfirmRegistrationModal paddleNumber: user.get('paddle_number')
+    new ConfirmRegistrationModal paddleNumber: user.get('paddle_number'), model: auction
 
   new AuctionArtworksView
     el: $('.js-auction-artworks-section')
@@ -38,7 +38,7 @@ module.exports.init = ->
 
   $('.js-specialist-contact-link').click (e) ->
     e.preventDefault()
-    new SpecialistView
+    openSpecialistModal()
 
   $('.js-register-button').click (e) ->
     return if CURRENT_USER?

@@ -13,12 +13,12 @@ analyticsHooks.on('auction:notify-me', function(data) {
 });
 
 // Clicked "Register" in the Thank You / Auction modal
-$('.email-to-registration-transition-register').click(function() {
+$(document).on('click', '.email-to-registration-transition-register', function() {
   analytics.track('Clicked "Register" in the Thank You / Auction modal');
 });
 
 // Clicked "Skip" in the Thank You / Auction modal
-$('.email-to-registration-transition-skip').click(function() {
+$(document).on('click', '.email-to-registration-transition-skip', function() {
   analytics.track('Clicked "Skip" in the Thank You / Auction modal');
 });
 
@@ -49,3 +49,11 @@ $('.registration-form-content .avant-garde-button-black').click(function() {
 // Showed ‘Confirm bid on artwork page’
 if (location.pathname.match(/artwork\/.*\/confirm-bid/))
   analytics.track("Showed 'Confirm bid on artwork page'", { nonInteraction: 1 });
+
+// Auction Page Pageview
+if (location.pathname.match(new RegExp('auction/.*')) &&
+   !location.pathname.match(new RegExp('auction/.*/'))) {
+  analytics.track("Auction Page Pageview", {
+    slug: sd.AUCTION.id, preview: sd.AUCTION.auction_state
+  });
+}

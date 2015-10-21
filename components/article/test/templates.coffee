@@ -26,3 +26,42 @@ describe 'article show template', ->
       sd: {}
       asset: ->
     html.should.containEql 'hi'
+
+  it 'renders share for static_fixed split test', ->
+    html = render('index')
+      article: new Article title: 'hi', sections: [], section_ids: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      moment: moment
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'fixed'
+      asset: ->
+    html.should.containEql 'article-share-fixed'
+    html.should.not.containEql 'article-social'
+
+  it 'renders share for static_current_fixed split test', ->
+    html = render('index')
+      article: new Article title: 'hi', sections: [], section_ids: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      moment: moment
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current_fixed'
+      asset: ->
+    html.should.containEql 'article-share-fixed'
+    html.should.containEql 'article-social'
+
+  it 'renders share for static_current split test', ->
+    html = render('index')
+      article: new Article title: 'hi', sections: [], section_ids: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      moment: moment
+      sd:
+        SCROLL_ARTICLE: 'static'
+        SHARE_ARTICLE: 'current'
+      asset: ->
+    html.should.not.containEql 'article-share-fixed'
+    html.should.containEql 'article-social'

@@ -169,17 +169,15 @@ xdescribe 'analytics', ->
           rewiredAnalytics.registerCurrentUser()
 
       describe '#multi', ->
-
         it 'sets the object ID to the concatenation of shortened MD5 hashes', (done) ->
           rewiredAnalytics.multi "Did something", "Artwork", [ "thug-slug", "pug-slug" ]
-          setTimeout =>
+          _.defer =>
             @gaStub.args[2][0].should.equal 'send'
             @gaStub.args[2][1].should.equal 'event'
             @gaStub.args[2][2].should.equal 'Multi-object Events'
             @gaStub.args[2][3].should.equal 'Did something'
             @gaStub.args[2][4].should.equal 'Artwork:cb7a5c6f-ab197545'
             done()
-          , 1000
 
     describe '#delta', ->
       it 'appends a tracker pixel', ->

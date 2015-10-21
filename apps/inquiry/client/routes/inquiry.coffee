@@ -1,4 +1,5 @@
 _ = require 'underscore'
+attachFastClick = -> require('fastclick') arguments...
 { ARTWORK } = require('sharify').data
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
@@ -7,10 +8,13 @@ State = require '../../../../components/branching_state/index.coffee'
 StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
 Logger = require '../../../../components/logger/index.coffee'
-map = require '../map.coffee'
+analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
+{ steps, decisions, views } = require '../map.coffee'
 
 module.exports = (id, bypass) ->
-  map = _.extend {}, map, steps: [bypass] if bypass
+  attachFastClick document.body
+
+  steps = [bypass] if bypass and _.contains(_.keys(views), bypass)
 
   $el = $('.js-embedded-inquiry')
 
@@ -23,7 +27,7 @@ module.exports = (id, bypass) ->
 
   user.approximateLocation()
 
-  state = new State map
+  state = new State steps: steps, decisions: decisions
   logger = new Logger 'inquiry-questionnaire-log'
 
   state.inject
@@ -35,7 +39,7 @@ module.exports = (id, bypass) ->
     userInterests: userInterests
     state: state
 
-  # To do: analytics
+  analytics.attach state.context
 
   state
     .on 'next', (step) ->
@@ -45,6 +49,7 @@ module.exports = (id, bypass) ->
     # Abort by clicking 'nevermind'
     .on 'abort', ->
       logger.reset()
+      location.href = artwork.href()
 
     # End of complete flow
     .on 'done', ->
@@ -56,8 +61,9 @@ module.exports = (id, bypass) ->
           openErrorFlash response
 
   questionnaire = new StateView
-    state: state
     className: 'inquiry-questionnaire'
+    state: state
+    views: views
 
   $el.html questionnaire.$el
 

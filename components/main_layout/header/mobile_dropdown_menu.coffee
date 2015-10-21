@@ -3,7 +3,7 @@ module.exports = class MobileDropdownMenu
 
   constructor: ->
     @$el = $('#main-header-menu-small-screen')
-    @$body = $('body > :not(#main-layout-header)')
+    @$body = $('#main-layout-container')
     @height = @$el.outerHeight()
 
   enable: ->
@@ -15,7 +15,7 @@ module.exports = class MobileDropdownMenu
   disable: ->
     @$el.css 'transform', 'translate3d(0, -100%, 0)'
     @$body.css 'transform', 'translate3d(0, 0, 0)'
-    setTimeout ( => @$el.removeClass 'is-active'), 200
+    setTimeout (=> @$el.removeClass 'is-active'), 200
     @active = false
 
   toggle: ->

@@ -1,15 +1,15 @@
 openMultiPageModal = require '../../../components/multi_page_modal/index.coffee'
-SpecialistView = require '../../../components/contact/general_specialist.coffee'
-FeebackView = require '../../../components/contact/feedback.coffee'
+openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
+openFeedbackModal = require '../../../components/feedback_modal/index.coffee'
 
 module.exports.init = ->
   $('.js-contact-specialist').click (e) ->
     e.preventDefault()
-    new SpecialistView
+    openSpecialistModal()
 
   $('.js-contact-feedback').click (e) ->
     e.preventDefault()
-    new FeebackView
+    openFeedbackModal()
 
   $('.js-multi-page-modal').click (e) ->
     e.preventDefault()

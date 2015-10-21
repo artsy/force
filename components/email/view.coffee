@@ -24,6 +24,13 @@ module.exports = class EmailView extends Backbone.View
       buttonText: @buttonText
       autofocus: @autofocus
 
+    @postRender()
+
+    this
+
+  postRender: ->
+    @$('#js-email-view-input').focus()
+
   submit: (e) ->
     model = new Backbone.Model
       listId: @listId
@@ -35,5 +42,6 @@ module.exports = class EmailView extends Backbone.View
     form.submit e,
       success: =>
         deferred.resolve form.data()['email']
+        form.reenable true
 
     false

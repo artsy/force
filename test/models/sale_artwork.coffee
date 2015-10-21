@@ -58,6 +58,11 @@ describe 'SaleArtwork', ->
       @saleArtwork.set highest_bid_amount_cents: 100
       @saleArtwork.bidCount().should.equal '6 bids'
 
+    it 'returns 0 if the highest_bid_amount_cents is not set (i.e. all bids were cancelled)', ->
+      @saleArtwork.set bidder_positions_count: 6
+      @saleArtwork.unset 'highest_bid_amount_cents'
+      @saleArtwork.bidCount().should.equal '0 bids'
+
     it 'returns a 0 bids string if attribute not present', ->
       @saleArtwork.unset 'bidder_positions_count'
       @saleArtwork.bidCount().should.equal '0 bids'

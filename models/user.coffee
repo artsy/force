@@ -46,7 +46,7 @@ module.exports = class User extends Backbone.Model
         @related()
           .collectorProfile.findOrCreate silent: true
       .then =>
-        Q.all(
+        Q.allSettled(
           @related().collectorProfile
             .related()
             .userFairActions.invoke 'save'
