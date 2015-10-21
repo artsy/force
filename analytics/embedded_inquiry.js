@@ -20,15 +20,4 @@
     });
   });
 
-  // Proxied events
-  var bind = function(name, handler) {
-    analyticsHooks.on('inquiry_questionnaire:' + name, handler);
-  };
-
-  bind('inquiry:sync', function(context) {
-    analytics.track('Sent artwork inquiry', {
-      label: 'Artwork:' + context.artwork.id
-    });
-  });
-
 })();
