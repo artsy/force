@@ -32,7 +32,6 @@ module.exports = class ArticleView extends Backbone.View
     @renderArtworks =>
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls
-      @sticky.rebuild()
     @checkEditable()
     @breakCaptions()
     @sizeVideo()
@@ -194,7 +193,9 @@ module.exports = class ArticleView extends Backbone.View
           textHeight = textHeight + $(section).children().height()
         if textHeight >= maxTextHeight
           limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
-          blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), { limit: limit }
+          blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
+            limit: limit
+            cb: => @sticky.rebuild()
           break
 
   setupWaypointUrls: =>
