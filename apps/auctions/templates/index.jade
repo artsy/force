@@ -56,7 +56,9 @@ block body
           h2.aggregate-page-subheader Upcoming Auctions
           for auction in upcomingAuctions
             .ap-upcoming-item
-              a.fine-faux-underline.au-name( href= auction.href() )
-                = auction.get('name')
+              if auction.id == 'input-output'
+                a.fine-faux-underline.au-name( href= auction.href() ) Sotheby's Input/Output
+              else
+                a.fine-faux-underline.au-name( href= auction.href() )= auction.get('name')
               .au-date Opens #{auction.date('start_at').format('MMMM Do')}
 
