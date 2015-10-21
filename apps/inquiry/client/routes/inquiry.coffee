@@ -7,6 +7,7 @@ State = require '../../../../components/branching_state/index.coffee'
 StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
 Logger = require '../../../../components/logger/index.coffee'
+analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
 { steps, decisions, views } = require '../map.coffee'
 
 module.exports = (id, bypass) ->
@@ -35,7 +36,7 @@ module.exports = (id, bypass) ->
     userInterests: userInterests
     state: state
 
-  # To do: analytics
+  analytics.attach state.context
 
   state
     .on 'next', (step) ->
