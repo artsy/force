@@ -158,7 +158,7 @@ describe 'Fair', ->
     { fair, coverImage, profile, primarySets, nestedFilteredSearchColumns } = {}
 
     before ->
-      fair = new Fair (fabricate 'fair', about: 'about the fair', filter_genes: _.times 2, -> fabricate 'gene', { id: _.uniqueId() })
+      fair = new Fair (fabricate 'fair', about: 'about the fair', tagline: 'This is a custom tagline', filter_genes: _.times 2, -> fabricate 'gene', { id: _.uniqueId() })
       coverImage = new CoverImage(image_versions: ['wide'], image_url: "foo/wide.jpg")
       profile = new Profile (fabricate 'fair_profile')
       primarySets = new OrderedSets()
@@ -366,6 +366,27 @@ describe 'Fair', ->
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
       $.html().should.containEql 'fair-overview-curator'
+
+    it 'renders tagline if present', ->
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair', filter_genes: []
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+        asset: (->)
+        _: _
+        counts: @collection.counts
+        params: new Backbone.Model
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        _s: _s
+
+      $.html('.fair-tagline').should.containEql 'This is a custom tagline'
 
   describe 'exhibitors columns', ->
     before ->

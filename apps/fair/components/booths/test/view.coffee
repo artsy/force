@@ -67,18 +67,6 @@ describe 'BoothsView', ->
       }]
       @view.$el.html().should.containEql 'FOCUS'
 
-  describe '#renderHeader', ->
-
-    it 'renders the header', ->
-      @view.params.set section: 'FOCUS'
-      @view.renderHeader()
-      @view.$el.html().should.containEql 'Exhibitors at FOCUS'
-
-    it 'renders the artist state header', ->
-      @view.params.set artist: 'andy-foobar'
-      @view.renderHeader()
-      @view.$el.html().should.containEql 'Andy Foobar'
-
   describe '#renderShows', ->
 
     it 'adds a feed view', ->
@@ -115,12 +103,6 @@ describe 'BoothsView', ->
     it 'sets sort params', ->
       @view.sort target: $ '<div data-sort="foo">'
       @view.params.get('sort').should.equal 'foo'
-
-  describe '#toggleBoothCount', ->
-
-    it 'hides the counts when in a section', ->
-      @view.params.set section: 'VISTA'
-      @view.$('.fair-booths-count-container').attr('style').should.containEql 'display: none'
 
   describe '#fetchShows', ->
 

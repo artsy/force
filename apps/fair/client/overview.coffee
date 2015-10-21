@@ -8,32 +8,17 @@ Artists = require '../../../collections/artists.coffee'
 mediator = require '../../../lib/mediator.coffee'
 analytics = require '../../../lib/analytics.coffee'
 ForYouView = require './for_you.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
+fairOverviewTop = -> require('../templates/overview_top.jade')
 
 module.exports = class Overview extends Backbone.View
 
-  events:
-    'click .container-left .large-section': 'clickForYou'
-
   initialize: (options) ->
     @fair = options.fair
+    @user = options.user
     @renderClock()
-    if sd.CURRENT_USER?
-      analytics.track.click "Showing fair overview with ForYou module"
-      @$('.for-you-container').html forYouTemplate(fair: @fair)
-      new ForYouView
-        model: @model
-        fair: @fair
-        el: @el
-        onFetchFollowingArtists: @onFetchFollowingArtists
-    else if @fair.get('display_vip')
-      mediator.trigger 'open:auth', { mode: 'register', copy: "Create an account or log in to activate your VIP preview for #{@fair.get('name')}", redirectTo: location.pathname }
-
-  clickForYou: =>
-    analytics.track.click "Clicked for-you from fair overview"
-    unless sd.CURRENT_USER?
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors', redirectTo: location.pathname }
-      false
+    @setupFollowButton()
 
   renderClock: ->
     @clock = new Clock
@@ -70,3 +55,17 @@ module.exports = class Overview extends Backbone.View
       "#{artists[0..(artists.length - 2)].join(', ')} and #{artists[artists?.length - 1]}"
     else
       "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"
+
+  setupFollowButton: ->
+    @following = new Following(null, kind: 'profile') if @user
+    new FollowButton
+      el: @$('#fair-follow-button')
+      following: @following
+      modelName: 'profile'
+      model: @model
+      label: @model.name
+      analyticsFollowMessage: 'Followed fair, via fair microsite page'
+      analyticsUnfollowMessage: 'Unfollowed fair, via fair microsite page'
+    @following?.syncFollows [@model.id]
+
+
