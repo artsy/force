@@ -5,7 +5,7 @@
 
 if(location.pathname.match('/article')){
 
-  $(document.body).on('click', '.article-social.top > a', function() {
+  $(document.body).on('click', '.article-social.article-share-top > a', function() {
     analytics.track('Clicked Article Share', {
       position: 'top',
       service: $(this).attr('data-service'),
@@ -14,7 +14,7 @@ if(location.pathname.match('/article')){
     })
   })
 
-  $(document.body).on('click', '.article-social.bottom > a', function() {
+  $(document.body).on('click', '.article-social.article-share-bottom > a', function() {
     analytics.track('Clicked Article Share', {
       position: 'bottom',
       service: $(this).attr('data-service'),
