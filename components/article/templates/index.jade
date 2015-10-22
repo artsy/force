@@ -46,7 +46,7 @@ mixin image(image)
     .article-date
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
     if sd.SHARE_ARTICLE !== "fixed"
-      .article-social
+      .article-social.article-share-top
         +share(article.get('title'), article.get('thumbnail_image'))
 
 
@@ -74,7 +74,7 @@ mixin image(image)
 
     if sd.SHARE_ARTICLE !== "fixed"
       //- Footer social buttons
-      .article-social.add-bottom
+      .article-social.add-bottom.article-share-bottom
         h2.article-social__header Share this article
         +share(article.get('title'), article.get('thumbnail_image'))
 

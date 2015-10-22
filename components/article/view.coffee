@@ -15,6 +15,7 @@ Q = require 'bluebird-q'
 { crop } = require '../resizer/index.coffee'
 blurb = require '../gradient_blurb/index.coffee'
 Sticky = require '../sticky/index.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
@@ -31,7 +32,6 @@ module.exports = class ArticleView extends Backbone.View
     @renderSlideshow()
     @renderArtworks =>
       @addReadMore() if @gradient
-      @setupWaypointUrls() if @waypointUrls
     @checkEditable()
     @breakCaptions()
     @sizeVideo()
@@ -195,12 +195,17 @@ module.exports = class ArticleView extends Backbone.View
           limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
           blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
             limit: limit
-            afterApply: => @sticky.rebuild()
+            afterApply: =>
+              @sticky.rebuild()
+              @setupWaypointUrls() if @waypointUrls
+              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', ->
+                analyticsHooks.trigger 'readmore', {}
           break
 
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      analyticsHooks.trigger 'scrollarticle', {}
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
       $('.article-edit-container a').attr 'href', editUrl
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
