@@ -198,7 +198,8 @@ module.exports = class ArticleView extends Backbone.View
             afterApply: =>
               @sticky.rebuild()
               @setupWaypointUrls() if @waypointUrls
-              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', -> analyticsHooks.trigger 'readmore', {}
+              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', ->
+                analyticsHooks.trigger 'readmore', {}
           break
 
   setupWaypointUrls: =>
@@ -211,7 +212,3 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
-
-
-
-
