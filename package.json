@@ -91,7 +91,7 @@
     "sinon": "^1.17.1",
     "sqwish": "^0.2.2",
     "stylus": "^0.52.4",
-    "typeahead.js": "^0.11.1",
+    "typeahead.js": "0.10.x",
     "uglifyify": "^3.0.1",
     "validator": "^4.1.0",
     "zombie": "^4.1.0"
