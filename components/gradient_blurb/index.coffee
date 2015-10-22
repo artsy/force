@@ -24,4 +24,4 @@ module.exports = ($el, options = {}) ->
         .on 'transitionend', ->
           $.waypoints 'refresh'
 
-    options.cb?()
+    options.afterApply?()
