@@ -23,3 +23,5 @@ module.exports = ($el, options = {}) ->
         .css 'max-height', height
         .on 'transitionend', ->
           $.waypoints 'refresh'
+
+    options.afterApply?()

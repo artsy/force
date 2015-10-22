@@ -5,6 +5,7 @@ Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
+JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 
@@ -29,6 +30,8 @@ module.exports = class ArticleIndexView extends Backbone.View
       waypointUrls: true
 
     if sd.SCROLL_ARTICLE is 'infinite'
+      @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+      $('#articles-show').append @jump.$el
       @listenTo @collection, 'sync', @render
 
       @listenTo @params, 'change:offset', =>
