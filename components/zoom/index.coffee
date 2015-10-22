@@ -11,3 +11,5 @@ module.exports = (src) ->
     img.onload = ->
       modal.view.dimensions.width = img.width
       done()
+
+  modal
