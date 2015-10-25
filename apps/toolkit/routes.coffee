@@ -21,7 +21,6 @@ request = require 'superagent'
         TKDL: 'Yes'
       double_optin: false
       send_welcome: false
-      update_existing: true
     ).end (err, response) ->
       res.send(response?.status, response?.body or response?.text or err.body)
 
