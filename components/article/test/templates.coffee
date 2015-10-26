@@ -66,7 +66,7 @@ describe 'article show template', ->
     html.should.not.containEql 'article-share-fixed'
     html.should.containEql 'article-social'
 
-  it 'includes the correct links for infinite scroll articles', ->
+  it 'includes the correct share links for infinite scroll articles', ->
     html = render('index')
       article: new Article title: 'hi', slug: 'foo', sections: [], section_ids: []
       crop: (url) -> url
