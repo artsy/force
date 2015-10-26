@@ -26,6 +26,6 @@ describe 'locals middleware', ->
     res.locals.sd.CURRENT_PATH.should.equal '/foo'
 
   it 'flags eigen', ->
-    middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Eigen' }, get: -> },
+    middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Something something Artsy-Mobile' }, get: -> },
       res = { locals: { sd: {} } }, ->
     res.locals.sd.EIGEN.should.be.ok()
