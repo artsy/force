@@ -50,6 +50,13 @@ describe 'image sitemap template', ->
       sd: {}
     xml.should.containEql 'Moo'
 
+  it 'does not include images for which imageUrl() is undefined', ->
+    xml = render('images')
+       models: new Artworks([fabricate 'artwork', id: 'james', images: undefined]).models
+      _: _
+      sd: {}
+    xml.should.not.containEql 'james'
+
 
 
 
