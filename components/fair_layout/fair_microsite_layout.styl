@@ -1,0 +1,34 @@
+@require '../../stylus_lib'
+@require '../header/stylesheets/index'
+@require '../header/stylesheets/small_screen_header'
+@require '../footer'
+@require './embedded'
+@require './form_elements'
+@require '../../../node_modules/artsy-ezel-components/spinners'
+@require './buttons'
+@require './headers'
+@require './body'
+@require './icons'
+@require './faux_underline'
+@require './navigation'
+@require './alerts'
+@require './utilities'
+@require './error'
+@require './typography'
+@require '../../hover_pulldown'
+@require '../../notice'
+
+#main-layout-container
+  margin-top (content-margin-top + main-header-height + welcome-header-height)
+
+// The 1250px max inner container
+.main-layout-container
+  max-width default-max-page-width
+  margin auto
+
+.responsive-layout-container
+  margin 0px 55px
+  @media screen and (min-width: 1440px)
+    margin 0px 150px
+  @media screen and (min-width: 1660px)
+    margin 0px 200px
