@@ -5,7 +5,7 @@ include ../bordered_pulldown/mixin
     .filter-sort-count
       h1.filter-heading.large-garamond-header
       h4.filter-sort-count-count Showing&nbsp;
-        span.filter-sort-count-total= typeof total == 'number' ? total : '...'
+        span.filter-sort-count-total= typeof total == 'number' ? total : '0 works'
       .filter-sort-count-pulldown
         +bordered-pulldown((pulldownVal || 'Recently Added'), 'Sort by:')
           a( data-sort='-published_at', href="#" ) Recently Added
