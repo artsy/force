@@ -1,4 +1,5 @@
-extends ../../../components/main_layout/templates/microsite
+//- extends ../../../components/main_layout/templates/microsite
+extends ../../../components/fair_layout/fair_microsite_layout
 
 block head
   include meta
@@ -7,17 +8,16 @@ append locals
   - assetPackage = 'fair'
 
 block body
-  #fair-page
-    include ./header
-    .fair-page-content
-      if sd.SECTION == 'search'
-        include ./search_results
-      else if sd.SECTION == 'info'
-        include ./info
-      else if sd.SECTION == 'browse'
-        #fair-browse-spacer
-        include ../components/browse/template
-      else if sd.SECTION == 'forYou'
-        include ./for_you
-    .fair-page-footer
-  include ../../../components/main_layout/templates/json_ld
+  //- include ../../../components/fair_layout/fair_header
+  .fair-page-content
+    if sd.SECTION == 'search'
+      include ./search_results
+    else if sd.SECTION == 'info'
+      include ./info
+    else if sd.SECTION == 'browse'
+      #fair-browse-spacer
+      include ../components/browse/template
+    else if sd.SECTION == 'forYou'
+      include ./for_you
+  .fair-page-footer
+  //- include ../../../components/main_layout/templates/json_ld

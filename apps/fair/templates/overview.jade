@@ -13,13 +13,13 @@ block body
     .feature-image
   #fair-page
     header.fair-page-header.main-layout-container
-      include ./header_navigation
-    if primarySets
-      include ./overview_top
-    include ./sections
-    if primarySets
-      include ./overview_bottom
-    .for-you-container
-    h2.overview-section-heading Browse the fair
-    .fair-page-content.main-layout-container
-      include ../components/browse/template
+      include ../../../components/fair_layout/fair_header_navigation
+  if primarySets
+    include ./overview_top
+  include ./sections
+  if primarySets
+    include ./overview_bottom
+  .for-you-container
+  h2.overview-section-heading Browse the fair
+  .fair-page-content.main-layout-container
+    include ../components/browse/template
