@@ -7,7 +7,6 @@ imageUrl = require './components/image_url'
 
 @image = (req, res, next) ->
   url = imageUrl req.params.model, req.params.id
-  console.log url
   imgReq = request.get url
   imgReq.on 'end', ->
     res.status imgReq.res.statusCode
