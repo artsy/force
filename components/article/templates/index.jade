@@ -23,7 +23,7 @@ mixin image(image)
   //- Article Share Fixed Nav
   if sd.SHARE_ARTICLE !== "current"
     .article-share-fixed(data-id=article.get('id'))
-      +share-fixed(article.get('title'),article.get('thumbnail_image'))
+      +share-fixed(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
   .article-content
     //- Article lead content
@@ -47,7 +47,7 @@ mixin image(image)
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
     if sd.SHARE_ARTICLE !== "fixed"
       .article-social.article-share-top
-        +share(article.get('title'), article.get('thumbnail_image'))
+        +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
 
     //- Article body content
@@ -76,7 +76,8 @@ mixin image(image)
       //- Footer social buttons
       .article-social.add-bottom.article-share-bottom
         h2.article-social__header Share this article
-        +share(article.get('title'), article.get('thumbnail_image'))
+        +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
 .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
   //- Rendered on client
+  
