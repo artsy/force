@@ -2,17 +2,17 @@
 Artwork = require '../../models/artwork'
 map = require '../../components/inquiry_questionnaire/map'
 
-@index = (req, res, next) ->
+@index = (req, res) ->
   artwork = new Artwork id: req.params.id
-  artwork.fetch cache: true, error: next, success: ->
+  artwork.fetch cache: true, error: res.backboneError, success: ->
     res.locals.sd.ARTWORK = artwork.toJSON()
     res.render 'index', artwork: artwork
 
-@development = (req, res, next) ->
+@development = (req, res) ->
   artwork = new Artwork id: req.query.artwork_id or
     'cindy-sherman-untitled-as-marilyn-monroe'
 
-  artwork.fetch cache: true, error: next, success: ->
+  artwork.fetch cache: true, error: res.backboneError, success: ->
     res.locals.sd.ARTWORK = artwork.toJSON()
 
     res.render 'development',
