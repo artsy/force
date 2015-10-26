@@ -30,8 +30,6 @@ figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
             a.faux-underline-hover( href=artist.href() )= artist.displayName()
           else
             = artist.displayName()
-          if i < artwork.related().artists.length - 1
-            = ', '
     if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
       .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
