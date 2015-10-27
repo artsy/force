@@ -5,6 +5,7 @@ analytics = require '../../../lib/analytics.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
+openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm
@@ -14,10 +15,12 @@ module.exports = class BidForm extends ErrorHandlingForm
   errors:
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
+    "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
     'click .bidding-question': 'showBiddingDialog'
+    'click .js-contact-specialist' : 'openContactModal'
 
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
     @$submit = @$('.registration-form-content .avant-garde-button-black')
@@ -26,6 +29,9 @@ module.exports = class BidForm extends ErrorHandlingForm
 
     # extend form's errors with our own
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
+
+  openContactModal: ->
+    openSpecialistModal()
 
   showBiddingDialog: (e) ->
     e.preventDefault()
