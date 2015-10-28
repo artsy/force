@@ -1,5 +1,5 @@
 //- extends ../../../components/main_layout/templates/microsite
-extends ../../../components/fair_layout/fair_microsite_layout
+extends ../../../components/fair_layout/templates/fair_microsite_layout
 
 block head
   include meta
@@ -7,8 +7,10 @@ block head
 append locals
   - assetPackage = 'fair'
 
+block header
+  include ../../../components/fair_layout/templates/fair_header
+
 block body
-  //- include ../../../components/fair_layout/fair_header
   .fair-page-content
     if sd.SECTION == 'search'
       include ./search_results
@@ -20,4 +22,6 @@ block body
     else if sd.SECTION == 'forYou'
       include ./for_you
   .fair-page-footer
-  //- include ../../../components/main_layout/templates/json_ld
+
+block jsonLd
+  include ../../../components/main_layout/templates/json_ld

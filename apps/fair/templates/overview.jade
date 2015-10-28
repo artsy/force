@@ -1,4 +1,5 @@
-extends ../../../components/main_layout/templates/microsite
+//- extends ../../../components/main_layout/templates/microsite
+extends ../../../components/fair_layout/templatles/fair_microsite_layout
 
 block head
   include meta
@@ -6,14 +7,14 @@ block head
 append locals
   - assetPackage = 'fair'
 
+block coverImage
+  include ../../../components/fair_layout/templates/fair_cover_image
+
+block header
+  header.fair-page-header.main-layout-container
+    include ../../../components/fair_layout/templates/fair_header_navigation
+
 block body
-  if coverImage && coverImage.hasImage('wide')
-    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
-  else
-    .feature-image
-  #fair-page
-    header.fair-page-header.main-layout-container
-      include ../../../components/fair_layout/fair_header_navigation
   if primarySets
     include ./overview_top
   include ./sections

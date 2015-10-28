@@ -11,20 +11,24 @@ html( data-useragent=userAgent )
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
   body( class='#{bodyClass} body-header-fixed is-microsite' )
-    include ../modal/template
-    include ../main_layout/header/templates/microsite
-    include ../flash/template
+    include ../../modal/template
+    include ../../main_layout/header/templates/microsite
+    include ../../flash/template
 
     #main-layout-container
-      #fair-page
-        include ./fair_header
-        block body
-      include ../main_layout/templates/json_ld
+      block coverImage
 
-    include ../main_layout/footer/template
+      #fair-page
+        block header
+
+        block body
+
+        block jsonLd
+
+    include ../../main_layout/footer/template
 
     #scripts
-      include ../main_layout/templates/scripts
+      include ../../main_layout/templates/scripts
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
       block scripts
