@@ -9,58 +9,41 @@ describe 'Statuses', ->
   beforeEach ->
     @artist = new Artist fabricate 'artist', id: 'foobar'
     @statuses = new Statuses artist: @artist
+
     sinon.stub Backbone, 'sync'
+      .yieldsTo 'success', [{}]
+      # Artwork filter fetch
+      .onCall 0
+      .yieldsTo 'success', total: 1
+      # Artist fetch
+      .onCall 1
+      .yieldsTo 'success', _id: 'foobar_mongo_id'
+      # Articles fetch
+      .onCall 2
+      .yieldsTo 'success', count: 1
 
   afterEach ->
     Backbone.sync.restore()
 
   it 'fetches the status of everything', ->
     @statuses.fetch()
-    # Snag all but the last URL, as these are direct fetches
-    urls = _.first(_.map(Backbone.sync.args, (args) -> args[1].url), (Backbone.sync.args.length - 1))
-    urls.should.eql [
-      'undefined/api/v1/search/filtered/artist/foobar/suggest'
-      'undefined/api/v1/related/shows?artist_id=foobar&sort=-end_at&displayable=true'
-      'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
-      'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
-      'undefined/artist/data/foobar/publications?merchandisable[]=false'
-      'undefined/artist/data/foobar/publications?merchandisable[]=true'
-      'undefined/artist/data/foobar/publications'
-      'undefined/artist/data/foobar/collections'
-      'undefined/artist/data/foobar/exhibitions'
-    ]
+    _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
+      .should.eql [
+        'undefined/api/v1/search/filtered/artist/foobar/suggest',
+        'undefined/api/v1/artist/foobar',
+        'undefined/api/articles?artist_id=foobar_mongo_id&published=true',
+        'undefined/api/v1/related/shows?artist_id=foobar&sort=-end_at&displayable=true',
+        'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true',
+        'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
+      ]
 
-  describe '#fetchArticles', ->
-    it 'fetches the articles status', ->
-      @statuses.fetch()
-      # Fetches the artist first
-      (artistFetch = _.last(Backbone.sync.args))[1].url()
-        .should.containEql '/api/v1/artist/foobar'
-      # Then fetches the articles using the `_id`
-      artistFetch[2].success _id: 'foobar_mongo_id'
-      _.last(Backbone.sync.args)[1].url()
-        .should.containEql '/api/articles?artist_id=foobar_mongo_id&published=true'
-
-  it 'resolves with the statuses', (done) ->
-    @statuses.fetch().then (statuses) ->
-      statuses.should.eql {
-        artworks: true
-        shows: true
-        artists: true
-        contemporary: true
-        webArticles: true
-        merchandisable: true
-        bibliography: true
-        collections: true
-        exhibitions: true
-        articles: true
-        biography: false
-      }
-      done()
-    successes = _.map(Backbone.sync.args, (args) -> args[2].success)
-    # Artworks
-    successes[0] total: 1
-    _.each(successes[1..(Backbone.sync.args.length - 1)], (success) -> success([{}]))
-    # Articles
-    _.last(successes)(_id: 'foobar_mongo_id')
-    _.last(Backbone.sync.args)[2].success(count: 1)
+  it 'resolves with the statuses',->
+    @statuses.fetch()
+      .then (statuses) ->
+        statuses.should.eql
+          articles: true
+          artists: true
+          artworks: true
+          biography: false
+          contemporary: true
+          shows: true
