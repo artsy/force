@@ -6,7 +6,6 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artist = require '../../../../models/artist'
 ShowsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/shows'), ['template']
-ShowsView.__set__ 'ExhibitionHistoryListView', Backbone.View
 ShowsView.__set__ 'RelatedShowsView', Backbone.View
 
 describe 'ShowsView', ->
@@ -33,21 +32,19 @@ describe 'ShowsView', ->
 
   describe '#initialize', ->
     it 'fetches shows until the end', ->
-      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.callCount.should.equal 1
       Backbone.sync.args[0][2].data.page.should.equal 1
       Backbone.sync.args[0][2].success [fabricate 'show']
-      Backbone.sync.callCount.should.equal 3
+      Backbone.sync.callCount.should.equal 2
       _.last(Backbone.sync.args)[2].data.page.should.equal 2
-
 
   describe '#render', ->
     it 'renders, sets up the template', ->
       @view.$el.html().should.containEql 'Foo Bar shows on Artsy'
 
   describe '#postRender', ->
-    it 'fetches the artist exhibitionHistory', ->
+    it 'fetches the artist shows', ->
       _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist_id=foo-bar&sort=-end_at&displayable=true'
-      _.last(Backbone.sync.args)[1].url.should.containEql '/artist/data/foo-bar/exhibitions'
 
   describe '#renderHeader', ->
     it 're-renders the header copy if new fairs or shows come in', ->
