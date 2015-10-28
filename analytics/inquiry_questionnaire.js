@@ -58,6 +58,10 @@
     track('User changed inquiry message from default');
   });
 
+  $document.on('alert', '.js-inquiry-message', function(e) {
+    track('User nudged to change inquiry message from default');
+  });
+
   $document.on('click', '.js-iq-save-skip', function() {
     track('Clicked on "No thanks don’t save my information"');
   });
