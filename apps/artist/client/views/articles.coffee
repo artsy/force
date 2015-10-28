@@ -9,10 +9,8 @@ module.exports = class ArticlesView extends Backbone.View
   subViews: []
 
   initialize: ->
-    @listenTo @model.related().webArticles, 'sync', @render
     @listenTo @model.related().articles, 'sync', @render
     @model.related().articles.fetch()
-    @model.related().webArticles.fetch()
 
   postRender: ->
     relatedArticlesView = new RelatedArticlesView
@@ -27,7 +25,6 @@ module.exports = class ArticlesView extends Backbone.View
     @$el.html template
       artist: @model
       articles: @model.related().articles.models
-      webArticles: @model.related().webArticles.models
     _.defer => @postRender()
     this
 

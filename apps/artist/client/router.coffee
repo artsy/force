@@ -9,8 +9,6 @@ WorksView = require './views/works.coffee'
 ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
-PublicationsView = require './views/publications.coffee'
-CollectionsView = require './views/collections.coffee'
 BiographyView = require './views/biography.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
@@ -67,12 +65,6 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   relatedArtists: ->
     @view = new RelatedArtistsView @options
-
-  publications: ->
-    @view = new PublicationsView @options
-
-  collections: ->
-    @view = new CollectionsView @options
 
   biography: ->
     @view = new BiographyView @options
