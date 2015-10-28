@@ -6,15 +6,32 @@ arrow-width = 40px
 arrow-offset = -30px
 body-height = 200px
   
+carousel-n-up(n, gap)
+  > .carousel-item
+    margin gap gap 0 gap
+  @media screen and (max-width: 1024px)
+    > .carousel-item
+      margin (gap / 2) (gap / 2) 0 (gap / 2)
 
-.partner-cell-grid-3-up
-  grid-3-up(20px, 30px)
-.partner-cell-grid-3-up > .grid-item
+carousel-3-up(offset, gap)
+  carousel-n-up(3, gap)
+  > .carousel-item
+    width 32%
+    width calc('33.33% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .carousel-item
+      offset = offset / 2
+      width calc('33.33% - %s' % offset)
+
+.partner-cell-carousel-3-up
+  carousel-3-up(20px, 30px)
+  
+.partner-cell-carousel-3-up > .carousel-item
   margin-top row-gap
   @media screen and (max-width: 1024px)
     margin-top row-gap/2
 
-.partner-carousel .partner-cell-grid-3-up > .grid-item
+.partner-carousel .partner-cell-grid-3-up > .carousel-item
   margin-top 0
 
 .partner-cell-carousel-header > *
