@@ -14,15 +14,16 @@ module.exports = class ClockView extends Backbone.View
   almostOver: 60
   modelName: 'Auction'
 
-  initialize: ({ @closedText, @modelName }) ->
+  initialize: ({ @closedText, @modelName, @stateCallback}) ->
     @closedText ?= 'Online Bidding Closed'
+    @stateCallback = @stateCallback or (-> location.reload())
 
   start: (callback = $.noop) ->
     @model.calculateOffsetTimes
       success: =>
-        @model.on('change:clockState', ->
+        @model.on('change:clockState', =>
           clearInterval @interval
-          location?.reload()
+          @stateCallback()
         )
         @render()
         callback()
