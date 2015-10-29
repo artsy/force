@@ -9,26 +9,30 @@ if hero
       if hero.caption
         p!= hero.caption
 
-//- Title & Lead Paragraph
-h1= article.get('title')
-if article.strip('lead_paragraph')
-  h3!= article.get('lead_paragraph')
+//- Title & Lead Paragraph -- JO'T: I think this bit should be cut based on Apple News formatting
+//- h1= article.get('title')
+//- if article.strip('lead_paragraph')
+//-   h3!= article.get('lead_paragraph')
 
-//- Author
-if article.get('author') || article.get('contributing_authors')
+//- Author - 'contributing' gets primacy for now b/c 'author' is always 
+//- 'Artsy Editorial', with people names listed in 'contributing_authors'
+if article.get('author') && article.get('contributing_authors')
   h2
     | By&nbsp;
-    if article.get('author')
+    - var authors = article.get('contributing_authors')
+    if authors
+      for author, i in authors
+          a( href="#{sd.APP_URL}/#{author.profile_id}" )
+            = author.name
+          if (authors.length > 1)
+            if i === (authors.length - 2)
+            | &nbsp; and
+          else
+            | ,&nbsp;
+    else if article.get('author')
       a( href="#{sd.APP_URL}/#{article.get('author').profile_id}" )
         = article.get('author').name
-    | &nbsp;
-    if article.get('contributing_authors')
-      | and&nbsp;
-      for author, i in article.get('contributing_authors')
-        a( href="#{sd.APP_URL}/#{author.profile_id}" )
-          = author.name
-          if i < article.get('contributing_authors').length
-            | ,&nbsp;
+      | &nbsp;
 
 //- Content
 for section, i in article.get('sections')
