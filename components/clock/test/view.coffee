@@ -18,7 +18,7 @@ describe 'ClockView', ->
       sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      @locationStub = sinon.stub location, 'reload'
+      sinon.stub location, 'reload'
       Backbone.$ = $
       @view = new ClockView
         model: new Sale(fabricate('sale'), clockState: 'open')
@@ -28,7 +28,7 @@ describe 'ClockView', ->
   after ->
     benv.teardown()
     Backbone.sync.restore()
-    @locationStub.restore()
+    location.reload.restore()
 
   beforeEach ->
     @triggerSpy = sinon.stub()
