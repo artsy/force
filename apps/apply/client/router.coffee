@@ -13,6 +13,7 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     'apply': 'step1'
     'apply/': 'step1'
     'apply/:mode': 'step1'
+    'apply/:mode/': 'step1'
     'apply/:mode/2': 'step2'
     'apply/:mode/3': 'step3'
     'apply/:mode/success': 'success'
