@@ -1,7 +1,7 @@
 _ = require 'underscore'
 fs = require 'fs'
-news_template = require('jade').compileFile(require.resolve '../templates/news.jade')
-article_template = require('jade').compileFile(require.resolve '../templates/article.jade')
+newsTemplate = require('jade').compileFile(require.resolve '../templates/news.jade')
+articleTemplate = require('jade').compileFile(require.resolve '../templates/article.jade')
 sd =
   APP_URL: 'http://localhost'
 { fabricate } = require 'antigravity'
@@ -12,7 +12,7 @@ moment = require 'moment'
 describe '/rss', ->
   describe 'news', ->
     it 'renders no news', ->
-      rendered = news_template(sd: sd, articles: new Articles)
+      rendered = newsTemplate(sd: sd, articles: new Articles)
       rendered.should.containEql '<title>Artsy News</title>'
       rendered.should.containEql '<atom:link href="http://localhost/rss/news" rel="self" type="application/rss+xml">'
       rendered.should.containEql '<description>Featured Artsy articles.</description>'
@@ -22,7 +22,7 @@ describe '/rss', ->
         new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString()),
         new Article(thumbnail_title: 'World', published_at: new Date().toISOString())
       ]
-      rendered = news_template(sd: sd, articles: articles, moment: moment)
+      rendered = newsTemplate(sd: sd, articles: articles, moment: moment)
       rendered.should.containEql '<title>Artsy News</title>'
       rendered.should.containEql '<atom:link href="http://localhost/rss/news" rel="self" type="application/rss+xml">'
       rendered.should.containEql '<description>Featured Artsy articles.</description>'
@@ -41,7 +41,7 @@ describe '/rss', ->
           profile_id: '5086df078523e60002000009'
         }
       )
-      rendered = article_template(sd: sd, article: article)
+      rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'James'
       rendered.should.containEql 'http://localhost/foo'
       rendered.should.not.containEql 'Artsy Editorial'
@@ -67,7 +67,7 @@ describe '/rss', ->
           profile_id: '5086df078523e60002000009'
         }
       )
-      rendered = article_template(sd: sd, article: article)
+      rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'By&nbsp;<a href="http://localhost/foo">James</a>,&nbsp;'
       rendered.should.containEql '<a href="http://localhost/bar">Plato</a>&nbsp;and&nbsp;'
       rendered.should.containEql '<a href="http://localhost/baz">Aeschylus</a></h2>'
@@ -82,5 +82,5 @@ describe '/rss', ->
           profile_id: '5086df078523e60002000009'
         }
       )
-      rendered = article_template(sd: sd, article: article)
+      rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'Artsy Editorial'
