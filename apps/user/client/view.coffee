@@ -8,6 +8,7 @@ module.exports = class UserSettingsView extends Backbone.View
 
   events:
     'click .garamond-tab': 'changeTab'
+    'click #receive_emails': 'changeEmailSubscription'
 
   initialize: (options = {}) ->
     { @profile, @userEdit } = options
@@ -26,3 +27,12 @@ module.exports = class UserSettingsView extends Backbone.View
   changeTab: (e) ->
     e.preventDefault()
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
+
+  changeEmailSubscription: (event) ->
+    receive_emails = if $(event.target).is ':checked' then true else false
+    $('#settings-email-preferences input').not(event.target).prop('disabled', !receive_emails)
+    opacity = if receive_emails then 1 else 0.3
+    console.log(opacity)
+    $('#settings-email-preferences label').not("label[for=#{event.target.id}]").fadeTo("slow", opacity)
+
+

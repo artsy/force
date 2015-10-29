@@ -129,6 +129,7 @@ mixin checkbox(name, label)
   .gs-header: h2 Email
   .gs-body: .gs-constrain
     #settings-email-preferences: form
+      +checkbox('receive_emails', 'Receive Emails')
       +checkbox('receive_weekly_email', 'Weekly featured content from Artsy')
       +checkbox('receive_personalized_email', 'Weekly personalized email')
       +checkbox('receive_follow_users_email', 'When I have new followers')
