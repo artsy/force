@@ -28,6 +28,7 @@ describe 'ClockView', ->
   after ->
     benv.teardown()
     Backbone.sync.restore()
+    location.reload.restore()
 
   beforeEach ->
     @triggerSpy = sinon.stub()
