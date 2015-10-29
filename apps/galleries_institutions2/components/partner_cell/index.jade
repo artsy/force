@@ -4,7 +4,11 @@
 a.partner-featured-image.hoverable-image-link(
   href= profile.href()
 )
-  .hoverable-image.is-three-two(class= imageUrl ? "" : "is-missing", data-initials= profile.defaultIconInitials())
+  .hoverable-image.is-three-two(
+    class= imageUrl ? "" : "is-missing"
+    data-initials= partner.defaultIconInitials()
+    style=(imageUrl ? "background-image: url(#{imageUrl});" : undefined)
+  )
 
 .partner-cell-metadata
   a.partner-cell-name.avant-garde-header( href= profile.href() )= partner.get('name')

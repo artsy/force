@@ -55,13 +55,7 @@ module.exports = class Profile extends Backbone.Model
     @related().owner?.get('name')
 
   defaultIconInitials: ->
-    iconInitials = ''
-    if @isPartner()
-      reduceFunction = (result, name) ->
-        return result unless name[0] and /\w/.test name[0]
-        result + name[0]
-      iconInitials = _.reduce(@displayName()?.split(' '), reduceFunction, '')[0..1]
-    iconInitials
+    if @isPartner() then @related().owner?.defaultIconInitials() else ''
 
   getFormattedWebsite: ->
     if @has 'website'

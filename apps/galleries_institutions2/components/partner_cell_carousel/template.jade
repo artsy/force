@@ -5,12 +5,10 @@
   a.partner-cell-carousel-header-right(href='#')
     |View All
 .partner-cell-carousel-body
-  .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow
-    |left
-  .partner-cell-carousel-content.partner-cell-grid-3-up
+  .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left
+  .partner-cell-carousel-content.partner-cell-carousel-3-up
     each partner in partners
       .partner-cell.grid-item(data-id= partner.get('id'))
         include ../partner_cell/index
 
-  .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow
-    |right
+  .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right

@@ -7,12 +7,12 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCell extends Backbone.View
   initialize: ({ @following }) ->
-    @profile = @model.related().profile 
+    @profile = @model.related().profile
     @listenTo @model.related().locations, 'sync', @render
     @listenTo @model, 'change:imageUrl', @render
 
-  render: ->
-    @$el.html template @model, @imageUrl
+  render: =>
+    @$el.html template partner:@model, imageUrl:@model.get('imageUrl')
 
   attachFollowing: ->
     new FollowButton
@@ -20,28 +20,23 @@ module.exports = class PartnerCell extends Backbone.View
       modelName: 'profile'
       model: @profile
       el: @$('.partner-cell-follow-button')
-    
-  getLocation: ->
-    @partner.related().locations.fetch
 
   setImage: (imageUrl) =>
     if imageUrl and not /missing_image.png/.test(imageUrl)
-      @imageUrl = imageUrl
-      @$image.removeClass 'is-missing'
+      @model.set('imageUrl', imageUrl)
       return true
     else
       return false
 
-  getImage: ->
-
-    getProfileCoverImage = =>
-      @profile.fetch success: (profile) ->
+  getProfile: ->
+    @profile.fetch success: (profile) =>
       imageUrl = profile.coverImage()?.imageUrl('wide')
-      @setImage(imageUrl)
+      if !@setImage(imageUrl)
+        @render()
 
-
-    @partner.related().shows.fetch(
-      success: (shows) ->
+  getShows: ->
+    @model.related().shows.fetch(
+      success: (shows) =>
         featuredImage = shows.featured()?.posterImageUrl() 
 
         if !@setImage(featuredImage)
@@ -50,11 +45,11 @@ module.exports = class PartnerCell extends Backbone.View
           , null)
 
           if !@setImage(firstImage)
-            getProfileCoverImage()
+            @getProfile()
 
-      , error: getProfileCoverImage)
+      , error: @getProfile)
 
   fetchMetadata: ->
-    @getLocation()
-    @getImage()
+    @model.related().locations.fetch()
+    @getShows()
 

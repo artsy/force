@@ -41,6 +41,14 @@ module.exports = class Partner extends Backbone.Model
   displayName: ->
     @get('name')
 
+  defaultIconInitials: ->
+    iconInitials = ''
+    reduceFunction = (result, name) ->
+      return result unless name[0] and /\w/.test name[0]
+      result + name[0]
+    iconInitials = _.reduce(@displayName()?.split(' '), reduceFunction, '')[0..1]
+    iconInitials
+
   displayNameAndLocation: ->
     _.compact([
       @displayName()
