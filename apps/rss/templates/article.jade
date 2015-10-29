@@ -9,11 +9,6 @@ if hero
       if hero.caption
         p!= hero.caption
 
-//- Title & Lead Paragraph -- JO'T: I think this bit should be cut based on Apple News formatting
-//- h1= article.get('title')
-//- if article.strip('lead_paragraph')
-//-   h3!= article.get('lead_paragraph')
-
 //- Author - 'contributing' gets primacy for now b/c 'author' is always 
 //- 'Artsy Editorial', with people names listed in 'contributing_authors'
 if article.get('author') || article.get('contributing_authors')
