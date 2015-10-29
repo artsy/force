@@ -107,31 +107,31 @@ describe 'ClockView', ->
 
   describe '#stateCallback', ->
     it 'defaults to reloading the page when the clock state changes', ->
-      clock_view = new ClockView
+      clockView = new ClockView
         model: new Sale(fabricate('sale'), clockState: 'open')
         el: $("<div></div>")
 
-      clock_view.start()
+      clockView.start()
       _.last(Backbone.sync.args)[2].success { time: moment().format() }
 
       location.reload.called.should.equal false
-      clock_view.model.set('clockState', 'closed')
+      clockView.model.set('clockState', 'closed')
       location.reload.called.should.equal true
 
     it 'can be overridden with anything', ->
       @hello = 'cat'
 
-      clock_view = new ClockView
+      clockView = new ClockView
         model: new Sale(fabricate('sale'), clockState: 'open')
         el: $("<div></div>")
         stateCallback: =>
           @hello = 'world'
 
-      clock_view.start()
+      clockView.start()
       _.last(Backbone.sync.args)[2].success { time: moment().format() }
 
       @hello.should.equal 'cat'
 
-      clock_view.model.set('clockState', 'closed')
+      clockView.model.set('clockState', 'closed')
 
       @hello.should.equal 'world'
