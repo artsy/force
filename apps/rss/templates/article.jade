@@ -16,23 +16,21 @@ if hero
 
 //- Author - 'contributing' gets primacy for now b/c 'author' is always 
 //- 'Artsy Editorial', with people names listed in 'contributing_authors'
-if article.get('author') && article.get('contributing_authors')
+if article.get('author') || article.get('contributing_authors')
   h2
     | By&nbsp;
     - var authors = article.get('contributing_authors')
-    if authors
+    if authors[0].name !== undefined
       for author, i in authors
           a( href="#{sd.APP_URL}/#{author.profile_id}" )
             = author.name
-          if (authors.length > 1)
-            if i === (authors.length - 2)
-            | &nbsp; and
-          else
+          if (authors.length > 1) && (i === (authors.length - 2))
+            | &nbsp;and&nbsp;
+          else if (authors.length > 1) && (i < (authors.length - 1))
             | ,&nbsp;
     else if article.get('author')
       a( href="#{sd.APP_URL}/#{article.get('author').profile_id}" )
         = article.get('author').name
-      | &nbsp;
 
 //- Content
 for section, i in article.get('sections')

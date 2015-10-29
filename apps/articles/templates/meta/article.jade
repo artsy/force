@@ -1,8 +1,5 @@
 title= article.get('thumbnail_title')
 meta( property="og:title", content=article.get('thumbnail_title') )
-//-No description field in the Writer API at present
-//-meta( name="description", content=article.get('thumbnail_teaser') )
-//-meta( property="og:description", content=article.get('thumbnail_teaser') )
 link( rel="canonical", href=(sd.APP_URL + '/article/' + article.get('slug')) )
 meta( property="og:site_name" content='Artsy')
 meta( property="og:url", content=(sd.APP_URL + '/article/' + article.get('slug')) )
@@ -21,16 +18,3 @@ meta( name='cre', content='Artsy')
 meta( property='fb:app_id', content='308278682573501')
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
-//-Use contributing_authors for now because author value is 'Artsy Editorial'
-if article.get('contributing_authors') && article.get('contributing_authors').length
-  - var a = article.get('contributing_authors')
-  - var l = a.length
-  - var nameArray = []
-  - var profileArray = []
-  - for(i = 0; i < l; i++)
-      if a[i].name
-        - nameArray.push(a[i].name)
-      if a[i].profile_id
-        - profileArray.push(sd.APP_URL + '/' + a[i].profile_id)
-  meta( name='author', content=nameArray.join(',') )
-  meta( property='article:author', content=profileArray.join(',') )
