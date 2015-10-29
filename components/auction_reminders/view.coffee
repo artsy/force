@@ -26,6 +26,8 @@ module.exports = class AuctionReminderView extends Backbone.View
       el: @$('.js-auction-reminder-clock')
       model: @model
       modelName: 'Auction'
+      stateCallback: =>
+        @close()
 
     @clock.start =>
       @$el.attr 'data-state', 'open'

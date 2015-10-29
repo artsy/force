@@ -1,3 +1,4 @@
+_ = require 'underscore'
 sd = require('sharify').data
 benv = require 'benv'
 Backbone = require 'backbone'
@@ -17,6 +18,7 @@ describe 'ClockView', ->
       sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
+      sinon.stub location, 'reload'
       Backbone.$ = $
       @view = new ClockView
         model: new Sale(fabricate('sale'), clockState: 'open')
@@ -26,6 +28,7 @@ describe 'ClockView', ->
   after ->
     benv.teardown()
     Backbone.sync.restore()
+    location.reload.restore()
 
   beforeEach ->
     @triggerSpy = sinon.stub()
@@ -101,3 +104,34 @@ describe 'ClockView', ->
       @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @triggerSpy.args[0][0].should.equal 'clock:is-over'
+
+  describe '#stateCallback', ->
+    it 'defaults to reloading the page when the clock state changes', ->
+      clockView = new ClockView
+        model: new Sale(fabricate('sale'), clockState: 'open')
+        el: $("<div></div>")
+
+      clockView.start()
+      _.last(Backbone.sync.args)[2].success { time: moment().format() }
+
+      location.reload.called.should.equal false
+      clockView.model.set('clockState', 'closed')
+      location.reload.called.should.equal true
+
+    it 'can be overridden with anything', ->
+      @hello = 'cat'
+
+      clockView = new ClockView
+        model: new Sale(fabricate('sale'), clockState: 'open')
+        el: $("<div></div>")
+        stateCallback: =>
+          @hello = 'world'
+
+      clockView.start()
+      _.last(Backbone.sync.args)[2].success { time: moment().format() }
+
+      @hello.should.equal 'cat'
+
+      clockView.model.set('clockState', 'closed')
+
+      @hello.should.equal 'world'
