@@ -55,7 +55,7 @@ block body
             unless article.id === sectionArticle.get('id')
               +article-figure(sectionArticle, 440, false, false)
       else
-        h1 What to Read Next
+        h3 What to Read Next
         ul#articles-footer-list
           for footerArticle in footerArticles.models
             unless article.id === footerArticle.get('id')
