@@ -3,7 +3,10 @@ _ = require 'underscore'
 sd = require('sharify').data
 should = require 'should'
 Backbone = require 'backbone'
-Partner = require '../../models/partner'
+# Partner = require '../../models/partner'
+# User = require '../../models/user'
+# Fair = require '../../models/fair.coffee'
+# FairOrganizer = require '../../models/fair_organizer'
 Profile = require '../../models/profile'
 sinon = require 'sinon'
 
@@ -108,6 +111,23 @@ describe 'Profile', ->
 
       @profile.related().owner.set 'name', "2 % Johan _ Gregor 37"
       @profile.defaultIconInitials().should.equal "2J"
+
+  describe.only 'related owner', ->
+    it "creates PartnerGallery", ->
+      @profile.set 'owner_type', 'PartnerGallery'
+      @profile.related().owner.constructor.name.should.equal 'Partner'
+    it "creates PartnerMuseum", ->
+      @profile.set 'owner_type', 'PartnerMuseum'
+      @profile.related().owner.constructor.name.should.equal 'Partner'
+    it "creates User", ->
+      @profile.set 'owner_type', 'User'
+      @profile.related().owner.constructor.name.should.equal 'User'
+    it "creates Fair", ->   
+      @profile.set 'owner_type', 'Fair'
+      @profile.related().owner.constructor.name.should.equal 'Fair'
+    it "creates FairOrganizer", ->
+      @profile.set 'owner_type', 'FairOrganizer'
+      @profile.related().owner.constructor.name.should.equal 'FairOrganizer'
 
   describe '#formatFollowText', ->
 
