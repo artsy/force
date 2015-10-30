@@ -32,7 +32,6 @@ module.exports = class UserSettingsView extends Backbone.View
     receive_emails = if $(event.target).is ':checked' then true else false
     $('#settings-email-preferences input').not(event.target).prop('disabled', !receive_emails)
     opacity = if receive_emails then 1 else 0.3
-    console.log(opacity)
     $('#settings-email-preferences label').not("label[for=#{event.target.id}]").fadeTo("slow", opacity)
 
 
