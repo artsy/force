@@ -17,10 +17,12 @@ block body
               span.galleries-institutions-count-value= partnerCount
               = ' '
               span.galleries-institutions-count-label Selected #{copy.adjective} Partners
-        if isActive('/galleries')
-          a.galleries-institutions-insights-link(href='/' + sd.GALLERY_INSIGHTS_SLUG) Gallery Insights Newsletter
-      h1.galleries-institutions-title
-        = copy.header
+          if isActive('/galleries')
+            a.galleries-institutions-insights-link(href='/' + sd.GALLERY_INSIGHTS_SLUG) Gallery Insights Newsletter
+        h1.galleries-institutions-title
+          = copy.header
+        .galleries-design-wrapper
+            a.avant-garde-button-text.galleries-design-link(href='/feature/design-galleries') Browse Design Galleries
 
     if featuredProfiles
       include ./featured_profiles

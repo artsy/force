@@ -4,16 +4,23 @@
   padding 40px 0
 .galleries-institutions-header-meta
   clearfix()
+  position relative
+
 .galleries-institutions-title
-  margin 20px 0 40px 0
   font-size 30px
   line-height 1
-  text-align center
-.galleries-institutions-header-info
-  float left
+  position absolute
+  left 50%
+  transform translateX(-50%)
+  top 0
 
-.galleries-institutions-insights-link
-  float right
+
+.galleries-institutions-header-info
+  width 297px
+  float left
+  text-align center
+  position relative
+  top -10px
 
 .galleries-institutions-featured-profiles
   margin 40px 0
@@ -45,3 +52,28 @@
   font-size 22px
   line-height 1.2
   text-align center
+
+.galleries-design-wrapper
+  position absolute
+  right 20px
+  top 3px
+
+.galleries-design-link::after
+  font-family 'artsy-icons'
+  speak none
+  font-style normal
+  font-weight normal
+  font-variant normal
+  text-transform none
+  text-decoration none
+  line-height 32px
+  font-size 32px
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  content '\e607'
+  vertical-align middle
+  position absolute
+  top 50%
+  right -20px
+  font-size 15px
+  transform translateY(-50%)
