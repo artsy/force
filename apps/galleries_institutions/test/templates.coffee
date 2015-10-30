@@ -40,7 +40,7 @@ describe 'Galleries / Institutions', ->
     it 'renders an A to Z list of institutional partners with links to the partner', ->
       @profiles.each (profile) ->
         markup = $('.galleries-institutions-list').html()
-        markup.should.containEql profile.get('owner').name
+        markup.should.containEql profile.related().owner.get('name')
         markup.should.containEql "/#{profile.id}"
       $('.a-to-z-row-letter').eq(0).text().should.equal @aToZGroup[0].letter
       $('.a-to-z-row-letter').eq(1).text().should.equal @aToZGroup[1].letter

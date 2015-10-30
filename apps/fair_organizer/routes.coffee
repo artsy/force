@@ -33,7 +33,7 @@ representation = (fair) ->
   # the fair fair_organizer data is pretty minor,
   # all of its attributes are included in the initial
   # profile fetch
-  fairOrg = new FairOrganizer profile.get('owner')
+  fairOrg = profile.related().owner
 
   fairs = new Fairs
 

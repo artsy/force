@@ -35,7 +35,7 @@ describe 'PartnerView', ->
         )
         mod.__set__("sectionToView", {});
         @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get('owner')
+        @partner = profile.related().owner
         @tablistTemplate = sinon.stub()
         mod.__set__ 'tablistTemplate', @tablistTemplate
 

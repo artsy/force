@@ -7,11 +7,14 @@ module.exports =
 
     Partner = require '../../partner.coffee'
 
-    if @get('owner_type') is 'User'
-      owner = new Backbone.Model @get('owner')
-      owner.urlRoot = "#{API_URL}/api/v1/user"
-    else
+    if @isPartner()
       owner = new Partner @get('owner')
+    else if @isFairOrganizer()
+      owner = new FairOrganizer @get('owner')
+    else if @isFair
+      owner = new Fair @get('owner')
+    else if @isUser
+      owner = new User @get('owner')
 
     @__related__ =
       owner: owner

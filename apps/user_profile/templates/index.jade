@@ -23,5 +23,5 @@ block body
     #profile-favorites.main-layout-container
     #profile-favorites-spinner
       .loading-spinner
-    #profile-feed-none #{profile.get('owner').name} has no articles.
+    #profile-feed-none #{profile.related().owner.get('name')} has no articles.
   include ../../../components/main_layout/templates/json_ld
