@@ -12,17 +12,21 @@ html( data-useragent=userAgent )
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
   body( class='#{bodyClass} body-header-fixed is-microsite' )
     include ../../modal/template
-    include ../header/templates/microsite
+    include ../../main_layout/header/templates/microsite
     include ../../flash/template
 
     #main-layout-container
-      block body
+      block coverImage
 
+      #fair-page
+        block header
 
-    include ../footer/template
+        block body
+
+    include ../../main_layout/footer/template
 
     #scripts
-      include scripts
+      include ../../main_layout/templates/scripts
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
       block scripts
