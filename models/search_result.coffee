@@ -18,7 +18,7 @@ module.exports = class SearchResult extends Backbone.Model
     @value = @display()
 
   display: ->
-    _s.trim(@get('name') || @related().owner?.get('name') || @get('display'))
+    _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
     _s.trim(_s.truncate(@get('display'), 75))

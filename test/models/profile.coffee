@@ -3,10 +3,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 should = require 'should'
 Backbone = require 'backbone'
-# Partner = require '../../models/partner'
-# User = require '../../models/user'
-# Fair = require '../../models/fair.coffee'
-# FairOrganizer = require '../../models/fair_organizer'
 Profile = require '../../models/profile'
 sinon = require 'sinon'
 
@@ -112,7 +108,7 @@ describe 'Profile', ->
       @profile.related().owner.set 'name', "2 % Johan _ Gregor 37"
       @profile.defaultIconInitials().should.equal "2J"
 
-  describe.only 'related owner', ->
+  describe 'related owner', ->
     it "creates PartnerGallery", ->
       @profile.set 'owner_type', 'PartnerGallery'
       @profile.related().owner.constructor.name.should.equal 'Partner'

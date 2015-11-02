@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
 { fabricate } = require 'antigravity'
-
+Profile = require '../../../models/profile.coffee'
 describe 'User profile routes', ->
 
   beforeEach ->
@@ -11,7 +11,7 @@ describe 'User profile routes', ->
     @req = { params: { id: 'foobar' } }
     @res =
       locals:
-        profile: new Backbone.Model(fabricate 'profile', owner: fabricate('user'))
+        profile: new Profile(fabricate 'profile')
         sd: {}
       render: sinon.stub()
 

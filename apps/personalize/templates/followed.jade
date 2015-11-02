@@ -2,7 +2,7 @@
   for model in models
     .results-list-item
       span.pfa-name.avant-garde-results-list-item-cell
-        if model.related().owner
+        if model.related && model.related().owner
           = model.related().owner.get('name')
         else
           = model.get('name')
