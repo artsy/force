@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 
 # Fails intermittenly and sometimes causes other suites to fail
-xdescribe 'setupAuctionReminder', ->
+describe 'setupAuctionReminder', ->
 
   beforeEach (done) ->
     benv.setup ->     
