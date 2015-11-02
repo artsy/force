@@ -2,12 +2,12 @@ for profile in suggestions.models
   .grid-item.popover-parent
     if profile.get('bio')
       .popover
-        .personalize-popover-name= profile.get('owner').name
+        .personalize-popover-name= profile.related().owner.get('name')
         p= profile.get('bio')
     include ../../../components/partner_profile_cover/template
     .personalize-suggestion-name
-      = profile.get('owner').name
-    .personalize-suggestion-location( data-id= profile.get('owner').id )
+      = profile.related().owner.get('name')
+    .personalize-suggestion-location( data-id= profile.related().owner.id )
       | &hellip;
     .personalize-suggestion-info
       = profile.get('locations')

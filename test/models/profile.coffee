@@ -3,7 +3,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 should = require 'should'
 Backbone = require 'backbone'
-Partner = require '../../models/partner'
 Profile = require '../../models/profile'
 sinon = require 'sinon'
 
@@ -69,7 +68,7 @@ describe 'Profile', ->
   describe '#displayName', ->
 
     it "returns the profile owner's display name", ->
-      @profile.displayName().should.equal @profile.get('owner').name
+      @profile.displayName().should.equal @profile.related().owner.get('name')
 
   describe '#isFairOrOrganizer', ->
 
@@ -96,18 +95,35 @@ describe 'Profile', ->
     it "returns up to two initials for a partner name", ->
       @profile.defaultIconInitials().should.equal "JP"
 
-      @profile.get('owner').name = "Whitney"
+      @profile.related().owner.set 'name', "Whitney"
       @profile.defaultIconInitials().should.equal "W"
 
-      @profile.get('owner').name = "John Jacob Jingle Heimer Schmidt"
+      @profile.related().owner.set 'name', "John Jacob Jingle Heimer Schmidt"
       @profile.defaultIconInitials().should.equal "JJ"
 
     it "does not include non-word characters", ->
-      @profile.get('owner').name = "Chime & Read"
+      @profile.related().owner.set 'name', "Chime & Read"
       @profile.defaultIconInitials().should.equal "CR"
 
-      @profile.get('owner').name = "2 % Johan _ Gregor 37"
+      @profile.related().owner.set 'name', "2 % Johan _ Gregor 37"
       @profile.defaultIconInitials().should.equal "2J"
+
+  describe 'related owner', ->
+    it "creates PartnerGallery", ->
+      @profile.set 'owner_type', 'PartnerGallery'
+      @profile.related().owner.constructor.name.should.equal 'Partner'
+    it "creates PartnerMuseum", ->
+      @profile.set 'owner_type', 'PartnerMuseum'
+      @profile.related().owner.constructor.name.should.equal 'Partner'
+    it "creates User", ->
+      @profile.set 'owner_type', 'User'
+      @profile.related().owner.constructor.name.should.equal 'User'
+    it "creates Fair", ->   
+      @profile.set 'owner_type', 'Fair'
+      @profile.related().owner.constructor.name.should.equal 'Fair'
+    it "creates FairOrganizer", ->
+      @profile.set 'owner_type', 'FairOrganizer'
+      @profile.related().owner.constructor.name.should.equal 'FairOrganizer'
 
   describe '#formatFollowText', ->
 
@@ -191,12 +207,12 @@ describe 'Profile', ->
   describe '#fetchFavorites', ->
 
     it 'fetches the saved-artwork collection based on the owner', ->
-      @profile.get('owner').id = 'foobar'
+      @profile.related().owner.set('id', 'foobar')
       @profile.fetchFavorites({})
       Backbone.sync.args[0][1].url.should.containEql 'saved-artwork/artworks'
 
     it 'returns feed items with a set url', (done) ->
-      @profile.get('owner').id = 'foobar'
+      @profile.related().owner.set('id', 'foobar')
       @profile.fetchFavorites success: (items) ->
         items.url.should.containEql 'saved-artwork/artworks'
         done()

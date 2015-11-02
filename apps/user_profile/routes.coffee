@@ -12,7 +12,8 @@
     return next err
   data = { private: true }
   data.access_token = req.user.get('accessToken') if req.user
-  new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id).fetch
+  console.log profile
+  new ArtworkCollection(id: req.params.id, user_id: profile.related().owner.id).fetch
     data: data
     error: res.backboneError
     success: (collection) ->

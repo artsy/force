@@ -199,7 +199,7 @@ aggregationParams = require './components/browse/aggregations.coffee'
 
   return next() unless profile?.isFairOrganizer()
 
-  fairOrg = new FairOrganizer profile.get('owner')
+  fairOrg = profile.related().owner
 
   # Get all fairs for the requested fair organizer
   pastFairs = new Fairs

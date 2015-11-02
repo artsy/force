@@ -5,13 +5,23 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    Partner = require '../../partner.coffee'
+    if @isPartner()
+      Partner = require '../../partner.coffee'
+      owner = new Partner(@get('owner'))
 
-    if @get('owner_type') is 'User'
-      owner = new Backbone.Model @get('owner')
-      owner.urlRoot = "#{API_URL}/api/v1/user"
-    else
-      owner = new Partner @get('owner')
+    if @isFairOrganizer()
+      FairOrganizer = require '../../fair_organizer.coffee'
+      owner = new FairOrganizer(@get('owner'))
+
+    if @isFair()
+      Fair = require '../../fair.coffee'
+      owner = new Fair(@get('owner'))
+
+    if @isUser()
+      User = require '../../user.coffee'
+      owner = new User(@get('owner'))
+      
+    owner ?= new Backbone.Model @get('owner')
 
     @__related__ =
       owner: owner

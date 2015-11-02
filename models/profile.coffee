@@ -52,7 +52,7 @@ module.exports = class Profile extends Backbone.Model
     "/#{@get('id')}"
 
   displayName: ->
-    @get('owner')?.name
+    @related().owner?.get('name')
 
   defaultIconInitials: ->
     iconInitials = ''
@@ -78,7 +78,7 @@ module.exports = class Profile extends Backbone.Model
   # Get either the default fair id (from FairOrganizer)
   # or the id (from Fair)
   fairOwnerId: ->
-    @get('owner').default_fair_id || @get('owner').id
+    @related().owner.get('default_fair_id') || @related().owner.get('id')
 
   profileType: ->
     if @isUser()
@@ -117,7 +117,7 @@ module.exports = class Profile extends Backbone.Model
     favorites.url = "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
     favorites.params = _.extend {
       sort: '-position'
-      user_id: @get('owner').id
+      user_id: @related().owner.get('id')
       private: true
       page: 1
     }, options.data

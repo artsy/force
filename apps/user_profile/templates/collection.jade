@@ -8,7 +8,7 @@ append locals
   - bodyClass = bodyClass + ' user-profile-collection-body'
 
 block body
-  - isUser = user && user.get('id') == profile.get('owner').id
+  - isUser = user && user.get('id') == profile.related().owner.id
   #user-profile-collection.main-layout-container( class=(isUser ? '' : 'upc-isnt-user') )
     header
       a.contextual-return-link(

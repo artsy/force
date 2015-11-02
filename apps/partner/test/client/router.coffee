@@ -44,7 +44,7 @@ describe 'PartnerRouter', ->
       Backbone.sync.restore()
 
     it 'renders correct section with parameters', ->
-      @router = new @PartnerRouter {profile: @profile, partner: @profile.get('owner')}
+      @router = new @PartnerRouter {profile: @profile, partner: @profile.related().owner}
 
       settings = {
         'aggregations': ['dimension_range', 'medium', 'price_range', 'total', 'for_sale']
