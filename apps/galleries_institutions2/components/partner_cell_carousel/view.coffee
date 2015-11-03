@@ -4,8 +4,13 @@ template = -> require('./template.jade') arguments...
 PartnerCell = require '../partner_cell/view.coffee'
 { Following } = require '../../../../components/follow_button/index.coffee'
 Profile = require '../../../../models/profile.coffee'
+initCarousel = require '../../../../components/merry_go_round/index.coffee'
 
 module.exports = class PartnerCellCarousel extends Backbone.View
+  events:
+    'click .partner-cell-carousel-arrow-right': 'next'
+    'click .partner-cell-carousel-arrow-left': 'prev'
+
   initialize: ({@partners}) ->
 
   setupFollowing: ->
@@ -24,3 +29,11 @@ module.exports = class PartnerCellCarousel extends Backbone.View
       cell
     this
 
+  setupCarousel: ->
+    @flickity = initCarousel(@$('.partner-cell-carousel-content')).cells.flickity
+
+  next: ->
+    @flickity.next()
+
+  prev: ->
+    @flickity.prev()

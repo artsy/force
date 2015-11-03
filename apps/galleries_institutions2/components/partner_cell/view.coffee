@@ -37,10 +37,10 @@ module.exports = class PartnerCell extends Backbone.View
   getShows: ->
     @model.related().shows.fetch(
       success: (shows) =>
-        featuredImage = shows.featured()?.posterImageUrl() 
+        featuredImage = shows.featured()?.posterImageUrl()
 
-        if !@setImage(featuredImage)
-          firstImage = _.reduceRight(shows, (a, b) ->
+        if !@setImage(featuredImage) && shows.length > 0
+          firstImage = _.reduceRight(shows.models, (a, b) ->
             return b.posterImageUrl() || a
           , null)
 
