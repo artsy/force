@@ -52,7 +52,7 @@ module.exports = class Profile extends Backbone.Model
     "/#{@get('id')}"
 
   displayName: ->
-    @related().owner?.get('name')
+    @related().owner.get('name')
 
   defaultIconInitials: ->
     if @isPartner() then @related().owner?.defaultIconInitials() else ''
