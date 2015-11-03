@@ -11,4 +11,5 @@ module.exports.init = ->
       partners: partners
       el: el
     carousel.renderCells()
+    carousel.setupCarousel()
 
