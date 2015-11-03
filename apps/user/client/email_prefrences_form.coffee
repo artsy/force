@@ -1,7 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
-FlashMessage = require '../../../components/flash/index.coffee'
-Form = require '../../../components/mixins/form.coffee'
 SubForm = require './sub_form.coffee'
 
 module.exports = class EmailPreferencesForm extends SubForm
@@ -16,8 +13,8 @@ module.exports = class EmailPreferencesForm extends SubForm
     @configureEmailSubscriptions(@model.get('receive_emails'))
 
   changeEmailSubscription: (event) ->
-    receive_emails = if $(event.target).is ':checked' then true else false
-    @configureEmailSubscriptions(receive_emails)
+    receiveEmails = if $(event.target).is ':checked' then true else false
+    @configureEmailSubscriptions(receiveEmails)
 
   configureEmailSubscriptions: (enable) ->
     @$('.email_subscriptions input').prop('disabled', !enable)
