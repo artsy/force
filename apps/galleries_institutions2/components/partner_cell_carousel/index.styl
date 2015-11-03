@@ -2,7 +2,7 @@
 @import '../../../../components/grid'
 @import '../partner_cell'
 
-arrow-offset = -54px
+arrow-offset = -30px
 body-height = 200px
 
 carousel-n-up(n, gap)
@@ -61,12 +61,14 @@ carousel-3-up(offset, gap)
 
 .partner-cell-carousel-arrow-left
   left (arrow-offset)
+  transform translate(-25px, -50%)
   @media screen and (max-width: 1024px)
     left (arrow-offset / 2)
 
 .partner-cell-carousel-arrow-right
   text-align right
   right (arrow-offset)
+  transform translate(25px, -50%)
   @media screen and (max-width: 1024px)
     right (arrow-offset / 2)
 
@@ -74,7 +76,6 @@ carousel-3-up(offset, gap)
   position absolute
   offset = (partner-cell-metadata-height + partner-cell-metadata-margin)/2
   top calc('50% - %s' % offset)
-  transform translateY(-50%)
 
 .partner-cell-carousel .partner-cell
   display inline-block

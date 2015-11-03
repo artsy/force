@@ -6,6 +6,8 @@ PartnerCell = require '../partner_cell/view.coffee'
 Profile = require '../../../../models/profile.coffee'
 initCarousel = require '../../../../components/merry_go_round/index.coffee'
 
+cellsPerRow = 3
+
 module.exports = class PartnerCellCarousel extends Backbone.View
   events:
     'click .partner-cell-carousel-arrow-right': 'next'
@@ -30,10 +32,24 @@ module.exports = class PartnerCellCarousel extends Backbone.View
     this
 
   setupCarousel: ->
-    @flickity = initCarousel(@$('.partner-cell-carousel-content')).cells.flickity
+    @flickity = initCarousel(@$('.partner-cell-carousel-content'), wrapAround: false).cells.flickity
+    @flickity.on('cellSelect', @cellIndexChanged)
+    @leftButton = @$('.partner-cell-carousel-arrow-left')
+    @rightButton = @$('.partner-cell-carousel-arrow-right')
 
   next: ->
-    @flickity.next()
+    @flickity.next false
 
   prev: ->
-    @flickity.prev()
+    @flickity.previous false
+
+  cellIndexChanged: =>
+    if @flickity.selectedIndex is 0
+      @leftButton.fadeOut()
+    else
+      @leftButton.fadeIn()
+
+    if @flickity.selectedIndex is @flickity.cells.length - cellsPerRow
+      @rightButton.fadeOut()
+    else
+      @rightButton.fadeIn()

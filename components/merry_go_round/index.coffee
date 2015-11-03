@@ -10,7 +10,7 @@ setup = ($el, options = {}, callback) ->
 
   totalWidth = _.reduce $cells, ((memo, el) -> $(el).width() + memo), 0
   averageWidth = totalWidth / $cells.length
-  options.wrapAround = (totalWidth - averageWidth) >= $(window).width()
+  options.wrapAround = (totalWidth - averageWidth) >= $(window).width() if not ("wrapAround" of options)
 
   {
     cells: cells = new MerryGoRoundFlickity $viewport, options
