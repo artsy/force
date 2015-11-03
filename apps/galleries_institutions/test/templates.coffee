@@ -12,12 +12,15 @@ describe 'Galleries / Institutions', ->
     @profiles = new Profiles [
       fabricate 'featured_partners_profiles',
         id: '43-salon-inter-nacional-de-artistas'
+        owner_type: 'PartnerGallery'
         owner: fabricate 'partner', type: 'Museum', name: '43 Salon (Inter) Nacional de Artistas'
       fabricate 'featured_partners_profiles',
         id: 'getty'
+        owner_type: 'PartnerGallery'
         owner: fabricate 'partner', type: 'Museum', name: 'J. Paul Getty Museum', sortable_id: 'getty'
       fabricate 'featured_partners_profiles',
         id: 'lacma'
+        owner_type: 'PartnerGallery'
         owner: fabricate 'partner', type: 'Museum', name: 'LACMA'
     ]
     @aToZGroup = @profiles.groupByAlphaWithColumns 3
