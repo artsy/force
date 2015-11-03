@@ -58,7 +58,7 @@ describe 'PartnerShowsGridView', ->
           PartnerShowsGridView.__set__ 'template', @template
 
           @profile = new Profile fabricate 'partner_profile'
-          @partner = new Partner @profile.get 'owner'
+          @partner = @profile.related().owner
           done()
 
     afterEach -> benv.teardown()
@@ -169,7 +169,7 @@ describe '#maybeFetchAndRenderShows', ->
         PartnerShowsGridView.__set__ 'PartnerShows', @PartnerShows
 
         @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get 'owner'
+        @partner = @profile.related().owner
         new PartnerShowsGridView
           el: $ '.partner-shows'
           partner: @partner

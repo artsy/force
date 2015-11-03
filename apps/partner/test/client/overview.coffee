@@ -56,7 +56,7 @@ describe 'PartnerOverviewView', ->
         mod.__set__ 'PartnerArtists', @PartnerArtistsCollection
 
         @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get 'owner'
+        @partner = @profile.related().owner
         @template = sinon.stub()
         @artistsGridTemplate = sinon.stub()
         mod.__set__ 'template', @template
@@ -107,7 +107,7 @@ describe 'PartnerOverviewView', ->
         mod.__set__ 'PartnerArtists', @PartnerArtistsCollection
 
         @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get 'owner'
+        @partner = @profile.related().owner
         @template = sinon.stub()
         @artistsGridTemplate = sinon.stub()
         @partnerShowsGrid = sinon.stub()
