@@ -1,6 +1,6 @@
-SearchBarView = require '../../../../components/search_bar/view.coffee'
-analytics = require '../../../../lib/analytics.coffee'
-teleport = require '../../../../components/teleport/index.coffee'
+SearchBarView = require '../search_bar/view.coffee'
+teleport = require '../teleport/index.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports =
   setupSearch: (profile, fair) ->

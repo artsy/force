@@ -17,7 +17,10 @@
 @require '../components/article_figure'
 @require '../components/tooltips'
 @require '../components/articles_feed/stylesheets'
+@require '../components/fair_layout/index'
+@require '../apps/fair/stylesheets'
+
+// Code smell, these should be refactored out into their own components if
+// they're reused, or consolidated into the fair app stylesheets.
 @require '../apps/page'
 @require '../apps/search'
-@require '../apps/fair/stylesheets'
-@require '../components/fair_layout/index'
