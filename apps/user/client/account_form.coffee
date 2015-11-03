@@ -3,6 +3,7 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 SubForm = require './sub_form.coffee'
+EmailPreferencesForm = require './email_prefrences_form.coffee'
 template = -> require('../templates/account.jade') arguments...
 crypto = require 'crypto'
 
@@ -48,7 +49,7 @@ module.exports = class AccountForm extends Backbone.View
 
     @detailsForm = new SubForm el: @$('#settings-account-details'), model: @userEdit, user: @userEdit
     @passwordForm = new SubForm el: @$('#settings-change-password-new'), model: @password, user: @userEdit, afterSuccess: changePasswordSuccess
-    @emailPreferencesForm = new SubForm el: @$('#settings-email-preferences'), model: @userEdit, user: @userEdit
+    @emailPreferencesForm = new EmailPreferencesForm el: @$('#settings-email-preferences'), model: @userEdit, user: @userEdit
 
   postRender: ->
     @setupForms()
@@ -61,4 +62,5 @@ module.exports = class AccountForm extends Backbone.View
   remove: ->
     @detailsForm.remove()
     @passwordForm.remove()
+    @emailPreferencesForm.remove()
     super
