@@ -35,7 +35,7 @@ describe 'PartnerArtistsView', ->
           (resolve __dirname, '../../client/artists'), ['template']
         )
         @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get 'owner'
+        @partner = @profile.related().owner
         @ArtistView = sinon.stub()
         @ArtistView.returns @ArtistView
         mod.__set__ 'ArtistView', @ArtistView
