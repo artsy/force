@@ -8,7 +8,7 @@ Specialist = benv.requireWithJadeify require.resolve('../../views/specialist'), 
 
 describe 'Specialist', setup ->
   beforeEach ->
-    @representative = owner: fabricate 'profile', name: 'Foo Bar'
+    @representative = owner_type: 'Admin', owner: fabricate 'profile', name: 'Foo Bar'
 
     sinon.stub Backbone, 'sync'
       .onCall 0
