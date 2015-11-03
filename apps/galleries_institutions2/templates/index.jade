@@ -1,5 +1,3 @@
-include ../components/partner_cell_grid/index
-
 extends ../../../components/main_layout/templates/index
 
 append locals
@@ -13,4 +11,9 @@ block body
         a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
         a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
 
-    +partner-cell-grid(partners)
+    .partner-cell-featured-specialties
+      each set in sets
+        .partner-carousel
+          - var title = set['title']
+          - var partners = set['partners']
+          include ../components/partner_cell_carousel/template.jade

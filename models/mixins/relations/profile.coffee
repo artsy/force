@@ -20,8 +20,6 @@ module.exports =
     if @isUser()
       User = require '../../user.coffee'
       owner = new User(@get('owner'))
-      
-    owner ?= new Backbone.Model @get('owner')
 
     @__related__ =
-      owner: owner
+      owner: owner ?= new Backbone.Model @get('owner')
