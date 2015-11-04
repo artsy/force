@@ -12,6 +12,7 @@ module.exports = class PartnerCellCarousel extends Backbone.View
     'click .partner-cell-carousel-arrow-left': 'prev'
 
   initialize: ({@partners}) ->
+    @cellsPerRow = 3
 
   setupFollowing: ->
     @following = new Following([], kind: 'profile') if CURRENT_USER?
@@ -30,10 +31,32 @@ module.exports = class PartnerCellCarousel extends Backbone.View
     this
 
   setupCarousel: ->
-    @flickity = initCarousel(@$('.partner-cell-carousel-content')).cells.flickity
+    @flickity = initCarousel(@$('.partner-cell-carousel-content'), wrapAround: false).cells.flickity
+    @flickity.on('cellSelect', @cellIndexChanged)
+    @leftButton = @$('.js-carousel-arrow-left')
+    @rightButton = @$('.js-carousel-arrow-right')
+
+  isFirstCell: ->
+    @flickity.selectedIndex is 0
+
+  isLastCell: ->
+    @flickity.selectedIndex is @flickity.cells.length - @cellsPerRow
 
   next: ->
-    @flickity.next()
+    return if @isLastCell()
+    @flickity.next false
 
   prev: ->
-    @flickity.prev()
+    return if @isFirstCell()
+    @flickity.previous false
+
+  cellIndexChanged: =>
+    if @isFirstCell()
+      @leftButton.fadeOut()
+    else
+      @leftButton.fadeIn()
+
+    if @isLastCell()
+      @rightButton.fadeOut()
+    else
+      @rightButton.fadeIn()
