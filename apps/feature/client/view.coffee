@@ -1,11 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
-mediator = require '../../../lib/mediator.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-FeatureRouter = require './router.coffee'
-ClockView = require '../../../components/clock/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
 SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
@@ -13,25 +9,15 @@ artworkColumns = -> require('../../../components/artwork_columns/template.jade')
 setsTemplate = -> require('../templates/sets.jade') arguments...
 
 module.exports = class FeatureView extends Backbone.View
-  events:
-    'click .js-register-button': 'authOrPass'
-
   initialize: (options = {}) ->
-    @setupCurrentUser()
-
-    @feature = @model
-
     # Make the sale available as soon as possible
-    @feature.on 'change:sale', =>
-      @sale = @feature.get 'sale'
+    @model.on 'change:sale', =>
+      @sale = @model.get 'sale'
+      if @sale?.isAuction()
+        # Redirect to the dedicated auction pages
+        window.location = @sale.href()
 
-      if @isAuction()
-        @redirectToAuction()
-      else
-        $('head').append '<meta property="og:event" content="sale">'
-        @$el.attr 'data-type', 'sale'
-
-    @feature.fetchSets
+     @model.fetchSets
       setsSuccess: (sets) =>
         @$('#feature-sets-container').html setsTemplate(sets: sets)
       artworkPageSuccess: @artworkPageSuccess
@@ -44,7 +30,7 @@ module.exports = class FeatureView extends Backbone.View
       window.location = @sale.href() # Redirect to the dedicated auction pages
 
   artworkPageSuccess: (fullCollection, newSaleArtworks) =>
-    return if @isAuction()
+    return if @sale?.isAuction()
 
     artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
 
