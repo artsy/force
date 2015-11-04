@@ -10,7 +10,10 @@
     a( href= href )
       if artwork.has('artist')
         h4.ala-artist
-          = artist.get('name')
+          if artists.length > 1
+            != artists.toSentence() || '&nbsp;'
+          else
+            != artist.get('name') || '&nbsp;'
       h3.ala-title
         != artwork.titleAndYear()
 
