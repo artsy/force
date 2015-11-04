@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ toSentence } = require 'underscore.string'
 Backbone = require 'backbone'
 Artist = require '../models/artist.coffee'
 { API_URL } = require('sharify').data
@@ -11,3 +12,7 @@ module.exports = class Artists extends Backbone.Collection
   model: Artist
 
   comparator: 'sortable_id'
+
+  toSentence: ->
+    toSentence @map (model) -> model.get('name')
+
