@@ -95,8 +95,9 @@
 
     //- Gallery/Institution link
     if artwork.partnerLink()
-      h2.artwork-detail-header
-        = partner.get('name')
+      a( href=artwork.partnerLink() )
+        h2.artwork-detail-header
+          = partner.get('name')
       span#artwork-partner-locations
         //- Rendered client-side
 
