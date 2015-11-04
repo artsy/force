@@ -13,7 +13,8 @@ module.exports = class FeatureView extends Backbone.View
     # Make the sale available as soon as possible
     @model.on 'change:sale', =>
       @sale = @model.get 'sale'
-      if @sale?.isAuction()
+      if @isAuction()
+        # Redirect to the dedicated auction pages
         @redirectToAuction()
 
      @model.fetchSets
