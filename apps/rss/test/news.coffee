@@ -71,12 +71,11 @@ describe '/rss', ->
       rendered.should.containEql 'By&nbsp;<a href="http://localhost/foo">James</a>,&nbsp;'
       rendered.should.containEql '<a href="http://localhost/bar">Plato</a>&nbsp;and&nbsp;'
       rendered.should.containEql '<a href="http://localhost/baz">Aeschylus</a></h2>'
-      rendered.should.containEql 'http://localhost/baz'
       rendered.should.not.containEql 'Artsy Editorial'
 
     it 'renders Artsy Editorial when there are no contributing authors', ->
       article = new Article(
-        contributing_authors: [{}],
+        contributing_authors: []
         author: {
           name: 'Artsy Editorial'
           profile_id: '5086df078523e60002000009'
