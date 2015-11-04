@@ -6,14 +6,13 @@ PartnerCell = require '../partner_cell/view.coffee'
 Profile = require '../../../../models/profile.coffee'
 initCarousel = require '../../../../components/merry_go_round/index.coffee'
 
-cellsPerRow = 3
-
 module.exports = class PartnerCellCarousel extends Backbone.View
   events:
     'click .partner-cell-carousel-arrow-right': 'next'
     'click .partner-cell-carousel-arrow-left': 'prev'
 
   initialize: ({@partners}) ->
+    @cellsPerRow = 3
 
   setupFollowing: ->
     @following = new Following([], kind: 'profile') if CURRENT_USER?
@@ -34,22 +33,30 @@ module.exports = class PartnerCellCarousel extends Backbone.View
   setupCarousel: ->
     @flickity = initCarousel(@$('.partner-cell-carousel-content'), wrapAround: false).cells.flickity
     @flickity.on('cellSelect', @cellIndexChanged)
-    @leftButton = @$('.partner-cell-carousel-arrow-left')
-    @rightButton = @$('.partner-cell-carousel-arrow-right')
+    @leftButton = @$('.js-carousel-arrow-left')
+    @rightButton = @$('.js-carousel-arrow-right')
+
+  isFirstCell: ->
+    @flickity.selectedIndex is 0
+
+  isLastCell: ->
+    @flickity.selectedIndex is @flickity.cells.length - @cellsPerRow
 
   next: ->
+    return if @isLastCell()
     @flickity.next false
 
   prev: ->
+    return if @isFirstCell()
     @flickity.previous false
 
   cellIndexChanged: =>
-    if @flickity.selectedIndex is 0
+    if @isFirstCell()
       @leftButton.fadeOut()
     else
       @leftButton.fadeIn()
 
-    if @flickity.selectedIndex is @flickity.cells.length - cellsPerRow
+    if @isLastCell()
       @rightButton.fadeOut()
     else
       @rightButton.fadeIn()
