@@ -14,8 +14,7 @@ module.exports = class FeatureView extends Backbone.View
     @model.on 'change:sale', =>
       @sale = @model.get 'sale'
       if @sale?.isAuction()
-        # Redirect to the dedicated auction pages
-        window.location = @sale.href()
+        @redirectToAuction()
 
      @model.fetchSets
       setsSuccess: (sets) =>
