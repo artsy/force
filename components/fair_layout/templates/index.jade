@@ -1,32 +1,19 @@
-//- Override any locals with `append locals`
-block locals
-  - bodyClass = helpers ? helpers.buildBodyClass(sd, (sd.BODY_CLASS || '')) : ''
-
 doctype html
 html( data-useragent=userAgent )
   head
-    block head
     include head
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
-    if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
-  body( class='#{bodyClass} body-header-fixed is-microsite' )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
+  body
     include ../../modal/template
-    include ./main_header
     include ../../flash/template
-
-    #main-layout-container
-      block coverImage
-
-      #fair-page
-        block header
-
-        block body
-
+    include ./main_header
+    block coverImage
+    .fair-layout-container
+      block header
+        include fair_header
+      block body
     include ../../main_layout/footer/template
-
     #scripts
       include ../../main_layout/templates/scripts
-      if assetPackage
-        script( src=asset('/assets/#{assetPackage}.js') )
-      block scripts
+      script( src=asset('/assets/fair.js') )

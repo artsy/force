@@ -1,13 +1,26 @@
-@require './header'
+@require './headers'
 @require './search'
 @require '../../stylus_lib/index.styl'
 
-// Adjustments for non-fair pages
-.is-microsite
-  #main-layout-container
-    width feed-max-width
-    margin 100px auto
-    position relative
-  .fair-page-header
-    padding-bottom 20px
-    border-bottom 1px solid gray-lighter-color
+.fair-layout-container
+  width feed-max-width
+  margin 64px auto 0 auto
+
+// Fair landing page
+// .body-transparent-header
+//   #fair-page
+//     margin 0 auto
+//     padding-top 0px
+
+// html[data-useragent*="iPad"]
+//   #fair-page
+//     margin 0 auto
+//     padding-top 0px
+
+// .body-eigen
+//   #fair-page
+//     padding-top 63px !important
+
+// #fair-page
+//   margin 100px auto
+//   width feed-max-width

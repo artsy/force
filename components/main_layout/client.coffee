@@ -18,7 +18,6 @@ module.exports = ->
   setupJquery()
   setupViews()
   setupReferrerTracking()
-  setupKioskMode()
   syncAuth()
   setupAuctionReminder()
   listenForInvert()
@@ -57,16 +56,6 @@ setupAnalytics = ->
       'Visited logged in'
     else
       'Visited logged out'
-
-setupKioskMode = ->
-  if sd.KIOSK_MODE and sd.KIOSK_PAGE and window.location.pathname != sd.KIOSK_PAGE
-    # After five minutes, sign out the user and redirect back to the kiosk page
-    setTimeout ->
-      if sd.CURRENT_USER
-        window.location = "/users/sign_out?redirect_uri=#{sd.APP_URL}#{sd.KIOSK_PAGE}"
-      else
-        window.location = sd.KIOSK_PAGE
-    , (6 * 60 * 1000)
 
 setupReferrerTracking = ->
   # Live, document.referrer always exists, but let's check

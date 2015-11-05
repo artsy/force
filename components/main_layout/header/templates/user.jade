@@ -1,24 +1,25 @@
-if user
-  span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
-    = user.get('name') ? user.get('name') : 'Account'
+.main-layout-header-user
+  if user
+    span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
+      = user.get('name') ? user.get('name') : 'Account'
 
-    .hover-pulldown-menu
-      a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
-      a( href='/following/artists' ) Artists
-      a( href='/favorites' ) Works
-      a( href='/following/profiles' ) Galleries
-      hr
-
-      if user.isAdmin()
-        a( href= sd.ADMIN_URL ) Admin
-      if user.isAdmin() || user.get('has_partner_access')
-        a( href= sd.CMS_URL ) CMS
-      if user.isAdmin() || user.get('has_partner_access')
+      .hover-pulldown-menu
+        a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
+        a( href='/following/artists' ) Artists
+        a( href='/favorites' ) Works
+        a( href='/following/profiles' ) Galleries
         hr
 
-      a( href='/user/edit' ) Settings
-      a.mlh-logout Log out
+        if user.isAdmin()
+          a( href= sd.ADMIN_URL ) Admin
+        if user.isAdmin() || user.get('has_partner_access')
+          a( href= sd.CMS_URL ) CMS
+        if user.isAdmin() || user.get('has_partner_access')
+          hr
 
-else
-  a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in
-  a.mlh-top-nav-link.mlh-signup( href='/sign_up' ) Sign up
+        a( href='/user/edit' ) Settings
+        a.mlh-logout Log out
+
+  else
+    a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in
+    a.mlh-top-nav-link.mlh-signup( href='/sign_up' ) Sign up

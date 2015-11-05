@@ -1,14 +1,5 @@
 extends ../../../components/fair_layout/templates/index
 
-block head
-  include meta
-
-append locals
-  - assetPackage = 'fair'
-
-block header
-  include ../../../components/fair_layout/templates/fair_header
-
 block body
   .fair-page-content
     if sd.SECTION == 'search'
@@ -23,3 +14,6 @@ block body
   .fair-page-footer
 
   include ../../../components/main_layout/templates/json_ld
+
+
+extends ../../../components/fair_layout/templates/index
