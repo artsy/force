@@ -1,25 +1,18 @@
-extends ../../../components/main_layout/templates/microsite
+extends ../../../components/fair_layout/templates/index
 
-block head
-  include meta
+block coverImage
+  include fair_cover_image
 
-append locals
-  - assetPackage = 'fair'
+block icon
+  .fair-overview-icon-spacer
 
 block body
-  if coverImage && coverImage.hasImage('wide')
-    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
-  else
-    .feature-image
-  #fair-page
-    header.fair-page-header.main-layout-container
-      include ./header_navigation
-    if primarySets
-      include ./overview_top
-    include ./sections
-    if primarySets
-      include ./overview_bottom
-    .for-you-container
-    h2.overview-section-heading Browse the fair
-    .fair-page-content.main-layout-container
-      include ../components/browse/template
+  if primarySets
+    include ./overview_top
+  include ./sections
+  if primarySets
+    include ./overview_bottom
+  .for-you-container
+  h2.overview-section-heading Browse the fair
+  .fair-page-content.main-layout-container
+    include ../components/browse/template

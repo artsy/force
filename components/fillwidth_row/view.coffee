@@ -20,6 +20,7 @@ module.exports = class FillwidthView extends Backbone.View
 
   render: =>
     return @empty?() if @collection.length < 1
+
     @$el.html template artworks: @collection.models, seeMore: @seeMore, imageWidth: 260
     maxHeight = parseInt(@$('img').first().css('max-height')) or 260
     @$('li').css 'min-height': maxHeight + 90

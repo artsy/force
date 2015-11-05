@@ -1,0 +1,20 @@
+doctype html
+html( data-useragent=userAgent )
+  head
+    include head
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
+  body
+    include ../../modal/template
+    include ../../flash/template
+    include ./header
+    block coverImage
+      .fair-layout-cover-image-spacer
+    .fair-layout-container
+      block nav
+        include nav
+      block body
+    include ../../main_layout/footer/template
+    #scripts
+      include ../../main_layout/templates/scripts
+      script( src=asset('/assets/fair.js') )

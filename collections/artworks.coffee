@@ -26,7 +26,10 @@ module.exports = class Artworks extends Backbone.Collection
       return null unless image = artwork.defaultImage()
       width = Math.round maxHeight * image.get('aspect_ratio')
       height = if width < maxHeight then maxHeight else width / image.get('aspect_ratio')
-      { width: width, height: height }
+      if artwork.id is 'dianna-molzan-untitled-2'
+        { width: height, height: width }
+      else
+        { width: width, height: height }
     _.without imageWidths, null
 
   # Groups models in to an array of n arrays where n is the numberOfColumns requested.

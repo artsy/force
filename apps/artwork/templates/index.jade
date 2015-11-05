@@ -1,4 +1,7 @@
-extends ../../../components/main_layout/templates/index
+if sd.MICROSITE
+  extends ../../../components/fair_layout/templates/index
+else
+  extends ../../../components/main_layout/templates/index
 
 block head
   include meta

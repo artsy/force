@@ -12,6 +12,7 @@ cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
 { captureSignup, validActions } = require './components/capture_signup/index.coffee'
+{ parse, format } = require 'url'
 FilterArtworks = require '../../collections/filter_artworks'
 aggregationParams = require './components/browse/aggregations.coffee'
 
@@ -99,12 +100,6 @@ aggregationParams = require './components/browse/aggregations.coffee'
     success: ->
       success()
     error: res.backboneError
-
-@favorites = (req, res, next) ->
-  return next() unless res.locals.sd.FAIR
-  return res.redirect("/#{req.params.id}") unless req.user
-  res.locals.sd.SECTION = 'favorites'
-  res.render 'favorites', profileId: req.user.get('default_profile_id')
 
 @follows = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -225,3 +220,34 @@ aggregationParams = require './components/browse/aggregations.coffee'
           res.locals.profile = profile
           req.params.id = profile.fairOwnerId()
           next()
+
+#
+# Checks for the presence of a microsite flag in the query string,
+# as well as query params for fair_id, fair_name, and profile_id,
+# then sets up the locals such that there are the needed skeleton
+# models for rendering the fair header and attaching a search view to it
+#
+@microsite = (req, res, next) ->
+  microsite = res.locals.sd.MICROSITE =
+    (qs = req.query).microsite? and qs.fair_id? and qs.fair_name? and qs.profile_id?
+
+  if microsite
+    Profile = require '../../models/profile.coffee'
+    Fair = require '../../models/fair.coffee'
+
+    fair = res.locals.micrositeFair = new Fair
+      id: qs.fair_id
+      name: qs.fair_name
+      organizer: profile_id: qs.profile_id
+
+    image_url = "#{res.locals.sd.API_URL}/api/v1/profile/#{qs.profile_id}/image"
+    image_url = image_url + "?xapp_token=#{res.locals.sd.ARTSY_XAPP_TOKEN}" if res.locals.sd.ARTSY_XAPP_TOKEN?
+
+    profile = res.locals.micrositeProfile = new Profile id: qs.profile_id, image_url: image_url
+
+    res.locals.sd.MICROSITE_FAIR = fair.toJSON()
+    res.locals.sd.MICROSITE_PROFILE = profile.toJSON()
+    res.locals.sd.HIDE_HEADER = true
+
+  next()
+
