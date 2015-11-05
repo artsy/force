@@ -31,8 +31,7 @@ module.exports = class PartnerCellCarousel extends Backbone.View
     this
 
   setupCarousel: ->
-    @flickity = initCarousel(@$('.partner-cell-carousel-content'), wrapAround: false).cells.flickity
-    @flickity.on('cellSelect', @cellIndexChanged)
+    @flickity = initCarousel(@$('.partner-cell-carousel-content'), wrapAround: true).cells.flickity
     @leftButton = @$('.js-carousel-arrow-left')
     @rightButton = @$('.js-carousel-arrow-right')
 
@@ -43,20 +42,7 @@ module.exports = class PartnerCellCarousel extends Backbone.View
     @flickity.selectedIndex is @flickity.cells.length - @cellsPerRow
 
   next: ->
-    return if @isLastCell()
-    @flickity.next false
+    @flickity.next true
 
   prev: ->
-    return if @isFirstCell()
-    @flickity.previous false
-
-  cellIndexChanged: =>
-    if @isFirstCell()
-      @leftButton.fadeOut()
-    else
-      @leftButton.fadeIn()
-
-    if @isLastCell()
-      @rightButton.fadeOut()
-    else
-      @rightButton.fadeIn()
+    @flickity.previous true
