@@ -5,11 +5,11 @@ analytics = require '../../../lib/analytics.coffee'
 module.exports =
   setupSearch: (profile, fair) ->
     @searchBarView ?= new SearchBarView
-      el: @$('#fair-search-container')
-      $input: @$('#fair-search-input')
+      el: @$('.fair-layout-search')
+      $input: @$('.fair-layout-search-input')
       fairId: @fair.id
 
-    @$('#fair-search-input').on 'focus', ->
+    @$('.fair-layout-search-input').on 'focus', ->
       analytics.track.click 'Focused on search input at fair'
 
     @searchBarView.on 'search:entered', (term) =>

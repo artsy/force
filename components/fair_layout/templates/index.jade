@@ -7,11 +7,12 @@ html( data-useragent=userAgent )
   body
     include ../../modal/template
     include ../../flash/template
-    include ./main_header
+    include ./header
     block coverImage
+      .fair-layout-cover-image-spacer
     .fair-layout-container
-      block header
-        include fair_header
+      block nav
+        include nav
       block body
     include ../../main_layout/footer/template
     #scripts

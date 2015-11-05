@@ -28,7 +28,7 @@ describe 'FairHeaderView', ->
     @fair = new Fair fabricate 'fair'
     @profile = new Profile fabricate 'fair_profile'
     benv.render resolve(__dirname, '../header.jade'), { micrositeFair: @fair, micrositeProfile: @profile }, =>
-      @view = new FairHeaderView el: $('.fair-page-header'), model: @profile, fair: @fair
+      @view = new FairHeaderView el: $('.fair-layout-nav'), model: @profile, fair: @fair
       @$template = $('body')
       done()
 

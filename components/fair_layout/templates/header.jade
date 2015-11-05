@@ -1,9 +1,8 @@
-include ../util/activator
+include ../../util/activator
 
-mixin micrositeHeader(profile, fair)
-  header.fair-page-header.main-layout-container
-    a.fair-logo( alt=fair.get('name'), href=profile.href() )
-      .profile-badge-icon( style="background-image: url(#{profile.get('image_url')})" )
-    include ../../apps/fair/templates/header_navigation
-
-+micrositeHeader(micrositeProfile, micrositeFair)
+header.fair-layout-header
+  a.fair-layout-header-left( href='/' )
+    i.icon-logo
+    span Back to Artsy.net
+  .fair-layout-header-right
+    include ../../main_layout/header/templates/user

@@ -3,12 +3,12 @@
 //
 // Search
 // Auto-complete
-#fair-search-container
+.fair-layout-search
   position relative
   // Fix for Firefox
   line-height 0
   &.is-loading
-    #fair-search-spinner
+    .fair-layout-search-spinner
       display block
 
   .twitter-typeahead
@@ -35,10 +35,10 @@
 search-bar-input-placeholder()
   color transparify(gray-dark-color, black)
 
-#fair-search-input
+.fair-layout-search-input
   placeholder(search-bar-input-placeholder)
 
-#fair-search-spinner
+.fair-layout-search-spinner
   display none
   position absolute
   top 0
