@@ -10,10 +10,9 @@ block body
       .galleries-institutions2-right
         a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
         a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
-
     .partner-cell-featured-specialties
-      each set in sets
+      each category in categories
         .partner-carousel
-          - var title = set['title']
-          - var partners = set['partners']
+          - var title = category.get('name')
+          - var partners = category.related().partners.models
           include ../components/partner_cell_carousel/template.jade
