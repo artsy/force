@@ -17,4 +17,4 @@ Q = require 'bluebird-q'
         filteredCategories = categories.select (category) ->
           category.related().partners.length
 
-        res.render 'index', categories: filteredCategories
+        res.render 'index', categories: filteredCategories, type: 'gallery'
