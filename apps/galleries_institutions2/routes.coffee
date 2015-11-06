@@ -6,22 +6,15 @@ Backbone = require 'backbone'
 Q = require 'bluebird-q'
 
 @galleries = (req, res, next) ->
-  partners = new Partners()
   categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: 'Gallery'
+    .then ->
 
-  categories.fetchUntilEnd
-    data: { category_type: 'Gallery' }
-    error: res.backboneError
-    success: ->
+      Q.all categories.map (category) ->
+        category.related().partners.fetch data: size: 10
 
-      Q.allSettled(categories.map (category) ->
-        partners = new Partners
-        category.set('partners', partners)
-        partners.fetchUntilEnd
-          data: { partner_categories: category.id}
-          error: res.backboneError
-      ).then ->
+      .then ->
         filteredCategories = categories.select (category) ->
-          category.get('partners').length
+          category.related().partners.length
 
         res.render 'index', categories: filteredCategories

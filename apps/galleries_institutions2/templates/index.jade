@@ -14,5 +14,5 @@ block body
       each category in categories
         .partner-carousel
           - var title = category.get('name')
-          - var partners = category.get('partners').models
+          - var partners = category.related().partners.models
           include ../components/partner_cell_carousel/template.jade
