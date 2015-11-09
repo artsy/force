@@ -91,6 +91,7 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
     beforeEach ->
+      sinon.stub location, 'assign'
       sinon.stub location, 'reload'
       @view.validateForm = -> true
 
@@ -98,6 +99,7 @@ describe 'AuthModalView', ->
       @view.user = new LoggedOutUser
 
     afterEach ->
+      location.assign.restore()
       location.reload.restore()
 
     it 'submits to signup when in that mode', ->
