@@ -3,64 +3,53 @@ Partner = require '../../../../models/partner.coffee'
 Profile = require '../../../../models/profile.coffee'
 Q = require 'bluebird-q'
 { FollowButton } = require '../../../../components/follow_button/index.coffee'
+template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCell extends Backbone.View
-  initialize: ({ @partner, @$el, @following }) ->
-    @profile = new Profile id: @partner.get('default_profile_id')
-    @$image = @$('.hoverable-image')
+  initialize: ({ @following }) ->
+    @profile = @model.related().profile
+    @listenTo @model.related().locations, 'sync', @render
+    @listenTo @model, 'change:imageUrl', @render
+
+  render: =>
+    @$el.html template partner:@model, imageUrl:@model.get('imageUrl')
+
+  attachFollowing: ->
     new FollowButton
       following: @following
       modelName: 'profile'
       model: @profile
       el: @$('.partner-cell-follow-button')
-    @fetchMetadata()
 
+  setImage: (imageUrl) =>
+    if imageUrl and not /missing_image.png/.test(imageUrl)
+      @model.set('imageUrl', imageUrl)
+      return true
+    else
+      return false
 
-  getLocation: ->
-    @partner.related().locations.fetch success: =>
-      @$('.partner-cell-location').text @partner.displayLocations()
+  getProfile: ->
+    @profile.fetch success: (profile) =>
+      imageUrl = profile.coverImage()?.imageUrl('wide')
+      if !@setImage(imageUrl)
+        @render()
 
-  getFeaturedShowImage: (options = {})->
-    @partner.related().shows.fetch(
-      success: (shows) ->
-        show = shows.featured() || shows.models[0]
-        imageUrl = show?.posterImageUrl()
-        if imageUrl and not /missing_image.png/.test(imageUrl)
-          options.success(imageUrl)
-        else options.error()
+  getShows: ->
+    @model.related().shows.fetch(
+      success: (shows) =>
+        featuredImage = shows.featured()?.posterImageUrl()
 
-      error: options.error
-    )
+        if !@setImage(featuredImage) && shows.length > 0
+          firstImage = _.reduceRight(shows.models, (a, b) ->
+            return b.posterImageUrl() || a
+          , null)
 
-  getProfileCoverImage: (options = {})->
-    @profile.fetch(
-      success: (profile) ->
-        imageUrl = profile.coverImage()?.imageUrl('wide')
-        if imageUrl and not /missing_image.png/.test(imageUrl)
-          options.success(imageUrl)
-        else options.error()
+          if !@setImage(firstImage)
+            @getProfile()
 
-      error: options.error
-    )
-
-  setImage: (imageUrl, error) =>
-    @$image.css backgroundImage: "url(#{imageUrl})"
-
-  setInitials: =>
-    @$image.attr 'data-initials', @profile.defaultIconInitials()
-    @$image.addClass 'is-missing'
-
-  getImage: ->
-    @getFeaturedShowImage(
-      success: @setImage,
-      error: =>
-        @getProfileCoverImage(
-          success: @setImage
-          error: @setInitials
-      )
-    )
+      , error: @getProfile)
 
   fetchMetadata: ->
-    @getLocation()
-    @getImage()
+    @model.related().locations.fetch()
+    @getShows()
 

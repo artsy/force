@@ -15,6 +15,7 @@ Q = require 'bluebird-q'
 { crop } = require '../resizer/index.coffee'
 blurb = require '../gradient_blurb/index.coffee'
 Sticky = require '../sticky/index.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
@@ -30,10 +31,7 @@ module.exports = class ArticleView extends Backbone.View
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks =>
-      imagesLoaded @$(".article-container[data-id=#{@article.get('id')}] .article-content"), =>
-        @addReadMore() if @gradient
-        @setupWaypointUrls() if @waypointUrls
-        @sticky.rebuild()
+      @addReadMore() if @gradient
     @checkEditable()
     @breakCaptions()
     @sizeVideo()
@@ -94,7 +92,7 @@ module.exports = class ArticleView extends Backbone.View
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
       message = if @article.get('published') then '' else "Draft"
       @renderedEditButton = true
-      @$('#articles-body-container').append(
+      $(".article-container[data-id=#{@article.get('id')}] .article-content").append(
         editTemplate message: message, edit_url: editUrl
       )
 
@@ -189,17 +187,28 @@ module.exports = class ArticleView extends Backbone.View
 
     # Computes the height of the div where the blur should begin
     # based on the line count excluding images and video
-    for section in $(".article-container[data-id=#{@article.get('id')}] .article-content").children()
-      if $(section).children().hasClass('article-section-text')
-        textHeight = textHeight + $(section).children().height()
-      if textHeight >= maxTextHeight
-        limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
-        blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"), { limit: limit }
-        break
+    imagesLoaded $(".article-container[data-id=#{@article.get('id')}] .article-content"), =>
+      for section in $(".article-container[data-id=#{@article.get('id')}] .article-content").children()
+        if $(section).children().hasClass('article-section-text')
+          textHeight = textHeight + $(section).children().height()
+        if textHeight >= maxTextHeight
+          limit = $(section).children('.article-section-text').position().top + $(section).children('.article-section-text').outerHeight()
+          blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
+            limit: limit
+            afterApply: =>
+              @sticky.rebuild()
+              @setupWaypointUrls() if @waypointUrls
+              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', ->
+                analyticsHooks.trigger 'readmore', {}
+          break
 
   setupWaypointUrls: =>
+    editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+      analyticsHooks.trigger 'scrollarticle', {}
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
+      $('.article-edit-container a').attr 'href', editUrl
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
+      $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }

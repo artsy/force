@@ -3,7 +3,7 @@ mixin network(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -22,7 +22,7 @@ mixin audience(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -40,7 +40,7 @@ mixin access(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -58,7 +58,7 @@ mixin visibility(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -76,7 +76,7 @@ mixin tools(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -94,7 +94,7 @@ mixin artsy-folio(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -120,11 +120,11 @@ mixin support(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
           if path.indexOf('gallery') > 0
-            |  You can also read and subscribe to our 
+            |  You can also read and subscribe to our
             a(href='/' + sd.GALLERY_INSIGHTS_SLUG) Gallery Insights Newsletter
 
   .partnerships-section-content
@@ -151,12 +151,12 @@ mixin support(section)
 mixin apply(section)
   .partnerships-section-header.apply
     if path.indexOf('institution') > 0
-      h3= section.heading
+      h3!= section.heading
       a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply/institution' ) Apply
     else
       .gallery-partnerships-apply-form
         header
-          h3 Interested in partnering with Artsy?
+          h3 Interested in partnering <br> with Artsy?
             aside Apply to join Artsy&rsquo;s invitation-only subscription service for galleries
 
         form.stacked-form.js-gallery-partnerships-apply-form(
@@ -178,18 +178,18 @@ mixin apply(section)
             | Apply
 
           .gallery-partnerships-privacy
-            | By clicking apply, you accept our 
+            | By clicking apply, you accept our
             a( href='/privacy' ) Privacy Policy
             | .
 
-          .partnerships-contact Call us: +1 800 589 1350
+          .partnerships-contact Call us: +1 888 840 0704
 
 mixin shows(section)
   .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -210,7 +210,7 @@ mixin education(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 
@@ -230,7 +230,7 @@ mixin design(section)
     .grid-2-up
       .grid-item
         h2= section.title
-        h3= section.heading
+        h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
 

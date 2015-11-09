@@ -15,13 +15,10 @@ describe 'inquiry routes', ->
     Backbone.sync.restore()
 
   describe '#index', ->
-    it 'nexts on error', ->
+    it 'handles errors', ->
       Backbone.sync.yieldsTo 'error'
-
       routes.index @req, @res, @next
-
       @res.render.called.should.be.false()
-      @next.called.should.be.true()
 
     it 'fetches the artwork and renders the template', ->
       Backbone.sync.yieldsTo 'success',

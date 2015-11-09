@@ -1,21 +1,29 @@
 @require '../../../../components/stylus_lib'
+
+partner-cell-metadata-height = 46px
+partner-cell-metadata-margin = 25px
+
 .partner-featured-image .hoverable-image
   background-size cover
 .partner-cell-metadata
-  height 46px
-  margin-top 25px
-  position  relative
+  height partner-cell-metadata-height
+  margin-top partner-cell-metadata-margin
+  position relative
+  display flex
+  align-items center
+.partner-cell-metadata-text
+  height 100%
+  flex 1 1 auto
+  overflow hidden
+  text-overflow ellipsis
 .partner-cell-name
   avant-garde()
   avant-garde-size('m-headline')
   text-decoration none
 .partner-cell-follow-button
   font-size 10px
-  position absolute
-  right 0
-  top 50%
-  transform translateY(-50%)
-
+  flex 0 0 auto
+  margin-left 10px
 .hoverable-image.is-missing
   position relative
   background-color gray-lightest-color

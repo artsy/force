@@ -10,6 +10,7 @@ module.exports = (options = {}, predicate) ->
       $submit.text label
 
     $input
+      .trigger 'alert'
       .wrap $alertable
       .one 'focus', ->
         $input

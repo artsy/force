@@ -5,14 +5,11 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    # Deferred requires:
     Artist = require '../../artist.coffee'
     PartnerShows = require '../../../collections/partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
-    WebArticles = Books = require '../../../components/artsypedia/collection.coffee'
     Articles = require '../../../collections/articles.coffee'
 
-    # Setup:
     artists = new Backbone.Collection [], model: Artist
     artists.url = "#{API_URL}/api/v1/related/layer/main/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
 
@@ -32,34 +29,13 @@ module.exports =
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
 
-    webArticles = new WebArticles
-    webArticles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
-
     articles = new Articles
     articles.url = =>
       "#{POSITRON_URL}/api/articles?artist_id=#{@get '_id'}&published=true"
 
-    merchandisable = new Books
-    merchandisable.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=true"
-
-    bibliography = new Backbone.Collection
-    bibliography.url = "#{APP_URL}/artist/data/#{@id}/publications"
-
-    collections = new Backbone.Collection
-    collections.url = "#{APP_URL}/artist/data/#{@id}/collections"
-
-    exhibitions = new Backbone.Collection
-    exhibitions.url = "#{APP_URL}/artist/data/#{@id}/exhibitions"
-
-    # Return:
     @__related__ =
       artists: artists
       contemporary: contemporary
       shows: shows
       artworks: artworks
-      webArticles: webArticles
       articles: articles
-      merchandisable: merchandisable
-      bibliography: bibliography
-      collections: collections
-      exhibitions: exhibitions

@@ -14,7 +14,10 @@
 
       .aga-primary-information
         h4.aga-artist
-          != artist.get('name') || '&nbsp;'
+          if artists.length > 1
+            != artists.toSentence() || '&nbsp;'
+          else
+            != artist.get('name') || '&nbsp;'
         h3.aga-title
           != artwork.titleAndYear() || '&nbsp;'
 

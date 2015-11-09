@@ -91,12 +91,14 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
     beforeEach ->
-      location.assign = sinon.stub()
-      location.reload = sinon.stub()
+      sinon.stub location, 'reload'
       @view.validateForm = -> true
 
       @view.state = new Backbone.Model
       @view.user = new LoggedOutUser
+
+    afterEach ->
+      location.reload.restore()
 
     it 'submits to signup when in that mode', ->
       @view.redirectTo = 'foobarbaz'

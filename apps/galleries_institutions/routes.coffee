@@ -13,9 +13,6 @@ fetch =
       featuredPartners.fetchAll(cache: true)
         .then ->
           profiles = featuredPartners.first().get 'items'
-          profiles.map (profile) ->
-            partner = new Partner profile.get 'owner'
-            profile.set 'owner', partner
           resolve profiles
 
   galleries: ->

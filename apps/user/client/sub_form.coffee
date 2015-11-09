@@ -6,7 +6,7 @@ Form = require '../../../components/mixins/form.coffee'
 module.exports = class SubForm extends Backbone.View
   _.extend @prototype, Form
 
-  events:
+  events: ->
     'submit form': 'submit'
     'click button': 'submit'
 

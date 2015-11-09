@@ -1,0 +1,80 @@
+@import '../../../../components/stylus_lib'
+@import '../../../../components/grid'
+@import '../partner_cell'
+
+arrow-offset = -30px
+body-height = 200px
+
+carousel-n-up(n, gap)
+  .grid-item
+    margin 0 gap 0 0
+  &.is-flush .grid-item
+    width (100 / n)%
+    margin 0 !important
+  @media screen and (max-width: 1024px)
+    .grid-item
+      margin 0 (gap / 2) 0 0
+
+carousel-3-up(offset, gap)
+  carousel-n-up(3, gap)
+  .grid-item
+    width 32%
+    width calc('33.33% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    .grid-item
+      offset = offset / 2
+      width calc('33.33% - %s' % offset)
+
+.partner-cell-carousel-3-up
+  carousel-3-up(20px, 30px)
+
+.partner-carousel .partner-cell-grid-3-up .grid-item
+  margin-top 0
+
+.partner-cell-carousel-header *
+  position absolute
+
+.partner-cell-carousel-header
+  position relative
+  border-bottom 2px solid gray-lighter-color
+  margin-bottom 30px
+  height 55px
+  garamond()
+
+.partner-cell-carousel-header-left
+  garamond-size('headline')
+  bottom 12px
+  left 0
+
+.partner-cell-carousel-header-right
+  bottom 20px
+  right 0
+
+.partner-cell-carousel-body
+  position relative
+
+.partner-cell-carousel-content
+  white-space nowrap
+  overflow hidden
+
+.partner-cell-carousel-arrow-left
+  left (arrow-offset)
+  transform translate(-25px, -50%)
+  @media screen and (max-width: 1024px)
+    left (arrow-offset / 2)
+
+.partner-cell-carousel-arrow-right
+  text-align right
+  right (arrow-offset)
+  transform translate(25px, -50%)
+  @media screen and (max-width: 1024px)
+    right (arrow-offset / 2)
+
+.partner-cell-carousel-arrow
+  position absolute
+  offset = (partner-cell-metadata-height + partner-cell-metadata-margin)/2
+  top calc('50% - %s' % offset)
+  user-select none
+
+.partner-cell-carousel .partner-cell
+  display inline-block

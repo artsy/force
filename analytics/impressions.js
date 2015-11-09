@@ -5,7 +5,7 @@ var visibleArtworkIds = function() {
   // Find all of the "artwork item" components that are visible
   var ids = $('.artwork-item').filter(function() {
     var belowViewportTop = $(this).offset().top > $(window).scrollTop();
-    var aboveViewportBottom = $(this).offset().top + $(this).height() >
+    var aboveViewportBottom = $(this).offset().top + $(this).height() <
       $(window).scrollTop() + $(window).height();
     return belowViewportTop && aboveViewportBottom;
   }).map(function() {

@@ -6,7 +6,7 @@ section.galleries-institutions-featured-profiles.grid-4-up
       a.faux-underline( href= copy.href ) Learn&nbsp;More
 
   for profile in featuredProfiles
-    - var partner = profile.get('owner')
+    - var partner = profile.related().owner
     .grid-item.gallery-institutions-profile
       include ../../../components/partner_profile_cover/template
       .gip-metadata

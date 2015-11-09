@@ -40,13 +40,4 @@ module.exports.init = ->
     e.preventDefault()
     openSpecialistModal()
 
-  $('.js-register-button').click (e) ->
-    return if CURRENT_USER?
-    e.preventDefault()
-    new AuthModalView
-      width: '500px'
-      mode: 'register'
-      copy: 'Sign up to bid on artworks'
-      redirectTo: auction.registerUrl()
-
   require('./analytics.coffee')(feature)

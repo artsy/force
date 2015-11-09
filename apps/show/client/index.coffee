@@ -13,9 +13,9 @@ attachRelatedShows = require '../components/related_shows/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 openMapModal = require '../components/map_modal/index.coffee'
-zoom = require '../../../components/zoom/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
+FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
@@ -32,9 +32,9 @@ module.exports.init = ->
       setGallerySize: false
       imagesLoaded: true
     }, (instance) ->
-      instance.cells.flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
-        if src = $(cellElement).find('img').attr('src')
-          zoom src
+
+      seq = new FlickityZoomSequence instance.cells.flickity
+      seq.bind()
 
   setupSaveControls show.related().artworks
   attachFollowArtists show.related().artists

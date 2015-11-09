@@ -7,7 +7,7 @@ PartnerRouter = require './router.coffee'
 
 module.exports.init = ->
   profile = new Profile sd.PROFILE
-  partner = new Partner profile.get('owner')
+  partner = profile.related().owner
 
   new PartnerRouter
     profile: profile

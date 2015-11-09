@@ -42,7 +42,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
         when 'payment_error'
           message = @errors.paymentError
         when 'param_error'
-          message = errorJson.message
+          message = @errors[errorJson.message] || errorJson.message
         else
           message = @errors.other
       # Differently formatted errors from gravity,

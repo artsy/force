@@ -1,0 +1,15 @@
+//- title, partners
+
+.partner-cell-carousel-header
+  .partner-cell-carousel-header-left=title
+  a.partner-cell-carousel-header-right(href='#')
+    |View All
+.partner-cell-carousel-body
+  .partner-cell-carousel-content
+    .mgr-cells.js-mgr-cells.partner-cell-carousel-3-up
+      each partner in partners
+        .partner-cell.mgr-cell.js-mgr-cell.grid-item(data-id= partner.get('id'))
+          include ../partner_cell/index
+    .partner-cell-nav
+      .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
+      .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
