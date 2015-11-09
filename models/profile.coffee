@@ -41,8 +41,9 @@ module.exports = class Profile extends Backbone.Model
 
   bestAvailableImage: ->
     if @has('cover_image')
-      @coverImage().imageUrl('medium250x165')
+      @coverImage().imageUrl()
     else
+      # For partners, this should never happen
       @iconImageUrl()
 
   alphaSortKey: ->

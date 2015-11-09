@@ -15,5 +15,5 @@ a.partner-profile-cover.hoverable-image-link(
 )
   .hoverable-image.is-three-two(
     data-initials= profile.defaultIconInitials()
-    style=(mode !== 'missing' ? "background-image: url(#{profile.bestAvailableImage()});" : undefined)
+    style=(mode !== 'missing' ? "background-image: url(#{profile.bestAvailableImage()});background-size: cover;background-position: center center;" : undefined)
   )
