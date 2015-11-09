@@ -9,36 +9,32 @@ rewire = require 'rewire'
 { resolve } = require 'path'
 
 describe 'ContactPartnerView', ->
-  before (done) ->
+
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      done()
-
-  after ->
-    benv.teardown()
-
-  beforeEach (done) ->
-    sinon.stub Backbone, 'sync'
-    @artwork = new Artwork fabricate 'artwork'
-    @partner = new Partner fabricate 'partner', locations: null
-    benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
-      ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
-      @analytics = ContactPartnerView.__get__('analytics')
-      sinon.stub @analytics.track, 'funnel'
-      ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
-      sinon.stub ContactPartnerView.prototype, 'isLoading'
-      sinon.stub ContactPartnerView.prototype, 'isLoaded'
-      sinon.stub ContactPartnerView.prototype, 'open'
-      sinon.stub ContactPartnerView.prototype, 'updatePosition'
-      ContactPartnerView.__set__ 'SESSION_ID', '1111'
-      @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
-      _.last(Backbone.sync.args)[2].complete [fabricate('location')]
-      done()
+      sinon.stub Backbone, 'sync'
+      @artwork = new Artwork fabricate 'artwork'
+      @partner = new Partner fabricate 'partner', locations: null
+      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
+        ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
+        @analytics = ContactPartnerView.__get__('analytics')
+        sinon.stub @analytics.track, 'funnel'
+        ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
+        sinon.stub ContactPartnerView.prototype, 'isLoading'
+        sinon.stub ContactPartnerView.prototype, 'isLoaded'
+        sinon.stub ContactPartnerView.prototype, 'open'
+        sinon.stub ContactPartnerView.prototype, 'updatePosition'
+        ContactPartnerView.__set__ 'SESSION_ID', '1111'
+        @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
+        _.last(Backbone.sync.args)[2].complete [fabricate('location')]
+        done()
 
   afterEach ->
     @analytics.track.funnel.restore()
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#submit', ->
     describe 'Logged out', ->
