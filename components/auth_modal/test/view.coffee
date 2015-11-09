@@ -91,6 +91,7 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
     beforeEach ->
+      sinon.stub location, 'assign'
       sinon.stub location, 'reload'
       @view.validateForm = -> true
 
@@ -98,6 +99,7 @@ describe 'AuthModalView', ->
       @view.user = new LoggedOutUser
 
     afterEach ->
+      location.assign.restore()
       location.reload.restore()
 
     it 'submits to signup when in that mode', ->
@@ -105,14 +107,14 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
-      location.href.should.containEql 'foobarbaz'
+      location.assign.args[0][0].should.containEql 'foobarbaz'
 
     it 'submits to signup with custom redirect url', ->
       @view.redirectTo = '/awesome-fair'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
-      location.href.should.containEql '/awesome-fair'
+      location.assign.args[0][0].should.containEql '/awesome-fair'
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
       @view.destination = '/artist/some-guy/follow'
@@ -128,7 +130,7 @@ describe 'AuthModalView', ->
     it 'redirects to /personalize when mode is register by default', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      location.href.should.containEql '/personalize'
+      location.assign.args[0][0].should.containEql '/personalize'
 
     it 'sends a CSRF token', ->
       @view.$el.html $ "<form>" + render('register')(

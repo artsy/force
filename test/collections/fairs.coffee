@@ -41,6 +41,7 @@ describe 'Fairs', ->
       rows[1].fairs.length.should.eql 2
 
   describe '#pastYearRoundFairs', ->
+
     beforeEach ->
       @clock = sinon.useFakeTimers()
 

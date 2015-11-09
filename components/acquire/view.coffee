@@ -15,7 +15,7 @@ module.exports =
       artworkId: artwork.get('id')
       editionSetId: editionSetId
       success: (response) =>
-        location.href = "/order/#{response.get('id')}/resume?token=#{response.get('token')}"
+        location.assign "/order/#{response.get('id')}/resume?token=#{response.get('token')}"
         @acquiring = false
       error: =>
         @acquiring = false

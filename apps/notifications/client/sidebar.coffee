@@ -12,6 +12,7 @@ module.exports = class SidebarView extends Backbone.View
     'click .filter-artist-clear' : 'clearArtistWorks'
 
   initialize: ({@filterState, @following}) ->
+    @history = window.history
     if @filterState.get 'artist'
       @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
       @$selectedArtist.attr 'data-state', 'selected'
@@ -28,7 +29,7 @@ module.exports = class SidebarView extends Backbone.View
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    window.history.pushState({}, "Artist", "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
+    @history.pushState({}, "Artist", "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
     @filterState.set
       artist: @$selectedArtist.attr('data-artist')
       loading: true
@@ -38,7 +39,7 @@ module.exports = class SidebarView extends Backbone.View
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    window.history.pushState({},"Clear","/works-for-you")
+    @history.pushState({},"Clear","/works-for-you")
     @filterState.set
       artist: null
       loading: true
