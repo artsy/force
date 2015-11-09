@@ -8,8 +8,11 @@ block body
     header.galleries-institutions2-header
       h1 Browse #{type == 'gallery' ? 'Galleries' : 'Institutions'}
       .galleries-institutions2-right
-        a.galleries-institutions2-right-item(href="/#{partnerType}-partnerships") Partner with Artsy
-        a.galleries-institutions2-right-item(href="/#{partnerType}-insights") #{type == 'gallery' ? 'Gallery' : 'Institutional'} Insights
+        a.galleries-institutions2-right-item(href="/#{type}-partnerships") Partner with Artsy
+
+        if type == 'gallery'
+          a.galleries-institutions2-right-item(href="/gallery-insights") Gallery Insights
+
     #partners-page-featured-specialties
       each category in categories
         .partner-carousel
