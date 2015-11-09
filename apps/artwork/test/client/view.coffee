@@ -80,24 +80,20 @@ describe 'ArtworkView', ->
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
         @view.$el.html().should.not.containEql 'Bid'
-        search = window.location.search
-        window.location.search = '?auction_id=my-sale-id'
+        @view.location = search: '?auction_id=my-sale-id'
         @view.checkQueryStringForAuction()
         html = @view.$el.html()
         html.should.containEql 'my-sale-id'
         html.should.containEql 'Bid'
-        window.location.search = search
 
       describe 'artwork is already sold', ->
         it 'does not render the auction placeholder', ->
           @artwork.set 'sold', true
-          search = window.location.search
-          window.location.search = '?auction_id=my-sale-id'
+          @view.location = search: '?auction_id=my-sale-id'
           @view.checkQueryStringForAuction()
           html = @view.$el.html()
           html.should.not.containEql 'my-sale-id'
           html.should.not.containEql 'Bid'
-          window.location.search = search
 
     describe 'when an artwork changes', ->
       it 'only renders if the artwork sale_message changes', ->

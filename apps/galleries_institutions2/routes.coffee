@@ -17,4 +17,18 @@ Q = require 'bluebird-q'
         filteredCategories = categories.select (category) ->
           category.related().partners.length
 
-        res.render 'index', categories: filteredCategories
+        res.render 'index', categories: filteredCategories, type: 'gallery'
+
+@institutions = (req, res, next) ->
+  categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: 'Institution'
+    .then ->
+
+      Q.all categories.map (category) ->
+        category.related().partners.fetch data: size: 10
+
+      .then ->
+        filteredCategories = categories.select (category) ->
+          category.related().partners.length
+
+        res.render 'index', categories: filteredCategories, type: 'institution'

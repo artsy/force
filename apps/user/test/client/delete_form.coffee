@@ -6,7 +6,7 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../models/current_user'
 
-describe 'UserDeleteForm', ->
+xdescribe 'UserDeleteForm', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'

@@ -4,15 +4,20 @@ append locals
   - assetPackage = 'galleries_institutions2'
 
 block body
-  #galleries-page.galleries-page.main-layout-container
+  #galleries-institutions2-page.partners-page.main-layout-container
     header.galleries-institutions2-header
-      h1 Browse Galleries
+      h1 Browse #{type == 'gallery' ? 'Galleries' : 'Institutions'}
       .galleries-institutions2-right
-        a.galleries-institutions2-right-item(href='/gallery-partnerships') Partner with Artsy
-        a.galleries-institutions2-right-item(href='/gallery-insights') Gallery Insights
-    .partner-cell-featured-specialties
+        a.galleries-institutions2-right-item(href="/#{type}-partnerships") Partner with Artsy
+
+        if type == 'gallery'
+          a.galleries-institutions2-right-item(href="/gallery-insights") Gallery Insights
+
+    #partners-page-featured-specialties
       each category in categories
         .partner-carousel
           - var title = category.get('name')
           - var partners = category.related().partners.models
           include ../components/partner_cell_carousel/template.jade
+
+    include ./footer.jade

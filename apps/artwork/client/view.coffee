@@ -41,6 +41,7 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-buy-button': 'buy'
 
   initialize: ({ @artwork, @artist, @artists }) ->
+    @location = window.location
     @checkQueryStringForAuction()
     @setupCurrentUser()
     @setupRelatedArticles()
@@ -139,7 +140,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   checkQueryStringForAuction: ->
     return if @artwork.get('sold')
-    { auction_id } = qs.parse(parse(window.location.search).query)
+    { auction_id } = qs.parse(parse(@location.search).query)
     @renderAuctionPlaceholder auction_id if auction_id
 
   renderAuctionPlaceholder: (auction_id) ->
