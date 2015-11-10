@@ -1,7 +1,7 @@
 { startServer, closeServer } = require '../../../test/helpers/integration'
 Browser = require 'zombie'
 
-describe 'Static page', ->
+xdescribe 'Static page', ->
 
   before (done) -> startServer done
 
