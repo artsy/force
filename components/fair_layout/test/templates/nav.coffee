@@ -84,5 +84,5 @@ describe 'Header template', ->
 
     it 'works with out user', ->
       user = undefined
-      # html = render('header')(sd: { CMS_URL: 'cms.com' })
+
       @$template.html().should.containEql '/log_in'
