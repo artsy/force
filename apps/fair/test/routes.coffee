@@ -249,7 +249,7 @@ describe '#fetchFairByOrganizerYear', ->
 # Microsite middleware test
 #
 sinon = require 'sinon'
-micrositeMiddleware = require '../../../lib/middleware/microsite'
+micrositeMiddleware = require('../routes').microsite
 
 describe 'microsite middleware', ->
   describe 'does not have the microsite context', ->
