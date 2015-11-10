@@ -39,7 +39,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
 
   renderSlideshow: =>
-    initCarousel $('.js-article-carousel'), imagesLoaded: true
+    initCarousel @$('.js-article-carousel'), imagesLoaded: true
 
   renderArtworks: (cb) =>
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
