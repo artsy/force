@@ -36,7 +36,7 @@ module.exports.FairView = class FairView extends Backbone.View
 
     # Instantiate sub views including the fair header and the view pertaining
     # to the current section.
-    new FairHeaderView el: $('.fair-page-header'), model: @model, fair: @fair
+    new FairHeaderView el: $('.fair-layout-header'), model: @model, fair: @fair
     return if options.currentSection is 'browse'
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
@@ -68,7 +68,7 @@ module.exports.init = ->
     model: profile
     fair: fair
     user: user
-    el: $('#fair-page')
+    el: $('.fair-layout-container')
     currentSection: sd.SECTION
 
   if sd.SECTION in ['overview', 'browse']
