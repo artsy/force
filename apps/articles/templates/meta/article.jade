@@ -19,7 +19,7 @@ if article.get('keywords') && article.get('keywords').length
   meta( property="article:tag", content=(article.get('keywords')).join(', ') )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
-if article.get('contributing_authors').length
+if article.get('contributing_authors') && article.get('contributing_authors').length
   - for author in article.get('contributing_authors')
       if author.name
         meta( name='author', content=author.name )
