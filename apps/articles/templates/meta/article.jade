@@ -13,16 +13,17 @@ meta( property='twitter:url', content=(sd.APP_URL + '/article/' + article.get('s
 meta( property="twitter:card", content="summary_large_image" )  
 meta( name='cre', content='Artsy' )
 meta( property='fb:app_id', content=sd.FACEBOOK_ID )
-meta( property="news_keywords", content=article.get('keywords') )
-meta( name="keywords", content=article.get('keywords') )
-meta( property="article:tag", content=article.get('keywords') )
+if article.get('keywords') && article.get('keywords').length
+  meta( property="news_keywords", content=(article.get('keywords')).join(', ') )
+  meta( name="keywords", content=(article.get('keywords')).join(', ') )
+  meta( property="article:tag", content=(article.get('keywords')).join(', ') )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
 if article.get('contributing_authors').length
   - for author in article.get('contributing_authors')
-    - if author.name?
-      meta( name='author', content=author.name )
-    - if author.facebook_uid?
-      meta( property='article:author', content=author.facebook_uid )
-    - if author.twitter_uid?
-      meta( property='twitter:creator:id', content=author.twitter_uid )
+      if author.name
+        meta( name='author', content=author.name )
+      if author.facebook_uid
+        meta( property='article:author', content=author.facebook_uid )
+      if author.twitter_uid
+        meta( property='twitter:creator:id', content=author.twitter_uid )
