@@ -12,9 +12,8 @@ aggregationParams = require './aggregations.coffee'
   Q.all([
     tag.fetch(cache: true)
     filterArtworks.fetch(data: filterData)
-  ]).done ->
+  ]).catch(next).then ->
     res.locals.sd.TAG = tag.toJSON()
-
     res.render 'index',
       tag: tag
       filterRoot: tag.href() + '/artworks'
