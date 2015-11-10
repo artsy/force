@@ -45,17 +45,3 @@ describe 'Header template', ->
   it 'sets the notification count if present in cookie', ->
     html = render('index')(sd: { CURRENT_USER: { type: 'Admin' }, NOTIFICATION_COUNT: "2" })
     html.should.containEql '<div data-visible="true" class="mlh-bundle-count">2</div>'
-
-describe 'Microsite template', ->
-  it 'does not render the welcome header', ->
-    render('microsite')(sd: { HIDE_HEADER: true }, user: undefined).should.not.containEql 'main-layout-welcome-header'
-
-  it 'renders the user nav', ->
-    user = new CurrentUser fabricate('user')
-    html = render('microsite')(sd: {}, user: user)
-    html.should.not.containEql 'main-layout-welcome-header'
-    html.should.containEql user.get('name')
-
-  it 'works with out user', ->
-    html = render('microsite')(sd: { CMS_URL: 'cms.com' })
-    html.should.containEql '/log_in'
