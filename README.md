@@ -20,10 +20,10 @@ Set-Up
 
 - Install [Heroku Toolbelt](https://toolbelt.heroku.com/)
 - Install [NVM](https://github.com/creationix/nvm)
-- Install Node 0.12
+- Install Node 4
 ```
-nvm install 0.12
-nvm alias default 0.12
+nvm install 4
+nvm alias default 4
 ```
 - Fork Force to your Github account in the Github UI.
 - Clone your repo locally (substitute your Github username).

@@ -151,6 +151,6 @@ describe 'HomeAuthRouter', ->
     @mediator.trigger.args[0][1].mode.should.equal 'forgot'
 
   it 'shows an error message if coming from a bad facebook/twitter', ->
-    location.search = '?error=already-signed-up'
+    @router.location = search: '?error=already-signed-up'
     @router.login()
     @mediator.trigger.args[1][0].should.equal 'auth:error'

@@ -139,7 +139,7 @@
 
       //- Administrative actions
       if user && user.isAdmin()
-        a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
+        a( href="#{sd.CMS_URL}/artworks/#{artwork.id}/edit?current_partner_id=#{artwork.get('partner')['id']}", target='_blank' )
           i.icon-edit
           | Edit
         a( href="#{sd.GENOME_URL}/genome/artworks?artwork_ids=#{artwork.id}", target='_blank' )

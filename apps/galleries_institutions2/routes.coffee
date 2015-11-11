@@ -1,10 +1,34 @@
 Partners = require '../../collections/partners'
+PartnerCategories = require '../../collections/partner_categories'
 Profile = require '../../models/profile'
 PartnerCellGrid = require './components/partner_cell_grid/view'
+Backbone = require 'backbone'
+Q = require 'bluebird-q'
 
 @galleries = (req, res, next) ->
-  partners = new Partners()
-  partners.fetch error: res.backboneError, success: ->
-    res.locals.sd.PARTNERS = partners.toJSON()
-    res.render 'index', sets: [{title: 'Title 1', partners: partners.models}, {title: 'Title 2', partners: partners.models}, {title: 'Title 3', partners: partners.models}]
-    
+  categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: 'Gallery'
+    .then ->
+
+      Q.all categories.map (category) ->
+        category.related().partners.fetch data: size: 10
+
+      .then ->
+        filteredCategories = categories.select (category) ->
+          category.related().partners.length
+
+        res.render 'index', categories: filteredCategories, type: 'gallery'
+
+@institutions = (req, res, next) ->
+  categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: 'Institution'
+    .then ->
+
+      Q.all categories.map (category) ->
+        category.related().partners.fetch data: size: 10
+
+      .then ->
+        filteredCategories = categories.select (category) ->
+          category.related().partners.length
+
+        res.render 'index', categories: filteredCategories, type: 'institution'

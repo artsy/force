@@ -64,7 +64,7 @@ describe 'Email Registration Flow', ->
         _.last(@authModalView.initialize.args)[0].redirectTo.should.equal '/personalize'
         done()
 
-  it 'AuthModal is set to redirect to bid registration if register is pressed', (done) ->
+  xit 'AuthModal is set to redirect to bid registration if register is pressed', (done) ->
     @emailView.deferred.resolve 'president@whitehouse.gov'
     _.defer =>
       @thankYouView.deferred.resolve true

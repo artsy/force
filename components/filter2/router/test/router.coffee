@@ -2,7 +2,8 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-FilterRouter = require '../index.coffee'
+rewire = require 'rewire'
+FilterRouter = rewire '../index.coffee'
 
 describe 'FilterRouter', ->
 
@@ -40,6 +41,6 @@ describe 'FilterRouter', ->
   describe '#artworks', ->
 
     it 'sets the filter params', ->
-      global.location.search = "?foo=bar"
+      FilterRouter.__set__ 'location', search: "?foo=bar"
       @router.artworks()
       @router.params.get('foo').should.equal 'bar'
