@@ -2,18 +2,19 @@
 
 h1.iq-headline
   if partner.get('pre_qualify')
-    | #{partner.get('name')} requests additional information before placing an inquiry.
+    | #{partner.get('name')} asks for some additional information before placing an inquiry.
     | You only have to do this once.
   else
-    | To facilitate your introduction with the gallery,
-    | we recommend to tell a little about yourself.
+    | Tell #{partner.get('name')} a little bit about yourself.
 
 form.iq-form.stacked-form
   .iq-form-errors.js-form-errors
     //- Rendered separately
 
   label.avant-garde-form-label( for='profession' )
-    | Profession <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
+    | Profession
+    if partner.get('pre_qualify')
+      span (Required)
   input.bordered-input.js-iq-profession(
     name='profession'
     id='profession'
@@ -22,12 +23,16 @@ form.iq-form.stacked-form
   )
 
   label.avant-garde-form-label( for='location' )
-    | Location <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
+    | Location
+    if partner.get('pre_qualify')
+      span (Required)
   .js-location-search
     //- Rendered separately
 
   label.avant-garde-form-label( for='phone' )
-    | Phone Number <span>(#{partner.get('pre_qualify') ? 'Required' : 'Optional'})</span>
+    | Phone Number
+    if partner.get('pre_qualify')
+      span (Required)
   input.bordered-input.js-iq-phone(
     name='phone'
     id='phone'
