@@ -27,13 +27,17 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
           @refreshRenderArtworks result
 
   initializeArtistRow: (result) ->
-    new Artist(id: result.id).fetchArtworks
+    artist = new Artist(id: result.id)
+    artist.fetchArtworks
       data:
         sort: '-iconicity'
         size: 7
         published: true
       success: (artworks) =>
-        @renderArtworks artworks, result.id
+        if artworks.length > 0
+          @renderArtworks artworks, result.id
+        else
+          @$("[data-id=#{artist.get 'id'}] .search-result-images").remove()
 
   initializeGeneRow: (result) ->
     new Gene(id: result.id).fetchArtworks
@@ -44,11 +48,12 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
         @renderArtworks artworks, result.id
 
   renderArtworks: (artworks, id) ->
-    imageUrls =
-      for artwork in artworks.models
-        artwork.defaultImageUrl('tall')
+    imageUrls = for artwork in artworks.models
+      artwork.defaultImageUrl('tall')
     if imageUrls.length > 0
-      @$(".search-result[data-id=#{id}] .search-result-images").html imageTemplate(imageUrls: imageUrls)
+      @$(".search-result[data-id=#{id}] .search-result-images").html(
+        imageTemplate(imageUrls: imageUrls)
+      )
 
   refreshRenderArtworks: (result) ->
     artwork = new Artwork(id: result.id)
