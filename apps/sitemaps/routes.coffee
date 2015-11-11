@@ -161,12 +161,13 @@ getArtworkBuckets = (callback) ->
       res.end()
 
 @bingDelta = (req, res, next) ->
+  res.set('Content-Disposition': 'attachment').write('[')
   request
     .get("#{FUSION_URL}/api/v1/artworks")
-    .query(published_at_since: moment().subtract(7, 'days'))
+    .query(published_at_since: moment().subtract(7, 'days').format('YYYY-MM-DD'))
     .end (err, sres) ->
       return next err if err
-      res.set('Content-Type', 'application/json').write('[')
+      return callback() if sres.body.results.length is 0
       streamResults sres.body.results, res
       res.write('{}]')
       res.end()
