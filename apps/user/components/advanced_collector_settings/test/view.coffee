@@ -27,7 +27,7 @@ describe 'AdvancedCollectorSettingsFormView', ->
   describe '#render', ->
     it 'renders correctly', ->
       html = @view.render().$el.html()
-      html.should.containEql 'Add artists, categories, and galleries you follow to inquiries'
+      html.should.containEql 'Share followed artists, categories, and galleries with your inquiries'
 
   describe '#submit', ->
     it 'saves the attributes on the user', ->
