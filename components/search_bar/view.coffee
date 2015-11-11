@@ -18,7 +18,6 @@ module.exports = class SearchBarView extends Backbone.View
 
   initialize: (options) ->
     return unless @$el.length
-
     { @mode,
       @restrictType,
       @$input,
@@ -61,6 +60,7 @@ module.exports = class SearchBarView extends Backbone.View
     analytics.track.click "Focused on search input"
 
   checkSubmission: (e) ->
+    console.log "checkSubmission"
     @hideSuggestions()
     return if !(e.which is 13) or @selected?
     @trigger 'search:entered', @$input.val()

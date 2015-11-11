@@ -248,6 +248,8 @@ aggregationParams = require './components/browse/aggregations.coffee'
     res.locals.sd.MICROSITE_FAIR = fair.toJSON()
     res.locals.sd.MICROSITE_PROFILE = profile.toJSON()
     res.locals.sd.HIDE_HEADER = true
+    res.locals.fair = fair
+    res.locals.profile = profile
 
   next()
 

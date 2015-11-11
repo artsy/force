@@ -1,86 +1,8 @@
-Backbone = require 'backbone'
-Backbone.$ = $
-_ = require 'underscore'
-Cookies = require 'cookies-js'
-imagesLoaded = require 'imagesloaded'
-mediator = require '../../lib/mediator.coffee'
+globalClientSetup = require '../../lib/global_client_setup.coffee'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
-sd = require('sharify').data
-analytics = require '../../lib/analytics.coffee'
-templateModules = require '../../lib/template_modules.coffee'
-setupAuctionReminder = require '../auction_reminders/index.coffee'
-setupSplitTests = require '../split_test/setup.coffee'
-listenForInvert = require '../eggs/invert/index.coffee'
-listenForBounce = require '../eggs/bounce/index.coffee'
 
 module.exports = ->
-  setupJquery()
-  setupViews()
-  setupReferrerTracking()
-  syncAuth()
-  setupAuctionReminder()
-  listenForInvert()
-  listenForBounce()
-  setupAnalytics()
-
-ensureFreshUser = (data) ->
-  return unless sd.CURRENT_USER
-  for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
-               'default_profile_id', 'has_partner_access', 'collector_level']
-    if not _.isEqual data[attr], sd.CURRENT_USER[attr]
-      $.ajax('/user/refresh').then -> window.location.reload()
-
-syncAuth = module.exports.syncAuth = ->
-  # Log out of Force if you're not logged in to Gravity
-  if sd.CURRENT_USER
-    $.ajax
-      url: "#{sd.API_URL}/api/v1/me"
-      success: ensureFreshUser
-      error: ->
-        $.ajax
-          method: 'DELETE'
-          url: '/users/sign_out'
-          complete: ->
-            window.location.reload()
-
-setupAnalytics = ->
-  window.analytics?.ready ->
-    analytics(mixpanel: (mixpanel ? null), ga: ga)
-    analytics.registerCurrentUser()
-  # Log a visit once per session
-  unless Cookies.get('active_session')?
-    Cookies.set 'active_session', true
-    mediator.trigger 'session:start'
-    analytics.track.funnel if sd.CURRENT_USER
-      'Visited logged in'
-    else
-      'Visited logged out'
-
-setupReferrerTracking = ->
-  # Live, document.referrer always exists, but let's check
-  # 'document?.referrer?.indexOf' just in case we're in a
-  # test that stubs document
-  if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0
-    Cookies.set 'force-referrer', document.referrer
-    Cookies.set 'force-session-start', window.location.href
-
-setupViews = ->
+  globalClientSetup()
   new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
-
-setupJquery = ->
-  require '../../node_modules/typeahead.js/dist/typeahead.bundle.min.js'
-  require 'jquery.transition'
-  require 'jquery.fillwidth'
-  require 'jquery.dotdotdot'
-  require 'jquery-on-infinite-scroll'
-  require '../../lib/vendor/waypoints.js'
-  require '../../lib/vendor/waypoints-sticky.js'
-  require '../../lib/jquery/hidehover.coffee'
-  require('artsy-gemini-upload') $
-  require('jquery-fillwidth-lite')($, _, imagesLoaded)
-  $.ajaxSettings.headers =
-    'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
-    'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
-  window[key] = helper for key, helper of templateModules

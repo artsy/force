@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 { FavoritesView } = require '../../../components/favorites/client/favorites.coffee'
 { FollowsView } = require '../../../components/favorites/client/follows.coffee'
-FairHeaderView = require '../../../components/fair_layout/client/header.coffee'
+initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
 FairInfoView = require './info.coffee'
 FairArticlesView = require './articles.coffee'
@@ -31,12 +31,12 @@ module.exports.FairView = class FairView extends Backbone.View
   footerRoutes: ['forYou', 'posts', 'search', 'info', 'favorites', 'follows']
 
   initialize: (options) ->
+    initFairLayout(options)
     @fair = options.fair
     @user = options.user
 
     # Instantiate sub views including the fair header and the view pertaining
     # to the current section.
-    new FairHeaderView el: $('.fair-layout-header'), model: @model, fair: @fair
     return if options.currentSection is 'browse'
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
