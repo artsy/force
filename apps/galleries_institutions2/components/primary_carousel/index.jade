@@ -1,6 +1,6 @@
 .galleries-primary-carousel.js-galleries-primary-carousel
   .gpc-overlays
-    for show, i in carousel.shows
+    for show, i in shows
       .gpc-overlay.js-gpc-overlay( data-idx= i )
         h2.gpc-headline
           = show.related().partner.get('name')
@@ -13,7 +13,7 @@
 
   .gpc-carousel
     .gpc-carousel-cells.js-mgr-cells
-      for show in carousel.shows
+      for show in shows
         .gpc-carousel-cell.js-mgr-cell
           if show.hasImage('large')
             .gpc-carousel-figure(
