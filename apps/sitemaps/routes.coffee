@@ -167,7 +167,6 @@ getArtworkBuckets = (callback) ->
     .query(published_at_since: moment().subtract(7, 'days').format('YYYY-MM-DD'))
     .end (err, sres) ->
       return next err if err
-      return callback() if sres.body.results.length is 0
       streamResults sres.body.results, res
       res.write('{}]')
       res.end()
