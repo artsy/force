@@ -21,7 +21,7 @@ describe 'BasicInfo', setup ->
       @view.$('.iq-headline').text()
         .should.containEql 'Gagosian Gallery requests additional information before placing an inquiry'
       @view.$('input').map(-> $(this).attr('name')).get()
-        .should.eql ['profession', 'phone']
+        .should.eql ['profession', 'phone', 'share_follows']
       @view.$('.js-nevermind').text().should.equal 'Nevermind, cancel my inquiry' # pre_qualify
 
   describe 'next', ->

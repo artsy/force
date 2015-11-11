@@ -5,8 +5,8 @@ h1.iq-headline
     | #{partner.get('name')} requests additional information before placing an inquiry.
     | You only have to do this once.
   else
-    | Please complete profile information to be shared with the gallery.
-    | You only need to fill this out once.
+    | To facilitate your introduction with the gallery,
+    | we recommend to tell a little about yourself.
 
 form.iq-form.stacked-form
   .iq-form-errors.js-form-errors
@@ -35,6 +35,19 @@ form.iq-form.stacked-form
     value= user.get('phone')
     required= partner.get('pre_qualify')
   )
+
+  if user.isLoggedIn()
+    .iq-checkbox.artsy-checkbox
+      .artsy-checkbox--checkbox
+        input(
+          type='checkbox'
+          id='share_follows'
+          name='share_follows'
+          checked= user.get('share_follows')
+        )
+        label( for='share_follows' )
+      label.artsy-checkbox--label( for='share_follows' )
+        | Share followed artists, categories, and galleries
 
   button.avant-garde-button-black.iq-next( type='submit' ) Next
 
