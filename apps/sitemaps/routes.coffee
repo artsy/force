@@ -160,6 +160,17 @@ getArtworkBuckets = (callback) ->
       res.write('{}]')
       res.end()
 
+@bingDelta = (req, res, next) ->
+  request
+    .get("#{FUSION_URL}/api/v1/artworks")
+    .query(published_at_since: moment().subtract(7, 'days'))
+    .end (err, sres) ->
+      return next err if err
+      res.set('Content-Type', 'application/json').write('[')
+      streamResults sres.body.results, res
+      res.write('{}]')
+      res.end()
+
 streamResults = (results, res) ->
   results.forEach (artwork) ->
     artwork = new Artwork artwork
