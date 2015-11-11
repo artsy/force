@@ -1,8 +1,10 @@
 a.search-result( href=result.href(), class=result.get('display_model'), data-id=result.get('id') )
-  .search-result-thumbnail
-    .search-result-thumbnail-fallback
-      if result.imageUrl() != null
+  if result.imageUrl() != null
+    .search-result-thumbnail
+      .search-result-thumbnail-fallback
         include image
+  else
+    .search-result-no-thumbnail
   .search-result-info
     if result.get('display_model')
       .search-result-kind= _s.humanize(result.get('display_model'))
