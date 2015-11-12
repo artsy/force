@@ -6,40 +6,47 @@ Backbone = require 'backbone'
 Q = require 'bluebird-q'
 PrimaryCarousel = require './components/primary_carousel/fetch'
 
-@galleries = (req, res, next) ->
-  carousel = new PrimaryCarousel
-  categories = new PartnerCategories
-
-  Q.all [
-    carousel.fetch()
-    categories.fetchUntilEnd data: category_type: 'Gallery'
-  ]
+fetchCategories = (type) ->
+  categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: type
     .then ->
       Q.all categories.map (category) ->
         category.related().partners.fetch data: size: 10
 
     .then ->
-      filteredCategories = categories.select (category) ->
+      categories.select (category) ->
         category.related().partners.length
 
-      res.render 'index',
-        type: 'gallery'
-        carousel: carousel
-        categories: filteredCategories
+@galleries = (req, res, next) ->
+  carousel = new PrimaryCarousel
+
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Gallery')
+  ])
+
+  .spread (shows, categories) ->
+    res.render 'index',
+      type: 'gallery'
+      shows: shows
+      categories: categories
 
     .catch next
     .done()
 
 @institutions = (req, res, next) ->
-  categories = new PartnerCategories()
-  categories.fetchUntilEnd data: category_type: 'Institution'
-    .then ->
+  carousel = new PrimaryCarousel
 
-      Q.all categories.map (category) ->
-        category.related().partners.fetch data: size: 10
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Institution')
+  ])
 
-      .then ->
-        filteredCategories = categories.select (category) ->
-          category.related().partners.length
+  .spread (shows, categories) ->
+    res.render 'index',
+      type: 'institution'
+      shows: shows
+      categories: categories
 
-        res.render 'index', categories: filteredCategories, type: 'institution'
+    .catch next
+    .done()
