@@ -58,14 +58,14 @@ module.exports = (app) ->
 
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
-  sync = Backbone.sync = require "backbone-super-sync"
+  sync = require "backbone-super-sync"
+  sync.timeout = API_REQUEST_TIMEOUT
+  sync.cacheClient = cache.client
+  sync.defaultCacheTime = DEFAULT_CACHE_TIME
   Backbone.sync = (method, model, options) ->
     options.headers ?= {}
     options.headers['X-XAPP-TOKEN'] = artsyXapp.token or ''
     sync method, model, options
-  Backbone.sync.timeout = API_REQUEST_TIMEOUT
-  Backbone.sync.cacheClient = cache.client
-  Backbone.sync.defaultCacheTime = DEFAULT_CACHE_TIME
 
   # Inject sharify data before anything
   app.use sharify
