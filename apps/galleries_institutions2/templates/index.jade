@@ -17,7 +17,7 @@ block body
 
     #partners-page-featured-specialties
       each category in categories
-        .partner-category-carousel( data-id= category.get('id') )
+        .partner-category-carousel
           - var title = category.get('name')
           - var partners = category.related().partners.models
           include ../components/partner_cell_carousel/template.jade

@@ -9,8 +9,12 @@ module.exports = class PartnerCell extends Backbone.View
     @listenTo @model, 'sync', @render
 
   render: =>
-    @$el.html template profile:@model, partner:@model.related().owner
+    imageUrl = @model.coverImage().imageUrl()
+    @$el.html template profile: @model, partner:@model.related().owner, imageUrl:imageUrl
 
   fetchMetadata: ->
-    @model.fetch()
+    @model.fetch().then =>
+      @locations = @model.related().owner.related().locations
+      @listenTo @locations, 'sync', @render
+      @locations.fetch()
 

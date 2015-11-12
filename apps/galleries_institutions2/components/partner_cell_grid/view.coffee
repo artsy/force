@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-{ CURRENT_USER } = require('sharify').data
 PartnerCell = require '../partner_cell/view.coffee'
 { Following } = require '../../../../components/follow_button/index.coffee'
 Profile = require '../../../../models/profile.coffee'

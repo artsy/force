@@ -8,6 +8,7 @@
   .partner-cell-carousel-content
     .mgr-cells.js-mgr-cells.partner-cell-carousel-3-up
       each partner in partners
+        - var profile = partner.related().profile
         .partner-cell.mgr-cell.js-mgr-cell.grid-item(data-id= partner.get('default_profile_id'))
           include ../partner_cell/index
     .partner-cell-nav
