@@ -77,6 +77,9 @@ module.exports = class Location extends Backbone.Model
     else
       @displayAddress()
 
+  toString: ->
+    @cityStateCountry()
+
   toJSONLD: ->
     address = [@get('address') or '', @get('address_2') or ''].join('')
     compactObject {
