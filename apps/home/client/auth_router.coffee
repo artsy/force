@@ -10,13 +10,16 @@ module.exports = class HomeAuthRouter extends Backbone.Router
     'sign_up': 'signup'
     'forgot': 'forgot'
 
+  initialize: ->
+    @location = window.location
+
   login: ->
-    error = qs.parse(location.search.replace /^\?/, '').error
-    redirectTo = qs.parse(location.search.replace /^\?/, '').redirect_uri or qs.parse(location.search.replace /^\?/, '')['redirect-to']
+    error = qs.parse(@location.search.replace /^\?/, '').error
+    redirectTo = qs.parse(@location.search.replace /^\?/, '').redirect_uri or qs.parse(@location.search.replace /^\?/, '')['redirect-to']
 
     # Handle gravity style account created errors
     unless error
-      error = qs.parse(location.search.replace /^\?/, '').account_created_email
+      error = qs.parse(@location.search.replace /^\?/, '').account_created_email
 
     if error
       msg = switch error

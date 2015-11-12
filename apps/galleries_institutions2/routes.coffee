@@ -4,17 +4,49 @@ Profile = require '../../models/profile'
 PartnerCellGrid = require './components/partner_cell_grid/view'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
+PrimaryCarousel = require './components/primary_carousel/fetch'
 
-@galleries = (req, res, next) ->
+fetchCategories = (type) ->
   categories = new PartnerCategories()
-  categories.fetchUntilEnd data: category_type: 'Gallery'
+  categories.fetchUntilEnd data: category_type: type
     .then ->
-
       Q.all categories.map (category) ->
         category.related().partners.fetch data: size: 10
 
-      .then ->
-        filteredCategories = categories.select (category) ->
-          category.related().partners.length
+    .then ->
+      categories.select (category) ->
+        category.related().partners.length
 
-        res.render 'index', categories: filteredCategories, type: 'gallery'
+@galleries = (req, res, next) ->
+  carousel = new PrimaryCarousel
+
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Gallery')
+  ])
+
+  .spread (shows, categories) ->
+    res.render 'index',
+      type: 'gallery'
+      shows: shows
+      categories: categories
+
+    .catch next
+    .done()
+
+@institutions = (req, res, next) ->
+  carousel = new PrimaryCarousel
+
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Institution')
+  ])
+
+  .spread (shows, categories) ->
+    res.render 'index',
+      type: 'institution'
+      shows: shows
+      categories: categories
+
+    .catch next
+    .done()

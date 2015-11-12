@@ -7,6 +7,7 @@ ArtworkCollection = require '../../models/artwork_collection'
 CurrentUser = require '../../models/current_user'
 benv = require 'benv'
 sd = require('sharify').data
+_ = require 'underscore'
 
 { fabricate } = require 'antigravity'
 
@@ -56,10 +57,9 @@ describe 'ArtworkCollection', ->
       artwork = new Artwork({ id: 'baz', title: 'Baz' })
       @artworkCollection.on "add:#{artwork.get('id')}", -> specificArtworkAddedCalls += 1
       @artworkCollection.saveArtwork artwork.get('id')
-      setTimeout ->
+      _.defer -> _.defer ->
         specificArtworkAddedCalls.should.equal 1
         done()
-      , 100
 
     it 'can accept a silent option to prevent event triggers', (done) ->
       artworkAddedCalls = 0
@@ -68,11 +68,10 @@ describe 'ArtworkCollection', ->
       @artworkCollection.on 'add', -> artworkAddedCalls += 1
       @artworkCollection.on "add:#{artwork.get('id')}", -> specificArtworkAddedCalls += 1
       @artworkCollection.saveArtwork artwork.get('id'), { silent: true }
-      setTimeout ->
+      _.defer -> _.defer ->
         artworkAddedCalls.should.equal 0
         specificArtworkAddedCalls.should.equal 0
         done()
-      , 100
 
     it 'calls the success callback', ->
       successCb = sinon.stub()

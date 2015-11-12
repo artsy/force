@@ -22,7 +22,9 @@ describe 'VideoView', ->
       }, =>
         Backbone.$ = $
         VideoView = require '../../client/video'
-        @view = new VideoView el: $('body'), artwork: @artwork
+        @view = new VideoView
+          el: $('<div><div class="artwork-image"></div></div>')
+          artwork: @artwork
         done()
 
   afterEach ->

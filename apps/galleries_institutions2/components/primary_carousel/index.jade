@@ -1,0 +1,25 @@
+.galleries-primary-carousel.js-galleries-primary-carousel
+  .gpc-overlays
+    for show, i in shows
+      .gpc-overlay.js-gpc-overlay( data-idx= i )
+        h2.gpc-headline
+          = show.related().partner.get('name')
+        .gpc-subheadline
+          | Current Show
+        .gpc-subheadline-alt
+          = show.get('name')
+        .gpc-follow-button: a.avant-garde-button-white
+          | Follow
+
+  .gpc-carousel
+    .gpc-carousel-cells.js-mgr-cells
+      for show in shows
+        .gpc-carousel-cell.js-mgr-cell
+          if show.hasImage('large')
+            .gpc-carousel-figure(
+              style='background-image: url(' + show.imageUrl('large') + ')'
+            )
+
+  .gpc-bumpers.js-gpc-navigation
+    .gpc-bumper-prev.js-gpc-prev: i.icon-chevron-small-left
+    .gpc-bumper-next.js-gpc-next: i.icon-chevron-small-right

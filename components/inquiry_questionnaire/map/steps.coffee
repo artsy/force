@@ -33,7 +33,7 @@ module.exports = [
       'inquiry'
       { has_completed_profile: false: ['confirmation'] }
       { has_seen_commercial_interest: false: ['commercial_interest'] }
-      { has_seen_basic_info: false: ['basic_info'] }
+      { has_basic_info: false: ['basic_info'] }
       {
         is_collector: true: [
           { has_seen_artists_in_collection: false: ['artists_in_collection'] }

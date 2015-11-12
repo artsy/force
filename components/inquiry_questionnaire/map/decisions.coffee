@@ -17,7 +17,8 @@ decisions =
   has_basic_info: ({ user }) ->
     user.has('profession') and
     user.has('location') and
-    user.has('phone')
+    user.has('phone') and
+    user.has('share_follows')
 
   is_logged_in: ({ user }) ->
     user.isLoggedIn()
@@ -25,7 +26,6 @@ decisions =
   has_completed_profile: ({ logger, user }) ->
     steps = [
       'commercial_interest'
-      'basic_info'
     ]
 
     if user.isCollector()
@@ -37,6 +37,7 @@ decisions =
         'institutional_affiliations'
       ]
 
+    @has_basic_info(arguments...) and
     logger.hasLogged steps...
 
 module.exports = _.reduce allSteps, (memo, step) ->

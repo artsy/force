@@ -22,15 +22,16 @@ describe 'AcquireArtwork Component', ->
       @editionSetId = null
       @artwork = new Backbone.Model(id: 'artwork-id')
       sinon.stub location, 'reload'
+      sinon.stub location, 'assign'
 
     afterEach ->
       Backbone.sync.restore()
       location.reload.restore()
+      location.assign.restore()
 
     it 'redirects to correct order resume url', ->
       acquireArtwork(@artwork, @target, @editionSetId)
       Backbone.sync.args[0][2].success
         id: 'order-id'
         token: 'order-token'
-
-      location.href.should.containEql '/order/order-id/resume?token=order-token'
+      location.assign.args[0][0].should.containEql '/order/order-id/resume?token=order-token'

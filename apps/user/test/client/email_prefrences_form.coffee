@@ -6,7 +6,7 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../models/current_user'
-EmailPrefrencesForm = rewire '../../client/email_prefrences_form'
+EmailPreferencesForm = rewire '../../client/email_prefrences_form'
 
 formTemplate = """
   <div>
@@ -22,7 +22,7 @@ formTemplate = """
   </div>
 """
 
-describe 'EmailPrefrencesForm', ->
+describe 'EmailPreferencesForm', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
@@ -33,37 +33,44 @@ describe 'EmailPrefrencesForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    sinon.stub(EmailPrefrencesForm::, 'validateForm').returns true
-    sinon.stub(EmailPrefrencesForm::, 'formIsSubmitting').returns false
+    sinon.stub(EmailPreferencesForm::, 'validateForm').returns true
+    sinon.stub(EmailPreferencesForm::, 'formIsSubmitting').returns false
     sinon.stub Backbone, 'sync'
+    sinon.spy $.fn, 'prop'
 
     @user = new CurrentUser fabricate 'user'
     @model = new Backbone.Model
     @model.url = '/api/v1/fixture'
-    @view = new EmailPrefrencesForm el: $(formTemplate), model: @model, user: @user
+    @view = new EmailPreferencesForm el: $(formTemplate), model: @model, user: @user
 
     done()
 
   afterEach ->
     @view.validateForm.restore()
     @view.formIsSubmitting.restore()
+    $.fn.prop.restore()
     Backbone.sync.restore()
 
   describe '#receive_emails', ->
     beforeEach ->
-      @view.$('input[name="bar"]').prop('checked', false)
       @view.$('input[name="baz"]').prop('checked', true)
+      @view.$('input[name="bar"]').prop('checked', false)
+      @propCalled = (selector, attr, val)->
+        for thisValue, i in $.fn.prop.thisValues
+          arg = $.fn.prop.args[i] if thisValue.selector is selector
+        arg[0].should.equal attr
+        arg[1].should.equal val
 
     it 'disables email_subscriptions checkboxes when we disable receive_emails', ->
       @view.$('#receive_emails').prop('checked', true)
       @view.$('#receive_emails').click()
-      @view.$('.email_subscriptions input').prop('disabled').should.be.true()
-      @view.$('input[name="bar"]').is(':checked').should.be.false()
-      @view.$('input[name="baz"]').is(':checked').should.be.true()
+      @propCalled '.email_subscriptions input', 'disabled', false
+      @propCalled 'input[name="bar"]', 'checked', false
+      @propCalled 'input[name="baz"]', 'checked', true
 
     it 'emables email_subscriptions checkboxes when we enable receive_emails', ->
       @view.$('#receive_emails').prop('checked', false)
       @view.$('#receive_emails').click()
-      @view.$('.email_subscriptions input').prop('disabled').should.be.false()
-      @view.$('input[name="bar"]').is(':checked').should.be.false()
-      @view.$('input[name="baz"]').is(':checked').should.be.true()
+      @propCalled '.email_subscriptions input', 'disabled', true
+      @propCalled 'input[name="bar"]', 'checked', false
+      @propCalled 'input[name="baz"]', 'checked', true

@@ -7,8 +7,11 @@ module.exports =
     return @__related__ if @__related__?
 
     CollectorProfile = require '../../collector_profile.coffee'
+    Location = require '../../location.coffee'
 
     collectorProfile = new CollectorProfile
+
+    location = new Location @get 'location'
 
     account = new Backbone.Model
     account.url = "#{API_URL}/api/v1/user"
@@ -19,3 +22,4 @@ module.exports =
     @__related__ =
       collectorProfile: collectorProfile
       account: account
+      location: location

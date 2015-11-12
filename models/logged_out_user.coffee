@@ -1,13 +1,16 @@
 Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL } = require('sharify').data
+{ API_URL, CSRF_TOKEN } = require('sharify').data
 syncWithSessionId = require '../lib/sync_with_session_id.coffee'
 User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
   __isRecentlyRegistered__: false
+
+  defaults:
+    _csrf: CSRF_TOKEN
 
   initialize: ->
     syncWithSessionId()
@@ -52,7 +55,7 @@ module.exports = class LoggedOutUser extends User
         success: =>
           @__isRecentlyRegistered__ = true
           @trigger 'signup'
-          @login(_.pick options, 'success')
+          @login(_.pick options, 'success', 'error')
 
   register: @::signup
 

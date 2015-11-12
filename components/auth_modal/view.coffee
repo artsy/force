@@ -125,12 +125,12 @@ module.exports = class AuthModalView extends ModalView
         when 'login'
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
           if @redirectTo
-            location.href = @redirectTo
+            location.assign @redirectTo
           else
             location.reload()
         when 'register'
           mediator.trigger 'auth:sign_up:success'
-          location.href = @redirectTo or '/personalize'
+          location.assign @redirectTo or '/personalize'
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 

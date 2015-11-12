@@ -1,17 +1,4 @@
-mixin checkbox(name, label)
-  .settings-split.artsy-checkbox
-    .ss-left
-      label.settings-checkbox-label.artsy-checkbox--label( for= name )
-        = label
-    .ss-right: .artsy-checkbox--checkbox
-      input(
-        type='checkbox'
-        id= name
-        name= name
-        checked= user.checked(name)
-        disabled= disabled
-      )
-      label( for= name )
+include ../components/checkbox/index
 
 .grouped-section
   .gs-header: h2 Information
@@ -130,12 +117,17 @@ mixin checkbox(name, label)
   .gs-header: h2 Email
   .gs-body: .gs-constrain
     #settings-email-preferences: form
-      +checkbox('receive_emails', 'Receive Emails')
+      +checkbox('receive_emails')
+        | Receive Emails
       .email_subscriptions
-        +checkbox('receive_weekly_email', 'Weekly featured content from Artsy')
-        +checkbox('receive_personalized_email', 'Weekly personalized email')
-        +checkbox('receive_follow_users_email', 'When I have new followers')
-        +checkbox('receive_offer_emails', 'Occasional buying opportunities')
+        +checkbox('receive_weekly_email')
+         | Weekly featured content from Artsy
+        +checkbox('receive_personalized_email')
+         | Weekly personalized email
+        +checkbox('receive_follow_users_email')
+         | When I have new followers
+        +checkbox('receive_offer_emails')
+         | Occasional buying opportunities
 
       hr.is-invisible
 

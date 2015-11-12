@@ -1,0 +1,95 @@
+@require '../../../components/merry_go_round'
+
+carousel-height = 400px
+
+// Structure
+.gpc-bumpers
+  position absolute
+  width 100%
+  z-index 1
+.gpc-bumper-next
+.gpc-bumper-prev
+  position absolute
+  width default-icon-font-size + 10
+  height carousel-height
+  background-color white
+  border 1px solid gray-lighter-color
+  cursor pointer
+  user-select none
+  > i
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+.gpc-bumper-next
+  right 0
+.gpc-bumper-prev
+  left 0
+
+.galleries-primary-carousel
+  position relative
+  width 100%
+  height carousel-height
+  block-margins(20px)
+  overflow hidden
+
+.gpc-overlays
+  position absolute
+  top 0
+  right 66.66%
+  bottom 0
+  left 0
+  height 100%
+  display flex
+  align-items center
+  text-align center
+
+.gpc-carousel
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 33.33%
+  height 100%
+
+// Overlays
+.gpc-overlay
+  opacity 0
+  margin 0 auto
+  display none
+  transition opacity 0.5s
+  &:first-child
+  &[data-state='active']
+    opacity 1
+  &[data-state='inactive']
+    opacity 0
+
+// Carousel
+.gpc-carousel-cell
+  position relative
+  display inline-block
+  height carousel-height
+  width 100%
+
+.gpc-carousel-figure
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background-size cover
+  background-position center center
+  transition transform 1s
+
+// Typography
+.gpc-headline
+  margin 20px 0
+  garamond-size('headline')
+.gpc-subheadline
+  margin 5px 0
+  avant-garde-size('body')
+.gpc-subheadline-alt
+  garamond-size('l-body')
+  font-style italic
+.gpc-follow-button
+  margin 20px 0
