@@ -20,6 +20,34 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  '1-54-london-2015':
+    title: '1:54 Contemporary African Art Fair 2015 | Artsy'
+    description: 'Browse galleries hailing from 20+ cities—from Tiwani Gallery in London to KooVha Gallery in Harare—showcasing a wide range of art from Africa and beyond.'
+
+  'art-toronto-2015':
+    title: 'Art Toronto 2015 | Artsy'
+    description: 'Discover artwork from Canada\'s leading galleries—Nikola Rukaj Gallery, Rebecca Hossack Gallery, and Galerie d\'Este among them—at Art Toronto.'
+
+  'art-taipei-2015':
+    title: 'Art Taipei 2015 | Artsy'
+    description: 'Browse works by leading Asian contemporary artists—including Chen Wei, Yayoi Kusama, and Geng Jianyi—at one of Asia’s longest-standing art fairs.'
+
+  'ifpda-2015':
+    title: 'IFPDA 2015 | Artsy'
+    description: 'Your first look at prints by old masters and leading contemporary artists—Chris Ofili and Albrecht Dürer among them—at this unique fair dedicated to printmaking.'
+
+  'artissima-2015':
+    title: 'Artissima 2015 | Artsy'
+    description: 'Explore works by leading contemporary artists—including Amina Benbouchta, Graham Wilson, and Evan Robarts—before the Torino fair opens its doors.'
+
+  'contemporary-istanbul-2015':
+    title: 'Contemporary Istanbul 2015 | Artsy'
+    description: 'Celebrating 10 years, the international fair brings works by contemporary artists—including Mehmet Güleryüz, Elisabeeth Lecourt, and Csaba Fürjesi—to the Turkish city.'
+
+  'the-salon-ny':
+    title: 'Salon: Art + Design 2015 | Artsy'
+    description: '55 international galleries, hailing from Paris to Rome, bring their finest design works to New York\'s Park Avenue Armory.'
+
   'unseen-photo-fair-2015':
     title: 'Unseen Photo Fair 2015 | Artsy'
     description: 'Your first look at the Amsterdam fair celebrating photography in all its forms—with works by Erwin Olaf, Letha Wilson, Christto & Andrew, and more.'
