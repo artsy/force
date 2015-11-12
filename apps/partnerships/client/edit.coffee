@@ -21,7 +21,6 @@ hulkCallback = (data) ->
 
 renderPreview = (data) ->
   renderData = JSON.parse JSON.stringify(data)
-  console.log 'renderData', renderData
   $('#partnerships-edit-preview').html(
     template _.extend(renderData, crop: crop, path: location.pathname, subject: sd.SUBJECT)
   )
