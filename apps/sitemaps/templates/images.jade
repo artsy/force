@@ -9,7 +9,7 @@ urlset(
         loc='https://www.artsy.net/artwork/' + artwork.id
         image:image
           //- Use CDN cname
-          image:loc=(artwork.imageUrl()).replace('https://d32dm0rphc51dk.cloudfront.net', 'http://media-assets.artsy.net')
+          image:loc=artwork.imageUrl()
           image:title=artwork.get('title')
           if artwork.get('artist')
             image:caption=artwork.get('title') + ' is a work of art created by ' + artwork.related().artist.get('name') + ' in ' + artwork.get('date') + '.'
