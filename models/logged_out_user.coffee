@@ -55,7 +55,7 @@ module.exports = class LoggedOutUser extends User
         success: =>
           @__isRecentlyRegistered__ = true
           @trigger 'signup'
-          @login(_.pick options, 'success')
+          @login(_.pick options, 'success', 'error')
 
   register: @::signup
 
