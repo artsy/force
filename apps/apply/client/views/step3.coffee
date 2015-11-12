@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+{ CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/mixins/form.coffee'
 Checkboxes = require './checkboxes.coffee'
 template = -> require('../templates/step3.jade') arguments...
@@ -22,6 +23,7 @@ module.exports = class Step3View extends Backbone.View
     return unless @validateForm()
     e.preventDefault()
     @$('button').attr 'data-state', 'loading'
+    @form.set('00NC0000005RUKX', CURRENT_USER.id) if CURRENT_USER
     @form.save @serializeForm(), success: @finish, error: @error
 
   finish: =>
