@@ -1,6 +1,5 @@
 //- partner, imageUrl
-- var profile = partner.related().profile
-
+- var profile ?= partner.related().profile
 a.partner-featured-image.hoverable-image-link(
   href= profile.href()
 )
