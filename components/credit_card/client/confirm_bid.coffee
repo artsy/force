@@ -24,6 +24,5 @@ module.exports = class ConfirmBid extends ModalView
     _.extend @templateData,
       artwork: @options.artwork
       paddleNumber: @options.paddleNumber
-      kioskMode: sd.KIOSK_MODE
-      signOutUrl:"/users/sign_out?redirect_uri=#{sd.APP_URL}#{sd.KIOSK_PAGE}"
+      signOutUrl:"/users/sign_out?redirect_uri=#{sd.APP_URL}"
     super @options

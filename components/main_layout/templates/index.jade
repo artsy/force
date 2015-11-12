@@ -10,30 +10,23 @@ html( data-useragent=userAgent )
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
-    if sd.MICROSITE
-      link( type='text/css', rel='stylesheet', href=asset('/assets/microsite.css') )
   body( class=bodyClass )
+
+    //- Global component mixins
     include ../../modal/template
     include ../../flash/template
 
-    if sd.MICROSITE || sd.KIOSK_MODE
-      include ../header/templates/microsite
-    else
-      include ../header/templates/index
-
+    //- Hedaer, body block, footer
+    include ../header/templates/index
     #main-layout-container.responsive-layout-container
-      if sd.MICROSITE
-        include ../../../components/microsite/header
       block body
-
     #scroll-frame-spinner: .loading-spinner
-
     include ../footer/template
 
+    //- Javascripts
     #scripts
       include scripts
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
-      if sd.MICROSITE
-        script( src=asset('/assets/microsite.js') )
       block scripts
+      script( src= asset('/assets/main_layout.js') )

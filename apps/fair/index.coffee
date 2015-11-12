@@ -21,6 +21,7 @@ getFairByOrganizerYear = [
   (req, res, next) -> next() unless req.timedout
 ]
 
+app.use routes.microsite
 app.get '/:id', getFairData, routes.overview
 app.get '/:id/:year([0-9]{4})', getFairByOrganizerYear, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
@@ -32,7 +33,6 @@ app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
 app.get '/:id/browse', getFairData, routes.browse
 app.get '/:id/browse/*', getFairData, routes.browse
 app.get '/:id/following/:type', getFairData, routes.follows
-app.get '/:id/favorites', getFairData, routes.favorites
 app.get '/:id/sign_up', getFairData, routes.overview
 app.get '/:id/sign_up/:action', getFairData, routes.overview
 app.get '/:id/capture', getFairData, routes.captureSignup, routes.overview
