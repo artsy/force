@@ -29,7 +29,7 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     Form.validate data
 
   updateType: (state, type) ->
-    @form.set '00NC0000004hoNU', state.value('type')
+    @form.set '00NC0000005RNdW', state.value('type')
 
   execute: (callback, args, name) ->
     args[0] = null unless _.contains _.keys(@state.modes), args[0]
