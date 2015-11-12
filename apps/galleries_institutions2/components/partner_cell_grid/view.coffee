@@ -9,11 +9,6 @@ module.exports = class PartnerCellGrid extends Backbone.View
   initialize: ( options = {  } ) ->
     @partners = options.partners
 
-  setupFollowing: ->
-    @following = new Following([], kind: 'profile') if CURRENT_USER?
-    profileIds = partners.pluck('default_profile_id')
-    @following?.syncFollows profileIds
-
   postRender: ->
     @cells = @$('.partner-cell').map (el) =>
       id = ($el = $(el)).data 'id'
@@ -28,4 +23,3 @@ module.exports = class PartnerCellGrid extends Backbone.View
     @$el.html template partners:partners
     _.defer => @postRender()
     this
-    

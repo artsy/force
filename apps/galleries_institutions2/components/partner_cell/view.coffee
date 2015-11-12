@@ -7,19 +7,14 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCell extends Backbone.View
   initialize: ({ @following }) ->
-    @profile = @model.related().profile
-    @listenTo @model.related().locations, 'sync', @render
+    @listenTo @model.related().locations, 'sync', @gotLocations
     @listenTo @model, 'change:imageUrl', @render
+
+  gotLocations: ->
+    @render()
 
   render: =>
     @$el.html template partner:@model, imageUrl:@model.get('imageUrl')
-
-  attachFollowing: ->
-    new FollowButton
-      following: @following
-      modelName: 'profile'
-      model: @profile
-      el: @$('.partner-cell-follow-button')
 
   setImage: (imageUrl) =>
     if imageUrl and not /missing_image.png/.test(imageUrl)
@@ -29,7 +24,7 @@ module.exports = class PartnerCell extends Backbone.View
       return false
 
   getProfile: ->
-    @profile.fetch success: (profile) =>
+    @model.related().profile.fetch success: (profile) =>
       imageUrl = profile.coverImage()?.imageUrl('wide')
       if !@setImage(imageUrl)
         @render()
