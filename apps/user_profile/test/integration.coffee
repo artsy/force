@@ -1,7 +1,7 @@
 { startServer, closeServer } = require '../../../test/helpers/integration'
 Browser = require 'zombie'
 
-xdescribe 'Profile pages', ->
+describe 'Profile pages', ->
 
   before (done) -> startServer done
 
