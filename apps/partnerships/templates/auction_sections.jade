@@ -101,19 +101,19 @@ mixin auction_apply(section)
   .partnerships-section-header.apply
     .gallery-partnerships-apply-form
       header
-        h3 Interested in partnering <br> with Artsy?
+        h3#apply-h3 Interested in partnering <br> with Artsy?
           aside Apply to join Artsy&rsquo;s invitation-only subscription service for auctions
 
       form.stacked-form.js-gallery-partnerships-apply-form(
         action='/apply/auction/2'
         method='get'
       )
-        input.bordered-input( type='text', name='company', placeholder= 'Auction House Name', id='apply-name-field' required )
+        input.bordered-input( type='text', name='company', placeholder= 'Organization Name', id='apply-name-field' required )
 
         .stacked-form-cell.grid-3-up
           .grid-item: input.bordered-input.is-block( type='text', name='first_name', placeholder='First Name', required )
           .grid-item: input.bordered-input.is-block( type='text', name='last_name', placeholder='Last Name', required  )
-          .grid-item: input.bordered-input.is-block( type='text', name='title', placeholder= 'Title at auction house' )
+          .grid-item: input.bordered-input.is-block( type='text', name='title', placeholder= 'Title at organization' )
 
         .stacked-form-cell.grid-2-up
           .grid-item: input.bordered-input.is-block( type='text', name='URL', placeholder='Website', required )
