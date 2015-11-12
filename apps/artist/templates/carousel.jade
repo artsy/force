@@ -2,12 +2,6 @@
   .mgr-cells.js-mgr-cells
     for figure in carousel.figures.models
       .mgr-cell.js-mgr-cell
-        - if (figure.get('href').match('dianna-molzan-untitled-2')) {
-        -   var height = figure.get('original_height')
-        -   var width = figure.get('original_width')
-        -   figure.set({ original_width: height, original_height: width })
-        - }
-        - var dimensions = figure.resizeDimensionsFor({ height: 300 })
         a( href= figure.get('href') )
           img(
             src= figure.resizeUrlWithGemini({ resize_to: 'height', height: 300 })
