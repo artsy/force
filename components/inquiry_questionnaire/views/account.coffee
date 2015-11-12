@@ -46,12 +46,13 @@ module.exports = class Account extends StepView
 
     form.state 'loading'
 
-    @user.set form.serializer.data()
+    @user.set form.data()
     @user[@mode()] # `login` or `signup`
-      error: form.error.bind(form)
+      error: form.error.bind form
       success: (model, { user }) =>
-        @user.repossess(user.id)
-          .finally => @next()
+        @user.repossess user.id,
+          error: form.error.bind form
+          success: => @next()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'
