@@ -74,7 +74,7 @@ describe 'Sitemaps', ->
 
     it 'only displays artworks published in the past week', ->      
       routes.__set__ 'request', get: -> query: (query) ->
-        moment(query.published_at_since).isAfter(6, 'days ago').should.be.true()
+        moment(query.published_at_since).isAfter(moment().subtract(8, 'days')).should.be.true()
         end: (cb) ->
           cb(null, { body: results: [fabricate 'artwork', { id: 'foo', title: 'bar' }] })
       routes.bingNew(@req, @res)
