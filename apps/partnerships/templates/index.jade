@@ -4,9 +4,9 @@ block head
   include meta
 
 append locals
-  - bodyClass = bodyClass + ' body-no-margins body-partnerships'
+  - bodyClass = bodyClass + ' body-no-margins body-partnerships body-partnerships--' + subject
   - assetPackage = 'partnerships'
 
 block body
   .partnerships-container
-    include sections
+    include content

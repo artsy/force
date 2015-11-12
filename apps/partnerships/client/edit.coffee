@@ -1,29 +1,28 @@
 _ = require 'underscore'
 require '../../../lib/vendor/hulk'
 GeminiForm = require '../../../components/gemini_form/view.coffee'
-sectionsTemplates = require '../templates/sections.jade'
 { DATA } = sd = require('sharify').data
 { crop } = require '../../../components/resizer/index.coffee'
+template =-> require('../templates/content.jade') arguments...
 
 hulkCallback = (data) ->
   renderPreview(data)
-  return unless confirm "Are you sure you want to update the gallery " +
+  return unless confirm "Are you sure you want to update the #{sd.SUBJECT} " +
                         "partnerships page (these changes can't be undone)?"
   $('.hulk-save').addClass 'is-loading'
-  url = if location.pathname.match 'gallery' then '/gallery-partnerships/edit' else '/institution-partnerships/edit'
   $.ajax
     type: 'POST'
-    url: url
+    url: "/#{sd.SUBJECT}-partnerships/edit"
     data: JSON.stringify(data)
     contentType: 'application/json'
-    success: -> location.assign( url.replace '/edit', '')
+    success: -> location.assign "/#{sd.SUBJECT}-partnerships"
     error: -> alert "Whoops. Something went wrong, try again. If it doesn't " +
                     "work ask Craig."
 
 renderPreview = (data) ->
   renderData = JSON.parse JSON.stringify(data)
   $('#partnerships-edit-preview').html(
-    sectionsTemplates _.extend(renderData, crop: crop, path: location.pathname)
+    template _.extend(renderData, crop: crop, path: location.pathname, subject: sd.SUBJECT)
   )
 
 #

@@ -9,6 +9,8 @@ module.exports = class PartnershipsRouter extends Backbone.Router
     'gallery-partnerships/:slug': 'toSection'
     'institution-partnerships': 'toTop'
     'institution-partnerships/:slug': 'toSection'
+    'auction-partnerships': 'toTop'
+    'auction-partnerships/:slug': 'toSection'
 
   initialize: ->
     @$window = $(window)

@@ -65,7 +65,7 @@ module.exports = class PartnershipsView extends Backbone.View
   setupLiaisonsFading: ->
     liaisons = @$liaisonsContainer.data('liaisons')
     numOfActive = @$liaisonsContainer.children('.support-liaison').length
-    indexArray = _.range(liaisons.length)
+    indexArray = _.range(liaisons.length) if liaisons
     if numOfActive < indexArray
       setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 1200
 
@@ -73,7 +73,7 @@ module.exports = class PartnershipsView extends Backbone.View
     @$nav.waypoint('sticky')
       # waypoint for the very top section
       .waypoint (direction) ->
-        backLink = if location.href.match 'gallery' then '/gallery-partnerships' else '/institution-partnerships'
+        backLink = "/#{sd.SUBJECT}-partnerships"
         Backbone.history.navigate( backLink ,
           trigger: false, replace: true) if direction is 'up'
 
@@ -103,6 +103,9 @@ module.exports = class PartnershipsView extends Backbone.View
   setupSectionsSlideshow: ->
     @$('.browser-images').each (i, el) =>
       @setupSlideshow $(el), $(el).find('.browser-image'), "browser#{i}"
+
+    @$('.mobile-images').each (i, el) =>
+      @setupSlideshow $(el), $(el).find('.mobile-image'), "mobile#{i}"
 
   setupSlideshow: ($container, $slides, name, interval = 3000) ->
     @["#{name}Frame"] = 0
