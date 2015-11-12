@@ -160,63 +160,64 @@ getArtworkBuckets = (callback) ->
       res.write('{}]')
       res.end()
 
-@bingDelta = (req, res, next) ->
-  res.set('Content-Disposition': 'attachment').write('[')
+@bingNew = (req, res, next) ->
   request
     .get("#{FUSION_URL}/api/v1/artworks")
     .query(published_at_since: moment().subtract(7, 'days').format('YYYY-MM-DD'))
     .end (err, sres) ->
       return next err if err
-      streamResults sres.body.results, res
-      res.write('{}]')
-      res.end()
+      res.set('Content-Disposition': 'attachment')
+      res.send _.map(sres.body.results, resultToBingJSON)
 
 streamResults = (results, res) ->
-  results.forEach (artwork) ->
-    artwork = new Artwork artwork
-    json = {
-      "@context": {
-        "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
-      }
-      "@type": "https://schema.org/ImageObject"
-      "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
-      "contentUrl": artwork.imageUrl()
-      "name": artwork.get('title')
-      "description": "
-        #{if title = artwork.get('title') then "#{title}" else "This work"}
-        #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
-        #{if date = artwork.get('date') then "in #{date}." else '. '}
-        #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
-      "
-      "encodingFormat": "jpeg"
-      "keywords": artwork.toPageDescription().split(', ')
-      "datePublished": artwork.get('published_at')
-      "dateModified": artwork.get('published_changed_at')
-      "copyrightHolder": {
-        "@type": "Organization"
-        "name": artwork.related().artist.get('image_rights')
-      }
+  results.forEach (result) ->
+    res.write JSON.stringify(resultToBingJSON(result)) + ','
+
+resultToBingJSON = (result) ->
+  artwork = new Artwork result
+  json = {
+    "@context": {
+      "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
     }
-    if artwork.get('artist')
-      json = _.extend json, {
-        "author": {
-          "alternateName": artwork.related().artist.get('name')
+    "@type": "https://schema.org/ImageObject"
+    "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
+    "contentUrl": artwork.imageUrl()
+    "name": artwork.get('title')
+    "description": "
+      #{if title = artwork.get('title') then "#{title}" else "This work"}
+      #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
+      #{if date = artwork.get('date') then "in #{date}." else '. '}
+      #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
+    "
+    "encodingFormat": "jpeg"
+    "keywords": artwork.toPageDescription().split(', ')
+    "datePublished": artwork.get('published_at')
+    "dateModified": artwork.get('published_changed_at')
+    "copyrightHolder": {
+      "@type": "Organization"
+      "name": artwork.related().artist.get('image_rights')
+    }
+  }
+  if artwork.get('artist')
+    json = _.extend json, {
+      "author": {
+        "alternateName": artwork.related().artist.get('name')
+        "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+      }
+      "CollectionPage":[
+        {
+          "@type": "CollectionPage"
           "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
         }
-        "CollectionPage":[
-          {
-            "@type": "CollectionPage"
-            "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
-          }
-        ]
-      }
-    if img = artwork.defaultImage()
-      dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
-      json = _.extend json, {
-        "height": dimensions.height
-        "width": dimensions.width
-      }
-    res.write JSON.stringify(json) + ','
+      ]
+    }
+  if img = artwork.defaultImage()
+    dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
+    json = _.extend json, {
+      "height": dimensions.height
+      "width": dimensions.width
+    }
+  json
 
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
