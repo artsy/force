@@ -2,7 +2,7 @@
   .mgr-cells.js-mgr-cells
     for figure in carousel.figures.models
       .mgr-cell.js-mgr-cell
-        var dimensions = figure.resizeDimensionsFor({ height: 300 })
+        - var dimensions = figure.resizeDimensionsFor({ height: 300 })
         a( href= figure.get('href') )
           img(
             src= figure.resizeUrlWithGemini({ resize_to: 'height', height: 300 })
