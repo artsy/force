@@ -6,10 +6,9 @@ client = null
 { S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
 { crop } = require '../../components/resizer'
 
-getJSON = (url, callback) ->
-  CONTENT_PATH = getContentPath(url)
+getJSON = (subject, callback) ->
   request.get(
-    "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
+    "http://#{APPLICATION_NAME}.s3.amazonaws.com/#{subject}-partnerships/content.json"
   )
   .on('error', callback)
   .end (err, res) ->
@@ -18,12 +17,6 @@ getJSON = (url, callback) ->
     catch e
       callback new Error "Invalid JSON " + e
 
-getContentPath = (url) ->
-  if url.match 'gallery-partnerships'
-    return '/gallery-partnerships/content.json'
-  else
-    return '/institution-partnerships/content.json'
-
 @initClient = ->
   client = knox.createClient
     key: S3_KEY
@@ -31,7 +24,9 @@ getContentPath = (url) ->
     bucket: APPLICATION_NAME
 
 @index = (req, res, next) ->
-  getJSON req.url, (err, data) ->
+  res.locals.subject = res.locals.sd.SUBJECT =  req.params.subject
+
+  getJSON res.locals.subject, (err, data) ->
     return next err if err
     res.render 'index', _.extend data, crop: crop, path: req.url
 
@@ -43,16 +38,18 @@ getContentPath = (url) ->
     next()
 
 @edit = (req, res, next) ->
-  getJSON( req.url, (err, data) ->
+  res.locals.subject = res.locals.sd.SUBJECT =  req.params.subject
+
+  getJSON res.locals.subject, (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
     res.render 'edit', path: req.url
-  )
 
 @upload = (req, res, next) ->
-  @req = req
+  res.locals.subject = res.locals.sd.SUBJECT =  req.params.subject
   buffer = new Buffer JSON.stringify req.body
   headers = { 'Content-Type': 'application/json', 'x-amz-acl': 'public-read' }
-  client.putBuffer buffer, getContentPath(req.url), headers, (err, r) ->
+  contentPath = "#{res.locals.subject}-partnerships/content.json"
+  client.putBuffer buffer, contentPath, headers, (err, r) ->
     return next err if err
     res.send 200, { msg: "success" }
