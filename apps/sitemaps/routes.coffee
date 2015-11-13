@@ -17,6 +17,10 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     end: epoch().add(i + 1, 'months').format('YYYY-MM-DD')
   }
 
+@setHeaders = (req, res, next) ->
+  res.set ('X-Robots-Tag': 'noindex')
+  next()
+
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
@@ -30,13 +34,13 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     success: (articles) ->
       recentArticles = articles.filter (article) ->
         moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
 
 @imagesIndex = (req, res, next) ->
   getArtworkBuckets (err, artworkBuckets) ->
     return next err if err
-    res.set('Content-Type', 'text/xml')
+    res.set 'Content-Type', 'text/xml'
     res.render('images_index', { pretty: true, artworkBuckets: artworkBuckets })
 
 @index = (req, res, next) ->
@@ -67,7 +71,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
         cb null, allPages
   ], (err, [artworkBuckets, articlePages, allPages]) ->
     return next(err) if err
-    res.set('Content-Type', 'text/xml')
+    res.set 'Content-Type', 'text/xml'
     res.render('index', {
       pretty: true
       artworkBuckets: artworkBuckets
@@ -92,11 +96,11 @@ getArtworkBuckets = (callback) ->
   , callback
 
 @misc = (req, res, next) ->
-  res.set('Content-Type', 'text/xml')
+  res.set 'Content-Type', 'text/xml'
   res.render('misc', pretty: true)
 
 @cities = (req, res, next) ->
-  res.set('Content-Type', 'text/xml')
+  res.set 'Content-Type', 'text/xml'
   res.render('cities', pretty: true, citySlugs: _.pluck(Cities, 'slug'))
 
 @artworksPage = (template) -> (req, res, next) ->
@@ -113,7 +117,7 @@ getArtworkBuckets = (callback) ->
     )
     .end (err, sres) ->
       return next err if err
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       models = _.map(sres.body.results, (artwork) -> new Artwork artwork)
       res.render(template, pretty: true, models: models)
 
@@ -124,7 +128,7 @@ getArtworkBuckets = (callback) ->
     .end (err, sres) ->
       return next err if err
       slugs = _.pluck(sres.body.results, 'slug')
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render('articles', pretty: true, slugs: slugs)
 
 @resourcePage = (req, res, next) ->
@@ -134,7 +138,7 @@ getArtworkBuckets = (callback) ->
     .query(page: req.params.page, size: PAGE_SIZE)
     .end (err, sres) ->
       return next err if err
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render(req.params.resource, pretty: true, models: sres.body)
 
 @bingjson = (req, res, next) ->
