@@ -43,8 +43,9 @@ mixin support(section)
       .grid-item
         p.preamble!= section.preamble
           if path.indexOf('gallery') > 0
-            |  You can also read and subscribe to our
+            |  You can also read and subscribe to our&nbsp;
             a(href='/' + sd.GALLERY_INSIGHTS_SLUG) Gallery Insights Newsletter
+            | .
 
   .partnerships-section-content
     .support-liaisons( data-liaisons=section.liaisons )
