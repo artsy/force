@@ -26,6 +26,7 @@ fetchCategories = (type) ->
   ])
 
   .spread (shows, categories) ->
+
     res.render 'index',
       type: 'gallery'
       shows: shows
@@ -43,6 +44,7 @@ fetchCategories = (type) ->
   ])
 
   .spread (shows, categories) ->
+
     res.render 'index',
       type: 'institution'
       shows: shows

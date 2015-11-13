@@ -1,13 +1,15 @@
-//- partner, imageUrl
-- var profile = partner.related().profile
-
+//- profile, partner, imageUrl
 a.partner-featured-image.hoverable-image-link(
   href= profile.href()
 )
+
+  - var image = profile.coverImage()
+  - var hasImage = image.isWithImages()
+  - var imageUrl = image.cropUrlFor({width:400, height:300})
   .hoverable-image.is-three-two(
-    class= imageUrl ? "" : "is-missing"
+    class= hasImage ? "" : "is-missing"
     data-initials= partner.defaultIconInitials()
-    style=(imageUrl ? "background-image: url(#{imageUrl});" : undefined)
+    style=(hasImage ? "background-image: url(#{imageUrl});" : undefined)
   )
 
 .partner-cell-metadata
