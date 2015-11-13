@@ -5,6 +5,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
+app.use routes.setHeaders #adds 'no index' header to keep sitemaps out of search results
 app.get '/robots.txt', routes.robots
 app.get '/articles/sitemap.xml', routes.articles #news sitemap (articles < 5 days old)
 app.get '/sitemap-misc.xml', routes.misc
@@ -16,3 +17,4 @@ app.get '/sitemap-:resource-:page.xml', routes.resourcePage
 app.get '/sitemap-cities.xml', routes.cities
 app.get '/images_sitemap.xml', routes.imagesIndex
 app.get '/sitemap-bing-images.json', routes.bingjson
+app.get '/sitemap-bing-images-new.json', routes.bingNew

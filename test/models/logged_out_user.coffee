@@ -31,6 +31,7 @@ describe 'LoggedOutUser', ->
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][2].url.should.equal '/users/sign_in'
         Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com', password: 'foobar'
+        _.include(_.keys(Backbone.sync.args[0][1].attributes), '_csrf').should.be.true()
         user.isLoggedIn().should.be.true()
 
       it 'accepts options and overwrites the default success', (done) ->

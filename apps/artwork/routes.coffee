@@ -9,7 +9,6 @@ request = require 'superagent'
 { FUSION_URL } = require '../../config'
 
 @index = (req, res, next) ->
-  templateName = if res.locals.sd.MICROSITE then 'fair' else 'index'
   artwork = new Artwork id: req.params.id
   artwork.fetch
     cache: not FUSION_URL?
@@ -31,7 +30,7 @@ request = require 'superagent'
         res.locals.sd.ARTISTS = artists.toJSON()
         res.locals.sd.ARTIST = artist.toJSON()
 
-        res.render templateName,
+        res.render 'index',
           artwork: artwork
           artist: artist
           artists: artists

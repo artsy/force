@@ -1,0 +1,30 @@
+.gs-header
+  h2
+    | About You
+  p
+    | Information that will give galleries a bit more context about where you are from and what you do.
+
+.gs-body: .gs-constrain
+  form.stacked-form
+    .form-errors.js-form-errors
+      //- Rendered separately
+
+    label.avant-garde-form-label
+      | Primary Location
+    .js-location-search
+      //- Rendered separately
+
+    label.avant-garde-form-label( for='profession' )
+      | Profession
+    input.bordered-input(
+      type='text'
+      id='profession'
+      name='profession'
+      value= user.get('profession')
+    )
+
+    hr.is-invisible
+
+    .is-center-aligned
+      button.avant-garde-button-white
+        | Save Changes

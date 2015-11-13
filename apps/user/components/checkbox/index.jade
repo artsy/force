@@ -1,0 +1,16 @@
+mixin checkbox(name)
+  .settings-split.artsy-checkbox
+    .ss-left
+      label.settings-checkbox-label.artsy-checkbox--label( for= name )
+        block
+
+    .ss-right
+      .artsy-checkbox--checkbox
+        input(
+          type='checkbox'
+          id= name
+          name= name
+          checked= user.checked(name)
+          disabled= disabled
+        )
+        label( for= name )

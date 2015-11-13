@@ -12,7 +12,7 @@ render = (opts) ->
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
-  )(_.extend require('./fixture/content.json'), { sd: {}, asset: (->), crop: (->), path: '/gallery-partnerships' }, opts)
+  )(_.extend require('./fixture/content.json'), { sd: {}, asset: (->), crop: (->), subject: 'gallery', path: '/gallery-partnerships' }, opts)
 
 describe 'Partnerships templates', ->
 

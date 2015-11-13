@@ -17,6 +17,10 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     end: epoch().add(i + 1, 'months').format('YYYY-MM-DD')
   }
 
+@setHeaders = (req, res, next) ->
+  res.set ('X-Robots-Tag': 'noindex')
+  next()
+
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
@@ -30,13 +34,13 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     success: (articles) ->
       recentArticles = articles.filter (article) ->
         moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
 
 @imagesIndex = (req, res, next) ->
   getArtworkBuckets (err, artworkBuckets) ->
     return next err if err
-    res.set('Content-Type', 'text/xml')
+    res.set 'Content-Type', 'text/xml'
     res.render('images_index', { pretty: true, artworkBuckets: artworkBuckets })
 
 @index = (req, res, next) ->
@@ -67,7 +71,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
         cb null, allPages
   ], (err, [artworkBuckets, articlePages, allPages]) ->
     return next(err) if err
-    res.set('Content-Type', 'text/xml')
+    res.set 'Content-Type', 'text/xml'
     res.render('index', {
       pretty: true
       artworkBuckets: artworkBuckets
@@ -92,11 +96,11 @@ getArtworkBuckets = (callback) ->
   , callback
 
 @misc = (req, res, next) ->
-  res.set('Content-Type', 'text/xml')
+  res.set 'Content-Type', 'text/xml'
   res.render('misc', pretty: true)
 
 @cities = (req, res, next) ->
-  res.set('Content-Type', 'text/xml')
+  res.set 'Content-Type', 'text/xml'
   res.render('cities', pretty: true, citySlugs: _.pluck(Cities, 'slug'))
 
 @artworksPage = (template) -> (req, res, next) ->
@@ -113,7 +117,7 @@ getArtworkBuckets = (callback) ->
     )
     .end (err, sres) ->
       return next err if err
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       models = _.map(sres.body.results, (artwork) -> new Artwork artwork)
       res.render(template, pretty: true, models: models)
 
@@ -124,7 +128,7 @@ getArtworkBuckets = (callback) ->
     .end (err, sres) ->
       return next err if err
       slugs = _.pluck(sres.body.results, 'slug')
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render('articles', pretty: true, slugs: slugs)
 
 @resourcePage = (req, res, next) ->
@@ -134,7 +138,7 @@ getArtworkBuckets = (callback) ->
     .query(page: req.params.page, size: PAGE_SIZE)
     .end (err, sres) ->
       return next err if err
-      res.set('Content-Type', 'text/xml')
+      res.set 'Content-Type', 'text/xml'
       res.render(req.params.resource, pretty: true, models: sres.body)
 
 @bingjson = (req, res, next) ->
@@ -160,52 +164,64 @@ getArtworkBuckets = (callback) ->
       res.write('{}]')
       res.end()
 
+@bingNew = (req, res, next) ->
+  request
+    .get("#{FUSION_URL}/api/v1/artworks")
+    .query(published_at_since: moment().subtract(7, 'days').format('YYYY-MM-DD'))
+    .end (err, sres) ->
+      return next err if err
+      res.set('Content-Disposition': 'attachment')
+      res.send _.map(sres.body.results, resultToBingJSON)
+
 streamResults = (results, res) ->
-  results.forEach (artwork) ->
-    artwork = new Artwork artwork
-    json = {
-      "@context": {
-        "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
-      }
-      "@type": "https://schema.org/ImageObject"
-      "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
-      "contentUrl": artwork.imageUrl()
-      "name": artwork.get('title')
-      "description": "
-        #{if title = artwork.get('title') then "#{title}" else "This work"}
-        #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
-        #{if date = artwork.get('date') then "in #{date}." else '. '}
-        #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
-      "
-      "encodingFormat": "jpeg"
-      "keywords": artwork.toPageDescription().split(', ')
-      "datePublished": artwork.get('published_at')
-      "dateModified": artwork.get('published_changed_at')
-      "copyrightHolder": {
-        "@type": "Organization"
-        "name": artwork.related().artist.get('image_rights')
-      }
+  results.forEach (result) ->
+    res.write JSON.stringify(resultToBingJSON(result)) + ','
+
+resultToBingJSON = (result) ->
+  artwork = new Artwork result
+  json = {
+    "@context": {
+      "bing": "http://www.bing.com/images/api/imagefeed/v1.0/"
     }
-    if artwork.get('artist')
-      json = _.extend json, {
-        "author": {
-          "alternateName": artwork.related().artist.get('name')
+    "@type": "https://schema.org/ImageObject"
+    "hostPageUrl": "#{APP_URL}/artwork/#{artwork.id}"
+    "contentUrl": artwork.imageUrl()
+    "name": artwork.get('title')
+    "description": "
+      #{if title = artwork.get('title') then "#{title}" else "This work"}
+      #{if name = artwork.related().artist.get('name') then "was created by #{name}" else if maker = artwork.get('cultural_maker') then "was created by #{maker}" else ''}
+      #{if date = artwork.get('date') then "in #{date}." else '. '}
+      #{if institution = artwork.get('collecting_institution') != "" then "This work was exhibited at #{institution}." else "This work was exhibited at #{artwork.related().partner.get('name')}."}
+    "
+    "encodingFormat": "jpeg"
+    "keywords": artwork.toPageDescription().split(', ')
+    "datePublished": artwork.get('published_at')
+    "dateModified": artwork.get('published_changed_at')
+    "copyrightHolder": {
+      "@type": "Organization"
+      "name": artwork.related().artist.get('image_rights')
+    }
+  }
+  if artwork.get('artist')
+    json = _.extend json, {
+      "author": {
+        "alternateName": artwork.related().artist.get('name')
+        "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
+      }
+      "CollectionPage":[
+        {
+          "@type": "CollectionPage"
           "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
         }
-        "CollectionPage":[
-          {
-            "@type": "CollectionPage"
-            "url": "#{APP_URL}/artist/#{artwork.related().artist.get('id')}"
-          }
-        ]
-      }
-    if img = artwork.defaultImage()
-      dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
-      json = _.extend json, {
-        "height": dimensions.height
-        "width": dimensions.width
-      }
-    res.write JSON.stringify(json) + ','
+      ]
+    }
+  if img = artwork.defaultImage()
+    dimensions = img.resizeDimensionsFor(width: 1024, height: 1024)
+    json = _.extend json, {
+      "height": dimensions.height
+      "width": dimensions.width
+    }
+  json
 
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'

@@ -32,7 +32,7 @@ describe 'map', ->
 
   describe 'logged in user', ->
     beforeEach ->
-       @user.related().collectorProfile.set collector_level: 1 # 'Looking and learning' or default
+      @user.related().collectorProfile.set collector_level: 1 # 'Looking and learning' or default
 
     describe 'default (partner does not have pre-qualification on)', ->
       it 'follows the path to the end', ->

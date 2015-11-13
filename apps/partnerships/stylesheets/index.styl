@@ -258,6 +258,13 @@ separator-color = #d4d4d4
     &.is-active
       transition opacity 1s
       opacity 1
+  &.visibility
+    .browser-images-container
+      width 90%
+      margin 0
+    .browser-image
+      padding-top 20px
+
 
   //
   // iPad/iPhone images Slideshos (override the Browser's)
@@ -274,6 +281,38 @@ separator-color = #d4d4d4
     padding 27px 58px
   .iphone-image
     padding 42px 11px
+
+  // Mobile frame
+  .mobile-images-container
+    position relative
+    width 75%
+    margin 0 auto
+  .mobile-frame, .mobile-images
+    &, img
+      width 100%
+  .mobile-images
+    position absolute
+    top 0
+  .mobile-image
+    position absolute
+    left 0
+    right 0
+    padding 53px 33px 40px 20px
+    transition opacity 1.5s
+    opacity 0
+    &.is-active
+      transition opacity 1s
+      opacity 1
+
+  .image-container-caption
+    text-align center
+    margin-top 20px
+    font-size 15px
+    h4
+      avant-garde()
+      font-size 12px
+    p
+      margin-top 10px
 
   // Quotes
   .quote
@@ -312,6 +351,42 @@ separator-color = #d4d4d4
   .education-location
     color gray-dark-color
 
+
+  &.auctions
+    img
+      max-width 100%
+      margin 0 auto
+
+  &.access
+    position relative
+    .auction-access-img
+      padding-bottom 140px
+      img
+        max-width 100%
+
+  &.event-services
+    .event-services-caption
+      avant-garde()
+      text-align center
+      line-height 1.5em
+      font-size 14px
+      margin 15px 0 10px 0
+
+    .grid-item img
+      max-width 100%
+
+
+  &.visibility
+    .visibility-left
+      width 65%
+      display inline-block
+      .image-container-caption
+        width 90%
+    .visibility-right
+      width 35%
+      display inline-block
+      vertical-align top
+
 //
 // Page specific
 //
@@ -344,11 +419,11 @@ separator-color = #d4d4d4
   margin 0 auto
   > header
     margin 20px 0
-    > h3
+    #apply-h3
       margin-bottom 0 !important
-      font-size 30px
+      font-size 34px
       > aside
-        font-size 17px
+        font-size 19px
 
   input
     &:focus

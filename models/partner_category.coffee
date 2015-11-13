@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-Relations = require './mixins/relations/partner_category'
+Relations = require './mixins/relations/partner_category.coffee'
 _ = require 'underscore'
 
 module.exports = class PartnerCategory extends Backbone.Model

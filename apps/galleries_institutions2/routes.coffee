@@ -4,31 +4,51 @@ Profile = require '../../models/profile'
 PartnerCellGrid = require './components/partner_cell_grid/view'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
+PrimaryCarousel = require './components/primary_carousel/fetch'
+
+fetchCategories = (type) ->
+  categories = new PartnerCategories()
+  categories.fetchUntilEnd data: category_type: type
+    .then ->
+      Q.all categories.map (category) ->
+        category.related().partners.fetch data: size: 10
+
+    .then ->
+      categories.select (category) ->
+        category.related().partners.length
 
 @galleries = (req, res, next) ->
-  categories = new PartnerCategories()
-  categories.fetchUntilEnd data: category_type: 'Gallery'
-    .then ->
+  carousel = new PrimaryCarousel
 
-      Q.all categories.map (category) ->
-        category.related().partners.fetch data: size: 10
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Gallery')
+  ])
 
-      .then ->
-        filteredCategories = categories.select (category) ->
-          category.related().partners.length
+  .spread (shows, categories) ->
 
-        res.render 'index', categories: filteredCategories, type: 'gallery'
+    res.render 'index',
+      type: 'gallery'
+      shows: shows
+      categories: categories
+
+    .catch next
+    .done()
 
 @institutions = (req, res, next) ->
-  categories = new PartnerCategories()
-  categories.fetchUntilEnd data: category_type: 'Institution'
-    .then ->
+  carousel = new PrimaryCarousel
 
-      Q.all categories.map (category) ->
-        category.related().partners.fetch data: size: 10
+  Q.all([
+    carousel.fetch()
+    fetchCategories('Institution')
+  ])
 
-      .then ->
-        filteredCategories = categories.select (category) ->
-          category.related().partners.length
+  .spread (shows, categories) ->
 
-        res.render 'index', categories: filteredCategories, type: 'institution'
+    res.render 'index',
+      type: 'institution'
+      shows: shows
+      categories: categories
+
+    .catch next
+    .done()

@@ -34,6 +34,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005ROPB' # Web Source Referrer
     '00NC0000005R4cC' # Abbreviated Channel
     '00NC0000005Lkol' # Date of Partnership Application
+    '00NC0000005RUKX' # Current user id (if available)
   ]
 
   @validate: (obj) ->

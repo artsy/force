@@ -4,6 +4,8 @@ append locals
   - assetPackage = 'galleries_institutions2'
 
 block body
+  include ../components/primary_carousel/index
+
   #galleries-institutions2-page.partners-page.main-layout-container
     header.galleries-institutions2-header
       h1 Browse #{type == 'gallery' ? 'Galleries' : 'Institutions'}
@@ -15,7 +17,7 @@ block body
 
     #partners-page-featured-specialties
       each category in categories
-        .partner-carousel
+        .partner-category-carousel
           - var title = category.get('name')
           - var partners = category.related().partners.models
           include ../components/partner_cell_carousel/template.jade
