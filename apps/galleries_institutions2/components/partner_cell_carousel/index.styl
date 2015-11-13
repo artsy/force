@@ -1,32 +1,21 @@
 @import '../../../../components/stylus_lib'
-@import '../../../../components/grid'
 @import '../partner_cell'
 
 arrow-offset = -30px
-body-height = 200px
+cell-margin = 30px
 
-carousel-n-up(n, gap)
-  .grid-item
-    margin 0 gap 0 0
-  &.is-flush .grid-item
-    width (100 / n)%
-    margin 0 !important
+.partner-category-carousel
+  margin-bottom 50px
+
+.partner-category-carousel .partner-cell
+  display inline-block
+  width calc(33.333% \- (cell-margin * 2 / 3))
+  margin-right cell-margin
+
   @media screen and (max-width: 1024px)
-    .grid-item
-      margin 0 (gap / 2) 0 0
-
-carousel-3-up(offset, gap)
-  carousel-n-up(3, gap)
-  .grid-item
-    width 32%
-    width calc('33.33% - %s' % offset)
-  @media screen and (max-width: 1024px)
-    .grid-item
-      offset = offset / 2
-      width calc('33.33% - %s' % offset)
-
-.partner-cell-carousel-3-up
-  carousel-3-up(20px, 30px)
+    cell-margin = cell-margin / 2
+    width calc(33.333% \- (cell-margin * 2 / 3))
+    margin-right cell-margin
 
 .partner-cell-carousel-header *
   position absolute
@@ -69,9 +58,6 @@ carousel-3-up(offset, gap)
 
 .partner-cell-carousel-arrow
   position absolute
-  offset = (partner-cell-metadata-height + partner-cell-metadata-margin)/2
+  offset = partner-cell-metadata-height/2
   top calc('50% - %s' % offset)
   user-select none
-
-.partner-cell-carousel .partner-cell
-  display inline-block
