@@ -1,16 +1,17 @@
 @require '../../../../components/stylus_lib'
 
-partner-cell-metadata-height = 46px
-partner-cell-metadata-margin = 25px
+partner-cell-metadata-height = 73px
 
 .partner-featured-image .hoverable-image
+  display block
   background-size cover
-.partner-cell-metadata
-  height partner-cell-metadata-height
-  margin-top partner-cell-metadata-margin
+  width 100%
   position relative
+.partner-cell-metadata
+  padding-top 25px
   display flex
   align-items center
+  min-height partner-cell-metadata-height
 .partner-cell-metadata-text
   height 100%
   flex 1 1 auto
@@ -21,14 +22,13 @@ partner-cell-metadata-margin = 25px
   text-decoration none
 .partner-cell-location
   garamond-size(s-body)
+  min-height 25px
 .partner-cell-follow-button
   font-size 10px
   flex 0 0 auto
   margin-left 10px
 .hoverable-image.is-missing
-  position relative
   background-color gray-lightest-color
-  border 1px solid gray-lighter-color
   &:before
     position absolute
     content attr(data-initials)

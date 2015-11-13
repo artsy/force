@@ -1,14 +1,17 @@
-initCarousel = require '../../../../components/merry_go_round/index.coffee'
+Flickity = require 'flickity'
 
 module.exports = (el) ->
   cellsPerRow = 3
 
-  { cells } = initCarousel $el = $(el), wrapAround: true
-  { flickity } = cells
+  $el = $(el)
+  flickity = new Flickity $el.find('.partner-cell-carousel-content')[0],
+    cellAlign: 'left'
+    prevNextButtons: false
+    pageDots: false
+    wrapAround: true
 
   $el.find('.partner-cell-carousel-arrow-right').on 'click', ->
-    flickity.next()
+    flickity.select(flickity.selectedIndex + cellsPerRow)
 
   $el.find('.partner-cell-carousel-arrow-left').on 'click', ->
-    flickity.previous()
-
+    flickity.select(flickity.selectedIndex - cellsPerRow)
