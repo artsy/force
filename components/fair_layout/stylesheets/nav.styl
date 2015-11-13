@@ -1,17 +1,19 @@
-@require '../../../components/stylus_lib'
+@require '../../stylus_lib/index.styl'
 
-.fair-page-header
-  margin-top 100px
+.fair-layout-nav
+  margin-top 63px
   position relative
   max-width feed-max-width
-  .fair-logo
+  .fair-layout-logo
     display inline-block
     vertical-align top
+    position relative
+    top -7px
     .profile-badge-icon
       width 100px
       height @width
       background-size @width
-  #fair-search-container
+  .fair-layout-search
     display inline-block
     vertical-align top
     margin 20px 0 0 90px
@@ -21,7 +23,7 @@
       &:hover
       &:active
         border-color purple-color
-  .fair-tabs
+  .fair-layout-nav-tabs
     position absolute
-    top 37px
+    top 32px
     right 0px

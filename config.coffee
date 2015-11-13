@@ -49,8 +49,6 @@ module.exports =
   DISABLE_IMAGE_PROXY: false
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   ENABLE_AB_TEST: true
-  KIOSK_MODE: false
-  KIOSK_PAGE: false
   MAX_SOCKETS: -1
   EMPTY_COLLECTION_SET_ID: null
   GEMINI_S3_ACCESS_KEY: null

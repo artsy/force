@@ -1,9 +1,9 @@
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-mediator = require '../../../lib/mediator.coffee'
 Profile = require '../../../models/profile.coffee'
-{ Following, FollowButton } = require '../index.coffee'
+rewire = require 'rewire'
+FollowButton = rewire '../view.coffee'
 { fabricate } = require 'antigravity'
 
 describe 'FollowButton', ->
@@ -12,14 +12,13 @@ describe 'FollowButton', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      @mediatorSpy = sinon.spy mediator, 'trigger'
+      FollowButton.__set__ 'mediator', @mediator = trigger: sinon.stub()
       Backbone.$ = $
       done()
 
   after ->
     benv.teardown()
     Backbone.sync.restore()
-    @mediatorSpy.restore()
 
   describe '#toggle without label', ->
     before ->
@@ -30,7 +29,7 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the model name as the label', ->
       @view.$el.click()
-      @mediatorSpy.args[0][1].copy.should.equal 'Sign up to follow profiles'
+      @mediator.trigger.args[0][1].copy.should.equal 'Sign up to follow profiles'
 
   describe '#toggle with label', ->
     before ->
@@ -42,6 +41,6 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the passed in label', ->
       @view.$el.click()
-      @mediatorSpy.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
+      @mediator.trigger.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
 
 
