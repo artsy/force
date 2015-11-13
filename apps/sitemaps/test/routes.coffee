@@ -3,6 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
+moment = require 'moment'
 
 describe 'Sitemaps', ->
 
@@ -12,6 +13,7 @@ describe 'Sitemaps', ->
     @res =
       render: sinon.stub()
       set: sinon.stub()
+      send: sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
@@ -67,3 +69,14 @@ describe 'Sitemaps', ->
       routes.artworksPage('artworks')(@req, @res)
       @res.render.args[0][0].should.equal('artworks')
       @res.render.args[0][1].models[0].id.should.equal('foo')
+
+  describe '#bingNew', ->
+
+    it 'only displays artworks published in the past week', ->      
+      routes.__set__ 'request', get: -> query: (query) ->
+        moment(query.published_at_since).isAfter(moment().subtract(8, 'days')).should.be.true()
+        end: (cb) ->
+          cb(null, { body: results: [fabricate 'artwork', { id: 'foo', title: 'bar' }] })
+      routes.bingNew(@req, @res)
+      @res.send.args[0][0][0].name.should.equal('bar') 
+

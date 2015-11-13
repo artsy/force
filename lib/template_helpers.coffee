@@ -6,7 +6,6 @@ module.exports =
     flagMap =
       # Flags that show up in Sharify data
       MICROSITE: 'is-microsite'
-      KIOSK_MODE: 'is-kioskmode'
       EIGEN: 'body-eigen'
       IS_RESPONSIVE: 'body-responsive'
 

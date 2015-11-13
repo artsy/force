@@ -18,7 +18,6 @@ module.exports = class SearchBarView extends Backbone.View
 
   initialize: (options) ->
     return unless @$el.length
-
     { @mode,
       @restrictType,
       @$input,

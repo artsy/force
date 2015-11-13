@@ -22,7 +22,6 @@ proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
 proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
-micrositeMiddleware = require './middleware/microsite'
 ensureSSL = require './middleware/ensure_ssl'
 ensureWWW = require './middleware/ensure_www'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
@@ -139,7 +138,6 @@ module.exports = (app) ->
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware
-  app.use micrositeMiddleware
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use hstsMiddleware
@@ -157,6 +155,8 @@ module.exports = (app) ->
   app.use require "../apps/auction_lots"
   app.use require "../apps/auction_support"
   app.use require "../apps/auctions"
+  app.use require "../apps/profile"
+  app.use require "../apps/fair"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
@@ -188,11 +188,9 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
-  app.use require "../apps/profile"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
   app.use require "../apps/articles"
-  app.use require "../apps/fair"
   app.use require "../apps/fair_organizer"
   app.use require "../apps/user"
   app.use require "../apps/style_guide"

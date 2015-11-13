@@ -17,3 +17,4 @@ app.get '/sitemap-:resource-:page.xml', routes.resourcePage
 app.get '/sitemap-cities.xml', routes.cities
 app.get '/images_sitemap.xml', routes.imagesIndex
 app.get '/sitemap-bing-images.json', routes.bingjson
+app.get '/sitemap-bing-images-new.json', routes.bingNew

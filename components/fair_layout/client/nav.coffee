@@ -1,21 +1,23 @@
-SearchBarView = require '../../../../components/search_bar/view.coffee'
-analytics = require '../../../../lib/analytics.coffee'
-teleport = require '../../../../components/teleport/index.coffee'
+Backbone = require 'backbone'
+SearchBarView = require '../../search_bar/view.coffee'
+teleport = require './teleport.coffee'
+analytics = require '../../../lib/analytics.coffee'
 
-module.exports =
-  setupSearch: (profile, fair) ->
+module.exports = class FairNavView extends Backbone.View
+  initialize: (options) ->
+    { fair, model } = options
     @searchBarView ?= new SearchBarView
-      el: @$('#fair-search-container')
-      $input: @$('#fair-search-input')
-      fairId: @fair.id
+      el: @$('.fair-layout-search')
+      $input: @$('.fair-layout-search-input')
+      fairId: fair.id
 
-    @$('#fair-search-input').on 'focus', ->
+    @$('.fair-layout-search-input').on 'focus', ->
       analytics.track.click 'Focused on search input at fair'
 
     @searchBarView.on 'search:entered', (term) =>
       analytics.track.click 'Hit enter on fair search'
 
-      teleport "#{@model.href()}/search?q=#{term}"
+      teleport "#{model.href()}/search?q=#{term}"
 
     @searchBarView.on 'search:selected', (e, model) ->
       return false unless model and model.get('published')

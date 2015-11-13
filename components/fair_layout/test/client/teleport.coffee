@@ -1,6 +1,6 @@
 benv = require 'benv'
 sinon = require 'sinon'
-teleport = require '../index.coffee'
+teleport = require '../../client/teleport.coffee'
 
 describe 'teleport', ->
   beforeEach (done) ->
