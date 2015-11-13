@@ -18,7 +18,7 @@ sf:
 
 # Start the server pointing to staging
 ss:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net nf start
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
 
 # Start the server pointing to staging with cache
 ssc:
