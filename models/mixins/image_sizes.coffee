@@ -11,7 +11,7 @@ module.exports =
     large: width: 640, height: 640
     larger: width: 1024, height: 1024
 
-  croppedSizes: ['square', 'medium_rectangle', 'large_rectangle']
+  croppedSizes: ['square', 'medium250x165', 'medium_rectangle', 'large_rectangle']
 
   isCropped: (version) ->
     _.contains @croppedSizes, version
@@ -71,7 +71,7 @@ module.exports =
   imageUrlForMaxSize: ->
     sizes = @publicVersions()
     # favor sizes in this order
-    for size in ['source', 'larger', 'large', 'large_rectangle', 'tall', 'medium', 'square', 'small']
+    for size in ['source', 'wide', 'larger', 'large', 'large_rectangle', 'tall', 'medium', 'square', 'small']
       return @imageUrl(size) if _.contains(sizes, size)
     null
 

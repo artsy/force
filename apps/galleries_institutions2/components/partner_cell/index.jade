@@ -3,8 +3,9 @@ a.partner-featured-image.hoverable-image-link(
   href= profile.href()
 )
 
-  - var imageUrl = profile.coverImage().imageUrl()
-  - var hasImage = imageUrl && !(/missing_image.png/.test(imageUrl))
+  - var image = profile.coverImage()
+  - var hasImage = image.isWithImages()
+  - var imageUrl = image.cropUrlFor({width:400, height:300})
   .hoverable-image.is-three-two(
     class= hasImage ? "" : "is-missing"
     data-initials= partner.defaultIconInitials()
