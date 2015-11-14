@@ -37,6 +37,7 @@ module.exports = class ArticleView extends Backbone.View
     @sizeVideo()
     @setupFooterArticles()
     @setupStickyShare()
+    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -202,12 +203,15 @@ module.exports = class ArticleView extends Backbone.View
                 analyticsHooks.trigger 'readmore', {}
           break
 
+  trackPageview: =>
+    analyticsHooks.trigger 'scrollarticle', {}
+
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
-      analyticsHooks.trigger 'scrollarticle', {}
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
       $('.article-edit-container a').attr 'href', editUrl
+      @trackPageview()
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
