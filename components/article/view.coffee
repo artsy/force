@@ -203,9 +203,6 @@ module.exports = class ArticleView extends Backbone.View
                 analyticsHooks.trigger 'readmore', {}
           break
 
-  trackPageview: =>
-    analyticsHooks.trigger 'scrollarticle', {}
-
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
