@@ -1,6 +1,3 @@
-Fair = require '../../models/fair'
-Profile = require '../../models/profile'
-
 @assignFair = (req, res, next) ->
   res.locals.fair = res.locals.profile?.related().owner
   next()
@@ -10,3 +7,6 @@ Profile = require '../../models/profile'
 
 @visitors = (req, res) ->
   res.render("visitors")
+
+@programming = (req, res) ->
+  res.render("programming")
