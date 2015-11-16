@@ -1,7 +1,5 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-visitorsTemplate = -> require('../templates/visitors.jade') arguments...
-# analytics = require '../../../lib/analytics.coffee'
 
 module.exports = class FairInfoVisitors extends Backbone.View
 
@@ -9,10 +7,8 @@ module.exports = class FairInfoVisitors extends Backbone.View
   mapHeight: 300
 
   initialize: (options) ->
-    console.log 'initialize FairInfoVisitors'
     @fair = options.fair
     location = @fair.location()
-    console.log 'set location from fair'
     if @fair.location()
       @displayMap location
     @targetBlankLinks()

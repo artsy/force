@@ -5,10 +5,64 @@ block body
     include nav
 
     .fair-info2-body
-      - console.log('location: ', fair.get('name'), fair.get('location'))
       .fair-info2-map
         if fair.get('location')
           a.fair-map-link( target="_blank" )
             img.map
-      if fair.get('location') && fair.get('location').summary
-        .location-caption!= fair.location().mdToHtml('summary')
+
+      .fair-info2-content
+        .grid-3-up
+          if fair.get('location') && fair.get('location').summary
+            .fair-location.grid-item
+              h2.visitor-title Location
+              .location-caption!= fair.location().mdToHtml('summary')
+              a.floorplan(href='#') Floorplan (PDF)
+
+          if fair.get('hours')
+            .fair-hours.grid-item
+              h2.visitor-title Hours
+              .fair-info2-fair-hours!= fair
+
+          if fair.get('tickets')
+            .fair-tickets.grid-item
+              h2.visitor-title Tickets
+              .fair-info2-ticket-info!= fair
+
+          .fair-directions.grid-item
+            h2.visitor-title Directions
+            input.fair-info2-directions-input.bordered-input(
+              placeholder='Enter your starting address'
+              tabindex=1
+              value=term
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            )
+            a.get-directions-link(href='#') Get Directions
+
+          if fair.get('contact')
+            .fair-contact.grid-item
+              h2.visitor-title Contact
+              .contact-caption!= fair.mdToHtml('contact')
+
+          if fair.get('links')
+            .fair-links.grid-item
+              h2.visitor-title Links
+              .links-caption!= fair.mdToHtml('links')
+
+          hr.fair-info-line
+
+          .fair-info2-mobile-section
+            .iphone-heading-section
+              | Going to the fair?
+              br
+              i Download Artsy for iPhone
+              | — Your personal
+              br
+              | guide to #{fair.get('name')}
+
+              a.avant-garde-button-white.block Get The App
+
+            .iphone-app-section
+
