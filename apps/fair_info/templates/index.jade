@@ -6,3 +6,8 @@ block body
 
     .fair-info2-body
       .fair-info2-map
+        if fair.get('location')
+          a.fair-map-link( target="_blank" )
+            img.map
+      if fair.get('location') && fair.get('location').summary
+        .location-caption!= fair.location().mdToHtml('summary')
