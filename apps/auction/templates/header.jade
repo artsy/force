@@ -21,7 +21,7 @@ header.auction-header
       .auction-header-clock.js-auction-clock( data-id= auction.id )
         include ../../../components/clock/template
 
-      unless auction.isAuctionPromo()
+      unless auction.isAuctionPromo() || auction.isClosed()
         .auction-header-register-button
           .auction-info-register-button
             include ./registration_button
