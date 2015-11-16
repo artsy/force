@@ -1,62 +1,67 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'bluebird-q'
-OrderedSets = require '../../collections/ordered_sets'
-Artist = require '../../models/artist'
 ArtistsByLetter = require './collections/artists_by_letter'
+metaphysics = require '../../lib/metaphysics'
 
-# *try* to pull out an artist id from the links
-@parseId = parseId = (string) ->
-  _.last string.match /\/?artist\/([\w-]*)\/?$/
+@index = (req, res, next) ->
+  metaphysics '
+    {
+      featured_artists: ordered_sets(key: "homepage:featured-artists") {
+        name
+        artists: items {
+          ... on FeaturedLinkItem {
+            id
+            title
+            subtitle
+            href
+            image {
+              thumb: cropped(width: 600, height: 500, version: "wide") {
+                width
+                height
+                url
+              }
+            }
+          }
+        }
+      }
+      featured_genes: ordered_sets(key: "artists:featured-genes") {
+        name
+        genes: items {
+          ... on GeneItem {
+            id
+            name
+            href
+            trending_artists(sample: 4) {
+              id
+              href
+              name
+              years
+              nationality
+              image {
+                url(version: "four_thirds")
+              }
+            }
+          }
+        }
+      }
+    }
+  '
+  .then (data) ->
+    res.render 'index', _.extend data,
+      letters: ArtistsByLetter::range
+  .catch next
+  .done()
 
-parseGenes = (collection) ->
-  collection.chain().
-    filter((model) -> model.hasImage('large')). # Exclude artists without images
-    shuffle().
-    first(4).
-    value()
-
-@index = (req, res) ->
-  featuredArtists = new OrderedSets(key: 'homepage:featured-artists')
-  featuredGenes = new OrderedSets(key: 'artists:featured-genes')
-  genes = null
-
-  render = _.after 2, ->
-    res.render 'index',
-      letterRange: ArtistsByLetter::range
-      featuredArtists: featuredArtists.at 0
-      featuredGenes: genes
-
-  featuredArtists.fetchAll(cache: true).then ->
-    links = featuredArtists.at(0)
-    Q.allSettled(links.get('items').map (link) ->
-      # Fetch and relate the artist featured in the link
-      id = parseId link.get('href')
-      artist = new Artist id: id
-      link.set 'artist', artist
-      artist.fetch cache: true
-    ).then render
-
-  featuredGenes.fetchAll(cache: true).then ->
-    genesSet = featuredGenes.findWhere item_type: 'Gene'
-    genes = genesSet.get 'items'
-    Q.allSettled(genes.map (gene) ->
-      gene.fetchArtists 'trending',
-        cache: true
-        success: ->
-          gene.trendingArtists = parseGenes gene.trendingArtists
-    ).then render
-
-@letter = (req, res) ->
+@letter = (req, res, next) ->
   currentPage = parseInt(req.query.page) or 1
-  letter = req.params.letter.replace('artists-starting-with-', '')
-  artists = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })
+  letter = req.params.letter.replace 'artists-starting-with-', ''
+  artists = new ArtistsByLetter [], letter: letter, state: currentPage: currentPage
 
-  artists.fetch().then ->
-    res.render 'letter',
-      artists: artists
-      letterRange: artists.range
-      letter: _s.capitalize(letter)
-
-@redirectArtist = (req, res) ->
-  res.redirect 301, req.url.replace 'artist', 'artists'
+  artists.fetch()
+    .then ->
+      res.render 'letter',
+        artists: artists
+        letterRange: artists.range
+        letter: _s.capitalize letter
+    .catch next
+    .done()
