@@ -1,0 +1,540 @@
+{
+  "data": {
+    "featured_artists": [
+      {
+        "name": "Featured Artists",
+        "artists": [
+          {
+            "id": "kamrooz-aram-untitled-from-the-series-ancient-through-modern",
+            "title": "Kamrooz Aram",
+            "subtitle": "Featured in the ICI Annual Benefit & Auction 2015",
+            "href": "https://www.artsy.net/artwork/kamrooz-aram-untitled-from-the-series-ancient-through-modern",
+            "image": {
+              "thumb": {
+                "width": 600,
+                "height": 500,
+                "url": "https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FJ4nSBRsO7fCvaOaKnF6M3g%2Fwide.jpg&width=600&height=500&key=a1f82558d8134f6cbebceb9e67d04980&quality=95"
+              }
+            }
+          },
+          {
+            "id": "tina-barney-blue-boy",
+            "title": "Tina Barney",
+            "subtitle": "Featured in the ICI Annual Benefit & Auction 2015",
+            "href": "https://www.artsy.net/artwork/tina-barney-blue-boy?auction_id=ici-annual-benefit-and-auction-2015",
+            "image": {
+              "thumb": {
+                "width": 600,
+                "height": 500,
+                "url": "https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F140JBWH0g-HV-lHZGk0vZw%2Fwide.jpg&width=600&height=500&key=a1f82558d8134f6cbebceb9e67d04980&quality=95"
+              }
+            }
+          },
+          {
+            "id": "sarah-braman-untitled",
+            "title": "Sarah Braman",
+            "subtitle": "Featured in the ICI Annual Benefit & Auction 2015",
+            "href": "https://www.artsy.net/artwork/sarah-braman-untitled?auction_id=ici-annual-benefit-and-auction-2015",
+            "image": {
+              "thumb": {
+                "width": 600,
+                "height": 500,
+                "url": "https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FG01aa71XJGKhA-9agLa_ZA%2Fwide.jpg&width=600&height=500&key=a1f82558d8134f6cbebceb9e67d04980&quality=95"
+              }
+            }
+          },
+          {
+            "id": "aaron-sandnes-locked-and-loaded-bullseye-blue-then-red-blue-then-dot-dot-dot-number-2",
+            "title": "Aaron Sandnes",
+            "subtitle": "Featured in the ICI Annual Benefit & Auction",
+            "href": "https://www.artsy.net/artwork/aaron-sandnes-locked-and-loaded-bullseye-blue-then-red-blue-then-dot-dot-dot-number-2?auction_id=ici-annual-benefit-and-auction-2015",
+            "image": {
+              "thumb": {
+                "width": 600,
+                "height": 500,
+                "url": "https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FqNjCUu4w5WEtM_mN5OoaQQ%2Fwide.jpg&width=600&height=500&key=a1f82558d8134f6cbebceb9e67d04980&quality=95"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "featured_genes": [
+      {
+        "name": "Featured Genes",
+        "genes": [
+          {
+            "id": "emerging-art",
+            "name": "Emerging Art",
+            "href": "gene/emerging-art",
+            "trending_artists": [
+              {
+                "id": "markus-schinwald",
+                "href": "/artist/markus-schinwald",
+                "name": "Markus Schinwald",
+                "years": "born 1973",
+                "nationality": "Austrian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/IpxuC11H4c7_yCt4ez4yRA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "allison-bianco",
+                "href": "/artist/allison-bianco",
+                "name": "Allison Bianco",
+                "years": "",
+                "nationality": "",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/SikCorkJINPI_vimk8msBQ/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "thomas-houseago",
+                "href": "/artist/thomas-houseago",
+                "name": "Thomas Houseago",
+                "years": "born 1972",
+                "nationality": "British",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/8Wp5zfjm1X1eyC60Gd6aZw/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "lucien-smith",
+                "href": "/artist/lucien-smith",
+                "name": "Lucien Smith",
+                "years": "born 1989",
+                "nationality": "American ",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/h2ih6zQ-sJt653Ekwv31EA/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "contemporary-chinese-art",
+            "name": "Contemporary Chinese Art",
+            "href": "gene/contemporary-chinese-art",
+            "trending_artists": [
+              {
+                "id": "zhang-xiaogang",
+                "href": "/artist/zhang-xiaogang",
+                "name": "Zhang Xiaogang",
+                "years": "born 1958",
+                "nationality": "Chinese",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/a3vlIiDVVdSmul8reVM13g/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "li-wei-li-ri-wei",
+                "href": "/artist/li-wei-li-ri-wei",
+                "name": "Li Wei 李日韦",
+                "years": "born 1970",
+                "nationality": "Chinese",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/EruwpPtEo2sryW6eWPHLzQ/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "zhang-huan",
+                "href": "/artist/zhang-huan",
+                "name": "Zhang Huan",
+                "years": "born 1965",
+                "nationality": "Chinese",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/VIU0XhmlcesDneDC8D-h9g/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "rong-rong",
+                "href": "/artist/rong-rong",
+                "name": "Rong Rong",
+                "years": "born 1968",
+                "nationality": "Chinese",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/wTAKx7x0IeVMjny7Vujudg/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "contemporary-photography",
+            "name": "Contemporary Photography",
+            "href": "gene/contemporary-photography",
+            "trending_artists": [
+              {
+                "id": "gohar-dashti",
+                "href": "/artist/gohar-dashti",
+                "name": "Gohar Dashti",
+                "years": "born 1980",
+                "nationality": "Iranian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/yBREhvbzQPGxP8-nN2q-AA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "joachim-koester",
+                "href": "/artist/joachim-koester",
+                "name": "Joachim Koester",
+                "years": "born 1962",
+                "nationality": "Danish",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/FDacLEPN1bokKnODwvyN6A/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "bill-jacobson",
+                "href": "/artist/bill-jacobson",
+                "name": "Bill Jacobson",
+                "years": "born 1955",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/ZQ7sZxxfAJf1qbt-ZbS9HA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "cig-harvey",
+                "href": "/artist/cig-harvey",
+                "name": "Cig Harvey",
+                "years": "born 1971",
+                "nationality": "British",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/va_pUan8vta792l3uFNKtA/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "abstract-sculpture",
+            "name": "Abstract Sculpture",
+            "href": "gene/abstract-sculpture",
+            "trending_artists": [
+              {
+                "id": "naum-gabo",
+                "href": "/artist/naum-gabo",
+                "name": "Naum Gabo",
+                "years": "1890-1977",
+                "nationality": "Russian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/MzwQ4167tIPfly6dwILJBQ/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "anish-kapoor",
+                "href": "/artist/anish-kapoor",
+                "name": "Anish Kapoor",
+                "years": "born 1954",
+                "nationality": "Indian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/aJFSJ1oyoV7jsnDdtx_tsw/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "jun-kaneko",
+                "href": "/artist/jun-kaneko",
+                "name": "Jun Kaneko",
+                "years": "born 1942",
+                "nationality": "Japanese-American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/vOiTJk8_rMcU-GldBEph-g/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "cordy-ryman",
+                "href": "/artist/cordy-ryman",
+                "name": "Cordy Ryman",
+                "years": "born 1971",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/GATsIwfDUO760U4oqpxTag/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "post-war-european-art",
+            "name": "Post-War European Art",
+            "href": "gene/post-war-european-art",
+            "trending_artists": [
+              {
+                "id": "maurizio-nannucci",
+                "href": "/artist/maurizio-nannucci",
+                "name": "Maurizio Nannucci",
+                "years": "born 1939",
+                "nationality": "Italian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/DyMw_jvizTj6uAtfIAmXKA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "joseph-beuys",
+                "href": "/artist/joseph-beuys",
+                "name": "Joseph Beuys",
+                "years": "1921-1986",
+                "nationality": "German",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/AvObXyaXds-Oehf2is6o3Q/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "howard-hodgkin",
+                "href": "/artist/howard-hodgkin",
+                "name": "Howard Hodgkin",
+                "years": "born 1932",
+                "nationality": "British",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/CtuKnRUh3JyoySMrAjvGDg/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "francois-morellet-2",
+                "href": "/artist/francois-morellet-2",
+                "name": "François Morellet",
+                "years": "born 1926",
+                "nationality": "French",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/eRy2-3kkpcYNSQAp8dPJ1w/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "contemporary-design",
+            "name": "Contemporary Design",
+            "href": "gene/contemporary-design",
+            "trending_artists": [
+              {
+                "id": "claude-conover",
+                "href": "/artist/claude-conover",
+                "name": "Claude Conover",
+                "years": "1907-1994",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/4HJYuA_ZHvtahAr7Amv_Qw/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "rike-bartels",
+                "href": "/artist/rike-bartels",
+                "name": "Rike Bartels",
+                "years": "born 1969",
+                "nationality": "German",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/o99K5vhdHOLntN3J6333CA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "pierre-gonalons",
+                "href": "/artist/pierre-gonalons",
+                "name": "Pierre Gonalons",
+                "years": "born 1977",
+                "nationality": "French",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/mYJrPedzFdPA6N6fTIYXPA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "shiro-kuramata",
+                "href": "/artist/shiro-kuramata",
+                "name": "Shiro Kuramata",
+                "years": "1934-1991",
+                "nationality": "Japanese",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/gnYZh2xgYKQex3tQ9ZgqpA/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "post-war-american-art",
+            "name": "Post-War American Art",
+            "href": "gene/post-war-american-art",
+            "trending_artists": [
+              {
+                "id": "irving-penn",
+                "href": "/artist/irving-penn",
+                "name": "Irving Penn",
+                "years": "1917-2009",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/Vm8OsGlgEtKBMJ76rpUsNQ/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "sol-lewitt",
+                "href": "/artist/sol-lewitt",
+                "name": "Sol LeWitt",
+                "years": "1928-2007",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/0zJtgJz-7_4Z8NB64HgRwg/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "tom-wesselmann",
+                "href": "/artist/tom-wesselmann",
+                "name": "Tom Wesselmann",
+                "years": "1931-2004",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/8smV519M1L352CTihrfW7A/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "ernest-trova",
+                "href": "/artist/ernest-trova",
+                "name": "Ernest Trova",
+                "years": "1927-2009",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/6v_4CZj5kFb-cU4JoCV3rg/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "contemporary-photography",
+            "name": "Contemporary Photography",
+            "href": "gene/contemporary-photography",
+            "trending_artists": [
+              {
+                "id": "bill-jacobson",
+                "href": "/artist/bill-jacobson",
+                "name": "Bill Jacobson",
+                "years": "born 1955",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/ZQ7sZxxfAJf1qbt-ZbS9HA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "sabine-pigalle",
+                "href": "/artist/sabine-pigalle",
+                "name": "Sabine Pigalle",
+                "years": "born 1963",
+                "nationality": "French",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/o_yDhImSFuKR75ZTYBSGMw/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "susan-derges",
+                "href": "/artist/susan-derges",
+                "name": "Susan Derges",
+                "years": "born 1955",
+                "nationality": "British",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/kTcqo0-WE3Dx0T6p_0J46g/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "karen-knorr",
+                "href": "/artist/karen-knorr",
+                "name": "Karen Knorr",
+                "years": "born 1954",
+                "nationality": "British-American ",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/ia5hSauv4IESKA0uyh1F_Q/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "contemporary-conceptualism",
+            "name": "Contemporary Conceptualism",
+            "href": "gene/contemporary-conceptualism",
+            "trending_artists": [
+              {
+                "id": "faycal-baghriche",
+                "href": "/artist/faycal-baghriche",
+                "name": "Fayçal Baghriche",
+                "years": "born 1972",
+                "nationality": "French-Algerian",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/4UwCykNDjVbj0ZorWekVng/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "christopher-bucklow",
+                "href": "/artist/christopher-bucklow",
+                "name": "Christopher Bucklow",
+                "years": "born 1957",
+                "nationality": "British",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/1Go-3pTVpHfz_zAciBXj9A/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "joachim-koester",
+                "href": "/artist/joachim-koester",
+                "name": "Joachim Koester",
+                "years": "born 1962",
+                "nationality": "Danish",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/FDacLEPN1bokKnODwvyN6A/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "jeppe-hein",
+                "href": "/artist/jeppe-hein",
+                "name": "Jeppe Hein",
+                "years": "born 1974",
+                "nationality": "Danish",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/IVsZzFkiHdCui4qOQ5F_AA/four_thirds.jpg"
+                }
+              }
+            ]
+          },
+          {
+            "id": "east-village-art",
+            "name": "East Village Art",
+            "href": "gene/east-village-art",
+            "trending_artists": [
+              {
+                "id": "martha-rosler",
+                "href": "/artist/martha-rosler",
+                "name": "Martha Rosler",
+                "years": "July 29, 1943",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/2NH5nzmCfqbXSexHrd8VMw/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "meyer-vaisman",
+                "href": "/artist/meyer-vaisman",
+                "name": "Meyer Vaisman",
+                "years": "born 1960",
+                "nationality": null,
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/uPFJPMAkDbwvnNIliwPWqA/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "john-evans-american-born-1932",
+                "href": "/artist/john-evans-american-born-1932",
+                "name": "John Evans (American, born 1932)",
+                "years": "born 1932",
+                "nationality": "American",
+                "image": {
+                  "url": "https://d32dm0rphc51dk.cloudfront.net/vyM4C0xyfuSGZf1fHVc-sQ/four_thirds.jpg"
+                }
+              },
+              {
+                "id": "paul-garrin",
+                "href": "/artist/paul-garrin",
+                "name": "Paul Garrin",
+                "years": "",
+                "nationality": "",
+                "image": {
+                  "url": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
