@@ -11,7 +11,7 @@ fetchCategories = (type) ->
   categories.fetchUntilEnd data: category_type: type
     .then ->
       Q.all categories.map (category) ->
-        category.related().partners.fetch data: size: 10
+        category.related().partners.fetch data: size: 6
 
     .then ->
       categories.select (category) ->
