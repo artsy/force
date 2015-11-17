@@ -40,13 +40,14 @@ describe 'Email Registration Flow', ->
     @emailView.initialize.called.should.equal true
     @emailView.initialize.args[0][0].buttonText.should.equal 'Notify me'
 
-  xit 'initializes the ThankYouView after the email is submitted', (done) ->
+  # How these pending specs should be re-written:
+  it 'initializes the ThankYouView after the email is submitted', ->
+    @emailView.result.then =>
+      @thankYouView.initialize.called.should.be.true()
     @emailView.deferred.resolve()
-    _.defer =>
-      @thankYouView.initialize.called.should.equal true
-      done()
+    @emailView.result
 
-  it 'initializes the AuthModalView after the email is submitted', (done) ->
+  xit 'initializes the AuthModalView after the email is submitted', (done) ->
     @emailView.deferred.resolve 'president@whitehouse.gov'
     _.defer =>
       @thankYouView.deferred.resolve false
