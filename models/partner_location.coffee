@@ -17,7 +17,7 @@ module.exports = class PartnerLocation extends Location
       options.hnear = location
     getMapLink options
 
-  mapImageSrc: (width, height) ->
+  mapImageSrc: (width, height, scale = 1, zoom = 16) ->
     location = @getMapsLocation()
     return unless location
 
@@ -25,4 +25,6 @@ module.exports = class PartnerLocation extends Location
       size: "#{width}x#{height}"
       center: location
       markers: "color:0x873ff0|#{location}"
+      scale: scale
+      zoom: zoom
     )

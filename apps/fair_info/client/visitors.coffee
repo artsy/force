@@ -3,8 +3,10 @@ sd = require('sharify').data
 
 module.exports = class FairInfoVisitors extends Backbone.View
 
-  mapWidth: 800
-  mapHeight: 300
+  mapWidth: 410
+  mapHeight: 150
+  scale: 2
+  zoom: 16
 
   initialize: (options) ->
     @fair = options.fair
@@ -14,7 +16,7 @@ module.exports = class FairInfoVisitors extends Backbone.View
     @targetBlankLinks()
 
   displayMap: (location) ->
-    src = location.mapImageSrc(@mapWidth, @mapHeight)
+    src = location.mapImageSrc(@mapWidth, @mapHeight, @scale, @zoom)
     @$(' .fair-info2-map img.map').attr('src': src) if src
     @$('.fair-map-link').attr
       'href': location.googleMapsLink()
