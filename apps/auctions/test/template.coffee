@@ -31,18 +31,18 @@ describe 'Auctions template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.auctions-placeholder').should.have.lengthOf 0
+      $('.auctions-placeholder').length.should.eql 0
       # Current ("Featured") auctions
-      $('.af-name').should.have.lengthOf 1
+      $('.af-name').length.should.eql 1
       # Past auctions
-      $('.leader-dots-list-item').should.have.lengthOf 1
+      $('.leader-dots-list-item').length.should.eql 1
       # Upcoming auctions
-      $('.ap-upcoming-item').should.have.lengthOf 1
+      $('.ap-upcoming-item').length.should.eql 1
       # How Auctions Work
-      $('.auction-cta-group').should.have.lengthOf 2
+      $('.auction-cta-group').length.should.eql 3
 
 
-  xdescribe 'without current auctions', ->
+  describe 'without current auctions', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
@@ -60,10 +60,8 @@ describe 'Auctions template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.auctions-placeholder').should.have.lengthOf 1
+      $('.auctions-placeholder').length.should.eql 1
       # Current ("Featured") auctions
-      $('.af-name').should.have.lengthOf 0
+      $('.ap-featured-item').length.should.eql 0
       # Upcoming & Past auctions
-      $('.leader-dots-list-item').should.have.lengthOf 2
-      # 'How auctions work' link
-      $('.ap-upcoming-item').should.have.lengthOf 1
+      $('.auctions-list--upcoming').length.should.eql 1

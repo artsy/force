@@ -26,7 +26,7 @@ block body
               include small_auction
 
         if upcomingAuctions.length && !currentAuctions.length
-          .auctions-list.leader-dots-list
+          .auctions-list.auctions-list--upcoming.leader-dots-list
             h2.aggregate-page-subheader Upcoming Auctions
             for auction in upcomingAuctions
               include small_auction
