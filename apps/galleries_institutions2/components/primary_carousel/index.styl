@@ -1,7 +1,8 @@
 @require '../../../components/merry_go_round'
 
 carousel-height = 400px
-
+small-screen-arrow-offset = 13px
+large-screen-arrow-offset = 90px
 // Structure
 
 .gpc-bumpers
@@ -11,11 +12,14 @@ carousel-height = 400px
 .gpc-bumper-next
 .gpc-bumper-prev
   position absolute
-  width 42px
+  page-margin = 55px
+  width page-margin - small-screen-arrow-offset
   @media screen and (min-width: 1440px)
-    width 60px
+    page-margin = 150px
+    width page-margin - large-screen-arrow-offset
   @media screen and (min-width: 1660px)
-    width 110px
+    page-margin = 200px
+    width page-margin - large-screen-arrow-offset
   height carousel-height
   background-color white
   border 1px solid gray-lighter-color
@@ -29,15 +33,15 @@ carousel-height = 400px
 .gpc-bumper-next
   border-right 0
   left 100%
-  transform translateX(13px)
+  transform translateX(small-screen-arrow-offset)
   @media screen and (min-width: 1440px)
-    transform translateX(90px)
+    transform translateX(large-screen-arrow-offset)
 .gpc-bumper-prev
   border-left 0
   right 100%
   transform translateX(-13px)
   @media screen and (min-width: 1440px)
-    transform translateX(-90px)
+    transform translateX(-large-screen-arrow-offset)
 
 .galleries-primary-carousel
   position relative
