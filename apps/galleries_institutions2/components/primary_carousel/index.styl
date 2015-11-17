@@ -39,9 +39,9 @@ large-screen-arrow-offset = 90px
 .gpc-bumper-prev
   border-left 0
   right 100%
-  transform translateX(-13px)
+  transform translateX(-(small-screen-arrow-offset))
   @media screen and (min-width: 1440px)
-    transform translateX(-large-screen-arrow-offset)
+    transform translateX(-(large-screen-arrow-offset))
 
 .galleries-primary-carousel
   position relative
@@ -91,6 +91,10 @@ large-screen-arrow-offset = 90px
   transition transform 1s
 
 // Typography
+.gpc-headline, .gpc-subheadline, .gpc-subheadline-alt
+  display block
+  text-decoration none
+
 .gpc-headline
   margin 20px 0
   garamond-size('headline')

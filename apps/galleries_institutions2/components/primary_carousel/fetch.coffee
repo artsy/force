@@ -14,7 +14,7 @@ module.exports = class PrimaryCarousel
         @sets().first().get 'items'
       .then (profiles) =>
         Q.all (@profiles = profiles).map (profile) ->
-          profile.related().owner.related().shows.fetch data: size: 1
+          profile.related().owner.related().shows.fetch()
       .then =>
         @shows = @profiles.map (profile) ->
-          profile.related().owner.related().shows.first()
+          profile.related().owner.related().shows.featured()
