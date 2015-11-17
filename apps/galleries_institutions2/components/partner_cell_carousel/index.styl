@@ -1,11 +1,10 @@
 @import '../../../../components/stylus_lib'
 @import '../partner_cell'
 
-arrow-offset = -30px
 cell-margin = 30px
 
 .partner-category-carousel
-  margin-bottom 50px
+  block-margins(55px)
 
 .partner-category-carousel .partner-cell
   display inline-block
@@ -44,17 +43,16 @@ cell-margin = 30px
   overflow hidden
 
 .partner-cell-carousel-arrow-left
-  left (arrow-offset)
-  transform translate(-25px, -50%)
-  @media screen and (max-width: 1024px)
-    left (arrow-offset / 2)
+  transform translateY(-50%)
+  left -43px
+  @media screen and (min-width: 1440px)
+    left -53px
 
 .partner-cell-carousel-arrow-right
-  text-align right
-  right (arrow-offset)
-  transform translate(25px, -50%)
-  @media screen and (max-width: 1024px)
-    right (arrow-offset / 2)
+  transform translateY(-50%)
+  right -43px
+  @media screen and (min-width: 1440px)
+    right -53px
 
 .partner-cell-carousel-arrow
   position absolute

@@ -6,14 +6,14 @@ module.exports = ->
   { flickity } = cells
 
   $overlays = $('.js-gpc-overlay')
-  $overlays.first().show()
+
+  $overlays.first().fadeIn()
 
   flickity.on 'cellSelect', ->
-    $overlays.hide().attr 'data-state', 'inactive'
-    $selected = $($overlays[flickity.selectedIndex])
-    $selected.show()
-    _.defer ->
-      $selected.attr 'data-state', 'active'
+    $overlays.fadeOut()
+    $overlays.promise().done ->
+      $selected = $($overlays[flickity.selectedIndex])
+      $selected.fadeIn()
 
   $('.js-gpc-next').on 'click', ->
     flickity.next()
