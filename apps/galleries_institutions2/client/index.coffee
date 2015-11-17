@@ -14,7 +14,7 @@ module.exports.init = ->
 
   following = new Following([], kind: 'profile') if CURRENT_USER?
 
-  followIds = $('.partner-cell').map ->
+  partnerCellFollowIDs = $('.partner-cell').map ->
     id = ($el = $(this)).data 'id'
     profile = new Profile id: id
 
@@ -23,8 +23,6 @@ module.exports.init = ->
 
     cell.fetch().then ->
       $el.html cell.render().$el
-
-    .then ->
       new FollowButton
         following: following
         modelName: 'profile'
@@ -32,6 +30,20 @@ module.exports.init = ->
         el: $el.find('.follow-button')
 
     id
+  .get()
 
-  following?.syncFollows followIds
+  mainCarouselFollowIDs = $('.galleries-primary-carousel .follow-button').map ->
+
+    id = ($el = $(this)).data 'id'
+
+    new FollowButton
+      following: following
+      modelName: 'profile'
+      model: new Profile id: id
+      el: this
+
+    id
+  .get()
+
+  following?.syncFollows partnerCellFollowIDs.concat mainCarouselFollowIDs
 

@@ -4,8 +4,6 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCell extends Backbone.View
 
-  init: ({@following}) ->
-
   render: ->
     @$el.html template profile: @model, partner:@partner
     this

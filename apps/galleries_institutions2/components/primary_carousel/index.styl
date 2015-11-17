@@ -1,8 +1,10 @@
 @require '../../../components/merry_go_round'
 
 carousel-height = 400px
-
+small-screen-arrow-offset = 13px
+large-screen-arrow-offset = 90px
 // Structure
+
 .gpc-bumpers
   position absolute
   width 100%
@@ -10,7 +12,14 @@ carousel-height = 400px
 .gpc-bumper-next
 .gpc-bumper-prev
   position absolute
-  width default-icon-font-size + 10
+  page-margin = 55px
+  width page-margin - small-screen-arrow-offset
+  @media screen and (min-width: 1440px)
+    page-margin = 150px
+    width page-margin - large-screen-arrow-offset
+  @media screen and (min-width: 1660px)
+    page-margin = 200px
+    width page-margin - large-screen-arrow-offset
   height carousel-height
   background-color white
   border 1px solid gray-lighter-color
@@ -22,16 +31,23 @@ carousel-height = 400px
     left 50%
     transform translate(-50%, -50%)
 .gpc-bumper-next
-  right 0
+  border-right 0
+  left 100%
+  transform translateX(small-screen-arrow-offset)
+  @media screen and (min-width: 1440px)
+    transform translateX(large-screen-arrow-offset)
 .gpc-bumper-prev
-  left 0
+  border-left 0
+  right 100%
+  transform translateX(-13px)
+  @media screen and (min-width: 1440px)
+    transform translateX(-large-screen-arrow-offset)
 
 .galleries-primary-carousel
   position relative
   width 100%
   height carousel-height
-  block-margins(20px)
-  overflow hidden
+  block-margins(60px)
 
 .gpc-overlays
   position absolute
@@ -54,15 +70,8 @@ carousel-height = 400px
 
 // Overlays
 .gpc-overlay
-  opacity 0
   margin 0 auto
   display none
-  transition opacity 0.5s
-  &:first-child
-  &[data-state='active']
-    opacity 1
-  &[data-state='inactive']
-    opacity 0
 
 // Carousel
 .gpc-carousel-cell

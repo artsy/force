@@ -1,0 +1,38 @@
+_ = require 'underscore'
+Q = require 'bluebird-q'
+geolib = require 'geolib'
+request = require 'superagent'
+{ Cities } = require 'places'
+{ NODE_ENV } = require '../../config'
+
+geoIP = (ip) ->
+  Q.promise (resolve, reject) ->
+    endpoint = 'https://freegeoip.net/json/'
+    endpoint += ip unless NODE_ENV is 'development'
+    request
+      .get endpoint
+      .end (err, response) ->
+        return reject if err?
+        resolve response.body
+
+@ip = (req, res, next) ->
+  geoIP req.ip
+    .then res.send.bind(res)
+    .catch next
+    .done()
+
+@nearest = (req, res, next) ->
+  cities = Cities.map (city) ->
+    city.latitude = city.coords[0]
+    city.longitude = city.coords[1]
+    city
+
+  geoIP req.ip
+    .then (you) ->
+      geolib.findNearest you, cities
+    .then (nearest) ->
+      yourCity = _.findWhere cities, _.pick(nearest, 'latitude', 'longitude')
+      res.send _.extend nearest, yourCity
+
+    .catch next
+    .done()

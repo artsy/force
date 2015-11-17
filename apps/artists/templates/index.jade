@@ -9,61 +9,73 @@ append locals
 block body
   #artists-page.main-layout-container
     nav.alphabetical-index
-      .alphabetical-index-label Browse over 40,000 artists
+      .alphabetical-index-label
+        | Browse over 40,000 artists
       .alphabetical-index-range
-        for letter in letterRange
-          a( href="/artists/artists-starting-with-#{letter}" )= letter
+        for letter in letters
+          a( href='/artists/artists-starting-with-#{letter}' )
+            = letter
 
-    h1.avant-garde-header-center
-      = featuredArtists.get('name')
+    for set in featured_artists
+      h1.avant-garde-header-center
+        = set.name
 
-    .artists-featured-carousel
-      .afc-prev: i.icon-chevron-left
-      .afc-next: i.icon-chevron-right
-      .afc-track-container
-        .afc-track
-          for link in featuredArtists.get('items').models
-            if link.hasImage('large_rectangle')
+      .artists-featured-carousel
+        .afc-prev: i.icon-chevron-left
+        .afc-next: i.icon-chevron-right
+        .afc-track-container
+          .afc-track
+            for artist in set.artists
               .afc-artist
-                - var artist = link.get('artist');
-                a.hoverable-image-link( href= link.get('href') )
-                  img( src= link.imageUrl('large_rectangle'), alt= link.get('title'), title= link.get('title') )
+                a.hoverable-image-link( href= artist.href )
+                  img(
+                    src= artist.image.thumb.url
+                    alt= artist.title
+                    title= artist.title
+                  )
+
                 .afc-artist-information
                   .afc-artist-information-left
                     h2.afc-artist-name
-                      a( href= link.get('href') )= link.get('title')
-                    if link.get('subtitle')
+                      a( href= artist.href )
+                        = artist.title
+
+                    if artist.subtitle
                       p.afc-artist-notes
-                        = link.get('subtitle')
-                      .afc-artist-works-count
-                        if artist.get('forsale_artworks_count') > 1
-                          | #{artist.get('forsale_artworks_count')} works available
-                        else if artist.get('forsale_artworks_count') === 1
-                          | 1 Work available
-                        //- If no available works and some published works
-                        if artist.get('forsale_artworks_count') === 0 && artist.get('published_artworks_count') > 1
-                          | #{artist.get('published_artworks_count')} Works on Artsy
+                        = artist.subtitle
 
                   .afc-artist-information-right
-                    a.avant-garde-button-white.follow-button( data-id= artist.id )
+                    a.avant-garde-button-white.follow-button(
+                      data-id= artist.id
+                    )
 
-    .artists-featured-genes
-      for gene in featuredGenes.models
-        .artists-featured-genes-gene
-          h4
-            a.avant-garde-jump-link( href="/gene/#{gene.id}/artists" )
-              = gene.get('name')
-              i.icon-chevron-small-right
-          .grid-4-up
-            for artist in gene.trendingArtists
-              .afg-artist.grid-item
-                a.hoverable-image-link( href="/artist/#{artist.id}" )
-                  img( src=artist.imageUrl('four_thirds'), alt= artist.get('name'), title= artist.get('name') )
-                .afg-artist-information
-                  h2.afg-artist-name
-                    a( href="/artist/#{artist.id}" )= artist.get('name')
-                  if artist.get('nationality')
-                    .afg-nationality= artist.get('nationality')
-                  if artist.get('years')
-                    .afg-years= artist.get('years')
-                  a.avant-garde-button-white.follow-button.is-small( data-id= artist.id )
+    for set in featured_genes
+      .artists-featured-genes
+        for gene in set.genes
+          .artists-featured-genes-gene
+            h4
+              a.avant-garde-jump-link( href='#{gene.href}/artists' )
+                = gene.name
+                i.icon-chevron-small-right
+
+            .grid-4-up
+              for artist in gene.trending_artists
+                .afg-artist.grid-item
+                  if artist.image
+                    a.hoverable-image-link( href= artist.href )
+                      img(
+                        src= artist.image.url
+                        alt= artist.name
+                        title= artist.name
+                      )
+
+                  .afg-artist-information
+                    h2.afg-artist-name: a( href= artist.href )
+                      = artist.name
+                    if artist.nationality
+                      .afg-nationality= artist.nationality
+                    if artist.years
+                      .afg-years= artist.years
+                    a.avant-garde-button-white.follow-button.is-small(
+                      data-id= artist.id
+                    )
