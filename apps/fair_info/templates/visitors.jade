@@ -23,17 +23,17 @@ block body
               h2.visitor-title Hours
               .fair-info2-fair-hours!= fair
 
-          if fair.get('tickets')
+          if fair.get('tickets_link')
             .fair-tickets.grid-item
               h2.visitor-title Tickets
-              .fair-info2-ticket-info!= fair
+              .fair-info2-ticket-info!= fair.get('tickets_link')
 
           .fair-directions.grid-item
             h2.visitor-title Directions
             input.fair-info2-directions-input.bordered-input(
               placeholder='Enter your starting address'
               tabindex=1
-              value=term
+              value=address
               autocomplete="off"
               autocorrect="off"
               autocapitalize="off"
@@ -62,7 +62,7 @@ block body
               br
               | guide to #{fair.get('name')}
 
-              a.avant-garde-button-white.block Get The App
+              a.avant-garde-button-white.block(href="https://iphone.artsy.net") Get The App
 
             .iphone-app-section
 
