@@ -1,0 +1,32 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+append locals
+  - assetPackage = 'inquiry'
+
+block body
+
+  .inquiry-user-outcome-page.main-layout-container
+    form.stacked-form.js-inquiry-outcome-form
+      h1.inqury-user-outcome-title.is-center-aligned
+        | PLEASE SUBMIT YOUR FEEDBACK
+      .inquiry-details
+        img.inquiry-details-image(src="#{artwork.defaultImage().imageUrl('medium')}")
+        .inquiry-details-info
+          .inquiry-details-info-artist_name
+            = artwork.related().artist.get('name')
+          em
+            = artwork.get('title')
+            | , 
+            = artwork.get('date')
+          .inquiry-details-info-medium
+            = artwork.get('medium')
+          .inquiry-details-info-dim
+            = artwork.get('dimensions')['in']
+      .inquiry-options
+        if inquiry.get('user_reported_outcome').toUpperCase() != 'OTHER'
+          em.inquiry-options-user-outcome-selected-option.is-center-aligned
+            | "#{inquiry.get('user_reported_outcome')}"
+        else
+          textarea.inquery-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...')
+      button.avant-garde-button-black(type='submit')
+        | Submit
