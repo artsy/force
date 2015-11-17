@@ -11,7 +11,7 @@ block body
         b
           | PLEASE SUBMIT YOUR FEEDBACK
       .inquiry-details
-        img.inquiry-details-image(src="#{artwork.defaultImage().imageUrl('medium')}")
+        img.inquiry-details-image(src=artwork.defaultImage().imageUrl('medium'))
         .inquiry-details-info
           .inquiry-details-info-artist_name.strong
             b 
@@ -29,6 +29,10 @@ block body
           em.inquiry-options-user-outcome-selected-option.is-center-aligned
             | "#{inquiry.get('user_reported_outcome')}"
         else
-          textarea.inquery-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...')
-      button.avant-garde-button-black(type='submit')
-        | Submit
+          textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...', disabled=already_submitted)
+      if ! already_submitted
+        button.avant-garde-button-black(type='submit')
+          | Submit
+      else
+        button.avant-garde-button-black(type='submit', disabled=true)
+          | Feedback Already Submitted

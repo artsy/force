@@ -10,9 +10,7 @@ module.exports = ->
     e.preventDefault()
     form.submit e,
       success: ->
-        new FlashMessage message: 'Thank you for your feedback.'
-        $('button').attr 'data-state', null
+        new FlashMessage message: 'Thank you for your feedback.', autoclose: false, href: '/' #redirect to homepage
       
       error: (model, response) =>
         new FlashMessage message: form.errors.parse response
-        $('button').attr 'data-state', 'error'

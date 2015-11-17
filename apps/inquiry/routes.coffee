@@ -30,11 +30,16 @@ map = require '../../components/inquiry_questionnaire/map'
     outcome_token: req.query.outcome_token
   
   inquiry.fetch data: { outcome_token: inquiry.get('outcome_token') }, cache: true, error: res.backboneError, success: ->
-    inquiry.set 'user_reported_outcome', req.query.option
+    already_submitted = if inquiry.get('user_reported_outcome') then true else false
+
+    if not already_submitted
+      inquiry.set 'user_reported_outcome', req.query.option
+
     res.locals.sd.INQUIRY = inquiry.toJSON()
     res.render 'user_outcome',
       artwork: inquiry.related().inquireable
       inquiry: inquiry
+      already_submitted: already_submitted
       views: Object.keys map.views
       NODE_ENV: NODE_ENV
       APPLICATION_NAME: APPLICATION_NAME
