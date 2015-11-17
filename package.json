@@ -38,6 +38,7 @@
     "express-uncapitalize": "^1.0.0",
     "forever": "^0.15.1",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
+    "geolib": "^2.0.18",
     "graceful-fs": "^4.1.2",
     "http-proxy": "^1.11.2",
     "jade": "^1.11.0",
