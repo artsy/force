@@ -2,11 +2,11 @@
   .gpc-overlays
     for show, i in shows
       .gpc-overlay.js-gpc-overlay( data-idx= i )
-        h2.gpc-headline
+        a.gpc-headline(href=show.related().partner.get('default_profile_id'))
           = show.related().partner.get('name')
-        .gpc-subheadline
+        a.gpc-subheadline(href= '/show/' + show.get('id'))
           | Current Show
-        .gpc-subheadline-alt
+        a.gpc-subheadline-alt(href= '/show/' + show.get('id'))
           = show.get('name')
         button.gpc-follow-button.avant-garde-button-white.is-small.follow-button( data-id= show.related().partner.get('default_profile_id') )
 
@@ -14,9 +14,10 @@
     .gpc-carousel-cells.js-mgr-cells
       for show in shows
         .gpc-carousel-cell.js-mgr-cell
-          if show.hasImage('large')
+          if show.isWithImages()
+            - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
             .gpc-carousel-figure(
-              style='background-image: url(' + show.imageUrl('large') + ')'
+              style='background-image: url(' + imageUrl + ')'
             )
 
   .gpc-bumpers.js-gpc-navigation
