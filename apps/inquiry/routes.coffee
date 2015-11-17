@@ -29,9 +29,8 @@ map = require '../../components/inquiry_questionnaire/map'
     id: req.params.id
     outcome_token: req.query.outcome_token
   
-  inquiry.fetch data: { outcome_token: inquiry.get('outcome_token') }, cache: true, error: res.backboneError, success: ->
+  inquiry.fetch data: { outcome_token: inquiry.get('outcome_token') }, cache: false, error: res.backboneError, success: ->
     already_submitted = if inquiry.get('user_reported_outcome') then true else false
-
     if not already_submitted
       inquiry.set 'user_reported_outcome', req.query.option
 

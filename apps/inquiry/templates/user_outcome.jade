@@ -30,9 +30,9 @@ block body
             | "#{inquiry.get('user_reported_outcome')}"
         else
           textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...', disabled=already_submitted)
-      if ! already_submitted
-        button.avant-garde-button-black(type='submit')
-          | Submit
-      else
-        button.avant-garde-button-black(type='submit', disabled=true)
+      button.inquiry-outcome-submit.avant-garde-button-black(type='submit', disabled=already_submitted)
+        if already_submitted
           | Feedback Already Submitted
+        else
+          | Submit
+          
