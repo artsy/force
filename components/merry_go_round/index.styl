@@ -36,6 +36,11 @@
   cursor pointer
   &:hover
     border-color black
+  &[disabled]
+    color gray-lighter-color
+    border-color transparent
+    cursor default
+    pointer-events none
 
 .mgr-dots
   text-align center
