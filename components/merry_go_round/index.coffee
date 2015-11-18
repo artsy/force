@@ -10,11 +10,19 @@ setup = ($el, options = {}, callback) ->
 
   totalWidth = _.reduce $cells, ((memo, el) -> $(el).width() + memo), 0
   averageWidth = totalWidth / $cells.length
-  options.wrapAround ?= (totalWidth - averageWidth) >= $(window).width()
+  sufficientWidth = (totalWidth - averageWidth) >= $(window).width()
+
+  options.wrapAround ?= sufficientWidth
+  options.contain ?= not sufficientWidth
+
+  cells = new MerryGoRoundFlickity $viewport, options
+  navigation = new MerryGoRoundNavView _.extend {}, options,
+    el: $navigation
+    flickity: cells.flickity
 
   {
-    cells: cells = new MerryGoRoundFlickity $viewport, options
-    navigation: new MerryGoRoundNavView flickity: cells.flickity, el: $navigation
+    cells: cells
+    navigation: navigation.render()
   }
 
 module.exports = ($el, options = {}, callback) ->

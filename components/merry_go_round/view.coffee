@@ -10,22 +10,41 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     'click .js-mgr-prev': 'prev'
     'click .js-mgr-select': 'select'
 
-  initialize: ({ @flickity }) ->
+  initialize: ({ @flickity, @contain }) ->
     @flickity.on 'cellSelect', @render
+    @flickity.on 'cellSelect', @announce
+
     $(document).on 'keydown.mgr', @keypress
 
   keypress: (e) =>
     switch e.keyCode
       when 37
-        @flickity.previous true
+        @prev e
       when 39
-        @flickity.next true
+        @next e
+
+  target: ->
+    @flickity.selectedCell.target
+
+  announce: =>
+    if @isStart()
+      @trigger 'start'
+    else if @isEnd()
+      @trigger 'end'
+
+  isStart: ->
+    @target() is @flickity.cells[0].target
+
+  isEnd: ->
+    @target() is @flickity.getLastCell().target
 
   next: (e) ->
+    return if @contain and @isEnd()
     e.preventDefault()
     @flickity.next true
 
   prev: (e) ->
+    return if @contain and @isStart()
     e.preventDefault()
     @flickity.previous true
 
@@ -37,6 +56,9 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @$el.html template
       length: @flickity.cells.length
       index: @flickity.selectedIndex
+      contain: @contain
+      isStart: @isStart()
+      isEnd: @isEnd()
     this
 
   remove: ->
