@@ -7,7 +7,7 @@ block body
     .fair-info2-body
       .fair-info2-map
         if fair.get('location')
-          a.fair-map-link( target="_blank" )
+          a.fair-info2-map-link( target="_blank" )
             img.map
 
       .fair-info2-content
@@ -38,12 +38,12 @@ block body
               autocapitalize="off"
               spellcheck="false"
             )
-            a.get-directions-link(href='#') Get Directions
+            a.fair-info2-get-directions-link(href='#') Get Directions
 
           if fair.get('contact')
-            .fair-contact.grid-item
+            .fair-info2-contact.grid-item
               h2.visitor-title Contact
-              .contact-caption!= fair.mdToHtml('contact')
+              .fair-infor2-contact-caption!= fair.mdToHtml('contact')
 
           if fair.get('links')
             .fair-links.grid-item
@@ -53,7 +53,7 @@ block body
           hr.fair-info-line
 
           .fair-info2-mobile-section
-            .iphone-heading-section
+            .fair-info2-iphone-heading-section
               | Going to the fair?
               br
               i Download Artsy for iPhone
@@ -63,5 +63,5 @@ block body
 
               a.avant-garde-button-white.block-link(href="https://iphone.artsy.net") Get The App
 
-            .iphone-app-section
+            .fair-info2-iphone-app-section
 

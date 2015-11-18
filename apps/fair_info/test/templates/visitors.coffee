@@ -23,7 +23,7 @@ describe 'Visitors templates', ->
       @html.should.containEql '401 Broadway New York, New York'
 
     it 'should render map', ->
-      @html.should.containEql 'class="fair-map-link"'
+      @html.should.containEql 'class="fair-info2-map-link"'
 
   describe 'fair without location', ->
 
@@ -31,7 +31,7 @@ describe 'Visitors templates', ->
       @fair = new Fair fabricate 'fair', location: null
       $el = render({profile: @profile, fair: @fair})
 
-      $el.should.not.containEql "class='fair-map-link'"
+      $el.should.not.containEql "class='fair-info2-map-link'"
       $el.should.not.containEql "class='map'"
 
   describe 'fair with contact', ->
