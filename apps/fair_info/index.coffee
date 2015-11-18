@@ -8,3 +8,4 @@ app.set 'view engine', 'jade'
 app.use('/:id/*', routes.assignFair)
 app.get('/:id/info2', routes.visitors)
 app.get('/:id/info2/visitors', routes.visitors)
+app.get('/:id/info2/programming', routes.programming)
