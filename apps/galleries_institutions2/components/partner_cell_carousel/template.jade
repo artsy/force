@@ -1,13 +1,13 @@
-//- pass carousel object
+//- title, partners
 
 .partner-category-carousel
   .partner-cell-carousel-header
-    .partner-cell-carousel-header-left=carousel.category.get('name')
-    a.partner-cell-carousel-header-right(href='#', data-id=)
+    .partner-cell-carousel-header-left=title
+    a.partner-cell-carousel-header-right(href='#')
       |View All
   .partner-cell-carousel-body
     .partner-cell-carousel-content
-      each partner in carousel.partners.models
+      each partner in partners
         - var profile = partner.related().profile
         .partner-cell(data-id= partner.get('default_profile_id'))
           include ../partner_cell/index

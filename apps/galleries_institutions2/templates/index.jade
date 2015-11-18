@@ -18,6 +18,8 @@ block body
 
     #partners-page-featured-specialties
       each carousel in carousels
+        - var title = carousel.category.get('name')
+        - var partners = carousel.partners.models
         include ../components/partner_cell_carousel/template.jade
 
     include ./footer.jade
