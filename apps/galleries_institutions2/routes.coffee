@@ -7,7 +7,7 @@ _ = require 'underscore'
 
 fetchCategories = (type) ->
   categories = new PartnerCategories()
-  categories.fetchUntilEnd data: category_type: type
+  categories.fetchUntilEnd cache: true, data: category_type: type
     .then ->
       Q.all categories.map (category) ->
         carousel = new CategoryCarousel(category: category)
