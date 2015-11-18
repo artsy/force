@@ -17,7 +17,7 @@ module.exports = class FairInfoVisitors extends Backbone.View
 
   displayMap: (location) ->
     src = location.mapImageSrc(@mapWidth, @mapHeight, @scale, @zoom)
-    @$(' .fair-info2-map img.map').attr('src': src) if src
+    @$('.fair-info2-map img.map').attr('src': src) if src
     @$('.fair-info2-map-link').attr
       'href': location.googleMapsLink()
 
