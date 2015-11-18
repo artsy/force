@@ -113,16 +113,13 @@ describe 'Fair routes', ->
       Backbone.sync.args[0][1].get('fair_id').should.equal 'armory-show-2013'
       Backbone.sync.args[1][1].get('profile_id').should.equal 'the-armory-show'
 
-    it 'triggers next if the action is attendee', (done)->
-      @req.params =
-        action: 'attendee'
+    it 'triggers next if the action is attendee', ->
+      Backbone.sync.yieldsTo 'success'
+      @req.params = action: 'attendee'
       @req.user = new CurrentUser fabricate 'user'
       routes.captureSignup @req, @res, (next = sinon.stub())
-      Backbone.sync.args[0][2].success()
-      Backbone.sync.args[1][2].success()
-      _.defer =>
-        next.called.should.be.ok()
-        done()
+        .then ->
+          next.called.should.be.true()
 
   describe '#search', ->
 
