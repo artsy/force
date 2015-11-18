@@ -1,21 +1,21 @@
-Partners = require '../../collections/partners'
 PartnerCategories = require '../../collections/partner_categories'
-Profile = require '../../models/profile'
-PartnerCellGrid = require './components/partner_cell_grid/view'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
 PrimaryCarousel = require './components/primary_carousel/fetch'
+CategoryCarousel = require './components/partner_cell_carousel/fetch'
+_ = require 'underscore'
 
 fetchCategories = (type) ->
   categories = new PartnerCategories()
   categories.fetchUntilEnd data: category_type: type
     .then ->
       Q.all categories.map (category) ->
-        category.related().partners.fetch data: { size: 6, sort: '-random_score' }
+        carousel = new CategoryCarousel(category: category)
+        carousel.fetch()
 
-    .then ->
-      categories.select (category) ->
-        category.related().partners.length
+    .then (carousels) ->
+      _.select carousels, (carousel) ->
+        carousel.partners.length > 0
 
 @galleries = (req, res, next) ->
   carousel = new PrimaryCarousel
@@ -25,12 +25,11 @@ fetchCategories = (type) ->
     fetchCategories('Gallery')
   ])
 
-  .spread (shows, categories) ->
-
+  .spread (shows, carousels) ->
     res.render 'index',
       type: 'gallery'
       shows: shows
-      categories: categories
+      carousels: carousels
 
     .catch next
     .done()
@@ -43,12 +42,12 @@ fetchCategories = (type) ->
     fetchCategories('Institution')
   ])
 
-  .spread (shows, categories) ->
+  .spread (shows, carousels) ->
 
     res.render 'index',
       type: 'institution'
       shows: shows
-      categories: categories
+      carousels: carousels
 
     .catch next
     .done()

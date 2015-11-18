@@ -1,15 +1,16 @@
-//- title, partners
+//- pass carousel object
 
-.partner-cell-carousel-header
-  .partner-cell-carousel-header-left=title
-  a.partner-cell-carousel-header-right(href='#')
-    |View All
-.partner-cell-carousel-body
-  .partner-cell-carousel-content
-    each partner in partners
-      - var profile = partner.related().profile
-      .partner-cell(data-id= partner.get('default_profile_id'))
-        include ../partner_cell/index
-  .partner-cell-nav
-    .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
-    .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
+.partner-category-carousel
+  .partner-cell-carousel-header
+    .partner-cell-carousel-header-left=carousel.category.get('name')
+    a.partner-cell-carousel-header-right(href='#', data-id=)
+      |View All
+  .partner-cell-carousel-body
+    .partner-cell-carousel-content
+      each partner in carousel.partners.models
+        - var profile = partner.related().profile
+        .partner-cell(data-id= partner.get('default_profile_id'))
+          include ../partner_cell/index
+    .partner-cell-nav
+      .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
+      .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
