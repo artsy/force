@@ -8,13 +8,13 @@ fetchLocationCarousel = require '../components/location_carousel/index.coffee'
 PartnerCellCarouselView = require '../components/partner_cell_carousel/view.coffee'
 
 module.exports.init = ->
-  initPrimaryCarousel()
-
   if CURRENT_USER?
     following = new Following [], kind: 'profile'
     partners = _.flatten _.pluck CAROUSELS, 'partners'
     ids = _.pluck partners, 'default_profile_id'
     following.syncFollows ids
+
+  initPrimaryCarousel following: following
 
   carouselViews = CAROUSELS.map ({ category, partners }) ->
     category = new Backbone.Model category

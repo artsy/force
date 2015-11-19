@@ -26,6 +26,7 @@ fetchCategories = (type) ->
   ]
     .spread (shows, carousels) ->
 
+      res.locals.sd.MAIN_PROFILES = carousel.profiles.toJSON()
       res.locals.sd.CAROUSELS = carousels
 
       res.render 'index',
