@@ -108,10 +108,12 @@ describe 'Fair routes', ->
     it 'follows the fair and adds a user fair action to the users collector profile', ->
       @req.params =
         action: 'attendee'
-      @req.user = new CurrentUser fabricate 'user'
+      @req.user = new CurrentUser fabricate 'user', accessToken: 'secret-code'
       routes.captureSignup @req, @res, (next = sinon.stub())
       Backbone.sync.args[0][1].get('fair_id').should.equal 'armory-show-2013'
+      Backbone.sync.args[0][1].get('access_token').should.equal 'secret-code'
       Backbone.sync.args[1][1].get('profile_id').should.equal 'the-armory-show'
+      Backbone.sync.args[0][1].get('access_token').should.equal 'secret-code'
 
     it 'triggers next if the action is attendee', ->
       Backbone.sync.yieldsTo 'success'
