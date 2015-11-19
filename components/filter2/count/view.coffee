@@ -14,7 +14,7 @@ module.exports = class CountView extends Backbone.View
     work = if @totalCount() is "1" then 'Work' else 'Works'
     @$el.text "#{@totalCount()} #{work}"
 
-  updateMeta: ->
-    $('meta[name=description]').remove()
-    $('head').append("<meta name='description' content='Collect #{@totalCount()} artworks. Purchase online or connect with over 1,500 top galleries.'>")
-
+  if not sd.FAIR
+    updateMeta: ->
+      $('meta[name=description]').remove()
+      $('head').append("<meta name='description' content='Collect #{@totalCount()} artworks. Purchase online or connect with over 1,500 top galleries.'>")

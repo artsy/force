@@ -53,18 +53,17 @@ module.exports = class FairBrowseView extends Backbone.View
       if @boothParams.get('section')
         "Exhibitors at #{@boothParams.get('section')}"
       else if @boothParams.get('artist')
-        deslugify @boothParams.get('artist')
+        (deslugify @boothParams.get('artist')) + " at "
       else
-        "Browse #{sd.EXHIBITORS_COUNT} Exhibitors"
+        "Exhibitors at "
     )
 
   updatePageTitle: (context) ->
     return unless SECTION is 'browse'
     document.title = _.compact([
-      (if @profile.displayName() then "#{@profile.displayName()}" else "Profile")
       context
-      "Artsy"
-    ]).join(" | ")
+      (if @profile.displayName() then "#{@profile.displayName()}" else "Profile")
+    ]).join(" ")
 
   boothsSection: =>
     @$('.filter-artworks-nav .is-active, #fair-filter-all-artists').removeClass('is-active')
