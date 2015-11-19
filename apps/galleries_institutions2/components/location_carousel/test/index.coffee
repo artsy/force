@@ -2,9 +2,9 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-initLocationCarousel = benv.requireWithJadeify require.resolve('../index'), ['template']
+fetchLocationCarousel = require '../index'
 
-describe 'initLocationCarousel', ->
+describe 'fetchLocationCarousel', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
@@ -33,7 +33,7 @@ describe 'initLocationCarousel', ->
     Backbone.sync.restore()
 
   it 'fetches nearest artsy "place", partner, profile, and partner locations', ->
-    initLocationCarousel()
+    fetchLocationCarousel()
       .then ->
         $.get.args[0][0].should.equal '/geo/nearest'
 
@@ -48,14 +48,12 @@ describe 'initLocationCarousel', ->
         Backbone.sync.args[2][1].url
           .should.containEql '/api/v1/partner/gagosian/locations?size=20'
 
-  it 'resolves a rendered $el', ->
-    initLocationCarousel()
-      .then ($el) ->
-        $el.find('.partner-cell-carousel-header').text()
-          .should.containEql 'Featured Galleries near Providence'
+  it 'resolves with the data', ->
+    fetchLocationCarousel()
+      .then ({ category, partners }) ->
+        category.get 'name'
+          .should.equal 'Featured Galleries near Providence'
 
-        $el.find('.partner-cell-name').text()
+        partners.should.have.lengthOf 1
+        partners.first().get 'name'
           .should.equal 'Gagosian Gallery'
-
-        $el.find('.partner-cell-location').text()
-          .should.equal 'Providence'

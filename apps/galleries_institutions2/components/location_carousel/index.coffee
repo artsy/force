@@ -1,13 +1,15 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
+Backbone = require 'backbone'
 Partners = require '../../../../collections/partners.coffee'
-template = -> require('../partner_cell_carousel/template.jade') arguments...
 
 module.exports = ->
   partners = new Partners
 
   Q.promise (resolve, reject) ->
     $.get '/geo/nearest', ({ name, latitude, longitude }) ->
+      category = new Backbone.Model name: "Featured Galleries near #{name}"
+
       Q(
         partners.fetch data:
           near: "#{latitude},#{longitude}"
@@ -21,12 +23,9 @@ module.exports = ->
           ]
 
         .then ->
-          ($el = $('<div class="partner-category-carousel"></div>'))
-            .html template
-              title: "Featured Galleries near #{name}"
-              partners: partners.models
-
-          resolve $el
+          resolve
+            category: category
+            partners: partners
 
         .catch reject
         .done()
