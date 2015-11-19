@@ -1,16 +1,15 @@
-//- title, partners
+//- Requires: category, partners
 
-.partner-category-carousel
-  .partner-cell-carousel-header
-    .partner-cell-carousel-header-left=title
-    a.partner-cell-carousel-header-right(href='#')
-      |View All
-  .partner-cell-carousel-body
-    .partner-cell-carousel-content
-      each partner in partners
-        - var profile = partner.related().profile
-        .partner-cell(data-id= partner.get('default_profile_id'))
-          include ../partner_cell/index
-    .partner-cell-nav
-      .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
-      .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
+.partner-cell-carousel-header
+  .partner-cell-carousel-header-left
+    = category.get('name')
+
+.partner-cell-carousel-body
+  .partner-cell-carousel-content.js-partner-cells
+    each partner in partners
+      .partner-cell
+        include ../partner_cell/index
+
+  .partner-cell-nav
+    .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
+    .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
