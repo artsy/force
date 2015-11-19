@@ -7,19 +7,23 @@ block body
   #galleries-institutions2-page.partners-page
 
     header.galleries-institutions2-header
-      h1 Browse #{type == 'gallery' ? 'Galleries' : 'Institutions'}
-      .galleries-institutions2-right
-        a.galleries-institutions2-right-item(href="/#{type}-partnerships") Partner with Artsy
+      h1
+        | Browse #{type === 'gallery' ? 'Galleries' : 'Institutions'}
 
-        if type == 'gallery'
-          a.galleries-institutions2-right-item(href="/gallery-insights") Gallery Insights
+      .galleries-institutions2-right
+        a.galleries-institutions2-right-item( href='/#{type}-partnerships' )
+          | Partner with Artsy
+        if type === 'gallery'
+          a.galleries-institutions2-right-item( href='/gallery-insights' )
+            | Gallery Insights
 
     include ../components/primary_carousel/index
 
-    #partners-page-featured-specialties
+    .js-partner-category-carousels
       each carousel in carousels
-        - var title = carousel.category.get('name')
+        - var category = carousel.category
         - var partners = carousel.partners.models
-        include ../components/partner_cell_carousel/template.jade
+        .partner-category-carousel
+          include ../components/partner_cell_carousel/template
 
-    include ./footer.jade
+    include ./footer

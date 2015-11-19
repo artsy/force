@@ -1,19 +1,26 @@
-//- profile, partner, imageUrl
+//- Required: partner
+
+- var profile = partner.related().profile
+- var image = profile.coverImage()
+- var hasImage = image.isWithImages()
+- var imageUrl = image.cropUrlFor({ width: 400, height: 300 })
+
 a.partner-featured-image(
   href= profile.href()
 )
-
-  - var image = profile.coverImage()
-  - var hasImage = image.isWithImages()
-  - var imageUrl = image.cropUrlFor({width:400, height:300})
   .hoverable-image.is-three-two(
-    class= hasImage ? "" : "is-missing"
+    class= hasImage ? '' : 'is-missing'
     data-initials= partner.defaultIconInitials()
-    style=(hasImage ? "background-image: url(#{imageUrl});" : undefined)
+    style= hasImage ? 'background-image: url(' + imageUrl + ');' : undefined
   )
 
 .partner-cell-metadata
   .partner-cell-metadata-text
-    a.partner-cell-name.avant-garde-header( href= profile.href() )= partner.get('name')
-    .partner-cell-location=partner.displayLocations() || ''
-  button.partner-cell-follow-button.avant-garde-button-white.is-small.follow-button( data-id= profile.get('id') )
+    a.partner-cell-name.avant-garde-header( href= profile.href() )
+      = partner.get('name')
+    .partner-cell-location
+      = partner.displayLocations() || ''
+
+  button.partner-cell-follow-button.avant-garde-button-white.is-small.follow-button.js-follow-button(
+    data-id= profile.id
+  )

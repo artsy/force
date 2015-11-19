@@ -1,29 +1,27 @@
+_ = require 'underscore'
 Q = require 'bluebird-q'
 Partners = require '../../../../collections/partners.coffee'
-module.exports = class CategoryCarousel
 
+module.exports = class CategoryCarousel
   constructor: ({ @category }) ->
+    @partners = new Partners
 
   fetch: ->
-    primaryPartners = new Partners()
-    secondaryPartners = new Partners()
-    Q.all([
-      primaryPartners.fetch {
-        cache: true
-        data:
-          partner_categories: [@category.get('id')]
-          size: 3
-          sort: '-random_score'
-          eligible_for_primary_bucket: true
+    options =
+      size: 3
+      sort: '-random_score'
+      partner_categories: [@category.id]
+
+    Q.all [
+      new Partners().fetch {
+        cache: true,
+        data: _.extend eligible_for_primary_bucket: true, options
       }
-      secondaryPartners.fetch {
+      new Partners().fetch {
         cache: true
-        data:
-          partner_categories: [@category.get('id')]
-          size: 3
-          sort: '-random_score'
-          eligible_for_secondary_bucket: true
+        data: _.extend eligible_for_secondary_bucket: true, options
       }
-    ]).spread (a, b) =>
-      @partners = new Partners (a.concat b)
-      this
+    ]
+      .spread (primary, secondary) =>
+        @partners.reset primary.concat secondary
+        this

@@ -1,54 +1,47 @@
-{ CURRENT_USER } = require('sharify').data
-initPartnerCarousel = require '../components/partner_cell_carousel/index.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ CAROUSELS, CURRENT_USER } = require('sharify').data
+Partners = require '../../../collections/partners.coffee'
+{ Following } = require '../../../components/follow_button/index.coffee'
 initPrimaryCarousel = require '../components/primary_carousel/index.coffee'
-initLocationCarousel = require '../components/location_carousel/index.coffee'
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-Profile = require '../../../models/profile.coffee'
-PartnerCell = require '../components/partner_cell/view.coffee'
+fetchLocationCarousel = require '../components/location_carousel/index.coffee'
+PartnerCellCarouselView = require '../components/partner_cell_carousel/view.coffee'
 
 module.exports.init = ->
-  initPrimaryCarousel()
+  if CURRENT_USER?
+    following = new Following [], kind: 'profile'
+    partners = _.flatten _.pluck CAROUSELS, 'partners'
+    ids = _.pluck partners, 'default_profile_id'
+    following.syncFollows ids
 
-  initLocationCarousel()
-    .then ($el) ->
-      $('#partners-page-featured-specialties').prepend $el
-      initPartnerCarousel $el
+  initPrimaryCarousel following: following
 
-  $('.partner-category-carousel').map ->
-    initPartnerCarousel(this)
+  carouselViews = CAROUSELS.map ({ category, partners }) ->
+    category = new Backbone.Model category
+    partners = new Partners partners
 
-  following = new Following([], kind: 'profile') if CURRENT_USER?
+    partners.each (partner) ->
+      partner.related().profile.fetch()
+      partner.related().locations.fetch()
 
-  partnerCellFollowIDs = $('.partner-cell').map ->
-    id = ($el = $(this)).data 'id'
-    profile = new Profile id: id
-
-    cell = new PartnerCell
-      model: profile
-
-    cell.fetch().then ->
-      $el.html cell.render().$el
-      new FollowButton
-        following: following
-        modelName: 'profile'
-        model: profile
-        el: $el.find('.follow-button')
-
-    id
-  .get()
-
-  mainCarouselFollowIDs = $('.galleries-primary-carousel .follow-button').map ->
-
-    id = ($el = $(this)).data 'id'
-
-    new FollowButton
+    view = new PartnerCellCarouselView
       following: following
-      modelName: 'profile'
-      model: new Profile id: id
-      el: this
+      category: category
+      partners: partners
 
-    id
-  .get()
+    view.render()
 
-  following?.syncFollows partnerCellFollowIDs.concat mainCarouselFollowIDs
+  $carousels = $('.js-partner-category-carousels')
+  $carousels.html _.pluck carouselViews, '$el'
 
+  fetchLocationCarousel().then ({ category, partners }) ->
+    view = new PartnerCellCarouselView
+      following: following
+      category: category
+      partners: partners
+
+    $carousels.prepend view.render().$el
+
+    return unless CURRENT_USER?
+
+    following.syncFollows partners.pluck 'default_profile_id'
