@@ -18,3 +18,9 @@ module.exports =
 
   getMapLink: (options) ->
     "https://maps.google.com/maps?#{$.param(options)}"
+
+  getDirections: (options) ->
+    if sd.GOOGLE_MAPS_API_KEY
+      options.key = sd.GOOGLE_MAPS_API_KEY
+
+    window.open("https://www.google.com/maps/dir/#{options.origin}/#{options.destination}", '_blank')

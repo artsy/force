@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Location = require './location.coffee'
-{ getMapImageSrc, getMapLink } = require "../components/util/google_maps.coffee"
+{ getMapImageSrc, getMapLink, getDirections } = require "../components/util/google_maps.coffee"
 { Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class PartnerLocation extends Location
@@ -28,3 +28,13 @@ module.exports = class PartnerLocation extends Location
       scale: scale
       zoom: zoom
     )
+
+  mapDirections: (destination) ->
+    location = @getMapsLocation()
+    return unless location
+
+    options =
+      origin: location
+      destination: destination
+
+    getDirections options
