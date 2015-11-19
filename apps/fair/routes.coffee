@@ -137,7 +137,8 @@ aggregationParams = require './components/browse/aggregations.coffee'
   Q.all [
     userFairActions.create
       fair_id: res.locals.fair.id
-      action: action
+      action: validActions[action]
+      access_token: req.user.get 'accessToken'
     followProfile.save
       access_token: req.user.get 'accessToken'
   ]
