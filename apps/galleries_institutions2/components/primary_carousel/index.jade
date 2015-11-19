@@ -2,13 +2,15 @@
   .gpc-overlays
     for show, i in shows
       .gpc-overlay.js-gpc-overlay( data-idx= i )
-        a.gpc-headline(href=show.related().partner.href())
+        a.gpc-headline( href=show.related().partner.href() )
           = show.related().partner.get('name')
-        a.gpc-subheadline(href= show.href())
+        a.gpc-subheadline( href= show.href() )
           | Current Show
-        a.gpc-subheadline-alt(href= show.href())
+        a.gpc-subheadline-alt( href= show.href() )
           = show.get('name')
-        button.gpc-follow-button.avant-garde-button-white.is-small.follow-button( data-id= show.related().partner.get('default_profile_id') )
+        button.gpc-follow-button.avant-garde-button-white.is-small.follow-button(
+          data-id= show.related().partner.get('default_profile_id')
+        )
 
   .gpc-carousel
     .gpc-carousel-cells.js-mgr-cells
