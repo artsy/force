@@ -20,6 +20,14 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'abu-dhabi-art-2015':
+    title: 'Abu Dhabi Art 2015 | Artsy'
+    description: 'Discover works from emerging and established galleries—including Hauser & Wirth, Acquavella, and The Third Line—soon to be on view in the United Arab Emirates’ capital.'
+
+  'art021-2015':
+    title: 'Art021 Shanghai Contemporary Art Fair 2015 | Artsy'
+    description: 'Browse work by the international artists—Zhao Zhao, Sabine Moritz, and Callum Innes among them—on view at this rising Shanghai fair.'
+
   '1-54-london-2015':
     title: '1:54 Contemporary African Art Fair 2015 | Artsy'
     description: 'Browse galleries hailing from 20+ cities—from Tiwani Gallery in London to KooVha Gallery in Harare—showcasing a wide range of art from Africa and beyond.'
