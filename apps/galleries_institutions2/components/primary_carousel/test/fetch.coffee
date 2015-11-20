@@ -2,7 +2,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 PrimaryCarousel = require '../fetch'
 
-describe 'PrimaryCarousel', ->
+xdescribe 'PrimaryCarousel', ->
   describe '#fetch', ->
     beforeEach ->
       sinon.stub Backbone, 'sync'
