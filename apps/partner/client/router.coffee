@@ -25,7 +25,7 @@ module.exports = class PartnerRouter extends Backbone.Router
   initialize: ({ @profile, @partner }) ->
     @baseView = new PartnerView el: $('#partner'), model: @profile, partner: @partner, currentSection: sd.SECTION
     mediator.on 'change:route', (route) =>
-      @navigate("#{@partner.id}/" + route, { trigger: true, replace: true })
+      @navigate "#{@partner.href()}/#{route}", trigger: true, replace: true
 
   index: ->
     section = 'overview' # default for galleries
