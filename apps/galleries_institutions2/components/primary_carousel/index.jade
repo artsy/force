@@ -4,7 +4,7 @@
     for profile, i in profiles
       - var show = profile.related().owner.related().shows.featured()
       .gpc-overlay.js-gpc-overlay( data-idx= i )
-        a.gpc-headline( href=profile.related().owner.href())
+        a.gpc-headline( href=profile.related().owner.href() )
           = profile.related().owner.get('name')
         if show
           a.gpc-subheadline( href= show.href() )
@@ -12,7 +12,7 @@
           a.gpc-subheadline-alt( href= show.href() )
             = show.get('name')
         button.gpc-follow-button.avant-garde-button-white.is-small.follow-button.js-follow-button(
-          data-id= profile.get('id')
+          data-id= profile.id
         )
 
   .gpc-carousel
