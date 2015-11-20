@@ -7,8 +7,9 @@ ModalView = require '../modal/view.coffee'
 Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
-{ templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
+{ templateMap, stateEventMap, routeCopyMap } = require './maps.coffee'
 sanitizeRedirect = require '../sanitize_redirect/index.coffee'
 Mailcheck = require '../mailcheck/index.coffee'
 isEigen = require './eigen.coffee'
@@ -102,8 +103,7 @@ module.exports = class AuthModalView extends ModalView
 
     # We're logging the event here prior to submission
     # to increase it's chance of being logged
-    successEvent = successEventMap[@state.get 'mode']
-    analytics.track.funnel successEvent if successEvent
+    analyticsHooks.trigger "auth:#{@state.get 'mode'}"
 
     @user.set (data = @serializeForm())
     @user[@state.get 'mode']

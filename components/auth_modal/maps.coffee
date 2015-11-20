@@ -20,10 +20,6 @@ module.exports =
     forgot: 'Viewed forgot password form'
     reset: 'Completed password reset'
 
-  successEventMap:
-    login: 'Successfully logged in'
-    register: 'Created account'
-
   routeCopyMap:
     '/favorites':
       signup: null
