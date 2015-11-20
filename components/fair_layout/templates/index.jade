@@ -2,6 +2,7 @@ block locals
 doctype html
 html( data-useragent=userAgent )
   head
+    block head
     include head
     link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
     if assetPackage
