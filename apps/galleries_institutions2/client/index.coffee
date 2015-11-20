@@ -7,6 +7,6 @@ class Router extends Backbone.Router
 
   index: require './routes/index.coffee'
 
-module.exports.init = ->
+module.exports = ->
   router = new Router
   Backbone.history.start pushState: true
