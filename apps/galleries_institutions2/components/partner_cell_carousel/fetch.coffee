@@ -8,6 +8,8 @@ module.exports = class CategoryCarousel
 
   fetch: ->
     options =
+      active: true
+      has_full_profile: true
       size: 3
       sort: '-random_score'
       partner_categories: [@category.id]

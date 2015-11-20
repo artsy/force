@@ -1,0 +1,27 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/util/activator
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'galleries_institutions2'
+
+block body
+  .galleries-institutions2-page
+    header.galleries-institutions2-header
+      h1.galleries-institutions2-headline
+        | Browse #{type === 'gallery' ? 'Galleries' : 'Institutions'}
+
+      nav.galleries-institutions2-subnav
+        if showAZLink
+          a.fine-faux-underline( href='/#{type}-a-z' )
+            | A–Z
+        a.fine-faux-underline( href='/#{type}-partnerships' )
+          | Partner with Artsy
+        if type === 'gallery'
+          a.fine-faux-underline( href='/gallery-insights' )
+            | Gallery Insights
+
+    block content
+    include ./footer
