@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PartnerCategories = require '../../collections/partner_categories'
@@ -7,7 +8,7 @@ CategoryCarousel = require './components/partner_cell_carousel/fetch'
 
 fetchCategories = (type) ->
   categories = new PartnerCategories
-  categories.fetchUntilEnd cache: true, data: category_type: type
+  categories.fetchUntilEnd cache: true, data: category_type: type, internal: false
     .then ->
       Q.all categories.map (category) ->
         carousel = new CategoryCarousel category: category
@@ -18,38 +19,28 @@ fetchCategories = (type) ->
         carousel.partners.length > 0
 
 @galleries = (req, res, next) ->
+  partners req, res, next, 'gallery'
+
+@institutions = (req, res, next) ->
+  partners req, res, next, 'institution'
+
+partners = (req, res, next, type) ->
+
   carousel = new PrimaryCarousel
 
   Q.all [
-    carousel.fetch()
-    fetchCategories 'Gallery'
+    carousel.fetch type
+    fetchCategories _s.capitalize type
   ]
-    .spread (shows, carousels) ->
 
-      res.locals.sd.MAIN_PROFILES = carousel.profiles.toJSON()
-      res.locals.sd.CAROUSELS = carousels
+  .spread (profiles, carousels) ->
 
-      res.render 'index',
-        type: 'gallery'
-        shows: shows
-        carousels: carousels
-
-    .catch next
-    .done()
-
-@institutions = (req, res, next) ->
-  carousel = new PrimaryCarousel
-
-  Q.all([
-    carousel.fetch()
-    fetchCategories('Institution')
-  ])
-
-  .spread (shows, carousels) ->
+    res.locals.sd.MAIN_PROFILES = profiles.toJSON()
+    res.locals.sd.CAROUSELS = carousels
 
     res.render 'index',
-      type: 'institution'
-      shows: shows
+      type: type
+      profiles: profiles.models
       carousels: carousels
 
     .catch next

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ CAROUSELS, CURRENT_USER } = require('sharify').data
+{ MAIN_PROFILES, CAROUSELS, CURRENT_USER } = require('sharify').data
 Partners = require '../../../collections/partners.coffee'
 { Following } = require '../../../components/follow_button/index.coffee'
 initPrimaryCarousel = require '../components/primary_carousel/index.coffee'
@@ -11,7 +11,9 @@ module.exports.init = ->
   if CURRENT_USER?
     following = new Following [], kind: 'profile'
     partners = _.flatten _.pluck CAROUSELS, 'partners'
-    ids = _.pluck partners, 'default_profile_id'
+    mainCarouselIds = _.pluck MAIN_PROFILES, 'id'
+    categoryCarouselIds = _.pluck partners, 'default_profile_id'
+    ids = mainCarouselIds.concat categoryCarouselIds
     following.syncFollows ids
 
   initPrimaryCarousel following: following

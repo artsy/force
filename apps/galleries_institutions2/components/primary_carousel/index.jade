@@ -1,25 +1,31 @@
 .galleries-primary-carousel.js-galleries-primary-carousel
   .gpc-overlays
-    for show, i in shows
+
+    for profile, i in profiles
+      - var show = profile.related().owner.related().shows.featured()
       .gpc-overlay.js-gpc-overlay( data-idx= i )
-        a.gpc-headline( href=show.related().partner.href() )
-          = show.related().partner.get('name')
-        a.gpc-subheadline( href= show.href() )
-          | Current Show
-        a.gpc-subheadline-alt( href= show.href() )
-          = show.get('name')
+        a.gpc-headline( href=profile.related().owner.href())
+          = profile.related().owner.get('name')
+        if show
+          a.gpc-subheadline( href= show.href() )
+            | Current Show
+          a.gpc-subheadline-alt( href= show.href() )
+            = show.get('name')
         button.gpc-follow-button.avant-garde-button-white.is-small.follow-button.js-follow-button(
-          data-id= show.related().partner.get('default_profile_id')
+          data-id= profile.get('id')
         )
 
   .gpc-carousel
     .gpc-carousel-cells.js-mgr-cells
-      for show in shows
-        .gpc-carousel-cell.js-mgr-cell
-          if show.isWithImages()
-            - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
+      for profile in profiles
+        - var show = profile.related().owner.related().shows.featured()
+          .gpc-carousel-cell.js-mgr-cell
+            if show && show.isWithImages()
+              - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
+            else
+              - var imageUrl = profile.coverImage().imageUrlForMaxSize()
             a.gpc-carousel-figure(
-              href=show.related().partner.href()
+              href=profile.related().owner.href()
               style='background-image: url(' + imageUrl + ')'
             )
 
