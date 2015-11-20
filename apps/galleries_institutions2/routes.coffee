@@ -25,7 +25,8 @@ fetchCategories = (type) ->
   partners req, res, next, 'institution'
 
 partners = (req, res, next, type) ->
-  carousel = new PrimaryCarousel()
+
+  carousel = new PrimaryCarousel
 
   Q.all [
     carousel.fetch type
@@ -33,6 +34,9 @@ partners = (req, res, next, type) ->
   ]
 
   .spread (profiles, carousels) ->
+
+    res.locals.sd.MAIN_PROFILES = profiles.toJSON()
+    res.locals.sd.CAROUSELS = carousels
 
     res.render 'index',
       type: type
