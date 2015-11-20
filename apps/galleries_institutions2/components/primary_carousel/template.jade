@@ -1,6 +1,5 @@
 .galleries-primary-carousel.js-galleries-primary-carousel
   .gpc-overlays
-
     for profile, i in profiles
       - var show = profile.related().owner.related().shows.featured()
       .gpc-overlay.js-gpc-overlay( data-idx= i )
@@ -15,19 +14,28 @@
           data-id= profile.id
         )
 
+    - var index = 0
+    - var length = profiles.length
+    .mgr-dots
+      for x, i in new Array(length)
+        .mgr-dot.js-gpc-dot(
+          class= (index === i ? 'is-active' : undefined)
+          data-index= i
+        ) •
+
   .gpc-carousel
     .gpc-carousel-cells.js-mgr-cells
       for profile in profiles
         - var show = profile.related().owner.related().shows.featured()
-          .gpc-carousel-cell.js-mgr-cell
-            if show && show.isWithImages()
-              - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
-            else
-              - var imageUrl = profile.coverImage().imageUrlForMaxSize()
-            a.gpc-carousel-figure(
-              href=profile.related().owner.href()
-              style='background-image: url(' + imageUrl + ')'
-            )
+        .gpc-carousel-cell.js-mgr-cell
+          if show && show.isWithImages()
+            - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
+          else
+            - var imageUrl = profile.coverImage().imageUrlForMaxSize()
+          a.gpc-carousel-figure(
+            href= profile.related().owner.href()
+            style='background-image: url(' + imageUrl + ')'
+          )
 
   .gpc-bumpers.js-gpc-navigation
     .gpc-bumper-prev.js-gpc-prev: i.icon-chevron-small-left

@@ -11,9 +11,20 @@ module.exports = ({ following }) ->
   { flickity } = cells
 
   $overlays = $el.find('.js-gpc-overlay')
+  $dots = $el.find('.js-gpc-dot')
+
   $overlays.first().fadeIn()
 
+  $dots.on 'click', (e) ->
+    e.preventDefault()
+    i = $(this).data 'index'
+    flickity.select i
+
   flickity.on 'cellSelect', ->
+    $dots.removeClass 'is-active'
+    $($dots[flickity.selectedIndex])
+      .addClass 'is-active'
+
     $overlays.fadeOut()
     $overlays.promise().done ->
       $selected = $($overlays[flickity.selectedIndex])

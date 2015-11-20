@@ -3,8 +3,14 @@
 carousel-height = 400px
 small-screen-arrow-offset = 13px
 large-screen-arrow-offset = 90px
-// Structure
 
+.galleries-primary-carousel
+  position relative
+  width 100%
+  height carousel-height
+  block-margins(60px)
+
+// Navigation
 .gpc-bumpers
   position absolute
   width 100%
@@ -43,12 +49,7 @@ large-screen-arrow-offset = 90px
   @media screen and (min-width: 1440px)
     transform translateX(-(large-screen-arrow-offset))
 
-.galleries-primary-carousel
-  position relative
-  width 100%
-  height carousel-height
-  block-margins(60px)
-
+// Overlays
 .gpc-overlays
   position absolute
   top 0
@@ -57,9 +58,15 @@ large-screen-arrow-offset = 90px
   left 0
   height 100%
   display flex
+  flex-direction column
+  justify-content center
   align-items center
   text-align center
+.gpc-overlay
+  margin 0 auto
+  display none
 
+// Carousel
 .gpc-carousel
   position absolute
   top 0
@@ -67,22 +74,13 @@ large-screen-arrow-offset = 90px
   bottom 0
   left 33.33%
   height 100%
-
-// Overlays
-.gpc-overlay
-  margin 0 auto
-  display none
-
-// Carousel
 .gpc-carousel-cells
   height 100%
   overflow hidden
-
 .gpc-carousel-cell
   position relative
   height 100%
   width 100%
-
 .gpc-carousel-figure
   position absolute
   top 0
@@ -94,10 +92,11 @@ large-screen-arrow-offset = 90px
   transition transform 1s
 
 // Typography
-.gpc-headline, .gpc-subheadline, .gpc-subheadline-alt
+.gpc-headline
+.gpc-subheadline
+.gpc-subheadline-alt
   display block
   text-decoration none
-
 .gpc-headline
   margin 20px 0
   garamond-size('headline')
