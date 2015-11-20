@@ -20,6 +20,7 @@ describe 'FairInfoVisitorsView', ->
     benv.teardown()
 
   beforeEach (done) ->
+    sinon.stub(window, 'open')
     fair = fabricate 'fair'
     profile = fabricate 'fair_profile'
     @fair = new Fair fair
@@ -33,6 +34,9 @@ describe 'FairInfoVisitorsView', ->
       @view = new FairInfoVisitorsView { el: $('.fair-info2-body'), model: @profile, fair: @fair }
       done()
 
+  afterEach ->
+    window.open.restore()
+
   describe '#initialize', ->
 
     beforeEach ->
@@ -45,3 +49,7 @@ describe 'FairInfoVisitorsView', ->
       html.should.containEql 'maps.google'
       @view.$('.fair-info2-map-link').attr('href').should.equal @fair.location().googleMapsLink()
       @view.$('img.map').attr('src').should.equal @fair.location().mapImageSrc(410, 150, 2, 16)
+
+    it 'opens directions in google', ->
+      @view.$('.fair-info2-get-directions-link').click()
+      window.open.called.should.equal true

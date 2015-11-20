@@ -23,4 +23,4 @@ module.exports =
     if sd.GOOGLE_MAPS_API_KEY
       options.key = sd.GOOGLE_MAPS_API_KEY
 
-    window.open("https://www.google.com/maps/dir/#{options.origin}/#{options.destination}", '_blank')
+    "https://www.google.com/maps/dir/#{options.origin}/#{encodeURI(options.destination)}"

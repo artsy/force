@@ -29,5 +29,4 @@ module.exports = class FairInfoVisitors extends Backbone.View
   onClickShowDirections: (e) ->
     e.preventDefault()
     destination = $('.fair-info2-directions input').val()
-
-    @fair.location().mapDirections(destination)
+    window.open(@fair.location().mapDirections(destination), '_blank')
