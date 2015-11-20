@@ -39,8 +39,8 @@ describe 'Fair Organizer', ->
         NODE_ENV: 'test'
         CURRENT_PATH: '/cool-fair'
         PROFILE: fabricate 'fair_organizer_profile'
-        FAIR_ORG: fabricate 'fair_organizer'
-      fairOrg = new FairOrganizer (sd.FAIR_ORG)
+        FAIR_ORGANIZER: fabricate 'fair_organizer'
+      fairOrg = new FairOrganizer (sd.FAIR_ORGANIZER)
       profile = new Profile (sd.PROFILE)
 
       pastFairs = new Fairs [fabricate('fair'), fabricate('fair')]
@@ -72,6 +72,7 @@ describe 'Meta tags', ->
       @sd =
         API_URL: "http://localhost:5000"
         CURRENT_PATH: '/cool-profile/info'
+        FAIR_ORGANIZER: fabricate 'fair_organizer'
       @file = path.resolve __dirname, "../templates/meta.jade"
       @profile = new Profile fabricate('profile')
       @html = jade.render fs.readFileSync(@file).toString(),
@@ -82,5 +83,5 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"#{@sd.APP_URL}/cool-profile/info"
       @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}/cool-profile/info"
-      @html.should.containEql "<meta property=\"og:title\" content=\"#{@profile.metaTitle()}"
-      @html.should.containEql "<meta property=\"og:description\" content=\"#{@profile.metaDescription()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@sd.FAIR_ORGANIZER.name} | Artsy"
+      @html.should.containEql "<meta property=\"og:description\" content=\"Browse artworks, artists and exhibitors from #{@sd.FAIR_ORGANIZER.name} on Artsy."

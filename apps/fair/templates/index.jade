@@ -1,5 +1,17 @@
 extends ../../../components/fair_layout/templates/index
 
+block head
+  if sd.SECTION == 'info'
+    include ./meta_info
+  else if sd.SECTION == 'posts'
+    include ./meta_posts
+  else if sd.CURRENT_PATH.match(/artworks/)
+    include ./meta_artworks
+  else if sd.CURRENT_PATH.match(/booths/)
+    include ./meta_booths
+  else if sd.CURRENT_PATH.match(/artist/)
+    include ./meta_artist
+
 block body
   .fair-page-content
     if sd.SECTION == 'search'

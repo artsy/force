@@ -1,7 +1,13 @@
-title= profile.metaTitle(sd.SECTION)
-meta( property="og:title", content=profile.metaTitle(sd.SECTION) )
-meta( name="description", content=profile.metaDescription(sd.SECTION) )
-meta( property="og:description", content=profile.metaDescription(sd.SECTION) )
+if sd.FAIR_ORGANIZER.name
+  title= (sd.FAIR_ORGANIZER.name + ' | Artsy')
+  meta( property="og:title", content=(sd.FAIR_ORGANIZER.name + ' | Artsy') )
+  meta( name="description", content=('Browse artworks, artists and exhibitors from ' + sd.FAIR_ORGANIZER.name + ' on Artsy.') )
+  meta( property="og:description", content=('Browse artworks, artists and exhibitors from ' + sd.FAIR_ORGANIZER.name + ' on Artsy.') )
+else
+  title= profile.metaTitle(sd.SECTION)
+  meta( property="og:title", content=profile.metaTitle(sd.SECTION) )
+  meta( name="description", content=profile.metaDescription(sd.SECTION) )
+  meta( property="og:description", content=profile.metaDescription(sd.SECTION) )
 meta( property="twitter:description", content=profile.metaDescription(sd.SECTION) )
 link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
 meta( property="og:url", content=(sd.APP_URL + sd.CURRENT_PATH) )

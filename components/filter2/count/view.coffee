@@ -1,5 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+sd = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports = class CountView extends Backbone.View
@@ -15,6 +16,6 @@ module.exports = class CountView extends Backbone.View
     @$el.text "#{@totalCount()} #{work}"
 
   updateMeta: ->
+    return if sd.FAIR
     $('meta[name=description]').remove()
     $('head').append("<meta name='description' content='Collect #{@totalCount()} artworks. Purchase online or connect with over 1,500 top galleries.'>")
-

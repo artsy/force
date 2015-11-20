@@ -11,9 +11,11 @@ module.exports =
     else
       @defaultMetaTitle?() or (@get('title') or @get('name') + " | Artsy")
 
-  toPageDescription: (length = 200) ->
+  toPageDescription: (length = 200) ->    
     if description = @metaOverrides('description')
       description
+    else if @.constructor.name is 'Fair'
+      "Browse artworks, artists and exhibitors from #{@get('name')} on Artsy."
     else
       @defaultMetaDescription?(length) or @get('title') or @get('name')
 

@@ -25,7 +25,7 @@ describe 'FairInfoView', ->
     @fair = new Fair fair
     @profile = new Profile profile
     benv.render resolve(__dirname, '../../templates/index.jade'), {
-      sd: { FAIR: fair, PROFILE: profile }
+      sd: { FAIR: fair, PROFILE: profile, SECTION: 'info' }
       fair: @fair
       profile: @profile
       asset: (->)

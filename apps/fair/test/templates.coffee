@@ -23,6 +23,11 @@ sinon = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
+  sd =
+    APP_URL: 'http://localhost:5000'
+    API_URL: 'http://localhost:5000'
+    CANONICAL_MOBILE_URL: 'http://localhost:5000'
+    NODE_ENV: 'test'
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
@@ -33,12 +38,10 @@ describe 'Fair', ->
 
     before (done) ->
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
-        API_URL: 'http://localhost:5000'
+        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
-        NODE_ENV: 'test'
         CURRENT_PATH: '/cool-fair'
         PROFILE: fabricate 'fair_profile'
         FAIR: fabricate 'fair', filter_genes: []
@@ -64,11 +67,10 @@ describe 'Fair', ->
       fair = fabricate 'fair', filter_genes: []
       fair.about = 'about the fair'
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
+        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
-        NODE_ENV: 'test'
         SECTION: 'info'
         CURRENT_PATH: '/cool-fair'
         PROFILE: fabricate 'fair_profile'
@@ -95,11 +97,8 @@ describe 'Fair', ->
 
     before (done) ->
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
-        APP_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
-        NODE_ENV: 'test'
         PROFILE: fabricate 'fair_profile'
         FAIR: fabricate 'fair', filter_genes: []
         SECTION: 'search'
@@ -226,7 +225,6 @@ describe 'Fair', ->
 
       @template = render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: _.times 2, -> fabricate 'gene', { id: _.uniqueId() }
@@ -261,7 +259,6 @@ describe 'Fair', ->
       nestedFilteredSearchColumns = fair.filteredSearchColumns nestedFilteredSearchOptions
       @nestedTemplate = render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: _.times 2, -> fabricate 'gene', { id: _.uniqueId() }
@@ -302,7 +299,6 @@ describe 'Fair', ->
       cSet.get('items').reset(cSet.get('items').first(1))
       $ = cheerio.load render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: []
@@ -326,7 +322,6 @@ describe 'Fair', ->
       cSet.get('items').reset([{}, {}])
       $ = cheerio.load render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: []
@@ -350,7 +345,6 @@ describe 'Fair', ->
       primarySets.remove(eSet)
       $ = cheerio.load render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: []
@@ -370,7 +364,6 @@ describe 'Fair', ->
     it 'renders tagline if present', ->
       $ = cheerio.load render('overview')
         sd:
-          APP_URL: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair', filter_genes: []
@@ -403,3 +396,128 @@ describe 'Fair', ->
       $('.exhibitors-column').length.should.equal 2
       $('.exhibitor-name').length.should.equal 4
       $('.exhibitor-item img').length.should.equal 4
+
+  describe 'metatags', ->
+    describe 'articles page', ->
+      before (done) ->
+        sd =
+          CURRENT_PATH: '/cool-fair/articles'
+          SECTION: 'posts'
+          FAIR: fabricate 'fair'
+        fair = new Fair (sd.FAIR)
+        profile = new Profile (sd.PROFILE)
+        template = render('index')
+          sd: sd
+          fair: fair
+          profile: profile
+          asset: (->)
+        @$template = cheerio.load template
+        done()
+
+      it 'renders article metadata', ->
+        @$template.html().should.containEql '<title>Exclusive Artsy Editorial from Armory Show 2013</title>'
+        @$template.html().should.containEql '<meta name="description" content="Read the latest articles from Armory Show 2013 on Artsy.">'
+
+    describe 'visitor info page', ->
+      before (done) ->
+        sd =
+          CURRENT_PATH: '/cool-fair/info'
+          SECTION: 'info'
+          FAIR: fabricate 'fair'
+        fair = new Fair (sd.FAIR)
+        profile = new Profile (sd.PROFILE)
+        template = render('index')
+          sd: sd
+          fair: fair
+          profile: profile
+          asset: (->)
+        @$template = cheerio.load template
+        done()
+
+      it 'renders info metadata', ->
+        @$template.html().should.containEql '<title>Visitor information: Armory Show 2013</title>'
+        @$template.html().should.containEql '<meta name="description" content="Plan your visit to Armory Show 2013: Hours, address, contact information, and more on Artsy.">'
+
+    describe 'artworks page', ->
+      before (done) ->
+        sd =
+          CURRENT_PATH: '/browse/artworks'
+          SECTION: 'browse'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair', filter_genes: []
+        fair = new Fair (sd.FAIR)
+        params = new Backbone.Model fair: fair.id
+        profile = new Profile (sd.PROFILE)
+        filterArtworks = new FilterArtworks fabricate2('filter_artworks'), parse: true
+        template = render('index')
+          sd: sd
+          fair: fair
+          params: params
+          profile: profile
+          counts: filterArtworks.counts
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          _: _
+          _s: _s
+          asset: (->)
+        @$template = cheerio.load template
+        done()
+
+      it 'renders artwork page metadata', ->
+        @$template.html().should.containEql '<title>Artworks from Armory Show 2013</title>'
+        @$template.html().should.containEql '<meta name="description" content="Browse artworks being shown at Armory Show 2013 on Artsy.">'
+
+    describe 'exhibitors page', ->
+      before (done) ->
+        sd =
+          CURRENT_PATH: '/browse/booths'
+          SECTION: 'browse'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair', filter_genes: []
+        fair = new Fair (sd.FAIR)
+        params = new Backbone.Model fair: fair.id
+        profile = new Profile (sd.PROFILE)
+        filterArtworks = new FilterArtworks fabricate2('filter_artworks'), parse: true
+        template = render('index')
+          sd: sd
+          fair: fair
+          params: params
+          profile: profile
+          counts: filterArtworks.counts
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          _: _
+          _s: _s
+          asset: (->)
+        @$template = cheerio.load template
+        done()
+
+      it 'renders exhibitor page metadata', ->
+        @$template.html().should.containEql '<title>Exhibitors at Armory Show 2013</title>'
+        @$template.html().should.containEql '<meta name="description" content="Browse galleries exhibiting at Armory Show 2013 on Artsy.">'  
+
+    describe 'fair artist page', ->
+      before (done) ->
+        sd =
+          CURRENT_PATH: '/browse/artist/andy-foobar'
+          SECTION: 'browse'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair', filter_genes: []
+        fair = new Fair (sd.FAIR)
+        params = new Backbone.Model fair: fair.id
+        profile = new Profile (sd.PROFILE)
+        filterArtworks = new FilterArtworks fabricate2('filter_artworks'), parse: true
+        template = render('index')
+          sd: sd
+          fair: fair
+          params: params
+          profile: profile
+          counts: filterArtworks.counts
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          _: _
+          _s: _s
+          asset: (->)
+        @$template = cheerio.load template
+        done()
+
+      it 'renders fair artist page metadata', ->
+        @$template.html().should.containEql '<title>Andy Foobar at Armory Show 2013</title>'
+        @$template.html().should.containEql '<meta name="description" content="Browse works by Andy Foobar being shown at Armory Show 2013 on Artsy.">'    
