@@ -26,6 +26,7 @@ render = (templateName) ->
   sd =
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
+    CANONICAL_MOBILE_URL: 'http://localhost:5000'
     NODE_ENV: 'test'
   jade.compile(
     fs.readFileSync(filename),
@@ -96,7 +97,6 @@ describe 'Fair', ->
 
     before (done) ->
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         PROFILE: fabricate 'fair_profile'
