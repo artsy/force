@@ -3,7 +3,7 @@ sd = require('sharify').data
 should = require 'should'
 Backbone = require 'backbone'
 benv = require 'benv'
-{ getMapImageSrc, getMapLink } = require "../google_maps.coffee"
+{ getMapImageSrc, getMapLink, getDirections } = require "../google_maps.coffee"
 
 describe "PartnerLocation", ->
 
@@ -33,3 +33,11 @@ describe "PartnerLocation", ->
         q: @location
         hnear: @location
       getMapLink(options).should.equal 'https://maps.google.com/maps?q=Address%2C+City%2C+State+00000&hnear=Address%2C+City%2C+State+00000'
+
+  describe '#getDirections', ->
+
+    it 'returns accurate google map directions', ->
+      options =
+        origin: @location
+        destination: '210 Main Street New York NY'
+      getDirections(options).should.equal 'https://www.google.com/maps/dir/Address, City, State 00000/210%20Main%20Street%20New%20York%20NY'

@@ -1,12 +1,14 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-
 module.exports = class FairInfoVisitors extends Backbone.View
 
   mapWidth: 410
   mapHeight: 150
   scale: 2
   zoom: 16
+
+  events: ->
+    'click.handler .fair-info2-get-directions-link': 'onClickShowDirections'
 
   initialize: (options) ->
     @fair = options.fair
@@ -23,3 +25,8 @@ module.exports = class FairInfoVisitors extends Backbone.View
 
   targetBlankLinks: ->
     @$('a').attr target: "_blank"
+
+  onClickShowDirections: (e) ->
+    e.preventDefault()
+    destination = $('.fair-info2-directions input').val()
+    window.open(@fair.location().mapDirections(destination), '_blank')

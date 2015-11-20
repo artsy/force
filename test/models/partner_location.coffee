@@ -1,9 +1,11 @@
 _ = require 'underscore'
 sd = require('sharify').data
 benv = require 'benv'
+sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'
 PartnerLocation = require '../../models/partner_location'
+{ getDirections } = require "../../components/util/google_maps.coffee"
 
 describe 'PartnerLocation', ->
 
@@ -102,3 +104,12 @@ describe 'PartnerLocation', ->
     it "returns only a q param for locations with coordinates", ->
       @partnerLocation.set 'coordinates', { lng: -74.0093178, lat: 40.2163901 }
       @partnerLocation.googleMapsLink().should.equal 'https://maps.google.com/maps?q=40.2163901%2C-74.0093178'
+
+  describe '#mapDirections', ->
+    beforeEach ->
+      @partnerLocation.set 'coordinates', { lng: -74.0093178, lat: 40.2163901 }
+
+    it "returns get directions", ->
+      destination = '210 Main St New York, NY'
+      @partnerLocation.mapDirections(destination).should.equal 'https://www.google.com/maps/dir/40.2163901,-74.0093178/210%20Main%20St%20New%20York,%20NY'
+
