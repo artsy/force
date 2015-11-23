@@ -4,7 +4,7 @@ _ = require 'underscore'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 template = require('jade').compileFile(require.resolve '../../templates/visitors.jade')
-data = _.extend {}, asset: (->), sd: {}, markdown: (->)
+data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info2/visitors'}, markdown: (->)
 
 render = (moreData) ->
   template _.extend {}, data, moreData
