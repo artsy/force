@@ -44,7 +44,6 @@ describe 'ArticleView', ->
         author: new Backbone.Model fabricate 'user'
         sd:
           SCROLL_ARTICLE: 'static'
-          SHARE_ARTICLE: 'current'
         asset: (->)
         embedVideo: require('embed-video')
         moment: require('moment')
