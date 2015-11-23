@@ -27,7 +27,7 @@ block body
               h2.visitor-title Tickets
               .fair-info2-ticket-info!= fair.get('tickets_link')
 
-          if fair.get('location')
+          if fair.get('location') && (fair.get('location').coordinates != null || fair.get('location').address != '')
             .fair-directions.grid-item
               h2.visitor-title Directions
               form.fair-info2-directions
