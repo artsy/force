@@ -21,9 +21,8 @@ mixin image(image)
 .article-container(data-id=article.get('id'))
 
   //- Article Share Fixed Nav
-  if sd.SHARE_ARTICLE !== "current"
-    .article-share-fixed(data-id=article.get('id'))
-      +share-fixed(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
+  .article-share-fixed(data-id=article.get('id'))
+    +share-fixed(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
   .article-content
     //- Article lead content
