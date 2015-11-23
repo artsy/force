@@ -26,7 +26,7 @@ describe 'FairInfoVisitorsView', ->
     @fair = new Fair fair
     @profile = new Profile profile
     benv.render resolve(__dirname, '../../templates/visitors.jade'), {
-      sd: { FAIR: fair, PROFILE: profile }
+      sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/visitors' }
       fair: @fair
       profile: @profile
       asset: (->)
