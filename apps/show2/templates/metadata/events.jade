@@ -1,0 +1,25 @@
+.show-events
+  //- More than one event (opens modal)
+  if show.related().showEvents.length > 1
+    a.show-entity-link.js-open-show-events( href='#' )
+      i.icon-circle-chevron
+      span Multiple events for this show
+  else
+    - var showEvent = show.related().showEvents.first()
+
+    //- One event with description (opens modal)
+    if showEvent.get('description')
+      a.show-entity-link.js-open-show-events( href='#' )
+        i.icon-circle-chevron
+        span
+          = showEvent.eventType() + ': '
+          if showEvent.get('title')
+            em= showEvent.get('title') + ', '
+          = showEvent.formatDateRange('start_at', 'end_at')
+    else
+      //- One event sans-description (no modal)
+      .show-event
+        = showEvent.eventType() + ': '
+        if showEvent.get('title')
+          em= showEvent.get('title') + ', '
+        = showEvent.formatDateRange('start_at', 'end_at')

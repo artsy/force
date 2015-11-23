@@ -1,0 +1,6 @@
+.show-follow-artists( class= artists.length > 5 ? 'has-columns' : undefined )
+  for artist in artists
+    .entity-with-follow
+      a.entity-link.is-small( href= artist.href )
+        = artist.name
+      a.entity-follow.artist-follow( data-id= artist.id )

@@ -1,0 +1,20 @@
+h1.sem-header
+  | Events
+
+.sem-events
+  each showEvent in showEvents.models
+    .sem-event
+      h2.sem-event-title
+        if showEvent.get('title')
+          | #{showEvent.eventType()} <em>#{showEvent.get('title')}</em>
+        else
+          = showEvent.eventType()
+
+      .sem-event-metadata
+        p= showEvent.formatDateRange('start_at', 'end_at')
+        if show.has('location')
+          p= show.location().singleLine()
+
+      if showEvent.get('description')
+        .sem-event-description
+          p= showEvent.get('description')

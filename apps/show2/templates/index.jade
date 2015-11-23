@@ -1,0 +1,21 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/share/template
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'show2'
+
+block body
+  - hasCarousel = partner_show.install_shots.length >= 3
+
+  if hasCarousel
+    include carousel
+
+  .responsive-layout-container: .main-layout-container
+    include header
+    //-   include columns
+    include footer
+
+  include ../../../components/main_layout/templates/json_ld
