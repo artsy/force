@@ -27,7 +27,7 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'hi'
 
-  it 'renders share for static_fixed split test', ->
+  it 'renders static split test', ->
     html = render('index')
       article: new Article title: 'hi', sections: [], section_ids: []
       footerArticles: new Articles
@@ -35,38 +35,11 @@ describe 'article show template', ->
       moment: moment
       sd:
         SCROLL_ARTICLE: 'static'
-        SHARE_ARTICLE: 'fixed'
       asset: ->
     html.should.containEql 'article-share-fixed'
-    html.should.not.containEql 'article-social'
+    html.should.not.containEql 'articles-footer'
 
-  it 'renders share for static_current_fixed split test', ->
-    html = render('index')
-      article: new Article title: 'hi', sections: [], section_ids: []
-      footerArticles: new Articles
-      crop: (url) -> url
-      moment: moment
-      sd:
-        SCROLL_ARTICLE: 'static'
-        SHARE_ARTICLE: 'current_fixed'
-      asset: ->
-    html.should.containEql 'article-share-fixed'
-    html.should.containEql 'article-social'
-
-  it 'renders share for static_current split test', ->
-    html = render('index')
-      article: new Article title: 'hi', sections: [], section_ids: []
-      footerArticles: new Articles
-      crop: (url) -> url
-      moment: moment
-      sd:
-        SCROLL_ARTICLE: 'static'
-        SHARE_ARTICLE: 'current'
-      asset: ->
-    html.should.not.containEql 'article-share-fixed'
-    html.should.containEql 'article-social'
-
-  it 'includes the correct share links for infinite scroll articles', ->
+  it 'renders infinite scroll split test', ->
     html = render('index')
       article: new Article title: 'hi', slug: 'foo', sections: [], section_ids: []
       crop: (url) -> url

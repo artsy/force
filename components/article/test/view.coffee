@@ -19,7 +19,6 @@ describe 'ArticleView', ->
       $.fn.imagesLoaded = sinon.stub()
       Backbone.$ = $
       sd.SCROLL_ARTICLE = 'static'
-      sd.SHARE_ARTICLE = 'current'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../view')
         ['artworkItemTemplate', 'editTemplate']

@@ -45,10 +45,8 @@ mixin image(image)
       include ../../article_figure/contributing_author.jade
     .article-date
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-    if sd.SHARE_ARTICLE !== "fixed"
-      .article-social.article-share-top
-        +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
-
+    .article-social.article-share-top
+      +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
     //- Article body content
     if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
@@ -72,11 +70,10 @@ mixin image(image)
             .article-section-video
               +video(section)
 
-    if sd.SHARE_ARTICLE !== "fixed"
-      //- Footer social buttons
-      .article-social.add-bottom.article-share-bottom
-        h2.article-social__header Share this article
-        +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
+    //- Footer social buttons
+    .article-social.add-bottom.article-share-bottom
+      h2.article-social__header Share this article
+      +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
 .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
   //- Rendered on client
