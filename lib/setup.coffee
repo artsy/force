@@ -147,17 +147,13 @@ module.exports = (app) ->
   app.use splitTestMiddleware
 
   # Mount apps
+
+  # Apps with hardcoded routes or "RESTful" routes
   app.use require "../apps/home"
-  # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/toolkit"
   app.use require "../apps/apply"
-  app.use require "../apps/auction"
   app.use require "../apps/auction_lots"
-  app.use require "../apps/auction_support"
   app.use require "../apps/auctions"
-  app.use require "../apps/profile"
-  app.use require "../apps/fair_info"
-  app.use require "../apps/fair"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
@@ -169,7 +165,6 @@ module.exports = (app) ->
   app.use require "../apps/how_auctions_work"
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
-  app.use require "../apps/feature"
   app.use require "../apps/flash"
   app.use require "../apps/galleries_institutions"
   app.use require "../apps/galleries_institutions2"
@@ -180,7 +175,6 @@ module.exports = (app) ->
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
-  app.use require "../apps/page"
   app.use require "../apps/press"
   app.use require "../apps/search"
   app.use require "../apps/show"
@@ -189,20 +183,33 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
-  app.use require "../apps/user_profile"
-  app.use require "../apps/partner"
-  app.use require "../apps/articles"
-  app.use require "../apps/fair_organizer"
-  app.use require "../apps/user"
   app.use require "../apps/style_guide"
   app.use require "../apps/auth"
   app.use require "../apps/static"
-  app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"
   app.use require "../apps/rss"
   app.use require "../apps/mailchimp_subscribe"
   app.use require '../apps/dev'
+
+  # Non-profile vanity url apps
+  app.use require "../apps/articles"
+  app.use require "../apps/page"
+  app.use require "../apps/shortcuts"
+
+  # Apps that need to fetch a profile
+  app.use require "../apps/profile"
+  app.use require "../apps/partner"
+  app.use require "../apps/fair"
+  app.use require "../apps/fair_info"
+  app.use require "../apps/fair_organizer"
+  app.use require "../apps/auction"
+  app.use require "../apps/auction_support"
+  app.use require "../apps/feature"
+
+  # Last but not least user profiles
+  app.use require "../apps/user"
+  app.use require "../apps/user_profile"
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->
