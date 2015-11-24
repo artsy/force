@@ -1,0 +1,67 @@
+.show-header
+.show-footer
+  display table
+  position relative
+  width 100%
+  margin 0 0 80px
+  table-layout fixed
+.show-header-cell
+.show-footer-cell
+  display table-cell
+  width 50%
+  vertical-align top
+  &:first-child
+    padding-right 40px
+  &:last-child
+    padding-left 40px
+
+.show-header
+    margin-top 110px
+  &.has-carousel
+    margin-top 30px
+
+.show-title
+.show-partner
+  margin 15px 0
+  vertical-align bottom
+  line-height 1.2
+.show-title
+  garamond-size('l-headline')
+.show-description
+.show-metadata
+  garamond-size('s-body')
+  > p
+    block-margins(10px)
+
+.show-location > .show-entity-link
+  margin-left 0.5em
+
+.show-events
+  margin-top 20px
+
+.show-entity-link
+  text-decoration none
+  > i
+    line-height 0
+    margin 0 -(default-icon-font-size / 4)
+    vertical-align -(garamond-s-body-font-size / 2)
+  > span
+    inline-block-margins(0.5em)
+    &:hover
+      fine-faux-underline()
+
+.show-partner
+  display table
+  width 100%
+  position relative
+  // Roughly line up baseline
+  padding-top 10px
+  > .entity-with-follow
+  > .show-share
+    display table-cell
+    vertical-align top
+  > .show-share
+    padding-left 30px
+    text-align right
+    > a
+      vertical-align middle
