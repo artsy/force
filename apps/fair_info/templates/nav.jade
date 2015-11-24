@@ -1,6 +1,6 @@
 aside.fair-info2-nav
-  a(href="/#{profile.id}/info2/visitors") visitors
-  a(href="/#{profile.id}/info2/programming") programming
-  a(href="/#{profile.id}/info2/events") events
-  a(href="/#{profile.id}/info2/artsy-at-the-fair") artsy at the fair
-  a(href="/#{profile.id}/info2/about-the-fair") about the fair
+  a(href="/#{profile.id}/info2/visitors" class=sd.CURRENT_PATH.includes('visitors') ? 'is-active' : '') visitors
+  a(href="/#{profile.id}/info2/programming" class=sd.CURRENT_PATH.includes('programming') ? 'is-active' : '') programming
+  a(href="/#{profile.id}/info2/events" class=sd.CURRENT_PATH.includes('events') ? 'is-active' : '') events
+  a(href="/#{profile.id}/info2/artsy-at-the-fair" class=sd.CURRENT_PATH.includes('artsy-at-the-fair') ? 'is-active' : '') artsy at the fair
+  a(href="/#{profile.id}/info2/about-the-fair" class=sd.CURRENT_PATH.includes('about-the-fair') ? 'is-active' : '') about the fair

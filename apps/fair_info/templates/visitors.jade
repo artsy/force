@@ -27,19 +27,20 @@ block body
               h2.visitor-title Tickets
               .fair-info2-ticket-info!= fair.get('tickets_link')
 
-          .fair-directions.grid-item
-            h2.visitor-title Directions
-            form.fair-info2-directions
-              input.fair-info2-directions-input.bordered-input(
-                placeholder='Enter your starting address'
-                tabindex=1
-                value=address
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-              )
-              a.fair-info2-get-directions-link(href='#') Get Directions
+          if fair.get('location') && (fair.get('location').coordinates != null || fair.get('location').address != '')
+            .fair-directions.grid-item
+              h2.visitor-title Directions
+              form.fair-info2-directions
+                input.fair-info2-directions-input.bordered-input(
+                  placeholder='Enter your starting address'
+                  tabindex=1
+                  value=address
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                )
+                a.fair-info2-get-directions-link(href='#') Get Directions
 
           if fair.get('contact')
             .fair-info2-contact.grid-item
