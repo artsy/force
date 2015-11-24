@@ -9,8 +9,7 @@ if(location.pathname.match('/article')){
     analytics.track('Clicked Article Share', {
       position: 'top',
       service: $(this).attr('data-service'),
-      scroll: sd.SCROLL_ARTICLE,
-      share: sd.SHARE_ARTICLE
+      scroll: sd.SCROLL_ARTICLE
     })
   })
 
@@ -18,8 +17,7 @@ if(location.pathname.match('/article')){
     analytics.track('Clicked Article Share', {
       position: 'bottom',
       service: $(this).attr('data-service'),
-      scroll: sd.SCROLL_ARTICLE,
-      share: sd.SHARE_ARTICLE
+      scroll: sd.SCROLL_ARTICLE
     })
   })
 
@@ -27,29 +25,26 @@ if(location.pathname.match('/article')){
     analytics.track('Clicked Article Share', {
       position: 'fixed',
       service: $(this).attr('data-service'),
-      scroll: sd.SCROLL_ARTICLE,
-      share: sd.SHARE_ARTICLE
+      scroll: sd.SCROLL_ARTICLE
     })
   })
 
   $(document.body).on('click', '.article-related-widget a', function() {
     analytics.track('Clicked Related Article', {
-      scroll: sd.SCROLL_ARTICLE,
-      share: sd.SHARE_ARTICLE
+      scroll: sd.SCROLL_ARTICLE
     })
   })
 
   analyticsHooks.on('readmore', function() {
     analytics.track('Clicked Read More', {
       scroll: sd.SCROLL_ARTICLE,
-      share: sd.SHARE_ARTICLE,
       message: location.pathname
     });
   });
 
   analyticsHooks.on('scrollarticle', function(){
     analytics.page({path: location.pathname});
-    analytics.track('Article pageview', { scroll: sd.SCROLL_ARTICLE, share: sd.SHARE_ARTICLE, message: location.pathname });
+    analytics.track('Article pageview', { scroll: sd.SCROLL_ARTICLE, message: location.pathname });
   });
 
 }

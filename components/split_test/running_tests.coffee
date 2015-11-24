@@ -22,14 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  share_article:
-    key: 'share_article'
-    edge: 'current_fixed'
-    outcomes:
-      current: 0.33
-      current_fixed: 0.33
-      fixed: 0.34
-
   scroll_article:
     key: 'scroll_article'
     edge: 'infinite'

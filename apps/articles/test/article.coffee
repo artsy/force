@@ -49,7 +49,6 @@ describe 'ArticleIndexView', ->
 
     before (done) ->
       @options.sd.SCROLL_ARTICLE = 'static'
-      @options.sd.SHARE_ARTICLE = 'current'
       benv.render resolve(__dirname, '../templates/article.jade'), @options, =>
         @view = new @ArticleIndexView
           el: $('body')
@@ -62,7 +61,6 @@ describe 'ArticleIndexView', ->
 
     before (done) ->
       @options.sd.SCROLL_ARTICLE = 'infinite'
-      @options.sd.SHARE_ARTICLE = 'current'
       benv.render resolve(__dirname, '../templates/article.jade'), _.extend(@options, {
         sd: sd
       }), =>

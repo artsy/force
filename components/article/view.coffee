@@ -144,8 +144,7 @@ module.exports = class ArticleView extends Backbone.View
     resizeVideo()
 
   setupStickyShare: ->
-    if sd.SHARE_ARTICLE isnt "current"
-      @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
+    @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
     if sd.SCROLL_ARTICLE is 'infinite'
