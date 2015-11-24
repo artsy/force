@@ -1158,7 +1158,7 @@
             },
             "chokidar": {
               "version": "1.3.0",
-              "from": "chokidar@>=1.0.0 <2.0.0",
+              "from": "chokidar@>=1.0.1 <2.0.0",
               "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-1.3.0.tgz",
               "dependencies": {
                 "anymatch": {
@@ -1753,15 +1753,15 @@
                       "from": "lodash.pad@^3.0.0",
                       "resolved": "https://registry.npmjs.org/lodash.pad/-/lodash.pad-3.1.1.tgz"
                     },
-                    "lodash.padleft": {
-                      "version": "3.1.1",
-                      "from": "lodash.padleft@^3.0.0",
-                      "resolved": "https://registry.npmjs.org/lodash.padleft/-/lodash.padleft-3.1.1.tgz"
-                    },
                     "lodash.padright": {
                       "version": "3.1.1",
                       "from": "lodash.padright@^3.0.0",
                       "resolved": "https://registry.npmjs.org/lodash.padright/-/lodash.padright-3.1.1.tgz"
+                    },
+                    "lodash.padleft": {
+                      "version": "3.1.1",
+                      "from": "lodash.padleft@^3.0.0",
+                      "resolved": "https://registry.npmjs.org/lodash.padleft/-/lodash.padleft-3.1.1.tgz"
                     },
                     "lodash.repeat": {
                       "version": "3.0.1",
