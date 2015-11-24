@@ -22,6 +22,18 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'design-miami-2015':
+    title: 'Design Miami/ 2015 | Artsy'
+    description: 'From established modernists to emerging desginers, your first look at the preeminent design fair in Miami'
+
+  'art-basel-in-miami-beach-2015':
+    title: 'Art Basel in Miami Beach 2015 | Artsy'
+    description: 'Find out what Paul Kasmin Gallery, KÖNIG GALERIE, ShanghART Gallery, and others are bringing to Miami Beach for the 14th U.S. edition of the renowned Swiss fair'
+
+  'focus-miami-2015':
+    title: 'Art Miami / Satellite Fairs 2015 | Artsy'
+    description: 'Explore our extensive coverage of Miami Art Week with highlights from the leading events happening in South Beach'
+
   'abu-dhabi-art-2015':
     title: 'Abu Dhabi Art 2015 | Artsy'
     description: 'Discover works from emerging and established galleries—including Hauser & Wirth, Acquavella, and The Third Line—soon to be on view in the United Arab Emirates’ capital.'
