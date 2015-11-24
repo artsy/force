@@ -1,7 +1,7 @@
 Fair = require '../../models/fair'
 
 @assignFair = (req, res, next) ->
-  return next() unless res.locals.profile
+  return next() unless res.locals.profile?.isFair()
 
   fair = new Fair id: res.locals.profile.get('owner').id
   fair.fetch
