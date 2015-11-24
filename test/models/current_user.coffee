@@ -79,12 +79,12 @@ describe 'CurrentUser', ->
       Backbone.sync.args[0][2].success ['existy']
 
   describe '#fetchNotifications', ->
-    it 'makes the correct API call and has default size of 50', ->
+    it 'makes the correct API call and has default size of 10', ->
       @user.fetchNotificationBundles
         success: (status) ->
           status.should.be.true()
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/notifications/feed'
-      Backbone.sync.args[0][2].data.size.should.equal 50
+      Backbone.sync.args[0][2].data.size.should.equal 10
 
   describe '#fetchAndMarkNotifications', ->
     it 'makes the correct API call and has defaults', ->

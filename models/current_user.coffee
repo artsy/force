@@ -134,7 +134,7 @@ module.exports = class CurrentUser extends User
     new Backbone.Model().fetch
       url: "#{@url()}/notifications/feed"
       data:
-        size: 50
+        size: 10
         access_token: @get('accessToken')
       success: options?.success
 
