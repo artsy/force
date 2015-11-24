@@ -8,29 +8,32 @@ PartnerShow = require '../../models/partner_show'
   Q.all [
     # Fetch the non-nested route (because we don't have the partner) and Gravity 302 redirects
     # to the nested partner show route.
-    show.fetch(cache: true)
-    show.related().installShots.fetchUntilEndInParallel(cache: true, data: default: false)
+    show.fetch cache: true
+    show.related().installShots.fetchUntilEndInParallel cache: true, data: default: false
   ]
 
   .then ->
     if show.get 'displayable'
-      Q.all([
+      Q.all [
         # We have to refetch the show to hit the endpoint that's nested under the partner route
         # now that we have the partner.
         # This might return stale data due to some HTTP caching.
         # Don't cache this record because we *also* have to pass some random string to bust it's cache...
         show.fetch cache: false, data: cacheBust: Math.random()
         show.related().artworks.fetchUntilEndInParallel cache: true
-      ])
+      ]
     else
-      Q.promise.reject()
+      Q.reject()
+
   .then ->
-    return unless show.has('fair')
+    return Q.resolve() unless show.has 'fair'
+
     show.related().fair.related().profile.fetch
       cache: true
       error: ->
         show.related().fair.set published: false
-  .finally ->
+
+  .then ->
     res.locals.sd.SHOW = show.toJSON()
     res.locals.sd.ARTWORKS = show.related().artworks.toJSON()
 
@@ -43,9 +46,4 @@ PartnerShow = require '../../models/partner_show'
       artworks: show.related().artworks
       jsonLD: stringifyJSONForWeb show.toJSONLD()
 
-  .catch ->
-    err = new Error 'Not Found'
-    err.status = 404
-    next err
-
-  .done()
+  .catch next
