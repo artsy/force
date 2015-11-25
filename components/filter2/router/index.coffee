@@ -6,6 +6,7 @@ location = location
 module.exports = class FilterRouter extends Backbone.Router
 
   initialize: ({ @urlRoot, @params, @stuckParamKey }) ->
+    @firstLoad = true
     @params.on 'change', @navigateParams
     @setupRoutes()
 
@@ -18,7 +19,9 @@ module.exports = class FilterRouter extends Backbone.Router
     # Only add '/artworks' to the url if there are params
     # Do not redirect from /gene/:id to gene/:id/artworks on pageload
     if params?.length > 0
-      @navigate "#{@urlRoot}?#{params}"
+      @navigate "#{@urlRoot}?#{params}", replace: @firstLoad
+    @firstLoad = false
+
 
   artworks: ->
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
