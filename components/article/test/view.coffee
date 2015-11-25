@@ -26,6 +26,7 @@ describe 'ArticleView', ->
       @ArticleView.__set__ 'CurrentUser', { orNull: ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
+      @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
