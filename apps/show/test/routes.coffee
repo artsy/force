@@ -60,7 +60,7 @@ describe 'Show route', ->
         @fair = fabricate 'fair'
         @show = fabricate 'show', fair: @fair, id: 'foobar', partner: id: 'foobar-partner'
 
-      it 'should fetch the fair profile', ->
+      xit 'should fetch the fair profile', ->
         Backbone.sync
           .onCall 0
           .yieldsTo 'success', @show
