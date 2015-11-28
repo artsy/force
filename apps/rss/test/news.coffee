@@ -83,3 +83,16 @@ describe '/rss', ->
       )
       rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql 'Artsy Editorial'
+
+    it 'renders the lead paragraph and body text', ->
+      article = new Article(
+        lead_paragraph: 'Andy Foobar never wanted fame.'
+        sections: [
+          {
+            type: 'text'
+            body: 'But sometimes fame chooses you.'
+          }
+        ]
+      )
+      rendered = articleTemplate(sd: sd, article: article)
+      rendered.should.containEql '<p>Andy Foobar never wanted fame.</p><p>But sometimes fame chooses you.</p>'

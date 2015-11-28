@@ -28,6 +28,8 @@ else if article.get('author')
       = article.get('author').name
 
 //- Content
+if article.strip('lead_paragraph')
+  p!= article.get('lead_paragraph')  
 for section, i in article.get('sections')
   case section.type
     when 'text'
