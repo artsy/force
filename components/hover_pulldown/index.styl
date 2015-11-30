@@ -179,8 +179,11 @@ for num in (1..8)
       color white
       svg
         fill white
-      &:before
+      &:not(.mlh-hamburger):not(.mlh-notification):before
         border-top-color white
+      &:after
+        border-bottom-color white
+
 
 // Persistent tooltip
 .hover-pulldown-static
