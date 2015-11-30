@@ -23,6 +23,7 @@ module.exports = ->
           ]
 
         .then ->
+          partners.reset partners.shuffle()
           resolve
             category: category
             partners: partners

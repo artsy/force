@@ -10,7 +10,7 @@ module.exports = class CategoryCarousel
     options =
       active: true
       has_full_profile: true
-      size: 3
+      size: 6
       sort: '-random_score'
       partner_categories: [@category.id]
 
@@ -25,5 +25,14 @@ module.exports = class CategoryCarousel
       }
     ]
       .spread (primary, secondary) =>
-        @partners.reset primary.concat secondary
+
+        if primary.length < 3
+          secondary = secondary.slice(0, 6 - primary.length)
+        else if secondary.length < 3
+          primary = primary.slice(0, 6 - secondary.length)
+        else
+          primary = primary.slice(0, 3)
+          secondary = secondary.slice(0, 3)
+
+        @partners.reset _.shuffle(primary).concat _.shuffle(secondary)
         this
