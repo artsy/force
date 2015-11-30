@@ -1,21 +1,46 @@
 @require '../../stylus_lib'
 
-#error-handler
-  padding 120px 0
-  text-align  center
-  p
-    font-size 19px
-  h1
-    serif()
-    font-weight bold
-    font-size 20px
-    line-height 1.2em
-    margin  20px auto
-  pre
-    max-width 75%
-    text-align left
-    font-family monospace
-    background #eee
-    padding 10px
-    margin 20px auto
-    overflow-x auto
+.error-handler
+  position relative
+  margin 0 auto
+  padding 120px 20px
+  text-align center
+  &:before
+    display block
+    position absolute
+    content attr(data-code)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    text-align center
+    font-size 535px
+    line-height 1
+    z-index -1
+    color gray-lightest-color
+
+.error-handler-headline
+  max-width 60%
+  margin 40px auto
+  garamond-size('l-headline')
+
+.error-handler-body
+  margin 30px 0 50px
+  garamond-size('l-body')
+  > p
+    block-margins(20px)
+
+.error-handler-trace
+  max-width 75%
+  margin 20px auto
+  padding 10px
+  overflow-x auto
+  text-align left
+  monospace()
+  font-size 13px
+  line-height 1.45
+  background-color rgba(white, 0.5)
+  border 2px solid purple-color
+  color purple-color
+
+.error-handler-return
+  margin 20px 0 60px

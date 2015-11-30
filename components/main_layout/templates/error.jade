@@ -1,14 +1,24 @@
 extends ./index
 
-block locals
-  - asset = asset || function(p){ return p }
-
 block body
-  main#error-handler
-    if code === 404
-      h1 The page you were looking for doesn't exist.
-    else
-      h1 Internal Error
-      if detail
-        pre= detail
-    p Please contact <a href="mailto:support@artsy.net">support@artsy.net</a> with any questions.
+  .error-handler( data-code= code )
+    h1.error-handler-headline
+      if code === 404
+        | Sorry, the page you were looking for doesn’t exist at this URL.
+      else
+        | Internal Error
+
+    .error-handler-body
+      if detail && code !== 404
+        pre.error-handler-trace
+          = detail
+      p
+        | Please contact
+        = ' '
+        a.fine-faux-underline( href='mailto:support@artsy.net' )
+          | support@artsy.net
+        = ' '
+        | with any questions.
+
+    .error-handler-return: a.avant-garde-button-black( href='/' )
+      | Go to Artsy homepage
