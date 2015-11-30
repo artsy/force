@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
@@ -60,7 +61,7 @@ describe 'Show route', ->
         @fair = fabricate 'fair'
         @show = fabricate 'show', fair: @fair, id: 'foobar', partner: id: 'foobar-partner'
 
-      xit 'should fetch the fair profile', ->
+      it 'should fetch the fair profile', ->
         Backbone.sync
           .onCall 0
           .yieldsTo 'success', @show
@@ -88,6 +89,7 @@ describe 'Show route', ->
           .yieldsTo 'success', []
           .onCall 4
           .yieldsTo 'error'
+          .returns Q.reject()
 
         routes.index @req, @res, @next
           .then =>

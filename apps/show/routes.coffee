@@ -28,14 +28,13 @@ PartnerShow = require '../../models/partner_show'
   .then ->
     return Q.resolve() unless show.has 'fair'
 
-    Q.promise (resolve) ->
-      show.related().fair.related().profile.fetch
+    show.related().fair.related().profile
+      .fetch
         cache: true
-        success: ->
-          resolve()
         error: ->
           show.related().fair.set published: false
-          resolve()
+      .catch ->
+        Q.resolve()
 
   .then ->
     res.locals.sd.SHOW = show.toJSON()
