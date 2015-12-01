@@ -87,6 +87,42 @@ describe 'RegistrationForm', ->
       html.should.containEql 'Please review the error(s) above and try again.'
       @view.$submit.hasClass('is-loading').should.be.false()
 
+    it 'lets the user resubmit a corrected form', ->
+      # Submit a bad form
+
+      @view.$submit.length.should.be.ok()
+      @view.$submit.click()
+      @view.on "submitted", =>
+        html = @view.$el.html()
+        html.should.containEql 'Please review the error(s) above and try again.'
+
+        # Now submit a good one
+
+        # Successfully create a stripe token
+        @Stripe.card.createToken.callsArgWith(1, 200, {})
+        # Successfully save phone number
+        Backbone.sync.onFirstCall().yieldsTo('success')
+        # Successfully save credit card
+        Backbone.sync.onSecondCall().yieldsTo('success')
+        # Successfully create the bidder
+        Backbone.sync.onThirdCall().yieldsTo('success')
+
+
+        @submitValidForm()
+        @view.on "submitted", =>
+          @Stripe.card.createToken.args[0][1](200, {})
+
+          # Saves the phone number
+          Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
+
+          # Saves the credit card
+          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'
+          Backbone.sync.args[1][2].success()
+
+          # Creates the bidder
+          Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
+          Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+
     it 'submits the form correctly', ->
       @submitValidForm()
       @Stripe.card.createToken.args[0][1](200, {})

@@ -1,11 +1,11 @@
-sd = require('sharify').data
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 ModalPageView = require '../../../components/modal/page.coffee'
 
-{ SESSION_ID } = require('sharify').data
+{ API_URL, SESSION_ID, STRIPE_PUBLISHABLE_KEY } = require('sharify').data
 
 module.exports = class RegistrationForm extends ErrorHandlingForm
 
@@ -39,28 +39,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
-  cardCallback: (status, data) =>
-    if status is 200
-      card = new Backbone.Model
-      card.url = "#{sd.API_URL}/api/v1/me/credit_cards"
-      card.save { token: data.id, provider: 'stripe' },
-        success: =>
-          success = =>
-            @success()
-            analyticsHooks.trigger 'registration:success'
-          @currentUser.createBidder
-            saleId: @model.get('id')
-            success: success
-            error: (model, xhr) =>
-              if xhr.responseJSON?.message is 'Sale is already taken.'
-                return success()
-              @showError "Registration submission error", xhr
-        error: (m, xhr) =>
-          @showError xhr.responseJSON?.message
-      analyticsHooks.trigger 'registration:validated'
-    else
-      @showError data.error.message
-
   cardData: ->
     name: @fields['name on card'].el.val()
     number: @fields['card number'].el.val()
@@ -73,21 +51,72 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     address_zip: @fields.zip.el.val()
     address_country: @$("select[name='address[country]']").val()
 
-  tokenizeCard: =>
-    Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
-    Stripe.card.createToken @cardData(), @cardCallback
+  tokenizeCard: ->
+    Q.Promise (resolve, reject) =>
+      # Attempt to tokenize the credit card through Stripe
+      Stripe.setPublishableKey STRIPE_PUBLISHABLE_KEY
+      Stripe.card.createToken @cardData(), (status, data) =>
+        if status is 200
+          resolve data
+        else
+          reject data.error.message
+    .then (data) =>
+      analyticsHooks.trigger 'registration:validated'
+
+      # Save new tokenized credit card for the user
+      Q.Promise (resolve, reject) =>
+        card = new Backbone.Model
+        card.url = "#{API_URL}/api/v1/me/credit_cards"
+        card.save { token: data.id, provider: 'stripe' },
+          success: (creditCard) =>
+            if creditCard.get("address_zip_check") == "fail"
+              reject @errors.badZip
+            else if creditCard.get("cvc_check") == "fail"
+              reject @errors.badSecurityCode
+            else
+              resolve(creditCard)
+          error: (m, xhr) => reject(xhr.responseJSON?.message)
+    .then =>
+      analyticsHooks.trigger 'registration:success'
+
+      # Create the "bidder" model for the user in this sale
+      Q.Promise (resolve, reject) =>
+        @currentUser.createBidder
+          saleId: @model.get('id')
+          success: resolve
+          error: (model, xhr) =>
+            if xhr.responseJSON?.message is 'Sale is already taken.'
+              resolve()
+            else
+              reject "Registration submission error: #{xhr.responseJSON?.message}"
+    .then =>
+      analytics.track.funnel 'Registration submitted'
+      @success()
 
   savePhoneNumber: ->
-    if @fields.telephone.el.val()?.length > 0
-      @currentUser.set(phone: @fields.telephone.el.val()).save()
+    # Always resolves; just delays until the process completes
+    Q.Promise (resolve, reject) =>
+      if @fields.telephone.el.val()?.length > 0
+        @currentUser.set(phone: @fields.telephone.el.val()).save null,
+          success: resolve
+          error: resolve
+      else
+        resolve()
+
+  loadingLock: ($element, action) ->
+    return if $element.hasClass('is-loading')
+    $element.addClass 'is-loading'
+    action().finally => $element.removeClass 'is-loading'
 
   onSubmit: =>
-    return if @$submit.hasClass('is-loading')
-    @$submit.addClass 'is-loading'
+    event.preventDefault()
+
     analyticsHooks.trigger 'registration:submit-address'
-    if @validateForm()
-      @tokenizeCard()
-      @savePhoneNumber()
-    else
-      @showError 'Please review the error(s) above and try again.'
-    false
+
+    @loadingLock @$submit, =>
+      (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
+        Q.all [@savePhoneNumber(), @tokenizeCard()]
+      .catch (error) =>
+        @showError error
+      .then =>
+        @trigger('submitted')
