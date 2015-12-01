@@ -39,7 +39,7 @@ module.exports = class ArticleView extends Backbone.View
     @sizeVideo()
     @setupFooterArticles()
     @setupStickyShare()
-    @renderEmbedSections()
+    # @renderEmbedSections()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
   renderSlideshow: =>
@@ -69,18 +69,19 @@ module.exports = class ArticleView extends Backbone.View
   renderEmbedSections: =>
     sections = []
     Q.all( for section in @article.get('sections') when section.type is 'embed'
-      $.get oembed(section.url, { maxwidth: @getWidth(section) }), (response) =>
-        sections.push _.extend section, { response: response }
+      $.get oembed(section.url, { maxwidth: @getWidth(section) })
     ).done (responses) =>
-      console.log sections
-      # $embedSection = $(".article-section-embed[data-id='#{section.url}']")
-      # $embedSection.data 'layout', section.layout
-      # # Use Embedly's iframe constructor or just generate our own iframe
-      # if response.html
-      #   $embedSection.html response.html
-      # else
-      #   $embedSection.append embedTemplate url: section.url, height: section.height
-      # $embedSection.closest('loading-spinner').remove()
+      if responses.length
+        for section in @article.get('sections') when section.type is 'embed'
+          response = responses.shift()
+          $embedSection = $(".article-section-embed[data-id='#{section.url}']")
+          $embedSectionContainer = $($embedSection.children('.article-embed-container')[0])
+          # Use Embedly's iframe constructor or just generate our own iframe
+          if response.html
+            $embedSectionContainer.html response.html
+          else
+            $embedSectionContainer.append embedTemplate url: section.url, height: section.height
+          $embedSection.children('.loading-spinner').remove()
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500

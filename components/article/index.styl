@@ -140,18 +140,21 @@ column-width = 540px
   .overlay-container
     display none
 
-.article-section-embed
-  margin auto
-
 .article-section-embed[data-layout="overflow"]
   width overflow-width
-  iframe
+  .article-embed-container
     width 1060px
 
 .article-section-embed[data-layout="column_width"]
   width column-width
-  iframe
+  .article-embed-container
     width 500px
+
+.article-section-embed
+  margin auto
+  iframe
+    margin auto
+    width 100%
 
 .article-section-video
   width body-width
