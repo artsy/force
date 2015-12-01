@@ -34,6 +34,10 @@ git clone git@github.com:craigspaeth/force.git && cd force
 ```
 npm install
 ```
+- Note: Earlier versions of the Heroku Toolbelt [included foreman](https://devcenter.heroku.com/changelog-items/692) but it is no longer included. You may need to install foreman via:
+```
+gem install foreman
+```
 - Create a .env file and paste in sensitive configuration. You can find these keys in the Artsy Engineering vault of One Password under "Force.env" or ask someone in #web Slack.
 - Start Force pointing to the staging [Gravity](https://github.com/artsy/gravity) API
 ```
