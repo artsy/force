@@ -39,7 +39,7 @@ module.exports = class ArticleView extends Backbone.View
     @sizeVideo()
     @setupFooterArticles()
     @setupStickyShare()
-    # @renderEmbedSections()
+    @renderEmbedSections()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
   renderSlideshow: =>
@@ -73,11 +73,11 @@ module.exports = class ArticleView extends Backbone.View
     ).done (responses) =>
       if responses.length
         for section in @article.get('sections') when section.type is 'embed'
-          response = responses.shift()
           $embedSection = $(".article-section-embed[data-id='#{section.url}']")
           $embedSectionContainer = $($embedSection.children('.article-embed-container')[0])
+          response = responses.shift()
           # Use Embedly's iframe constructor or just generate our own iframe
-          if response.html
+          if response.html?
             $embedSectionContainer.html response.html
           else
             $embedSectionContainer.append embedTemplate url: section.url, height: section.height

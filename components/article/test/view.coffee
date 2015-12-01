@@ -63,12 +63,12 @@ describe 'ArticleView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    # sinon.stub $, 'get'
+    sinon.stub($, 'get').returns { html: '<iframe>Test</iframe>' }
     @view = new @ArticleView el: $('body'), article: @article
 
   afterEach ->
     Backbone.sync.restore()
-    # $.get.restore()
+    $.get.restore()
 
   describe '#renderSlideshow', ->
 
@@ -81,7 +81,7 @@ describe 'ArticleView', ->
     it 'renders artworks from the article', ->
       Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-      @view.renderArtworks()
+      @view.renderArtworks(->)
       for arg in Backbone.sync.args
         arg[2].success fabricate 'artwork',
           title: 'Andy Foobar Flowers'
@@ -91,7 +91,7 @@ describe 'ArticleView', ->
     it 'does not render an artwork if unpublished', ->
       Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-      @view.renderArtworks()
+      @view.renderArtworks(->)
       for arg in Backbone.sync.args
         arg[2].error()
       @view.$('.article-section-artworks ul').html().length.should.equal 0
@@ -105,10 +105,12 @@ describe 'ArticleView', ->
       @view.checkEditable()
       @view.renderedEditButton.should.be.ok()
 
-  # describe '#renderEmbedSections', ->
+  describe '#renderEmbedSections', ->
 
-  #   it 'renders embedded content from the article', ->
-  #     @view.renderEmbedSections()
-  #     # console.log @view.$('body').html()
+    it 'renders embedded content from the article', ->
+      @view.renderEmbedSections()
+      @view.$('.article-section-embed').html().should.containEql '<iframe>Test</iframe>'
 
-  #   it 'uses its own iframe if the Embedly iframe cannot be created', ->
+    it 'removes the loading spinner after loading', ->
+      @view.renderEmbedSections()
+      @view.$('.article-section-embed').html().should.not.containEql 'loading-spinner'
