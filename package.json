@@ -34,6 +34,7 @@
     "diacritics": "^1.2.2",
     "dompurify": "^0.7.1",
     "embed-video": "^1.2.0",
+    "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",
     "express": "^4.13.3",
     "express-uncapitalize": "^1.0.0",
     "forever": "^0.15.1",

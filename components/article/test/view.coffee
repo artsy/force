@@ -21,7 +21,7 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../view')
-        ['artworkItemTemplate', 'editTemplate']
+        ['artworkItemTemplate', 'editTemplate', 'embedTemplate' ]
       )
       @ArticleView.__set__ 'CurrentUser', { orNull: ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
@@ -41,6 +41,12 @@ describe 'ArticleView', ->
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
               layout: 'overflow_fillwidth'
             }
+            {
+              type: 'embed',
+              layout: 'overflow',
+              url: 'http://files.artsy.net/data.pdf',
+              height: ''
+            }
         ]
         author: new Backbone.Model fabricate 'user'
         sd:
@@ -57,10 +63,12 @@ describe 'ArticleView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub($, 'get').returns { html: '<iframe>Test</iframe>' }
     @view = new @ArticleView el: $('body'), article: @article
 
   afterEach ->
     Backbone.sync.restore()
+    $.get.restore()
 
   describe '#renderSlideshow', ->
 
@@ -73,7 +81,7 @@ describe 'ArticleView', ->
     it 'renders artworks from the article', ->
       Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-      @view.renderArtworks()
+      @view.renderArtworks(->)
       for arg in Backbone.sync.args
         arg[2].success fabricate 'artwork',
           title: 'Andy Foobar Flowers'
@@ -83,7 +91,7 @@ describe 'ArticleView', ->
     it 'does not render an artwork if unpublished', ->
       Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-      @view.renderArtworks()
+      @view.renderArtworks(->)
       for arg in Backbone.sync.args
         arg[2].error()
       @view.$('.article-section-artworks ul').html().length.should.equal 0
@@ -96,3 +104,13 @@ describe 'ArticleView', ->
       @view.article.set author_id: @view.user.id
       @view.checkEditable()
       @view.renderedEditButton.should.be.ok()
+
+  describe '#renderEmbedSections', ->
+
+    it 'renders embedded content from the article', ->
+      @view.renderEmbedSections()
+      @view.$('.article-section-embed').html().should.containEql '<iframe>Test</iframe>'
+
+    it 'removes the loading spinner after loading', ->
+      @view.renderEmbedSections()
+      @view.$('.article-section-embed').html().should.not.containEql 'loading-spinner'

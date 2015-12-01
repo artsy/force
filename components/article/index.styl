@@ -9,6 +9,7 @@ body-width = 570px
 artwork-height = 500px
 gutter-size = 30px
 play-button-size = 30px
+column-width = 540px
 
 .article-container h1
   width 900px
@@ -138,6 +139,22 @@ play-button-size = 30px
     overflow ellipsis
   .overlay-container
     display none
+
+.article-section-embed[data-layout="overflow"]
+  width overflow-width
+  .article-embed-container
+    width 1060px
+
+.article-section-embed[data-layout="column_width"]
+  width column-width
+  .article-embed-container
+    width 500px
+
+.article-section-embed
+  margin auto
+  iframe
+    margin auto
+    width 100%
 
 .article-section-video
   width body-width

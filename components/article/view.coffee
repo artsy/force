@@ -11,6 +11,7 @@ Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
+{ oembed } = require('embedly-view-helpers')(sd.EMBEDLY_KEY)
 Q = require 'bluebird-q'
 { crop } = require '../resizer/index.coffee'
 blurb = require '../gradient_blurb/index.coffee'
@@ -20,6 +21,7 @@ artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
 relatedTemplate = -> require('./templates/related.jade') arguments...
+embedTemplate = -> require('./templates/embed.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -37,6 +39,7 @@ module.exports = class ArticleView extends Backbone.View
     @sizeVideo()
     @setupFooterArticles()
     @setupStickyShare()
+    @renderEmbedSections()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
   renderSlideshow: =>
@@ -62,6 +65,26 @@ module.exports = class ArticleView extends Backbone.View
         Q.nfcall @fillwidth, $el
     ).done =>
       cb()
+
+  renderEmbedSections: =>
+    sections = []
+    Q.all( for section in @article.get('sections') when section.type is 'embed'
+      $.get oembed(section.url, { maxwidth: @getWidth(section) })
+    ).done (responses) =>
+      if responses.length
+        for section in @article.get('sections') when section.type is 'embed'
+          $embedSection = $(".article-section-embed[data-id='#{section.url}']")
+          $embedSectionContainer = $($embedSection.children('.article-embed-container')[0])
+          response = responses.shift()
+          # Use Embedly's iframe constructor or just generate our own iframe
+          if response.html?
+            $embedSectionContainer.html response.html
+          else
+            $embedSectionContainer.append embedTemplate url: section.url, height: section.height
+          $embedSection.children('.loading-spinner').remove()
+
+  getWidth: (section) ->
+    if section.layout is 'overflow' then 1060 else 500
 
   breakCaptions: ->
     @$('.article-section-image').each ->

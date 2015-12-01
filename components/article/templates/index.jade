@@ -68,6 +68,10 @@ mixin image(image)
           when 'video'
             .article-section-video
               +video(section)
+          when 'embed'
+            .article-section-embed( data-id=section.url data-layout=section.layout )
+              .loading-spinner
+              .article-embed-container
 
     //- Footer social buttons
     .article-social.add-bottom.article-share-bottom
