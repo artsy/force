@@ -11,10 +11,7 @@ module.exports = (type) ->
     $.get '/geo/nearest', ({ name, latitude, longitude }) ->
       typeName = if type is 'gallery' then 'Galleries' else 'Institutions'
       category = new Backbone.Model name: "Featured #{typeName} near #{name}"
-
-      partnerType = if type is 'gallery' then 'PartnerGallery' else 'PartnerInstitution'
-
-      options = near: "#{latitude},#{longitude}", type: partnerType
+      options = near: "#{latitude},#{longitude}"
 
       Q(
 
