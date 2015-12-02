@@ -40,6 +40,9 @@ module.exports = class ArticleView extends Backbone.View
     @setupFooterArticles()
     @setupStickyShare()
     @renderEmbedSections()
+
+    @renderSuperArticle() if @article.get('is_super_article')
+
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
   renderSlideshow: =>
@@ -124,6 +127,7 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
+    'click .article-sa-sticky-title' : 'toggleSuperArticleToC'
 
   toggleSectionCarousel: (e) ->
     @$('.articles-section-show-header-right').toggleClass('is-over')
@@ -235,3 +239,26 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+
+  # Methods for super articles
+  toggleSuperArticleToC: ->
+    @$('.article-sa-sticky-center .article-sa-related').toggleClass 'visible'
+
+  renderSuperArticle: ->
+    @setupSuperArticleStickyNav()
+    @$window = $(window)
+    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related')
+    throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
+    @$window.on 'scroll', throttledScroll
+
+  onSuperArticleScroll: ->
+    @$superArticleNavToc.removeClass('visible')
+
+  setupSuperArticleStickyNav: ->
+    $stickyHeader = @$('.article-sa-sticky-header')
+    @$(".article-container[data-id=#{@article.get('id')}] .article-lead-paragraph").waypoint (direction) =>
+      if direction == 'down'
+        $stickyHeader.addClass 'visible'
+      else
+        $stickyHeader.removeClass 'visible'

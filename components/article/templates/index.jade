@@ -78,5 +78,11 @@ mixin image(image)
       h2.article-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
+
+    if article.get('is_super_article')
+      include ./super_article_sticky_header.jade
+      include ./super_article_footer.jade
+
+
 .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
   //- Rendered on client

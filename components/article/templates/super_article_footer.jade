@@ -1,0 +1,29 @@
+.article-sa-footer
+  .article-sa-footer-left
+    .article-sa-title= article.get('title')
+    .article-sa-logos
+      .article-sa-primary-logos
+        a( href="/" ).article-sa-artsy-logo.icon-logotype
+        .article-sa-primary-logo
+          if article.get('super_article').partner_logo
+            if article.get('super_article').partner_link
+              a( href=article.get('super_article').partner_link )
+                img( src=article.get('super_article').partner_logo )
+            else
+              img( src=article.get('super_article').partner_logo )
+
+      .article-sa-secondary-logo
+        .article-sa-secondary-logo-text In Partnership With (temp text!)
+        if article.get('super_article').secondary_partner_logo
+          if article.get('super_article').secondary_partner_link
+            a( href=article.get('super_article').secondary_partner_link )
+              img( src=article.get('super_article').secondary_partner_logo )
+          else
+            img( src=article.get('super_article').secondary_partner_logo )
+
+      a.article-sa-cta( href="/todo" ) Download the Planet Art App (temp text!)
+
+  .article-sa-footer-right
+    .article-sa-related
+      for relatedArticle in relatedArticles.models
+        a( href=relatedArticle.get('href') )= relatedArticle.get('title') 
