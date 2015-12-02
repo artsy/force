@@ -58,7 +58,7 @@ module.exports = class Article extends Backbone.Model
           data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
       # Get related articles for super articles
-      if @isSuperArticle() and @get('super_article').related_articles?.length
+      if @get('is_super_article') and @get('super_article').related_articles?.length
         for id in @get('super_article').related_articles
           dfds.push new Article(id: id).fetch
             success: (article) ->
@@ -82,9 +82,6 @@ module.exports = class Article extends Backbone.Model
 
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
-
-  isSuperArticle: ->
-    @get('is_super_article')
 
   cropUrlFor: (attr, args...) ->
     crop @get(attr), args...
