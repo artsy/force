@@ -62,7 +62,6 @@ module.exports = class Article extends Backbone.Model
         for id in @get('super_article').related_articles
           dfds.push new Article(id: id).fetch
             success: (article) ->
-              console.log 'success'
               relatedArticles.add article
       Q.allSettled(dfds).fin =>
         @set('section', section) if section
