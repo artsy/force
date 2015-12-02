@@ -52,6 +52,24 @@ describe "Article", ->
       Backbone.sync.args[0][2].success _.extend {}, fixtures.article, title: 'Moo', sections: []
       Backbone.sync.args[1][2].success [fixtures.article]
 
+    it 'fetches related articles for super articles', (done) ->
+      @article.fetchWithRelated success: (data) ->
+        _.defer => _.defer =>
+          data.relatedArticles.first().get('title').should.equal 'RelatedArticle'
+          data.article.get('title').should.equal 'SuperArticle'
+          done()
+
+      Backbone.sync.args[0][2].success _.extend {}, fixtures.article,
+        title: 'SuperArticle',
+        is_super_article: true
+        sections: []
+        super_article:
+          related_articles: ['id-1']
+
+      Backbone.sync.args[1][2].success [fixtures.article]
+      _.defer =>
+        Backbone.sync.args[2][2].success _.extend {}, fixtures.article, title: 'RelatedArticle'
+
   describe '#strip', ->
     it 'returns the attr without tags', ->
       @article.set 'lead_paragraph', '<p><br></p>'

@@ -40,6 +40,7 @@ module.exports = class Article extends Backbone.Model
       )
     ]).then =>
       slideshowArtworks = new Artworks
+      relatedArticles = new Articles
       dfds = []
       # Get slideshow artworks to render server-side carousel
       if @get('sections')?.length and
@@ -56,10 +57,21 @@ module.exports = class Article extends Backbone.Model
         dfds.push (sectionArticles = new Articles).fetch(
           data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
+      # Get related articles for super articles
+      if @get('is_super_article') and @get('super_article').related_articles?.length
+        for id in @get('super_article').related_articles
+          console.log 'test!'
+          dfds.push new Article(id: id).fetch
+            success: (article) ->
+              console.log 'success'
+              relatedArticles.add article
+
       Q.allSettled(dfds).fin =>
+        console.log 'settled'
         @set('section', section) if section
         options.success(
           article: this
+          relatedArticles: relatedArticles
           footerArticles: footerArticles
           slideshowArtworks: slideshowArtworks
           section: section
@@ -74,6 +86,9 @@ module.exports = class Article extends Backbone.Model
 
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
+
+  isSuperArticle: ->
+    @get('is_super_article')
 
   cropUrlFor: (attr, args...) ->
     crop @get(attr), args...
