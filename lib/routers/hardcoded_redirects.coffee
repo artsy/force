@@ -27,6 +27,7 @@ redirects =
   '/home/featured%20works': '/tag/apple/artworks'
   '/dev': '/inquiry/development'
   '/artist': '/artists'
+  '/job/mobile-engineer': '/article/artsy-jobs-mobile-engineer'
 
 for from, path of redirects
   router.get from, to(path)
