@@ -8,7 +8,6 @@ Article = require '../../models/article.coffee'
 Artwork = require '../../models/artwork.coffee'
 Articles = require '../../collections/articles.coffee'
 Artworks = require '../../collections/artworks.coffee'
-Sticky = require '../sticky/index.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
 initCarousel = require '../merry_go_round/index.coffee'
@@ -245,7 +244,6 @@ module.exports = class ArticleView extends Backbone.View
   # Methods for super articles
   toggleSuperArticleToC: ->
     @$('.article-sa-sticky-center .article-sa-related').toggleClass 'visible'
-    @sticky.rebuild()
 
   renderSuperArticle: ->
     @setupSuperArticleStickyNav()
