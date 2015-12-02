@@ -39,6 +39,7 @@ describe 'fetch', ->
             has_full_profile: true
             size: 9
             sort: '-random_score'
+            type: 'PartnerGallery'
 
           Backbone.sync.args[1][2].data.should.eql
             cache: true
@@ -46,6 +47,7 @@ describe 'fetch', ->
             has_full_profile: true
             size: 9
             sort: '-random_score'
+            type: 'PartnerGallery'
 
       it 'applies additonal parameters if supplied', ->
         fetch.galleries(random_parameter: true).then (partners) ->
@@ -55,6 +57,7 @@ describe 'fetch', ->
             has_full_profile: true
             size: 9
             sort: '-random_score'
+            type: 'PartnerGallery'
             random_parameter: true
 
           Backbone.sync.args[1][2].data.should.eql
@@ -63,6 +66,7 @@ describe 'fetch', ->
             has_full_profile: true
             size: 9
             sort: '-random_score'
+            type: 'PartnerGallery'
             random_parameter: true
 
       it 'resolves promise with partners', ->
@@ -209,6 +213,7 @@ describe 'fetch', ->
             cache: true
             has_full_profile: true
             size: 9
+            type: 'PartnerInstitution'
             sort: '-random_score'
 
       it 'applies additonal parameters if supplied', ->
@@ -218,6 +223,7 @@ describe 'fetch', ->
             has_full_profile: true
             size: 9
             sort: '-random_score'
+            type: 'PartnerInstitution'
             random_parameter: true
 
       it 'resolves promise with partners', ->

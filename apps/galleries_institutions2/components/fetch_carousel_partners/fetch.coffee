@@ -15,7 +15,7 @@ module.exports =
     size: desiredTotalPartners
 
   galleries: (options) ->
-    options = _.extend {}, @defaults, options
+    options = _.extend type:'PartnerGallery', @defaults, options
 
     Q.all([
 
@@ -31,7 +31,6 @@ module.exports =
 
     ]).spread (primary, secondary) ->
 
-      console.log primary, secondary
       if primary.length < desiredPrimaryPartners
         secondary = secondary.slice(0, desiredTotalPartners - primary.length)
 
@@ -45,6 +44,8 @@ module.exports =
       new Partners _.shuffle(primary).concat _.shuffle(secondary)
 
   institutions: (options) ->
-    options = _.extend {}, @defaults, options
-    new Partners().fetch(data: options).then (p) ->
-      new Partners _.shuffle p
+    options = _.extend type:'PartnerInstitution', @defaults, options
+    institutions = new Partners()
+    institutions.fetch(data: options).then (partners) ->
+      institutions.reset _.shuffle partners
+      institutions
