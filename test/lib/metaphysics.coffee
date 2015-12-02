@@ -24,11 +24,11 @@ describe 'metaphysics', ->
           id
         }
       }
-    ', variables = id: 'foo-bar'
+    ', variables = id: 'foo-bar', size: 3
 
     @request.get.args[0][0].should.equal 'https://metaphysics.test'
     @request.query.args[0][0].query.should.equal query
-    @request.query.args[0][0].variables.should.equal variables
+    @request.query.args[0][0].variables.should.equal '{"id":"foo-bar","size":3}'
 
   describe 'success', ->
     it 'yields with the data', ->
