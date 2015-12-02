@@ -1,10 +1,10 @@
-.super-article-footer
-  .super-article-footer-left
-    .super-article-title= article.get('title')
-    .super-article-logos
-      .super-article-primary-logos
-        a( href="/" ).super-article-artsy-logo.icon-logotype
-        .super-article-primary-logo
+.article-sa-footer
+  .article-sa-footer-left
+    .article-sa-title= article.get('title')
+    .article-sa-logos
+      .article-sa-primary-logos
+        a( href="/" ).article-sa-artsy-logo.icon-logotype
+        .article-sa-primary-logo
           if article.get('super_article').partner_logo
             if article.get('super_article').partner_link
               a( href=article.get('super_article').partner_link )
@@ -12,8 +12,8 @@
             else
               img( src=article.get('super_article').partner_logo )
 
-      .super-article-secondary-logo
-        .super-article-secondary-logo-text In Partnership With (temp text!)
+      .article-sa-secondary-logo
+        .article-sa-secondary-logo-text In Partnership With (temp text!)
         if article.get('super_article').secondary_partner_logo
           if article.get('super_article').secondary_partner_link
             a( href=article.get('super_article').secondary_partner_link )
@@ -21,9 +21,9 @@
           else
             img( src=article.get('super_article').secondary_partner_logo )
 
-      a.super-article-cta( href="/todo" ) Download the Planet Art App (temp text!)
+      a.article-sa-cta( href="/todo" ) Download the Planet Art App (temp text!)
 
-  .super-article-footer-right
-    .super-article-related
+  .article-sa-footer-right
+    .article-sa-related
       for relatedArticle in relatedArticles.models
         a( href=relatedArticle.get('href') )= relatedArticle.get('title') 
