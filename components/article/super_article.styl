@@ -74,6 +74,7 @@
   background: white
   opacity: 0
   transition: all 400ms
+  min-height: 75px
   &.visible
     opacity: 1
     transition: all 200ms
@@ -94,7 +95,6 @@
 .article-sa-sticky-center
   text-align: center
   margin-top: 25px
-  margin-bottom: 25px
   .article-sa-sticky-title
     avant-garde-size('l-headline')
     cursor: pointer
@@ -102,11 +102,12 @@
     &:hover
       color: purple-color
 
-  .article-sa-related
+  .article-sa-related-container
     max-height: 0px
+    transition: max-height 300ms
     overflow: hidden
-    margin: 0px auto
-    transition: all 300ms
     &.visible
       max-height: 100px
-      margin-top: 15px
+
+  .article-sa-related
+    margin: 25px auto

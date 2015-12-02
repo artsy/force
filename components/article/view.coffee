@@ -243,12 +243,12 @@ module.exports = class ArticleView extends Backbone.View
 
   # Methods for super articles
   toggleSuperArticleToC: ->
-    @$('.article-sa-sticky-center .article-sa-related').toggleClass 'visible'
+    @$superArticleNavToc.toggleClass 'visible'
 
   renderSuperArticle: ->
     @setupSuperArticleStickyNav()
     @$window = $(window)
-    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related')
+    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
 
