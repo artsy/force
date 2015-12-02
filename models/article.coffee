@@ -60,14 +60,11 @@ module.exports = class Article extends Backbone.Model
       # Get related articles for super articles
       if @get('is_super_article') and @get('super_article').related_articles?.length
         for id in @get('super_article').related_articles
-          console.log 'test!'
           dfds.push new Article(id: id).fetch
             success: (article) ->
               console.log 'success'
               relatedArticles.add article
-
       Q.allSettled(dfds).fin =>
-        console.log 'settled'
         @set('section', section) if section
         options.success(
           article: this
