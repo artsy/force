@@ -18,6 +18,7 @@ module.exports =
     options = _.extend {}, @defaults, options
 
     Q.all([
+
       new Partners().fetch {
         cache: true,
         data: _.extend eligible_for_primary_bucket: true, options
@@ -27,19 +28,23 @@ module.exports =
         cache: true
         data: _.extend eligible_for_secondary_bucket: true, options
       }
+
     ]).spread (primary, secondary) ->
-        if primary.length < desiredPrimaryPartners
-          secondary = secondary.slice(0, desiredTotalPartners - primary.length)
 
-        else if secondary.length < desiredSecondaryPartners
-          primary = primary.slice(0, desiredTotalPartners - secondary.length)
+      console.log primary, secondary
+      if primary.length < desiredPrimaryPartners
+        secondary = secondary.slice(0, desiredTotalPartners - primary.length)
 
-        else
-          primary = primary.slice(0, desiredPrimaryPartners)
-          secondary = secondary.slice(0, desiredSecondaryPartners)
+      else if secondary.length < desiredSecondaryPartners
+        primary = primary.slice(0, desiredTotalPartners - secondary.length)
 
-        new Partners _.shuffle(primary).concat _.shuffle(secondary)
+      else
+        primary = primary.slice(0, desiredPrimaryPartners)
+        secondary = secondary.slice(0, desiredSecondaryPartners)
+
+      new Partners _.shuffle(primary).concat _.shuffle(secondary)
 
   institutions: (options) ->
+    options = _.extend {}, @defaults, options
     new Partners().fetch(data: options).then (p) ->
-      new Partners _.shuffle partners
+      new Partners _.shuffle p

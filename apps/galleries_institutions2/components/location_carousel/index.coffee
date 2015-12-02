@@ -14,7 +14,7 @@ module.exports = (type) ->
 
       partnerType = if type is 'gallery' then 'PartnerGallery' else 'PartnerInstitution'
 
-      options = near: "#{latitude},#{longitude}"
+      options = near: "#{latitude},#{longitude}", type: partnerType
 
       Q(
 
