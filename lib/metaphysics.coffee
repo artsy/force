@@ -3,7 +3,6 @@ request = require 'superagent'
 { METAPHYSICS_ENDPOINT } = require('sharify').data
 
 module.exports = (query, variables) ->
-  console.log variables
   Q.promise (resolve, reject) ->
     request
       .get METAPHYSICS_ENDPOINT

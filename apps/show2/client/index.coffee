@@ -1,8 +1,6 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
-PartnerShow = require '../../../models/partner_show.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
 ShareView = require '../../../components/share/view.coffee'
 initCarousel = require '../../../components/merry_go_round/index.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
@@ -14,9 +12,7 @@ openMapModal = require '../components/map_modal/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
 FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
-relatedShowOptions = require '../components/related_shows/options.coffee'
 
 module.exports.init = ->
   # show = new PartnerShow SHOW
@@ -45,73 +41,17 @@ module.exports.init = ->
     e.preventDefault()
     openMapModal model: bootstrappedShow
 
-  # Client-side metaphysics fetch, related shows (more to come)
   if bootstrappedShow.fair
-    type = 'fair'
+    attachRelatedShows 'fair', bootstrappedShow
   else
     if location.search.match "from-show-guide"
-      type = 'city'
+      attachRelatedShows 'city', bootstrappedShow
+      attachRelatedShows 'featured', bootstrappedShow
     else
-      type = 'gallery'
+      attachRelatedShows 'gallery', bootstrappedShow
       
-  relatedShowData = relatedShowOptions type, bootstrappedShow
-  metaphysics '
-    query($featured: Boolean, $size: Int, $sort: PartnerShowSorts, $fair_id: String, $partner_id: String, $near: Near, $status: EventStatus, $displayable: Boolean) {
-      related_shows: partner_shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
-        id
-        start_at
-        end_at
-        name
-        partner {
-          name
-          href
-        }
-        fair {
-          id
-          published
-          has_full_feature
-          name
-          href
-          start_at
-          end_at
-        }
-        location {
-          display
-          city
-          state
-          postal_code
-          country
-          address
-          address_2
-        }
-        install_shots: images(size: 1, default: false) {
-          image: resized(height: 270, version: "large") {
-            url
-            width
-            height
-          }
-          aspect_ratio
-        }
-        artworks(size: 5) {
-          id
-          image {
-            image: resized(height: 270, version: "large") {
-              url
-              width
-              height
-            }
-            aspect_ratio
-          }
-        }
-      }
-    }
-  ', relatedShowData.options
-    .then (data) ->
-      attachRelatedShows type, bootstrappedShow, data.related_shows, relatedShowData.city, relatedShowData.title
+  # relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
+  # $('.artwork-column').first().prepend relatedArticlesView.$el
+  # show.related().articles.fetch()
 
-      # relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
-      # $('.artwork-column').first().prepend relatedArticlesView.$el
-      # show.related().articles.fetch()
-
-      new ShareView el: $('.js-show-share')
-    .done()
+  new ShareView el: $('.js-show-share')
