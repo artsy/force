@@ -32,14 +32,10 @@ fetchCategories = (type) ->
 partners = (req, res, next, type) ->
 
   carousel = new PrimaryCarousel
-
-  Q.all [
-    carousel.fetch type
-    fetchCategories _s.capitalize type
-  ]
-
-  .spread (profiles, carousels) ->
-
+  Q.all([
+    carousel.fetch(type)
+    fetchCategories(_s.capitalize type)
+  ]).spread (profiles, carousels) ->
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.CAROUSELS = carousels
 
@@ -61,7 +57,6 @@ fetchAZ =
         cache: true
         data:
           size: 20
-          active: true
           type: 'PartnerGallery'
           sort: 'sortable_id'
           has_full_profile: true

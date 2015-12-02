@@ -7,7 +7,7 @@ initPrimaryCarousel = require '../../components/primary_carousel/index.coffee'
 fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
 
-module.exports = ->
+module.exports = (type) ->
   if CURRENT_USER?
     following = new Following [], kind: 'profile'
     partners = _.flatten _.pluck CAROUSELS, 'partners'
@@ -36,7 +36,10 @@ module.exports = ->
   $carousels = $('.js-partner-category-carousels')
   $carousels.html _.pluck carouselViews, '$el'
 
-  fetchLocationCarousel().then ({ category, partners }) ->
+  fetchLocationCarousel(type).then ({ category, partners }) ->
+
+    return unless partners.length > 3
+
     view = new PartnerCellCarouselView
       following: following
       category: category
