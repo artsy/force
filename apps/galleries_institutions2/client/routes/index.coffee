@@ -38,7 +38,7 @@ module.exports = (type) ->
 
   fetchLocationCarousel(type).then ({ category, partners }) ->
 
-    return unless partners.length > 0
+    return unless partners.length > 3
 
     view = new PartnerCellCarouselView
       following: following

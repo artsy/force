@@ -2,6 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Partners = require '../../../../collections/partners.coffee'
+fetch = require '../fetch_carousel_partners/fetch.coffee'
 
 module.exports = (type) ->
   partners = new Partners
@@ -13,26 +14,26 @@ module.exports = (type) ->
 
       partnerType = if type is 'gallery' then 'PartnerGallery' else 'PartnerInstitution'
 
+      options = near: "#{latitude},#{longitude}"
+
       Q(
-        partners.fetch data:
-          active: true
-          has_full_profile: true
-          near: "#{latitude},#{longitude}"
-          sort: '-random_score'
-          size: 6
-          type: partnerType
-      )
-        .then ->
-          Q.all _.flatten partners.map (partner) -> [
-            partner.related().profile.fetch()
-            partner.related().locations.fetch()
-          ]
 
-        .then ->
-          partners.reset partners.shuffle()
-          resolve
-            category: category
-            partners: partners
+        if type is 'gallery'
+          fetch.galleries(options)
+        else
+          fetch.institutions(options)
 
-        .catch reject
-        .done()
+      ).then (partners) ->
+        Q.all _.flatten partners.map (partner) -> [
+          partner.related().profile.fetch()
+          partner.related().locations.fetch()
+        ]
+        partners
+
+      .then (partners) ->
+        resolve
+          category: category
+          partners: partners
+
+      .catch reject
+      .done()

@@ -34,7 +34,6 @@ describe 'fetch', ->
     carousel.fetch().then ->
       Backbone.sync.args[0][2].data.should.eql
         eligible_for_primary_bucket: true
-        active: true
         has_full_profile: true
         size: 6
         sort: '-random_score'
@@ -42,7 +41,6 @@ describe 'fetch', ->
 
       Backbone.sync.args[1][2].data.should.eql
         eligible_for_secondary_bucket: true
-        active: true
         has_full_profile: true
         size: 6
         sort: '-random_score'
