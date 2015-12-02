@@ -17,6 +17,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       published: true
       tier: 1
       sort: '-published_at'
+      is_super_article: false
 
     @article = new Article sd.ARTICLE
     @collection = new Articles
