@@ -228,7 +228,7 @@ module.exports = class Artwork extends Backbone.Model
 
   toAltText: ->
     _.compact([
-      (if @related().artist?.get('name') then @related().artist?.get('name') else undefined)
+      (@related().artist?.get('name'))
       (", '#{@get 'title'},' " if @get 'title'),
       ("#{@get 'date'}" if @get 'date'),
       (", #{@get('partner')?.name}" if @get 'partner')
@@ -256,22 +256,22 @@ module.exports = class Artwork extends Backbone.Model
   # same as .to_s in Gravity
   toOneLine: ->
     _.compact([
-      @related().artist?.get('name')
+      @related().artist.get('name')
       @toTitleWithDate()
     ]).join(" ")
 
   toAuctionResultsPageTitle: ->
     _.compact([
-      (if @related().artist?.get('name') then "#{@related().artist.get('name')}#{if @get('title') then ',' else ''}" else undefined)
+      (if @related().artist.get('name') then "#{@related().artist.get('name')}#{if @get('title') then ',' else ''}" else undefined)
       @toTitleWithDate()
-      (if @related().artist?.get('name') or @get('title') then "| Related Auction Results" else "Related Auction Results")
+      (if @related().artist.get('name') or @get('title') then "| Related Auction Results" else "Related Auction Results")
       "| Artsy"
     ]).join(" ")
 
   titleByArtist: ->
     _.compact([
       @getTitle()
-      @related().artist?.get('name')
+      @related().artist.get('name')
     ]).join(' by ')
 
   partnerDescription: ->
@@ -282,7 +282,7 @@ module.exports = class Artwork extends Backbone.Model
   toPageDescription: ->
     _.compact([
       @partnerDescription()
-      (if @related().artist?.get('name') then @related().artist.get('name') else undefined)
+      @related().artist.get('name')
       @toTitleWithDate()
       @get('medium')
       @dimensions()
@@ -315,13 +315,12 @@ module.exports = class Artwork extends Backbone.Model
     @get('website') or @isDownloadable() or (user and user.isAdmin())
 
   toJSONLD: ->
-    if @related().artist
-      creator =
-        compactObject {
-          "@type": "Person"
-          name: @related().artist.get('name')
-          sameAs: "#{sd.APP_URL}/artist/#{@related().artist.get('id')}"
-        }
+    creator =
+      compactObject {
+        "@type": "Person"
+        name: @related().artist.get('name')
+        sameAs: "#{sd.APP_URL}/artist/#{@related().artist.get('id')}"
+      }
 
     compactObject {
       "@context": "http://schema.org"
@@ -339,12 +338,11 @@ module.exports = class Artwork extends Backbone.Model
     }
 
   artistName: ->
-    @related().artist?.get('name') or ''
+    @related().artist.get('name') or _.compact(@related().artists.pluck('name'))[0] or ''
 
   artistsNames: ->
-    @related().artists.length > 1
-    return @artistName() if not @related().artists.length > 1
-    names = @related().artists.pluck 'name'
+    names = _.compact(@related().artists.pluck 'name')
+    return @artistName() if not (names.length > 1)
     names.push names.splice(-2).join(' and ')
     names.join (', ')
 

@@ -329,13 +329,34 @@ describe 'Artwork', ->
         partner: undefined
       @artwork.toAltText().should.equal ""
 
+  describe "artistName", ->
+    it "renders correctly", ->
+       new Artwork(title: "title", forsale: false).artistName().should.equal ""
+       new Artwork(title: "title", forsale: false, artist: { name: undefined }).artistName().should.equal ""
+       new Artwork(title: "title", forsale: false, artists: [{ name: undefined }]).artistName().should.equal ""
+       new Artwork(title: "title", forsale: false, artist: { name: "popeye the sailor" }).artistName().should.equal "popeye the sailor"
+       new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }]).artistName().should.equal "cap'n crunch"
+       new Artwork(title: "title", forsale: false, artists: [{ name: "cap'n crunch" }, { name: "popeye the sailor" }]).artistName().should.equal "cap'n crunch"
+       new Artwork(title: "title", forsale: false, artists: [{ name: undefined }, { name: "so and so" }]).artistName().should.equal "so and so"
+       new Artwork(title: "title", forsale: false, artist: { name: undefined }, artists: [{ name: "so and so" }]).artistName().should.equal "so and so"
+
+  describe "artistsNames", ->
+    it "renders correctly", ->
+      new Artwork(title: "title", forsale: false).artistsNames().should.equal ""
+      new Artwork(title: "title", forsale: false, artist: { name: "john doe" }).artistsNames().should.equal "john doe"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "john doe" }, { name: "mark twain" }]).artistsNames().should.equal "john doe and mark twain"
+      new Artwork(title: "title", forsale: false, artists: [{ name: undefined }, { name: "mark twain" }]).artistsNames().should.equal "mark twain"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "john doe" }, { name: "mark twain" }, { name: "joey pepperoni" }]).artistsNames().should.equal "john doe, mark twain and joey pepperoni"
+      new Artwork(title: "title", forsale: false, artists: [{ name: undefined }, { name: "mark twain" }, { name: "joey pepperoni" }]).artistsNames().should.equal "mark twain and joey pepperoni"
+
   describe "#toPageTitle", ->
     it "renders correctly", ->
       new Artwork(title: "", forsale: false).toPageTitle().should.equal "Artsy"
       new Artwork(title: "title", forsale: false).toPageTitle().should.equal "title | Artsy"
       new Artwork(title: "title", forsale: true).toPageTitle().should.equal "title, Available for Sale | Artsy"
-      new Artwork(title: "title", forsale: false, artist: { name: "first last" }).toPageTitle().should.equal "first last | title | Artsy"
-      new Artwork(title: "title", forsale: false, artist: { name: "first middle last" }).toPageTitle().should.equal "first middle last | title | Artsy"
+      new Artwork(title: "title", forsale: false, artist: { name: "john doe" }).toPageTitle().should.equal "john doe | title | Artsy"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "john doe" }, { name: "santa claus" }]).toPageTitle().should.equal "john doe and santa claus | title | Artsy"
+      new Artwork(title: "title", forsale: false, artists: [{ name: "john doe" }, { name: "santa claus" }, { name: "hello kitty" }]).toPageTitle().should.equal "john doe, santa claus and hello kitty | title | Artsy"
       new Artwork(title: "", forsale: false, artist: { name: "last" }).toPageTitle().should.equal "last | Artsy"
       new Artwork(title: "title", forsale: false, date: "2010" ).toPageTitle().should.equal "title (2010) | Artsy"
       new Artwork(title: "title", forsale: false, date: "2010", artist: { name: "last" }).toPageTitle().should.equal "last | title (2010) | Artsy"
