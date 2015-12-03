@@ -9,6 +9,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
   metaphysics '
     query($id: String!) {
       partner_show(id: $id) {
+        _id
         id
         start_at
         end_at

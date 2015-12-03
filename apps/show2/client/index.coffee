@@ -49,9 +49,10 @@ module.exports.init = ->
       attachRelatedShows 'featured', bootstrappedShow
     else
       attachRelatedShows 'gallery', bootstrappedShow
-      
-  # relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
-  # $('.artwork-column').first().prepend relatedArticlesView.$el
+  
+  relatedArticlesEl = $('.js-related-articles')    
+  relatedArticlesView = new RelatedArticlesView showId: bootstrappedShow._id, numToShow: 3, el: relatedArticlesEl
+  $('.artwork-column').first().prepend relatedArticlesView.$el
   # show.related().articles.fetch()
 
   new ShareView el: $('.js-show-share')
