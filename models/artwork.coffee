@@ -217,9 +217,6 @@ module.exports = class Artwork extends Backbone.Model
   partnerLinkTarget: ->
     if @get('partner').linkType() is 'external' then '_blank' else '_self'
 
-  artistLink: ->
-    "/artist/#{@get('artist').id}"
-
   getTitle: ->
     if @get('title') then @get('title') else '(Untitled)'
 
@@ -231,7 +228,7 @@ module.exports = class Artwork extends Backbone.Model
 
   toAltText: ->
     _.compact([
-      (if @get('artist')?.name then @get('artist')?.name else undefined)
+      (if @related().artist?.get('name') then @related().artist?.get('name') else undefined)
       (", '#{@get 'title'},' " if @get 'title'),
       ("#{@get 'date'}" if @get 'date'),
       (", #{@get('partner')?.name}" if @get 'partner')
@@ -251,7 +248,7 @@ module.exports = class Artwork extends Backbone.Model
 
   toPageTitle: ->
     _.compact([
-      @get('artist')?.name
+      @artistsNames()
       @toTitleWithDateForSale()
       "Artsy"
     ]).join(" | ")
@@ -259,22 +256,22 @@ module.exports = class Artwork extends Backbone.Model
   # same as .to_s in Gravity
   toOneLine: ->
     _.compact([
-      @get('artist')?.name
+      @related().artist?.get('name')
       @toTitleWithDate()
     ]).join(" ")
 
   toAuctionResultsPageTitle: ->
     _.compact([
-      (if @get('artist')?.name then "#{@get('artist').name}#{if @get('title') then ',' else ''}" else undefined)
+      (if @related().artist?.get('name') then "#{@related().artist.get('name')}#{if @get('title') then ',' else ''}" else undefined)
       @toTitleWithDate()
-      (if @get('artist')?.name or @get('title') then "| Related Auction Results" else "Related Auction Results")
+      (if @related().artist?.get('name') or @get('title') then "| Related Auction Results" else "Related Auction Results")
       "| Artsy"
     ]).join(" ")
 
   titleByArtist: ->
     _.compact([
       @getTitle()
-      @get('artist')?.name
+      @related().artist?.get('name')
     ]).join(' by ')
 
   partnerDescription: ->
@@ -285,7 +282,7 @@ module.exports = class Artwork extends Backbone.Model
   toPageDescription: ->
     _.compact([
       @partnerDescription()
-      (if @get('artist')?.name then @get('artist').name else undefined)
+      (if @related().artist?.get('name') then @related().artist.get('name') else undefined)
       @toTitleWithDate()
       @get('medium')
       @dimensions()
@@ -318,12 +315,12 @@ module.exports = class Artwork extends Backbone.Model
     @get('website') or @isDownloadable() or (user and user.isAdmin())
 
   toJSONLD: ->
-    if @get('artist')
+    if @related().artist
       creator =
         compactObject {
           "@type": "Person"
-          name: @get('artist').name
-          sameAs: "#{sd.APP_URL}/artist/#{@get('artist').id}"
+          name: @related().artist.get('name')
+          sameAs: "#{sd.APP_URL}/artist/#{@related().artist.get('id')}"
         }
 
     compactObject {
@@ -342,7 +339,14 @@ module.exports = class Artwork extends Backbone.Model
     }
 
   artistName: ->
-    @get('artist')?.name or ''
+    @related().artist?.get('name') or ''
+
+  artistsNames: ->
+    @related().artists.length > 1
+    return @artistName() if not @related().artists.length > 1
+    names = @related().artists.pluck 'name'
+    names.push names.splice(-2).join(' and ')
+    names.join (', ')
 
   fetchPartnerAndSales: (options) ->
     Q.allSettled([

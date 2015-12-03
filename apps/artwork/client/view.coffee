@@ -40,8 +40,10 @@ module.exports = class ArtworkView extends Backbone.View
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
 
-  initialize: ({ @artwork, @artist, @artists }) ->
+  initialize: ({ @artwork }) ->
     @location = window.location
+    @artist = @artwork.related().artist
+    @artists = @artwork.related().artists
     @checkQueryStringForAuction()
     @setupCurrentUser()
     @setupRelatedArticles()
