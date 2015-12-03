@@ -1,6 +1,7 @@
 include ../../../util/activator
-header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
-  unless user || sd.HIDE_HEADER
+
+header#main-layout-header( class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '' )
+  unless sd.HIDE_HEADER
     #main-layout-welcome-header
       #main-layout-welcome-header-aside
         .mlwha-outer
@@ -8,6 +9,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | Discover art from leading galleries,
             br
             | museums, and private collections.
+
       i#main-layout-welcome-logo.icon-logotype
 
   include ./small_screen_header.jade
