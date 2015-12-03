@@ -13,6 +13,7 @@ render = (templateName) ->
     { filename: filename }
   )
 
+
 describe 'Header template', ->
   it 'displays the welcome header', ->
     render('index')(sd: { HIDE_HEADER: false }, user: undefined).should.containEql 'main-layout-welcome-header'
@@ -23,19 +24,16 @@ describe 'Header template', ->
   it 'shows the admin link for admins', ->
     user = new CurrentUser fabricate('user', type: 'Admin', is_slumming: false)
     html = render('index')(sd: { ADMIN_URL: 'admin.com' }, user: user)
-    html.should.not.containEql 'main-layout-welcome-header'
     html.should.containEql 'admin.com'
 
   it 'hides the admin link for slumming admins', ->
     user = new CurrentUser fabricate('user', type: 'Admin', is_slumming: true)
     html = render('index')(sd: { ADMIN_URL: 'admin.com' }, user: user)
-    html.should.not.containEql 'main-layout-welcome-header'
     html.should.not.containEql 'admin.com'
 
   it 'shows the cms link for users with partner access', ->
     user = new CurrentUser(fabricate 'user', has_partner_access: true)
     html = render('index')(sd: { CMS_URL: 'cms.com' }, user: user)
-    html.should.not.containEql 'main-layout-welcome-header'
     html.should.containEql 'cms.com'
 
   it 'shows the notification link for users logged in', ->
