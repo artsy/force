@@ -11,9 +11,10 @@
             img( src=article.get('super_article').partner_logo )
   .article-sa-sticky-center
     .article-sa-sticky-title= article.get('title')
-    .article-sa-related
-      for relatedArticle in relatedArticles.models
-        a( href=relatedArticle.get('href') )= relatedArticle.get('title')
+    .article-sa-related-container
+      .article-sa-related
+        for relatedArticle in relatedArticles.models
+          a( href=relatedArticle.get('href') )= relatedArticle.get('title')
 
   .article-sa-sticky-right
     a.article-sticky-back( href="/articles" ) Back to Artsy Magazine
