@@ -41,7 +41,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @renderEmbedSections()
 
-    @renderSuperArticle() if @article.get('is_super_article')
+    @renderSuperArticle() if sd.RELATED_ARTICLES
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
@@ -239,7 +239,6 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
-
 
   # Methods for super articles
   toggleSuperArticleToC: ->
