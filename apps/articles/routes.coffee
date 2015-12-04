@@ -36,7 +36,7 @@ request = require 'superagent'
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
-      res.locals.sd.RELATED_ARTICLES = data.relatedArticles.toJSON()
+      res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
       unless data.article.get('author_id') is '503f86e462d56000020002cc'
         res.locals.sd.SCROLL_ARTICLE = 'static'

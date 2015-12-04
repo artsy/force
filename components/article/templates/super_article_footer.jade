@@ -5,20 +5,14 @@
       .article-sa-primary-logos
         a( href="/" ).article-sa-artsy-logo.icon-logotype
         .article-sa-primary-logo
-          if superArticle.get('super_article').partner_logo
-            if superArticle.get('super_article').partner_link
-              a( href=superArticle.get('super_article').partner_link )
-                img( src=superArticle.get('super_article').partner_logo )
-            else
+          if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_link
+            a( href=superArticle.get('super_article').partner_link )
               img( src=superArticle.get('super_article').partner_logo )
 
       .article-sa-secondary-logo
         .article-sa-secondary-logo-text= superArticle.get('super_article').secondary_logo_text
-        if superArticle.get('super_article').secondary_partner_logo
-          if superArticle.get('super_article').secondary_logo_link
-            a( href=superArticle.get('super_article').secondary_logo_link )
-              img( src=superArticle.get('super_article').secondary_partner_logo )
-          else
+        if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
+          a( href=superArticle.get('super_article').secondary_logo_link )
             img( src=superArticle.get('super_article').secondary_partner_logo )
 
       a.article-sa-cta( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
