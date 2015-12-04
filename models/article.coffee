@@ -6,7 +6,6 @@ sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
-Articles = require '../collections/articles.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
@@ -24,7 +23,7 @@ module.exports = class Article extends Backbone.Model
     # Deferred require
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
-    Q.all([
+    Q.allSettled([
       @fetch(
         error: options.error
         headers: 'X-Access-Token': options.accessToken or ''
@@ -64,19 +63,19 @@ module.exports = class Article extends Backbone.Model
       if @get('is_super_article')
         superArticle = this
       else
-        # Check if the article is IN a super article
+         # Check if the article is IN a super article
         dfds.push new Articles().fetch
           data:
             super_article_for: @get('id')
             published: true
           success: (articles) ->
-            superArticle = articles.models[0]
+            superArticle = articles?.models[0]
 
-      Q.allSettled(dfds).fin =>
-        dfds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
-        Q.allSettled(dfds)
+      Q.allSettled(dfds).then =>
+        superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
+        Q.allSettled(superArticleDefferreds)
           .then =>
-            relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles
+            relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
             @set('section', section) if section
             options.success(
               article: this
@@ -108,7 +107,7 @@ module.exports = class Article extends Backbone.Model
 
   #
   # Super Article helpers
-  fetchRelatedArticles: (relatedArticles, dfds) ->
+  fetchRelatedArticles: (relatedArticles) ->
     for id in @get('super_article').related_articles
       new Article(id: id).fetch
         success: (article) =>
