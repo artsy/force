@@ -76,7 +76,7 @@ module.exports = class Article extends Backbone.Model
         dfds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
         Q.allSettled(dfds)
           .then =>
-            superArticle?.orderRelatedArticles()
+            relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles
             @set('section', section) if section
             options.success(
               article: this
@@ -108,9 +108,6 @@ module.exports = class Article extends Backbone.Model
 
   #
   # Super Article helpers
-  orderRelatedArticles: ->
-    @relatedArticles?.orderByIds(@get('super_article').related_articles)
-
   fetchRelatedArticles: (relatedArticles, dfds) ->
     for id in @get('super_article').related_articles
       new Article(id: id).fetch

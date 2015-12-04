@@ -52,3 +52,17 @@ describe 'Articles', ->
         { tier: 2, id: 'boom' }
       ]
       @articles.biography().id.should.equal 'baz'
+
+  describe '#orderByIds', ->
+
+    it 'orders collection by ids give - dropping other items', ->
+      @articles.set [
+        { tier: 1, id: 'foo' }
+        { tier: 1, id: 'bar' }
+        { tier: 2, id: 'boom' }
+      ]
+      @articles.orderByIds ['boom', 'bar', 'foo']
+      @articles.length.should.equal 3
+      @articles.models[0].id.should.equal 'boom'
+      @articles.models[1].id.should.equal 'bar'
+      @articles.models[2].id.should.equal 'foo'
