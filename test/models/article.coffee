@@ -77,7 +77,7 @@ describe "Article", ->
         id: 'id-1'
         title: 'RelatedArticle 1',
         sections: []
-      realtedArticle2 = _.extend {}, fixtures.article,
+      relatedArticle2 = _.extend {}, fixtures.article,
         id: 'id-2'
         title: 'RelatedArticle 2',
         sections: []
@@ -97,8 +97,8 @@ describe "Article", ->
         .yieldsTo 'success', relatedArticle1
         .returns Q.resolve relatedArticle1
         .onCall 2
-        .yieldsTo 'success', realtedArticle2
-        .returns Q.resolve realtedArticle2
+        .yieldsTo 'success', relatedArticle2
+        .returns Q.resolve relatedArticle2
         .onCall 3
         .yieldsTo 'success', relatedArticle1
         .returns Q.resolve relatedArticle1
