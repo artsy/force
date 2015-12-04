@@ -9,12 +9,15 @@ ViewHelpers = require './helpers/view_helpers.coffee'
   metaphysics '
     query($id: String!) {
       partner_show(id: $id) {
+        _id
+        id
         start_at
         end_at
         name
         displayable
         partner {
           id
+          _id
           href
           name
           profile {
@@ -24,6 +27,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
         }
         fair {
           id
+          _id
           published
           has_full_feature
           name

@@ -1,21 +1,18 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
-{ Cities, FeaturedCities } = require 'places'
-PartnerShow = require '../../../models/partner_show.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
 ShareView = require '../../../components/share/view.coffee'
 initCarousel = require '../../../components/merry_go_round/index.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
-attachRelatedShows = require '../components/related_shows/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 openMapModal = require '../components/map_modal/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
 FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
+attachRelatedShows = require '../components/related_shows/index.coffee'
 
 module.exports.init = ->
   # show = new PartnerShow SHOW
@@ -44,17 +41,18 @@ module.exports.init = ->
     e.preventDefault()
     openMapModal model: bootstrappedShow
 
-  # if bootstrappedShow.fair
-  #   attachRelatedShows 'fair', bootstrappedShow
-  # else
-  #   if location.search.match "from-show-guide"
-  #     attachRelatedShows 'city', bootstrappedShow
-  #     attachRelatedShows 'featured', bootstrappedShow
-  #   else
-  #     attachRelatedShows 'gallery', bootstrappedShow
-
-  # relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
-  # $('.artwork-column').first().prepend relatedArticlesView.$el
+  if bootstrappedShow.fair
+    attachRelatedShows 'fair', bootstrappedShow
+  else
+    if location.search.match "from-show-guide"
+      attachRelatedShows 'city', bootstrappedShow
+      attachRelatedShows 'featured', bootstrappedShow
+    else
+      attachRelatedShows 'gallery', bootstrappedShow
+  
+  relatedArticlesEl = $('.js-related-articles')    
+  relatedArticlesView = new RelatedArticlesView showId: bootstrappedShow._id, numToShow: 3, el: relatedArticlesEl
+  $('.artwork-column').first().prepend relatedArticlesView.$el
   # show.related().articles.fetch()
 
   new ShareView el: $('.js-show-share')

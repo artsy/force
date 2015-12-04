@@ -62,6 +62,9 @@ module.exports =
         .reject (day_schedule) -> day_schedule['hours'] is 'Closed'
         .value()
 
+  getMetaphysicsLocation: (location) ->
+    { lat: location.coordinates.lat, lng: location.coordinates.lng }
+
   getMapsLocation: (location) ->
     if location.coordinates
       "#{location.coordinates.lat},#{location.coordinates.lng}"
