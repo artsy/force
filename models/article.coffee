@@ -6,6 +6,7 @@ sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
+Articles = require '../collections/articles.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
@@ -40,6 +41,7 @@ module.exports = class Article extends Backbone.Model
       )
     ]).then =>
       slideshowArtworks = new Artworks
+      superArticle = null
       relatedArticles = new Articles
       dfds = []
       # Get slideshow artworks to render server-side carousel
@@ -57,22 +59,34 @@ module.exports = class Article extends Backbone.Model
         dfds.push (sectionArticles = new Articles).fetch(
           data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
-      # Get related articles for super articles
-      if @get('is_super_article') and @get('super_article').related_articles?.length
-        for id in @get('super_article').related_articles
-          dfds.push new Article(id: id).fetch
-            success: (article) ->
-              relatedArticles.add article
+
+      # Check if the article is a super article
+      if @get('is_super_article')
+        superArticle = this
+      else
+        # Check if the article is IN a super article
+        dfds.push new Articles().fetch
+          data:
+            super_article_for: @get('id')
+            published: true
+          success: (articles) ->
+            superArticle = articles.models[0]
+
       Q.allSettled(dfds).fin =>
-        @set('section', section) if section
-        options.success(
-          article: this
-          relatedArticles: relatedArticles
-          footerArticles: footerArticles
-          slideshowArtworks: slideshowArtworks
-          section: section
-          allSectionArticles: sectionArticles if section
-        )
+        dfds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
+        Q.allSettled(dfds)
+          .then =>
+            superArticle?.orderRelatedArticles()
+            @set('section', section) if section
+            options.success(
+              article: this
+              footerArticles: footerArticles
+              slideshowArtworks: slideshowArtworks
+              superArticle: superArticle
+              relatedArticles: relatedArticles
+              section: section
+              allSectionArticles: sectionArticles if section
+            )
 
   isTopTier: ->
     @get('tier') is 1
@@ -92,7 +106,19 @@ module.exports = class Article extends Backbone.Model
   strip: (attr) ->
     stripTags(@get attr)
 
-  toJSONLD: ->       # article metadata tag for parse.ly
+  #
+  # Super Article helpers
+  orderRelatedArticles: ->
+    @relatedArticles?.orderByIds(@get('super_article').related_articles)
+
+  fetchRelatedArticles: (relatedArticles, dfds) ->
+    for id in @get('super_article').related_articles
+      new Article(id: id).fetch
+        success: (article) =>
+          relatedArticles.add article
+
+  # article metadata tag for parse.ly
+  toJSONLD: ->
     creator = []
     creator.push @get('author').name if @get('author')
     creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length
