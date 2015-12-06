@@ -24,10 +24,20 @@ module.exports = class Gene extends Backbone.Model
 
   alphaSortKey: -> @get('id')
 
-  toPageTitle: -> "#{@get('name')} | Artsy"
+  toPageTitle: -> 
+    if title = @metaOverrides('title')
+      title
+    else 
+      "#{@get('name')} | Artsy"
 
   # Trim whitespace and newlines
-  toPageDescription: -> _s.clean(@mdToHtmlToText('description'))
+  toPageDescription: -> 
+    if description = @metaOverrides('description')
+      description
+    else if @isGeographic()
+      "Explore art by artists who are from, or who have lived in, #{@get('name')}. Browse works by size, price, and medium."
+    else
+      _s.clean(@mdToHtmlToText('description'))
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
@@ -43,6 +53,9 @@ module.exports = class Gene extends Backbone.Model
     artworks.url = "#{@url()}/artworks"
     artworks.fetch options
 
+  isGeographic: ->
+    @get('type')?.name?.includes('Geographical Regions and Countries')
+
   isSubjectMatter: ->
     @get('type')?.name?.match new RegExp SUBJECT_MATTER_MATCHES.join('|'), 'i'
 
@@ -54,3 +67,20 @@ module.exports = class Gene extends Backbone.Model
       data: params
       url: "#{sd.API_URL}/api/v1/search/filtered/gene/#{@get 'id'}/suggest"
     , options
+
+  metaOverrides: (tag) ->
+    metaOverrides(this)[@id]?[tag]
+
+  # support custom gene titles + descriptions
+  metaOverrides = (model) ->
+    'western-europe':
+      description: 'Discover Western European artists from pre-history to present, and browse works by size, prize and medium.'
+
+    'latin-america-and-the-caribbean':
+      description: 'Discover artists from Latin America and the Caribbean from pre-history to present, and browse works by size, prize and medium.'
+
+    'africa':
+      description: 'Explore the art of Africa, including traditional Sub-Saharan art, modern photography, and contemporary art.'
+
+    'middle-east':
+      description: 'Discover Middle Eastern artists and explore art from the region from pre-history to present (Mesopotamian art, ancient Egyptian art, Islamic art, and contemporary Middle Eastern artists).'

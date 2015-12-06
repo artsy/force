@@ -211,6 +211,8 @@ module.exports = class Profile extends Backbone.Model
   profileMetaDescription: ->
     if @get('bio')
       @get('bio')
+    else if @isGallery()
+      "Explore Artists, Artworks, and Shows from #{@displayName()} on Artsy"
     else
       if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
 
