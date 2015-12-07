@@ -24,33 +24,7 @@ describe 'Artwork routes', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
       _.defer => _.defer =>
-        _.last(Backbone.sync.args)[2].success fabricate 'artist'
         @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
-        @res.render.args[0][0].should.equal 'index'
-        done()
-
-    it 'works without an artist', (done) ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: null
-      _.defer => _.defer =>
-        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-        @res.render.args[0][0].should.equal 'index'
-        done()
-
-    it 'works with multiple artists', (done) ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork',
-        id: 'andy-foobar'
-        artist: id: 'andy-foobar-artist'
-        artists: [{ id: 'andy-foobar-artist' }, { id: 'andy-barbaz-artist' }]
-      _.defer => _.defer =>
-        fetches = _.last(Backbone.sync.args, 2)
-        fetches[0][2].success fabricate 'artist'
-        fetches[1][2].success fabricate 'artist'
-        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
-        _.pluck(@res.locals.sd.ARTISTS, 'id')
-          .should.eql ['andy-foobar-artist', 'andy-barbaz-artist']
         @res.render.args[0][0].should.equal 'index'
         done()
 
@@ -60,9 +34,7 @@ describe 'Artwork routes', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
       _.defer => _.defer =>
-        _.last(Backbone.sync.args)[2].success fabricate 'artist'
         @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
         @res.render.args[0][0].should.equal 'index'
         done()
 

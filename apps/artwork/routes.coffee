@@ -1,7 +1,5 @@
 Q = require 'bluebird-q'
 Artwork = require '../../models/artwork'
-Artist = require '../../models/artist'
-Artists = require '../../collections/artists'
 Backbone = require 'backbone'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { client } = require '../../lib/cache'
@@ -20,25 +18,18 @@ request = require 'superagent'
 
       return res.redirect artwork.href() if artworkPath isnt artwork.href()
 
-      artist = new Artist artwork.get('artist')
-      artists = new Artists artwork.get('artists')
+      res.locals.sd.ARTWORK = artwork.toJSON()
 
-      Q.all(artists.invoke('fetch', cache: true)).then ->
-        artist = artists.get artist.id if artists.length
+      res.render 'index',
+        artwork: artwork
+        artist: artwork.related().artist
+        artists: artwork.related().artists
+        tab: req.params.tab
+        auctionId: req.query?.auction_id
+        jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
+        # HACK: Hide auction results for ADAA
+        inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
 
-        res.locals.sd.ARTWORK = artwork.toJSON()
-        res.locals.sd.ARTISTS = artists.toJSON()
-        res.locals.sd.ARTIST = artist.toJSON()
-
-        res.render 'index',
-          artwork: artwork
-          artist: artist
-          artists: artists
-          tab: req.params.tab
-          auctionId: req.query?.auction_id
-          jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
-          # HACK: Hide auction results for ADAA
-          inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
       , ->
         err = new Error 'Not Found'
         err.status = 404

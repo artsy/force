@@ -24,18 +24,20 @@ describe 'ArtworkView', ->
     benv.teardown()
 
   beforeEach (done) ->
-    @artists = new Artists [fabricate 'artist']
-    @artist = @artists.first()
-    sinon.stub @artist.related().artworks, 'fetch'
 
     # Interestingly: jQuery "Every attempt is made to convert the string to a
     # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
     # and we're using numeric-looking strings for fabricated artwork image IDs.
     edition_sets = _.times(2, -> fabricate('edition_set', forsale: true, acquireable: true))
-    artwork = fabricate('artwork', can_share_image: true, edition_sets: edition_sets, acquireable: true)
+    artwork = fabricate('artwork', can_share_image: true, edition_sets: edition_sets, acquireable: true, artists: [{id: 'artist', artworks_count: 2}], artist: {id: 'artist', artworks_count: 2})
+
     _.each (artwork).images, (image) ->
       image.id = _.uniqueId('stringy')
     @artwork = new Artwork(artwork, parse: true)
+    @artists = @artwork.related().artists
+    @artist = @artwork.related().artist
+
+    sinon.stub @artist.related().artworks, 'fetch'
 
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/index.jade'), {
@@ -74,7 +76,7 @@ describe 'ArtworkView', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->) }
-      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
+      @view = new @ArtworkView el: $('#artwork-page'), artwork: @artwork
       @artwork.related().sales.trigger 'sync', {}
 
     describe '#checkQueryStringForAuction', ->
