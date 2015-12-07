@@ -1,6 +1,7 @@
+_ = require 'underscore'
 Fair = require '../../models/fair'
 FairEvent = require '../../models/fair_event'
-# FairEvents = require '../../collections/fair_events'
+FairEvents = require '../../collections/fair_events'
 
 @assignFair = (req, res, next) ->
   return next() unless res.locals.profile?.isFair()
@@ -23,12 +24,12 @@ FairEvent = require '../../models/fair_event'
   res.render("programming")
 
 @events = (req, res) ->
-  event = new FairEvent {id: '54e671ad7261693b7e000200'} , {fairId: res.locals.fair.id}
+  events = new FairEvents [], {fairId: res.locals.fair.id}
 
-  event.fetch
+  events.fetch
     cache: true
     error: res.backboneError
     success: ->
-      res.locals.fairEvent = event
-      res.locals.sd.FAIREVENT = event.toJSON()
+      res.locals.fairEvents = events
+      res.locals.sd.FAIREVENTS = events.sortedEvents()
       res.render("events")

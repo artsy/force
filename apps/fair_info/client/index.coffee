@@ -23,5 +23,4 @@ module.exports.init = ->
 
   new FairInfoEventsView
     fair: fair
-    # fairEvent: new FairEvent(fair_id: fair.id, id: "54e671ad7261693b7e000200")
     el: $('.fair-info-events')

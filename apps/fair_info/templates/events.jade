@@ -6,6 +6,18 @@ block body
 
     .fair-info2-body
       .fair-info-events
-        h2.fair-info2-event-type-title Highlighted Events
-        h2= sd.FAIREVENT.name
-
+        h2.fair-info2-event-type-title Events
+        if sd.FAIREVENTS.length > 0
+          - console.log('FAIREVENT: ', sd.FAIREVENTS)
+          for event in sd.FAIREVENTS
+            .fair-info-event-item
+              .fair-info-event-item-time
+                .event-day-date= event.formatDate()
+                .event-time= event.formateTime()
+                a.add-to-calender(href='#') Add to Calendar
+              .fair-info-event-item-details
+                h2.event-title= event.get('name')
+                .event-address= event.get('venue')
+                .event-description= event.get('extended_description')
+        else
+          h2 There are no events at this time
