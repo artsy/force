@@ -1,7 +1,9 @@
 FairInfoVisitorsView = require './visitors.coffee'
 FairInfoProgrammingView = require './programming.coffee'
+FairInfoEventsView = require './events.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 Fair = require '../../../models/fair.coffee'
+FairEvent = require '../../../models/fair_event.coffee'
 Profile = require '../../../models/profile.coffee'
 sd = require('sharify').data
 
@@ -17,4 +19,9 @@ module.exports.init = ->
 
   new FairInfoProgrammingView
     fair: fair
-    el: $('fair-info-programming')
+    el: $('.fair-info-programming')
+
+  new FairInfoEventsView
+    fair: fair
+    # fairEvent: new FairEvent(fair_id: fair.id, id: "54e671ad7261693b7e000200")
+    el: $('.fair-info-events')
