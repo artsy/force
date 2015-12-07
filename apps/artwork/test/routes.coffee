@@ -1,18 +1,32 @@
-{ fabricate } = require 'antigravity'
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 request = require 'superagent'
+{ fabricate } = require 'antigravity'
 routes = require '../routes'
-CurrentUser = require '../../../models/current_user.coffee'
-Artwork = require '../../../models/artwork.coffee'
+CurrentUser = require '../../../models/current_user'
+Artwork = require '../../../models/artwork'
 
 describe 'Artwork routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub(request, 'get').returns(set: sinon.stub())
-    @req = { params: { id: 'foo' }, query: { sort: '-published_at' }, pipe: sinon.stub().returns(pipe: sinon.stub()) }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), status: sinon.stub(), locals: { sd: { APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artwork/andy-foobar' } } }
+    sinon.stub(request, 'get').returns set: sinon.stub()
+
+    @req =
+      params: id: 'foo'
+      query: sort: '-published_at'
+      pipe: sinon.stub().returns pipe: sinon.stub()
+
+    @res =
+      render: sinon.stub()
+      redirect: sinon.stub()
+      status: sinon.stub()
+      locals:
+        sd:
+          APP_URL: 'http://localhost:5000'
+          CURRENT_PATH: '/artwork/andy-foobar'
+
     @next = sinon.stub()
 
   afterEach ->
@@ -20,36 +34,38 @@ describe 'Artwork routes', ->
     request.get.restore()
 
   describe '#index', ->
-    it 'bootstraps the artwork', (done) ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
-      _.defer => _.defer =>
-        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-        @res.render.args[0][0].should.equal 'index'
-        done()
+    beforeEach ->
+      Backbone.sync
+        .onCall 0
+        .yieldsTo 'success', artwork = fabricate 'artwork', id: 'andy-foobar', artists: [id: 'andy-foobar-artist']
+        .returns Q.resolve artwork
 
-    it 'works with client side routes', (done) ->
+    it 'bootstraps the artwork', ->
+      routes.index @req, @res, @next
+        .then =>
+          @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+          @res.render.args[0][0].should.equal 'index'
+
+    it 'works with client side routes', ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar/inquire'
       @req.params.tab = 'inquire'
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar', artist: id: 'andy-foobar-artist'
-      _.defer => _.defer =>
-        @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
-        @res.render.args[0][0].should.equal 'index'
-        done()
+      routes.index @req, @res, @next
+        .then =>
+          @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+          @res.render.args[0][0].should.equal 'index'
 
     it 'redirects to the correct artwork url', ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong'
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
+      routes.index @req, @res, @next
+        .then =>
+          @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
 
     it 'redirects to the correct artwork page for client side routes fetched with a changed slug', ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong/inquire'
       @req.params.tab = 'inquire'
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
-      @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
+      routes.index @req, @res, @next
+        .then =>
+          @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
 
   describe '#save', ->
     it 'saves the artwork', ->
