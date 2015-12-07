@@ -40,46 +40,38 @@ module.exports = (type, show) ->
       }
       title = "Current Shows in #{show.location.city.trim()}"
 
-  metaphysics '
-    query($featured: Boolean, $size: Int, $sort: PartnerShowSorts, $fair_id: String, $partner_id: String, $near: Near, $status: EventStatus, $displayable: Boolean) {
-      related_shows: partner_shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
-        id
-        start_at
-        end_at
-        name
-        partner {
-          name
-          href
-        }
-        fair {
+  metaphysics
+    variables: opts
+    query: '
+      query($featured: Boolean, $size: Int, $sort: PartnerShowSorts, $fair_id: String, $partner_id: String, $near: Near, $status: EventStatus, $displayable: Boolean) {
+        related_shows: partner_shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
           id
-          published
-          has_full_feature
-          name
-          href
           start_at
           end_at
-        }
-        location {
-          display
-          city
-          state
-          postal_code
-          country
-          address
-          address_2
-        }
-        install_shots: images(size: 1, default: false) {
-          image: resized(height: 270, version: "large") {
-            url
-            width
-            height
+          name
+          partner {
+            name
+            href
           }
-          aspect_ratio
-        }
-        artworks(size: 5) {
-          id
-          image {
+          fair {
+            id
+            published
+            has_full_feature
+            name
+            href
+            start_at
+            end_at
+          }
+          location {
+            display
+            city
+            state
+            postal_code
+            country
+            address
+            address_2
+          }
+          install_shots: images(size: 1, default: false) {
             image: resized(height: 270, version: "large") {
               url
               width
@@ -87,14 +79,24 @@ module.exports = (type, show) ->
             }
             aspect_ratio
           }
+          artworks(size: 5) {
+            id
+            image {
+              image: resized(height: 270, version: "large") {
+                url
+                width
+                height
+              }
+              aspect_ratio
+            }
+          }
         }
       }
-    }
-  ', opts
-    .then (data) ->
-      new RelatedShowsView
-        data: data.related_shows
-        el: el
-        show: show
-        city: city
-        title: title
+    '
+  .then (data) ->
+    new RelatedShowsView
+      data: data.related_shows
+      el: el
+      show: show
+      city: city
+      title: title

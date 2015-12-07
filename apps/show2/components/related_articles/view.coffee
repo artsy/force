@@ -12,29 +12,31 @@ module.exports = class RelatedArticlesView extends Backbone.View
     @fetch()
 
   fetch: ->
-    metaphysics '
-      query($show_id: String!)
-      {
-        related_articles: articles(show_id: $show_id) {
-          id
-          href
-          title
-          thumbnail_title
-          author {
-            name
+    metaphysics
+      variables: show_id: @showId
+      query: '
+        query($show_id: String!)
+        {
+          related_articles: articles(show_id: $show_id) {
+            id
             href
-          }
-          thumbnail_image {
-            cropped(width: 300, height: 225) {
-              url
+            title
+            thumbnail_title
+            author {
+              name
+              href
+            }
+            thumbnail_image {
+              cropped(width: 300, height: 225) {
+                url
+              }
             }
           }
         }
-      }
-    ', show_id: @showId
-      .then (data) =>
-        @relatedArticles = data.related_articles
-        @render()
+      '
+    .then (data) =>
+      @relatedArticles = data.related_articles
+      @render()
 
   render: ->
     if @relatedArticles.length
