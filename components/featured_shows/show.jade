@@ -1,7 +1,6 @@
 - displayLocation = displayLocation || false
 - displayContextualLabel = displayContextualLabel || false
 
-
 //- Sometimes a show will have an image_url but not image_versions
 if show.has('image_versions') && show.get('image_versions').length
   li.featured-shows-featured-show.grid-item
@@ -12,53 +11,24 @@ if show.has('image_versions') && show.get('image_versions').length
         onerror='this.style.display="none";'
       )
 
-    a.fsfs-metadata( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
+    a.fsfs-metadata(
+      href= show.href() + (fromShowGuide ? '?from-show-guide=true' : '')
+    )
       if displayContextualLabel
-        h5.fsfs-contextual-label= show.contextualLabel(artist && artist.get('name'))
-      h4.fsfs-partner-name= show.partnerName()
-      h5.fsfs-show-name= show.get('name')
+        h5.fsfs-contextual-label
+          = show.contextualLabel(artist && artist.get('name'))
+      h4.fsfs-partner-name
+        = show.partnerName()
+      h5.fsfs-show-name
+        = show.get('name')
 
       if displayLocation
         .fsfs-running-dates
-          if show.formatCity()
-            = show.formatCity()
-
-          if show.upcoming()
-            if show.formatCity()
-              = ', '
-            | Opening #{show.dateFormatted('start_at')}
-          else if show.isEndingSoon()
-            if show.formatCity()
-              = ', '
-            span.fsfs-warning Closing #{show.endingIn()}
-          else
-            if show.formatCity()
-              | ,
-              = ' '
-            | #{show.date('start_at').format('MMM DD')} – #{show.dateFormatted('end_at')}
+          include metadata/location_with_dates
 
       else
         if show.formatStreetAddress()
           .fsfs-street-address
             = show.formatStreetAddress()
 
-        if show.get('status') === 'upcoming'
-          .fsfs-running-dates
-            if show.isOpeningToday()
-              | Opening today
-            else
-              | Opening #{show.dateFormatted('start_at')}
-        if show.get('status') === 'closed'
-          .fsfs-running-dates
-            | #{show.date('start_at').format('MMM DD')} – #{show.dateFormatted('end_at')}
-
-        if show.isEndingSoon()
-          .fsfs-warning Closing #{show.endingIn()}
-        else if show.get('status') === 'running'
-          .fsfs-closing-date
-            if show.date('end_at').isBefore()
-              | Closed
-            else
-              | Closes
-            = ' '
-            = show.dateFormatted('end_at')
+        include metadata/dates
