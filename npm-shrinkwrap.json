@@ -1256,7 +1256,7 @@
     },
     "ezel-assets": {
       "version": "1.0.1",
-      "from": "ezel-assets@>=1.0.1 <2.0.0"
+      "from": "ezel-assets@>=1.0.0 <2.0.0"
     },
     "fast-levenshtein": {
       "version": "1.0.7",
