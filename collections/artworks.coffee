@@ -34,7 +34,7 @@ module.exports = class Artworks extends Backbone.Collection
   # [
   #   [artworks.at(0), artworks.at(3), artworks.at(6)]
   #   [artworks.at(1), artworks.at(4), artworks.at(7)]
-  #   [artworks.at(2), artworks.at(6)]
+  #   [artworks.at(2), artworks.at(5)]
   # ]
   #
   # @param {Number} numberOfColumns The number of columns of models to return in an array

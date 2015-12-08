@@ -1,24 +1,31 @@
 Q = require 'bluebird-q'
 Artwork = require '../../models/artwork'
 Backbone = require 'backbone'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
 { client } = require '../../lib/cache'
 request = require 'superagent'
 { FUSION_URL } = require '../../config'
 
 @index = (req, res, next) ->
   artwork = new Artwork id: req.params.id
-  artwork.fetch
-    cache: not FUSION_URL?
-    error: res.backboneError
-    success: (model, response, options) ->
+  artwork
+    .fetch cache: not FUSION_URL?
+    .then ->
       # Remove the current artwork tab from the path to more easily test against artwork.href()
       artworkPath = res.locals.sd.CURRENT_PATH
       artworkPath = artworkPath.replace("/#{req.params.tab}", '') if req.params?.tab
-
       return res.redirect artwork.href() if artworkPath isnt artwork.href()
 
       res.locals.sd.ARTWORK = artwork.toJSON()
+
+      Q.all artwork.related().artists.invoke('fetch', cache: true)
+
+    .then ->
+      # Set the primary artist as one of the fully fetched artists
+      if artwork.related().artists.length
+        artist = artwork.related().artist
+        fetchedArtist = artwork.related().artists.get artist.id
+        artist.set fetchedArtist.attributes if fetchedArtist?
 
       res.render 'index',
         artwork: artwork
@@ -30,10 +37,7 @@ request = require 'superagent'
         # HACK: Hide auction results for ADAA
         inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
 
-      , ->
-        err = new Error 'Not Found'
-        err.status = 404
-        next err
+    .catch next
 
 @save = (req, res) ->
   return res.redirect "/artwork/#{req.params.id}" unless req.user

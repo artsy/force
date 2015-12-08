@@ -57,6 +57,25 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           }
           artworks {
             id
+            _id
+            image {
+              url(version: "large")
+              width
+              height
+            }
+            partner {
+              href
+              id
+              type
+            }
+            artists {
+              public
+              href
+              name
+            }
+            date
+            title
+            sale_message
           }
           artists {
             id
@@ -85,5 +104,6 @@ ViewHelpers = require './helpers/view_helpers.coffee'
     res.locals.ViewHelpers = ViewHelpers
     res.locals.DateHelpers = DateHelpers
     res.locals.jsonLD = ViewHelpers.toJSONLD data.partner_show
+    data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
     res.render 'index', data
   .catch next
