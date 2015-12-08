@@ -17,6 +17,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           end_at
           name
           displayable
+          press_release(format: markdown)
           partner {
             id
             _id

@@ -6,7 +6,7 @@ if partner_show.press_release || (partner_show.artists && partner_show.artists.l
           h3.show-subheadline
             | Press Release
           .show-press-release
-            != ViewHelper.mdToHtml(partner_show.press_release)
+            != partner_show.press_release
 
       .show-footer-cell
         h3.show-subheadline
