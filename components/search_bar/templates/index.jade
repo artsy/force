@@ -1,6 +1,12 @@
 #main-layout-search-bar-container( itemscope, itemtype='http://schema.org/WebSite' )
   meta( itemprop='url', content='https://artsy.net' )
-  form( itemprop='potentialAction', itemscope, itemtype='http://schema.org/SearchAction' )
+  form(
+    action='/search'
+    method='GET'
+    itemprop='potentialAction'
+    itemscope
+    itemtype='http://schema.org/SearchAction'
+  )
     meta( itemprop="target", content="https://artsy.net/search?q={search_term}" )
 
     input#main-layout-search-bar-input.bordered-input(
@@ -8,7 +14,7 @@
       tabindex='1'
       itemprop='query-input'
       type='text'
-      name='search_term'
+      name='q'
       value= term
       autocomplete="off"
       autocorrect="off"
