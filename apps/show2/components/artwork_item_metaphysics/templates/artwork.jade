@@ -1,0 +1,25 @@
+figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
+  .artwork-item-image-container
+    a.artwork-item-image-link(href=artwork.href)
+      include ./variable_width_image
+      include ../save_controls/template
+  figcaption.artwork-item-caption
+    if artwork.artists.length
+      p.artwork-item-artist.artwork-item-overflow
+        for artist, i in artwork.artists
+          if artist.public
+            a.faux-underline-hover( href=artist.href )= artist.name
+          else
+            = artist.name
+    p.artwork-item-title.artwork-item-overflow!= ViewHelpers.titleAndYear(artwork)
+    if artwork.partner
+      //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
+      p.artwork-item-partner.artwork-item-overflow
+        if artwork.partner.href
+          a.faux-underline-hover( href=artwork.partner.href )= artwork.partner.name
+        else
+          = artwork.partner.name
+
+    //- Display price for non-auctions
+    if artwork.sale_message
+      p.artwork-item-sale-price= artwork.sale_message

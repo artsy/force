@@ -1,0 +1,46 @@
+.overlay-container
+  position absolute
+  right 5px
+  bottom 5px
+
+// Extend this class and add content
+// to its before pseudo element to use
+.overlay-button
+  iconfont-styling()
+  display inline-block
+  width 40px
+  height @width
+  cursor pointer
+  color white
+  background-color gray-dark-color
+  background-color transparify(gray-dark-color, black)
+  text-align center
+  font-size 16px
+  line-height @height
+  border-radius (@width / 2)
+  opacity 1
+  &:hover
+    background-color black
+  &[data-state='saved']
+    opacity 1
+    background-color purple-color
+    &:hover
+      background-color red-color
+      &:before
+        content '\e621'
+      &.is-clicked
+        background-color purple-color
+
+.overlay-button-save
+  @extends .overlay-button
+  &:before
+    content '\e622'
+
+.artwork-item
+  &:hover
+    .overlay-button-save
+      opacity 1
+  .overlay-button-save
+    opacity 0
+    &[data-state='saved']
+      opacity 1
