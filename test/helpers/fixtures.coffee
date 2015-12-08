@@ -124,6 +124,9 @@ moment = require 'moment'
   featured_artwork_ids: ['5321b71c275b24bcaa0001a5']
   gravity_id: '502a6debe8b6470002000004'
   section_ids: []
+  is_super_article: false
+  super_article: {}
+  hero_section: {}
 
 @searchResult =
   kind: 'customsearch#result'

@@ -70,7 +70,7 @@ if superArticle
   if article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
     +fullscreen(article)
 
-  .article-content( class=(article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
+  .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
     //- Nesting to support fullscreen content going over fullscreen header
     .article-fullscreen-content-container
       //- Article lead content
