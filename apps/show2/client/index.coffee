@@ -3,7 +3,6 @@ Q = require 'bluebird-q'
 sd = require('sharify').data
 ShareView = require '../../../components/share/view.coffee'
 initCarousel = require '../../../components/merry_go_round/index.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
@@ -53,6 +52,5 @@ module.exports.init = ->
   relatedArticlesEl = $('.js-related-articles')    
   relatedArticlesView = new RelatedArticlesView showId: bootstrappedShow._id, numToShow: 3, el: relatedArticlesEl
   $('.artwork-column').first().prepend relatedArticlesView.$el
-  # show.related().articles.fetch()
 
   new ShareView el: $('.js-show-share')
