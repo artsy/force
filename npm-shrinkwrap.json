@@ -966,7 +966,7 @@
     "destroy": {
       "version": "1.0.3",
       "from": "destroy@1.0.3",
-      "resolved": "http://registry.npmjs.org/destroy/-/destroy-1.0.3.tgz"
+      "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.0.3.tgz"
     },
     "detective": {
       "version": "4.3.1",
@@ -1255,9 +1255,8 @@
       "resolved": "https://registry.npmjs.org/eyes/-/eyes-0.1.8.tgz"
     },
     "ezel-assets": {
-      "version": "0.0.13",
-      "from": "ezel-assets@0.0.13",
-      "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-0.0.13.tgz"
+      "version": "1.0.1",
+      "from": "ezel-assets@>=1.0.0 <2.0.0"
     },
     "fast-levenshtein": {
       "version": "1.0.7",
@@ -2550,7 +2549,7 @@
     "media-typer": {
       "version": "0.3.0",
       "from": "media-typer@0.3.0",
-      "resolved": "http://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
+      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
     },
     "meow": {
       "version": "2.0.0",
@@ -3172,7 +3171,7 @@
     "places": {
       "version": "0.0.1",
       "from": "git://github.com/artsy/places.git",
-      "resolved": "git://github.com/artsy/places.git#617b8cbec470df622fbc01cd908cc8beea0a858c"
+      "resolved": "git://github.com/artsy/places.git#066b9966d133f19d6a4feb94171e92f97062e0c6"
     },
     "prelude-ls": {
       "version": "1.1.2",
