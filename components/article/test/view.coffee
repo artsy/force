@@ -17,6 +17,7 @@ describe 'ArticleView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       $.fn.imagesLoaded = sinon.stub()
+      $.fn.waypoint = sinon.stub()
       Backbone.$ = $
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
