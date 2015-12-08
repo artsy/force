@@ -108,6 +108,14 @@ module.exports = class Article extends Backbone.Model
   strip: (attr) ->
     stripTags(@get attr)
 
+  getBodyClass: ->
+    bodyClass = ''
+    if @get('hero_section') and @get('hero_section').type == 'fullscreen'
+      bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
+      if @get('is_super_article')
+        bodyClass += ' body-no-header'
+    bodyClass
+
   #
   # Super Article helpers
   fetchRelatedArticles: (relatedArticles) ->
@@ -115,18 +123,6 @@ module.exports = class Article extends Backbone.Model
       new Article(id: id).fetch
         success: (article) =>
           relatedArticles.add article
-
-  getBodyClass: (superArticle) ->
-    if @get('hero_section') and @get('hero_section').type == 'fullscreen'
-      if @get('is_super_article')
-        'body-no-margins body-no-header body-fullscreen-super-article'
-      else
-        'body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
-    else
-      ''
-
-  getArticleContentClass: ->
-    if @get('hero_section')?.type == 'fullscreen' then 'article-fullscreen-content' else ''
 
   # article metadata tag for parse.ly
   toJSONLD: ->

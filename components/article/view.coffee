@@ -41,6 +41,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @renderEmbedSections()
 
+    @setupArticleWaypoints()
     @renderSuperArticle() if sd.RELATED_ARTICLES
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
@@ -245,7 +246,6 @@ module.exports = class ArticleView extends Backbone.View
     @$superArticleNavToc.toggleClass 'visible'
 
   renderSuperArticle: ->
-    @setupSuperArticleStickyNav()
     @$window = $(window)
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
@@ -254,10 +254,15 @@ module.exports = class ArticleView extends Backbone.View
   onSuperArticleScroll: ->
     @$superArticleNavToc.removeClass('visible')
 
-  setupSuperArticleStickyNav: ->
+  # Sets up waypoint for both fullscreen video and super article
+  setupArticleWaypoints: ->
     $stickyHeader = @$('.article-sa-sticky-header')
-    @$(".article-container[data-id=#{@article.get('id')}] .article-lead-paragraph").waypoint (direction) =>
+    $fullscreenVideo = @$('.article-fullscreen-video')
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-section-container' else '.article-lead-paragraph'
+    @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
+        $fullscreenVideo.addClass 'hidden'
       else
         $stickyHeader.removeClass 'visible'
+        $fullscreenVideo.removeClass 'hidden'

@@ -42,7 +42,6 @@ mixin fullscreen(article)
             if article.get('super_article').partner_logo && article.get('super_article').partner_link
               a( href=article.get('super_article').partner_link )
                 img( src=article.get('super_article').partner_logo )
-
       .article-fullscreen-text-overlay
         if article.get('hero_section').title
           h1.large-garamond-header.article-fullscreen-title= article.get('title')
@@ -71,7 +70,7 @@ if superArticle
   if article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
     +fullscreen(article)
 
-  .article-content( class=article.getArticleContentClass() )
+  .article-content( class=(article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
     //- Nesting to support fullscreen content going over fullscreen header
     .article-fullscreen-content-container
       //- Article lead content

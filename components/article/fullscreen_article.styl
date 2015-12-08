@@ -1,0 +1,100 @@
+@require '../stylus_lib'
+
+body.body-fullscreen-article
+  #articles-show.main-layout-container
+    margin-left: 0px
+    margin-right 0px
+    max-width: 100%
+  .article-fullscreen-content-container
+    max-width default-max-page-width
+    margin 0px auto
+    padding: 80px 0px
+    position: relative
+
+.article-content.article-fullscreen-content
+  background: white
+  margin-top: 100vh
+  z-index: 1
+  position: relative
+  h1.large-garamond-header, .article-lead-paragraph, .article-author-date, .article-social.article-share-top
+    display: none
+
+.article-fullscreen-video
+  position: fixed
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100vh
+  overflow: hidden
+  &.hidden
+    display: none
+  &.article-sa-fullscreen-video
+    // align left for super article
+    h1, .article-lead-paragraph
+      text-align: left
+      margin-left: 0px
+    h1
+      margin-bottom: 60px
+    .main-layout-container
+      margin-top: 80px
+  .main-layout-container
+    position: relative
+    z-index: 1
+    margin-top: 200px
+  a
+    color: white
+  .article-date
+    color: gray-lighter-color
+  .article-author-date
+    margin-bottom: 20px
+  .article-sa-artsy-logo
+    color: white
+    margin-bottom: 100px
+  .article-sa-related-container
+    position: absolute
+    right: 0px
+    top: 244px
+    z-index: 2
+    width: 100%
+    color: white
+    .article-sa-related
+      a, a:hover
+        color: white
+        border-color: white
+        background: transparent
+
+.article-share-fixed-fullscreen
+  position: absolute
+  top: 0px
+  right: 0px
+  z-index: 1
+  a
+    color: white
+    text-decoration: none
+.article-fullscreen-video-container
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  height: 100vh
+  width: 100vw
+  z-index: 1
+.article-fullscreen-video-overlay
+  position: absolute
+  top: 0px
+  left: 0px
+  background: #333
+  opacity: 0.5
+  min-height: 500px
+  height: 100%
+  width: 100%
+  z-index: 1
+.article-fullscreen-text-overlay
+  color: white
+.article-fullscreen-video-player
+  height: 100vh
+  z-index: 0
+.article-container h1.article-fullscreen-title
+  font-size: 75px
+  font-style italic
