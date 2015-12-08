@@ -2,6 +2,7 @@
 @import '../partner_cell'
 
 cell-margin = 30px
+arrow-offset = 30px
 
 .partner-category-carousel
   block-margins(55px)
@@ -44,15 +45,11 @@ cell-margin = 30px
 
 .partner-cell-carousel-arrow-left
   transform translateY(-50%)
-  left -43px
-  @media screen and (min-width: 1440px)
-    left -53px
+  right calc('100% + %s' % arrow-offset)
 
 .partner-cell-carousel-arrow-right
   transform translateY(-50%)
-  right -43px
-  @media screen and (min-width: 1440px)
-    right -53px
+  left calc('100% + %s' % arrow-offset)
 
 .partner-cell-carousel-arrow
   position absolute
