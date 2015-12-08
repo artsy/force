@@ -21,6 +21,12 @@ request = require 'superagent'
       Q.all artwork.related().artists.invoke('fetch', cache: true)
 
     .then ->
+      # Set the primary artist as one of the fully fetched artists
+      if artwork.related().artists.length
+        artist = artwork.related().artist
+        fetchedArtist = artwork.related().artists.get artist.id
+        artist.set fetchedArtist.attributes if fetchedArtist?
+
       res.render 'index',
         artwork: artwork
         artist: artwork.related().artist

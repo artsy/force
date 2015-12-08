@@ -11,7 +11,8 @@ Artwork = require '../../../models/artwork'
 describe 'Artwork routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub(request, 'get').returns set: sinon.stub()
+    sinon.stub request, 'get'
+      .returns set: sinon.stub()
 
     @req =
       params: id: 'foo'
@@ -37,7 +38,10 @@ describe 'Artwork routes', ->
     beforeEach ->
       Backbone.sync
         .onCall 0
-        .yieldsTo 'success', artwork = fabricate 'artwork', id: 'andy-foobar', artists: [id: 'andy-foobar-artist']
+        .yieldsTo 'success', artwork = fabricate 'artwork',
+            id: 'andy-foobar'
+            artist: id: 'andy-foobar-artist'
+            artists: [id: 'andy-foobar-artist']
         .returns Q.resolve artwork
 
     it 'bootstraps the artwork', ->
@@ -66,6 +70,37 @@ describe 'Artwork routes', ->
       routes.index @req, @res, @next
         .then =>
           @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
+
+    describe 'with multiple artists', ->
+      beforeEach ->
+        Backbone.sync.restore()
+
+        sinon.stub Backbone, 'sync'
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', artwork = fabricate 'artwork', {
+            id: 'andy-foobar'
+            artist: id: 'multiple-andy-foobar-artist-primary'
+            artists: [
+              { id: 'multiple-andy-foobar-artist-secondary' }
+              { id: 'multiple-andy-foobar-artist-primary' }
+            ]
+          }
+          .returns Q.resolve artwork
+          .onCall 1
+          .yieldsTo 'success', {}
+          .returns Q.resolve {}
+          .onCall 2
+          .yieldsTo 'success', artist = id: 'multiple-andy-foobar-artist-primary', fetched: 'existy'
+          .returns Q.resolve artist
+
+      it 'fully fetches the artists', ->
+        routes.index @req, @res, @next
+          .then =>
+            Backbone.sync.callCount.should.equal 3
+            @res.render.called.should.be.true()
+            @res.render.args[0][1].artwork.related().artist.get 'fetched'
+              .should.equal 'existy'
 
   describe '#save', ->
     it 'saves the artwork', ->
