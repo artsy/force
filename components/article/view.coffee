@@ -30,6 +30,7 @@ module.exports = class ArticleView extends Backbone.View
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
+    @$window = $(window)
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks =>
@@ -42,9 +43,17 @@ module.exports = class ArticleView extends Backbone.View
     @renderEmbedSections()
 
     @setupArticleWaypoints()
+    @centerFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
+
+  # Note: Does not handle the content being bigger than the viewport
+  centerFullscreenHeader: ($header) ->
+    $container = $header.find('.main-layout-container')
+    maxHeight = @$window.height()
+    margin = Math.round((maxHeight - $container.height()) / 2)
+    $container.css 'margin-top': "#{margin}px"
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -246,7 +255,6 @@ module.exports = class ArticleView extends Backbone.View
     @$superArticleNavToc.toggleClass 'visible'
 
   renderSuperArticle: ->
-    @$window = $(window)
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
