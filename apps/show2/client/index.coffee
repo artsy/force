@@ -17,9 +17,9 @@ module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
   blurb $('.show-press-release'), limit: 350
 
-  # $('.js-open-show-events').click (e) ->
-  #   e.preventDefault()
-  #   openShowEvents(model: show, collection: show.related().showEvents)
+  $('.js-open-show-events').click (e) ->
+    e.preventDefault()
+    openShowEvents(show: bootstrappedShow, events: bootstrappedShow.events)
 
   if $('.js-show-installation-shot-carousel').length
     initCarousel $('.js-show-installation-shot-carousel'), {

@@ -18,6 +18,14 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           name
           displayable
           press_release(format: markdown)
+          description
+          events {
+            description
+            title
+            start_at
+            end_at
+            event_type
+          }
           partner {
             id
             _id
