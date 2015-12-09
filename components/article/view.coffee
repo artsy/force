@@ -48,13 +48,17 @@ module.exports = class ArticleView extends Backbone.View
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
-  initFullscreenHeader: ($header) ->
+  centerFullscreenHeader: ($header) ->
     # Center header
     # Note: Does not handle the content being bigger than the viewport
     $container = $header.find('.article-fullscreen-text-overlay')
     maxHeight = @$window.height()
     margin = Math.round((maxHeight - $container.height()) / 2)
     $container.css 'margin-top': "#{margin}px"
+
+  initFullscreenHeader: ($header) ->
+    @centerFullscreenHeader $header
+    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
 
     # Show after css modifications are done
     $header.find('.main-layout-container').addClass 'visible'
@@ -274,7 +278,11 @@ module.exports = class ArticleView extends Backbone.View
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
-        $fullscreenVideo.addClass 'hidden'
+        if $fullscreenVideo
+          $fullscreenVideo.addClass 'hidden'
+          @$el.removeClass 'body-transparent-header body-transparent-header-white'
       else
         $stickyHeader.removeClass 'visible'
-        $fullscreenVideo.removeClass 'hidden'
+        if $fullscreenVideo
+          $fullscreenVideo.removeClass 'hidden'
+          @$el.addClass 'body-transparent-header body-transparent-header-white'
