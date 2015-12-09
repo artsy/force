@@ -43,17 +43,21 @@ module.exports = class ArticleView extends Backbone.View
     @renderEmbedSections()
 
     @setupArticleWaypoints()
-    @centerFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
+    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
-  # Note: Does not handle the content being bigger than the viewport
-  centerFullscreenHeader: ($header) ->
-    $container = $header.find('.main-layout-container')
+  initFullscreenHeader: ($header) ->
+    # Center header
+    # Note: Does not handle the content being bigger than the viewport
+    $container = $header.find('.article-fullscreen-text-overlay')
     maxHeight = @$window.height()
     margin = Math.round((maxHeight - $container.height()) / 2)
     $container.css 'margin-top': "#{margin}px"
+
+    # Show after css modifications are done
+    $header.find('.main-layout-container').addClass 'visible'
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true

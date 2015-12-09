@@ -36,13 +36,19 @@ body.body-fullscreen-article
     h1
       margin-bottom: 60px
     .main-layout-container
-      margin-top: 80px
-  .main-layout-container
-    position: relative
-    z-index: 1
-    margin-top: 200px
+      margin-top: 0px
+        
   a
     color: white
+  .main-layout-container
+    transition: opacity 0.3s
+    opacity: 0
+    position: relative
+    &.visible
+      opacity: 1
+  .article-fullscreen-text-overlay
+    position: relative
+    z-index: 1
   .article-date
     color: gray-lighter-color
   .article-author-date
@@ -50,10 +56,13 @@ body.body-fullscreen-article
   .article-sa-artsy-logo
     color: white
     margin-bottom: 100px
+  .article-sa-primary-logos
+    position: absolute
+    z-index: 1
+    top: 80px
   .article-sa-related-container
     position: absolute
-    right: 0px
-    top: 244px
+    top: 142px
     z-index: 2
     width: 100%
     color: white
@@ -65,7 +74,7 @@ body.body-fullscreen-article
 
 .article-share-fixed-fullscreen
   position: absolute
-  top: 0px
+  top: 80px
   right: 0px
   z-index: 1
   a
@@ -98,6 +107,9 @@ body.body-fullscreen-article
   object-fit: cover
   z-index: 0
 .article-container h1.article-fullscreen-title
-  font-size: 75px
+  font-size: 72px
   font-style italic
   line-height: 110%
+.article-fullscreen-intro.article-lead-paragraph
+  font-size: 25px
+  line-height: 120%
