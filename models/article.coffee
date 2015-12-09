@@ -93,6 +93,9 @@ module.exports = class Article extends Backbone.Model
   href: ->
     "/article/#{@get('slug')}"
 
+  fullHref: ->
+    "#{sd.APP_URL}/article/#{@get('slug')}"
+
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
 
@@ -104,6 +107,14 @@ module.exports = class Article extends Backbone.Model
 
   strip: (attr) ->
     stripTags(@get attr)
+
+  getBodyClass: ->
+    bodyClass = ''
+    if @get('hero_section') and @get('hero_section').type == 'fullscreen'
+      bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
+      if @get('is_super_article')
+        bodyClass += ' body-no-header'
+    bodyClass
 
   #
   # Super Article helpers

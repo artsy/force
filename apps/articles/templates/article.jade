@@ -6,6 +6,7 @@ block head
 
 append locals
   - assetPackage = 'articles'
+  - bodyClass = bodyClass + ' ' + article.getBodyClass()
 
 block body
   #articles-show.main-layout-container

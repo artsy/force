@@ -30,6 +30,7 @@ module.exports = class ArticleView extends Backbone.View
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
+    @$window = $(window)
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks =>
@@ -41,9 +42,26 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @renderEmbedSections()
 
+    @setupArticleWaypoints()
+    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
+
+  centerFullscreenHeader: ($header) ->
+    # Center header
+    # Note: Does not handle the content being bigger than the viewport
+    $container = $header.find('.article-fullscreen-text-overlay')
+    maxHeight = @$window.height()
+    margin = Math.round((maxHeight - $container.height()) / 2)
+    $container.css 'margin-top': "#{margin}px"
+
+  initFullscreenHeader: ($header) ->
+    @centerFullscreenHeader $header
+    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
+
+    # Show after css modifications are done
+    $header.find('.main-layout-container').addClass 'visible'
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -245,8 +263,6 @@ module.exports = class ArticleView extends Backbone.View
     @$superArticleNavToc.toggleClass 'visible'
 
   renderSuperArticle: ->
-    @setupSuperArticleStickyNav()
-    @$window = $(window)
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
@@ -254,10 +270,22 @@ module.exports = class ArticleView extends Backbone.View
   onSuperArticleScroll: ->
     @$superArticleNavToc.removeClass('visible')
 
-  setupSuperArticleStickyNav: ->
+  # Sets up waypoint for both fullscreen video and super article
+  setupArticleWaypoints: ->
     $stickyHeader = @$('.article-sa-sticky-header')
-    @$(".article-container[data-id=#{@article.get('id')}] .article-lead-paragraph").waypoint (direction) =>
+    $fullscreenVideo = @$('.article-fullscreen-video')
+
+    return unless $stickyHeader.length or $fullscreenVideo.length
+
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-section-container' else '.article-lead-paragraph'
+    @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
+        if $fullscreenVideo.length
+          $fullscreenVideo.addClass 'hidden'
+          @$el.removeClass 'body-transparent-header body-transparent-header-white'
       else
         $stickyHeader.removeClass 'visible'
+        if $fullscreenVideo.length
+          $fullscreenVideo.removeClass 'hidden'
+          @$el.addClass 'body-transparent-header body-transparent-header-white'
