@@ -7,7 +7,7 @@
           a( href=superArticle.get('super_article').partner_link )
             img( src=superArticle.get('super_article').partner_logo )
   .article-sa-sticky-center
-    .article-sa-sticky-title= article.get('title')
+    .article-sa-sticky-title= superArticle.get('title')
     .article-sa-related-container
       .article-sa-related
         for relatedArticle in relatedArticles.models
