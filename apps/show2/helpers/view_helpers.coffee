@@ -6,6 +6,15 @@ sd = require('sharify').data
 
 module.exports =
 
+  formatShowEventDateRange: (start_at, end_at, format = 'dddd, MMM. Do, h:mma') ->
+    start = moment.utc(start_at)
+    end = moment.utc(end_at)
+
+    output = "#{start.format(format)} -"
+    output += end.format(if start.isSame(end, 'day') then 'h:mma' else format)
+
+    output.replace /:00/g, ''
+
   titleAndYear: (artwork) ->
     _.compact([
       if artwork.title? and artwork.title.length > 0 then "<em>#{artwork.title}</em>" else '',
