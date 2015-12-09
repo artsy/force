@@ -1,5 +1,10 @@
 @require '../stylus_lib'
 
+.article-sa-footer
+  margin-bottom: 100px
+  .article-sa-title
+    font-size: 66px
+
 .article-sa-footer-left, .article-sa-footer-right
   display: inline-block
   vertical-align: top
@@ -79,6 +84,8 @@
   transition: all 400ms
   min-height: 75px
   pointer-events: none
+  &.no-transition
+    transition: all 0ms
   &.visible
     pointer-events: all
     opacity: 1
