@@ -14,8 +14,6 @@ FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffe
 attachRelatedShows = require '../components/related_shows/index.coffee'
 
 module.exports.init = ->
-  # show = new PartnerShow SHOW
-  # show.related().artworks.reset ARTWORKS
   bootstrappedShow = sd.PARTNER_SHOW
   blurb $('.show-press-release'), limit: 350
 
@@ -32,7 +30,7 @@ module.exports.init = ->
       seq = new FlickityZoomSequence instance.cells.flickity
       seq.bind()
 
-  # setupSaveControls show.related().artworks
+  setupSaveControls bootstrappedShow.artworks
   attachFollowArtists bootstrappedShow.artists
   attachFollowProfile bootstrappedShow.partner.profile
 
