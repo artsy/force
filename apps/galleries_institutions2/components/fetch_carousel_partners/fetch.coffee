@@ -15,7 +15,7 @@ module.exports =
     size: desiredTotalPartners
 
   fetch: (options) ->
-    options = _.extend @defaults, options
+    options = _.extend {}, @defaults, options
 
     Q.all([
 
