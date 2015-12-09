@@ -145,7 +145,6 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
-    'click .article-sa-sticky-title' : 'toggleSuperArticleToC'
 
   toggleSectionCarousel: (e) ->
     @$('.articles-section-show-header-right').toggleClass('is-over')
@@ -259,19 +258,14 @@ module.exports = class ArticleView extends Backbone.View
     , { offset: 'bottom-in-view' }
 
   # Methods for super articles
-  toggleSuperArticleToC: ->
-    if @$superArticleNavToc.hasClass('visible')
-      @$superArticleNavToc.css 'max-height', '0px'
-    else
-      @$superArticleNavToc.css 'max-height', "#{@superArticleNavMaxHeight}px"
-    @$superArticleNavToc.toggleClass 'visible'
-
   renderSuperArticle: ->
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
 
-    # Set height
-    _.defer =>
-      @superArticleNavMaxHeight = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 30
+    @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
+      return if @$superArticleNavToc.hasClass('visible')
+      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 30
+      @$superArticleNavToc.css 'max-height', "#{height}px"
+      @$superArticleNavToc.addClass 'visible'
 
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
