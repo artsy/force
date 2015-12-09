@@ -1,8 +1,7 @@
 @require '../../../components/merry_go_round'
 
 carousel-height = 400px
-small-screen-arrow-offset = 13px
-large-screen-arrow-offset = 90px
+arrow-offset = 30px
 
 .galleries-primary-carousel
   position relative
@@ -10,44 +9,34 @@ large-screen-arrow-offset = 90px
   height carousel-height
   block-margins(60px)
 
+  &:hover
+    .gpc-bumpers
+      opacity 1
+
 // Navigation
 .gpc-bumpers
-  position absolute
-  width 100%
-  z-index 1
+  transition opacity .25s
+  opacity 0
+
 .gpc-bumper-next
 .gpc-bumper-prev
   position absolute
-  page-margin = 55px
-  width page-margin - small-screen-arrow-offset
-  @media screen and (min-width: 1440px)
-    page-margin = 150px
-    width page-margin - large-screen-arrow-offset
-  @media screen and (min-width: 1660px)
-    page-margin = 200px
-    width page-margin - large-screen-arrow-offset
-  height carousel-height
-  background-color white
-  border 1px solid gray-lighter-color
-  cursor pointer
   user-select none
+  height 100%
+  width 200px
   > i
     position absolute
     top 50%
-    left 50%
-    transform translate(-50%, -50%)
+    transform translateY(-50%)
+
 .gpc-bumper-next
-  border-right 0
   left 100%
-  transform translateX(small-screen-arrow-offset)
-  @media screen and (min-width: 1440px)
-    transform translateX(large-screen-arrow-offset)
+  > i
+    left arrow-offset
 .gpc-bumper-prev
-  border-left 0
   right 100%
-  transform translateX(-(small-screen-arrow-offset))
-  @media screen and (min-width: 1440px)
-    transform translateX(-(large-screen-arrow-offset))
+  > i
+    right arrow-offset
 
 // Overlays
 .gpc-overlays
