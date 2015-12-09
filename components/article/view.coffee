@@ -50,10 +50,17 @@ module.exports = class ArticleView extends Backbone.View
 
   centerFullscreenHeader: ($header) ->
     # Center header
-    # Note: Does not handle the content being bigger than the viewport
     $container = $header.find('.article-fullscreen-text-overlay')
     maxHeight = @$window.height()
     margin = Math.round((maxHeight - $container.height()) / 2)
+    minMargin = 158
+    if margin < minMargin
+      margin = minMargin
+
+      # fix for small screens
+      headerHeight = $container.height() + (margin * 2)
+      @$('.article-fullscreen-video, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player').css 'min-height', headerHeight
+
     $container.css 'margin-top': "#{margin}px"
 
   initFullscreenHeader: ($header) ->
