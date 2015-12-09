@@ -14,8 +14,8 @@ module.exports =
     sort: '-random_score'
     size: desiredTotalPartners
 
-  galleries: (options) ->
-    options = _.extend type:'PartnerGallery', @defaults, options
+  fetch: (options) ->
+    options = _.extend @defaults, options
 
     Q.all([
 
@@ -43,9 +43,8 @@ module.exports =
 
       new Partners _.shuffle(primary).concat _.shuffle(secondary)
 
+  galleries: (options) ->
+    @fetch _.extend type:'PartnerGallery', options
+
   institutions: (options) ->
-    options = _.extend type:'PartnerInstitution', @defaults, options
-    institutions = new Partners()
-    institutions.fetch(data: options).then (partners) ->
-      institutions.reset _.shuffle partners
-      institutions
+    @fetch _.extend type:'PartnerInstitution', options
