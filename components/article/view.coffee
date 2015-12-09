@@ -260,15 +260,26 @@ module.exports = class ArticleView extends Backbone.View
 
   # Methods for super articles
   toggleSuperArticleToC: ->
+    if @$superArticleNavToc.hasClass('visible')
+      @$superArticleNavToc.css 'max-height', '0px'
+    else
+      @$superArticleNavToc.css 'max-height', "#{@superArticleNavMaxHeight}px"
     @$superArticleNavToc.toggleClass 'visible'
 
   renderSuperArticle: ->
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
+
+    # Set height
+    _.defer =>
+      @superArticleNavMaxHeight = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 30
+
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
 
   onSuperArticleScroll: ->
-    @$superArticleNavToc.removeClass('visible')
+    if @$superArticleNavToc.hasClass('visible')
+      @$superArticleNavToc.css 'max-height', '0px'
+      @$superArticleNavToc.removeClass('visible')
 
   # Sets up waypoint for both fullscreen video and super article
   setupArticleWaypoints: ->
@@ -277,7 +288,7 @@ module.exports = class ArticleView extends Backbone.View
 
     return unless $stickyHeader.length or $fullscreenVideo.length
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-section-container' else '.article-lead-paragraph'
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-section-container' else '.article-section-container:first'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
