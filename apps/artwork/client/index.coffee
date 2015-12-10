@@ -17,6 +17,7 @@ module.exports.init = ->
   return if navigator.userAgent.match('PhantomJS')
   require('./ascii_easter_egg.coffee')(artwork)
   require('./skrillex_easter_egg.coffee')(artwork)
+  require('./doge_easter_egg.coffee')(artwork)
 
   # HACK: Hide auction results for ADAA
   $.ajax

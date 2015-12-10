@@ -9,6 +9,7 @@ module.exports = class AnnyangView extends Backbone.View
       { @artwork } = options
       events = {
         'skrillex': @triggerSkrillex
+        'doge': @triggerDoge
         'go to *term': @onPath
         'go back': @goBack
       }
@@ -20,6 +21,9 @@ module.exports = class AnnyangView extends Backbone.View
 
   triggerSkrillex: ->
     mediator.trigger 'search:skrillex'
+
+  triggerDoge: ->
+    mediator.trigger 'search:doge'
 
   onPath: (term) ->
     words = term.split(' ')
