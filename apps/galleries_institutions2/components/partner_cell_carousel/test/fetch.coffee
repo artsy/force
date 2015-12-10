@@ -15,18 +15,18 @@ describe 'fetch', ->
 
   beforeEach ->
     primary = [
-      fabricate('partner', id: 'primary_1'),
-      fabricate('partner', id: 'primary_2'),
-      fabricate('partner', id: 'primary_3'),
-      fabricate('partner', id: 'primary_4'),
-      fabricate('partner', id: 'primary_5')
+      fabricate('partner', default_profile_public: true, id: 'primary_1'),
+      fabricate('partner', default_profile_public: true, id: 'primary_2'),
+      fabricate('partner', default_profile_public: true, id: 'primary_3'),
+      fabricate('partner', default_profile_public: true, id: 'primary_4'),
+      fabricate('partner', default_profile_public: true, id: 'primary_5')
     ]
     secondary = [
-      fabricate('partner', id: 'secondary_1'),
-      fabricate('partner', id: 'secondary_2'),
-      fabricate('partner', id: 'secondary_3'),
-      fabricate('partner', id: 'secondary_4'),
-      fabricate('partner', id: 'secondary_5')
+      fabricate('partner', default_profile_public: true, id: 'secondary_1'),
+      fabricate('partner', default_profile_public: true, id: 'secondary_2'),
+      fabricate('partner', default_profile_public: true, id: 'secondary_3'),
+      fabricate('partner', default_profile_public: true, id: 'secondary_4'),
+      fabricate('partner', default_profile_public: true, id: 'secondary_5')
     ]
     sinon.stub Backbone, 'sync'
       .onCall 0
@@ -50,7 +50,6 @@ describe 'fetch', ->
         cache: true
         eligible_for_primary_bucket: true
         has_full_profile: true
-        size: 9
         sort: '-random_score'
         type: 'PartnerGallery'
         partner_categories: ['id']
@@ -59,7 +58,6 @@ describe 'fetch', ->
         cache: true
         eligible_for_secondary_bucket: true
         has_full_profile: true
-        size: 9
         sort: '-random_score'
         type: 'PartnerGallery'
         partner_categories: ['id']
@@ -74,7 +72,6 @@ describe 'fetch', ->
         cache: true
         eligible_for_primary_bucket: true
         has_full_profile: true
-        size: 9
         sort: '-random_score'
         type: 'PartnerInstitution'
         partner_categories: ['id']
@@ -83,7 +80,6 @@ describe 'fetch', ->
         cache: true
         eligible_for_secondary_bucket: true
         has_full_profile: true
-        size: 9
         sort: '-random_score'
         type: 'PartnerInstitution'
         partner_categories: ['id']

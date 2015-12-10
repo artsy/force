@@ -15,8 +15,8 @@ describe 'fetchLocationCarousel', ->
     benv.teardown()
 
   beforeEach ->
-    primary = [fabricate 'partner', id: 'primary']
-    secondary = [fabricate 'partner', id: 'secondary']
+    primary = [fabricate 'partner', id: 'primary', default_profile_public: true]
+    secondary = [fabricate 'partner', id: 'secondary', default_profile_public: true]
     sinon.stub Backbone, 'sync'
       .onCall 0
       .yieldsTo 'success', primary
@@ -52,7 +52,6 @@ describe 'fetchLocationCarousel', ->
             .should.eql
               near: '41.82,-71.41',
               sort: '-random_score',
-              size: 9
               has_full_profile: true
               cache: true
               eligible_for_primary_bucket: true
@@ -64,7 +63,6 @@ describe 'fetchLocationCarousel', ->
             .should.eql
               near: '41.82,-71.41',
               sort: '-random_score',
-              size: 9
               has_full_profile: true
               cache: true
               eligible_for_secondary_bucket: true
@@ -99,7 +97,6 @@ describe 'fetchLocationCarousel', ->
             .should.eql
               near: '41.82,-71.41',
               sort: '-random_score',
-              size: 9
               has_full_profile: true
               cache: true
               eligible_for_primary_bucket: true
@@ -111,7 +108,6 @@ describe 'fetchLocationCarousel', ->
             .should.eql
               near: '41.82,-71.41',
               sort: '-random_score',
-              size: 9
               has_full_profile: true
               cache: true
               eligible_for_secondary_bucket: true
