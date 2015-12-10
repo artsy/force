@@ -152,6 +152,7 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
+    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
 
   toggleSectionCarousel: (e) ->
     @$('.articles-section-show-header-right').toggleClass('is-over')
@@ -198,7 +199,7 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
-    if sd.SCROLL_ARTICLE is 'infinite'
+    if sd.SCROLL_ARTICLE is 'infinite' and not @article.get('is_super_article')
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data:
@@ -265,6 +266,13 @@ module.exports = class ArticleView extends Backbone.View
     , { offset: 'bottom-in-view' }
 
   # Methods for super articles
+  duration: 500
+  scrollPastFullscreenHeader: ->
+    position = @$('.article-fullscreen-video').height()
+    (@$htmlBody ?= $('html, body'))
+      .animate { scrollTop: position }, @duration
+    false
+
   renderSuperArticle: ->
     @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
 

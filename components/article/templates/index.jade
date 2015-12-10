@@ -46,6 +46,8 @@ mixin fullscreen(article)
         .article-share-fixed-fullscreen(data-id=article.get('id'))
           +share-fixed(article.get('title'), article.get('thumbnail_image'), article.fullHref())
 
+    .article-fullscreen-down-arrow
+      a.icon-chevron-down
     .main-layout-container.article-fullscreen-text
       .article-fullscreen-text-overlay
         if article.get('hero_section').title
@@ -127,6 +129,7 @@ if superArticle
       if superArticle
         include ./super_article_footer.jade
 
-if !superArticle
+
+.main-layout-container
   .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
     //- Rendered on client

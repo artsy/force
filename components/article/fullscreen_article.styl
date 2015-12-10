@@ -1,5 +1,13 @@
 @require '../stylus_lib'
 
+@keyframes pulse
+  0%
+    opacity 0.33
+  50%
+    opacity 1
+  100%
+    opacity 0.33
+
 body.body-fullscreen-article
   #articles-show.main-layout-container
     margin-left: 0px
@@ -70,6 +78,17 @@ body.body-fullscreen-article
         border-color: white
         background: transparent
 
+.article-fullscreen-down-arrow
+  position: absolute
+  top: 92vh
+  z-index: 1
+  font-size: 24px
+  text-align: center
+  color: white
+  width: 100%
+  .icon-chevron-down
+    animation pulse 2s infinite
+
 .article-share-fixed-fullscreen
   position: absolute
   top: 80px
@@ -89,7 +108,7 @@ body.body-fullscreen-article
   position: absolute
   top: 0px
   left: 0px
-  background: #333
+  background: black
   opacity: 0.5
   min-height: 500px
   height: 100vh
