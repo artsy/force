@@ -42,7 +42,9 @@ module.exports = class Article extends Backbone.Model
       slideshowArtworks = new Artworks
       superArticle = null
       relatedArticles = new Articles
+      calloutArticles = new Articles
       dfds = []
+
       # Get slideshow artworks to render server-side carousel
       if @get('sections')?.length and
          (slideshow = _.first(@get 'sections')).type is 'slideshow'
@@ -71,6 +73,13 @@ module.exports = class Article extends Backbone.Model
           success: (articles) ->
             superArticle = articles?.models[0]
 
+      # Get callout artworks
+      if @get('sections')?.length
+        for sec in @get('sections') when sec.type is 'callout'
+          dfds.push new Article(id: sec.article).fetch
+            success: (article) ->
+              calloutArticles.add(article)
+
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
         Q.allSettled(superArticleDefferreds)
@@ -82,6 +91,7 @@ module.exports = class Article extends Backbone.Model
               footerArticles: footerArticles
               slideshowArtworks: slideshowArtworks
               superArticle: superArticle
+              calloutArticles: calloutArticles
               relatedArticles: relatedArticles
               section: section
               allSectionArticles: sectionArticles if section
