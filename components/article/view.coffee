@@ -298,7 +298,7 @@ module.exports = class ArticleView extends Backbone.View
 
     return unless $stickyHeader.length or $fullscreenVideo.length
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-section-container' else '.article-section-container:first'
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
