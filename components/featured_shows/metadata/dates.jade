@@ -1,0 +1,21 @@
+if show.get('status') === 'upcoming'
+  .fsfs-running-dates
+    if show.isOpeningToday()
+      | Opening today
+    else
+      | Opening #{show.dateFormatted('start_at')}
+
+if show.get('status') === 'closed'
+  .fsfs-running-dates
+    | #{show.date('start_at').format('MMM DD')} – #{show.dateFormatted('end_at')}
+
+if show.isEndingSoon()
+  .fsfs-warning Closing #{show.endingIn()}
+else if show.get('status') === 'running'
+  .fsfs-closing-date
+    if show.date('end_at').isBefore()
+      | Closed
+    else
+      | Closes
+    = ' '
+    = show.dateFormatted('end_at')

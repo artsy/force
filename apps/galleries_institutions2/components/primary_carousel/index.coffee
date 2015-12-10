@@ -7,7 +7,7 @@ FollowButtonView = require '../../../../components/follow_button/view.coffee'
 module.exports = ({ following }) ->
   $el = $('.js-galleries-primary-carousel')
 
-  { cells } = initCarousel $el
+  { cells } = initCarousel $el, wrapAround: true
   { flickity } = cells
 
   $overlays = $el.find('.js-gpc-overlay')

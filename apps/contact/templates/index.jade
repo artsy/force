@@ -1,11 +1,12 @@
 extends ../../../components/main_layout/templates/index
 
 block head
+  - var description = "We're here to help. Contact an Artsy team member about Sales, Auctions, Press inquiries, Editorial, Careers, and more."
   title #{title} | Artsy
   meta( property='og:title', content= title )
-  meta( name='description', content= title )
-  meta( name='og:description', content= title )
-  meta( property='twitter:description', content= title )
+  meta( name='description', content= description )
+  meta( name='og:description', content= description )
+  meta( property='twitter:description', content= description )
   meta( property='og:url', content='#{sd.APP_URL}/contact' )
   meta( property='og:image', content= asset('/images/og_image.jpg') )
   meta( property='og:type', content='website' )

@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Article = require '../../models/article.coffee'
@@ -7,7 +8,7 @@ fixtures = require '../helpers/fixtures.coffee'
 
 describe "Article", ->
   beforeEach ->
-    sinon.stub Backbone, 'sync'
+    sinon.stub(Backbone, 'sync').returns Q.defer()
     @article = new Article
 
   afterEach ->
@@ -53,6 +54,64 @@ describe "Article", ->
       Backbone.sync.args[1][2].success [fixtures.article]
 
     it 'fetches related articles for super articles', (done) ->
+      @article.fetchWithRelated success: (data) ->
+        _.defer => _.defer => _.defer =>
+          data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle'
+          data.article.get('title').should.equal 'SuperArticle'
+          done()
+
+      Backbone.sync.args[0][2].success _.extend {}, fixtures.article,
+        title: 'SuperArticle',
+        is_super_article: true
+        sections: []
+        super_article:
+          related_articles: ['id-1']
+
+      Backbone.sync.args[1][2].success [fixtures.article]
+      _.defer =>
+        Backbone.sync.args[2][2].success _.extend {}, fixtures.article, title: 'RelatedArticle', id: 'id-1'
+
+    it 'fetches related articles for article in super article', (done) ->
+      Backbone.sync.restore()
+      relatedArticle1 = _.extend {}, fixtures.article,
+        id: 'id-1'
+        title: 'RelatedArticle 1',
+        sections: []
+      relatedArticle2 = _.extend {}, fixtures.article,
+        id: 'id-2'
+        title: 'RelatedArticle 2',
+        sections: []
+      superArticle = _.extend {}, fixtures.article,
+        id: 'id-3'
+        title: 'SuperArticle',
+        is_super_article: true
+        sections: []
+        super_article:
+          related_articles: ['id-1', 'id-2']
+
+      sinon.stub Backbone, 'sync'
+        .onCall 0
+        .yieldsTo 'success', superArticle
+        .returns Q.resolve superArticle
+        .onCall 1
+        .yieldsTo 'success', relatedArticle1
+        .returns Q.resolve relatedArticle1
+        .onCall 2
+        .yieldsTo 'success', relatedArticle2
+        .returns Q.resolve relatedArticle2
+        .onCall 3
+        .yieldsTo 'success', relatedArticle1
+        .returns Q.resolve relatedArticle1
+        .onCall 4
+        .returns Q.resolve()
+
+      @article.fetchWithRelated success: (data) ->
+        data.superArticle.get('title').should.equal 'SuperArticle'
+        data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle 1'
+        data.relatedArticles.models[1].get('title').should.equal 'RelatedArticle 2'
+        done()
+
+    it 'fetches related articles for article in a super article', (done) ->
       @article.fetchWithRelated success: (data) ->
         _.defer => _.defer =>
           data.relatedArticles.first().get('title').should.equal 'RelatedArticle'

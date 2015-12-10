@@ -26,4 +26,4 @@ module.exports = class Tag extends Backbone.Model
     if @get('description')
       _s.clean(@mdToHtmlToText('description'))
     else
-      "Artworks with the #{@get('name')} tag on Artsy"
+      "Browse all artworks with the #{@get('name')} tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price."

@@ -2,10 +2,16 @@ Backbone = require 'backbone'
 
 class Router extends Backbone.Router
   routes:
-    'galleries2': 'index'
-    'institutions2': 'index'
+    'galleries2': 'galleries'
+    'institutions2': 'institutions'
 
   index: require './routes/index.coffee'
+
+  galleries: ->
+    @index('gallery')
+
+  institutions: ->
+    @index('institution')
 
 module.exports = ->
   router = new Router

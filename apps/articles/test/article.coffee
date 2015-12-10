@@ -78,6 +78,9 @@ describe 'ArticleIndexView', ->
       @view.nextPage()
       @view.params.get('offset').should.equal 10
 
+    it 'excludes super articles', ->
+      @view.params.get('is_super_article').should.be.false()
+
     it 'renders the next page on #render', ->
       articles = [_.extend fixtures.article, { id: '343', sections: [{ type: 'text', body: 'FooLa' }] } ]
       @view.render(@view.collection, results: articles )

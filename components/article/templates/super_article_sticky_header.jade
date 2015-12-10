@@ -1,0 +1,17 @@
+.article-sa-sticky-header( class=(article.get('is_super_article') ? '' : 'visible no-transition' ) )
+  .article-sa-sticky-left
+    .article-sa-primary-logos
+      a( href="/" ).article-sa-artsy-logo.icon-logotype
+      .article-sa-primary-logo
+        if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_link
+          a( href=superArticle.get('super_article').partner_link )
+            img( src=superArticle.get('super_article').partner_logo )
+  .article-sa-sticky-center
+    a.article-sa-sticky-title( href=superArticle.href() )= superArticle.get('title')
+    .article-sa-related-container
+      .article-sa-related
+        for relatedArticle in relatedArticles.models
+          a( href=relatedArticle.href() )= relatedArticle.get('thumbnail_title') 
+
+  .article-sa-sticky-right
+    a.article-sticky-back( href="/articles" ) Back to Artsy Magazine

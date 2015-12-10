@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "4.x.x"
+    "node": ">=5.1.1",
+    "npm": "3.x.x"
   },
   "scripts": {
     "start": "make s",
@@ -70,7 +71,7 @@
     "caching-coffeeify": "^0.5.1",
     "cheerio": "^0.19.0",
     "cookies-js": "^1.2.2",
-    "ezel-assets": "0.0.13",
+    "ezel-assets": "^1.0.0",
     "fastclick": "^1.0.6",
     "flickity": "^1.1.1",
     "flickity-imagesloaded": "^1.0.1",

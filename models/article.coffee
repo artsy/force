@@ -23,7 +23,7 @@ module.exports = class Article extends Backbone.Model
     # Deferred require
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
-    Q.all([
+    Q.allSettled([
       @fetch(
         error: options.error
         headers: 'X-Access-Token': options.accessToken or ''
@@ -40,6 +40,7 @@ module.exports = class Article extends Backbone.Model
       )
     ]).then =>
       slideshowArtworks = new Artworks
+      superArticle = null
       relatedArticles = new Articles
       dfds = []
       # Get slideshow artworks to render server-side carousel
@@ -57,28 +58,43 @@ module.exports = class Article extends Backbone.Model
         dfds.push (sectionArticles = new Articles).fetch(
           data: section_id: @get('section_ids')[0], published: true, limit: 50
         )
-      # Get related articles for super articles
-      if @get('is_super_article') and @get('super_article').related_articles?.length
-        for id in @get('super_article').related_articles
-          dfds.push new Article(id: id).fetch
-            success: (article) ->
-              relatedArticles.add article
-      Q.allSettled(dfds).fin =>
-        @set('section', section) if section
-        options.success(
-          article: this
-          relatedArticles: relatedArticles
-          footerArticles: footerArticles
-          slideshowArtworks: slideshowArtworks
-          section: section
-          allSectionArticles: sectionArticles if section
-        )
+
+      # Check if the article is a super article
+      if @get('is_super_article')
+        superArticle = this
+      else
+         # Check if the article is IN a super article
+        dfds.push new Articles().fetch
+          data:
+            super_article_for: @get('id')
+            published: true
+          success: (articles) ->
+            superArticle = articles?.models[0]
+
+      Q.allSettled(dfds).then =>
+        superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
+        Q.allSettled(superArticleDefferreds)
+          .then =>
+            relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
+            @set('section', section) if section
+            options.success(
+              article: this
+              footerArticles: footerArticles
+              slideshowArtworks: slideshowArtworks
+              superArticle: superArticle
+              relatedArticles: relatedArticles
+              section: section
+              allSectionArticles: sectionArticles if section
+            )
 
   isTopTier: ->
     @get('tier') is 1
 
   href: ->
     "/article/#{@get('slug')}"
+
+  fullHref: ->
+    "#{sd.APP_URL}/article/#{@get('slug')}"
 
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
@@ -92,7 +108,24 @@ module.exports = class Article extends Backbone.Model
   strip: (attr) ->
     stripTags(@get attr)
 
-  toJSONLD: ->       # article metadata tag for parse.ly
+  getBodyClass: ->
+    bodyClass = ''
+    if @get('hero_section') and @get('hero_section').type == 'fullscreen'
+      bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
+      if @get('is_super_article')
+        bodyClass += ' body-no-header'
+    bodyClass
+
+  #
+  # Super Article helpers
+  fetchRelatedArticles: (relatedArticles) ->
+    for id in @get('super_article').related_articles
+      new Article(id: id).fetch
+        success: (article) =>
+          relatedArticles.add article
+
+  # article metadata tag for parse.ly
+  toJSONLD: ->
     creator = []
     creator.push @get('author').name if @get('author')
     creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length

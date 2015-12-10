@@ -54,7 +54,5 @@ module.exports.init = ->
       attachRelatedShows 'gallery', show
 
   relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
-  $('.artwork-column').first().prepend relatedArticlesView.$el
-  show.related().articles.fetch()
 
   new ShareView el: $('.js-show-share')

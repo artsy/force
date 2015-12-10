@@ -4,53 +4,53 @@ ArtistsByLetter = require './collections/artists_by_letter'
 metaphysics = require '../../lib/metaphysics'
 
 @index = (req, res, next) ->
-  metaphysics '
-    {
-      featured_artists: ordered_sets(key: "homepage:featured-artists") {
-        name
-        artists: items {
-          ... on FeaturedLinkItem {
-            id
-            title
-            subtitle
-            href
-            image {
-              thumb: cropped(width: 600, height: 500, version: "wide") {
-                width
-                height
-                url
-              }
-            }
-          }
-        }
-      }
-      featured_genes: ordered_sets(key: "artists:featured-genes") {
-        name
-        genes: items {
-          ... on GeneItem {
-            id
-            name
-            href
-            trending_artists(sample: 4) {
+  metaphysics
+    query: '
+      {
+        featured_artists: ordered_sets(key: "homepage:featured-artists") {
+          name
+          artists: items {
+            ... on FeaturedLinkItem {
               id
+              title
+              subtitle
               href
-              name
-              years
-              nationality
               image {
-                url(version: "four_thirds")
+                thumb: cropped(width: 600, height: 500, version: "wide") {
+                  width
+                  height
+                  url
+                }
+              }
+            }
+          }
+        }
+        featured_genes: ordered_sets(key: "artists:featured-genes") {
+          name
+          genes: items {
+            ... on GeneItem {
+              id
+              name
+              href
+              trending_artists(sample: 4) {
+                id
+                href
+                name
+                years
+                nationality
+                image {
+                  url(version: "four_thirds")
+                }
               }
             }
           }
         }
       }
-    }
-  '
+    '
   .then (data) ->
     res.render 'index', _.extend data,
       letters: ArtistsByLetter::range
   .catch next
-  .done()
 
 @letter = (req, res, next) ->
   currentPage = parseInt(req.query.page) or 1
@@ -64,4 +64,3 @@ metaphysics = require '../../lib/metaphysics'
         letterRange: artists.range
         letter: _s.capitalize letter
     .catch next
-    .done()

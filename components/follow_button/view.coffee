@@ -10,7 +10,7 @@ module.exports = class FollowButton extends Backbone.View
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
-    { @following, @notes, @modelName } = options
+    { @following, @notes, @modelName, @href } = options
 
     @label = if options.label then options.label else "#{@modelName}s"
 
@@ -43,7 +43,7 @@ module.exports = class FollowButton extends Backbone.View
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: "Sign up to follow #{@label}"
-        destination: "#{@model.href()}/follow"
+        destination: @href || "#{@model.href()}/follow"
       return false
 
     if @following.isFollowing @model.id

@@ -48,7 +48,7 @@ module.exports = class DeepZoomView extends Backbone.View
         maxZoomPixelRatio: 1.0
         minZoomImageRatio: 0.9
         zoomPerClick: @zoomPerClick
-        zoomPerScroll: 1.1
+        zoomPerScroll: 1.25
         constrainDuringPan: true
         visibilityRatio: 1
         tileSources: @image.deepZoomJson()

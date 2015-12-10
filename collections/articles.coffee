@@ -22,6 +22,9 @@ module.exports = class Articles extends Backbone.Collection
   biography: ->
     @select((article) -> article.get('biography_for_artist_id'))?[0]
 
+  orderByIds: (ids) ->
+    @reset ids.map ((id) -> @get(id)), @
+
   sync: (method, model, options) ->
     options.headers = 'X-Access-Token': ''
     super

@@ -30,6 +30,7 @@ module.exports = class ArticleView extends Backbone.View
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
+    @$window = $(window)
     @sticky = new Sticky
     @renderSlideshow()
     @renderArtworks =>
@@ -40,7 +41,34 @@ module.exports = class ArticleView extends Backbone.View
     @setupFooterArticles()
     @setupStickyShare()
     @renderEmbedSections()
+
+    @setupArticleWaypoints()
+    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
+    @renderSuperArticle() if sd.RELATED_ARTICLES
+
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
+
+  centerFullscreenHeader: ($header) ->
+    # Center header
+    $container = $header.find('.article-fullscreen-text-overlay')
+    maxHeight = @$window.height()
+    margin = Math.round((maxHeight - $container.height()) / 2)
+    minMargin = 158
+    if margin < minMargin
+      margin = minMargin
+
+      # fix for small screens
+      headerHeight = $container.height() + (margin * 2)
+      @$('.article-fullscreen-video, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player').css 'min-height', headerHeight
+
+    $container.css 'margin-top': "#{margin}px"
+
+  initFullscreenHeader: ($header) ->
+    @centerFullscreenHeader $header
+    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
+
+    # Show after css modifications are done
+    $header.find('.main-layout-container').addClass 'visible'
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -124,6 +152,7 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
+    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
 
   toggleSectionCarousel: (e) ->
     @$('.articles-section-show-header-right').toggleClass('is-over')
@@ -170,7 +199,8 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
-    if sd.SCROLL_ARTICLE is 'infinite'
+    # Do not render footer articles if the article has related articles (is/is in a super article)
+    if sd.SCROLL_ARTICLE is 'infinite' and not sd.RELATED_ARTICLES
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data:
@@ -235,3 +265,48 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+  # Methods for super articles
+  duration: 500
+  scrollPastFullscreenHeader: ->
+    position = @$('.article-fullscreen-video').height()
+    (@$htmlBody ?= $('html, body'))
+      .animate { scrollTop: position }, @duration
+    false
+
+  renderSuperArticle: ->
+    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
+
+    @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
+      return if @$superArticleNavToc.hasClass('visible')
+      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 30
+      @$superArticleNavToc.css 'max-height', "#{height}px"
+      @$superArticleNavToc.addClass 'visible'
+
+    throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
+    @$window.on 'scroll', throttledScroll
+
+  onSuperArticleScroll: ->
+    if @$superArticleNavToc.hasClass('visible')
+      @$superArticleNavToc.css 'max-height', '0px'
+      @$superArticleNavToc.removeClass('visible')
+
+  # Sets up waypoint for both fullscreen video and super article
+  setupArticleWaypoints: ->
+    $stickyHeader = @$('.article-sa-sticky-header')
+    $fullscreenVideo = @$('.article-fullscreen-video')
+
+    return unless $stickyHeader.length or $fullscreenVideo.length
+
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
+    @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
+      if direction == 'down'
+        $stickyHeader.addClass 'visible'
+        if $fullscreenVideo.length
+          $fullscreenVideo.addClass 'hidden'
+          @$el.removeClass 'body-transparent-header body-transparent-header-white'
+      else
+        $stickyHeader.removeClass 'visible'
+        if $fullscreenVideo.length
+          $fullscreenVideo.removeClass 'hidden'
+          @$el.addClass 'body-transparent-header body-transparent-header-white'

@@ -6,6 +6,7 @@ block head
 
 append locals
   - assetPackage = 'articles'
+  - bodyClass = bodyClass + ' ' + article.getBodyClass()
 
 block body
   #articles-show.main-layout-container
@@ -42,7 +43,7 @@ block body
     if sd.SCROLL_ARTICLE === "infinite"
       #article-loading: .loading-spinner
 
-  if sd.SCROLL_ARTICLE === "static"
+  if sd.SCROLL_ARTICLE === "static" && !superArticle
     //- Article footer content
     section#articles-footer
       if article.get('section_ids').length

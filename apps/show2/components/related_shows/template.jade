@@ -3,43 +3,43 @@
 for show in shows
   .show-related-show-container
     .show-related-show-info
-      if show.has('fair')
+      if show.fair
         .show-related-show-title
-          a( href=show.href() )
-            = show.partnerName()
+          a( href=show.href )
+            = show.partner.name
         .show-related-show-title-fair
-          a( href= show.href() )
-            = show.fairName()
+          a( href= show.href )
+            = show.fair.name
         .show-related-show-partner
-          a.entity-link( href=show.partnerHref() )
-            = show.partnerName()
-        if show.get('fair_location')
+          a.entity-link( href=show.partner.href )
+            = show.partner.name
+        if show.location
           .show-related-show-fair-booth
-            a( href= show.href() )
-              = show.get('fair_location').display
+            a( href= show.href )
+              = show.location.display
       else
         .show-related-show-title
-          a( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
-            = show.title()
+          a( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
+            = show.title
         .show-related-show-partner
-          a.entity-link( href=show.partnerHref() )
-            = show.partnerName()
+          a.entity-link( href=show.partner.href )
+            = show.partner.name
         .show-related-show-running-dates
-          | #{show.runningDates()}
+          = DateHelpers.timespanInWords(show.start_at, show.end_at)
 
     ul.show-related-show-images
-      if show.related().relatedImages
-        for image in show.related().relatedImages.models
+      if show.filteredImages
+        for image in show.filteredImages
           li.show-related-show-image-container
-            a.hoverable-image-link( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
+            a.hoverable-image-link( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
               img.show-related-show-image(
-                src= image.resizeUrlFor({ height: 270 })
-                alt= show.get('name')
+                src= image.image.url
+                alt= show.title
                 onerror='this.style.display="none";'
               )
 if fromShowGuide && title != 'Featured Shows' && city
   a.avant-garde-button-white.show-related-show-show-more-button( href= '/shows/#{city.slug}' )
     = 'See more shows in ' + city.name
-if show.get('fair_location')
-  a.avant-garde-button-white.show-related-show-show-more-button( href= show.related().fair.href() )
-    = 'See more booths from ' + show.fairName()
+if show.fair
+  a.avant-garde-button-white.show-related-show-show-more-button( href= show.fair.href )
+    = 'See more booths from ' + show.fair.name

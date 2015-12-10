@@ -10,11 +10,6 @@ describe 'locals middleware', ->
     req.session.id.length.should.be.above 0
     res.locals.sd.SESSION_ID.should.equal req.session.id
 
-  it 'sets the hide header flag', ->
-    middleware req = { url: 'localhost:3000', cookies: { 'hide-force-header': true }, session: {}, get: (->)},
-      res = { locals: { sd: {} } }, ->
-    res.locals.sd.HIDE_HEADER.should.be.ok()
-
   it 'adds the user agent', ->
     middleware req = { url: 'localhost:3000', get: -> 'foobar' },
       res = { locals: { sd: {} } }, ->

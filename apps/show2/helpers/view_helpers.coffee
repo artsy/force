@@ -6,6 +6,63 @@ sd = require('sharify').data
 
 module.exports =
 
+  formatShowEventDateRange: (start_at, end_at, format = 'dddd, MMM. Do, h:mma') ->
+    start = moment.utc(start_at)
+    end = moment.utc(end_at)
+
+    output = "#{start.format(format)} -"
+    output += end.format(if start.isSame(end, 'day') then 'h:mma' else format)
+
+    output.replace /:00/g, ''
+
+  titleAndYear: (artwork) ->
+    _.compact([
+      if artwork.title? and artwork.title.length > 0 then "<em>#{artwork.title}</em>" else '',
+      artwork.date
+    ]).join(', ')
+
+  factor: (image, favor = 'width', precision = 3) ->
+    disfavor = if favor is 'width' then 'height' else 'width'
+    factor = image["#{disfavor}"] / image["#{favor}"]
+    x = Math.pow 10, precision
+    Math.floor(factor * x) / x
+
+  noPinAttr: (artwork) ->
+    if artwork.can_share_image then undefined else 'nopin'
+
+  toAltText: (artwork) ->
+    _.compact([
+      (artwork.artist?.name),
+      (", '#{artwork.title},' " if artwork.title),
+      ("#{artwork.date}" if artwork.date),
+      (", #{artwork.partner.name}" if artwork.partner)
+
+    ]).join('')
+
+  # Groups models in to an array of n arrays where n is the numberOfColumns requested.
+  # For a collection of eight artworks
+  # [
+  #   [artworks.at(0), artworks.at(3), artworks.at(6)]
+  #   [artworks.at(1), artworks.at(4), artworks.at(7)]
+  #   [artworks.at(2), artworks.at(5)]
+  # ]
+  #
+  # @param {Number} numberOfColumns The number of columns of models to return in an array
+  groupByColumnsInOrder: (artworks, numberOfColumns = 3) ->
+    return [artworks] if numberOfColumns < 2
+    # Set up the columns to avoid a check in every model pass
+    columns = []
+    for column in [0..numberOfColumns-1]
+      columns[column] = []
+    # Put models in each column in order
+    column = 0
+    for artwork in artworks
+      columns[column].push artwork
+      column = column + 1
+      if column is numberOfColumns
+        column = 0
+    columns
+
   # Takes a day of the week as a string and returns a formatted schedule for a day of the week or closed:
   # { start: 'Monday', hours: '10:30am–7pm' } or { start: 'Tuesday', hours: 'Closed'}
   formatDaySchedule: (location, day) ->
@@ -61,6 +118,9 @@ module.exports =
             .value()
         .reject (day_schedule) -> day_schedule['hours'] is 'Closed'
         .value()
+
+  getMetaphysicsLocation: (location) ->
+    { lat: location.coordinates.lat, lng: location.coordinates.lng }
 
   getMapsLocation: (location) ->
     if location.coordinates

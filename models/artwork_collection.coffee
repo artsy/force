@@ -49,7 +49,8 @@ module.exports = class ArtworkCollection extends Backbone.Model
     @set 'artworks', new Artworks
 
   addRepoArtworks: (artworks) ->
-    @repoArtworkIds = _.union(@repoArtworkIds, artworks.pluck('id'))
+    ids = if artworks instanceof Backbone.Collection then artworks.pluck('id') else _.pluck(artworks, 'id')
+    @repoArtworkIds = _.union(@repoArtworkIds, ids)
 
   # Additional trigger for the specific artwork to reduce tons of
   # bindings that will loop through the collection to see if a specific
@@ -99,7 +100,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
     @unsavedCache.sort()
 
   isSaved: (artwork) ->
-    @get('artworks').get(artwork.get('id'))?
+    @get('artworks').get(artwork.id)?
 
   broadcastSaved: ->
     @get('artworks').each((artwork) => @trigger("add:#{artwork.get('id')}"))

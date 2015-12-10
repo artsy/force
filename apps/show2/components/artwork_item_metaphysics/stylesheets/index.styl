@@ -1,0 +1,118 @@
+@require '../../stylus_lib'
+@require '../save_controls'
+@require '../save_controls_two_btn'
+@require '../../favorites2/stylesheets'
+
+.artwork-item-image-container
+  margin-bottom 11px
+  img
+    vertical-align bottom
+
+.artwork-item-image
+  display block
+  background-color gray-color
+  > img
+    pointer-events none
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+
+.artwork-item-image-link
+  display block
+  position relative
+  overflow hidden
+
+.artwork-item-caption
+  min-height 55px
+  color gray-darker-color
+  font-size 15px
+  line-height 1.3
+  text-align left
+  max-width 100%
+  a
+    color gray-darker-color
+    &.avant-garde-button-black
+      color white
+    // Match width of 'Bid' button to be the same
+    // as the 'More Info' button
+    &.artwork-item-bid
+      min-width 90px
+
+  p.artwork-item-overflow
+    overflow ellipsis
+
+.artwork-item-artist
+  font-weight bold
+  a
+    &:after
+      content ', '
+    &:last-child:after
+      content ''
+
+.artwork-item-sale-metadata
+  margin 20px 0 10px
+
+.artwork-item-buy-now-price
+.artwork-item-auction-bid-status
+  color black
+  font-size 13px
+  avant-garde()
+
+.artwork-item-blurb
+  color black
+  font-size 17px
+  margin-bottom 1em
+  margin-top 1em
+  text-align left
+
+.artwork-item-sold
+  background-color gray-darker-color
+  color gray-lighter-color
+  cursor default
+  &:hover
+    color gray-darker-color
+    background-color gray-lighter-color
+
+.artwork-item
+  .avant-garde-button-black
+    margin-right 1em
+    margin-top 1em
+
+.artwork-item-remove
+  width 30px
+  height @width
+  background-color rgba(0, 0, 0, 0.4)
+  cursor pointer
+  color white
+  font-size 22px
+  bottom 5px
+  left 5px
+  position absolute
+  text-align center
+  line-height 30px
+  text-decoration none
+  display none
+  &:hover
+    background red-color
+
+.artwork-item:hover .artwork-item-remove
+  display block
+
+.artwork-item-collection-name
+  avant-garde()
+  margin-top 3px
+  font-size 12px
+  color gray-darker-color
+  text-decoration none
+
+.artwork-item-estimate
+  color black
+  font-size 17px
+
+.artwork-item-lot-number
+  avant-garde()
+  font-size 13px
+  color black
+  margin-bottom 2px

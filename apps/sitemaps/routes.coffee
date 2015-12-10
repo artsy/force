@@ -17,10 +17,6 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     end: epoch().add(i + 1, 'months').format('YYYY-MM-DD')
   }
 
-@setHeaders = (req, res, next) ->
-  res.set ('X-Robots-Tag': 'noindex')
-  next()
-
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
