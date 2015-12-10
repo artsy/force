@@ -21,7 +21,7 @@ fetchCategories = (type) ->
 
     .then (carousels) ->
       _.select carousels, (carousel) ->
-        carousel.partners.length > 0
+        carousel.partners.length >= 3
 
 @galleries = (req, res, next) ->
   partners req, res, next, 'gallery'
