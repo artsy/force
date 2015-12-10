@@ -69,6 +69,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @setBodyClass()
 
   onKeyUp: (e) ->
+    return if $(e.target).attr('id') is 'main-layout-search-bar-input'
     switch e.keyCode
       when 37
         @onLeftArrow()
