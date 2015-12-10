@@ -20,5 +20,5 @@ module.exports = class Fairs extends Backbone.Collection
   sortedEvents: ->
     @chain()
       .sortBy((event) -> event.get('start_at'))
-      # .groupBy((event) -> moment(Date.parse(event.get('start_at'))).format('dddd'))
+      .groupBy((event) -> moment(Date.parse(event.get('start_at'))).format('dddd'))
       .value()

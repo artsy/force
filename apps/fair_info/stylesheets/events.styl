@@ -6,27 +6,39 @@
 .fair-info-event-item
   display flex
   margin-bottom 60px
-  .fair-info-event-item-time
-    width 30%
-    .event-day-date
-      garamond()
-      font-size 30px
-      line-height 1.5
-    .event-time
-      avant-garde()
-      font-size 15px
-    .add-to-calender
-      color gray-color
-  .fair-info-event-item-details
-    width 70%
-    .event-title
-      garamond()
-      font-size 30px
-      line-height 1.5
-    .event-address
-      avant-garde()
-      font-size 13px
-      margin-bottom 15px
-    .event-description
-      garamond()
-      font-size 17px
+
+.fair-info-event-item-time
+  width 30%
+  margin-right 15px
+  .event-time
+    avant-garde()
+    font-size 15px
+  .add-to-calender
+    color gray-color
+    font-size 17px
+
+.fair-info-event-item-details
+  width 70%
+  .event-title
+    garamond()
+    font-size 25px
+    line-height 1.5
+  .event-address
+    avant-garde()
+    font-size 13px
+    margin-bottom 15px
+  .event-description
+    garamond()
+    font-size 17px
+    text-transform none
+
+.event-day-date
+  garamond()
+  font-size 25px
+  line-height 1.5
+  padding-top 20px
+  display none
+
+.fair-info-event-day .fair-info-event-item:first-child
+  .event-day-date
+    display inline
