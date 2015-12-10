@@ -16,7 +16,7 @@ module.exports = class FairEvent extends Backbone.Model
     start = moment(Date.parse(@get('start_at')))
     "#{start.format('dddd')}, #{start.format('MMMM')} #{start.format('D')}"
 
-  formateTime: ->
+  formatTime: ->
     start = moment(Date.parse(@get('start_at')))
     end = moment(Date.parse(@get('end_at')))
     "#{start.format('h')}:#{start.format('mm')}-#{end.format('h')}:#{end.format('mm')}#{end.format('A')}"
