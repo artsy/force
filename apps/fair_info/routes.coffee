@@ -30,6 +30,4 @@ FairEvents = require '../../collections/fair_events'
     cache: true
     error: res.backboneError
     success: ->
-      res.locals.fairEvents = events
-      res.locals.sd.FAIREVENTS = events.sortedEvents()
-      res.render("events")
+      res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })

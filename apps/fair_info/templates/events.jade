@@ -7,13 +7,12 @@ block body
     .fair-info2-body
       .fair-info-events
         h2.fair-info2-event-type-title Events
-        if sd.FAIREVENTS.length > 0
-          - console.log('FAIREVENT: ', sd.FAIREVENTS)
-          for event in sd.FAIREVENTS
+        if sortedEvents.length > 0
+          for event in sortedEvents
             .fair-info-event-item
               .fair-info-event-item-time
                 .event-day-date= event.formatDate()
-                .event-time= event.formateTime()
+                .event-time= event.formatTime()
                 a.add-to-calender(href='#') Add to Calendar
               .fair-info-event-item-details
                 h2.event-title= event.get('name')
