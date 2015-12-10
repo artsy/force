@@ -28,6 +28,14 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
+mixin callout(calloutArticle, section)
+  .article-section-callout
+    .article-section-callout-left
+      img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
+    .article-section-callout-right
+      .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+      a.article-section-callout-link( href=calloutArticle.href() ) Read full article
+
 mixin fullscreen(article)
   figure.article-fullscreen-video( class= article.get('is_super_article') ? 'article-sa-fullscreen-video' : '' )
     if article.get('hero_section').background_url
@@ -120,6 +128,8 @@ if superArticle
               .article-section-embed( data-id=section.url data-layout=section.layout )
                 .loading-spinner
                 .article-embed-container
+            when 'callout'
+              +callout(calloutArticles.get(section.article), section)
 
       //- Footer social buttons
       .article-social.add-bottom.article-share-bottom
