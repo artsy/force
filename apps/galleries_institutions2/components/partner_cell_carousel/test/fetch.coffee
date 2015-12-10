@@ -13,13 +13,7 @@ describe 'fetch', ->
       benv.expose $: benv.require 'jquery'
       done()
 
-  after ->
-    benv.teardown()
-
-  afterEach ->
-    Backbone.sync.restore()
-
-  it 'fetches primary and secondary buckets for a gallery category', ->
+  beforeEach ->
     primary = [
       fabricate('partner', id: 'primary_1'),
       fabricate('partner', id: 'primary_2'),
@@ -41,6 +35,14 @@ describe 'fetch', ->
       .onCall 1
       .yieldsTo 'success', secondary
       .returns Q.resolve secondary
+
+  after ->
+    benv.teardown()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'has correct params for gallery', ->
 
     carousel = new CategoryCarousel category: new PartnerCategory id: 'id', name: 'Category', category_type: 'Gallery'
     carousel.fetch().then ->
@@ -64,35 +66,26 @@ describe 'fetch', ->
 
       carousel.partners.length.should.eql 9
 
-  describe 'institutions', ->
+  it 'has correct params for institution', ->
 
-    beforeEach ->
-      partners = [
-        fabricate('partner', id: 'partner_1'),
-        fabricate('partner', id: 'partner_2'),
-        fabricate('partner', id: 'partner_3'),
-        fabricate('partner', id: 'partner_4'),
-        fabricate('partner', id: 'partner_5'),
-        fabricate('partner', id: 'partner_6'),
-        fabricate('partner', id: 'partner_7'),
-        fabricate('partner', id: 'partner_8'),
-        fabricate('partner', id: 'partner_9'),
-      ]
+    carousel = new CategoryCarousel category: new PartnerCategory id: 'id', name: 'Category', category_type: 'Institution'
+    carousel.fetch().then ->
+      Backbone.sync.args[0][2].data.should.eql
+        cache: true
+        eligible_for_primary_bucket: true
+        has_full_profile: true
+        size: 9
+        sort: '-random_score'
+        type: 'PartnerInstitution'
+        partner_categories: ['id']
 
-      sinon.stub Backbone, 'sync'
-        .onCall 0
-        .yieldsTo 'success', partners
-        .returns Q.resolve partners
+      Backbone.sync.args[1][2].data.should.eql
+        cache: true
+        eligible_for_secondary_bucket: true
+        has_full_profile: true
+        size: 9
+        sort: '-random_score'
+        type: 'PartnerInstitution'
+        partner_categories: ['id']
 
-    it 'fetches partners without buckets for given category id', ->
-      carousel = new CategoryCarousel category: new PartnerCategory id: 'id', name: 'Category', category_type: 'Institution'
-      carousel.fetch().then ->
-        Backbone.sync.args[0][2].data.should.eql
-          cache: true
-          has_full_profile: true
-          size: 9
-          type: 'PartnerInstitution'
-          sort: '-random_score'
-          partner_categories: ['id']
-
-        carousel.partners.length.should.eql 9
+      carousel.partners.length.should.eql 9
