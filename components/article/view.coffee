@@ -199,7 +199,7 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
-    # Do not render footer articles if the article is has related articles (is/is in a super article)
+    # Do not render footer articles if the article has related articles (is/is in a super article)
     if sd.SCROLL_ARTICLE is 'infinite' and not sd.RELATED_ARTICLES
       Q.allSettled([
         (tagRelated = new Articles).fetch
