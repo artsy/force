@@ -16,7 +16,7 @@ module.exports =
   signupSuccess: (options) ->
     defaults =
       action: "Attendee"
-      message: "Thank you for signing up.<br><br>You are not logged in. Log in with your details on Artsy.net or on our iPhone and iPad apps."
+      message: "Thank you for signing up.<br><br>You have been logged out for security purposes. Sign in to Artsy.net to follow artists, browse and inquire on artworks, and read exclusive editorial content."
       duration: 10000
 
     { fair, action, message, duration } = _.defaults options, defaults
