@@ -35,6 +35,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @baseView.route 'show'
     # Skrillex easter egg
     mediator.on 'search:skrillex', => window.location = "#{@artwork.href()}/skrillex"
+    mediator.on 'search:doge', => window.location = "#{@artwork.href()}/doge"
 
   zoom: ->
     analytics.track.click 'Clicked to zoom in on artwork'
