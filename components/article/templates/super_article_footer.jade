@@ -1,6 +1,14 @@
 .article-sa-footer
   .article-sa-footer-left
     a.article-sa-title( href=superArticle.href() )= superArticle.get('title')
+
+    if superArticle.get('footer_blurb')
+      .article-sa-footer-blurb= superArticle.get('footer_blurb')
+
+    if superArticle.get('super_article').partner_link_title
+      .article-sa-cta-container
+        a.article-sa-cta.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
+
     .article-sa-logos
       .article-sa-primary-logos
         a( href="/" ).article-sa-artsy-logo.icon-logotype
@@ -14,8 +22,6 @@
         if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
           a( href=superArticle.get('super_article').secondary_logo_link )
             img( src=superArticle.get('super_article').secondary_partner_logo )
-
-      a.article-sa-cta( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
 
   .article-sa-footer-right
     .article-sa-related
