@@ -200,7 +200,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
-    if sd.SCROLL_ARTICLE is 'infinite' and not sd.RELATED_ARTICLES
+    if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data:

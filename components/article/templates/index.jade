@@ -30,11 +30,17 @@ mixin image(image)
 
 mixin callout(calloutArticle, section)
   .article-section-callout
-    .article-section-callout-left
-      img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
-    .article-section-callout-right
-      .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
-      a.article-section-callout-link( href=calloutArticle.href() ) Read full article
+     if calloutArticle
+       img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
+     else if section.thumbnail_url
+       img( src=section.thumbnail_url )
+
+     .article-section-callout-text
+       if calloutArticle
+         .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+         a.article-section-callout-link( href=calloutArticle.href() ) Read full article
+       else if section.text
+         .article-section-callout-title= section.text
 
 mixin fullscreen(article)
   figure.article-fullscreen-video( class= article.get('is_super_article') ? 'article-sa-fullscreen-video' : '' )
