@@ -7,8 +7,12 @@ module.exports = class MonocleView extends Backbone.View
     { @artwork } = options
     @monocleSize = parseInt(@$('.monocle-zoom').css('width').replace 'px', '') / 2
     @preCalc()
+    @removeAltTag()
     @bindMonocles()
     @hideMonocle()
+
+  removeAltTag: ->
+    @$('img').attr('title', '')
 
   # Calculate and cache some numbers
   preCalc: ->
