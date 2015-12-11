@@ -76,9 +76,10 @@ module.exports = class Article extends Backbone.Model
       # Get callout articles
       if @get('sections')?.length
         for sec in @get('sections') when sec.type is 'callout'
-          dfds.push new Article(id: sec.article).fetch
-            success: (article) ->
-              calloutArticles.add(article)
+          if sec.article
+            dfds.push new Article(id: sec.article).fetch
+              success: (article) ->
+                calloutArticles.add(article)
 
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
