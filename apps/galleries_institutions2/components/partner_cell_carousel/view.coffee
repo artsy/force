@@ -10,8 +10,8 @@ module.exports = class PartnerCellCarouselView extends Backbone.View
   subViews: []
 
   events:
-    'click .js-carousel-arrow-left': 'prev'
-    'click .js-carousel-arrow-right': 'next'
+    'click .js-pcc-prev': 'prev'
+    'click .js-pcc-next': 'next'
 
   initialize: ({ @following, @category, @partners }) -> #
 

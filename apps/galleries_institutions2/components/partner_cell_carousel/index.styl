@@ -2,7 +2,6 @@
 @import '../partner_cell'
 
 cell-margin = 30px
-arrow-offset = 30px
 
 .partner-category-carousel
   block-margins(55px)
@@ -17,42 +16,36 @@ arrow-offset = 30px
     width calc(33.333% \- (cell-margin * 2 / 3))
     margin-right cell-margin
 
-.partner-cell-carousel-header *
+.pcc-header *
   position absolute
 
-.partner-cell-carousel-header
+.pcc-header
   position relative
   border-bottom 2px solid gray-lighter-color
   margin-bottom 30px
   height 55px
   garamond()
 
-.partner-cell-carousel-header-left
+.pcc-header-left
   garamond-size('headline')
   bottom 12px
   left 0
 
-.partner-cell-carousel-header-right
+.pcc-header-right
   bottom 20px
   right 0
 
-.partner-cell-carousel-body
+.pcc-body
+  position  relative
   position relative
 
-.partner-cell-carousel-content
+.pcc-content
   white-space nowrap
   overflow hidden
 
-.partner-cell-carousel-arrow-left
-  transform translateY(-50%)
-  right calc('100% + %s' % arrow-offset)
-
-.partner-cell-carousel-arrow-right
-  transform translateY(-50%)
-  left calc('100% + %s' % arrow-offset)
-
-.partner-cell-carousel-arrow
-  position absolute
-  offset = partner-cell-metadata-height/2
-  top calc('50% - %s' % offset)
-  user-select none
+.pcc-prev
+.pcc-next
+  > i
+    offset = partner-cell-metadata-height/2
+    top calc('50% - %s' % offset)
+    user-select none

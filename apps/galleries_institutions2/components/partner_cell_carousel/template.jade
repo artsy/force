@@ -1,15 +1,15 @@
 //- Requires: category, partners
 
-.partner-cell-carousel-header
-  .partner-cell-carousel-header-left
+.pcc-header
+  .pcc-header-left
     = category.get('name')
+.pcc-body
 
-.partner-cell-carousel-body
-  .partner-cell-carousel-content.js-partner-cells
+  .pcc-nav.js-pcc-nav
+    .pcc-prev.gi-carousel-arrow-prev.js-pcc-prev: i.icon-chevron-left
+    .pcc-next.gi-carousel-arrow-next.js-pcc-next: i.icon-chevron-right
+
+  .pcc-content.js-partner-cells
     each partner in partners
       .partner-cell
         include ../partner_cell/index
-
-  .partner-cell-nav
-    .partner-cell-carousel-arrow-left.partner-cell-carousel-arrow.icon-chevron-left.js-carousel-arrow-left
-    .partner-cell-carousel-arrow-right.partner-cell-carousel-arrow.icon-chevron-right.js-carousel-arrow-right
