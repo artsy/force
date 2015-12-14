@@ -100,8 +100,7 @@ if superArticle
     +fullscreen(article)
 
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
-    //- Nesting to support fullscreen content going over fullscreen header
-    .article-fullscreen-content-container
+    .main-layout-container
       //- Article lead content
       if article.get('hero_section') && article.get('hero_section').type === 'video'
         .article-large-format-video-container
@@ -117,34 +116,37 @@ if superArticle
       .article-social.article-share-top
         +share(article.get('title'), article.get('thumbnail_image'), article.fullHref())
 
+    .main-layout-container
       //- Article body content
       if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
         .article-carousel
           include carousel
-      for section, i in article.get('sections')
-        .article-section-container
-          case section.type
-            when 'text'
-              .article-section-text!= section.body
-            when 'artworks'
-              .article-section-artworks.is-loading( data-layout=section.layout )
-                .loading-spinner
-                ul
-                  for id in section.ids
-                    li( data-id=id )
-            when 'image'
-              .article-section-image
-                +image(section)
-            when 'video'
-              .article-section-video
-                +video(section)
-            when 'embed'
-              .article-section-embed( data-id=section.url data-layout=section.layout )
-                .loading-spinner
-                .article-embed-container
-            when 'callout'
-              +callout(calloutArticles.get(section.article), section)
 
+    for section, i in article.get('sections')
+      .article-section-container.main-layout-container( class=("article-section-container-" + section.type + (section.layout ? "-" + section.layout : "")) )
+        case section.type
+          when 'text'
+            .article-section-text!= section.body
+          when 'artworks'
+            .article-section-artworks.is-loading( data-layout=section.layout )
+              .loading-spinner
+              ul
+                for id in section.ids
+                  li( data-id=id )
+          when 'image'
+            .article-section-image
+              +image(section)
+          when 'video'
+            .article-section-video( class="article-video-background-" + section.background_color )
+              +video(section)
+          when 'embed'
+            .article-section-embed( data-id=section.url data-layout=section.layout )
+              .loading-spinner
+              .article-embed-container
+          when 'callout'
+            +callout(calloutArticles.get(section.article), section)
+
+    .main-layout-container
       //- Footer social buttons
       .article-social.add-bottom.article-share-bottom
         h2.article-social__header Share this article
