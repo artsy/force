@@ -288,7 +288,7 @@ column-width = 540px
 
 .article-section-callout
   float: right
-  margin: 6px 96px 20px 20px
+  margin: 6px 74px 20px 20px
   padding: 20px 0px
   border-top: 1px solid gray-lighter-color
   border-bottom: 1px solid gray-lighter-color
@@ -299,7 +299,7 @@ column-width = 540px
   .article-section-callout-title
     font-size: 25px
     line-height: 131%
-  a.article-section-callout-link
+  .article-section-callout-link
     avant-garde()
     text-decoration: none
     font-size: 14px
@@ -307,4 +307,11 @@ column-width = 540px
     max-width: 180px
     margin-right: 20px
   .article-section-callout-text
-    max-width: 200px
+    max-width: 215px
+    &.article-section-callout-no-image
+      max-width: 100%
+
+a.article-section-callout
+  transition: border-color 0.3s
+  &:hover
+    border-color: gray-dark-color

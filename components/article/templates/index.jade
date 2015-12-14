@@ -28,19 +28,27 @@ mixin image(image)
     if image.caption
       figcaption!= image.caption
 
-mixin callout(calloutArticle, section)
-  .article-section-callout
-     if calloutArticle
-       img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
-     else if section.thumbnail_url
-       img( src=section.thumbnail_url )
+mixin callout-content(calloutArticle, section)
+  if !section.hide_image
+    if calloutArticle
+      img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
+    else if section.thumbnail_url
+      img( src=section.thumbnail_url )
 
-     .article-section-callout-text
-       if calloutArticle
-         .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
-         a.article-section-callout-link( href=calloutArticle.href() ) Read full article
-       else if section.text
-         .article-section-callout-title= section.text
+  .article-section-callout-text( class=(section.hide_image ? 'article-section-callout-no-image' : '') )
+    if calloutArticle
+      .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+      .article-section-callout-link Read full article
+    else if section.text
+      .article-section-callout-title= section.text
+
+mixin callout(calloutArticle, section)
+  if calloutArticle
+    a.article-section-callout( href=(calloutArticle ? calloutArticle.href() : '') )
+      +callout-content(calloutArticle, section)
+  else
+    .article-section-callout
+      +callout-content(calloutArticle, section)
 
 mixin fullscreen(article)
   figure.article-fullscreen-video( class= article.get('is_super_article') ? 'article-sa-fullscreen-video' : '' )
@@ -48,6 +56,8 @@ mixin fullscreen(article)
       .article-fullscreen-video-container
         .article-fullscreen-video-overlay
         video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
+        .article-fullscreen-down-arrow
+          a.icon-chevron-down
 
     if article.get('is_super_article')
       .main-layout-container.article-sa-fullscreen-logos
@@ -60,8 +70,6 @@ mixin fullscreen(article)
         .article-share-fixed-fullscreen(data-id=article.get('id'))
           +share-fixed(article.get('title'), article.get('thumbnail_image'), article.fullHref())
 
-    .article-fullscreen-down-arrow
-      a.icon-chevron-down
     .main-layout-container.article-fullscreen-text
       .article-fullscreen-text-overlay
         if article.get('hero_section').title
