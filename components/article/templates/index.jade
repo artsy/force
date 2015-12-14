@@ -53,11 +53,11 @@ mixin callout(calloutArticle, section)
 mixin fullscreen(article)
   figure.article-fullscreen-video( class= article.get('is_super_article') ? 'article-sa-fullscreen-video' : '' )
     if article.get('hero_section').background_url
-      .article-fullscreen-video-container
-        .article-fullscreen-video-overlay
-        video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
-        .article-fullscreen-down-arrow
-          a.icon-chevron-down
+      .article-fullscreen-video-overlay
+      video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
+
+    .article-fullscreen-down-arrow
+      a.icon-chevron-down
 
     if article.get('is_super_article')
       .main-layout-container.article-sa-fullscreen-logos
@@ -152,7 +152,6 @@ if superArticle
 
       if superArticle
         include ./super_article_footer.jade
-
 
 .main-layout-container
   .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
