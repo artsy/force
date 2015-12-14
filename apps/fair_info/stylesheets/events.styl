@@ -7,38 +7,45 @@
   display flex
   margin-bottom 60px
 
-.fair-info-event-item-time
+.fair-info-event-item-date
   width 30%
   margin-right 15px
-  .event-time
+  letter-spacing normal
+  &__formatted-date
+    garamond()
+    font-size 25px
+    line-height 1.5
+    display none
+  &__time
     avant-garde()
     font-size 15px
-  .add-to-calender
+  &__add-to-calender
     color gray-color
     font-size 17px
 
 .fair-info-event-item-details
+  letter-spacing normal
   width 70%
-  .event-title
+  &__title
     garamond()
     font-size 25px
     line-height 1.5
-  .event-address
+  &__address
     avant-garde()
     font-size 13px
     margin-bottom 15px
-  .event-description
+  &__description
     garamond()
     font-size 17px
     text-transform none
 
-.event-day-date
-  garamond()
-  font-size 25px
-  line-height 1.5
-  padding-top 20px
-  display none
+// .event-formatted-date
+//   garamond()
+//   font-size 25px
+//   line-height 1.5
+//   display none
 
 .fair-info-event-day .fair-info-event-item:first-child
-  .event-day-date
+  .fair-info-event-item-date__formatted-date
+  // .event-formatted-date
     display inline

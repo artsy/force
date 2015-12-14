@@ -23,4 +23,4 @@ module.exports.init = ->
 
   new FairInfoEventsView
     fair: fair
-    el: $('.fair-info-events')
+    el: $('.fair-info2-events')

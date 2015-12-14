@@ -5,20 +5,20 @@ block body
     include nav
 
     .fair-info2-body
-      .fair-info-events
+      .fair-info2-events
         h2.fair-info2-event-type-title Events
-          if Object.keys(sortedEvents).length > 0
-            for day in sortedEvents
-              .fair-info-event-day
-                for event in day
-                  .fair-info-event-item
-                    .fair-info-event-item-time
-                      .event-day-date= event.formatDate()
-                      .event-time= event.formatTime()
-                      a.add-to-calender(href='#') Add to Calendar
-                    .fair-info-event-item-details
-                      h2.event-title= event.get('name')
-                      .event-address= event.get('venue')
-                      .event-description= event.get('extended_description')
-          else
-            .fair-info-event-item There are no events.
+        if Object.keys(sortedEvents).length > 0
+          for day in sortedEvents
+            .fair-info-event-day
+              for event in day
+                .fair-info-event-item
+                  .fair-info-event-item-date
+                    .fair-info-event-item-date__formatted-date= event.formatDate()
+                    .fair-info-event-item-date__time= event.formatTime()
+                    a.fair-info-event-item-date__add-to-calender(href='#') Add to Calendar
+                  .fair-info-event-item-details
+                    h2.fair-info-event-item-details__title= event.get('name')
+                    .fair-info-event-item-details__address= event.get('venue')
+                    .fair-info-event-item-details__description= event.get('extended_description')
+        else
+          .fair-info-event-item There are no events.
