@@ -13,7 +13,7 @@
         for relatedArticle in relatedArticles.models
           a( href=relatedArticle.href() )= relatedArticle.get('thumbnail_title') 
       if superArticle.get('super_article').partner_link_title
-        a.article-sa-cta( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
+        a.article-sa-cta-sticky.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
 
   .article-sa-sticky-right
     a.article-sticky-back( href="/articles" ) Back to Artsy Magazine
