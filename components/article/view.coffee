@@ -283,9 +283,14 @@ module.exports = class ArticleView extends Backbone.View
 
     @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
       return if @$superArticleNavToc.hasClass('visible')
-      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 30
+      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 50
       @$superArticleNavToc.css 'max-height', "#{height}px"
       @$superArticleNavToc.addClass 'visible'
+
+
+    @$('.article-sa-sticky-header').mouseleave =>
+      @$superArticleNavToc.css 'max-height', '0px'
+      @$superArticleNavToc.removeClass('visible')
 
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
