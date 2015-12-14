@@ -17,6 +17,7 @@ body.body-fullscreen-article
     max-width default-max-page-width
     margin 0px auto
     position: relative
+    padding-top: 25px
   #articles-show
     margin-top: 0px
 
@@ -79,7 +80,7 @@ body.body-fullscreen-article
         border-color: white
         background: transparent
       a:hover
-        background: rgba(0,0,0,.2)
+        background: rgba(255,255,255,.2)
 
 .article-fullscreen-down-arrow
   position: absolute
@@ -100,28 +101,22 @@ body.body-fullscreen-article
   a
     color: white
     text-decoration: none
-.article-fullscreen-video-container
-  position: absolute
+
+.article-fullscreen-video-overlay, .article-fullscreen-video-player
+  position: fixed
   top: 0px
   left: 0px
   height: 100vh
   width: 100vw
-  z-index: 1
+
 .article-fullscreen-video-overlay
-  position: absolute
-  top: 0px
-  left: 0px
   background: black
   opacity: 0.5
   min-height: 500px
-  height: 100vh
-  width: 100vw
   z-index: 1
 .article-fullscreen-text-overlay
   color: white
 .article-fullscreen-video-player
-  height: 100vh
-  width: 100vw
   object-fit: cover
   z-index: 0
 .article-container h1.article-fullscreen-title
