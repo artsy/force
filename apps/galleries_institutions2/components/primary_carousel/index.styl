@@ -6,46 +6,25 @@ arrow-offset = 30px
 .galleries-primary-carousel
   position relative
   width 100%
-  height carousel-height
+
   block-margins(60px)
 
-  &:hover
-    .gpc-bumpers
-      opacity 1
+.gpc-body
+  display flex
+  flex-direction row
+  align-items center
+  width 100%
 
 // Navigation
-.gpc-bumpers
-  transition opacity .25s
-  opacity 0
 
-.gpc-bumper-next
 .gpc-bumper-prev
-  position absolute
-  user-select none
-  height 100%
-  width 200px
+.gpc-bumber-next
   > i
-    position absolute
     top 50%
-    transform translateY(-50%)
-
-.gpc-bumper-next
-  left 100%
-  > i
-    left arrow-offset
-.gpc-bumper-prev
-  right 100%
-  > i
-    right arrow-offset
 
 // Overlays
 .gpc-overlays
-  position absolute
-  top 0
-  right 66.66%
-  bottom 0
-  left 0
-  height 100%
+  flex 1 1 40%
   display flex
   flex-direction column
   justify-content center
@@ -60,19 +39,16 @@ arrow-offset = 30px
 
 // Carousel
 .gpc-carousel
-  position absolute
-  top 0
-  right 0
-  bottom 0
-  left 33.33%
-  height 100%
+  flex 1 1 60%
 .gpc-carousel-cells
   height 100%
   overflow hidden
+  white-space no-wrap
 .gpc-carousel-cell
+  display inline-block
   position relative
-  height 100%
   width 100%
+  padding-bottom 66%
 .gpc-carousel-figure
   position absolute
   top 0
