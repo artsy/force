@@ -12,6 +12,7 @@ openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
 FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
+FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -50,5 +51,8 @@ module.exports.init = ->
   relatedArticlesEl = $('.js-related-articles')    
   relatedArticlesView = new RelatedArticlesView showId: bootstrappedShow._id, numToShow: 3, el: relatedArticlesEl
   $('.artwork-column').first().prepend relatedArticlesView.$el
+
+  furtherArtworksEl = $('.artworks-container')
+  new FurtherArtworksView showId: bootstrappedShow._id, page: 2, artworks: bootstrappedShow.artworks, el: furtherArtworksEl
 
   new ShareView el: $('.js-show-share')
