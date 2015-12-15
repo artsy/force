@@ -103,6 +103,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
               height
               url
             }
+            zoom_image: url(version: "larger")
             caption
           }
         }

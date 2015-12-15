@@ -24,6 +24,7 @@ module.exports = class InstallShotsView extends Backbone.View
                 height
                 url
               }
+              zoom_image: url(version: "larger")
               caption
             }
           }
