@@ -1,27 +1,18 @@
-_ = require 'underscore'
-{ CURRENT_USER } = require('sharify').data
-Profile = require '../../../models/profile.coffee'
-Partner = require '../../../models/partner.coffee'
-{ FollowButton, Following } = require '../../../components/follow_button/index.coffee'
+Backbone = require 'backbone'
 
-module.exports.init = ->
-  # Sync follows
-  following = new Following([], kind: 'profile') if CURRENT_USER?
+class Router extends Backbone.Router
+  routes:
+    'galleries': 'galleries'
+    'institutions': 'institutions'
 
-  followIds = $('.follow-button').map ->
-    id = ($el = $(this)).data 'id'
-    new FollowButton
-      following: following
-      modelName: 'profile'
-      model: new Profile id: id
-      el: $el
-    id
+  index: require './routes/index.coffee'
 
-  following?.syncFollows followIds.get()
+  galleries: ->
+    @index('gallery')
 
-  # Sync locations
-  $('.gip-location').each ->
-    id = ($el = $(this)).data 'id'
-    partner = new Partner id: id
-    partner.related().locations.fetch success: =>
-      $el.text partner.displayLocations()
+  institutions: ->
+    @index('institution')
+
+module.exports = ->
+  router = new Router
+  Backbone.history.start pushState: true
