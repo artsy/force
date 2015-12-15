@@ -22,14 +22,23 @@ module.exports = class Sticky
   native: ($el) ->
     $el.attr 'style', "position: -webkit-sticky; position: sticky; top: #{@viewportTop()}px"
 
-  headerHeight: ->
-    (@$header ?= $('#main-layout-header')).height()
+  getHeaderHeight: ->
+    return @headerHeight if @headerHeight
+
+    @headerHeight = 0
+    $mainHeader = $('#main-layout-header')
+    if $mainHeader.is(':visible')
+      @headerHeight = $mainHeader.height()
+    else
+      @headerHeight = $('.article-sa-sticky-header').height()
+
+    @headerHeight
 
   visibleArea: ->
-    @$window.height() - @headerHeight()
+    @$window.height() - @getHeaderHeight()
 
   viewportTop: ->
-    if isTouchDevice() then 0 else @headerHeight()
+    if isTouchDevice() then 0 else @getHeaderHeight()
 
   rebuild: ->
     return unless Stickyfill?
