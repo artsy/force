@@ -8,6 +8,9 @@ to = require '../to'
 # Put em' here:
 
 redirects =
+  '/partners': '/galleries'
+  '/gallery': '/galleries'
+  '/institution': '/institutions'
   '/filter/artworks': '/browse'
   '/filter/artworks/*': '/browse'
   '/genes': '/categories'
