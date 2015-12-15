@@ -30,6 +30,7 @@ module.exports = class Sticky
     if $mainHeader.is(':visible')
       @headerHeight = $mainHeader.height()
     else
+      # Support super articles with fullscreen header (where mainHeader is hidden)
       @headerHeight = $('.article-sa-sticky-header').height()
 
     @headerHeight

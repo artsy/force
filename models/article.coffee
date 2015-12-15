@@ -120,11 +120,12 @@ module.exports = class Article extends Backbone.Model
     stripTags(@get attr)
 
   getBodyClass: ->
-    bodyClass = ''
+    bodyClass = 'body-article'
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
       if @get('is_super_article')
         bodyClass += ' body-no-header'
+
     bodyClass
 
   #
