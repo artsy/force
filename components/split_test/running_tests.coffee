@@ -28,3 +28,10 @@ module.exports =
     outcomes:
       infinite: 0.5
       static: 0.5
+
+  show_metaphysics:
+    key: 'show_page_metaphysics'
+    outcomes:
+      true: 0.5
+      false: 0.5
+    dimension: 'metaphysics'
