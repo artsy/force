@@ -7,10 +7,13 @@ ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
 analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
 
-artworkRow = -> require('../templates/artwork_row.jade') arguments...
+template = -> require('../templates/artwork_row.jade') arguments...
 
 module.exports = class ArtworkRowView extends SaleArtworkView
   displayPurchase: true
+
+  className: 'artwork-table__row'
+  attributes: -> data: artwork: @model.id
 
   initialize: (options = {})->
     { @$container, @model } = options
@@ -23,15 +26,13 @@ module.exports = class ArtworkRowView extends SaleArtworkView
       (=> @$('.hoverable-image-link').removeClass 'is-hovered')
 
   render: ->
-    renderedArtwork = artworkRow
+    @$el.html template
       artwork: @model
       displayPurchase: @displayPurchase
 
-    @$el = $(renderedArtwork)
-    @$container.append @$el
     @pl = new PartnerLocations $el: @$el, artwork: @model
 
-    return @$el
+    this
 
   contactSeller: (e) ->
     e.preventDefault()

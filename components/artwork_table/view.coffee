@@ -21,16 +21,15 @@ module.exports = class ArtworkTableView extends Backbone.View
   length: ->
     @$('.artwork-table__row').length
 
+  appendArtworks: (artworks) ->
+    @render()
+
   render: ->
     @$el.html artworkTable()
-    @appendArtworks @collection.models
+    rows = @rowHtml(@collection)
+    @$('#artwork-table').html rows
 
-  appendArtworks: (artworks) =>
-    for artwork in artworks
-      unless @$(".artwork-table__row[data-artwork='#{artwork.id}']").length
-        @appendArtworkRow artwork
-
-  appendArtworkRow: (artwork) ->
-    new ArtworkRowView
-      model: artwork
-      $container: @$('#artwork-table')
+  rowHtml: (coll) ->
+    coll.map (artwork) ->
+      view = new ArtworkRowView model: artwork
+      view.render().$el

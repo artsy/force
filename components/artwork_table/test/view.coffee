@@ -23,7 +23,7 @@ describe 'ArtworkTableView', ->
 
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
-        ), ['artworkRow']
+        ), ['template']
 
       @ArtworkTableView.__set__ 'ArtworkRowView', @ArtworkRowView
 
@@ -66,7 +66,7 @@ describe 'ArtworkRowView', ->
 
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
-        ), ['artworkRow']
+        ), ['template']
 
   after ->
     benv.teardown()
