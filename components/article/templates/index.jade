@@ -123,7 +123,7 @@ if superArticle
           include carousel
 
     for section, i in article.get('sections')
-      .article-section-container.main-layout-container( class=("article-section-container-" + section.type + (section.layout ? "-" + section.layout : "")) )
+      .article-section-container.main-layout-container( data-layout=section.layout, data-section-type=section.type )
         case section.type
           when 'text'
             .article-section-text!= section.body
