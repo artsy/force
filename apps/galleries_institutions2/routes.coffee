@@ -20,7 +20,7 @@ fetchCategories = (type) ->
         carousel.fetch()
 
     .then (carousels) ->
-      _.select carousels, (carousel) ->
+      _.shuffle _.select carousels, (carousel) ->
         carousel.partners.length >= 3
 
 @galleries = (req, res, next) ->

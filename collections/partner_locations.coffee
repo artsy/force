@@ -18,7 +18,7 @@ module.exports = class PartnerLocations extends Backbone.Collection
         @first().get('country')
 
       if @length > 1
-        string += " + #{@length - 1} other location"
+        string += " & #{@length - 1} other location"
         string += "s" unless @length is 2
 
       string
