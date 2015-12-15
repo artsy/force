@@ -34,4 +34,4 @@ module.exports =
     outcomes:
       true: 0.5
       false: 0.5
-    dimension: 'metaphysics'
+    dimension: 'dimension7'
