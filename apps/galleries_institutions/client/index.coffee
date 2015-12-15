@@ -2,8 +2,8 @@ Backbone = require 'backbone'
 
 class Router extends Backbone.Router
   routes:
-    'galleries2': 'galleries'
-    'institutions2': 'institutions'
+    'galleries': 'galleries'
+    'institutions': 'institutions'
 
   index: require './routes/index.coffee'
 

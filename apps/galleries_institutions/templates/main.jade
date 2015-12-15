@@ -8,12 +8,12 @@ append locals
   - assetPackage = 'galleries_institutions'
 
 block body
-  .galleries-institutions2-page.main-layout-container
-    header.galleries-institutions2-header
-      h1.galleries-institutions2-headline
+  .galleries-institutions-page.main-layout-container
+    header.galleries-institutions-header
+      h1.galleries-institutions-headline
         | Browse #{type === 'gallery' ? 'Galleries' : 'Institutions'}
 
-      nav.galleries-institutions2-subnav
+      nav.galleries-institutions-subnav
         if showAZLink
           a.fine-faux-underline( href='/#{type}-a-z' )
             | A–Z

@@ -38,7 +38,7 @@ describe 'Galleries / Institutions', ->
 
   describe 'template', ->
     it 'renders an A to Z list of partners with links to the partner', ->
-      markup = $('.galleries-institutions2-page').html()
+      markup = $('.galleries-institutions-page').html()
       markup.should.containEql ('Browse Institutions')
       @profiles.each (profile) ->
         markup.should.containEql profile.related().owner.get('name')
