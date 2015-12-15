@@ -1,18 +1,8 @@
 Backbone = require 'backbone'
-
-class Router extends Backbone.Router
-  routes:
-    'galleries': 'galleries'
-    'institutions': 'institutions'
-
-  index: require './routes/index.coffee'
-
-  galleries: ->
-    @index('gallery')
-
-  institutions: ->
-    @index('institution')
+PartnersRouter = require './router.coffee'
 
 module.exports = ->
-  router = new Router
-  Backbone.history.start pushState: true
+  partnersRoot = sd.PARTNERS_ROOT
+  partnersType = if partnersRoot is 'galleries' then 'gallery' else 'institution'
+  router = new PartnersRouter type: partnersType
+  Backbone.history.start root: partnersRoot, pushState: true

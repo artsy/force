@@ -5,8 +5,9 @@ app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
-app.get '/galleries', routes.galleries
-app.get '/institutions', routes.institutions
+app.get '/:type', routes.partners
+app.get '/:type', routes.partnersSearch
 
-app.get '/gallery-a-z', routes.galleriesAZ
-app.get '/institution-a-z', routes.institutionsAZ
+app.get '/:type-a-z', routes.partnersAZ
+
+app.get '/:type/all', routes.partnersSearch

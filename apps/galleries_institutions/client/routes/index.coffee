@@ -8,6 +8,15 @@ fetchLocationCarousel = require '../../components/location_carousel/index.coffee
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
 
 module.exports = (type) ->
+  partners = new Partners()
+  partners.fetchUntilEndInParallel
+    cache: true
+    data:
+      size: 20
+      type: 'PartnerGallery'
+      sort: 'sortable_id'
+      has_full_profile: true
+
   if CURRENT_USER?
     following = new Following [], kind: 'profile'
     partners = _.flatten _.pluck CAROUSELS, 'partners'

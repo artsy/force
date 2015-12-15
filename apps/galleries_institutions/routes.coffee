@@ -3,39 +3,48 @@ _s = require 'underscore.string'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
+PartnerCategory = require '../../models/partner_category'
 PartnerCategories = require '../../collections/partner_categories'
 PrimaryCarousel = require './components/primary_carousel/fetch'
 CategoryCarousel = require './components/partner_cell_carousel/fetch'
 Partners = require '../../collections/partners'
 Profiles = require '../../collections/profiles'
+{ FeaturedCities } = require 'places'
+
+mapType =
+  galleries: 'gallery'
+  institutions: 'institution'
 
 # Landing page
 
 fetchCategories = (type) ->
   categories = new PartnerCategories
-  categories.fetchUntilEndInParallel cache: true, data: category_type: type, internal: false
+  categories.fetchUntilEnd cache: true, data: category_type: _s.capitalize type, internal: false
     .then ->
-      Q.all categories.map (category) ->
-        carousel = new CategoryCarousel category: category
-        carousel.fetch()
+      categories
 
-    .then (carousels) ->
-      _.shuffle _.select carousels, (carousel) ->
-        carousel.partners.length >= 3
+fetchPartnersForCategories = (categories) ->
+  Q.all categories.map (category) ->
+    carousel = new CategoryCarousel category: category
+    carousel.fetch()
 
-@galleries = (req, res, next) ->
-  partners req, res, next, 'gallery'
+  .then (carousels) ->
+    _.shuffle _.select carousels, (carousel) ->
+      carousel.partners.length >= 3
 
-@institutions = (req, res, next) ->
-  partners req, res, next, 'institution'
-
-partners = (req, res, next, type) ->
+@partners = (req, res, next) ->
+  return next() if req.params.type not in ['galleries', 'institutions']
+  return next() if not _.isEmpty req.query
+  res.locals.sd.PARTNERS_ROOT = req.params.type
+  type = mapType[req.params.type]
 
   carousel = new PrimaryCarousel
   Q.all([
     carousel.fetch(type)
-    fetchCategories(_s.capitalize type)
+    fetchCategories(type).then (categories) ->
+      fetchPartnersForCategories(categories)
   ]).spread (profiles, carousels) ->
+
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.CAROUSELS = carousels
 
@@ -68,13 +77,10 @@ fetchAZ =
         url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
         data: size: 20
 
-@galleriesAZ = (req, res, next) ->
-  partnersAZ req, res, next, 'gallery'
-
-@institutionsAZ = (req, res, next) ->
-  partnersAZ req, res, next, 'institution'
-
-partnersAZ = (req, res, next, type) ->
+@partnersAZ = (req, res, next) ->
+  return next() if req.params.type not in ['galleries', 'institutions']
+  res.locals.sd.PARTNERS_ROOT = req.params.type
+  type = mapType[req.params.type]
   fetchAZ[type]().then (partners) ->
     aToZGroup = partners.groupByAlphaWithColumns 3
     res.render 'a_z',
@@ -84,3 +90,13 @@ partnersAZ = (req, res, next, type) ->
 
     .catch next
     .done()
+
+# Search page
+
+@partnersSearch = (req, res, next) ->
+  return next() if req.params.type not in ['galleries', 'institutions']
+  type = mapType[req.params.type]
+  fetchCategories(type).then (categories) ->
+    res.locals.sd.CATEGORIES = categories.toJSON()
+    res.locals.sd.PARTNERS_ROOT = req.params.type
+    res.render 'search', categories: categories.models, locations: FeaturedCities, type: type
