@@ -169,7 +169,23 @@ column-width = 540px
     height (9 / 16 * body-width)
 
 .article-section-container
-  margin (gutter-size * 1.5) 0
+  margin (gutter-size * 1.5) auto
+  &.main-layout-container
+    // Override the main layout container width here
+    &.article-section-container-video-overflow_fillwidth
+      width: 100%
+      max-width: 10000px
+      .article-section-video
+        width: 100%
+        padding-top: 40px
+        padding-bottom: 40px
+        &.article-video-background-black
+          width: 100%
+          background: black
+        .article-video-container
+          width: body-width + 200
+          position: relative
+          margin: auto
 
 .article-carousel
   img
