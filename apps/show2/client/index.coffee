@@ -2,7 +2,6 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 ShareView = require '../../../components/share/view.coffee'
-initCarousel = require '../../../components/merry_go_round/index.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
@@ -10,9 +9,9 @@ RelatedArticlesView = require '../components/related_articles/view.coffee'
 openMapModal = require '../components/map_modal/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
-FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
+FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -23,13 +22,8 @@ module.exports.init = ->
     openShowEvents(show: bootstrappedShow, events: bootstrappedShow.events)
 
   if $('.js-show-installation-shot-carousel').length
-    initCarousel $('.js-show-installation-shot-carousel'), {
-      setGallerySize: false
-      imagesLoaded: true
-    }, (instance) ->
-
-      seq = new FlickityZoomSequence instance.cells.flickity
-      seq.bind()
+    furtherInstallShotsEl = $('.js-show-installation-shot-carousel')
+    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
 
   setupSaveControls bootstrappedShow.artworks
   attachFollowArtists bootstrappedShow.artists

@@ -1,19 +1,16 @@
-section.show-installation-shot-carousel.merry-go-round.js-show-installation-shot-carousel(
-  class= ViewHelpers.hasCaptions(partner_show.install_shots) ? 'has-captions' : undefined
-)
-  .mgr-cells.js-mgr-cells
-    for installShot in partner_show.install_shots
-      .mgr-cell.js-mgr-cell
-        img(
-          src= installShot.carousel_image.url
-          alt= installShot.caption
-          title= installShot.caption
-        )
+.mgr-cells.js-mgr-cells
+  for installShot in partner_show.install_shots
+    .mgr-cell.js-mgr-cell
+      img(
+        src= installShot.carousel_image.url
+        alt= installShot.caption
+        title= installShot.caption
+      )
 
-        if installShot.caption
-          .show-installation-shot-caption
-            = installShot.caption
+      if installShot.caption
+        .show-installation-shot-caption
+          = installShot.caption
 
-  - length = partner_show.install_shots.length
-  nav.mgr-navigation.js-mgr-navigation
-    include ../../../components/merry_go_round/templates/navigation
+- length = partner_show.install_shots.length
+nav.mgr-navigation.js-mgr-navigation
+  include ../../../components/merry_go_round/templates/navigation
