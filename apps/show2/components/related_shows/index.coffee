@@ -49,6 +49,7 @@ module.exports = (type, show) ->
           start_at
           end_at
           name
+          href
           partner {
             name
             href

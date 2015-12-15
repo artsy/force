@@ -3,6 +3,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 DateHelpers = require '../../../../components/util/date_helpers.coffee'
+ViewHelpers = require '../../helpers/view_helpers.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class RelatedShowsView extends Backbone.View
@@ -24,6 +25,7 @@ module.exports = class RelatedShowsView extends Backbone.View
         show: @show
         city: @city
         DateHelpers: DateHelpers
+        ViewHelpers: ViewHelpers
       this
 
   filterRelatedImages: =>
