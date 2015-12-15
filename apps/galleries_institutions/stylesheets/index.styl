@@ -1,79 +1,33 @@
 @require '../../../components/stylus_lib'
+@require '../components/primary_carousel'
+@require '../components/partner_cell'
+@require '../components/partner_cell_carousel'
+@require './footer'
+@require './carousels'
 
-#galleries-institutions-page
+.galleries-institutions-page
   padding 40px 0
-.galleries-institutions-header-meta
-  clearfix()
-  position relative
+  margin 0 45px
+  @media screen and (min-width: 1440px)
+    margin auto
 
-.galleries-institutions-title
-  font-size 30px
-  line-height 1
-  position absolute
-  left 50%
-  transform translateX(-50%)
-  top 0
+.galleries-institutions-header
+  display table
+  width 100%
+  margin-bottom 60px
 
-
-.galleries-institutions-header-info
-  width 297px
-  float left
-  text-align center
-  position relative
-  top -10px
-
-.galleries-institutions-featured-profiles
-  margin 40px 0
-.gip-metadata
-  margin 10px 0
-  text-align center
-  a
-    text-decoration none
-.gip-name
-  avant-garde()
-  font-size 13px
-  overflow ellipsis
-.gip-location
-  margin 5px 0 10px 0
-  font-size 18px
-
-.gallery-partnerships-callout
-  position relative
-  // Variable width 3:2 aspect ratio container
-  padding-bottom 66.67%
-  line-height 0
-.gpc-inner
-  position absolute
-  top 0
-  right 0
-  bottom 0
-  left 0
-  padding 0 20px
-  font-size 22px
-  line-height 1.2
-  text-align center
-
-.galleries-design-wrapper
-  position absolute
-  right 20px
-  top 3px
-
-.galleries-design-link::after
-  font-family 'artsy-icons'
-  speak none
-  font-style normal
-  font-weight normal
-  font-variant normal
-  text-transform none
-  text-decoration none
-  line-height 32px
-  font-size 32px
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  content '\e607'
+.galleries-institutions-subnav
+.galleries-institutions-headline
+  display table-cell
+  height 100%
   vertical-align middle
-  position absolute
-  top 50%
-  right -20px
-  font-size 15px
-  transform translateY(-50%)
+
+.galleries-institutions-headline
+  garamond-size('l-headline')
+
+.galleries-institutions-subnav
+  text-align right
+  > a
+    display inline-block
+    margin-left 30px
+
