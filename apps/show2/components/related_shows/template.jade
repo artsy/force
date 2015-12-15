@@ -20,7 +20,7 @@ for show in shows
       else
         .show-related-show-title
           a( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
-            = show.title
+            = ViewHelpers.title(show)
         .show-related-show-partner
           a.entity-link( href=show.partner.href )
             = show.partner.name
@@ -34,7 +34,7 @@ for show in shows
             a.hoverable-image-link( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
               img.show-related-show-image(
                 src= image.image.url
-                alt= show.title
+                alt= ViewHelpers.title(show)
                 onerror='this.style.display="none";'
               )
 if fromShowGuide && title != 'Featured Shows' && city
