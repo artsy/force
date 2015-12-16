@@ -31,6 +31,7 @@ module.exports =
 
   show_metaphysics:
     key: 'show_page_metaphysics'
+    edge: true
     outcomes:
       true: 0.5
       false: 0.5
