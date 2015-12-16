@@ -41,6 +41,8 @@ request = require 'superagent'
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
       unless data.article.get('author_id') is '503f86e462d56000020002cc'
         res.locals.sd.SCROLL_ARTICLE = 'static'
+      if data.relatedArticles?
+        res.locals.sd.SCROLL_ARTICLE = 'static'
       videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
       if res.locals.sd.CURRENT_USER?.email? and _.contains res.locals.sd.ARTICLE.section_ids, '55550be07b8a750300db8430'
         email = res.locals.sd.CURRENT_USER?.email
