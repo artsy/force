@@ -60,7 +60,7 @@ describe "Article", ->
     it 'fetches related articles for super articles', (done) ->
       @article.set sections: []
       @article.fetchWithRelated success: (data) ->
-        _.defer => _.defer =>
+        _.defer => _.defer => _.defer =>
           data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle'
           data.article.get('title').should.equal 'SuperArticle'
           done()
