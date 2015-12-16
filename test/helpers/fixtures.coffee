@@ -125,7 +125,9 @@ moment = require 'moment'
   gravity_id: '502a6debe8b6470002000004'
   section_ids: []
   is_super_article: false
-  super_article: {}
+  super_article: {
+    related_articles: ['5086df098523e60002000012']
+  }
   hero_section: {}
 
 @searchResult =

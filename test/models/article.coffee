@@ -3,6 +3,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Article = require '../../models/article.coffee'
+Articles = require '../../collections/articles.coffee'
 sinon = require 'sinon'
 fixtures = require '../helpers/fixtures.coffee'
 
@@ -15,6 +16,7 @@ describe "Article", ->
     Backbone.sync.restore()
 
   describe '#fetchWithRelated', ->
+
     it 'gets all the related data from the article', (done) ->
       @article.set sections: []
       @article.fetchWithRelated success: (data) ->
@@ -22,6 +24,7 @@ describe "Article", ->
         done()
       Backbone.sync.args[0][2].success _.extend {}, fixtures.article, title: 'Moo'
       Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.args[2][2].success [fixtures.article]
 
     xit 'gets the slideshow artworks', (done) ->
       @article.fetchWithRelated success: (data) ->
@@ -42,9 +45,9 @@ describe "Article", ->
         done()
       Backbone.sync.args[0][2].success _.extend {}, fixtures.article, title: 'Moo', section_ids: ['foo']
       Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.args[2][2].success [fixtures.article]
       _.defer =>
-        Backbone.sync.args[2][2].success fixtures.section
-        Backbone.sync.args[3][2].success [fixtures.articles]
+        Backbone.sync.args[3][2].success fixtures.section
 
     it 'works for those rare sectionless articles', (done) ->
       @article.fetchWithRelated success: (data) ->
@@ -54,6 +57,7 @@ describe "Article", ->
       Backbone.sync.args[1][2].success [fixtures.article]
 
     it 'fetches related articles for super articles', (done) ->
+      @article.set sections: []
       @article.fetchWithRelated success: (data) ->
         _.defer => _.defer => _.defer =>
           data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle'
@@ -68,10 +72,11 @@ describe "Article", ->
           related_articles: ['id-1']
 
       Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.args[2][2].success [fixtures.article]
       _.defer =>
-        Backbone.sync.args[2][2].success _.extend {}, fixtures.article, title: 'RelatedArticle', id: 'id-1'
+        Backbone.sync.args[3][2].success _.extend {}, fixtures.article, title: 'RelatedArticle', id: 'id-1'
 
-    it 'fetches related articles for article in super article', (done) ->
+    xit 'fetches related articles for article in super article', (done) ->
       Backbone.sync.restore()
       relatedArticle1 = _.extend {}, fixtures.article,
         id: 'id-1'
@@ -110,24 +115,6 @@ describe "Article", ->
         data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle 1'
         data.relatedArticles.models[1].get('title').should.equal 'RelatedArticle 2'
         done()
-
-    it 'fetches related articles for article in a super article', (done) ->
-      @article.fetchWithRelated success: (data) ->
-        _.defer => _.defer =>
-          data.relatedArticles.first().get('title').should.equal 'RelatedArticle'
-          data.article.get('title').should.equal 'SuperArticle'
-          done()
-
-      Backbone.sync.args[0][2].success _.extend {}, fixtures.article,
-        title: 'SuperArticle',
-        is_super_article: true
-        sections: []
-        super_article:
-          related_articles: ['id-1']
-
-      Backbone.sync.args[1][2].success [fixtures.article]
-      _.defer =>
-        Backbone.sync.args[2][2].success _.extend {}, fixtures.article, title: 'RelatedArticle'
 
   describe '#strip', ->
     it 'returns the attr without tags', ->
