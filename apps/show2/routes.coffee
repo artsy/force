@@ -67,6 +67,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           artworks {
             id
             _id
+            href
             image {
               url(version: "large")
               width
