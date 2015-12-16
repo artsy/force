@@ -98,7 +98,7 @@ module.exports = class Article extends Backbone.Model
             superSubArticleIds = []
             if superArticles.length
               for article in superArticles.models
-                superSubArticleIds = superSubArticleIds.concat(article.get('super_article').related_articles)
+                superSubArticleIds = superSubArticleIds.concat(article.get('super_article')?.related_articles)
 
             relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
             @set('section', section) if section
