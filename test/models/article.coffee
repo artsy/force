@@ -48,7 +48,6 @@ describe "Article", ->
       Backbone.sync.args[2][2].success [fixtures.article]
       _.defer =>
         Backbone.sync.args[3][2].success fixtures.section
-        Backbone.sync.args[4][2].success [fixtures.article]
 
     it 'works for those rare sectionless articles', (done) ->
       @article.fetchWithRelated success: (data) ->
@@ -73,10 +72,9 @@ describe "Article", ->
           related_articles: ['id-1']
 
       Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.args[2][2].success [fixtures.article]
       _.defer =>
         Backbone.sync.args[3][2].success _.extend {}, fixtures.article, title: 'RelatedArticle', id: 'id-1'
-
-      Backbone.sync.args[2][2].success [fixtures.article]
 
     xit 'fetches related articles for article in super article', (done) ->
       Backbone.sync.restore()
