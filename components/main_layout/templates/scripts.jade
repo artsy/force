@@ -20,16 +20,16 @@ if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
 
 //- Quantcast
 script( type="text/javascript" ).
-  var _qevents = _qevents || [];
-  (function() {
+  var ezt = ezt ||[];
+  (function(){
     var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-cMwS3F29bthyC";
     elem.async = true;
     elem.type = "text/javascript";
     var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem, scpt);
-  })();
-  _qevents.push({qacct:"p-cMwS3F29bthyC",labels:""});
+    scpt.parentNode.insertBefore(elem,scpt);
+  }());
+  ezt.push({qacct: 'p-cMwS3F29bthyC', orderid: '', revenue: ''});
 
 noscript
   img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif" style="display: none;" border="0" height="1" width="1" alt=" Quantcast" )
