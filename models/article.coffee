@@ -23,6 +23,7 @@ module.exports = class Article extends Backbone.Model
     # Deferred require
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
+    superArticles = new Articles
     Q.allSettled([
       @fetch(
         error: options.error
@@ -37,6 +38,13 @@ module.exports = class Article extends Backbone.Model
           published: true
           tier: 1
           sort: '-published_at'
+      )
+      superArticles.fetch(
+        error: options.error
+        cache: true
+        data:
+          published: true
+          is_super_article: true
       )
     ]).then =>
       slideshowArtworks = new Artworks
@@ -85,6 +93,13 @@ module.exports = class Article extends Backbone.Model
         superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
         Q.allSettled(superArticleDefferreds)
           .then =>
+
+            # Super Sub Article Ids
+            superSubArticleIds = []
+            if superArticles.length
+              for article in superArticles.models
+                superSubArticleIds = superSubArticleIds.concat(article.get('super_article').related_articles)
+
             relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
             @set('section', section) if section
             options.success(
@@ -94,6 +109,7 @@ module.exports = class Article extends Backbone.Model
               superArticle: superArticle
               calloutArticles: calloutArticles
               relatedArticles: relatedArticles
+              superSubArticleIds: superSubArticleIds
               section: section
               allSectionArticles: sectionArticles if section
             )

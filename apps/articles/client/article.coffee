@@ -47,7 +47,8 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   render: (collection, response) =>
     if response
-      articles = _.reject response.results, (a) => a.id is @article.id
+      articles = _.reject response.results, (a) =>
+        (a.id is @article.id) or (a.hero_section?.type is 'fullscreen') or (_.contains(sd.SUPER_SUB_ARTICLE_IDS, a.id))
 
       for article in articles
         # Setup and append article template
