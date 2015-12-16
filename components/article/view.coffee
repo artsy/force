@@ -310,12 +310,14 @@ module.exports = class ArticleView extends Backbone.View
     selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
-        $stickyHeader.addClass 'visible'
+        if @article.get('is_super_article')
+          $stickyHeader.addClass 'visible'
         if $fullscreenVideo.length
           $fullscreenVideo.addClass 'hidden'
           @$el.removeClass 'body-transparent-header body-transparent-header-white'
       else
-        $stickyHeader.removeClass 'visible'
+        if @article.get('is_super_article')
+          $stickyHeader.removeClass 'visible'
         if $fullscreenVideo.length
           $fullscreenVideo.removeClass 'hidden'
           @$el.addClass 'body-transparent-header body-transparent-header-white'
