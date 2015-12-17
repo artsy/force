@@ -3,6 +3,7 @@ Q = require 'bluebird-q'
 PartnerShow = require '../../models/partner_show'
 
 @index = (req, res, next) ->
+  return next() if req.user?.get('type') is 'Admin'
   show = new PartnerShow id: req.params.id
 
   Q.all [

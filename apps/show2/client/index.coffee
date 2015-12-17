@@ -4,7 +4,6 @@ sd = require('sharify').data
 ShareView = require '../../../components/share/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
-setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 openMapModal = require '../components/map_modal/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
@@ -25,7 +24,6 @@ module.exports.init = ->
     furtherInstallShotsEl = $('.js-show-installation-shot-carousel')
     new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
 
-  setupSaveControls bootstrappedShow.artworks
   attachFollowArtists bootstrappedShow.artists
   attachFollowProfile bootstrappedShow.partner.profile
 
