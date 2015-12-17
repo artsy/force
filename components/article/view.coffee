@@ -68,6 +68,7 @@ module.exports = class ArticleView extends Backbone.View
 
     $superArticleArrow = @$('.article-fullscreen-down-arrow')
     $superArticleArrow.css 'top': @$('.article-fullscreen-video').height() - 100
+    $superArticleArrow.show()
 
     @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
 
