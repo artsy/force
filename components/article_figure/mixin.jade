@@ -27,7 +27,7 @@ mixin article-figure(article, width, showDate, showShare)
       if showShare
         .article-figure-share.js-article-figure-share
           +share(
-            article.get('title'),
+            (article.get('share_description') || article.get('thumbnail_title')),
             article.get('thumbnail_image'),
             (sd && sd.APP_URL) + article.href()
           )
