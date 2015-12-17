@@ -18,5 +18,22 @@ script( type="text/javascript", src="https://js.stripe.com/v2/" )
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   script( src=asset('/assets/analytics.js') )
 
+//- Quantcast
+script( type="text/javascript" ).
+  var ezt = ezt ||[];
+  (function(){
+    var elem = document.createElement('script');
+    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-cMwS3F29bthyC";
+    elem.async = true;
+    elem.type = "text/javascript";
+    var scpt = document.getElementsByTagName('script')[0];
+    scpt.parentNode.insertBefore(elem,scpt);
+  }());
+  ezt.push({qacct: 'p-cMwS3F29bthyC', orderid: '', revenue: ''});
+
+noscript
+  img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif" style="display: none;" border="0" height="1" width="1" alt=" Quantcast" )
+
+
 //-Utm-stripping
 script( src="//fast.wistia.net/labs/fresh-url/v1.js" async )
