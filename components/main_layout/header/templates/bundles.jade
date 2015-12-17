@@ -1,5 +1,10 @@
 for bundle in bundles
-  a(href="/works-for-you?artist_id=#{bundle.object.artist.id}")
+  a.js-notification-bundle(
+    data-unread=(bundle.status == "unread" ? "true" : "false")
+    data-message=bundle.message
+    data-artist=bundle.object.artist.id
+    href="/works-for-you?artist_id=#{bundle.object.artist.id}"
+  )
     .bundle-item
       img.bundle-image(src="#{bundle.object.images[0].image_urls.square}")
       .bundle-text

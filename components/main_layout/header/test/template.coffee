@@ -42,4 +42,4 @@ describe 'Header template', ->
 
   it 'sets the notification count if present in cookie', ->
     html = render('index')(sd: { CURRENT_USER: { type: 'Admin' }, NOTIFICATION_COUNT: "2" })
-    html.should.containEql '<div data-visible="true" class="mlh-bundle-count">2</div>'
+    html.should.containEql '<div data-visible="true" class="mlh-bundle-count js-notification-count">2</div>'
