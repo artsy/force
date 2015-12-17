@@ -3,12 +3,13 @@ _ = require 'underscore'
 template = -> require('./template.jade') arguments...
 metaphysics = require '../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
+setupSaveControls = require '../save_artworks/index.coffee'
 
 module.exports = class ArtworkColumnsView extends Backbone.View
 
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
-    @fetch()
+    setupSaveControls @artworks
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
   fetch: =>
@@ -20,6 +21,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
             artworks(page: $page) {
               id
               _id
+              href
               image {
                 url(version: "large")
                 width
@@ -63,4 +65,5 @@ module.exports = class ArtworkColumnsView extends Backbone.View
       artworkColumns: artworkColumns
       ViewHelpers: ViewHelpers
     @$('.artwork-column').first().prepend relatedArticlesHtml
+    setupSaveControls @artworks
     this
