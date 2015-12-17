@@ -80,11 +80,6 @@ mixin fullscreen(article)
           .article-lead-paragraph-container
             .article-lead-paragraph.article-fullscreen-intro
               != article.get('hero_section').intro
-            if article.get('is_super_article')
-              .article-sa-related-container
-                .article-sa-related
-                  for relatedArticle in relatedArticles.models
-                    a( href=relatedArticle.href() )= relatedArticle.get('thumbnail_title')
 
 //- Super article header needs to be outside the article-container
 if superArticle
