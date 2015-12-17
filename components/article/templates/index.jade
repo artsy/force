@@ -68,7 +68,7 @@ mixin fullscreen(article)
               a( href=article.get('super_article').partner_logo_link )
                 img( src=article.get('super_article').partner_fullscreen_header_logo )
         .article-share-fixed-fullscreen(data-id=article.get('id'))
-          +share-fixed(article.get('title'), article.get('thumbnail_image'), article.fullHref())
+          +share-fixed( (article.get('share_description') || article.get('title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container.article-fullscreen-text
       .article-fullscreen-text-overlay
@@ -93,7 +93,7 @@ if superArticle
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
     //- Article Share Fixed Nav
     .article-share-fixed(data-id=article.get('id'))
-      +share-fixed(article.get('title'), article.get('thumbnail_image'), article.fullHref())
+      +share-fixed((article.get('share_description') || article.get('title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container.first
       //- Article lead content
@@ -109,7 +109,7 @@ if superArticle
           != article.get('lead_paragraph')
       +author-date
       .article-social.article-share-top
-        +share(article.get('title'), article.get('thumbnail_image'), article.fullHref())
+        +share((article.get('share_description') || article.get('title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container
       //- Article body content
@@ -145,7 +145,7 @@ if superArticle
       //- Footer social buttons
       .article-social.add-bottom.article-share-bottom
         h2.article-social__header Share this article
-        +share(article.get('title'), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
+        +share((article.get('share_description') || article.get('title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
 
   .main-layout-container
