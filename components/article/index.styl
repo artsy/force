@@ -325,7 +325,7 @@ body.body-article
   padding-top 60px
   margin-left -35px
   margin-top 250px
-  padding-left: 93px
+  padding-left 93px
   float left
   a
     text-decoration none
@@ -335,32 +335,38 @@ body.body-article
     color gray-darker-color
 
 .article-section-callout
-  float: right
-  margin: 6px 74px 20px 20px
-  padding: 20px 0px
-  border-top: 1px solid gray-lighter-color
-  border-bottom: 1px solid gray-lighter-color
-  width: 415px
+  float right
+  margin 6px 74px 20px 20px
+  padding 20px 0px
+  border-top 1px solid gray-lighter-color
+  border-bottom 1px solid gray-lighter-color
+  width 415px
   img, .article-section-callout-text
-    display: inline-block
-    vertical-align: middle
+    display inline-block
+    vertical-align middle
   .article-section-callout-title
-    font-size: 25px
-    line-height: 131%
+    font-size 25px
+    line-height 131%
   .article-section-callout-link
     avant-garde()
-    text-decoration: none
-    font-size: 14px
+    text-decoration none
+    font-size 14px
   img
-    max-width: 180px
-    margin-right: 20px
+    max-width 180px
+    margin-right 20px
   .article-section-callout-text
-    max-width: 215px
+    max-width 215px
     &.article-section-callout-no-image
-      max-width: 100%
-      padding: 10px 0px
+      max-width 100%
+      padding 10px 0px
+    &.article-section-callout-pullquote
+      max-width 100%
+      padding 10px 0px
+      .article-section-callout-title
+        font-size 30px
+
 
 a.article-section-callout
-  transition: border-color 0.3s
+  transition border-color 0.3s
   &:hover
-    border-color: gray-dark-color
+    border-color gray-dark-color
