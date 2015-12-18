@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
@@ -22,7 +23,7 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../view')
-        ['artworkItemTemplate', 'editTemplate', 'embedTemplate' ]
+        ['artworkItemTemplate', 'editTemplate', 'embedTemplate', 'calloutTemplate' ]
       )
       @ArticleView.__set__ 'CurrentUser', { orNull: ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
@@ -47,6 +48,13 @@ describe 'ArticleView', ->
               layout: 'overflow',
               url: 'http://files.artsy.net/data.pdf',
               height: ''
+            }
+            {
+              type: 'callout',
+              article: '123',
+              text: '',
+              title: ''
+              hide_image: false
             }
         ]
         author: new Backbone.Model fabricate 'user'
@@ -115,3 +123,18 @@ describe 'ArticleView', ->
     it 'removes the loading spinner after loading', ->
       @view.renderEmbedSections()
       @view.$('.article-section-embed').html().should.not.containEql 'loading-spinner'
+
+  describe '#renderCalloutSections', ->
+
+    it 'renders callout content from the article', ->
+      Backbone.sync.restore()
+      sinon.stub Backbone, 'sync'
+
+      Backbone.sync
+        .onCall 0
+        .yieldsTo 'success', article = fabricate 'article', { thumbnail_title: 'Callout title' }
+        .returns Q.resolve(article)
+
+      @view.renderCalloutSections()
+        .then =>
+          @view.$('.article-section-callout-container').html().should.containEql 'Callout title'
