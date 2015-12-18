@@ -69,15 +69,16 @@ if combinedItems.length >= 4
       +1up(eSet.get('items').first())
       hr
   .fair-overview-curator
-    h2.overview-section-heading-small Art world insiders share their selections
-    .curator-picks-container
-      for set in primarySets.where({ key: 'curator' })
-        for item in set.get('items').models
-          a.small-section( href=item.get('href'), class=set.layoutStyle(set.get('items').length) )
-            img( src=item.imageUrl('small_square') )
-            h2.section-heading= item.get('title')
-            if item.get('subtitle')
-              .section-subheading= item.get('subtitle')
+    if primarySets.where({ key: 'curator' }).length > 0
+      h2.overview-section-heading-small Art world insiders share their selections
+      .curator-picks-container
+        for set in primarySets.where({ key: 'curator' })
+          for item in set.get('items').models
+            a.small-section( href=item.get('href'), class=set.layoutStyle(set.get('items').length) )
+              img( src=item.imageUrl('small_square') )
+              h2.section-heading= item.get('title')
+              if item.get('subtitle')
+                .section-subheading= item.get('subtitle')
     .overview-posts-link-container
       a.overview-posts-link( href=profile.href() + "/articles") See All Articles
 else if combinedItems.length == 3
