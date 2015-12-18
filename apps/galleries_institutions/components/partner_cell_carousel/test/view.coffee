@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 Partners = require '../../../../../collections/partners'
 PartnerCellView = benv.requireWithJadeify require.resolve('../../partner_cell/view'), ['template']
 PartnerCellCarouselView = benv.requireWithJadeify require.resolve('../view'), ['template']
-PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
 
 describe 'PartnerCellCarouselView', ->
 
@@ -13,6 +12,8 @@ describe 'PartnerCellCarouselView', ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
+      sinon.stub PartnerCellCarouselView::, 'setupFlickity'
       done()
 
   after ->
