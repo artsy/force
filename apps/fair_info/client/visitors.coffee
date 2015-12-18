@@ -1,36 +1,44 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-embeddedMap = require '../../../components/embedded_map/index.coffee'
+geo = require '../../../components/geo/index.coffee'
 
 module.exports = class FairInfoVisitors extends Backbone.View
+  events:
+    'click .fair-info2-get-directions-link': 'showDirections'
 
-  mapWidth: 1000
-  mapHeight: 250
-  scale: 1
-  zoom: 16
+  maybeDisplayMap: ->
+    geo.loadGoogleMaps =>
+      @$map = @$('#fair-info2-map')
 
-  events: ->
-    'click.handler .fair-info2-get-directions-link': 'onClickShowDirections'
+      if @model.location().has('coordinates')
+        { lat, lng } = @model.location().get('coordinates')
+        @displayMap lat, lng
+      else
+        @$map.remove()
 
-  initialize: (options) ->
-    @fair = options.fair
-    location = @fair.location()
-    if @fair.location()
-      @displayMap location
-    @targetBlankLinks()
+  displayMap: (lat, lng)->
+    center = new google.maps.LatLng lat, lng
 
-  displayMap: (location) ->
-    embeddedMap.init
-      location: location,
-      id: 'fair-info2-map'
+    map = new google.maps.Map @$map[0],
+      disableDefaultUI: true
+      center: center
+      zoom: 16
+      draggable: false
+      zoomControl: false
+      scrollWheel: false
+      styles: [
+        stylers: [
+          { lightness: 50 }
+          { saturation: -100 }
+        ]
+      ]
 
-    @$('.fair-info2-map-link').attr
-      'href': location.googleMapsLink()
+    marker = new google.maps.Marker
+      icon: '/show-purple-google-map-marker.png'
+      position: center
+      map: map
 
-  targetBlankLinks: ->
-    @$('a').attr target: "_blank"
-
-  onClickShowDirections: (e) ->
+  showDirections: (e) ->
     e.preventDefault()
     destination = $('.fair-info2-directions input').val()
     window.open(@fair.location().mapDirections(destination), '_blank')

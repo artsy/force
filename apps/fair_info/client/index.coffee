@@ -11,9 +11,10 @@ sd = require('sharify').data
 module.exports = class FairInfoRouter extends Backbone.Router
 
   routes:
-    ':id/info2/visitors' : 'setupFairInfoVisitorsView'
-    ':id/info2/programming' : 'setupFairInfoProgrammingView'
-    ':id/info2/events' : 'setupFairInfoEventsView'
+    ':id/info2' : 'visitors'
+    ':id/info2/visitors' : 'visitors'
+    ':id/info2/programming' : 'programming'
+    ':id/info2/events' : 'events'
 
   initialize: ->
     @fair = new Fair sd.FAIR
@@ -21,19 +22,21 @@ module.exports = class FairInfoRouter extends Backbone.Router
       model: new Profile sd.PROFILE
       fair: @fair
 
-  setupFairInfoVisitorsView: ->
-    new FairInfoVisitorsView
-      fair: @fair
+  visitors: ->
+    view = new FairInfoVisitorsView
+      model: @fair
       el: $('.fair-info2-body')
 
-  setupFairInfoProgrammingView: ->
+    view.maybeDisplayMap()
+
+  programming: ->
     new FairInfoProgrammingView
-      fair: @fair
+      model: @fair
       el: $('.fair-info-programming')
 
-  setupFairInfoEventsView: ->
+  events: ->
     new FairInfoEventsView
-      fair: @fair
+      model: @fair
       el: $('.fair-info2-events')
 
 module.exports.init = ->
