@@ -6,6 +6,7 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
+embeddedMap = require '../../../../components/embedded_map/index.coffee'
 FairInfoVisitorsView = require '../../client/visitors.coffee'
 
 describe 'FairInfoVisitorsView', ->
@@ -21,6 +22,7 @@ describe 'FairInfoVisitorsView', ->
 
   beforeEach (done) ->
     sinon.stub(window, 'open')
+    embeddedMap.init = sinon.stub()
     fair = fabricate 'fair'
     profile = fabricate 'fair_profile'
     @fair = new Fair fair
@@ -42,13 +44,12 @@ describe 'FairInfoVisitorsView', ->
     beforeEach ->
       @view.initialize({ el: $('.fair-info2-body'), profile: @profile, fair: @fair })
 
-    it 'adds map links and image src', ->
+    it 'adds embedded map', ->
       html = @view.$el.html()
-      html.should.not.containEql 'undefined'
-      html.should.not.containEql '#{'
-      html.should.containEql 'maps.google'
+      html.should.containEql 'id="fair-info2-map"'
+
+    it 'adds map google link', ->
       @view.$('.fair-info2-map-link').attr('href').should.equal @fair.location().googleMapsLink()
-      @view.$('img.map').attr('src').should.equal @fair.location().mapImageSrc(410, 150, 2, 16)
 
     it 'opens directions in google', ->
       @view.$('.fair-info2-get-directions-link').click()
