@@ -7,7 +7,7 @@ block body
     .fair-info2-body
       .fair-info2-map
         if fair.get('location')
-          a.fair-info2-map-link( target="_blank" )
+          a.fair-info2-map-link( target="_blank" href=fair.location().googleMapsLink() )
             #fair-info2-map
 
       .fair-info2-content
