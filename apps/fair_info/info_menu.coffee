@@ -34,7 +34,7 @@ module.exports = class InfoMenu
 
   fetchEvents: ->
     Q.promise (resolve) =>
-      events = new FairEvents [], { fairId: res.locals.fair.id }
+      events = new FairEvents [], { fairId: @fair.id }
       events.fetch
         error: ->
           resolve events: false
