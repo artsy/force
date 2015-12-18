@@ -1,10 +1,10 @@
 sd = require('sharify').data
-mapapi = require('google-maps-api')(sd.GOOGLE_MAPS_API_KEY)
-geocode = require('google-maps-api/geocode')
 
 module.exports =
   init: ({ location, id }) ->
     return unless sd.GOOGLE_MAPS_API_KEY
+    mapapi = require('google-maps-api')(sd.GOOGLE_MAPS_API_KEY)
+    geocode = require('google-maps-api/geocode')
 
     mapapi().then ->
       if location.get('coordinates')
