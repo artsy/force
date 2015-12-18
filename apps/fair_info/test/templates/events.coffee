@@ -24,7 +24,7 @@ describe 'Events templates', ->
 
     it 'should render event date and time', ->
       @html.should.containEql 'Saturday, March 8'
-      @html.should.containEql '12:15-12:30PM'
+      @html.should.containEql '5:15-5:30PM'
 
     it 'should render event details', ->
       @html.should.containEql 'Welcome'
