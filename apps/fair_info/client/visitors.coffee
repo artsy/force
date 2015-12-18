@@ -1,10 +1,12 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
+embeddedMap = require '../../../components/embedded_map/index.coffee'
+
 module.exports = class FairInfoVisitors extends Backbone.View
 
-  mapWidth: 410
-  mapHeight: 150
-  scale: 2
+  mapWidth: 1000
+  mapHeight: 250
+  scale: 1
   zoom: 16
 
   events: ->
@@ -18,8 +20,10 @@ module.exports = class FairInfoVisitors extends Backbone.View
     @targetBlankLinks()
 
   displayMap: (location) ->
-    src = location.mapImageSrc(@mapWidth, @mapHeight, @scale, @zoom)
-    @$('.fair-info2-map img.map').attr('src': src) if src
+    embeddedMap.init
+      location: location,
+      id: 'fair-info2-map'
+
     @$('.fair-info2-map-link').attr
       'href': location.googleMapsLink()
 

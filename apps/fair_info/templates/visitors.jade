@@ -8,7 +8,7 @@ block body
       .fair-info2-map
         if fair.get('location')
           a.fair-info2-map-link( target="_blank" )
-            img.map
+            #fair-info2-map
 
       .fair-info2-content
         .grid-3-up
@@ -22,10 +22,10 @@ block body
               h2.visitor-title Hours
               .fair-info2-fair-hours!= fair
 
-          if fair.get('tickets_link')
+          if fair.get('tickets')
             .fair-tickets.grid-item
               h2.visitor-title Tickets
-              .fair-info2-ticket-info!= fair.get('tickets_link')
+              .fair-info2-ticket-info!= fair.get('tickets')
 
           if fair.get('location') && (fair.get('location').coordinates != null || fair.get('location').address != '')
             .fair-directions.grid-item

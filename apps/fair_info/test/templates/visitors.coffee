@@ -23,7 +23,7 @@ describe 'Visitors templates', ->
       @html.should.containEql '401 Broadway New York, New York'
 
     it 'should render map', ->
-      @html.should.containEql 'class="fair-info2-map-link"'
+      @html.should.containEql 'id="fair-info2-map"'
 
   describe 'fair without location', ->
 
@@ -31,8 +31,7 @@ describe 'Visitors templates', ->
       @fair = new Fair fabricate 'fair', location: null
       $el = render({profile: @profile, fair: @fair})
 
-      $el.should.not.containEql "class='fair-info2-map-link'"
-      $el.should.not.containEql "class='map'"
+      $el.should.not.containEql "id='fair-info2-map'"
 
   describe 'fair with contact', ->
     it 'should render contact info', ->
@@ -44,8 +43,8 @@ describe 'Visitors templates', ->
 
       render({profile: @profile, fair: @fair}).should.containEql 'href="http://google.com'
 
-  describe 'fair with tickets link', ->
+  describe 'fair with tickets', ->
     it 'should render ticket info', ->
-      @fair = new Fair fabricate 'fair', tickets_link: 'www.gettickets.com'
+      @fair = new Fair fabricate 'fair', tickets: 'Adult Tickets: $20'
 
-      render({profile: @profile, fair: @fair}).should.containEql 'Tickets'
+      render({profile: @profile, fair: @fair}).should.containEql 'Adult Tickets: $20'
