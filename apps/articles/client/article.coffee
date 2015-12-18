@@ -5,6 +5,7 @@ Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
+embedVideo = require 'embed-video'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
@@ -58,6 +59,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           sd: sd
           resize: resize
           moment: moment
+          embedVideo: embedVideo
 
         # Initialize client
         feedArticle = new ArticleView

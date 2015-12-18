@@ -22,6 +22,7 @@ artworkItemTemplate = -> require(
 editTemplate = -> require('./templates/edit.jade') arguments...
 relatedTemplate = -> require('./templates/related.jade') arguments...
 embedTemplate = -> require('./templates/embed.jade') arguments...
+calloutTemplate = -> require('./templates/callout.jade') arguments...
 
 module.exports = class ArticleView extends Backbone.View
 
@@ -41,6 +42,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupFooterArticles()
     @setupStickyShare()
     @renderEmbedSections()
+    @renderCalloutSections()
 
     @setupArticleWaypoints()
     @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
@@ -115,6 +117,18 @@ module.exports = class ArticleView extends Backbone.View
           else
             $embedSectionContainer.append embedTemplate url: section.url, height: section.height
           $embedSection.children('.loading-spinner').remove()
+
+  renderCalloutSections: =>
+    Q.allSettled( for section in @article.get('sections') when section.type is 'callout'
+      new Article(id: section.article).fetch()
+    ).then (articles) =>
+      i = 0
+      for section in @article.get('sections') when section.type is 'callout'
+        $calloutSection = $(".article-section-callout-container")[i]
+        $($calloutSection).append calloutTemplate
+          section: section
+          calloutArticle: new Article(articles[i].value) if articles[i].state is 'fulfilled'
+        i = i + 1
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
