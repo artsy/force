@@ -6,7 +6,6 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
-embeddedMap = require '../../../../components/embedded_map/index.coffee'
 FairInfoVisitorsView = require '../../client/visitors.coffee'
 
 describe 'FairInfoVisitorsView', ->
