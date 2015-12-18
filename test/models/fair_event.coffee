@@ -17,4 +17,4 @@ describe 'FairEvent', ->
 
   describe '#formatTime', ->
     it 'returns the time in 2:00-4:00AM format', ->
-      @fairEvent.formatTime().should.equal '12:15-12:30PM'
+      @fairEvent.formatTime().should.equal '5:15-5:30PM'
