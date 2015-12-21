@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 { API_URL, CSRF_TOKEN } = require('sharify').data
 syncWithSessionId = require '../lib/sync_with_session_id.coffee'
 User = require './user.coffee'
+sd = require('sharify').data
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
@@ -40,7 +41,7 @@ module.exports = class LoggedOutUser extends User
   login: (options = {}) ->
     new Backbone.Model()
       .save @pick('email', 'password', '_csrf'), _.extend {}, options,
-        url: '/users/sign_in'
+        url: sd.AP?.loginPagePath
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
           @trigger 'login'

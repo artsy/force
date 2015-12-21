@@ -4,7 +4,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-LoggedOutUser = require '../../models/logged_out_user'
+rewire = require 'rewire'
+LoggedOutUser = rewire '../../models/logged_out_user'
 
 describe 'LoggedOutUser', ->
   before (done) ->
@@ -25,6 +26,7 @@ describe 'LoggedOutUser', ->
 
     describe '#login', ->
       it 'logs the user in', ->
+        LoggedOutUser.__set__ 'sd', AP: loginPagePath: '/users/sign_in'
         user = new LoggedOutUser email: 'foo@bar.com', password: 'foobar'
         user.isLoggedIn().should.be.false()
         user.login()

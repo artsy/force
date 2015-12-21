@@ -26,6 +26,8 @@ module.exports =
   ARTSY_SECRET: null
   FACEBOOK_ID: 'facebook-id'
   FACEBOOK_SECRET: 'facebook-secret'
+  LINKEDIN_KEY: 'linkedin-id'
+  LINKEDIN_SECRET: 'linkedin-secret'
   TWITTER_KEY: 'twitter-key'
   TWITTER_SECRET: 'twitter-secret'
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'

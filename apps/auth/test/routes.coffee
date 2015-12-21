@@ -32,13 +32,6 @@ describe 'Auth routes', ->
       routes.resetPassword @req, @res
       @res.render.args[0][0].should.equal 'reset_password'
 
-  describe '#redirectBack', ->
-    it 'redirects to the path set in the session', ->
-      @req.session.redirectTo = '/cabbies-home-page'
-      routes.redirectBack @req, @res, @next
-      @res.redirect.called.should.be.true()
-      @res.redirect.args[0][0].should.equal '/cabbies-home-page'
-
   describe '#twitterLastStep', ->
     it 'renders the last step email page', ->
       routes.twitterLastStep @req, @res

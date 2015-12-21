@@ -110,9 +110,7 @@ module.exports = (app) ->
 
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
-    signupRedirect: '/personalize'
     ARTSY_URL: API_URL
-    XAPP_TOKEN: artsyXapp.token
 
   # Static file middleware above apps & redirects to ensure we don't try to
   # fetch /assets/:pkg.js in an attempt to check for profile or redirect assets

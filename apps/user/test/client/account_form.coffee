@@ -21,6 +21,7 @@ describe 'AccountForm', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
 
+    AccountForm.__set__ 'sd', AP: {}
     @userEdit = new UserEdit fabricate 'user', paddle_number: '1234', location: fabricate '@view.location'
     @view = new AccountForm userEdit: @userEdit
     @view.render()
@@ -38,19 +39,6 @@ describe 'AccountForm', ->
       @view.$('label.user-bidder-number').text().should.containEql '1234'
 
   describe '#toggleService', ->
-    describe 'link', ->
-      beforeEach ->
-        @userEdit.set accessToken: 'x-foo-token'
-        @view.location = assign: sinon.stub(), href: 'user/edit'
-        @view.$('.settings-toggle-service[data-service="twitter"]').click()
-
-      it 'links the correct service', ->
-        @view.location.assign.args[0][0].should.containEql '/users/auth/twitter?'
-
-      describe '#toggleLinked', ->
-        it 'after linking redirects back to the user edit form', ->
-          @view.location.assign.args[0][0].should.containEql 'redirect-to='
-          @view.location.assign.args[0][0].should.containEql 'user%2Fedit'
 
     describe 'unlink', ->
       beforeEach ->
