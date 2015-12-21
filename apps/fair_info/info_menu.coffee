@@ -42,11 +42,11 @@ module.exports = class InfoMenu
           resolve events: !!collection.length
 
   fetchArticle: (urlParam, key) ->
-    Q.resolve (resolve) =>
+    Q.promise (resolve) =>
       data = {}
       data[urlParam] = @fair.id
       articles = new Articles
-      article.fetch
+      articles.fetch
         data: data
         error: ->
           resolve "#{key}": false
@@ -54,10 +54,10 @@ module.exports = class InfoMenu
           resolve "#{key}": !!collection.length
 
   fetchProgramming: ->
-    fetchArticle('fair_programming_id', 'programming')
+    @fetchArticle('fair_programming_ids', 'programming')
 
   fetchAtTheFair: ->
-    fetchArticle('fair_artsy_id', 'artsyAtTheFair')
+    @fetchArticle('fair_artsy_ids', 'artsyAtTheFair')
 
   fetchAboutTheFair: ->
-    fetchArticle('fair_about_id', 'aboutTheFair')
+    @fetchArticle('fair_about_ids', 'aboutTheFair')

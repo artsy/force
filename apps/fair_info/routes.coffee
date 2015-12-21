@@ -11,15 +11,15 @@ InfoMenu = require './info_menu.coffee'
   infoMenu = new InfoMenu fair: fair
   Q.all([
     fair.fetch(cache: true)
-    infoMenu.fetch()
-  ]).then (data) ->
-    console.log data
-    # res.locals.fair = fair
-    # res.locals.sd.FAIR = fair.toJSON()
+    infoMenu.fetch(cache: true)
+  ]).then () ->
+    res.locals.fair = fair
+    res.locals.infoMenu = infoMenu.infoMenu
+    res.locals.sd.FAIR = fair.toJSON()
     next()
-
-
-
+  .catch (error) ->
+    next()
+  .done()
 
 @index = (req, res) ->
   res.render("index")
