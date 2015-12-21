@@ -58,7 +58,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
           @$seeMore.remove()
 
         @$('.feed-large-artworks-columns').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(4)
-        @setupArtworkSaveControls artworks
+        @setupArtworkSaveControls artworks.models
     false
 
   setupArtworkImpressionTracking: (artworks=@model.artworks().models) ->
