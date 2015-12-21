@@ -99,7 +99,7 @@ describe 'PartnerLocation', ->
   describe '#googleMapsLink', ->
 
     it "returns q and hnear params for an address only location", ->
-      @partnerLocation.googleMapsLink().should.equal 'https://maps.google.com/maps?q=Address%2C+City%2C+State+00000&hnear=Address%2C+City%2C+State+00000'
+      @partnerLocation.googleMapsLink().should.equal 'https://maps.google.com/maps?q=Address%2C%20City%2C%20State%2000000&hnear=Address%2C%20City%2C%20State%2000000'
 
     it "returns only a q param for locations with coordinates", ->
       @partnerLocation.set 'coordinates', { lng: -74.0093178, lat: 40.2163901 }
