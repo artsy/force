@@ -21,7 +21,6 @@ describe 'Visitors templates', ->
       artsyAtTheFair: false,
       aboutTheFair: false
     }
-    # console.log @infoMenu.infoMenu
 
 
   describe 'fair with location', ->
