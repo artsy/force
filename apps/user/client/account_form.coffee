@@ -6,6 +6,7 @@ SubForm = require './sub_form.coffee'
 EmailPreferencesForm = require './email_prefrences_form.coffee'
 template = -> require('../templates/account.jade') arguments...
 crypto = require 'crypto'
+sd = require('sharify').data
 
 module.exports = class AccountForm extends Backbone.View
   className: 'settings-account-form'
@@ -49,7 +50,7 @@ module.exports = class AccountForm extends Backbone.View
     @setupForms()
 
   render: ->
-    @$el.html template(user: @userEdit)
+    @$el.html template(user: @userEdit, sd: sd)
     @postRender()
     this
 
