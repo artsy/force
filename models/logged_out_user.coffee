@@ -41,7 +41,7 @@ module.exports = class LoggedOutUser extends User
   login: (options = {}) ->
     new Backbone.Model()
       .save @pick('email', 'password', '_csrf'), _.extend {}, options,
-        url: sd.AP.loginPagePath
+        url: sd.AP?.loginPagePath
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
           @trigger 'login'
