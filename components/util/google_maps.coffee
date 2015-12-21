@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+qs = require('qs')
 
 # Helpers for getting Google maps urls
 module.exports =
@@ -14,10 +15,10 @@ module.exports =
     )
     if sd.GOOGLE_MAPS_API_KEY
       options.key = sd.GOOGLE_MAPS_API_KEY
-    "https://maps.googleapis.com/maps/api/staticmap?#{$.param(options)}"
+    "https://maps.googleapis.com/maps/api/staticmap?#{qs.stringify(options)}"
 
   getMapLink: (options) ->
-    "https://maps.google.com/maps?#{$.param(options)}"
+    "https://maps.google.com/maps?#{qs.stringify(options)}"
 
   getDirections: (options) ->
     if sd.GOOGLE_MAPS_API_KEY
