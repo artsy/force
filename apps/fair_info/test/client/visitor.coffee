@@ -8,6 +8,7 @@ Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
 embeddedMap = require '../../../../components/embedded_map/index.coffee'
 FairInfoVisitorsView = require '../../client/visitors.coffee'
+InfoMenu = require '../../info_menu.coffee'
 
 describe 'FairInfoVisitorsView', ->
 
@@ -27,10 +28,19 @@ describe 'FairInfoVisitorsView', ->
     profile = fabricate 'fair_profile'
     @fair = new Fair fair
     @profile = new Profile profile
+    @infoMenu = new InfoMenu fair: @fair
+    @infoMenu.infoMenu = {
+      events: true,
+      programming: false,
+      artsyAtTheFair: false,
+      aboutTheFair: false
+    }
+
     benv.render resolve(__dirname, '../../templates/visitors.jade'), {
       sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/visitors' }
       fair: @fair
       profile: @profile
+      infoMenu: @infoMenu.infoMenu
       asset: (->)
     }, =>
       @view = new FairInfoVisitorsView { el: $('.fair-info2-body'), model: @profile, fair: @fair }
