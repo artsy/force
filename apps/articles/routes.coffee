@@ -39,19 +39,22 @@ request = require 'superagent'
       res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
+      res.locals.sd.VIDEO_OPTIONS = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
+
+      # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
       unless data.article.get('author_id') is '503f86e462d56000020002cc'
         res.locals.sd.SCROLL_ARTICLE = 'static'
       if data.relatedArticles?.length
         res.locals.sd.SCROLL_ARTICLE = 'static'
-      videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
+
       if res.locals.sd.CURRENT_USER?.email? and _.contains res.locals.sd.ARTICLE.section_ids, '55550be07b8a750300db8430'
         email = res.locals.sd.CURRENT_USER?.email
         subscribed email, (cb) ->
           res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-          res.render 'article', _.extend data, embedVideo: embedVideo, videoOptions: videoOptions
+          res.render 'article', _.extend data, embedVideo: embedVideo
       else
         res.locals.sd.MAILCHIMP_SUBSCRIBED = false
-        res.render 'article', _.extend data, embedVideo: embedVideo, videoOptions: videoOptions
+        res.render 'article', _.extend data, embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'
