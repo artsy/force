@@ -11,6 +11,7 @@ block body
     #auth-artsy-logo.icon-logotype
 
     h1.small-caps Just one more step
+    .auth-page-error-message!= sd.ERROR
     form.stacked-form( method='post', action='/users/auth/twitter/email?redirect-to=/personalize' )
       input.bordered-input( type='email', placeholder='Email', name='email', autofocus )
       button.avant-garde-button-black Join Artsy

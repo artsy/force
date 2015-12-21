@@ -37,6 +37,10 @@ module.exports = class UserSettingsRouter extends Backbone.Router
   user: ->
     @view = new AccountForm @models
     @baseView.$('#settings-forms').html @view.render().$el
+    if sd.ERROR
+      $('body, html').animate {
+        scrollTop: $('#settings-auth-errors').offset().top - 100
+      }, 800
 
   profile: ->
     @view = new ProfileForm @models

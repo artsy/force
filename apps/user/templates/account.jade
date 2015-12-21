@@ -95,21 +95,20 @@ include ../components/checkbox/index
 .grouped-section
   .gs-header: h2 Linked Accounts
   .gs-body: .gs-constrain
-    #settings-auth-errors.settings-form-errors
-      //- Rendered elsewhere
+    #settings-auth-errors.settings-form-errors!= sd.ERROR
 
-    for service in ['Twitter', 'Facebook']
+    for service in ['Twitter', 'Facebook', 'Linkedin']
       .settings-split
         .ss-left
           | Link my account to #{service}
           br
           em This allows you to login with #{service}
 
-        - connected = user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
         .ss-right: a.avant-garde-button-white.settings-toggle-service(
           id="#user-link-#{service.toLowerCase()}"
+          href=sd.AP[service.toLowerCase() + 'Path']
           data-service=service.toLowerCase()
-          data-connected=connected
+          data-connected=user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
         )
           i( class="icon-#{service.toLowerCase()}" )
 

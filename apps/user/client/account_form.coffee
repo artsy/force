@@ -11,13 +11,12 @@ module.exports = class AccountForm extends Backbone.View
   className: 'settings-account-form'
 
   events:
-    'click .settings-toggle-service': 'toggleService'
+    'click .settings-toggle-service': 'unlinkService'
     'click .settings-toggle-password': 'togglePasswordForm'
 
   initialize: (options = {}) ->
     @location = location
     { @userEdit } = options
-
     @password = new Backbone.Model id: 1 # Force PUT
     @password.url = "#{API_URL}/api/v1/me/password"
     @listenTo @password, 'sync', @togglePasswordForm
@@ -26,23 +25,17 @@ module.exports = class AccountForm extends Backbone.View
     (@$password ?= $('#settings-change-password-current, #settings-change-password-new'))
       .toggle()
 
-  toggleService: (e) ->
+  unlinkService: (e) ->
     $target = $(e.currentTarget).attr 'data-state', 'loading'
-    @toggleLinked $target, $target.data('service')
-
-  toggleLinked: ($button, service) ->
-    if @userEdit.isLinkedTo service
-      @userEdit.unlinkAccount service,
-        success: ->
-          $button.attr 'data-state': null, 'data-connected': 'disconnected'
-        error: (model, response, options) =>
-          @$('#settings-auth-errors').text response.responseJSON.error
-          $button.attr 'data-state', null
-    else
-      csrfHash = crypto.createHash('sha1').update(@userEdit.get 'accessToken').digest('hex')
-      @location.assign "/users/auth/#{service}?" +
-        "redirect-to=#{encodeURIComponent(@location.href)}&" +
-        "state=#{csrfHash}"
+    service = $target.data('service')
+    return true unless @userEdit.isLinkedTo service
+    e.preventDefault()
+    @userEdit.unlinkAccount service,
+      success: ->
+        $(e.currentTarget).attr 'data-state': null, 'data-connected': 'disconnected'
+      error: (model, response, options) =>
+        @$('#settings-auth-errors').text response.responseJSON.error
+        $(e.currentTarget).attr 'data-state', null
 
   setupForms: ->
     # Changing your password logs you out so we direct to login after changing password

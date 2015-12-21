@@ -14,15 +14,3 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
 
 @twitterLastStep = (req, res) ->
   res.render 'twitter_email'
-
-@redirectBack = (req, res, next) ->
-  url = req.body['redirect-to'] or
-        req.query['redirect-to'] or
-        req.params.redirect_uri or
-        req.session.redirectTo or
-        '/'
-
-  res.redirect sanitizeRedirect(url)
-
-@logout = (req, res, next) ->
-  res.status(200).send msg: 'success'
