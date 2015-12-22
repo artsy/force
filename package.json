@@ -17,7 +17,7 @@
     "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-newrelic": "git://github.com/artsy/artsy-newrelic.git",
-    "artsy-passport": "git://github.com/artsy/artsy-passport.git",
+    "artsy-passport": "^1.0.5",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^1.4.2",
     "backbone": "^1.2.3",

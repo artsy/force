@@ -172,9 +172,8 @@
       "resolved": "git://github.com/artsy/artsy-newrelic.git#af87a882c2918b3f14f9f6d75a76ed9848a755d6"
     },
     "artsy-passport": {
-      "version": "1.0.4",
-      "from": "git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#2326a6785052475b76725b0f15b4ed6df2cebb75"
+      "version": "1.0.5",
+      "from": "artsy-passport@>=1.0.5 <2.0.0"
     },
     "artsy-xapp": {
       "version": "1.0.4",
