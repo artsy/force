@@ -8,6 +8,7 @@ Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
 FairEvent = require '../../../../models/fair_event.coffee'
 FairEvents = require '../../../../collections/fair_events.coffee'
+InfoMenu = require '../../info_menu.coffee'
 
 
 describe 'FairInfoEventsView', ->
@@ -29,6 +30,13 @@ describe 'FairInfoEventsView', ->
     @profile = new Profile profile
     @fair_event = new FairEvent fabricate('fair_event'), { fairId: 'armory-show-2013' }
     @fair_events = new FairEvents [@fair_event], { fairId: 'armory-show-2013' }
+    @infoMenu = new InfoMenu fair: @fair
+    @infoMenu.infoMenu = {
+      events: true,
+      programming: false,
+      artsyAtTheFair: false,
+      aboutTheFair: false
+    }
     benv.render resolve(__dirname, '../../templates/events.jade'), {
       sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/events' }
       fair: @fair
@@ -38,6 +46,7 @@ describe 'FairInfoEventsView', ->
         Saturday:
           [ @fair_event ]
       }
+      infoMenu: @infoMenu.infoMenu
     }, =>
       sinon.stub(@FairInfoEventsView.prototype, 'initializeBlurb')
       @view = new @FairInfoEventsView { el: $('.fair-info2-body'), model: @profile, fair: @fair }

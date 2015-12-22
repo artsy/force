@@ -6,6 +6,7 @@ Fair = require '../../../../models/fair'
 FairEvent = require '../../../../models/fair_event'
 FairEvents = require '../../../../collections/fair_events'
 template = require('jade').compileFile(require.resolve '../../templates/events.jade')
+InfoMenu = require '../../info_menu.coffee'
 data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info2/events'}, markdown: (->)
 
 render = (moreData) ->
@@ -15,12 +16,19 @@ describe 'Events templates', ->
   before ->
     @profile = new Profile fabricate 'profile'
     @fair = new Fair fabricate 'fair'
+    @infoMenu = new InfoMenu fair: @fair
+    @infoMenu.infoMenu = {
+      events: true,
+      programming: false,
+      artsyAtTheFair: false,
+      aboutTheFair: false
+    }
     @fairEvent = new FairEvent fabricate('fair_event'), { fairId: 'armory-show-2013' }
     @fairEvents = new FairEvents [@fairEvent], { fairId: @fair.id }
 
   describe 'fair with events', ->
     beforeEach ->
-      @html = render({ profile: @profile, fair: @fair, fairEvents: @fairEvents, sortedEvents: @fairEvents.sortedEvents() })
+      @html = render({ profile: @profile, fair: @fair, fairEvents: @fairEvents, sortedEvents: @fairEvents.sortedEvents(), infoMenu: @infoMenu.infoMenu })
 
     it 'should render event date and time', ->
       @html.should.containEql 'Saturday, March 8'
