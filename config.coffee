@@ -24,12 +24,12 @@ module.exports =
   SESSION_COOKIE_KEY: 'force.sess'
   ARTSY_ID: null
   ARTSY_SECRET: null
-  FACEBOOK_ID: 'facebook-id'
-  FACEBOOK_SECRET: 'facebook-secret'
-  LINKEDIN_KEY: 'linkedin-id'
-  LINKEDIN_SECRET: 'linkedin-secret'
-  TWITTER_KEY: 'twitter-key'
-  TWITTER_SECRET: 'twitter-secret'
+  FACEBOOK_ID: null
+  FACEBOOK_SECRET: null
+  LINKEDIN_KEY: null
+  LINKEDIN_SECRET: null
+  TWITTER_KEY: null
+  TWITTER_SECRET: null
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   S3_KEY: null
   S3_SECRET: null
