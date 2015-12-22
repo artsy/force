@@ -119,16 +119,16 @@ module.exports = class ArticleView extends Backbone.View
           $embedSection.children('.loading-spinner').remove()
 
   renderCalloutSections: =>
-    Q.allSettled( for section in @article.get('sections') when section.type is 'callout'
+    Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
       new Article(id: section.article).fetch()
     ).then (articles) =>
-      i = 0
-      for section in @article.get('sections') when section.type is 'callout'
-        $calloutSection = $(".article-section-callout-container")[i]
+      articles = _.pluck(_.reject(articles, (article) -> article.state is 'rejected'), 'value')
+      for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
+        $calloutSection = $(".article-section-callout-container[data-id=#{section.article}]")
+        article = _.find articles, { id: section.article }
         $($calloutSection).append calloutTemplate
           section: section
-          calloutArticle: new Article(articles[i].value) if articles[i].state is 'fulfilled'
-        i = i + 1
+          calloutArticle: new Article article if article
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500

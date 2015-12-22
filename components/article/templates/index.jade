@@ -59,6 +59,16 @@ mixin fullscreen(article)
             .article-lead-paragraph.article-fullscreen-intro
               != article.get('hero_section').intro
 
+mixin callout(section)
+  .article-section-callout
+    if !section.hide_image && section.thumbnail_url
+      img( src=section.thumbnail_url )
+    .article-section-callout-text(
+      class=("article-section-callout-pullquote #{section.hide_image ? 'article-section-callout-no-image' : ''}")
+    )
+      if section.text
+        .article-section-callout-title= section.text
+
 //- Super article header needs to be outside the article-container
 if superArticle
   include ./super_article_sticky_header.jade
@@ -118,8 +128,11 @@ if superArticle
               .article-embed-container
                 //- Rendered on client
           when 'callout'
-            .article-section-callout-container( data-id=section.article )
-              //- Rendered on client
+            if section.article.length > 0
+              .article-section-callout-container( data-id=section.article )
+                //- Rendered on client
+            else
+              +callout(section)
 
     .main-layout-container
       //- Footer social buttons
