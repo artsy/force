@@ -117,4 +117,5 @@ ViewHelpers = require './helpers/view_helpers.coffee'
     res.locals.jsonLD = ViewHelpers.toJSONLD data.partner_show
     data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
     res.render 'index', data
-  .catch next
+  .catch ->
+    next()
