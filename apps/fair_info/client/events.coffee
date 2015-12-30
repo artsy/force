@@ -1,10 +1,15 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
 BlurbView = require '../../../components/blurb/view.coffee'
+openMapModal = require '../components/map_modal/index.coffee'
+FairEvents = require '../../../collections/fair_events.coffee'
 
 module.exports = class FairInfoEvents extends Backbone.View
+  events:
+    'click .js-open-fair-events': 'initializeModal'
 
   initialize: (options) ->
+    @events = new FairEvents sd.FAIREVENTS, {fairId: sd.FAIR.id}
     @initializeBlurb()
 
   initializeBlurb: ->
@@ -16,3 +21,7 @@ module.exports = class FairInfoEvents extends Backbone.View
           lineCount: 3
           resizeHeight: '100%'
         )
+
+  initializeModal: (e) ->
+    e.preventDefault()
+    openMapModal model: @events.get $(e.currentTarget).attr('data-id')
