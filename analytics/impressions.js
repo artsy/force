@@ -3,11 +3,19 @@ var trackedIds = [];
 var visibleArtworkIds = function() {
 
   // Find all of the "artwork item" components that are visible
+  // Extra verbose for clarity's sake
   var ids = $('.artwork-item').filter(function() {
-    var belowViewportTop = $(this).offset().top > $(window).scrollTop();
-    var aboveViewportBottom = $(this).offset().top <
-      $(window).scrollTop() + $(window).height();
-    return belowViewportTop && aboveViewportBottom;
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+    var artworkTop = $(this).offset().top;
+    var artworkBottom = artworkTop + $(this).outerHeight();
+
+    // Either artwork top or artwork bottom is below the top
+    // of the browser and above the fold.
+    var topInView = artworkTop > viewportTop && artworkTop < viewportBottom;
+    var bottomInView = artworkBottom > viewportTop && artworkBottom < viewportBottom;
+
+    return topInView || bottomInView;
   }).map(function() {
     return $(this).attr('data-id');
   }).toArray();
@@ -29,4 +37,4 @@ var trackImpressions = function() {
 };
 
 trackImpressions();
-$(window).on('scroll', _.debounce(trackImpressions, 500));
+$(window).on('scroll', _.throttle(trackImpressions, 200));
