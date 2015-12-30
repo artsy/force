@@ -2,7 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Partners = require '../../../../collections/partners.coffee'
-fetch = require '../fetch_carousel_partners/fetch.coffee'
+fetchCarouselPartners = require '../fetch_carousel_partners/fetch.coffee'
 
 module.exports = (type) ->
   partners = new Partners
@@ -11,16 +11,9 @@ module.exports = (type) ->
     $.get '/geo/nearest', ({ name, latitude, longitude }) ->
       typeName = if type is 'gallery' then 'Galleries' else 'Institutions'
       category = new Backbone.Model name: "Featured #{typeName} near #{name}"
-      options = near: "#{latitude},#{longitude}"
+      options = near: "#{latitude},#{longitude}", type: type
 
-      Q(
-
-        if type is 'gallery'
-          fetch.galleries(options)
-        else
-          fetch.institutions(options)
-
-      ).then (partners) ->
+      fetchCarouselPartners(options).then (partners) ->
         Q.all _.flatten partners.map (partner) -> [
           partner.related().profile.fetch()
           partner.related().locations.fetch()

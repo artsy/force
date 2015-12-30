@@ -14,9 +14,6 @@ block body
         | Browse #{type === 'gallery' ? 'Galleries' : 'Institutions'}
 
       nav.galleries-institutions-subnav
-        if showAZLink
-          a.fine-faux-underline( href='/#{type}-a-z' )
-            | A–Z
         a.fine-faux-underline( href='/#{type}-partnerships' )
           | Partner with Artsy
         if type === 'gallery'

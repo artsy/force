@@ -1,46 +1,70 @@
 Backbone = require 'backbone'
-PartnersSearch = require '../../components/partners_search/partners_search.coffee'
-PartnerCategories = require '../../../../collections/partner_categories.coffee'
-{CATEGORIES} = require('sharify').data
+{ CATEGORIES, MAIN_PROFILES, CURRENT_USER } = require('sharify').data
 { FeaturedCities } = require 'places'
-
-filtersTemplate = -> require('../../components/partners_search/search_filters.jade') arguments...
-resultsTemplate = -> require('../../components/partners_search/results.jade') arguments...
+{ Following } = require '../../../../components/follow_button/index.coffee'
+Profiles = require '../../../../collections/profiles.coffee'
+PartnerCategories = require '../../../../collections/partner_categories.coffee'
+LandingCarouselView = require './landing.coffee'
+PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
+SearchResultsView = require '../../components/search_results/view.coffee'
+filtersTemplate = -> require('../../templates/search_filters.jade') arguments...
+resultsTemplate = -> require('../../components/search_results/template.jade') arguments...
 
 module.exports = class PartnersSearchView extends Backbone.View
 
-  el: $('#partners-search')
+  el: $('.galleries-institutions-page')
 
   events:
     'click .partner-search-filter-item' : 'filterSelected'
 
   initialize: ({ @params }) ->
+    @listenTo @params, 'change firstLoad', @renderFilters
+    @listenTo @params, 'change', @updateUrl
+
     @allCategories = new PartnerCategories CATEGORIES
     @allCities = FeaturedCities
 
-    @search = new PartnersSearch
+    if CURRENT_USER?
+      following = new Following [], kind: 'profile'
+      mainCarouselIds = _.pluck MAIN_PROFILES, 'id'
+      following.syncFollows mainCarouselIds
 
-    @listenTo @search.get('partners'), 'sync', @renderResults
+    new LandingCarouselView
+      following: following
+      params: @params
+      el: $('.js-partner-category-carousels')
 
-    @$searchResults = @$('.search-results')
-    @$filters = @$('.search-filters')
+    new PrimaryCarousel
+      following: following
+      params: @params
+      profiles: new Profiles MAIN_PROFILES
+      el: @$('.galleries-institutions-primary-carousel')
 
-  renderFilters: (params) ->
-    @$filters.html filtersTemplate selectedFilters:params.pick('category', 'location'), categories: @allCategories.models, locations: @allCities
+    new SearchResultsView
+      params: @params
+      el: @$('.galleries-institutions-search-results')
 
-  renderResults: ->
-    @$searchResults.html resultsTemplate partners: @search.get('partners').models
+    @$filters = @$('.galleries-institutions-search-filters')
+    @params.trigger 'firstLoad', @params
 
-  update: ->
-    @renderFilters @params
-    @search.fetch @params
+  renderFilters: =>
+    @$filters.html filtersTemplate
+      selectedFilters:@params.currentSelection()
+      categories: @allCategories.models
+      locations: @allCities
+
+  updateUrl: ->
+    if @params.hasSelection()
+      window.history.replaceState {}, null, "/#{sd.PARTNERS_ROOT}?#{@params.urlQueryString()}"
+    else
+      window.history.replaceState {}, null, "/#{sd.PARTNERS_ROOT}"
 
   filterSelected: (e) =>
     e.preventDefault()
     target = $(e.target)
     key = target.attr('data-filter')
 
-    if (value = target.attr 'data-id') is 'all'
-      @params.unset key
-    else
+    if (value = target.attr 'data-id')
       @params.set key, value
+    else
+      @params.unset key

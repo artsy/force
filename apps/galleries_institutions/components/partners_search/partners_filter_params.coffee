@@ -11,8 +11,11 @@ module.exports = class PartnersFilterParams extends Backbone.Model
 
   # Format params for the API request
 
-  hasFilterParams: ->
-    @get 'location' or @get 'category'
+  currentSelection: ->
+    @pick 'category', 'location'
+
+  hasSelection: ->
+    not _.isEmpty @currentSelection()
 
   urlQueryString: ->
-    qs.stringify @pick 'location', 'category'
+    qs.stringify @currentSelection()

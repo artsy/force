@@ -1,11 +1,20 @@
 extends ./main
 
 block content
-  include ../components/primary_carousel/template
+  .galleries-institutions-primary-carousel.js-galleries-institutions-primary-carousel.gi-carousel-arrow-reveal
+    if profiles && profiles.length
+      include ../components/primary_carousel/template
 
-  .js-partner-category-carousels
-    each carousel in carousels
-      - var category = carousel.category
-      - var partners = carousel.partners.models
-      .partner-category-carousel
-        include ../components/partner_cell_carousel/template
+  .galleries-institutions-search-filters
+    include ./search_filters
+
+  .galleries-institutions-main-content
+    .galleries-institutions-carousels.js-partner-category-carousels
+      if carousels && carousels.length
+        each carousel in carousels
+          - var category = carousel.category
+          - var partners = carousel.partners.models
+          .partner-category-carousel
+            include ../components/partner_cell_carousel/template
+
+    .galleries-institutions-search-results
