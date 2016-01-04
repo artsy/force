@@ -64,6 +64,9 @@ request = require 'superagent'
 @redirectArticle = (req, res, next) ->
   res.redirect 301, req.url.replace 'article', 'articles'
 
+@redirectMagazine = (req, res, next) ->
+  res.redirect 301, req.url.replace 'magazine', 'articles'
+
 @section = (req, res, next) ->
   new Section(id: req.params.slug).fetch
     error: -> next()
