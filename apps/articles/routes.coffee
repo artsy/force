@@ -44,7 +44,7 @@ request = require 'superagent'
       # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
       if data.relatedArticles?.length
         res.locals.sd.SCROLL_ARTICLE = 'static'
-      else unless data.article.get('author_id') is '503f86e462d56000020002cc'
+      else if data.article.get('author_id') isnt '503f86e462d56000020002cc'
         res.locals.sd.SCROLL_ARTICLE = 'static'
       else
         res.locals.sd.SCROLL_ARTICLE = 'infinite'
