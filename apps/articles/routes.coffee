@@ -42,10 +42,12 @@ request = require 'superagent'
       res.locals.sd.VIDEO_OPTIONS = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
 
       # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-      unless data.article.get('author_id') is '503f86e462d56000020002cc'
-        res.locals.sd.SCROLL_ARTICLE = 'static'
       if data.relatedArticles?.length
         res.locals.sd.SCROLL_ARTICLE = 'static'
+      else if data.article.get('author_id') is not '503f86e462d56000020002cc'
+        res.locals.sd.SCROLL_ARTICLE = 'static'
+      else
+        res.locals.sd.SCROLL_ARTICLE = 'infinite'
 
       if res.locals.sd.CURRENT_USER?.email? and _.contains res.locals.sd.ARTICLE.section_ids, '55550be07b8a750300db8430'
         email = res.locals.sd.CURRENT_USER?.email
