@@ -46,7 +46,7 @@ module.exports = class ArticleView extends Backbone.View
 
     @setupArticleWaypoints()
     @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
-    @renderSuperArticle() if sd.RELATED_ARTICLES
+    @renderSuperArticle() if sd.RELATED_ARTICLES.length > 0
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
@@ -306,6 +306,8 @@ module.exports = class ArticleView extends Backbone.View
     @$('.article-sa-sticky-header').mouseleave =>
       @$superArticleNavToc.css 'max-height', '0px'
       @$superArticleNavToc.removeClass('visible')
+
+    @$('footer').hide()
 
     throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
     @$window.on 'scroll', throttledScroll
