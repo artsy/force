@@ -34,5 +34,25 @@
     analytics.track("Viewed 'Comparables'");
   });
 
+  analyticsHooks.on('artwork:zoom', function(){
+    analytics.track('Clicked to zoom in on artwork');
+  });
+
+  analyticsHooks.on('artwork:view-in-room', function(){
+    analytics.track("Entered 'View In Room'");
+  });
+
+  analyticsHooks.on('artwork:contact-gallery', function(){
+    analytics.track("Clicked 'Contact Gallery'");
+  });
+
+  analyticsHooks.on('artwork:contact-specialist', function(){
+    analytics.track("Clicked 'Contact Artsy Specialist'");
+  });
+
+  analyticsHooks.on('artwork:confirm-registration', function(){
+    analytics.track("Showed 'Confirm registration on artwork page'");
+  });
+
 })();
 
