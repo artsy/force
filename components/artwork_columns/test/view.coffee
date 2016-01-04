@@ -55,6 +55,14 @@ describe 'ArtworkColumns', ->
       @view.appendArtworks _.times 4, (-> new Artwork fabricate 'artwork')
       @view.length().should.equal 8
 
+  describe '#_columnWidth',  ->
+
+    it 'total width of columns should be less than container width', ->
+      @view.$el.width 1000
+
+      totalWidth = (@view._columnWidth() * @view.numberOfColumns) + ((@view.numberOfColumns - 1) * @view.gutterWidth)
+      totalWidth.should.be.below @view.$el.width()
+
   describe '#setUserSavedArtworks', ->
 
     describe 'with a current user', ->
