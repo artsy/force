@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-analytics = require '../../../lib/analytics.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
@@ -60,13 +59,10 @@ module.exports = class BidForm extends ErrorHandlingForm
           _.delay =>
             @pollForBidderPositionProcessed(model)
           , 1000
-          analytics.track.funnel 'Confirmed bid on bid page'
         error: (model, response) =>
           @showError 'Error placing your bid', response
     else
       @showError "Your bid must be higher than #{@bidderPositions.minBid()}"
-
-    analytics.track.click 'Clicked "Confirm Bid" on bid page'
 
   pollForBidderPositionProcessed: (bidderPosition) ->
     bidderPosition.fetch
