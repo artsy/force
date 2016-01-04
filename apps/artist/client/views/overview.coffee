@@ -1,7 +1,6 @@
 _ = require 'underscore'
 { STATUSES } = require('sharify').data
 Backbone = require 'backbone'
-analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
 # Sub-header
