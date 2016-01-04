@@ -1,5 +1,5 @@
 if (location.pathname.match('/artist')) {
-  analytics.track('Artist page', { nonInteraction: 1 });
+  analytics.track('Artist page', { id: sd.ARTIST.id, nonInteraction: 1 });
 
   $('#artist-nav-list a, #artist-tabs a').click(function(e){
     tab = $(e.target).text();
