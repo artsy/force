@@ -46,7 +46,7 @@ module.exports = class ArticleView extends Backbone.View
 
     @setupArticleWaypoints()
     @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
-    @renderSuperArticle() if sd.RELATED_ARTICLES.length > 0
+    @renderSuperArticle() if sd.RELATED_ARTICLES?.length > 0
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
 
