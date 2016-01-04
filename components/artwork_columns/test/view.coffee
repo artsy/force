@@ -35,6 +35,7 @@ describe 'ArtworkColumns', ->
       new Artwork fabricate 'artwork'
       new Artwork fabricate 'artwork'
     ])
+
     @view = new ArtworkColumnsView
       el: $('body')
       collection: @artworks
@@ -54,6 +55,18 @@ describe 'ArtworkColumns', ->
       @view.length().should.equal 4
       @view.appendArtworks _.times 4, (-> new Artwork fabricate 'artwork')
       @view.length().should.equal 8
+
+  describe '#_columnWidth',  ->
+
+    beforeEach ->
+      sinon.stub($.fn, 'width').returns 1280
+
+    afterEach ->
+      $.fn.width.restore()
+
+    it 'total width of columns should be less than container width', ->
+      totalWidth = (@view._columnWidth() * @view.numberOfColumns) + ((@view.numberOfColumns - 1) * @view.gutterWidth)
+      totalWidth.should.be.below @view.$el.width()
 
   describe '#setUserSavedArtworks', ->
 

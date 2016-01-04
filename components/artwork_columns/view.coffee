@@ -51,7 +51,9 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   _columnWidth: ->
     width = @totalWidth or @$el.width()
-    Math.floor((width - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns)
+    colWidth = Math.floor((width - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns)
+    totalWidth = (colWidth * @numberOfColumns) + ((@numberOfColumns - 1) * @gutterWidth)
+    return (if totalWidth <= @$el.innerWidth() then colWidth - 1 else colWidth)
 
   sizeColumns: =>
     margin = Math.floor(@gutterWidth / 2)
