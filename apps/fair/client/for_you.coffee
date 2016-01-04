@@ -11,7 +11,7 @@ Artists = require '../../../collections/artists.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
@@ -132,7 +132,8 @@ module.exports = class ForYouView extends Backbone.View
         _.extend(additionalParams, size: 3)
       success: (items) =>
         if items.models
-          analytics.track.click "Display following exhibitors at the fair"
+          analyticsHooks.trigger 'fair:display-following'
+
         feed.handleFetchedItems items.models
 
   fetchAndAppendShows: (feedItems) ->
