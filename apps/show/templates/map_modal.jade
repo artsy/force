@@ -1,6 +1,6 @@
 .map-modal-show-information
   .map-modal-partner-name
-    a.entity-link( href= model.get('partner').href )
+    a.entity-link( href= model.partnerHref() )
       = model.get('partner').name
   .map-modal-partner-location-address
     = model.location().get('address')
