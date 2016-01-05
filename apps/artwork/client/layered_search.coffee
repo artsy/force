@@ -2,9 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { Markdown } = require 'artsy-backbone-mixins'
-analytics = require '../../../lib/analytics.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+
 template = -> require('../templates/layered_search.jade') arguments...
 
 module.exports.Layer = class Layer extends Backbone.Model
@@ -91,7 +92,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @$layeredSearchResults.html '<div class="loading-spinner"></div>'
     @fetchAndRenderActiveLayer()
 
-    analytics.track.click "Switched to related artworks: #{@__activeLayer__.label()}" if e
+    analyticsHooks.trigger('switched:layer', label: @__activeLayer__.label()) if e
 
   fetchAndRenderActiveLayer: ->
     @$layerGeneButton.attr 'data-state', 'inactive'

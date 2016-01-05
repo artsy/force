@@ -6,7 +6,7 @@ FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 FeedView = require '../../../components/feed/client/feed.coffee'
 Artists = require '../../../collections/artists.coffee'
 mediator = require '../../../lib/mediator.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ForYouView = require './for_you.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
@@ -40,7 +40,7 @@ module.exports = class Overview extends Backbone.View
   onFetchFollowingArtists: (followingArtists) =>
     artistNames = @formatArtists followingArtists, 2
     if artistNames
-      analytics.track.click "Display following artists at the fair"
+      analyticsHooks.trigger 'fair:display-following-artists'
       @$('.container-left .large-section-subheading').text "Works by #{artistNames}"
 
   formatArtists: (followArtists, max=Infinity) ->

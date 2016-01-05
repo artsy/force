@@ -1,5 +1,5 @@
 StepView = require './step.coffee'
-analytics = require '../../../../lib/analytics.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 UserInterestsView = require '../../../../components/user_interests/view.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
 template = -> require('../../templates/bookmarks.jade') arguments...
@@ -19,9 +19,10 @@ module.exports = class BookmarksView extends StepView
 
     @listenTo @userInterests, 'add remove', @setSkipLabel
     @listenTo @userInterests, 'add', ->
-      analytics.track.funnel 'Added an artist to their collection from /personalize', label: "User:#{@user.id}"
+      analyticsHooks.trigger 'personalize:added-artist'
+
     @listenTo @userInterestsView, 'uncollect', ->
-      analytics.track.funnel 'Removed an artist from their collection from /personalize', label: "User:#{@user.id}"
+      analyticsHooks.trigger 'personalize:removed-artist'
 
   render: ->
     @$el.html template(state: @state)

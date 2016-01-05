@@ -1,7 +1,8 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 infoTemplate = -> require('../templates/info.jade') arguments...
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class FairInfo extends Backbone.View
 
@@ -17,7 +18,7 @@ module.exports = class FairInfo extends Backbone.View
     @trackFairVisit()
 
   trackFairVisit: ->
-    analytics.track.funnel "Viewed fair page #{@fair.get('name')}"
+    analytics.ready -> analyticsHooks.trigger 'fair:impression'
 
   displayMap: (location) ->
     src = location.mapImageSrc(@mapWidth, @mapHeight)

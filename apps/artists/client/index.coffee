@@ -2,7 +2,6 @@
 Artist = require '../../../models/artist.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 CarouselView = require './carousel.coffee'
-analytics = require './analytics.coffee'
 
 module.exports.init = ->
   if CURRENT_USER?
@@ -30,5 +29,3 @@ module.exports.init = ->
     following.syncFollows featuredArtistFollowIds.concat(trendingArtistFollowIds)
 
   new CarouselView el: $('.artists-featured-carousel')
-
-  analytics()

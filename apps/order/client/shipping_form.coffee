@@ -3,7 +3,8 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 sd = require('sharify').data
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
-analytics = require('../../../lib/analytics.coffee')
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 
 module.exports = class ShippingForm extends ErrorHandlingForm
@@ -33,7 +34,7 @@ module.exports = class ShippingForm extends ErrorHandlingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    analyticsHooks.trigger 'order:submitted', label: modelNameAndIdToLabel('artwork', @model.get('id'))
 
     if @validateForm()
       @model.update @orderAttrs(),

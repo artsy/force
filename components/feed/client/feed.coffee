@@ -11,7 +11,6 @@ FollowProfiles = require '../../../collections/follow_profiles.coffee'
 FeedItem = require '../models/feed_item.coffee'
 FeedItemView = require('./feed_item.coffee').FeedItemView
 feedItemsTemplate = -> require('../templates/feed_items.jade') arguments...
-FollowProfileButton = require '../../../apps/partners/client/follow_profiles_button.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class FeedView extends Backbone.View
@@ -151,14 +150,6 @@ module.exports = class FeedView extends Backbone.View
     @$feedItems.append @getFeedItemHtml(items)
     @lastItem = @$('.feed-item:last')
     @handleDoneFetching?()
-
-  initFollowButton: (profile, el) ->
-    new FollowProfileButton
-      el: el
-      model: profile
-      collection: @followProfiles
-      analyticsFollowMessage: @analyticsFollowMessage
-      analyticsUnfollowMessage: @analyticsUnfollowMessage
 
   infiniteScroll: (scrollTop) ->
     @scrollTop = scrollTop || @$window.scrollTop()
