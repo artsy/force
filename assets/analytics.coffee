@@ -29,6 +29,7 @@ $ -> analytics.ready ->
   require '../analytics/fair.js'
   require '../analytics/following.js'
   require '../analytics/partner.js'
+  require '../analytics/checkout.js'
 
   if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'
