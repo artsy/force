@@ -40,7 +40,7 @@ module.exports =
 
     # Fallback in case model doesn't have display_model
     displayModel = model.get('display_model') or 'displayModelUnknown'
-    analyticsHooks 'followable:followed',
+    analyticsHooks.trigger 'followable:followed',
       message: @analyticsFollowMessage
       label: modelNameAndIdToLabel(displayModel, model.get('id'))
 
@@ -50,6 +50,6 @@ module.exports =
     @following.unfollow id
 
     displayModel = model.get('display_model') or 'displayModelUnknown'
-    analyticsHooks 'followable:followed',
+    analyticsHooks.trigger 'followable:followed',
       message: @analyticsFollowMessage
       label: modelNameAndIdToLabel(displayModel, model.get('id'))
