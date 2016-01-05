@@ -31,6 +31,7 @@ request = require 'superagent'
     accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (data) ->
+      debugger
       if req.params.slug isnt data.article.get('slug')
         return res.redirect "/article/#{data.article.get 'slug'}"
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
