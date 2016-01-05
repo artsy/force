@@ -24,6 +24,7 @@ describe 'Events templates', ->
       aboutTheFair: false
     }
     @fairEvent = new FairEvent fabricate('fair_event'), { fairId: 'armory-show-2013' }
+    @fairEvent.set venue_address: '711 12th Ave, New York, NY 10019'
     @fairEvents = new FairEvents [@fairEvent], { fairId: @fair.id }
 
   describe 'fair with events', ->
