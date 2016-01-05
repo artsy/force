@@ -46,7 +46,7 @@
     "http-proxy": "^1.11.2",
     "jade": "^1.11.0",
     "knox": "^0.9.2",
-    "moment": "^2.10.6",
+    "moment": "~2.10.6",
     "morgan": "^1.6.1",
     "node-uuid": "^1.4.3",
     "places": "git://github.com/artsy/places.git",

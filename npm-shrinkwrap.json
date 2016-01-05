@@ -2961,9 +2961,9 @@
       }
     },
     "moment": {
-      "version": "2.11.0",
-      "from": "moment@>=2.10.6 <3.0.0",
-      "resolved": "https://registry.npmjs.org/moment/-/moment-2.11.0.tgz"
+      "version": "2.10.6",
+      "from": "moment@>=2.10.6 <2.11.0",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.10.6.tgz"
     },
     "morgan": {
       "version": "1.6.1",
@@ -4142,9 +4142,9 @@
       "resolved": "https://registry.npmjs.org/parse-asn1/-/parse-asn1-5.0.0.tgz",
       "dependencies": {
         "asn1.js": {
-          "version": "4.2.1",
+          "version": "4.3.0",
           "from": "asn1.js@>=4.0.0 <5.0.0",
-          "resolved": "https://registry.npmjs.org/asn1.js/-/asn1.js-4.2.1.tgz"
+          "resolved": "https://registry.npmjs.org/asn1.js/-/asn1.js-4.3.0.tgz"
         },
         "bn.js": {
           "version": "4.6.2",
