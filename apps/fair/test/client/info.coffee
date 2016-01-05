@@ -3,10 +3,10 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
+rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
-FairInfo = require '../../client/info.coffee'
 
 describe 'FairInfoView', ->
 
@@ -31,7 +31,14 @@ describe 'FairInfoView', ->
       asset: (->)
     }, =>
       $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
-      @view = new FairInfo { el: $('#fair'), model: @profile, fair: @fair }
+
+      sinon.stub(FairInfo, 'trackFairVisit')
+
+      @view = new FairInfo
+        el: $('#fair')
+        model: @profile
+        fair: @fair
+
       done()
 
   describe '#initialize', ->

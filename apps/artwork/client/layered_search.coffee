@@ -92,7 +92,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @$layeredSearchResults.html '<div class="loading-spinner"></div>'
     @fetchAndRenderActiveLayer()
 
-    analyticsHooks('switched:layer', label: @__activeLayer__.label()) if e
+    analyticsHooks.trigger('switched:layer', label: @__activeLayer__.label()) if e
 
   fetchAndRenderActiveLayer: ->
     @$layerGeneButton.attr 'data-state', 'inactive'
