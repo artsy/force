@@ -1,4 +1,4 @@
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
@@ -12,9 +12,6 @@ resolvedImage = -> require('../templates/image.jade') arguments...
 module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
 
   el: '#search-page'
-
-  events:
-    'click .search-result' : 'trackClick'
 
   initialize: (options) ->
     if options.results
@@ -60,9 +57,6 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
     artwork.fetch
       success: ->
         @$(".search-result[data-id='#{result.id}'] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
-
-  trackClick: ->
-    analytics.track.click "Selected item from results page", query: $('#main-layout-search-bar-input').val()
 
 module.exports.init = ->
   new SearchResultsView
