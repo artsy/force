@@ -1,6 +1,5 @@
 Backbone = require 'backbone'
 SaveControls = require '../../../../components/artwork_item/save_controls.coffee'
-{ trackArtworkImpressions } = require '../../../../components/analytics/impression_tracking.coffee'
 FeaturedArtworks = require './collection.coffee'
 template = -> require('./template.jade') arguments...
 
@@ -16,7 +15,6 @@ module.exports = class FeaturedArtworksView extends Backbone.View
       model: artwork
 
   syncArtworks: (collection) ->
-    trackArtworkImpressions collection.models, @$el
     @user?.initializeDefaultArtworkCollection()
     @savedArtworks = @user?.defaultArtworkCollection()
     collection.map @attachSaveControls

@@ -36,4 +36,3 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
 module.exports.init = ->
   new HomeView el: $('body')
-  require './analytics.coffee'
