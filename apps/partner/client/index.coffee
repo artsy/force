@@ -1,6 +1,5 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-{ track } = require '../../../lib/analytics.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 Profile = require '../../../models/profile.coffee'
 Partner = require '../../../models/partner.coffee'
