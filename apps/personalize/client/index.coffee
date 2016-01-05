@@ -5,6 +5,7 @@ PersonalizeState = require './state.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 track = require('../../../lib/analytics.coffee').track
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 views =
   CollectView: require './views/collect.coffee'
@@ -27,8 +28,8 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
 
-    track.funnel 'Landed on personalize page', label: "User:#{@user.id}"
-    track.funnel 'Started re-onboarding' if @reonboarding
+    analyticsHooks.trigger 'personalize:impression', label: "User:#{@user.id}"
+    analyticsHooks.trigger('personalize:reonboarding') if @reonboarding
 
     _.defer => @next()
 
@@ -37,7 +38,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       @view?.remove()
       @state.set 'current_step', step
 
-      track.funnel "Starting Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
+      analyticsHooks.trigger 'personalize:step',
+        message: "Starting Personalize #{@state.currentStepLabel()}"
+        label: "User:#{@user.id}"
 
       @view = new views["#{_s.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el
@@ -55,7 +58,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     destination or '/'
 
   done: ->
-    track.funnel 'Finished personalize', label: "User:#{@user.id}"
+    analyticsHooks.trigger 'personalize:finished', label: "User:#{@user.id}"
 
     @$el.attr 'data-state', 'loading'
 
