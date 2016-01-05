@@ -1,11 +1,11 @@
 .map-modal-fair-event-information
-  .map-modal-fair-event-venue= fairEvent.get('venue')
+  .map-modal-fair-event-venue= model.get('venue')
   .map-modal-fair-event-address
-    = fairEvent.get('venue_address')
+    = model.get('venue_address')
 
   .map-modal-fair-event-running-hours
-    p= fairEvent.formatDate()
-    p= fairEvent.formatTime()
+    p= model.formatDate()
+    p= model.formatTime()
 
 .map-modal-fair-event-map-container
   .map-modal-fair-event-map.js-map-modal-fair-event-map

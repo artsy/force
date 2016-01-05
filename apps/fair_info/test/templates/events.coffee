@@ -38,3 +38,12 @@ describe 'Events templates', ->
       @html.should.containEql 'Welcome'
       @html.should.containEql 'This panel is organized in conjunction with The Armory Show'
       @html.should.containEql 'The New York Times Style Magazine Media Lounge on Pier 94'
+
+    it 'should display map icon', ->
+      @html.should.containEql '<i class="icon-circle-chevron"></i><span>Map</span>'
+
+    it 'should not display map icon', ->
+      @fairEvent.set venue_address: null
+      @fairEvents = new FairEvents [@fairEvent], { fairId: 'armory-show-2013' }
+      clientWithoutAdddress = render({ profile: @profile, fair: @fair, fairEvents: @fairEvents, sortedEvents: @fairEvents.sortedEvents(), infoMenu: @infoMenu.infoMenu })
+      clientWithoutAdddress.should.not.containEql '<i class="icon-circle-chevron"></i><span>Map</span>'

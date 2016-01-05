@@ -1,8 +1,10 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
 BlurbView = require '../../../components/blurb/view.coffee'
-openMapModal = require '../components/map_modal/index.coffee'
+geo = require '../../../components/geo/index.coffee'
+openMapModal = require '../../../components/map_modal/index.coffee'
 FairEvents = require '../../../collections/fair_events.coffee'
+template = -> require('../templates/map_modal.jade') arguments...
 
 module.exports = class FairInfoEvents extends Backbone.View
   events:
@@ -24,4 +26,8 @@ module.exports = class FairInfoEvents extends Backbone.View
 
   initializeModal: (e) ->
     e.preventDefault()
-    openMapModal model: @events.get $(e.currentTarget).attr('data-id')
+    event = @events.get $(e.currentTarget).attr('data-id')
+
+    if event.get('venue_address')
+      geo.lookUpAddress event.get('venue_address'), (result) ->
+        openMapModal({model: event, latlng: result, template: template, location: event.get('venue_address'), element: '.js-map-modal-fair-event-map' })

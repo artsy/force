@@ -12,7 +12,8 @@ attachFollowProfile = require '../components/follow_profile/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
-openMapModal = require '../components/map_modal/index.coffee'
+openMapModal = require '../../../components/map_modal/index.coffee'
+template = -> require('../templates/map_modal.jade') arguments...
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
 FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
@@ -42,7 +43,12 @@ module.exports.init = ->
 
   $('.js-open-map-modal').click (e) ->
     e.preventDefault()
-    openMapModal model: show
+    openMapModal
+      model: show
+      latlng: show.location().get('coordinates')
+      template: template
+      location: show.location().getMapsLocation()
+      element: '.map-modal-show-map'
 
   if show.isFairBooth()
     attachRelatedShows 'fair', show
@@ -56,5 +62,5 @@ module.exports.init = ->
   relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
   $('.artwork-column').first().prepend relatedArticlesView.$el
   show.related().articles.fetch()
-  
+
   new ShareView el: $('.js-show-share')
