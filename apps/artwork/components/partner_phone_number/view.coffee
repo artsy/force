@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analytics = require '../../../../lib/analytics.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 template = -> require('./template.jade') arguments...
 
 logOnce = _.once (locations) ->
