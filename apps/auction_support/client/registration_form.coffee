@@ -1,7 +1,7 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../lib/analytics.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 ModalPageView = require '../../../components/modal/page.coffee'
