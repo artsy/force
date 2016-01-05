@@ -2,7 +2,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
@@ -31,10 +32,10 @@ module.exports = class FollowProfileButton extends Backbone.View
       return false
 
     if @collection.isFollowing @model
-      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
+      analyticsHooks.trigger 'followable:unfollow', message: @analyticsUnfollowMessage, label: modelNameAndIdToLabel('profile', @model.get('id'))
       @collection.unfollow @model.get('id')
     else
-      analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
+      analyticsHooks.trigger 'followable:follow', message: @analyticsFollowMessage, label: modelNameAndIdToLabel('profile', @model.get('id'))
       @collection.follow @model.get('id')
 
       # Delay label change
