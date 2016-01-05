@@ -1,16 +1,8 @@
 $(function(){
   if(location.pathname == '/') analytics.track('Home page', { nonInteraction: 1 });
 
-  $('#home-featured-artworks .grid-item').click(function(e){
-    analytics.track('Clicked homepage artwork');
-  })
-
-  $('.is-via-personalized').click(function(e){
-    analytics.track('Clicked personalized homepage artwork');
-  })
-
-  $('is-via-featured').click(function(e){
-    analytics.track('Clicked featured homepage artwork');
-  })
+  analytics.trackLink($('#home-featured-artworks .grid-item'), 'Clicked homepage artwork');
+  analytics.trackLink($('.is-via-personalized'), 'Clicked personalized homepage artwork');
+  analytics.trackLink($('is-via-featured'), 'Clicked featured homepage artwork');
 
 });
