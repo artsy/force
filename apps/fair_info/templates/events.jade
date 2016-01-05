@@ -19,9 +19,10 @@ block body
                   .fair-info-event-item-details
                     h2.fair-info-event-item-details__title= event.get('name')
                     .fair-info-event-item-details__address= event.get('venue')
-                      a.fair-info-event-map-link.js-open-fair-events( href='#' data-id=event.id )
-                        i.icon-circle-chevron
-                        span Map
+                      if event.get('venue_address')
+                        a.fair-info-event-map-link.js-open-fair-events( href='#' data-id=event.id )
+                          i.icon-circle-chevron
+                          span Map
                     .fair-info-event-item-details__description= event.get('extended_description')
         else
           .fair-info-event-item There are no events.
