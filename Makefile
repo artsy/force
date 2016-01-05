@@ -16,7 +16,7 @@ s:
 sf:
 	$(BIN)/forever $(BIN)/coffee --nodejs --max_old_space_size=960 index.coffee
 
-# Start the server using forever and debugger mode
+# Start the server using debugger mode
 sd:
 	$(BIN)/coffee --nodejs --debug index.coffee
 
