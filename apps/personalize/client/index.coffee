@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 PersonalizeState = require './state.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
-track = require('../../../lib/analytics.coffee').track
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 views =

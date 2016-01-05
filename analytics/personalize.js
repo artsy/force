@@ -35,6 +35,10 @@
     analytics.track('Personalize collector level:' + data.value, { label: data.label });
   });
 
+  analyticsHooks.on('personalize:advance', function(data){
+    analytics.track('Finishing Personalize ' + data.value, { label: data.label });
+  });
+
   analyticsHooks.on('personalize:step', function(data){
     analytics.track(data.message, { label: data.label });
   });

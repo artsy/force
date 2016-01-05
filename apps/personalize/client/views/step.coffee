@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-track = require('../../../../lib/analytics.coffee').track
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 device = require '../../../../components/util/device.coffee'
 
 module.exports = class StepView extends Backbone.View
@@ -13,5 +13,9 @@ module.exports = class StepView extends Backbone.View
 
   advance: (e) ->
     e?.preventDefault()
-    track.funnel "Finishing Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
+
+    analyticsHooks.trigger 'personalize:advance',
+      value: @state.currentStepLabel(),
+      label: "User:#{@user.id}"
+
     @state.trigger 'transition:next'
