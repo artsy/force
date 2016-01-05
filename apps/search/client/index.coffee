@@ -1,4 +1,4 @@
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
