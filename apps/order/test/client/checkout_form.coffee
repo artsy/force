@@ -78,7 +78,7 @@ describe 'CheckoutForm', ->
       @view.fields.billing_state.el.val 'NY'
       @view.fields.billing_zip.el.val '11238'
       @view.fields.month.el.val '12'
-      @view.fields.year.el.val '2015'
+      @view.fields.year.el.val '2025'
       @view.fields.conditions.el.prop('checked', true)
       @view.onSubmit()
       @view.$('.error').text().should.equal ''

@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 ModalPageView = require '../../../components/modal/page.coffee'
@@ -47,7 +47,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         success: =>
           success = =>
             @success()
-            analytics.track.funnel 'Registration submitted'
+            analyticsHooks.trigger 'registration:success'
           @currentUser.createBidder
             saleId: @model.get('id')
             success: success
@@ -57,7 +57,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               @showError "Registration submission error", xhr
         error: (m, xhr) =>
           @showError xhr.responseJSON?.message
-      analytics.track.funnel 'Registration card validated'
+      analyticsHooks.trigger 'registration:validated'
     else
       @showError data.error.message
 
@@ -84,7 +84,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
-    analytics.track.funnel 'Registration submit billing address'
+    analyticsHooks.trigger 'registration:submit-address'
     if @validateForm()
       @tokenizeCard()
       @savePhoneNumber()

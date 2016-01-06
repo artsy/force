@@ -31,7 +31,14 @@ describe 'FairInfoView', ->
       asset: (->)
     }, =>
       $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
-      @view = new FairInfo { el: $('#fair'), model: @profile, fair: @fair }
+
+      sinon.stub(FairInfo::, 'trackFairVisit')
+
+      @view = new FairInfo
+        el: $('#fair')
+        model: @profile
+        fair: @fair
+
       done()
 
   describe '#initialize', ->

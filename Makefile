@@ -16,6 +16,10 @@ s:
 sf:
 	$(BIN)/forever $(BIN)/coffee --nodejs --max_old_space_size=960 index.coffee
 
+# Start the server using debugger mode
+sd:
+	$(BIN)/coffee --nodejs --debug index.coffee
+
 # Start the server pointing to staging
 ss:
 	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
@@ -31,6 +35,14 @@ sp:
 # Start server pointing to production with cache
 spc:
 	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
+
+# Start the server pointing to production with debugger
+spd:
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start -f ./Procfile.dev
+
+# Start the server pointing to staging with debugger
+ssd:
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start -f ./Procfile.dev
 
 # Run all of the project-level tests, followed by app-level tests
 test:

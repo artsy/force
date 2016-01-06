@@ -12,6 +12,11 @@ analyticsHooks.on('auction:notify-me', function(data) {
   analytics.track('Notify me form submitted on the auction registration page', data);
 });
 
+// auth:sign_up:success
+analyticsHooks.on('auction:sign_up:success', function(data) {
+  analytics.track('Successful registration on auction feature page');
+});
+
 // Clicked "Register" in the Thank You / Auction modal
 $(document).on('click', '.email-to-registration-transition-register', function() {
   analytics.track('Clicked "Register" in the Thank You / Auction modal');

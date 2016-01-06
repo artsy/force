@@ -1,7 +1,8 @@
 Backbone = require 'backbone'
-analytics = require '../../../lib/analytics.coffee'
 sd = require('sharify').data
 ShippingForm = require('./shipping_form.coffee')
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class CheckoutForm extends ShippingForm
@@ -38,7 +39,7 @@ module.exports = class CheckoutForm extends ShippingForm
       @model.save data,
         url: "#{@model.url()}/submit"
         success: =>
-          analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+          analyticsHooks.trigger 'order:submitted', label: modelNameAndIdToLabel('artwork', @model.get('id'))
           @success()
           @$el.addClass 'order-page-complete'
           @$('.checkout-form').hide()
@@ -47,7 +48,7 @@ module.exports = class CheckoutForm extends ShippingForm
           $('html, body').scrollTop(0)
         error: (m, xhr) =>
           @showError xhr.responseJSON?.message
-      analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+      analyticsHooks.trigger 'order:validated', label: modelNameAndIdToLabel('artwork', @model.get('id'))
     else
       @showError res.error?.message
 
@@ -71,7 +72,7 @@ module.exports = class CheckoutForm extends ShippingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    analyticsHooks.trigger 'order:submit-shipping', label: modelNameAndIdToLabel('artwork', @model.get('id'))
 
     if @validateForm()
       @tokenizeCard()

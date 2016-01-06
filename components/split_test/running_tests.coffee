@@ -22,13 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  scroll_article:
-    key: 'scroll_article'
-    edge: 'infinite'
-    outcomes:
-      infinite: 0.5
-      static: 0.5
-
   show_metaphysics:
     key: 'show_page_metaphysics'
     edge: 'true'

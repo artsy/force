@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../../components/share/view.coffee'
 SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
@@ -53,14 +52,10 @@ module.exports = class FeatureView extends Backbone.View
 
   doneFetchingSaleArtworks: (saleFeaturedSet) =>
     artworks = saleFeaturedSet.get 'data'
-    @setupArtworkImpressionTracking artworks.models
 
   appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
     @setupSaleArtworks artworks, @sale
-
-  setupArtworkImpressionTracking: (artworks) ->
-    trackArtworkImpressions artworks, @$el
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

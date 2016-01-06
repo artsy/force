@@ -29,6 +29,20 @@
 
   $document.on('click', '.js-notification-view-all', function(e){
     analytics.track('Clicked view all from notification dropdown');
-  })
+  });
+
+  if(location.pathname.match(/works-for-you/)) analytics.track('"Works For You" page', { nonInteraction: 1 });
+
+  $document.on('click', '#for-sale', function(e){
+    analytics.track('Toggled "For Sale" on "Works For You" page');
+  });
+
+  $document.on('click', '#notifications-manage-follow', function(e){
+    analytics.track('Clicked "Manage who you follow" on "Works For You" page');
+  });
+
+  $document.on('click', '.notifications-see-more', function(e){
+    analytics.track('Clicked "See More" in artwork group on "Works For You" page');
+  });
 
 })();

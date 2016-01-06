@@ -74,4 +74,3 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 module.exports.init = ->
   new NotificationsView el: $('body')
   scrollFrame '#notifications-feed a' unless sd.EIGEN
-  require './analytics.coffee'

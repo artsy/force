@@ -23,6 +23,15 @@ $ -> analytics.ready ->
   require '../analytics/account_login.js'
   require '../analytics/bidding.js'
   require '../analytics/notifications.js'
+  require '../analytics/artists.js'
+  require '../analytics/artwork.js'
+  require '../analytics/registration.js'
+  require '../analytics/fair.js'
+  require '../analytics/following.js'
+  require '../analytics/partner.js'
+  require '../analytics/checkout.js'
+  require '../analytics/personalize.js'
+  require '../analytics/search.js'
 
   if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'

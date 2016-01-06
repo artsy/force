@@ -17,6 +17,7 @@ app.get '/posts', routes.redirectPost
 app.get '/post/:id', routes.redirectPost
 app.get '/:id/posts', routes.redirectPost
 app.get '/article', routes.redirectArticle
+app.get '/magazine', routes.redirectMagazine
 app.get '/articles', routes.articles
 app.get '/article/:slug', routes.article
 app.get '/:slug', routes.section

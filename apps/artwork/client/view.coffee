@@ -9,7 +9,6 @@ Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
-analytics = require '../../../lib/analytics.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
 BelowTheFoldView = require './below_the_fold.coffee'
 { trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
@@ -98,10 +97,6 @@ module.exports = class ArtworkView extends Backbone.View
     fair = fairs.first()
 
     @belowTheFoldView.setupFair fair
-
-    $scripts = $('#scripts')
-    analytics.delta 'fair_artist_view', { fair: fair.get('_id'), id: @artist.get('_id') }, $scripts
-    analytics.delta 'fair_partner_view', { fair: fair.get('_id'), id: @artwork.get('partner')._id }, $scripts
 
   handleSales: (sales) ->
     return unless sales.length

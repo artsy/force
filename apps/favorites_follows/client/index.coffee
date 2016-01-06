@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 Favorites = require './favorites.coffee'
 { FollowsView } = require '../../../components/favorites/client/follows.coffee'
-{ track } = require '../../../lib/analytics.coffee'
 
 class FavoritesFollowsRouter extends Backbone.Router
   routes:
@@ -16,4 +15,4 @@ class FavoritesFollowsRouter extends Backbone.Router
 module.exports.init = ->
   new FavoritesFollowsRouter
   Backbone.history.start pushState: true
-  track.impression 'Favorites/Follows page'
+

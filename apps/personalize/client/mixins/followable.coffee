@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 TypeaheadView = require '../../../../components/typeahead/view.coffee'
-analytics = require '../../../../lib/analytics.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../../lib/analytics_helpers.coffee'
 followedTemplate = -> require('../../templates/followed.jade') arguments...
 
 # Common functionality between views with auto-complete/following
@@ -39,7 +40,9 @@ module.exports =
 
     # Fallback in case model doesn't have display_model
     displayModel = model.get('display_model') or 'displayModelUnknown'
-    analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(displayModel, model.get('id'))
+    analyticsHooks.trigger 'followable:followed',
+      message: @analyticsFollowMessage
+      label: modelNameAndIdToLabel(displayModel, model.get('id'))
 
   unfollow: (e) ->
     id = $(e.currentTarget).data 'id'
@@ -47,4 +50,6 @@ module.exports =
     @following.unfollow id
 
     displayModel = model.get('display_model') or 'displayModelUnknown'
-    analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel(displayModel, model.get('id'))
+    analyticsHooks.trigger 'followable:followed',
+      message: @analyticsFollowMessage
+      label: modelNameAndIdToLabel(displayModel, model.get('id'))

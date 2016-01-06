@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 ArtworkView = require './view.coffee'
 DeepZoomView = require './deep_zoom.coffee'
 ViewInRoomView = require './view_in_room.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
@@ -38,7 +38,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
     mediator.on 'search:doge', => window.location = "#{@artwork.href()}/doge"
 
   zoom: ->
-    analytics.track.click 'Clicked to zoom in on artwork'
+    analyticsHooks.trigger 'artwork:zoom'
     @baseView.route 'zoom'
     @view = new DeepZoomView
       artwork: @artwork
@@ -46,8 +46,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
     $('#artwork-deep-zoom-container').html @view.render().$el
 
   viewInRoom: ->
-    analytics.track.click "Entered 'View In Room'"
-
+    analyticsHooks.trigger 'artwork:view-in-room'
     @baseView.route 'view-in-room'
 
     # Ensure we only view the default image in the room
@@ -58,12 +57,12 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @view.render()
 
   contactPartner: ->
-    analytics.track.click "Clicked 'Contact Gallery'"
+    analyticsHooks.trigger 'artwork:contact-gallery'
     new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   inquire: ->
-    analytics.track.click "Clicked 'Contact Artsy Specialist'"
+    analyticsHooks.trigger 'artwork:contact-specialist'
     new InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
@@ -77,10 +76,9 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @fetchUser =>
       new ConfirmBidModal artwork: @artwork, paddleNumber: @currentUser.get('paddle_number')
       mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
-      analytics.track.click "Showed 'Confirm bid on artwork page'"
 
   confirmRegistration: ->
     @fetchUser =>
       new ConfirmRegistrationModal artwork: @artwork, paddleNumber: @currentUser.get('paddle_number')
       mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
-      analytics.track.click "Showed 'Confirm registration on artwork page'"
+      analyticsHooks.trigger 'artwork:confirm-registration'
