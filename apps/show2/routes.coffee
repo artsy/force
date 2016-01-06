@@ -31,6 +31,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
             _id
             href
             name
+            isLinkable
             profile {
               id
               href
