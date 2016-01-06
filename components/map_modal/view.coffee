@@ -10,11 +10,11 @@ module.exports = class MapModalView extends Backbone.View
   events:
     'click input': 'selectAll'
 
-  initialize: ({ @model, @latlng, @template, @location, @element })->
+  initialize: ({ @model, @latlng, @template, @location, @mapElement })->
     # no op
 
   postRender: -> _.defer =>
-    $map = @$(@element)
+    $map = @$(@mapElement)
 
     geo.loadGoogleMaps =>
       map = new google.maps.Map $map[0],

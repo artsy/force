@@ -34,4 +34,4 @@ module.exports = class FairInfoEvents extends Backbone.View
         latlng: result
         template: template
         location: event.get('venue_address')
-        element: '.js-map-modal-fair-event-map'
+        mapElement: '.js-map-modal-fair-event-map'

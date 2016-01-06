@@ -1,6 +1,6 @@
 # MapModalView
 
-This component is used to render a pop-up modal with an interactive google map showing the location of the Gallery and text displaying the show's location and its hours.
+This component is used to render a pop-up modal with an interactive google map showing the location and text displaying the model's location and supporting details.
 
 ## Implementation
 
@@ -12,11 +12,17 @@ Include the stylesheet in your pages .styl file
 
 Require in the components backbone view.
 
-Anytime you need the view to appear, trigger an event and construct the MapModal view, passing it a show as the model and a width of 820px.
+Anytime you need the view to appear, trigger an event and pass the model, latlng, template, location, and mapElement (as a string) to openMapModal.
 
 ````
-MapModal = require '../components/map_modal/view.coffee'
+openMapModal = require '../components/map_modal/index.coffee'
 
-$('.map-modal-link').click -> new MapModal model: show, width: 820px
+$('.map-modal-link').click ->
+  openMapModal
+    model: show
+    latlng: show.location().get('coordinates')
+    template: template
+    location: show.location().getMapsLocation()
+    mapElement: '.map-modal-show-map'
 
 ````

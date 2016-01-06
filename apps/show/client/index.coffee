@@ -48,7 +48,7 @@ module.exports.init = ->
       latlng: show.location().get('coordinates')
       template: template
       location: show.location().getMapsLocation()
-      element: '.map-modal-show-map'
+      mapElement: '.map-modal-show-map'
 
   if show.isFairBooth()
     attachRelatedShows 'fair', show
