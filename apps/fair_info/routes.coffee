@@ -37,5 +37,5 @@ InfoMenu = require './info_menu.coffee'
     cache: true
     error: res.backboneError
     success: ->
-      res.locals.sd.FAIREVENTS = events.toJSON()
+      res.locals.sd.FAIR_EVENTS = events.toJSON()
       res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })

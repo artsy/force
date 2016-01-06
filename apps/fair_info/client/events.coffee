@@ -11,7 +11,7 @@ module.exports = class FairInfoEvents extends Backbone.View
     'click .js-open-fair-events': 'initializeModal'
 
   initialize: (options) ->
-    @events = new FairEvents sd.FAIREVENTS, {fairId: sd.FAIR.id}
+    @events = new FairEvents sd.FAIR_EVENTS, {fairId: sd.FAIR.id}
     @initializeBlurb()
 
   initializeBlurb: ->
@@ -28,6 +28,10 @@ module.exports = class FairInfoEvents extends Backbone.View
     e.preventDefault()
     event = @events.get $(e.currentTarget).attr('data-id')
 
-    if event.get('venue_address')
-      geo.lookUpAddress event.get('venue_address'), (result) ->
-        openMapModal({model: event, latlng: result, template: template, location: event.get('venue_address'), element: '.js-map-modal-fair-event-map' })
+    geo.lookUpAddress event.get('venue_address'), (result) ->
+      openMapModal
+        model: event
+        latlng: result
+        template: template
+        location: event.get('venue_address')
+        element: '.js-map-modal-fair-event-map'
