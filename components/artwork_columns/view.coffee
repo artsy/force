@@ -5,7 +5,6 @@ CurrentUser = require '../../models/current_user.coffee'
 SaveControls = require '../artwork_item/save_controls.coffee'
 artworkColumns = -> require('./template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
-trackArtworkImpressions = require("../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports = class ArtworkColumns extends Backbone.View
 
@@ -104,8 +103,6 @@ module.exports = class ArtworkColumns extends Backbone.View
     if @artworkCollection
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()
-
-    trackArtworkImpressions artworks, @$el
 
   buttonLabel: ->
     num = @collectionLength - @initialItemCount
