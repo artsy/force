@@ -1,5 +1,6 @@
 GeoFormatter = require 'geoformatter'
 Backbone = require 'backbone'
+Q = require 'bluebird-q'
 
 module.exports =
   googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en'
@@ -52,3 +53,14 @@ module.exports =
       # If the user's browser doesn't support geolocation
       # or we don't care about accuracy
       @fallback options.success
+
+  lookUpAddress: (address, cb) ->
+    @loadGoogleMaps =>
+      new google.maps.Geocoder().geocode
+        address: address
+      , (result, status) ->
+        if (status == google.maps.GeocoderStatus.OK) and result[0]
+          cb {
+            lat: result[0].geometry.location.lat()
+            lng: result[0].geometry.location.lng()
+          }

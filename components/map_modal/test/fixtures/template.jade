@@ -1,0 +1,25 @@
+.map-modal-show-information
+  .map-modal-partner-name
+    a.entity-link( href= model.get('partner').href )
+      = model.get('partner').name
+  .map-modal-partner-location-address
+    = model.location().get('address')
+  .map-modal-partner-location-city
+    = model.location().cityState()
+
+  if model.daySchedules()
+    .map-modal-partner-location-running-hours
+      each daySchedule in model.formatModalDaySchedules()
+        p= daySchedule.days
+        p= daySchedule.hours
+  else
+    .map-modal-show-running-dates
+      = model.runningDates()
+
+.map-modal-show-map-container
+  .map-modal-show-map.js-map-modal-show-map
+    //- Rendered separately
+
+  .map-modal-show-map-link
+    a( href= googleMapsLink, target='_blank')
+      | View in Google Maps

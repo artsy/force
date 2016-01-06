@@ -27,7 +27,6 @@ describe 'Visitors templates', ->
     beforeEach ->
       @fair = new Fair fabricate 'fair', location: {summary: '401 Broadway New York, New York'}
       @html = render({profile: @profile, fair: @fair, infoMenu: @infoMenu.infoMenu})
-      console.log @html
 
     it 'should render address', ->
       @html.should.containEql '401 Broadway New York, New York'

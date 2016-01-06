@@ -1,20 +1,20 @@
 .map-modal-show-information
   .map-modal-partner-name
-    a.entity-link( href= show.partnerHref() )
-      = show.partnerName()
+    a.entity-link( href= model.partnerHref() )
+      = model.get('partner').name
   .map-modal-partner-location-address
-    = show.location().get('address')
+    = model.location().get('address')
   .map-modal-partner-location-city
-    = show.location().cityState()
+    = model.location().cityState()
 
-  if show.daySchedules()
+  if model.daySchedules()
     .map-modal-partner-location-running-hours
-      each daySchedule in show.formatModalDaySchedules()
+      each daySchedule in model.formatModalDaySchedules()
         p= daySchedule.days
         p= daySchedule.hours
   else
     .map-modal-show-running-dates
-      = show.runningDates()
+      = model.runningDates()
 
 .map-modal-show-map-container
   .map-modal-show-map.js-map-modal-show-map

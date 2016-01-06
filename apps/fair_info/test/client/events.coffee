@@ -10,13 +10,11 @@ FairEvent = require '../../../../models/fair_event.coffee'
 FairEvents = require '../../../../collections/fair_events.coffee'
 InfoMenu = require '../../info_menu.coffee'
 
-
 describe 'FairInfoEventsView', ->
 
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      @FairInfoEventsView = require '../../client/events.coffee'
       Backbone.$ = $
       done()
 
@@ -37,8 +35,9 @@ describe 'FairInfoEventsView', ->
       artsyAtTheFair: false,
       aboutTheFair: false
     }
+    data = { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/events' }
     benv.render resolve(__dirname, '../../templates/events.jade'), {
-      sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/events' }
+      sd: data
       fair: @fair
       profile: @profile
       asset: (->)
@@ -48,16 +47,13 @@ describe 'FairInfoEventsView', ->
       }
       infoMenu: @infoMenu.infoMenu
     }, =>
+      @FairInfoEventsView = benv.requireWithJadeify resolve(__dirname, '../../client/events'), ['template']
+      @FairInfoEventsView.__set__ 'sd', data
       sinon.stub(@FairInfoEventsView.prototype, 'initializeBlurb')
       @view = new @FairInfoEventsView { el: $('.fair-info2-body'), model: @profile, fair: @fair }
       done()
 
-
   describe '#initialize', ->
-
-    beforeEach ->
-      @view.initialize({ el: $('.fair-info2-body'), profile: @profile, fair: @fair })
-
     it 'displays fair events', ->
       html = @view.$el.html()
 

@@ -1,0 +1,16 @@
+.map-modal-fair-event-information
+  .map-modal-fair-event-venue= model.get('venue')
+  .map-modal-fair-event-address
+    = model.get('venue_address')
+
+  .map-modal-fair-event-running-hours
+    p= model.formatDate()
+    p= model.formatTime()
+
+.map-modal-fair-event-map-container
+  .map-modal-fair-event-map.js-map-modal-fair-event-map
+    //- Rendered separately
+
+  .map-modal-fair-event-map-link
+    a( href= googleMapsLink, target='_blank')
+      | View in Google Maps
