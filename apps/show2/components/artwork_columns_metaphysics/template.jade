@@ -1,9 +1,7 @@
-if artworkColumns
-  .artworks-container
-    for column in artworkColumns
-      .artwork-column
-        for artwork in column
-          include ../artwork_item_metaphysics/templates/artwork
+for column in artworkColumns
+  .artwork-column
+    for artwork in column
+      include ../artwork_item_metaphysics/templates/artwork
 
 if numberOfColumns
   - for (var i = 0; i < numberOfColumns; i++)

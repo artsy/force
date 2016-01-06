@@ -64,6 +64,6 @@ module.exports = class ArtworkColumnsView extends Backbone.View
     @$el.html template
       artworkColumns: artworkColumns
       ViewHelpers: ViewHelpers
-    @$('.artwork-column').first().prepend relatedArticlesHtml
+    @$('.artwork-column').first().prepend "<div class='js-related-articles'>#{relatedArticlesHtml}</div>"
     setupSaveControls @artworks
     this
