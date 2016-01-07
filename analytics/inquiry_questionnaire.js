@@ -181,4 +181,11 @@
     });
   });
 
+  bind('inquiry:sent', function(context) {
+    track('Sent artwork inquiry', { label: context.label });
+    track('Submit confirm inquiry modal', context.attributes);
+    track(context.changed + ' default message');
+    track('Inquiry: Updated Flow', context.session_id);
+  });
+
 })();

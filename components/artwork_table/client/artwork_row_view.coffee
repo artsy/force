@@ -4,7 +4,7 @@ mediator = require '../../../lib/mediator.coffee'
 PartnerLocations = require '../../../apps/artwork/components/partner_locations/index.coffee'
 SaleArtworkView = require '../../artwork_item/views/sale_artwork.coffee'
 ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 FlashMessage = require '../../flash/index.coffee'
 
 template = -> require('../templates/artwork_row.jade') arguments...
@@ -36,7 +36,7 @@ module.exports = class ArtworkRowView extends SaleArtworkView
 
   contactSeller: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
+    analyticsHooks.trigger 'artwork:contact-gallery'
     new ConfirmInquiryView
       artwork: @model
       partner: @model.get 'partner'

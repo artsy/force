@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analytics = require('../../lib/analytics.coffee')
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 Partner = require '../../models/partner.coffee'
 Cookies = require 'cookies-js'
 Form = require '../mixins/form.coffee'
@@ -91,12 +92,11 @@ module.exports = class ConfirmInquiryView extends ContactView
         @error?()
 
   inquirySentAnalytics: =>
-    analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
-    analytics.track.funnel "Submit confirm inquiry modal", @artwork.attributes
-    changed = if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
-    analytics.track.funnel "#{changed} default message"
-    analytics.track.funnel "Inquiry: Updated Flow", SESSION_ID
+    analyticsHooks.trigger 'inquiry:sent',
+      label: modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      changed: if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
+      session_id: SESSION_ID
+      attributes: @artwork.attributes
 
   postRender: =>
     @isLoading()
