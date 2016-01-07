@@ -19,8 +19,6 @@ describe 'ContactPartnerView', ->
       @partner = new Partner fabricate 'partner', locations: null
       benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
-        @analytics = ContactPartnerView.__get__('analytics')
-        sinon.stub @analytics.track, 'funnel'
         ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
         sinon.stub ContactPartnerView.prototype, 'isLoading'
         sinon.stub ContactPartnerView.prototype, 'isLoaded'
@@ -32,7 +30,6 @@ describe 'ContactPartnerView', ->
         done()
 
   afterEach ->
-    @analytics.track.funnel.restore()
     Backbone.sync.restore()
     benv.teardown()
 
@@ -62,13 +59,6 @@ describe 'ContactPartnerView', ->
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.be.ok() # Should contact gallery
 
-      it 'tracks the correct event', ->
-        events = _.last(@analytics.track.funnel.args, 4)
-        events[0][0].should.equal 'Sent artwork inquiry'
-        events[1][0].should.equal 'Contact form submitted'
-        events[2][0].should.equal 'Changed default message'
-        events[3][1].should.equal '1111'
-
     describe 'Logged in', ->
       beforeEach ->
         @view.user = (@user = new Backbone.Model fabricate 'user')
@@ -84,13 +74,6 @@ describe 'ContactPartnerView', ->
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.be.ok() # Should contact gallery
-
-      it 'tracks the correct event', ->
-        events = _.last(@analytics.track.funnel.args, 4)
-        events[0][0].should.equal 'Sent artwork inquiry'
-        events[1][0].should.equal 'Contact form submitted'
-        events[2][0].should.equal 'Changed default message'
-        events[3][1].should.equal '1111'
 
   describe '#events', ->
     it 'disables click on backdrop', ->
