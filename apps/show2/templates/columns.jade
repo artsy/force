@@ -1,2 +1,4 @@
 section.show-artworks-columns.js-show-artworks-columns
-  include ../components/artwork_columns_metaphysics/template
+  if artworkColumns
+    .artworks-container
+      include ../components/artwork_columns_metaphysics/template

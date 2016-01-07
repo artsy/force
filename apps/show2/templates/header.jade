@@ -15,7 +15,7 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
   .show-header-cell
     .show-partner
       .entity-with-follow
-        if partner_show.partner.isLinkable
+        if partner_show.partner.is_linkable
           a.entity-link( href= partner_show.partner.href )
             = partner_show.partner.name
         else
