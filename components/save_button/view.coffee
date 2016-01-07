@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 
 module.exports = class SaveButton extends Backbone.View
   events:
@@ -34,10 +35,14 @@ module.exports = class SaveButton extends Backbone.View
 
     if @model.isSaved @saved
       @saved.unsaveArtwork @model.id
-      analytics.track.click @analyticsUnsaveMessage, label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+      analyticsHooks.trigger 'save:remove-artwork',
+        message: @analyticsUnsaveMessage
+        label: modelNameAndIdToLabel('artwork', @model.get('id'))
     else
       @saved.saveArtwork @model.id, notes: (@notes or @analyticsSaveMessage)
-      analytics.track.click @analyticsSaveMessage, label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+      analyticsHooks.trigger 'save:save-artwork',
+        message: @analyticsSaveMessage
+        label: modelNameAndIdToLabel('artwork', @model.get('id'))
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500

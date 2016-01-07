@@ -4,7 +4,6 @@ Profile = require '../../models/profile.coffee'
 FollowProfileButton = require './follow_profile.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FollowProfiles = require '../../collections/follow_profiles.coffee'
-analytics = require '../../lib/analytics.coffee'
 ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
 
 module.exports = class PartnerShowButtons extends Backbone.View

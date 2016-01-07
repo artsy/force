@@ -6,7 +6,7 @@
   });
 
   analyticsHooks.on('save:save-artwork save:remove-artwork', function(data) {
-    analytics.track(data.message);
+    analytics.track(data.message, { label: data.label });
   });
 
 })();

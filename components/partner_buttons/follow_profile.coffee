@@ -1,13 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 FollowProfiles = require '../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
 
   analyticsFollowMessage: 'Followed partner profile from /partners'
-
   analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
 
   events:
@@ -32,11 +32,15 @@ module.exports = class FollowProfileButton extends Backbone.View
       return false
 
     if @collection.isFollowing @model
-      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
       @collection.unfollow @model.get('id')
+      analyticsHooks.trigger 'followable:unfollowed',
+        message: @analyticsUnfollowMessage,
+        label: modelNameAndIdToLabel('profile', @model.get('id'))
     else
-      analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
       @collection.follow @model.get('id')
+      analyticsHooks.trigger 'followable:followed',
+        message: @analyticsFollowMessage,
+        label: modelNameAndIdToLabel('profile', @model.get('id'))
 
       # Delay label change
       @$el.addClass 'is-clicked'

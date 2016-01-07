@@ -6,7 +6,7 @@ mediator = require '../../../lib/mediator.coffee'
 sd = require('sharify').data
 moment = require 'moment'
 { isTouchDevice } = require '../../util/device.coffee'
-analytics = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
@@ -89,7 +89,7 @@ module.exports = class HeaderView extends Backbone.View
           window.location = profile.href()
 
     trackingText = if $(event.target).hasClass('is-profile-text') then 'Profile' else 'Username'
-    analytics.track.click "Clicked user dropdown link with text: #{trackingText}"
+    analyticsHooks.trigger 'dropdown:link'
     false
 
   makePublic: ->
@@ -103,17 +103,14 @@ module.exports = class HeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked sign up via the header'
     mediator.trigger 'open:auth', mode: 'signup'
 
   login: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked login via the header'
     mediator.trigger 'open:auth', mode: 'login'
 
   logout: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked logout via the header'
     $.ajax
       url: '/users/sign_out'
       type: 'DELETE'

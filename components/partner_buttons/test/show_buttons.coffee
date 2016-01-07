@@ -14,7 +14,6 @@ describe 'PartnerShowButtons', ->
         PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
         PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
         PartnerShowButtons.__set__ 'ShowInquiryModal', @ShowInquiryModal = sinon.stub()
-        PartnerShowButtons.__set__ 'analytics', @analytics = {}
         @view = new PartnerShowButtons el: $('body'), model: new Backbone.Model fabricate 'show'
         done()
 
@@ -27,7 +26,6 @@ describe 'PartnerShowButtons', ->
 
     describe '#contactGallery', ->
       it 'creates a new show inquiry modal', ->
-        @analytics.abTest = -> false
         @view.contactGallery()
         @ShowInquiryModal.calledWithNew.should.be.ok()
 
@@ -39,7 +37,6 @@ describe 'PartnerShowButtons', ->
         PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
         PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
         PartnerShowButtons.__set__ 'ShowInquiryModal', @ShowInquiryModal = sinon.stub()
-        PartnerShowButtons.__set__ 'analytics', @analytics = {}
         @view = new PartnerShowButtons el: $('body'), model: new Backbone.Model fabricate 'show', partner: null
         done()
 
@@ -52,6 +49,5 @@ describe 'PartnerShowButtons', ->
 
     describe '#contactGallery', ->
       it 'creates a new show inquiry modal', ->
-        @analytics.abTest = -> false
         @view.contactGallery()
         @ShowInquiryModal.calledWithNew.should.be.ok()
