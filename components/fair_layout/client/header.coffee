@@ -5,7 +5,6 @@ Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-analytics = require '../../../lib/analytics.coffee'
 AuthModalView = require '../../auth_modal/view.coffee'
 FlashMessage = require '../../flash/index.coffee'
 
@@ -26,17 +25,14 @@ module.exports = class FairHeaderView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked sign up via the header'
     mediator.trigger 'open:auth', mode: 'signup'
 
   login: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked login via the header'
     mediator.trigger 'open:auth', mode: 'login'
 
   logout: (e) ->
     e.preventDefault()
-    analytics.track.funnel 'Clicked logout via the header'
     $.ajax
       url: '/users/sign_out'
       type: 'DELETE'
