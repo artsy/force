@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 RemoveConfirmModal = require './remove_confirm_modal.coffee'
 EditCollectionModal = require './edit_collection_modal.coffee'
-analytics = require '../../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'

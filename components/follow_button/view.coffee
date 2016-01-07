@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -39,7 +40,7 @@ module.exports = class FollowButton extends Backbone.View
     @trigger 'click'
 
     unless @following
-      analytics.track.funnel 'Triggered sign up form via follow button'
+      analyticsHooks.trigger 'follow:sign-up'
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: "Sign up to follow #{@label}"
@@ -49,13 +50,17 @@ module.exports = class FollowButton extends Backbone.View
     if @following.isFollowing @model.id
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
-      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel(@modelName, @model.id)
+      analyticsHooks.trigger 'followable:unfollowed',
+        label: modelNameAndIdToLabel(@modelName, @model.id)
+        message: @analyticsUnfollowMessage
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
-      analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(@modelName, @model.id)
+      aanalyticsHooks.trigger 'followable:followed',
+        label: modelNameAndIdToLabel(@modelName, @model.id)
+        message: @analyticsUnfollowMessage
 
     false
