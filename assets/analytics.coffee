@@ -32,6 +32,9 @@ $ -> analytics.ready ->
   require '../analytics/checkout.js'
   require '../analytics/personalize.js'
   require '../analytics/search.js'
+  require '../analytics/auth.js'
+  require '../analytics/layered_search.js'
+  require '../analytics/error.js'
 
   if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'
