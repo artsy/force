@@ -97,6 +97,7 @@ module.exports = class ConfirmInquiryView extends ContactView
       changed: if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
       session_id: SESSION_ID
       attributes: @artwork.attributes
+      version: 'Updated'
 
   postRender: =>
     @isLoading()

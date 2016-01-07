@@ -54,9 +54,6 @@ module.exports = class ContactPartnerView extends ContactView
     @$('.contact-location').html ", " + city
 
   submit: ->
-    analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
-
     @model.set
       artwork: @artwork.id
       contact_gallery: true
@@ -67,9 +64,12 @@ module.exports = class ContactPartnerView extends ContactView
 
     super
 
-    changed = if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
-    analytics.track.funnel "#{changed} default message"
-    analytics.track.funnel "Inquiry: Original Flow", SESSION_ID
+    analyticsHooks.trigger 'inquiry:sent',
+      label: modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      changed: if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
+      session_id: SESSION_ID
+      attributes: @artwork.attributes
+      version: 'Original'
 
   postRender: =>
     @isLoading()
