@@ -24,11 +24,11 @@ module.exports = class FairInfoRouter extends Backbone.Router
       model: new Profile sd.PROFILE
       fair: @fair
 
-    # view = new FairInfoVisitorsView
-    #   model: @fair
-    #   el: $('.fair-info2-body')
+    view = new FairInfoVisitorsView
+      model: @fair
+      el: $('.fair-info2-body')
 
-    # view.maybeDisplayMap()
+    view.maybeDisplayMap()
 
   visitors: ->
     view = new FairInfoVisitorsView
