@@ -6,6 +6,8 @@ initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 Fair = require '../../../models/fair.coffee'
 FairEvent = require '../../../models/fair_event.coffee'
 Profile = require '../../../models/profile.coffee'
+Article = require '../../../models/article.coffee'
+ArticleView = require '../../../components/article/view.coffee'
 sd = require('sharify').data
 
 module.exports = class FairInfoRouter extends Backbone.Router
@@ -31,7 +33,11 @@ module.exports = class FairInfoRouter extends Backbone.Router
 
   programming: ->
     new FairInfoProgrammingView
-      model: @fair
+      model: @article
+      el: $('.fair-info-programming')
+
+    new ArticleView
+      article: new Article(sd.ARTICLE)
       el: $('.fair-info-programming')
 
   events: ->
