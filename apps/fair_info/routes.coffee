@@ -3,11 +3,14 @@ Fair = require '../../models/fair'
 FairEvent = require '../../models/fair_event'
 FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
+embedVideo = require 'embed-video'
 InfoMenu = require './info_menu.coffee'
+Article = require '../../models/article'
+FairInfoProgrammingView = require './client/programming.coffee'
 
 @assignFair = (req, res, next) ->
   return next() unless res.locals.profile?.isFair()
-  fair = new Fair id: res.locals.profile.get('owner').id
+  fair = new Fair res.locals.profile.get('owner')
   infoMenu = new InfoMenu fair: fair
   Q.all([
     fair.fetch(cache: true)
@@ -28,7 +31,17 @@ InfoMenu = require './info_menu.coffee'
   res.render("visitors")
 
 @programming = (req, res) ->
-  res.render("programming")
+  @article = new Article
+  @article.parse = (response) ->
+    response.results[0]
+
+  @article.fetch
+    data:
+      'fair_programming_id': res.locals.sd.FAIR._id
+      published: true
+    success: ->
+      res.locals.sd.ARTICLE = @article.toJSON()
+      res.render('programming', embedVideo: embedVideo)
 
 @events = (req, res) ->
   events = new FairEvents [], {fairId: res.locals.fair.id}

@@ -43,21 +43,21 @@ module.exports = class InfoMenu
 
   fetchArticle: (urlParam, key) ->
     Q.promise (resolve) =>
-      data = {}
-      data[urlParam] = @fair.id
+      data = { published: true }
+      data[urlParam] = @fair.get('_id')
       articles = new Articles
       articles.fetch
         data: data
-        error: ->
+        error: (collection, error) ->
           resolve "#{key}": false
         success: (collection, response) ->
           resolve "#{key}": !!collection.length
 
   fetchProgramming: ->
-    @fetchArticle('fair_programming_ids', 'programming')
+    @fetchArticle('fair_programming_id', 'programming')
 
   fetchAtTheFair: ->
-    @fetchArticle('fair_artsy_ids', 'artsyAtTheFair')
+    @fetchArticle('fair_artsy_id', 'artsyAtTheFair')
 
   fetchAboutTheFair: ->
-    @fetchArticle('fair_about_ids', 'aboutTheFair')
+    @fetchArticle('fair_about_id', 'aboutTheFair')
