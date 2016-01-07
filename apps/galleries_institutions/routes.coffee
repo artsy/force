@@ -13,7 +13,7 @@ Profiles = require '../../collections/profiles'
 
 fetchCategories = (type) ->
   categories = new PartnerCategories
-  categories.fetchUntilEnd cache: true, data: category_type: type, internal: false
+  categories.fetchUntilEndInParallel cache: true, data: category_type: type, internal: false
     .then ->
       Q.all categories.map (category) ->
         carousel = new CategoryCarousel category: category
