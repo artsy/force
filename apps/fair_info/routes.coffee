@@ -6,7 +6,6 @@ Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
 InfoMenu = require './info_menu.coffee'
 Article = require '../../models/article'
-FairInfoProgrammingView = require './client/programming.coffee'
 
 @assignFair = (req, res, next) ->
   return next() unless res.locals.profile?.isFair()
