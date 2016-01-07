@@ -13,4 +13,8 @@
     });
   });
 
+  analyticsHooks.on('jump:scroll-to-top', function() {
+    analytics.track('Clicked filter scrollToTop');
+  });
+
 })();
