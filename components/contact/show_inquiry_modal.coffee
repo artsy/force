@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 Partner = require '../../models/partner.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...
@@ -41,8 +42,8 @@ module.exports = class ShowInquiryModal extends ContactView
     @$('.contact-location').html ", " + city
 
   submit: (e) ->
-    analytics.track.funnel 'Sent show inquiry',
-      label: analytics.modelNameAndIdToLabel('show', @show.get('id'))
+    analyticsHooks.trigger 'inquiry:show',
+      label: modelNameAndIdToLabel 'show', @show.get('id')
     @model.set
       inquireable_id: @show.get('id')
       inquireable_type: 'partner_show'

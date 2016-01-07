@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 Cookies = require 'cookies-js'
 defaultMessage = require './default_message.coffee'
@@ -32,9 +32,7 @@ module.exports = class ContactPartnerView extends ContactView
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
     successMessage: 'Thank you. Your inquiry has been sent.'
 
-  initialize: (options) ->
-    { @artwork, @partner } = options
-
+  initialize: ({ @artwork, @partner }) ->
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()

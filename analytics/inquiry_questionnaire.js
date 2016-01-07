@@ -181,6 +181,28 @@
     });
   });
 
+  bindOnce('inquiry:show', function(context) {
+    analytics.track('Sent show inquiry', {
+      label: context.label
+    });
+  });
+
+  bindOnce('contact:hover', function(context) {
+    analytics.track("Hovered over contact form 'Send' button");
+  });
+
+  bindOnce('contact:close-x', function(context) {
+    analytics.track("Closed the inquiry form via the '×' button");
+  });
+
+  bindOnce('contact:close-back', function(context) {
+    analytics.track("Closed the inquiry form by clicking the modal window backdrop");
+  });
+
+  bindOnce('contact:submitted', function(context) {
+    analytics.track('Contact form submitted', context.attributes);
+  });
+
   bind('inquiry:sent', function(context) {
     track('Sent artwork inquiry', { label: context.label });
     track('Submit confirm inquiry modal', context.attributes);
