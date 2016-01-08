@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 SearchBarView = require '../../search_bar/view.coffee'
 teleport = require './teleport.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
 
 module.exports = class FairNavView extends Backbone.View
   initialize: ({ fair, model }) ->
