@@ -24,14 +24,11 @@ Article = require '../../models/article'
     next()
   .done()
 
-@index = (req, res) ->
-  res.render("index")
-
 @visitors = (req, res) ->
   res.render("visitors")
 
 @programming = (req, res, next) ->
-  fetchArticle('fair_programming_id', 'programming', req, res, next)
+  fetchArticle('fair_programming_id', req, res, next)
 
 @events = (req, res) ->
   events = new FairEvents [], {fairId: res.locals.fair.id}
@@ -44,12 +41,12 @@ Article = require '../../models/article'
       res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })
 
 @atTheFair = (req, res, next) ->
-  fetchArticle('fair_artsy_id', 'at_the_fair', req, res, next)
+  fetchArticle('fair_artsy_id', req, res, next)
 
 @aboutFair = (req, res, next) ->
-  fetchArticle('fair_about_id', 'about_fair', req, res, next)
+  fetchArticle('fair_about_id', req, res, next)
 
-fetchArticle = (articleParam, template, req, res, next) ->
+fetchArticle = (articleParam, req, res, next) ->
   @article = new Article
   @article.parse = (response) ->
     response.results[0]
@@ -61,4 +58,4 @@ fetchArticle = (articleParam, template, req, res, next) ->
     error: next
     success: ->
       res.locals.sd.ARTICLE = @article.toJSON()
-      res.render(template, { embedVideo: embedVideo, resize: resize })
+      res.render('article', { embedVideo: embedVideo, resize: resize })
