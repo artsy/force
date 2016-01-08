@@ -56,7 +56,7 @@ module.exports = class Sale extends Backbone.Model
       'closed'
     else if moment().isBetween(start, end)
       'open'
-    else if moment().isBefore(start) or isSame(start)
+    else if moment().isBefore(start) or moment().isSame(start)
       'preview'
 
   state: ->

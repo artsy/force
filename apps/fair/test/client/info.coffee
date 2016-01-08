@@ -32,8 +32,6 @@ describe 'FairInfoView', ->
     }, =>
       $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
 
-      sinon.stub(FairInfo::, 'trackFairVisit')
-
       @view = new FairInfo
         el: $('#fair')
         model: @profile
