@@ -4,7 +4,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 sd = require('sharify').data
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
+{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 
 module.exports = class ShippingForm extends ErrorHandlingForm

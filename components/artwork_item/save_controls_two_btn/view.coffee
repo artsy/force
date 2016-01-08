@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 SaveControlsModal = require './modal.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-{ track } = require '../../../lib/analytics.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 
 module.exports = class SaveControls extends Backbone.View
@@ -14,7 +14,8 @@ module.exports = class SaveControls extends Backbone.View
     @collections ?= new ArtworkCollections [], user: @user
 
   showSignupModal: ->
-    track.funnel 'Triggered sign up form via save button'
+    analyticsHooks.trigger 'save:sign-up'
+
     mediator.trigger 'open:auth',
       mode: 'register'
       copy: 'Sign up to save artworks'

@@ -28,7 +28,6 @@ describe 'FavoritesView', ->
         stubChildClasses mod, this,
           ['ArtworkColumnsView', 'FavoritesEmptyStateView', 'ShareView', 'ZigZagBanner']
           ['appendArtworks', 'render']
-        mod.__get__('analytics').getProperty = sinon.stub()
         mod.setupForTwoButton = sinon.stub()
         @view = new FavoritesView el: $('body')
         done()

@@ -8,4 +8,8 @@
     analytics.track(options.message, { label: options.label } );
   });
 
+  analyticsHooks.on('follow:sign-up', function(options) {
+    analytics.track('Triggered sign up form via follow button');
+  });
+
 })();

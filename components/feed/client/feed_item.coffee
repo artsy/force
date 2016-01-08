@@ -4,12 +4,10 @@ Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
 ShareView = require '../../share/view.coffee'
 AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
-analytics = require('../../../lib/analytics.coffee')
 SaveControls = require '../../artwork_item/save_controls.coffee'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 artworkColumns = -> require('../../artwork_columns/template.jade') arguments...
 Artwork = require('../../../models/artwork.coffee')
-trackArtworkImpressions = require("../../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
@@ -27,7 +25,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     @hideArtworks()
     _.defer =>
       @setupArtworkSaveControls()
-      @setupArtworkImpressionTracking()
 
   hideArtworks: ->
     _.each(@model.artworks().rest(@model.get('initialArtworkSize')), ((artwork) =>
@@ -36,10 +33,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   showArtworks: ->
     @$el.find(".artwork-item:not(:visible)").fadeIn('fast')
     @$el.find(".feed-item-see-more").hide()
-
-  moreArtworksClick: (event) =>
-    analytics.track.click "Clicked show all artworks on feed item"
-    @fetchMoreArtworks $(event.target)
 
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
@@ -60,9 +53,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
         @$('.feed-large-artworks-columns').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(4)
         @setupArtworkSaveControls artworks.models
     false
-
-  setupArtworkImpressionTracking: (artworks=@model.artworks().models) ->
-    trackArtworkImpressions artworks, @$el
 
   setupArtworkSaveControls: (artworks=@model.artworks().models) ->
     listItems =

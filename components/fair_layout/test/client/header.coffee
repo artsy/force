@@ -8,7 +8,6 @@ Fair = require '../../../../models/fair.coffee'
 sinon = require 'sinon'
 mediator = require '../../../../lib/mediator.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
-analytics = require '../../../../lib/analytics.coffee'
 { fabricate } = require 'antigravity'
 
 describe 'HeaderView', ->

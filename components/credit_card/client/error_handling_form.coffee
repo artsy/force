@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 isCreditCard = require('validator').isCreditCard
 isEmail = require('validator').isEmail
-analytics = require('../../../lib/analytics.coffee')
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class ErrorHandlingForm extends Backbone.View
 
@@ -72,7 +72,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     message += " #{response.error.additional}" if response?.error?.additional
 
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
-    analytics.track.error(description) if description?
+    analyticsHooks.trigger 'error', description
 
   internationalizeFields: ->
     @$('select.country').change =>

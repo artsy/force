@@ -23,8 +23,6 @@ describe 'Inquiry', ->
     @partner = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate'])
-      @analytics = Inquiry.__get__('analytics')
-      sinon.stub @analytics.track, 'funnel'
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
       sinon.stub Inquiry.prototype, 'isLoaded'
@@ -33,7 +31,6 @@ describe 'Inquiry', ->
       done()
 
   afterEach ->
-    @analytics.track.funnel.restore()
     Backbone.sync.restore()
 
   describe '#renderTemplates', ->
@@ -65,11 +62,6 @@ describe 'Inquiry', ->
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.not.be.ok() # Should not contact gallery
-
-      it 'tracks the correct event', ->
-        events = _.last(@analytics.track.funnel.args, 2)
-        events[0][0].should.equal 'Sent artwork inquiry'
-        events[1][0].should.equal 'Contact form submitted'
 
       it 'sends inquiries to galleries if the work is in an auction and ' +
          'partner is directly contactable', ->

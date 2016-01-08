@@ -11,7 +11,6 @@ SaveButton = require '../../../components/save_button/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
 BelowTheFoldView = require './below_the_fold.coffee'
-{ trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
 MonocleView = require './monocles.coffee'
 AnnyangView = require './annyang.coffee'
 CTAView = require './cta.coffee'
@@ -198,8 +197,6 @@ module.exports = class ArtworkView extends Backbone.View
       isOrdered: false
       seeMore: false
       artworkSize: 'tall'
-
-    trackArtworkImpressions @artist.related().artworks.models, @$('#artwork-artist-artworks-container')
 
   renderActions: ->
     @$('.artwork-actions').html actionsTemplate

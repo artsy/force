@@ -6,10 +6,17 @@ window._ = require 'underscore'
 
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
+
 require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
+
 $ -> analytics.ready ->
   setupSplitTests()
+
+  whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type']
+  traits = _.extend _.pick(sd.CURRENT_USER, whitelist), session_id: sd.SESSION_ID
+
+  analytics.identify null, traits
 
   require '../analytics/global.js'
   require '../analytics/impressions.js'
@@ -32,6 +39,9 @@ $ -> analytics.ready ->
   require '../analytics/checkout.js'
   require '../analytics/personalize.js'
   require '../analytics/search.js'
+  require '../analytics/auth.js'
+  require '../analytics/layered_search.js'
+  require '../analytics/error.js'
 
   if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'

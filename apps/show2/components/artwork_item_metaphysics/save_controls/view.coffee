@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 mediator = require '../../../../../lib/mediator.coffee'
-track = require('../../../../../lib/analytics.coffee').track
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
@@ -28,7 +28,7 @@ module.exports = class SaveControls extends Backbone.View
 
   save: (e) ->
     unless @artworkCollection
-      track.funnel 'Triggered sign up form via save button'
+      analyticsHooks.trigger 'save:sign-up'
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: 'Sign up to save artworks'
@@ -36,11 +36,11 @@ module.exports = class SaveControls extends Backbone.View
       return false
 
     if @artworkCollection.isSaved(@artwork)
-      track.click @analyticsRemoveMessage, @artwork
+      analyticsHooks.trigger 'save:artwork-remove', message: @analyticsRemoveMessage
       @artworkCollection.unsaveArtwork @artwork.id,
         error: => @$button.attr 'data-state', 'saved'
     else
-      track.click @analyticsSaveMessage, @artwork
+      analyticsHooks.trigger 'save:artwork-save', message: @analyticsSaveMessage
       @artworkCollection.saveArtwork @artwork.id,
         error: => @$button.attr 'data-state', 'unsaved'
 

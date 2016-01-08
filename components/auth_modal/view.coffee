@@ -6,7 +6,6 @@ Cookies = require 'cookies-js'
 ModalView = require '../modal/view.coffee'
 Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
-analytics = require '../../lib/analytics.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 { templateMap, stateEventMap, routeCopyMap } = require './maps.coffee'
@@ -84,10 +83,10 @@ module.exports = class AuthModalView extends ModalView
     @state.set 'mode', mode
 
   logState: ->
-    analytics.track.funnel stateEventMap[@state.get 'mode']
+    analyticsHooks.trigger 'auth:state', message: stateEventMap[@state.get 'mode']
 
   logClose: =>
-    analytics.track.funnel 'Closed auth modal', mode: @state.get('mode')
+    analyticsHooks.trigger 'auth:close', mode: @state.get('mode')
 
   toggleMode: (e) ->
     e.preventDefault()

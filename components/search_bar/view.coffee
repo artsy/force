@@ -4,7 +4,8 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
@@ -57,7 +58,7 @@ module.exports = class SearchBarView extends Backbone.View
       @emptyItemClick()
 
   trackFocusInput: ->
-    analytics.track.click "Focused on search input"
+    analyticsHooks.trigger 'search:focus'
 
   checkSubmission: (e) ->
     @hideSuggestions()
@@ -117,7 +118,9 @@ module.exports = class SearchBarView extends Backbone.View
 
   trackSearchResults: (results) ->
     string = "Searched from header, with #{if results?.length then 'results' else 'no results'}"
-    analytics.track.funnel string, query: @$input.val()
+    analyticsHooks.trigger 'search:header',
+      message: string
+      query: @$input.val()
 
   setupBloodHound: ->
     @hound = new Bloodhound
@@ -162,17 +165,17 @@ module.exports = class SearchBarView extends Backbone.View
     @$input.typeahead 'val', value
 
   emptyItemClick: ->
-    analytics.track.click 'Selected item from search',
+    analyticsHooks.trigger 'search:empty-item:click',
       query: @query
-      label: analytics.modelNameAndIdToLabel 'user-query', 'query'
+      label: modelNameAndIdToLabel 'user-query', 'query'
     @selected = true
     location.assign "/search?q=#{@query}"
 
   selectResult: (e, model) ->
     return @emptyItemClick() unless model
-    analytics.track.click 'Selected item from search',
+    analyticsHooks.trigger 'search:item:click',
       query: @query
-      label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
+      label: modelNameAndIdToLabel 'user-query', 'query'
     @selected = true
     location.assign model.href()
 

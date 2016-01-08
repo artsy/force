@@ -13,4 +13,12 @@
     });
   });
 
+  analyticsHooks.on('jump:scroll-to-top', function() {
+    analytics.track('Clicked filter scrollToTop');
+  });
+
+  analyticsHooks.on('dropdown:link', function(trackingText) {
+    analytics.track("Clicked user dropdown link with text: " + trackingText);
+  });
+
 })();

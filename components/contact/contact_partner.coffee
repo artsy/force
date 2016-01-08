@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 CurrentUser = require '../../models/current_user.coffee'
 Cookies = require 'cookies-js'
 defaultMessage = require './default_message.coffee'
@@ -32,9 +33,7 @@ module.exports = class ContactPartnerView extends ContactView
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
     successMessage: 'Thank you. Your inquiry has been sent.'
 
-  initialize: (options) ->
-    { @artwork, @partner } = options
-
+  initialize: ({ @artwork, @partner }) ->
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
       @renderLocation()
@@ -54,9 +53,6 @@ module.exports = class ContactPartnerView extends ContactView
     @$('.contact-location').html ", " + city
 
   submit: ->
-    analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
-
     @model.set
       artwork: @artwork.id
       contact_gallery: true
@@ -67,9 +63,12 @@ module.exports = class ContactPartnerView extends ContactView
 
     super
 
-    changed = if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
-    analytics.track.funnel "#{changed} default message"
-    analytics.track.funnel "Inquiry: Original Flow", SESSION_ID
+    analyticsHooks.trigger 'inquiry:sent',
+      label: modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      changed: if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
+      session_id: SESSION_ID
+      attributes: @artwork.attributes
+      version: 'Original'
 
   postRender: =>
     @isLoading()

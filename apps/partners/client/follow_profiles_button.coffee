@@ -3,7 +3,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
+{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View

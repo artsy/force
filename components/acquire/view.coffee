@@ -1,6 +1,7 @@
 CurrentUser = require '../../models/current_user.coffee'
-analytics = require '../../lib/analytics.coffee'
 mediator = require '../../lib/mediator.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports =
 
@@ -9,7 +10,7 @@ module.exports =
     @acquiring = true
     currentUser = new CurrentUser()
 
-    analytics.track.funnel 'Order - item added', analytics.modelNameAndIdToLabel('artwork', artwork.get('id'))
+    analyticsHooks.trigger 'order:item-added', modelNameAndIdToLabel('artwork', artwork.get('id'))
 
     currentUser.addToPendingOrder
       artworkId: artwork.get('id')

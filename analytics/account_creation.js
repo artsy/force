@@ -30,6 +30,11 @@ $('.mlh-signup').click(function() {
   analytics.track('Clicked sign up via the header');
 });
 
+// Clicked sign out via the header
+$('.mlh-logout').click(function() {
+  analytics.track('Clicked logout via the header');
+});
+
 // Viewed sign up options
 var trackViewSignup = function() {
   analytics.track('Viewed sign up options');

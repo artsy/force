@@ -6,7 +6,7 @@ mediator = require '../../lib/mediator.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
-analytics = require '../../lib/analytics.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 
 template = -> require('./templates/index.jade') arguments...
@@ -44,14 +44,14 @@ module.exports = class ContactView extends ModalView
       placeholder: @options.placeholder
 
     @on 'click:close', ->
-      analytics.track.click "Closed the inquiry form via the '×' button"
+      analyticsHooks.trigger 'contact:close-x'
     @on 'click:backdrop', ->
-      analytics.track.click "Closed the inquiry form by clicking the modal window backdrop"
+      analyticsHooks.trigger 'contact:close-back'
 
     super @options
 
   logHover: ->
-    analytics.track.hover "Hovered over contact form 'Send' button"
+    analyticsHooks.trigger 'contact:hover'
 
   postRender: ->
     @renderTemplates()
@@ -84,7 +84,7 @@ module.exports = class ContactView extends ModalView
         @$submit.attr 'data-state', 'error'
         @updatePosition()
 
-    analytics.track.funnel 'Contact form submitted', @model.attributes
+    analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
 
   focusTextareaAfterCopy: =>
     return unless @autofocus()

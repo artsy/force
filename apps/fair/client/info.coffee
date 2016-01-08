@@ -15,10 +15,6 @@ module.exports = class FairInfo extends Backbone.View
     if @fair.location()
       @displayMap location
     @targetBlankLinks()
-    @trackFairVisit()
-
-  trackFairVisit: ->
-    analytics.ready -> analyticsHooks.trigger 'fair:impression'
 
   displayMap: (location) ->
     src = location.mapImageSrc(@mapWidth, @mapHeight)
