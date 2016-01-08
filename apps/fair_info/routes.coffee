@@ -24,20 +24,6 @@ Article = require '../../models/article'
     next()
   .done()
 
-# fetchArticle = (articleParam, template, req, res, next) ->
-#   @article = new Article
-#   @article.parse = (response) ->
-#     response.results[0]
-
-#   @article.fetch
-#     data:
-#       "#{articleParam}": res.locals.sd.FAIR._id
-#       published: true
-#     error: next
-#     success: ->
-#       res.locals.sd.ARTICLE = @article.toJSON()
-#       res.render(template, { embedVideo: embedVideo, resize: resize })
-
 @index = (req, res) ->
   res.render("index")
 
