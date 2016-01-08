@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  if(location.pathname.match(/artwork/)) analytics.track('Artwork page', { id: sd.ARTWORK.id, nonInteraction: 1 });
+  if(location.pathname.match(/artwork/) && sd.ARTWORK) analytics.track('Artwork page', { id: sd.ARTWORK.id, nonInteraction: 1 });
 
   // DOM events
   var $document = $(document);

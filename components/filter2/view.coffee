@@ -94,7 +94,6 @@ module.exports = class FilterView extends Backbone.View
     state =
       if @giveUpCount is 1 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
-      else if response.hits.length < @pageSize then 'finished-paging'
       else ''
 
     @$('.filter-artworks').attr 'data-state', state
