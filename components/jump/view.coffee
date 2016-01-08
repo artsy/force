@@ -14,13 +14,13 @@ module.exports = class JumpView extends Backbone.View
     position: 0 # where the button scrolls to
 
   initialize: (options = {}) ->
-    console.log 'JumpView'
     {
       @duration,
       @threshold,
       @frequency,
       @direction,
-      @position } = _.defaults options, @defaults
+      @position
+    } = _.defaults options, @defaults
 
     @$el.addClass "from-#{@direction}"
     @isScrolling = false
