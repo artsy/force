@@ -1,6 +1,5 @@
 Backbone = require 'backbone'
 FairInfoVisitorsView = require './visitors.coffee'
-FairInfoProgrammingView = require './programming.coffee'
 FairInfoEventsView = require './events.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 Fair = require '../../../models/fair.coffee'
@@ -8,6 +7,7 @@ FairEvent = require '../../../models/fair_event.coffee'
 Profile = require '../../../models/profile.coffee'
 Article = require '../../../models/article.coffee'
 ArticleView = require '../../../components/article/view.coffee'
+FairInfoArticleView = require './article.coffee'
 sd = require('sharify').data
 
 module.exports = class FairInfoRouter extends Backbone.Router
@@ -15,8 +15,10 @@ module.exports = class FairInfoRouter extends Backbone.Router
   routes:
     ':id/info2' : 'visitors'
     ':id/info2/visitors' : 'visitors'
-    ':id/info2/programming' : 'programming'
+    ':id/info2/programming' : 'article'
     ':id/info2/events' : 'events'
+    ':id/info2/artsy-at-the-fair' : 'article'
+    ':id/info2/about-the-fair' : 'article'
 
   initialize: ->
     @fair = new Fair sd.FAIR
@@ -31,19 +33,20 @@ module.exports = class FairInfoRouter extends Backbone.Router
 
     view.maybeDisplayMap()
 
-  programming: ->
-    new FairInfoProgrammingView
+  article: ->
+    new FairInfoArticleView
       model: @article
-      el: $('.fair-info-programming')
+      el: $('.fair-info-article')
 
     new ArticleView
       article: new Article(sd.ARTICLE)
-      el: $('.fair-info-programming')
+      el: $('.fair-info-article')
 
   events: ->
     new FairInfoEventsView
       model: @fair
       el: $('.fair-info2-events')
+
 
 module.exports.init = ->
   new FairInfoRouter

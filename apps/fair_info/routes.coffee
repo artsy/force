@@ -4,6 +4,7 @@ FairEvent = require '../../models/fair_event'
 FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
+{ resize } = require '../../components/resizer/index.coffee'
 InfoMenu = require './info_menu.coffee'
 Article = require '../../models/article'
 
@@ -23,24 +24,11 @@ Article = require '../../models/article'
     next()
   .done()
 
-@index = (req, res) ->
-  res.render("index")
-
 @visitors = (req, res) ->
   res.render("visitors")
 
-@programming = (req, res) ->
-  @article = new Article
-  @article.parse = (response) ->
-    response.results[0]
-
-  @article.fetch
-    data:
-      'fair_programming_id': res.locals.sd.FAIR._id
-      published: true
-    success: ->
-      res.locals.sd.ARTICLE = @article.toJSON()
-      res.render('programming', embedVideo: embedVideo)
+@programming = (req, res, next) ->
+  fetchArticle('fair_programming_id', req, res, next)
 
 @events = (req, res) ->
   events = new FairEvents [], {fairId: res.locals.fair.id}
@@ -51,3 +39,23 @@ Article = require '../../models/article'
     success: ->
       res.locals.sd.FAIR_EVENTS = events.toJSON()
       res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })
+
+@atTheFair = (req, res, next) ->
+  fetchArticle('fair_artsy_id', req, res, next)
+
+@aboutFair = (req, res, next) ->
+  fetchArticle('fair_about_id', req, res, next)
+
+fetchArticle = (articleParam, req, res, next) ->
+  @article = new Article
+  @article.parse = (response) ->
+    response.results[0]
+
+  @article.fetch
+    data:
+      "#{articleParam}": res.locals.sd.FAIR._id
+      published: true
+    error: next
+    success: ->
+      res.locals.sd.ARTICLE = @article.toJSON()
+      res.render('article', { embedVideo: embedVideo, resize: resize })

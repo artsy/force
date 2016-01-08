@@ -6,7 +6,7 @@ Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 Article = require '../../../../models/article'
 InfoMenu = require '../../info_menu.coffee'
-template = require('jade').compileFile(require.resolve '../../templates/programming.jade')
+template = require('jade').compileFile(require.resolve '../../templates/article.jade')
 testStubs =
   asset: (->)
   resize: sinon.stub()

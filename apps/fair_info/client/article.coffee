@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-module.exports = class FairInfoProgrammingView extends Backbone.View
+module.exports = class FairInfoArticleView extends Backbone.View
 
   initialize: (options) ->
