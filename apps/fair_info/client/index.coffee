@@ -8,6 +8,8 @@ FairEvent = require '../../../models/fair_event.coffee'
 Profile = require '../../../models/profile.coffee'
 Article = require '../../../models/article.coffee'
 ArticleView = require '../../../components/article/view.coffee'
+FairInfoAtTheFairView = require './at_the_fair.coffee'
+FairInfoAboutFairView = require './about_fair.coffee'
 sd = require('sharify').data
 
 module.exports = class FairInfoRouter extends Backbone.Router
@@ -17,6 +19,8 @@ module.exports = class FairInfoRouter extends Backbone.Router
     ':id/info2/visitors' : 'visitors'
     ':id/info2/programming' : 'programming'
     ':id/info2/events' : 'events'
+    ':id/info2/artsy-at-the-fair' : 'atTheFair'
+    ':id/info2/about-the-fair' : 'aboutFair'
 
   initialize: ->
     @fair = new Fair sd.FAIR
@@ -44,6 +48,24 @@ module.exports = class FairInfoRouter extends Backbone.Router
     new FairInfoEventsView
       model: @fair
       el: $('.fair-info2-events')
+
+  atTheFair: ->
+    new FairInfoAtTheFairView
+      model: @article
+      el: $('.fair-info-at-the-fair')
+
+    new ArticleView
+      article: new Article(sd.ARTICLE)
+      el: $('.fair-info-at-the-fair')
+
+  aboutFair: ->
+    new FairInfoAboutFairView
+      model: @fair
+      el: $('.fair-info-about-fair')
+
+    new ArticleView
+      article: new Article(sd.ARTICLE)
+      el: $('.fair-info-about-fair')
 
 module.exports.init = ->
   new FairInfoRouter
