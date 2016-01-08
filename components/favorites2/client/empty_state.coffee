@@ -15,7 +15,7 @@ module.exports = class FavoritesEmptyStateView extends Backbone.View
           emptyTemplate {
             featuredLinks: _.sample(featuredLinks.models, 4)
             inSetView: CURRENT_PATH.match('/collection/')
-            inTwoButtonMode: ((Cookies.get('save-controls') is 'two button')
+            inTwoButtonMode: (Cookies.get('save-controls') is 'two button')
           }
         )
 

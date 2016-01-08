@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -59,7 +59,7 @@ module.exports = class FollowButton extends Backbone.View
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
-      aanalyticsHooks.trigger 'followable:followed',
+      analyticsHooks.trigger 'followable:followed',
         label: modelNameAndIdToLabel(@modelName, @model.id)
         message: @analyticsUnfollowMessage
 
