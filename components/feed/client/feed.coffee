@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
-analytics = require '../../../lib/analytics.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
