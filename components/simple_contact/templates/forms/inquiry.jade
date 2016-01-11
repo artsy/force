@@ -25,6 +25,9 @@ form.scontact-form.stacked-form.js-inquiry-form
   )
     = message
 
+  if fair
+    include attendance
+
   if user && user.get('name') && user.get('email')
     input( type='hidden', name='name', value= user.get('name') )
     input( type='hidden', name='email', value= user.get('email') )
