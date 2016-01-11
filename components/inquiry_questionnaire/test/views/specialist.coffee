@@ -29,11 +29,11 @@ describe 'Specialist', setup ->
 
         @view.render()
 
-      it 'loads the representative then renders the template', (done) ->
-        Backbone.sync.args[0][1].url
-          .should.containEql '/api/v1/admins/available_representatives'
+      it 'loads the representative then renders the template', ->
+        @view.__representatives__.then =>
+          Backbone.sync.args[0][1].url
+            .should.containEql '/api/v1/admins/available_representatives'
 
-        @wait =>
           @view.$('h1').text()
             .should.equal 'Send message to Artsy'
           @view.$('.scontact-description').text()
@@ -44,8 +44,6 @@ describe 'Specialist', setup ->
             .should.have.lengthOf 0
           @view.$('.scontact-from').text()
             .should.equal 'From: Craig Spaeth (craigspaeth@gmail.com)'
-
-          done()
 
     describe 'user without contact details', ->
       beforeEach ->
@@ -85,32 +83,30 @@ describe 'Specialist', setup ->
 
       @view.render()
 
-    it 'sets up the inquiry and ensures the user has contact details', (done) ->
+    it 'sets up the inquiry and ensures the user has contact details', ->
       @view.$('input[name="name"]').val 'Foo Bar'
       @view.$('input[name="email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
       @view.$('button').click()
 
-      # Sets up the inquiry
-      @inquiry.get('message').should.equal 'I wish to buy the foo bar'
-      @inquiry.get('contact_gallery').should.be.false()
-      @inquiry.get('artwork').should.equal @artwork.id
+      @view.__serialize__.then =>
+        # Sets up the inquiry
+        @inquiry.get('message').should.equal 'I wish to buy the foo bar'
+        @inquiry.get('contact_gallery').should.be.false()
+        @inquiry.get('artwork').should.equal @artwork.id
 
-      # Sets up the user
-      @loggedOutUser.get('name').should.equal 'Foo Bar'
-      @loggedOutUser.get('email').should.equal 'foo@bar.com'
+        # Sets up the user
+        @loggedOutUser.get('name').should.equal 'Foo Bar'
+        @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-      Backbone.sync.callCount.should.equal 3
+        Backbone.sync.callCount.should.equal 4
 
-      Backbone.sync.args[0][1].url
-        .should.containEql '/api/v1/admins/available_representatives'
-      Backbone.sync.args[1][1].url()
-        .should.containEql '/api/v1/me/artwork_inquiry_request'
-      Backbone.sync.args[2][1].url()
-        .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+        Backbone.sync.args[0][1].url
+          .should.containEql '/api/v1/admins/available_representatives'
+        Backbone.sync.args[1][1].url()
+          .should.containEql '/api/v1/me/artwork_inquiry_request'
+        Backbone.sync.args[2][1].url()
+          .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
 
-      @wait =>
         # Next
         @view.state.current().should.equal 'after_specialist'
-
-        done()
