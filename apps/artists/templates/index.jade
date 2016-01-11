@@ -63,10 +63,9 @@ block body
                 .afg-artist.grid-item
                   if artist.image
                     a.hoverable-image-link( href= artist.href )
-                      img(
-                        src= artist.image.url
-                        alt= artist.name
-                        title= artist.name
+                      .hoverable-image.is-four-three.is-cropped(
+                        data-initials= artist.initials
+                        style= artist.image.url && 'background-image: url(#{artist.image.url})'
                       )
 
                   .afg-artist-information
