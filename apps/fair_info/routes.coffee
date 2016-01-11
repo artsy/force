@@ -6,7 +6,7 @@ Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
 { resize } = require '../../components/resizer/index.coffee'
 InfoMenu = require './info_menu.coffee'
-Article = require '../../models/article'
+Articles = require '../../collections/articles'
 
 @assignFair = (req, res, next) ->
   return next() unless res.locals.profile?.isFair()
@@ -47,15 +47,13 @@ Article = require '../../models/article'
   fetchArticle('fair_about_id', req, res, next)
 
 fetchArticle = (articleParam, req, res, next) ->
-  @article = new Article
-  @article.parse = (response) ->
-    response.results[0]
+  articles = new Articles
 
-  @article.fetch
+  articles.fetch
     data:
       "#{articleParam}": res.locals.sd.FAIR._id
       published: true
     error: next
-    success: ->
-      res.locals.sd.ARTICLE = @article.toJSON()
-      res.render('article', { embedVideo: embedVideo, resize: resize })
+    success: =>
+      res.locals.sd.ARTICLE = articles.first().toJSON()
+      res.render('article', { embedVideo: embedVideo, resize: resize, article: articles.first() })
