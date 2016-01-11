@@ -11,3 +11,6 @@ module.exports = class UserFairActions extends Backbone.Collection
     @add
       action: 'Attendee'
       fair_id: fair.id
+
+  isAttending: (fair) ->
+    @findWhere(fair_id: fair.id)?

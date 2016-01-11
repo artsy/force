@@ -11,7 +11,7 @@ map = require '../../components/inquiry_questionnaire/map'
 
 @development = (req, res) ->
   artwork = new Artwork id: req.query.artwork_id or
-    'cindy-sherman-untitled-as-marilyn-monroe'
+    'cindy-sherman-untitled'
 
   artwork.fetch cache: true, error: res.backboneError, success: ->
     res.locals.sd.ARTWORK = artwork.toJSON()
@@ -28,7 +28,7 @@ map = require '../../components/inquiry_questionnaire/map'
   inquiry = new InquiryOutcome
     id: req.params.id
     outcome_token: req.query.outcome_token
-  
+
   inquiry.fetch data: { outcome_token: inquiry.get('outcome_token') }, cache: false, error: res.backboneError, success: ->
     already_submitted = if inquiry.get('user_reported_outcome') then true else false
     if not already_submitted

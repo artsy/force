@@ -1,12 +1,19 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 setup = require './setup'
 Inquiry = benv.requireWithJadeify require.resolve('../../views/inquiry'), [
   'template'
 ]
 
 describe 'Inquiry', setup ->
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+  afterEach ->
+    Backbone.sync.restore()
+
   describe '#render', ->
     describe 'user with email and name', ->
       beforeEach ->
@@ -55,10 +62,8 @@ describe 'Inquiry', setup ->
         @view.$('.scontact-from').text()
           .should.be.empty()
 
-  describe 'next', ->
+  describe '#next', ->
     beforeEach ->
-      sinon.stub Backbone, 'sync'
-
       @state.set 'steps', ['inquiry', 'after_inquiry']
 
       @loggedOutUser.unset 'name'
@@ -72,36 +77,31 @@ describe 'Inquiry', setup ->
 
       @view.render()
 
-    afterEach ->
-      Backbone.sync.restore()
-
-    it 'sets up the inquiry and ensures the user has contact details', (done) ->
+    it 'sets up the inquiry and ensures the user has contact details', ->
       @view.$('input[name="name"]').val 'Foo Bar'
       @view.$('input[name="email"]').val 'foo@bar.com'
       @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
       @view.$('button').click()
 
-      # Sets up the inquiry
-      @inquiry.get('message').should.equal 'I wish to buy the foo bar'
-      @inquiry.get('contact_gallery').should.be.true()
-      @inquiry.get('artwork').should.equal @artwork.id
+      @view.__serialize__.then =>
+        # Sets up the inquiry
+        @inquiry.get('message').should.equal 'I wish to buy the foo bar'
+        @inquiry.get('contact_gallery').should.be.true()
+        @inquiry.get('artwork').should.equal @artwork.id
 
-      # Sets up the user
-      @loggedOutUser.get('name').should.equal 'Foo Bar'
-      @loggedOutUser.get('email').should.equal 'foo@bar.com'
+        # Sets up the user
+        @loggedOutUser.get('name').should.equal 'Foo Bar'
+        @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-      Backbone.sync.callCount.should.equal 2
+        Backbone.sync.callCount.should.equal 2
 
-      Backbone.sync.args[0][1].url()
-        .should.containEql '/api/v1/me/artwork_inquiry_request'
-      Backbone.sync.args[1][1].url()
-        .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+        Backbone.sync.args[0][1].url()
+          .should.containEql '/api/v1/me/artwork_inquiry_request'
+        Backbone.sync.args[1][1].url()
+          .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
 
-      @wait =>
         # Next
         @view.state.current().should.equal 'after_inquiry'
-
-        done()
 
     it 'prevents an initial send (but not subsequent) when submitting the default message', ->
       @view.$('textarea[name="message"]').val()
@@ -118,3 +118,60 @@ describe 'Inquiry', setup ->
       @view.$('button').click()
 
       Backbone.sync.callCount.should.equal 2
+
+  describe 'in a fair context', ->
+    beforeEach ->
+      @state.set 'steps', ['inquiry', 'after_inquiry']
+
+      @loggedOutUser.unset 'name'
+      @loggedOutUser.unset 'email'
+
+      @artwork.related().fairs.add fabricate 'fair'
+
+      @view = new Inquiry
+        user: @loggedOutUser
+        artwork: @artwork
+        inquiry: @inquiry
+        state: @state
+
+      @view.render()
+
+    describe '#render', ->
+      it 'renders the attendance checkbox', ->
+        @view.$el.html().should.containEql 'I will attend Armory Show'
+
+    describe '#next', ->
+      it 'saves the user fair action', ->
+        @view.$('input[name="name"]').val 'Foo Bar'
+        @view.$('input[name="email"]').val 'foo@bar.com'
+        @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
+        @view.$('input[name="attending"]').prop 'checked', true
+        @view.$('button').click()
+
+        @view.__serialize__.then =>
+          Backbone.sync.callCount.should.equal 3
+
+          Backbone.sync.args[2][1].url()
+            .should.containEql '/api/v1/me/user_fair_action'
+
+          @view.state.current().should.equal 'after_inquiry'
+
+      it 'continues on to the next state even when the UserFairAction errors', ->
+        Backbone.sync
+          .onCall 0
+            .returns Promise.resolve()
+          .onCall 1
+            .returns Promise.resolve()
+          .onCall 2
+            .returns Promise.reject('Action already taken')
+
+        @view.$('input[name="name"]').val 'Foo Bar'
+        @view.$('input[name="email"]').val 'foo@bar.com'
+        @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
+        @view.$('input[name="attending"]').prop 'checked', true
+        @view.$('button').click()
+
+        @view.__serialize__.then =>
+          Backbone.sync.callCount.should.equal 3
+
+          @view.state.current().should.equal 'after_inquiry'

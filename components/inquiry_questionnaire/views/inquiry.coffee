@@ -10,6 +10,7 @@ template = -> require('../templates/inquiry.jade') arguments...
 module.exports = class Inquiry extends StepView
   template: (data) ->
     template _.extend data,
+      fair: @artwork.related().fairs.first()
       message: @inquiry.get('message') or @defaultMessage()
 
   __events__:
@@ -39,11 +40,24 @@ module.exports = class Inquiry extends StepView
 
     form.state 'loading'
 
-    Q.all [
-      @inquiry.save _.extend { contact_gallery: true }, form.data()
+    { attending } = data = form.serializer.data()
+
+    if attending
+      @user
+        .related().collectorProfile
+        .related().userFairActions.attendFair @artwork.related().fairs.first()
+
+    @__serialize__ = Q.all [
+      @inquiry.save _.extend { contact_gallery: true }, data
       @user.save @inquiry.pick('name', 'email')
     ]
-      .done =>
+      .then =>
+        Q.allSettled(
+          @user
+            .related().collectorProfile
+            .related().userFairActions.invoke 'save'
+        )
+      .then =>
         @next()
       , (e) ->
         form.error null, e

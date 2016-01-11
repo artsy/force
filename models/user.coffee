@@ -24,6 +24,10 @@ module.exports = class User extends Backbone.Model
     @get('collector_level') >= 2 or
     @related().collectorProfile.isCommercial()
 
+  isAttending: (fair) ->
+    @related().collectorProfile
+      .related().userFairActions.isAttending fair
+
   isLoggedIn: ->
     @__isLoggedIn__
 
@@ -45,9 +49,3 @@ module.exports = class User extends Backbone.Model
       .then =>
         @related()
           .collectorProfile.findOrCreate silent: true
-      .then =>
-        Q.allSettled(
-          @related().collectorProfile
-            .related()
-            .userFairActions.invoke 'save'
-        )
