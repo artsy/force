@@ -61,7 +61,7 @@ module.exports = class ArticleView extends Backbone.View
 
       # fix for small screens
       headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player').css 'min-height', headerHeight
+      @$('.article-fullscreen, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
 
     $container.css 'margin-top': "#{margin}px"
 
