@@ -26,3 +26,34 @@ describe 'article show template', ->
       sd: {}
       asset: ->
     html.should.containEql 'hi'
+
+  it 'renders fullscreen headers with video', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        hero_section:
+          type: 'fullscreen'
+          background_url: 'http://video.mp4'
+      footerArticles: new Articles
+      crop: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'article-fullscreen-video-player'
+
+  it 'renders fullscreen headers with static image', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        hero_section:
+          type: 'fullscreen'
+          background_image_url: 'http://image.jpg'
+      footerArticles: new Articles
+      crop: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'article-fullscreen-image'
+
