@@ -7,5 +7,7 @@ qs = require 'qs'
 module.exports = ->
   params = new FilterParams _.extend qs.parse(parse(window.location.search).query),
     type: if sd.PARTNERS_ROOT is 'galleries' then 'gallery' else 'institution',
+    page: 1
+    size: 9
 
   new SearchView params: params

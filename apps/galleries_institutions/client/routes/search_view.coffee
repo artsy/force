@@ -8,7 +8,6 @@ LandingCarouselView = require './landing.coffee'
 PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
 SearchResultsView = require '../../components/search_results/view.coffee'
 filtersTemplate = -> require('../../templates/search_filters.jade') arguments...
-resultsTemplate = -> require('../../components/search_results/template.jade') arguments...
 
 module.exports = class PartnersSearchView extends Backbone.View
 

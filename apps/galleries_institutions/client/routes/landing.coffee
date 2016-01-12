@@ -8,7 +8,7 @@ PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.c
 module.exports = class LandingCarouselView extends Backbone.View
 
   initialize: ({ @following, params }) ->
-    @listenTo params, 'change firstLoad', @paramsChanged
+    @listenTo params, 'change:location change:category firstLoad', @paramsChanged
 
   setup: (type) ->
     return if @loaded

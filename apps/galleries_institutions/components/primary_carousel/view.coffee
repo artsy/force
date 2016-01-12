@@ -9,7 +9,7 @@ fetchProfiles = require './fetch.coffee'
 module.exports = class PrimaryCarousel extends Backbone.View
 
   initialize: ({ params, @following, @profiles}) ->
-    @listenTo params, 'change', @fetch
+    @listenTo params, 'change:location change:category', @fetch
     @listenTo params, 'firstLoad', @setupFlickity
     @listenTo @profiles, 'reset', @render
 
