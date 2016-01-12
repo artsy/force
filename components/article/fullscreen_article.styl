@@ -26,13 +26,13 @@ body.body-fullscreen-article
     margin-top 0px
     top 0px
 
-.article-fullscreen-video
+.article-fullscreen
   width 100%
   height 100vh
   overflow hidden
   &.hidden
     opacity 0
-  &.article-sa-fullscreen-video
+  &.article-sa-fullscreen
     h1, .article-lead-paragraph
       text-align left
     h1
@@ -97,7 +97,7 @@ body.body-fullscreen-article
     color white
     text-decoration none
 
-.article-fullscreen-video-overlay, .article-fullscreen-video-player
+.article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image
   position fixed
   top 0px
   left 0px
@@ -105,14 +105,14 @@ body.body-fullscreen-article
   width 100vw
   pointer-events none
 
-.article-fullscreen-video-overlay
+.article-fullscreen-overlay
   background black
   opacity 0.17
   min-height 500px
   z-index 1
 .article-fullscreen-text-overlay
   color white
-.article-fullscreen-video-player
+.article-fullscreen-video-player, .article-fullscreen-image
   object-fit cover
   z-index 0
 .article-container h1.article-fullscreen-title

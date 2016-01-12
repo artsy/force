@@ -45,7 +45,7 @@ module.exports = class ArticleView extends Backbone.View
     @renderCalloutSections()
 
     @setupArticleWaypoints()
-    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen-video')).length
+    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES?.length > 0
 
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
@@ -61,7 +61,7 @@ module.exports = class ArticleView extends Backbone.View
 
       # fix for small screens
       headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen-video, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player').css 'min-height', headerHeight
+      @$('.article-fullscreen, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player').css 'min-height', headerHeight
 
     $container.css 'margin-top': "#{margin}px"
 
@@ -69,7 +69,7 @@ module.exports = class ArticleView extends Backbone.View
     @centerFullscreenHeader $header
 
     $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen-video').height() - 100
+    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
     $superArticleArrow.show()
 
     @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
