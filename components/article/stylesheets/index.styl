@@ -1,4 +1,4 @@
-@require '../stylus_lib'
+@require '../../stylus_lib'
 @require './super_article'
 @require './fullscreen_article'
 
@@ -15,9 +15,9 @@ column-width = 540px
 
 body.body-article
   #main-layout-container
-    margin-left: 0px
+    margin-left 0px
     margin-right 0px
-    max-width: 100%
+    max-width 100%
 
 .article-container h1
   width 900px
@@ -161,7 +161,7 @@ body.body-article
 .article-section-embed
   margin auto
   .article-embed-container
-    margin: auto
+    margin auto
   iframe
     margin auto
     width 100%
@@ -178,45 +178,45 @@ body.body-article
 
 #articles-show
   .main-layout-container
-    @media screen and (min-width: 900px)
-      max-width: 850px
-    @media screen and (min-width: 1000px)
-      max-width: 950px
-    @media screen and (min-width: 1100px)
-      max-width: 1050px
-    @media screen and (min-width: 1200px)
-      max-width: 1150px
-    @media screen and (min-width: 1300px)
-      max-width: 1250px
+    @media screen and (min-width 900px)
+      max-width 850px
+    @media screen and (min-width 1000px)
+      max-width 950px
+    @media screen and (min-width 1100px)
+      max-width 1050px
+    @media screen and (min-width 1200px)
+      max-width 1150px
+    @media screen and (min-width 1300px)
+      max-width 1250px
 
 .article-section-container
   margin (gutter-size * 1.5) auto
   &.main-layout-container
     // Override the main layout container width here
     &[data-layout="overflow_fillwidth"]
-      width: 100%
-      max-width: 10000px !important
+      width 100%
+      max-width 10000px !important
       // Go over the share buttons
-      z-index: 1
-      position: relative
+      z-index 1
+      position relative
       &[data-section-type="embed"]
-        background: black
+        background black
         width 100%
         .article-embed-container
-          width: 100%
-          margin: auto
+          width 100%
+          margin auto
       &[data-section-type="video"]
         .article-section-video
-          width: 100%
-          padding-top: 40px
-          padding-bottom: 40px
+          width 100%
+          padding-top 40px
+          padding-bottom 40px
           &.article-video-background-black
-            width: 100%
-            background: black
+            width 100%
+            background black
           .article-video-container
-            width: body-width + 200
-            position: relative
-            margin: auto
+            width body-width + 200
+            position relative
+            margin auto
 
 .article-carousel
   img
