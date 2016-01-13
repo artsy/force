@@ -32,7 +32,7 @@ module.exports =
 
   toAltText: (artwork) ->
     _.compact([
-      (artwork.artist?.name),
+      (artwork.artists[0].name if artwork.artists?),
       (", '#{artwork.title},' " if artwork.title),
       ("#{artwork.date}" if artwork.date),
       (", #{artwork.partner.name}" if artwork.partner)

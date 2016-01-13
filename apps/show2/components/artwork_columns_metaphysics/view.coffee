@@ -31,6 +31,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
                 href
                 id
                 type
+                name
               }
               artists {
                 public

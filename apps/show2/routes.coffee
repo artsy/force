@@ -19,6 +19,8 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           displayable
           press_release(format: markdown)
           description
+          status
+          href
           events {
             description
             title
@@ -78,6 +80,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
               href
               id
               type
+              name
             }
             artists {
               public
