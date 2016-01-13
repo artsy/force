@@ -79,6 +79,8 @@ module.exports = class ArtworkView extends Backbone.View
     relatedNavigationView = new RelatedNavigationView model: @artwork
     @$('.js-artwork-related-navigation').html relatedNavigationView.render().$el
 
+    @belowTheFoldView.setupRails()
+
     new ImagesView
       el: @$('.js-artwork-images')
       model: @artwork

@@ -50,6 +50,24 @@ module.exports =
     else
       @imageUrlFor width, width
 
+  maxWidthForHeight: (height, maxDimension) ->
+    aspectRatio = @aspectRatio()
+    maxDimension = maxDimension or @get 'original_width'
+    if aspectRatio?
+      width = Math.round height / @aspectRatio()
+      if width > maxDimension then maxDimension else Math.floor(width)
+
+  maxHeightForHeight: (height, maxDimension) ->
+    aspectRatio = @aspectRatio()
+    if aspectRatio?
+      if maxDimension
+        width = height / @aspectRatio()
+        width = maxDimension if width > maxDimension
+        height = width * @aspectRatio()
+      else
+        maxDimension = @get('original_height')
+      if height > maxDimension then maxDimension else Math.floor(height)
+
   maxHeightForWidth: (width, maxDimension) ->
     aspectRatio = @aspectRatio()
     maxDimension = maxDimension or @get 'original_height'

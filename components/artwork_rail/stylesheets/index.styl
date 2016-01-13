@@ -1,0 +1,54 @@
+@import '../components/merry_go_round'
+@import '../components/fillwidth_row'
+
+arrow-offset = 30px
+
+.arv-container
+  overflow hidden
+
+.arv-header
+  garamond-size('headline', true)
+  margin-bottom 20px
+
+.arv-fillwidth-row
+  padding-bottom 80px
+
+.arv-carousel
+  max-height 400px
+  overflow-y hidden
+
+   &:hover
+    .arv-carousel-arrow-next
+    .arv-carousel-arrow-prev
+      opacity 1
+
+  .arv-carousel-arrow-next:hover
+  .arv-carousel-arrow-prev:hover
+    opacity 0.5
+
+.arv-carousel-arrow-next
+.arv-carousel-arrow-prev
+  cursor pointer
+  transition opacity .25s
+  opacity 0
+  position absolute
+  user-select none
+  height 100%
+  width 90px
+  > i
+    position absolute
+    transform translateY(-50%)
+    top calc('50% - %s' % 200px)
+    user-select none
+
+.arv-carousel-arrow-next
+  left 100%
+  > i
+    left arrow-offset
+.arv-carousel-arrow-prev
+  right 100%
+  > i
+    right arrow-offset
+
+
+

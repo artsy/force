@@ -25,7 +25,7 @@ initCarousel = require '../../../components/merry_go_round/index.coffee'
 
 promise = initCarousel $('.js-my-carousel')
 # Pass in additional or overwrite existing options
-# initCarousel $('.js-my-carousel'), imagesLoaded: true
+initCarousel $('.js-my-carousel'), imagesLoaded: true
 
 # Hook into Flickity if need be:
 initCarousel $('.js-my-carousel'), {}, (carousel) ->

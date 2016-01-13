@@ -1,0 +1,9 @@
+- var defaultImage = artwork.defaultImage()
+- var maxDimension = maxDimension || imageHeight * 2
+
+img.artwork-item-image(
+  src=defaultImage.imageUrlForHeight(imageHeight)
+  nopin=artwork.noPinAttr()
+  alt=artwork.toAltText()
+  height=defaultImage.maxHeightForHeight(imageHeight, maxDimension)
+)

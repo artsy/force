@@ -19,14 +19,14 @@ module.exports = class FilterArtworks extends Artworks
 
   sync: (method, collection, options) =>
     for k, v of @mapppedParams
-      if val = options.data[k]
+      if val = options.data?[k]
         options.data[v] = val
         delete options.data[k]
     options.data = decodeURIComponent qs.stringify(options.data, { arrayFormat: 'brackets' })
     super
 
   parse: (data) ->
-    @counts = @prepareCounts data.aggregations
+    @counts = @prepareCounts(data.aggregations) if data.aggregations
     data.hits
 
   prepareCounts: (aggregations)->
