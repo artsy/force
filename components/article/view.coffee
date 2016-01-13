@@ -61,7 +61,7 @@ module.exports = class ArticleView extends Backbone.View
 
       # fix for small screens
       headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-video-container, .article-fullscreen-video-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
+      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
 
     $container.css 'margin-top': "#{margin}px"
 
@@ -288,7 +288,7 @@ module.exports = class ArticleView extends Backbone.View
   # Methods for super articles
   duration: 500
   scrollPastFullscreenHeader: ->
-    position = @$('.article-fullscreen-video').height()
+    position = @$('.article-fullscreen').height()
     (@$htmlBody ?= $('html, body'))
       .animate { scrollTop: position }, @duration
     false
@@ -320,7 +320,7 @@ module.exports = class ArticleView extends Backbone.View
   # Sets up waypoint for both fullscreen video and super article
   setupArticleWaypoints: ->
     $stickyHeader = @$('.article-sa-sticky-header')
-    $fullscreenVideo = @$('.article-fullscreen-video')
+    $fullscreenVideo = @$('.article-fullscreen')
 
     return unless $stickyHeader.length or $fullscreenVideo.length
 
