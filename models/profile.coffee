@@ -16,13 +16,6 @@ module.exports = class Profile extends Backbone.Model
   GALLERY_OWNER_TYPES: ['PartnerGallery']
   USER_OWNER_TYPES: [ 'User', 'Admin' ]
   INSTITUTION_OWNER_TYPES: [
-    'PartnerMuseum',
-    'PartnerArtistEstate',
-    'PartnerPrivateCollection',
-    'PartnerFoundation',
-    'PartnerPublicDomain',
-    'PartnerImageArchive',
-    'PartnerNonProfit',
     'PartnerBrand',
     'PartnerInstitution',
     'PartnerInstitutionalSeller'
