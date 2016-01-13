@@ -13,6 +13,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
     $(window).on 'scroll.partner_show.artworks', _.throttle(@infiniteScroll, 150)
 
   fetch: =>
+    @isFetching = true
     metaphysics
       variables: show_id: @showId, page: @page
       query: '
@@ -51,10 +52,12 @@ module.exports = class ArtworkColumnsView extends Backbone.View
         $(window).off 'scroll.partner_show.artworks'
       else
         @page++
+        @isFetching = false
         @artworks = @artworks.concat fetchedArtworks
         @render()
 
   infiniteScroll: =>
+    return if @isFetching
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.artwork-column').last()
     @fetch() unless fold < $lastItem.offset()?.top + $lastItem.height()
