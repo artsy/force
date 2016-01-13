@@ -39,8 +39,10 @@
         .gpc-carousel-cell.js-mgr-cell
           if show && show.isWithImages()
             - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
-          else
+          else if profile.get('cover_image')
             - var imageUrl = profile.coverImage().imageUrlForMaxSize()
+          else
+            - var imageUrl = ''
           a.gpc-carousel-figure(
             href= (show && show.href()) || profile.related().owner.href()
             style='background-image: url(' + imageUrl + ')'

@@ -7,7 +7,6 @@ Partner = require '../../models/partner.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
-
 module.exports = class ShowInquiryModal extends ContactView
 
   headerTemplate: (locals) =>

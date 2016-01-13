@@ -1,21 +1,23 @@
 extends ./main
-
 block content
+  .galleries-institutions-search-filters
+    each facet in facets
+      - var displayName = facet.displayName
+      - var facetName = facet.facetName
+      - var countItems = facet.countItems
+
+      .filter-partners-dropdown(class= "search-#{facetName}")
+        include ../components/filters/filter_dropdown
+
   .galleries-institutions-primary-carousel.js-galleries-institutions-primary-carousel.gi-carousel-arrow-reveal
     if profiles && profiles.length
       include ../components/primary_carousel/template
 
-  .galleries-institutions-search-filters
-    include ./search_filters
-
-  .galleries-institutions-main-content
+  .galleries-institutions-main-content(data-state= state)
     .galleries-institutions-carousels.js-partner-category-carousels
-      if carousels && carousels.length
-        each carousel in carousels
-          - var category = carousel.category
-          - var partners = carousel.partners.models
-          .partner-category-carousel
-            include ../components/partner_cell_carousel/template
+      each category in categories
+        .partner-category-carousel(data-id= category.id)
+          include ../components/partner_cell_carousel/template
 
     .galleries-institutions-search-results
       .galleries-institutions-results-grid

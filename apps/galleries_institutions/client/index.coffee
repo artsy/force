@@ -1,13 +1,11 @@
 Backbone = require 'backbone'
-SearchView = require './routes/search_view.coffee'
-FilterParams = require '../components/partners_search/partners_filter_params.coffee'
+PartnersView = require './routes/index.coffee'
+FilterParams = require '../components/filters/partners_filter_params.coffee'
 qs = require 'qs'
 { parse } = require 'url'
 
 module.exports = ->
   params = new FilterParams _.extend qs.parse(parse(window.location.search).query),
     type: if sd.PARTNERS_ROOT is 'galleries' then 'gallery' else 'institution',
-    page: 1
-    size: 9
 
-  new SearchView params: params
+  new PartnersView params: params

@@ -1,59 +1,40 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ CAROUSELS, CURRENT_USER } = require('sharify').data
+{ CURRENT_USER } = require('sharify').data
 Partners = require '../../../../collections/partners.coffee'
+Profile = require '../../../../models/profile.coffee'
 fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
+carouselTemplate = -> require('../../components/partner_cell_carousel/template.jade') arguments...
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
+facetDefaults = require '../../components/filters/facet_defaults.coffee'
 
 module.exports = class LandingCarouselView extends Backbone.View
 
   initialize: ({ @following, params }) ->
-    @listenTo params, 'change:location change:category firstLoad', @paramsChanged
+    @listenTo params, 'firstLoad', @paramsChanged
+
+    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+      @listenTo params, "change:#{f}", @paramsChanged
 
   setup: (type) ->
     return if @loaded
-    if CURRENT_USER?
-      partners = _.flatten _.pluck CAROUSELS, 'partners'
-      categoryCarouselIds = _.pluck partners, 'default_profile_id'
-      @following.syncFollows categoryCarouselIds
-
-    carouselViews = CAROUSELS.map ({ category, partners }) ->
-      category = new Backbone.Model category
-      partners = new Partners partners
-
-      partners.each (partner) ->
-        partner.related().profile.fetch()
-        partner.related().locations.fetch()
-
-      view = new PartnerCellCarouselView
+    @$('.partner-category-carousel').each (index, el) =>
+      carousel = new PartnerCellCarouselView
+        el: $(el),
         following: @following
-        category: category
-        partners: partners
+      carousel.postRender()
 
-      view.render()
+    fetchLocationCarousel(type).then (category) =>
+      return if category.partners.length < 3
 
-    @$el.html _.pluck carouselViews, '$el'
+      carousel = new PartnerCellCarouselView
+        following: @following
+        model: category
 
+      @$el.prepend carousel.render().$el
+      @following.syncFollows _.pluck category.partners, 'default_profile_id'
     @loaded = true
 
-    fetchLocationCarousel(type).then ({ category, partners }) ->
-
-      return unless partners.length > 3
-
-      view = new PartnerCellCarouselView
-        following: @following
-        category: category
-        partners: partners
-
-      @$el.prepend view.render().$el
-
-      return unless CURRENT_USER?
-
-      @following.syncFollows partners.pluck 'default_profile_id'
-
   paramsChanged: (params) ->
-    if params.hasSelection()
-      @$el.hide()
-    else
-      @$el.show()
-      @setup(params.get('type')) if not @loaded
+    return if params.hasSelection()
+    @setup(params.get('type')) if not @loaded

@@ -21,16 +21,17 @@ fetchFeaturedSet = (type) ->
 fetchWithParams = (params) ->
   partners = new FilterPartners
   Q(partners.fetch(
-    data: _.extend params, eligible_for_primary_bucket: true
-  )).then ->
+    data: _.extend {}, params, eligible_for_carousel: true, size: 3, sort: '-random_score'
+  ).then (results) ->
     profiles = new Profiles
-    Q.all(partners.first(3).map (partner) ->
+    Q.all(partners.map (partner) ->
       profile = new Profile id: partner.get('default_profile_id')
       profiles.add profile
       Q(profile.fetch(cache: true)).then ->
         Q(profile.related().owner.related().shows.fetch cache:true)
     ).then ->
       profiles
+  )
 
 module.exports = (params) ->
   if params.category or params.location

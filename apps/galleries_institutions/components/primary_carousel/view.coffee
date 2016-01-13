@@ -5,11 +5,17 @@ initCarousel = require '../../../../components/merry_go_round/index.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 template = -> require('./template.jade') arguments...
 fetchProfiles = require './fetch.coffee'
+facetDefaults = require '../filters/facet_defaults.coffee'
 
 module.exports = class PrimaryCarousel extends Backbone.View
+  events:
+    'click .js-gpc-dot': 'dotClicked'
+    'click .js-gpc-next': -> @flickity.next()
+    'click .js-gpc-prev': -> @flickity.previous()
 
   initialize: ({ params, @following, @profiles}) ->
-    @listenTo params, 'change:location change:category', @fetch
+    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+      @listenTo params, "change:#{f}", @fetch
     @listenTo params, 'firstLoad', @setupFlickity
     @listenTo @profiles, 'reset', @render
 
@@ -19,42 +25,37 @@ module.exports = class PrimaryCarousel extends Backbone.View
       @profiles.reset profiles.models
 
   render: ->
+    @destroyFlickity()
     @$el.html template profiles: @profiles.models
-
-    # Does something need to be destroyed first?
     @setupFlickity()
 
-  setupFlickity: ->
+  destroyFlickity: ->
+    @flickity.off 'cellSelect' if @flickity
+    @flickity.destroy() if @flickity
+
+  dotClicked: (e) ->
+    i = $(e.toElement).data 'index'
+    @flickity.select i
+
+  setupFlickity: =>
     return if not @profiles.length
 
     { cells } = initCarousel @$el, wrapAround: true
-    { flickity } = cells
+    { @flickity } = cells
 
-    $overlays = @$el.find('.js-gpc-overlay')
-    $dots = @$el.find('.js-gpc-dot')
-
+    $overlays = $('.js-gpc-overlay')
     $overlays.first().fadeIn()
 
-    $dots.on 'click', (e) ->
-      e.preventDefault()
-      i = $(this).data 'index'
-      flickity.select i
-
-    flickity.on 'cellSelect', ->
+    @flickity.on 'cellSelect', =>
+      $dots = @$('.js-gpc-dot')
       $dots.removeClass 'is-active'
-      $($dots[flickity.selectedIndex])
+      $($dots[@flickity.selectedIndex])
         .addClass 'is-active'
 
       $overlays.fadeOut()
-      $overlays.promise().done ->
-        $selected = $($overlays[flickity.selectedIndex])
+      $overlays.promise().done =>
+        $selected = $($overlays[@flickity.selectedIndex])
         $selected.fadeIn()
-
-    @$el.find('.js-gpc-next').on 'click', ->
-      flickity.next()
-
-    @$el.find('.js-gpc-prev').on 'click', ->
-      flickity.previous()
 
     @profiles.map (profile) =>
       new FollowButtonView
