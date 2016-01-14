@@ -34,6 +34,30 @@ script( type="text/javascript" ).
 noscript
   img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
 
+//- Sailthru Horizon JS - user interest data, personalization
+if sd.ARTICLE
+  script( type="text/javascript" ).
+    (function() {
+      function loadHorizon() {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = location.protocol + '//ak.sail-horizon.com/horizon/v1.js';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+      loadHorizon();
+      var oldOnLoad = window.onload;
+      window.onload = function() {
+        if (typeof oldOnLoad === 'function') {
+          oldOnLoad();
+        }
+        Sailthru.setup({
+          domain: 'horizon.artsy.net',
+          useStoredTags: false
+        });
+      };
+    })();
 
 //-Utm-stripping
 script( src="//fast.wistia.net/labs/fresh-url/v1.js" async )
