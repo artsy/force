@@ -1,0 +1,25 @@
+#partner-overview
+  if showBanner
+    section.partner-overview-section.partner-overview-messages
+      p.message-title #{partner.get('name')} participates in Artsy’s art fair coverage
+      p.message-title but does not have a full profile.
+      p.message-content A full Artsy profile includes artists, works, shows, and contact information for collectors.
+      br
+      br
+      p.message-content
+        | Do you represent #{partner.get('name')}?
+        | Learn about
+        = ' '
+        a.faux-underline( href='/gallery-partnerships' ) Artsy gallery partnerships.
+
+  //section.partner-overview-section.partner-overview-shows
+    .loading-spinner
+
+  //section.partner-overview-section.partner-overview-artists
+    .loading-spinner
+
+  unless isPartner
+    section.partner-overview-section.partner-overview-locations
+      h2.avant-garde-header-center Locations
+      ul.locations
+        .loading-spinner
