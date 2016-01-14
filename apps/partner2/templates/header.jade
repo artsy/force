@@ -1,0 +1,18 @@
+header.partner-header
+  .partner-brand-container
+    .partner-info
+      h1.partner-name= profile.displayName()
+      .partner-locations New York • London • Menlo Park • Hong Kong • Taipei
+    a.profile-badge.partner-icon( href=profile.href() )
+      .profile-badge-icon
+        if profile.has('icon')
+          img( src=profile.iconImageUrl(), alt=profile.displayName() )
+        else
+          .profile-badge-initials= profile.defaultIconInitials()
+  .partner-navs-container
+    .partner-actions
+      button.avant-garde-button-white.follow-button.is-small
+      if profile.get('follows_count')
+        .partner-followers
+          = profile.formatFollowText()
+    .partner-nav

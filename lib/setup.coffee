@@ -200,6 +200,7 @@ module.exports = (app) ->
 
   # Apps that need to fetch a profile
   app.use require "../apps/profile"
+  app.use require "../apps/partner2"
   app.use require "../apps/partner"
   app.use require "../apps/fair"
   app.use require "../apps/fair_info"
