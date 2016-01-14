@@ -2,7 +2,7 @@ Search = require '../collections/search'
 
 describe 'Search', ->
   beforeEach ->
-    @items = [{ owner_type: 'PartnerGallery' }, { owner_type: 'PartnerMuseum' }, { foo: 'bar' }]
+    @items = [{ owner_type: 'PartnerGallery' }, { owner_type: 'PartnerInstitution' }, { foo: 'bar' }]
 
   describe '#url', ->
     it 'has the correct url', ->
@@ -31,8 +31,8 @@ describe 'Search', ->
       parsed[0].get('model').should.equal 'profile'
 
     it 'can restrict the results by multiple owner_types', ->
-      search = new Search mode: 'profiles', restrictType: ['PartnerMuseum', 'PartnerNonProfit']
-      @items.push owner_type: 'PartnerNonProfit'
+      search = new Search mode: 'profiles', restrictType: ['PartnerInstitution', 'PartnerInstitutionalSeller']
+      @items.push owner_type: 'PartnerInstitutionalSeller'
       parsed = search.parse(@items)
       parsed.length.should.equal 2
       parsed[0].get('model').should.equal 'profile'
