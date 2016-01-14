@@ -1,10 +1,14 @@
 h1.arv-header= title
 
 .arv-carousel.js-my-carousel
-  .arv-carousel-nav.js-arv-carousel-nav
-    .arv-carousel-arrow-prev.js-arv-prev: i.icon-chevron-left
-    .arv-carousel-arrow-next.js-arv-next: i.icon-chevron-right
   ul.arv-fillwidth-list.fillwidth-list.js-mgr-cells
     for artwork in artworks
       li.arv-fillwidth-row.fillwidth-row.js-mgr-cell
         include ../../../components/artwork_item/templates/artwork
+  .arv-carousel-nav
+    .arv-carousel-arrow.vam-outer.arv-carousel-arrow-prev
+      .arv-carousel-arrow__inner.vam-inner.is-center-aligned.js-mgr-prev
+        i.icon-chevron-left
+    .arv-carousel-arrow.vam-outer.arv-carousel-arrow-next
+      .arv-carousel-arrow__inner.vam-inner.is-center-aligned.js-mgr-next
+        i.icon-chevron-right
