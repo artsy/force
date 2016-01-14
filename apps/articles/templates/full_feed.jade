@@ -10,7 +10,7 @@
           +article-figure(article, 600, false, false)
 
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
-    section.articles-featured-section-articles
+    section.articles-featured-articles
       h4= section.get('featured_links_header')
       ul.grid-4-up
         for link in section.get('featured_links')
