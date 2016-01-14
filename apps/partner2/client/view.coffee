@@ -19,6 +19,8 @@ module.exports = class PartnerView extends Backbone.View
   events:
     # Links that uses router should have a partner-route-link class
     'click .partner-route-link': 'intercept'
+    # TODO: remove admin notice
+    'click .notice-message-close': -> @$('.admin-notice-message').remove()
 
   defaults:
     currentSection: 'overview'

@@ -15,9 +15,9 @@ showFiguresTemplate = -> require('../templates/show_figures.jade') arguments...
 module.exports = class PartnerShowsGridView extends Backbone.View
 
   defaults:
-    numberOfFeatured: 1         # number of featured shows needed
-    isCombined: false     # if combining current, upcoming and past shows
-    numberOfShows: Infinity  # number of combined shows needed
+    numberOfFeatured: 1     # number of featured shows needed
+    isCombined: false       # if combining current, upcoming and past shows
+    numberOfShows: Infinity # number of combined shows needed
     heading: ''
     seeAll: true
 
