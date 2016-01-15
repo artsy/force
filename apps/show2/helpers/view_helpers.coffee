@@ -183,7 +183,7 @@ module.exports =
   toJSONLDShortArtist: (artist) ->
     compactObject {
       "@type": "Person"
-      image: artist.image.url
+      image: artist.image?.url
       name: artist.name
       sameAs: "#{sd.APP_URL}#{artist.href}"
     }
