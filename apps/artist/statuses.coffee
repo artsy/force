@@ -17,14 +17,13 @@ module.exports = class Statuses
           return resolve @statuses = data
 
         Q.all [
-          @fetchArtworks()
           @fetchArticles()
           @fetchStatus 'shows'
           @fetchStatus 'artists'
           @fetchStatus 'contemporary'
         ]
           .then (statuses) =>
-            @statuses = _.extend {}, statuses...
+            @statuses = _.extend { artworks: @artist.get('published_artworks_count') > 0 }, statuses...
             cache.setHash @key, @statuses
             resolve @statuses
           .catch reject
@@ -45,17 +44,6 @@ module.exports = class Statuses
               resolve
                 articles: !!response?.count
                 biography: articles.biography()?
-
-  fetchArtworks: ->
-    Q.promise (resolve) =>
-      filter = new Backbone.Model
-      filter.url = "#{API_URL}/api/v1/search/filtered/artist/#{@artist.id}/suggest"
-      filter.fetch
-        cache: @cache
-        success: (model, response) ->
-          resolve artworks: !!response?.total
-        error: ->
-          resolve artworks: false
 
   fetchStatus: (name, options = {}) ->
     Q.promise (resolve) =>
