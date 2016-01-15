@@ -1,40 +1,27 @@
 @require '../../../components/stylus_lib'
-@require './lib'
-@require '../components/related_navigation/index'
+
+@require '../components/banner/index'
 @require '../components/images/index'
-@require '../components/detail/stylesheets'
+@require '../components/metadata/index'
 
 .artwork-page
   padding 20px 0
 
-.artwork-container
+.artwork
   display table
   position relative
   width 100%
   height auto
   z-index 1
 
-  // First step down
-  @media screen and (max-width: (artwork-image-size + (artwork-detail-width * 2) + (layout-side-margin * 2)))
-    .artwork-related-content
-      width artwork-related-content-smaller-width
+  &__overview
+  &__metadata
+    display table-cell
+    vertical-align top
 
-  // Second step down
-  @media screen and (max-width: (artwork-image-size + artwork-detail-width + artwork-related-content-smaller-width + (layout-side-margin * 2)))
-    .artwork-related-content
-      display none
+  &__metadata
+    width 229px
+    padding 0 20px
 
-.artwork-overview
-.artwork-detail
-.artwork-related-content
-  display table-cell
-  vertical-align top
-.artwork-related-content
-.artwork-detail
-  width artwork-detail-width
-.artwork-detail
-  padding-left 20px
-.artwork-related-content
-  padding-right 20px
-.artwork-overview
-  text-align center
+  &__overview
+    text-align center

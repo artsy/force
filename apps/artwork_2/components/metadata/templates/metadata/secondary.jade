@@ -1,0 +1,30 @@
+.artwork-metadata__secondary-metadata
+  if artwork.medium
+    .artwork-metadata__medium
+      = artwork.medium
+
+  if artwork.duration
+    .artwork-metadata__duration
+      = artwork.duration
+
+  if artwork.manufacturer
+    .artwork-metadata__manufacturer
+      = artwork.manufacturer
+
+  unless artwork.editions
+    .artwork-metadata__dimensions
+      .amd-imperial
+        = artwork.dimensions.in
+      .amd-metric
+        = artwork.dimensions.cm
+
+  //- TODO
+  //- if artwork.editionStatus()
+  //-   .artwork-metadata__artwork-edition-status
+  //-     = artwork.editionStatus()
+
+  if artwork.image_rights
+    .artwork-meta-photo-credit
+      = artwork.image_rights
+
+  include editions
