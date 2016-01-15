@@ -1,0 +1,15 @@
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Partner = require '../../../models/partner.coffee'
+template = -> require('../templates/overview.jade') arguments...
+
+module.exports = class PartnerOverviewView extends Backbone.View
+
+  initialize: (options={}) ->
+    { @profile, @partner } = _.defaults options, @defaults
+    @isPartner = @partner.get('claimed') isnt false
+    @showBanner = not @isPartner and not @partner.get 'show_promoted'
+
+    @$el.html template partner: @partner, showBanner: @showBanner, isPartner: @isPartner

@@ -9,15 +9,15 @@ describe 'Galleries / Institutions', ->
       fabricate 'featured_partners_profiles',
         id: '43-salon-inter-nacional-de-artistas'
         owner_type: 'PartnerInstitution'
-        owner: fabricate 'partner', type: 'Museum', name: '43 Salon (Inter) Nacional de Artistas'
+        owner: fabricate 'partner', type: 'Institution', name: '43 Salon (Inter) Nacional de Artistas'
       fabricate 'featured_partners_profiles',
         id: 'getty'
         owner_type: 'PartnerInstitution'
-        owner: fabricate 'partner', type: 'Museum', name: 'J. Paul Getty Museum', sortable_id: 'getty'
+        owner: fabricate 'partner', type: 'Institution', name: 'J. Paul Getty Museum', sortable_id: 'getty'
       fabricate 'featured_partners_profiles',
         id: 'lacma'
         owner_type: 'PartnerInstitution'
-        owner: fabricate 'partner', type: 'Museum', name: 'LACMA'
+        owner: fabricate 'partner', type: 'Institution', name: 'LACMA'
     ]
     @aToZGroup = @profiles.groupByAlphaWithColumns 3
 
