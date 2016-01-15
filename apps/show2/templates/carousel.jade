@@ -1,16 +1,15 @@
 .mgr-cells.js-mgr-cells
   for installShot in partner_show.install_shots
-    if installShot.carousel_image
+    if installShot.carousel_dimension && installShot.url
       .mgr-cell.js-mgr-cell
         img(
-          src= installShot.carousel_image.url
+          src= installShot.url
           alt= installShot.caption
           title= installShot.caption
-          data-zoom-url= installShot.zoom_image
         )
 
         if installShot.caption
-          .show-installation-shot-caption( style="width: #{installShot.carousel_image.width}px")
+          .show-installation-shot-caption( style="width: #{installShot.carousel_dimension.width}px")
             = installShot.caption
 
 - length = partner_show.install_shots.length
