@@ -1,32 +1,29 @@
-Q = require 'bluebird-q'
-Artwork = require '../../models/artwork'
+metaphysics = require '../../lib/metaphysics'
+
+query = """
+  query artwork($id: String!) {
+    artwork(id: $id) {
+      ... banner
+      ... images
+      ... metadata
+    }
+  }
+  #{require './components/banner/query'}
+  #{require './components/images/query'}
+  #{require './components/metadata/query'}
+"""
 
 @index = (req, res, next) ->
-  artwork = new Artwork id: req.params.id
+  metaphysics
+    variables: id: req.params.id
+    query: query
 
-  artwork.fetch(cache: true).then ->
-    Q.all [
-      artwork.related().sales.fetch cache: true, data: size: 1
-      artwork.related().fairs.fetch cache: true, data: size: 1
-      artwork.related().shows.fetch cache: true
-    ]
+  .then (data) ->
+    if req.query.query?
+      res.send query
+    else if req.query.data?
+      res.send data
+    else
+      res.render 'index', data
 
-  .then ->
-    if artwork.related().sales.length
-      sale = artwork.related().sales.first()
-      artwork.related().saleArtwork.set artwork: artwork, sale: sale
-      artwork.related().saleArtwork.fetch cache: true
-
-  .then ->
-    res.locals.sd.ARTWORK = artwork.toJSON()
-    res.render 'index',
-      artwork: artwork
-      sale: artwork.related().sales.first()
-      fair: artwork.related().fairs.first()
-
-  .catch ->
-    err = new Error 'Not Found'
-    err.status = 404
-    next err
-
-  .done()
+  .catch next
