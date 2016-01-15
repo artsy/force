@@ -12,14 +12,11 @@ describe 'Statuses', ->
 
     sinon.stub Backbone, 'sync'
       .yieldsTo 'success', [{}]
-      # Artwork filter fetch
-      .onCall 0
-      .yieldsTo 'success', total: 1
       # Artist fetch
-      .onCall 1
-      .yieldsTo 'success', _id: 'foobar_mongo_id'
+      .onCall 0
+      .yieldsTo 'success', _id: 'foobar_mongo_id', published_artworks_count: 3
       # Articles fetch
-      .onCall 2
+      .onCall 1
       .yieldsTo 'success', count: 1
 
   afterEach ->
@@ -29,7 +26,6 @@ describe 'Statuses', ->
     @statuses.fetch()
     _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
       .should.eql [
-        'undefined/api/v1/search/filtered/artist/foobar/suggest',
         'undefined/api/v1/artist/foobar',
         'undefined/api/articles?artist_id=foobar_mongo_id&published=true',
         'undefined/api/v1/related/shows?artist_id=foobar&sort=-end_at&displayable=true',
