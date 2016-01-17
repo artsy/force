@@ -31,6 +31,15 @@ if article.get('email_metadata')
     - var src = article.get('email_metadata').image_url
     meta( name="sailthru.image.full" content=crop(src, { width: 1280, height: 960 } ))
     meta( name="sailthru.image.thumb" content=crop(src, { width: 552, height: 392 } ))
+- var keywords = ['article']
+if article.get('author').name == 'Artsy Editorial'
+  - keywords = keywords.concat(['artsy-editorial'])
+if article.get('featured') == true
+  - keywords = keywords.concat(['magazine'])
+if article.get('keywords') && article.get('keywords').length
+  - keywords = keywords.concat(article.get('keywords'))
+meta( name="sailthru.tags" content=keywords.join(','))
+meta( name="sailthru.date" content=article.get('published_at'))
 
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
