@@ -3,7 +3,7 @@ Q = require 'bluebird-q'
 PartnerShow = require '../../models/partner_show'
 
 @index = (req, res, next) ->
-  return next() if res.locals.sd.SHOW_METAPHYSICS is 'true'
+  # return next() if res.locals.sd.SHOW_METAPHYSICS is 'true'
   show = new PartnerShow id: req.params.id
 
   Q.all [
@@ -50,4 +50,6 @@ PartnerShow = require '../../models/partner_show'
       artworks: show.related().artworks
       jsonLD: stringifyJSONForWeb show.toJSONLD()
 
-  .catch next
+  .catch (err)->
+    console.log 'err', err
+    next()
