@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 { client } = require '../../lib/cache'
 request = require 'superagent'
 { FUSION_URL } = require '../../config'
+ArtworkRails = require './artwork_rails'
 
 @index = (req, res, next) ->
   artwork = new Artwork id: req.params.id
@@ -58,3 +59,12 @@ request = require 'superagent'
     else
       res.status 403
       next new Error 'Not authorized to download this image'
+
+@relatedRails = (req, res, next) ->
+  artworkRails = new ArtworkRails id: req.params.id
+  artworkRails.fetch({cache: true})
+    .then (response) ->
+      res.send response
+
+    .catch(next)
+    .done()
