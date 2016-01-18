@@ -1,4 +1,4 @@
-BackbonePageableCollection = require 'backbone-pageable'
+BackbonePageableCollection = require 'backbone.paginator'
 
 module.exports = class PageableCollection extends BackbonePageableCollection
   queryParams:
