@@ -15,13 +15,11 @@ module.exports = class ArtworkRails
   fetch: ({ @cache } = {}) ->
     Q.promise (resolve, reject) =>
       cache.getHash @key, {}, (err, data) =>
-        console.log '@', @
         if data and @cache
           return resolve @rails = data
 
         Q @fetchArtwork()
         .then (artwork) =>
-          console.log 'artwork', artwork
           @rails.artwork = artwork
           resolve @rails
         .catch reject
@@ -60,7 +58,6 @@ module.exports = class ArtworkRails
           }
           '
       .then (data) ->
-        console.log 'data', data
         resolve data
       .catch (err) ->
         reject err
