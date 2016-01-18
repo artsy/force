@@ -11,6 +11,7 @@ blurb = require '../../../components/gradient_blurb/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
 FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
 FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
+Profile = require '../../../models/profile.coffee'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -25,7 +26,7 @@ module.exports.init = ->
     new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
 
   attachFollowArtists bootstrappedShow.artists
-  attachFollowProfile bootstrappedShow.partner.profile
+  attachFollowProfile new Profile id: bootstrappedShow.partner.default_profile_id
 
   $('.js-open-map-modal').click (e) ->
     e.preventDefault()
