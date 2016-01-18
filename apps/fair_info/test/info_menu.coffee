@@ -39,7 +39,7 @@ describe 'InfoMenu', ->
     _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
       .should.eql [
         "localhost:3000/api/v1/fair/#{@fair.id}/fair_events",
-        "undefined/api/articles",
+        "undefined/api/articles"
         "undefined/api/articles"
       ]
 
