@@ -1,4 +1,14 @@
 .artwork-banner
+  if artwork.banner.profile && artwork.banner.profile.icon
+    - var img = artwork.banner.profile.icon.img
+    .artwork-banner__logo
+      a( href= artwork.banner.href )
+        img(
+          src= img.url
+          width= img.width
+          height= img.height
+        )
+
   h1.artwork-banner__name
     = artwork.banner.name
 
