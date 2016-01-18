@@ -253,15 +253,15 @@
       "from": "backbone@>=1.2.3 <2.0.0",
       "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.3.tgz"
     },
-    "backbone-pageable": {
-      "version": "1.4.8",
-      "from": "backbone-pageable@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/backbone-pageable/-/backbone-pageable-1.4.8.tgz"
-    },
     "backbone-super-sync": {
       "version": "1.1.1",
       "from": "backbone-super-sync@>=1.1.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/backbone-super-sync/-/backbone-super-sync-1.1.1.tgz"
+    },
+    "backbone.paginator": {
+      "version": "2.0.2",
+      "from": "backbone.paginator@*",
+      "resolved": "https://registry.npmjs.org/backbone.paginator/-/backbone.paginator-2.0.2.tgz"
     },
     "balanced-match": {
       "version": "0.3.0",
