@@ -55,5 +55,5 @@ fetchArticle = (articleParam, req, res, next) ->
       published: true
     error: next
     success: =>
-      res.locals.sd.ARTICLE = articles.first().toJSON()
+      res.locals.sd.ARTICLE = articles.first().toJSON() if articles.length > 0
       res.render('article', { embedVideo: embedVideo, resize: resize, article: articles.first() })
