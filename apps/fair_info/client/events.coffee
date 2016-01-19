@@ -23,6 +23,7 @@ module.exports = class FairInfoEvents extends Backbone.View
           updateOnResize: true
           lineCount: 3
           resizeHeight: '100%'
+          includeShowLess: true
         )
 
   initializeModal: (e) ->

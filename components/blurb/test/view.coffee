@@ -18,10 +18,14 @@ describe 'BlurbView', ->
   beforeEach ->
     BlurbView = require '../view.coffee'
     $('body').append '<div class="blurb"></div>'
-    @view = new BlurbView el: $('.blurb')
+    @view = new BlurbView
+      el: $('.blurb')
+      updateOnResize: true
+      lineCount: 3
+      resizeHeight: '100%'
+      includeShowLess: true
     @view.detachEllipsis = sinon.stub()
 
   describe '#attachEllipsis', ->
-
     it 'attaches ellipsis using dotdotdot', ->
       @dotdotdot.calledOnce.should.be.ok()
