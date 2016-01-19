@@ -32,7 +32,7 @@ if article.get('email_metadata')
     meta( name="sailthru.image.full" content=crop(src, { width: 1280, height: 960 } ))
     meta( name="sailthru.image.thumb" content=crop(src, { width: 552, height: 392 } ))
 - var keywords = ['article']
-if article.get('author').name === 'Artsy Editorial'
+if article.get('author') && article.get('author').name === 'Artsy Editorial'
   - keywords = keywords.concat(['artsy-editorial'])
 if article.get('featured') === true
   - keywords = keywords.concat(['magazine'])
