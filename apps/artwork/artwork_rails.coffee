@@ -5,8 +5,10 @@ qs = require 'qs'
 Backbone = require 'backbone'
 cache = require '../../lib/cache'
 metaphysics = require '../../lib/metaphysics'
+Artworks = require '../../collections/artworks.coffee'
 FilterArtworks = require '../../collections/filter_artworks'
 Partner = require '../../models/partner'
+Sale = require '../../models/sale'
 PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
@@ -53,8 +55,6 @@ module.exports = class ArtworkRails
           @excludedIds.push @artwork._id
           @fetchAuctionArtworks()
         .then =>
-          @fetchFairArtworks()
-        .then =>
           @fetchShowArtworks()
         .then =>
           @fetchSimilarArtworks()
@@ -74,26 +74,17 @@ module.exports = class ArtworkRails
   fetchAuctionArtworks: ->
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
-        if @artwork.related.auction_state is 'closed'
-          @rails.closed_auction_artworks = @artwork.related.sale_artworks
-          @excludedIds.concat _.chain(@artwork.related.sale_artworks).pick('artwork').pick('id').value()
-        else
-          @rails.current_auction_artwowrks = artwork.related.sale_artworks
+        sale = new Sale @artwork.related
+        sale.related().saleArtworks.fetchUntilEndInParallel
+          success: (collection, response, options) =>
+            collection.remove @artwork
+            artworks = Artworks.fromSale collection
+            if @artwork.related.auction_state is 'closed'
+              @assignRail 'closed_auction_artworks', artworks.toJSON()
+            else
+              @assignRail 'current_auction_artworks', artworks.toJSON()
 
         resolve()
-      else
-        resolve()
-
-  fetchFairArtworks: ->
-    Q.promise (resolve) =>
-      if @artwork.related?.__typename is 'RelatedFair'
-        artworks = new FilterArtworks []
-        artworks.fetch
-          error: resolve
-          data: @prepareParams fair_id: @artwork.related.id
-          success: =>
-            @assignRail 'fair_artworks', artworks.toJSON()
-            resolve()
       else
         resolve()
 
@@ -176,20 +167,6 @@ module.exports = class ArtworkRails
                 end_at
                 sale_type
                 auction_state
-                sale_artworks{
-                  bidder_positions_count
-                  highest_bid{
-                    amount_cents
-                  }
-                  artwork{
-                    id
-                    image{
-                      id
-                      url
-                      versions
-                    }
-                  }
-                }
               }
             }
             partner{

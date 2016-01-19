@@ -51,7 +51,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupArtistArtworks()
     @setupFollowButtons()
     @setupBelowTheFold() unless @showRails
-    setupArtworkRails(@artwork) if @showRails
+    setupArtworkRails(@artwork, @artist) if @showRails
     @setupMainSaveButton()
     @setupVideoView()
     @setupAnnyang()
@@ -82,8 +82,6 @@ module.exports = class ArtworkView extends Backbone.View
 
     relatedNavigationView = new RelatedNavigationView model: @artwork
     @$('.js-artwork-related-navigation').html relatedNavigationView.render().$el
-
-    @belowTheFoldView.setupRails() unless @showRails
 
     new ImagesView
       el: @$('.js-artwork-images')

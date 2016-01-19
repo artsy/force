@@ -9,20 +9,6 @@ module.exports = class BelowTheFold extends Backbone.View
   initialize: ({ @artwork }) ->
     # no-op
 
-  setupRails: ->
-    artworks = new FilterArtworks []
-
-    new ArtworkRailView
-      collection: artworks
-      el: $('#artwork-rails')
-      title: "More works by #{@artwork.related().artist.get('name')}"
-      viewAllUrl: "/"
-
-    artworks.fetch
-      data:
-        artist_id: @artwork.related().artist.id
-        for_sale: true
-
   setupSale: (options = {}) ->
     new SaleView _.extend el: @$el, artwork: @artwork, options
     @fadeIn()
