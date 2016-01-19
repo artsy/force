@@ -27,9 +27,6 @@ describe 'InfoMenu', ->
       # Artsy At The Fair Articles fetch
       .onCall 2
       .yieldsTo 'error', {}
-      # About The Fair Articles fetch
-      # .onCall 3
-      # .yieldsTo 'error', {}
 
   afterEach ->
     Backbone.sync.restore()

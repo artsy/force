@@ -5,7 +5,7 @@ block body
     include nav
     .fair-info2-body
       .fair-info-article
-        if sd.CURRENT_PATH == "/" + fair.id + "/info2/about-the-fair" && article
+        if article
           include ../../../components/article/templates/index.jade
         else
           include ./about_fair.jade
