@@ -80,4 +80,4 @@ describe 'metaphysics', ->
           }
         '
       .catch (errs) ->
-        errs.should.eql [message: 'some error']
+        errs.should.equal """[{"message":"some error"}]"""
