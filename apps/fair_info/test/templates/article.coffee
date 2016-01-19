@@ -22,7 +22,6 @@ describe 'Article template', ->
   before ->
     @profile = new Profile fabricate 'profile'
     @fair = new Fair fabricate 'fair'
-    console.log 'fair id: ', @fair.id
     @article = new Article fabricate 'article'
     @infoMenu = new InfoMenu fair: @fair
     @infoMenu.infoMenu = {
