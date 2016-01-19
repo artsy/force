@@ -47,7 +47,9 @@ module.exports = (artwork, artist) ->
 
           $('#artwork-rails').append view.render().$el
 
-        $('#artwork-rails').attr 'data-state', 'fade-in'
+        _.delay =>
+          $('#artwork-rails').attr 'data-state', 'fade-in'
+        , 700
       else
         return unless artist.related().artworks.length
         $('#artist-artworks-section').addClass('is-fade-in').show()
