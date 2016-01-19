@@ -61,7 +61,6 @@ ArtworkRails = require './artwork_rails'
       next new Error 'Not authorized to download this image'
 
 @relatedRails = (req, res, next) ->
-  console.log 'about to get relatedRails'
   artworkRails = new ArtworkRails id: req.params.id
   artworkRails.fetch({cache: true})
     .then (response) -> res.send response

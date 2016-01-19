@@ -2,8 +2,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
-ArtworkRailView = require '../../../components/artwork_rail/client/artwork_rail_view.coffee'
 LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
 SaleView = require './sale.coffee'
 

@@ -21,14 +21,15 @@ module.exports = class ArtworkRailView extends Backbone.View
     @carousel.cells.flickity.previous(true)
 
   render: ->
-    if @collection.length
-      @$el.html template
-        artworks: @collection.models
-        title: @title
-        viewAllUrl: @viewAllUrl
-        imageHeight: 250
+    @$el.html template
+      artworks: @collection.models
+      title: @title
+      viewAllUrl: @viewAllUrl
+      imageHeight: 250
 
-      _.defer => @postRender()
+    _.defer => @postRender()
+
+    return this
 
   postRender: ->
     initCarousel $('.js-my-carousel'),

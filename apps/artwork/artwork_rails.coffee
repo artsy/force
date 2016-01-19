@@ -30,7 +30,6 @@ module.exports = class ArtworkRails
     data = _.defaults options, defaults
 
   assignRail: (id, collection) ->
-    console.log 'assigning', id, collection.length
     if collection.length >= @minCount
       @rails[id] = collection
       @excludedIds = @excludedIds.concat _.pluck(collection, '_id')
@@ -70,21 +69,19 @@ module.exports = class ArtworkRails
         .done()
 
   fetchAuctionArtworks: ->
-    console.log 'fetchAuctionArtworks'
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
         if @artwork.related.auction_state is 'closed'
-          @rails.closed_auction = @artwork.related.sale_artworks
+          @rails.closed_auction_artworks = @artwork.related.sale_artworks
           @excludedIds.concat _.chain(@artwork.related.sale_artworks).pick('artwork').pick('id').value()
         else
-          @rails.current_auction = artwork.related.sale_artworks
+          @rails.current_auction_artwowrks = artwork.related.sale_artworks
 
         resolve()
       else
         resolve()
 
   fetchFairArtworks: =>
-    console.log 'fetchFairArtworks'
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedFair'
         artworks = new FilterArtworks []
@@ -92,13 +89,12 @@ module.exports = class ArtworkRails
           error: resolve
           data: @prepareParams fair_id: @artwork.related.id
           success: =>
-            @assignRail 'related_fair', artworks.toJSON()
+            @assignRail 'fair_artworks', artworks.toJSON()
             resolve()
       else
         resolve()
 
   fetchShowArtworks: =>
-    console.log 'fetchShowArtworks'
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
@@ -107,13 +103,12 @@ module.exports = class ArtworkRails
         show.related().artworks.fetch
           error: resolve
           success: (artworks) =>
-            @assignRail 'related_show', artworks.toJSON()
+            @assignRail 'show_artworks', artworks.toJSON()
             resolve()
       else
         resolve()
 
   fetchSimilarArtworks: =>
-    console.log 'fetchSimilarArtworks'
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
@@ -125,7 +120,6 @@ module.exports = class ArtworkRails
           resolve()
 
   fetchArtistArtworks: =>
-    console.log 'fetchArtistArtworks'
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
@@ -136,7 +130,6 @@ module.exports = class ArtworkRails
           resolve()
 
   fetchPartnerArtworks: =>
-    console.log 'fetchPartnerArtworks'
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
@@ -157,9 +150,11 @@ module.exports = class ArtworkRails
             category
             artist {
               id
+              name
             }
             shows {
               id
+              name
               partner {
                 id
               }
@@ -198,6 +193,7 @@ module.exports = class ArtworkRails
               id
               default_profile_id
               is_linkable
+              name
             }
 
           }
