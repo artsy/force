@@ -1,0 +1,11 @@
+.artwork-banner
+  h1.artwork-banner__name
+    = artwork.banner.name
+
+  .artwork-banner__jump
+    a.avant-garde-button-white( href= artwork.banner.href )
+      case artwork.banner.__typename
+        when 'RelatedFair'
+          | Explore Fair
+        when 'RelatedSale'
+          | Explore Auction

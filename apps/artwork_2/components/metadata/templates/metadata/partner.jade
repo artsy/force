@@ -1,0 +1,6 @@
+.artwork-metadata__partner
+  if artwork.partner.href
+    a( href= artwork.partner.href )
+      = artwork.partner.name
+  else
+    = artwork.partner.name

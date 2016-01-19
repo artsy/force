@@ -19,12 +19,10 @@ module.exports = class InstallShotsView extends Backbone.View
         query($show_id: String!, $page: Int) {
           partner_show(id: $show_id) {
             install_shots: images(page: $page) {
-              carousel_image: resized(height: 300, version: "large") {
+              carousel_dimension: resized(height: 300, version: "large") {
                 width
-                height
-                url
               }
-              zoom_image: url(version: "larger")
+              url(version: "larger")
               caption
             }
           }

@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'partner2'
+
+block body
+  #partner.responsive-layout-container
+    .main-layout-container
+      include header
+      .partner-content
+        .loading-spinner

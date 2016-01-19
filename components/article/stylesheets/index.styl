@@ -1,0 +1,372 @@
+@require '../../stylus_lib'
+@require './super_article'
+@require './fullscreen_article'
+
+headline-font-size = 30px
+headline-line-height = 38px
+headline2-font-size = 30px
+gutter-size = 30px
+overflow-width = 1100px
+body-width = 570px
+artwork-height = 500px
+gutter-size = 30px
+play-button-size = 30px
+column-width = 540px
+
+body.body-article
+  #main-layout-container
+    margin-left 0px
+    margin-right 0px
+    max-width 100%
+
+.article-container h1
+  width 900px
+  margin auto
+  font-size 40px
+  line-height 48px
+  text-align center
+  margin-bottom gutter-size
+
+.article-container
+  position relative
+
+.article-author, .article-social
+  vertical-align middle
+
+.article-author, .article-date, .article-contributing-author
+  text-align center
+  a
+    text-decoration none
+    &:hover
+      border-bottom 2px solid
+
+.article-lead-paragraph
+  margin 0 auto gutter-size auto
+
+.article-section-text
+  margin auto
+
+.article-lead-paragraph, .article-section-text
+  font-size 20px
+  line-height 27px
+  width body-width
+  a
+    text-decoration none
+    fine-faux-underline()
+  p
+    margin-bottom 1em
+    &:last-child
+      margin-bottom 0
+  h2
+    font-size 28px
+    line-height 1.2em
+  h3
+    avant-garde()
+    font-size 13px
+  ul li
+    list-style disc inside
+  ol li
+    list-style decimal inside
+
+.article-date
+  avant-garde()
+  font-size 11px
+  margin-bottom 5px
+  color gray-darker-color
+
+.article-author
+  avant-garde-size('s-headline')
+
+.article-contributing-author
+  avant-garde-size('m-headline')
+
+.article-social
+  text-align center
+  padding 10px 0 20px 0
+  .article-social__header
+    avant-garde()
+    font-size default-avant-garde-font-size
+    margin-bottom 10px
+  &.add-bottom
+    margin gutter-size auto (gutter-size * 2)
+    padding-bottom 50px
+
+.article-section-image
+  width overflow-width
+  margin auto
+  img
+    max-width 100%
+    display block
+    margin auto
+  figcaption
+    margin-top 10px
+    font-style italic
+    color gray-dark-color
+    text-align left
+
+.article-section-artworks
+  position relative
+  min-height (body-width * .33)
+
+.article-section-artworks[data-layout="column_width"]
+  width body-width
+  margin auto
+  .loading-spinner
+    display none
+  .artwork-item-image
+    background transparent
+    img
+      max-width 100%
+      width auto
+
+.article-section-artworks[data-layout="overflow_fillwidth"]
+  width (overflow-width + gutter-size)
+  margin 0 auto
+  text-align center
+  &.is-loading
+    [data-id]
+      opacity 0
+    height artwork-height
+    .loading-spinner
+      display block
+  .loading-spinner
+    display none
+  [data-id]
+    display inline-block
+    vertical-align top
+    padding 0
+    width 100%
+  .artwork-item-image-container
+    height auto
+    img
+      height auto
+      position relative
+  .artwork-item-image
+    padding-bottom 0 !important
+  .artwork-item-caption
+    overflow ellipsis
+  .overlay-container
+    display none
+
+.article-section-embed[data-layout="overflow"]
+  width overflow-width
+  .article-embed-container
+    width 1060px
+
+.article-section-embed[data-layout="column_width"]
+  width column-width
+  .article-embed-container
+    width 500px
+
+.article-section-embed
+  margin auto
+  .article-embed-container
+    margin auto
+  iframe
+    margin auto
+    width 100%
+
+.article-section-video
+  width body-width
+  margin auto
+  margin-bottom 1em
+  position relative
+  iframe
+    margin auto
+    width body-width
+    height (9 / 16 * body-width)
+
+#articles-show
+  .main-layout-container
+    @media screen and (min-width 900px)
+      max-width 850px
+    @media screen and (min-width 1000px)
+      max-width 950px
+    @media screen and (min-width 1100px)
+      max-width 1050px
+    @media screen and (min-width 1200px)
+      max-width 1150px
+    @media screen and (min-width 1300px)
+      max-width 1250px
+
+.article-section-container
+  margin (gutter-size * 1.5) auto
+  &.main-layout-container
+    // Override the main layout container width here
+    &[data-layout="overflow_fillwidth"]
+      width 100%
+      max-width 10000px !important
+      // Go over the share buttons
+      z-index 1
+      position relative
+      &[data-section-type="embed"]
+        background black
+        width 100%
+        .article-embed-container
+          width 100%
+          margin auto
+      &[data-section-type="video"]
+        .article-section-video
+          width 100%
+          padding-top 40px
+          padding-bottom 40px
+          &.article-video-background-black
+            width 100%
+            background black
+          .article-video-container
+            width body-width + 200
+            position relative
+            margin auto
+
+.article-carousel
+  img
+    height 350px
+
+.article-large-format-video-container .article-video
+  position relative
+  padding-bottom 56.25% /* 16:9 */
+  height 0
+  max-width 1250px
+  margin-bottom 50px
+
+  iframe
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    max-width 100%
+    max-height ((default-max-page-width * .5625) - 50)
+
+.article-large-format-video-container
+  position relative
+
+.article-large-format-image
+  max-width 1250px
+  margin-bottom 50px
+  img
+    top 0
+    left 0
+    width 100%
+
+.article-video-cover-image
+  background center center
+  background-size cover
+  width 100%
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 1
+
+.article-video-play-button
+  background white
+  width play-button-size + 40px
+  height @width
+  position absolute
+  top "calc(50% - %s)" % (@width / 2)
+  left "calc(50% - %s)" % (@width / 2)
+  z-index 2
+  cursor pointer
+  border 0
+  outline 0
+
+.article-video-play-button-caret
+  width 0
+  height 0
+  top 14px
+  left 22px
+  position absolute
+  border-top (play-button-size - 10) solid transparent
+  border-bottom (play-button-size - 10) solid transparent
+  border-left play-button-size solid black
+
+.article-edit-container
+  position fixed
+  display inline-block
+  top 80px
+  right 20px
+
+.article-edit-hover, .article-edit-container:hover .article-edit-default
+  display none
+
+.article-edit-container:hover .article-edit-hover
+  display inline-block
+  .article-edit-message
+    color black
+
+.article-edit-message
+  font-size 11px
+  display inline-block
+  vertical-align middle
+  color red-color
+  avant-garde()
+  .icon-with-black-circle
+    vertical-align middle
+
+.article-edit-message i, .article-edit-hover i
+  min-width 0 !important
+  width 40px !important
+  height @width
+  padding 4px !important
+  margin 0 7px 0 14px !important
+
+.article-edit-hover i
+  font-size 24px
+  &::before
+    left 5px
+    position relative
+
+.article-edit-button
+  display inline-block
+  vertical-align middle
+
+.article-share-fixed
+  padding-top 78px
+  margin-left -35px
+  padding-left 93px
+  float left
+  z-index 2
+  a
+    text-decoration none
+    display block
+    color gray-dark-color
+  a:hover
+    color gray-darker-color
+
+.article-section-callout
+  float right
+  margin 6px 74px 20px 20px
+  padding 20px 0px
+  border-top 1px solid gray-lighter-color
+  border-bottom 1px solid gray-lighter-color
+  width 415px
+  img, .article-section-callout-text
+    display inline-block
+    vertical-align middle
+  .article-section-callout-title
+    font-size 25px
+    line-height 131%
+  .article-section-callout-link
+    avant-garde()
+    text-decoration none
+    font-size 14px
+  img
+    max-width 180px
+    margin-right 20px
+  .article-section-callout-text
+    max-width 215px
+    &.article-section-callout-no-image
+      max-width 100%
+      padding 10px 0px
+    &.article-section-callout-pullquote
+      max-width 100%
+      padding 10px 0px
+      .article-section-callout-title
+        font-size 30px
+
+
+a.article-section-callout
+  transition border-color 0.3s
+  &:hover
+    border-color gray-dark-color

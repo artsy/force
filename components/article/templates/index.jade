@@ -29,10 +29,13 @@ mixin image(image)
       figcaption!= image.caption
 
 mixin fullscreen(article)
-  figure.article-fullscreen-video( class= article.get('is_super_article') ? 'article-sa-fullscreen-video' : '' )
+  figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
     if article.get('hero_section').background_url
-      .article-fullscreen-video-overlay
+      .article-fullscreen-overlay
       video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
+    else if article.get('hero_section').background_image_url
+      .article-fullscreen-overlay
+      img.article-fullscreen-image( src=article.get('hero_section').background_image_url)
 
     .article-fullscreen-down-arrow
       a.icon-chevron-down
@@ -149,5 +152,5 @@ if superArticle
       include ./super_article_footer.jade
 
 .main-layout-container
-  .articles-featured-section-articles.article-related-widget( data-id = article.get('id') )
+  .articles-featured-articles.article-related-widget( data-id = article.get('id') )
     //- Rendered on client

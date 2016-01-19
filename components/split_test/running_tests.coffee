@@ -23,7 +23,7 @@ module.exports =
       apply: 0.5
 
   show_metaphysics:
-    key: 'show_page_metaphysics'
+    key: 'show_metaphysics'
     edge: 'true'
     outcomes:
       true: 0.5

@@ -3,7 +3,7 @@
 // and potentionally other alternative layout options or more.
 //
 
-if(location.pathname.match('/article')){
+if(location.pathname.match('/article/')){
 
   $(document.body).on('click', '.article-social.article-share-top > a', function() {
     analytics.track('Clicked Article Share', {

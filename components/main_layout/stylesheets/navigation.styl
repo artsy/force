@@ -96,6 +96,27 @@
     padding-bottom 66.67%
   &.is-four-three
     padding-bottom 75%
+  &[data-initials]
+    position relative
+    &:before
+    &:after
+      display block
+      position absolute
+      z-index -1
+    &:before
+      content ''
+      top 0
+      left 0
+      right 0
+      bottom 0
+      background-color gray-lighter-color
+    &:after
+      content attr(data-initials)
+      avant-garde-size('xl-headline')
+      color gray-darker-color
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
 
 .horizontal-list-nav
   display flex

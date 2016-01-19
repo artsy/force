@@ -20,7 +20,7 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
             = partner_show.partner.name
         else
           span.entity-link= partner_show.partner.name
-        a.entity-follow.profile-follow( data-id= partner_show.partner.profile.id )
+        a.entity-follow.profile-follow( data-id= partner_show.partner.default_profile_id )
 
       nav.show-share.js-show-share
         +share(ViewHelpers.shareTitle(partner_show))

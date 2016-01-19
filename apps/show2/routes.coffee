@@ -19,6 +19,8 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           displayable
           press_release(format: markdown)
           description
+          status
+          href
           events {
             description
             title
@@ -32,10 +34,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
             href
             name
             is_linkable
-            profile {
-              id
-              href
-            }
+            default_profile_id
           }
           fair {
             id
@@ -78,6 +77,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
               href
               id
               type
+              name
             }
             artists {
               public
@@ -100,12 +100,10 @@ ViewHelpers = require './helpers/view_helpers.coffee'
             meta_image_url: url(version: "large")
           }
           install_shots: images {
-            carousel_image: resized(height: 300, version: "large") {
+            carousel_dimension: resized(height: 300, version: "large") {
               width
-              height
-              url
             }
-            zoom_image: url(version: "larger")
+            url(version: "larger")
             caption
           }
         }
@@ -115,7 +113,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
     res.locals.sd.PARTNER_SHOW = data.partner_show #bootstrap
     res.locals.ViewHelpers = ViewHelpers
     res.locals.DateHelpers = DateHelpers
-    res.locals.jsonLD = ViewHelpers.toJSONLD data.partner_show
+    res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
     data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
     res.render 'index', data
   .catch ->

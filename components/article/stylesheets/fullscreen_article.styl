@@ -1,0 +1,137 @@
+@require '../../stylus_lib'
+
+@keyframes pulse
+  0%
+    opacity 0.33
+  50%
+    opacity 1
+  100%
+    opacity 0.33
+
+body.body-fullscreen-article
+  .article-content
+    .main-layout-container.first
+      padding-top 25px
+  #articles-show
+    margin-top 0px
+
+.article-content.article-fullscreen-content
+  background white
+  z-index 1
+  position relative
+  h1.large-garamond-header, .article-lead-paragraph, .article-author-date, .article-social.article-share-top
+    display none
+
+  .article-share-fixed
+    margin-top 0px
+    top 0px
+
+.article-fullscreen
+  width 100%
+  height 100vh
+  overflow hidden
+  &.hidden
+    opacity 0
+  &.article-sa-fullscreen
+    h1
+      margin-bottom 60px
+    .main-layout-container
+      margin-top 0px
+  a
+    color white
+  .article-lead-paragraph-container
+    position relative
+  .main-layout-container
+    transition opacity 0.3s
+    opacity 0
+    position relative
+    &.visible
+      opacity 1
+  .article-fullscreen-text-overlay
+    position relative
+    z-index 1
+  .article-date
+    color gray-lighter-color
+  .article-author-date
+    margin-bottom 20px
+  .article-sa-artsy-logo
+    color white
+    width 148px
+    max-height 50px
+    display inline-block
+    vertical-align top
+    font-size 50px
+
+  .article-sa-primary-logo
+    img
+      height 50px
+      margin-top -10px
+
+  .article-sa-primary-logos
+    position absolute
+    z-index 1
+    top 80px
+
+.article-fullscreen-down-arrow
+  position absolute
+  top 0px
+  z-index 3
+  font-size 50px
+  text-align center
+  color white
+  width 100%
+  display none
+  .icon-chevron-down
+    font-size 50px
+    line-height 50px
+    animation pulse 2s infinite
+
+.article-share-fixed-fullscreen
+  position absolute
+  top 80px
+  right 0px
+  z-index 1
+  a
+    color white
+    text-decoration none
+
+.article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image
+  position fixed
+  top 0px
+  left 0px
+  height 100vh
+  width 100vw
+  pointer-events none
+
+.article-fullscreen-overlay
+  background black
+  opacity 0.17
+  min-height 500px
+  z-index 1
+.article-fullscreen-text-overlay
+  color white
+.article-fullscreen-video-player, .article-fullscreen-image
+  object-fit cover
+  z-index 0
+.article-container h1.article-fullscreen-title
+  font-size 72px
+  font-style italic
+  line-height 110%
+  width 750px
+  text-align left
+  @media screen and (min-width 1100px)
+    width 900px
+.article-fullscreen-intro.article-lead-paragraph
+  font-size 22px
+  line-height 120%
+  width 750px
+  margin-bottom 0px
+  @media screen and (min-width 1100px)
+    width 900px
+  @media screen and (min-width 1500px)
+    font-size 25px
+
+.article-sa-fullscreen-logos
+  width 750px
+  @media screen and (min-width 1100px)
+    width 900px

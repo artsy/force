@@ -69,7 +69,7 @@ describe 'SearchBarView', ->
       @view.trigger 'search:start'
       @view.$el.attr('class').should.containEql 'is-loading'
       @view.trigger 'search:complete'
-      _.isUndefined(@view.$el.attr('class')).should.be.ok()
+      _.isEmpty(@view.$el.attr('class')).should.be.ok()
 
   describe '#displaySuggestions', ->
     it 'displays the feedback when the input is empty', ->

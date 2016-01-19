@@ -32,7 +32,7 @@ module.exports =
 
   toAltText: (artwork) ->
     _.compact([
-      (artwork.artist?.name),
+      (artwork.artists[0].name if artwork.artists?),
       (", '#{artwork.title},' " if artwork.title),
       ("#{artwork.date}" if artwork.date),
       (", #{artwork.partner.name}" if artwork.partner)
@@ -183,7 +183,7 @@ module.exports =
   toJSONLDShortArtist: (artist) ->
     compactObject {
       "@type": "Person"
-      image: artist.image.url
+      image: artist.image?.url
       name: artist.name
       sameAs: "#{sd.APP_URL}#{artist.href}"
     }

@@ -7,6 +7,7 @@ Section = require '../../models/section'
 Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
+{ crop } = require '../../components/resizer'
 { POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
@@ -24,7 +25,7 @@ request = require 'superagent'
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     section = sections.running()?[0]
-    res.render 'articles', section: section, articles: articles
+    res.render 'articles', section: section, articles: articles, crop: crop
 
 @article = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated

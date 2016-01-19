@@ -49,7 +49,7 @@ describe 'Artists', ->
       $links.first().text().should.equal 'Emerging Art'
 
     it 'uses four_thirds images', ->
-      @$('.afg-artist img').attr('src').should.containEql 'four_thirds'
+      @$('.afg-artist').html().should.containEql 'four_thirds'
 
   describe 'letter page', ->
     before ->

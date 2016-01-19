@@ -17,7 +17,7 @@ module.exports = class FlickityZoomSequence
   src: ->
     $(@selected())
       .find 'img'
-      .attr 'data-zoom-url'
+      .attr 'src'
 
   click: (e, p, el, idx) =>
     @clicked = true

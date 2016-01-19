@@ -11,8 +11,9 @@ describe 'Profile', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @profile = new Profile(fabricate('partner_profile',
+      owner_type: 'PartnerInstitution'
       owner:
-        type: "Museum"
+        type: "Institution"
         sortable_id: "getty-museum"
         name: "J. Paul Getty Museum"
         default_profile_id: "getty"
@@ -112,13 +113,13 @@ describe 'Profile', ->
     it "creates PartnerGallery", ->
       @profile.set 'owner_type', 'PartnerGallery'
       @profile.related().owner.constructor.name.should.equal 'Partner'
-    it "creates PartnerMuseum", ->
-      @profile.set 'owner_type', 'PartnerMuseum'
+    it "creates PartnerInstitution", ->
+      @profile.set 'owner_type', 'PartnerInstitution'
       @profile.related().owner.constructor.name.should.equal 'Partner'
     it "creates User", ->
       @profile.set 'owner_type', 'User'
       @profile.related().owner.constructor.name.should.equal 'User'
-    it "creates Fair", ->   
+    it "creates Fair", ->
       @profile.set 'owner_type', 'Fair'
       @profile.related().owner.constructor.name.should.equal 'Fair'
     it "creates FairOrganizer", ->
@@ -157,7 +158,7 @@ describe 'Profile', ->
       @profile.metaTitle('posts').should.equal 'J. Paul Getty Museum | Posts | Artsy'
 
     it 'correctly formats title for non-gallery partners', ->
-      @profile.set owner_type: 'PartnerMuseum'
+      @profile.set owner_type: 'PartnerInstitution'
       @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Artsy'
 
     it 'correctly formats title for fairs', ->

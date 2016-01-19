@@ -38,6 +38,7 @@ metaphysics = require '../../lib/metaphysics'
                 name
                 years
                 nationality
+                initials
                 image {
                   url(version: "four_thirds")
                 }

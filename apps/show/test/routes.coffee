@@ -17,23 +17,8 @@ describe 'Show route', ->
     Backbone.sync.restore()
 
   describe 'next to show2 for admins', ->
-    it 'does not next for users', ->
-      @req.user = new Backbone.Model(type: 'User')
-      Backbone.sync
-        .onCall 0
-        .yieldsTo 'success', fabricate 'show', id: 'foobar', partner: id: 'foobar-partner'
-        .onCall 1
-        .yieldsTo 'success', []
-        .onCall 2
-        .yieldsTo 'success'
-        .onCall 3
-        .yieldsTo 'success', []
-      routes.index @req, @res, @next
-        .then =>
-          @res.render.called.should.be.true()
-          @next.called.should.be.false()
-
-    it 'does not next for logged out', ->
+    it 'does not next when SHOW_METAPHYSICS is not true', ->
+      @res.locals.sd.SHOW_METAPHYSICS = 'false'
       Backbone.sync
         .onCall 0
         .yieldsTo 'success', fabricate 'show', id: 'foobar', partner: id: 'foobar-partner'

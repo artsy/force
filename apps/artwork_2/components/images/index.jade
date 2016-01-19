@@ -1,0 +1,17 @@
+.artwork-images
+  for image in [artwork.images[0]]
+    a.artwork-image__link(
+      href='#{artwork.href}/zoom'
+      rel='nofollow'
+    )
+      img.artwork-image_img(
+        src= image.url
+        width= image.resized.width
+        height= image.resized.height
+        alt='TODO'
+        title= artwork.title
+        nopin='TODO'
+        data-pin-url= artwork.href
+        data-pin-media= image.url
+        data-pin-description='TODO'
+      )

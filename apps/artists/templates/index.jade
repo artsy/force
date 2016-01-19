@@ -61,13 +61,11 @@ block body
             .grid-4-up
               for artist in gene.trending_artists
                 .afg-artist.grid-item
-                  if artist.image
-                    a.hoverable-image-link( href= artist.href )
-                      img(
-                        src= artist.image.url
-                        alt= artist.name
-                        title= artist.name
-                      )
+                  a.hoverable-image-link( href= artist.href )
+                    .hoverable-image.is-four-three.is-cropped(
+                      data-initials= artist.initials
+                      style= artist.image && 'background-image: url(#{artist.image.url})'
+                    )
 
                   .afg-artist-information
                     h2.afg-artist-name: a( href= artist.href )

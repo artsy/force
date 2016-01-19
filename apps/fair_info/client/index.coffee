@@ -34,10 +34,6 @@ module.exports = class FairInfoRouter extends Backbone.Router
     view.maybeDisplayMap()
 
   article: ->
-    new FairInfoArticleView
-      model: @article
-      el: $('.fair-info-article')
-
     new ArticleView
       article: new Article(sd.ARTICLE)
       el: $('.fair-info-article')

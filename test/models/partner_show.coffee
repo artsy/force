@@ -58,7 +58,7 @@ describe 'PartnerShow', ->
 
     it 'omits the artworks for sale bit if the partner is not a gallery', ->
       @partnerShow.attributes.partner.name = "White Cube"
-      @partnerShow.attributes.partner.type = "Museum"
+      @partnerShow.attributes.partner.type = "Institution"
       @partnerShow.toPageTitle().should.not.containEql ", Artwork for Sale"
 
   describe '#toPageDescription', ->
