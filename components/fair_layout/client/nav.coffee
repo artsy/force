@@ -23,7 +23,7 @@ module.exports = class FairNavView extends Backbone.View
       return false unless model and model.get('published')
       model.updateForFair fair
       analyticsHooks.trigger 'fair:search:select',
-        label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
+        label: modelNameAndIdToLabel model.get('display_model'), model.id
         query: @query
       @selected = true
 

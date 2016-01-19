@@ -8,7 +8,7 @@
   });
 
   analyticsHooks.on('search:focus', function() {
-    analytics.trigger("Focused on search input");
+    analytics.track("Focused on search input");
   });
 
   analyticsHooks.on('search:empty-item:click search:item:click', function(data) {
