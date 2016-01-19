@@ -38,7 +38,6 @@ module.exports = class BlurbView extends Backbone.View
 
   displayShowLessAfterDetached: ->
     return unless @includeShowLess
-
     $link = $("<a>", {class: "show-less-blurb"}).html(' Show less')
     @$el.append($link)
 
@@ -46,5 +45,5 @@ module.exports = class BlurbView extends Backbone.View
       e.preventDefault()
       @seeMoreClicked = false
       $('span .see-more-blurb').remove()
-      $('a.show-less-blurb').remove()
+      $($link).remove()
       @attachEllipsis()
