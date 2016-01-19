@@ -120,13 +120,17 @@ include ../components/checkbox/index
         | Receive Emails
       .email_subscriptions
         +checkbox('receive_weekly_email')
-         | Weekly featured content from Artsy
+         | What's on Artsy This Week
+        +checkbox('receive_editorial_email')
+         | Art World News
+        +checkbox('receive_auction_email')
+         | Auctions
         +checkbox('receive_personalized_email')
-         | Weekly personalized email
+         | Personalized Art Recommendations
         +checkbox('receive_follow_users_email')
-         | When I have new followers
+         | When I Have New Followers
         +checkbox('receive_offer_emails')
-         | Occasional buying opportunities
+         | Artsy Specialist Recommendations
 
       hr.is-invisible
 

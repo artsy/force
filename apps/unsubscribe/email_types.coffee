@@ -1,6 +1,8 @@
 # These need to be updated when a new mailing is added or one is removed from Gravity.
 module.exports =
-  'weekly_email': 'Weekly Newsletters'
-  'follow_users_email': 'User Follow Emails'
-  'offer_emails': 'Offer Emails'
-  'personalized_email': 'Personalized Artists and Artwork Recommendations'
+  'weekly_email': 'What\'s on Artsy This Week'
+  'editorial_email': 'Art World News'
+  'auction_email': 'Auctions'
+  'personalized_email': 'Personalized Art Recommendations'
+  'follow_users_email': 'When I Have New Followers'
+  'offer_emails': 'Artsy Specialist Recommendations'
