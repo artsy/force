@@ -27,9 +27,6 @@ describe 'InfoMenu', ->
       # Artsy At The Fair Articles fetch
       .onCall 2
       .yieldsTo 'error', {}
-      # About The Fair Articles fetch
-      .onCall 3
-      .yieldsTo 'error', {}
 
   afterEach ->
     Backbone.sync.restore()
@@ -41,7 +38,6 @@ describe 'InfoMenu', ->
         "localhost:3003/api/v1/fair/#{@fair.id}/fair_events",
         "undefined/api/articles"
         "undefined/api/articles"
-        "undefined/api/articles"
       ]
 
   it 'resolves with the infoMenu',->
@@ -51,4 +47,3 @@ describe 'InfoMenu', ->
           events: true
           programming: false
           artsyAtTheFair: false
-          aboutTheFair: false

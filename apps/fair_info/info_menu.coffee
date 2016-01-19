@@ -23,7 +23,6 @@ module.exports = class InfoMenu
           @fetchEvents()
           @fetchProgramming()
           @fetchAtTheFair()
-          @fetchAboutTheFair()
         ]
           .then (menuItems) =>
             @infoMenu = _.extend {}, menuItems...
@@ -58,6 +57,3 @@ module.exports = class InfoMenu
 
   fetchAtTheFair: ->
     @fetchArticle('fair_artsy_id', 'artsyAtTheFair')
-
-  fetchAboutTheFair: ->
-    @fetchArticle('fair_about_id', 'aboutTheFair')
