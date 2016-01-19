@@ -14,7 +14,9 @@ CurrentUser = require '../../../../models/current_user'
 describe 'ArtworkView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        sd: {}
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
