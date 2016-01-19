@@ -13,8 +13,8 @@ PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
 module.exports = class ArtworkRails
-  minCount: 10
-  maxCount: 25
+  minCount: 7
+  size: 10
 
   constructor: ({ @id }) ->
     @excludedIds = []
@@ -25,7 +25,7 @@ module.exports = class ArtworkRails
     defaults =
       exclude_artwork_ids: @excludedIds
       for_sale: true
-      size: @minCount
+      size: @size
 
     data = _.defaults options, defaults
 
