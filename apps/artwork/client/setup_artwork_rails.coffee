@@ -19,10 +19,10 @@ railwayMap = (artwork) ->
     url: "/show/#{artwork.shows[0]?.id}"
     title: "More Works From #{artwork.shows[0]?.name}"
   current_auction_artworks:
-    url: "/"
+    url: "/auction/#{artwork.related?.id}"
     title: "More Works From #{artwork.related?.name}"
   closed_auction_artworks:
-    url: "/"
+    url: "/auction/#{artwork.related?.id}"
     title: "More Works From #{artwork.related?.name}"
 
 module.exports = (artwork, artist) ->
