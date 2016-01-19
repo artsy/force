@@ -1,6 +1,8 @@
 _ = require 'underscore'
-ArtworkRailView = require '../../../components/artwork_rail/client/artwork_rail_view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+ArtworkRailView = require '../../../components/artwork_rail/client/artwork_rail_view.coffee'
+LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
+
 
 railwayMap = (artwork) ->
   similar_artworks:
@@ -25,9 +27,15 @@ railwayMap = (artwork) ->
     url: "/"
     title: "More Works From #{artwork.related?.name}"
 
-module.exports = ->
+module.exports = (artwork) ->
+  new LayeredSearchView
+    el: $('#artwork-below-the-fold-section')
+    artwork: artwork
+
+  $('#artwork-below-the-fold-section').attr 'data-state', 'fade-in'
+
   $.ajax
-    url: "#{sd.APP_URL}/artwork/#{sd.ARTWORK.id}/artwork_rails"
+    url: "#{sd.APP_URL}/artwork/#{artwork.id}/artwork_rails"
     success: (response) ->
       options = railwayMap(response.artwork)
 

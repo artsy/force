@@ -51,7 +51,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupArtistArtworks()
     @setupFollowButtons()
     @setupBelowTheFold() unless @showRails
-    setupArtworkRails() if @showRails
+    setupArtworkRails(@artwork) if @showRails
     @setupMainSaveButton()
     @setupVideoView()
     @setupAnnyang()

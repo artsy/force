@@ -11,14 +11,12 @@ PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
 module.exports = class ArtworkRails
-  rails: {}
-  artwork: {}
-  excludedIds: []
   minCount: 10
   maxCount: 25
 
   constructor: ({ @id }) ->
     @excludedIds = []
+    @rails = {}
     @key = "artwork:#{@id}:rails"
 
   prepareParams: (options) ->
@@ -54,11 +52,16 @@ module.exports = class ArtworkRails
         .then ({ @artwork }) =>
           @excludedIds.push @artwork._id
           @fetchAuctionArtworks()
-        .then @fetchFairArtworks
-        .then @fetchShowArtworks
-        .then @fetchSimilarArtworks
-        .then @fetchArtistArtworks
-        .then @fetchPartnerArtworks
+        .then =>
+          @fetchFairArtworks()
+        .then =>
+          @fetchShowArtworks()
+        .then =>
+          @fetchSimilarArtworks()
+        .then =>
+          @fetchArtistArtworks()
+        .then =>
+          @fetchPartnerArtworks()
         .then =>
           response =
             artwork: @artwork
@@ -81,7 +84,7 @@ module.exports = class ArtworkRails
       else
         resolve()
 
-  fetchFairArtworks: =>
+  fetchFairArtworks: ->
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedFair'
         artworks = new FilterArtworks []
@@ -94,7 +97,7 @@ module.exports = class ArtworkRails
       else
         resolve()
 
-  fetchShowArtworks: =>
+  fetchShowArtworks: ->
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
@@ -108,18 +111,18 @@ module.exports = class ArtworkRails
       else
         resolve()
 
-  fetchSimilarArtworks: =>
+  fetchSimilarArtworks: ->
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
-        data: @prepareParams size: 20, gene_id: slugify @artwork.category, artist_id: @artwork.artist.id
+        data: @prepareParams size: 20, gene_id: slugify(@artwork.category), artist_id: @artwork.artist.id
         error: resolve
         success: (artworks, response, options) =>
           if artworks.length is 20
             @assignRail 'similar_artworks', artworks.toJSON()
           resolve()
 
-  fetchArtistArtworks: =>
+  fetchArtistArtworks: ->
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
@@ -129,7 +132,7 @@ module.exports = class ArtworkRails
           @assignRail 'artist_artworks', artworks.toJSON()
           resolve()
 
-  fetchPartnerArtworks: =>
+  fetchPartnerArtworks: ->
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
