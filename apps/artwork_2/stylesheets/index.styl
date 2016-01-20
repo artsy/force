@@ -6,13 +6,14 @@
 @require '../components/metadata/index'
 
 .artwork-page
-  padding 20px 0
+  padding 15px 0
 
 .artwork
   display table
   position relative
   width 100%
   height auto
+  table-layout fixed
   z-index 1
 
   &__overview
@@ -26,3 +27,7 @@
 
   &__overview
     text-align center
+    border-bottom 1px solid gray-lighter-color
+
+.artwork-fold
+  block-margins(20px)

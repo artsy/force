@@ -1,7 +1,7 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  //- include meta
+  title= [artwork.title, 'Artsy'].join(' | ')
 
 append locals
   - assetPackage = 'artwork_2'
@@ -16,3 +16,6 @@ block body
 
       .artwork__metadata
         include ../components/metadata/index
+
+    section.artwork-fold
+      | &hellip;
