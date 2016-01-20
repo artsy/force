@@ -4,10 +4,12 @@ _ = require 'underscore'
 module.exports = class BlurbView extends Backbone.View
 
   initialize: (options) ->
-    { @updateOnResize, @lineCount, @resizeHeight } = options
+    { @updateOnResize, @lineCount, @resizeHeight, @includeShowLess } = options
     @resizeHeight = @resizeHeight || @$el.height()
     @attachEllipsis()
     $(window).on 'resize', => @attachEllipsis() if @updateOnResize
+
+    @on 'ellipsis:detached', @displayShowLessAfterDetached
 
   attachEllipsis: ->
     return unless @$el.length > 0
@@ -32,3 +34,16 @@ module.exports = class BlurbView extends Backbone.View
     @$el.trigger('destroy')[0] # Destroy dotdotdot and return the actual height
     @$el.height(@$el.height(@resizeHeight).scrollHeight) # Set the real height (transition happens with CSS)
     $(window).off 'resize'
+    @trigger 'ellipsis:detached'
+
+  displayShowLessAfterDetached: ->
+    return unless @includeShowLess
+    $link = $("<a>", {class: "show-less-blurb"}).html(' Show less')
+    @$el.append($link)
+
+    $('a.show-less-blurb').click (e) =>
+      e.preventDefault()
+      @seeMoreClicked = false
+      $('span .see-more-blurb').remove()
+      $($link).remove()
+      @attachEllipsis()

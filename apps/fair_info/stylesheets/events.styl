@@ -19,8 +19,9 @@
   &__time
     avant-garde()
     font-size 15px
+    line-height 2
   &__add-to-calender
-    color gray-color
+    color gray-dark-color
     font-size 17px
     text-decoration none
 
@@ -51,9 +52,6 @@
     a:hover
       background-color gray-darkest-color
 
-
-
-
 .fair-info-event-item-details
   letter-spacing normal
   width 70%
@@ -69,6 +67,14 @@
     garamond()
     font-size 17px
     text-transform none
+    .faux-underline
+      avant-garde()
+      font-size 11px
+      &:before
+        border-bottom none
+    .show-less-blurb
+      avant-garde()
+      font-size 11px
 
 .fair-info-event-day .fair-info-event-item:first-child
   .fair-info-event-item-date__formatted-date
