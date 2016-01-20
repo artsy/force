@@ -27,12 +27,12 @@ module.exports = class ArtworkRailView extends Backbone.View
       viewAllUrl: @viewAllUrl
       imageHeight: 250
 
-    _.defer => @postRender()
+    @postRender()
 
     return this
 
   postRender: ->
-    initCarousel @$('.js-my-carousel'),
+    @carouselPromise = initCarousel @$('.js-my-carousel'),
       imagesLoaded: true
     , (carousel) =>
       @carousel = carousel

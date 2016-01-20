@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 { slugify } = require 'underscore.string'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
@@ -37,20 +38,8 @@ module.exports = (artwork, artist) ->
     success: ({artwork, rails}) ->
       options = railwayMap artwork
 
-      unless _.isEmpty rails
-        _.each rails, (value, key) ->
-          artworks = new Artworks value
-          view = new ArtworkRailView
-            collection: artworks
-            title: options[key].title
-            viewAllUrl: options[key].url
-
-          $('#artwork-rails').append view.render().$el
-
-        _.delay =>
-          $('#artwork-rails').attr 'data-state', 'fade-in'
-        , 700
-      else
+      # if rails endpoint doesn't return anything, fall back to old related works
+      if _.isEmpty rails
         return unless artist.related().artworks.length
         $('#artist-artworks-section').addClass('is-fade-in').show()
 
@@ -64,4 +53,20 @@ module.exports = (artwork, artist) ->
           isOrdered: false
           seeMore: false
           artworkSize: 'tall'
+      else
+        # wait for all carousels to initialize before fading in
+        carouselPromises = _.map rails, (value, key) ->
+          artworks = new Artworks value
+          view = new ArtworkRailView
+            collection: artworks
+            title: options[key].title
+            viewAllUrl: options[key].url
+
+          $('#artwork-rails').append view.render().$el
+
+          view.carouselPromise
+
+        Q.all([carouselPromises]).then ->
+          $('#artwork-rails').attr 'data-state', 'fade-in'
+
 
