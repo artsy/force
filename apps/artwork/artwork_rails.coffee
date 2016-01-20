@@ -30,6 +30,7 @@ module.exports = class ArtworkRails
     data = _.defaults options, defaults
 
   assignRail: (id, collection) ->
+    console.log 'assignRail', id, collection.length >= @minCount, collection.length
     if collection.length >= @minCount
       @rails[id] = collection
       @excludedIds = @excludedIds.concat _.pluck(collection, '_id')
@@ -72,6 +73,7 @@ module.exports = class ArtworkRails
         .done()
 
   fetchAuctionArtworks: ->
+    console.log 'auction'
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
         sale = new Sale @artwork.related
@@ -89,6 +91,7 @@ module.exports = class ArtworkRails
         resolve()
 
   fetchShowArtworks: ->
+    console.log 'show'
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
@@ -96,13 +99,14 @@ module.exports = class ArtworkRails
         show.set partner: partner
         show.related().artworks.fetch
           error: resolve
-          success: (artworks) =>
+          success: (artworks, response) =>
             @assignRail 'show_artworks', artworks.toJSON()
             resolve()
       else
         resolve()
 
   fetchSimilarArtworks: ->
+    console.log 'similar'
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
@@ -114,13 +118,14 @@ module.exports = class ArtworkRails
           resolve()
 
   fetchArtistArtworks: ->
+    console.log 'artist'
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
         data: @prepareParams artist_id: @artwork.artist.id
         error: resolve
-        success: =>
-          @assignRail 'artist_artworks', artworks.toJSON()
+        success: (collection, response) =>
+          @assignRail 'artist_artworks', collection.toJSON()
           resolve()
 
   fetchPartnerArtworks: ->
@@ -129,8 +134,10 @@ module.exports = class ArtworkRails
       artworks.fetch
         data: @prepareParams partner_id: @artwork.partner.id
         error: resolve
-        success: =>
+        success: (collection, response) =>
+          console.log 'response', response.length, collection.length
           @assignRail 'partner_artworks', artworks.toJSON()
+
           resolve()
         error: resolve
 
