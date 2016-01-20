@@ -7,8 +7,6 @@ qs = require 'qs'
 { fabricate } = require 'antigravity'
 # joaquin-torres-garcia-autorretrato-self-portrait
 artworkWithShow = require './fixtures/artwork_with_show'
-# pierre-bonnard-bords-de-seine-a-vernon
-artworkWithShowAndGallery = require './fixtures/artwork_with_show_and_gallery'
 # ed-ruscha-pearl-dust-combination-from-insects-portfolio
 artworkWithAuction = require './fixtures/artwork_open_auction'
 ArtworkRails = rewire '../artwork_rails'
@@ -62,7 +60,7 @@ describe 'ArtworkRails', ->
     after ->
       Backbone.sync.restore()
 
-    it 'fetches show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
+    it 'tries to fetch show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
       @rails.fetch().then ->
         _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
         .should.eql [
@@ -117,7 +115,7 @@ describe 'ArtworkRails', ->
     after ->
       Backbone.sync.restore()
 
-    it 'fetches show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
+    it 'tries to fetch show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
       @rails.fetch().then ->
         _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
         .should.eql [
@@ -152,6 +150,34 @@ describe 'ArtworkRails', ->
         response.artwork._id.should.eql '54c2f01972616916df110900'
         _.keys(response.rails).length.should.eql 4
         _.keys(response.rails)[0].should.eql 'current_auction_artworks'
+        done()
+      .catch done
+
+  describe 'with an artwork that has an auction and no similar works',  ->
+    before ->
+      ArtworkRails.__set__ 'metaphysics', ->
+        Q.promise (resolve, reject) ->
+          return resolve artworkWithAuction
+
+      @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
+
+      sinon.stub Backbone, 'sync'
+        .yieldsTo 'success', hits: @tenArtworks
+        # auction fetch
+        .onCall 0
+        .yieldsTo 'success', @tenSaleArtworks
+        # similar fetch
+        .onCall 1
+        .yieldsTo 'success', []
+
+    after ->
+      Backbone.sync.restore()
+
+    it 'returns artwork and all valid rails (without similar_artworks)', (done) ->
+      @rails.fetch().then (response) ->
+        response.artwork._id.should.eql '54c2f01972616916df110900'
+        _.keys(response.rails).length.should.eql 3
+        _.keys(response.rails)[1].should.eql 'artist_artworks'
         done()
       .catch done
 
