@@ -31,6 +31,7 @@ module.exports = class PartnerView extends Backbone.View
     @listenTo @partner, 'sync', @initializeTablistAndContent
     @initializeCache()
     @initializePartner()
+    @initializePartnerLocations()
     @initializeFollows()
 
   renderSection: (section, @sectionViewParams = {}) ->
@@ -60,7 +61,12 @@ module.exports = class PartnerView extends Backbone.View
   initializeCache: ->
     @cache = {}; _.each sectionToView, (v, k) => @cache[k] = {}
 
-  initializePartner: -> @partner.fetch cache: true
+  initializePartner: -> @partner.fetch()
+
+  initializePartnerLocations: ->
+    @partner.related().locations.fetch
+      success: (locations) =>
+        @$('.partner-header .partner-locations').html locations.displayCities(' • ')
 
   initializeTablistAndContent: ->
     @isPartnerFetched = true
