@@ -30,7 +30,6 @@ module.exports = class ArtworkRails
     data = _.defaults options, defaults
 
   assignRail: (id, collection) ->
-    console.log 'assignRail', id, collection.length >= @minCount, collection.length
     if collection.length >= @minCount
       @rails[id] = collection
       @excludedIds = @excludedIds.concat _.pluck(collection, '_id')
@@ -40,16 +39,6 @@ module.exports = class ArtworkRails
       cache.getHash @key, {}, (err, data) =>
         if data and @cache
           return resolve @rails = data
-
-        # fetch artwork
-        # if theres an auction return sale_artworks also
-          # if the auction is current, resolve with works
-          # else add works to existing ids
-        # if the work is in a fair, fetch all other works in the show (excluding existing works)
-        # if the work is in a show, fetch all other works in the show (excluding existing works)
-        # fetch works in the same category, if over 20 add works to rails and excluded ids
-        # fetch works by artist, add to rails
-        # fetch works by partner, add to rails
 
         @fetchArtwork()
         .then ({ @artwork }) =>
@@ -73,7 +62,6 @@ module.exports = class ArtworkRails
         .done()
 
   fetchAuctionArtworks: ->
-    console.log 'auction'
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
         sale = new Sale @artwork.related
@@ -85,13 +73,11 @@ module.exports = class ArtworkRails
               @assignRail 'closed_auction_artworks', artworks.toJSON()
             else
               @assignRail 'current_auction_artworks', artworks.toJSON()
-
-        resolve()
+            resolve()
       else
         resolve()
 
   fetchShowArtworks: ->
-    console.log 'show'
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
@@ -106,40 +92,28 @@ module.exports = class ArtworkRails
         resolve()
 
   fetchSimilarArtworks: ->
-    console.log 'similar'
-    Q.promise (resolve) =>
-      artworks = new FilterArtworks []
-      artworks.fetch
-        data: @prepareParams size: 20, gene_id: slugify(@artwork.category), artist_id: @artwork.artist.id
-        error: resolve
-        success: (artworks, response, options) =>
-          if artworks.length is 20
-            @assignRail 'similar_artworks', artworks.toJSON()
-          resolve()
+    @fetchFilterArtworks 'similar_artworks',
+      gene_id: slugify(@artwork.category)
+      artist_id: @artwork.artist.id
+      size: 20
 
   fetchArtistArtworks: ->
-    console.log 'artist'
-    Q.promise (resolve) =>
-      artworks = new FilterArtworks []
-      artworks.fetch
-        data: @prepareParams artist_id: @artwork.artist.id
-        error: resolve
-        success: (collection, response) =>
-          @assignRail 'artist_artworks', collection.toJSON()
-          resolve()
+    @fetchFilterArtworks 'artist_artworks',
+      artist_id: @artwork.artist.id
 
   fetchPartnerArtworks: ->
+    @fetchFilterArtworks 'partner_artworks',
+      partner_id: @artwork.partner.id
+
+  fetchFilterArtworks: (id, options)->
     Q.promise (resolve) =>
       artworks = new FilterArtworks []
       artworks.fetch
-        data: @prepareParams partner_id: @artwork.partner.id
+        data: @prepareParams options
         error: resolve
         success: (collection, response) =>
-          console.log 'response', response.length, collection.length
-          @assignRail 'partner_artworks', artworks.toJSON()
-
+          @assignRail id, collection.toJSON()
           resolve()
-        error: resolve
 
   fetchArtwork: ->
     metaphysics
