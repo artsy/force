@@ -3,8 +3,7 @@ include templates/metadata/title
 include templates/metadata/series
 include templates/metadata/secondary
 
-unless artwork.is_contactable
-  include templates/metadata/partner
+//- unless artwork.sale // todo
+include templates/metadata/price
 
-//- unless sale && sale.isAuction() || sale && sale.isAuctionPromo()
-//-   include templates/metadata/price
+include templates/metadata/partner

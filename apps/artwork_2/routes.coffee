@@ -18,8 +18,11 @@ query = """
   #{require './components/metadata/query'}
 """
 
+helpers = extend {},
+  require './components/metadata/helpers'
+
 @index = (req, res, next) ->
-  send = query: query, variables: id: req.params.id
+  send = query: query, variables: req.params
 
   if req.query.query?
     get = extend {}, send, variables: JSON.stringify send.variables
@@ -27,5 +30,6 @@ query = """
 
   metaphysics send
     .then (data) ->
+      extend res.locals.helpers, helpers
       res.render 'index', data
     .catch next

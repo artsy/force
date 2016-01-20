@@ -11,20 +11,19 @@
     .artwork-metadata__manufacturer
       = artwork.manufacturer
 
-  unless artwork.editions
+  unless artwork.edition_sets.length > 1
     .artwork-metadata__dimensions
-      .amd-imperial
+      .artwork-metadata__dimensions__imperial
         = artwork.dimensions.in
-      .amd-metric
+      .artwork-metadata__dimensions__metric
         = artwork.dimensions.cm
 
-  //- TODO
-  //- if artwork.editionStatus()
-  //-   .artwork-metadata__artwork-edition-status
-  //-     = artwork.editionStatus()
+  if artwork.edition_of
+    .artwork-metadata__edition-of
+      = artwork.edition_of
 
   if artwork.image_rights
-    .artwork-meta-photo-credit
+    .artwork-metadata__image-rights
       = artwork.image_rights
 
   include editions

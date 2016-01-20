@@ -1,9 +1,3 @@
-//- if artwork.isPriceDisplayable()
-//-   .artwork-meta-price
-//-     .artwork-meta-price-label( class=(artwork.get('sold') ? 'is-sold' : 'is-not-sold') )
-//-       = artwork.priceLabel()
-//-     .artwork-meta-price-amount= artwork.priceDisplay()
-//- else
-//-   if artwork.artworkPageSaleMessage()
-//-     .artwork-meta-price
-//-       = artwork.artworkPageSaleMessage()
+if artwork.sale_message
+  .artwork-metadata__sale-message
+    = artwork.sale_message
