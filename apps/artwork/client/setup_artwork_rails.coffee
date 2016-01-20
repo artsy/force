@@ -12,19 +12,19 @@ railwayMap = (artwork) ->
     title: "Similar Artworks from #{artwork.artist?.name}"
   partner_artworks:
     url: "/#{artwork.partner?.default_profile_id}/works"
-    title: "More Works From #{artwork.partner?.name}"
+    title: "More Works by #{artwork.partner?.name}"
   artist_artworks:
     url: "/artist/#{artwork.artist.id}/works"
-    title: "More Works From #{artwork.artist?.name}"
+    title: "More Works by #{artwork.artist?.name}"
   show_artworks:
     url: "/show/#{artwork.shows[0]?.id}"
-    title: "More Works From #{artwork.shows[0]?.name}"
+    title: "More Works from #{artwork.shows[0]?.name}"
   current_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "More Works From #{artwork.related?.name}"
+    title: "More Works from #{artwork.related?.name}"
   closed_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "More Works From #{artwork.related?.name}"
+    title: "More Works from #{artwork.related?.name}"
 
 module.exports = (artwork, artist) ->
   new LayeredSearchView
@@ -67,6 +67,7 @@ module.exports = (artwork, artist) ->
           view.carouselPromise
 
         Q.all([carouselPromises]).then ->
-          $('#artwork-rails').attr 'data-state', 'fade-in'
+          _.defer =>
+            $('#artwork-rails').attr 'data-state', 'fade-in'
 
 
