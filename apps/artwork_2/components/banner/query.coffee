@@ -12,7 +12,7 @@ module.exports = """
         href
         profile {
           icon {
-            img: cropped(width: 80, height: 35, version: "square140") {
+            img: resized(width: 80, height: 45, version: "square140") {
               width
               height
               url
