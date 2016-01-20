@@ -1,9 +1,65 @@
-.artwork-images
-  block-margins(10px)
+page-height = 30px
 
-.artwork-image
-  &__link
-    //
-  &_img
-    display block
-    margin 0 auto
+.artwork-images
+  position relative
+  block-margins(10px)
+  height 65vh
+
+  &.artwork-images--multiple
+    > .artwork-images__images
+      bottom page-height
+
+  &__images
+    position absolute
+    top 0
+    right 0
+    left 0
+    bottom 0
+
+    &__image
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      left 0
+      background-color white
+
+      &[data-state='active']
+        z-index 1
+
+      &__placeholder
+      &__display
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        background-size contain
+        background-repeat no-repeat
+        background-position center center
+
+  &__pages
+    position absolute
+    right 0
+    bottom 0
+    left 0
+    height page-height
+    block-margins(10px)
+    display flex
+    align-items center
+    flex-direction row
+    justify-content center
+
+    &__page
+      display inline-block
+      padding 2px
+      color gray-color
+      cursor pointer
+      font-family Verdana, sans-serif
+      font-size 20px
+      line-height 1
+      transition color 0.2s ease-in-out
+      user-select none
+      &:hover
+      &[data-state='active']
+        color black

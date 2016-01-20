@@ -1,0 +1,15 @@
+a.artwork-images__images__image(
+  class='js-artwork-images__images__image'
+  data-id= image.id
+  data-state=(i === (artwork.images.length - 1) ? 'active' : 'inactive')
+  href='#zoom'
+  rel='nofollow'
+)
+  .artwork-images__images__image__placeholder(
+    class='js-artwork-images__images__image__placeholder'
+    style='background-image: url(#{image.placeholder.url})'
+  )
+  .artwork-images__images__image__display(
+    class='js-artwork-images__images__image__display'
+    data-src= image.url
+  )

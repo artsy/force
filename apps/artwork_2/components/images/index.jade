@@ -1,17 +1,9 @@
-.artwork-images
-  for image in [artwork.images[0]]
-    a.artwork-image__link(
-      href='#{artwork.href}/zoom'
-      rel='nofollow'
-    )
-      img.artwork-image_img(
-        src= image.url
-        width= image.resized.width
-        height= image.resized.height
-        alt='TODO'
-        title= artwork.title
-        nopin='TODO'
-        data-pin-url= artwork.href
-        data-pin-media= image.url
-        data-pin-description='TODO'
-      )
+.artwork-images.js-artwork-images(
+  class="#{artwork.images.length > 1 ? 'artwork-images--multiple' : ''}"
+)
+  .artwork-images__images
+    for image, i in artwork.images.reverse()
+      include ./templates/image
+
+  if artwork.images.length > 1
+    include ./templates/pages
