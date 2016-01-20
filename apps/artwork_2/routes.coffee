@@ -8,11 +8,13 @@ query = """
     artwork(id: $id) {
       ... banner
       ... images
+      ... actions
       ... metadata
     }
   }
   #{require './components/banner/query'}
   #{require './components/images/query'}
+  #{require './components/actions/query'}
   #{require './components/metadata/query'}
 """
 

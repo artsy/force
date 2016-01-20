@@ -1,0 +1,42 @@
+@require '../../../../components/tooltips/index'
+
+artwork-action = {
+  size: 46px
+}
+
+.artwork-actions
+  margin 10px 0
+
+.artwork-action
+  position relative
+  display inline-block
+  margin 0 5px
+  width: artwork-action.size
+  height: artwork-action.size
+  cursor pointer
+  color black
+  border 2px solid gray-lighter-color
+  border-radius 50%
+  user-select none
+
+  &--save > i
+    margin-left 1px
+  &--share > i
+    margin-top 1px
+    margin-left 1px
+  &--view-in-room > i
+    margin-top -1px
+    margin-left 1px
+
+  &:hover
+    background-color gray-darker-color
+    border-color @background-color
+    color white
+
+  > i
+    position absolute
+    top 50%
+    left 50%
+    font-size 26px
+    line-height 1
+    transform translate(-50%, -50%)
