@@ -42,6 +42,7 @@ module.exports = class ArtworkRails
 
         @fetchArtwork()
         .then ({ @artwork }) =>
+          return resolve() if @artwork.partner.type is 'Institution'
           @excludedIds.push @artwork._id
           @fetchAuctionArtworks()
         .then =>
@@ -154,6 +155,7 @@ module.exports = class ArtworkRails
               id
               default_profile_id
               is_linkable
+              type
               name
             }
 
