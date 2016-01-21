@@ -54,10 +54,10 @@ module.exports = (model, artist) ->
       else
         options = railwayMap artwork
 
-        # if the artwork in question is sold,
+        # if the artwork in question is sold or not for sale,
         # pop the first rail above the artwork related information
         # and continue the rest below
-        if model.get('sold')
+        if model.get('sold')  or not model.get('forsale')
           firstRail = _.first(_.keys(rails))
           artworks = new Artworks rails[firstRail]
           { title } = railwayMap(artwork, ' For Sale')[firstRail]
