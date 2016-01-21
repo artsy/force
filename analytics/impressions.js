@@ -28,7 +28,7 @@ var visibleArtworkIds = function() {
   trackedIds = trackedIds.concat(ids);
 
   // Return only the new impressions
-  return ids;
+  return ids.join();
 };
 
 var trackImpressions = function() {
