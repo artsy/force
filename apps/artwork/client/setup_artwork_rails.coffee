@@ -9,7 +9,7 @@ LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
 railwayMap = (artwork, forSaleModifier = '') ->
   similar_artworks:
     url: "/artist/#{artwork.artist?.id}?medium=#{slugify(artwork.category)}"
-    title: "Similar#{forSaleModifier} Artworks from #{artwork.artist?.name}"
+    title: "Similar#{forSaleModifier} Artworks by #{artwork.artist?.name}"
   partner_artworks:
     url: "/#{artwork.partner?.default_profile_id}/works"
     title: "More#{forSaleModifier} Works by #{artwork.partner?.name}"
