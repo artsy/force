@@ -12,7 +12,7 @@ railwayMap = (artwork, forSaleModifier = '') ->
     title: "Similar#{forSaleModifier} Artworks by #{artwork.artist?.name}"
   partner_artworks:
     url: "/#{artwork.partner?.default_profile_id}/works"
-    title: "More#{forSaleModifier} Works by #{artwork.partner?.name}"
+    title: "More#{forSaleModifier} Works from #{artwork.partner?.name}"
   artist_artworks:
     url: "/artist/#{artwork.artist.id}/works"
     title: "More#{forSaleModifier} Works by #{artwork.artist?.name}"
@@ -57,7 +57,7 @@ module.exports = (model, artist) ->
         # if the artwork in question is sold or not for sale,
         # pop the first rail above the artwork related information
         # and continue the rest below
-        if model.get('sold') or not model.get('forsale')
+        if model.get('sold')
           firstRail = _.first(_.keys(rails))
           artworks = new Artworks rails[firstRail]
           { title } = railwayMap(artwork, ' For Sale')[firstRail]
