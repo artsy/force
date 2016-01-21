@@ -54,7 +54,7 @@ module.exports = (model, artist) ->
       else
         options = railwayMap artwork
 
-        # if the artwork in question is sold or not for sale,
+        # if the artwork in question is sold,
         # pop the first rail above the artwork related information
         # and continue the rest below
         if model.get('sold')
