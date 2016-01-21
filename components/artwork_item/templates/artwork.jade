@@ -1,5 +1,6 @@
 - artworkSize = artworkSize || 'medium'
 - imageWidth = imageWidth || false
+- imageHeight = imageHeight || false
 - displayPurchase = displayPurchase || false
 - showBlurbs = showBlurbs || false
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
@@ -11,6 +12,8 @@ figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
     a.artwork-item-image-link(href=artwork.href())
       if imageWidth
         include ./fixed_width_image
+      else if imageHeight
+        include ./fixed_height_image
       else
         include ./variable_width_image
       if artwork.collection && artwork.collection.artworkCollection

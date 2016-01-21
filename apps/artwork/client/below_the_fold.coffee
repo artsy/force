@@ -6,8 +6,8 @@ LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
 SaleView = require './sale.coffee'
 
 module.exports = class BelowTheFold extends Backbone.View
-  initialize: (options) ->
-    { @artwork } = options
+  initialize: ({ @artwork }) ->
+    # no-op
 
   setupSale: (options = {}) ->
     new SaleView _.extend el: @$el, artwork: @artwork, options

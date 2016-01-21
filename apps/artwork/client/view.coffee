@@ -25,6 +25,8 @@ ImagesView = require '../components/images/view.coffee'
 PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedNavigationView = require '../components/related_navigation/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
+setupArtworkRails = require './setup_artwork_rails.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
 actionsTemplate = -> require('../templates/_actions.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
@@ -39,6 +41,7 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-buy-button': 'buy'
 
   initialize: ({ @artwork }) ->
+    @showRails = splitTest('merchandized_rails').outcome()
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
@@ -47,7 +50,8 @@ module.exports = class ArtworkView extends Backbone.View
     @setupRelatedArticles()
     @setupArtistArtworks()
     @setupFollowButtons()
-    @setupBelowTheFold()
+    @setupBelowTheFold() unless @showRails
+    setupArtworkRails(@artwork, @artist) if @showRails
     @setupMainSaveButton()
     @setupVideoView()
     @setupAnnyang()
@@ -73,7 +77,7 @@ module.exports = class ArtworkView extends Backbone.View
     $.when.apply(null, relatedContentFetches).done =>
       relatedCollections = _.values _.pick(@artwork.related(), ['sales', 'features', 'fairs', 'shows'])
       isAnythingRelated = _.any relatedCollections, (xs) -> xs.length
-      unless isAnythingRelated
+      unless isAnythingRelated or @showRails
         @belowTheFoldView.setupLayeredSearch()
 
     relatedNavigationView = new RelatedNavigationView model: @artwork
@@ -91,14 +95,13 @@ module.exports = class ArtworkView extends Backbone.View
     @setupEmbeddedInquiryForm()
 
   handleFairs: (fairs) ->
-    return unless fairs.length
-
+    return unless fairs.length and not @showRails
     fair = fairs.first()
 
     @belowTheFoldView.setupFair fair
 
   handleSales: (sales) ->
-    return unless sales.length
+    return unless sales.length and not @showRails
 
     unless sales.hasAuctions()
       @setupZigZag()
@@ -116,7 +119,7 @@ module.exports = class ArtworkView extends Backbone.View
       @setupAuction @sale
 
   handleShows: (shows) ->
-    return unless shows.length
+    return unless shows.length and not @showRails
 
     @$('#artist-artworks-section').remove()
     new RelatedShowView
@@ -184,7 +187,7 @@ module.exports = class ArtworkView extends Backbone.View
     # Ensure the current artwork is not in the collection
     @artist.related().artworks.remove @artwork
 
-    return unless @artist.related().artworks.length
+    return unless @artist.related().artworks.length and not @showRails
     @$('#artist-artworks-section').addClass('is-fade-in').show()
 
     new ArtworkColumnsView
