@@ -94,7 +94,7 @@ module.exports = (model, artist) ->
 
           view.carouselPromise
 
-        Q.all([carouselPromises]).then ->
+        Q.all(carouselPromises).then ->
           _.delay =>
             $('#artwork-rails').attr 'data-state', 'fade-in'
           , 200
