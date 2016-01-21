@@ -137,11 +137,6 @@ module.exports = class ArtworkRails
             }
             related{
               __typename
-              ... on RelatedFair {
-                id
-                name
-                _id
-              }
               ... on RelatedSale {
                 id
                 name
