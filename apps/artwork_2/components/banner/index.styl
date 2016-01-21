@@ -1,15 +1,28 @@
+artwork-banner = {
+  height: 66px
+}
+
 .artwork-banner
+  height: artwork-banner.height
   display flex
+  flex-direction row
   justify-content space-between
   align-items center
   block-margins(10px)
-  padding 15px
   text-align left
   border-bottom 1px solid gray-lighter-color
+
+  &__logo
+    margin-right 10px
+    padding-right @margin-right
+    border-right 1px solid gray-lighter-color
 
   &__name
     flex 1
     garamond-size('s-headline')
+    > a
+      display block
+      text-decoration none
 
   &__jump
     //

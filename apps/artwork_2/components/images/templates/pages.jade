@@ -1,0 +1,7 @@
+.artwork-images__pages
+  for image in artwork.images.reverse()
+    .artwork-images__pages__page(
+      class='js-artwork-images__pages__page'
+      data-id= image.id
+      data-state=(i === (artwork.images.length - 1) ? 'active' : 'inactive')
+    ) •

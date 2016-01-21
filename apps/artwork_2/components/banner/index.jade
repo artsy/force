@@ -1,11 +1,23 @@
-.artwork-banner
-  h1.artwork-banner__name
-    = artwork.banner.name
+if artwork.banner
+  .artwork-banner
+    if artwork.banner.profile && artwork.banner.profile.icon
+      - var img = artwork.banner.profile.icon.img
+      .artwork-banner__logo
+        a( href= artwork.banner.href )
+          img(
+            src= img.url
+            width= img.width
+            height= img.height
+          )
 
-  .artwork-banner__jump
-    a.avant-garde-button-white( href= artwork.banner.href )
-      case artwork.banner.__typename
-        when 'RelatedFair'
-          | Explore Fair
-        when 'RelatedSale'
-          | Explore Auction
+    h1.artwork-banner__name
+      a( href= artwork.banner.href )
+        = artwork.banner.name
+
+    .artwork-banner__jump
+      a.avant-garde-button-white.is-small( href= artwork.banner.href )
+        case artwork.banner.__typename
+          when 'RelatedFair'
+            | Explore Fair
+          when 'RelatedSale'
+            | Explore Auction

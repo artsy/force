@@ -1,0 +1,11 @@
+.artwork-actions
+  a.artwork-action.artwork-action--save.black-tooltip( data-message='Favorite' )
+    i.icon-heart
+
+  if artwork.is_shareable
+    a.artwork-action.artwork-action--share.black-tooltip( data-message='Share' )
+      i.icon-share
+
+  if artwork.is_hangable
+    a.artwork-action.artwork-action--view-in-room.black-tooltip( data-message='View in Room' )
+      i.icon-frame

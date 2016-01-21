@@ -9,5 +9,5 @@ module.exports = (options = {}) ->
       .query query: options.query, variables: JSON.stringify(options.variables)
       .end (err, response) ->
         return reject err if err?
-        return reject response.body.errors if response.body.errors?
+        return reject JSON.stringify(response.body.errors) if response.body.errors?
         resolve response.body.data

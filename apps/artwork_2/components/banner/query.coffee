@@ -10,6 +10,15 @@ module.exports = """
       ... on RelatedFair {
         name
         href
+        profile {
+          icon {
+            img: resized(width: 80, height: 45, version: "square140") {
+              width
+              height
+              url
+            }
+          }
+        }
       }
     }
   }
