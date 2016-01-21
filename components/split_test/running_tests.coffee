@@ -36,3 +36,4 @@ module.exports =
     outcomes:
       true: 0.5
       false: 0.5
+    dimension: 'dimension8'

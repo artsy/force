@@ -11,7 +11,7 @@ module.exports = class ArtworkRailView extends Backbone.View
     'click .js-mgr-next': 'next'
     'click .js-mgr-prev': 'prev'
 
-  initialize: ({ @title, @viewAllUrl })->
+  initialize: ({ @title, @viewAllUrl, @railId })->
     @collection.on 'sync', @render, @
 
   next: ->
@@ -26,6 +26,7 @@ module.exports = class ArtworkRailView extends Backbone.View
       title: @title
       viewAllUrl: @viewAllUrl
       imageHeight: 250
+      railId: @railId
 
     @postRender()
 

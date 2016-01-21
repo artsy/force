@@ -61,15 +61,20 @@ module.exports = (model, artist) ->
           firstRail = _.first(_.keys(rails))
           artworks = new Artworks rails[firstRail]
           { title } = railwayMap(artwork, ' For Sale')[firstRail]
+
           view = new ArtworkRailView
             collection: artworks
             title: options[firstRail].title
             viewAllUrl: options[firstRail].url
+            railId: firstRail
 
           $('#artwork-for-sale-rail').append view.render().$el
+
+          # updates title to "for sale"
           view.$('.arv-header h1').html title
 
           Q.resolve(view.carouselPromise).then ->
+            # its better to wait a little bit here to let the carousel render
             _.delay =>
               $('#artwork-for-sale-rail').attr 'data-state', 'fade-in'
             , 200
@@ -83,6 +88,7 @@ module.exports = (model, artist) ->
             collection: artworks
             title: options[key].title
             viewAllUrl: options[key].url
+            railId: key
 
           $('#artwork-rails').append view.render().$el
 
