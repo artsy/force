@@ -99,7 +99,7 @@ ViewHelpers = require './helpers/view_helpers.coffee'
           cover_image {
             meta_image_url: url(version: "large")
           }
-          install_shots: images {
+          install_shots: images(default: false) {
             carousel_dimension: resized(height: 300, version: "large") {
               width
             }
