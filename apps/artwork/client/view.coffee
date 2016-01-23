@@ -41,7 +41,7 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-buy-button': 'buy'
 
   initialize: ({ @artwork }) ->
-    @showRails = if splitTest('merchandized_rails').outcome() is 'true' then true else false
+    @showRails = if splitTest('merchandized_rails').outcome() is 'true'
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
