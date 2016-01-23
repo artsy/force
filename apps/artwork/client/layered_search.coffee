@@ -5,8 +5,11 @@ Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
 
 template = -> require('../templates/layered_search.jade') arguments...
+newTemplate = -> require('../templates/layered_search_v2.jade') arguments...
 
 module.exports.Layer = class Layer extends Backbone.Model
   _.extend @prototype, Markdown
@@ -63,13 +66,18 @@ module.exports.Layers = class Layers extends Backbone.Collection
     @sortMap model.get('type'), model.id
 
 module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
-  template: template
+  template: ->
+    if @relatedV2
+      newTemplate arguments...
+    else
+      template arguments...
 
   events:
     'click .layered-search-layer-button': 'selectLayer'
 
   initialize: (options = {}) ->
     { @artwork, @fair } = options
+    @relatedV2 = splitTest('merchandized_rails').outcome()
     @setupLayers()
 
   setupLayers: ->
@@ -122,18 +130,26 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
         'data-type': layer.get 'type'
         'data-state': 'active'
 
-    # Ideally we should be removing this view before re-rendering
-    # which would require a small refactor to the ArtworkColumns component
-    @artworkColumnsView = new ArtworkColumnsView
-      el: @$layeredSearchResults
-      collection: layer.artworks
-      numberOfColumns: 4
-      gutterWidth: 40
-      maxArtworkHeight: 400
-      isOrdered: false
-      seeMore: false
-      allowDuplicates: true
-      artworkSize: 'tall'
+
+    if @relatedV2
+      fillwidthView = new FillwidthView
+        doneFetching: true
+        collection: layer.artworks
+        el: @$layeredSearchResults
+      fillwidthView.render()
+    else
+      # Ideally we should be removing this view before re-rendering
+      # which would require a small refactor to the ArtworkColumns component
+      @artworkColumnsView = new ArtworkColumnsView
+        el: @$layeredSearchResults
+        collection: layer.artworks
+        numberOfColumns: 4
+        gutterWidth: 40
+        maxArtworkHeight: 400
+        isOrdered: false
+        seeMore: false
+        allowDuplicates: true
+        artworkSize: 'tall'
 
   postRender: ->
     @$layeredSearchResults = @$('#layered-search-results-container')
@@ -145,6 +161,6 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     # if there are no layers then remove the view
     return @remove() unless @layers.length
 
-    @$el.html template(layers: @layers)
+    @$el.html @template(layers: @layers)
     @postRender()
     this
