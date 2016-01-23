@@ -32,6 +32,10 @@
       "font-size": "15px",
       "line-height": 1.25
     },
+    "m-caption": {
+      "font-size": "13px",
+      "line-height": 1.5
+    },
     "s-caption": {
       "font-size": "11px",
       "line-height": 1.5

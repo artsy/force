@@ -5,28 +5,31 @@
 @require '../components/actions/index'
 @require '../components/metadata/index'
 
+artwork-page = {
+  gutter: 20px,
+  metadata: {
+    width: 230px
+  }
+}
+
 .artwork-page
   padding 15px 0
 
 .artwork
-  display table
+  clearfix()
   position relative
-  width 100%
-  height auto
-  table-layout fixed
-  z-index 1
 
   &__overview
   &__metadata
-    display table-cell
-    vertical-align top
+    float left
 
   &__metadata
-    width 229px
-    padding 0 20px
+    width: artwork-page.metadata.width
 
   &__overview
+    width calc('100% - %s' % (artwork-page.metadata.width + artwork-page.gutter))
     text-align center
+    margin-right: artwork-page.gutter
     border-bottom 1px solid gray-lighter-color
 
 .artwork-fold

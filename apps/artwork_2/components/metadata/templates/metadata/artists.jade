@@ -6,4 +6,7 @@ if artwork.artists.length
       a.entity-follow.artist-follow( data-id= artist.id )
 
 else if artwork.cultural_maker
-  //- TODO
+  .artwork-metadata__artist
+    .artwork-detail-artist
+      span.entity-link
+        = artwork.cultural_maker
