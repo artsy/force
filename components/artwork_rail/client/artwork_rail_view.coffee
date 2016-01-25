@@ -28,7 +28,7 @@ module.exports = class ArtworkRailView extends Backbone.View
 
   contactSeller: (e) =>
     e.preventDefault()
-    inquiry = new ArtworkInquiry
+    inquiry = new ArtworkInquiry notification_delay: @delayBy
     artwork = @collection.get $(e.currentTarget).data 'id'
 
     if artwork
