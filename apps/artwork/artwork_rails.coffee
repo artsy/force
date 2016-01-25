@@ -13,7 +13,7 @@ PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
 module.exports = class ArtworkRails
-  minCount: 7
+  minCount: 1
   size: 10
 
   constructor: ({ @id }) ->
