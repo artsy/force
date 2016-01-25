@@ -183,7 +183,7 @@ describe 'ArtworkRails', ->
       @rails.fetch().then (response) ->
         response.artwork._id.should.eql '54c2f01972616916df110900'
         _.keys(response.rails).length.should.eql 3
-        _.keys(response.rails)[1].should.eql 'current_auction_artworks'
+        _.keys(response.rails)[0].should.eql 'current_auction_artworks'
         _.keys(response.rails)[1].should.eql 'artist_artworks'
         done()
       .catch done
