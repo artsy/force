@@ -77,7 +77,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
 
   initialize: (options = {}) ->
     { @artwork, @fair } = options
-    @relatedV2 = splitTest('merchandized_rails').outcome()
+    @relatedV2 = splitTest('merchandized_rails').outcome() is 'true'
     @setupLayers()
 
   setupLayers: ->
