@@ -37,3 +37,14 @@ module.exports = class ArtworkRailView extends Backbone.View
       imagesLoaded: true
     , (carousel) =>
       @carousel = carousel
+
+      @cellWidth = @$('.js-mgr-cell')
+        .map((i, e) -> $(e).outerWidth(true))
+        .get()
+        .reduce( (prev, curr) -> prev + curr )
+
+      # if there are no overflowing elements
+      console.log "@cellWidth", @cellWidth
+      console.log "@$('.js-my-carousel').width()", @$('.js-my-carousel').innerWidth()
+      unless @cellWidth > @$('.js-my-carousel').width()
+        @$('.arv-carousel-nav').addClass 'is-hidden'
