@@ -42,7 +42,8 @@ module.exports =
     displayModel = model.get('display_model') or 'displayModelUnknown'
     analyticsHooks.trigger 'followable:followed',
       message: @analyticsFollowMessage
-      label: modelNameAndIdToLabel(displayModel, model.get('id'))
+      modelName: displayModel
+      id: @model.get('id')
 
   unfollow: (e) ->
     id = $(e.currentTarget).data 'id'
@@ -51,5 +52,6 @@ module.exports =
 
     displayModel = model.get('display_model') or 'displayModelUnknown'
     analyticsHooks.trigger 'followable:followed',
-      message: @analyticsFollowMessage
-      label: modelNameAndIdToLabel(displayModel, model.get('id'))
+      message: @analyticsUnfollowMessage
+      modelName: displayModel
+      id: @model.get('id')

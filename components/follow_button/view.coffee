@@ -30,7 +30,7 @@ module.exports = class FollowButton extends Backbone.View
     @change()
 
   defaultAnalyticsMessage: (action) ->
-    "#{action} #{@modelName} from #{window?.location.pathname}"
+    "#{action} #{@modelName}"
 
   change: ->
     state = if @following.isFollowing(@model.id) then 'following' else 'follow'
@@ -51,8 +51,9 @@ module.exports = class FollowButton extends Backbone.View
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
       analyticsHooks.trigger 'followable:unfollowed',
-        label: modelNameAndIdToLabel(@modelName, @model.id)
         message: @analyticsUnfollowMessage
+        modelName: @modelName
+        id: @model.id
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
       # Delay label change
@@ -60,7 +61,8 @@ module.exports = class FollowButton extends Backbone.View
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
       analyticsHooks.trigger 'followable:followed',
-        label: modelNameAndIdToLabel(@modelName, @model.id)
-        message: @analyticsUnfollowMessage
+        message: @analyticsFollowMessage
+        modelName: @modelName
+        id: @model.id
 
     false

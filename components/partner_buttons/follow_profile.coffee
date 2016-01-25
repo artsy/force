@@ -35,12 +35,14 @@ module.exports = class FollowProfileButton extends Backbone.View
       @collection.unfollow @model.get('id')
       analyticsHooks.trigger 'followable:unfollowed',
         message: @analyticsUnfollowMessage,
-        label: modelNameAndIdToLabel('profile', @model.get('id'))
+        modelName: 'profile'
+        id: @model.get('id')
     else
       @collection.follow @model.get('id')
       analyticsHooks.trigger 'followable:followed',
         message: @analyticsFollowMessage,
-        label: modelNameAndIdToLabel('profile', @model.get('id'))
+        modelName: 'profile'
+        id: @model.get('id')
 
       # Delay label change
       @$el.addClass 'is-clicked'
