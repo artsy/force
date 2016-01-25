@@ -49,6 +49,7 @@ module.exports =
   DELTA_HOST: 'delta.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   DISABLE_IMAGE_PROXY: false
+  IMAGE_PROXY: 'EMBEDLY'
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   ENABLE_AB_TEST: true
   MAX_SOCKETS: -1
@@ -57,7 +58,6 @@ module.exports =
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_ACCOUNT_KEY: 'admin'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
-  DISABLE_GEMINI_PROXY: false
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
   SENTRY_DSN: null

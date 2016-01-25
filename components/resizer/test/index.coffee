@@ -1,63 +1,101 @@
+{ extend } = require 'underscore'
 sinon = require 'sinon'
-Backbone = require 'backbone'
 rewire = require 'rewire'
-{ fill, crop, resize, resizeWithGemini } = resizer = rewire '../index'
 
-describe 'using the embedly proxy', ->
+dispatch = rewire '../services/index'
+embedly = rewire '../services/embedly'
+embedly.__set__ 'resizer', dispatch
+gemini = rewire '../services/gemini'
+gemini.__set__ 'resizer', dispatch
+
+resizer = rewire '../index'
+resizer.__set__ 'SERVICES', EMBEDLY: embedly, GEMINI: gemini
+
+describe 'resizer', ->
   before ->
-    resizer.__set__ 'EMBEDLY_KEY', 'xxx'
+    @src = 'https://d32dm0rphc51dk.cloudfront.net/RhCPuRWITO6WFW2Zu_u3EQ/large.jpg'
 
-  describe '#crop', ->
-    it 'returns the appropriate URL', ->
-      crop('http://foobar.jpg', width: 32, height: 32).
-        should.equal 'https://i.embed.ly/1/display/crop?width=32&height=32&quality=95&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+  describe 'using the embedly proxy', ->
+    before ->
+      embedly.__set__ 'EMBEDLY_KEY', 'xxx'
 
-    it 'supports options', ->
-      crop('http://foobar.jpg', width: 300, height: 200, quality: 50).
-        should.equal 'https://i.embed.ly/1/display/crop?width=300&height=200&quality=50&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+      @config = resizer.__get__ 'config'
+      resizer.__set__ 'config', extend {}, @config, proxy: 'EMBEDLY'
 
-  describe '#resize', ->
-    it 'returns the appropriate URL', ->
-      resize('http://foobar.jpg', width: 32, height: 32).
-        should.equal 'https://i.embed.ly/1/display/resize?width=32&height=32&quality=95&grow=false&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+    after ->
+      resizer.__set__ 'config', @config
 
-    it 'supports options', ->
-      resize('http://foobar.jpg', width: 300, height: 200, quality: 50, grow: true).
-        should.equal 'https://i.embed.ly/1/display/resize?width=300&height=200&quality=50&grow=true&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+    describe '#resize', ->
+      it 'returns the appropriate URL', ->
+        resizer.resize @src, width: 32, height: 32
+          .should.equal 'https://i.embed.ly/1/display/resize?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95&key=xxx'
 
-  describe '#fill', ->
-    it 'returns the appropriate URL', ->
-      fill('http://foobar.jpg', width: 32, height: 32).
-        should.equal 'https://i.embed.ly/1/display/fill?width=32&height=32&quality=95&color=fff&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+      it 'supports options', ->
+        resizer.resize @src, width: 300, height: 200, quality: 50
+          .should.equal 'https://i.embed.ly/1/display/resize?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=50&key=xxx'
 
-    it 'supports options', ->
-      fill('http://foobar.jpg', width: 300, height: 200, quality: 50, color: 'ff00cc').
-        should.equal 'https://i.embed.ly/1/display/fill?width=300&height=200&quality=50&color=ff00cc&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+    describe '#crop', ->
+      it 'returns the appropriate URL', ->
+        resizer.crop @src, width: 32, height: 32
+          .should.equal 'https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95&key=xxx'
 
-  describe 'when disabled', ->
-    beforeEach ->
-      resizer.__set__ 'DISABLE_IMAGE_PROXY', 'true'
+      it 'supports options', ->
+        resizer.crop @src, width: 300, height: 200, quality: 50
+          .should.equal 'https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=50&key=xxx'
 
-    it 'returns the non-proxied URL', ->
-      resize('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
-      crop('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
-      fill('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
+    describe '#fill', ->
+      it 'returns the appropriate URL', ->
+        resizer.fill @src, width: 32, height: 32
+          .should.equal 'https://i.embed.ly/1/display/fill?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&color=fff&quality=95&key=xxx'
 
-describe 'using the gemini proxy', ->
-  before ->
-    resizer.__set__ 'GEMINI_CLOUDFRONT_URL', 'https://cat.com'
+      it 'supports options', ->
+        resizer.fill @src, width: 300, height: 200, quality: 50, color: 'ff00cc'
+          .should.equal 'https://i.embed.ly/1/display/fill?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&color=ff00cc&quality=50&key=xxx'
 
-  describe '#resizeWithGemini', ->
-    it 'returns the appropriate URL', ->
-      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
-        should.equal 'https://cat.com/?resize_to=height&height=32&quality=95&src=http%3A%2F%2Ffoobar.jpg'
+    describe 'when disabled', ->
+      beforeEach ->
+        dispatch.__set__ 'enabled', false
 
-  describe 'when disabled', ->
-    beforeEach ->
-      resizer.__set__ 'DISABLE_GEMINI_PROXY', true
-      resizer.__set__ 'EMBEDLY_KEY', 'xxx'
-      resizer.__set__ 'DISABLE_IMAGE_PROXY', false
+      afterEach ->
+        dispatch.__set__ 'enabled', true
 
-    it 'returns the embedly URL', ->
-      resizeWithGemini('http://foobar.jpg', resize_to: 'height', height: 32).
-        should.equal 'https://i.embed.ly/1/display/resize?height=32&quality=95&grow=false&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+      it 'returns the non-proxied URL', ->
+        resizer.resize @src, width: 32, height: 32
+          .should.equal @src
+        resizer.crop @src, width: 32, height: 32
+          .should.equal @src
+        resizer.fill @src, width: 32, height: 32
+          .should.equal @src
+
+  describe 'using the gemini proxy', ->
+    before ->
+      gemini.endpoint = 'https://d7hftxdivxxvm.cloudfront.net'
+
+      @config = resizer.__get__ 'config'
+      resizer.__set__ 'config', extend {}, @config, proxy: 'GEMINI'
+
+    after ->
+      resizer.__set__ 'config', @config
+
+    describe '#resize', ->
+      it 'returns the appropriate URL when no width is specified', ->
+        resizer.resize @src, height: 300
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&height=300&quality=95'
+
+      it 'returns the appropriate URL when no height is specified', ->
+        resizer.resize @src, width: 300
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&quality=95'
+
+      it 'returns the appropriate URL when both a height and width are specified', ->
+        resizer.resize @src, width: 300, height: 200
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=95'
+
+    describe '#crop', ->
+      it 'returns the appropriate URL', ->
+        resizer.crop @src, width: 32, height: 32
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95'
+
+    describe '#fill', ->
+      it 'is not really supported and falls back to crop', ->
+        resizer.fill @src, width: 32, height: 32
+          .should.equal 'https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=32&height=32&quality=95'
