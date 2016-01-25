@@ -49,6 +49,7 @@ module.exports =
   DELTA_HOST: 'delta.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   DISABLE_IMAGE_PROXY: false
+  IMAGE_PROXY: 'EMBEDLY'
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   ENABLE_AB_TEST: true
   MAX_SOCKETS: -1
