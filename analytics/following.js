@@ -5,7 +5,7 @@
   }
 
   analyticsHooks.on('followable:unfollowed followable:followed', function(options) {
-    analytics.track(options.message, { id: options.id, modelName: option.modelName } );
+    analytics.track(options.message, { id: options.id, modelName: options.modelName } );
   });
 
   analyticsHooks.on('follow:sign-up', function(options) {
