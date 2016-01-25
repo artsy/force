@@ -70,10 +70,8 @@ module.exports = class ArtworkRails
           success: (collection, response, options) =>
             collection.remove @artwork
             artworks = Artworks.fromSale collection
-            if @artwork.related.auction_state is 'closed'
+            if @artwork.related.auction_state is 'open'
               @assignRail 'closed_auction_artworks', artworks.toJSON()
-            else
-              @assignRail 'current_auction_artworks', artworks.toJSON()
             resolve()
       else
         resolve()
