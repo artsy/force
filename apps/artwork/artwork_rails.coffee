@@ -46,11 +46,11 @@ module.exports = class ArtworkRails
           @excludedIds.push @artwork._id
           @fetchAuctionArtworks()
         .then =>
-          @fetchShowArtworks()
-        .then =>
           @fetchSimilarArtworks()
         .then =>
           @fetchArtistArtworks()
+        .then =>
+          @fetchShowArtworks()
         .then =>
           @fetchPartnerArtworks()
         .then =>
