@@ -12,19 +12,19 @@ railwayMap = (artwork, forSaleModifier = '') ->
     title: "Similar#{forSaleModifier} Artworks by #{artwork.artist?.name}"
   partner_artworks:
     url: "/#{artwork.partner?.default_profile_id}/works"
-    title: "More#{forSaleModifier} Works from #{artwork.partner?.name}"
+    title: "Other#{forSaleModifier} Works from #{artwork.partner?.name}"
   artist_artworks:
     url: "/artist/#{artwork.artist.id}/works"
-    title: "More#{forSaleModifier} Works by #{artwork.artist?.name}"
+    title: "Other#{forSaleModifier} Works by #{artwork.artist?.name}"
   show_artworks:
     url: "/show/#{artwork.shows[0]?.id}"
-    title: "More#{forSaleModifier} Works from #{artwork.shows[0]?.name}"
+    title: "Other#{forSaleModifier} Works from #{artwork.shows[0]?.name}"
   current_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "More#{forSaleModifier} Works from #{artwork.related?.name}"
+    title: "Other#{forSaleModifier} Works from #{artwork.related?.name}"
   closed_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "More#{forSaleModifier} Works from #{artwork.related?.name}"
+    title: "Other#{forSaleModifier} Works from #{artwork.related?.name}"
 
 module.exports = (model, artist) ->
   new LayeredSearchView
