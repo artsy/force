@@ -1,3 +1,6 @@
+@require '../../../components/stylus_lib'
+@require '../../../components/chevron_list'
+
 .layered-search-layers
   margin: 0px 0px 20px
   overflow ellipsis
@@ -55,5 +58,10 @@
   padding-top 20px
   text-align right
 
-.layered-search-layer-gene-button--v2
-  chevron()
+a#layered-search-layer-gene-button.layered-search-layer-gene-button--v2
+  display block
+  padding-right 30px
+  chevron-item()
+
+  &:after
+    color black
