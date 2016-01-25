@@ -43,7 +43,7 @@ module.exports =
     analyticsHooks.trigger 'followable:followed',
       message: @analyticsFollowMessage
       modelName: displayModel
-      id: @model.get('id')
+      id: model.get('id')
 
   unfollow: (e) ->
     id = $(e.currentTarget).data 'id'
@@ -54,4 +54,4 @@ module.exports =
     analyticsHooks.trigger 'followable:followed',
       message: @analyticsUnfollowMessage
       modelName: displayModel
-      id: @model.get('id')
+      id: model.get('id')
