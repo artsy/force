@@ -67,6 +67,8 @@ module.exports =
       else
         maxDimension = @get('original_height')
       if height > maxDimension then maxDimension else Math.floor(height)
+    else
+      height
 
   maxHeightForWidth: (width, maxDimension) ->
     aspectRatio = @aspectRatio()

@@ -25,7 +25,7 @@ module.exports = class ArtworkRailView extends Backbone.View
       artworks: @collection.models
       title: @title
       viewAllUrl: @viewAllUrl
-      imageHeight: 250
+      imageHeight: 220
       railId: @railId
 
     @postRender()

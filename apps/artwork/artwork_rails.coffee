@@ -13,7 +13,7 @@ PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
 module.exports = class ArtworkRails
-  minCount: 7
+  minCount: 1
   size: 10
 
   constructor: ({ @id }) ->
@@ -24,7 +24,7 @@ module.exports = class ArtworkRails
   prepareParams: (options) ->
     defaults =
       exclude_artwork_ids: @excludedIds
-      for_sale: true
+      sort: "-merchandisability"
       size: @size
 
     data = _.defaults options, defaults
@@ -46,11 +46,11 @@ module.exports = class ArtworkRails
           @excludedIds.push @artwork._id
           @fetchAuctionArtworks()
         .then =>
-          @fetchShowArtworks()
-        .then =>
           @fetchSimilarArtworks()
         .then =>
           @fetchArtistArtworks()
+        .then =>
+          @fetchShowArtworks()
         .then =>
           @fetchPartnerArtworks()
         .then =>
@@ -70,9 +70,7 @@ module.exports = class ArtworkRails
           success: (collection, response, options) =>
             collection.remove @artwork
             artworks = Artworks.fromSale collection
-            if @artwork.related.auction_state is 'closed'
-              @assignRail 'closed_auction_artworks', artworks.toJSON()
-            else
+            if @artwork.related.auction_state is 'open'
               @assignRail 'current_auction_artworks', artworks.toJSON()
             resolve()
       else

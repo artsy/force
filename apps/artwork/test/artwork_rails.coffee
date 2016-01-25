@@ -55,7 +55,7 @@ describe 'ArtworkRails', ->
       sinon.stub Backbone, 'sync'
         .yieldsTo 'success', hits: @tenArtworks
         .onCall 0
-        .yieldsTo 'success', @tenArtworks
+        .yieldsTo 'success', hits: @tenArtworks
 
     after ->
       Backbone.sync.restore()
@@ -64,9 +64,9 @@ describe 'ArtworkRails', ->
       @rails.fetch().then ->
         _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
         .should.eql [
+          'undefined/api/v1/filter/artworks'
+          'undefined/api/v1/filter/artworks'
           'undefined/api/v1/partner/museum-of-modern-art/show/museum-of-modern-art-joaquin-torres-garcia-the-arcadian-modern/artworks?published=true',
-          'undefined/api/v1/filter/artworks'
-          'undefined/api/v1/filter/artworks'
           'undefined/api/v1/filter/artworks'
         ]
         done()
@@ -76,17 +76,17 @@ describe 'ArtworkRails', ->
       @rails.fetch().then ->
         data = _.map Backbone.sync.args, (args) -> qs.parse(args[2].data)
         # similar
-        data[1].exclude_artwork_ids.length.should.eql 11
-        data[1].gene_id.should.eql 'painting'
-        data[1].size.should.eql '20'
+        data[0].exclude_artwork_ids.length.should.eql 1
+        data[0].gene_id.should.eql 'painting'
+        data[0].size.should.eql '20'
         # artist
-        data[2].artist_id.should.eql 'joaquin-torres-garcia'
-        data[2].size.should.eql '10'
-        data[2].exclude_artwork_ids.length.should.eql 21
+        data[1].artist_id.should.eql 'joaquin-torres-garcia'
+        data[1].size.should.eql '10'
+        data[1].exclude_artwork_ids.length.should.eql 11
         # show
         data[3].partner_id.should.eql 'museum-of-modern-art'
         data[3].size.should.eql '10'
-        data[3].exclude_artwork_ids.length.should.eql 31
+        data[3].exclude_artwork_ids.length.should.eql 21
         done()
       .catch done
 
@@ -94,7 +94,7 @@ describe 'ArtworkRails', ->
       @rails.fetch().then (response) ->
         response.artwork._id.should.eql '5669a995a09a67218b00009c'
         _.keys(response.rails).length.should.eql 4
-        _.keys(response.rails)[0].should.eql 'show_artworks'
+        _.keys(response.rails)[0].should.eql 'similar_artworks'
         done()
       .catch done
 
@@ -162,13 +162,19 @@ describe 'ArtworkRails', ->
       @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
 
       sinon.stub Backbone, 'sync'
-        .yieldsTo 'success', hits: @tenArtworks
         # auction fetch
         .onCall 0
         .yieldsTo 'success', @tenSaleArtworks
         # similar fetch
         .onCall 1
-        .yieldsTo 'success', []
+        .yieldsTo 'success', null
+        .onCall 2
+        .yieldsTo 'success', hits: @tenArtworks
+        .onCall 3
+        .yieldsTo 'success', hits: @tenArtworks
+        .onCall 4
+        .yieldsTo 'success', hits: @tenArtworks
+
 
     after ->
       Backbone.sync.restore()
@@ -177,6 +183,7 @@ describe 'ArtworkRails', ->
       @rails.fetch().then (response) ->
         response.artwork._id.should.eql '54c2f01972616916df110900'
         _.keys(response.rails).length.should.eql 3
+        _.keys(response.rails)[0].should.eql 'current_auction_artworks'
         _.keys(response.rails)[1].should.eql 'artist_artworks'
         done()
       .catch done
