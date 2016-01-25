@@ -24,7 +24,7 @@ module.exports = class ArtworkRails
   prepareParams: (options) ->
     defaults =
       exclude_artwork_ids: @excludedIds
-      for_sale: true
+      sort: "-merchandisability"
       size: @size
 
     data = _.defaults options, defaults
