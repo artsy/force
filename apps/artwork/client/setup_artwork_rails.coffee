@@ -60,7 +60,9 @@ module.exports = (model, artist) ->
         if model.get('sold')  or not model.get('forsale')
           firstRail = _.first(_.keys(rails))
           artworks = new Artworks rails[firstRail]
-          { title } = railwayMap(artwork, ' For Sale')[firstRail]
+          anyForSale = artworks.any (model) -> model.get('forsale')
+          modifier = if anyForSale then ' For Sale' else ''
+          { title } = railwayMap(artwork, modifier)[firstRail]
 
           view = new ArtworkRailView
             collection: artworks
