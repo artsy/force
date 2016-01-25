@@ -58,10 +58,13 @@
   padding-top 20px
   text-align right
 
-a#layered-search-layer-gene-button.layered-search-layer-gene-button--v2
-  display block
+a.layered-search-layer-gene-button--v2
   padding-right 30px
   chevron-item()
 
+  &[data-state='inactive']
+    display none
+  &:hover
+    border-bottom-color transparent
   &:after
     color black
