@@ -71,7 +71,7 @@ module.exports = class ArtworkRails
             collection.remove @artwork
             artworks = Artworks.fromSale collection
             if @artwork.related.auction_state is 'open'
-              @assignRail 'closed_auction_artworks', artworks.toJSON()
+              @assignRail 'current_auction_artworks', artworks.toJSON()
             resolve()
       else
         resolve()
