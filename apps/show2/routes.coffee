@@ -1,4 +1,5 @@
 Q = require 'bluebird-q'
+{ NODE_ENV } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 PartnerShow = require '../../models/partner_show'
 metaphysics = require '../../lib/metaphysics'
@@ -116,5 +117,5 @@ ViewHelpers = require './helpers/view_helpers.coffee'
     res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
     data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
     res.render 'index', data
-  .catch ->
-    next()
+  .catch (err) ->
+    next(err if NODE_ENV is 'development')
