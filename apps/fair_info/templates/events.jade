@@ -27,7 +27,7 @@ block body
                     if event.get('image_url')
                       img.fair-info-event-item-details__image( src=event.get('image_url') )
                     if event.get('caption')
-                      .fair-info-event-item-details__image-caption This is an image caption
+                      .fair-info-event-item-details__image-caption= event.get('caption')
                     h2.fair-info-event-item-details__title= event.get('name')
                     .fair-info-event-item-details__address= event.get('venue')
                       if event.get('venue_address')
