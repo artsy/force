@@ -5,6 +5,7 @@ ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 FillwidthView = require '../../fillwidth_row/view.coffee'
 initCarousel = require '../../merry_go_round/index.coffee'
 openInquiryQuestionnaireFor = require '../../inquiry_questionnaire/index.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/artwork_rail.jade') arguments...
 
 module.exports = class ArtworkRailView extends Backbone.View
@@ -28,6 +29,7 @@ module.exports = class ArtworkRailView extends Backbone.View
 
   contactSeller: (e) =>
     e.preventDefault()
+    analyticsHooks.trigger 'rail:clicked-contact', e
     inquiry = new ArtworkInquiry notification_delay: @delayBy
     artwork = @collection.get $(e.currentTarget).data 'id'
 
