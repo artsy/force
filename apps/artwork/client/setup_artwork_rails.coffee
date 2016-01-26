@@ -6,25 +6,28 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/artwork_rail_view.coffee'
 LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
 
-railwayMap = (artwork, forSaleModifier = '') ->
+railwayMap = (artwork) ->
+  for_sale_artworks:
+    url: "/artist/#{artwork.artist?.id}?for_sale=true"
+    title: "For Sale Artworks by #{artwork.artist?.name}"
   similar_artworks:
     url: "/artist/#{artwork.artist?.id}?medium=#{slugify(artwork.category)}"
-    title: "Similar#{forSaleModifier} Artworks by #{artwork.artist?.name}"
+    title: "Similar Artworks by #{artwork.artist?.name}"
   partner_artworks:
     url: "/#{artwork.partner?.default_profile_id}/works"
-    title: "Other#{forSaleModifier} Works from #{artwork.partner?.name}"
+    title: "Other Works from #{artwork.partner?.name}"
   artist_artworks:
     url: "/artist/#{artwork.artist.id}/works"
-    title: "Other#{forSaleModifier} Works by #{artwork.artist?.name}"
+    title: "Other Works by #{artwork.artist?.name}"
   show_artworks:
     url: "/show/#{artwork.shows[0]?.id}"
-    title: "Other#{forSaleModifier} Works from #{artwork.shows[0]?.name}"
+    title: "Other Works from #{artwork.shows[0]?.name}"
   current_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "Other#{forSaleModifier} Works from #{artwork.related?.name}"
+    title: "Other Works from #{artwork.related?.name}"
   closed_auction_artworks:
     url: "/auction/#{artwork.related?.id}"
-    title: "Other#{forSaleModifier} Works from #{artwork.related?.name}"
+    title: "Other Works from #{artwork.related?.name}"
 
 module.exports = (model, artist) ->
   new LayeredSearchView
@@ -58,22 +61,14 @@ module.exports = (model, artist) ->
         # pop the first rail above the artwork related information
         # and continue the rest below
         if model.get('sold')  or not model.get('forsale')
-          firstRail = _.first(_.keys(rails))
-          artworks = new Artworks rails[firstRail]
-          anyForSale = artworks.any (model) -> model.get('forsale')
-          modifier = if anyForSale then ' For Sale' else ''
-          { title } = railwayMap(artwork, modifier)[firstRail]
-
+          artworks = new Artworks rails['for_sale_artworks']
           view = new ArtworkRailView
             collection: artworks
-            title: options[firstRail].title
-            viewAllUrl: options[firstRail].url
-            railId: firstRail
+            title: options['for_sale_artworks'].title
+            viewAllUrl: options['for_sale_artworks'].url
+            railId: 'for_sale_artworks'
 
           $('#artwork-for-sale-rail').append view.render().$el
-
-          # updates title to "for sale"
-          view.$('.arv-header h1').html title
 
           Q.resolve(view.carouselPromise).then ->
             # its better to wait a little bit here to let the carousel render
@@ -81,7 +76,7 @@ module.exports = (model, artist) ->
               $('#artwork-for-sale-rail').attr 'data-state', 'fade-in'
             , 200
 
-          rails = _.omit(rails, firstRail)
+          rails = _.omit(rails, 'for_sale_artworks')
 
         # wait for all carousels to initialize before fading in
         carouselPromises = _.map rails, (value, key) ->
