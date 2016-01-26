@@ -26,6 +26,12 @@ module.exports = """
         phone
       }
     }
+    auction: sale {
+      id
+      sale_artwork(artwork_id: $id) {
+        lot_number
+      }
+    }
     edition_of
     edition_sets {
       edition_of
