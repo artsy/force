@@ -44,6 +44,8 @@ module.exports = class ArtworkRails
         .then ({ @artwork }) =>
           return resolve() if @artwork.partner.type is 'Institution'
           @excludedIds.push @artwork._id
+          @maybeFetchForSaleArtworks()
+        .then =>
           @fetchAuctionArtworks()
         .then =>
           @fetchSimilarArtworks()
@@ -61,6 +63,14 @@ module.exports = class ArtworkRails
           resolve response
         .catch reject
         .done()
+
+  maybeFetchForSaleArtworks: ->
+      if @artwork.is_for_sale
+        Q.resolve()
+      else
+        @fetchFilterArtworks 'for_sale_artworks',
+          artist_id: @artwork.artist.id
+          for_sale: true
 
   fetchAuctionArtworks: ->
     Q.promise (resolve) =>
@@ -122,6 +132,7 @@ module.exports = class ArtworkRails
           artwork(id: $id){
             _id
             category
+            is_for_sale
             artist {
               id
               name

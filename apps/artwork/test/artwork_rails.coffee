@@ -189,3 +189,47 @@ describe 'ArtworkRails', ->
       .catch done
 
 
+  describe 'with an artwork that is not for sale',  ->
+    before ->
+      ArtworkRails.__set__ 'metaphysics', ->
+        Q.promise (resolve, reject) ->
+          notForSaleArtwork = _.clone artworkWithShow
+          notForSaleArtwork.artwork.is_for_sale = false
+          return resolve notForSaleArtwork
+
+      @rails = new ArtworkRails id: 'joaquin-torres-garcia-autorretrato-self-portrait'
+
+      @rails.fetchAuctionArtworks = ->
+        Q.promise (resolve, reject) ->
+          return resolve()
+
+      sinon.stub Backbone, 'sync'
+        .yieldsTo 'success', hits: @tenArtworks
+        .onCall 0
+        .yieldsTo 'success', hits: @tenArtworks
+
+    after ->
+      Backbone.sync.restore()
+
+    it 'tries to fetch for sale artworks, show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
+      @rails.fetch().then ->
+        _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
+        .should.eql [
+          'undefined/api/v1/filter/artworks'
+          'undefined/api/v1/filter/artworks'
+          'undefined/api/v1/filter/artworks'
+          'undefined/api/v1/partner/museum-of-modern-art/show/museum-of-modern-art-joaquin-torres-garcia-the-arcadian-modern/artworks?published=true',
+          'undefined/api/v1/filter/artworks'
+        ]
+        done()
+      .catch done
+
+    it 'returns artwork and all valid rails', (done) ->
+      @rails.fetch().then (response) ->
+        response.artwork._id.should.eql '5669a995a09a67218b00009c'
+        _.keys(response.rails).length.should.eql 5
+        _.keys(response.rails)[0].should.eql 'for_sale_artworks'
+        done()
+      .catch done
+
+
