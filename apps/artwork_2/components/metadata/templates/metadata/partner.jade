@@ -1,25 +1,26 @@
 - var partner = artwork.partner
 
-.artwork-metadata__partner
-  if artwork.is_for_sale
-    h3 Offered by
+unless artwork.auction
+  .artwork-metadata__partner
+    if artwork.is_for_sale
+      h3 Offered by
 
-  a( href= partner.href )
-    = [partner.name, helpers.consolidate(helpers.pluck(partner.locations, 'city'), 'locations')].join(', ')
+    a( href= partner.href )
+      = [partner.name, helpers.consolidate(helpers.pluck(partner.locations, 'city'), 'locations')].join(', ')
 
-  if artwork.is_contactable && partner.locations.length
-    .artwork-metadata__partner__phone
-      a( class='js-artwork-metadata__partner__phone' )
-        | Show phone number
-      .artwork-metadata__partner__phone__locations(
-        class='js-artwork-metadata__partner__phone__locations'
-      )
-        for location in partner.locations
-          .artwork-metadata__partner__phone__locations__location
-            if partner.locations.length > 1
-              | #{location.city}:
-              = ' '
-            = location.phone
+    if artwork.is_contactable && partner.locations.length
+      .artwork-metadata__partner__phone
+        a( class='js-artwork-metadata__partner__phone' )
+          | Show phone number
+        .artwork-metadata__partner__phone__locations(
+          class='js-artwork-metadata__partner__phone__locations'
+        )
+          for location in partner.locations
+            .artwork-metadata__partner__phone__locations__location
+              if partner.locations.length > 1
+                | #{location.city}:
+                = ' '
+              = location.phone
 
-  if artwork.is_contactable
-    //- TODO: Embedded inquiry form
+    if artwork.is_contactable
+      //- TODO: Embedded inquiry form
