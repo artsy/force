@@ -63,7 +63,9 @@ module.exports = class SearchBarView extends Backbone.View
   checkSubmission: (e) ->
     @hideSuggestions()
     return if !(e.which is 13) or @selected?
-    @trigger 'search:entered', @query
+
+    unless @isEmpty()
+      @trigger 'search:entered', encodeURIComponent(@$input.val())
 
   indicateLoading: ->
     @renderFeedback()
