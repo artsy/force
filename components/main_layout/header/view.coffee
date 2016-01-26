@@ -16,7 +16,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
-maybePopUpPolicyNotice = require './policy.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -26,7 +25,6 @@ module.exports = class HeaderView extends Backbone.View
     'click .mlh-logout': 'logout'
 
   initialize: ->
-    maybePopUpPolicyNotice() # TODO: REMOVE AFTER 01/25/15
     dealWithWelcomeBanner()
     @currentUser = CurrentUser.orNull()
     @checkForNotifications()
