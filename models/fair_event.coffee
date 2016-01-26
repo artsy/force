@@ -4,11 +4,12 @@ _s = require 'underscore.string'
 Backbone = require 'backbone'
 moment = require 'moment'
 DateHelpers = require '../components/util/date_helpers.coffee'
-{ CalendarUrls } = require 'artsy-backbone-mixins'
+{ CalendarUrls, Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class FairEvent extends Backbone.Model
 
   _.extend @prototype, CalendarUrls({address: 'venue_address', title: 'name'})
+  _.extend @prototype, Markdown
 
   urlRoot: -> "#{sd.API_URL}/api/v1/fair/#{@fairId}/fair_event"
 
