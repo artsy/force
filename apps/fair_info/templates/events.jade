@@ -24,12 +24,16 @@ block body
                         a.yahoo( href= event.yahooCalendarUrl() target= '_blank' ) Yahoo!
                         a.ical( href= event.icsCalendarUrl()) iCal
                   .fair-info-event-item-details
+                    if event.get('image_url')
+                      img.fair-info-event-item-details__image( src=event.get('image_url') )
+                    if event.get('caption')
+                      .fair-info-event-item-details__image-caption This is an image caption
                     h2.fair-info-event-item-details__title= event.get('name')
                     .fair-info-event-item-details__address= event.get('venue')
                       if event.get('venue_address')
                         a.fair-info-event-map-link.js-open-fair-events( href='#' data-id=event.id )
                           i.icon-circle-chevron
                           span Map
-                    .fair-info-event-item-details__description= event.get('extended_description')
+                    .fair-info-event-item-details__description!= event.mdToHtml('extended_description')
         else
           .fair-info-event-item There are no events.

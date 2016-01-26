@@ -20,12 +20,12 @@ block body
           if fair.get('hours')
             .fair-hours.grid-item
               h2.visitor-title Hours
-              .fair-info2-fair-hours!= fair
+              .fair-info2-fair-hours!= fair.mdToHtml('hours')
 
           if fair.get('tickets')
             .fair-tickets.grid-item
               h2.visitor-title Tickets
-              .fair-info2-ticket-info!= fair.get('tickets')
+              .fair-info2-ticket-info!= fair.mdToHtml('tickets')
 
           if fair.get('location') && (fair.get('location').coordinates != null || fair.get('location').address != '')
             .fair-directions.grid-item
