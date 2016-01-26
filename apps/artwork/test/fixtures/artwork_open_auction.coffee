@@ -2,6 +2,7 @@ module.exports = {
   "artwork": {
     "_id": "54c2f01972616916df110900",
     "category": "Print",
+    "is_for_sale": true,
     "artist": {
       "id": "ed-ruscha",
       "name": "Ed Ruscha"
