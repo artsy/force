@@ -1,5 +1,6 @@
 sinon = require 'sinon'
 rewire = require 'rewire'
+Backbone = require 'backbone'
 metaphysics = rewire '../../lib/metaphysics'
 
 describe 'metaphysics', ->
@@ -7,6 +8,7 @@ describe 'metaphysics', ->
     @__request__ = metaphysics.__get__ 'request'
 
     @request = {}
+    @request.set = sinon.stub().returns @request
     @request.get = sinon.stub().returns @request
     @request.query = sinon.stub().returns @request
     @request.end = sinon.stub().returns @request
@@ -81,3 +83,15 @@ describe 'metaphysics', ->
         '
       .catch (errs) ->
         errs.should.equal """[{"message":"some error"}]"""
+
+  describe 'user auth', ->
+    beforeEach ->
+      @user = new Backbone.Model accessToken: 'xxx'
+
+    it 'optionally accepts a req object, from which it extracts the user access token', ->
+      @request.end.yields null, ok: true, body: data: {}
+
+      metaphysics req: user: @user
+        .then =>
+          @request.set.args[0][0]
+            .should.eql 'X-ACCESS-TOKEN': 'xxx'
