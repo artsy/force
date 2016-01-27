@@ -2,6 +2,7 @@ module.exports = {
   "artwork": {
     "_id": "5669a995a09a67218b00009c",
     "category": "Painting",
+    "is_for_sale": true,
     "artist": {
       "id": "joaquin-torres-garcia",
       "name": "Joaquín Torres-García"

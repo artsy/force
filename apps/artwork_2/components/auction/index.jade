@@ -1,0 +1,95 @@
+- var auction = artwork.auction;
+
+if auction
+  if auction.is_auction_promo
+    //- TODO
+  else
+    .artwork-auction
+      if auction.sale_artwork.estimate && !auction.is_closed
+        .artwork-auction__estimate
+          | Estimate: #{auction.sale_artwork.estimate}
+
+      //- TODO:
+      //- if auction.isOpen()
+      //-   if bidderPositions && bidderPositions.length
+      //-     .artwork-bidder-position-status(
+      //-       class= bidderPositions.classes()
+      //-     )
+      //-       if (position = bidderPositions.isHighestBidder())
+      //-         | You are currently the highest bidder for this lot with a bid at #{position.currentBid()}
+      //-       else if (position = bidderPositions.isOutbid())
+      //-         | Your max bid of #{position.maxBid()} has been outbid.
+
+      .artwork-auction__bid-status
+        .artwork-auction__bid-status__bid
+          if auction.sale_artwork.bidder_positions_count === 0
+            | Starting Bid:
+          else
+            | Current Bid:
+        .artwork-auction__bid-status__amount
+          = auction.sale_artwork.current_bid
+        .artwork-auction__bid-status__count
+          | (#{helpers.pluralize('bid', auction.sale_artwork.bidder_positions_count)})
+          //- TODO: Needs reserve status
+
+      form.artwork-auction__bid-form.stacked-form(
+        method='GET'
+        action='/auction/#{auction.id}/bid/#{artwork.id}'
+      )
+        button.avant-garde-button-black
+          | Bid
+
+      if auction.is_open && auction.is_with_buyers_premium
+        .artwork-auction__buyers-premium
+          | This work has a
+          = ' '
+          a( href='#' )
+            | Buyer’s Premium
+
+      //- TODO:
+      //-   form.artwork-bid-form.js-artwork-bid-form( action= auction.bidUrl(saleArtwork) )
+      //-     if auction.isOpen() && user
+      //-       .abf-validation-error
+      //-         | Your bid needs to be at least #{saleArtwork.minBid()}
+      //-       .abf-min-next
+      //-         | Enter #{saleArtwork.minBid()} or higher
+      //-       .typed-bordered-input.is-block
+      //-         span $
+      //-         input.bordered-input( name='bid', autocomplete='off', required )
+
+      //-     if auction.isOpen() && auction.get('buyers_premium')
+      //-       p.artwork-buyers-premium-link
+      //-         | This work has a&nbsp;
+      //-         a.js-buyers-premium.fine-faux-underline( href='#' ) Buyer's Premium
+
+      //-     button.avant-garde-button-black.abf-button(
+      //-       type= 'submit'
+      //-       class= auction.bidButtonState(user, artwork).classes
+      //-       disabled= !auction.bidButtonState(user, artwork).enabled
+      //-     )
+      //-       = auction.bidButtonState(user, artwork).label
+
+      //- TODO:
+      //- if auction.isOpen() && artwork.get('acquireable') && saleArtwork.get('bidder_positions_count') < 1
+      //-   .artwork-meta-price
+      //-     .artwork-meta-price-label.is-not-sold Buy Now Price
+      //-     .artwork-meta-price-amount= artwork.priceDisplay()
+      //-   a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+      //-     | Buy Now
+
+      .artwork-auction__help
+        a.js-artwork-auction__help__modal(
+          href='/auction-info'
+          data-id='how-auctions-work-bidding'
+        ) Auction FAQs
+
+        br
+        a.js-artwork-auction__help__modal(
+          href='/conditions-of-sale'
+          data-id='how-auctions-work-conditions-of-sale'
+        ) Conditions of Sale
+
+        br
+        a(
+          href='artwork/#{auction.sale_artwork.id}/ask_specialist'
+        ) Ask a Specialist

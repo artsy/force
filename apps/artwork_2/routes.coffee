@@ -10,16 +10,26 @@ query = """
       ... images
       ... actions
       ... metadata
+      ... inquiry
+      ... auction
     }
   }
   #{require './components/banner/query'}
   #{require './components/images/query'}
   #{require './components/actions/query'}
   #{require './components/metadata/query'}
+  #{require './components/inquiry/query'}
+  #{require './components/auction/query'}
 """
 
+helpers = extend [
+  {}
+  require './components/metadata/helpers'
+  require './components/auction/helpers'
+]...
+
 @index = (req, res, next) ->
-  send = query: query, variables: id: req.params.id
+  send = query: query, variables: req.params
 
   if req.query.query?
     get = extend {}, send, variables: JSON.stringify send.variables
@@ -27,5 +37,6 @@ query = """
 
   metaphysics send
     .then (data) ->
+      extend res.locals.helpers, helpers
       res.render 'index', data
     .catch next

@@ -24,4 +24,8 @@
     analytics.track("Clicked artwork on artwork rail", { rail: railId(e) });
   });
 
+  analyticsHooks.on('rail:clicked-contact', function(e){
+    analytics.track('Clicked "Contact Gallery" from artwork rail', { rail: railId(e) });
+  });
+
 })();

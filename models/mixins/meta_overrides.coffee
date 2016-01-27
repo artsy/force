@@ -22,6 +22,18 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'fog-design-plus-art-2016':
+    title: 'FOG Art + Design 2016 | Artsy'
+    description: 'Amid a burgeoning West Coast art scene, preview this fair of 43+ dealers—Marian Goodman Gallery, David Gill Gallery, and Salon 94 among them—from the Bay Area and beyond.'
+
+  'art-stage-singapore-2016':
+    title: 'Art Stage Singapore  2016 | Artsy'
+    description: 'Explore work from Asia and beyond as 140+ regional and international galleries—Tomio Koyama Gallery, Whitestone Gallery, and amanasalto among them—gather in Singapore.'
+
+  'art-los-angeles-contemporary-2016':
+    title: 'Art Los Angeles Contemporary 2016 | Artsy'
+    description: 'Find out which works The Hole, MOT International, and Galerie Christina Lethert are bringing to the West Coast.'
+
   'design-miami-2015':
     title: 'Design Miami/ 2015 | Artsy'
     description: 'From established modernists to emerging desginers, your first look at the preeminent design fair in Miami'

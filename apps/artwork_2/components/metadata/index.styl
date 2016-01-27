@@ -5,19 +5,70 @@
   &__artist
   &__partner
   &__secondary-metadata
-    block-margins(10px)
+    block-margins(15px)
 
   &__lot-number
     avant-garde-size('body')
 
-  &__artist
-    > .entity-follow
-      display block
-      // Offset icon spacing from within 32px square
-      margin-left -8px
+  &__artist > .entity-follow
+    display block
+    // Offset icon spacing from within 32px square
+    margin-left -8px
 
   &__title
-    garamond-size('l-body')
+    garamond-size('s-body')
 
   &__secondary-metadata
     color gray-darker-color
+
+  // Collapse between margins when these two are next to one another
+  &__title + &__secondary-metadata
+    margin-top 0
+
+  &__image-rights
+    block-margins(15px)
+    garamond-size('s-caption')
+
+  &__sale-message
+    block-margins(15px)
+    padding 15px 0
+    border-top 1px solid gray-lighter-color
+    border-bottom @border-top
+
+  &__partner
+    > h3
+      margin-bottom 5px
+      avant-garde-size('s-headline')
+    > a
+      text-decoration none
+    &__phone
+      > a
+        color gray-darker-color
+        fine-faux-underline()
+      &__locations
+        display none
+
+.artwork-edition-sets
+  block-margins(15px)
+
+.artwork-edition-set
+  display table
+  width 100%
+  padding 5px 0
+  garamond-size('m-caption')
+  border-top 1px dotted gray-lighter-color
+  &:first-child
+    border-top-style solid
+
+  &__radio
+  &__details
+  &__price
+    display table-cell
+    height 100%
+    vertical-align top
+  &__radio
+    text-align center
+  &__details
+    padding 0 10px
+  &__price
+    text-align right

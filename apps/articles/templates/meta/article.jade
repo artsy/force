@@ -18,28 +18,30 @@ if article.get('keywords') && article.get('keywords').length
   meta( name="keywords", content=(article.get('keywords')).join(', ') )
   meta( property="article:tag", content=(article.get('keywords')).join(', ') )
 
-if article.get('email_metadata')
-  if article.get('email_metadata').headline
-    meta( name="sailthru.title", content=article.get('email_metadata').headline)
-  if article.get('email_metadata').author
-    meta( name="sailthru.author" content=article.get('email_metadata').author)
-  if article.get('email_metadata').credit_url
-    meta( name="sailthru.credit_url" content=article.get('email_metadata').credit_url)
-  if article.get('email_metadata').credit_line
-    meta( name="sailthru.credit_line" content=article.get('email_metadata').credit_line)
-  if article.get('email_metadata').image_url
-    - var src = article.get('email_metadata').image_url
-    meta( name="sailthru.image.full" content=crop(src, { width: 1280, height: 960 } ))
-    meta( name="sailthru.image.thumb" content=crop(src, { width: 552, height: 392 } ))
-- var keywords = ['article']
-if article.get('author') && article.get('author').name === 'Artsy Editorial'
-  - keywords = keywords.concat(['artsy-editorial'])
-if article.get('featured') === true
-  - keywords = keywords.concat(['magazine'])
-if article.get('keywords') && article.get('keywords').length
-  - keywords = keywords.concat(article.get('keywords'))
-meta( name="sailthru.tags" content=keywords.join(','))
-meta( name="sailthru.date" content=article.get('published_at'))
+//- Sailthru Metatags
+if article.get('published')
+  if article.get('email_metadata')
+    if article.get('email_metadata').headline
+      meta( name="sailthru.title", content=article.get('email_metadata').headline)
+    if article.get('email_metadata').author
+      meta( name="sailthru.author" content=article.get('email_metadata').author)
+    if article.get('email_metadata').credit_url
+      meta( name="sailthru.credit_url" content=article.get('email_metadata').credit_url)
+    if article.get('email_metadata').credit_line
+      meta( name="sailthru.credit_line" content=article.get('email_metadata').credit_line)
+    if article.get('email_metadata').image_url
+      - var src = article.get('email_metadata').image_url
+      meta( name="sailthru.image.full" content=crop(src, { width: 1200, height: 706 } ))
+      meta( name="sailthru.image.thumb" content=crop(src, { width: 900, height: 530 } ))
+  - var keywords = ['article']
+  if article.get('author') && article.get('author').name === 'Artsy Editorial'
+    - keywords = keywords.concat(['artsy-editorial'])
+  if article.get('featured') === true
+    - keywords = keywords.concat(['magazine'])
+  if article.get('keywords') && article.get('keywords').length
+    - keywords = keywords.concat(article.get('keywords'))
+  meta( name="sailthru.tags" content=keywords.join(','))
+  meta( name="sailthru.date" content=article.get('published_at'))
 
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )

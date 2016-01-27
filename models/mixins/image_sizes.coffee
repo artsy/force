@@ -67,6 +67,8 @@ module.exports =
       else
         maxDimension = @get('original_height')
       if height > maxDimension then maxDimension else Math.floor(height)
+    else
+      height
 
   maxHeightForWidth: (width, maxDimension) ->
     aspectRatio = @aspectRatio()
@@ -108,9 +110,6 @@ module.exports =
 
   resizeUrlFor: (options = {}, attr) ->
     resizer.resize @sourceUrl(attr), arguments...
-
-  resizeUrlWithGemini: (options = {}) ->
-    resizer.resizeWithGemini @imageUrlForMaxSize(), arguments...
 
   cropUrlFor: (options = {}, attr) ->
     resizer.crop @sourceUrl(attr), options

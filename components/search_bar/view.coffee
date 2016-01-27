@@ -63,7 +63,9 @@ module.exports = class SearchBarView extends Backbone.View
   checkSubmission: (e) ->
     @hideSuggestions()
     return if !(e.which is 13) or @selected?
-    @trigger 'search:entered', @$input.val()
+
+    unless @isEmpty()
+      @trigger 'search:entered', encodeURIComponent(@$input.val())
 
   indicateLoading: ->
     @renderFeedback()
@@ -137,7 +139,7 @@ module.exports = class SearchBarView extends Backbone.View
             xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
             @trigger 'search:start', xhr
           complete: (xhr) =>
-            @query = @$input.val()
+            @query = encodeURIComponent @$input.val()
             @trigger 'search:complete', xhr
             @announceQuery @query
     @hound.initialize()

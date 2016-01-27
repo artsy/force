@@ -13,7 +13,7 @@ PartnerShow = require '../../models/partner_show'
 { API_URL } = require('sharify').data
 
 module.exports = class ArtworkRails
-  minCount: 7
+  minCount: 1
   size: 10
 
   constructor: ({ @id }) ->
@@ -24,7 +24,7 @@ module.exports = class ArtworkRails
   prepareParams: (options) ->
     defaults =
       exclude_artwork_ids: @excludedIds
-      for_sale: true
+      sort: "-merchandisability"
       size: @size
 
     data = _.defaults options, defaults
@@ -44,13 +44,15 @@ module.exports = class ArtworkRails
         .then ({ @artwork }) =>
           return resolve() if @artwork.partner.type is 'Institution'
           @excludedIds.push @artwork._id
-          @fetchAuctionArtworks()
+          @maybeFetchForSaleArtworks()
         .then =>
-          @fetchShowArtworks()
+          @fetchAuctionArtworks()
         .then =>
           @fetchSimilarArtworks()
         .then =>
           @fetchArtistArtworks()
+        .then =>
+          @fetchShowArtworks()
         .then =>
           @fetchPartnerArtworks()
         .then =>
@@ -62,6 +64,14 @@ module.exports = class ArtworkRails
         .catch reject
         .done()
 
+  maybeFetchForSaleArtworks: ->
+      if @artwork.is_for_sale
+        Q.resolve()
+      else
+        @fetchFilterArtworks 'for_sale_artworks',
+          artist_id: @artwork.artist.id
+          for_sale: true
+
   fetchAuctionArtworks: ->
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
@@ -70,9 +80,7 @@ module.exports = class ArtworkRails
           success: (collection, response, options) =>
             collection.remove @artwork
             artworks = Artworks.fromSale collection
-            if @artwork.related.auction_state is 'closed'
-              @assignRail 'closed_auction_artworks', artworks.toJSON()
-            else
+            if @artwork.related.auction_state is 'open'
               @assignRail 'current_auction_artworks', artworks.toJSON()
             resolve()
       else
@@ -124,6 +132,7 @@ module.exports = class ArtworkRails
           artwork(id: $id){
             _id
             category
+            is_for_sale
             artist {
               id
               name

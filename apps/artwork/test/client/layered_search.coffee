@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-{ Layer, Layers, LayeredSearchView } = benv.requireWithJadeify resolve(__dirname, '../../client/layered_search'), ['template']
+{ Layer, Layers, LayeredSearchView } = benv.requireWithJadeify resolve(__dirname, '../../client/layered_search'), ['template', 'newTemplate']
 Artwork = require '../../../../models/artwork'
 Fair = require '../../../../models/fair'
 
@@ -177,6 +177,7 @@ describe 'LayeredSearchView', ->
       @view.layers.fair = @fair
       @layers.push id: _.uniqueId('layer'), type: 'fair'
       @view.layers.reset @layers
+      @view.relatedV2 = false
       @view.render()
 
       done()

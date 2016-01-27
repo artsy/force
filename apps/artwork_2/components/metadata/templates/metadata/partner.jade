@@ -1,6 +1,23 @@
-.artwork-metadata__partner
-  if artwork.partner.href
-    a( href= artwork.partner.href )
-      = artwork.partner.name
-  else
-    = artwork.partner.name
+- var partner = artwork.partner
+
+unless artwork.auction
+  .artwork-metadata__partner
+    if artwork.is_for_sale
+      h3 Offered by
+
+    a( href= partner.href )
+      = [partner.name, helpers.consolidate(helpers.pluck(partner.locations, 'city'), 'locations')].join(', ')
+
+    if artwork.is_contactable && partner.locations.length
+      .artwork-metadata__partner__phone
+        a( class='js-artwork-metadata__partner__phone' )
+          | Show phone number
+        .artwork-metadata__partner__phone__locations(
+          class='js-artwork-metadata__partner__phone__locations'
+        )
+          for location in partner.locations
+            .artwork-metadata__partner__phone__locations__location
+              if partner.locations.length > 1
+                | #{location.city}:
+                = ' '
+              = location.phone

@@ -1,3 +1,6 @@
+@require '../../../components/stylus_lib'
+@require '../../../components/chevron_list'
+
 .layered-search-layers
   margin: 0px 0px 20px
   overflow ellipsis
@@ -24,3 +27,44 @@
     display inline-block
   &, &[data-state='inactive']
     display none
+
+// V2 Related search layers
+#layered-search-header-v2
+  clearfix()
+  margin-bottom 20px
+  margin-top 20px
+  h1
+    garamond-size('headline', true)
+    float left
+  .layered-search-layers--v2
+    float right
+    vertical-align middle
+    margin-top 10px
+  .layered-search-layer-button
+    avant-garde-size('body')
+    text-decoration none
+    &:hover
+      border-bottom 2px solid black
+    &[data-state='active']
+      border-bottom 2px solid purple-color
+
+.layered-search-results--v2
+  .fillwidth-list li
+    margin-bottom 20px
+
+#layered-search-layer-gene-button-container--v2
+  border-top 1px solid gray-lighter-color
+  margin 20px 0
+  padding-top 20px
+  text-align right
+
+a.layered-search-layer-gene-button--v2
+  padding-right 30px
+  chevron-item()
+
+  &[data-state='inactive']
+    display none
+  &:hover
+    border-bottom-color transparent
+  &:after
+    color black

@@ -1,26 +1,20 @@
-_ = require 'underscore'
-qs = require 'querystring'
-{ DISABLE_IMAGE_PROXY, EMBEDLY_KEY, GEMINI_CLOUDFRONT_URL, DISABLE_GEMINI_PROXY } = require('sharify').data
-baseUrl = 'https://i.embed.ly/1/display'
+config = require './config.coffee'
+SERVICES =
+  EMBEDLY: require './services/embedly.coffee'
+  GEMINI: require './services/gemini.coffee'
 
-fetch = (method, options) ->
-  if DISABLE_IMAGE_PROXY then options.url else "#{baseUrl}/#{method}?#{qs.stringify(options)}"
+oneIn = (n) ->
+  Math.floor(Math.random() * n) is 0
 
-fetchGemini = (options) ->
-  "#{GEMINI_CLOUDFRONT_URL}/?#{qs.stringify(options)}"
+service = ->
+  # Will enable this later to drive 1/N requests to Gemini:
+  # delegateTo = if oneIn(GEMINI_LOAD_RATIO) then 'GEMINI' else 'EMBEDLY'
+  SERVICES[config.proxy]
 
 module.exports =
-  resize: (url, options = {}) ->
-    fetch 'resize', _.defaults(options, quality: 95, grow: false, url: url, key: EMBEDLY_KEY)
-
-  resizeWithGemini: (url, options = {}) ->
-    if DISABLE_GEMINI_PROXY
-      fetch 'resize', _.omit _.defaults(options, quality: 95, grow: false, url: url, key: EMBEDLY_KEY), 'resize_to'
-    else
-      fetchGemini _.defaults(options, quality: 95, src: url)
-
-  crop: (url, options = {}) ->
-    fetch 'crop', _.defaults(options, quality: 95, url: url, key: EMBEDLY_KEY)
-
-  fill: (url, options = {}) ->
-    fetch 'fill', _.defaults(options, quality: 95, color: 'fff', url: url, key: EMBEDLY_KEY)
+  resize: ->
+    service().resize arguments...
+  crop: ->
+    service().crop arguments...
+  fill: ->
+    service().fill arguments...
