@@ -4,7 +4,7 @@ geo = require '../../../components/geo/index.coffee'
 
 module.exports = class FairInfoVisitors extends Backbone.View
   events:
-    'click .fair-info2-get-directions-link': 'showDirections'
+    'click .js-get-directions-link': 'showDirections'
 
   maybeDisplayMap: ->
     geo.loadGoogleMaps =>

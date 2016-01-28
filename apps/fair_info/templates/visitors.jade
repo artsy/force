@@ -12,20 +12,26 @@ block body
 
       .fair-info2-content
         .grid-3-up
-          if fair.get('location') && fair.get('location').summary
+          if (fair.get('location') && fair.get('location').summary) || fair.get('floorplan_link')
             .fair-location.grid-item
               h2.visitor-title Location
-              .location-caption!= fair.location().mdToHtml('summary')
+              if (fair.get('location') && fair.get('location').summary)
+                .location-caption!= fair.location().mdToHtml('summary')
+              if fair.get('floorplan_link')
+                a.fair-info2-heavy-link(href=fair.get('floorplan_link')) Floorplan (PDF)
 
           if fair.get('hours')
             .fair-hours.grid-item
               h2.visitor-title Hours
               .fair-info2-fair-hours!= fair.mdToHtml('hours')
 
-          if fair.get('tickets')
+          if fair.get('tickets') || fair.get('tickets_link')
             .fair-tickets.grid-item
               h2.visitor-title Tickets
-              .fair-info2-ticket-info!= fair.mdToHtml('tickets')
+              if fair.get('tickets')
+                .fair-info2-ticket-info!= fair.mdToHtml('tickets')
+              if fair.get('tickets_link')
+                a.fair-info2-heavy-link(href=fair.get('tickets_link')) Buy Tickets
 
           if fair.get('location') && (fair.get('location').coordinates != null || fair.get('location').address != '')
             .fair-directions.grid-item
@@ -40,7 +46,7 @@ block body
                   autocapitalize="off"
                   spellcheck="false"
                 )
-                a.fair-info2-get-directions-link(href='#') Get Directions
+                a.js-get-directions-link.fair-info2-heavy-link(href='#') Get Directions
 
           if fair.get('contact')
             .fair-info2-contact.grid-item
