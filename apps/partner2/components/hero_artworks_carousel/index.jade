@@ -1,0 +1,18 @@
+.hero-artworks-carousel
+  .mgr-cells.js-mgr-cells
+      for artwork in artworks.models
+        .mgr-cell.js-mgr-cell
+          - var dimensions = artwork.defaultImage().resizeDimensionsFor({ height: 300 })
+          a( href= artwork.href() )
+            img(
+              src= artwork.defaultImage().imageUrlForHeight(300)
+              alt= artwork.get('title')
+              width= dimensions.width
+              height= dimensions.height
+            )
+          .artist-name= artwork.artistName()
+          .title!= artwork.titleAndYear()
+
+    - length = artworks.length
+    nav.mgr-navigation.js-mgr-navigation
+      include ../../../../components/merry_go_round/templates/navigation

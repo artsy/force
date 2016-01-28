@@ -162,6 +162,12 @@ module.exports = class PartnerShow extends Backbone.Model
   formatCity: =>
     @get('location')?.city?.trim()
 
+  formatShowOrFairCity: =>
+    if @has 'location'
+      @get('location').city?.trim()
+    else if @has 'fair'
+      @get('fair').location?.city?.trim()
+
   formatStreetAddress: ->
     @get('location')?.address?.trim()
 
@@ -176,6 +182,13 @@ module.exports = class PartnerShow extends Backbone.Model
       else if @closed() then 'Past'
     type = if @get('fair') then 'fair booth' else 'show'
     "#{status} #{type}"
+
+  statusLabel: ->
+    mapping =
+      running: 'Current',
+      upcoming: 'Upcoming',
+      closed: 'Past'
+    mapping[@get('status')]
 
   fairLocationDisplay: ->
     city = @formatCity()
