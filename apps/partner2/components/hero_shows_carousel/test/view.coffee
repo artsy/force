@@ -10,7 +10,7 @@ PartnerShow = require '../../../../../models/partner_show.coffee'
 
 HeroShowsCarousel = benv.requireWithJadeify resolve(
   __dirname, '../view.coffee'
- ), ['template']
+), ['template']
 
 describe 'HeroShowsCarousel', ->
 
@@ -33,9 +33,9 @@ describe 'HeroShowsCarousel', ->
       @current = [@featured[0]]
       @upcoming = []
       @past = []
-      _.each [1..3], (i) => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
-      _.each [0..3], (i) => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
-      _.each [0..3], (i) => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
+      _.each [1..3], => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
+      _.each [0..3], => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
+      _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
 
     it 'makes proper requests to fetch shows', ->
       @view.fetchShows()
@@ -51,11 +51,13 @@ describe 'HeroShowsCarousel', ->
       _.isFunction(@view.fetchShows().then).should.be.ok
 
     it 'fetches shows and organizes them in proper order', (done) ->
-      @view.fetchShows().then (partnerShows) =>
-        partnerShows.length.should.equal 10
-        expected = @featured.concat(@current[1..3]).concat(@upcoming).concat(@past[0..1])
-        partnerShows.should.eql expected
-        done()
+      @view.fetchShows()
+        .then (partnerShows) =>
+          partnerShows.length.should.equal 10
+          expected = @featured.concat(@current[1..3]).concat(@upcoming).concat(@past[0..1])
+          partnerShows.should.eql expected
+          done()
+        .done()
 
       requests = Backbone.sync.args
       requests[0][2].success @featured
