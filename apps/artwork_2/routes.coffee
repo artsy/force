@@ -12,6 +12,7 @@ query = """
       ... metadata
       ... inquiry
       ... auction
+      ... highlights
     }
   }
   #{require './components/banner/query'}
@@ -20,6 +21,7 @@ query = """
   #{require './components/metadata/query'}
   #{require './components/inquiry/query'}
   #{require './components/auction/query'}
+  #{require './components/highlights/query'}
 """
 
 helpers = extend [
