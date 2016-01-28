@@ -17,8 +17,7 @@ module.exports = class PartnerRouter extends Backbone.Router
       @navigate "#{@partner.href()}/#{route}", trigger: true, replace: true
 
   index: ->
-    section = 'overview' # default section
-    @baseView.renderSection section
+    @baseView.renderSection 'overview'
 
   overview: ->
     @baseView.renderSection 'overview'
