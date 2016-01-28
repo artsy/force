@@ -1,0 +1,15 @@
+- var article = highlight
+
+.artwork-highlight
+  .artwork-highlight__images
+    h3.artwork-highlight__images__context
+      | This Work Is Mentioned In
+
+    .artwork-highlight__images__image
+      img( src= article.image.thumb.url )
+
+  .artwork-highlight__metadata
+    h2.artwork-highlight__metadata__title: a( href= article.href )
+      = article.title
+    .artwork-highlight__metadata__byline
+      | By #{article.author.name}
