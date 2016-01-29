@@ -101,7 +101,7 @@ module.exports = class ArtworkView extends Backbone.View
     @belowTheFoldView.setupFair fair
 
   handleSales: (sales) ->
-    return unless sales.length and not @showRails
+    return unless sales.length
 
     unless sales.hasAuctions()
       @setupZigZag()
@@ -109,7 +109,7 @@ module.exports = class ArtworkView extends Backbone.View
     @sale = sales.first()
     @$('#artist-artworks-section').remove()
 
-    unless @sale.isAuctionPromo() # Replace with auction-artworks view
+    unless @sale.isAuctionPromo() or @showRails
       @belowTheFoldView.setupSale
         sale: @sale
         saved: @saved
