@@ -62,12 +62,12 @@ module.exports = class Modalize extends Backbone.View
     this
 
   escape: (e) =>
-    @close(null, e) if e.which is 27
+    @close(e, null) if e.which is 27
 
   maybeClose: (e) ->
-    @close(null, e) if $(e.target).hasClass('js-modalize-backdrop')
+    @close(e, null) if $(e.target).hasClass('js-modalize-backdrop')
 
-  close: (callback, e) ->
+  close: (e, callback) ->
     $(window).off 'keyup.modalize'
     @scrollbar.reenable()
     @trigger 'closing'
