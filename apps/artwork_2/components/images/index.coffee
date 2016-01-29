@@ -15,6 +15,8 @@ module.exports = ->
 
     $loader
       .css 'background-image': "url(#{$loader.data('src')})"
+      .imagesLoaded { background: true }, ->
+        $loader.attr 'data-state', 'loaded'
 
   activate $imgs.last().data 'id'
 

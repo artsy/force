@@ -38,6 +38,13 @@ page-height = 30px
         background-repeat no-repeat
         background-position center center
 
+      &__display
+        opacity 0
+        background-color white
+        transition opacity 0.25s
+        &[data-state='loaded']
+          opacity 1
+
   &__pages
     position absolute
     right 0
