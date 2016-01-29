@@ -169,7 +169,6 @@
   });
 
   bind('user:signup', function(context) {
-    if (context.user.isRecentlyRegistered()) return;
     analytics.track('Created account', {
       context: 'inquiry_questionnaire'
     });
