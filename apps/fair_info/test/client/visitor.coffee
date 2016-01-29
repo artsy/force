@@ -49,7 +49,7 @@ describe 'FairInfoVisitorsView', ->
 
   describe '#showDirections', ->
     it 'opens directions in google', ->
-      @view.$('.fair-info2-get-directions-link').click()
+      @view.$('.js-get-directions-link').click()
       window.open.called.should.equal true
 
 
