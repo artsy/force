@@ -6,9 +6,11 @@
 @require '../components/metadata/index'
 @require '../components/inquiry/index'
 @require '../components/auction/index'
+@require '../components/highlights/index'
+@require '../components/tabs/index'
 
 artwork-page = {
-  gutter: 20px,
+  gutter: 30px,
   metadata: {
     width: 230px
   }
@@ -32,7 +34,6 @@ artwork-page = {
     width calc('100% - %s' % (artwork-page.metadata.width + artwork-page.gutter))
     text-align center
     margin-right: artwork-page.gutter
-    border-bottom 1px solid gray-lighter-color
 
 .artwork-fold
-  block-margins(20px)
+  width calc('100% - %s' % (artwork-page.metadata.width + artwork-page.gutter))
