@@ -25,29 +25,37 @@ block body
         if exploreSections.length
           include explore_sections
         if exploreSections.length
-          h2.home-featured-header Currently on Artsy
         ul#home-top-featured-links
           include featured_links
 
         #home-featured-artworks-section
           //- Rendered client-side
+        
+        #home-featured-shows-section
+          h2.home-featured-header Featured Shows
+            .home-browse-all-right  
+              a( href='/shows' )
+                | View All
+          ul#home-featured-shows.home-featured-list
+            - shows = featuredShows.take(8)
+            - displayLocation = true
+            include featured_shows
 
-        h2.home-featured-header Featured Shows
-        ul#home-featured-shows.home-featured-list
-          - shows = featuredShows.take(8)
-          - displayLocation = true
-          include featured_shows
-        a.home-browse-all.avant-garde-button-text( href='/shows' )
-          | All Shows
-
-        h2.home-featured-header Featured Articles
-        ul#home-featured-articles.home-featured-list
-          - articleLinks = featuredArticles.take(7)
-          include featured_articles
-        a.home-browse-all.avant-garde-button-text( href='/articles' )
-          | All Articles
-
-        h2.home-featured-header Featured Artists
-        ul#home-featured-artists.grid-4-up.home-featured-list
-          - artistLinks = featuredArtists.take(4)
-          include featured_artists
+        #home-featured-articles-section
+          h2.home-featured-header Featured Articles
+            .home-browse-all-right
+              a( href='/articles' )
+                | View All
+          ul#home-featured-articles.home-featured-list
+            - articleLinks = featuredArticles.take(7)
+            include featured_articles
+          
+        #home-featured-artists-section
+          h2.home-featured-header Featured Artists
+            .home-browse-all-right
+              a( href='/artists' )
+                | View All
+          ul#home-featured-artists.grid-4-up.home-featured-list
+            - artistLinks = featuredArtists.take(4)
+            include featured_artists
+          
