@@ -10,7 +10,7 @@ module.exports = class Modalize extends Backbone.View
 
   events:
     'click .js-modalize-backdrop': 'maybeClose'
-    'click .js-modalize-close': 'close'
+    'click .js-modalize-close': 'clickClose'
 
   initialize: (options = {}) ->
     { @subView, @dimensions } = _.defaults options, @defaults
@@ -67,6 +67,11 @@ module.exports = class Modalize extends Backbone.View
   maybeClose: (e) ->
     @close(null, e) if $(e.target).hasClass('js-modalize-backdrop')
 
+  clickClose: (e) ->
+    @close(null, e)
+
+  # Used programmatically which expects this order of params
+  # so use clickClose to handle the click handler param ordering
   close: (callback, e) ->
     $(window).off 'keyup.modalize'
     @scrollbar.reenable()
