@@ -9,12 +9,14 @@ PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.c
 facetDefaults = require '../../components/filters/facet_defaults.coffee'
 
 module.exports = class LandingCarouselView extends Backbone.View
+  events:
+    'click .pcc-see-all': 'seeAllClicked'
 
-  initialize: ({ @following, params }) ->
-    @listenTo params, 'firstLoad', @paramsChanged
+  initialize: ({ @following, @params }) ->
+    @listenTo @params, 'firstLoad', @paramsChanged
 
     _.each _.pluck(facetDefaults, 'facetName'), (f) =>
-      @listenTo params, "change:#{f}", @paramsChanged
+      @listenTo @params, "change:#{f}", @paramsChanged
 
   setup: (type) ->
     return if @loaded
@@ -34,6 +36,14 @@ module.exports = class LandingCarouselView extends Backbone.View
       @$el.prepend carousel.render().$el
       @following.syncFollows _.pluck category.partners, 'default_profile_id'
     @loaded = true
+
+  seeAllClicked: (e) ->
+    e.preventDefault()
+    $target = $(e.target)
+    facetName = $target.attr 'data-facet'
+    id = $target.attr 'data-id'
+
+    @params.set facetName, id if facetName and id
 
   paramsChanged: (params) ->
     return if params.hasSelection()

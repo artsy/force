@@ -12,7 +12,7 @@ module.exports = (type) ->
   Q.promise (resolve, reject) ->
     $.get '/geo/nearest', ({ name, latitude, longitude, slug }) ->
       typeName = if type is 'gallery' then 'Galleries' else 'Institutions'
-      category = { name: "Featured #{typeName} near #{name}", id: slug, filter: 'location' }
+      category = { name: "Featured #{typeName} near #{name}", id: slug, facet: 'location' }
       metaphysics(
         query: query
         variables: _.extend near: "#{latitude},#{longitude}", partnerTypes[type]

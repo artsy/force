@@ -13,7 +13,7 @@ module.exports = class PartnersSearchView extends Backbone.View
 
   el: $('.galleries-institutions-page')
 
-  initialize: ({ @params }) ->
+  initialize: ({ @params, @root }) ->
     @listenTo @params, 'change', @paramsChanged
 
     if CURRENT_USER?
@@ -57,6 +57,6 @@ module.exports = class PartnersSearchView extends Backbone.View
 
   updateUrl: ->
     if @params.hasSelection()
-      window.history.replaceState {}, null, "/#{sd.PARTNERS_ROOT}?#{@params.urlQueryString()}"
+      window.history.replaceState {}, null, "/#{@root}?#{@params.urlQueryString()}"
     else
-      window.history.replaceState {}, null, "/#{sd.PARTNERS_ROOT}"
+      window.history.replaceState {}, null, "/#{@root}"

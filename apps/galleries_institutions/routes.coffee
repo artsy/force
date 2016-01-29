@@ -5,18 +5,19 @@ qs = require 'qs'
 metaphysics = require '../../lib/metaphysics'
 { API_URL } = require('sharify').data
 { FeaturedCities } = require 'places'
-mergeBuckets = require './components/partner_cell_carousel/merge_buckets'
-fetchPrimaryCarousel = require './components/primary_carousel/fetch'
+Partners = require '../../collections/partners'
+Profiles = require '../../collections/profiles'
 ViewHelpers = require './components/partner_cell/view_helpers'
 query = require './queries/partner_categories_query'
 partnerTypes = require './queries/partner_types'
+mergeBuckets = require './components/partner_cell_carousel/merge_buckets'
+fetchPrimaryCarousel = require './components/primary_carousel/fetch'
 
 mapType =
   galleries: 'gallery'
   institutions: 'institution'
 
 @index = (req, res, next) ->
-  res.locals.sd.PARTNERS_ROOT = req.params.type
   type = mapType[req.params.type]
   searchParams = _.pick(req.query, 'location', 'category')
   params = _.extend type: type, searchParams
@@ -58,4 +59,35 @@ mapType =
     .catch next
     .done()
 
+# A to Z page
+
+fetchAZ =
+  gallery: ->
+    new Partners()
+      .fetchUntilEndInParallel
+        cache: true
+        data:
+          size: 20
+          type: 'PartnerGallery'
+          sort: 'sortable_id'
+          has_full_profile: true
+
+  institution: ->
+    new Profiles()
+      .fetchUntilEndInParallel
+        cache: true
+        url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
+        data: size: 20
+
+@partnersAZ = (req, res, next) ->
+  type = mapType[req.params.type]
+  fetchAZ[type]().then (partners) ->
+    aToZGroup = partners.groupByAlphaWithColumns 3
+    res.render 'a_z',
+      type: type
+      showAZLink: false
+      aToZGroup: aToZGroup
+
+    .catch next
+    .done()
 
