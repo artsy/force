@@ -1,45 +1,14 @@
-.show-related-shows-title
+.show-related-shows-headline
   = title
-for show in shows
-  .show-related-show-container
-    .show-related-show-info
-      if show.fair
-        .show-related-show-title
-          a( href=show.href )
-            = show.partner.name
-        .show-related-show-title-fair
-          a( href= show.href )
-            = show.fair.name
-        .show-related-show-partner
-          a.entity-link( href=show.partner.href )
-            = show.partner.name
-        if show.location
-          .show-related-show-fair-booth
-            a( href= show.href )
-              = show.location.display
-      else
-        .show-related-show-title
-          a( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
-            = ViewHelpers.title(show)
-        .show-related-show-partner
-          a.entity-link( href=show.partner.href )
-            = show.partner.name
-        .show-related-show-running-dates
-          = DateHelpers.timespanInWords(show.start_at, show.end_at)
 
-    ul.show-related-show-images
-      if show.filteredImages
-        for image in show.filteredImages
-          li.show-related-show-image-container
-            a.hoverable-image-link( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
-              img.show-related-show-image(
-                src= image.image.url
-                alt= ViewHelpers.title(show)
-                onerror='this.style.display="none";'
-              )
-if fromShowGuide && title != 'Featured Shows' && city
-  a.avant-garde-button-white.show-related-show-show-more-button( href= '/shows/#{city.slug}' )
-    = 'See more shows in ' + city.name
-if show.fair
-  a.avant-garde-button-white.show-related-show-show-more-button( href= show.fair.href )
-    = 'See more booths from ' + show.fair.name
+.show-related-shows
+  for show in shows
+    include ./templates/show
+
+  if fromShowGuide && city && (title !== 'Featured Shows')
+    a.avant-garde-button-white.show-related-shows__more( href= '/shows/#{city.slug}' )
+      | See more shows in #{city.name}
+
+  if show.fair
+    a.avant-garde-button-white.show-related-shows__more( href= show.fair.href )
+      | See more booths from #{show.fair.name}

@@ -1,0 +1,37 @@
+.show-related-show
+  .show-related-show__metadata
+    if show.fair
+      a.show-related-show__metadata__title( href= show.href )
+        = show.partner.name
+      a.show-related-show__metadata__fair-name( href= show.href )
+        = show.fair.name
+      .show-related-show__metadata__partner
+        a.entity-link( href= show.partner.href )
+          = show.partner.name
+      if show.location
+        a.show-related-show__metadata__fair-booth( href= show.href )
+          = show.location.display
+
+    else
+      a.show-related-show__metadata__title( href= show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
+        = ViewHelpers.title(show)
+
+      .show-related-show__metadata__partner
+        a.entity-link( href= show.partner.href )
+          = show.partner.name
+
+      .show-related-show__metadata__running-dates
+        = DateHelpers.timespanInWords(show.start_at, show.end_at)
+
+  if show.images
+    a.show-related-show__images(
+      href= show.href + (fromShowGuide ? '?from-show-guide=true' : '')
+    )
+      for image in show.images
+        .show-related-show__images__image: img(
+          src= image.thumb.url
+          width= image.thumb.width
+          height= image.thumb.height
+          alt= ViewHelpers.title(show)
+          onerror='this.style.display="none";'
+        )

@@ -1,13 +1,15 @@
-RelatedShowsView = require './view.coffee'
-{ Cities, FeaturedCities } = require 'places'
 _ = require 'underscore'
+{ Cities } = require 'places'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
+DateHelpers = require '../../../../components/util/date_helpers.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require './query.coffee'
+template = -> require('./template.jade') arguments...
 
 module.exports = (type, show) ->
-  el = $('.js-related-shows')
+  $el = $('.js-related-shows')
 
-  city = _.findWhere(Cities, name: show.location?.city?.trim())
+  city = _.findWhere Cities, name: show.location?.city?.trim()
 
   criteria =
     sort: 'end_at_asc'
@@ -16,88 +18,58 @@ module.exports = (type, show) ->
 
   switch type
     when 'fair'
-      opts =  _.extend criteria, {
-        fair_id: show.fair._id
-      }
       title = "More Booths from #{show.fair.name}"
+      options =  _.extend criteria,
+        fair_id: show.fair._id
+
     when 'gallery'
-      opts = _.extend criteria, {
+      title = "Other Shows from #{show.partner.name}"
+      options = _.extend criteria,
         sort: 'start_at_desc'
         partner_id: show.partner._id
-      }
-      title = "Other Shows from #{show.partner.name}"
+
     when 'featured'
-      opts = _.extend criteria, {
+      title = "Featured Shows"
+      options = _.extend criteria,
         featured: true
         status: 'running'
-      }
-      el = $('.js-featured-shows')
-      title = "Featured Shows"
+
     when 'city'
-      opts = _.extend criteria, {
+      title = "Current Shows in #{show.location.city.trim()}"
+      options = _.extend criteria,
         near: ViewHelpers.getMetaphysicsLocation(show.location)
         status: 'running'
-      }
-      title = "Current Shows in #{show.location.city.trim()}"
 
   metaphysics
-    variables: opts
-    query: '
-      query($featured: Boolean, $size: Int, $sort: PartnerShowSorts, $fair_id: String, $partner_id: String, $near: Near, $status: EventStatus, $displayable: Boolean) {
-        related_shows: partner_shows(featured: $featured, size: $size, sort: $sort, fair_id: $fair_id, partner_id: $partner_id, near: $near, status: $status, displayable: $displayable) {
-          id
-          start_at
-          end_at
-          name
-          href
-          partner {
-            name
-            href
-          }
-          fair {
-            id
-            published
-            has_full_feature
-            name
-            href
-            start_at
-            end_at
-          }
-          location {
-            display
-            city
-            state
-            postal_code
-            country
-            address
-            address_2
-          }
-          install_shots: images(size: 1, default: false) {
-            image: resized(height: 270, version: "large") {
-              url
-              width
-              height
-            }
-            aspect_ratio
-          }
-          artworks(size: 5) {
-            id
-            image {
-              image: resized(height: 270, version: "large") {
-                url
-                width
-                height
-              }
-              aspect_ratio
-            }
-          }
-        }
-      }
-    '
-  .then (data) ->
-    new RelatedShowsView
-      data: data.related_shows
-      el: el
+    variables: options,
+    query: query
+
+  .then ({ related_shows }) ->
+    _.chain related_shows
+      # Filter out the current show
+      .filter ({ id }) ->
+        id isnt show.id
+
+      # Merge the two image arrays
+      .map (related_show) ->
+        related_show.images = _.compact(
+          related_show.install_shots
+            .concat _.pluck related_show.artworks, 'image'
+        )
+        related_show
+
+      .value()
+
+  .then (related_shows) ->
+    return unless related_shows.length
+
+    $el.html template
+      title: title
+      shows: related_shows
       show: show
       city: city
-      title: title
+      DateHelpers: DateHelpers
+      ViewHelpers: ViewHelpers
+      fromShowGuide: location.search.match 'from-show-guide'
+
+  .catch console.error.bind(console)
