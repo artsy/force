@@ -70,3 +70,33 @@ page-height = 30px
       &:hover
       &[data-state='active']
         color black
+
+  &__arrows
+    position absolute
+    z-index 1
+    top 50%
+    left 0
+    right 0
+    opacity 0
+    transition opacity 0.33s
+    &__prev
+    &__next
+      position absolute
+      transform translateY(-50%)
+      padding 30px
+      cursor pointer
+      color gray-color
+      transition color 0.25s
+      &:hover
+        color black
+    &__prev
+      left 0
+      padding-left 0
+    &__next
+      right 0
+      padding-right 0
+
+  &[data-focus='active'] > .artwork-images__arrows
+    opacity 1
+  &[data-focus='inactive'] > .artwork-images__arrows
+    opacity 0
