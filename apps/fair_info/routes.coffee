@@ -58,7 +58,7 @@ fetchArticle = (articleParam, req, res, next) ->
       if articles.length < 1 && articleParam != 'fair_about_id'
         err = new Error('Not Found')
         err.status = 404
-        next err
+        return next err
 
       res.locals.sd.ARTICLE = articles.first().toJSON() if articles.length > 0
 
