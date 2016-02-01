@@ -34,6 +34,10 @@ describe 'resizer', ->
         resizer.resize @src, width: 300, height: 200, quality: 50
           .should.equal 'https://i.embed.ly/1/display/resize?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=50&key=xxx'
 
+      it 'falls back when it has invalid options', ->
+        resizer.resize @src, width: 0, height: 100
+          .should.equal @src
+
     describe '#crop', ->
       it 'returns the appropriate URL', ->
         resizer.crop @src, width: 32, height: 32
@@ -43,6 +47,10 @@ describe 'resizer', ->
         resizer.crop @src, width: 300, height: 200, quality: 50
           .should.equal 'https://i.embed.ly/1/display/crop?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&quality=50&key=xxx'
 
+      it 'falls back when it has invalid options', ->
+        resizer.crop @src, width: 0, height: 100
+          .should.equal @src
+
     describe '#fill', ->
       it 'returns the appropriate URL', ->
         resizer.fill @src, width: 32, height: 32
@@ -51,6 +59,10 @@ describe 'resizer', ->
       it 'supports options', ->
         resizer.fill @src, width: 300, height: 200, quality: 50, color: 'ff00cc'
           .should.equal 'https://i.embed.ly/1/display/fill?url=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FRhCPuRWITO6WFW2Zu_u3EQ%2Flarge.jpg&width=300&height=200&color=ff00cc&quality=50&key=xxx'
+
+      it 'falls back when it has invalid options', ->
+        resizer.fill @src, width: 0, height: 100
+          .should.equal @src
 
     describe 'when disabled', ->
       beforeEach ->
