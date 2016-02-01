@@ -6,7 +6,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.use('/:id/*', routes.assignFair)
-app.get('/:id/info2', routes.visitors)
+app.get('/:id/info2', routes.info)
 app.get('/:id/info2/visitors', routes.visitors)
 app.get('/:id/info2/programming', routes.programming)
 app.get('/:id/info2/events', routes.events)
