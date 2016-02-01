@@ -1,15 +1,16 @@
 .fair-sections-container
   .sections-left
-    .fair-sections-small-heading
-      | Browse&nbsp;
-      = fair.get('name')
-    .fair-search-options
-      for gene in fair.get('filter_genes')
-        a( href=fair.href() + '/browse/artworks?related_gene=' + gene.id )= gene.name
-    .a-to-z-section-links
-      a( href=fair.href() + '/browse/artists') Artists A-Z
-      .fair-spacer |
-      a( href=fair.href() + '/browse/exhibitors') Exhibitors A-Z
+    .section-left-info-nav
+      h2 Fair Information
+      .fair-nav-info-menu.chevron-nav-list
+        a(href="/#{profile.id}/info2/visitors") visitors
+        if infoMenu.programming
+          a(href="/#{profile.id}/info2/programming") programming
+        if infoMenu.events
+          a(href="/#{profile.id}/info2/events") events
+        if infoMenu.artsyAtTheFair
+          a(href="/#{profile.id}/info2/artsy-at-the-fair") artsy at the fair
+        a(href="/#{profile.id}/info2/about-the-fair") about the fair
   a.sections-right( href="https://iphone.artsy.net", target="_blank" )
     .mobile-section-heading
       | Going to the fair?

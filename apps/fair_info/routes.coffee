@@ -5,7 +5,7 @@ FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
 { resize } = require '../../components/resizer/index.coffee'
-InfoMenu = require './info_menu.coffee'
+InfoMenu = require '../../components/info_menu/index.coffee'
 Articles = require '../../collections/articles'
 
 @assignFair = (req, res, next) ->

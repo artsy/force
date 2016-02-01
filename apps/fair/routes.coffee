@@ -15,6 +15,7 @@ kinds = require '../favorites_follows/kinds'
 { parse, format } = require 'url'
 FilterArtworks = require '../../collections/filter_artworks'
 aggregationParams = require './components/browse/aggregations.coffee'
+InfoMenu = require '../../components/info_menu/index.coffee'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -22,18 +23,24 @@ aggregationParams = require './components/browse/aggregations.coffee'
   fair = res.locals.fair
   params = new Backbone.Model fair: fair.id
   filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
-  # TODO: Dependent on attribute of fair
-  res.locals.sd.BODY_CLASS = 'body-transparent-header'
-  res.locals.sd.SECTION = 'overview'
-  filterArtworks.fetch
-    data: filterData
-    success: ->
-      res.render 'overview',
-        counts: filterArtworks.counts
-        params: params
-        filterRoot: fair.href() + '/browse/artworks'
-        hideForSaleButton: true
-        includeAllWorksButton: true
+  infoMenu = new InfoMenu(fair: fair)
+  Q.all([
+    fair.fetch(cache: true)
+    infoMenu.fetch(cache: true)
+  ]).then () ->
+    res.locals.infoMenu = infoMenu.infoMenu
+    # TODO: Dependent on attribute of fair
+    res.locals.sd.BODY_CLASS = 'body-transparent-header'
+    res.locals.sd.SECTION = 'overview'
+    filterArtworks.fetch
+      data: filterData
+      success: ->
+        res.render 'overview',
+          counts: filterArtworks.counts
+          params: params
+          filterRoot: fair.href() + '/browse/artworks'
+          hideForSaleButton: true
+          includeAllWorksButton: true
 
 @info = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
