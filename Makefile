@@ -30,7 +30,7 @@ ssc:
 
 # Start the server pointing to production
 sp:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net nf start
 
 # Start server pointing to production with cache
 spc:
