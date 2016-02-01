@@ -112,3 +112,9 @@ describe 'Artist', ->
       @artist.displayFollowers().should.equal '1,000 Followers'
       @artist.unset 'follow_count'
       _.isUndefined(@artist.displayFollowers()).should.be.true()
+
+  describe '#alternateNames', ->
+    it 'concatenates alternate names into a string', ->
+      @artist.alternateNames().should.equal ''
+      @artistWithAlternateNames = new Artist fabricate 'artist', alternate_names: ['Paul Picasso', 'Paulie Picasso']
+      @artistWithAlternateNames.alternateNames().should.equal 'Paul Picasso; Paulie Picasso'

@@ -57,6 +57,9 @@ module.exports = class Artist extends Backbone.Model
       else
         'their'
 
+  alternateNames: ->
+    if alts = @get('alternate_names') then alts.join('; ') else ''
+
   pageTitleArtworksCount: (threshold = 1) ->
     count = @get('published_artworks_count')
     if count <= threshold or not count? then 'Artworks' else "#{count} Artworks"
