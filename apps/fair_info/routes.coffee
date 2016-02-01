@@ -63,3 +63,6 @@ fetchArticle = (articleParam, req, res, next) ->
       res.locals.sd.ARTICLE = articles.first().toJSON() if articles.length > 0
 
       res.render('article', { embedVideo: embedVideo, resize: resize, article: articles.first() })
+
+@info = (req, res) ->
+  res.redirect 'info2/visitors'
