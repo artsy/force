@@ -37,6 +37,7 @@ sharify.data = _.extend _.pick(config,
   'GEMINI_APP'
   'GEMINI_ACCOUNT_KEY'
   'GEMINI_CLOUDFRONT_URL'
+  'GEMINI_LOAD_RATIO'
   'BIDDER_H1_COPY'
   'BIDDER_H2_COPY'
   'SENTRY_PUBLIC_DSN'
