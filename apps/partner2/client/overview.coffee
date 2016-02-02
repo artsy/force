@@ -13,15 +13,16 @@ module.exports = class PartnerOverviewView extends Backbone.View
     @isPartner = @partner.get('claimed') isnt false
     @showBanner = not @isPartner and not @partner.get 'show_promoted'
 
-    @$el.html template partner: @partner, showBanner: @showBanner, isPartner: @isPartner, modules: @moduleNames()
+    @$el.html template
+      partner: @partner
+      showBanner: @showBanner
+      isPartner: @isPartner
+      modules: overviewLayoutFactory(@partner)
     @initLayout()
 
   initLayout: ->
     _.each overviewLayoutFactory(@partner), (module) =>
+      selector = ".partner-overview-section[data-module=#{module.name}] .partner-overview-section-content"
       new module.component?(
-        _.extend module.options, el: @$(".partner-overview-section[data-module=#{module.name}]")
+        _.extend module.options, el: @$(selector)
       ).startUp()
-
-  # Available module names
-  moduleNames: ->
-    _.map overviewLayoutFactory(@partner), (m) -> m.name

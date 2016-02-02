@@ -48,7 +48,7 @@ describe 'HeroShowsCarousel', ->
       requests[3][2].data.should.eql size: 10, status: 'closed', sort: '-end_at', displayable: true
 
     it 'returns a thenable promise', ->
-      _.isFunction(@view.fetchShows().then).should.be.ok
+      _.isFunction(@view.fetchShows().then).should.be.ok()
 
     it 'fetches shows and organizes them in proper order', (done) ->
       @view.fetchShows()
@@ -74,4 +74,4 @@ describe 'HeroShowsCarousel', ->
 
     it 'removes the view if no partner shows', ->
       @view.initCarousel []
-      @view.remove.calledOnce.should.be.ok
+      @view.remove.calledOnce.should.be.ok()
