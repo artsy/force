@@ -13,5 +13,11 @@
         a.faux-underline( href='/gallery-partnerships' ) Artsy gallery partnerships.
 
   for module in modules
-    section.partner-overview-section( data-module=module )
-      .loading-spinner
+    section.partner-overview-section( data-module=module.name )
+      if module.title
+        h3.partner-overview-section-title= module.title
+      if module.viewAll
+        .partner-overview-section-view-all
+          a( href=module.viewAll ) View All
+      .partner-overview-section-content
+        .loading-spinner
