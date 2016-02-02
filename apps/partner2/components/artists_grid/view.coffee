@@ -13,18 +13,14 @@ module.exports = class PartnerArtistsGridView extends Backbone.View
     @fetch().then(@group).then(@render).done()
 
   fetch: ->
-    dfd = Q.defer()
     partnerArtists = new PartnerArtists()
     partnerArtists.url = "#{@partner.url()}/partner_artists"
-    partnerArtists.fetchUntilEndInParallel
-      success: =>
+    partnerArtists.fetchUntilEndInParallel()
+      .then ->
         # Display represented artists or non- ones who have published artworks
-        artists = partnerArtists.filter (pa) ->
+        partnerArtists.filter (pa) ->
           pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
-        dfd.resolve artists
-      error: dfd.reject
-    dfd.promise
 
   group: (artists) =>
     groups = _.groupBy artists, (pa) -> pa.get 'represented_by'

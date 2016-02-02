@@ -17,18 +17,14 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     @fetch().then(@render).done()
 
   fetch: ->
-    dfd = Q.defer()
     partnerArtists = new PartnerArtists()
     partnerArtists.url = "#{@partner.url()}/partner_artists"
-    partnerArtists.fetchUntilEndInParallel
-      success: =>
+    partnerArtists.fetchUntilEndInParallel()
+      .then ->
         # Display represented artists or non- ones who have published artworks
-        artists = partnerArtists.filter (pa) ->
+        partnerArtists.filter (pa) ->
           pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
-        dfd.resolve artists
-      error: dfd.reject
-    dfd.promise
 
   render: (artists) =>
     if artists.length is 0
