@@ -9,9 +9,16 @@
   position relative
   flex-grow 1
   margin-right 30px
+  .twitter-typeahead
+  .tt-dropdown-menu
+    width 100%
+    background white
 
-.filter-partners-header
-  width 100%
+  .tt-dropdown-menu
+    border 1px solid gray-color
+    border-top none
+    overflow hidden
+
   .icon-chevron-down
     position absolute
     right 0
@@ -19,6 +26,16 @@
     font-size 15px
     color gray-dark-color
     cursor pointer
+
+  .tt-suggestions
+    width 100%
+    overflow auto
+    margin-left 20px
+    padding-right 40px
+    max-height 575px
+
+  .tt-suggestions
+    garamond-size(s-body)
 
 .filter-header-input
   width 100%
@@ -31,31 +48,10 @@
     &.no-selection
       placeholder(color black,)
 
-.filter-partners-dropdown-list-container
-  width 100%
-  display none
-  background white
-  position absolute
-  z-index 1
-  overflow hidden
-  border 1px solid gray-color
-  border-top none
-
-.filter-partners-dropdown-list-items
-  overflow auto
-  margin-left 20px
-  padding-right 40px
-  width 100%
-  max-height 575px
-
-.filter-partners-dropdown
-  &[data-state='expanded']
-    .filter-partners-dropdown-list-container
-      display block
-
 .partner-search-filter-item
   display block
   margin 20px 0
   garamond-size(s-body)
   &.is-disabled
+    cursor default
     color gray-darker-color

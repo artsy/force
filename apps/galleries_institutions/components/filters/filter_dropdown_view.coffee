@@ -1,49 +1,85 @@
 Backbone = require 'backbone'
-template = -> require('./filter_dropdown.jade') arguments...
 _ = require 'underscore'
+template = -> require('./filter_dropdown.jade') arguments...
+suggestionTemplate = -> require('./suggestion.jade') arguments...
 
 module.exports = class FilterDropdownView extends Backbone.View
   events:
-    'mousedown .filter-partners-dropdown-list-container': (e) -> e.preventDefault()
-    'mousedown .filter-partners-header .icon-chevron-down': (e) -> e.preventDefault()
-    'click .js-partner-filter': 'filterSelected'
     'focus .filter-header-input': 'inputFocus'
     'blur .filter-header-input': 'inputBlur'
-    'click .filter-partners-header .icon-chevron-down': 'dropdownClick'
+    'mousedown .icon-chevron-down': (e) -> e.preventDefault()
+    'click .icon-chevron-down': 'dropdownClick'
 
   initialize: ({ @params, @facet }) ->
-    @listenTo @params, 'firstLoad', @firstLoad
-    @listenTo @facet, 'change:countItems change:selected', @render
+    @$input = @$('.filter-header-input')
+    @$input.typeahead({
+      hint: false
+      highlight: true,
+      minLength: 0
+    }, {
+      name: @facet.facetName
+      source: @facet.matcher
+      displayKey: 'name'
+      template: 'custom'
+      templates:
+        suggestion: @suggestionTemplate
+        empty: -> "<p>Empty</p>" # Typeahead won't render the header for empty results unless 'empty' is defined
+    })
 
-  render: ->
-    @$el.html template @facet.pick('displayName', 'selected', 'countItems', 'total')
+    @listenTo @params, 'firstLoad', @firstLoad
+
+    @typeahead = @$input.data().ttTypeahead
+
+    @$('.tt-dataset-category').on('click', '.tt-suggestion', @suggestionClicked)
+
+    @$input.bind('typeahead:selected', @selected)
+
+  firstLoad: (params) =>
+    @setPlaceholderToCurrentItem()
+
+  suggestionClicked: (e) =>
+    datum = @typeahead.dropdown.getDatumForSuggestion($(e.currentTarget))
+    e.stopPropagation() if datum.raw.ignore
+
+  selected: (e, suggestion, dataset) =>
+    if suggestion.id
+      @params.set @facet.facetName, suggestion.id
+    else
+      @params.unset @facet.facetName
+
+    $(e.target).blur()
+
+  suggestionTemplate: (item) ->
+    suggestionTemplate item: item
+
+  dropdownClick: (e) ->
+    if @$input.is(":focus")
+      @$input.blur()
+    else
+      @$input.focus()
 
   inputFocus: (e) ->
     e.preventDefault()
     $target = $(e.target)
+    $target.data().ttTypeahead.input.trigger('queryChanged', '')
     $target.attr('placeholder', 'Search ' + @facet.displayName)
-    @$el.attr('data-state', 'expanded');
 
   inputBlur: (e) ->
     e.preventDefault()
     $target = $(e.target)
-    $target.attr('placeholder', @facet.get('selected')?.name or 'All ' + @facet.displayName)
-    @$el.attr('data-state', '');
+    $target.typeahead('val', '')
+    @setPlaceholderToCurrentItem()
 
-  dropdownClick: (e) ->
-    $input = @$('.filter-header-input')
-    if $input.is(":focus")
-      $input.blur()
+  setPlaceholderToCurrentItem: ->
+    id = @params.get(@facet.facetName)
+    if id
+      @$input.removeClass('no-selection')
+      item = _.find @facet.countItems, id: id
     else
-      $input.focus()
+      @$input.addClass('no-selection')
+      item = @facet.allItemsSuggestion
 
-  filterSelected: (e) ->
-    e.preventDefault()
-    $target = $(e.target)
-    return if $target.hasClass('is-disabled')
+    @$input.attr('placeholder', item.name)
 
-    if (value = $target.attr 'data-id')
-      @params.set @facet.facetName, value
-    else
-      @params.unset @facet.facetName
+
 

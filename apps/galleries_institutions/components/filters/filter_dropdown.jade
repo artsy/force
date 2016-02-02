@@ -1,20 +1,6 @@
 - var hasTotal = !(total === undefined)
 
-.filter-partners-header
-  input.filter-header-input(
-    class= selected ? '' : 'no-selection'
-    placeholder= selected ? selected.name : "All " + displayName
-  )
-  span.icon-chevron-down
-
-.filter-partners-dropdown-list-container
-  .filter-partners-dropdown-list-items
-    a.js-partner-filter.partner-search-filter-item(
-    )= 'All ' + displayName + (hasTotal ? ' (' + total + ')' : '' )
-
-    each item in countItems
-      - var hasCount = !(item.count === undefined)
-      a.js-partner-filter.partner-search-filter-item(
-        class= (hasCount && item.count == 0 ? 'is-disabled' : ''),
-        data-id= item.id,
-      )= item.name + ( hasCount ? ' (' + item.count + ')' : '' )
+input.filter-header-input.no-selection(
+  placeholder= "All " + displayName
+)
+span.icon-chevron-down

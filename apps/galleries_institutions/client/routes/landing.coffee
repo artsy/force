@@ -34,7 +34,7 @@ module.exports = class LandingCarouselView extends Backbone.View
         model: category
 
       @$el.prepend carousel.render().$el
-      @following.syncFollows _.pluck category.partners, 'default_profile_id'
+      @following.syncFollows _.pluck category.partners, 'default_profile_id' if CURRENT_USER?
     @loaded = true
 
   seeAllClicked: (e) ->
