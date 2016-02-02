@@ -77,6 +77,7 @@ module.exports =
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,kana'
   STRIPE_PUBLISHABLE_KEY: null
   MAILCHIMP_KEY: null
+  GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
   GALLERY_INSIGHTS_LIST: null
   GALAXY_URL: null

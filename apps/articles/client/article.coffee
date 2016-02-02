@@ -4,6 +4,7 @@ sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
+GalleryInsightsView = require './gallery_insights.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 embedVideo = require 'embed-video'
 JumpView = require '../../../components/jump/view.coffee'
@@ -73,5 +74,5 @@ module.exports = class ArticleIndexView extends Backbone.View
     @params.set offset: (@params.get('offset') + 10) or 0
 
 module.exports.init = ->
-  new ArticleIndexView
-    el: $('body')
+  new ArticleIndexView el: $('body')
+  new GalleryInsightsView el: $('body')
