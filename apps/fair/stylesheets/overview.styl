@@ -171,8 +171,8 @@ html[data-useragent*="Firefox"]
 .small-section
   width: 50%
   display inline-block
-  height: small-section-height
-  width: small-section-height
+  height small-section-height
+  width small-section-height
   position relative
   vertical-align top
   background-color #000
@@ -181,9 +181,10 @@ html[data-useragent*="Firefox"]
     img
       opacity 0.5
   img
+    -webkit-backface-visibility hidden
     opacity 1
     transition opacity 0.3s
-    height: 100%
+    height 100%
     width 100%
   .section-heading
     color white
