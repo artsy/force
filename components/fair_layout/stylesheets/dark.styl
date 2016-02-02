@@ -1,0 +1,22 @@
+search-bar-input-placeholder-dark()
+  color gray-lighter-color
+
+.is-dark .fair-layout-search-input
+  placeholder(search-bar-input-placeholder-dark)
+
+.fair-layout-nav
+  &.is-dark
+    color white !important
+    a
+      color white !important
+    .fair-layout-search input
+      border-color rgba(255, 255, 255, 0.2)
+      color white
+
+.fair-layout-header
+  &.is-dark
+    color white
+    a
+      color white
+    .hover-pulldown:not(.mlh-hamburger):not(.mlh-notification):before
+      border-top-color white
