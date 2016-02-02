@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 routes = require '../routes'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -12,30 +13,31 @@ describe 'FairInfo routes', ->
   describe '#assignFair', ->
     beforeEach ->
       @req =
-        profile: new Profile fabricate 'profile', owner_type: 'Fair', owner: fabricate 'fair'
         params:
           id: "the-armory-show-2013"
 
       @res =
         locals:
+          profile: new Profile fabricate 'profile', owner_type: 'Fair', owner: fabricate 'fair'
           sd: {}
           render: sinon.stub()
 
       @next = sinon.stub()
 
-    before ->
       sinon.stub Backbone, 'sync'
         .yieldsTo 'success', {}
         .onCall 0
         .yieldsTo 'success', fabricate 'fair'
+        .returns Q.resolve {}
 
-    after ->
+    afterEach ->
       Backbone.sync.restore()
 
-    it 'assigns a fair model to locals', ->
+    it 'assigns a fair model to locals', (done) ->
       routes.assignFair(@req, @res, @next)
       _.defer =>
         @res.locals.fair.get('name').should.equal 'Armory Show 2013'
+        done()
 
   describe 'routes functions', ->
     beforeEach ->
