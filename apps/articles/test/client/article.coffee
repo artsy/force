@@ -3,11 +3,11 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-fixtures = require '../../../test/helpers/fixtures'
+fixtures = require '../../../../test/helpers/fixtures'
 { fabricate } = require 'antigravity'
-Article = require '../../../models/article.coffee'
-Articles = require '../../../collections/articles.coffee'
-{ crop, resize } = require '../../../components/resizer'
+Article = require '../../../../models/article.coffee'
+Articles = require '../../../../collections/articles.coffee'
+{ crop, resize } = require '../../../../components/resizer'
 sd = require('sharify').data
 moment = require 'moment'
 
@@ -38,7 +38,7 @@ describe 'ArticleIndexView', ->
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
-      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../client/article'), ['articleTemplate']
+      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/article'), ['articleTemplate']
       done()
 
   after ->
@@ -49,7 +49,7 @@ describe 'ArticleIndexView', ->
 
     before (done) ->
       @options.sd.SCROLL_ARTICLE = 'static'
-      benv.render resolve(__dirname, '../templates/article.jade'), @options, =>
+      benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
         @view = new @ArticleIndexView
           el: $('body')
         done()
@@ -61,7 +61,7 @@ describe 'ArticleIndexView', ->
 
     before (done) ->
       @options.sd.SCROLL_ARTICLE = 'infinite'
-      benv.render resolve(__dirname, '../templates/article.jade'), _.extend(@options, {
+      benv.render resolve(__dirname, '../../templates/article.jade'), _.extend(@options, {
         sd: sd
       }), =>
         @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
