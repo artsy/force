@@ -153,6 +153,10 @@
           "version": "2.4.2",
           "from": "qs@>=2.4.1 <3.0.0",
           "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.2.tgz"
+        },
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@*"
         }
       }
     },
@@ -164,7 +168,13 @@
     "artsy-error-handler": {
       "version": "0.0.5",
       "from": "git://github.com/artsy/artsy-error-handler.git",
-      "resolved": "git://github.com/artsy/artsy-error-handler.git#841cc9138d9f0b832cc374755bc703f3eac0bd13"
+      "resolved": "git://github.com/artsy/artsy-error-handler.git#841cc9138d9f0b832cc374755bc703f3eac0bd13",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@*"
+        }
+      }
     },
     "artsy-ezel-components": {
       "version": "0.0.4",
@@ -251,7 +261,13 @@
     "backbone": {
       "version": "1.2.3",
       "from": "backbone@>=1.2.3 <2.0.0",
-      "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.3.tgz"
+      "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.2.3.tgz",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.7.0"
+        }
+      }
     },
     "backbone-super-sync": {
       "version": "1.1.1",
@@ -261,7 +277,13 @@
     "backbone.paginator": {
       "version": "2.0.2",
       "from": "backbone.paginator@>=2.0.2 <3.0.0",
-      "resolved": "https://registry.npmjs.org/backbone.paginator/-/backbone.paginator-2.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/backbone.paginator/-/backbone.paginator-2.0.2.tgz",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.5.0 <2.0.0"
+        }
+      }
     },
     "balanced-match": {
       "version": "0.3.0",
@@ -502,7 +524,13 @@
     "browserify-dev-middleware": {
       "version": "0.1.2",
       "from": "browserify-dev-middleware@>=0.1.2 <0.2.0",
-      "resolved": "https://registry.npmjs.org/browserify-dev-middleware/-/browserify-dev-middleware-0.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/browserify-dev-middleware/-/browserify-dev-middleware-0.1.2.tgz",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@*"
+        }
+      }
     },
     "browserify-rsa": {
       "version": "4.0.0",
@@ -547,6 +575,10 @@
           "version": "2.9.0",
           "from": "commander@>=2.8.1 <3.0.0",
           "resolved": "https://registry.npmjs.org/commander/-/commander-2.9.0.tgz"
+        },
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.8.3 <2.0.0"
         }
       }
     },
@@ -4300,7 +4332,14 @@
     "places": {
       "version": "0.0.1",
       "from": "git://github.com/artsy/places.git",
-      "resolved": "git://github.com/artsy/places.git#5639439bc930de83fcc68bfbd488ef4441b0b084"
+      "resolved": "git://github.com/artsy/places.git#569016fc3f2d5ead4daf0d202babf802530015cc",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@*",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
+        }
+      }
     },
     "plist": {
       "version": "1.2.0",
@@ -5174,6 +5213,10 @@
           "version": "0.0.3",
           "from": "scmp@0.0.3",
           "resolved": "https://registry.npmjs.org/scmp/-/scmp-0.0.3.tgz"
+        },
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.0.0 <2.0.0"
         }
       }
     },
