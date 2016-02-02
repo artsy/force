@@ -38,19 +38,19 @@ describe 'PartnerArtistsListView', ->
 
     it 'makes proper requests to fetch partner artists', ->
       @view.fetch()
-      @fetchUntilEndInParallel.calledOnce.should.be.ok
+      @fetchUntilEndInParallel.calledOnce.should.be.ok()
 
-    it 'returns a thenable promises', ->
-      _.isFunction(@view.fetch().then).should.be.ok
+    it 'returns a thenable promise', ->
+      _.isFunction(@view.fetch().then).should.be.ok()
 
     it 'fetches and returns partner artists', ->
-      @view.fetch()
-        .then (artists) =>
-          artists.length.should.equal 10
-          artists.should.eql @partnerArtists.models
-        .done()
+      Backbone.sync
+        .onCall 0
+        .yieldsTo 'success', @partnerArtists.models
 
-      Backbone.sync.args[0][2].success @partnerArtists.models
+      @view.fetch().then (artists) =>
+        artists.length.should.equal 10
+        artists.should.eql @partnerArtists.models
 
   describe '#groupArtists', ->
 
