@@ -22,6 +22,7 @@ describe 'article show template', ->
       article: new Article title: 'hi', sections: [], section_ids: []
       footerArticles: new Articles
       crop: (url) -> url
+      resize: (u) -> u
       moment: moment
       sd: {}
       asset: ->
@@ -37,6 +38,7 @@ describe 'article show template', ->
           background_url: 'http://video.mp4'
       footerArticles: new Articles
       crop: (url) -> url
+      resize: (u) -> u
       moment: moment
       sd: {}
       asset: ->
@@ -52,6 +54,7 @@ describe 'article show template', ->
           background_image_url: 'http://image.jpg'
       footerArticles: new Articles
       crop: (url) -> url
+      resize: (u) -> u
       moment: moment
       sd: {}
       asset: ->
