@@ -35,7 +35,9 @@ mixin fullscreen(article)
       video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
     else if article.get('hero_section').background_image_url
       .article-fullscreen-overlay
-      img.article-fullscreen-image( src=article.get('hero_section').background_image_url)
+      img.article-fullscreen-image(
+        src=resize(article.get('hero_section').background_image_url, { height: 2000, width: 2000 })
+      )
 
     .article-fullscreen-down-arrow
       a.icon-chevron-down
