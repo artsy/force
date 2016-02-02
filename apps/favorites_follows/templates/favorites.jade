@@ -11,6 +11,10 @@ block body
   #favorites.favorites-container
     .main-layout-container
       if user.get('lab_features').indexOf('Set Management') != -1
+        .garamond-alert-info
+          | Artsy will soon be discontinuing support for set curation.
+          | Your works currently saved into sets will be added to your favorites.
+
         include ../../../components/favorites2/templates/favorites_content
       else
         include ../../../components/favorites/templates/favorites_content
