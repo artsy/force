@@ -79,7 +79,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->) }
       @view = new @ArtworkView el: $('#artwork-page'), artwork: @artwork
-      @artwork.related().sales.trigger 'sync', {}
+      @artwork.related().sales.trigger 'sync', @artwork.related().sales
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
@@ -212,7 +212,7 @@ describe 'ArtworkView', ->
 
     describe '#displayZigZag', ->
       beforeEach ->
-        @view.$el.append $('<div class="artwork-inquiry-button"></div>')
+        @view.$el.append $('<div class="js-send-embedded-inquiry"></div>')
       it 'should display as long as the work is not acquireable and it is for sale', ->
         @view.artwork.set { 'acquireable': false, 'forsale': true}
         @view.displayZigZag().should.be.true()
