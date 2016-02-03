@@ -26,9 +26,6 @@ include ./sections/works
 #artist-related-moreinfo-section.artist-related-section
   h3.artist-related-section-header More info
   #artist-related-moreinfo.artist-related-section-content
-    if artist.get('auction_lots_count')
-      a.faux-underline( href="/artist/#{artist.id}/auction-results" )
-        | Auction Results for #{artist.get('name')}
     #artist-related-last-modified
       //- Rendered client-side
 
