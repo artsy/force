@@ -18,10 +18,10 @@ module.exports = class PartnerCellView extends Backbone.View
       modelName: 'profile'
 
   render: ->
-    city = _.findWhere FeaturedCities, slug: @preferredCitySlug
+    city = _.findWhere FeaturedCities, slug: @preferredCitySlug if @preferredCitySlug
     @$el.html template
       partner: @partner
-      preferredCity: city.name
+      preferredCity: city?.name
       ViewHelpers: ViewHelpers
     @trigger 'postRender'
     this

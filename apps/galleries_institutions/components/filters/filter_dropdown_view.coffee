@@ -31,8 +31,7 @@ module.exports = class FilterDropdownView extends Backbone.View
     @typeahead = @$input.data().ttTypeahead
 
     @$('.tt-dataset-category').on('click', '.tt-suggestion', @suggestionClicked)
-
-    @$input.bind('typeahead:selected', @selected)
+    @$input.on('typeahead:selected', @selected)
 
   firstLoad: (params) =>
     @setPlaceholderToCurrentItem()
@@ -81,5 +80,8 @@ module.exports = class FilterDropdownView extends Backbone.View
 
     @$input.attr('placeholder', item.name)
 
-
+  destroy: ->
+    @$('.tt-dataset-category').off('click', '.tt-suggestion', @suggestionClicked)
+    @$input.off('typeahead:selected', @selected)
+    super()
 

@@ -15,10 +15,10 @@ module.exports = class ResultsView extends Backbone.View
     $.onInfiniteScroll =>
       if @params.hasSelection() and not @filterPartners.allFetched
         @fetch()
+    , offset: 800
 
   render: (partners) ->
     @$el.attr 'data-state', 'finished-paging' if @filterPartners.allFetched
-    debugger
     cellViews = _.map partners, (partner) =>
       view = new PartnerCell
         following: @following
@@ -37,5 +37,9 @@ module.exports = class ResultsView extends Backbone.View
       @$el.attr 'data-state', ''
 
     @$gridContainer.html ''
+
+  remove: ->
+    $.destroyInfiteScroll()
+    super()
 
 

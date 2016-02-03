@@ -63,3 +63,7 @@ module.exports = class PrimaryCarousel extends Backbone.View
         following: @following
         model: profile
         modelName: 'profile'
+
+  remove: ->
+    @destroyFlickity()
+    super()
