@@ -57,14 +57,17 @@ module.exports = class Form
     @reset() if reset
     @__submitting__ = false
     @$submit.prop 'disabled', false
+    this
 
   reset: ->
     @$form
       .find 'button, input, textarea'
       .attr 'data-state', null
+    this
 
   state: (state) ->
     @$submit.attr 'data-state', state
+    this
 
   data: ->
     @serializer.data()
