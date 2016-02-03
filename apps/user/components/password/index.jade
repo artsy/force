@@ -1,0 +1,68 @@
+.stacked-form(
+  class='js-settings-password--toggleable'
+)
+  label.avant-garde-form-label
+    | Current Password
+  input.bordered-input(
+    name='decoy-password'
+    type='password'
+    value='●●●●●●●'
+    disabled
+  )
+
+  hr.is-invisible
+
+  a.avant-garde-button-white(
+    class='js-settings-password__toggle'
+  ) Create New Password
+
+//- Initially hidden
+form.settings-password__form.stacked-form(
+  class='js-settings-password--toggleable'
+)
+  .form-errors.js-form-errors
+    //- Rendered client-side
+
+  label.avant-garde-form-label( for='current-password' )
+    | Current Password
+  input.bordered-input(
+    id='current-password'
+    name='current_password'
+    type='password'
+    autocomplete='on'
+    pattern='.{6,}'
+    title='6 characters minimum'
+    autofocus
+    required
+  )
+
+  label.avant-garde-form-label( for='new_password' )
+    | New Password
+  input.bordered-input(
+    id='new_password'
+    name='new_password'
+    type='password'
+    autocomplete='on'
+    pattern='.{6,}'
+    title='6 characters minimum'
+    required
+  )
+
+  label.avant-garde-form-label( for='password_confirmation' )
+    | Repeat New Password
+  input.bordered-input(
+    id='password_confirmation'
+    name='password_confirmation'
+    type='password'
+    autocomplete='on'
+    pattern='.{6,}'
+    title='6 characters minimum'
+    required
+  )
+
+  button.avant-garde-button-black
+    | Save Changes
+
+  a.avant-garde-button-white(
+    class='js-settings-password__toggle'
+  ) Cancel

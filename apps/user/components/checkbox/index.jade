@@ -1,16 +1,19 @@
 mixin checkbox(name)
   .settings-split.artsy-checkbox
-    .ss-left
-      label.settings-checkbox-label.artsy-checkbox--label( for= name )
+    .settings-split__left
+      label.artsy-checkbox--label(
+        class='js-settings-checkbox-label'
+        for= name
+      )
         block
 
-    .ss-right
+    .settings-split__right
       .artsy-checkbox--checkbox
         input(
           type='checkbox'
           id= name
           name= name
-          checked= user.checked(name)
+          checked= user && user.checked(name)
           disabled= disabled
         )
         label( for= name )

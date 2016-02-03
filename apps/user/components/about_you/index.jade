@@ -1,0 +1,59 @@
+form.stacked-form
+  .form-errors.js-form-errors
+    //- Rendered client-side
+
+  label.avant-garde-form-label( for='handle' )
+    | Username
+  input.bordered-input(
+    id='handle'
+    type='text'
+    name='handle'
+    value= profile.id
+    size='30'
+    maxlength='20'
+    required
+  )
+
+  label.avant-garde-form-label( for='bio' )
+    | Bio
+  textarea.bordered-input(
+    id='bio'
+    name='bio'
+    rows='5'
+  )
+    = profile.get('bio')
+
+  label.avant-garde-form-label( for='website' )
+    | Website
+  input.bordered-input(
+    id='website'
+    type='url'
+    name='website'
+    value= profile.get('website')
+    size='30'
+    placeholder='http://'
+  )
+
+  label.avant-garde-form-label
+    | Primary Location
+  .settings-about-you__location(
+    class='js-settings-about-you__location'
+  )
+    input.bordered-input.is-block(
+      name='decoy-location'
+      placeholder='Enter your city'
+    )
+
+  label.avant-garde-form-label( for='profession' )
+    | Profession
+  input.bordered-input(
+    type='text'
+    id='profession'
+    name='profession'
+    value= user.get('profession')
+  )
+
+  //- Profile picture?
+
+  button.avant-garde-button-white
+    | Save Changes

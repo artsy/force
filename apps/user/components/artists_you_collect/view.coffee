@@ -1,17 +1,18 @@
 Backbone = require 'backbone'
 UserInterestsView = require '../../../../components/user_interests/view.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./index.jade') arguments...
 
-module.exports = class ArtistsInCollectionView extends Backbone.View
-  className: 'grouped-section'
+module.exports = class ArtistsYouCollectView extends Backbone.View
+  className: 'settings-artists-you-collect'
 
-  initialize: ->
-    { @collectorProfile } = @model.related()
+  initialize: ({ @user }) ->
+    { @collectorProfile } = @user.related()
     { @userInterests } = @collectorProfile.related()
 
   postRender: ->
     @userInterestsView = new UserInterestsView collection: @userInterests
-    @$('.js-settings-collector-user-interests').html @userInterestsView.render().$el
+    @$('.js-artists-you-collect__user-interests')
+      .html @userInterestsView.render().$el
     @userInterests.fetch()
 
   render: ->

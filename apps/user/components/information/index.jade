@@ -1,0 +1,43 @@
+form.stacked-form
+  .form-errors.js-form-errors
+    //- Rendered client-side
+
+  label.avant-garde-form-label( for='name' )
+    | Full Name
+  input.bordered-input(
+    id='name'
+    type='text'
+    name='name'
+    value= user.get('name')
+    required
+  )
+
+  label.avant-garde-form-label( for='email' )
+    | Email
+  input.bordered-input(
+    id='email'
+    type='email'
+    name='email'
+    value= user.get('email')
+    required
+  )
+
+  label.avant-garde-form-label( for='phone' )
+    | Mobile Number
+  input.bordered-input(
+    id='phone'
+    type='tel'
+    name='phone'
+    value= user.get('phone')
+  )
+
+  if user.get('paddle_number')
+    label.avant-garde-form-label
+      | Bidder Number
+    input.bordered-input(
+      value= user.get('paddle_number')
+      disabled
+    )
+
+  button.avant-garde-button-white
+    | Save Changes

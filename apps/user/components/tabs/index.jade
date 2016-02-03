@@ -1,0 +1,14 @@
+include ../../../../components/util/activator
+
+nav.avant-garde-tablist
+  a.avant-garde-tablist__tab(
+    class='js-avant-garde-tablist__tab'
+    href='/settings/edit'
+    data-state= activeState('/settings/edit')
+  ) Settings
+
+  a.avant-garde-tablist__tab(
+    class='js-avant-garde-tablist__tab'
+    href='/profile/edit'
+    data-state= activeState('/profile/edit')
+  ) Profile
