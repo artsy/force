@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-GeminiForm = require '../../../components/gemini_form/view.coffee'
+GeminiForm = require '../../../../components/gemini_form/view.coffee'
 
 module.exports = class ProfileIconUpload extends Backbone.View
   events:

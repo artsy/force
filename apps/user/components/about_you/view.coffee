@@ -1,56 +1,36 @@
-Q = require 'bluebird-q'
-Backbone = require 'backbone'
+{ invoke } = require 'underscore'
 GenericFormView = require '../generic_form/view.coffee'
-Form = require '../../../../components/form/index.coffee'
-FlashMessage = require '../../../../components/flash/index.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
+ProfileIconView = require '../profile_icon/view.coffee'
 template = -> require('./index.jade') arguments...
 
-module.exports = class AboutYouView extends Backbone.View
-  className: 'settings-about-you'
+module.exports = class AboutYouView extends GenericFormView
+  subViews: []
 
-  events:
-    'input input': 'change'
-    'click button': 'submit'
+  className: 'settings-about-you'
 
   initialize: ({ @user, @profile }) -> #
 
-  change: GenericFormView::change
-
-  submit: (e) ->
-    e.preventDefault()
-
-    form = new Form $form: @$('form')
-    return unless form.isReady()
-
-    form.state 'loading'
-
-    # Form manages attributes for both User and Profile
-    # so we need to split them out and save to each model
-    Q.all [
-      @profile.save form.serializer.pick 'handle', 'bio', 'website'
-      @user.save form.serializer.pick 'profession'
-    ]
-      .then =>
-        form
-          .state 'default'
-          .reenable()
-
-        @user.refresh()
-
-        new FlashMessage message: 'Your settings have been saved'
-
-      .catch form.error.bind form
-
   postRender: ->
     city = @model.related().location.toString()
-    @locationSearchView = new LocationSearchView autofocus: false
+    locationSearchView = new LocationSearchView autofocus: false
     @$('.js-settings-about-you__location')
-      .html @locationSearchView.render(city).$el
+      .html locationSearchView.render(city).$el
 
-    @listenTo @locationSearchView, 'location:update', (value) =>
+    @listenTo locationSearchView, 'location:update', (value) =>
       @model.setLocation value
       @change()
+
+    profileIconView = new ProfileIconView
+      el: @$('.js-settings-about-you__avatar')
+      model: @profile.icon()
+      profile: @profile
+      accessToken: @user.get 'accessToken'
+
+    @subViews = [
+      locationSearchView
+      profileIconView
+    ]
 
   render: ->
     @$el.html template
@@ -60,5 +40,5 @@ module.exports = class AboutYouView extends Backbone.View
     this
 
   remove: ->
-    @locationSearchView.remove()
+    invoke @subViews, 'remove'
     super

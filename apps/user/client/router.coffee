@@ -1,51 +1,55 @@
-_ = require 'underscore'
-sd = require('sharify').data
+{ USER, PROFILE } = require('sharify').data
 Backbone = require 'backbone'
 Profile = require '../../../models/profile.coffee'
-UserEdit = require '../models/user_edit.coffee'
-AccountForm = require './account_form.coffee'
-ProfileForm = require './profile_form.coffee'
-CollectorForm = require './collector_form.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-UserSettingsView = require './view.coffee'
+UserEdit = require '../models/user_edit.coffee'
+SettingsTabsView = require '../components/tabs/view.coffee'
+SettingsView = require './settings.coffee'
+ProfileView = require './profile.coffee'
+DeleteView = require './delete.coffee'
 
 module.exports = class UserSettingsRouter extends Backbone.Router
   routes:
-    'user/edit': 'user'
+    'settings/edit': 'settings'
+    'settings/edit#:section': 'settings'
     'profile/edit': 'profile'
-    'collector/edit': 'collector'
+    'profile/edit#:section': 'profile'
+    'user/delete': 'delete'
+    'user/delete#:section': 'delete'
 
-  initialize: (options = {}) ->
-    user = new UserEdit sd.USER_EDIT
-    user.initializeDefaultArtworkCollection success: (collection, response, options) =>
-      user.set 'public_favorites', !collection.get('private')
+  initialize: ->
+    user = new UserEdit USER
+    profile = new Profile PROFILE
 
     @models =
-      user: CurrentUser.orNull()
-      profile: new Profile sd.PROFILE
-      userEdit: user
+      user: user
+      profile: profile
 
-    @baseView = new UserSettingsView _.extend(el: $('#settings'), @models)
+    @$el = $('.js-settings-page')
+    @$main = @$el.find '.js-settings-page__content__main'
+    @$sections = @$el.find '.js-settings-page__content__sections'
+
+    @tabs = new SettingsTabsView el: @$el
 
   execute: ->
     @view?.remove()
-    @baseView.activateCurrentTab()
+    @tabs.update()
     super
-    _.defer =>
-      @view.$el.addClass 'is-fade-in'
+    @renderSections()
 
-  user: ->
-    @view = new AccountForm @models
-    @baseView.$('#settings-forms').html @view.render().$el
-    if sd.ERROR
-      $('body, html').animate {
-        scrollTop: $('#settings-auth-errors').offset().top - 100
-      }, 800
+  renderSections: ->
+    @$sections.html @view.$el.find('.js-settings-section').map(->
+      "<a href='##{$(this).attr 'id'}'>#{$(this).data 'name'}</a>"
+    ).get().join ''
+
+  settings: ->
+    @view = new SettingsView @models
+    @$main.html @view.render().$el
 
   profile: ->
-    @view = new ProfileForm @models
-    @baseView.$('#settings-forms').html @view.render().$el
+    @view = new ProfileView @models
+    @$main.html @view.render().$el
 
-  collector: ->
-    @view = new CollectorForm @models
-    @baseView.$('#settings-forms').html @view.render().$el
+  delete: ->
+    @view = new DeleteView @models
+    @$main.html @view.render().$el

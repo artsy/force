@@ -1,38 +1,8 @@
+include ../checkbox/index
+
 form.stacked-form
   .form-errors.js-form-errors
     //- Rendered client-side
-
-  label.avant-garde-form-label( for='handle' )
-    | Username
-  input.bordered-input(
-    id='handle'
-    type='text'
-    name='handle'
-    value= profile.id
-    size='30'
-    maxlength='20'
-    required
-  )
-
-  label.avant-garde-form-label( for='bio' )
-    | Bio
-  textarea.bordered-input(
-    id='bio'
-    name='bio'
-    rows='5'
-  )
-    = profile.get('bio')
-
-  label.avant-garde-form-label( for='website' )
-    | Website
-  input.bordered-input(
-    id='website'
-    type='url'
-    name='website'
-    value= profile.get('website')
-    size='30'
-    placeholder='http://'
-  )
 
   label.avant-garde-form-label
     | Primary Location
@@ -53,7 +23,18 @@ form.stacked-form
     value= user.get('profession')
   )
 
-  //- Profile picture?
+  label.avant-garde-form-label
+    | Advanced Settings
+  .settings-about-you__advanced-settings
+    +checkbox('share_follows')
+      | Share followed artists, categories, and galleries with your inquiries
+
+  label.avant-garde-form-label
+    | Profile Picture
+  .settings-about-you__avatar(
+    class='js-settings-about-you__avatar'
+  )
+    include ../profile_icon/index
 
   button.avant-garde-button-white
     | Save Changes

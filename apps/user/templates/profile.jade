@@ -1,91 +1,10 @@
-if profile.get('private')
-  header.grouped-section
-    .gs-header &nbsp;
-    .gs-body
-      p
-        em.settings-disabled-indicator Your profile is currently disabled
-        a.settings-toggle-profile.avant-garde-button-black
-          | Enable public profile
-else
-  .grouped-section
-    .gs-header &nbsp;
-    .gs-body
-      | Visit your public profile:
-      = ' '
-      a.faux-underline( href= profile.href() )
-        | https://www.artsy.net#{profile.href()}
+include ./mixins
 
-  .grouped-section
-    .gs-header: h2 Your Profile Information
-    .gs-body: .gs-constrain
-      #settings-profile-information
-        .settings-form-errors
-          //- Rendered elsewhere
++settings-section('about-you', 'About You')
+  include ../components/about_you/index
 
-        form.stacked-form
-          label.avant-garde-form-label( for='settings-handle' ) Username
-          input#settings-handle.bordered-input(
-            type='text'
-            value=profile.id
-            size='30'
-            maxlength='20'
-            name='handle'
-            required
-          )
++settings-section('artists-you-collect', 'Artists You Collect')
+  include ../components/artists_you_collect/index
 
-          label.avant-garde-form-label( for='settings-bio' ) Bio
-          textarea#settings-bio.bordered-input(
-            name='bio'
-            rows='5'
-          )= profile.get('bio')
-
-          label.avant-garde-form-label Location
-          #settings-profile-location
-            //- Rendered elsewhere
-
-          label.avant-garde-form-label( for='settings-website' ) Website
-          input#settings-website.bordered-input(
-            type='url'
-            value=profile.get('website')
-            size='30'
-            name='website'
-            placeholder='http://'
-          )
-
-          hr.is-invisible
-
-          .is-center-aligned: button.avant-garde-button-white
-            | Save Changes
-
-  .grouped-section
-    .gs-header: h2 Profile Picture
-    .gs-body: .gs-constrain.is-center-aligned
-      include profile_icon
-
-  #settings-profile-advanced-container.grouped-section
-    .gs-header
-      h2 Advanced Settings
-    .gs-body: .gs-constrain
-      #settings-profile-advanced
-        form
-          .settings-split.artsy-checkbox
-            .ss-left
-              label( for='profile-favorites' ).artsy-checkbox--label.settings-checkbox-label
-                | Enable Public Favorites
-                br
-                em Allows others to view the artworks you save
-            .ss-right: .artsy-checkbox--checkbox
-              input(
-                type='checkbox'
-                id='profile-favorites'
-                checked=user.checked('public_favorites')
-              )
-              label( for='profile-favorites' )
-
-          hr.is-invisible
-
-          .is-center-aligned: button.avant-garde-button-white
-            | Save Changes
-
-  a.settings-toggle-profile.settings-disable-link.garamond-button-text
-    | Disable Profile
++settings-section('gallery-intro', 'Your Gallery Intro')
+  include ../components/gallery_intro/index
