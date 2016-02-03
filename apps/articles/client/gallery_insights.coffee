@@ -17,6 +17,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
     sd.SECTION?.id is sd.GALLERY_INSIGHTS_SECTION_ID
 
   eligibleToSignUp: ->
+    console.log 'moo', @inGIArticlePage(), @inGIVerticalPage(), sd.MAILCHIMP_SUBSCRIBED
     (@inGIArticlePage() or @inGIVerticalPage()) and not sd.MAILCHIMP_SUBSCRIBED
 
   createAndShowCTAForm: ->
