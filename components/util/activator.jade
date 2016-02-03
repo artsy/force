@@ -10,4 +10,5 @@
 -   }
 - };
 
-- function activeClass(path) { if (sd && sd.CURRENT_PATH) return isActive(path) ? 'is-active' : 'is-inactive'; };
+- function activeState(path) { if (sd && sd.CURRENT_PATH) return isActive(path) ? 'active' : 'inactive'; };
+- function activeClass(path) { if (sd && sd.CURRENT_PATH) return 'is-' + activeState(path); };
