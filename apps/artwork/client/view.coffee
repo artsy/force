@@ -93,6 +93,8 @@ module.exports = class ArtworkView extends Backbone.View
     @handleSales sales
     @setupPartnerLocations()
     @setupEmbeddedInquiryForm()
+    unless sales.hasAuctions()
+      _.defer => @setupZigZag()
 
   handleFairs: (fairs) ->
     return unless fairs.length and not @showRails
@@ -102,9 +104,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   handleSales: (sales) ->
     return unless sales.length
-
-    unless sales.hasAuctions()
-      @setupZigZag()
 
     @sale = sales.first()
     @$('#artist-artworks-section').remove()
@@ -161,7 +160,7 @@ module.exports = class ArtworkView extends Backbone.View
     view.render()
 
   displayZigZag: ->
-    (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
+    (@$inquiryButton = @$('.js-send-embedded-inquiry').first())
     @$inquiryButton.length and not @artwork.get('acquireable') and @artwork.get('forsale')
 
   setupZigZag: ->
