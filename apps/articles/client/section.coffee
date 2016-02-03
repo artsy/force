@@ -15,6 +15,7 @@ module.exports.init = ->
       limit: 50
       published: true
       featured: true
+      section_id: sd.SECTION.id
       sort: '-published_at'
-  feedView.render()
+  feedView.render() if sd.ARTICLES_COUNT > sd.ARTICLES.length
   new GalleryInsightsView el: $('body')
