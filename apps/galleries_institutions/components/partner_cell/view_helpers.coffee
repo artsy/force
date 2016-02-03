@@ -2,6 +2,7 @@ _ = require 'underscore'
 
 module.exports =
   displayLocations: (locations, preferredCity) ->
+    debugger
     if locations.length
       string =
         _.findWhere(locations, city: preferredCity)?.city or

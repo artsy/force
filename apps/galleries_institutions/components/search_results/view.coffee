@@ -18,12 +18,12 @@ module.exports = class ResultsView extends Backbone.View
 
   render: (partners) ->
     @$el.attr 'data-state', 'finished-paging' if @filterPartners.allFetched
-
+    debugger
     cellViews = _.map partners, (partner) =>
       view = new PartnerCell
         following: @following
         partner: partner
-        preferredLocation: @params.location
+        preferredCitySlug: @params.get('location')
 
       view.render()
 
