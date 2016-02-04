@@ -12,7 +12,6 @@ module.exports = class FilterPartners extends Partners
   sync: (method, collection, options) =>
     data = {
       default_profile_public: true
-      has_full_profile: true
     }
 
     _.extend data, _.omit options.data, 'category', 'location', 'type'
