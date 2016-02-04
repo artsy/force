@@ -173,7 +173,7 @@ module.exports =
       url: "#{sd.APP_URL}#{show.href}"
       startDate: (new Date(show.start_at)).toISOString()
       endDate: (new Date(show.end_at)).toISOString()
-      location: @toJSONLDLocation(show.location)
+      location: @toJSONLDLocation(show.location) if show.location
       performer: @performers(show)
     }
 
@@ -226,10 +226,10 @@ module.exports =
 
   singleLine: (location) ->
     _.compact([
-      location.city or ''
+      location?.city or ''
       _.compact([
-        location.address or ''
-        location.address_2 or ''
+        location?.address or ''
+        location?.address_2 or ''
       ]).join(' ')
     ]).join(', ')
 
