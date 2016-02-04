@@ -4,10 +4,18 @@ block content
     each facet in facets
       - var displayName = facet.displayName
       - var facetName = facet.facetName
-      - var countItems = facet.countItems
 
-      .filter-partners-dropdown(class= "search-#{facetName}")
-        include ../components/filters/filter_dropdown
+      .partners-facet-dropdown.filter-partners-dropdown(class= "search-#{facetName}")
+        input.partners-facet-input.no-selection(
+          placeholder= "All " + displayName
+        )
+        span.icon-chevron-down
+
+    .partners-search-dropdown.filter-partners-dropdown
+      span.icon-search
+      input.partners-search-input(
+        placeholder= "Search #{pluralType}"
+      )
 
   .galleries-institutions-primary-carousel.js-galleries-institutions-primary-carousel.gi-carousel-arrow-reveal
     if profiles && profiles.length

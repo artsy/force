@@ -56,8 +56,10 @@ mapType =
       facets: [categoriesFacet, locationsFacet]
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
-    .catch next
-    .done()
+  .catch (e) ->
+    console.log e
+    next()
+  .done()
 
 # A to Z page
 
@@ -88,6 +90,8 @@ fetchAZ =
       showAZLink: false
       aToZGroup: aToZGroup
 
-    .catch next
-    .done()
+  .catch (e) ->
+    console.log e
+    next()
+  .done()
 

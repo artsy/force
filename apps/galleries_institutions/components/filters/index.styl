@@ -20,12 +20,19 @@
     overflow hidden
 
   .icon-chevron-down
+  .icon-search
     position absolute
-    right 0
     bottom 0
     font-size 15px
+
+  .icon-chevron-down
+    right 0
     color gray-dark-color
     cursor pointer
+
+  .icon-search
+    left 0
+    color black
 
   .tt-suggestions
     width 100%
@@ -37,11 +44,14 @@
   .tt-suggestions
     garamond-size(s-body)
 
-.filter-header-input
+.partners-facet-input
+.partners-search-input
   width 100%
   garamond-size(s-headline)
   border-width 0 0 1px 0
   border-color gray-color
+
+.partners-facet-input
   placeholder(color gray-dark-color,)
   &:not(:focus)
     placeholder(color purple-color,)

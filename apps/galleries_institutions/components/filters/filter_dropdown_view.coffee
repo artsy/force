@@ -1,17 +1,16 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-template = -> require('./filter_dropdown.jade') arguments...
 suggestionTemplate = -> require('./suggestion.jade') arguments...
 
 module.exports = class FilterDropdownView extends Backbone.View
   events:
-    'focus .filter-header-input': 'inputFocus'
-    'blur .filter-header-input': 'inputBlur'
+    'focus .partners-facet-input': 'inputFocus'
+    'blur .partners-facet-input': 'inputBlur'
     'mousedown .icon-chevron-down': (e) -> e.preventDefault()
     'click .icon-chevron-down': 'dropdownClick'
 
   initialize: ({ @params, @facet }) ->
-    @$input = @$('.filter-header-input')
+    @$input = @$('.partners-facet-input')
     @$input.typeahead({
       hint: false
       highlight: true,

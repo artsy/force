@@ -8,10 +8,11 @@ append locals
   - assetPackage = 'galleries_institutions'
 
 block body
+  - var pluralType = type === 'gallery' ? 'Galleries' : 'Institutions'
   .galleries-institutions-page.main-layout-container
     header.galleries-institutions-header
       h1.galleries-institutions-headline
-        | Browse #{type === 'gallery' ? 'Galleries' : 'Institutions'}
+        | Browse #{pluralType}
 
       nav.galleries-institutions-subnav
         a.fine-faux-underline( href='/#{type}-partnerships' )
