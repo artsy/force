@@ -8,7 +8,9 @@ qs = require 'qs'
 # joaquin-torres-garcia-autorretrato-self-portrait
 artworkWithShow = require './fixtures/artwork_with_show'
 # ed-ruscha-pearl-dust-combination-from-insects-portfolio
-artworkWithAuction = require './fixtures/artwork_open_auction'
+artworkWithClosedAuction = require './fixtures/artwork_closed_auction'
+# andy-warhol-skull
+artworkWithOpenAuction = require './fixtures/artwork_open_auction'
 ArtworkRails = rewire '../artwork_rails'
 
 describe 'ArtworkRails', ->
@@ -98,11 +100,29 @@ describe 'ArtworkRails', ->
         done()
       .catch done
 
-  describe 'with an artwork that has an auction',  ->
+  describe 'with an artwork that has an open auction', ->
     before ->
       ArtworkRails.__set__ 'metaphysics', ->
         Q.promise (resolve, reject) ->
-          return resolve artworkWithAuction
+          return resolve artworkWithOpenAuction
+
+      @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
+
+      sinon.stub Backbone, 'sync'
+
+    after ->
+      Backbone.sync.restore()
+
+    it 'doesnt fetch anything', (done) ->
+      @rails.fetch().then ->
+        Backbone.sync.args.should.eql []
+        done()
+
+  describe 'with an artwork that has a closed auction',  ->
+    before ->
+      ArtworkRails.__set__ 'metaphysics', ->
+        Q.promise (resolve, reject) ->
+          return resolve artworkWithClosedAuction
 
       @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
 
@@ -115,7 +135,7 @@ describe 'ArtworkRails', ->
     after ->
       Backbone.sync.restore()
 
-    it 'tries to fetch show artworks, similar artworks, artist artworks, and partner artworks', (done) ->
+    it 'tries to fetch auction artworks, similar artworks, artist artworks, and partner artworks', (done) ->
       @rails.fetch().then ->
         _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
         .should.eql [
@@ -157,7 +177,7 @@ describe 'ArtworkRails', ->
     before ->
       ArtworkRails.__set__ 'metaphysics', ->
         Q.promise (resolve, reject) ->
-          return resolve artworkWithAuction
+          return resolve artworkWithClosedAuction
 
       @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
 
