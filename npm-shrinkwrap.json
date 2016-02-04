@@ -265,7 +265,8 @@
       "dependencies": {
         "underscore": {
           "version": "1.8.3",
-          "from": "underscore@>=1.7.0"
+          "from": "underscore@1.8.3",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
         }
       }
     },
@@ -4332,14 +4333,7 @@
     "places": {
       "version": "0.0.1",
       "from": "git://github.com/artsy/places.git",
-      "resolved": "git://github.com/artsy/places.git#569016fc3f2d5ead4daf0d202babf802530015cc",
-      "dependencies": {
-        "underscore": {
-          "version": "1.8.3",
-          "from": "underscore@*",
-          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
-        }
-      }
+      "resolved": "git://github.com/artsy/places.git#e9be46252857badac222e5640d1a793972c0a03d"
     },
     "plist": {
       "version": "1.2.0",
