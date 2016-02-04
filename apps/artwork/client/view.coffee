@@ -50,7 +50,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupRelatedArticles()
     @setupArtistArtworks()
     @setupFollowButtons()
-    @setupBelowTheFold() unless @showRails
+    @setupBelowTheFold()   # We always do this since auctions might override rails.
     setupArtworkRails(@artwork, @artist) if @showRails
     @setupMainSaveButton()
     @setupVideoView()
@@ -108,7 +108,9 @@ module.exports = class ArtworkView extends Backbone.View
     @sale = sales.first()
     @$('#artist-artworks-section').remove()
 
-    unless @sale.isAuctionPromo() or @showRails
+    # If the sale is an auction and is in preview or open, override rails.
+    includeSaleView = ! @sale.isAuctionPromo() and @sale.isUpcomingOrClosed()
+    if includeSaleView
       @belowTheFoldView.setupSale
         sale: @sale
         saved: @saved
@@ -246,6 +248,7 @@ module.exports = class ArtworkView extends Backbone.View
         @$('#artwork-artist-related-extended').append subView.render().$el
 
   setupBelowTheFold: ->
+    # This initializer doesn't fetch or do anything, it's a no-op.
     @belowTheFoldView = new BelowTheFoldView
       artwork: @artwork
       el: @$('#artwork-below-the-fold-section')

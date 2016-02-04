@@ -4,8 +4,8 @@ module.exports = {
     "category": "Print",
     "is_for_sale": true,
     "artist": {
-      "id": "andy-warhol",
-      "name": "Andy Warhol"
+      "id": "ed-ruscha",
+      "name": "Ed Ruscha"
     },
     "shows": [],
     "related": {
@@ -15,9 +15,7 @@ module.exports = {
       "start_at": "2016-01-20T10:00:00+00:00",
       "end_at": "2016-01-20T23:59:00+00:00",
       "sale_type": "auction",
-      "auction_state": "open",
-      "is_preview": true,
-      "is_auction": true
+      "auction_state": "open"
     },
     "partner": {
       "id": "los-angeles-modern-auctions-lama",

@@ -43,16 +43,19 @@ module.exports = class ArtworkRails
         @fetchArtwork()
         .then ({ @artwork }) =>
           return resolve() if @artwork.partner.type is 'Institution'
+          isInAuction = @artwork.related?.__typename is 'RelatedSale' and @artwork.related?.is_auction?
+          isInCurrentOrUpcomingAuction = @artwork.related?.is_preview? or @artwork.related?.is_open?
+          return resolve() if isInAuction and isInCurrentOrUpcomingAuction
           @excludedIds.push @artwork._id
           @maybeFetchForSaleArtworks()
         .then =>
-          @fetchAuctionArtworks()
+          @maybeFetchAuctionArtworks()
         .then =>
           @fetchSimilarArtworks()
         .then =>
           @fetchArtistArtworks()
         .then =>
-          @fetchShowArtworks()
+          @maybeFetchShowArtworks()
         .then =>
           @fetchPartnerArtworks()
         .then =>
@@ -72,7 +75,7 @@ module.exports = class ArtworkRails
           artist_id: @artwork.artist.id
           for_sale: true
 
-  fetchAuctionArtworks: ->
+  maybeFetchAuctionArtworks: ->
     Q.promise (resolve) =>
       if @artwork.related?.__typename is 'RelatedSale'
         sale = new Sale @artwork.related
@@ -86,7 +89,7 @@ module.exports = class ArtworkRails
       else
         resolve()
 
-  fetchShowArtworks: ->
+  maybeFetchShowArtworks: ->
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
@@ -153,6 +156,9 @@ module.exports = class ArtworkRails
                 end_at
                 sale_type
                 auction_state
+                is_auction
+                is_preview
+                is_open
               }
             }
             partner{
