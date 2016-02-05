@@ -21,6 +21,7 @@ module.exports = class ViewInRoom extends Backbone.View
     0.095 * @roomWidth
 
   initialize: (options) ->
+    $('.artwork-detail').css 'visibility', 'hidden'
     { @$container, @$img, @artwork } = options
 
     @$window = $(window)
@@ -46,6 +47,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   return: ->
     Backbone.history.navigate @artwork.href(), trigger: true, replace: true
+    $('.artwork-detail').css 'visibility', 'visible'
     false
 
   cacheSelectors: ->
