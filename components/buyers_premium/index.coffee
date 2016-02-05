@@ -9,42 +9,51 @@ module.exports = (auction, callback) ->
     success: ->
       sortedSchedule = _.sortBy(auction.get('buyers_premium').schedule, (sched) -> sched.min_amount_cents)
       symbol = auction.get('buyers_premium').symbol
-      schedule = _.map sortedSchedule, (scheduleRow, idx) ->
-        if idx == 0
-          """
-          <li>
-            <div class='buyers-premium-pre'>
-              On the hammer price up to and including \
-              #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}
-            </div>
-            <div class='buyers-premium-dots'></div>
-            <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
-          </li>
-          """
-        else if idx == sortedSchedule.length - 1
-          """
-          <li>
-            <div class='buyers-premium-pre'>
-              On the portion of the hammer price in excess of \
-              #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)}
-            </div>
-            <div class='buyers-premium-dots'></div>
-            <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
-          </li>
-          """
-        else
-          """
-          <li>
-            <div class='buyers-premium-pre'>
-              On the hammer price in excess of \
-              #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)} \
-              up to and including \
-              #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)} \
-            </div>
-            <div class='buyers-premium-dots'></div>
-            <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
-          </li>
-          """
+      if sortedSchedule.length == 1
+        schedule = """
+          <div>
+            #{sortedSchedule[0].percent * 100}% on the hammer price
+          </div>
+        """
+        callback null, schedule
+        return
+      else
+        schedule = _.map sortedSchedule, (scheduleRow, idx) ->
+          if idx == 0
+            """
+            <li>
+              <div class='buyers-premium-pre'>
+                On the hammer price up to and including \
+                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}
+              </div>
+              <div class='buyers-premium-dots'></div>
+              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
+            </li>
+            """
+          else if idx == sortedSchedule.length - 1
+            """
+            <li>
+              <div class='buyers-premium-pre'>
+                On the portion of the hammer price in excess of \
+                #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)}
+              </div>
+              <div class='buyers-premium-dots'></div>
+              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
+            </li>
+            """
+          else
+            """
+            <li>
+              <div class='buyers-premium-pre'>
+                On the hammer price in excess of \
+                #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)} \
+                up to and including \
+                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)} \
+              </div>
+              <div class='buyers-premium-dots'></div>
+              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
+            </li>
+            """
 
       fullyRenderedHtml = """
         <div class='buyers-premium'>
