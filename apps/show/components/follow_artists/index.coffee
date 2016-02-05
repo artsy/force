@@ -13,6 +13,7 @@ module.exports = (artists) ->
       following: following
       modelName: 'artist'
       model: artist
+      href: "#{artist.href}/follow"
       analyticsFollowMessage: 'Followed artist, via show page'
       analyticsUnfollowMessage: 'Unfollowed artist, via show page'
 

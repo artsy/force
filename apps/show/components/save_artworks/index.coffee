@@ -1,5 +1,6 @@
+_ = require 'underscore'
 CurrentUser = require '../../../../models/current_user.coffee'
-SaveControls = require '../../../../components/artwork_item/save_controls.coffee'
+SaveControls = require './../artwork_item_metaphysics/save_controls/view.coffee'
 
 module.exports = (artworks) ->
   if user = CurrentUser.orNull()
@@ -10,6 +11,6 @@ module.exports = (artworks) ->
 
   $artworks = $('.artwork-item')
 
-  artworks.each (artwork) ->
+  _.each artworks, (artwork) =>
     $el = $artworks.filter("[data-artwork='#{artwork.id}']").find '.overlay-container'
-    new SaveControls el: $el, artworkCollection: saved, model: artwork
+    new SaveControls el: $el, artworkCollection: saved, artwork: artwork

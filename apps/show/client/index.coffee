@@ -1,66 +1,51 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
-{ SHOW, ARTWORKS } = require('sharify').data
-{ Cities, FeaturedCities } = require 'places'
-PartnerShow = require '../../../models/partner_show.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
+sd = require('sharify').data
 ShareView = require '../../../components/share/view.coffee'
-initCarousel = require '../../../components/merry_go_round/index.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
-attachRelatedShows = require '../components/related_shows/index.coffee'
-setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
-openMapModal = require '../../../components/map_modal/index.coffee'
-template = -> require('../templates/map_modal.jade') arguments...
+openMapModal = require '../components/map_modal/index.coffee'
 openShowEvents = require '../components/events_modal/index.coffee'
 blurb = require '../../../components/gradient_blurb/index.coffee'
-FlickityZoomSequence = require '../components/flickity_zoom_sequence/index.coffee'
+attachRelatedShows = require '../components/related_shows/index.coffee'
+FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
+FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
+Profile = require '../../../models/profile.coffee'
 
 module.exports.init = ->
-  show = new PartnerShow SHOW
-  show.related().artworks.reset ARTWORKS
-
+  bootstrappedShow = sd.PARTNER_SHOW
   blurb $('.show-press-release'), limit: 350
 
   $('.js-open-show-events').click (e) ->
     e.preventDefault()
-    openShowEvents(model: show, collection: show.related().showEvents)
+    openShowEvents(show: bootstrappedShow, events: bootstrappedShow.events)
 
   if $('.js-show-installation-shot-carousel').length
-    initCarousel $('.js-show-installation-shot-carousel'), {
-      setGallerySize: false
-      imagesLoaded: true
-    }, (instance) ->
+    furtherInstallShotsEl = $('.js-show-installation-shot-carousel')
+    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
 
-      seq = new FlickityZoomSequence instance.cells.flickity
-      seq.bind()
-
-  setupSaveControls show.related().artworks
-  attachFollowArtists show.related().artists
-  attachFollowProfile show.related().profile
+  attachFollowArtists bootstrappedShow.artists
+  attachFollowProfile new Profile id: bootstrappedShow.partner.default_profile_id
 
   $('.js-open-map-modal').click (e) ->
     e.preventDefault()
-    openMapModal
-      model: show
-      latlng: show.location().get('coordinates')
-      template: template
-      location: show.location().getMapsLocation()
-      mapElement: '.map-modal-show-map'
+    openMapModal model: bootstrappedShow
 
-  if show.isFairBooth()
-    attachRelatedShows 'fair', show
+  if bootstrappedShow.fair
+    attachRelatedShows 'fair', bootstrappedShow
   else
     if location.search.match "from-show-guide"
-      attachRelatedShows 'city', show
-      attachRelatedShows 'featured', show
+      attachRelatedShows 'city', bootstrappedShow
+      attachRelatedShows 'featured', bootstrappedShow
     else
-      attachRelatedShows 'gallery', show
+      attachRelatedShows 'gallery', bootstrappedShow
 
-  relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
+  relatedArticlesEl = $('.js-related-articles')
+  relatedArticlesView = new RelatedArticlesView showId: bootstrappedShow._id, numToShow: 3, el: relatedArticlesEl
   $('.artwork-column').first().prepend relatedArticlesView.$el
-  show.related().articles.fetch()
+
+  furtherArtworksEl = $('.artworks-container')
+  new FurtherArtworksView showId: bootstrappedShow._id, page: 2, artworks: bootstrappedShow.artworks, el: furtherArtworksEl
 
   new ShareView el: $('.js-show-share')

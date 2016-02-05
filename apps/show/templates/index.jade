@@ -8,10 +8,13 @@ append locals
   - assetPackage = 'show'
 
 block body
-  - hasCarousel = installShots.length >= 3
+  - hasCarousel = partner_show.install_shots.length >= 3
 
   if hasCarousel
-    include carousel
+    section.show-installation-shot-carousel.merry-go-round.js-show-installation-shot-carousel(
+      class= ViewHelpers.hasCaptions(partner_show.install_shots) ? 'has-captions' : undefined
+    )
+      include carousel
 
   .responsive-layout-container: .main-layout-container
     include header
