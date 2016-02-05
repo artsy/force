@@ -69,9 +69,7 @@ module.exports = (model, artist) ->
 
           Q.resolve(view.carouselPromise).then ->
             # its better to wait a little bit here to let the carousel render
-            _.delay =>
-              $('#artwork-for-sale-rail').attr 'data-state', 'fade-in'
-            , 200
+            $('#artwork-for-sale-rail').attr 'data-state', 'fade-in'
 
           rails = _.omit(rails, 'for_sale_artworks')
 
@@ -89,8 +87,6 @@ module.exports = (model, artist) ->
           view.carouselPromise
 
         Q.all(carouselPromises).then ->
-          _.delay =>
-            $('#artwork-rails').attr 'data-state', 'fade-in'
-          , 200
+          $('#artwork-rails').attr 'data-state', 'fade-in'
 
 
