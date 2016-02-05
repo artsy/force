@@ -42,7 +42,6 @@ cache = require './cache'
 timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
-welcomeBannerMiddleware = require '../components/welcome_banner/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
@@ -137,7 +136,6 @@ module.exports = (app) ->
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware
-  app.use welcomeBannerMiddleware
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use hstsMiddleware
