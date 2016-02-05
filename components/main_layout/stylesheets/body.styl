@@ -11,11 +11,7 @@
 search-bar-input-placeholder-white()
   color white
 
-// When you arrive at a page logged out there is a welcome header, then you
-// scroll down and the header becomes fixed. This is the fixed header.
 .body-header-fixed
-  #main-layout-welcome-header
-    display none
   #main-layout-container
     margin-top (main-header-height + content-margin-top)
   #main-layout-header
@@ -79,7 +75,7 @@ html[data-useragent*="iPad"]
 @media(min-width: nav-bar-break)
   .body-transparent-header-white
     #main-layout-header-center a, .main-layout-header-user a, .mlh-user-name, #main-layout-header-home-logo
-    #main-layout-welcome-header, #main-layout-search-bar-icon, #main-layout-search-bar-input
+    #main-layout-search-bar-icon, #main-layout-search-bar-input
       color white
     #main-layout-search-bar-input
       placeholder(search-bar-input-placeholder-white)

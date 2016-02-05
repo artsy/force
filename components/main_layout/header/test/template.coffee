@@ -15,12 +15,6 @@ render = (templateName) ->
 
 
 describe 'Header template', ->
-  it 'displays the welcome header', ->
-    render('index')(sd: { HIDE_HEADER: false }, user: undefined).should.containEql 'main-layout-welcome-header'
-
-  it 'hides the welcome header', ->
-    render('index')(sd: { HIDE_HEADER: true }, user: undefined).should.not.containEql 'main-layout-welcome-header'
-
   it 'shows the admin link for admins', ->
     user = new CurrentUser fabricate('user', type: 'Admin', is_slumming: false)
     html = render('index')(sd: { ADMIN_URL: 'admin.com' }, user: user)

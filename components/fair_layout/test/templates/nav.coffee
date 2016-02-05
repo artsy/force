@@ -47,13 +47,8 @@ describe 'Header template', ->
       @$template = cheerio.load template
       done()
 
-    it 'does not render the welcome header', ->
-      user = new CurrentUser fabricate 'user'
-      @$template.html().should.not.containEql 'main-layout-welcome-header'
-
     it 'renders the user header', ->
       user = new CurrentUser fabricate 'user'
-      @$template.html().should.not.containEql 'main-layout-welcome-header'
       @$template.html().should.containEql user.get('name')
 
   describe 'logged out', ->

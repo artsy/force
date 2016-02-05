@@ -11,7 +11,6 @@ FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 activatePulldowns = require '../../hover_pulldown/index.coffee'
-dealWithWelcomeBanner = require '../../welcome_banner/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
@@ -25,7 +24,6 @@ module.exports = class HeaderView extends Backbone.View
     'click .mlh-logout': 'logout'
 
   initialize: ->
-    dealWithWelcomeBanner()
     @currentUser = CurrentUser.orNull()
     @checkForNotifications()
     @mobileHeaderView = new MobileHeaderView

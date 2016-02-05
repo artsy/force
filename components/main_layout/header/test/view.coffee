@@ -23,7 +23,7 @@ describe 'HeaderView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @sd = { HIDE_HEADER: false, HEADER_CLASS: 'stub' }
+    @sd = { HEADER_CLASS: 'stub' }
     benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
       @HeaderView = benv.requireWithJadeify(
           resolve(__dirname, '../view')
@@ -94,7 +94,7 @@ describe 'HeaderView', ->
     before (done) ->
       @user = new CurrentUser fabricate('user')
       @user.type = 'Admin'
-      sd = { HIDE_HEADER: false, CURRENT_USER: @user}
+      sd = { CURRENT_USER: @user}
       benv.render resolve(__dirname, '../templates/index.jade'), { sd: sd }, =>
         @HeaderView = benv.requireWithJadeify(
             resolve(__dirname, '../view')
