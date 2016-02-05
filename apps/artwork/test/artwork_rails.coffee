@@ -139,22 +139,19 @@ describe 'ArtworkRails', ->
 
       sinon.stub Backbone, 'sync'
         .onCall 0
-        .yieldsTo 'success', @tenSaleArtworks()
+        .yieldsTo 'success', hits: @tenArtworks()
         .onCall 1
         .yieldsTo 'success', hits: @tenArtworks()
         .onCall 2
-        .yieldsTo 'success', hits: @tenArtworks()
-        .onCall 3
         .yieldsTo 'success', hits: @tenArtworks()
 
     afterEach ->
       Backbone.sync.restore()
 
-    it 'tries to fetch auction artworks, similar artworks, artist artworks, and partner artworks', (done) ->
+    it 'tries to similar artworks, artist artworks, and partner artworks', (done) ->
       @rails.fetch().then ->
         _.map Backbone.sync.args, (args) -> _.result args[1], 'url'
         .should.eql [
-          'undefined/api/v1/sale/los-angeles-modern-auctions-march-2015/sale_artworks',
           'undefined/api/v1/filter/artworks'
           'undefined/api/v1/filter/artworks'
           'undefined/api/v1/filter/artworks'
@@ -166,22 +163,22 @@ describe 'ArtworkRails', ->
       @rails.fetch().then (response)->
         data = _.map Backbone.sync.args, (args) -> qs.parse(args[2].data)
         # similar
-        data[1].gene_id.should.eql 'print'
-        data[1].size.should.eql '21'
+        data[0].gene_id.should.eql 'print'
+        data[0].size.should.eql '21'
         # artist
-        data[2].artist_id.should.eql 'ed-ruscha'
-        data[2].size.should.eql '31'
+        data[1].artist_id.should.eql 'ed-ruscha'
+        data[1].size.should.eql '31'
         # partner
-        data[3].partner_id.should.eql 'los-angeles-modern-auctions-lama'
-        data[3].size.should.eql '61'
+        data[2].partner_id.should.eql 'los-angeles-modern-auctions-lama'
+        data[2].size.should.eql '61'
         done()
       .catch done
 
     it 'returns artwork and all valid rails', (done) ->
       @rails.fetch().then (response) ->
         response.artwork._id.should.eql '54c2f01972616916df110900'
-        _.keys(response.rails).length.should.eql 4
-        _.keys(response.rails)[0].should.eql 'closed_auction_artworks'
+        _.keys(response.rails).length.should.eql 3
+        _.keys(response.rails)[0].should.eql 'similar_artworks'
         done()
       .catch done
 
@@ -194,17 +191,14 @@ describe 'ArtworkRails', ->
       @rails = new ArtworkRails id: 'john-evans-american-born-1932-daily-collages-march-april-1981'
 
       sinon.stub Backbone, 'sync'
-        # auction fetch
-        .onCall 0
-        .yieldsTo 'success', @tenSaleArtworks()
         # similar fetch
-        .onCall 1
+        .onCall 0
         .yieldsTo 'success', null
+        .onCall 1
+        .yieldsTo 'success', hits: @tenArtworks()
         .onCall 2
         .yieldsTo 'success', hits: @tenArtworks()
         .onCall 3
-        .yieldsTo 'success', hits: @tenArtworks()
-        .onCall 4
         .yieldsTo 'success', hits: @tenArtworks()
 
 
@@ -214,9 +208,9 @@ describe 'ArtworkRails', ->
     it 'returns artwork and all valid rails (without similar_artworks)', (done) ->
       @rails.fetch().then (response) ->
         response.artwork._id.should.eql '54c2f01972616916df110900'
-        _.keys(response.rails).length.should.eql 3
-        _.keys(response.rails)[0].should.eql 'closed_auction_artworks'
-        _.keys(response.rails)[1].should.eql 'artist_artworks'
+        _.keys(response.rails).length.should.eql 2
+        _.keys(response.rails)[0].should.eql 'artist_artworks'
+        _.keys(response.rails)[1].should.eql 'partner_artworks'
         done()
       .catch done
 

@@ -22,9 +22,6 @@ railwayMap = (artwork) ->
   show_artworks:
     url: "/show/#{artwork.shows[0]?.id}"
     title: "Other Works from #{artwork.shows[0]?.name}"
-  closed_auction_artworks:
-    url: "/auction/#{artwork.related?.id}"
-    title: "Other Works from #{artwork.related?.name}"
 
 module.exports = (model, artist) ->
   new LayeredSearchView
@@ -57,7 +54,7 @@ module.exports = (model, artist) ->
         # if the artwork in question is sold or not for sale,
         # pop the first rail above the artwork related information
         # and continue the rest below
-        if model.get('sold') or not model.get('forsale')
+        if rails['for_sale_artworks']
           artworks = new Artworks rails['for_sale_artworks']
           view = new ArtworkRailView
             collection: artworks

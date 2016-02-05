@@ -16,7 +16,6 @@ module.exports = class ArtworkRails
   minCount: 1
   size: 10
   railSizeMapping:
-    closed_auction_artworks: null,
     show_artworks: 10,
     for_sale_artworks: 10,
     similar_artworks: 20,
@@ -60,7 +59,6 @@ module.exports = class ArtworkRails
           isInCurrentOrUpcomingAuction = @artwork.related?.is_preview or @artwork.related?.is_open
           return resolve() if isInAuction and isInCurrentOrUpcomingAuction
           Q.all [
-            @maybeFetchAuctionArtworks()   # fetch all (so what if these show up in other rails)
             @fetchSimilarArtworks()        # fetch 21 (guaranteed 20 uniques)
             @fetchArtistArtworks()         # fetch 31 (guaranteed 10 uniques)
             @maybeFetchShowArtworks()      # fetch 41 (guaranteed 10 uniques)
@@ -89,18 +87,6 @@ module.exports = class ArtworkRails
           artist_id: @artwork.artist.id
           for_sale: true
           size: 51
-
-  maybeFetchAuctionArtworks: ->
-    Q.promise (resolve) =>
-      if @artwork.related?.__typename is 'RelatedSale'
-        sale = new Sale @artwork.related
-        sale.related().saleArtworks.fetchUntilEndInParallel
-          success: (collection, response, options) =>
-            collection.remove @artwork
-            artworks = Artworks.fromSale collection
-            resolve id: 'closed_auction_artworks', collection: artworks.toJSON()
-      else
-        resolve()
 
   maybeFetchShowArtworks: ->
     Q.promise (resolve) =>
