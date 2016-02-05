@@ -5,16 +5,16 @@
   for article in articles
     .show-related-article
       .show-related-article-image
-        a( href= article.href() ): img(
-          src= crop(article.get('thumbnail_image'), { width: 300, height: 225 })
-          alt= article.get('title')
+        a( href= article.href ): img(
+          src= article.thumbnail_image.cropped.url
+          alt= article.title
         )
 
       .show-related-article-info
-        a( href= article.href() )
-          .show-related-article-title= article.get('thumbnail_title')
-        a.show-related-article-author( href="/#{article.related().author.get('profile_handle')}" )
-          | By #{article.related().author.get('name')}
+        a( href= article.href )
+          .show-related-article-title= article.thumbnail_title
+        a.show-related-article-author( href=article.author.href )
+          | By #{article.author.name}
 
   if remaining > 0
     .related-articles-show-all.avant-garde-button-white.is-block
