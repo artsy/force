@@ -17,8 +17,24 @@
       padding 10px 0
       avant-garde-size('body')
       color gray-darker-color
+      &:first-child
+        padding-top 0
+      &:last-child
+        padding-bottom 0
       &:hover
+      &[data-state='active']
         color black
 
   &__content
+    width calc('100% - %s' % 250px)
     padding 0 30px
+
+.artwork-tab
+  display none
+  &[data-state='active']
+    display block
+
+  > p
+    block-margins(15px)
+  a
+    fine-faux-underline()

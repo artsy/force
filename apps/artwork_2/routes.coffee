@@ -13,6 +13,7 @@ query = """
       ... inquiry
       ... auction
       ... highlights
+      ... tabs
     }
   }
   #{require './components/banner/query'}
@@ -22,6 +23,7 @@ query = """
   #{require './components/inquiry/query'}
   #{require './components/auction/query'}
   #{require './components/highlights/query'}
+  #{require './components/tabs/query'}
 """
 
 helpers = extend [

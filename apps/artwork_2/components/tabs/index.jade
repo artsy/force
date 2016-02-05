@@ -1,6 +1,26 @@
-.artwork-tabs
-  .artwork-tabs__nav
-    //-
+if artwork.tabs.length
+  .artwork-tabs
+    .artwork-tabs__nav
+      for tab, i in artwork.tabs
+        a.artwork-tabs__nav__link(
+          class='js-artwork-tabs__nav__link'
+          data-id= tab.id
+          data-state= (i === 0 ? 'active' : 'inactive')
+        )= tab.name
 
-  .artwork-tabs__content
-    //-
+    .artwork-tabs__content
+      for tab, i in artwork.tabs
+        .artwork-tab(
+          class='js-artwork-tab'
+          data-id= tab.id
+          data-state= (i === 0 ? 'active' : 'inactive')
+        )
+          case tab.__typename
+            when 'DescriptionArtworkTab'
+              include ./templates/description
+            when 'ExhibitionHistoryArtworkTab'
+              include ./templates/exhibition_history
+            when 'BibliographyArtworkTab'
+              include ./templates/bibliography
+            when 'ProvenanceArtworkTab'
+              include ./templates/provenance
