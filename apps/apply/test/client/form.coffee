@@ -19,6 +19,8 @@ describe 'Form', ->
       oid: '00DC0000000PWQJ'
       foo: 'bar'
       bar: 'baz;qux;'
+      '00NC0000005ROPB': undefined
+      '00NC0000006VbjC': undefined
     }
 
   it 'validates attributes', ->

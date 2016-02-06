@@ -12,6 +12,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNdW': REFERRER
     '00NC0000005RNfS': MEDIUM
     '00NC0000005ROPB': Cookies.get('force-referrer')
+    '00NC0000006VbjC': Cookies.get('_mkto_trk')
     '00NC0000005RRYb': SESSION_ID
     # Abbreviated Channel
     '00NC0000005R4cC': 'Inbound'
@@ -32,6 +33,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNdW' # Web Referrer
     '00NC0000005RNfS' # Web Medium
     '00NC0000005ROPB' # Web Source Referrer
+    '00NC0000006VbjC' # Marketo marketing service cookie token
     '00NC0000005R4cC' # Abbreviated Channel
     '00NC0000005Lkol' # Date of Partnership Application
     '00NC0000005RUKX' # Current user id (if available)
