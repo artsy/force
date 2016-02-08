@@ -26,7 +26,7 @@ mapType =
     fetchPrimaryCarousel(params)
     metaphysics(
       query: query
-      variables: _.extend category_type: type.toUpperCase(), partnerTypes[type]
+      variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
     ).then (data) ->
       _.compact _.map data.partner_categories, (category) ->
         return null if category.primary.length + category.secondary.length < 3
@@ -38,22 +38,23 @@ mapType =
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
-    categoriesFacet =
-      displayName: "Categories"
-      facetName: 'category'
-      countItems: res.locals.sd.CATEGORIES
-
     locationsFacet =
       displayName: "Locations"
       facetName: 'location'
       countItems: _.map FeaturedCities, (c) -> {name: c.name, id: c.slug}
 
+    categoriesFacet =
+      displayName: "Specialties"
+      facetName: 'category'
+      countItems: res.locals.sd.CATEGORIES
+
     render = res.render 'index',
       ViewHelpers: ViewHelpers
+      showAZLink: true
       type: type
       profiles: profiles.models
       categories: _.shuffle categories
-      facets: [categoriesFacet, locationsFacet]
+      facets: [locationsFacet, categoriesFacet]
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
   .catch (e) ->

@@ -43,15 +43,5 @@ cell-margin = 30px
   margin-left 10px
 .hoverable-image
   background-color gray-lightest-color
-  &.is-missing:before
-    position absolute
-    content attr(data-initials)
-    color gray-dark-color
-    avant-garde()
-    font-size 27px
-    line-height 0
-    // 2% offset for Avant Garde baseline
-    top 52%
-    left 0
-    right 0
-    text-align center
+  &.is-missing:after
+    z-index 1

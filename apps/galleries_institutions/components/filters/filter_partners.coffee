@@ -21,7 +21,7 @@ module.exports = class FilterPartners extends Backbone.Model
     return if @allFetched or @fetching
     @fetching = true
     paramsJSON = @params.toJSON()
-    data = _.extend _.pick(paramsJSON, 'category'), partnerTypes[paramsJSON.type]
+    data = _.extend _.pick(paramsJSON, 'category'), type: partnerTypes[paramsJSON.type]
     city = _.findWhere FeaturedCities, slug: paramsJSON.location if paramsJSON.location
     data.near = city.coords.join (',') if city
 

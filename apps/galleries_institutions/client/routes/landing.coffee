@@ -20,16 +20,17 @@ module.exports = class LandingCarouselView extends Backbone.View
 
   setup: (type) ->
     return if @loaded
-    @$('.partner-category-carousel').each (index, el) =>
+    @carousels = @$('.partner-category-carousel').map (index, el) =>
       carousel = new PartnerCellCarouselView
         el: $(el),
         following: @following
       carousel.postRender()
+      carousel
 
     fetchLocationCarousel(type).then (category) =>
       return if category.partners.length < 3
 
-      carousel = new PartnerCellCarouselView
+      @carousels.push carousel = new PartnerCellCarouselView
         following: @following
         model: category
 
@@ -39,6 +40,7 @@ module.exports = class LandingCarouselView extends Backbone.View
 
   seeAllClicked: (e) ->
     e.preventDefault()
+    $(window).scrollTop()
     $target = $(e.target)
     facetName = $target.attr 'data-facet'
     id = $target.attr 'data-id'
@@ -47,4 +49,9 @@ module.exports = class LandingCarouselView extends Backbone.View
 
   paramsChanged: (params) ->
     return if params.hasSelection()
-    @setup(params.get('type')) if not @loaded
+    if @loaded
+      _.defer =>
+        _.each @carousels, (carousel) ->
+          carousel.flickity.resize()
+    else
+      @setup(params.get('type'))

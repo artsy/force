@@ -22,18 +22,15 @@ module.exports = class FilterDropdownView extends Backbone.View
       template: 'custom'
       templates:
         suggestion: @suggestionTemplate
-        empty: -> "<p>Empty</p>" # Typeahead won't render the header for empty results unless 'empty' is defined
+        empty: -> '' # Typeahead won't render the header for empty results unless 'empty' is defined
     })
 
-    @listenTo @params, 'firstLoad', @firstLoad
-
+    @listenTo @params, 'firstLoad', @setPlaceholderToCurrentItem
+    @listenTo @params, "change:#{@facet.facetName}", @setPlaceholderToCurrentItem
     @typeahead = @$input.data().ttTypeahead
 
     @$('.tt-dataset-category').on('click', '.tt-suggestion', @suggestionClicked)
     @$input.on('typeahead:selected', @selected)
-
-  firstLoad: (params) =>
-    @setPlaceholderToCurrentItem()
 
   suggestionClicked: (e) =>
     datum = @typeahead.dropdown.getDatumForSuggestion($(e.currentTarget))
@@ -59,8 +56,8 @@ module.exports = class FilterDropdownView extends Backbone.View
   inputFocus: (e) ->
     e.preventDefault()
     $target = $(e.target)
-    $target.data().ttTypeahead.input.trigger('queryChanged', '')
     $target.attr('placeholder', 'Search ' + @facet.displayName)
+    $target.data().ttTypeahead.input.trigger('queryChanged', '')
 
   inputBlur: (e) ->
     e.preventDefault()
@@ -79,8 +76,9 @@ module.exports = class FilterDropdownView extends Backbone.View
 
     @$input.attr('placeholder', item.name)
 
-  destroy: ->
+  remove: ->
     @$('.tt-dataset-category').off('click', '.tt-suggestion', @suggestionClicked)
     @$input.off('typeahead:selected', @selected)
+    @$input.typeahead 'destroy'
     super()
 

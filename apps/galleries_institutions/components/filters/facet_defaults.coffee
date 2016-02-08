@@ -3,5 +3,5 @@ module.exports = [{
     displayName: 'Locations',
   }, {
     facetName: 'category'
-    displayName: 'Categories'
+    displayName: 'Specialties'
   }]

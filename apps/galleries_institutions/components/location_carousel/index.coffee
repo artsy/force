@@ -15,7 +15,7 @@ module.exports = (type) ->
       category = { name: "Featured #{typeName} near #{name}", id: slug, facet: 'location' }
       metaphysics(
         query: query
-        variables: _.extend near: "#{latitude},#{longitude}", partnerTypes[type]
+        variables: _.extend near: "#{latitude},#{longitude}", type: partnerTypes[type]
       ).then (data) ->
         resolve _.extend category,
           partners: mergeBuckets data.primary, data.secondary
