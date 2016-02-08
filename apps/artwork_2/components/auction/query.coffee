@@ -9,7 +9,7 @@ module.exports = """
       is_auction
       is_auction_promo
       is_with_buyers_premium
-      sale_artwork(artwork_id: $id) {
+      sale_artwork(id: $id) {
         id
         estimate
         current_bid
