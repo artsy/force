@@ -1,0 +1,10 @@
+.partner-news
+  for item in news
+    .partner-news-item
+      .partner-news-item-subtitle
+        = item.subtitle
+      .partner-news-item-title
+        a( href=item.titleLink )
+          = item.title
+      .partner-news-item-time
+        = item.time
