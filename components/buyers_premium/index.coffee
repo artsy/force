@@ -7,16 +7,15 @@ module.exports = (auction, callback) ->
   page.fetch
     error: callback
     success: ->
+
       sortedSchedule = _.sortBy(auction.get('buyers_premium').schedule, (sched) -> sched.min_amount_cents)
       symbol = auction.get('buyers_premium').symbol
       if sortedSchedule.length == 1
-        schedule = """
+        buyersPremiumHtml = """
           <div>
             #{sortedSchedule[0].percent * 100}% on the hammer price
           </div>
         """
-        callback null, schedule
-        return
       else
         schedule = _.map sortedSchedule, (scheduleRow, idx) ->
           if idx == 0
@@ -55,13 +54,17 @@ module.exports = (auction, callback) ->
             </li>
             """
 
+        buyersPremiumHtml = """
+          <ul class='buyers-premium-schedule'>
+            #{schedule.join('')}
+          </ul>
+          """
+      
       fullyRenderedHtml = """
         <div class='buyers-premium'>
           <div class='buyers-premium-page markdown-content'>
             #{page.mdToHtml('content')}
-            <ul class='buyers-premium-schedule'>
-              #{schedule.join('')}
-            </ul>
+            #{buyersPremiumHtml}
           </div>
         </div>
       """    
