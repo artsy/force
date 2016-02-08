@@ -42,6 +42,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   initialize: ({ @artwork }) ->
     @showRails = splitTest('merchandized_rails').outcome() is 'true'
+    setupArtworkRails(@artwork, @artist) if @showRails
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
@@ -51,7 +52,6 @@ module.exports = class ArtworkView extends Backbone.View
     @setupArtistArtworks()
     @setupFollowButtons()
     @setupBelowTheFold()   # We always do this since auctions might override rails.
-    setupArtworkRails(@artwork, @artist) if @showRails
     @setupMainSaveButton()
     @setupVideoView()
     @setupAnnyang()

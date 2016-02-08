@@ -11,6 +11,7 @@ module.exports = (profile) ->
     el: $el
     following: following
     modelName: 'profile'
+    href: "#{profile.href}/follow"
     model: profile
     analyticsFollowMessage: 'Followed profile, via show page'
     analyticsUnfollowMessage: 'Unfollowed profile, via show page'

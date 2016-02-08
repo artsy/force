@@ -5,7 +5,7 @@ sd = require('sharify').data
 PartnerShow = require '../../../models/partner_show'
 cheerio = require 'cheerio'
 
-describe 'Meta tags', ->
+xdescribe 'Meta tags', ->
 
   describe 'Partner Show', ->
 

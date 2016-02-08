@@ -1,56 +1,75 @@
 _ = require 'underscore'
-{ Cities, FeaturedCities } = require 'places'
-PartnerShows = require '../../../../collections/partner_shows.coffee'
-RelatedShowsView = require './view.coffee'
+{ Cities } = require 'places'
+ViewHelpers = require '../../helpers/view_helpers.coffee'
+DateHelpers = require '../../../../components/util/date_helpers.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require './query.coffee'
+template = -> require('./template.jade') arguments...
 
 module.exports = (type, show) ->
+  $el = $('.js-related-shows')
 
-  el = $('.js-related-shows')
-
-  city = _.findWhere(Cities, name: show.formatCity())
+  city = _.findWhere Cities, name: show.location?.city?.trim()
 
   criteria =
-    sort: 'end_at'
+    sort: 'end_at_asc'
     size: 20
     displayable: true
 
-  relatedShows = new PartnerShows
-
   switch type
     when 'fair'
-      data =  _.extend criteria, {
-        fair_id: show.related().fair.get('_id')
-      }
-      title = "More Booths from #{show.related().fair.get('name')}"
+      title = "More Booths from #{show.fair.name}"
+      options =  _.extend criteria,
+        fair_id: show.fair._id
+
     when 'gallery'
-      data = _.extend criteria, {
-        sort: '-start_at'
-      }
-      relatedShows.url = "#{show.related().partner.url()}/shows"
-      title = "Other Shows from #{show.partnerName()}"
+      title = "Other Shows from #{show.partner.name}"
+      options = _.extend criteria,
+        sort: 'start_at_desc'
+        partner_id: show.partner._id
+
     when 'featured'
-      data = _.extend criteria, {
+      title = "Featured Shows"
+      options = _.extend criteria,
         featured: true
         status: 'running'
-      }
-      el = $('.js-featured-shows')
-      title = "Featured Shows"
+
     when 'city'
-      data = _.extend criteria, {
-        near: show.location().getMapsLocation()
+      title = "Current Shows in #{show.location.city.trim()}"
+      options = _.extend criteria,
+        near: ViewHelpers.getMetaphysicsLocation(show.location)
         status: 'running'
-      }
-      title = "Current Shows in #{show.formatCity()}"
 
-  new RelatedShowsView
-    collection: relatedShows
-    title: title
-    el: el
-    show: show
-    city: city
+  metaphysics
+    variables: options,
+    query: query
 
-  relatedShows.fetch
-    data: data
-    success: ->
-      relatedShows.getShowsRelatedImages()
+  .then ({ related_shows }) ->
+    _.chain related_shows
+      # Filter out the current show
+      .filter ({ id }) ->
+        id isnt show.id
 
+      # Merge the two image arrays
+      .map (related_show) ->
+        related_show.images = _.compact(
+          related_show.install_shots
+            .concat _.pluck related_show.artworks, 'image'
+        )
+        related_show
+
+      .value()
+
+  .then (related_shows) ->
+    return unless related_shows.length
+
+    $el.html template
+      title: title
+      shows: related_shows
+      show: show
+      city: city
+      DateHelpers: DateHelpers
+      ViewHelpers: ViewHelpers
+      fromShowGuide: location.search.match 'from-show-guide'
+
+  .catch console.error.bind(console)
