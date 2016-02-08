@@ -29,12 +29,12 @@ module.exports = class PartnerLocation extends Location
       zoom: zoom
     )
 
-  mapDirections: (destination) ->
+  mapDirections: (origin) ->
     location = @getMapsLocation()
     return unless location
 
     options =
-      origin: location
-      destination: destination
+      origin: origin
+      destination: location
 
     getDirections options

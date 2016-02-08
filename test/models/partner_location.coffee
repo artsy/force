@@ -110,6 +110,6 @@ describe 'PartnerLocation', ->
       @partnerLocation.set 'coordinates', { lng: -74.0093178, lat: 40.2163901 }
 
     it "returns get directions", ->
-      destination = '210 Main St New York, NY'
-      @partnerLocation.mapDirections(destination).should.equal 'https://www.google.com/maps/dir/40.2163901,-74.0093178/210%20Main%20St%20New%20York,%20NY'
+      origin = '210 Main St New York, NY'
+      @partnerLocation.mapDirections(origin).should.equal 'https://www.google.com/maps/dir/210%20Main%20St%20New%20York,%20NY/40.2163901,-74.0093178'
 

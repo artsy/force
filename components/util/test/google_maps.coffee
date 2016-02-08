@@ -38,6 +38,6 @@ describe "PartnerLocation", ->
 
     it 'returns accurate google map directions', ->
       options =
-        origin: @location
-        destination: '210 Main Street New York NY'
-      getDirections(options).should.equal 'https://www.google.com/maps/dir/Address, City, State 00000/210%20Main%20Street%20New%20York%20NY'
+        origin: '210 Main Street New York NY'
+        destination: @location
+      getDirections(options).should.equal 'https://www.google.com/maps/dir/210%20Main%20Street%20New%20York%20NY/Address, City, State 00000'
