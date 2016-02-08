@@ -3,8 +3,10 @@ HeroShowsCarousel = require '../components/hero_shows_carousel/view.coffee'
 HeroArtworksCarousel = require '../components/hero_artworks_carousel/view.coffee'
 ArtistsListView = require '../components/artists_list/view.coffee'
 ArtistsGridView = require '../components/artists_grid/view.coffee'
+NewsView = require '../components/news/view.coffee'
+aboutTemplate = -> require('../components/about/index.jade') arguments...
 
-module.exports = (partner) ->
+module.exports = (partner, profile) ->
   contract =
     institution: [
       { name: 'hero', component: HeroShowsCarousel, options: { partner: partner, maxNumberOfShows: 3 } }
@@ -15,6 +17,10 @@ module.exports = (partner) ->
         component: HeroShowsCarousel
         options: partner: partner, maxNumberOfShows: 1
       ,
+        name: 'about'
+        template: galleryOneAbout(partner, profile)
+        title: 'About'
+      ,
         name: 'artists'
         component: ArtistsGridView
         options: partner: partner
@@ -24,6 +30,15 @@ module.exports = (partner) ->
         name: 'hero'
         component: galleryTwoHero(partner)
         options: galleryTwoHeroOptions(partner)
+      ,
+        name: 'about'
+        template: galleryTwoAbout(partner, profile)
+        title: 'About'
+      ,
+        name: 'news'
+        component: NewsView
+        options: partner: partner
+        title: 'News'
       ,
         name: 'artists'
         component: galleryTwoArtists(partner)
@@ -37,6 +52,15 @@ module.exports = (partner) ->
         component: galleryThreeHero(partner)
         options: galleryThreeHeroOptions(partner)
       ,
+        name: 'about'
+        template: galleryThreeAbout(partner, profile)
+        title: 'About'
+      ,
+        name: 'news'
+        component: NewsView
+        options: partner: partner
+        title: 'News'
+      ,
         name: 'artists'
         component: galleryThreeArtists(partner)
         options: partner: partner
@@ -46,7 +70,11 @@ module.exports = (partner) ->
 
   contract[partner.get('profile_layout')] or []
 
-# Layout gallery_two helpers
+# gallery_one layout helpers
+galleryOneAbout = (partner, profile) ->
+  aboutTemplate profile: profile if profile.get('full_bio')
+
+# gallery_two layout helpers
 galleryTwoHero = (partner) ->
   if partner.get('profile_banner_display') is 'Shows'
     HeroShowsCarousel
@@ -75,9 +103,12 @@ galleryTwoArtistsTitle = (partner) ->
 galleryTwoArtistsViewAll = (partner) ->
   "#{partner.href()}/artists" if galleryTwoArtists(partner) is ArtistsListView
 
-# Layout gallery_three helpers
+galleryTwoAbout = galleryOneAbout
+
+# gallery_three layout helpers
 galleryThreeHero = galleryTwoHero
 galleryThreeHeroOptions = galleryTwoHeroOptions
+galleryThreeAbout = galleryOneAbout
 galleryThreeArtists = galleryTwoArtists
 galleryThreeArtistsTitle = galleryTwoArtistsTitle
 galleryThreeArtistsViewAll = galleryTwoArtistsViewAll
