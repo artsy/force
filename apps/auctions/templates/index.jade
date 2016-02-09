@@ -40,6 +40,8 @@ block body
                 span= auction.date('end_at').format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
+        if user
+          include ../../../components/my_active_bids/template
         a.auction-cta-group(href="https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080")
           .auction-cta-group__left
             img(src="images/mobile-cta.png", alt="Bid from your phone")
