@@ -1,6 +1,6 @@
 # My Active Bids
 
-A component that renders a small widget around the site indicating which bids are currently in place and whether they're winning again or not.
+Small widget that indicates bids placed by the current user and if they're winning.
 
 ## Client-side
 
