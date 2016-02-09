@@ -4,6 +4,14 @@
   padding-top 50px
   margin-bottom 100px
 
+#notifications-page[data-forsale=true]
+  .filter-artist-published-artworks-count
+    display none
+
+#notifications-page[data-forsale=false]
+  .filter-artist-forsale-artworks-count
+    display none
+
 #notifications-page[data-state=loading]
   #notifications-works, #notifications-artist-works, #notifications-empty
     display none
@@ -60,7 +68,7 @@
     border-top 1px solid gray-lighter-color
   .filter-artist
     display block
-  .filter-artist-count
+  .filter-artist-published-artworks-count, .filter-artist-forsale-artworks-count
     display inline
     color gray-dark-color
   .filter-artist-name

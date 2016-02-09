@@ -78,5 +78,8 @@ describe 'NotificationsView', ->
       @view.render()
       $('#notifications-page').attr('data-state').should.equal 'recent-works'
 
-
-
+    it 'sets the data-forsale when filtering', ->
+      @view.filterState.set
+        forSale: true
+      @view.render()
+      $('#notifications-page').attr('data-forsale').should.equal 'true'
