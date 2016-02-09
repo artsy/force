@@ -8,14 +8,4 @@ append locals
   - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
-  #browse-page.browse-page.main-layout-container
-    #browse-filter.browse-filter
-      .filter-fixed-header-nav
-        .filter-fixed-header-left
-          em
-            span.filter-artworks-num
-            | &nbsp;Works
-        include ../../../components/filter2/dropdown_group/template
-
-      #browse-artworks.browse-artworks
-        include ../../../components/filter2/template
+  #browse-page
