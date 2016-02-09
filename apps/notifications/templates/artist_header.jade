@@ -2,4 +2,5 @@ a.artist-header-name(href="/artist/#{id}")
   .artist-name= name
     i.icon-chevron-small-right
 .artist-clear Clear
-.artist-work-count= count + " Works"
+.artist-work-count
+  | #{count} Work#{count < 2 ? '' : 's'}
