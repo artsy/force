@@ -1,8 +1,3 @@
-metaphysics = require '../../lib/metaphysics'
-request = require 'superagent'
-sd = require('sharify').data
-Q = require 'bluebird-q'
-
 module.exports = """
     query {
       me {
