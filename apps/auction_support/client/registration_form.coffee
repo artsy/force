@@ -8,12 +8,14 @@ ModalPageView = require '../../../components/modal/page.coffee'
 { API_URL, SESSION_ID, STRIPE_PUBLISHABLE_KEY } = require('sharify').data
 
 module.exports = class RegistrationForm extends ErrorHandlingForm
+  deferred = Q.defer()
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
 
   initialize: (options) ->
+    @result = deferred.promise
     @success = options.success
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
@@ -77,8 +79,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               resolve(creditCard)
           error: (m, xhr) => reject(xhr.responseJSON?.message)
     .then =>
-      analyticsHooks.trigger 'registration:success'
-
       # Create the "bidder" model for the user in this sale
       Q.Promise (resolve, reject) =>
         @currentUser.createBidder
@@ -90,7 +90,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
             else
               reject "Registration submission error: #{xhr.responseJSON?.message}"
     .then =>
-      analytics.track.funnel 'Registration submitted'
+      analyticsHooks.trigger 'registration:success'
       @success()
 
   savePhoneNumber: ->
@@ -109,8 +109,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     action().finally => $element.removeClass 'is-loading'
 
   onSubmit: =>
-    event.preventDefault()
-
     analyticsHooks.trigger 'registration:submit-address'
 
     @loadingLock @$submit, =>
