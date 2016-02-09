@@ -32,6 +32,7 @@ redirects =
   '/artist': '/artists'
   '/job/mobile-engineer': '/article/artsy-jobs-mobile-engineer'
   '/article/jesse-kedy-digital-marketing-manager-organic-growth-06-22-15': '/article/artsy-jobs-associate-director-of-organic-growth'
+  '/feature/artsy-education': '/artsy-education'
 
 for from, path of redirects
   router.get from, to(path)

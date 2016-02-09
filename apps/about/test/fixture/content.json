@@ -144,7 +144,7 @@
             },
             "pullBlurb4": {
                 "button": {
-                    "href": "/feature/artsy-education",
+                    "href": "/artsy-education",
                     "text": "Go to Artsy’s Education page"
                 },
                 "h1": "Art News",
