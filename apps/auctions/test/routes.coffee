@@ -6,7 +6,8 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Auction = require '../../../models/auction'
 CurrentUser = require '../../../models/current_user'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 
 describe 'Auctions routes', ->
   beforeEach ->
@@ -59,6 +60,9 @@ describe 'Auctions routes', ->
       before ->
         @req = user: new CurrentUser fabricate 'user'
         @res = render: sinon.stub(), locals: sd: {}
+        routes.__set__ 'metaphysics', ->
+          Q.promise (resolve, reject) ->
+            return resolve { me: [] }
 
       it 'fetches the relevant auction data in addition to the user bid status and renders the index template', (done) ->
         routes.index @req, @res

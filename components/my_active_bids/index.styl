@@ -1,0 +1,57 @@
+@require '../stylus_lib'
+
+item-margin-bottom = 16px
+
+.my-active-bids-bid-button, .my-active-bids-warning, .my-active-bids-item h4
+  avant-garde()
+  font-size 10px
+
+.my-active-bids-item
+  position relative
+  margin-bottom item-margin-bottom
+  padding-bottom item-margin-bottom
+  border-bottom 1px solid gray-lighter-color
+  &:last-child
+    border-bottom 0
+  &.my-active-bids-winning
+    .my-active-bids-warning
+      color new-green-color
+      &::after
+        content "\25B2" // ▲ character
+    .my-active-bids-bid-button
+      background transparent
+      color black
+      border-color gray-lighter-color
+      &:hover
+        color purple-color
+  img
+    margin-right 12px
+    width 60px
+    height 60px
+
+.my-active-bids-item img, .my-active-bids-item-details
+  display inline-block
+  vertical-align top
+
+.my-active-bids-item-details
+  line-height 20px
+
+.my-active-bids-warning
+  position absolute
+  top -2px
+  right 0
+  color new-red-color
+  padding-right 17px
+  &::after
+    content "\25BC" // ▼ character
+    position absolute
+    right 0
+    top 0
+    font-size 12px
+
+.my-active-bids-bid-button
+  small-avant-garde()
+  padding 7px 14px
+  position absolute
+  bottom item-margin-bottom
+  right 0
