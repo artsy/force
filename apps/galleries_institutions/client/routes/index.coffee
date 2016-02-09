@@ -39,7 +39,7 @@ module.exports = class PartnersSearchView extends Backbone.View
 
     _.each facets, (facet) =>
       new FilterDropdownView
-        el: @$(".galleries-institutions-search-filters .search-#{facet.facetName}")
+        el: @$(".galleries-institutions-search-filters .dropdown-#{facet.facetName}")
         params: @params
         filterPartners: filterPartners
         facet: facet

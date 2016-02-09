@@ -2,7 +2,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-fetchLocationCarousel = require '../index'
+rewire = require 'rewire'
+fetchLocationCarousel = rewire '../index'
 Q = require 'bluebird-q'
 
 describe 'fetchLocationCarousel', ->
@@ -15,116 +16,66 @@ describe 'fetchLocationCarousel', ->
     benv.teardown()
 
   beforeEach ->
-    primary = [fabricate 'partner', id: 'primary', default_profile_public: true]
-    secondary = [fabricate 'partner', id: 'secondary', default_profile_public: true]
-    sinon.stub Backbone, 'sync'
-      .onCall 0
-      .yieldsTo 'success', primary
-      .returns Q.resolve primary
-      .onCall 1
-      .yieldsTo 'success', secondary
-      .returns Q.resolve secondary
-      .onCall 2
-      .yieldsTo 'success', fabricate 'profile', id: 'gagosian'
-      .onCall 3
-      .yieldsTo 'success', [fabricate 'partner_location', city: 'Providence']
-
+    data = {
+      primary: [fabricate 'partner', id: 'primary', default_profile_public: true]
+      secondary: [fabricate 'partner', id: 'secondary', default_profile_public: true]
+    }
     sinon.stub $, 'get'
       .yields
         name: 'Providence'
         latitude: 41.82
         longitude: -71.41
 
+    @metaphysics = sinon.stub()
+    fetchLocationCarousel.__set__ 'metaphysics', @metaphysics
+    @metaphysics.returns Q.promise (resolve, reject) -> resolve data
+
   afterEach ->
     $.get.restore()
-    Backbone.sync.restore()
 
   describe 'type gallery', ->
 
-    it 'fetches nearest artsy "place", partner, profile, and partner locations with buckets', ->
-      fetchLocationCarousel('gallery')
-        .then ->
-          $.get.args[0][0].should.equal '/geo/nearest'
+    it 'fetches location and primary and secondary buckets', ->
+      fetchLocationCarousel('gallery').then =>
+        $.get.args[0][0].should.equal '/geo/nearest'
+        @metaphysics.args[0][0].query.should.containEql(
+          'primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)')
+        @metaphysics.args[0][0].query.should.containEql(
+          'secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)')
 
-          Backbone.sync.args[0][1].url
-            .should.containEql '/api/v1/partners'
-          Backbone.sync.args[0][2].data
-            .should.eql
-              near: '41.82,-71.41',
-              sort: '-random_score',
-              has_full_profile: true
-              cache: true
-              eligible_for_primary_bucket: true
-              type: 'PartnerGallery'
-
-          Backbone.sync.args[1][1].url
-            .should.containEql '/api/v1/partners'
-          Backbone.sync.args[1][2].data
-            .should.eql
-              near: '41.82,-71.41',
-              sort: '-random_score',
-              has_full_profile: true
-              cache: true
-              eligible_for_secondary_bucket: true
-              type: 'PartnerGallery'
-
-          Backbone.sync.args[2][1].url()
-            .should.containEql '/api/v1/profile/gagosian'
-
-          Backbone.sync.args[3][1].url
-            .should.containEql '/api/v1/partner/primary/locations?size=20'
+    it 'fetches with correct variables', ->
+      fetchLocationCarousel('gallery').then =>
+        $.get.args[0][0].should.equal '/geo/nearest'
+        @metaphysics.args[0][0].variables.should.deepEqual {
+          near: '41.82,-71.41'
+          type: ['GALLERY']
+        }
 
     it 'resolves with the data', ->
-      fetchLocationCarousel('gallery')
-        .then ({ category, partners }) ->
-          category.get 'name'
-            .should.equal 'Featured Galleries near Providence'
+      fetchLocationCarousel('gallery').then (category) =>
+        category.name.should.equal 'Featured Galleries near Providence'
+        category.partners.should.have.lengthOf 2
+        category.partners[0].name.should.equal 'Gagosian Gallery'
 
-          partners.should.have.lengthOf 2
-          partners.first().get 'name'
-            .should.equal 'Gagosian Gallery'
+  describe 'type institution', ->
+    it 'fetches location and primary and secondary buckets', ->
+      fetchLocationCarousel('gallery').then =>
+        $.get.args[0][0].should.equal '/geo/nearest'
+        @metaphysics.args[0][0].query.should.containEql(
+          'primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)')
+        @metaphysics.args[0][0].query.should.containEql(
+          'secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)')
 
-  # describe 'type institution', ->
-
-    it 'fetches nearest artsy "place", partner, profile, and partner locations with buckets', ->
-      fetchLocationCarousel('institution')
-        .then ->
-          $.get.args[0][0].should.equal '/geo/nearest'
-
-          Backbone.sync.args[0][1].url
-            .should.containEql '/api/v1/partners'
-          Backbone.sync.args[0][2].data
-            .should.eql
-              near: '41.82,-71.41',
-              sort: '-random_score',
-              has_full_profile: true
-              cache: true
-              eligible_for_primary_bucket: true
-              type: 'PartnerInstitution'
-
-          Backbone.sync.args[1][1].url
-            .should.containEql '/api/v1/partners'
-          Backbone.sync.args[1][2].data
-            .should.eql
-              near: '41.82,-71.41',
-              sort: '-random_score',
-              has_full_profile: true
-              cache: true
-              eligible_for_secondary_bucket: true
-              type: 'PartnerInstitution'
-
-          Backbone.sync.args[2][1].url()
-            .should.containEql '/api/v1/profile/gagosian'
-
-          Backbone.sync.args[3][1].url
-            .should.containEql '/api/v1/partner/primary/locations?size=20'
+    it 'fetches with correct variables', ->
+      fetchLocationCarousel('institution').then =>
+        $.get.args[0][0].should.equal '/geo/nearest'
+        @metaphysics.args[0][0].variables.should.deepEqual {
+          near: '41.82,-71.41'
+          type: ['INSTITUTION', 'INSTITUTIONAL_SELLER']
+        }
 
     it 'resolves with the data', ->
-      fetchLocationCarousel('institution')
-        .then ({ category, partners }) ->
-          category.get 'name'
-            .should.equal 'Featured Institutions near Providence'
-
-          partners.should.have.lengthOf 2
-          partners.first().get 'name'
-            .should.equal 'Gagosian Gallery'
+      fetchLocationCarousel('institution').then (category) =>
+        category.name.should.equal 'Featured Institutions near Providence'
+        category.partners.should.have.lengthOf 2
+        category.partners[0].name.should.equal 'Gagosian Gallery'

@@ -1,16 +1,17 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
 { FeaturedCities } = require 'places'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require './view_helpers.coffee'
 Profile = require '../../../../models/profile.coffee'
 template = -> require('./index.jade') arguments...
+
 module.exports = class PartnerCellView extends Backbone.View
   className: 'partner-cell'
 
   initialize: ({ @following, @partner, @preferredCitySlug }) ->
-    @listenTo this, 'postRender', @postRender
 
-  postRender: ->
+  postRender: -> _.defer =>
     @followButton = new FollowButtonView
       el: @$('.js-follow-button')
       following: @following
@@ -23,5 +24,5 @@ module.exports = class PartnerCellView extends Backbone.View
       partner: @partner
       preferredCity: city?.name
       ViewHelpers: ViewHelpers
-    @trigger 'postRender'
+    @postRender()
     this

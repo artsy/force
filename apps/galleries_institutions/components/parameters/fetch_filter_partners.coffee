@@ -20,15 +20,8 @@ module.exports = class FetchFilterPartners extends Backbone.Model
   fetch: =>
     return if @allFetched or @fetching
     @fetching = true
-    paramsJSON = @params.toJSON()
-    data = _.extend _.pick(paramsJSON, 'category'), type: partnerTypes[paramsJSON.type]
-    city = _.findWhere FeaturedCities, slug: paramsJSON.location if paramsJSON.location
-    data.near = city.coords.join (',') if city
 
-    data.page = @page
-    data.includeAggregations = @page == 1
-    data.includeResults = @params.hasSelection()
-
+    data = @formatVariables()
     metaphysics
       query: query
       variables: data
@@ -51,6 +44,17 @@ module.exports = class FetchFilterPartners extends Backbone.Model
 
       @fetching = false
       @page++
+
+  formatVariables: ->
+    paramsJSON = @params.toJSON()
+    data = _.extend _.pick(paramsJSON, 'category'), type: partnerTypes[paramsJSON.type]
+    city = _.findWhere FeaturedCities, slug: paramsJSON.location if paramsJSON.location
+    data.near = city.coords.join (',') if city
+
+    data.page = @page
+    data.includeAggregations = @page == 1
+    data.includeResults = @params.hasSelection()
+    return data
 
   reset: =>
     @partners = []

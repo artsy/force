@@ -2,14 +2,8 @@ extends ./main
 block content
   .galleries-institutions-search-filters
     each facet in facets
-      - var displayName = facet.displayName
-      - var facetName = facet.facetName
 
-      .partners-facet-dropdown.filter-partners-dropdown(class= "search-#{facetName}")
-        input.partners-facet-input.no-selection(
-          placeholder= "All " + displayName
-        )
-        span.icon-chevron-down
+      include ../components/dropdown/template
 
     //- .partners-search-dropdown.filter-partners-dropdown
     //-   input.partners-search-input(

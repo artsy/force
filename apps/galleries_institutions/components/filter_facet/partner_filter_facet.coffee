@@ -13,7 +13,6 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     @allItemsSuggestion.count = changed.total
     @countItems = _.map @defaultItems, (item) ->
       item = _.find(changed.countItems, id: item.id,) || _.extend {count: 0}, item
-      item.ignore = item.count is 0
       item
 
   matcher: (query, callback) =>

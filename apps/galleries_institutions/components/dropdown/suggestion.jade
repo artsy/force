@@ -1,4 +1,4 @@
 - var hasCount = !(item.count === undefined)
 a.js-partner-filter.partner-search-filter-item(
-  class= (item.ignore ? 'is-disabled' : ''),
+  class= (hasCount && item.count <= 0 ? 'is-disabled' : ''),
 )= item.name + ( hasCount ? ' (' + item.count + ')' : '' )

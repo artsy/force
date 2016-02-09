@@ -24,17 +24,18 @@ module.exports = class FilterDropdownView extends Backbone.View
         suggestion: @suggestionTemplate
         empty: -> '' # Typeahead won't render the header for empty results unless 'empty' is defined
     })
-
-    @listenTo @params, 'firstLoad', @setPlaceholderToCurrentItem
-    @listenTo @params, "change:#{@facet.facetName}", @setPlaceholderToCurrentItem
-    @typeahead = @$input.data().ttTypeahead
+    @listenTo @params, 'firstLoad', @setPlaceholder
+    @listenTo @params, "change:#{@facet.facetName}", @setPlaceholder
+    @typeahead = @$input.data('ttTypeahead')
 
     @$('.tt-dataset-category').on('click', '.tt-suggestion', @suggestionClicked)
+
+    # Annoying workaround to prevent Twitter Typeahead from selecting a suggestion with no results
     @$input.on('typeahead:selected', @selected)
 
   suggestionClicked: (e) =>
-    datum = @typeahead.dropdown.getDatumForSuggestion($(e.currentTarget))
-    e.stopPropagation() if datum.raw.ignore
+    suggestion = @typeahead.dropdown.getDatumForSuggestion($(e.currentTarget)).raw
+    e.stopPropagation() if 'count' of suggestion and suggestion.count == 0
 
   selected: (e, suggestion, dataset) =>
     if suggestion.id
@@ -54,27 +55,30 @@ module.exports = class FilterDropdownView extends Backbone.View
       @$input.focus()
 
   inputFocus: (e) ->
-    e.preventDefault()
-    $target = $(e.target)
-    $target.attr('placeholder', 'Search ' + @facet.displayName)
-    $target.data().ttTypeahead.input.trigger('queryChanged', '')
+    @setPlaceholder true
+    # Make the suggestions render immediately
+    @typeahead.input.trigger('queryChanged', '')
 
   inputBlur: (e) ->
-    e.preventDefault()
-    $target = $(e.target)
-    $target.typeahead('val', '')
-    @setPlaceholderToCurrentItem()
+    @$input.typeahead('val', '')
+    @setPlaceholder false
 
-  setPlaceholderToCurrentItem: ->
+  setPlaceholder: (hasFocus) ->
     id = @params.get(@facet.facetName)
+
+    if hasFocus
+      placeholder = 'Search ' + @facet.displayName
+    else if id
+      placeholder = _.find(@facet.countItems, id: id).name
+    else
+      placeholder = @facet.allItemsSuggestion.name
+
     if id
       @$input.removeClass('no-selection')
-      item = _.find @facet.countItems, id: id
     else
       @$input.addClass('no-selection')
-      item = @facet.allItemsSuggestion
 
-    @$input.attr('placeholder', item.name)
+    @$input.attr('placeholder', placeholder)
 
   remove: ->
     @$('.tt-dataset-category').off('click', '.tt-suggestion', @suggestionClicked)

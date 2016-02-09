@@ -4,8 +4,8 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Params = require '../filter_params.coffee'
 
-describe 'PartnerCellView', ->
-  before (done) ->
+describe 'FilterParams', ->
+  beforeEach ->
     @params = new Params {location: 'new-york', category: 'painting', type: 'gallery'}
 
   describe '#currentSelection', ->
