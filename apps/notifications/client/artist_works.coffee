@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Artist = require '../../../models/artist.coffee'
+Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 artistHeaderTemplate = -> require('../templates/artist_header.jade') arguments...
 
@@ -19,33 +20,57 @@ module.exports = class ArtistWorksView extends Backbone.View
     return unless @filterState.get('artist')
     return unless @filterState.get('loading')
 
+    @setupPreFetch()
+    @fetch()
+
+  setupPreFetch: ->
+    $(window).on 'scroll.notifications.artworks', _.throttle(@infiniteScroll, 150)
     @artist = new Artist id: @filterState.get 'artist'
-
-    @forSaleArtist = if @filterState.get('forSale') then 'for_sale' else ''
-    @artist.related().artworks.fetchUntilEnd
-      data:
-        filter: [@forSaleArtist]
-      success: =>
-        if @artist.related().artworks.length
-          @renderColumns @$artistFeed, @artist.related().artworks
-          @$artistHeader.html artistHeaderTemplate
-            name: $(".filter-artist[data-artist=#{@filterState.get('artist')}]").children('.filter-artist-name').html()
-            count: @artist.related().artworks.length
-            id: @artist.id
-          @$artistHeader.show()
-        else
-          @filterState.set 'empty', true
-        @filterState.set 'loading', false
-
-  renderColumns: ($el, artworks) ->
-    new ArtworkColumnsView
-      el: $el
-      collection: artworks
+    @artworks = new Artworks
+    @columnsView = new ArtworkColumnsView
+      el: @$artistFeed
+      collection: @artworks
       artworkSize: 'large'
       numberOfColumns: 3
       gutterWidth: 40
-      allowDuplicates: true
       maxArtworkHeight: 600
+    @page = 1
+    @forSaleArtist = if @filterState.get('forSale') then 'for_sale' else ''
+
+  fetch: ->
+    return if @isFetching
+    @isFetching = true
+    @artist.related().artworks.fetch
+      data:
+        filter: [@forSaleArtist]
+        page: @page
+        total_count: true if @page == 1
+      success: (coll, resp, options) =>
+        if @artist.related().artworks.length == 0
+          $(window).off 'scroll.notifications.artworks'
+        else
+          @showHeader(options.xhr.getResponseHeader('x-total-count')) if @page == 1
+          @columnsView.appendArtworks @artist.related().artworks.models
+
+        if @artworks.length == 0
+          @filterState.set 'empty', true
+
+        @filterState.set 'loading', false
+        @page++
+        @isFetching = false
+
+  showHeader: (count) ->
+    @$artistHeader.html artistHeaderTemplate
+      name: $(".filter-artist[data-artist=#{@filterState.get('artist')}]").children('.filter-artist-name').html()
+      count: count
+      id: @artist.id
+    @$artistHeader.show()
+
+  infiniteScroll: =>
+    return if @isFetching
+    fold = $(window).height() + $(window).scrollTop()
+    $lastItem = @$('.artwork-column').last()
+    @fetch() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   clearArtistWorks: =>
     $('.filter-artist[data-state=selected] .filter-artist-clear').click()
