@@ -6,7 +6,7 @@ Profile = require '../../../../models/profile.coffee'
 fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
 carouselTemplate = -> require('../../components/partner_cell_carousel/template.jade') arguments...
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
-facetDefaults = require '../../components/filters/facet_defaults.coffee'
+facetDefaults = require '../../components/filter_facet/facet_defaults.coffee'
 
 module.exports = class LandingCarouselView extends Backbone.View
   events:

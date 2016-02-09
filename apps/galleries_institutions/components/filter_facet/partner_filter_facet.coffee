@@ -8,10 +8,11 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     @allItemsSuggestion = name: 'All ' + @displayName
     @countItems = @defaultItems = _.map(items, (c) -> _.pick c, 'id', 'name')
 
-  updateSuggestions: (aggregations, {countItems, total}) ->
-    @allItemsSuggestion.count = total
+  updateSuggestions: (aggregations, changed) ->
+    return if not changed
+    @allItemsSuggestion.count = changed.total
     @countItems = _.map @defaultItems, (item) ->
-      item = _.find(countItems, id: item.id,) || _.extend {count: 0}, item
+      item = _.find(changed.countItems, id: item.id,) || _.extend {count: 0}, item
       item.ignore = item.count is 0
       item
 

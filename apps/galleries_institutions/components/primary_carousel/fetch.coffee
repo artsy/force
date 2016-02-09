@@ -1,7 +1,7 @@
 Q = require 'bluebird-q'
 OrderedSets = require '../../../../collections/ordered_sets.coffee'
 _ = require 'underscore'
-FilterPartners = require '../../../../collections/filter_partners.coffee'
+FilterPartners = require './collections/filter_partners.coffee'
 Profile = require '../../../../models/profile.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
 

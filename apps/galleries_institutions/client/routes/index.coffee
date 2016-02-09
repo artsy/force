@@ -6,10 +6,10 @@ Profiles = require '../../../../collections/profiles.coffee'
 LandingCarouselView = require './landing.coffee'
 PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
 SearchResultsView = require '../../components/search_results/view.coffee'
-FilterDropdownView = require '../../components/filters/filter_dropdown_view.coffee'
-PartnerSearchView = require '../../components/filters/partner_search_view.coffee'
-FilterPartners = require '../../components/filters/filter_partners.coffee'
-initFacets = require '../../components/filters/init_filter_facets.coffee'
+FilterDropdownView = require '../../components/dropdown/filter_dropdown_view.coffee'
+# PartnerSearchView = require '../../components/dropdown/partner_search_view.coffee'
+FetchFilterPartners = require '../../components/parameters/fetch_filter_partners.coffee'
+initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
 module.exports = class PartnersSearchView extends Backbone.View
 
   el: $('.galleries-institutions-page')
@@ -33,7 +33,7 @@ module.exports = class PartnersSearchView extends Backbone.View
       profiles: new Profiles MAIN_PROFILES
       el: @$('.galleries-institutions-primary-carousel')
 
-    filterPartners = new FilterPartners params: @params
+    filterPartners = new FetchFilterPartners params: @params
 
     facets = initFacets(params: @params, aggregations: filterPartners.aggregations)
 

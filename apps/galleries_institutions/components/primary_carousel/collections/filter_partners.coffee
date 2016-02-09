@@ -1,7 +1,7 @@
 _ = require 'underscore'
 qs = require 'qs'
 Backbone = require 'backbone'
-Partners = require '../collections/partners.coffee'
+Partners = require '../../../../../collections/partners.coffee'
 { API_URL } = require('sharify').data
 { FeaturedCities } = require 'places'
 

@@ -5,7 +5,7 @@ initCarousel = require '../../../../components/merry_go_round/index.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 template = -> require('./template.jade') arguments...
 fetchProfiles = require './fetch.coffee'
-facetDefaults = require '../filters/facet_defaults.coffee'
+facetDefaults = require '../filter_facet/facet_defaults.coffee'
 
 module.exports = class PrimaryCarousel extends Backbone.View
   events:
