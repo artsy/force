@@ -15,33 +15,35 @@ block body
       .aggregate-page-items-featured
         if currentAuctions.length
           .aggregate-page-items-featured-set
-            h2.aggregate-page-subheader Current Auctions
+            h2.auctions-header Current Auctions
             for auction in currentAuctions
               include auction
 
         if promoAuctions.length
           .auctions-list.auctions-list--promo.leader-dots-list
-            h2.aggregate-page-subheader Auction Previews
+            h2.auctions-header Auction Previews
             for auction in promoAuctions
               include small_auction
 
         if upcomingAuctions.length && !currentAuctions.length
           .auctions-list.auctions-list--upcoming.leader-dots-list
-            h2.aggregate-page-subheader Upcoming Auctions
+            h2.auctions-header Upcoming Auctions
             for auction in upcomingAuctions
               include small_auction
 
         if pastAuctions.length
           .auctions-list.leader-dots-list
-            h2.aggregate-page-subheader Past Auctions
+            h2.auctions-header Past Auctions
             for auction in pastAuctions
               a.leader-dots-list-item( href= auction.href() )
                 span= auction.get('name')
                 span= auction.date('end_at').format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
-        if user
-          include ../../../components/my_active_bids/template
+        if myActiveBids && myActiveBids.length
+          .auctions-my-active-bids
+            h3 Your Active Bids
+            include ../../../components/my_active_bids/template
         a.auction-cta-group(href="https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080")
           .auction-cta-group__left
             img(src="images/mobile-cta.png", alt="Bid from your phone")
@@ -62,7 +64,7 @@ block body
             span.faux-underline Learn More
 
         if upcomingAuctions.length && currentAuctions.length
-          h2.aggregate-page-subheader Upcoming Auctions
+          h2.auctions-header Upcoming Auctions
           for auction in upcomingAuctions
             .ap-upcoming-item
               if auction.id == 'input-output'

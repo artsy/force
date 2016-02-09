@@ -1,5 +1,4 @@
 if myActiveBids && myActiveBids.length
-  h3.my-active-bids-header Your Active Bids
   ul
     for bid in myActiveBids
       - winning = bid.highest_bid.id == bid.sale_artwork.highest_bid.id
