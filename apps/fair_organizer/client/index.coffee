@@ -40,7 +40,7 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
     @articles.fetch
       remove: false
       data: $.param
-        fair_ids: sd.FAIR_IDS
+        'fair_ids': sd.FAIR_IDS
         published: true
         offset: 10 * (@page += 1)
 

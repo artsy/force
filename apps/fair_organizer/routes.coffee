@@ -61,7 +61,7 @@ representation = (fair) ->
         articles.fetch(
           data:
             published: true
-            fair_ids: fairs.pluck('_id')
+            'fair_ids[]': fairs.pluck('_id')
             sort: '-published_at'
         )
       ]
