@@ -67,7 +67,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.fetchRoot
       success: (model, response, options) =>
         mediator.trigger 'artwork_filter:filter:sync', model
-        @remove() unless (model.get('total').value > 0)
+        @remove() unless model.get('total')
       error: =>
         @remove()
     @fetchArtworks()
