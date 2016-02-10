@@ -13,7 +13,9 @@ setupUser = (user, auction) ->
         success: (boolean) -> user.set 'registered_to_bid', boolean
         error: -> user.set 'registered_to_bid', false
       ),
-      metaphysics(query: myActiveBidsQuery, req: user: user)
+      # /api/v1/me/bidder_positions are not 1:1 with "my active bids"
+      # Need to do some filtering to pull out the relavent bidder positions
+      # metaphysics(query: myActiveBidsQuery, req: user: user)
     ]
   else
     Q.promise (resolve) -> resolve()
@@ -34,7 +36,7 @@ setupUser = (user, auction) ->
       upcomingAuctions: res.locals.sd.UPCOMING_AUCTIONS = auctions.previews()
       promoAuctions: auctions.currentAuctionPromos()
       nextAuction: auctions.next()
-      myActiveBids: userData?[1].me.bidder_positions
+      myActiveBids: userData?[1]?.me.bidder_positions
   )
   .catch(next)
   .done()
