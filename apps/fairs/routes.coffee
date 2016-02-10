@@ -4,7 +4,7 @@ metaphysics = require '../../lib/metaphysics'
 ViewHelpers = require './helpers/view_helpers.coffee'
 query = require './query.coffee'
 
-@index = (req, res) ->
+@index = (req, res, next) ->
   metaphysics 
     variables: page: 1
     query: query
