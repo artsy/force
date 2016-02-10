@@ -35,12 +35,6 @@ block body
                   .artwork-artist-blurb
                     != artist.mdToHtml('blurb')
 
-            if artwork.isComparable() && !inADAA
-              .is-center-aligned
-                a.artwork-auction-results-button.avant-garde-header-small(
-                  href="/artwork/#{artwork.id}/auction-results"
-                ) See related auction results
-
     section#artwork-related-show-section
       //- Rendered client-side
 
