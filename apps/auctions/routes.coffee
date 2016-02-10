@@ -2,20 +2,23 @@ Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
 AuctionReminders = require '../../components/auction_reminders/fetch'
+metaphysics = require '../../lib/metaphysics'
+myActiveBidsQuery = require '../../components/my_active_bids/query'
 
 setupUser = (user, auction) ->
-  Q.promise (resolve) ->
-    if user? and auction?
-      user.checkRegisteredForAuction
+  if user? and auction?
+    Q.all [
+      user.checkRegisteredForAuction(
         saleId: auction.id
-        success: (boolean) ->
-          user.set 'registered_to_bid', boolean
-        error: ->
-          user.set 'registered_to_bid', false
-        complete: ->
-          resolve user
-    else
-      resolve()
+        success: (boolean) -> user.set 'registered_to_bid', boolean
+        error: -> user.set 'registered_to_bid', false
+      ),
+      # /api/v1/me/bidder_positions are not 1:1 with "my active bids"
+      # Need to do some filtering to pull out the relavent bidder positions
+      # metaphysics(query: myActiveBidsQuery, req: user: user)
+    ]
+  else
+    Q.promise (resolve) -> resolve()
 
 @index = (req, res, next) ->
   auctions = new Auctions
@@ -26,13 +29,14 @@ setupUser = (user, auction) ->
     data: published: true, size: 30, sort: '-created_at'
   ).then(->
     setupUser(req.user, auctions.next())
-  ).then(->
+  ).then((userData) ->
     res.render 'index',
       pastAuctions: auctions.closeds()
       currentAuctions: res.locals.sd.CURRENT_AUCTIONS = auctions.opens()
       upcomingAuctions: res.locals.sd.UPCOMING_AUCTIONS = auctions.previews()
       promoAuctions: auctions.currentAuctionPromos()
       nextAuction: auctions.next()
+      myActiveBids: userData?[1]?.me.bidder_positions
   )
   .catch(next)
   .done()

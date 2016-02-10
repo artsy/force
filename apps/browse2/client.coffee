@@ -1,12 +1,12 @@
-scrollFrame = require 'scroll-frame'
-{ setupFilter } = require '../../components/filter2/index.coffee'
-aggregationParams = require './aggregations.coffee'
+Filter = require '../../components/commercial_filter/models/filter.coffee'
+ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->
-  setupFilter
-    filterRoot: '/browse2/artworks'
-    el: $ '#browse-filter'
-    aggregations: aggregationParams
-
-  scrollFrame '#browse-filter a' unless sd.EIGEN
+  filter = new Filter()
+  filter.fetch().then ({ artworks, aggregations }) ->
+    view = new ArtworkColumnsView
+      collection: artworks
+      el: $('#browse-page')
+      allowDuplicates: true
+      numberOfColumns: 4

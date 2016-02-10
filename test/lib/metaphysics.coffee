@@ -31,6 +31,9 @@ describe 'metaphysics', ->
       '
 
     @request.get.args[0][0].should.equal 'https://metaphysics.test'
+    @request.set.args.should.eql [
+      ['Accept', 'application/json']
+    ]
     @request.query.args[0][0].query.should.equal query
     @request.query.args[0][0].variables.should.equal '{"id":"foo-bar","size":3}'
 
@@ -93,5 +96,8 @@ describe 'metaphysics', ->
 
       metaphysics req: user: @user
         .then =>
-          @request.set.args[0][0]
-            .should.eql 'X-ACCESS-TOKEN': 'xxx'
+          @request.set.args
+            .should.eql [
+              ['Accept', 'application/json']
+              ['X-ACCESS-TOKEN': 'xxx']
+            ]
