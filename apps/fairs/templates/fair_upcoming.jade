@@ -1,4 +1,5 @@
 .fairs__upcoming-fair
-  .fairs-fair__name #{fair.get('name')}
-  .fairs-fair__info #{fair.formatDates()}
-  .fairs-fair__info #{fair.formatLocation()}
+  .fairs-fair__name #{fair.name}
+  .fairs-fair__info #{ViewHelpers.formatDates(fair)}
+  if fair.location && fair.location.city
+    .fairs-fair__info= fair.location.city

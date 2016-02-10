@@ -13,7 +13,7 @@
     .mgr-cells.js-mgr-cells
       for slide in featuredFairs
         .mgr-cell.js-mgr-cell
-          img( src= slide.imageUrl('large'), alt= slide.get('title'))
+          img( src= slide.image.url, alt= slide.title)
           .mgr-cell__caption
-            .mgr-cell__title= slide.get('title')
-            .mgr-cell__subtitle= slide.get('subtitle')
+            .mgr-cell__title= slide.title
+            .mgr-cell__subtitle= slide.subtitle
