@@ -18,7 +18,7 @@ describe 'RegistrationForm', ->
         Stripe: @Stripe =
           setPublishableKey: sinon.stub()
           card:
-            createToken: sinon.stub()
+            createToken: sinon.stub().yields(200, {})
       Backbone.$ = $
       done()
 
@@ -64,40 +64,121 @@ describe 'RegistrationForm', ->
         @view.$('input[name="telephone"]').val '555-555-5555'
         @view.$submit.click()
 
-    it 'still succeeds if the API throws an error for having already created a bidder', ->
-      @submitValidForm()
-      @Stripe.card.createToken.args[0][1](200, {})
-      # Save credit card
-      Backbone.sync.args[1][2].success()
-      # Creates the bidder
-      Backbone.sync.args[2][2].error { responseJSON: { message: 'Sale is already taken.' } }
-      @view.success.called.should.be.ok()
+    it 'still succeeds if the API throws an error for having already created a bidder', (done) ->
+      Backbone.sync
+        .yieldsTo 'success', {} # savePhoneNumber success
+        .onCall 1
+        .yieldsTo 'success', { get: () -> 'pass' } # credit card save success
+        .onCall 2
+        .yieldsTo 'error', { responseJSON: { message: 'Sale is already taken.' } } # bidder creation failure
 
-    it 'validates the form and displays errors', ->
+      @submitValidForm()
+
+      @view.once 'submitted', =>
+        done()
+
+    it 'validates the form and displays errors', (done) ->
       @view.$submit.length.should.be.ok()
       @view.$submit.click()
-      html = @view.$el.html()
-      html.should.containEql 'Invalid name on card'
-      html.should.containEql 'Invalid card number'
-      html.should.containEql 'Invalid security code'
-      html.should.containEql 'Invalid city'
-      html.should.containEql 'Invalid state'
-      html.should.containEql 'Invalid zip'
-      html.should.containEql 'Invalid telephone'
-      html.should.containEql 'Please review the error(s) above and try again.'
-      @view.$submit.hasClass('is-loading').should.be.false()
 
-    it 'submits the form correctly', ->
+      @view.once 'submitted', =>
+        html = @view.$el.html()
+        html.should.containEql 'Invalid name on card'
+        html.should.containEql 'Invalid card number'
+        html.should.containEql 'Invalid security code'
+        html.should.containEql 'Invalid city'
+        html.should.containEql 'Invalid state'
+        html.should.containEql 'Invalid zip'
+        html.should.containEql 'Invalid telephone'
+        html.should.containEql 'Please review the error(s) above and try again.'
+        @view.$submit.hasClass('is-loading').should.be.false()
+        done()
+
+    it 'lets the user resubmit a corrected form', ->
+      # Submit a bad form
+
+      @view.$submit.length.should.be.ok()
+      @view.$submit.click()
+      @view.once "submitted", =>
+        html = @view.$el.html()
+        html.should.containEql 'Please review the error(s) above and try again.'
+
+        # Now submit a good one
+
+        # Successfully create a stripe token
+        @Stripe.card.createToken.callsArgWith(1, 200, {})
+        # Successfully save phone number
+        Backbone.sync.onFirstCall().yieldsTo('success')
+        # Successfully save credit card
+        Backbone.sync.onSecondCall().yieldsTo('success')
+        # Successfully create the bidder
+        Backbone.sync.onThirdCall().yieldsTo('success')
+
+
+        @submitValidForm()
+        @view.once "submitted", =>
+          @Stripe.card.createToken.args[0][1](200, {})
+
+          # Saves the phone number
+          Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
+
+          # Saves the credit card
+          Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'
+          Backbone.sync.args[1][2].success()
+
+          # Creates the bidder
+          Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
+          Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+
+    it 'shows an error when the ZIP check fails', (done) ->
+      Backbone.sync
+        .yieldsTo 'success', {} # savePhoneNumber success
+        .onCall 1
+        .yieldsTo 'success', { address_zip_check: 'fail', cvc_check: 'pass' } # credit card save failure
+        .onCall 2
+        .yieldsTo 'success', {}
+
       @submitValidForm()
-      @Stripe.card.createToken.args[0][1](200, {})
 
-      # Saves the phone number
-      Backbone.sync.args[0][1].changed.phone.should.equal '555-555-5555'
+      @view.once "submitted", =>
+        html = @view.$el.html()
+        html.should.containEql "The ZIP code provided did not match your card number."
+        done()
 
-      # Saves the credit card
-      Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'
-      Backbone.sync.args[1][2].success()
+    it 'shows an error when the CVV check fails', (done) ->
+      Backbone.sync
+        .yieldsTo 'success', {} # savePhoneNumber success
+        .onCall 1
+        .yieldsTo 'success', { address_zip_check: 'pass', cvc_check: 'fail' } # credit card save failure
+        .onCall 2
+        .yieldsTo 'success', {}
 
-      # Creates the bidder
-      Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
-      Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+      @submitValidForm()
+
+      @view.once "submitted", =>
+        html = @view.$el.html()
+        html.should.containEql "The security code provided did not match your card number."
+        done()
+
+    it 'submits the form correctly', (done) ->
+      Backbone.sync
+        .yieldsTo 'success', {} # savePhoneNumber success
+        .onCall 1
+        .yieldsTo 'success', { get: () -> 'pass' } # credit card save passes
+        .onCall 2
+        .yieldsTo 'success', {}
+
+      @submitValidForm()
+
+      @view.once "submitted", =>
+        # Saves the phone number
+        Backbone.sync.args[0][1].attributes.phone.should.equal '555-555-5555'
+
+        # Saves the credit card
+        Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/credit_cards'
+
+        # Creates the bidder
+        Backbone.sync.args[2][1].attributes.sale_id.should.equal @sale.id
+        Backbone.sync.args[2][2].url.should.containEql '/api/v1/bidder'
+
+        done()
