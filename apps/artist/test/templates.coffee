@@ -80,3 +80,5 @@ describe 'Artist header', ->
       $navLinks.last().text().should.equal 'Shows'
       $navLinks.text().should.not.containEql 'Works'
 
+    it 'should not display an artworks section with no artworks', ->
+      $('body').html().should.not.containEql 'artwork-section'
