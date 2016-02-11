@@ -48,7 +48,7 @@ module.exports = class ArticleView extends Backbone.View
     @initFullscreenHeader($header) if ($header = @$('.article-fullscreen')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES?.length > 0
 
-    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {}
+    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
 
   centerFullscreenHeader: ($header) ->
     # Center header
