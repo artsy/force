@@ -40,7 +40,6 @@ module.exports = class ErrorHandlingForm extends Backbone.View
 
   showError: (description, response={}) =>
     if response.responseText? and (errorJson = try JSON.parse response.responseText)
-      console.log response, 'MOOO'
       switch errorJson.type
         when 'payment_error'
           message = @errors.paymentError
