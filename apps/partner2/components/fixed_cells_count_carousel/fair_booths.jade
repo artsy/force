@@ -1,0 +1,21 @@
+- var fairBooths = collection
+- var width = 300
+- var height = 200
+
+.fcc-carousel.partner2-shows-carousel
+
+  if displayNav
+    a.mgr-arrow-left.icon-chevron-left.js-mgr-prev
+    a.mgr-arrow-right.icon-chevron-right.js-mgr-next
+
+  .mgr-cells.js-mgr-cells
+      for show in fairBooths.models
+        .mgr-cell.js-mgr-cell
+          a( href= show.href() )
+            img.fcc-carousel-image(
+              src= show.cropUrlFor({ width: width, height: height })
+              alt= show.get('name')
+            )
+          a.fcc-carousel-caption-title( href= show.href() )
+            em= show.get('name')
+          .fcc-carousel-caption-dates= show.runningDates()
