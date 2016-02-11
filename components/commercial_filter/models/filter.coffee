@@ -12,6 +12,8 @@ module.exports = class Filter
       size: 18
       page: 1
       for_sale: true
+      color: null
+      medium: null
       aggregations: ['TOTAL', 'FOR_SALE', 'COLOR', 'MEDIUM']
 
   constructor: (options) ->
@@ -23,14 +25,23 @@ module.exports = class Filter
         $aggregations: [ArtworkAggregation]!,
         $for_sale: Boolean,
         $size: Int,
-        $page: Int
+        $page: Int,
+        $color: String,
+        $price_range: String,
+        $gene_id: String,
+        $medium: String
       ){
         filter_artworks(
           aggregations: $aggregations,
           for_sale: $for_sale,
           size: $size,
-          page: $page
+          page: $page,
+          color: $color,
+          price_range: $price_range,
+          gene_id: $gene_id,
+          medium: $medium
         ){
+          total
           aggregations {
             ... aggregations
           }
