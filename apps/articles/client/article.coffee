@@ -44,8 +44,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           cache: true
           remove: false
           data: @params.toJSON()
-          complete: =>
-            $('#articles-show').removeClass 'is-loading'
+          complete: => $('#articles-show').removeClass 'is-loading'
 
       $.onInfiniteScroll(@nextPage)
 
