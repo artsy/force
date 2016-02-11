@@ -37,7 +37,7 @@ describe 'Events templates', ->
 
     it 'should render event details', ->
       @html.should.containEql 'Welcome'
-      @html.should.containEql 'This panel is organized in conjunction with The Armory Show'
+      @html.should.containEql 'PARTICIPANTS: Noah Horowitz, Executive Director'
       @html.should.containEql 'The New York Times Style Magazine Media Lounge on Pier 94'
 
     it 'should display map icon', ->
