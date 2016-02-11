@@ -1,9 +1,9 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-AboutYouView = require '../components/about_you/view.coffee'
-ArtistsYouCollectView = require '../components/artists_you_collect/view.coffee'
-GalleryIntroView = require '../components/gallery_intro/view.coffee'
-template = -> require('../templates/profile.jade') arguments...
+AboutYouView = require '../../components/about_you/view.coffee'
+ArtistsYouCollectView = require '../../components/artists_you_collect/view.coffee'
+GalleryIntroView = require '../../components/gallery_intro/view.coffee'
+template = -> require('./index.jade') arguments...
 
 module.exports = class ProfileView extends Backbone.View
   subviews: []

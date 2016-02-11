@@ -5,9 +5,12 @@ block sections
 
 block main
   case sd.CURRENT_PATH
-    when '/settings/edit'
-      include ./settings
+    when '/user/edit'
+      .settings-page__settings
+        include ../pages/settings/index
     when '/profile/edit'
-      include ./profile
+      .settings-page__profile
+        include ../pages/profile/index
     when '/user/delete'
-      include ./delete
+      .settings-page__delete
+        include ../pages/delete/index

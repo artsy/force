@@ -1,14 +1,12 @@
 include ../../../../components/util/activator
 
-nav.avant-garde-tablist
+mixin tab(name, path)
   a.avant-garde-tablist__tab(
     class='js-avant-garde-tablist__tab'
-    href='/settings/edit'
-    data-state= activeState('/settings/edit')
-  ) Settings
+    href= path
+    data-state= activeState(path)
+  )= name
 
-  a.avant-garde-tablist__tab(
-    class='js-avant-garde-tablist__tab'
-    href='/profile/edit'
-    data-state= activeState('/profile/edit')
-  ) Profile
+nav.avant-garde-tablist
+  +tab('Settings', '/user/edit')
+  +tab('Profile', '/profile/edit')
