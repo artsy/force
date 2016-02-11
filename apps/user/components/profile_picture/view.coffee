@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
@@ -43,7 +44,6 @@ module.exports = class ProfileIconUpload extends Backbone.View
     _.delay (=> @$errorMessage.removeClass('is-active')), 3000
 
   renderUploadedImage: ->
-    @$el.addClass 'is-loading'
     @$progressIndicator.hide().css 'width', 0
     $("<img src=\"#{@profile.iconImageUrl()}\" />").on 'load', =>
       @$el.removeClass('is-loading').addClass 'has-image'
@@ -76,10 +76,15 @@ module.exports = class ProfileIconUpload extends Backbone.View
     @$progressIndicator.hide().css 'width', 0
 
   # Render processing message?
-  onUploadComplete: (resp) =>
-    @profile.set 'icon', { profileId: @profile.get('id'), gemini_token: resp.token }
-    @profile.icon().save()
-    @renderUploadedImage()
+  onUploadComplete: ({ token }) =>
+    @$el.addClass 'is-loading'
+    @profile.icon()
+      .save
+        profileId: @profile.id
+        gemini_token: token
+      .then =>
+        @renderUploadedImage()
+
 
   onProgressUpdate: (e, data) =>
     @$progressIndicator.show() unless @$progressIndicator.is(':visible')

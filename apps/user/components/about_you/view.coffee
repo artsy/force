@@ -1,7 +1,6 @@
 { invoke } = require 'underscore'
 GenericFormView = require '../generic_form/view.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
-ProfileIconView = require '../profile_icon/view.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class AboutYouView extends GenericFormView
@@ -21,15 +20,8 @@ module.exports = class AboutYouView extends GenericFormView
       @model.setLocation value
       @change()
 
-    profileIconView = new ProfileIconView
-      el: @$('.js-settings-about-you__avatar')
-      model: @profile.icon()
-      profile: @profile
-      accessToken: @user.get 'accessToken'
-
     @subViews = [
       locationSearchView
-      profileIconView
     ]
 
   render: ->
