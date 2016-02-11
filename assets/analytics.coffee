@@ -32,7 +32,6 @@ $ -> analytics.ready ->
   require '../analytics/notifications.js'
   require '../analytics/artists.js'
   require '../analytics/artwork.js'
-  require '../analytics/registration.js'
   require '../analytics/fair.js'
   require '../analytics/following.js'
   require '../analytics/partner.js'

@@ -92,6 +92,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     .then =>
       analyticsHooks.trigger 'registration:success'
       @success()
+    .catch (err) => throw err.toString()
 
   savePhoneNumber: ->
     # Always resolves; just delays until the process completes
