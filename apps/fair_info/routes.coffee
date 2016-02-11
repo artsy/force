@@ -31,12 +31,14 @@ Articles = require '../../collections/articles'
   fetchArticle('fair_programming_id', req, res, next)
 
 @events = (req, res) ->
-  events = new FairEvents [], {fairId: res.locals.fair.id}
+  events = new FairEvents [], { fairId: res.locals.fair.id }
 
   events.fetch
     cache: true
+    data:
+      size: 50
     error: res.backboneError
-    success: ->
+    success: (events) ->
       res.locals.sd.FAIR_EVENTS = events.toJSON()
       res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })
 
