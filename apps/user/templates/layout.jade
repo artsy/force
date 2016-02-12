@@ -1,0 +1,29 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  title Settings | Artsy
+
+append locals
+  - assetPackage = 'user'
+
+block body
+  .settings-page.responsive-layout-container(
+    class='js-settings-page'
+  )
+    .main-layout-container
+      header.settings-page__header
+        h1.settings-page__header__name
+          = user.get('name')
+
+        include ../components/tabs/index
+
+      .settings-page__content
+        nav.settings-page__content__sections(
+          class='js-settings-page__content__sections'
+        )
+          block sections
+
+        .settings-page__content__main(
+          class='js-settings-page__content__main'
+        )
+          block main

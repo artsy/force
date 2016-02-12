@@ -1,107 +1,86 @@
 @require '../../../components/stylus_lib'
-@require './profile_icon'
+@require '../components/checkbox'
+@require '../components/information'
+@require '../components/password'
+@require '../components/linked_accounts'
+@require '../components/email_preferences'
+@require '../components/profile_picture'
+@require '../components/about_you'
+@require '../components/artists_you_collect'
+@require '../components/gallery_intro'
+@require '../components/delete_my_account'
 
-#settings
-  padding 50px 0
-  .garamond-tablist
-    margin-bottom 30px
+.avant-garde-tablist
+  clearfix()
+  margin gutter 0
+  border-bottom 2px solid gray-lighter-color
+  &__tab
+    display block
+    float left
+    avant-garde-size('body')
+    padding (gutter / 2)
+    color gray-darker-color
+    border-bottom 2px solid gray-lighter-color
+    margin-bottom -2px
+    transition color 0.25s, border-color 0.25s
+    text-decoration none
+    &:hover
+    &[data-state='active']
+      color black
+      border-bottom-color gray-darker-color
+    &:first-child
+      padding-left 0
 
-.settings-account-form
-.settings-collector-form
-.settings-profile-form
-  fade-in()
+.settings-page
+  padding 15px 0
 
-.settings-split
-  display table
-  width 100%
-  margin 20px 0
+  &__header
+    &__name
+      garamond-size('s-headline')
+
+  &__content
+    clearfix()
+
+    &__sections
+    &__main
+      float left
+
+    &__sections
+      width 25%
+      > a
+      > span
+        display block
+        padding (gutter / 4) 0
+        avant-garde-size('body')
+        color gray-darker-color
+        transition color 0.25s
+        text-decoration none
+      > a
+        &:hover
+        &[data-state='active']
+          color black
+
+    &__main
+      width 75%
+
+.settings-subnav
+  //
+
+.settings-section
+  width 75%
+  block-margins(gutter)
+  padding gutter 0 (gutter * 2) 0
+  border-top 1px solid gray-lighter-color
   &:first-child
-    margin-top 0
-  &:last-child
-    margin-bottom 0
-.ss-left
-  padding-right 10px
-.ss-right
-  text-align right
-.ss-left
-.ss-right
-  vertical-align top
-  display table-cell
+    border-top 0
+    padding-top 0
+
+  &__name
+    block-margins(gutter)
+    garamond-size('s-headline')
+
+  &__main
+    //
 
 .settings-disable-link
   color gray-dark-color
-  &[data-state='loading']::before
-    background-color @color
-
-.settings-collector-introduction-preview
-  margin 20px 25% 20px 0
-  color gray-darker-color
-  font-size 24px
-  line-height 1.4
-  position relative
-
-.settings-disabled-indicator
-  margin-right 20px
-
-.settings-form-errors
-  margin-bottom 20px
-  &, a
-    color red-color
-  &:empty
-    display none
-
-#settings-change-password-new
-  display none
-
-.settings-toggle-service
-  &:after
-    content 'Connect'
-  &[data-connected='connected']
-    &:after
-      content 'Connected'
-    &:hover
-      color red-color
-      &:after
-        content 'Disconnect'
-
-.settings-checkbox-label
-  margin-left 0
-
-// Grouped section (extract)
-.grouped-section
-  margin 20px 0
-  padding 20px 0 60px 0
-  clearfix()
-  border-bottom 1px solid gray-lighter-color
-  &:last-child
-    border-bottom none
-.gs-header
-.gs-body
-  float left
-.gs-header
-  width 25%
-  padding-right 60px
-  h1
-  h2
-    margin-bottom 20px
-    line-height 1.25
-  h1
-    avant-garde()
-    font-size 23px
-  h2
-    garamond()
-    font-size 28px
-.gs-body
-  width 75%
-.gs-constrain
-  width 50%
-  margin 0
-header.grouped-section
-  .gs-body p
-    font-size 24px
-    line-height 1.25
-    margin-right 40px
-
-#settings-email-preferences
-  .email_subscriptions
-    padding-left 25px

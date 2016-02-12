@@ -19,6 +19,7 @@ redirects =
   '/fairs': 'art-fairs'
   '/feature/art-fairs': 'art-fairs'
   '/settings': '/user/edit'
+  '/collector/edit': '/profile/edit'
   '/_=_': '/' # Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
   '/press': '/press/press-releases'
   '/about/press': '/press/press-releases'

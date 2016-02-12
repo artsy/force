@@ -1,0 +1,18 @@
+include ../../templates/mixins
+
++settings-section('information', 'Information')
+  include ../../components/information/index
+
++settings-section('password', 'Password')
+  include ../../components/password/index
+
++settings-section('linked-accounts', 'Linked Accounts')
+  include ../../components/linked_accounts/index
+
++settings-section('email-preferences', 'Email Preferences')
+  include ../../components/email_preferences/index
+
+.settings-section
+  .settings-section__main
+    a.settings-disable-link.garamond-button-text( href='/user/delete' )
+      | Delete Account
