@@ -15,7 +15,7 @@
   .partner-overview-container
     for module in layout
       if module.component || module.template
-        section.partner-overview-section( data-module=module.name )
+        section.partner-overview-section( data-module=module.name, data-component=(module.component ? module.component.name : null) )
           if module.title
             h3.partner-overview-section-title= module.title
           if module.viewAll
