@@ -85,7 +85,6 @@ module.exports = class ProfileIconUpload extends Backbone.View
       .then =>
         @renderUploadedImage()
 
-
   onProgressUpdate: (e, data) =>
     @$progressIndicator.show() unless @$progressIndicator.is(':visible')
     @$progressIndicator.width parseInt(data.loaded / data.total * 140, 10)

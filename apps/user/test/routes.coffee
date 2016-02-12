@@ -1,90 +1,70 @@
-_ = require 'underscore'
-routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'
+CurrentUser = require '../../../models/current_user'
+routes = require '../routes'
 
 describe '/user', ->
-
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { url: '/user/edit' }
+    @req = url: '/user/edit'
     @res =
+      set: sinon.stub()
       json: sinon.stub()
       render: sinon.stub()
       redirect: sinon.stub()
-      locals: { sd: { API_URL: 'http://localhost:5000'} }
+      locals: sd: API_URL: 'http://localhost:5000'
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#refresh', ->
-
     it 'redirects to the home page without a current user', ->
       routes.refresh @req, @res
       @res.redirect.args[0][0].should.equal '/'
 
     describe 'with a logged in user', ->
-
       beforeEach ->
         @req =
           user: new CurrentUser fabricate 'user'
           login: sinon.stub()
-
         @next = sinon.stub()
-        routes.refresh @req, @res, @next
-        Backbone.sync.args[0][2].success @req.user
+
+        Backbone.sync
+          .onCall 0
+          .returns Promise.resolve @req.user
 
       it 'calls req.login to refresh the session', ->
-        @req.login.calledOnce.should.be.true()
-        @req.login.args[0][1]()
-        @next.calledOnce.should.not.be.true()
-        @req.login.args[0][1](true)
-        @next.calledOnce.should.be.true()
+        routes.refresh @req, @res, @next
+          .then =>
+            @req.login.calledOnce.should.be.true()
+            @req.login.args[0][1]()
+            @next.calledOnce.should.not.be.true()
+            @req.login.args[0][1](true)
+            @next.calledOnce.should.be.true()
 
   describe '#settings', ->
-
     it 'redirects to the home page without a current user', ->
       routes.settings @req, @res
       @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=/user/edit'
 
     describe 'with a logged in user', ->
-
       beforeEach ->
-        @req = { user: new CurrentUser fabricate 'user' }
+        @req = user: new CurrentUser fabricate 'user', type: 'User', accessToken: 'xxx'
+
+        Backbone.sync
+          .onCall 0
+          .returns Promise.resolve @req.user
+
+      it 'fetches the current user and profile', ->
         routes.settings @req, @res
+          .then =>
+            Backbone.sync.args[2][1].attributes.id
+              .should.equal @req.user.get 'default_profile_id'
+            Backbone.sync.args[2][2].data.access_token
+              .should.equal 'xxx'
 
-      it "fetches the current user and the user's profile", ->
-        Backbone.sync.args[0][2].success @req.user
-        Backbone.sync.args[2][1].attributes.id.should.equal @req.user.get 'default_profile_id'
-        _.keys(Backbone.sync.args[2][2].data)[0].should.equal 'access_token'
-
-      it "fetches the current user's authentications", ->
-        Backbone.sync.args[0][2].success @req.user
-        _.keys(Backbone.sync.args[1][2].data)[0].should.equal 'access_token'
-        Backbone.sync.args[1][2].url.should.containEql 'me/authentications'
-
-      xit 'determines which model to edit first (profile or user)', ->
-
-
-  describe '#delete', ->
-
-    it 'redirects to the home page without a current user', ->
-      routes.delete @req, @res
-      @res.redirect.args[0][0].should.equal '/'
-
-    describe 'with a logged in user', ->
-
-      it 'renders the account delete form', ->
-        @req = { user: new CurrentUser fabricate 'user', type: 'User' }
-        routes.delete @req, @res
-        @res.render.args[0][0].should.containEql 'delete'
-        @res.render.args[0][1].user.should.equal @req.user
-
-    describe 'with a logged in admin', ->
-
-      it 'redirects to the home page - the "me" API does not delete admins', ->
-        @req = { user: new CurrentUser fabricate 'user', type: 'Admin' }
-        routes.delete @req, @res
-        @res.redirect.args[0][0].should.equal '/'
+      it 'fetches the authentications', ->
+        routes.settings @req, @res
+          .then =>
+            Backbone.sync.args[1][2].url.should.containEql '/me/authentications'

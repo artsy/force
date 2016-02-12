@@ -6,17 +6,18 @@ form.stacked-form
   .settings-email-preferences__subscriptions(
     class='js-settings-email-preferences__subscriptions'
   )
-    +checkbox('receive_weekly_email')
+    - var disable = !user.get('receive_emails');
+    +checkbox('receive_weekly_email', disable)
      | What's on Artsy This Week
-    +checkbox('receive_editorial_email')
+    +checkbox('receive_editorial_email', disable)
      | Art World News
-    +checkbox('receive_auction_email')
+    +checkbox('receive_auction_email', disable)
      | Auctions
-    +checkbox('receive_personalized_email')
+    +checkbox('receive_personalized_email', disable)
      | Personalized Art Recommendations
-    +checkbox('receive_follow_users_email')
+    +checkbox('receive_follow_users_email', disable)
      | When I Have New Followers
-    +checkbox('receive_offer_emails')
+    +checkbox('receive_offer_emails', disable)
      | Artsy Specialist Recommendations
 
   button.avant-garde-button-white

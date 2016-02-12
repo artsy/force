@@ -1,4 +1,3 @@
-{ extend } = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 template = -> require('./index.jade') arguments...
