@@ -20,4 +20,3 @@ for service in ['Twitter', 'Facebook', 'LinkedIn']
         data-connected= user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
       )
         i( class='icon-#{service.toLowerCase()}' )
-        | Connect
