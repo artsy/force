@@ -124,8 +124,8 @@ galleryTwoArtists = (partner, profile) ->
       when 'Grid' then ArtistsGridView
       else ArtistsListView
   options: partner: partner
-  title: 'Artists' if partner.get('profile_artists_layout') is 'List'
-  viewAll: "#{partner.href()}/artists" if partner.get('profile_artists_layout') is 'List'
+  title: 'Artists' unless partner.get('profile_artists_layout') is 'Grid'
+  viewAll: "#{partner.href()}/artists" unless partner.get('profile_artists_layout') is 'Grid'
 
 galleryTwoArticles = (partner, profile) ->
   name: 'articles'
