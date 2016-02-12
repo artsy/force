@@ -10,4 +10,12 @@
       garamond-size('s-body')
 
     &__toggle
-      //
+      &:after
+        content 'Connect'
+      &[data-connected='connected']
+        &:after
+          content 'Connected'
+        &:hover
+          color red-color
+          &:after
+            content 'Disconnect'
