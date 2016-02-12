@@ -135,7 +135,7 @@ describe 'overview_layout_factory', ->
       @partner.set profile_banner_display: 'Shows'
       @partner.set profile_artists_layout: 'Grid'
       factory(@partner, @profile).should.eql [
-        { name: 'hero', component: HeroShowsCarousel, options: { partner: @partner, maxNumberOfShows: 10 } }
+        { name: 'hero', component: HeroShowsCarousel, options: { partner: @partner, maxNumberOfShows: 2 } }
         { name: 'about', template: '<article></article>', title: 'About' }
         { name: 'news', component: NewsView, options: { partner: @partner }, title: 'News' }
         {
