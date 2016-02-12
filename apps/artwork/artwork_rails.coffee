@@ -57,7 +57,7 @@ module.exports = class ArtworkRails
           return resolve() if @artwork.partner.type is 'Institution'
           isInAuction = @artwork.related?.__typename is 'RelatedSale' and @artwork.related?.is_auction?
           isInCurrentOrUpcomingAuction = @artwork.related?.is_preview or @artwork.related?.is_open
-          return resolve() if isInAuction and isInCurrentOrUpcomingAuction
+          return resolve(in_auction: true) if isInAuction and isInCurrentOrUpcomingAuction
           Q.all [
             @fetchSimilarArtworks()        # fetch 21 (guaranteed 20 uniques)
             @fetchArtistArtworks()         # fetch 31 (guaranteed 10 uniques)

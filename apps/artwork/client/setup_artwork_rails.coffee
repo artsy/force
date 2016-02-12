@@ -24,20 +24,20 @@ railwayMap = (artwork) ->
     title: "Other Works from #{artwork.shows[0]?.name}"
 
 module.exports = (model, artist) ->
-  new LayeredSearchView
-    el: $('#artwork-below-the-fold-section')
-    artwork: model
-
-  $('#artwork-below-the-fold-section').attr 'data-state', 'fade-in'
-
   $.ajax
     url: "#{sd.APP_URL}/artwork/#{model.id}/artwork_rails"
-    success: ({artwork, rails}) ->
+    success: ({artwork, rails, in_auction}) ->
+      if not in_auction
+        new LayeredSearchView
+          el: $('#artwork-below-the-fold-section')
+          artwork: model
+
+        $('#artwork-below-the-fold-section').attr 'data-state', 'fade-in'
+
       # if rails endpoint doesn't return anything, fall back to old related works
       if _.isEmpty rails
         return unless artist.related().artworks.length
         $('#artist-artworks-section').addClass('is-fade-in').show()
-
         new ArtworkColumnsView
           el: $('#artist-artworks-section .artworks-list')
           collection: artist.related().artworks
