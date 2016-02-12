@@ -2,8 +2,9 @@ header.auction-header
   .auction-header-primary
     if auction.isWithHeaderImage()
       //- 9:4 ratio
-      .auction-cover-image.responsive-image-container: img(
-        src= auction.cropUrlFor({ width: 1440, height: 640 })
+      - imgUrl = auction.cropUrlFor({ width: 1440, height: 640 })
+      .auction-cover-image.responsive-image-container(
+        style='background-image: url("' + imgUrl + '")'
         alt= auction.get('name')
       )
 
