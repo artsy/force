@@ -1,6 +1,7 @@
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
+Backbone = require 'backbone'
 { fabricate, fabricate2 } = require 'antigravity'
 
 describe 'Filter', ->
@@ -17,12 +18,7 @@ describe 'Filter', ->
 
   describe '#query', ->
     it 'returns a query string', ->
-      filter = new @Filter()
+      filter = new @Filter params: new Backbone.Model()
       query = filter.query()
       query.should.containEql 'ArtworkAggregation'
 
-  describe '#params', ->
-    it 'returns default params', ->
-      filter = new @Filter()
-      filter.params().should.containEql 'for_sale'
-      filter.params().should.containEql 'aggregations'
