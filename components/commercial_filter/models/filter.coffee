@@ -1,23 +1,19 @@
-{ defaults, extend, pick } = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
+Q = require 'bluebird-q'
+{ defaults, extend, pick } = require 'underscore'
+Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class Filter
-  extend @prototype, Backbone.Events
-  defaults:
-    stuckParam: null
-    params:
-      size: 18
-      page: 1
-      for_sale: true
-      color: null
-      medium: null
-      aggregations: ['TOTAL', 'FOR_SALE', 'COLOR', 'MEDIUM']
+  extend Backbone.Events
 
-  constructor: (options) ->
-    @options = defaults @defaults, options
+  constructor: ({ @params } = {}) ->
+    throw new Error 'Requires a params model' unless @params?
+    @artworks = new Artworks()
+    @aggregations = new Aggregations()
+
+    @params.on 'change', @fetch, @
 
   query: ->
     query = """
@@ -54,15 +50,12 @@ module.exports = class Filter
       #{require '../queries/aggregations.coffee'}
     """
 
-  params: ->
-    pick @options.params, 'aggregations', 'for_sale', 'size', 'page'
-
   fetch: ->
     Q.promise (resolve, reject) =>
-      metaphysics query: @query(), variables: @params()
+      metaphysics query: @query(), variables: @params.current()
         .then ({ filter_artworks }) =>
-          @artworks = new Artworks filter_artworks.hits
-          @aggregations = new Backbone.Model filter_artworks.aggregations
+          @artworks.reset filter_artworks.hits
+          @aggregations.reset filter_artworks.aggregations
           resolve @
         .catch (error) ->
           reject error
