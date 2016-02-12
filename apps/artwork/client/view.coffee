@@ -42,10 +42,10 @@ module.exports = class ArtworkView extends Backbone.View
 
   initialize: ({ @artwork }) ->
     @showRails = splitTest('merchandized_rails').outcome() is 'true'
-    setupArtworkRails(@artwork, @artist) if @showRails
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
+    setupArtworkRails(@artwork, @artist) if @showRails
     @checkQueryStringForAuction()
     @setupCurrentUser()
     @setupRelatedArticles()
