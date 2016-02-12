@@ -13,7 +13,6 @@ var AUCTION_ID = (
 var USER_AUCTION = {};
 if (sd.CURRENT_USER) USER_AUCTION.user_id = sd.CURRENT_USER.id;
 if (AUCTION_ID) USER_AUCTION.auction_slug = AUCTION_ID;
-console.log(AUCTION_ID, USER_AUCTION)
 
 // -----------------------------------------------------------------------------
 // Events from https://trello.com/c/nqmq1yjL/264-web-send-data-to-segment
