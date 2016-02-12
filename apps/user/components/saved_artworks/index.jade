@@ -1,0 +1,20 @@
+.settings-section__count
+  if total
+    | #{total} Artworks
+
+.settings-saved-artworks__artworks(
+  class='js-settings-saved-artworks__artworks'
+)
+  if artworks && artworks.length === 0
+    | Nothing yet.
+
+if !artworks || artworks && artworks.length > 0
+  .settings-saved-artworks__more
+    a.avant-garde-button-white(
+      class='js-settings-saved-artworks__more__button'
+      data-state= (!artworks ? 'loading' : 'loaded')
+    )
+      | More
+      if remaining
+        = ' '
+        | (#{remaining})
