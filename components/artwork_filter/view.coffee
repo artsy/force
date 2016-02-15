@@ -131,16 +131,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.deselect $(e.currentTarget).data('key')
     @trigger 'navigate'
 
-  # setState: ->
-  #   @setButtonState()
-
-  # setButtonState: ->
-  #   length = @artworksView?.length() or 0
-  #   @remaining = @filter.get('total')?.value - length
-  #   visibility = if length >= @filter.get('total')?.value then 'hide' else 'show'
-  #   @$button.text("See More (#{@remaining})")[visibility]()
-
-
   renderHeader: ->
     @$header?.html headerTemplate
       filter: @filter
