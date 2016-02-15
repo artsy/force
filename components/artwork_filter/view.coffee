@@ -18,7 +18,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click .artwork-filter-select': 'selectCriteria'
     'click .artwork-filter-remove': 'removeCriteria'
     'click input[type="checkbox"]': 'toggleBoolean'
-    'click #artwork-see-more': 'clickSeeMore'
     'click .bordered-pulldown-options a': 'selectCriteria'
     'click .artwork-filter-view-mode__toggle': 'changeViewMode'
 
@@ -97,20 +96,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
-  clickSeeMore: (e) ->
-    e.preventDefault()
-    @loadNextPage()
-
   changeViewMode: (e) ->
     $target = $(e.currentTarget)
     mode = $target.data('mode')
     @viewMode.set 'mode', mode
     @artworksView = @view()
     analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
-
-  loadNextPage: (options = {}) ->
-    return if @remaining is 0
-    @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
 
   fetchArtworks: ->
     @artworks.fetch data: @filter.selected.toJSON()
@@ -140,15 +131,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.deselect $(e.currentTarget).data('key')
     @trigger 'navigate'
 
-  setState: ->
-    @setButtonState()
-
-  setButtonState: ->
-    length = @artworksView?.length() or 0
-    @remaining = @filter.get('total')?.value - length
-    visibility = if length >= @filter.get('total')?.value then 'hide' else 'show'
-    @$button.text("See More (#{@remaining})")[visibility]()
-
   renderHeader: ->
     @$header?.html headerTemplate
       filter: @filter
@@ -166,16 +148,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
       @artworksView?.stopListening()
       @artworksView = @view()
 
-    @setState()
-
   pricedFilter: ->
     (if @filter.selected.has('for_sale') then @filter.priced() else @filter.root) or @filter.root
 
   renderFilter: ->
     @$filter.html filterTemplate(filter: @filter, pricedFilter: @pricedFilter())
-    @setState()
 
   render: ->
-    @$el.html template()
+    @$el.html template
+      model: @model
     @postRender()
     this

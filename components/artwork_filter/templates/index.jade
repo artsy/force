@@ -9,5 +9,8 @@
 
     #artwork-section__artworks.artwork-section__artworks
       //- Rendered separately
-    button#artwork-see-more.avant-garde-button-white.is-block
-      | See More
+    if model.get('published_artworks_count') > 9
+      a#artwork-see-more.avant-garde-button-black.is-block(href="#{model.href()}/works")
+        | See All (
+        span= model.get('published_artworks_count')
+        | )
