@@ -3,6 +3,7 @@ module.exports = """
     slice
     counts {
       id
+      name
       count
     }
   }
