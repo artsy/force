@@ -89,11 +89,12 @@ module.exports = class ArtworkView extends Backbone.View
       collection: @artwork.related().images
 
   afterSalesFetch: (sales) ->
+    @sales = sales or @artwork.related().sales
     @renderActions()
-    @handleSales sales
+    @handleSales @sales
     @setupPartnerLocations()
     @setupEmbeddedInquiryForm()
-    unless sales.hasAuctions()
+    unless @sales.hasAuctions()
       _.defer => @setupZigZag()
 
   handleFairs: (fairs) ->
@@ -222,6 +223,9 @@ module.exports = class ArtworkView extends Backbone.View
     _.each @followButtons, (view) ->
       view.setElement @$(".artist-follow[data-id='#{view.model.id}']")
     @following.syncFollows(@artists.pluck 'id') if @currentUser
+
+    # Re-setup any sale related views
+    @afterSalesFetch()
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0

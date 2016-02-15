@@ -67,12 +67,14 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
 
       @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'
+      @afterSalesFetchSpy = sinon.spy @ArtworkView::, 'afterSalesFetch'
       done()
 
   afterEach ->
     Backbone.sync.restore()
     @artist.related().artworks.fetch.restore()
     @renderDetailSpy.restore()
+    @afterSalesFetchSpy.restore()
 
   describe 'user logged in', ->
     beforeEach ->
@@ -104,6 +106,7 @@ describe 'ArtworkView', ->
         @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'sale_message', 'SOLD'
         @renderDetailSpy.called.should.be.ok()
+        @afterSalesFetchSpy.called.should.be.ok()
 
       it 'only renders if the artwork ecommerce changes', ->
         @renderDetailSpy.called.should.not.be.ok()
