@@ -10,13 +10,14 @@ module.exports = class ArtistFillwidthList extends Backbone.View
   defaults:
     page: 1
     per: 10
+    syncFollows: true
 
   initialize: (options = {}) ->
-    { @user } = options
-    { @page, @per } = _.defaults @defaults, options
+    { @user, @following } = options
+    { @page, @per, @syncFollows } = _.defaults @defaults, options
     @$document = $(document)
     @user?.initializeDefaultArtworkCollection()
-    @following = new Following(null, kind: 'artist') if @user
+    @following = new Following(null, kind: 'artist') if @user and not @following?
     @
 
   fetchAndRender: =>
@@ -63,6 +64,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           fillwidthView.removeHiddenItems()
 
   syncFollowsOnAjaxStop: ->
+    return if not @syncFollows
     @$document.one 'ajaxStop', =>
       @following?.syncFollows @collection.pluck('id')
 
