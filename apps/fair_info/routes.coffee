@@ -67,4 +67,4 @@ fetchArticle = (articleParam, req, res, next) ->
       res.render('article', { embedVideo: embedVideo, resize: resize, article: articles.first() })
 
 @info = (req, res) ->
-  res.redirect 'info2/visitors'
+  res.redirect 'info/visitors'

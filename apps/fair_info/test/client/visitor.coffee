@@ -7,7 +7,7 @@ sinon = require 'sinon'
 Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
 FairInfoVisitorsView = require '../../client/visitors.coffee'
-InfoMenu = require '../../info_menu.coffee'
+InfoMenu = require '../../../../components/info_menu/index.coffee'
 
 describe 'FairInfoVisitorsView', ->
 
@@ -35,7 +35,7 @@ describe 'FairInfoVisitorsView', ->
     }
 
     benv.render resolve(__dirname, '../../templates/visitors.jade'), {
-      sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/visitors' }
+      sd: { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info/visitors' }
       fair: @fair
       profile: @profile
       infoMenu: @infoMenu.infoMenu

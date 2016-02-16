@@ -5,13 +5,13 @@ sinon = require 'sinon'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 Article = require '../../../../models/article'
-InfoMenu = require '../../info_menu.coffee'
+InfoMenu = require '../../../../components/info_menu/index.coffee'
 template = require('jade').compileFile(require.resolve '../../templates/article.jade')
 testStubs =
   asset: (->)
   resize: sinon.stub()
   moment: require('moment')
-  sd: {CURRENT_PATH: '/armory-show-2013/info2/about-the-fair'}
+  sd: {CURRENT_PATH: '/armory-show-2013/info/about-the-fair'}
   markdown: (->)
 data = _.extend {}, testStubs
 
