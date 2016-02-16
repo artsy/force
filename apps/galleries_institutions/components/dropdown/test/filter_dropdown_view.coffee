@@ -16,10 +16,10 @@ describe 'FilterDropdownView', ->
       benv.expose
         $: benv.require 'jquery'
       Backbone.$ = $
-      $.fn.typeahead = sinon.stub()
       done()
 
   beforeEach (done) ->
+    $.fn.typeahead = sinon.stub()
     @params = new Backbone.Model category: 'painting', location: 'location-1', type: 'gallery'
     @aggregations = new Backbone.Model
 
