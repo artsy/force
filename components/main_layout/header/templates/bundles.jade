@@ -6,7 +6,9 @@ for bundle in bundles
     href="/works-for-you?artist_id=#{bundle.object.artist.id}"
   )
     .bundle-item
-      img.bundle-image(src="#{bundle.object.images[0].image_urls.square}")
+      //- This image may be `undefined` which will 404 on the force server
+      if bundle.object.images[0].image_urls.square
+        img.bundle-image(src="#{bundle.object.images[0].image_urls.square}")
       .bundle-text
         .bundle-message= bundle.message
         .bundle-actors= bundle.actors

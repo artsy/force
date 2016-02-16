@@ -80,26 +80,5 @@ describe 'Artist header', ->
       $navLinks.last().text().should.equal 'Shows'
       $navLinks.text().should.not.containEql 'Works'
 
-  describe 'artist with auction results', ->
-    beforeEach (done) ->
-      @artist = new Artist fabricate 'artist', published_artworks_count: 1, auction_lots_count: 1
-      @carousel = new Carousel artist: @artist
-      @nav = new Nav artist: @artist, statuses:
-        artworks: false
-        shows: true
-        articles: false
-        artists: false
-        contemporary: false
-
-      benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
-        asset: (->)
-        artist: @artist
-        nav: @nav
-        carousel: @carousel
-      }, done
-
-    it 'displays a link to the auction results', ->
-      @artist.get('published_artworks_count').should.be.above 0
-      @artist.get('auction_lots_count').should.be.above 0
-      $('body').html().should.containEql "/artist/#{@artist.id}/auction-results"
+    it 'should not display an artworks section with no artworks', ->
+      $('body').html().should.not.containEql 'artwork-section'

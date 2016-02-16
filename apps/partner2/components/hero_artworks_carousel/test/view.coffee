@@ -46,7 +46,7 @@ describe 'HeroArtworksCarousel', ->
       , { arrayFormat: 'brackets' })
 
     it 'returns a thenable promise', ->
-      _.isFunction(@view.fetchArtworks().then).should.be.ok
+      _.isFunction(@view.fetchArtworks().then).should.be.ok()
 
     it 'fetches and returns artworks', (done) ->
       @view.fetchArtworks()
@@ -72,7 +72,7 @@ describe 'HeroArtworksCarousel', ->
 
       it 'removes the view', ->
         @view.initCarousel @artworks
-        @view.remove.calledOnce.should.be.ok
+        @view.remove.calledOnce.should.be.ok()
 
     describe 'with >= 5 artworks', ->
       beforeEach ->
@@ -80,5 +80,5 @@ describe 'HeroArtworksCarousel', ->
 
       it 'initializes the carousel', ->
         @view.initCarousel @artworks
-        @view.remove.called.should.not.be.ok
-        @initCarousel.calledOnce.should.be.ok
+        @view.remove.called.should.not.be.ok()
+        @initCarousel.calledOnce.should.be.ok()

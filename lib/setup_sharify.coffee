@@ -37,6 +37,7 @@ sharify.data = _.extend _.pick(config,
   'GEMINI_APP'
   'GEMINI_ACCOUNT_KEY'
   'GEMINI_CLOUDFRONT_URL'
+  'GEMINI_LOAD_RATIO'
   'BIDDER_H1_COPY'
   'BIDDER_H2_COPY'
   'SENTRY_PUBLIC_DSN'
@@ -59,6 +60,7 @@ sharify.data = _.extend _.pick(config,
   'MAILCHIMP_WELCOME_LIST_ID'
   'MAILCHIMP_AUCTION_LIST_ID'
   'METAPHYSICS_ENDPOINT'
+  'GALLERY_INSIGHTS_SECTION_ID'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

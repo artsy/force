@@ -1,23 +1,48 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
-{ crop } = require '../../../../components/resizer/index.coffee'
-
+metaphysics = require '../../../../lib/metaphysics.coffee'
+Backbone = require 'backbone'
 module.exports = class RelatedArticlesView extends Backbone.View
 
   defaults:
     numToShow: 4
 
   initialize: (options = {}) ->
-    { @numToShow } = _.defaults options, @defaults
-    @listenTo @collection, 'sync', @render
+    { @numToShow, @showId } = _.defaults options, @defaults
+    @fetch()
+
+  fetch: ->
+    metaphysics
+      variables: show_id: @showId
+      query: '
+        query($show_id: String!)
+        {
+          related_articles: articles(show_id: $show_id) {
+            id
+            href
+            title
+            thumbnail_title
+            author {
+              name
+              href
+            }
+            thumbnail_image {
+              cropped(width: 300, height: 225) {
+                url
+              }
+            }
+          }
+        }
+      '
+    .then (data) =>
+      @relatedArticles = data.related_articles
+      @render()
 
   render: ->
-    if @collection.length
+    if @relatedArticles.length
       @$el.html template
-        articles: @collection.take(@numToShow)
-        remaining: Math.max((@collection.length - @numToShow), 0)
-        crop: crop
+        articles: _.take(@relatedArticles, @numToShow)
+        remaining: Math.max((@relatedArticles.length - @numToShow), 0)
     this
 
   events:
@@ -25,5 +50,5 @@ module.exports = class RelatedArticlesView extends Backbone.View
 
   showAll: (e) ->
     e.preventDefault()
-    @numToShow = @collection.length
+    @numToShow = @relatedArticles.length
     @render()

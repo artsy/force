@@ -3,7 +3,6 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-Artist = require '../../../../models/artist.coffee'
 ArtistWorksView = require '../../client/artist_works.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
@@ -23,6 +22,7 @@ describe 'ArtistWorksView', ->
       @ArtistWorksView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/artist_works'), ['artistHeaderTemplate']
         )
+      stubChildClasses @ArtistWorksView, @, ['ArtworkColumnsView'], ['appendArtworks']
       @filterState = new Backbone.Model
         forSale: false
         artist: null

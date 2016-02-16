@@ -1,3 +1,4 @@
+{ GEMINI_LOAD_RATIO } = require('sharify').data
 config = require './config.coffee'
 SERVICES =
   EMBEDLY: require './services/embedly.coffee'
@@ -7,9 +8,7 @@ oneIn = (n) ->
   Math.floor(Math.random() * n) is 0
 
 service = ->
-  # Will enable this later to drive 1/N requests to Gemini:
-  # delegateTo = if oneIn(GEMINI_LOAD_RATIO) then 'GEMINI' else 'EMBEDLY'
-  SERVICES[config.proxy]
+  SERVICES[if oneIn(GEMINI_LOAD_RATIO) then 'GEMINI' else config.proxy]
 
 module.exports =
   resize: ->

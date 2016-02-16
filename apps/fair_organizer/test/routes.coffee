@@ -58,8 +58,9 @@ describe 'Fair Organization routes', ->
     it 'redirects to the fair if there is a current fair', ->
       fair = @fairs.first()
       fair.set
-        start_at: moment().subtract(3, 'days').format()
-        end_at: moment().add(3, 'days').format()
+        autopublish_artworks_at: moment().utc().subtract(5, 'days').format()
+        start_at: moment().utc().subtract(3, 'days').format()
+        end_at: moment().utc().add(3, 'days').format()
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
       Backbone.sync.args[0][2].success @fairs.models
       @res.redirect.args[0][0].should.equal '/the-armory-show/1969'

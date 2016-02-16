@@ -155,3 +155,15 @@ module.exports = class CurrentUser extends User
 
   findOrCreate: (options = {}) ->
     Q(@fetch options)
+
+  fetchBidderForAuction: (auction, options) ->
+    new Backbone.Collection().fetch
+      url: "#{@url()}/bidders"
+      error: options.error
+      success: (bidders) ->
+        bidder = bidders.find (b) -> b.get('sale').id is auction.get('id')
+        return options.success null unless bidder
+        bidder.fetch
+          url: "#{sd.API_URL}/api/v1/bidder/#{bidder.id}"
+          error: options.error
+          success: options.success

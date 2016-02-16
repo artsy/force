@@ -48,7 +48,7 @@ representation = (fair) ->
 
       # find if we have a current fair
       current = fairs.find (fair)->
-        moment().isBetween fair.get('start_at'), fair.get('end_at')
+        moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
 
       # redirect to fair if there is a fair currently running.
       return res.redirect(current.fairOrgHref()) if current
@@ -61,7 +61,7 @@ representation = (fair) ->
         articles.fetch(
           data:
             published: true
-            fair_ids: fairs.pluck('_id')
+            'fair_ids[]': fairs.pluck('_id')
             sort: '-published_at'
         )
       ]

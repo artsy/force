@@ -1,16 +1,36 @@
+{ invoke } = require 'underscore'
+GenericFormView = require '../generic_form/view.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
-UserEditFormView = require '../user_edit/view.coffee'
-template = -> require('./template.jade') arguments...
+template = -> require('./index.jade') arguments...
 
-module.exports = class AboutYouFormView extends UserEditFormView
-  template: -> template arguments...
+module.exports = class AboutYouView extends GenericFormView
+  subViews: []
+
+  className: 'settings-about-you'
+
+  initialize: ({ @user, @profile }) -> #
 
   postRender: ->
-    @locationSearch = new LocationSearchView autofocus: false
+    city = @model.related().location.toString()
+    locationSearchView = new LocationSearchView autofocus: false
+    @$('.js-settings-about-you__location')
+      .html locationSearchView.render(city).$el
 
-    @listenTo @locationSearch, 'location:update', (value) =>
+    @listenTo locationSearchView, 'location:update', (value) =>
       @model.setLocation value
+      @change()
 
-    @$('.js-location-search').html @locationSearch.render(
-      @model.related().location.toString()
-    ).$el
+    @subViews = [
+      locationSearchView
+    ]
+
+  render: ->
+    @$el.html template
+      user: @user
+      profile: @profile
+    @postRender()
+    this
+
+  remove: ->
+    invoke @subViews, 'remove'
+    super

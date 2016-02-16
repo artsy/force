@@ -36,9 +36,16 @@ if(location.pathname.match('/article/')){
     });
   });
 
-  analyticsHooks.on('scrollarticle', function(){
+  analyticsHooks.on('scrollarticle', function(options){
     analytics.page({path: location.pathname});
     analytics.track('Article pageview', { message: location.pathname });
+    if(window.PARSELY){
+      window.PARSELY.beacon.trackPageView({
+        url: location.href,
+        urlref: sd.APP_URL + '/' + options.urlref,
+        js: 1,
+        action_name: 'infinite'
+      });
+    }
   });
-
 }

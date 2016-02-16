@@ -67,19 +67,21 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
 
       @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'
+      @afterSalesFetchSpy = sinon.spy @ArtworkView::, 'afterSalesFetch'
       done()
 
   afterEach ->
     Backbone.sync.restore()
     @artist.related().artworks.fetch.restore()
     @renderDetailSpy.restore()
+    @afterSalesFetchSpy.restore()
 
   describe 'user logged in', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->) }
       @view = new @ArtworkView el: $('#artwork-page'), artwork: @artwork
-      @artwork.related().sales.trigger 'sync', {}
+      @artwork.related().sales.trigger 'sync', @artwork.related().sales
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
@@ -104,6 +106,7 @@ describe 'ArtworkView', ->
         @renderDetailSpy.called.should.not.be.ok()
         @view.artwork.set 'sale_message', 'SOLD'
         @renderDetailSpy.called.should.be.ok()
+        @afterSalesFetchSpy.called.should.be.ok()
 
       it 'only renders if the artwork ecommerce changes', ->
         @renderDetailSpy.called.should.not.be.ok()
@@ -212,7 +215,7 @@ describe 'ArtworkView', ->
 
     describe '#displayZigZag', ->
       beforeEach ->
-        @view.$el.append $('<div class="artwork-inquiry-button"></div>')
+        @view.$el.append $('<div class="js-send-embedded-inquiry"></div>')
       it 'should display as long as the work is not acquireable and it is for sale', ->
         @view.artwork.set { 'acquireable': false, 'forsale': true}
         @view.displayZigZag().should.be.true()

@@ -112,6 +112,9 @@ module.exports = class Sale extends Backbone.Model
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'
 
+  isUpcomingOrClosed: ->
+    @isPreview() || @isOpen()
+
   isSale: ->
     not @isAuction() and
     not @isAuctionPromo()

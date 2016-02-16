@@ -22,14 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  show_metaphysics:
-    key: 'show_metaphysics'
-    edge: 'true'
-    outcomes:
-      true: 0.5
-      false: 0.5
-    dimension: 'dimension7'
-
   merchandized_rails:
     key: 'merchandized_rails'
     edge: 'true'

@@ -11,6 +11,8 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     missingOrMalformed: "Your card appears to be missing or malformed. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     couldNotAuthorize: "Your card could not be authorized. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
+    badZip: "The ZIP code provided did not match your card number. Please check it again, try another card, or contact <a href='mailto:support@artsy.net'>support</a>."
+    badSecurityCode: "The security code provided did not match your card number. Please check it again, try another card, or contact <a href='mailto:support@artsy.net'>support</a>."
     other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     timeout: "Processing your payment took too long. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     connection: "Please check your network connectivity and try again."
@@ -20,7 +22,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
   isEmail: ($el) -> isEmail $el.val()
   isPresent: ($el) -> $el.val()? && $.trim($el.val()).length > 0
   isState: ($el) => @isPresent($el) || $el.parent().parent().find('select.country').val() != 'USA'
-  isZip: ($el) => @isPresent($el) && ($el.parent().parent().find('select.country').val() != 'USA' || $el.val().trim().match(/^\d{5}/))
+  isZip: ($el) => @isPresent($el)
 
   clearErrors: ->
     @$el.find('.has-error').removeClass('has-error')

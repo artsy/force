@@ -100,10 +100,6 @@ module.exports = class AuthModalView extends ModalView
 
     @$('button').attr 'data-state', 'loading'
 
-    # We're logging the event here prior to submission
-    # to increase it's chance of being logged
-    analyticsHooks.trigger "auth:#{@state.get 'mode'}"
-
     @user.set (data = @serializeForm())
     @user[@state.get 'mode']
       success: @onSubmitSuccess
@@ -113,6 +109,7 @@ module.exports = class AuthModalView extends ModalView
         mediator.trigger 'auth:error', message
 
   onSubmitSuccess: (model, response, options) =>
+    analyticsHooks.trigger "auth:#{@state.get 'mode'}"
     @reenableForm null, reset: false
 
     if response.error?

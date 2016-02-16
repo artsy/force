@@ -10,7 +10,6 @@ module.exports = class Form
   constructor: (options = {}) ->
     { @model, @$form } = options
 
-    throw new Error 'requires `model`' unless @model?
     throw new Error 'requires `$form`' unless @$form?
 
     { @$submit, @$errors } = settings = _.defaults options,
@@ -25,6 +24,8 @@ module.exports = class Form
     @validator.isValid() and not @submitting()
 
   submit: (e, options = {}, send = 'save') ->
+    throw new Error 'requires `model`' unless @model?
+
     e?.preventDefault()
 
     return unless @isReady()
@@ -56,14 +57,17 @@ module.exports = class Form
     @reset() if reset
     @__submitting__ = false
     @$submit.prop 'disabled', false
+    this
 
   reset: ->
     @$form
       .find 'button, input, textarea'
       .attr 'data-state', null
+    this
 
   state: (state) ->
     @$submit.attr 'data-state', state
+    this
 
   data: ->
     @serializer.data()

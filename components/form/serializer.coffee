@@ -25,3 +25,6 @@ module.exports = class Serializer
 
   data: ->
     _.extend {}, @inputs(), @checkboxes()
+
+  pick: (keys...) ->
+    _.pick @data(), keys...

@@ -68,4 +68,4 @@ module.exports = class BrowseRouter extends Backbone.Router
     @view.artistsAZ()
 
   browse: (id) =>
-    @navigate "#{id}/browse/booths", trigger: true
+    @navigate "#{id}/browse/booths", trigger: true, replace: true

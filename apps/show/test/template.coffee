@@ -12,7 +12,7 @@ Artworks = require '../../../collections/artworks'
 render = (templateName) ->
   jade.compileFile(require.resolve "../templates/#{templateName}.jade")
 
-describe 'metadata', ->
+xdescribe 'metadata', ->
   describe 'events', ->
     describe 'with multiple events', ->
       it 'renders correctly', ->
@@ -41,7 +41,7 @@ describe 'metadata', ->
         html.should.not.containEql 'Multiple events for this show'
         html.should.containEql 'Opening Reception'
 
-describe 'Partner Show', ->
+xdescribe 'Partner Show', ->
   describe 'an average show', ->
     before ->
       @show = new PartnerShow fabricate('show')

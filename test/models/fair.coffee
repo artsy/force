@@ -4,6 +4,7 @@ sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'
 Fair = require '../../models/fair'
+moment = require 'moment'
 
 describe 'Fair', ->
 
@@ -27,6 +28,13 @@ describe 'Fair', ->
 
     it "returns the client link to this fair", ->
       @fair.href().should.equal "/#{@fair.get('organizer').profile_id}"
+
+  describe '#fairOrgHref', ->
+    dt = moment().utc().format()
+    @fair = new Fair fabricate('fair', autopublish_artworks_at: dt)
+
+    it "returns the client link to this fair", ->
+      @fair.fairOrgHref().should.equal "/#{@fair.get('organizer').profile_id}/#{moment(dt).year()}"
 
   describe '#fetchShowForPartner', ->
 
@@ -71,3 +79,4 @@ describe 'Fair', ->
         }
       ]
       _.flatten(@fair.itemsToColumns(items, 2)).length.should.equal 3
+

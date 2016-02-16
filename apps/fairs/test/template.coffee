@@ -1,24 +1,22 @@
 _ = require 'underscore'
 benv = require 'benv'
-moment = require 'moment'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../models/fair'
-Fairs = require '../../../collections/fairs'
-Items = require '../../../collections/items'
+moment = require 'moment'
+ViewHelpers = require '../helpers/view_helpers.coffee'
 
 describe 'Fairs template', ->
   before ->
-    @currentFairs = new Fairs _.times 2, ->
-      fair = new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'), banner_size: 'large')
-      fair
+    image = { url: "https://www.example.com/cat.jpg" }
+    profile = { icon: { url: "https://www.example.com/cat.jpg" } }
+    @currentFairs = _.times 2, ->
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'), banner_size: 'large')
     @pastFairs = _.times 4, ->
-      fair = new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
-      fair
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
     @upcomingFairs = _.times 3, ->
-      new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
 
-    @rows = @currentFairs.fillRows @currentFairs.models
+    @rows = ViewHelpers.fillRows @currentFairs
 
   describe 'with current fairs', ->
     before (done) ->
@@ -32,6 +30,7 @@ describe 'Fairs template', ->
           pastFairs: @pastFairs
           upcomingFairs: @upcomingFairs
           currentFairRows: @rows
+          ViewHelpers: ViewHelpers
         done()
 
     after ->
@@ -57,6 +56,7 @@ describe 'Fairs template', ->
           pastFairs: @pastFairs
           upcomingFairs: @upcomingFairs
           currentFairRows: []
+          ViewHelpers: ViewHelpers
         done()
 
     after ->

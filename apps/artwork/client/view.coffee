@@ -45,13 +45,13 @@ module.exports = class ArtworkView extends Backbone.View
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
+    setupArtworkRails(@artwork, @artist) if @showRails
     @checkQueryStringForAuction()
     @setupCurrentUser()
     @setupRelatedArticles()
     @setupArtistArtworks()
     @setupFollowButtons()
-    @setupBelowTheFold() unless @showRails
-    setupArtworkRails(@artwork, @artist) if @showRails
+    @setupBelowTheFold()   # We always do this since auctions might override rails.
     @setupMainSaveButton()
     @setupVideoView()
     @setupAnnyang()
@@ -89,10 +89,13 @@ module.exports = class ArtworkView extends Backbone.View
       collection: @artwork.related().images
 
   afterSalesFetch: (sales) ->
+    @sales = sales or @artwork.related().sales
     @renderActions()
-    @handleSales sales
+    @handleSales @sales
     @setupPartnerLocations()
     @setupEmbeddedInquiryForm()
+    unless @sales.hasAuctions()
+      _.defer => @setupZigZag()
 
   handleFairs: (fairs) ->
     return unless fairs.length and not @showRails
@@ -103,13 +106,12 @@ module.exports = class ArtworkView extends Backbone.View
   handleSales: (sales) ->
     return unless sales.length
 
-    unless sales.hasAuctions()
-      @setupZigZag()
-
     @sale = sales.first()
     @$('#artist-artworks-section').remove()
 
-    unless @sale.isAuctionPromo() or @showRails
+    # If the sale is an auction and is in preview or open, override rails.
+    includeSaleView = ! @sale.isAuctionPromo() and @sale.isUpcomingOrClosed()
+    if includeSaleView
       @belowTheFoldView.setupSale
         sale: @sale
         saved: @saved
@@ -161,7 +163,7 @@ module.exports = class ArtworkView extends Backbone.View
     view.render()
 
   displayZigZag: ->
-    (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
+    (@$inquiryButton = @$('.js-send-embedded-inquiry').first())
     @$inquiryButton.length and not @artwork.get('acquireable') and @artwork.get('forsale')
 
   setupZigZag: ->
@@ -222,6 +224,9 @@ module.exports = class ArtworkView extends Backbone.View
       view.setElement @$(".artist-follow[data-id='#{view.model.id}']")
     @following.syncFollows(@artists.pluck 'id') if @currentUser
 
+    # Re-setup any sale related views
+    @afterSalesFetch()
+
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
     _.defer =>
@@ -247,6 +252,7 @@ module.exports = class ArtworkView extends Backbone.View
         @$('#artwork-artist-related-extended').append subView.render().$el
 
   setupBelowTheFold: ->
+    # This initializer doesn't fetch or do anything, it's a no-op.
     @belowTheFoldView = new BelowTheFoldView
       artwork: @artwork
       el: @$('#artwork-below-the-fold-section')

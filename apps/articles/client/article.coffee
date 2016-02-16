@@ -4,6 +4,7 @@ sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
+GalleryInsightsView = require './gallery_insights.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 embedVideo = require 'embed-video'
 JumpView = require '../../../components/jump/view.coffee'
@@ -21,6 +22,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       is_super_article: false
 
     @article = new Article sd.ARTICLE
+    @displayedArticles = [@article.get('slug')]
     @collection = new Articles
       cache: true
       data: @params.toJSON()
@@ -50,6 +52,7 @@ module.exports = class ArticleIndexView extends Backbone.View
     if response
       articles = _.reject response.results, (a) =>
         (a.id is @article.id) or (a.hero_section?.type is 'fullscreen') or (_.contains(sd.SUPER_SUB_ARTICLE_IDS, a.id))
+      @displayedArticles = @displayedArticles.concat _.pluck(articles, 'slug')
 
       for article in articles
         # Setup and append article template
@@ -61,6 +64,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           moment: moment
           embedVideo: embedVideo
 
+        previousHref = @displayedArticles[@displayedArticles.indexOf(article.get('slug'))-1]
         # Initialize client
         feedArticle = new ArticleView
           el: $(".article-container[data-id=#{article.get('id')}]")
@@ -68,10 +72,11 @@ module.exports = class ArticleIndexView extends Backbone.View
           gradient: true
           waypointUrls: true
           seenArticleIds: (_.pluck articles, 'id').slice(0,3)
+          previousHref: previousHref
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 10) or 0
 
 module.exports.init = ->
-  new ArticleIndexView
-    el: $('body')
+  new ArticleIndexView el: $('body')
+  new GalleryInsightsView el: $('body')

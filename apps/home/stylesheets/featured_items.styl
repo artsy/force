@@ -4,10 +4,8 @@ column-gap = 30px
 // ----------------
 
 .home-featured-header
-  margin (column-gap * 2) 0 column-gap 0
-  text-align center
-  font-size 20px
-  small-caps()
+  margin (column-gap - 10px) 0 column-gap 0
+  font-size 25px
   clear both
 
 .home-featured-list
@@ -22,6 +20,12 @@ column-gap = 30px
 .home-browse-all-center
   margin column-gap 0
   text-align center
+
+.home-browse-all-right
+  float right
+  a
+    fine-faux-underline()
+    font-size 17px
 
 .home-featured-cover-img
   overflow hidden
@@ -38,7 +42,7 @@ li.grid-item a
 #home-top-featured-links
   display table
   width 100%
-  margin 20px 0
+  margin 20px 0px 60px 0px
   table-layout fixed
 .home-top-feature-link
   display table-cell
@@ -77,6 +81,13 @@ li.grid-item a
 
 // Featured artworks
 // -----------------
+
+#home-featured-artworks-section, #home-featured-shows-section, #home-featured-articles-section, #home-featured-artists-section
+  border-top 1px solid gray-lighter-color
+  margin-bottom 40px
+
+#home-featured-artists-section
+   margin-bottom 0px
 
 #home-featured-artworks li, #home-suggested-artworks li
   figure

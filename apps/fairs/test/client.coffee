@@ -5,12 +5,11 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../models/fair.coffee'
-Fairs = require '../../../collections/fairs.coffee'
-Profile = require '../../../models/profile.coffee'
 { FairsView } = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
   'pastFairsTemplate'
 ]
+ViewHelpers = require '../helpers/view_helpers.coffee'
+moment = require 'moment'
 
 describe 'FairsView', ->
 
@@ -18,46 +17,36 @@ describe 'FairsView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      sinon.stub(Fair.prototype, 'isPast').returns(true)
       done()
 
   after ->
-    Backbone.sync.restore()
-    Fair.prototype.isPast.restore()
     benv.teardown()
 
   beforeEach (done) ->
-    fair = new Fair fabricate 'fair'
-    fair.related().profile = new Profile fabricate 'fair_profile'
-    @fairs = new Fairs [fair]
+    @image = { url: "https://www.example.com/cat.jpg" }
+    @profile = { is_published: true, icon: { url: "https://www.example.com/cat.jpg" } }
+    fair = fabricate('fair', image: @image, profile: @profile)
+    @fairs = [fair]
     benv.render resolve(__dirname, '../templates/index.jade'), {
       sd: FAIRS: @fairs
-      featuredFairs: @fairs.models
-      currentFairRows: @fairs.currentRows()
-      upcomingFairs: @fairs.models
-      pastFairs: @fairs.models
+      featuredFairs: @fairs
+      currentFairRows: ViewHelpers.currentRows(@fairs)
+      upcomingFairs: @fairs
+      pastFairs: @fairs
+      ViewHelpers: ViewHelpers
       asset: (->)
     }, =>
       @view = new FairsView
         el: $('body')
-        collection: @fairs
         user: null
       done()
 
   describe '#renderPastFairs', ->
 
     beforeEach ->
-      @view.initialize({ el: $('body'), fair: @fair })
+      @view.initialize({ el: $('body') })
 
-    it 'appends the additional fair(s)', (done)->
+    it 'appends the additional fair(s)', ->
       @view.$('.fairs__past-fairs-list a').length.should.eql 1
-      @view.renderPastFairs @fairs, [fabricate('fair')]
-      Backbone.sync.args[0][1].id.should.eql 'the-armory-show'
-      Backbone.sync.args[0][2].success()
-      _.defer => _.defer =>
-        @view.$('.fairs__past-fairs-list a').length.should.eql 2
-        done()
-
-
-
+      @view.renderPastFairs [fabricate('fair', is_published: true, has_full_feature: true, image: @image, profile: @profile, end_at: moment().subtract(10, 'days').format())]
+      @view.$('.fairs__past-fairs-list a').length.should.eql 2

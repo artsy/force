@@ -12,6 +12,17 @@
         = ' '
         a.faux-underline( href='/gallery-partnerships' ) Artsy gallery partnerships.
 
-  for module in modules
-    section.partner-overview-section( data-module=module )
-      .loading-spinner
+  .partner-overview-container
+    for module in layout
+      if module.component || module.template
+        section.partner-overview-section( data-module=module.name, data-component=(module.component ? module.component.name : null) )
+          if module.title
+            h3.partner-overview-section-title= module.title
+          if module.viewAll
+            .partner-overview-section-view-all
+              a( href=module.viewAll ) View All
+          .partner-overview-section-content
+            if module.template
+              != module.template
+            else
+              .loading-spinner

@@ -15,24 +15,36 @@ PartnerShow = require '../../models/partner_show'
 module.exports = class ArtworkRails
   minCount: 1
   size: 10
+  railSizeMapping:
+    show_artworks: 10,
+    for_sale_artworks: 10,
+    similar_artworks: 20,
+    artist_artworks: 10,
+    partner_artworks: 10
 
   constructor: ({ @id }) ->
-    @excludedIds = []
+    @alreadySeenIds = []
     @rails = {}
     @key = "artwork:#{@id}:rails"
 
   prepareParams: (options) ->
     defaults =
-      exclude_artwork_ids: @excludedIds
-      sort: "-merchandisability"
+      sort: "-for_sale"
       size: @size
 
     data = _.defaults options, defaults
 
-  assignRail: (id, collection) ->
-    if collection.length >= @minCount
-      @rails[id] = collection
-      @excludedIds = @excludedIds.concat _.pluck(collection, '_id')
+  filter: (responses) =>
+    ids = [@id]
+    _.map _.compact(responses), (obj) =>
+      # obj is { id: ..., collection: ... }
+      if (count = @railSizeMapping[obj.id])
+        filteredArtworks = _.filter obj.collection, (artwork) => ! _.contains(ids, artwork._id)
+        railArtworks = _.take(filteredArtworks, count)
+        ids = ids.concat _.pluck railArtworks, '_id'
+        obj.collection = railArtworks
+
+      obj
 
   fetch: ({ @cache } = {}) ->
     Q.promise (resolve, reject) =>
@@ -43,26 +55,29 @@ module.exports = class ArtworkRails
         @fetchArtwork()
         .then ({ @artwork }) =>
           return resolve() if @artwork.partner.type is 'Institution'
-          @excludedIds.push @artwork._id
-          @maybeFetchForSaleArtworks()
-        .then =>
-          @fetchAuctionArtworks()
-        .then =>
-          @fetchSimilarArtworks()
-        .then =>
-          @fetchArtistArtworks()
-        .then =>
-          @fetchShowArtworks()
-        .then =>
-          @fetchPartnerArtworks()
-        .then =>
-          response =
-            artwork: @artwork
-            rails: @rails
-          cache.setHash @key, response
-          resolve response
+          isInAuction = @artwork.related?.__typename is 'RelatedSale' and @artwork.related?.is_auction?
+          isInCurrentOrUpcomingAuction = @artwork.related?.is_preview or @artwork.related?.is_open
+          return resolve(in_auction: true) if isInAuction and isInCurrentOrUpcomingAuction
+          Q.all [
+            @fetchSimilarArtworks()        # fetch 21 (guaranteed 20 uniques)
+            @fetchArtistArtworks()         # fetch 31 (guaranteed 10 uniques)
+            @maybeFetchShowArtworks()      # fetch 41 (guaranteed 10 uniques)
+            @maybeFetchForSaleArtworks()   # fetch 51 (guaranteed 10 uniques)
+            @fetchPartnerArtworks()        # fetch 61 (guaranteed 10 uniques)
+          ]
+            .then (responses) =>
+              @rails = _.reduce @filter(responses), (memo, obj) =>
+                memo[obj.id] = obj.collection if obj? and obj.collection?.length > @minCount
+                memo
+              , {}
+
+              response =
+                artwork: @artwork
+                rails: @rails
+              cache.setHash @key, response
+              resolve response
+
         .catch reject
-        .done()
 
   maybeFetchForSaleArtworks: ->
       if @artwork.is_for_sale
@@ -71,32 +86,19 @@ module.exports = class ArtworkRails
         @fetchFilterArtworks 'for_sale_artworks',
           artist_id: @artwork.artist.id
           for_sale: true
+          size: 51
 
-  fetchAuctionArtworks: ->
-    Q.promise (resolve) =>
-      if @artwork.related?.__typename is 'RelatedSale'
-        sale = new Sale @artwork.related
-        sale.related().saleArtworks.fetchUntilEndInParallel
-          success: (collection, response, options) =>
-            collection.remove @artwork
-            artworks = Artworks.fromSale collection
-            if @artwork.related.auction_state is 'open'
-              @assignRail 'current_auction_artworks', artworks.toJSON()
-            resolve()
-      else
-        resolve()
-
-  fetchShowArtworks: ->
+  maybeFetchShowArtworks: ->
     Q.promise (resolve) =>
       if @artwork.shows.length
         partner = new Partner id: @artwork.shows[0].partner.id
         show = new PartnerShow id: @artwork.shows[0].id
         show.set partner: partner
         show.related().artworks.fetch
+          data: size: 41
           error: resolve
           success: (artworks, response) =>
-            @assignRail 'show_artworks', artworks.toJSON()
-            resolve()
+            resolve id: 'show_artworks', collection: artworks.toJSON()
       else
         resolve()
 
@@ -104,15 +106,17 @@ module.exports = class ArtworkRails
     @fetchFilterArtworks 'similar_artworks',
       gene_id: slugify(@artwork.category)
       artist_id: @artwork.artist.id
-      size: 20
+      size: 21
 
   fetchArtistArtworks: ->
     @fetchFilterArtworks 'artist_artworks',
       artist_id: @artwork.artist.id
+      size: 31
 
   fetchPartnerArtworks: ->
     @fetchFilterArtworks 'partner_artworks',
       partner_id: @artwork.partner.id
+      size: 61
 
   fetchFilterArtworks: (id, options)->
     Q.promise (resolve) =>
@@ -121,8 +125,7 @@ module.exports = class ArtworkRails
         data: @prepareParams options
         error: resolve
         success: (collection, response) =>
-          @assignRail id, collection.toJSON()
-          resolve()
+          resolve id: id, collection: collection.toJSON()
 
   fetchArtwork: ->
     metaphysics
@@ -153,6 +156,9 @@ module.exports = class ArtworkRails
                 end_at
                 sale_type
                 auction_state
+                is_auction
+                is_preview
+                is_open
               }
             }
             partner{

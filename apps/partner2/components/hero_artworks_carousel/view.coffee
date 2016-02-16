@@ -28,4 +28,5 @@ module.exports = class HeroArtworksCarousel extends Backbone.View
     return @remove() unless artworks.length >= 5
 
     @$el.html template artworks: artworks
-    initCarousel @$el, imagesLoaded: true
+    initCarousel @$el, wrapAround: true, imagesLoaded: true, (carousel) ->
+      carousel.cells.flickity.resize()

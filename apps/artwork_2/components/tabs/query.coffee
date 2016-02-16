@@ -1,12 +1,30 @@
 module.exports = """
   fragment tabs on Artwork {
-    is_comparable_with_auction_results
-    description(format: markdown)
-    exhibition_history(format: markdown)
-    bibliography(format: markdown)
-    provenance(format: markdown)
-    additional_information(format: markdown)
-    series
-    manufacturer
+    tabs {
+      __typename
+      ... on DescriptionArtworkTab {
+        id
+        name
+        description(format: HTML)
+        additional_information(format: HTML)
+        signature(format: HTML)
+        series
+      }
+      ... on ExhibitionHistoryArtworkTab {
+        id
+        name
+        exhibition_history(format: HTML)
+      }
+      ... on ProvenanceArtworkTab {
+        id
+        name
+        provenance(format: HTML)
+      }
+      ... on BibliographyArtworkTab {
+        id
+        name
+        bibliography(format: HTML)
+      }
+    }
   }
 """

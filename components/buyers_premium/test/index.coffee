@@ -17,3 +17,10 @@ describe 'buyersPremium', ->
       html.should.containEql "<div class='buyers-premium-perc'>25%"
       done()
     Backbone.sync.args[0][2].success fabricate 'page'
+
+  it 'renders buyers premium on a flat fee', (done) ->
+    sale = fabricate('sale', buyers_premium: { 'schedule': [{ 'min_amount_cents': 0, 'percent': 0.25 }] })
+    buyersPremium new Sale(sale), (err, html) ->
+      html.should.containEql "25% on the hammer price"
+      done()
+    Backbone.sync.args[0][2].success fabricate 'page'
