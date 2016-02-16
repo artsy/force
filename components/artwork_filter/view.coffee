@@ -103,6 +103,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @artworksView = @view()
     analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
 
+  loadNextPage: (options = {}) ->
+    return if @remaining is 0
+    @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
+
   fetchArtworks: ->
     @artworks.fetch data: @filter.selected.toJSON()
 
