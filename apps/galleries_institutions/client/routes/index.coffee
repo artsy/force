@@ -7,7 +7,6 @@ LandingCarouselView = require './landing.coffee'
 PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
 SearchResultsView = require '../../components/search_results/view.coffee'
 FilterDropdownView = require '../../components/dropdown/filter_dropdown_view.coffee'
-# PartnerSearchView = require '../../components/dropdown/partner_search_view.coffee'
 FetchFilterPartners = require '../../components/parameters/fetch_filter_partners.coffee'
 initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
 module.exports = class PartnersSearchView extends Backbone.View
@@ -43,11 +42,6 @@ module.exports = class PartnersSearchView extends Backbone.View
         params: @params
         filterPartners: filterPartners
         facet: facet
-
-    # Hold off until partners endpoint supports search
-    # new PartnerSearchView
-    #   el: @$('.galleries-institutions-search-filters .partners-search-dropdown')
-    #   type: @params.get('type')
 
     resultsView = new SearchResultsView
       filterPartners: filterPartners

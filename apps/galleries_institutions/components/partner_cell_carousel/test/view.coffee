@@ -1,39 +1,61 @@
-# benv = require 'benv'
-# sinon = require 'sinon'
-# Backbone = require 'backbone'
-# { fabricate } = require 'antigravity'
-# Partners = require '../../../../../collections/partners'
-# PartnerCellView = benv.requireWithJadeify require.resolve('../../partner_cell/view'), ['template']
-# PartnerCellCarouselView = benv.requireWithJadeify require.resolve('../view'), ['template']
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Partners = require '../../../../../collections/partners'
+PartnerCellView = benv.requireWithJadeify require.resolve('../../partner_cell/view'), ['template']
+PartnerCellCarouselView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
-# describe 'PartnerCellCarouselView', ->
+describe 'PartnerCellCarouselView', ->
 
-#   before (done) ->
-#     benv.setup ->
-#       benv.expose $: benv.require 'jquery'
-#       Backbone.$ = $
-#       PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
-#       sinon.stub PartnerCellCarouselView::, 'setupFlickity'
-#       done()
+  before (done) ->
+    benv.setup ->
+      benv.expose $: benv.require 'jquery'
+      Backbone.$ = $
+      PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
+      sinon.stub PartnerCellCarouselView::, 'setupFlickity'
+      done()
 
-#   after ->
-#     benv.teardown()
+  after ->
+    benv.teardown()
 
-#   beforeEach ->
-#     @category = new Backbone.Model name: 'Foo Bar'
-#     @partners = new Partners [
-#       fabricate 'partner', name: 'Gallery Foo'
-#       fabricate 'partner', name: 'Gallery Bar'
-#     ]
-#     @view = new PartnerCellCarouselView category: @category, partners: @partners
+  beforeEach ->
+    @category =
+      name: 'Foo Bar'
+      facet: 'some-facet'
+      id: 'foo-bar'
+      partners: [{
+        name: 'Gallery Foo'
+        id: 'gallery-foo'
+        initials: "GF"
+        locations: [{ city: "New York" }]
+        profile:
+          id: "foo-gallery"
+          href: "/foo-gallery"
+          image: cropped: url: "/foo.jpeg"
+      }, {
+        name: 'Gallery Bar'
+        id: 'gallery-bar'
+        initials: "GB"
+        locations: [{ city: "New York" }]
+        profile:
+          id: "bar-gallery",
+          href: "/bar-gallery",
+          image: cropped: url: "/bar.jpeg"
+      }]
 
-#   describe '#render', ->
-#     beforeEach ->
-#       @view.render()
+    @view = new PartnerCellCarouselView model: @category
 
-#     it 'renders correctly', ->
-#       @view.$('.partner-cell-name').map -> $(this).text()
-#         .get().should.eql [
-#           'Gallery Foo'
-#           'Gallery Bar'
-#         ]
+  describe '#render', ->
+    beforeEach ->
+      @view.render()
+
+    it 'renders correctly', ->
+      @view.$('.partner-cell-name').map -> $(this).text()
+        .get().should.eql [
+          'Gallery Foo'
+          'Gallery Bar'
+        ]
+      @view.$('.pcc-header-left').text().should.equal 'Foo Bar'
+      @view.$('.pcc-see-all').data('id').should.equal 'foo-bar'
+      @view.$('.pcc-see-all').data('facet').should.equal 'some-facet'
