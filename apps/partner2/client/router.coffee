@@ -1,5 +1,7 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
+FilterArtworks = require '../../../collections/filter_artworks.coffee'
+filterSettings = require './filter_settings.coffee'
 _ = require 'underscore'
 sd = require('sharify').data
 mediator = require '../../../lib/mediator.coffee'
@@ -10,6 +12,9 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id': 'index'                    #      x         x
     ':id/overview': 'overview'        #      x         x
     ':id/shows': 'shows'              #      x         x
+    ':id/works': 'works'              #      x
+    ':id/collection': 'collection'    #                x
+    ':id/shop': 'shop'                #                x
 
   initialize: ({ @profile, @partner }) ->
     @baseView = new PartnerView el: $('#partner'), profile: @profile, partner: @partner, currentSection: sd.SECTION
@@ -24,3 +29,26 @@ module.exports = class PartnerRouter extends Backbone.Router
 
   shows: ->
     @baseView.renderSection 'shows'
+
+  filterArtworks: (section, settings) ->
+    render = (filterArtworks) =>
+      @baseView.renderSection section, _.extend( { counts: filterArtworks.counts }, settings)
+
+    if filterArtworks = @[section + 'FilterArtworks']
+      render(filterArtworks)
+    else
+      filterArtworks = new FilterArtworks
+      filterData = { size: 0, gallery: @partner.id, aggregations: settings.aggregations }
+
+      filterArtworks.fetch data: filterData, success: =>
+        render(filterArtworks)
+        @[section + 'FilterArtworks'] = filterArtworks
+
+  collection: ->
+    @filterArtworks('collection', filterSettings.settings(@partner, 'collection'))
+
+  shop: ->
+    @filterArtworks('shop', filterSettings.settings(@partner, 'shop'))
+
+  works: ->
+    @filterArtworks('works', filterSettings.settings(@partner, 'works'))

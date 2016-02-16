@@ -8,3 +8,6 @@ app.set 'view engine', 'jade'
 app.get '/:id', routes.requireAdmin, routes.overview
 app.get '/:id/overview', routes.requireAdmin, routes.redirectToOverview
 app.get '/:id/shows', routes.requireAdmin, routes.shows
+app.get '/:id/works', routes.works
+app.get '/:id/collection', routes.collection
+app.get '/:id/shop', routes.shop

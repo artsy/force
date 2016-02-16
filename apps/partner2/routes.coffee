@@ -16,3 +16,18 @@
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'shows'
   res.render 'index', params: req.params
+
+@works = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'works'
+  res.render 'index', params: req.params
+
+@collection = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'collection'
+  res.render 'index', params: req.params
+
+@shop = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'shop'
+  res.render 'index', params: req.params

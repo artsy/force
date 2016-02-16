@@ -6,6 +6,7 @@ Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
 ShowsView = require './shows.coffee'
 OverviewView = require './overview.coffee'
+FilteredArtworks = require './artworks_filter.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 mediator = require '../../../lib/mediator.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -13,6 +14,9 @@ mediator = require '../../../lib/mediator.coffee'
 sectionToView =
   overview: OverviewView
   shows: ShowsView
+  works: FilteredArtworks
+  collection: FilteredArtworks
+  shop: FilteredArtworks
 
 module.exports = class PartnerView extends Backbone.View
 
