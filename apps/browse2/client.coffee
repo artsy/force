@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Params = require '../../components/commercial_filter/models/params.coffee'
 Filter = require '../../components/commercial_filter/models/filter.coffee'
 UrlHandler = require '../../components/commercial_filter/url_handler.coffee'
+PaginatorView = require '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 sd = require('sharify').data
@@ -23,6 +24,11 @@ module.exports.init = ->
     el: $('.cf-sidebar__mediums')
     params: params
     aggregations: filter.aggregations
+
+  paginatorView = new PaginatorView
+    el: $('.cf-pagination')
+    params: params
+    filter: filter
 
   urlHandler = new UrlHandler
     params: params

@@ -5,10 +5,8 @@ Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 
-module.exports = class Filter
-  extend Backbone.Events
-
-  constructor: ({ @params } = {}) ->
+module.exports = class Filter extends Backbone.Model
+  initialize: ({ @params } = {}) ->
     throw new Error 'Requires a params model' unless @params?
     @artworks = new Artworks()
     @aggregations = new Aggregations()
@@ -55,6 +53,7 @@ module.exports = class Filter
       metaphysics query: @query(), variables: @params.current()
         .then ({ filter_artworks }) =>
           @artworks.reset filter_artworks.hits
+          @set total: filter_artworks.total
           @aggregations.reset filter_artworks.aggregations
           resolve @
         .catch (error) ->

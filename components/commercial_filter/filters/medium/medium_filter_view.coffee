@@ -17,7 +17,7 @@ module.exports = class MediumFilterView extends Backbone.View
 
   setMedium: (e) ->
     $target = $(e.currentTarget)
-    @params.set 'medium', $target.data('value')
+    @params.set medium: $target.data('value'), page: 1
 
   render: ->
     mediums = _.sortBy @aggregations.get('MEDIUM').get('counts'), (medium) -> medium.id
