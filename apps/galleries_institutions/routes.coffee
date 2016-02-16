@@ -12,6 +12,7 @@ query = require './queries/partner_categories_query'
 partnerTypes = require './queries/partner_types'
 mergeBuckets = require './components/partner_cell_carousel/merge_buckets'
 fetchPrimaryCarousel = require './components/primary_carousel/fetch'
+facetDefaults = require './components/filter_facet/facet_defaults.coffee'
 
 mapType =
   galleries: 'gallery'
@@ -38,23 +39,13 @@ mapType =
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
-    locationsFacet =
-      displayName: "Locations"
-      facetName: 'location'
-      countItems: _.map FeaturedCities, (c) -> {name: c.name, id: c.slug}
-
-    categoriesFacet =
-      displayName: "Specialties"
-      facetName: 'category'
-      countItems: res.locals.sd.CATEGORIES
-
     render = res.render 'index',
       ViewHelpers: ViewHelpers
       showAZLink: true
       type: type
       profiles: profiles.models
       categories: _.shuffle categories
-      facets: [locationsFacet, categoriesFacet]
+      facets: facetDefaults
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
   .catch next

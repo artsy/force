@@ -24,8 +24,8 @@ module.exports = class FilterDropdownView extends Backbone.View
         suggestion: @suggestionTemplate
         empty: -> '' # Typeahead won't render the header for empty results unless 'empty' is defined
     })
-    @listenTo @params, 'firstLoad', @setPlaceholder
-    @listenTo @params, "change:#{@facet.facetName}", @setPlaceholder
+    @listenTo @params, 'firstLoad', -> @setPlaceholder false
+    @listenTo @params, "change:#{@facet.facetName}", -> @setPlaceholder false
     @typeahead = @$input.data('ttTypeahead')
 
     @$('.tt-dataset-category').on('click', '.tt-suggestion', @suggestionClicked)

@@ -4,8 +4,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 partnerTypes = require '../../queries/partner_types.coffee'
 query = require '../../queries/partners_filter_query.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
-
-{ FeaturedCities } = require 'places'
+{ Cities } = require 'places'
 
 module.exports = class FetchFilterPartners extends Backbone.Model
 
@@ -48,7 +47,7 @@ module.exports = class FetchFilterPartners extends Backbone.Model
   formatVariables: ->
     paramsJSON = @params.toJSON()
     data = _.extend _.pick(paramsJSON, 'category'), type: partnerTypes[paramsJSON.type]
-    city = _.findWhere FeaturedCities, slug: paramsJSON.location if paramsJSON.location
+    city = _.findWhere Cities, slug: paramsJSON.location if paramsJSON.location
     data.near = city.coords.join (',') if city
 
     data.page = @page

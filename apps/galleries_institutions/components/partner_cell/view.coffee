@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-{ FeaturedCities } = require 'places'
+{ Cities } = require 'places'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require './view_helpers.coffee'
 Profile = require '../../../../models/profile.coffee'
@@ -19,7 +19,7 @@ module.exports = class PartnerCellView extends Backbone.View
       modelName: 'profile'
 
   render: ->
-    city = _.findWhere FeaturedCities, slug: @preferredCitySlug if @preferredCitySlug
+    city = _.findWhere Cities, slug: @preferredCitySlug if @preferredCitySlug
     @$el.html template
       partner: @partner
       preferredCity: city?.name

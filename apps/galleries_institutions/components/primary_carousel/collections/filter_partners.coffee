@@ -3,7 +3,7 @@ qs = require 'qs'
 Backbone = require 'backbone'
 Partners = require '../../../../../collections/partners.coffee'
 { API_URL } = require('sharify').data
-{ FeaturedCities } = require 'places'
+{ Cities } = require 'places'
 
 module.exports = class FilterPartners extends Partners
 
@@ -19,7 +19,7 @@ module.exports = class FilterPartners extends Partners
 
     data.partner_categories = [options.data.category] if options.data.category
 
-    city = _.findWhere FeaturedCities, slug: options.data.location if options.data.location
+    city = _.findWhere Cities, slug: options.data.location if options.data.location
     data.near = city.coords.join (',') if city
     data.type = if options.data.type is 'gallery' then ['PartnerGallery'] else ['PartnerInstitution', 'PartnerInstitutionalSeller']
     options.data = decodeURIComponent qs.stringify(data, { arrayFormat: 'brackets' })

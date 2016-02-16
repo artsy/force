@@ -24,7 +24,7 @@ describe 'FilterDropdownView', ->
     @aggregations = new Backbone.Model
 
     @facet = new PartnerFilterFacet
-      items: [
+      allItems: [
         { id: 'location-1', name: 'Location 1' }
         { id: 'location-2', name: 'Location 2' }
         { id: 'location-3', name: 'Location 3' }

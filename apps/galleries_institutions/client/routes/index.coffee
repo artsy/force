@@ -1,6 +1,5 @@
 Backbone = require 'backbone'
 { MAIN_PROFILES, CURRENT_USER } = require('sharify').data
-{ FeaturedCities } = require 'places'
 { Following } = require '../../../../components/follow_button/index.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
 LandingCarouselView = require './landing.coffee'
