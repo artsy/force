@@ -11,25 +11,12 @@ module.exports = class DropdownView extends Backbone.View
     'click a[data-attr]': 'onSelect'
 
   initialize: ({@collection, @params, @facet, @el, @facets, @filterRoot}) ->
-    @listenTo @collection, 'initial:fetch', @updateCounts
+    @listenTo @collection, 'initial:fetch', @renderCounts
     @listenTo @params, "change:#{@facet}", @renderActiveParam
+    @listenTo @collection, 'sync', @renderCounts
 
-    for facet in @facets
-      @listenTo @params, "change:#{facet}", @updateCounts
-
-    @listenTo @params, "change:for_sale", @updateCounts
-
-  updateCounts: ->
-    # we need a copy of the params without this facet and
-    # we don't need results, just counts
-    clonedParams = @params.clone().unset(@facet).set { size: 0, page: 1 }
-    updatedCounts = new FilterArtworks
-    updatedCounts.fetch
-      data: clonedParams.toJSON()
-      success: @renderCounts
-
-  renderCounts: (collection) =>
-    counts = collection.counts[@facet]
+  renderCounts: =>
+    counts = @collection.counts[@facet]
     activeText = counts[@params.get(@facet)]?.name
 
     html = template
