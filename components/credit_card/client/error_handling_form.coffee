@@ -22,7 +22,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
   isEmail: ($el) -> isEmail $el.val()
   isPresent: ($el) -> $el.val()? && $.trim($el.val()).length > 0
   isState: ($el) => @isPresent($el) || $el.parent().parent().find('select.country').val() != 'USA'
-  isZip: ($el) => @isPresent($el) && ($el.parent().parent().find('select.country').val() != 'USA' || $el.val().trim().match(/^\d{5}/))
+  isZip: ($el) => @isPresent($el)
 
   clearErrors: ->
     @$el.find('.has-error').removeClass('has-error')
