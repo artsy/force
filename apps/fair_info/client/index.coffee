@@ -25,7 +25,6 @@ module.exports = class FairInfoRouter extends Backbone.Router
     initFairLayout
       model: new Profile sd.PROFILE
       fair: @fair
-    defaultNavLinkIsActive()
 
   visitors: ->
     view = new FairInfoVisitorsView
@@ -43,11 +42,6 @@ module.exports = class FairInfoRouter extends Backbone.Router
     new FairInfoEventsView
       model: @fair
       el: $('.fair-info2-events')
-
-  defaultNavLinkIsActive = ->
-    strLen = sd.CURRENT_PATH.length
-    if sd.CURRENT_PATH.substr((strLen - 5), strLen) == 'info2'
-      $('.fair-info2-nav a:first-child').addClass('is-active')
 
 module.exports.init = ->
   new FairInfoRouter
