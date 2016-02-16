@@ -1,5 +1,6 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
-PartnerCell = require '../partner_cell/view.coffee'
+PartnerCellView = require '../partner_cell/view.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
 
 module.exports = class ResultsView extends Backbone.View
@@ -11,14 +12,14 @@ module.exports = class ResultsView extends Backbone.View
     @$gridContainer = @$('.galleries-institutions-results-grid')
 
     $.onInfiniteScroll =>
-      if @params.hasSelection() and not @filterPartners.allFetched
-        @fetch()
+      @fetchNextPage()
     , offset: 800
 
   render: (partners) ->
-    @$el.attr 'data-state', 'finished-paging' if @filterPartners.allFetched
+    state = if @filterPartners.allFetched then 'finished-paging' else ''
+    @$el.attr 'data-state', state
     cellViews = _.map partners, (partner) =>
-      view = new PartnerCell
+      view = new PartnerCellView
         following: @following
         partner: partner
         preferredCitySlug: @params.get('location')
@@ -29,6 +30,10 @@ module.exports = class ResultsView extends Backbone.View
 
   fetch: ->
     @filterPartners.fetch()
+
+  fetchNextPage: ->
+    if @params.hasSelection() and not @filterPartners.allFetched
+      @fetch()
 
   reset: ->
     @$gridContainer.html ''

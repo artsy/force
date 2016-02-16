@@ -11,7 +11,7 @@ FilterParams = require '../../parameters/filter_params.coffee'
 template = -> require('../template.jade') arguments...
 
 describe 'FilterDropdownView', ->
-  beforeEach (done) ->
+  before (done) ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
