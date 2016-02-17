@@ -14,7 +14,9 @@ aggregationParams = require './aggregations.coffee'
 
   Q.all [
     gene.fetch cache: true
-    filterArtworks.fetch data: filterData
+    filterArtworks.fetch
+      data: filterData
+      cache: true
   ]
 
   .then ->

@@ -11,7 +11,7 @@ aggregationParams = require './aggregations.coffee'
   filterData = { size: 0, tag: req.params.id, aggregations: aggregationParams }
   Q.all([
     tag.fetch(cache: true)
-    filterArtworks.fetch(data: filterData)
+    filterArtworks.fetch(data: filterData, cache: true)
   ]).catch(next).then ->
     res.locals.sd.TAG = tag.toJSON()
     res.render 'index',
