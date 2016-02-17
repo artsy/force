@@ -35,10 +35,6 @@ body.body-article
 
 .article-author, .article-date, .article-contributing-author
   text-align center
-  a
-    text-decoration none
-    &:hover
-      border-bottom 2px solid
 
 .article-lead-paragraph
   margin 0 auto gutter-size auto
@@ -79,6 +75,11 @@ body.body-article
 
 .article-contributing-author
   avant-garde-size('m-headline')
+
+.article-author-date
+  div:first-child:nth-last-child(2),
+  div:first-child:nth-last-child(2) .article-author
+    avant-garde-size('m-headline')
 
 .article-social
   text-align center
