@@ -1,14 +1,9 @@
 @require '../../../components/stylus_lib'
-@require '../components/checkbox'
-@require '../components/information'
-@require '../components/password'
-@require '../components/linked_accounts'
-@require '../components/email_preferences'
-@require '../components/profile_picture'
-@require '../components/about_you'
-@require '../components/artists_you_collect'
-@require '../components/gallery_intro'
-@require '../components/delete_my_account'
+
+@require '../pages/delete'
+@require '../pages/profile'
+@require '../pages/saves'
+@require '../pages/settings'
 
 .avant-garde-tablist
   clearfix()
@@ -67,6 +62,7 @@
   //
 
 .settings-section
+  position relative
   width 75%
   block-margins(gutter)
   padding gutter 0 (gutter * 2) 0
@@ -84,3 +80,8 @@
 
 .settings-disable-link
   color gray-dark-color
+
+.faux-underline-hover-large:hover
+  text-decoration underline
+  &:before
+    display none
