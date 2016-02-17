@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 Artist = require '../models/artist.coffee'
+Relations = require './mixins/relations/gene.coffee'
 
 SUBJECT_MATTER_MATCHES = [
   "content", "medium", "concrete contemporary",
@@ -12,7 +13,7 @@ SUBJECT_MATTER_MATCHES = [
 ]
 
 module.exports = class Gene extends Backbone.Model
-
+  _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
 
@@ -24,14 +25,14 @@ module.exports = class Gene extends Backbone.Model
 
   alphaSortKey: -> @get('id')
 
-  toPageTitle: -> 
+  toPageTitle: ->
     if title = @metaOverrides('title')
       title
-    else 
+    else
       "#{@get('name')} | Artsy"
 
   # Trim whitespace and newlines
-  toPageDescription: -> 
+  toPageDescription: ->
     if description = @metaOverrides('description')
       description
     else if @isGeographic()
