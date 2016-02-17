@@ -31,3 +31,13 @@
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'shop'
   res.render 'index', params: req.params
+
+@artists = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'artists'
+  res.render 'index', params: req.params
+
+@artist = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'artist'
+  res.render 'index', params: req.params

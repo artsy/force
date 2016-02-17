@@ -11,3 +11,5 @@ app.get '/:id/shows', routes.requireAdmin, routes.shows
 app.get '/:id/works', routes.works
 app.get '/:id/collection', routes.collection
 app.get '/:id/shop', routes.shop
+app.get '/:id/artists', routes.artists
+app.get '/:id/artist/:artistId', routes.artist

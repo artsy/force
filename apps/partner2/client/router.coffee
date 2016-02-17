@@ -15,6 +15,8 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/works': 'works'              #      x
     ':id/collection': 'collection'    #                x
     ':id/shop': 'shop'                #                x
+    ':id/artists': 'artists'          #      x
+    ':id/artist/:artistId': 'artists' #      x
 
   initialize: ({ @profile, @partner }) ->
     @baseView = new PartnerView el: $('#partner'), profile: @profile, partner: @partner, currentSection: sd.SECTION
@@ -52,3 +54,6 @@ module.exports = class PartnerRouter extends Backbone.Router
 
   works: ->
     @filterArtworks('works', filterSettings.settings(@partner, 'works'))
+
+  artists: (id, artistId) ->
+    @baseView.renderSection 'artists', { artistId: artistId }
