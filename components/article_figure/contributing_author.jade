@@ -10,6 +10,6 @@ if article.get('contributing_authors') && article.get('contributing_authors').le
         - delimiter = ''
       else
         - delimiter = ",&nbsp"
-      if a[i].name && a[i].profile_id
-        a.article-figure-contributing-name( href= "/#{a[i].profile_id}")= a[i].name
+      if a[i].name
+        .article-figure-contributing-name= a[i].name
         .article-figure-contributing-name !{delimiter}
