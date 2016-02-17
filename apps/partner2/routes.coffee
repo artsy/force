@@ -41,3 +41,8 @@
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'artist'
   res.render 'index', params: req.params
+
+@articles = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'articles'
+  res.render 'index', params: req.params
