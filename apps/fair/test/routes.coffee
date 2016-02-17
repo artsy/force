@@ -17,7 +17,6 @@ CoverImage = require '../../../models/cover_image'
 describe 'Fair routes', ->
 
   beforeEach ->
-    sinon.stub Backbone, 'sync'
     @req = { params: { id: 'some-fair' } }
     @res =
       render: sinon.stub()
@@ -27,15 +26,15 @@ describe 'Fair routes', ->
         fair: new Fair(fabricate 'fair')
         profile: new Profile(fabricate 'fair_profile')
 
-  afterEach ->
-    Backbone.sync.restore()
-
   describe '#all', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
+
     it 'next is called without a fair', ->
       @res.locals.sd.FAIR = undefined
-
-      routes.info @req, @res, (next = sinon.stub())
-      next.called.should.be.ok()
 
       routes.overview @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
@@ -52,22 +51,29 @@ describe 'Fair routes', ->
       routes.browse @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
 
-  describe '#info', ->
-
-    it 'renders the info template', ->
-      routes.info @req, @res
-      @res.locals.sd.SECTION.should.equal 'info'
-      @res.render.args[0][0].should.equal 'index'
-
   describe '#overview', ->
+    before ->
+      sinon.stub Backbone, 'sync'
+        .yieldsTo 'success', {}
+        .onCall 0
+        .yieldsTo 'success', fabricate 'fair'
+
+    after ->
+      Backbone.sync.restore()
 
     it 'renders the overview template', ->
       routes.overview @req, @res
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
-      @res.locals.sd.SECTION.should.equal 'overview'
-      @res.render.args[0][0].should.equal 'overview'
+      _.defer =>
+        @res.locals.sd.SECTION.should.equal 'overview'
+        @res.render.args[0][0].should.equal 'overview'
 
   describe '#foryou', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'renders the foryou template', ->
       routes.forYou @req, @res
@@ -75,6 +81,11 @@ describe 'Fair routes', ->
       @res.render.args[0][0].should.equal 'index'
 
   describe '#fairArticles', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'renders the posts template', ->
       routes.fairArticles @req, @res
@@ -82,6 +93,11 @@ describe 'Fair routes', ->
       @res.render.args[0][0].should.equal 'index'
 
   describe '#follows', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'redirects to the homepage without a user', ->
       routes.follows @req, @res
@@ -94,6 +110,12 @@ describe 'Fair routes', ->
       @res.render.args[0][0].should.equal 'favorites'
 
   describe '#captureSignup', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
+
     it 'triggers next if a user is not defined', ->
       routes.captureSignup @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
@@ -124,6 +146,11 @@ describe 'Fair routes', ->
           next.called.should.be.true()
 
   describe '#search', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'searches', ->
       req = { params: { id: 'some-fair' }, query: { q: 'foobar' } }
@@ -137,6 +164,11 @@ describe 'Fair routes', ->
       @res.redirect.args[0][0].should.equal '/some-fair'
 
   describe '#browse', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'renders index', ->
       routes.browse @req, @res
@@ -144,6 +176,11 @@ describe 'Fair routes', ->
       @res.render.args[0][0].should.equal 'index'
 
   describe '#showRedirect', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
 
     it 'redirects to show page', ->
       show = fabricate('show')

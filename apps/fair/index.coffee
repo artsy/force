@@ -26,7 +26,6 @@ app.get '/:id', getFairData, routes.overview
 app.get '/:id/:year([0-9]{4})', getFairByOrganizerYear, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
 app.get '/:id/articles', getFairData, routes.fairArticles
-app.get '/:id/info', getFairData, routes.info
 app.get '/:id/for-you', getFairData, routes.forYou
 app.get '/:id/search', getFairData, routes.search
 app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
