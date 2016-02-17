@@ -61,38 +61,6 @@ describe 'Fair', ->
       @$template.html().should.not.containEql 'undefined'
       @$template.html().should.containEql 'Back to Artsy.net'
 
-  describe 'info page', ->
-
-    before (done) ->
-      fair = fabricate 'fair', filter_genes: []
-      fair.about = 'about the fair'
-      sd =
-        APP_URL: 'http://localhost:5000'
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
-        CSS_EXT: '.css.gz'
-        JS_EXT: '.js.gz'
-        SECTION: 'info'
-        CURRENT_PATH: '/cool-fair'
-        PROFILE: fabricate 'fair_profile'
-        FAIR: fair
-        FACEBOOK_APP_NAMESPACE: 'namespace'
-      fair = new Fair sd.FAIR
-      profile = new Profile sd.PROFILE
-      template = render('index')
-        sd: sd
-        _s: _s
-        fair: fair
-        profile: profile
-        asset: (->)
-      @$template = cheerio.load template
-      done()
-
-    it 'renders without errors', ->
-      @$template.html().should.not.containEql 'undefined'
-      @$template.html().should.containEql 'Back to Artsy.net'
-      @$template.root().find('.fair-map-link').length.should.equal 1
-      @$template.root().find('.fair-info-content').html().should.containEql 'about the fair'
-
   describe 'search page', ->
 
     before (done) ->

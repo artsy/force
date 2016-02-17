@@ -42,11 +42,6 @@ InfoMenu = require '../../components/info_menu/index.coffee'
           hideForSaleButton: true
           includeAllWorksButton: true
 
-@info = (req, res, next) ->
-  return next() unless res.locals.sd.FAIR
-  res.locals.sd.SECTION = 'info'
-  res.render 'index'
-
 @fairArticles = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'posts'

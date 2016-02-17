@@ -36,9 +36,6 @@ describe 'Fair routes', ->
     it 'next is called without a fair', ->
       @res.locals.sd.FAIR = undefined
 
-      routes.info @req, @res, (next = sinon.stub())
-      next.called.should.be.ok()
-
       routes.overview @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
 
@@ -53,18 +50,6 @@ describe 'Fair routes', ->
 
       routes.browse @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
-
-  describe '#info', ->
-    beforeEach ->
-      sinon.stub Backbone, 'sync'
-
-    afterEach ->
-      Backbone.sync.restore()
-
-    it 'renders the info template', ->
-      routes.info @req, @res
-      @res.locals.sd.SECTION.should.equal 'info'
-      @res.render.args[0][0].should.equal 'index'
 
   describe '#overview', ->
     before ->
