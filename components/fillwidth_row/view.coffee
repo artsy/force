@@ -27,6 +27,7 @@ module.exports = class FillwidthView extends Backbone.View
       imageDimensions: @collection.fillwidthDimensions(maxHeight)
     _.defer => @handleSeeMore() if @seeMore
     @initializeArtworks @collection
+    this
 
   initializeArtworks: (artworks) ->
     $list = @$('.artwork-item')
