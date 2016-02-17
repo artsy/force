@@ -53,6 +53,7 @@ module.exports =
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
       facets: facets
+      aggregations: aggregations
 
     router = new FilterRouter
       params: params
@@ -63,6 +64,7 @@ module.exports =
       data: params.toJSON()
       success: ->
         collection.trigger 'initial:fetch'
+        params.unset('aggregations')
 
     Backbone.history.start(pushState: true) if startHistory
 
