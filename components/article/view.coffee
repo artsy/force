@@ -103,8 +103,8 @@ module.exports = class ArticleView extends Backbone.View
 
   renderEmbedSections: =>
     sections = []
-    Q.all( for section in @article.get('sections') when section.type is 'embed'
-      $.get oembed(section.url, { maxwidth: @getWidth(section) })
+    Q.all( for section in @article.get 'sections' when section.type is 'embed'
+      $.get oembed section.url, { maxwidth: @getWidth(section) }
     ).done (responses) =>
       if responses.length
         for section in @article.get('sections') when section.type is 'embed'
