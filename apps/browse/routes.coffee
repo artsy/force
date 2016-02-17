@@ -8,6 +8,7 @@ aggregationParams = require './aggregations.coffee'
   filterData = { size: 0, aggregations: aggregationParams }
   filterArtworks.fetch
     data: filterData
+    cache: true
     success: ->
       res.render 'index',
         filterRoot: '/browse/artworks'
