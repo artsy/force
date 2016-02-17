@@ -7,6 +7,8 @@ FillwidthView = require '../fillwidth_row/view.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 
 module.exports = class ArtistFillwidthList extends Backbone.View
+  subViews: []
+
   defaults:
     page: 1
     per: 10
@@ -49,10 +51,13 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           doneFetching: true
           collection: artworks
           el: $row.find('.artist-fillwidth-list-artworks')
+
+        @subViews.push fillwidthView
+
         fillwidthView.render()
 
         # Add follow button
-        new FollowButton
+        @subViews.push new FollowButton
           el: $row.find('.plus-follow-button')
           following: @following
           model: artist
@@ -79,3 +84,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         page: @page = @page + 1
         size: @per
       success: @appendPage
+
+  remove: ->
+    _.invoke @subViews, 'remove'
+    super
