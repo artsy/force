@@ -14,3 +14,5 @@ app.get '/:id/shop', routes.shop
 app.get '/:id/artists', routes.artists
 app.get '/:id/artist/:artistId', routes.artist
 app.get '/:id/articles', routes.articles
+app.get '/:id/contact', routes.contact
+app.get '/:id/about', routes.about

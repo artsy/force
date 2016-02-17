@@ -46,3 +46,13 @@
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'articles'
   res.render 'index', params: req.params
+
+@contact = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'contact'
+  res.render 'index', params: req.params
+
+@about = (req, res, next) ->
+  return next() unless res.locals.profile?.isPartner()
+  res.locals.sd.SECTION = 'about'
+  res.render 'index', params: req.params
