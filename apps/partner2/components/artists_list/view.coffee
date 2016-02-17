@@ -11,20 +11,24 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     numberOfColumns: 6
 
   initialize: (options = {}) ->
-    { @partner, @numberOfColumns, @linkToPartnerArtist } = _.defaults options, @defaults
+    { @partner, @collection, @numberOfColumns, @linkToPartnerArtist } = _.defaults options, @defaults
+    @collection ?= new PartnerArtists()
+    @collection.url = "#{@partner.url()}/partner_artists?display_on_partner_profile=1"
 
   startUp: ->
     @fetch().then(@render).done()
 
-  fetch: ->
-    partnerArtists = new PartnerArtists()
-    partnerArtists.url = "#{@partner.url()}/partner_artists"
-    partnerArtists.fetchUntilEndInParallel()
-      .then ->
-        # Display represented artists or non- ones who have published artworks
-        partnerArtists.filter (pa) ->
-          pa.get('represented_by') or
-          pa.get('published_artworks_count') > 0
+  fetch: (forced = false) ->
+    if @collection.length is 0 or forced
+      @collection.reset() unless @collection.length is 0
+      @collection.fetchUntilEndInParallel()
+        .then =>
+          # Display represented artists or non- ones who have published artworks
+          @collection.filter (pa) ->
+            pa.get('represented_by') or
+            pa.get('published_artworks_count') > 0
+    else
+      Q.promise (resolve) => resolve @collection.models
 
   render: (artists) =>
     if artists.length is 0

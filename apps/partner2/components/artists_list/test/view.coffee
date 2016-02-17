@@ -36,21 +36,63 @@ describe 'PartnerArtistsListView', ->
     afterEach ->
       @fetchUntilEndInParallel.restore()
 
-    it 'makes proper requests to fetch partner artists', ->
-      @view.fetch()
-      @fetchUntilEndInParallel.calledOnce.should.be.ok()
+    context 'with empty collection', ->
+      it 'makes proper requests to fetch partner artists', ->
+        @view.fetch()
+        @fetchUntilEndInParallel.calledOnce.should.be.ok()
 
-    it 'returns a thenable promise', ->
-      _.isFunction(@view.fetch().then).should.be.ok()
+      it 'returns a thenable promise', ->
+        @view.fetch().then.should.be.a.Function()
 
-    it 'fetches and returns partner artists', ->
-      Backbone.sync
-        .onCall 0
-        .yieldsTo 'success', @partnerArtists.models
+      it 'fetches and returns partner artists', ->
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', @partnerArtists.models
 
-      @view.fetch().then (artists) =>
-        artists.length.should.equal 10
-        artists.should.eql @partnerArtists.models
+        @view.fetch().then (artists) =>
+          artists.length.should.equal 10
+          artists.should.eql @partnerArtists.models
+
+    context 'with non-empty collection', ->
+      beforeEach ->
+        @view = new PartnerArtistsListView
+          partner: @partner
+          collection: new PartnerArtists [fabricate 'partner_artist']
+
+      it 'does not make requests to fetch partner artists', ->
+        @view.fetch()
+        @fetchUntilEndInParallel.called.should.not.be.ok()
+
+      it 'returns a thenable promise', ->
+        @view.fetch().then.should.be.a.Function()
+
+      it 'returns the collection', ->
+        @view.fetch().then (artists) =>
+          artists.length.should.equal 1
+          artists.should.eql @view.collection.models
+
+    context 'with non-empty collection and forced fetch', ->
+      beforeEach ->
+        @view = new PartnerArtistsListView
+          partner: @partner
+          collection: new PartnerArtists [fabricate 'partner_artist']
+
+      it 'makes proper requests to fetch partner artists', ->
+        @view.fetch(true)
+        @fetchUntilEndInParallel.calledOnce.should.be.ok()
+
+      it 'returns a thenable promise', ->
+        @view.fetch(true).then.should.be.a.Function()
+
+      it 'resets collection, fetches and returns partner artists', ->
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', @partnerArtists.models
+
+        @view.fetch(true).then (artists) =>
+          artists.length.should.equal 10
+          artists.length.should.not.equal 11
+          artists.should.eql @partnerArtists.models
 
   describe '#groupArtists', ->
 

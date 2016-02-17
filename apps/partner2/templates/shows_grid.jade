@@ -2,10 +2,10 @@ mixin showsGallery(shows, isFeatured, type)
   .partner-shows-container
     include show_figures
 
-.partner-shows
+.partner2-shows
 
   if heading
-    h2.avant-garde-header-center.partner-shows-heading= heading
+    h2.partner-shows-heading= heading
 
   if featured
     section.partner-shows-section.featured
@@ -13,17 +13,17 @@ mixin showsGallery(shows, isFeatured, type)
 
   if current && current.length > 0
     section.partner-shows-section.current
-      h2.avant-garde-header-center.partner-shows-section-heading Current Shows
+      h2.partner-shows-section-heading Current Shows
       +showsGallery(current, false, 'current')
 
   if upcoming && upcoming.length > 0
     section.partner-shows-section.upcoming
-      h2.avant-garde-header-center.partner-shows-section-heading Upcoming Shows
+      h2.partner-shows-section-heading Upcoming Shows
       +showsGallery(upcoming, false, 'upcoming')
 
   if past && past.length > 0
     section.partner-shows-section.past
-      h2.avant-garde-header-center.partner-shows-section-heading Past Shows
+      h2.partner-shows-section-heading Past Shows
       +showsGallery(past, false, 'past')
 
   if seeAll
