@@ -7,6 +7,7 @@ SettingsTabsView = require '../components/tabs/view.coffee'
 SettingsView = require '../pages/settings/index.coffee'
 ProfileView = require '../pages/profile/index.coffee'
 DeleteView = require '../pages/delete/index.coffee'
+SavesView = require '../pages/saves/index.coffee'
 
 module.exports = class UserSettingsRouter extends Backbone.Router
   routes:
@@ -16,6 +17,8 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     'profile/edit#:section': 'profile'
     'user/delete': 'delete'
     'user/delete#:section': 'delete'
+    'user/saves': 'saves'
+    'user/saves#:section': 'saves'
 
   initialize: ->
     user = new UserEdit USER
@@ -41,6 +44,10 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     @$sections.html @view.$el.find('.js-settings-section').map(->
       "<a href='##{$(this).attr 'id'}'>#{$(this).data 'name'}</a>"
     ).get().join ''
+
+  saves: ->
+    @view = new SavesView @models
+    @$main.html @view.render().$el
 
   settings: ->
     @view = new SettingsView @models
