@@ -28,6 +28,7 @@ module.exports =
       forSale,
       facets,
       hideForSaleButton,
+      includeMediumFilterInAggregation
     } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
@@ -39,6 +40,9 @@ module.exports =
 
     if stuckParam
       params.set stuckParam
+
+    if includeMediumFilterInAggregation
+      params.set includeMediumFilterInAggregation
 
     collection = new FilterArtworks
 

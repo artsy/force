@@ -10,7 +10,7 @@ aggregationParams = require './aggregations.coffee'
   gene = new Gene id: req.params.id
   params = new Backbone.Model gene: gene.id
   filterArtworks = new FilterArtworks
-  filterData = size: 0, gene_id: req.params.id, aggregations: aggregationParams
+  filterData = size: 0, gene_id: req.params.id, aggregations: aggregationParams, include_medium_filter_in_aggregation: true
 
   Q.all [
     gene.fetch cache: true
