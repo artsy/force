@@ -65,7 +65,7 @@ describe 'PartnerShowsGridView', ->
 
     it 'respects the dispalyable attribute of partner shows', ->
       new PartnerShowsGridView
-        el: $ '.partner-shows'
+        el: $ '.partner2-shows'
         partner: @partner
 
       @template.args[0][0].current.should.have.lengthOf 3
@@ -74,7 +74,7 @@ describe 'PartnerShowsGridView', ->
 
     it 'fetches 1 featured and all other shows and renders them by default', ->
       new PartnerShowsGridView
-        el: $ '.partner-shows'
+        el: $ '.partner2-shows'
         partner: @partner
 
       @template.args[0][0].featured.get('name').should.equal "show2"
@@ -84,7 +84,7 @@ describe 'PartnerShowsGridView', ->
 
     it 'fetches 0 featued and all other shows and renders them', ->
       new PartnerShowsGridView
-        el: $ '.partner-shows'
+        el: $ '.partner2-shows'
         partner: @partner
         numberOfFeatured: 0
 
@@ -95,7 +95,7 @@ describe 'PartnerShowsGridView', ->
 
     it 'fetches 1 featued and combined other shows and renders them', ->
       new PartnerShowsGridView
-        el: $ '.partner-shows'
+        el: $ '.partner2-shows'
         partner: @partner
         isCombined: true
         numberOfShows: 6
@@ -105,105 +105,105 @@ describe 'PartnerShowsGridView', ->
       @template.args[0][0].upcoming.should.have.lengthOf 0
       @template.args[0][0].past.should.have.lengthOf 0
 
-describe '#maybeFetchAndRenderShows', ->
+  describe '#maybeFetchAndRenderShows', ->
 
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
-        partner: { href: -> }
-        params: {}
-      }, =>
-        PartnerShowsGridView = mod = benv.requireWithJadeify(
-            (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
-          )
-        @src = [
-          fabricate('show', { name: 'show1' } ),
-          fabricate('show', { name: 'show2', featured: true } ),
-          fabricate('show', { name: 'show3' } ),
-          fabricate('show', { name: 'show4' } ),
-          fabricate('show', { name: 'show5' } ),
-          fabricate('show', { name: 'show6' } ),
-          fabricate('show', { name: 'show7' } ),
-          fabricate('show', { name: 'show8' } ),
-          fabricate('show', { name: 'show9' } ),
-          fabricate('show', { name: 'show10' } ),
-          fabricate('show', { name: 'show11' } ),
-          fabricate('show', { name: 'show12' } ),
-          fabricate('show', { name: 'show13' } ),
-          fabricate('show', { name: 'show14' } ),
-          fabricate('show', { name: 'show15' } ),
-          fabricate('show', { name: 'show16' } ),
-          fabricate('show', { name: 'show17' } ),
-          fabricate('show', { name: 'show18' } ),
-          fabricate('show', { name: 'show19' } ),
-          fabricate('show', { name: 'show20' } ),
-          fabricate('show', { name: 'show21' } ),
-          fabricate('show', { name: 'show22' } ),
-          fabricate('show', { name: 'show23' } ),
-          fabricate('show', { name: 'show24' } ),
-          fabricate('show', { name: 'show25' } ),
-          fabricate('show', { name: 'show26' } ),
-          fabricate('show', { name: 'show27' } ),
-          fabricate('show', { name: 'show28' } ),
-          fabricate('show', { name: 'show29' } ),
-          fabricate('show', { name: 'show30' } ),
-          fabricate('show', { name: 'show31' } ),
-          fabricate('show', { name: 'show32' } ),
-          fabricate('show', { name: 'show33' } ),
-          fabricate('show', { name: 'show34' } ),
-          fabricate('show', { name: 'show35' } )
-        ]
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose { $: benv.require 'jquery' }
+        Backbone.$ = $
+        sinon.stub Backbone, 'sync'
+        benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
+          partner: { href: -> }
+          params: {}
+        }, =>
+          PartnerShowsGridView = mod = benv.requireWithJadeify(
+              (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
+            )
+          @src = [
+            fabricate('show', { name: 'show1' } ),
+            fabricate('show', { name: 'show2', featured: true } ),
+            fabricate('show', { name: 'show3' } ),
+            fabricate('show', { name: 'show4' } ),
+            fabricate('show', { name: 'show5' } ),
+            fabricate('show', { name: 'show6' } ),
+            fabricate('show', { name: 'show7' } ),
+            fabricate('show', { name: 'show8' } ),
+            fabricate('show', { name: 'show9' } ),
+            fabricate('show', { name: 'show10' } ),
+            fabricate('show', { name: 'show11' } ),
+            fabricate('show', { name: 'show12' } ),
+            fabricate('show', { name: 'show13' } ),
+            fabricate('show', { name: 'show14' } ),
+            fabricate('show', { name: 'show15' } ),
+            fabricate('show', { name: 'show16' } ),
+            fabricate('show', { name: 'show17' } ),
+            fabricate('show', { name: 'show18' } ),
+            fabricate('show', { name: 'show19' } ),
+            fabricate('show', { name: 'show20' } ),
+            fabricate('show', { name: 'show21' } ),
+            fabricate('show', { name: 'show22' } ),
+            fabricate('show', { name: 'show23' } ),
+            fabricate('show', { name: 'show24' } ),
+            fabricate('show', { name: 'show25' } ),
+            fabricate('show', { name: 'show26' } ),
+            fabricate('show', { name: 'show27' } ),
+            fabricate('show', { name: 'show28' } ),
+            fabricate('show', { name: 'show29' } ),
+            fabricate('show', { name: 'show30' } ),
+            fabricate('show', { name: 'show31' } ),
+            fabricate('show', { name: 'show32' } ),
+            fabricate('show', { name: 'show33' } ),
+            fabricate('show', { name: 'show34' } ),
+            fabricate('show', { name: 'show35' } )
+          ]
 
-        @partnerShows = new PartnerShows()
-        @partnerShows.fetch = (options) =>
-          page = options.data.page
-          size = options.data.size
-          @partnerShows.reset()
-          @partnerShows.add @src
-          options.success?()
-        @PartnerShows = sinon.stub()
-        @PartnerShows.returns @partnerShows
-        PartnerShowsGridView.__set__ 'PartnerShows', @PartnerShows
+          @partnerShows = new PartnerShows()
+          @partnerShows.fetch = (options) =>
+            page = options.data.page
+            size = options.data.size
+            @partnerShows.reset()
+            @partnerShows.add @src
+            options.success?()
+          @PartnerShows = sinon.stub()
+          @PartnerShows.returns @partnerShows
+          PartnerShowsGridView.__set__ 'PartnerShows', @PartnerShows
 
-        @profile = new Profile fabricate 'partner_profile'
-        @partner = @profile.related().owner
-        new PartnerShowsGridView
-          el: $ '.partner-shows'
-          partner: @partner
-          isCombined: false
-          numberOfFeatured: 1
-        done()
+          @profile = new Profile fabricate 'partner_profile'
+          @partner = @profile.related().owner
+          new PartnerShowsGridView
+            el: $ '.partner2-shows'
+            partner: @partner
+            isCombined: false
+            numberOfFeatured: 1
+          done()
 
-  afterEach ->
-    Backbone.sync.restore()
-    benv.teardown()
+    afterEach ->
+      Backbone.sync.restore()
+      benv.teardown()
 
-  it 'displays up to 30 shows and a See More button if there are more', ->
-    $('figure').length.should.equal 31
-    $('.js-partner-shows-more').length.should.equal 1
+    it 'displays up to 30 shows and a See More button if there are more', ->
+      $('figure').length.should.equal 31
+      $('.js-partner-shows-more').length.should.equal 1
 
-  it 'tries to fetch more shows if there are not enough shows', ->
-    src = []
-    @partnerShows.fetch = (options) =>
-      page = options.data.page
-      size = options.data.size
-      @partnerShows.reset()
-      @partnerShows.add src
-      options.success?()
-    $('.js-partner-shows-more').click()
-    $('figure').length.should.equal 35
+    it 'tries to fetch more shows if there are not enough shows', ->
+      src = []
+      @partnerShows.fetch = (options) =>
+        page = options.data.page
+        size = options.data.size
+        @partnerShows.reset()
+        @partnerShows.add src
+        options.success?()
+      $('.js-partner-shows-more').click()
+      $('figure').length.should.equal 35
 
-  it 'adds the fetched items if there are more', ->
-    src = [fabricate('show', { name: 'show36' , status: 'closed' })]
-    @partnerShows.fetch = (options) =>
-      page = options.data.page
-      size = options.data.size
-      @partnerShows.reset()
-      @partnerShows.add src
-      options.success?()
-    $('.js-partner-shows-more').click()
-    $('figure').length.should.equal 36
-    $('body').html().should.not.containEql 'See More'
+    it 'adds the fetched items if there are more', ->
+      src = [fabricate('show', { name: 'show36' , status: 'closed' })]
+      @partnerShows.fetch = (options) =>
+        page = options.data.page
+        size = options.data.size
+        @partnerShows.reset()
+        @partnerShows.add src
+        options.success?()
+      $('.js-partner-shows-more').click()
+      $('figure').length.should.equal 36
+      $('body').html().should.not.containEql 'See More'

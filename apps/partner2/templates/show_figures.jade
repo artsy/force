@@ -4,7 +4,7 @@ mixin showFigureContent(show, isFeatured)
     img( src="#{posterImageUrl}", alt=show.formatFeedItemHeading() )
     .partner-show-overlay
   figurecaption.partner-show-caption
-    h5.avant-garde-header-center.partner-show-heading= show.formatLeadHeading()
+    h5.partner-show-heading= show.formatLeadHeading()
     if show.has('artists')
       h3.partner-show-artists= show.formatArtists()
     h4.partner-show-name= show.formatFeedItemHeading()
