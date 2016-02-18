@@ -1,8 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-{ FavoritesView } = require '../../../components/favorites/client/favorites.coffee'
-{ FollowsView } = require '../../../components/favorites/client/follows.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
 # FairInfoView = require './info.coffee'
@@ -23,12 +21,10 @@ module.exports.FairView = class FairView extends Backbone.View
     posts: FairArticlesView
     search: FairSearchView
     browse: FairBrowseRouter
-    favorites: FavoritesView
-    follows: FollowsView
     forYou: ForYouView
     overview: OverviewView
 
-  footerRoutes: ['forYou', 'posts', 'search', 'favorites', 'follows']
+  footerRoutes: ['forYou', 'posts', 'search']
 
   initialize: (options) ->
     initFairLayout(options)
@@ -46,19 +42,12 @@ module.exports.FairView = class FairView extends Backbone.View
         el: el
         user: @user
 
-      if options.currentSection == 'follows' or options.currentSection == 'favorites'
-        @fixFavoritesFollowingTabs @model
 
       if options.currentSection in @footerRoutes
         new FairFooter
           el: @$('.fair-page-footer')
           fair: @fair
           model: @model
-
-  # Kinda hacky
-  fixFavoritesFollowingTabs: (profile) ->
-    @$('.follows-tabs.garamond-tablist a').each ->
-      $(@).attr href: "#{profile.href()}#{$(@).attr('href')}"
 
 module.exports.init = ->
   fair = new Fair sd.FAIR

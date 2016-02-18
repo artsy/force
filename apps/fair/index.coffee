@@ -31,7 +31,6 @@ app.get '/:id/search', getFairData, routes.search
 app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
 app.get '/:id/browse', getFairData, routes.browse
 app.get '/:id/browse/*', getFairData, routes.browse
-app.get '/:id/following/:type', getFairData, routes.follows
 app.get '/:id/sign_up', getFairData, routes.overview
 app.get '/:id/sign_up/:action', getFairData, routes.overview
 app.get '/:id/capture', getFairData, routes.captureSignup, routes.overview
