@@ -20,7 +20,11 @@ module.exports = class WorksView extends Backbone.View
     $el
 
   setupArtworkFilter: ->
-    filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model, mode: 'grid'
+    filterRouter = ArtworkFilter.init
+      el: @$('#artwork-section')
+      model: @model
+      mode: 'grid'
+      showSeeMoreLink: false
     @subViews.push filterRouter.view
     $.onInfiniteScroll ->
       filterRouter.view.loadNextPage()

@@ -9,8 +9,12 @@
 
     #artwork-section__artworks.artwork-section__artworks
       //- Rendered separately
-    if model.get('published_artworks_count') > 9
-      a#artwork-see-more.avant-garde-button-black.is-block(href="#{model.href()}/works")
-        | See All (
-        span= model.get('published_artworks_count')
-        | )
+
+    .link-and-spinner
+      .artwork-spinner-container
+        .loading-spinner
+      if model.get('published_artworks_count') > 9 && showSeeMoreLink
+        a#artwork-see-more.avant-garde-button-black.is-block(href="#{model.href()}/works")
+          | See All (
+          span= model.get('published_artworks_count')
+          | )
