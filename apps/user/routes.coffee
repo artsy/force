@@ -16,7 +16,7 @@ Profile = require '../../models/profile'
 
 @settings = (req, res, next) ->
   return res.redirect "/log_in?redirect_uri=#{req.url}" unless req.user
-  return res.redirect '/' if req.user.isAdmin()
+  return res.redirect '/' if req.url is '/user/delete' and req.user.isAdmin()
 
   user = new UserEdit req.user.attributes
   profile = new Profile
