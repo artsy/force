@@ -142,11 +142,6 @@ module.exports = class Article extends Backbone.Model
         success: (article) =>
           relatedArticles.add article
 
-  showAuthorSection: ->
-    @get('contributing_authors').length is 0 or
-    @get('author_id') isnt sd.ARTSY_EDITORIAL_ID or
-    sd.CURRENT_PATH isnt '/articles'
-
   # article metadata tag for parse.ly
   toJSONLD: ->
     creator = []
