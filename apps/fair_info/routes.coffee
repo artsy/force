@@ -101,7 +101,9 @@ aawMap = require './maps/armory_arts_week_neighborhoods'
   Q.all _.map neighborhoods, (hood) -> hood.article.fetch()
   .then ->
     res.render 'armory_arts_week_all',
-      neighborhoods: neighborhoods
+      neighborhoods: neighborhoods,
+      embedVideo: embedVideo,
+      resize: resize
   .catch (err) ->
     next err
   .done()
