@@ -15,12 +15,12 @@ mixin article-figure(article, width, showDate, showShare)
         = article.get('thumbnail_title')
 
       .article-figure-author-section
-        if !(article.get('contributing_authors') != null && article.get('contributing_authors').length && article.get('author_id') === sd.ARTSY_EDITORIAL_ID && sd.CURRENT_PATH === '/articles')
+        if article.showAuthorSection()
           .article-figure-author
             .article-figure-author-link
               = article.get('author') ? article.get('author').name : ''
 
-        if article.get('contributing_authors') && article.get('contributing_authors').length > 0
+        if article.get('contributing_authors').length > 0
           include ./contributing_author.jade
 
       if showShare
