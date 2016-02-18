@@ -1,8 +1,10 @@
 Q = require 'bluebird-q'
+qs = require 'qs'
 request = require 'superagent'
+{ extend } = require 'underscore'
 { METAPHYSICS_ENDPOINT } = require('sharify').data
 
-module.exports = ({ query, variables, req } = {}) ->
+metaphysics = ({ query, variables, req } = {}) ->
   Q.promise (resolve, reject) ->
     get = request
       .get METAPHYSICS_ENDPOINT
@@ -21,3 +23,11 @@ module.exports = ({ query, variables, req } = {}) ->
         if response.body.errors?
           return reject JSON.stringify(response.body.errors)
         resolve response.body.data
+
+metaphysics.debug = (req, res, send) ->
+  if req.query.query?
+    get = extend {}, send, variables: JSON.stringify send.variables
+    res.redirect "#{METAPHYSICS_ENDPOINT}?#{qs.stringify get}"
+    true
+
+module.exports = metaphysics

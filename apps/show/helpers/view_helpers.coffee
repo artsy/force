@@ -238,7 +238,7 @@ module.exports =
 
   formatLeadHeading: (show) ->
     status =
-      if show.status is 'current' then 'Current'
+      if show.status is 'current' or show.status is 'running' then 'Current'
       else if show.status is 'upcoming' then 'Upcoming'
       else if show.status is 'closed' then 'Past'
     type = if show.fair then 'fair booth' else 'show'
