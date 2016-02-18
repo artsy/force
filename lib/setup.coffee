@@ -179,7 +179,6 @@ module.exports = (app) ->
   app.use require "../apps/show"
   app.use require "../apps/shows"
   app.use require "../apps/tag"
-  app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
   app.use require "../apps/style_guide"
