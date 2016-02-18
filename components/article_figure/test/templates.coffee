@@ -42,9 +42,11 @@ describe 'article figure template', ->
   it 'handles one contributing author', ->
     html = render('template')
       article: new Article
+        author_id: '123'
         contributing_authors: [ {name: 'Kana', profile_id: 'user345'} ]
-        sd: {}
+      sd: {CURRENT_PATH: '/articles'}
     html.should.not.containEql 'Kana,'
+    html.should.containEql 'has-contributing-author'
 
   it 'handles two contributing authors', ->
     html = render('template')
@@ -57,6 +59,7 @@ describe 'article figure template', ->
     html.should.containEql '&nbspand&nbsp'
     html.should.containEql 'Kina'
     html.should.containEql 'Kana'
+    html.should.containEql 'has-contributing-author'
 
   it 'handles three or more contributing authors', ->
     html = render('template')
@@ -68,3 +71,14 @@ describe 'article figure template', ->
         ]
       sd: {}
     html.should.containEql 'By <div class="article-figure-contributing-name">Kana,&nbsp</div><div class="article-figure-contributing-name">Kina&nbspand&nbsp</div><div class="article-figure-contributing-name">Yoshie</div>'
+    html.should.containEql 'has-contributing-author'
+
+  it 'does not render author name if Artsy Editorial, /articles, and has contributing authors', ->
+    html = render('template')
+      article: new Article
+        author_id: '123'
+        contributing_authors: [
+          {name: 'Kana' }
+        ]
+      sd: {CURRENT_PATH: '/articles', ARTSY_EDITORIAL_ID: '123'}
+    html.should.not.containEql 'class="article-figure-author"'
