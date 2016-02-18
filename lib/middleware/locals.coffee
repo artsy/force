@@ -5,7 +5,7 @@
 uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
-_ = require 'underscore.string'
+_s = require 'underscore.string'
 moment = require 'moment'
 { NODE_ENV } = require '../../config'
 helpers = require '../template_helpers'
@@ -15,7 +15,7 @@ artsyXapp = require 'artsy-xapp'
 module.exports = (req, res, next) ->
 
   # Attach libraries to locals
-  res.locals._ = _
+  res.locals._ = _s
   res.locals.moment = moment
   res.locals.helpers = helpers
   res.locals[key] = helper for key, helper of templateModules
@@ -32,5 +32,7 @@ module.exports = (req, res, next) ->
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Artsy-Mobile')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
+
+  _.extend require('sharify').data, res.locals.sd
 
   next()
