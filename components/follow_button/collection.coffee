@@ -28,6 +28,8 @@ module.exports = class Following extends Backbone.Collection
       @trigger "add:#{follow.get(@kind).id}"
     @on 'remove', (follow) =>
       @trigger "remove:#{follow.get(@kind).id}"
+    @once 'sync', (a, b, jqXHR) =>
+      @totalCount = jqXHR?.xhr?.getResponseHeader('X-Total-Count')
 
   isFollowing: (id) ->
     not _.isUndefined @findByModelId(id)

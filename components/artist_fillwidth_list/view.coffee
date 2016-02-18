@@ -7,16 +7,19 @@ FillwidthView = require '../fillwidth_row/view.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 
 module.exports = class ArtistFillwidthList extends Backbone.View
+  subViews: []
+
   defaults:
     page: 1
     per: 10
+    syncFollows: true
 
   initialize: (options = {}) ->
-    { @user } = options
-    { @page, @per } = _.defaults @defaults, options
+    { @user, @following } = options
+    { @page, @per, @syncFollows } = _.defaults @defaults, options
     @$document = $(document)
     @user?.initializeDefaultArtworkCollection()
-    @following = new Following(null, kind: 'artist') if @user
+    @following = new Following(null, kind: 'artist') if @user and not @following?
     @
 
   fetchAndRender: =>
@@ -48,10 +51,13 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           doneFetching: true
           collection: artworks
           el: $row.find('.artist-fillwidth-list-artworks')
+
+        @subViews.push fillwidthView
+
         fillwidthView.render()
 
         # Add follow button
-        new FollowButton
+        @subViews.push new FollowButton
           el: $row.find('.plus-follow-button')
           following: @following
           model: artist
@@ -63,6 +69,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           fillwidthView.removeHiddenItems()
 
   syncFollowsOnAjaxStop: ->
+    return if not @syncFollows
     @$document.one 'ajaxStop', =>
       @following?.syncFollows @collection.pluck('id')
 
@@ -77,3 +84,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         page: @page = @page + 1
         size: @per
       success: @appendPage
+
+  remove: ->
+    _.invoke @subViews, 'remove'
+    super

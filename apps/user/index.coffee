@@ -10,3 +10,4 @@ app.get '/user/refresh', routes.refresh
 app.get '/profile/edit', routes.settings
 app.get '/user/edit', routes.settings
 app.get '/user/delete', routes.settings
+app.get '/user/saves', routes.settings
