@@ -7,3 +7,5 @@ aside.fair-info2-nav
   if infoMenu.artsyAtTheFair
     a(href="/#{profile.id}/info/artsy-at-the-fair" class=sd.CURRENT_PATH.includes('artsy-at-the-fair') ? 'is-active' : '') artsy at the fair
   a(href="/#{profile.id}/info/about-the-fair" class=sd.CURRENT_PATH.includes('about-the-fair') ? 'is-active' : '') about the fair
+  if profile.id == 'the-armory-show-2016'
+    a(href="/#{profile.id}/info/armory-arts-week" class=sd.CURRENT_PATH.includes('armory-arts-week') ? 'is-active' : '') armory arts week
