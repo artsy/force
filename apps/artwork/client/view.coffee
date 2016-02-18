@@ -262,21 +262,12 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    if @currentUser?.hasLabFeature 'Set Management'
-      SaveControls = require '../../../components/artwork_item/save_controls.coffee'
-      @$('.circle-icon-button-save').after(
-        require('../../../components/artwork_item/save_controls_two_btn/templates/artwork_page_button.jade')()
-      )
-      new SaveControls
-        model: artwork
-        el: @$('.artwork-image-actions')
-    else
-      new SaveButton
-        analyticsSaveMessage: 'Added artwork to collection, via artwork info'
-        analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
-        el: $el
-        saved: @saved
-        model: artwork
+    new SaveButton
+      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+      el: $el
+      saved: @saved
+      model: artwork
 
   setupFollowButtons: ->
     @followButtons = @artists.map (artist) =>
