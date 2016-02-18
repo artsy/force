@@ -46,6 +46,18 @@ sidebar-width = 26%
   display block
   margin 20px auto
 
+#artwork-see-more[data-state='loading']
+  visibility hidden
+
+#artwork-see-more[data-state='loaded']
+  visibility visibile
+
+.artwork-spinner-container .loading-spinner[data-state='loading']
+  visibility visibile
+
+.artwork-spinner-container .loading-spinner[data-state='loaded']
+  visibility hidden
+
 .artwork-filter-reset
   display block
   overflow ellipsis
@@ -127,3 +139,5 @@ sidebar-width = 26%
 #artwork-section__header
   h2
     float left
+.artwork-spinner-container
+  position relative

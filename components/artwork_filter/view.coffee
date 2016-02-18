@@ -46,7 +46,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
       collection: @artworks
     , viewModes[@viewMode.get('mode')]
 
-  initialize: ({ @mode }) ->
+  initialize: ({ @mode, @showSeeMoreLink }) ->
     @artworks = new ArtworkColumns [], artistId: @model.id
     @filter = new Filter model: @model
     @viewMode = new Backbone.Model mode: @mode
@@ -86,10 +86,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   handleArtworksState: (eventName) ->
     if @mode is 'infinite'
-      @handleState @$button, eventName
+      @handleState @$link, eventName
+      @handleState @$spinner, eventName
     else
       state = @handleState @$artworks, eventName
-      @$button?.attr 'data-state', state if state
+      @$link?.attr 'data-state', state if state
+      @$spinner?.attr 'data-state', state if state
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
@@ -118,8 +120,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$artworksSection = @$('#artwork-section__content')
     @$artworks = @$('#artwork-section__artworks')
     @$filter = @$('#artwork-filter')
-    @$button = @$('#artwork-see-more')
+    @$link = @$('#artwork-see-more')
     @$header = @$('#artwork-section__header')
+    @$spinner = @$('.artwork-spinner-container .loading-spinner')
 
   postRender: ->
     @cacheSelectors()
@@ -161,5 +164,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
   render: ->
     @$el.html template
       model: @model
+      showSeeMoreLink: @showSeeMoreLink
     @postRender()
     this
