@@ -27,7 +27,6 @@ module.exports = class WorksView extends Backbone.View
       showSeeMoreLink: false
     @subViews.push filterRouter.view
     $.onInfiniteScroll ->
-      # $('#artwork-see-more').hide()
       filterRouter.view.loadNextPage()
 
   postRender: ->
