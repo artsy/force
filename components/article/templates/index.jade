@@ -3,11 +3,10 @@ include ./share
 
 mixin author-date
   .article-author-date
-    .article-author
+    .article-author(class= article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
       = article.related().author.get('name')
-    if article.get('contributing_authors').length > 0
-      .article-contributing-author
-        include ../../article_figure/contributing_author.jade
+    .article-contributing-author
+      include ../../article_figure/contributing_author.jade
     .article-date
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
 

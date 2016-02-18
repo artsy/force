@@ -16,9 +16,8 @@ mixin article-figure(article, width, showDate, showShare)
 
       .article-figure-author-section
         if article.showAuthorSection()
-          .article-figure-author
-            .article-figure-author-link
-              = article.get('author') ? article.get('author').name : ''
+          .article-figure-author(class = article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
+            = article.get('author') ? article.get('author').name : ''
 
         if article.get('contributing_authors').length > 0
           include ./contributing_author.jade

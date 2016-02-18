@@ -19,7 +19,7 @@ describe 'article show template', ->
 
   it 'renders sectionless articles', ->
     html = render('index')
-      article: new Article title: 'hi', sections: [], section_ids: []
+      article: new Article title: 'hi', sections: [], section_ids: [], contributing_authors: []
       footerArticles: new Articles
       crop: (url) -> url
       resize: (u) -> u
@@ -33,6 +33,7 @@ describe 'article show template', ->
       article: new Article
         title: 'hi'
         sections: []
+        contributing_authors: []
         hero_section:
           type: 'fullscreen'
           background_url: 'http://video.mp4'
@@ -49,6 +50,7 @@ describe 'article show template', ->
       article: new Article
         title: 'hi'
         sections: []
+        contributing_authors: []
         hero_section:
           type: 'fullscreen'
           background_image_url: 'http://image.jpg'
