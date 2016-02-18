@@ -18,6 +18,10 @@ mapType =
   galleries: 'gallery'
   institutions: 'institution'
 
+mapTypeClasses =
+  galleries: ['PartnerGallery']
+  institutions: ['PartnerInstitution', 'PartnerInstitutionalSeller']
+
 @index = (req, res, next) ->
   type = mapType[req.params.type]
   searchParams = _.pick(req.query, 'location', 'category')
@@ -53,33 +57,25 @@ mapType =
 
 # A to Z page
 
-fetchAZ =
-  gallery: ->
-    new Partners()
-      .fetchUntilEndInParallel
-        cache: true
-        data:
-          size: 20
-          type: 'PartnerGallery'
-          sort: 'sortable_id'
-          has_full_profile: true
-
-  institution: ->
-    new Profiles()
-      .fetchUntilEndInParallel
-        cache: true
-        url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
-        data: size: 20
-
 @partnersAZ = (req, res, next) ->
   type = mapType[req.params.type]
-  fetchAZ[type]().then (partners) ->
-    aToZGroup = partners.groupByAlphaWithColumns 3
-    res.render 'a_z',
-      type: type
-      showAZLink: false
-      aToZGroup: aToZGroup
 
-  .catch next
-  .done()
+  partners = new Partners()
+    .fetchUntilEndInParallel
+      cache: true
+      data:
+        size: 20
+        type: mapTypeClasses[type]
+        sort: 'sortable_id'
+        has_full_profile: true
+
+    .then ->
+      aToZGroup = partners.groupByAlphaWithColumns 3
+      res.render 'a_z',
+        type: type
+        showAZLink: false
+        aToZGroup: aToZGroup
+
+    .catch next
+    .done()
 

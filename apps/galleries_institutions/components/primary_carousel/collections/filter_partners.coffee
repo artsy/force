@@ -7,8 +7,6 @@ Partners = require '../../../../../collections/partners.coffee'
 
 module.exports = class FilterPartners extends Partners
 
-  url: "#{API_URL}/api/v1/partners"
-
   sync: (method, collection, options) =>
     data = {
       default_profile_public: true

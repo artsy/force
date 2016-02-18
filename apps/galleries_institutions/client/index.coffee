@@ -9,4 +9,5 @@ module.exports = ->
   params = new FilterParams _.extend qs.parse(url.parse(window.location.search).query),
     type: if root is 'galleries' then 'gallery' else 'institution',
 
-  new PartnersView params: params, root: root
+  new PartnersView params: params, root: root, el: $('.galleries-institutions-page')
+

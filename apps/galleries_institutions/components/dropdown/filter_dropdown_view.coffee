@@ -65,11 +65,10 @@ module.exports = class FilterDropdownView extends Backbone.View
 
   setPlaceholder: (hasFocus) ->
     id = @params.get(@facet.facetName)
-
     if hasFocus
       placeholder = 'Search ' + @facet.displayName
     else if id
-      placeholder = _.find(@facet.countItems, id: id).name
+      placeholder = @currentSelectionName()
     else
       placeholder = @facet.allItemsSuggestion.name
 
@@ -79,6 +78,9 @@ module.exports = class FilterDropdownView extends Backbone.View
       @$input.addClass('no-selection')
 
     @$input.attr('placeholder', placeholder)
+
+  currentSelectionName: ->
+     _.find(@facet.countItems, id: @params.get(@facet.facetName))?.name
 
   remove: ->
     @$('.tt-dataset-category').off('click', '.tt-suggestion', @suggestionClicked)

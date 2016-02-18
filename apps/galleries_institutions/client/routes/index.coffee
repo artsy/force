@@ -1,4 +1,6 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
+_s = require 'underscore.string'
 { MAIN_PROFILES, CURRENT_USER } = require('sharify').data
 { Following } = require '../../../../components/follow_button/index.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
@@ -8,12 +10,12 @@ SearchResultsView = require '../../components/search_results/view.coffee'
 FilterDropdownView = require '../../components/dropdown/filter_dropdown_view.coffee'
 FetchFilterPartners = require '../../components/parameters/fetch_filter_partners.coffee'
 initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
-module.exports = class PartnersSearchView extends Backbone.View
 
-  el: $('.galleries-institutions-page')
+module.exports = class PartnersView extends Backbone.View
 
   initialize: ({ @params, @root }) ->
     @listenTo @params, 'change', @paramsChanged
+    @listenTo @params, 'firstLoad', @updateResultsHeading
 
     if CURRENT_USER?
       following = new Following [], kind: 'profile'
@@ -31,19 +33,19 @@ module.exports = class PartnersSearchView extends Backbone.View
       profiles: new Profiles MAIN_PROFILES
       el: @$('.galleries-institutions-primary-carousel')
 
-    filterPartners = new FetchFilterPartners params: @params
+    @filterPartners = new FetchFilterPartners params: @params
 
-    facets = initFacets(params: @params, aggregations: filterPartners.aggregations)
+    @facets = initFacets(params: @params, aggregations: @filterPartners.aggregations)
 
-    _.each facets, (facet) =>
+    @dropdownViews = _.map @facets, (facet) =>
       new FilterDropdownView
         el: @$(".galleries-institutions-search-filters .dropdown-#{facet.facetName}")
         params: @params
-        filterPartners: filterPartners
+        filterPartners: @filterPartners
         facet: facet
 
     resultsView = new SearchResultsView
-      filterPartners: filterPartners
+      filterPartners: @filterPartners
       following: following
       params: @params
       el: @$('.galleries-institutions-search-results')
@@ -53,9 +55,24 @@ module.exports = class PartnersSearchView extends Backbone.View
   paramsChanged: ->
     @$('.galleries-institutions-main-content').attr 'data-state', (if @params.hasSelection() then 'search' else 'landing')
     @updateUrl()
+    @updateResultsHeading()
+
+  updateResultsHeading: ->
+    locationName = @dropdownViews[0].currentSelectionName()
+    categoryName = @dropdownViews[1].currentSelectionName()
+    resultsTitle = _.compact([
+      "All"
+      categoryName
+      _s.capitalize @root
+      if (locationName) then "near #{locationName}"
+    ]).join ' '
+    @$('.galleries-institutions-results-heading').text(resultsTitle)
 
   updateUrl: ->
+    window.history.replaceState {}, null, @url()
+
+  url: ->
     if @params.hasSelection()
-      window.history.replaceState {}, null, "/#{@root}?#{@params.urlQueryString()}"
+      "/#{@root}?#{@params.urlQueryString()}"
     else
-      window.history.replaceState {}, null, "/#{@root}"
+      "/#{@root}"

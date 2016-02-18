@@ -10,12 +10,12 @@ module.exports = class ResultsView extends Backbone.View
     @listenTo @params, 'firstLoad', @fetch
     @listenTo @filterPartners, 'partnersAdded', @render
     @$gridContainer = @$('.galleries-institutions-results-grid')
-
     $.onInfiniteScroll =>
       @fetchNextPage()
     , offset: 800
 
   render: (partners) ->
+
     state = if @filterPartners.allFetched then 'finished-paging' else ''
     @$el.attr 'data-state', state
     cellViews = _.map partners, (partner) =>
