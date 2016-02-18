@@ -68,7 +68,7 @@ module.exports =
       data: params.toJSON()
       success: ->
         collection.trigger 'initial:fetch'
-        params.unset('aggregations')
+        params.unset('aggregations', silent: true)
 
     Backbone.history.start(pushState: true) if startHistory
 
