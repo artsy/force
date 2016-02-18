@@ -208,7 +208,6 @@ module.exports = (app) ->
 
   # Last but not least user profiles
   app.use require "../apps/user"
-  app.use require "../apps/user_profile"
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->
