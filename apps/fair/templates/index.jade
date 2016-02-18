@@ -16,8 +16,6 @@ block body
   .fair-page-content
     if sd.SECTION == 'search'
       include ./search_results
-    else if sd.SECTION == 'info'
-      include ./info
     else if sd.SECTION == 'browse'
       #fair-browse-spacer
       include ../components/browse/template

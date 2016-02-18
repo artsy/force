@@ -5,8 +5,8 @@ FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
 { resize } = require '../../components/resizer/index.coffee'
-InfoMenu = require './info_menu.coffee'
 Article = require '../../models/article'
+InfoMenu = require '../../components/info_menu/index.coffee'
 Articles = require '../../collections/articles'
 
 @assignFair = (req, res, next) ->
@@ -77,7 +77,7 @@ fetchArticle = (articleParam, req, res, next) ->
         article: articles.first()
 
 @info = (req, res) ->
-  res.redirect 'info2/visitors'
+  res.redirect 'info/visitors'
 
 @armoryArtsWeek = (req, res) ->
   events = new FairEvents [], { fairId: res.locals.fair.id }
@@ -94,7 +94,6 @@ fetchArticle = (articleParam, req, res, next) ->
         sortedEvents: events.sortedEvents()
 
 aawMap = require './maps/armory_arts_week_neighborhoods'
-
 @armoryArtsWeekAll = (req, res, next) ->
   neighborhoods = _.map aawMap, (neighborhood) ->
     _.extend neighborhood, { article: new Article id: neighborhood.id }
@@ -106,4 +105,5 @@ aawMap = require './maps/armory_arts_week_neighborhoods'
   .catch (err) ->
     next err
   .done()
+
 

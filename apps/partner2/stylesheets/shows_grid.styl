@@ -1,13 +1,16 @@
-.partner-shows
+.partner2-shows
   .partner-shows-heading
-    margin-bottom 50px
+    garamond-size('headline')
+    line-height 2.5
   .partner-shows-section
     margin-bottom 50px
+    border-top 1px solid gray-lighter-color
     a
       text-decoration none
 
     .partner-shows-section-heading
-      margin-bottom 50px
+      garamond-size('headline')
+      line-height 2.5
 
     .partner-show
       box-sizing content-box
@@ -27,7 +30,7 @@
       background-size cover
       background-position 50% 40%
       padding-bottom 70%
-      margin-bottom 10px
+      margin-bottom 15px
       position relative
       img
         display none
@@ -44,7 +47,6 @@
         opacity 0.4
 
     .partner-show-caption
-      text-align center
       margin-bottom 20px
 
     .partner-show-heading, .partner-show-name, .partner-show-time
@@ -52,23 +54,27 @@
       margin-bottom 10px
 
     .partner-show-heading
-      font-size 13px
-      margin-bottom 20px
-      line-height 1.6em
+      avant-garde-size('body')
 
     .partner-show-name
-      font-size 24px
+      garamond-size('l-body')
       font-style italic
+      margin-bottom 5px
       word-wrap break-word
 
     .partner-show-time
-      font-size 18px
+      garamond-size('s-body')
 
     .loading-spinner
       display none
 
   // Special treatment for the featured section
   .partner-shows-section.featured
+    padding-top 50px
+    text-align center
+    .partner-show-heading
+      display none
+
     .partner-show
       width 100%
       padding 0

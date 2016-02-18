@@ -28,6 +28,7 @@ module.exports =
       forSale,
       facets,
       hideForSaleButton,
+      includeMediumFilterInAggregation
     } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
@@ -39,6 +40,9 @@ module.exports =
 
     if stuckParam
       params.set stuckParam
+
+    if includeMediumFilterInAggregation
+      params.set includeMediumFilterInAggregation
 
     collection = new FilterArtworks
 
@@ -53,6 +57,7 @@ module.exports =
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
       facets: facets
+      aggregations: aggregations
 
     router = new FilterRouter
       params: params
@@ -63,6 +68,7 @@ module.exports =
       data: params.toJSON()
       success: ->
         collection.trigger 'initial:fetch'
+        params.unset('aggregations')
 
     Backbone.history.start(pushState: true) if startHistory
 

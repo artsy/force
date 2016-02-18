@@ -12,6 +12,10 @@ module.exports =
 
     @setupAuctionDetailView()
 
+    # TODO: Omg there's way too many states for this page, wtf does this mean
+    # for the comment below.
+    @renderClosedSaleMessage()
+
     return if @artwork.get 'sold'
 
     # This hides the normal availablity status UI
@@ -67,3 +71,11 @@ module.exports =
     @currentUser.checkRegisteredForAuction
       success: (isRegistered) =>
         @currentUser.set 'registered_to_bid', isRegistered
+
+  # TODO: Refactor to Gravity-level
+  # https://artsy.slack.com/archives/collector-gmv/p1455659066000019
+  renderClosedSaleMessage: ->
+    return unless @auction.isClosed()
+    $('.artwork-meta-price').replaceWith(
+      $ "<div class='artwork-meta-price'>Auction Closed</div>"
+    )

@@ -61,38 +61,6 @@ describe 'Fair', ->
       @$template.html().should.not.containEql 'undefined'
       @$template.html().should.containEql 'Back to Artsy.net'
 
-  describe 'info page', ->
-
-    before (done) ->
-      fair = fabricate 'fair', filter_genes: []
-      fair.about = 'about the fair'
-      sd =
-        APP_URL: 'http://localhost:5000'
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
-        CSS_EXT: '.css.gz'
-        JS_EXT: '.js.gz'
-        SECTION: 'info'
-        CURRENT_PATH: '/cool-fair'
-        PROFILE: fabricate 'fair_profile'
-        FAIR: fair
-        FACEBOOK_APP_NAMESPACE: 'namespace'
-      fair = new Fair sd.FAIR
-      profile = new Profile sd.PROFILE
-      template = render('index')
-        sd: sd
-        _s: _s
-        fair: fair
-        profile: profile
-        asset: (->)
-      @$template = cheerio.load template
-      done()
-
-    it 'renders without errors', ->
-      @$template.html().should.not.containEql 'undefined'
-      @$template.html().should.containEql 'Back to Artsy.net'
-      @$template.root().find('.fair-map-link').length.should.equal 1
-      @$template.root().find('.fair-info-content').html().should.containEql 'about the fair'
-
   describe 'search page', ->
 
     before (done) ->
@@ -233,12 +201,14 @@ describe 'Fair', ->
         filteredSearchColumns: filteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        infoMenu: @infoMenu
         asset: (->)
         _: _
         counts: @collection.counts
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
       nestedFilteredSearchOptions = new Backbone.Model {
         related_gene:
@@ -273,6 +243,7 @@ describe 'Fair', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
     xit 'renders without errors', ->
       $ = cheerio.load @template
@@ -313,6 +284,7 @@ describe 'Fair', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
 
     it 'renders a editorial even when missing a set', ->
@@ -330,12 +302,14 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
         asset: (->)
         _: _
         counts: @collection.counts
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
 
     it 'renders a editorial even when missing a set w/ >= 4 items', ->
@@ -359,6 +333,7 @@ describe 'Fair', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html().should.containEql 'fair-overview-curator'
 
     it 'renders tagline if present', ->
@@ -378,6 +353,7 @@ describe 'Fair', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
       $.html('.fair-tagline').should.containEql 'This is a custom tagline'
 
@@ -492,7 +468,7 @@ describe 'Fair', ->
 
       it 'renders exhibitor page metadata', ->
         @$template.html().should.containEql '<title>Exhibitors at Armory Show 2013</title>'
-        @$template.html().should.containEql '<meta name="description" content="Browse galleries exhibiting at Armory Show 2013 on Artsy.">'  
+        @$template.html().should.containEql '<meta name="description" content="Browse galleries exhibiting at Armory Show 2013 on Artsy.">'
 
     describe 'fair artist page', ->
       before (done) ->
@@ -520,4 +496,4 @@ describe 'Fair', ->
 
       it 'renders fair artist page metadata', ->
         @$template.html().should.containEql '<title>Andy Foobar at Armory Show 2013</title>'
-        @$template.html().should.containEql '<meta name="description" content="Browse works by Andy Foobar being shown at Armory Show 2013 on Artsy.">'    
+        @$template.html().should.containEql '<meta name="description" content="Browse works by Andy Foobar being shown at Armory Show 2013 on Artsy.">'

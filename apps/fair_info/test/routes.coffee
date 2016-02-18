@@ -106,4 +106,4 @@ describe '#info', ->
 
     it 'should redirect to /info/visitors', ->
       routes.info(@req, @res)
-      @res.redirect.args[0][0].should.equal 'info2/visitors'
+      @res.redirect.args[0][0].should.equal 'info/visitors'

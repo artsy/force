@@ -103,12 +103,12 @@ module.exports = class ArticleView extends Backbone.View
 
   renderEmbedSections: =>
     sections = []
-    Q.all( for section in @article.get('sections') when section.type is 'embed'
-      $.get oembed(section.url, { maxwidth: @getWidth(section) })
+    Q.all( for section in @article.get 'sections' when section.type is 'embed'
+      $.get oembed section.url, { maxwidth: @getWidth(section) }
     ).done (responses) =>
       if responses.length
         for section in @article.get('sections') when section.type is 'embed'
-          $embedSection = $(".article-section-embed[data-id='#{section.url}']")
+          $embedSection = @$(".article-section-embed[data-id='#{section.url}']")
           $embedSectionContainer = $($embedSection.children('.article-embed-container')[0])
           response = responses.shift()
           # Use Embedly's iframe constructor or just generate our own iframe
@@ -124,7 +124,7 @@ module.exports = class ArticleView extends Backbone.View
     ).then (articles) =>
       articles = _.pluck(_.reject(articles, (article) -> article.state is 'rejected'), 'value')
       for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
-        $calloutSection = $(".article-section-callout-container[data-id=#{section.article}]")
+        $calloutSection = @$(".article-section-callout-container[data-id=#{section.article}]")
         article = _.find articles, { id: section.article }
         $($calloutSection).append calloutTemplate
           section: section

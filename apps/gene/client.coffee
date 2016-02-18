@@ -46,6 +46,7 @@ module.exports.init = ->
     aggregations: aggregationParams
     forSale: 'false'
     filterRoot: gene.href() + '/artworks'
+    includeMediumFilterInAggregation: { include_medium_filter_in_aggregation: true }
 
   view = new GeneView
     user: user

@@ -104,6 +104,33 @@ describe 'ArtworkFilterView', ->
         @view.artworks.trigger 'error'
         @view.$artworks.attr('data-state').should.equal 'loaded'
 
+  describe '#loadNextPage', ->
+    it 'loads the next page when the button is clicked', ->
+      Backbone.sync.callCount.should.equal 2
+      @view.artworks.params.get('page').should.equal 1
+      @view.loadNextPage()
+      @view.artworks.params.get('page').should.equal 2
+      Backbone.sync.callCount.should.equal 3
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
+      @view.loadNextPage()
+      @view.artworks.params.get('page').should.equal 3
+      Backbone.sync.callCount.should.equal 4
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+
+    describe 'error', ->
+      it 'reverts the params', ->
+        @view.artworks.params.attributes.should.eql size: 9, page: 1
+        @view.loadNextPage()
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
+        Backbone.sync.restore()
+        sinon.stub(Backbone, 'sync').yieldsTo 'error'
+        # Tries to get next page but errors
+        @view.loadNextPage()
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+        # Next try should have the same params
+        @view.loadNextPage()
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+
   describe '#selectCriteria', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate2 'filter_artworks'

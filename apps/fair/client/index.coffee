@@ -5,7 +5,7 @@ sd = require('sharify').data
 { FollowsView } = require '../../../components/favorites/client/follows.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
-FairInfoView = require './info.coffee'
+# FairInfoView = require './info.coffee'
 FairArticlesView = require './articles.coffee'
 FairSearchView = require './search.coffee'
 ForYouView = require './for_you.coffee'
@@ -19,7 +19,7 @@ scrollFrame = require 'scroll-frame'
 module.exports.FairView = class FairView extends Backbone.View
 
   sectionHash:
-    info: FairInfoView
+    # info: FairInfoView
     posts: FairArticlesView
     search: FairSearchView
     browse: FairBrowseRouter
@@ -28,7 +28,7 @@ module.exports.FairView = class FairView extends Backbone.View
     forYou: ForYouView
     overview: OverviewView
 
-  footerRoutes: ['forYou', 'posts', 'search', 'info', 'favorites', 'follows']
+  footerRoutes: ['forYou', 'posts', 'search', 'favorites', 'follows']
 
   initialize: (options) ->
     initFairLayout(options)

@@ -25,7 +25,7 @@ module.exports = class FilterView extends Backbone.View
     'click .filter-artworks-see-more' : 'nextPage'
 
   initialize: (options) ->
-    { @collection, @params, @defaultHeading } = options
+    { @collection, @params, @defaultHeading, @aggregations } = options
     { @giveUpCount,
       @columnWidth,
       @includeFixedHeader,
@@ -36,11 +36,11 @@ module.exports = class FilterView extends Backbone.View
       @pageSize,
       @filterRoot } = _.defaults options, @defaults
     @initSubViews()
-
     @listenTo @collection, 'sync', @render
 
     @listenTo @params, 'change:page', =>
       @$('.filter-artworks').addClass 'is-loading'
+      @params.set(aggregations: @aggregations) if @params.get('page') is 1
       @collection.fetch
         remove: false
         data: @params.toJSON()

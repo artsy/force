@@ -8,7 +8,7 @@ Fair = require '../../../../models/fair.coffee'
 Profile = require '../../../../models/profile.coffee'
 FairEvent = require '../../../../models/fair_event.coffee'
 FairEvents = require '../../../../collections/fair_events.coffee'
-InfoMenu = require '../../info_menu.coffee'
+InfoMenu = require '../../../../components/info_menu/index.coffee'
 
 describe 'FairInfoEventsView', ->
 
@@ -35,7 +35,7 @@ describe 'FairInfoEventsView', ->
       artsyAtTheFair: false,
       aboutTheFair: false
     }
-    data = { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info2/events' }
+    data = { FAIR: fair, PROFILE: profile, CURRENT_PATH: '/info/events' }
     benv.render resolve(__dirname, '../../templates/events.jade'), {
       sd: data
       fair: @fair
