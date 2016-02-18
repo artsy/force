@@ -5,10 +5,12 @@ block body
     include nav
     .fair-info2-body
       h2.fair-info2-event-type-title Armory Arts Week (All Events)
+      h2.avant-garde-s-headline Browse by neighborhood:
+      br
       .fair-info-aaw-menu
         each neighborhood in neighborhoods
           h1: a(href="##{_s.underscored(neighborhood.name)}") #{neighborhood.name}
-
+      hr
       .fair-info-aaw-neigborhoods
         each neighborhood in neighborhoods
           .fair-info-aaw-neigborhood(id="#{_s.underscored(neighborhood.name)}")
