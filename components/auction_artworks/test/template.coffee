@@ -52,8 +52,7 @@ describe 'templates', ->
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
-          $template.find('.aabs-label').is(':empty').should.be.true()
-          $template.find('.aabs-price').text().should.equal ' ' # &nsbp;
+          $template.find('.aga-bid-status').length.should.equal 0
           $template.find('.js-bid-button').should.have.lengthOf 0
           $template.find('.avant-garde-button').text().should.equal 'Online Bidding Closed'
 
