@@ -90,8 +90,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
       @handleState @$spinner, eventName
     else
       state = @handleState @$artworks, eventName
-      @$link?.attr 'data-state', state if state
-      @$spinner?.attr 'data-state', state if state
+      @$linkWithSpinner.attr 'data-state', state if state
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
@@ -105,8 +104,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @artworksView = @view()
     analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
 
+  remaining: ->
+    length = @artworksView?.length() or 0
+    @filter.get('total')?.value - length
+
   loadNextPage: (options = {}) ->
-    return if @remaining is 0
+    return if @remaining() is 0
     @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
 
   fetchArtworks: ->
@@ -122,7 +125,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$filter = @$('#artwork-filter')
     @$link = @$('#artwork-see-more')
     @$header = @$('#artwork-section__header')
-    @$spinner = @$('.artwork-spinner-container .loading-spinner')
+    @$linkWithSpinner = @$('.link-and-spinner')
 
   postRender: ->
     @cacheSelectors()

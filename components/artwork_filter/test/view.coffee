@@ -105,6 +105,14 @@ describe 'ArtworkFilterView', ->
         @view.artworks.trigger 'error'
         @view.$artworks.attr('data-state').should.equal 'loaded'
 
+  describe '#getRemaining', ->
+    beforeEach ->
+      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
+
+    it 'calculates the remaining works to display', ->
+      @view.artworks.trigger 'sync'
+      @view.remaining().should.eql 11959
+
   describe '#loadNextPage', ->
     it 'loads the next page when the button is clicked', ->
       Backbone.sync.callCount.should.equal 2

@@ -42,21 +42,20 @@ sidebar-width = 26%
     font-size small-avant-garde-size
   li
     line-height 1.6
-#artwork-see-more
-  display block
-  margin 20px auto
 
-#artwork-see-more[data-state='loading']
-  visibility hidden
+.link-and-spinner
+  &[data-state='loading']
+    #artwork-see-more
+      display none
+    .loading-spinner
+      display block
 
-#artwork-see-more[data-state='loaded']
-  visibility visibile
-
-.artwork-spinner-container .loading-spinner[data-state='loading']
-  visibility visibile
-
-.artwork-spinner-container .loading-spinner[data-state='loaded']
-  visibility hidden
+  &[data-state='loaded']
+    #artwork-see-more
+      display block
+      margin 20px auto
+    .loading-spinner
+      display none
 
 .artwork-filter-reset
   display block
