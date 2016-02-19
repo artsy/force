@@ -54,7 +54,11 @@ describe 'article template', ->
 
   it "renders related footer articles", ->
     html = render('article')
-      article: new Article title: 'hi', sections: [], section_ids: []
+      article: new Article
+        title: 'hi'
+        sections: []
+        section_ids: []
+        contributing_authors: []
       footerArticles: new Articles [_.extend(_.clone(fixtures.article),
         thumbnail_title: "This is a footer article"
         section_ids: [])]
@@ -68,7 +72,11 @@ describe 'article template', ->
 
   it 'renders extra stickies if featured ones are missing and article is part of a section', ->
     html = render('article')
-      article: new Article title: 'hi', sections: [], section_ids: ['55356a9deca560a0137aa4b7']
+      article: new Article
+        title: 'hi'
+        sections: []
+        section_ids: ['55356a9deca560a0137aa4b7']
+        contributing_authors: []
       crop: (url) -> url
       resize: (url) -> url
       moment: moment

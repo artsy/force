@@ -35,8 +35,8 @@ describe 'ArticlesFeedView', ->
   describe 'with an articles collection', ->
     beforeEach ->
       @articles = new Articles [
-        { id: _.uniqueId(), thumbnail_title: 'Foo Bar' }
-        { id: _.uniqueId(), thumbnail_title: 'Bar Baz' }
+        { id: _.uniqueId(), thumbnail_title: 'Foo Bar', contributing_authors: [] }
+        { id: _.uniqueId(), thumbnail_title: 'Bar Baz', contributing_authors: [] }
       ]
       @articles.count = 10
       @view = new ArticlesFeedView collection: @articles

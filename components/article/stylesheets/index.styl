@@ -35,10 +35,6 @@ body.body-article
 
 .article-author, .article-date, .article-contributing-author
   text-align center
-  a
-    text-decoration none
-    &:hover
-      border-bottom 2px solid
 
 .article-lead-paragraph
   margin 0 auto gutter-size auto
@@ -75,7 +71,9 @@ body.body-article
   color gray-darker-color
 
 .article-author
-  avant-garde-size('s-headline')
+  avant-garde-size('m-headline')
+  &.has-contributing-author
+    avant-garde-size('s-headline')
 
 .article-contributing-author
   avant-garde-size('m-headline')

@@ -61,6 +61,7 @@ sharify.data = _.extend _.pick(config,
   'MAILCHIMP_AUCTION_LIST_ID'
   'METAPHYSICS_ENDPOINT'
   'GALLERY_INSIGHTS_SECTION_ID'
+  'ARTSY_EDITORIAL_ID'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

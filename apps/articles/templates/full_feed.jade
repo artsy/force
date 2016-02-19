@@ -3,7 +3,7 @@
     header.am-featured
       .am-featured-hero
         - article = featuredArticles[0]
-         +article-figure(article, 1000, false, false)
+        +article-figure(article, 1000, false, false)
 
       aside.am-featured-also
         for article in featuredArticles.slice(1)
