@@ -61,7 +61,7 @@
               //- Hack to always maintain consistent grid height
               //- (reconsider using flexbox or table layout)
               .aga-bid-status: .aabs-price &nbsp;
-          else
+          else if !auction.isClosed()
             .aga-bid-status
               .aabs-label
                 //-

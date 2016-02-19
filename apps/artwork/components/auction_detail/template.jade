@@ -30,9 +30,10 @@ else
           | Your max bid of #{position.maxBid()} has been outbid.
 
   .artwork-bid-status
-    .abs-bid #{saleArtwork.bidLabel()}:
-    .abs-amount= saleArtwork.currentBid()
-    .abs-count= saleArtwork.formatBidsAndReserve()
+    if !auction.isClosed()
+      .abs-bid #{saleArtwork.bidLabel()}:
+      .abs-amount= saleArtwork.currentBid()
+      .abs-count= saleArtwork.formatBidsAndReserve()
 
     form.artwork-bid-form.js-artwork-bid-form( action= auction.bidUrl(saleArtwork) )
       if auction.isOpen() && user
