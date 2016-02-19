@@ -1,11 +1,13 @@
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
-{ defaults, extend, pick } = require 'underscore'
 Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class Filter extends Backbone.Model
+  defaults:
+    loading: false
+
   initialize: ({ @params } = {}) ->
     throw new Error 'Requires a params model' unless @params?
     @artworks = new Artworks()
@@ -49,9 +51,11 @@ module.exports = class Filter extends Backbone.Model
     """
 
   fetch: ->
+    @set loading: true
     Q.promise (resolve, reject) =>
       metaphysics query: @query(), variables: @params.current()
         .then ({ filter_artworks }) =>
+          @set loading: false
           @artworks.reset filter_artworks.hits
           @set total: filter_artworks.total
           @aggregations.reset filter_artworks.aggregations
