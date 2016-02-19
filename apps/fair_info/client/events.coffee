@@ -21,7 +21,7 @@ module.exports = class FairInfoEvents extends Backbone.View
         new BlurbView
           el: $('.fair-info-event-item-details__description')[index]
           updateOnResize: true
-          lineCount: 3
+          lineCount: 5
           resizeHeight: '100%'
           includeShowLess: true
         )

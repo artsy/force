@@ -17,6 +17,7 @@ module.exports = class FairInfoRouter extends Backbone.Router
     ':id/info/visitors' : 'visitors'
     ':id/info/programming' : 'article'
     ':id/info/events' : 'events'
+    ':id/info/armory-arts-week' : 'events'
     ':id/info/artsy-at-the-fair' : 'article'
     ':id/info/about-the-fair' : 'article'
 
