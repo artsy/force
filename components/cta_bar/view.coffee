@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Form = require '../mixins/form.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 Cookies = require '../cookies/index.coffee'
+CurrentUser = require '../../models/current_user.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class CTABarView extends Backbone.View
@@ -14,16 +15,20 @@ module.exports = class CTABarView extends Backbone.View
 
   events:
     'click .cta-bar-defer': 'close'
-    'click .cta-bar-button': 'signUp'
+    'click .cta-bar-button': 'onClickButton'
     'submit .cta-bar-form': 'submit'
 
   defaults:
     name: 'cta_bar'
     mode: 'link'
     persist: true
+    linkCopy: 'Join Artsy Now'
+    linkHref: '/sign_up'
 
   initialize: (options = {}) ->
-    { @headline, @mode, @name, @persist, @modalOptions, @subHeadline, @email } = _.defaults options, @defaults
+    { @headline, @mode, @name, @persist, @modalOptions, @subHeadline,
+      @email, @linkCopy, @linkHref } = _.defaults options, @defaults
+    @user = CurrentUser.orNull()
 
   previouslyDismissed: ->
     @persist and Cookies.get(@name)?
@@ -49,9 +54,9 @@ module.exports = class CTABarView extends Backbone.View
     e.preventDefault()
     @openModal userData: @serializeForm()
 
-  signUp: (e) ->
+  onClickButton: (e) ->
     e.preventDefault()
-    @openModal()
+    @openModal() unless @user
 
   openModal: (options = {}) ->
     @close()
@@ -65,6 +70,8 @@ module.exports = class CTABarView extends Backbone.View
       mode: @mode
       subHeadline: @subHeadline
       email: @email
+      linkCopy: @linkCopy
+      linkHref: @linkHref
     this
 
   close: (e) ->
