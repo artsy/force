@@ -109,8 +109,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @remaining = @filter.get('total')?.value - length
 
   loadNextPage: (options = {}) ->
-    @getRemaining()
-    return if @remaining is 0
+    return if @getRemaining() is 0
     @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
 
   fetchArtworks: ->
