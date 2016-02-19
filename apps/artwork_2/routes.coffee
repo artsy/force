@@ -14,6 +14,7 @@ query = """
       ... auction
       ... highlights
       ... tabs
+      ... artists
     }
   }
   #{require './components/banner/query'}
@@ -24,6 +25,7 @@ query = """
   #{require './components/auction/query'}
   #{require './components/highlights/query'}
   #{require './components/tabs/query'}
+  #{require './components/artists/query'}
 """
 
 helpers = extend [
