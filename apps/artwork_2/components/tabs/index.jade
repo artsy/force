@@ -1,5 +1,7 @@
 if artwork.tabs.length
-  section.artwork-tabs
+  section.artwork-tabs(
+    class='js-artwork-tabs'
+  )
     .artwork-tabs__nav
       for tab, i in artwork.tabs
         a.artwork-tabs__nav__link(
