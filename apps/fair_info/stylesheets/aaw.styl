@@ -1,11 +1,22 @@
 .fair-info-aaw-menu
-  margin-bottom 50px
-  h1
-    garamond-size('headline', true)
+  margin 20px 0
+  padding 40px 0
+  border-top 1px solid gray-lightest-color
+  border-bottom 1px solid gray-lightest-color
+  h2
+    margin-bottom 20px
   a
     text-decoration none
-.fair-info-aaw-neigborhoods
-  margin-top 50px
+
+.fair-info-aaw-neightborhood-nav
+  display inline-block
+  garamond-size('l-body')
+  margin-right .4em
+  &:after
+    margin-left .4em
+    content '/'
+  &:last-child:after
+    content ''
 
 .fair-info-aaw-neigborhood
   margin 40px 0
@@ -19,3 +30,7 @@
     width auto
   .article-section-image figcaption
     text-align center
+  .large-garamond-header
+    garamond-size('headline')
+    text-align left
+    width 570px
