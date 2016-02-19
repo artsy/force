@@ -3,6 +3,7 @@ flatCompact = _.compose _.flatten, _.compact
 Backbone = require 'backbone'
 Notifications = require '../../../../collections/notifications.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
+Q = require 'bluebird-q'
 
 module.exports = class FeaturedArtworks extends Backbone.Collection
   limit: 4
@@ -31,9 +32,11 @@ module.exports = class FeaturedArtworks extends Backbone.Collection
     collection
 
   fetch: (options = {}) ->
-    $.when.apply(null, _.compact([
+    Q.allSettled(_.compact([
       @fetchPersonalized()
       @fetchFeatured()
-    ])).then =>
+    ]))
+    .then =>
       @reset @takeResponse(), silent: true
       @trigger 'sync', this, @toJSON(), options
+      return

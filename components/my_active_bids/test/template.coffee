@@ -31,13 +31,11 @@ describe 'My Active Bids template', ->
   it 'renders highest bid if the highest_bid on the sale artwork and \
       bidder positon match', ->
     data = fixture()
-    data[0].highest_bid.id = 'foo'
-    data[0].sale_artwork.highest_bid.id = 'foo'
+    data[0].is_winning = true
     template(myActiveBids: data).should.containEql 'Highest Bid'
 
   it 'renders losing if the highest_bid on the sale artwork and \
       bidder positon do not match', ->
     data = fixture()
-    data[0].highest_bid.id = 'foo'
-    data[0].sale_artwork.highest_bid.id = 'bar'
+    data[0].is_winning = false
     template(myActiveBids: data).should.containEql 'Outbid'

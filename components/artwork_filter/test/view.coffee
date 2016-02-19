@@ -49,6 +49,7 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/filter/artworks?artist_id=foo-bar'
 
     it 'removes itself if the initial filter state returns without any works', ->
+      @view.filter.set 'total', value: 0
       Backbone.sync.args[0][2].success {}
       @view.remove.called.should.be.true()
 

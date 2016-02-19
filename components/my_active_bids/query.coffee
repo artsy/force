@@ -1,30 +1,27 @@
 module.exports = """
-    query {
-      me {
-        bidder_positions {
-          id
-          display_max_bid_amount_dollars
-          highest_bid {
-            id
+query {
+  me {
+    bidder_positions(current: true) {
+      id
+      display_max_bid_amount_dollars
+      is_winning
+      sale_artwork {
+        id
+        lot_number
+        bidder_positions_count
+        sale_id
+        artwork {
+          href
+          title
+          image {
+            url(version: "square")
           }
-          sale_artwork {
-            id
-            lot_number
-            bidder_positions_count
-            highest_bid {
-              id
-            }
-            artwork {
-              href
-              image {
-                url(version: "square")
-              }
-              artist {
-                name
-              }
-            }
+          artist {
+            name
           }
         }
       }
     }
-  """
+  }
+}
+"""
