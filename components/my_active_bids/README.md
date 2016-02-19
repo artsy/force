@@ -6,10 +6,11 @@ Small widget that indicates bids placed by the current user and if they're winni
 
 ````coffeescript
 query = require '../../components/my_active_bids/query.coffee'
-metaphysics = require '../../lib/metaphysics'
-'myActiveBidsTemplate = -> require('../../components/my_active_bids/template.jade') arguments...
+metaphysics = require '../../lib/metaphysics.coffee'
+myActiveBidsTemplate = -> require('../../components/my_active_bids/template.jade') arguments...
 
-metaphysics(query).then (data) ->
+user = CurrentUser.orNull()
+metaphysics(query: query, req: user: user).then (data) ->
   $('.el').html myActiveBidsTemplate(myActiveBids: data.me.bidder_positions)
 ````
 
@@ -19,7 +20,7 @@ metaphysics(query).then (data) ->
 query = require '../components/my_active_bids/query.coffee'
 
 (req, res, next) ->
-  metaphysics(query).then (data) ->
+  metaphysics(query: query, req: req).then (data) ->
     res.locals.myActiveBids = data.me.bidder_positions
 ````
 

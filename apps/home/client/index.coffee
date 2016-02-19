@@ -1,12 +1,16 @@
+Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
+metaphysics = require '../../../lib/metaphysics.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
-FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
+HomeTopRailView = require '../components/top_rail/view.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
 JumpView = require '../../../components/jump/view.coffee'
+myActiveBidsQuery = require '../../../components/my_active_bids/query.coffee'
+myActiveBidsTemplate = -> require('../../../components/my_active_bids/template.jade') arguments...
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: (options) ->
@@ -16,9 +20,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
     new HomeAuthRouter
     Backbone.history.start pushState: true
 
+    # Render Featured Sections
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    @renderArtworks()
+    new HomeTopRailView user: @user, el: @$('#home-top-rail-section')
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
@@ -28,11 +33,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
     return if parseInt(Cookies.get 'favorites_onboarding_dismiss_count') >= 2
     OnboardingModal = require '../../../components/favorites2/client/onboarding_modal.coffee'
     new OnboardingModal width: 1000
-
-  renderArtworks: ->
-    subView = new FeaturedArtworksView user: @user
-    subView.collection.fetch()
-    @$('#home-featured-artworks-section').html subView.render().$el
 
 module.exports.init = ->
   new HomeView el: $('body')

@@ -10,6 +10,9 @@ block body
   .auction-page.main-layout-container
     include header
 
+    if myActiveBids
+      include ./my_active_bids
+
     section.auction-artworks-container.js-auction-artworks-section
       - artworks = artworks.models
       include ../../../components/auction_artworks/templates/index

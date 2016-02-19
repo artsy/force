@@ -104,14 +104,12 @@ describe 'Homepage init code', ->
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub Backbone.history, 'start'
     sinon.stub Backbone, 'sync'
-    sinon.stub @HomeView::, 'renderArtworks'
     @init()
 
   afterEach ->
     global.sd = undefined
     Backbone.sync.restore()
     Backbone.history.start.restore()
-    @HomeView::renderArtworks.restore()
 
   it 'renders featured artists'
 

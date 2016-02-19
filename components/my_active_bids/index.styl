@@ -55,3 +55,18 @@ item-margin-bottom = 16px
   position absolute
   bottom item-margin-bottom
   right 0
+
+// Hide active bids UI across the site under admin-cover
+// TODO: Remove after Feb 20th  when Juliens is over
+.auctions-my-active-bids
+.home-top-rail-right
+.auction-my-active-bids
+  display none !important
+html[data-user-type='User'] .home-top-rail-left
+  width 100% !important
+html[data-user-type='Admin']
+  .auctions-my-active-bids
+  .auction-my-active-bids
+    display block !important
+  .home-top-rail-right
+    display inline-block !important

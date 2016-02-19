@@ -28,12 +28,13 @@ block body
         ul#home-top-featured-links
           include featured_links
 
-        #home-featured-artworks-section
+        #home-top-rail-section
+          .loading-spinner
           //- Rendered client-side
-        
+
         #home-featured-shows-section
           h2.home-featured-header Featured Shows
-            .home-browse-all-right  
+            .home-browse-all-right
               a( href='/shows' )
                 | View All
           ul#home-featured-shows.home-featured-list
@@ -49,7 +50,7 @@ block body
           ul#home-featured-articles.home-featured-list
             - articleLinks = featuredArticles.take(7)
             include featured_articles
-          
+
         #home-featured-artists-section
           h2.home-featured-header Featured Artists
             .home-browse-all-right
@@ -58,4 +59,3 @@ block body
           ul#home-featured-artists.grid-4-up.home-featured-list
             - artistLinks = featuredArtists.take(4)
             include featured_artists
-          

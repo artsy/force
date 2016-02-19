@@ -5,6 +5,7 @@ FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
 embedVideo = require 'embed-video'
 { resize } = require '../../components/resizer/index.coffee'
+Article = require '../../models/article'
 InfoMenu = require '../../components/info_menu/index.coffee'
 Articles = require '../../collections/articles'
 
@@ -32,15 +33,21 @@ Articles = require '../../collections/articles'
 
 @events = (req, res) ->
   events = new FairEvents [], { fairId: res.locals.fair.id }
+  params = { size: 50 }
+
+  # le SIGH
+  if res.locals.fair.id is 'the-armory-show-2016'
+    params = _.extend(params, { fair_event_group_id: '56c21fcecd530e66dc00007f' })
 
   events.fetch
     cache: true
-    data:
-      size: 50
+    data: params
     error: res.backboneError
     success: (events) ->
       res.locals.sd.FAIR_EVENTS = events.toJSON()
-      res.render('events', { fairEvents: events, sortedEvents: events.sortedEvents() })
+      res.render 'events',
+        fairEvents: events,
+        sortedEvents: events.sortedEvents()
 
 @atTheFair = (req, res, next) ->
   fetchArticle('fair_artsy_id', req, res, next)
@@ -64,7 +71,41 @@ fetchArticle = (articleParam, req, res, next) ->
 
       res.locals.sd.ARTICLE = articles.first().toJSON() if articles.length > 0
 
-      res.render('article', { embedVideo: embedVideo, resize: resize, article: articles.first() })
+      res.render 'article',
+        embedVideo: embedVideo,
+        resize: resize,
+        article: articles.first()
 
 @info = (req, res) ->
   res.redirect 'info/visitors'
+
+@armoryArtsWeek = (req, res) ->
+  events = new FairEvents [], { fairId: res.locals.fair.id }
+  params = { size: 50, fair_event_group_id: '56c21fdd2a893a579b00010a' }
+
+  events.fetch
+    cache: true
+    data: params
+    error: res.backboneError
+    success: (events) ->
+      res.locals.sd.FAIR_EVENTS = events.toJSON()
+      res.render 'armory_arts_week',
+        fairEvents: events,
+        sortedEvents: events.sortedEvents()
+
+aawMap = require './maps/armory_arts_week_neighborhoods'
+@armoryArtsWeekAll = (req, res, next) ->
+  neighborhoods = _.map aawMap, (neighborhood) ->
+    _.extend neighborhood, { article: new Article id: neighborhood.id }
+
+  Q.all _.map neighborhoods, (hood) -> hood.article.fetch()
+  .then ->
+    res.render 'armory_arts_week_all',
+      neighborhoods: neighborhoods,
+      embedVideo: embedVideo,
+      resize: resize
+  .catch (err) ->
+    next err
+  .done()
+
+

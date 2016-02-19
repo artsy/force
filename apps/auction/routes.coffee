@@ -11,17 +11,25 @@ OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
 footerItems = require './footer_items'
+metaphysics = require '../../lib/metaphysics'
+myActiveBidsQuery = require '../../components/my_active_bids/query'
 
 setupUser = (user, auction) ->
   if user?
     Q.all [
       user.fetch() # Complete-fetch required to get at bidder number
-      user.checkRegisteredForAuction
+      user.checkRegisteredForAuction(
         saleId: auction.id
         success: (boolean) ->
           user.set 'registered_to_bid', boolean
         error: ->
           user.set 'registered_to_bid', false
+      )
+      metaphysics(query: myActiveBidsQuery, req: user: user).then((data) ->
+        bids =_.filter data.me.bidder_positions, (position) ->
+          position.sale_artwork.sale_id is auction.id
+        _.sortBy bids, (bid) -> bid.is_winning
+      )
     ]
   else
     Q.resolve()
@@ -34,6 +42,7 @@ setupUser = (user, auction) ->
   articles = new Articles
   state = new State
   artworks = new Artworks
+  myActiveBids = null
 
   artworks.comparator = (artwork) ->
     saleArtwork = artwork.related().saleArtwork
@@ -46,7 +55,8 @@ setupUser = (user, auction) ->
     saleArtworks.fetchUntilEndInParallel(cache: true)
     setupUser(user, auction)
   ])
-    .then ->
+    .then (res) ->
+      myActiveBids = res?[2]?[2]
       Q.promise (resolve) ->
         articles.fetch
           cache: true
@@ -76,6 +86,7 @@ setupUser = (user, auction) ->
         displayBlurbs: displayBlurbs = artworks.hasAny('blurb')
         maxBlurbHeight: artworks.maxBlurbHeight(displayBlurbs)
         footerItems: footerItems
+        myActiveBids: myActiveBids
 
     .catch next
     .done()

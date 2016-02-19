@@ -5,6 +5,9 @@ block sections
 
 block main
   case sd.CURRENT_PATH
+    when '/user/saves'
+      .settings-page__saves
+        include ../pages/saves/index
     when '/user/edit'
       .settings-page__settings
         include ../pages/settings/index

@@ -13,9 +13,7 @@ setupUser = (user, auction) ->
         success: (boolean) -> user.set 'registered_to_bid', boolean
         error: -> user.set 'registered_to_bid', false
       ),
-      # /api/v1/me/bidder_positions are not 1:1 with "my active bids"
-      # Need to do some filtering to pull out the relavent bidder positions
-      # metaphysics(query: myActiveBidsQuery, req: user: user)
+      metaphysics(query: myActiveBidsQuery, req: user: user)
     ]
   else
     Q.promise (resolve) -> resolve()
