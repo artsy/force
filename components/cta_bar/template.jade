@@ -3,8 +3,8 @@
   if mode === 'link'
     h3.cta-bar-headline
       = headline
-    a.cta-bar-button.avant-garde-button-dark( href='/sign_up' )
-      | Join Artsy Now
+    a.cta-bar-button.avant-garde-button-dark( href=linkHref )
+      = linkCopy
     .cta-bar-defer: a( href='#' )
       | Maybe Later
   else if mode === 'smaller-with-email'

@@ -9,6 +9,7 @@ ConfirmRegistrationModal = require '../../../components/credit_card/client/confi
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 setupClocks = require './clocks.coffee'
 setupEmailRegistration = require './email_registration_flow.coffee'
+attachCTA = require './cta.coffee'
 
 module.exports.init = ->
   feature = new Feature FEATURE
@@ -28,6 +29,7 @@ module.exports.init = ->
     user: user
 
   setupEmailRegistration(auction) unless user.id
+  attachCTA auction, user
 
   # Re-fetch due to cache
   saleArtworks = new SaleArtworks [], id: auction.id
