@@ -8,6 +8,7 @@ module.exports = (auction, user) ->
     success: (registered) ->
       return if registered
       ctaBarView = new CTABarView
+        name: 'auction_register_cta'
         headline: 'Register to bid in Artsy Auctions'
         linkCopy: 'Register to bid'
         linkHref: "/auction-registration/#{auction.get('id')}"
