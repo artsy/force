@@ -14,12 +14,15 @@ padding-unit = 15px
     margin (padding-unit * 2) padding-unit
 
 .cf-artworks
+  transition opacity 0.25s
   .artwork-column
     margin 0 padding-unit
     width: calc(33% \- (padding-unit * 2))
-
   .artwork-item-image-container img
     width 100%
+  &[data-loading='true']
+    opacity 0.5
+    pointer-events none
 
 .cf-pagination
   padding 0 padding-unit

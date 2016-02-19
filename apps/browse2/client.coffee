@@ -19,6 +19,7 @@ module.exports.init = ->
     numberOfColumns: 3
 
   filter.artworks.on 'reset', -> artworkView.render()
+  filter.on 'change:loading', -> $('.cf-artworks').attr 'data-loading', filter.get('loading')
 
   mediumsView = new MediumFilterView
     el: $('.cf-sidebar__mediums')
