@@ -110,7 +110,7 @@ describe 'ArtworkFilterView', ->
 
     it 'calculates the remaining works to display', ->
       @view.artworks.trigger 'sync'
-      @view.getRemaining().should.eql 11959
+      @view.remaining().should.eql 11959
 
   describe '#loadNextPage', ->
     it 'loads the next page when the button is clicked', ->
