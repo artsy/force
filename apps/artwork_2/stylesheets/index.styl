@@ -34,3 +34,8 @@ artwork-page = {
   &__overview
     width calc('100% - %s' % (artwork-page.metadata.width + artwork-page.gutter))
     margin-right: artwork-page.gutter
+
+    > section
+      block-margins(15px)
+      garamond-size('s-body')
+      border-top 1px solid gray-lighter-color
