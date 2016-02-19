@@ -18,10 +18,10 @@ module.exports = class Gene extends Backbone.Model
   _.extend @prototype, Markdown
 
   urlRoot: "#{sd.API_URL}/api/v1/gene"
-
+  
   href: -> "/gene/#{@get('id')}"
 
-  displayName: -> @get('name')
+  displayName: -> @get('display_name') or @get('name') 
 
   alphaSortKey: -> @get('id')
 
@@ -29,7 +29,7 @@ module.exports = class Gene extends Backbone.Model
     if title = @metaOverrides('title')
       title
     else
-      "#{@get('name')} | Artsy"
+      "#{@displayName()} | Artsy"
 
   # Trim whitespace and newlines
   toPageDescription: ->

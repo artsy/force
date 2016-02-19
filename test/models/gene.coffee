@@ -13,6 +13,19 @@ describe "Gene", ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#displayName', ->
+
+    it 'returns display name when available', ->
+      @gene = new Gene(fabricate 'gene', display_name: 'A different name for display')
+      @gene.displayName().should.equal 'A different name for display'
+
+
+    it 'returns the regular name when no display name is available', ->
+      @gene = new Gene(fabricate 'gene', display_name: '')
+      @gene.displayName().should.equal @gene.get('name')
+      @gene = new Gene(fabricate 'gene', display_name: null)
+      @gene.displayName().should.equal @gene.get('name')
+
   describe '#isSubjectMatter', ->
 
     it 'checks against the gene type name', ->
