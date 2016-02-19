@@ -1,8 +1,6 @@
 sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 
-sd.MEDIUM = 'search'
-
 module.exports = (auction, user) ->
   return if auction.isClosed() or sd.MEDIUM isnt 'search'
   user.checkRegisteredForAuction
