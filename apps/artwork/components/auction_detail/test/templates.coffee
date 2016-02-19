@@ -75,3 +75,17 @@ describe 'Artwork auction detail', ->
       user: new User fabricate 'user'
       asset: ->
     template.should.containEql "Buy Now"
+
+  it 'does not show bidding information if the auction is closed', ->
+    @artwork.set acquireable: true
+    auction = new Auction fabricate 'sale', buyers_premium: null
+    auction.isClosed = -> true
+    template = render('template')
+      sd: @sd
+      artwork: @artwork
+      artist: @artist
+      auction: auction
+      saleArtwork: new SaleArtwork fabricate 'sale_artwork', bidder_positions_count: 0
+      user: new User fabricate 'user'
+      asset: ->
+    template.should.not.containEql "abs-amount"
