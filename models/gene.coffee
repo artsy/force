@@ -18,7 +18,7 @@ module.exports = class Gene extends Backbone.Model
   _.extend @prototype, Markdown
 
   urlRoot: "#{sd.API_URL}/api/v1/gene"
-  
+
   href: -> "/gene/#{@get('id')}"
 
   displayName: -> @get('display_name') or @get('name') 
