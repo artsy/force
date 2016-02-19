@@ -12,12 +12,12 @@ block body
 
     header.gene-header
       h1.gene-header-headline
-        = gene.get('name')
+        = gene.displayName()
 
       a.gene-header-follow-button.avant-garde-button-white.follow-button
 
       .gene-share-buttons.js-gene-share-buttons
-        +share(gene.get('name') + ' on Artsy', gene.imageUrl())
+        +share(gene.displayName() + ' on Artsy', gene.imageUrl())
 
     .bisected-header
       if gene.get('description')
