@@ -14,6 +14,7 @@ query = """
       ... auction
       ... highlights
       ... tabs
+      ... artists
     }
   }
   #{require './components/banner/query'}
@@ -24,12 +25,14 @@ query = """
   #{require './components/auction/query'}
   #{require './components/highlights/query'}
   #{require './components/tabs/query'}
+  #{require './components/artists/query'}
 """
 
 helpers = extend [
   {}
-  require './components/metadata/helpers'
-  require './components/auction/helpers'
+  metadata: require './components/metadata/helpers'
+  auction: require './components/auction/helpers'
+  artists: require './components/artists/helpers'
 ]...
 
 @index = (req, res, next) ->

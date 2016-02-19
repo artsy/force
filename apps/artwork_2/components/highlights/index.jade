@@ -1,7 +1,8 @@
-.artwork-highlights
-  for highlight in artwork.highlights
-    case highlight.__typename
-      when 'HighlightedShow'
-        include ./templates/show
-      when 'HighlightedArticle'
-        include ./templates/article
+if artwork.highlights.length
+  section.artwork-highlights
+    for highlight in artwork.highlights
+      case highlight.__typename
+        when 'HighlightedShow'
+          include ./templates/show
+        when 'HighlightedArticle'
+          include ./templates/article

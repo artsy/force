@@ -6,7 +6,12 @@
       | This Work Is Mentioned In
 
     .artwork-highlight__images__image
-      img( src= article.image.thumb.url )
+      img(
+        src= article.image.thumb.url
+        width= article.image.thumb.width
+        height= article.image.thumb.height
+        alt= article.title
+      )
 
   .artwork-highlight__metadata
     h2.artwork-highlight__metadata__title: a( href= article.href )

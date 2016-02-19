@@ -1,0 +1,57 @@
+@require '../tabs'
+
+.artwork-artists
+  //
+
+.artwork-artist
+  //
+  &__name
+    margin 20px 0 35px 0
+    garamond-size('s-headline')
+
+  &__content
+    //
+    &__biography
+      garamond-size('s-body')
+      a
+        fine-faux-underline()
+
+    &__exhibition-history
+      > h3
+        block-margins(10px)
+        avant-garde-size('s-headline')
+
+      &__show
+        display flex
+        &__year
+          padding-right 10px
+        &__info > a
+          fine-faux-underline()
+
+    &__articles
+      //
+      &__article
+        display flex
+        block-margins(gutter)
+        text-decoration none
+
+        &__image
+          margin-right 30px
+
+        &__image
+        &__metadata
+          > h2
+            garamond-size('s-headline')
+          > h3
+            margin 10px 0
+            avant-garde-size('s-headline')
+
+  &__jump
+    block-margins(30px)
+
+    > a
+      display inline-block
+      padding 20px 45px 0 0
+      avant-garde-size('body')
+      text-decoration none
+      border-top 1px solid gray-lighter-color

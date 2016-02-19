@@ -9,8 +9,10 @@ module.exports = """
           name
         }
         image: thumbnail_image {
-          thumb: resized(width: 259) {
+          thumb: cropped(width: 260, height: 170) {
             url
+            width
+            height
           }
         }
       }

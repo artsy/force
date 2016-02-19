@@ -28,7 +28,7 @@ module.exports = """
     }
     auction: sale {
       id
-      sale_artwork(artwork_id: $id) {
+      sale_artwork(id: $id) {
         lot_number
       }
     }
