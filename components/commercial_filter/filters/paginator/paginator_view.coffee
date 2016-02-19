@@ -4,6 +4,7 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PaginatorView extends Backbone.View
   maxPage: 100
+  pagesInterval: 1
 
   events:
     'click li a' : 'setPage'
@@ -25,5 +26,6 @@ module.exports = class PaginatorView extends Backbone.View
 
   render: ->
     @$el.html template
-      current: @params.get('page')
+      current: parseInt @params.get('page')
       total: @totalPages()
+      pagesInterval: @pagesInterval
