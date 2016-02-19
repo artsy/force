@@ -5,13 +5,10 @@ block body
     include nav
     .fair-info2-body
       h2.garamond-l-headline.is-center-aligned All Armory Arts Week Events
-      hr
       .fair-info-aaw-menu.is-center-aligned
         h2.avant-garde-s-headline Browse neighborhoods
-        br
         each neighborhood in neighborhoods
           .fair-info-aaw-neightborhood-nav: a(href="##{_s.underscored(neighborhood.name)}") #{neighborhood.name}
-      hr
       .fair-info-aaw-neigborhoods
         each neighborhood in neighborhoods
           .fair-info-aaw-neigborhood(id="#{_s.underscored(neighborhood.name)}")
