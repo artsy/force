@@ -46,6 +46,9 @@ describe 'HomeTopRailView', ->
       describe 'with personalized works', ->
         beforeEach (done) ->
           @metaphysics.returns Q.resolve { me: bidder_positions: [{
+            highest_bid: {
+              display_amount_dollars: '$5,000'
+            }
             sale_artwork:
               artwork:
                 title: "Hello World"
