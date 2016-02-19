@@ -29,7 +29,7 @@ if auction
         .artwork-auction__bid-status__amount
           = auction.sale_artwork.current_bid
         .artwork-auction__bid-status__count
-          | (#{helpers.pluralize('bid', auction.sale_artwork.bidder_positions_count)})
+          | (#{helpers.auction.pluralize('bid', auction.sale_artwork.bidder_positions_count)})
           //- TODO: Needs reserve status
 
       form.artwork-auction__bid-form.stacked-form(
