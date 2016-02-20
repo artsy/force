@@ -24,58 +24,61 @@ relatedTemplate = -> require('./templates/related.jade') arguments...
 embedTemplate = -> require('./templates/embed.jade') arguments...
 calloutTemplate = -> require('./templates/callout.jade') arguments...
 
+DATA =
+  sort: '-published_at'
+  published: true
+  tier: 1
+  author_id: sd.ARTSY_EDITORIAL_ID
+
 module.exports = class ArticleView extends Backbone.View
+
+  events:
+    'click .articles-section-right-chevron, \
+    .articles-section-left-chevron': 'toggleSectionCarousel'
+    'click .article-video-play-button': 'playVideo'
+    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
+    @loadedArtworks = @loadedEmbeds = @loadedCallouts = @loadedImageHeights = false
     @$window = $(window)
     @sticky = new Sticky
+
+    # Render sections
     @renderSlideshow()
-    @renderArtworks =>
-      @addReadMore() if @gradient
-    @checkEditable()
-    @breakCaptions()
-    @sizeVideo()
-    @setupFooterArticles()
-    @setupStickyShare()
+    @renderArtworks()
     @renderEmbedSections()
     @renderCalloutSections()
+    @setupFooterArticles()
+    @setupStickyShare()
 
+    # Resizing
+    @breakCaptions()
+    @sizeVideo()
+
+    # FS and Super Article setup
     @setupArticleWaypoints()
     @initFullscreenHeader($header) if ($header = @$('.article-fullscreen')).length
     @renderSuperArticle() if sd.RELATED_ARTICLES?.length > 0
 
+    # Utility
+    @checkEditable()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
 
-  centerFullscreenHeader: ($header) ->
-    # Center header
-    $container = $header.find('.article-fullscreen-text-overlay')
-    maxHeight = @$window.height()
-    margin = Math.round((maxHeight - $container.height()) / 2)
-    minMargin = 158
-    if margin < minMargin
-      margin = minMargin
+  maybeFinishedLoading: ->
+    if @loadedArtworks and @loadedEmbeds and @loadedCallouts and not @loadedImageHeights
+      @setupMaxImageHeights()
+    else if @loadedArtworks and @loadedEmbeds and @loadedCallouts and @loadedImageHeights
+      @breakCaptions()
+      @addReadMore() if @gradient
 
-      # fix for small screens
-      headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
-
-    $container.css 'margin-top': "#{margin}px"
-
-  initFullscreenHeader: ($header) ->
-    @centerFullscreenHeader $header
-
-    $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
-    $superArticleArrow.show()
-
-    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
-
-    # Show after css modifications are done
-    $header.find('.main-layout-container').addClass 'visible'
+  setupMaxImageHeights: ->
+    @$(".article-section-artworks[data-layout=overflow] img, .article-section-image img").css('max-height', window.innerHeight * 0.7 )
+    @loadedImageHeights = true
+    @maybeFinishedLoading()
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
@@ -99,13 +102,14 @@ module.exports = class ArticleView extends Backbone.View
             " li[data-id=#{artworks.first().get '_id'}]").parent()
         Q.nfcall @fillwidth, $el
     ).done =>
-      cb()
+      @loadedArtworks = true
+      @maybeFinishedLoading()
 
   renderEmbedSections: =>
     sections = []
     Q.all( for section in @article.get 'sections' when section.type is 'embed'
       $.get oembed section.url, { maxwidth: @getWidth(section) }
-    ).done (responses) =>
+    ).then (responses) =>
       if responses.length
         for section in @article.get('sections') when section.type is 'embed'
           $embedSection = @$(".article-section-embed[data-id='#{section.url}']")
@@ -117,6 +121,9 @@ module.exports = class ArticleView extends Backbone.View
           else
             $embedSectionContainer.append embedTemplate url: section.url, height: section.height
           $embedSection.children('.loading-spinner').remove()
+    .done =>
+      @loadedEmbeds = true
+      @maybeFinishedLoading()
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -129,6 +136,9 @@ module.exports = class ArticleView extends Backbone.View
         $($calloutSection).append calloutTemplate
           section: section
           calloutArticle: new Article article if article
+    .done =>
+      @loadedCallouts = true
+      @maybeFinishedLoading()
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
@@ -166,12 +176,6 @@ module.exports = class ArticleView extends Backbone.View
       $(".article-container[data-id=#{@article.get('id')}] .article-content").append(
         editTemplate message: message, edit_url: editUrl
       )
-
-  events:
-    'click .articles-section-right-chevron, \
-    .articles-section-left-chevron': 'toggleSectionCarousel'
-    'click .article-video-play-button': 'playVideo'
-    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
 
   toggleSectionCarousel: (e) ->
     @$('.articles-section-show-header-right').toggleClass('is-over')
@@ -222,25 +226,13 @@ module.exports = class ArticleView extends Backbone.View
     if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1
       Q.allSettled([
         (tagRelated = new Articles).fetch
-          data:
+          data: _.extend _.clone DATA,
             tags: if @article.get('tags')?.length then @article.get('tags') else [null]
-            sort: '-published_at'
-            published: true
-            tier: 1
-            author_id: '503f86e462d56000020002cc'
         (artistRelated = new Articles).fetch
-          data:
+          data: _.extend _.clone DATA,
             artist_id: if @article.get('primary_featured_artist_ids')?.length then @article.get('primary_featured_artist_ids')[0]
-            sort: '-published_at'
-            published: true
-            tier: 1
-            author_id: '503f86e462d56000020002cc'
         (feed = new Articles).fetch
-          data:
-            author_id: '503f86e462d56000020002cc'
-            published: true
-            tier: 1
-            sort: '-published_at'
+          data: _.extend _.clone DATA,
             limit: 20
       ]).then =>
         safeRelated = _.union tagRelated.models, artistRelated.models, feed.models
@@ -284,6 +276,33 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+  centerFullscreenHeader: ($header) ->
+    # Center header
+    $container = $header.find('.article-fullscreen-text-overlay')
+    maxHeight = @$window.height()
+    margin = Math.round((maxHeight - $container.height()) / 2)
+    minMargin = 158
+    if margin < minMargin
+      margin = minMargin
+
+      # fix for small screens
+      headerHeight = $container.height() + (margin * 2)
+      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
+
+    $container.css 'margin-top': "#{margin}px"
+
+  initFullscreenHeader: ($header) ->
+    @centerFullscreenHeader $header
+
+    $superArticleArrow = @$('.article-fullscreen-down-arrow')
+    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
+    $superArticleArrow.show()
+
+    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
+
+    # Show after css modifications are done
+    $header.find('.main-layout-container').addClass 'visible'
 
   # Methods for super articles
   duration: 500

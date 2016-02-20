@@ -133,7 +133,6 @@ describe 'ArticleView', ->
       Backbone.sync
         .onCall 0
         .yieldsTo 'success', article = fabricate 'article', { thumbnail_title: 'Callout title', id: '123'}
-        .returns Q.resolve(article)
 
       @view.renderCalloutSections()
         .then =>
