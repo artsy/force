@@ -24,3 +24,11 @@ describe 'locals middleware', ->
     middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Something something Artsy-Mobile' }, get: -> },
       res = { locals: { sd: {} } }, ->
     res.locals.sd.EIGEN.should.be.ok()
+
+  it 'adds the referrer "medium"', ->
+    middleware(
+      req = { url: 'localhost:3000', get: -> 'https://www.google.com/' }
+      res = { locals: { sd: {} } }
+      ->
+    )
+    res.locals.sd.MEDIUM.should.equal 'search'
