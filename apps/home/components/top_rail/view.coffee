@@ -30,7 +30,10 @@ module.exports = class HomeTopRailView extends Backbone.View
   fetchAndRender: ->
     promises = [@collection.fetch()]
     if @user
-      promises.push metaphysics(query: myActiveBidsQuery, req: user: @user)
+      promises.push(
+        metaphysics(query: myActiveBidsQuery, req: user: @user)
+          .catch(-> me: bidder_positions: [])
+      )
     Q.all(promises).then ([c, data]) =>
       @syncArtworks()
       @$el.html template
