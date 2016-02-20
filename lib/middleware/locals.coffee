@@ -30,7 +30,6 @@ module.exports = (req, res, next) ->
   res.locals.sd.CURRENT_PATH = parse(req.url).pathname
   res.locals.sd.ARTSY_XAPP_TOKEN = artsyXapp.token
   res.locals.sd.REFERRER = referrer = req.get 'Referrer'
-  console.log referrer, 'moo'
   res.locals.sd.MEDIUM = new Referrer(referrer).medium if referrer
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Artsy-Mobile')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
