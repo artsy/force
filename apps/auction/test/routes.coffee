@@ -93,7 +93,7 @@ describe '/auction routes', ->
       routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
 
     it 'filters to bids in this auction sorted by losing bids', (done) ->
-      @metaphysics.returns then: (callback) =>
+      @metaphysics.returns catch: => then: (callback) =>
         myActiveBids = callback { me: bidder_positions: [
           { id: 'a', sale_artwork: { sale_id: 'foobar' }, is_winning: true }
           { id: 'b', sale_artwork: { sale_id: 'baz' } }
