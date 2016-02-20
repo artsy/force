@@ -3,7 +3,9 @@ query {
   me {
     bidder_positions(current: true) {
       id
-      display_max_bid_amount_dollars
+      highest_bid {
+        display_amount_dollars
+      }
       is_winning
       sale_artwork {
         id

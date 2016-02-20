@@ -15,7 +15,7 @@
               = bid.sale_artwork.artwork.date
         .auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
         .auction-mab-current-bid
-          strong Current Bid: <em>#{bid.display_max_bid_amount_dollars}</em>
+          strong Current Bid: <em>#{bid.highest_bid.display_amount_dollars}</em>
         .auction-mab-bid-num (#{bid.sale_artwork.bidder_positions_count} Bids)
         if bid.is_winning
           .auction-mab-warning.is-winning: p Highest Bid
