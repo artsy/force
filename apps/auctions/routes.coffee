@@ -14,6 +14,7 @@ setupUser = (user, auction) ->
         error: -> user.set 'registered_to_bid', false
       ),
       metaphysics(query: myActiveBidsQuery, req: user: user)
+        .catch(-> me: bidder_positions: [])
     ]
   else
     Q.promise (resolve) -> resolve()
