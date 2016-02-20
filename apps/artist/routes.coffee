@@ -17,9 +17,6 @@ Carousel = require './carousel'
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
 
-  if (referrer = req.get 'Referrer')?
-    medium = new ReferrerParser(referrer).medium
-
   Q.all [
     artist.fetch cache: true
     carousel.fetch cache: true
@@ -33,7 +30,6 @@ Carousel = require './carousel'
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statuses.statuses
-        res.locals.sd.MEDIUM = medium if medium?
 
         res.render 'index',
           artist: artist
