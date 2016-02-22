@@ -6,6 +6,7 @@ ArtistsGridView = require '../components/artists_grid/view.coffee'
 NewsView = require '../components/news/view.coffee'
 FixedCellsCountCarousel = require '../components/fixed_cells_count_carousel/view.coffee'
 ShowsGrid = require '../client/shows_grid.coffee'
+LocationsView = require '../components/locations/view.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 Articles = require '../../../collections/articles.coffee'
 aboutTemplate = -> require('../components/about/index.jade') arguments...
@@ -19,7 +20,7 @@ module.exports = (partner, profile) ->
     gallery_default: [
       galleryDefaultShows partner, profile
       galleryDefaultArtists partner, profile
-      # locations for unclaimed partners
+      galleryDefaultLocations partner, profile
     ]
     gallery_one: [
       galleryOneHero partner, profile
@@ -74,6 +75,13 @@ galleryDefaultArtists = (partner, profile) ->
       { partner: partner, linkToPartnerArtist: false }
   )
 
+galleryDefaultLocations = (partner, profile) ->
+  name: 'locations'
+  title: 'Locations'
+  component: (
+    LocationsView unless partner.claimed()
+  )
+  options: partner: partner
 
 #
 # Sections for gallery_one layout.
