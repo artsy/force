@@ -64,18 +64,20 @@ describe 'PartnerShowsGridView', ->
     afterEach -> benv.teardown()
 
     it 'respects the dispalyable attribute of partner shows', ->
-      new PartnerShowsGridView
+      (new PartnerShowsGridView
         el: $ '.partner2-shows'
         partner: @partner
+      ).startUp()
 
       @template.args[0][0].current.should.have.lengthOf 3
       @template.args[0][0].upcoming.should.have.lengthOf 2
       @template.args[0][0].past.should.have.lengthOf 4
 
     it 'fetches 1 featured and all other shows and renders them by default', ->
-      new PartnerShowsGridView
+      (new PartnerShowsGridView
         el: $ '.partner2-shows'
         partner: @partner
+      ).startUp()
 
       @template.args[0][0].featured.get('name').should.equal "show2"
       @template.args[0][0].current.should.have.lengthOf 3
@@ -83,10 +85,11 @@ describe 'PartnerShowsGridView', ->
       @template.args[0][0].past.should.have.lengthOf 4
 
     it 'fetches 0 featued and all other shows and renders them', ->
-      new PartnerShowsGridView
+      (new PartnerShowsGridView
         el: $ '.partner2-shows'
         partner: @partner
         numberOfFeatured: 0
+      ).startUp()
 
       _.isUndefined(@template.args[0][0].featured).should.be.ok()
       @template.args[0][0].current.should.have.lengthOf 3
@@ -94,11 +97,12 @@ describe 'PartnerShowsGridView', ->
       @template.args[0][0].past.should.have.lengthOf 5
 
     it 'fetches 1 featued and combined other shows and renders them', ->
-      new PartnerShowsGridView
+      (new PartnerShowsGridView
         el: $ '.partner2-shows'
         partner: @partner
         isCombined: true
         numberOfShows: 6
+      ).startUp()
 
       @template.args[0][0].featured.get('name').should.equal "show2"
       @template.args[0][0].current.should.have.lengthOf 6
@@ -170,11 +174,12 @@ describe 'PartnerShowsGridView', ->
 
           @profile = new Profile fabricate 'partner_profile'
           @partner = @profile.related().owner
-          new PartnerShowsGridView
+          (new PartnerShowsGridView
             el: $ '.partner2-shows'
             partner: @partner
             isCombined: false
             numberOfFeatured: 1
+          ).startUp()
           done()
 
     afterEach ->

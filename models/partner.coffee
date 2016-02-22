@@ -63,3 +63,5 @@ module.exports = class Partner extends Backbone.Model
 
   typeName: ->
     if @get('type') is 'Gallery' then 'Gallery' else 'Institution'
+
+  claimed: -> @get('claimed')

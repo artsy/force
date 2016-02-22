@@ -1,16 +1,24 @@
 .partner2-shows
+  &.combined
+    .partner-shows-section:not(.actions):not(:first-of-type)
+      padding-top 50px
+    .partner-shows-section-heading
+      display none
   .partner-shows-heading
     garamond-size('headline')
     line-height 2.5
   .partner-shows-section
     margin-bottom 50px
     border-top 1px solid gray-lighter-color
+    &:last-of-type
+      margin-bottom 0
     a
       text-decoration none
 
     .partner-shows-section-heading
       garamond-size('headline')
-      line-height 2.5
+      line-height 1
+      margin 20px 0
 
     .partner-show
       box-sizing content-box
@@ -68,12 +76,14 @@
     .loading-spinner
       display none
 
+  // Special treatment for the first and actions sections
+  .partner-shows-section:first-of-type
+  .partner-shows-section.actions
+    border-top none
+
   // Special treatment for the featured section
   .partner-shows-section.featured
-    padding-top 50px
     text-align center
-    .partner-show-heading
-      display none
 
     .partner-show
       width 100%
@@ -97,7 +107,8 @@
       font-size 50px
       margin-bottom 20px
 
-  .partner-shows-see-all
+  // Special treatment for the see all section
+  .partner-shows-section.actions
     a
       font-size 13px
       &:hover:before
