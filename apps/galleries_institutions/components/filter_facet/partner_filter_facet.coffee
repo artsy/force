@@ -16,7 +16,7 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     # Exclude items that were not specified in `allItems`.
     # Default count to zero for items that were not included in the response.
     @countItems = _.map @allItems, (item) ->
-      _.find(changed.countItems, id: item.id,) || _.extend {count: 0}, item
+      _.find(changed.countItems, id: item.id) || _.extend {count: 0}, item
 
   matcher: (query, callback) =>
     if query.length
