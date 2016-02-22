@@ -49,6 +49,7 @@
     "moment": "~2.10.6",
     "morgan": "^1.6.1",
     "node-uuid": "^1.4.3",
+    "nouislider": "^8.3.0",
     "places": "git://github.com/artsy/places.git",
     "qs": "^5.2.0",
     "redis": "^2.2.3",
