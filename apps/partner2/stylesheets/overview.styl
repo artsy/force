@@ -3,12 +3,13 @@
     display flex
     flex-wrap wrap
   .partner-overview-section
-    min-height 425px
+    min-height 200px
     margin-bottom 60px
     border-top 1px solid gray-color
     flex 0 1 100%
     &:empty
       display none
+    &:first-of-type
     &[data-module=hero]
     &[data-module=about]
     &[data-module=news]
@@ -52,3 +53,18 @@
     garamond-size('l-caption')
     width 100px
     text-align right
+
+  .partner-overview-messages
+    min-height 0
+    background-color #fff5db
+    padding 100px 0
+    position relative
+    top -50px
+    margin-bottom -50px
+    p
+      text-align center
+      color gray-darkest-color
+      font-size 19px
+      line-height 1.5
+      &.message-title
+        font-size 30px

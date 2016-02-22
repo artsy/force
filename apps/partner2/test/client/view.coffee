@@ -67,7 +67,7 @@ describe 'PartnerView', ->
           @partner.set type: 'Institution'
           @profile.set owner_type: 'PartnerInstitution'
           sections = @view.getDisplayableSections @view.getSections()
-          sections.should.eql ['overview', 'articles', 'about']
+          sections.should.eql ['articles', 'about']
 
       describe 'with maximum data to display', ->
         beforeEach ->
@@ -102,16 +102,16 @@ describe 'PartnerView', ->
           it 'returns proper sections when display works section is disabled', ->
             @partner.set display_works_section: false
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['overview', 'shows', 'articles', 'shop', 'about']
+            sections.should.eql ['shows', 'articles', 'shop', 'about']
 
           it 'returns proper sections when display work section is enabled', ->
             @partner.set display_works_section: true
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['overview', 'shows', 'collection', 'articles', 'shop', 'about']
+            sections.should.eql ['shows', 'collection', 'articles', 'shop', 'about']
 
     describe '#initializeTablistAndContent', ->
 
       it 'renders tabs properly', ->
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
-        _.last(@tablistTemplate.args)[0].sections.should.eql ['overview', 'articles', 'about']
+        _.last(@tablistTemplate.args)[0].sections.should.eql ['articles', 'about']

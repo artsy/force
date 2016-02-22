@@ -1,22 +1,23 @@
 #partner
-  .partner-header
-  .partner-footer
-    .partner-actions
-    .partner-nav
-      display inline-block
-      vertical-align middle
-    .partner-actions
-      width 300px
-      margin-right 30px
-    .partner-nav
-      width calc(100% \- 330px)
-      text-align right
+  .partner-tabs
+    padding 15px 0
+    border-top 1px solid gray-lighter-color
+    border-bottom 1px solid gray-lighter-color
+    &:empty
+      border-top none
+    .garamond-tab
+      &, &:hover, &:focus, &.is-active
+        border-bottom none
+
+  .partner-actions
+    .follow-button[data-state='following'], .follow-button.is-following
+      color white
 
   .partner-header
     padding-top 30px
-    margin-bottom 40px
+    margin-bottom 50px
     .partner-brand-container
-      margin-bottom 40px
+      margin-bottom 20px
     .partner-info
     .partner-icon
       display inline-block
@@ -33,6 +34,7 @@
       color gray-darker-color
       line-height 1.5
       min-height 1.5em
+      margin-bottom 10px
     .partner-icon
       text-align center
     .profile-badge-icon
@@ -54,8 +56,23 @@
       color gray-darker-color
 
   .partner-footer
-    padding 40px 0
-    margin-bottom -20px
     border-top 1px solid gray-lighter-color
+    margin-bottom -20px
+    .partner-branding
+    .partner-nav
+      display inline-block
+      vertical-align middle
+    .partner-branding
+      width 300px
+      margin-right 30px
+    .partner-nav
+      min-height 100px
+      width calc(100% \- 330px)
+      text-align right
     .partner-name
       avant-garde-size('m-headline')
+    .partner-tabs
+      border none
+      padding 40px 0
+      &:empty
+        padding 50px 0
