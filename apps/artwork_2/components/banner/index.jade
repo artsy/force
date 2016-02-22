@@ -1,9 +1,11 @@
 if artwork.banner
+  - var banner = artwork.banner
+
   .artwork-banner
-    if artwork.banner.profile && artwork.banner.profile.icon
-      - var img = artwork.banner.profile.icon.img
+    if banner.profile && banner.profile.icon
+      - var img = banner.profile.icon.img
       .artwork-banner__logo
-        a( href= artwork.banner.href )
+        a( href= banner.href )
           img(
             src= img.url
             width= img.width
@@ -11,12 +13,20 @@ if artwork.banner
           )
 
     h1.artwork-banner__name
-      a( href= artwork.banner.href )
-        = artwork.banner.name
+      a( href= banner.href )
+        = banner.name
+
+    if banner.end_at
+      .artwork-banner__countdown(
+        class='js-artwork-banner__countdown'
+      )
+        - var label = 'Auction closes in'
+        - var countdown = helpers.banner.countdown(banner.end_at)
+        include ../clock/index
 
     .artwork-banner__jump
-      a.avant-garde-button-white.is-small( href= artwork.banner.href )
-        case artwork.banner.__typename
+      a.avant-garde-button-white.is-small( href= banner.href )
+        case banner.__typename
           when 'RelatedFair'
             | Explore Fair
           when 'RelatedSale'
