@@ -23,10 +23,7 @@ block body
         for jobs, name in categories
           a.jobs-category.js-jobs-category( href="##{name}" )
             h3= name
-            if jobs.length === 1
-              p #{jobs.length} Open Position
-            else
-              p #{jobs.length} Open Positions
+             p #{jobs.length} Open Positions
 
       .jobs-category-items
         for jobs, name in categories
