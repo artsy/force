@@ -29,7 +29,13 @@ artwork-detail-item-height = 36px
       display none
   .artwork-detail-header
     avant-garde()
+    display: inline
     font-size 13px
+    border-bottom 2px solid black
+    a
+      text-decoration none
+  #artwork-partner-locations
+    display: block
   hr
     height 0
     margin 10px 0
@@ -204,11 +210,14 @@ artwork-detail-item-height = 36px
     margin-right 0
   &:empty
     display none
-
+    
+.artwork-actions
+   > a
+     text-decoration none 
+       
 .artwork-actions-list
   margin-top 20px
   border-top 1px dotted
-  border-color transparify(gray-lighter-color, black)
   > a
     display block
     position relative
