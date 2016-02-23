@@ -1,30 +1,12 @@
 @require '../../../components/stylus_lib'
 
+@require '../components/tabs'
+@require '../components/sections'
+
 @require '../pages/delete'
 @require '../pages/profile'
 @require '../pages/saves'
 @require '../pages/settings'
-
-.avant-garde-tablist
-  clearfix()
-  margin gutter 0
-  border-bottom 2px solid gray-lighter-color
-  &__tab
-    display block
-    float left
-    avant-garde-size('body')
-    padding (gutter / 2)
-    color gray-darker-color
-    border-bottom 2px solid gray-lighter-color
-    margin-bottom -2px
-    transition color 0.25s, border-color 0.25s
-    text-decoration none
-    &:hover
-    &[data-state='active']
-      color black
-      border-bottom-color gray-darker-color
-    &:first-child
-      padding-left 0
 
 .settings-page
   padding 15px 0
@@ -39,21 +21,10 @@
     &__sections
     &__main
       float left
+      padding-top gutter
 
     &__sections
       width 25%
-      > a
-      > span
-        display block
-        padding (gutter / 4) 0
-        avant-garde-size('body')
-        color gray-darker-color
-        transition color 0.25s
-        text-decoration none
-      > a
-        &:hover
-        &[data-state='active']
-          color black
 
     &__main
       width 75%
