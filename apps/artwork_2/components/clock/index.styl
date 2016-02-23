@@ -1,0 +1,41 @@
+.countdown-clock
+  margin 0 20px
+
+  &__label
+    avant-garde-size('s-headline')
+
+  &__clock
+    margin-top 2px
+
+    &__unit
+      display inline-block
+      position relative
+      width 2em
+      margin-right 0.5em
+      &:last-child
+        margin-right 0
+
+      &:after
+        content ':'
+        position absolute
+        top 0
+        right 0
+        avant-garde-size('l-headline')
+
+      &:last-child
+        margin-right 0
+        &:after
+          display none
+
+      &__value
+      &__label
+        display block
+
+      &__value
+        avant-garde-size('l-headline')
+
+      &__label
+        avant-garde()
+        font-size 9px
+        line-height 1
+        color gray-color
