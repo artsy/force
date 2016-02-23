@@ -22,17 +22,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     # Render Featured Sections
     @setupHeroUnits()
-    @setupFavoritesOnboardingModal()
     new HomeTopRailView user: @user, el: @$('#home-top-rail-section')
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
-
-  setupFavoritesOnboardingModal: ->
-    return unless @user and 'Set Management' in @user.get('lab_features')
-    return if parseInt(Cookies.get 'favorites_onboarding_dismiss_count') >= 2
-    OnboardingModal = require '../../../components/favorites2/client/onboarding_modal.coffee'
-    new OnboardingModal width: 1000
 
 module.exports.init = ->
   new HomeView el: $('body')

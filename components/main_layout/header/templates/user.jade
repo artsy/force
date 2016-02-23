@@ -4,12 +4,6 @@
       = user.get('name') ? user.get('name') : 'Account'
 
       .hover-pulldown-menu
-        a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
-        a( href='/following/artists' ) Artists
-        a( href='/favorites' ) Works
-        a( href='/following/profiles' ) Galleries
-        hr
-
         if user.isAdmin()
           a( href= sd.ADMIN_URL ) Admin
         if user.isAdmin() || user.get('has_partner_access')
