@@ -1,5 +1,7 @@
 @require '../../../components/stylus_lib'
 
+@require '../components/sections'
+
 @require '../pages/delete'
 @require '../pages/profile'
 @require '../pages/saves'
@@ -42,18 +44,6 @@
 
     &__sections
       width 25%
-      > a
-      > span
-        display block
-        padding (gutter / 4) 0
-        avant-garde-size('body')
-        color gray-darker-color
-        transition color 0.25s
-        text-decoration none
-      > a
-        &:hover
-        &[data-state='active']
-          color black
 
     &__main
       width 75%
