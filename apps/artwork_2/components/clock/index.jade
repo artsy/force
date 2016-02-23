@@ -1,0 +1,12 @@
+if countdown
+  .countdown-clock
+    if label
+      .countdown-clock__label
+        = label
+    .countdown-clock__clock
+      for unit in countdown
+        .countdown-clock__clock__unit
+          span.countdown-clock__clock__unit__value
+            = unit.value
+          span.countdown-clock__clock__unit__label
+            = unit.label

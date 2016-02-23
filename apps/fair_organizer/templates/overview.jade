@@ -18,7 +18,7 @@ block body
           img.large-profile-image( alt=fairOrg.get('name'), title=fairOrg.get('name'), src=profile.icon().imageUrl('square') )
         .fair-organizer-top__header
           h1 Explore #{fairOrg.get('name')} on Artsy
-        .fair-organizer-top__sub-header Browse past editions and stay connected with the latest news
+        .fair-organizer-top__sub-header Discover the fair and stay connected with the latest news
         a#fair-organizer-follow.fair-organizer-top__notify.follow-button.avant-garde-button-black(data-id="#{profile.id}")
         .fair-organizer-top__countdown
           .fair-organizer-top__countdown__headline Fair opens in:
@@ -39,10 +39,11 @@ block body
         //- .fair-organizer-content__links!= fairOrg.mdToHtml('links')
 
       .fair-organizer-content__right
-        .fair-organizer-content__header Revisit Previous Fairs
-        .fair-organizer-content__section.fair-organizer-content__section--past-fairs
-          for fair in pastFairs
-            include fair
+        if pastFairs.length
+          .fair-organizer-content__header Revisit Previous Fairs
+          .fair-organizer-content__section.fair-organizer-content__section--past-fairs
+            for fair in pastFairs
+              include fair
 
         .fair-organizer-content__header Latest from #{fairOrg.get('name')}
         .fair-organizer-content__section.fair-organizer-content__section--articles
