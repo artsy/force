@@ -43,7 +43,7 @@ mapTypeClasses =
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
-    render = res.render 'index',
+    res.render 'index',
       ViewHelpers: ViewHelpers
       showAZLink: true
       type: type
@@ -61,21 +61,22 @@ mapTypeClasses =
   type = mapType[req.params.type]
 
   partners = new Partners()
-    .fetchUntilEndInParallel
-      cache: true
-      data:
-        size: 20
-        type: mapTypeClasses[type]
-        sort: 'sortable_id'
-        has_full_profile: true
+  partners.fetchUntilEndInParallel
+    cache: true
+    data:
+      size: 20
+      type: mapTypeClasses[req.params.type]
+      sort: 'sortable_id'
+      has_full_profile: true
+      eligible_for_listing: true
 
-    .then ->
-      aToZGroup = partners.groupByAlphaWithColumns 3
-      res.render 'a_z',
-        type: type
-        showAZLink: false
-        aToZGroup: aToZGroup
+  .then ->
+    aToZGroup = partners.groupByAlphaWithColumns 3
+    res.render 'a_z',
+      type: type
+      showAZLink: false
+      aToZGroup: aToZGroup
 
-    .catch next
-    .done()
+  .catch next
+  .done()
 
