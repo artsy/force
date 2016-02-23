@@ -74,7 +74,7 @@ describe 'Artist routes', ->
       afterEach ->
         @req = @reqRestore
 
-      it 'parse the medium and passes it to Sharify', (done) ->
+      xit 'parse the medium and passes it to Sharify', (done) ->
         routes.index @req, @res
         Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
         Backbone.sync.args[1][2].success()

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "accounting": "^0.4.1",
-    "artsy-backbone-mixins": "0.0.22",
+    "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
     "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",

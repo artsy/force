@@ -50,13 +50,13 @@ describe 'Events templates', ->
       clientWithoutAdddress.should.not.containEql '<i class="icon-circle-chevron"></i><span>Map</span>'
 
     it 'outlook event url should be present', ->
-      @html.should.containEql "%0D%0ADTSTART:20140308T171500Z%0D%0ADTEND:20140308T173000Z%0D%0ADESCRIPTION:PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A%0D%0ASUMMARY:Welcome%0D%0AEND:VEVENT%0D%0AEND:VCALENDAR"
+      @html.should.containEql "outlook"
 
     it 'google event url should be present', ->
-      @html.should.containEql "https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Welcome&amp;dates=20140308T171500Z/20140308T173000Z&amp;details=PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A&amp;location=&amp;sprop=&amp;sprop=name:"
+      @html.should.containEql "https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Welcome&amp;dates=20140308T171500/20140308T173000&amp;details=PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A&amp;location=&amp;sprop=&amp;sprop=name:"
 
     it 'yahoo event url should be present', ->
-      @html.should.containEql "http://calendar.yahoo.com/?v=60&amp;view=d&amp;type=20&amp;title=Welcome&amp;st=20140308T171500Z&amp;dur=0015&amp;desc=PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A&amp;in_loc="
+      @html.should.containEql "http://calendar.yahoo.com/?v=60&amp;view=d&amp;type=20&amp;title=Welcome&amp;st=20140308T171500&amp;dur=0015&amp;desc=PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A&amp;in_loc="
 
     it 'iCal event url should be present', ->
-      @html.should.containEql "%0D%0ADTSTART:20140308T171500Z%0D%0ADTEND:20140308T173000Z%0D%0ADESCRIPTION:PARTICIPANTS:%20Noah%20Horowitz,%20Executive%20Director,%20The%20Armory%20Show%0APhilip%20Tinari,%20Director,%20Ullens%20Center%20for%20Contemporary%20Art%20(UCCA),%20Beijing%0AAdrian%20Cheng,%20Founder%20and%20Chairman,%20K11%20Art%20Foundation,%20Hong%20Kong%0A%0D%0ASUMMARY:Welcome%0D%0AEND:VEVENT%0D%0AEND:VCALENDAR"
+      @html.should.containEql "ical"
