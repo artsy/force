@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 scrollTo = require '../../../../components/smooth_scroll/index.coffee'
+Sticky = require '../../../../components/sticky/index.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SettingsSectionsView extends Backbone.View
@@ -22,7 +23,14 @@ module.exports = class SettingsSectionsView extends Backbone.View
 
     @sections.reset sections
 
+  postRender: ->
+    return if @stuck
+    @sticky = new Sticky
+    @sticky.add @$el
+    @stuck = true
+
   render: ->
     @$el.html template
       sections: @sections.toJSON()
+    @postRender()
     this
