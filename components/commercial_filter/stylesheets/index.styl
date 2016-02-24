@@ -14,9 +14,20 @@ padding-unit = 15px
   &:last-child
     border-bottom 2px solid gray-lighter-color
 
-
 .cf-sidebar__size > div
   margin-bottom 20px
+
+.cf-headline__headline
+  padding padding-unit
+  garamond-size('headline')
+  font-size 25px
+  > div
+    display inline-block
+    &:after
+      content ' '
+      margin-right 5px
+  &__medium, &__color
+    text-transform capitalize
 
 .cf-right
   float left

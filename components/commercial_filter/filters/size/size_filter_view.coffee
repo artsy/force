@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-{ formatMoney } = require 'accounting'
 createSlider = require '../../../slider/index.coffee'
 
 template = -> require('./index.jade') arguments...

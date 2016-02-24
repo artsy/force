@@ -4,6 +4,7 @@ Params = require '../../components/commercial_filter/models/params.coffee'
 Filter = require '../../components/commercial_filter/models/filter.coffee'
 UrlHandler = require '../../components/commercial_filter/url_handler.coffee'
 PaginatorView = require '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
+HeadlineView = require '../../components/commercial_filter/views/headline/headline_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
@@ -15,6 +16,10 @@ module.exports.init = ->
   # Set initial params from the url params
   params = new Params qs.parse(location.search.replace(/^\?/, ''))
   filter = new Filter params: params
+
+  headlineView = new HeadlineView
+    el: $('.cf-headline')
+    params: params
 
   # Main Artworks view
   artworkView = new ArtworkColumnsView

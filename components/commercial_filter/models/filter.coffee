@@ -23,6 +23,7 @@ module.exports = class Filter extends Backbone.Model
         $height: String,
         $width: String
         $page: Int,
+        $size: Int,
         $color: String,
         $price_range: String,
         $gene_id: String,
@@ -32,6 +33,7 @@ module.exports = class Filter extends Backbone.Model
           aggregations: $aggregations,
           for_sale: $for_sale,
           page: $page,
+          size: $size,
           width: $width,
           height: $height,
           color: $color,
