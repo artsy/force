@@ -6,7 +6,7 @@ module.exports = class Params extends Backbone.Model
     'page'
     'medium'
     'color',
-    'price',
+    'price_range',
     'width',
     'height'
   ]
@@ -16,7 +16,7 @@ module.exports = class Params extends Backbone.Model
     for_sale: true
     color: null
     medium: null
-    aggregations: ['TOTAL', 'FOR_SALE', 'COLOR', 'MEDIUM']
+    aggregations: ['TOTAL', 'COLOR', 'MEDIUM']
 
   current: ->
     @attributes
@@ -24,4 +24,6 @@ module.exports = class Params extends Backbone.Model
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist
     omitted = _.omit whitelisted, (val, key) ->
-      (key is 'page' and val is 1) or not val?
+      (key is 'page' and val is 1) or
+      (key is 'price_range' and val is '0.00-50000.00') or
+      not val?

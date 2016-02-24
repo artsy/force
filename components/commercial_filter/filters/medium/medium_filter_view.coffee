@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 template = -> require('./index.jade') arguments...
 
 module.exports = class MediumFilterView extends Backbone.View
-  classNames: 'cf-mediums'
+  className: 'cf-mediums cf-filter'
   events:
     'click h1' : 'setMedium'
 
