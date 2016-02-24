@@ -1,6 +1,15 @@
 .cf-sidebar__colors
   .clickable
     cursor pointer
+    &[data-empty=true]
+      fill #f1f1f1
+      pointer-events none
+    &[data-selected=true]
+      stroke black
+      opacity 1
+    &[data-selected=false]
+      opacity 0.75
+
   svg
     height 175px
     width 175px
