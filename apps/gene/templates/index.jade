@@ -22,13 +22,14 @@ block body
     .bisected-header
       if gene.get('description')
         .bisected-header-cell
-          h2 About
-          .gene-blurb.js-gene-blurb
-            != gene.mdToHtml('description')
+          .bisected-header-cell-section
+            h2 About
+            .gene-blurb.js-gene-blurb
+              != gene.mdToHtml('description')
       .bisected-header-cell
-        .related-genes.related-links
+        .related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
-        .related-artists.related-links
+        .related-artists.related-links.bisected-header-cell-section
           //- Rendered client-side
 
     include filter

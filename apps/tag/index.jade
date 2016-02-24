@@ -17,8 +17,9 @@ block body
     .bisected-header
       if tag.get('description')
         .bisected-header-cell.tag-blurb
-          h2 About
-          .blurb!= tag.mdToHtml('description')
+          .bisected-header-cell-section
+            h2 About
+            .blurb!= tag.mdToHtml('description')
 
     #tag-filter
       #tag-filter-nav.filter-fixed-header-nav
