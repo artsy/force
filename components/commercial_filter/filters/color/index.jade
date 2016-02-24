@@ -1,0 +1,6 @@
+//- h1.cf-mediums__option(data-value=false class=selected ? '' : 'is-selected') All
+each color, index in colors
+  h1.cf-colors__option(
+    data-value="#{color.id}"
+    class=selected == color.id ? 'is-selected' : ''
+    ) #{color.name}
