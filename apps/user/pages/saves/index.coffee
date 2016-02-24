@@ -29,16 +29,16 @@ module.exports = class SavesView extends Backbone.View
       .html categoriesView.render().$el
     categoriesView.fetch()
 
-    galleriesInstitutionsView = new GalleriesInstitutions user: @user
-    @$('.js-settings-section__main--galleries-institutions')
-      .html galleriesInstitutionsView.render().$el
-    galleriesInstitutionsView.fetch()
+    # galleriesInstitutionsView = new GalleriesInstitutions user: @user
+    # @$('.js-settings-section__main--galleries-institutions')
+    #   .html galleriesInstitutionsView.render().$el
+    # galleriesInstitutionsView.fetch()
 
     @subViews = [
       savedArtworksView
       artistsView
       categoriesView
-      galleriesInstitutionsView
+      # galleriesInstitutionsView
     ]
 
   render: ->
