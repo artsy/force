@@ -68,6 +68,33 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
 
+  centerFullscreenHeader: ($header) ->
+    # Center header
+    $container = $header.find('.article-fullscreen-text-overlay')
+    maxHeight = @$window.height()
+    margin = Math.round((maxHeight - $container.height()) / 2)
+    minMargin = 158
+    if margin < minMargin
+      margin = minMargin
+
+      # fix for small screens
+      headerHeight = $container.height() + (margin * 2)
+      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
+
+    $container.css 'margin-top': "#{margin}px"
+
+  initFullscreenHeader: ($header) ->
+    @centerFullscreenHeader $header
+
+    $superArticleArrow = @$('.article-fullscreen-down-arrow')
+    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
+    $superArticleArrow.show()
+
+    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
+
+    # Show after css modifications are done
+    $header.find('.main-layout-container').addClass 'visible'
+
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedEmbeds and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
@@ -276,33 +303,6 @@ module.exports = class ArticleView extends Backbone.View
       window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
       $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
-
-  centerFullscreenHeader: ($header) ->
-    # Center header
-    $container = $header.find('.article-fullscreen-text-overlay')
-    maxHeight = @$window.height()
-    margin = Math.round((maxHeight - $container.height()) / 2)
-    minMargin = 158
-    if margin < minMargin
-      margin = minMargin
-
-      # fix for small screens
-      headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
-
-    $container.css 'margin-top': "#{margin}px"
-
-  initFullscreenHeader: ($header) ->
-    @centerFullscreenHeader $header
-
-    $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
-    $superArticleArrow.show()
-
-    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
-
-    # Show after css modifications are done
-    $header.find('.main-layout-container').addClass 'visible'
 
   # Methods for super articles
   duration: 500
