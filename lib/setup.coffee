@@ -165,7 +165,6 @@ module.exports = (app) ->
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
   app.use require "../apps/flash"
-  app.use require "../apps/galleries_institutions"
   app.use require "../apps/gallery_insights"
   app.use require "../apps/partnerships"
   app.use require "../apps/gene"
@@ -191,6 +190,7 @@ module.exports = (app) ->
   app.use require '../apps/dev'
 
   # Non-profile vanity url apps
+  app.use require "../apps/galleries_institutions"
   app.use require "../apps/articles"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"

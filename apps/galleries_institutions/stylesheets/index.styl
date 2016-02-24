@@ -2,8 +2,11 @@
 @require '../components/primary_carousel'
 @require '../components/partner_cell'
 @require '../components/partner_cell_carousel'
+@require '../components/search_results'
+@require '../components/dropdown'
 @require './footer'
 @require './carousels'
+@require './search'
 
 .galleries-institutions-page
   padding 40px 0
@@ -31,3 +34,14 @@
     display inline-block
     margin-left 30px
 
+.galleries-institutions-main-content
+  &[data-state='landing']
+    .galleries-institutions-carousels
+      display block
+    .galleries-institutions-search-results
+      display none
+  &[data-state='search']
+    .galleries-institutions-carousels
+      display none
+    .galleries-institutions-search-results
+      display block

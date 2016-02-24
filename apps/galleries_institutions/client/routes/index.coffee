@@ -1,52 +1,78 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
-{ MAIN_PROFILES, CAROUSELS, CURRENT_USER } = require('sharify').data
-Partners = require '../../../../collections/partners.coffee'
+_ = require 'underscore'
+_s = require 'underscore.string'
+{ MAIN_PROFILES, CURRENT_USER } = require('sharify').data
 { Following } = require '../../../../components/follow_button/index.coffee'
-initPrimaryCarousel = require '../../components/primary_carousel/index.coffee'
-fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
-PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
+Profiles = require '../../../../collections/profiles.coffee'
+LandingCarouselView = require './landing.coffee'
+PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
+SearchResultsView = require '../../components/search_results/view.coffee'
+FilterDropdownView = require '../../components/dropdown/filter_dropdown_view.coffee'
+FetchFilterPartners = require '../../components/parameters/fetch_filter_partners.coffee'
+initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
 
-module.exports = (type) ->
-  if CURRENT_USER?
-    following = new Following [], kind: 'profile'
-    partners = _.flatten _.pluck CAROUSELS, 'partners'
-    mainCarouselIds = _.pluck MAIN_PROFILES, 'id'
-    categoryCarouselIds = _.pluck partners, 'default_profile_id'
-    ids = mainCarouselIds.concat categoryCarouselIds
-    following.syncFollows ids
+module.exports = class PartnersView extends Backbone.View
 
-  initPrimaryCarousel following: following
+  initialize: ({ @params, @root }) ->
+    @listenTo @params, 'change', @paramsChanged
+    @listenTo @params, 'firstLoad', @updateResultsHeading
 
-  carouselViews = CAROUSELS.map ({ category, partners }) ->
-    category = new Backbone.Model category
-    partners = new Partners partners
+    if CURRENT_USER?
+      following = new Following [], kind: 'profile'
+      mainCarouselIds = _.pluck MAIN_PROFILES, 'id'
+      following.syncFollows mainCarouselIds
 
-    partners.each (partner) ->
-      partner.related().profile.fetch()
-      partner.related().locations.fetch()
-
-    view = new PartnerCellCarouselView
+    new LandingCarouselView
       following: following
-      category: category
-      partners: partners
+      params: @params
+      el: $('.js-partner-category-carousels')
 
-    view.render()
-
-  $carousels = $('.js-partner-category-carousels')
-  $carousels.html _.pluck carouselViews, '$el'
-
-  fetchLocationCarousel(type).then ({ category, partners }) ->
-
-    return unless partners.length > 3
-
-    view = new PartnerCellCarouselView
+    new PrimaryCarousel
       following: following
-      category: category
-      partners: partners
+      params: @params
+      profiles: new Profiles MAIN_PROFILES
+      el: @$('.galleries-institutions-primary-carousel')
 
-    $carousels.prepend view.render().$el
+    @filterPartners = new FetchFilterPartners params: @params
 
-    return unless CURRENT_USER?
+    @facets = initFacets(params: @params, aggregations: @filterPartners.aggregations)
 
-    following.syncFollows partners.pluck 'default_profile_id'
+    @dropdownViews = _.map @facets, (facet) =>
+      new FilterDropdownView
+        el: @$(".galleries-institutions-search-filters .dropdown-#{facet.facetName}")
+        params: @params
+        filterPartners: @filterPartners
+        facet: facet
+
+    resultsView = new SearchResultsView
+      filterPartners: @filterPartners
+      following: following
+      params: @params
+      el: @$('.galleries-institutions-search-results')
+
+    @params.trigger 'firstLoad', @params
+
+  paramsChanged: ->
+    @$('.galleries-institutions-main-content').attr 'data-state', (if @params.hasSelection() then 'search' else 'landing')
+    @updateUrl()
+    @updateResultsHeading()
+
+  updateResultsHeading: ->
+    locationName = @dropdownViews[0].currentSelectionName()
+    categoryName = @dropdownViews[1].currentSelectionName()
+    resultsTitle = _.compact([
+      "All"
+      categoryName
+      _s.capitalize @root
+      if (locationName) then "near #{locationName}"
+    ]).join ' '
+    @$('.galleries-institutions-results-heading').text(resultsTitle)
+
+  updateUrl: ->
+    window.history.replaceState {}, null, @url()
+
+  url: ->
+    if @params.hasSelection()
+      "/#{@root}?#{@params.urlQueryString()}"
+    else
+      "/#{@root}"

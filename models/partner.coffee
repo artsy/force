@@ -48,9 +48,9 @@ module.exports = class Partner extends Backbone.Model
       @displayLocations()
     ]).join(', ')
 
-  # @param {String} preferredLocation (optional)
-  displayLocations: (preferredLocation) ->
-    @related().locations.displayLocations(preferredLocation)
+  # @param {String} preferredCity (optional)
+  displayLocations: (preferredCity) ->
+    @related().locations.displayLocations(preferredCity)
 
   getMailTo: ->
     return "" unless @has('email') && @get('email').length > 0
