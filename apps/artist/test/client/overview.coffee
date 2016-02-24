@@ -19,6 +19,7 @@ describe 'OverviewView', ->
 
   beforeEach ->
     $.onInfiniteScroll = sinon.stub()
+    $.waypoint = sinon.stub()
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub(Artist::, 'related').returns({
