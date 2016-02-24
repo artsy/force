@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
 { formatMoney } = require 'accounting'
 createSlider = require '../../../slider/index.coffee'
 
@@ -6,8 +7,8 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PriceFilterView extends Backbone.View
   classNames: 'cf-price cf-filter'
-  min: 0
-  max: 50000
+  min: 0.00
+  max: 50000.00
 
   initialize: ({ @params }) ->
     throw new Error 'Requires a params model' unless @params?
@@ -22,7 +23,7 @@ module.exports = class PriceFilterView extends Backbone.View
 
   _postRender: ->
     @slider = createSlider
-      $container: @$('#cf-price-slider')
+      $container: @$('.cf-price-slider')
       name: 'Price'
       min: @min
       max: @max
@@ -34,4 +35,11 @@ module.exports = class PriceFilterView extends Backbone.View
     @slider.on 'set', @updateParams
 
   updateParams: (values) =>
-    @params.set price_range: values.join '-'
+    parsedValues = _.map values, (val) -> parseInt(val)
+    if _.isEqual parsedValues, [@min, @max]
+      @params.unset 'price_range'
+      @params.set page: 1
+    else
+      @params.set
+        price_range: values.join '-'
+        page: 1
