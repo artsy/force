@@ -56,7 +56,6 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
 
     # Resizing
-    @breakCaptions()
     @sizeVideo()
 
     # FS and Super Article setup
