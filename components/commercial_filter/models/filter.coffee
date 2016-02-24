@@ -20,7 +20,8 @@ module.exports = class Filter extends Backbone.Model
       query filterArtworks(
         $aggregations: [ArtworkAggregation]!,
         $for_sale: Boolean,
-        $size: Int,
+        $height: String,
+        $width: String
         $page: Int,
         $color: String,
         $price_range: String,
@@ -30,8 +31,9 @@ module.exports = class Filter extends Backbone.Model
         filter_artworks(
           aggregations: $aggregations,
           for_sale: $for_sale,
-          size: $size,
           page: $page,
+          width: $width,
+          height: $height,
           color: $color,
           price_range: $price_range,
           gene_id: $gene_id,

@@ -6,6 +6,7 @@ UrlHandler = require '../../components/commercial_filter/url_handler.coffee'
 PaginatorView = require '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
+SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 sd = require('sharify').data
 
@@ -34,6 +35,17 @@ module.exports.init = ->
     el: $('.cf-sidebar__price')
     params: params
 
+  widthView = new SizeFilterView
+    el: $('.cf-sidebar__size__width')
+    attr: 'width'
+    params: params
+
+  heightView = new SizeFilterView
+    el: $('.cf-sidebar__size__height')
+    attr: 'height'
+    params: params
+
+  # bottom
   paginatorView = new PaginatorView
     el: $('.cf-pagination')
     params: params
