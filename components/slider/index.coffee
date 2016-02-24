@@ -2,12 +2,14 @@
 slider = require 'nouislider'
 template = -> require('./index.jade') arguments...
 
-module.exports = ({ $container, start, min, max, name, step, formatter = (val) -> val }) ->
+module.exports = ({ $container, start, min, max, name, step, append = "", formatter = (val) -> val }) ->
   return unless $container
   $container.html template name: name
 
   el = $container.find('.slider__slider')[0]
   $label = $container.find('.slider__top__label')
+
+  return unless el
 
   sliderInstance = slider.create el,
     start: start || [min, max]
@@ -19,6 +21,7 @@ module.exports = ({ $container, start, min, max, name, step, formatter = (val) -
 
   sliderInstance.on 'update', (values, handle) ->
     formattedValues = map values, formatter
-    $label.html formattedValues.join("-")
+    plus = if parseInt(values[1]) is max then "+" else ""
+    $label.html "#{formattedValues.join("-")}#{plus}#{append}"
 
   sliderInstance
