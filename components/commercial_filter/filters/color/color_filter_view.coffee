@@ -6,7 +6,7 @@ template = -> require('./index.jade') arguments...
 module.exports = class ColorFilterView extends Backbone.View
   className: 'cf-colors cf-filter'
   events:
-    'click h1' : 'setColor'
+    'click svg .clickable' : 'setColor'
 
   initialize: ({ @params, @aggregations }) ->
     throw new Error 'Requires a params model' unless @params?
