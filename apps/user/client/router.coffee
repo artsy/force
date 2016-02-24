@@ -9,6 +9,7 @@ SettingsView = require '../pages/settings/index.coffee'
 ProfileView = require '../pages/profile/index.coffee'
 DeleteView = require '../pages/delete/index.coffee'
 SavesView = require '../pages/saves/index.coffee'
+AuctionsView = require '../pages/auctions/index.coffee'
 
 module.exports = class UserSettingsRouter extends Backbone.Router
   routes:
@@ -20,6 +21,7 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     'user/delete#:section': 'delete'
     'user/saves': 'saves'
     'user/saves#:section': 'saves'
+    'user/auctions': 'auctions'
 
   initialize: ->
     user = new UserEdit USER
@@ -56,4 +58,8 @@ module.exports = class UserSettingsRouter extends Backbone.Router
 
   delete: ->
     @view = new DeleteView @models
+    @$main.html @view.render().$el
+
+  auctions: ->
+    @view = new AuctionsView @models
     @$main.html @view.render().$el
