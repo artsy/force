@@ -14,7 +14,6 @@ module.exports = class HeadlineView extends Backbone.View
     @listenTo @params, 'change', @render
 
   color: ->
-    medium: ->
     if @params.has('color')
       colorMap @params.get('color')
     else
