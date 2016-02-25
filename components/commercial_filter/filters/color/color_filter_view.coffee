@@ -5,6 +5,7 @@ template = require('./index.jade')
 module.exports = class ColorFilterView extends Backbone.View
   events:
     'click svg .clickable' : 'setColor'
+    'click .cf-sidebar__colors_clear-right' : 'clear'
 
   colors: ['darkblue', 'lightblue', 'darkgreen', 'lightgreen', 'yellow', 'gold', 'orange', 'darkorange', 'red', 'pink', 'darkviolet', 'violet', 'black-and-white']
 
@@ -16,6 +17,8 @@ module.exports = class ColorFilterView extends Backbone.View
 
     @$clickableColors = @$('svg .clickable')
     @$checkmark = @$('.icon-check')
+    @$clear = @$('.cf-sidebar__colors_clear-right')
+
     @listenTo @params, 'change:color', @renderSelectedAndEmptyStates
     @listenTo @aggregations, 'reset', @renderSelectedAndEmptyStates
 
@@ -25,6 +28,9 @@ module.exports = class ColorFilterView extends Backbone.View
 
   initialRender: ->
     @$el.html template
+
+  clear: ->
+    @params.unset('color')
 
   renderSelectedAndEmptyStates: =>
     # First remove all empty and selected states
@@ -41,6 +47,9 @@ module.exports = class ColorFilterView extends Backbone.View
       _.each(deSelectedColors, (color) ->
         @$("svg path[data-value='#{color}']").attr('data-selected', false)
       )
+      @$clear.show()
+    else
+      @$clear.hide()
 
     # Add empty states
     respColors = _.pluck @aggregations.get('COLOR').get('counts'), 'name'
