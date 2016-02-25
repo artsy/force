@@ -27,7 +27,8 @@ module.exports = class Filter extends Backbone.Model
         $color: String,
         $price_range: String,
         $gene_id: String,
-        $medium: String
+        $medium: String,
+        $sort: String,
       ){
         filter_artworks(
           aggregations: $aggregations,
@@ -39,7 +40,8 @@ module.exports = class Filter extends Backbone.Model
           color: $color,
           price_range: $price_range,
           gene_id: $gene_id,
-          medium: $medium
+          medium: $medium,
+          sort: $sort
         ){
           total
           aggregations {

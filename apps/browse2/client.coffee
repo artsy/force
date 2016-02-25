@@ -5,6 +5,8 @@ Filter = require '../../components/commercial_filter/models/filter.coffee'
 UrlHandler = require '../../components/commercial_filter/url_handler.coffee'
 PaginatorView = require '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
 HeadlineView = require '../../components/commercial_filter/views/headline/headline_view.coffee'
+TotalView = require '../../components/commercial_filter/views/total/total_view.coffee'
+SortView = require '../../components/commercial_filter/views/sort/sort_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
@@ -20,6 +22,14 @@ module.exports.init = ->
 
   headlineView = new HeadlineView
     el: $('.cf-headline')
+    params: params
+
+  totalView = new TotalView
+    el: $('.cf-total-sort__total')
+    filter: filter
+
+  totalView = new SortView
+    el: $('.cf-total-sort__sort')
     params: params
 
   pillboxView = new PillboxView
