@@ -9,5 +9,7 @@ mixin tab(name, path)
 
 nav.settings-tabs
   +tab('Saves & Follows', '/user/saves')
+  if user.isAdmin()
+    +tab('Auctions', '/user/auctions')
   +tab('Collector Profile', '/profile/edit')
   +tab('Settings', '/user/edit')
