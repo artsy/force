@@ -14,12 +14,17 @@ module.exports = class PriceFilterView extends Backbone.View
     throw new Error 'Requires a params model' unless @params?
 
     @listenToOnce @params, 'change', @render
+    @listenTo @params, 'change:price_range', @resetSlider
 
   render: ->
     @$el.html template()
 
     _.defer =>
       @_postRender()
+
+  resetSlider: ->
+    return if @params.has('price_range')
+    @slider.set([@min, @max])
 
   _postRender: ->
     @slider = createSlider
