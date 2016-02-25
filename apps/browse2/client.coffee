@@ -9,6 +9,7 @@ MediumFilterView = require '../../components/commercial_filter/filters/medium/me
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
+PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 sd = require('sharify').data
 
@@ -19,6 +20,10 @@ module.exports.init = ->
 
   headlineView = new HeadlineView
     el: $('.cf-headline')
+    params: params
+
+  pillboxView = new PillboxView
+    el: $('.cf-pillboxes')
     params: params
 
   # Main Artworks view
