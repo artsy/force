@@ -11,7 +11,7 @@ module.exports = class SavesView extends Backbone.View
 
   className: 'settings-page__saves'
 
-  initialize: ({ @user, @profile }) -> #
+  initialize: ({ @user }) -> #
 
   postRender: ->
     savedArtworksView = new SavedArtworksView user: @user
@@ -44,7 +44,6 @@ module.exports = class SavesView extends Backbone.View
   render: ->
     @$el.html template
       user: @user
-      profile: @profile
     @postRender()
     this
 

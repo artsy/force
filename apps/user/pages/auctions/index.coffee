@@ -8,7 +8,7 @@ module.exports = class AuctionsView extends Backbone.View
 
   className: 'settings-page__auctions'
 
-  initialize: ({ @user, @profile }) -> #
+  initialize: ({ @user }) -> #
 
   postRender: ->
     activeBidsView = new ActiveBidsView user: @user
@@ -23,7 +23,6 @@ module.exports = class AuctionsView extends Backbone.View
   render: ->
     @$el.html template
       user: @user
-      profile: @profile
     @postRender()
     this
 

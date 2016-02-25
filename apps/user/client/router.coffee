@@ -1,7 +1,5 @@
-{ USER, PROFILE } = require('sharify').data
+{ USER } = require('sharify').data
 Backbone = require 'backbone'
-Profile = require '../../../models/profile.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
 UserEdit = require '../models/user_edit.coffee'
 SettingsTabsView = require '../components/tabs/view.coffee'
 SettingsSectionsView = require '../components/sections/view.coffee'
@@ -24,12 +22,7 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     'user/auctions': 'auctions'
 
   initialize: ->
-    user = new UserEdit USER
-    profile = new Profile PROFILE
-
-    @models =
-      user: user
-      profile: profile
+    @user = new UserEdit USER
 
     @$el = $('.js-settings-page')
     @$main = @$el.find '.js-settings-page__content__main'
@@ -45,21 +38,21 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     @sections.update view: @view
 
   saves: ->
-    @view = new SavesView @models
+    @view = new SavesView user: @user
     @$main.html @view.render().$el
 
   settings: ->
-    @view = new SettingsView @models
+    @view = new SettingsView user: @user
     @$main.html @view.render().$el
 
   profile: ->
-    @view = new ProfileView @models
+    @view = new ProfileView user: @user
     @$main.html @view.render().$el
 
   delete: ->
-    @view = new DeleteView @models
+    @view = new DeleteView user: @user
     @$main.html @view.render().$el
 
   auctions: ->
-    @view = new AuctionsView @models
+    @view = new AuctionsView user: @user
     @$main.html @view.render().$el

@@ -56,15 +56,10 @@ describe '/user', ->
           .onCall 0
           .returns Promise.resolve @req.user
 
-      it 'fetches the current user and profile', ->
-        routes.settings @req, @res
-          .then =>
-            Backbone.sync.args[2][1].attributes.id
-              .should.equal @req.user.get 'default_profile_id'
-            Backbone.sync.args[2][2].data.access_token
-              .should.equal 'xxx'
-
       it 'fetches the authentications', ->
         routes.settings @req, @res
           .then =>
-            Backbone.sync.args[1][2].url.should.containEql '/me/authentications'
+            Backbone.sync.args[1][2].url.should
+              .containEql '/me/authentications'
+            Backbone.sync.args[1][2].data.access_token
+              .should.equal 'xxx'

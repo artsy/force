@@ -6,7 +6,7 @@ template = -> require('./index.jade') arguments...
 module.exports = class DeleteView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user, @profile }) -> #
+  initialize: ({ @user }) -> #
 
   postRender: ->
     deleteMyAccountView = new DeleteMyAccountView user: @user
@@ -20,7 +20,6 @@ module.exports = class DeleteView extends Backbone.View
   render: ->
     @$el.html template
       user: @user
-      profile: @profile
     @postRender()
     this
 
