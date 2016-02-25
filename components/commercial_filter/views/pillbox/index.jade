@@ -1,7 +1,7 @@
 .cf-pillbox__pillboxes
   if color
     .cf-pillbox__pillboxes__color
-      span.cf-pillbox__pillboxes_display= color
+      span.cf-pillbox__pillboxes_display(class="cf-pillbox__pillboxes_display--#{color}")
       span.cf-pillbox__pillboxes_clear(data-value='color') ×
   if medium
     .cf-pillbox__pillboxes__medium

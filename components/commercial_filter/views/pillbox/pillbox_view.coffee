@@ -5,7 +5,7 @@ s = require 'underscore.string'
 
 template = -> require('./index.jade') arguments...
 
-module.exports = class HeadlineView extends Backbone.View
+module.exports = class PillboxView extends Backbone.View
   events:
     'click .cf-pillbox__pillboxes_clear' : 'clear'
 
