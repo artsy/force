@@ -11,7 +11,6 @@ module.exports = class TotalView extends Backbone.View
     @listenTo @filter, 'change:total', @render
 
   render: ->
-    console.log "s(@filter.get('total')).numberFormat().value()", s(@filter.get('total')).numberFormat().value()
     @$el.html template
       total: s(@filter.get('total')).numberFormat().value()
 
