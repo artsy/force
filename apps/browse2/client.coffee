@@ -22,8 +22,6 @@ module.exports.init = ->
     el: $('.cf-headline')
     params: params
 
-  console.log "$('.cf-total-sort__total')", $('.cf-total-sort__total')
-
   totalView = new TotalView
     el: $('.cf-total-sort__total')
     filter: filter

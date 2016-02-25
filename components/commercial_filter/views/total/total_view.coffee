@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-_s = require 'underscore.string'
+s = require 'underscore.string'
 
 template = -> require('./index.jade') arguments...
 
@@ -11,6 +11,7 @@ module.exports = class TotalView extends Backbone.View
     @listenTo @filter, 'change:total', @render
 
   render: ->
+    console.log "s(@filter.get('total')).numberFormat().value()", s(@filter.get('total')).numberFormat().value()
     @$el.html template
-      total: _s.numberFormat @filter.get('total')
+      total: s(@filter.get('total')).numberFormat().value()
 
