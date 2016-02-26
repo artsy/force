@@ -38,8 +38,12 @@ module.exports = class HeadlineView extends Backbone.View
     else
       "for Sale"
 
+  showDefault: ->
+    !(@params.has('medium') or @params.has('color') or @params.has('price_range'))
+
   render: ->
     @$el.html template
       color: @color()
       medium: @medium()
       price: @price()
+      showDefault: @showDefault()

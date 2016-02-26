@@ -11,7 +11,7 @@ module.exports = class Params extends Backbone.Model
     'height'
   ]
   defaults:
-    size: 18
+    size: 25
     page: 1
     for_sale: true
     color: null
