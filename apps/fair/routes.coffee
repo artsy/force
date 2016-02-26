@@ -9,7 +9,6 @@ FairOrganizer = require '../../models/fair_organizer.coffee'
 FollowProfile = require '../../models/follow_profile.coffee'
 Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
-kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
 { captureSignup, validActions } = require './components/capture_signup/index.coffee'
 { parse, format } = require 'url'
@@ -102,18 +101,6 @@ InfoMenu = require '../../components/info_menu/index.coffee'
     success: ->
       success()
     error: res.backboneError
-
-@follows = (req, res, next) ->
-  return next() unless res.locals.sd.FAIR
-  return res.redirect("/#{req.params.id}") unless req.user
-  if (route = req.params.type) in _.keys(kinds)
-    res.locals.sd.KIND = kinds[route] or 'artist'
-    res.locals.sd.SECTION = 'follows'
-    res.render 'favorites',
-      profileId: req.user.get('default_profile_id')
-      type: route
-  else
-    next()
 
 # Fetches show for partner and redirects to the show permalink
 @showRedirect = (req, res, next) ->

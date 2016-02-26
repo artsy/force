@@ -54,6 +54,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
           el: $el
           collection: category.related().artworks
           doneFetching: true
+          artworkCollection: @user.defaultArtworkCollection()
 
         view.render()
         view.hideSecondRow()

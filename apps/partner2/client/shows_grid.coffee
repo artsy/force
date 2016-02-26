@@ -27,17 +27,19 @@ module.exports = class PartnerShowsGridView extends Backbone.View
   initialize: (options={}) ->
     { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
     @page = 1
-    @initializeShows()
 
-  renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
+  startUp: -> @initializeShows()
+
+  renderShows: (featured = [], current = [], upcoming = [], past = []) ->
     numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
-    return @$el.hide() if numberOfAllShows is 0
+    return @remove() if numberOfAllShows is 0
 
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
       heading: @heading
       seeAll: @seeAll
+      isCombined: @isCombined
       featured: featured[0]
       current: current
       upcoming: upcoming

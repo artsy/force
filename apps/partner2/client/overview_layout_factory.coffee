@@ -5,6 +5,8 @@ ArtistsListView = require '../components/artists_list/view.coffee'
 ArtistsGridView = require '../components/artists_grid/view.coffee'
 NewsView = require '../components/news/view.coffee'
 FixedCellsCountCarousel = require '../components/fixed_cells_count_carousel/view.coffee'
+ShowsGrid = require '../client/shows_grid.coffee'
+LocationsView = require '../components/locations/view.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 Articles = require '../../../collections/articles.coffee'
 aboutTemplate = -> require('../components/about/index.jade') arguments...
@@ -15,7 +17,11 @@ articlesTemplate = -> require('../components/fixed_cells_count_carousel/articles
 module.exports = (partner, profile) ->
   contract =
     institution: []
-    gallery_default: []
+    gallery_default: [
+      galleryDefaultShows partner, profile
+      galleryDefaultArtists partner, profile
+      galleryDefaultLocations partner, profile
+    ]
     gallery_one: [
       galleryOneHero partner, profile
       galleryOneAbout partner, profile
@@ -43,6 +49,39 @@ module.exports = (partner, profile) ->
     ]
 
   contract[partner.get('profile_layout')] or []
+
+#
+# Sections for gallery_default layout.
+#
+galleryDefaultShows = (partner, profile) ->
+  name: 'shows'
+  component: ShowsGrid
+  options:
+    partner: partner
+    isCombined: true
+    numberOfFeatured: if partner.claimed() then 1 else 0
+    numberOfShows: 6
+    seeAll: partner.claimed()
+    heading: 'Shows & Fair Booths' unless partner.claimed()
+
+galleryDefaultArtists = (partner, profile) ->
+  name: 'artists'
+  component: if partner.claimed() then ArtistsGridView else ArtistsListView
+  title: if partner.claimed() then null else 'Artists'
+  options: (
+    if partner.claimed()
+      { partner: partner }
+    else
+      { partner: partner, linkToPartnerArtist: false }
+  )
+
+galleryDefaultLocations = (partner, profile) ->
+  name: 'locations'
+  title: 'Locations'
+  component: (
+    LocationsView unless partner.claimed()
+  )
+  options: partner: partner
 
 #
 # Sections for gallery_one layout.

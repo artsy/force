@@ -1,26 +1,28 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
+{ Cities } = require 'places'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
+ViewHelpers = require './view_helpers.coffee'
+Profile = require '../../../../models/profile.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCellView extends Backbone.View
   className: 'partner-cell'
 
-  initialize: ({ @following, @partner }) ->
-    { @profile, @locations } = @partner.related()
+  initialize: ({ @following, @partner, @preferredCitySlug }) ->
 
-    @listenTo @partner, 'sync', @render
-    @listenTo @profile, 'sync', @render
-    @listenTo @locations, 'sync', @render
-
-  postRender: ->
+  postRender: -> _.defer =>
     @followButton = new FollowButtonView
       el: @$('.js-follow-button')
       following: @following
-      model: @profile
+      model: new Profile @partner.profile
       modelName: 'profile'
 
   render: ->
+    city = _.findWhere Cities, slug: @preferredCitySlug if @preferredCitySlug
     @$el.html template
       partner: @partner
+      preferredCity: city?.name
+      ViewHelpers: ViewHelpers
     @postRender()
     this

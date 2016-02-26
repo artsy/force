@@ -53,3 +53,7 @@ module.exports = class NewsView extends Backbone.View
     return @remove() unless news.length > 0
 
     @$el.html template news: news
+
+  remove: ->
+    @$el.closest('.partner-overview-section').empty()
+    super

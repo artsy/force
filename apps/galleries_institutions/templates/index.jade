@@ -1,11 +1,3 @@
 extends ./main
-
 block content
-  include ../components/primary_carousel/template
-
-  .js-partner-category-carousels
-    each carousel in carousels
-      - var category = carousel.category
-      - var partners = carousel.partners.models
-      .partner-category-carousel
-        include ../components/partner_cell_carousel/template
+  include ./index_landing

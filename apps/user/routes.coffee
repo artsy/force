@@ -1,6 +1,4 @@
-Q = require 'bluebird-q'
 UserEdit = require './models/user_edit'
-Profile = require '../../models/profile'
 
 @refresh = (req, res, next) ->
   return res.redirect '/' unless req.user
@@ -16,25 +14,17 @@ Profile = require '../../models/profile'
 
 @settings = (req, res, next) ->
   return res.redirect "/log_in?redirect_uri=#{req.url}" unless req.user
-  return res.redirect '/' if req.user.isAdmin()
+  return res.redirect '/' if req.url is '/user/delete' and req.user.isAdmin()
 
   user = new UserEdit req.user.attributes
-  profile = new Profile
 
   # Fetch private User fields & overried CurrentUser's sync
   # to add the `access_token` param
-  user
-    .fetch()
+  user.fetch()
     .then ->
-      profile.set 'id', req.user.get 'default_profile_id'
-
-      Q.all [
-        user.fetchAuthentications data: access_token: user.get 'accessToken'
-        profile.fetch data: access_token: user.get 'accessToken'
-      ]
+      user.fetchAuthentications data: access_token: user.get 'accessToken'
 
     .then ->
-      res.locals.sd.PROFILE = profile.toJSON()
       res.locals.sd.USER = user.toJSON()
 
       # HTTP cache headers to prevent browser caching
@@ -42,8 +32,6 @@ Profile = require '../../models/profile'
       res.set 'Pragma', 'no-cache'
       res.set 'Expires', '0'
 
-      res.render 'index',
-        user: user
-        profile: profile
+      res.render 'index', user: user
 
     .catch next

@@ -22,10 +22,9 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  merchandized_rails:
-    key: 'merchandized_rails'
-    edge: 'true'
+  artist_works_infinite_scroll:
+    key: 'artist_works_infinite_scroll'
     outcomes:
-      true: 0.5
-      false: 0.5
-    dimension: 'dimension8'
+      infinite: 0.5
+      finite: 0.5
+    dimension: 'dimension9'

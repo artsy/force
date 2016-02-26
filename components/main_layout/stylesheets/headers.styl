@@ -42,14 +42,21 @@
     width 60%
     padding-right 20px
   h2
-    margin 5px 0
+    margin-bottom 20px
     avant-garde-size('body')
+  .bisected-header-cell-section
+    margin-bottom 40px
+    &:last-child
+      margin-bottom 0
   @media screen and (max-width: 768px)
     float none
     block-margins(20px)
     &:first-child
     &:last-child
       width 100% !important
+    &:first-child
+      .bisected-header-cell-section:last-child
+        margin-bottom 40px
 .evenly-bisected-header-cell
   @extends .bisected-header-cell
   &:last-child

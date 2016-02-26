@@ -123,7 +123,7 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     gallery          = ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
-    institution      = ['overview', 'shows', 'collection', 'articles', 'shop', 'about']
+    institution      = ['shows', 'collection', 'articles', 'shop', 'about']
     unclaimedGallery = ['overview']
 
     if @profile.isInstitution()

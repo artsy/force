@@ -165,7 +165,6 @@ module.exports = (app) ->
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
   app.use require "../apps/flash"
-  app.use require "../apps/galleries_institutions"
   app.use require "../apps/gallery_insights"
   app.use require "../apps/partnerships"
   app.use require "../apps/gene"
@@ -179,7 +178,6 @@ module.exports = (app) ->
   app.use require "../apps/show"
   app.use require "../apps/shows"
   app.use require "../apps/tag"
-  app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
   app.use require "../apps/style_guide"
@@ -192,6 +190,7 @@ module.exports = (app) ->
   app.use require '../apps/dev'
 
   # Non-profile vanity url apps
+  app.use require "../apps/galleries_institutions"
   app.use require "../apps/articles"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"
@@ -209,7 +208,6 @@ module.exports = (app) ->
 
   # Last but not least user profiles
   app.use require "../apps/user"
-  app.use require "../apps/user_profile"
 
   # route to ping for system time
   app.get '/system/time', timeout('25s'), (req, res)->

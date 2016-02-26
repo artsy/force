@@ -1,49 +1,49 @@
+.gpc-bumpers.js-gpc-navigation
+  .gpc-bumper-prev.gi-carousel-arrow-prev.js-gpc-prev: i.icon-chevron-left
+  .gpc-bumber-next.gi-carousel-arrow-next.js-gpc-next: i.icon-chevron-right
 
-.galleries-primary-carousel.js-galleries-primary-carousel.gi-carousel-arrow-reveal
-  .gpc-bumpers.js-gpc-navigation
-    .gpc-bumper-prev.gi-carousel-arrow-prev.js-gpc-prev: i.icon-chevron-left
-    .gpc-bumber-next.gi-carousel-arrow-next.js-gpc-next: i.icon-chevron-right
+.gpc-body
+  .gpc-overlays
+    for profile, i in profiles
+      - var show = profile.related().owner.related().shows.featured()
+      .gpc-overlay.js-gpc-overlay( data-idx= i )
+        a.gpc-headline( href= profile.related().owner.href() )
+          = profile.related().owner.get('name')
 
-  .gpc-body
-    .gpc-overlays
-      for profile, i in profiles
+        if show
+          a( href= show.href() )
+            .gpc-subheadline
+              | Current #{show.has('location') ? show.formatCity() : ''} Show
+            .gpc-subheadline-alt
+              = show.get('name')
+            .gpc-location-dates
+              include ../../../../components/featured_shows/metadata/location_with_dates
+
+        button.gpc-follow-button.avant-garde-button-white.is-small.follow-button.js-follow-button(
+          data-id= profile.id
+        )
+
+    - var index = 0
+    - var length = profiles.length
+    .mgr-dots
+      for x, i in new Array(length)
+        .mgr-dot.js-gpc-dot(
+          class= (index === i ? 'is-active' : undefined)
+          data-index= i
+        ) •
+
+  .gpc-carousel
+    .gpc-carousel-cells.js-mgr-cells
+      for profile in profiles
         - var show = profile.related().owner.related().shows.featured()
-        .gpc-overlay.js-gpc-overlay( data-idx= i )
-          a.gpc-headline( href= profile.related().owner.href() )
-            = profile.related().owner.get('name')
-
-          if show
-            a( href= show.href() )
-              .gpc-subheadline
-                | Current #{show.has('location') ? show.formatCity() : ''} Show
-              .gpc-subheadline-alt
-                = show.get('name')
-              .gpc-location-dates
-                include ../../../../components/featured_shows/metadata/location_with_dates
-
-          button.gpc-follow-button.avant-garde-button-white.is-small.follow-button.js-follow-button(
-            data-id= profile.id
+        .gpc-carousel-cell.js-mgr-cell
+          if show && show.isWithImages()
+            - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
+          else if profile.get('cover_image')
+            - var imageUrl = profile.coverImage().imageUrlForMaxSize()
+          else
+            - var imageUrl = ''
+          a.gpc-carousel-figure(
+            href= (show && show.href()) || profile.related().owner.href()
+            style='background-image: url(' + imageUrl + ')'
           )
-
-      - var index = 0
-      - var length = profiles.length
-      .mgr-dots
-        for x, i in new Array(length)
-          .mgr-dot.js-gpc-dot(
-            class= (index === i ? 'is-active' : undefined)
-            data-index= i
-          ) •
-
-    .gpc-carousel
-      .gpc-carousel-cells.js-mgr-cells
-        for profile in profiles
-          - var show = profile.related().owner.related().shows.featured()
-          .gpc-carousel-cell.js-mgr-cell
-            if show && show.isWithImages()
-              - var imageUrl = show.hasImage('featured') ? show.imageUrl('featured') : show.imageUrlForMaxSize()
-            else
-              - var imageUrl = profile.coverImage().imageUrlForMaxSize()
-            a.gpc-carousel-figure(
-              href= (show && show.href()) || profile.related().owner.href()
-              style='background-image: url(' + imageUrl + ')'
-            )

@@ -34,10 +34,12 @@ describe 'partner2 index', ->
       @app.use partner2
       @app.use partner1
 
-    _.each ['/:id', '/:id/overview', '/:id/shows'], (route) ->
+    _.each ['/:id', '/:id/overview', '/:id/shows', '/:id/works', '/:id/collection',
+            '/:id/shop', '/:id/artists', '/:id/artist/:artistId', '/:id/articles',
+            '/:id/contact', '/:id/about'], (route) ->
       it "renders partner1 for #{route}", ->
         request(@app)
-          .get route.replace(':id', 'partner-id')
+          .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
           .expect 200
           .expect 'partner1'
 
@@ -47,10 +49,12 @@ describe 'partner2 index', ->
       @app.use partner2
       @app.use partner1
 
-    _.each ['/:id', '/:id/overview', '/:id/shows'], (route) ->
+    _.each ['/:id', '/:id/overview', '/:id/shows', '/:id/works', '/:id/collection',
+            '/:id/shop', '/:id/artists', '/:id/artist/:artistId', '/:id/articles',
+            '/:id/contact', '/:id/about'], (route) ->
       it "renders partner1 for #{route}", ->
         request(@app)
-          .get route.replace(':id', 'partner-id')
+          .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
           .expect 200
           .expect 'partner1'
 
@@ -60,10 +64,12 @@ describe 'partner2 index', ->
       @app.use partner2
       @app.use partner1
 
-    _.each ['/:id', '/:id/shows'], (route) ->
+    _.each ['/:id', '/:id/shows', '/:id/works', '/:id/collection', '/:id/shop',
+            '/:id/artists', '/:id/artist/:artistId', '/:id/articles',
+            '/:id/contact', '/:id/about'], (route) ->
       it "renders partner2 for #{route}", ->
         request(@app)
-          .get route.replace(':id', 'partner-id')
+          .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
           .expect 200
           .expect (res) ->
             # https://github.com/visionmedia/supertest/issues/253

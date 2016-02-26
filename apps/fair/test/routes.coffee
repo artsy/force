@@ -45,9 +45,6 @@ describe 'Fair routes', ->
       routes.fairArticles @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
 
-      routes.follows @req, @res, (next = sinon.stub())
-      next.called.should.be.ok()
-
       routes.browse @req, @res, (next = sinon.stub())
       next.called.should.be.ok()
 
@@ -91,23 +88,6 @@ describe 'Fair routes', ->
       routes.fairArticles @req, @res
       @res.locals.sd.SECTION.should.equal 'posts'
       @res.render.args[0][0].should.equal 'index'
-
-  describe '#follows', ->
-    beforeEach ->
-      sinon.stub Backbone, 'sync'
-
-    afterEach ->
-      Backbone.sync.restore()
-
-    it 'redirects to the homepage without a user', ->
-      routes.follows @req, @res
-      @res.redirect.args[0][0].should.equal '/some-fair'
-
-    it 'renders the follows template', ->
-      @req.user = new CurrentUser fabricate 'user'
-      @req.params.type = 'artists'
-      routes.follows @req, @res
-      @res.render.args[0][0].should.equal 'favorites'
 
   describe '#captureSignup', ->
     beforeEach ->

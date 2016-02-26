@@ -1,6 +1,17 @@
 @require '../../../../components/stylus_lib'
 
 partner-cell-metadata-height = 73px
+cell-margin = 30px
+
+.partner-cell
+  display inline-block
+  width calc(33.333% \- (cell-margin * 2 / 3))
+  margin-right cell-margin
+
+  @media screen and (max-width: 1024px)
+    cell-margin = cell-margin / 2
+    width calc(33.333% \- (cell-margin * 2 / 3))
+    margin-right cell-margin
 
 .partner-featured-image .hoverable-image
   display block
@@ -13,14 +24,17 @@ partner-cell-metadata-height = 73px
   align-items center
   min-height partner-cell-metadata-height
 .partner-cell-metadata-text
-  height 100%
+  height 48px
   flex 1 1 auto
   overflow hidden
   text-overflow ellipsis
 .partner-cell-name
   avant-garde-size('m-headline')
   text-decoration none
+  text-overflow ellipsis
+  white-space nowrap
 .partner-cell-location
+  display inline
   garamond-size(s-body)
   min-height 25px
 .partner-cell-follow-button
@@ -29,15 +43,5 @@ partner-cell-metadata-height = 73px
   margin-left 10px
 .hoverable-image
   background-color gray-lightest-color
-  &.is-missing:before
-    position absolute
-    content attr(data-initials)
-    color gray-dark-color
-    avant-garde()
-    font-size 27px
-    line-height 0
-    // 2% offset for Avant Garde baseline
-    top 52%
-    left 0
-    right 0
-    text-align center
+  &.is-missing:after
+    z-index 1

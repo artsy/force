@@ -67,17 +67,13 @@ module.exports.Layers = class Layers extends Backbone.Collection
 
 module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
   template: ->
-    if @relatedV2
-      newTemplate arguments...
-    else
-      template arguments...
+    template arguments...
 
   events:
     'click .layered-search-layer-button': 'selectLayer'
 
   initialize: (options = {}) ->
     { @artwork, @fair } = options
-    @relatedV2 = splitTest('merchandized_rails').outcome() is 'true'
     @setupLayers()
 
   setupLayers: ->
@@ -130,26 +126,18 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
         'data-type': layer.get 'type'
         'data-state': 'active'
 
-
-    if @relatedV2
-      fillwidthView = new FillwidthView
-        doneFetching: true
-        collection: layer.artworks
-        el: @$layeredSearchResults
-      fillwidthView.render()
-    else
-      # Ideally we should be removing this view before re-rendering
-      # which would require a small refactor to the ArtworkColumns component
-      @artworkColumnsView = new ArtworkColumnsView
-        el: @$layeredSearchResults
-        collection: layer.artworks
-        numberOfColumns: 4
-        gutterWidth: 40
-        maxArtworkHeight: 400
-        isOrdered: false
-        seeMore: false
-        allowDuplicates: true
-        artworkSize: 'tall'
+    # Ideally we should be removing this view before re-rendering
+    # which would require a small refactor to the ArtworkColumns component
+    @artworkColumnsView = new ArtworkColumnsView
+      el: @$layeredSearchResults
+      collection: layer.artworks
+      numberOfColumns: 4
+      gutterWidth: 40
+      maxArtworkHeight: 400
+      isOrdered: false
+      seeMore: false
+      allowDuplicates: true
+      artworkSize: 'tall'
 
   postRender: ->
     @$layeredSearchResults = @$('#layered-search-results-container')

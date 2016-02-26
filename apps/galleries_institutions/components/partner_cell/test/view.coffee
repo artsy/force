@@ -16,25 +16,65 @@ describe 'PartnerCellView', ->
     benv.teardown()
 
   beforeEach ->
-    @partner = new Partner fabricate 'partner'
-    @view = new PartnerCellView partner: @partner
+    @partner = {
+      id: "soze-gallery",
+      name: "Soze Gallery",
+      initials: "SG",
+      locations: [{ city: "Los Angeles" }, { city: "New York" }],
+      profile:
+        id: "soze-gallery",
+        href: "/soze-gallery",
+        image: cropped: url: "/something.jpeg"
+    }
 
   describe '#render', ->
-    beforeEach ->
+    it 'renders partner data', ->
+      @view = new PartnerCellView partner: @partner
       @view.render()
+      @view.$('.partner-cell-name').text().should.equal 'Soze Gallery'
+      @view.$('.partner-cell-follow-button').data('id').should.equal 'soze-gallery'
+      @view.$('.partner-featured-image').attr('href').should.equal '/soze-gallery'
+      @view.$('.partner-cell-name').attr('href').should.equal '/soze-gallery'
+      @view.$('.hoverable-image').data('initials').should.equal 'SG'
 
-    it 'renders correctly', ->
-      @view.$('.partner-cell-name').text()
-        .should.equal 'Gagosian Gallery'
+    describe 'with an image', ->
+      beforeEach ->
+        @view = new PartnerCellView partner: @partner
+        @view.render()
 
-    it 're-renders correctly when other data syncs', ->
-      @view.$('.partner-cell-location').is ':empty'
-        .should.be.true()
+      it 'sets the class', ->
+        @view.$('.hoverable-image').hasClass('is-missing').should.be.false()
 
-      @partner.related().locations.add fabricate 'partner_location'
-      @partner.related().locations.trigger 'sync'
+      it 'sets background image', ->
+        @view.$('.hoverable-image').attr('style').should.containEql 'background-image: url(/something.jpeg)'
 
-      @view.$('.partner-cell-location').is ':empty'
-        .should.be.false()
-      @view.$('.partner-cell-location').text()
-        .should.equal 'San Francisco'
+    describe 'without an image', ->
+      beforeEach ->
+        @partner.profile.image = {}
+        @view = new PartnerCellView partner: @partner
+        @view.render()
+
+      it 'sets the class', ->
+        @view.$('.hoverable-image').hasClass('is-missing').should.be.true()
+
+      it 'does not set background image', ->
+        @view.$('.hoverable-image').is('style').should.be.false()
+
+    describe 'preferred city', ->
+      it 'lists preferred city first if gallery location matches', ->
+        @view = new PartnerCellView partner: @partner, preferredCitySlug: 'new-york'
+        @view.render()
+
+        @view.$('.partner-cell-location').text().should.equal 'New York & 1 other location'
+
+      it 'lists first location first if gallery location does not match', ->
+        @view = new PartnerCellView partner: @partner, preferredCitySlug: 'tokyo'
+        @view.render()
+
+        @view.$('.partner-cell-location').text().should.equal 'Los Angeles & 1 other location'
+
+      it 'lists first location first if no peferred city provided', ->
+        @view = new PartnerCellView partner: @partner
+        @view.render()
+
+        @view.$('.partner-cell-location').text().should.equal 'Los Angeles & 1 other location'

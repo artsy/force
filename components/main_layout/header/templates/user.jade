@@ -4,10 +4,11 @@
       = user.get('name') ? user.get('name') : 'Account'
 
       .hover-pulldown-menu
-        a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
-        a( href='/following/artists' ) Artists
-        a( href='/favorites' ) Works
-        a( href='/following/profiles' ) Galleries
+        a.hpm-header( href='/user/saves' ) Follows &amp; Favorites
+        a( href='/user/saves' ) Artists
+        a( href='/user/saves' ) Works
+        //- a( href='/user/saves' ) Galleries // Later
+
         hr
 
         if user.isAdmin()

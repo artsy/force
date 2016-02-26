@@ -4,7 +4,7 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PaginatorView extends Backbone.View
   maxPage: 100
-  pagesInterval: 1
+  pagesInterval: 2
 
   events:
     'click li a' : 'setPage'
@@ -19,6 +19,7 @@ module.exports = class PaginatorView extends Backbone.View
   setPage: (e) ->
     e.preventDefault()
     @params.set page: $(e.currentTarget).data('value')
+    $('html,body').animate { scrollTop: 0 }, 400
 
   totalPages: ->
     calculated = Math.floor(@filter.get('total') / @params.get('size'))

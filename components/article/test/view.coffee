@@ -25,8 +25,6 @@ describe 'ArticleView', ->
         resolve(__dirname, '../view')
         ['artworkItemTemplate', 'editTemplate', 'embedTemplate', 'calloutTemplate' ]
       )
-      @ArticleView.__set__ 'CurrentUser', { orNull: ->
-        new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
       stubChildClasses @ArticleView, this,
@@ -36,6 +34,7 @@ describe 'ArticleView', ->
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
         article: @article = new Article _.extend fixtures.article,
+          author_id: '4d8cd73191a5c50ce210002a'
           sections: [
             { type: 'text', body: 'Foo' }
             {
@@ -56,7 +55,7 @@ describe 'ArticleView', ->
               title: ''
               hide_image: false
             }
-        ]
+          ]
         author: new Backbone.Model fabricate 'user'
         sd:
           SCROLL_ARTICLE: 'static'
@@ -73,11 +72,15 @@ describe 'ArticleView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     sinon.stub($, 'get').returns { html: '<iframe>Test</iframe>' }
-    @view = new @ArticleView el: $('body'), article: @article
+    sinon.stub @ArticleView.prototype, 'initialize'
+    @view = new @ArticleView
+    @view.setElement $('body')
+    @view.article = @article
 
   afterEach ->
     Backbone.sync.restore()
     $.get.restore()
+    @ArticleView.prototype.initialize.restore()
 
   describe '#renderSlideshow', ->
 
@@ -109,8 +112,7 @@ describe 'ArticleView', ->
 
     it 'shows the edit button when the author_id matches user and the user has \
         partner access', ->
-      @view.user.set has_partner_access: true
-      @view.article.set author_id: @view.user.id
+      @view.user = _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a', has_partner_access: true } )
       @view.checkEditable()
       @view.renderedEditButton.should.be.ok()
 
@@ -118,7 +120,8 @@ describe 'ArticleView', ->
 
     it 'renders embedded content from the article', ->
       @view.renderEmbedSections()
-      @view.$('.article-section-embed').html().should.containEql '<iframe>Test</iframe>'
+      _.defer => _.defer =>
+        @view.$('.article-section-embed').html().should.containEql '<iframe>Test</iframe>'
 
     it 'removes the loading spinner after loading', ->
       @view.renderEmbedSections()
@@ -129,12 +132,10 @@ describe 'ArticleView', ->
     it 'renders callout content from the article', ->
       Backbone.sync.restore()
       sinon.stub Backbone, 'sync'
-
       Backbone.sync
         .onCall 0
         .yieldsTo 'success', article = fabricate 'article', { thumbnail_title: 'Callout title', id: '123'}
         .returns Q.resolve(article)
-
       @view.renderCalloutSections()
-        .then =>
-          @view.$('.article-section-callout-container').html().should.containEql 'Callout title'
+      _.defer =>
+        @view.$('.article-section-callout-container').html().should.containEql 'Callout title'

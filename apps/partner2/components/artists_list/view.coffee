@@ -31,16 +31,11 @@ module.exports = class PartnerArtistsListView extends Backbone.View
       Q.promise (resolve) => resolve @collection.models
 
   render: (artists) =>
-    if artists.length is 0
-      @$el.html """
-        <div class="artists-group artists-group-6-columns">
-          <h2 class="avant-garde-header-center artists-group-label">No Results</h2>
-        </div>
-      """
-    else
-      @$el.html template
-        groups: @groupArtists(artists)
-        linkToPartnerArtist: @linkToPartnerArtist
+    @remove() if artists.length is 0
+
+    @$el.html template
+      groups: @groupArtists(artists)
+      linkToPartnerArtist: @linkToPartnerArtist
 
   groupArtists: (pas) ->
     h = Math.ceil pas.length / @numberOfColumns
@@ -68,3 +63,7 @@ module.exports = class PartnerArtistsListView extends Backbone.View
         g.cols.push g.list.slice(i, i + step); i += step
 
     _.filter [bigger, smaller], (g) -> g.list.length > 0
+
+  remove: ->
+    @$el.closest('.partner-overview-section').empty()
+    super

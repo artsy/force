@@ -26,7 +26,6 @@ PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedNavigationView = require '../components/related_navigation/view.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
-setupArtworkRails = require './setup_artwork_rails.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
 actionsTemplate = -> require('../templates/_actions.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
@@ -41,11 +40,9 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-buy-button': 'buy'
 
   initialize: ({ @artwork }) ->
-    @showRails = splitTest('merchandized_rails').outcome() is 'true'
     @location = window.location
     @artist = @artwork.related().artist
     @artists = @artwork.related().artists
-    setupArtworkRails(@artwork, @artist) if @showRails
     @checkQueryStringForAuction()
     @setupCurrentUser()
     @setupRelatedArticles()
@@ -77,7 +74,7 @@ module.exports = class ArtworkView extends Backbone.View
     $.when.apply(null, relatedContentFetches).done =>
       relatedCollections = _.values _.pick(@artwork.related(), ['sales', 'features', 'fairs', 'shows'])
       isAnythingRelated = _.any relatedCollections, (xs) -> xs.length
-      unless isAnythingRelated or @showRails
+      unless isAnythingRelated
         @belowTheFoldView.setupLayeredSearch()
 
     relatedNavigationView = new RelatedNavigationView model: @artwork
@@ -98,7 +95,7 @@ module.exports = class ArtworkView extends Backbone.View
       _.defer => @setupZigZag()
 
   handleFairs: (fairs) ->
-    return unless fairs.length and not @showRails
+    return unless fairs.length
     fair = fairs.first()
 
     @belowTheFoldView.setupFair fair
@@ -121,7 +118,7 @@ module.exports = class ArtworkView extends Backbone.View
       @setupAuction @sale
 
   handleShows: (shows) ->
-    return unless shows.length and not @showRails
+    return unless shows.length
 
     @$('#artist-artworks-section').remove()
     new RelatedShowView
@@ -189,7 +186,7 @@ module.exports = class ArtworkView extends Backbone.View
     # Ensure the current artwork is not in the collection
     @artist.related().artworks.remove @artwork
 
-    return unless @artist.related().artworks.length and not @showRails
+    return unless @artist.related().artworks.length
     @$('#artist-artworks-section').addClass('is-fade-in').show()
 
     new ArtworkColumnsView
@@ -262,21 +259,12 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    if @currentUser?.hasLabFeature 'Set Management'
-      SaveControls = require '../../../components/artwork_item/save_controls.coffee'
-      @$('.circle-icon-button-save').after(
-        require('../../../components/artwork_item/save_controls_two_btn/templates/artwork_page_button.jade')()
-      )
-      new SaveControls
-        model: artwork
-        el: @$('.artwork-image-actions')
-    else
-      new SaveButton
-        analyticsSaveMessage: 'Added artwork to collection, via artwork info'
-        analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
-        el: $el
-        saved: @saved
-        model: artwork
+    new SaveButton
+      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+      el: $el
+      saved: @saved
+      model: artwork
 
   setupFollowButtons: ->
     @followButtons = @artists.map (artist) =>

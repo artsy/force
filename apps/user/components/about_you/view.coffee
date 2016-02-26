@@ -8,7 +8,7 @@ module.exports = class AboutYouView extends GenericFormView
 
   className: 'settings-about-you'
 
-  initialize: ({ @user, @profile }) -> #
+  initialize: ({ @user }) -> #
 
   postRender: ->
     city = @model.related().location.toString()
@@ -27,7 +27,6 @@ module.exports = class AboutYouView extends GenericFormView
   render: ->
     @$el.html template
       user: @user
-      profile: @profile
     @postRender()
     this
 

@@ -2,7 +2,7 @@ mixin showsGallery(shows, isFeatured, type)
   .partner-shows-container
     include show_figures
 
-.partner2-shows
+.partner2-shows( class= isCombined ? 'combined' : null )
 
   if heading
     h2.partner-shows-heading= heading
@@ -27,8 +27,8 @@ mixin showsGallery(shows, isFeatured, type)
       +showsGallery(past, false, 'past')
 
   if seeAll
-    section.partner-shows-section
-      .partner-shows-see-all.avant-garde-header-center
+    section.partner-shows-section.actions.see-all
+      .avant-garde-header-center
         a.faux-underline-hover.partner-route-link(
           href="#{partner.href()}/shows"
         ) See all shows

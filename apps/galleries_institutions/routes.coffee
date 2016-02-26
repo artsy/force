@@ -1,86 +1,82 @@
-_ = require 'underscore'
-_s = require 'underscore.string'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
+_ = require 'underscore'
+Q = require 'bluebird-q'
+qs = require 'qs'
+metaphysics = require '../../lib/metaphysics'
 { API_URL } = require('sharify').data
-PartnerCategories = require '../../collections/partner_categories'
-PrimaryCarousel = require './components/primary_carousel/fetch'
-CategoryCarousel = require './components/partner_cell_carousel/fetch'
+{ FeaturedCities } = require 'places'
 Partners = require '../../collections/partners'
 Profiles = require '../../collections/profiles'
+ViewHelpers = require './components/partner_cell/view_helpers'
+query = require './queries/partner_categories_query'
+partnerTypes = require './queries/partner_types'
+mergeBuckets = require './components/partner_cell_carousel/merge_buckets'
+fetchPrimaryCarousel = require './components/primary_carousel/fetch'
+facetDefaults = require './components/filter_facet/facet_defaults.coffee'
 
-# Landing page
+mapType =
+  galleries: 'gallery'
+  institutions: 'institution'
 
-fetchCategories = (type) ->
-  categories = new PartnerCategories
-  categories.fetchUntilEndInParallel cache: true, data: category_type: type, internal: false
-    .then ->
-      Q.all categories.map (category) ->
-        carousel = new CategoryCarousel category: category
-        carousel.fetch()
+mapTypeClasses =
+  galleries: ['PartnerGallery']
+  institutions: ['PartnerInstitution', 'PartnerInstitutionalSeller']
 
-    .then (carousels) ->
-      _.shuffle _.select carousels, (carousel) ->
-        carousel.partners.length >= 3
+@index = (req, res, next) ->
+  type = mapType[req.params.type]
+  searchParams = _.pick(req.query, 'location', 'category')
+  params = _.extend type: type, searchParams
 
-@galleries = (req, res, next) ->
-  partners req, res, next, 'gallery'
-
-@institutions = (req, res, next) ->
-  partners req, res, next, 'institution'
-
-partners = (req, res, next, type) ->
-
-  carousel = new PrimaryCarousel
   Q.all([
-    carousel.fetch(type)
-    fetchCategories(_s.capitalize type)
-  ]).spread (profiles, carousels) ->
+    fetchPrimaryCarousel(params)
+    metaphysics(
+      query: query
+      variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
+    ).then (data) ->
+      _.compact _.map data.partner_categories, (category) ->
+        return null if category.primary.length + category.secondary.length < 3
+        _.extend _.omit(category, 'primary', 'secondary'),
+          partners: mergeBuckets(category.primary, category.secondary),
+          facet: 'category'
+
+  ]).spread (profiles, categories) ->
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
-    res.locals.sd.CAROUSELS = carousels
+    res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
     res.render 'index',
-      type: type
+      ViewHelpers: ViewHelpers
       showAZLink: true
+      type: type
       profiles: profiles.models
-      carousels: carousels
+      categories: _.shuffle categories
+      facets: facetDefaults
+      state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
-    .catch next
-    .done()
+  .catch next
+  .done()
 
 # A to Z page
 
-fetchAZ =
-  gallery: ->
-    new Partners()
-      .fetchUntilEndInParallel
-        cache: true
-        data:
-          size: 20
-          type: 'PartnerGallery'
-          sort: 'sortable_id'
-          has_full_profile: true
+@partnersAZ = (req, res, next) ->
+  type = mapType[req.params.type]
 
-  institution: ->
-    new Profiles()
-      .fetchUntilEndInParallel
-        cache: true
-        url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
-        data: size: 20
+  partners = new Partners()
+  partners.fetchUntilEndInParallel
+    cache: true
+    data:
+      size: 20
+      type: mapTypeClasses[req.params.type]
+      sort: 'sortable_id'
+      has_full_profile: true
+      eligible_for_listing: true
 
-@galleriesAZ = (req, res, next) ->
-  partnersAZ req, res, next, 'gallery'
-
-@institutionsAZ = (req, res, next) ->
-  partnersAZ req, res, next, 'institution'
-
-partnersAZ = (req, res, next, type) ->
-  fetchAZ[type]().then (partners) ->
+  .then ->
     aToZGroup = partners.groupByAlphaWithColumns 3
     res.render 'a_z',
       type: type
       showAZLink: false
       aToZGroup: aToZGroup
 
-    .catch next
-    .done()
+  .catch next
+  .done()
+

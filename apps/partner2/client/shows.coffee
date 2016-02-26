@@ -15,8 +15,9 @@ module.exports = class PartnerShowsView extends Backbone.View
     @initializeShows()
 
   initializeShows: ->
-    new PartnerShowsGrid
+    (new PartnerShowsGrid
       el: @$('#partner-shows')
       partner: @partner
       numberOfFeatured: if @profile.isGallery() then 0 else 1
       seeAll: false
+    ).startUp()

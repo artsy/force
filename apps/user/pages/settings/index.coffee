@@ -9,7 +9,7 @@ template = -> require('./index.jade') arguments...
 module.exports = class SettingsView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user, @profile }) -> #
+  initialize: ({ @user }) -> #
 
   postRender: ->
     informationView = new InformationView model: @user, user: @user

@@ -2,14 +2,17 @@
 
 .pcc-header
   .pcc-header-left
-    = category.get('name')
+    = category.name
+  a.pcc-header-right.pcc-see-all.js-partner-filter(
+    data-id= category.id
+    data-facet= category.facet
+  ) See All
 .pcc-body.gi-carousel-arrow-reveal
-
   .pcc-nav.js-pcc-nav
     .pcc-prev.gi-carousel-arrow-prev.js-pcc-prev: i.icon-chevron-left
     .pcc-next.gi-carousel-arrow-next.js-pcc-next: i.icon-chevron-right
 
   .pcc-content.js-partner-cells
-    each partner in partners
-      .partner-cell
+    each partner in category.partners
+      .partner-cell(data-id= partner.id)
         include ../partner_cell/index

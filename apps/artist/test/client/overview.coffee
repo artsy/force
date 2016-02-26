@@ -11,7 +11,7 @@ describe 'OverviewView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @OverviewView = benv.requireWithJadeify resolve(__dirname, '../../client/views/overview'), ['template']
+      @OverviewView = benv.requireWithJadeify require.resolve('../../client/views/overview'), ['template']
       done()
 
   after ->
@@ -19,6 +19,12 @@ describe 'OverviewView', ->
 
   beforeEach ->
     $.onInfiniteScroll = sinon.stub()
+
+    $.waypoints or= -> #
+    $.fn.waypoint or= -> #
+    sinon.stub $, 'waypoints'
+    sinon.stub $.fn, 'waypoint'
+
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub(Artist::, 'related').returns({
@@ -43,6 +49,8 @@ describe 'OverviewView', ->
     Backbone.sync.restore()
     @view.remove()
     @model.related.restore()
+    $.waypoints.restore()
+    $.fn.waypoint.restore()
 
   describe '#render', ->
     it 'renders the template', ->
