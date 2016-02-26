@@ -3,6 +3,7 @@ _ = require 'underscore'
 s = require 'underscore.string'
 { formatMoney } = require 'accounting'
 colorMap = require './color_map.coffee'
+mediumMap = require '../../filters/medium/medium_map.coffee'
 
 template = -> require('./index.jade') arguments...
 
@@ -21,11 +22,7 @@ module.exports = class HeadlineView extends Backbone.View
 
   medium: ->
     if @params.has('medium')
-      s(@params.get('medium'))
-        .humanize()
-        .replace('slash', '/')
-        .capitalize()
-        .value()
+      mediumMap[@params.get('medium')]
     else
       "Artworks"
 
