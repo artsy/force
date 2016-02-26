@@ -12,6 +12,6 @@ module.exports = (slug) ->
     'pink': "Pink"
     'darkviolet': "Dark Violet"
     'violet': "Violet"
-    'black-and-white': "Black and White"
+    'black-and-white': "Black & White"
 
   colors[slug]
