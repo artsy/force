@@ -34,8 +34,11 @@ module.exports = class PriceFilterView extends Backbone.View
       max: @max
       start: @params.get('price_range')?.split('-')
       step: 100
-      formatter: (val) ->
-        "#{formatMoney(val, { precision: 0 })}"
+      formatter: (val, index) ->
+        if index is 0
+          "#{formatMoney(val, { precision: 0 })}"
+        else
+          "#{formatMoney(val, { symbol: "", precision: 0 })}"
 
     @slider.on 'set', @updateParams
 
