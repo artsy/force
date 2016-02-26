@@ -7,6 +7,8 @@ module.exports = class ArtistHeaderView extends Backbone.View
   initialize: ({ @user }) ->
     @setupShareButtons()
     @setupFollowButton()
+    @$window = $ window
+    @$window.on 'scroll', @popLock
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -21,3 +23,10 @@ module.exports = class ArtistHeaderView extends Backbone.View
       modelName: 'artist'
       model: @model
     @following?.syncFollows [@model.id]
+
+  popLock: =>
+    console.log 'scroll'
+    if @$window.scrollTop() - $('#main-layout-header').height() >= @$('.artist-tabs').offset().top
+      @$('.artist-tabs').addClass('artist-fixed-header')
+    else
+      @$('.artist-tabs').removeClass('artist-fixed-header')
