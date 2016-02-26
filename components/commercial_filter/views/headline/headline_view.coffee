@@ -39,7 +39,7 @@ module.exports = class HeadlineView extends Backbone.View
       else if min is 0 and max < 50000
         "Below #{formatMoney(max, { precision: 0 })}"
     else
-      "For Sale"
+      "for Sale"
 
   render: ->
     @$el.html template

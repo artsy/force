@@ -7,7 +7,7 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PriceFilterView extends Backbone.View
   classNames: 'cf-price cf-filter'
-  min: 0.00
+  min: 50.00
   max: 50000.00
 
   initialize: ({ @params }) ->
