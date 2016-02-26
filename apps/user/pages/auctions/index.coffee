@@ -1,6 +1,7 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
 ActiveBidsView = require '../../components/active_bids/view.coffee'
+AuctionRegistrationsView = require '../../components/auction_registrations/view.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class AuctionsView extends Backbone.View
@@ -16,8 +17,14 @@ module.exports = class AuctionsView extends Backbone.View
       .html activeBidsView.render().$el
     activeBidsView.fetch()
 
+    auctionRegistrationsView = new AuctionRegistrationsView user: @user
+    @$('.js-settings-section__main--auction-registrations')
+      .html auctionRegistrationsView.render().$el
+    auctionRegistrationsView.fetch()
+
     @subViews = [
       activeBidsView
+      auctionRegistrationsView
     ]
 
   render: ->
