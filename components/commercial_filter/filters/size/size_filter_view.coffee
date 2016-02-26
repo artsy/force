@@ -5,7 +5,7 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class SizeFilterView extends Backbone.View
   classNames: 'cf-size cf-filter'
-  min: 0
+  min: 1
   max: 120
 
   initialize: ({ @params, @attr }) ->

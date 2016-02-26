@@ -1,6 +1,7 @@
 h1.cf-mediums__option(data-value=false class=selected ? '' : 'is-selected') All
-each medium, index in mediums
+each name, id in mediums
   h1.cf-mediums__option(
-    data-value="#{medium.id}"
-    class=selected == medium.id ? 'is-selected' : ''
-    ) #{medium.name}
+    data-value="#{id}"
+    data-has-results=hasResults(counts, id) ? "true" : "false"
+    class=selected == id ? 'is-selected' : ''
+    ) #{name}

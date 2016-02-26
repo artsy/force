@@ -22,6 +22,6 @@ module.exports = ({ $container, start, min, max, name, step, append = "", format
   sliderInstance.on 'update', (values, handle) ->
     formattedValues = map values, formatter
     plus = if parseInt(values[1]) is max then "+" else ""
-    $label.html "#{formattedValues.join("-")}#{plus}#{append}"
+    $label.html "#{formattedValues.join("—")}#{plus}#{append}"
 
   sliderInstance

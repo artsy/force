@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+mediumMap = require './medium_map.coffee'
 
 template = -> require('./index.jade') arguments...
 
@@ -19,8 +20,12 @@ module.exports = class MediumFilterView extends Backbone.View
     $target = $(e.currentTarget)
     @params.set medium: $target.data('value'), page: 1
 
+  hasResults: (counts, id) ->
+    _.any counts, (count) -> count.id is id
+
   render: ->
-    mediums = _.sortBy @aggregations.get('MEDIUM').get('counts'), (medium) -> medium.id
     @$el.html template
-      mediums: mediums
+      counts: @aggregations.get('MEDIUM').get('counts')
+      mediums: mediumMap
       selected: @params.get('medium')
+      hasResults: @hasResults
