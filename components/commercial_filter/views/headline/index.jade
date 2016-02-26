@@ -1,5 +1,8 @@
 .cf-headline__headline
-  if color
-    .cf-headline__headline__color= color
-  .cf-headline__headline__medium= medium
-  .cf-headline__headline__price= price
+  if color || medium || price
+    if color
+      .cf-headline__headline__color= color
+    .cf-headline__headline__medium= medium
+    .cf-headline__headline__price= price
+  else
+    | Collect Art Online
