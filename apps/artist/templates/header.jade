@@ -28,7 +28,7 @@ header.artist-header
       +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
   #artist-tabs.artist-tabs
-    nav.garamond-tablist
+    nav.garamond-bordered-tablist
       for link, i in nav.sections()
         a.garamond-tab(
           href= link.href
