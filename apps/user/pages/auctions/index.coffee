@@ -1,6 +1,7 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
 ActiveBidsView = require '../../components/active_bids/view.coffee'
+BidHistoryView = require '../../components/bid_history/view.coffee'
 AuctionRegistrationsView = require '../../components/auction_registrations/view.coffee'
 template = -> require('./index.jade') arguments...
 
@@ -17,6 +18,11 @@ module.exports = class AuctionsView extends Backbone.View
       .html activeBidsView.render().$el
     activeBidsView.fetch()
 
+    bidHistoryView = new BidHistoryView user: @user
+    @$('.js-settings-section__main--bid-history')
+      .html bidHistoryView.render().$el
+    bidHistoryView.fetch()
+
     auctionRegistrationsView = new AuctionRegistrationsView user: @user
     @$('.js-settings-section__main--auction-registrations')
       .html auctionRegistrationsView.render().$el
@@ -24,6 +30,7 @@ module.exports = class AuctionsView extends Backbone.View
 
     @subViews = [
       activeBidsView
+      bidHistoryView
       auctionRegistrationsView
     ]
 
