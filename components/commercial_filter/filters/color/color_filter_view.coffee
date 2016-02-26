@@ -33,23 +33,21 @@ module.exports = class ColorFilterView extends Backbone.View
     @params.unset('color')
 
   renderSelectedAndEmptyStates: =>
-    # First remove all empty and selected states
-    _.each(@$clickableColors, (color) ->
-      $(color).removeAttr('data-selected')
+    # First remove all empty states
+    _.each(@$clickableColors, (color) =>
       $(color).removeAttr('data-empty')
+      @$checkmark.removeClass($(color).data('value'))
     )
 
     # Add selected states
     selected = @params.get('color')
     if selected
-      @$("svg path[data-value='#{selected}']").attr('data-selected', true) if selected
-      deSelectedColors = _.without(@colors, selected)
-      _.each(deSelectedColors, (color) ->
-        @$("svg path[data-value='#{color}']").attr('data-selected', false)
-      )
+      @$checkmark.addClass(selected)
       @$clear.show()
+      @$checkmark.show()
     else
       @$clear.hide()
+      @$checkmark.hide()
 
     # Add empty states
     respColors = _.pluck @aggregations.get('COLOR').get('counts'), 'name'
