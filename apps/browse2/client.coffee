@@ -71,6 +71,12 @@ module.exports.init = ->
     attr: 'height'
     params: params
 
+  $('.cf-sidebar').waypoint (direction) ->
+    if direction == 'down'
+      $(@).addClass 'stuck'
+    else
+      $(@).removeClass 'stuck'
+
   # bottom
   paginatorView = new PaginatorView
     el: $('.cf-pagination')
