@@ -23,13 +23,19 @@ describe 'QuasiInfiniteView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    $.waypoints = sinon.stub()
-    $.fn.waypoint = sinon.stub()
+
+    $.waypoints or= -> #
+    $.fn.waypoint or= -> #
+    sinon.stub $, 'waypoints'
+    sinon.stub $.fn, 'waypoint'
 
     @view = new ViewFromQuasiInfiniteView
 
   afterEach ->
     Backbone.sync.restore()
+
+    $.waypoints.restore()
+    $.fn.waypoint.restore()
 
   describe '#render', ->
     it 'renders the template', ->

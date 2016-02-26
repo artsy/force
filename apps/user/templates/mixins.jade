@@ -1,9 +1,9 @@
-mixin settings-section(id, name)
+mixin settings-section(id, name, label)
   .settings-section(
     class='js-settings-section'
     id= id
     data-id= id
-    data-name= name
+    data-name= label || name
   )
     h2.settings-section__name
       = name
