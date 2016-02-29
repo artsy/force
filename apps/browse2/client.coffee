@@ -13,6 +13,7 @@ ColorFilterView = require '../../components/commercial_filter/filters/color/colo
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
+Sticky = require '../../components/sticky/index.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->
@@ -35,16 +36,18 @@ module.exports.init = ->
   pillboxView = new PillboxView
     el: $('.cf-pillboxes')
     params: params
+    artworks: filter.artworks
 
   # Main Artworks view
-  artworkView = new ArtworkColumnsView
-    collection: filter.artworks
-    el: $('.cf-artworks')
-    allowDuplicates: true
-    numberOfColumns: 3
+  filter.artworks.on 'reset', ->
+    artworkView = new ArtworkColumnsView
+      collection: filter.artworks
+      el: $('.cf-artworks')
+      allowDuplicates: true
+      gutterWidth: 30
+      numberOfColumns: 3
 
-  filter.artworks.on 'reset', -> artworkView.render()
-  filter.on 'change:loading', -> $('.cf-artworks').attr 'data-loading', filter.get('loading')
+  filter.on 'change:loading', ->  $('.cf-artworks').attr 'data-loading', filter.get('loading')
 
   # Sidebar
   mediumsView = new MediumFilterView
@@ -85,3 +88,17 @@ module.exports.init = ->
 
   # Trigger one change just to render filters
   params.trigger 'change'
+
+  # Whenever params change, scroll to the top
+  params.on 'change', -> $('html,body').animate { scrollTop: 0 }, 400
+
+  # Handles sticky sidebar
+  @sticky = false
+  filter.artworks.on 'reset zero:artworks', =>
+    if @sticky
+      _.delay (=> @sticky.rebuild()), 300
+    else
+      @sticky = new Sticky
+      @sticky.add $('.cf-sidebar')
+
+

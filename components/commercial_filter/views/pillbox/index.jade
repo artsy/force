@@ -12,3 +12,5 @@ if color || medium || price
       .cf-pillbox__pillboxes__price
         span.cf-pillbox__pillboxes_display= price
         span.cf-pillbox__pillboxes_clear(data-value='price_range') ×
+if !hasResults
+  .cf-pillbox__no-results Your search returned 0 results. Try removing some filters.
