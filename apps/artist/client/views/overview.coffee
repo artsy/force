@@ -26,31 +26,14 @@ module.exports = class OverviewView extends Backbone.View
     test = splitTest('artist_works_infinite_scroll')
     outcome = test.outcome()
 
-    if outcome is 'finite'
-      filterRouter = ArtworkFilter.init
-        el: @$('#artwork-section')
-        model: @model
-        mode: 'grid'
-        showSeeMoreLink: true
+    filterRouter = ArtworkFilter.init
+      el: @$('#artwork-section')
+      model: @model
+      mode: 'grid'
+      showSeeMoreLink: true
 
-      @filterView = filterRouter.view
-      @subViews.push @filterView
-
-    else if outcome is 'infinite'
-      filterRouter = ArtworkFilter.init
-        el: @$('#artwork-section')
-        model: @model
-        mode: 'grid'
-        showSeeMoreLink: false
-
-      @filterView = filterRouter.view
-      @subViews.push @filterView
-
-      @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-      @$('#artwork-section').waypoint (direction) =>
-        return if not direction is 'down'
-        @filterView.loadNextPage()
-      , { offset: 'bottom-in-view' }
+    @filterView = filterRouter.view
+    @subViews.push @filterView
 
   # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
   # The waypoint must be pushed below the the window bottom in order to be triggered again on subsequent scroll events.
