@@ -13,6 +13,7 @@ ColorFilterView = require '../../components/commercial_filter/filters/color/colo
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
+Sticky = require '../../components/sticky/index.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->
@@ -71,12 +72,6 @@ module.exports.init = ->
     attr: 'height'
     params: params
 
-  $('.cf-sidebar').waypoint (direction) ->
-    if direction == 'down'
-      $(@).addClass 'stuck'
-    else
-      $(@).removeClass 'stuck'
-
   # bottom
   paginatorView = new PaginatorView
     el: $('.cf-pagination')
@@ -91,3 +86,7 @@ module.exports.init = ->
 
   # Trigger one change just to render filters
   params.trigger 'change'
+
+  filter.artworks.once 'reset', ->
+    sticky = new Sticky
+    sticky.add $('.cf-sidebar')
