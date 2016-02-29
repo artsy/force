@@ -36,6 +36,7 @@ module.exports.init = ->
   pillboxView = new PillboxView
     el: $('.cf-pillboxes')
     params: params
+    artworks: filter.artworks
 
   # Main Artworks view
   artworkView = new ArtworkColumnsView
@@ -87,6 +88,15 @@ module.exports.init = ->
   # Trigger one change just to render filters
   params.trigger 'change'
 
-  filter.artworks.once 'reset', ->
-    sticky = new Sticky
-    sticky.add $('.cf-sidebar')
+  params.on 'change', -> $('html,body').animate { scrollTop: 0 }, 400
+
+  # handle stuck sidebar
+  @sticky = false
+  filter.artworks.on 'reset zero:artworks', =>
+    if @sticky
+      _.delay (=> @sticky.rebuild()), 300
+    else
+      @sticky = new Sticky
+      @sticky.add $('.cf-sidebar')
+
+

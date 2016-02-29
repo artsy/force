@@ -61,8 +61,11 @@ module.exports = class Filter extends Backbone.Model
     Q.promise (resolve, reject) =>
       metaphysics query: @query(), variables: @params.current()
         .then ({ filter_artworks }) =>
+          if filter_artworks.hits.length
+            @artworks.reset filter_artworks.hits
+          else
+            @artworks.trigger 'zero:results', false
           @set loading: false
-          @artworks.reset filter_artworks.hits
           @set total: filter_artworks.total
           @aggregations.reset filter_artworks.aggregations
           resolve @
