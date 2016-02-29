@@ -17,6 +17,7 @@ module.exports = """
       id
       name
       href
+      public
     }
     cultural_maker
     medium
