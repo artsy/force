@@ -39,14 +39,15 @@ module.exports.init = ->
     artworks: filter.artworks
 
   # Main Artworks view
-  artworkView = new ArtworkColumnsView
-    collection: filter.artworks
-    el: $('.cf-artworks')
-    allowDuplicates: true
-    numberOfColumns: 3
+  filter.artworks.on 'reset', ->
+    artworkView = new ArtworkColumnsView
+      collection: filter.artworks
+      el: $('.cf-artworks')
+      allowDuplicates: true
+      gutterWidth: 30
+      numberOfColumns: 3
 
-  filter.artworks.on 'reset', -> artworkView.render()
-  filter.on 'change:loading', -> $('.cf-artworks').attr 'data-loading', filter.get('loading')
+  filter.on 'change:loading', ->  $('.cf-artworks').attr 'data-loading', filter.get('loading')
 
   # Sidebar
   mediumsView = new MediumFilterView
@@ -88,9 +89,10 @@ module.exports.init = ->
   # Trigger one change just to render filters
   params.trigger 'change'
 
+  # Whenever params change, scroll to the top
   params.on 'change', -> $('html,body').animate { scrollTop: 0 }, 400
 
-  # handle stuck sidebar
+  # Handles sticky sidebar
   @sticky = false
   filter.artworks.on 'reset zero:artworks', =>
     if @sticky
