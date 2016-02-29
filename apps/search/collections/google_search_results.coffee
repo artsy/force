@@ -11,7 +11,7 @@ module.exports = class GoogleSearchResults extends Backbone.Collection
   parse:  (response) ->
     _.reject response.items, (item) ->
       # HACK filter out image rights sensitive results
-      JSON.stringify(item).match(/kippenberger|zoe.*leo/i) or
+      JSON.stringify(item).match(/kippenberger|zoe.*leonard|pat.*lipsky/i) or
       # Filter out auction results
       item.link?.indexOf('/auction-result') isnt -1 or
       # Filter out 403s
