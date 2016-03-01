@@ -8,6 +8,5 @@ module.exports = class ArticlesAdapter
     collection.url = "#{collection.url}/?partner_id=#{partner.get('_id')}&published=true&limit=5&sort=-published_at"
     view = new ArticlesFeedView el: el, collection: collection
     el.html '<div class="loading-spinner"></div>'
-    el.addClass view.className
     collection.fetch()
     view
