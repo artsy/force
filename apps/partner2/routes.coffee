@@ -3,6 +3,10 @@
 @requireAdmin = (req, res, next) ->
   if req.user?.isAdmin() then next() else next('route')
 
+@requireNewLayout = (req, res, next) ->
+  deprecated = res.locals.profile?.get('owner')?.profile_layout is 'gallery_deprecated'
+  if deprecated then next('route') else next()
+
 @overview = (req, res, next) ->
   return next() unless res.locals.profile?.isPartner()
   res.locals.sd.SECTION = 'overview'
