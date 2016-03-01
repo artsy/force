@@ -4,5 +4,4 @@ module.exports =
   'editorial_email': 'Art World News'
   'auction_email': 'Auctions'
   'personalized_email': 'Personalized Art Recommendations'
-  'follow_users_email': 'When I Have New Followers'
   'offer_emails': 'Artsy Specialist Recommendations'
