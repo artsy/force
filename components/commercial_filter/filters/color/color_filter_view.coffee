@@ -4,7 +4,7 @@ template = require('./index.jade')
 
 module.exports = class ColorFilterView extends Backbone.View
   events:
-    'click svg .clickable' : 'setColor'
+    'click svg .clickable' : 'toggleColor'
     'click .cf-sidebar__colors_clear-right' : 'clear'
 
   colors: ['darkblue', 'lightblue', 'darkgreen', 'lightgreen', 'yellow', 'gold', 'orange', 'darkorange', 'red', 'pink', 'darkviolet', 'violet', 'black-and-white']
@@ -22,9 +22,12 @@ module.exports = class ColorFilterView extends Backbone.View
     @listenTo @params, 'change:color', @renderSelectedAndEmptyStates
     @listenTo @aggregations, 'reset', @renderSelectedAndEmptyStates
 
-  setColor: (e) ->
-    $target = $(e.currentTarget)
-    @params.set color: $target.data('value'), page: 1
+  toggleColor: (e) ->
+    color = $(e.currentTarget).data('value')
+    if @params.get('color') is color
+      @params.unset('color')
+    else
+      @params.set color: color, page: 1
 
   initialRender: ->
     @$el.html template
