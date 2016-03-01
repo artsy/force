@@ -12,6 +12,11 @@ module.exports = class SizeFilterView extends Backbone.View
     throw new Error 'Requires a params model' unless @params?
 
     @listenToOnce @params, 'change', @render
+    @listenTo @params, "change:#{@attr}", @resetSlider
+
+  resetSlider: ->
+    return if @params.has(@attr)
+    @slider.set([@min, @max])
 
   render: ->
     @$el.html template()
