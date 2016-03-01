@@ -1,7 +1,8 @@
 .main-layout-header-user
   if user
     span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
-      = user.get('name') ? user.get('name') : 'Account'
+      a( href='/settings' )
+        = user.get('name') ? user.get('name') : 'Account'
 
       .hover-pulldown-menu
         a.hpm-header( href='/user/saves' ) Follows &amp; Favorites
