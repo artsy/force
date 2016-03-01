@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-UserEdit = require '../../../models/user_edit'
+CurrentUser = require '../../../models/current_user'
 EmailPreferencesView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
 describe 'EmailPreferencesView', ->
@@ -18,7 +18,7 @@ describe 'EmailPreferencesView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @user = new UserEdit fabricate 'user', receive_emails: true
+    @user = new CurrentUser fabricate 'user', receive_emails: true
     @view = new EmailPreferencesView model: @user, user: @user
     @view.render()
 

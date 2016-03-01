@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-UserEdit = require '../../../models/user_edit'
+CurrentUser = require '../../../models/current_user'
 AdvancedCollectorSettingsFormView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
 describe 'AdvancedCollectorSettingsFormView', ->
@@ -18,7 +18,7 @@ describe 'AdvancedCollectorSettingsFormView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @user = new UserEdit fabricate 'user'
+    @user = new CurrentUser fabricate 'user'
     @view = new AdvancedCollectorSettingsFormView model: @user
 
   afterEach ->

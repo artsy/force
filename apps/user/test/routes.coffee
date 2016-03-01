@@ -59,7 +59,7 @@ describe '/user', ->
       it 'fetches the authentications', ->
         routes.settings @req, @res
           .then =>
-            Backbone.sync.args[1][2].url.should
+            Backbone.sync.args[1][1].url.should
               .containEql '/me/authentications'
             Backbone.sync.args[1][2].data.access_token
               .should.equal 'xxx'
