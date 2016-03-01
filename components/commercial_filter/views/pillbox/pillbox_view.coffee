@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 s = require 'underscore.string'
+mediumMap = require '../../filters/medium/medium_map.coffee'
 { formatMoney } = require 'accounting'
 
 template = -> require('./index.jade') arguments...
@@ -21,22 +22,19 @@ module.exports = class PillboxView extends Backbone.View
     @params.unset(param)
 
   medium: ->
-    if @params.has('medium')
-      s(@params.get('medium'))
-        .humanize()
-        .replace('slash', '/')
-        .capitalize()
-        .value()
+    mediumMap[@params.get('medium')] if @params.has('medium')
 
   size: (label, attr) ->
     if @params.has(attr)
       [ min, max ] = _.map @params.get(attr).split("-"), (val) -> parseInt val
-      "#{label}: #{min} – #{max} in."
+      plus = if max is @params.get('ranges')[attr]?.max then "+" else ""
+      "#{label}: #{min} – #{max}#{plus} in."
 
   price: ->
     if @params.has('price_range')
       [ min, max ] = _.map @params.get('price_range').split("-"), (val) -> parseInt val
-      "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { precision: 0 })}"
+      plus = if max is @params.get('ranges').price_range.max then "+" else ""
+      "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { precision: 0 })}#{plus}"
 
   render: (hasResults = true) ->
     @$el.html template

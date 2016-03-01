@@ -7,14 +7,14 @@ template = -> require('./index.jade') arguments...
 
 module.exports = class PriceFilterView extends Backbone.View
   classNames: 'cf-price cf-filter'
-  min: 50.00
-  max: 50000.00
 
   initialize: ({ @params }) ->
     throw new Error 'Requires a params model' unless @params?
 
     @listenToOnce @params, 'change', @render
     @listenTo @params, 'change:price_range', @resetSlider
+
+    { @min, @max } = @params.get('ranges').price_range
 
   render: ->
     @$el.html template()
@@ -43,7 +43,8 @@ module.exports = class PriceFilterView extends Backbone.View
     @slider.on 'set', @updateParams
 
   updateParams: (values) =>
-    parsedValues = _.map values, (val) -> parseInt(val)
+    parsedValues = _.map values, (val) -> parseInt val
+
     if _.isEqual parsedValues, [@min, @max]
       @params.unset 'price_range'
       @params.set page: 1
