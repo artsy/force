@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../models/current_user'
+CurrentUser = require '../../../../../models/current_user'
 EmailPreferencesView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
 describe 'EmailPreferencesView', ->
@@ -35,10 +35,10 @@ describe 'EmailPreferencesView', ->
     it 'saves the preferences', ->
       @view.$('[name="receive_weekly_email"]').click()
       @view.$('[name="receive_weekly_email"]').click()
-      @view.$('[name="receive_follow_users_email"]').click()
+      @view.$('[name="receive_personalized_email"]').click()
       @view.$('button').click()
       Backbone.sync.args[0][1].attributes
-        .receive_follow_users_email.should.be.true()
+        .receive_personalized_email.should.be.true()
       Backbone.sync.args[0][1].attributes
         .receive_weekly_email.should.be.false()
 
