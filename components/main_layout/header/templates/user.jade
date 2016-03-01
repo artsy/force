@@ -1,16 +1,10 @@
 .main-layout-header-user
   if user
     span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
-      = user.get('name') ? user.get('name') : 'Account'
+      a( href='/settings' )
+        = user.get('name') ? user.get('name') : 'Account'
 
       .hover-pulldown-menu
-        a.hpm-header( href='/user/saves' ) Follows &amp; Favorites
-        a( href='/user/saves' ) Artists
-        a( href='/user/saves' ) Works
-        //- a( href='/user/saves' ) Galleries // Later
-
-        hr
-
         if user.isAdmin()
           a( href= sd.ADMIN_URL ) Admin
         if user.isAdmin() || user.get('has_partner_access')
@@ -18,8 +12,15 @@
         if user.isAdmin() || user.get('has_partner_access')
           hr
 
-        a( href='/user/edit' ) Settings
-        a.mlh-logout Log out
+        a( href='/user/saves' )
+          | Saves &amp; Follows
+        a( href='/profile/edit' )
+          | Collector Profile
+        a( href='/user/edit' )
+          | Settings
+
+        a.mlh-logout
+          | Log out
 
   else
     a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in

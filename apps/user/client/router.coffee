@@ -1,6 +1,7 @@
 { USER } = require('sharify').data
 Backbone = require 'backbone'
-UserEdit = require '../models/user_edit.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+JumpView = require '../../../components/jump/view.coffee'
 SettingsTabsView = require '../components/tabs/view.coffee'
 SettingsSectionsView = require '../components/sections/view.coffee'
 SettingsView = require '../pages/settings/index.coffee'
@@ -22,7 +23,7 @@ module.exports = class UserSettingsRouter extends Backbone.Router
     'user/auctions': 'auctions'
 
   initialize: ->
-    @user = new UserEdit USER
+    @user = new CurrentUser USER
 
     @$el = $('.js-settings-page')
     @$main = @$el.find '.js-settings-page__content__main'
@@ -30,6 +31,9 @@ module.exports = class UserSettingsRouter extends Backbone.Router
 
     @tabs = new SettingsTabsView el: @$el
     @sections = new SettingsSectionsView el: @$sections
+
+    @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+    $('body').append @jump.$el
 
   execute: ->
     @view?.remove()

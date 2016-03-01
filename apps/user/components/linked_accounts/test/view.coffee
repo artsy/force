@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-UserEdit = require '../../../models/user_edit'
+CurrentUser = require '../../../models/current_user'
 LinkedAccountsView = benv.requireWithJadeify require.resolve('../view'), ['template']
 LinkedAccountsView.__set__ 'sd', AP:
   twitterPath: '/users/auth/twitter'
@@ -23,7 +23,7 @@ describe 'LinkedAccountsView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @user = new UserEdit fabricate 'user'
+    @user = new CurrentUser fabricate 'user'
     @view = new LinkedAccountsView user: @user
     @view.render()
 

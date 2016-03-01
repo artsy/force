@@ -13,7 +13,7 @@ mixin checkbox(name, disabled)
           type='checkbox'
           id= name
           name= name
-          checked= user && user.checked(name)
+          checked= user && user.isChecked(name)
           disabled= disabled
         )
         label( for= name )

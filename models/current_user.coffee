@@ -167,3 +167,9 @@ module.exports = class CurrentUser extends User
           url: "#{sd.API_URL}/api/v1/bidder/#{bidder.id}"
           error: options.error
           success: options.success
+
+  isLinkedTo: (provider) ->
+    @related().authentications.where(provider: provider).length > 0
+
+  isChecked: (attribute) ->
+    if (_.isBoolean(@get attribute) and @get(attribute)) then true else undefined

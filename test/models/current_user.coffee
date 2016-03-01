@@ -113,3 +113,29 @@ describe 'CurrentUser', ->
           .should.containEql '/api/v1/me'
         Backbone.sync.args[1][1].url
           .should.containEql '/api/v1/me/collector_profile'
+
+  describe '#isChecked', ->
+    it 'translates a boolean attribute to on or off', ->
+      @user.set weekly_email: false, follow_email: true, offer_emails: false
+      _.isUndefined(@user.isChecked('weekly_email')).should.be.true()
+      _.isUndefined(@user.isChecked('offer_emails')).should.be.true()
+      @user.isChecked('follow_email').should.be.true()
+
+  describe 'authentications', ->
+    beforeEach ->
+      @authentications = [
+        { id: '1', uid: '123456789', provider: 'twitter' }
+        { id: '2', uid: '987654321', provider: 'facebook' }
+      ]
+
+    describe '#isLinkedTo', ->
+      it 'determines if an account is linked to an app provider', ->
+        @user.isLinkedTo 'twitter'
+          .should.be.false()
+
+        @user.related().authentications.reset @authentications
+
+        @user.isLinkedTo 'twitter'
+          .should.be.true()
+        @user.isLinkedTo 'facebook'
+          .should.be.true()

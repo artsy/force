@@ -1,28 +1,26 @@
-UserEdit = require './models/user_edit'
-
 @refresh = (req, res, next) ->
-  return res.redirect '/' unless req.user
+  user = req.user
 
-  req.user
+  return res.redirect '/' unless user
+
+  user
     .fetch()
     .then ->
-      req.login req.user, (err) ->
+      req.login user, (err) ->
         return next err if err?
-        res.json req.user.attributes
+        res.json user.attributes
 
     .catch next
 
 @settings = (req, res, next) ->
-  return res.redirect "/log_in?redirect_uri=#{req.url}" unless req.user
-  return res.redirect '/' if req.url is '/user/delete' and req.user.isAdmin()
+  user = req.user
 
-  user = new UserEdit req.user.attributes
+  return res.redirect "/log_in?redirect_uri=#{req.url}" unless user
+  return res.redirect '/' if req.url is '/user/delete' and user.isAdmin()
 
-  # Fetch private User fields & overried CurrentUser's sync
-  # to add the `access_token` param
   user.fetch()
     .then ->
-      user.fetchAuthentications data: access_token: user.get 'accessToken'
+      user.related().authentications.fetch data: access_token: user.get 'accessToken'
 
     .then ->
       res.locals.sd.USER = user.toJSON()

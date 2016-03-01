@@ -19,7 +19,11 @@ module.exports =
       options.data = @pick('email')
       fetch.call account, options
 
+    authentications = new Backbone.Collection
+    authentications.url = "#{API_URL}/api/v1/me/authentications"
+
     @__related__ =
       collectorProfile: collectorProfile
       account: account
       location: location
+      authentications: authentications
