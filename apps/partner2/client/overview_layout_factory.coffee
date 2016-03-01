@@ -140,7 +140,7 @@ galleryTwoHero = (partner, profile) ->
   component:
     switch partner.get('profile_banner_display')
       when 'Shows' then HeroShowsCarousel
-      when 'Artworks' then HeroArtworksCarousel
+      else HeroArtworksCarousel
   options: (
     options =
       partner: partner
@@ -191,7 +191,7 @@ galleryThreeHero = (partner, profile) ->
   component:
     switch partner.get('profile_banner_display')
       when 'Shows' then HeroShowsCarousel
-      when 'Artworks' then HeroArtworksCarousel
+      else HeroArtworksCarousel
   options: (
     options =
       partner: partner
