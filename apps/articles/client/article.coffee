@@ -5,6 +5,7 @@ Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
+EditorialSignupView = require './editorial_signup.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 embedVideo = require 'embed-video'
 JumpView = require '../../../components/jump/view.coffee'
@@ -15,7 +16,7 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   initialize: (options) ->
     @params = new Backbone.Model
-      author_id: '503f86e462d56000020002cc'
+      author_id: sd.ARTSY_EDITORIAL_ID
       published: true
       tier: 1
       sort: '-published_at'
@@ -80,3 +81,4 @@ module.exports = class ArticleIndexView extends Backbone.View
 module.exports.init = ->
   new ArticleIndexView el: $('body')
   new GalleryInsightsView el: $('body')
+  new EditorialSignupView el: $('body')

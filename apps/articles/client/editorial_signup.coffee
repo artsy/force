@@ -3,37 +3,35 @@ sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 Backbone = require 'backbone'
 
-module.exports = class GalleryInsightsView extends Backbone.View
+module.exports = class EditorialSignupView extends Backbone.View
 
   initialize: ->
     return unless @eligibleToSignUp()
     @createAndShowCTAForm()
     @setupCTAWaypoints()
 
-  inGIArticlePage: ->
-    sd.GALLERY_INSIGHTS_SECTION_ID in (sd.ARTICLE?.section_ids or [])
+  inAEArticlePage: ->
+    sd.ARTICLE? and sd.ARTICLE.author_id is sd.ARTSY_EDITORIAL_ID
 
-  inGIVerticalPage: ->
-    sd.SECTION?.id is sd.GALLERY_INSIGHTS_SECTION_ID
+  inAEMagazinePage: ->
+    sd.CURRENT_PATH is '/articles'
 
   eligibleToSignUp: ->
-    (@inGIArticlePage() or @inGIVerticalPage()) and not sd.MAILCHIMP_SUBSCRIBED
+    # Also include where they are coming from
+    (@inAEArticlePage() or @inAEMagazinePage()) and not sd.SUBSCRIBED_TO_EDITORIAL
 
   createAndShowCTAForm: ->
     @ctaBarView = new CTABarView
-      headline: 'Artsy Insights for Galleries'
-      mode: 'gallery-insights'
-      name: 'gallery-insights-signup'
+      mode: 'editorial-signup'
+      name: 'editorial-signup'
       persist: true
-      subHeadline: "Receive periodical insights from Artsy's Gallery Team"
       email: sd.CURRENT_USER?.email or ''
-    @$('.articles-insights-show').show()
-    @$('.articles-insights-section').show()
+    @$('.articles-editorial-signup').show()
 
   setupCTAWaypoints: ->
     return if @ctaBarView.previouslyDismissed()
     @$el.append @ctaBarView.render().$el
-    if @inGIArticlePage()
+    if @inAEArticlePage()
       @$(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) =>
         @ctaBarView.transitionIn() if direction is 'down'
       , { offset: -200 }
@@ -41,7 +39,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
         @ctaBarView.transitionOut() if direction is 'down'
         @ctaBarView.transitionIn() if direction is 'up'
       , { offset: 'bottom-in-view' }
-    else if @inGIVerticalPage()
+    else if @inAEMagazinePage()
       @$('.js-articles-feed-articles').waypoint (direction) =>
         @ctaBarView.transitionIn() if direction is 'down'
       ,{ offset: '50%' }

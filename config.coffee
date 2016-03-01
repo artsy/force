@@ -87,6 +87,9 @@ module.exports =
   MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   METAPHYSICS_ENDPOINT: null
   ARTSY_EDITORIAL_ID: '503f86e462d56000020002cc'
+  SAILTHRU_KEY: null
+  SAILTHRU_SECRET: null
+  GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

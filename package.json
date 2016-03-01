@@ -54,6 +54,7 @@
     "qs": "^5.2.0",
     "redis": "^2.2.3",
     "referer-parser": "0.0.3",
+    "sailthru-client": "^2.0.3",
     "serve-favicon": "^2.3.0",
     "sharify": "^0.1.6",
     "spark-md5": "^1.0.0",
