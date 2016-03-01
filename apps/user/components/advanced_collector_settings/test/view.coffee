@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../models/current_user'
+CurrentUser = require '../../../../../models/current_user'
 AdvancedCollectorSettingsFormView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
 describe 'AdvancedCollectorSettingsFormView', ->
