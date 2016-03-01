@@ -28,7 +28,6 @@ module.exports = ({ targets, backgroundClass, imageUrl }) ->
     BackgroundCheck.init
       targets: targets
       images: background
-      windowEvents: false
       classes:
         light: 'is-light'
         dark: 'is-dark'
