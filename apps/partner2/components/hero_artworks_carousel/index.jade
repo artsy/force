@@ -1,8 +1,8 @@
 .hero-artworks-carousel
   .mgr-cells.js-mgr-cells
       for artwork in artworks.models
-        .mgr-cell.js-mgr-cell
-          - var dimensions = artwork.defaultImage().resizeDimensionsFor({ height: 300 })
+        - var dimensions = artwork.defaultImage().resizeDimensionsFor({ height: 300 })
+        .mgr-cell.js-mgr-cell(style="width:#{dimensions.width}px;")
           a( href= artwork.href() )
             img(
               src= artwork.defaultImage().imageUrlForHeight(300)
