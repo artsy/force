@@ -11,4 +11,8 @@ app.get '/profile/edit', routes.settings
 app.get '/user/edit', routes.settings
 app.get '/user/delete', routes.settings
 app.get '/user/saves', routes.settings
-app.get '/user/auctions', routes.settings
+
+adminOnly = require '../../lib/middleware/admin_only'
+
+app.get '/user/auctions', adminOnly, routes.settings
+app.get '/user/payments', adminOnly, routes.settings
