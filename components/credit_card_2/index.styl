@@ -1,0 +1,62 @@
+@require '../grid'
+
+.credit-card-bordered-input
+  position relative
+  display inline-block
+
+  &.is-block
+    &, & > .bordered-input
+      display block
+      width 100%
+
+  > .bordered-input
+    padding-right 30px
+
+  > span
+    position absolute
+    display block
+    top 50%
+    right 10px
+    width 100px
+    height 30px
+    background-size contain
+    background-position center right
+    background-repeat no-repeat
+    transform translateY(-50%)
+    pointer-events none
+
+.credit-card-form
+  //
+
+  &__header
+    garamond-size('headline')
+    padding gutter
+    border-bottom 1px solid gray-lighter-color
+
+  &__form
+    width 50%
+    margin gutter auto
+
+    &__subheadline
+      avant-garde-size('s-headline')
+      margin gutter 0
+      padding 10px 0
+      border-top 1px solid gray-lighter-color
+
+  &__buttons
+    padding gutter
+    text-align right
+    border-top 1px solid gray-lighter-color
+
+    > a
+    > button
+      inline-block-margins(gutter / 4)
+
+icons = json('./icons.json', { hash: true })
+
+.credit-card-icon
+  background-size contain
+  background-repeat no-repeat
+  for provider, src in icons
+    &[data-provider=\'{provider}\']
+      background-image url(src)

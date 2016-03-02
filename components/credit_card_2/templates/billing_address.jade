@@ -1,0 +1,42 @@
+input.bordered-input(
+  id='address_line1'
+  name='address_line1'
+  placeholder='Address'
+)
+
+input.bordered-input(
+  name='address_line2'
+  placeholder='Address (cont.)'
+)
+
+if countries && countries.length
+  label.bordered-select
+    select( id='address_country', name='address_country' )
+      for country in countries
+        option( value= country )
+          = country
+else
+  input.bordered-input(
+    id='address_country'
+    name='address_country'
+    placeholder='Country'
+  )
+
+input.bordered-input(
+  id='address_city'
+  name='address_city'
+  placeholder='City'
+)
+
+input.bordered-input(
+  id='address_state'
+  name='address_state'
+  placeholder='State'
+)
+
+.grid-2-up
+  .grid-item: input.bordered-input(
+    id='address_zip'
+    name='address_zip'
+    placeholder='Zip'
+  )
