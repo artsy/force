@@ -22,8 +22,12 @@ module.exports =
     authentications = new Backbone.Collection
     authentications.url = "#{API_URL}/api/v1/me/authentications"
 
+    creditCards = new Backbone.Collection
+    creditCards.url = "#{API_URL}/api/v1/me/credit_cards"
+
     @__related__ =
       collectorProfile: collectorProfile
       account: account
       location: location
       authentications: authentications
+      creditCards: creditCards
