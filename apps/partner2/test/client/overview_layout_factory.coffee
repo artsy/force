@@ -21,6 +21,8 @@ factory.__set__ 'FixedCellsCountCarousel', FixedCellsCountCarousel = sinon.stub(
 factory.__set__ 'showsTemplate', showsTemplate = sinon.stub().returns '<article></article>'
 factory.__set__ 'fairBoothsTemplate', fairBoothsTemplate = sinon.stub().returns '<article></article>'
 factory.__set__ 'articlesTemplate', articlesTemplate = sinon.stub().returns '<article></article>'
+factory.__set__ 'ShowsGrid', ShowsGrid = sinon.stub()
+factory.__set__ 'LocationsView', LocationsView = sinon.stub()
 
 describe 'overview_layout_factory', ->
   describe 'gallery_three', ->
@@ -267,4 +269,44 @@ describe 'overview_layout_factory', ->
           viewAll: "#{@partner.href()}/shows"
         }
         { name: 'artists', component: ArtistsGridView, options: partner: @partner }
+      ]
+
+  describe 'gallery_default', ->
+    beforeEach ->
+      @profile = new Profile fabricate 'partner_profile', full_bio: 'full bio here'
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_default', claimed: false
+
+    it 'returns modules without artists for fair partners', ->
+      factory(@partner, @profile).should.eql [
+        {
+          name: 'shows'
+          component: ShowsGrid
+          options:
+            partner: @partner
+            isCombined: true
+            numberOfFeatured: 0
+            numberOfShows: 6
+            seeAll: false
+            heading: 'Shows & Fair Booths'
+        }
+        { name: 'artists', component: undefined, options: { partner: @partner } }
+        { name: 'locations', title: 'Locations', component: LocationsView, options: { partner: @partner } }
+      ]
+
+    it 'returns modules properly otherwise', ->
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_default', claimed: true
+      factory(@partner, @profile).should.eql [
+        {
+          name: 'shows'
+          component: ShowsGrid
+          options:
+            partner: @partner
+            isCombined: true
+            numberOfFeatured: 1
+            numberOfShows: 6
+            seeAll: true
+            heading: undefined
+        }
+        { name: 'artists', component: ArtistsGridView, options: { partner: @partner } }
+        { name: 'locations', title: 'Locations', component: undefined, options: { partner: @partner } }
       ]
