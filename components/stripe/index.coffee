@@ -6,13 +6,20 @@ module.exports =
   initialize: ->
     Stripe.setPublishableKey STRIPE_PUBLISHABLE_KEY
 
-  validate: validate = ({ number, exp, cvc }) ->
-    number: Stripe.card.validateCardNumber number
-    exp: Stripe.card.validateExpiry exp
-    cvc: Stripe.card.validateCVC cvc
+  error: (key) -> {
+    number: 'Your card number is incorrect.'
+    exp: 'Your card’s expiration year is invalid.'
+    cvc: 'Your card’s security code is invalid.'
+  }[key]
+
+  validate: validate = ({ number, exp, cvc }) -> [
+    { name: 'number', value: Stripe.card.validateCardNumber number }
+    { name: 'exp', value: Stripe.card.validateExpiry exp }
+    { name: 'cvc', value: Stripe.card.validateCVC cvc }
+  ]
 
   isValid: ->
-    every (validate arguments...), identity
+    every (validate arguments...), ({ value }) -> value
 
   serialize: ($form) ->
     reduce $form.find('[data-stripe]'), (memo, el) ->
