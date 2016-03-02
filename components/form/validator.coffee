@@ -32,6 +32,12 @@ module.exports = class Validator
   isEligible: ->
     _.isFunction @$form[0].checkValidity
 
+  setValidity: ($el, message) ->
+    $el[0].setCustomValidity? message
+
+  clearValidity: ($el) ->
+    $el[0].setCustomValidity? ''
+
   # Ensures fields with data-confirm='some_name' has a value matching the value
   # of the field called out in the data-confirm attribute
   confirm: ->
@@ -41,6 +47,6 @@ module.exports = class Validator
       $confirm = @$form.find("input[name='#{confirm}']")
 
       if $confirm.length and $el.val() isnt $confirm.val()
-        $el[0].setCustomValidity? "#{_s.humanize(confirm)} must match"
+        @setValidity $el, "#{_s.humanize(confirm)} must match"
       else
-        $el[0].setCustomValidity? ''
+        @clearValidity $el
