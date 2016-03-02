@@ -22,6 +22,9 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         sort: '-published_at'
         featured: true
     )
+    if res.locals.sd.CURRENT_USER?.email?
+      subscribedToEditorial res.locals.sd.CURRENT_USER.email, (err, subscribed) ->
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
   ]).catch(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
@@ -133,5 +136,18 @@ subscribedToEditorial = (email, callback) ->
     subscribed = response.vars.receive_editorial_email
     callback null, subscribed
 
-@sailthru = (req, res, next) ->
-  console.log 'testing'
+@editorialForm = (req, res, next) ->
+  sailthru.apiPost 'user',
+    id: req.body.email
+    lists:
+      "#{sd.SAILTHRU_MASTER_LIST}": 1
+    source: 'editorial'
+    name: req.body.name
+    vars:
+      receive_editorial_email: true
+      email_frequency: 'daily'
+  , (err, response) ->
+    if response.ok
+      res.send req.body
+    else
+      res.send response.status, response.body

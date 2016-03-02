@@ -103,8 +103,6 @@ if superArticle
         .article-lead-paragraph
           != article.get('lead_paragraph')
       +author-date
-      .article-social.article-share-top
-        +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container
       //- Article body content
@@ -143,10 +141,12 @@ if superArticle
 
     .main-layout-container
       //- Footer social buttons
-      .article-social.add-bottom.article-share-bottom
-        h2.article-social__header Share this article
+      .article-social.article-share-bottom
+        h2.article-social__header Share article
         +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
+    .main-layout-container.article-es
+      include ./editorial_signup.jade
 
   .main-layout-container
     if superArticle

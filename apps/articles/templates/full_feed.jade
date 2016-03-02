@@ -1,6 +1,6 @@
-.articles-articles-page.main-layout-container
+.articles-articles-page
   if (featuredArticles = articles.featured()).length
-    header.am-featured
+    header.am-featured.main-layout-container
       .am-featured-hero
         - article = featuredArticles[0]
         +article-figure(article, 1000, false, false)
@@ -10,7 +10,7 @@
           +article-figure(article, 600, false, false)
 
   if sd.CURRENT_PATH != '/articles' && section && section.get('featured_links')
-    section.articles-featured-articles
+    section.articles-featured-articles.main-layout-container
       h4= section.get('featured_links_header')
       ul.grid-4-up
         for link in section.get('featured_links')
@@ -20,7 +20,7 @@
               p= link.title
         +remainingStickies(section, articles, 70, 70)
 
-  .articles-articles-feed.articles-feed
+  .articles-articles-feed
     .articles-feed-articles.js-articles-feed-articles
       for article in articles.feed()
         .articles-feed-item( data-tier= article.get('tier') )
@@ -29,5 +29,5 @@
     .js-articles-feed-more
       include ../../../components/articles_feed/templates/button
   if section && section.get('slug') == sd.GALLERY_INSIGHTS_SLUG
-    .articles-insights-section
+    .articles-insights-section.main-layout-container
       include gallery_insights_form
