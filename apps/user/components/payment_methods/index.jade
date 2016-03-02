@@ -1,3 +1,20 @@
-a.avant-garde-button-white(
+a.settings-payment-methods__new.avant-garde-button-white.is-small(
   class='js-settings-payment-methods__add'
 ) Add New
+
+if cards && cards.length
+  .settings-payment-methods__cards.grid-2-up
+    for card in cards
+      .settings-payment-methods__cards__card.grid-item
+        .settings-payment-methods__cards__card__digits
+          | #{card.brand} xxxx-xxxx-xxxx-#{card.last_digits}
+
+        .settings-payment-methods__cards__card__name
+          = card.name
+
+        .settings-payment-methods__cards__card__exp
+          | #{card.expiration_month}/#{card.expiration_year}
+
+        .settings-payment-methods__cards__card__logo.credit-card-icon(
+          data-provider= card.brand
+        )
