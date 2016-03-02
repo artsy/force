@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 s = require 'underscore.string'
+categoryMap = require '../../filters/category/category_map.coffee'
 mediumMap = require '../../filters/medium/medium_map.coffee'
 { formatMoney } = require 'accounting'
 
@@ -24,6 +25,10 @@ module.exports = class PillboxView extends Backbone.View
     @params.set page: 1, silent: true
     @params.unset param
 
+  category: ->
+    if @params.get('gene_id')
+      _.findWhere categoryMap(@params.get('medium')), {id: "#{@params.get('gene_id')}"}
+
   medium: ->
     mediumMap[@params.get('medium')] if @params.has('medium')
 
@@ -42,6 +47,7 @@ module.exports = class PillboxView extends Backbone.View
   render: (hasResults = true) ->
     @$el.html template
       color: @params.get('color')
+      category: @category()
       medium: @medium()
       price: @price()
       width: @size 'Width', 'width'
