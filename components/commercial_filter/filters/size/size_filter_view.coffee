@@ -40,8 +40,8 @@ module.exports = class SizeFilterView extends Backbone.View
   updateParams: (values) =>
     parsedValues = _.map values, (val) -> parseInt(val)
     if _.isEqual parsedValues, [@min, @max]
+      @params.set page: 1, silent: true
       @params.unset @attr
-      @params.set page: 1
     else
       @params.set
         "#{@attr}": values.join '-'

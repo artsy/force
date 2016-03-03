@@ -15,10 +15,25 @@ module.exports = class Filter extends Backbone.Model
 
     @params.on 'change', @fetch, @
 
+  includeAggregations: ->
+    @params.get('page') is 1 or @aggregations.length == 0
+
+  aggregationSelector: ->
+    if @includeAggregations()
+      require '../queries/aggregations_selector.coffee'
+    else
+      ''
+
+  aggregationFragment: ->
+    if @includeAggregations()
+      require '../queries/aggregations.coffee'
+    else
+      ''
+
   query: ->
     query = """
       query filterArtworks(
-        $aggregations: [ArtworkAggregation]!,
+        $aggregations: [ArtworkAggregation],
         $for_sale: Boolean,
         $height: String,
         $width: String
@@ -44,16 +59,14 @@ module.exports = class Filter extends Backbone.Model
           sort: $sort
         ){
           total
-          aggregations {
-            ... aggregations
-          }
+          #{@aggregationSelector()}
           hits {
             ... artwork
           }
         }
       }
       #{require '../queries/artwork.coffee'}
-      #{require '../queries/aggregations.coffee'}
+      #{@aggregationFragment()}
     """
 
   fetch: ->
@@ -67,7 +80,7 @@ module.exports = class Filter extends Backbone.Model
             @artworks.trigger 'zero:results', false
           @set loading: false
           @set total: filter_artworks.total
-          @aggregations.reset filter_artworks.aggregations
+          @aggregations.reset filter_artworks.aggregations if filter_artworks.aggregations
           resolve @
         .catch (error) ->
           reject error

@@ -46,8 +46,8 @@ module.exports = class PriceFilterView extends Backbone.View
     parsedValues = _.map values, (val) -> parseInt val
 
     if _.isEqual parsedValues, [@min, @max]
+      @params.set page: 1, silent: true
       @params.unset 'price_range'
-      @params.set page: 1
     else
       @params.set
         price_range: values.join '-'
