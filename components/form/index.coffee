@@ -37,10 +37,13 @@ module.exports = class Form
     @state 'loading'
     @model[send] @data(), options
 
-  error: (model, response, options) ->
+  error: (modelOrString, response, options) ->
     @state 'error'
     @reenable false
-    @$errors.text @errors.parse response
+    @$errors.text if typeof modelOrString is 'string'
+      modelOrString
+    else
+      @errors.parse response
 
   submitting: ->
     return @__submitting__ if @__submitting__

@@ -1,0 +1,36 @@
+.stacked-form-cell
+  .credit-card-bordered-input.is-block
+    input.bordered-input(
+      id='cc-number'
+      class='js-cc-number'
+      data-stripe='number'
+      placeholder='Credit Card Number'
+      autocomplete='cc-number'
+      required
+    )
+    span.credit-card-bordered-input__type.credit-card-icon(
+      class='js-cc-type'
+    )
+
+.grid-3-up
+  .grid-item
+    input.bordered-input.is-block(
+      id='exp'
+      data-stripe='exp'
+      placeholder='MM/YYYY'
+      required
+    )
+  .grid-item
+    input.bordered-input.is-block(
+      id='cvc'
+      data-stripe='cvc'
+      placeholder='CVC'
+      required
+    )
+
+input.bordered-input(
+  id='name'
+  name='name'
+  placeholder='Name on Credit Card'
+  required
+)

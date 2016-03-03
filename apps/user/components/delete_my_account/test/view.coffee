@@ -85,7 +85,7 @@ describe 'DeleteMyAccountFormView', ->
       beforeEach ->
         $.ajax
           .onCall 0
-          .returns Promise.reject('AN ERROR APPEARS')
+          .returns Promise.reject('There was an error')
 
       it 'displays the error message', ->
         @view.submit $.Event()

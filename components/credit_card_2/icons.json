@@ -1,0 +1,9 @@
+{
+  "American Express": "/cc_American-Express.png",
+  "Diners Club": "/cc_Diners-Club.png",
+  "Discover": "/cc_Discover.png",
+  "JCB": "/cc_JCB.png",
+  "MasterCard": "/cc_MasterCard.png",
+  "Visa": "/cc_Visa.png",
+  "Unknown": "/cc_Unknown.png"
+}
