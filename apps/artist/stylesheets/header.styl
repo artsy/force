@@ -59,7 +59,7 @@
 
 .artist-sticky-name
 .artist-header-follow-count
-.artist-sticky-follow-button
+#artist-sticky-follow-button
   display none
 
 .artist-sticky-name
@@ -70,8 +70,8 @@
     padding 0 15px
     display flex
     flex-direction row
-    align-items: center
-    flex-wrap: nowrap
+    align-items center
+    flex-wrap nowrap
     border-bottom 1px
     top 52px
     background-color white
@@ -79,7 +79,7 @@
     left 0
     width 100%
     z-index 1
-    border-bottom 1px solid gray-dark-color
+    border-bottom 1px solid gray-lighter-color
   .artist-tablist
     border none
   .artist-tabs
@@ -87,8 +87,15 @@
     flex-grow 1
     margin 0 30px
   .artist-sticky-name
-  .artist-header-follow-count
-  .artist-sticky-follow-button
+  #artist-sticky-follow-button
     flex-grow 0
     flex-shrink 0
     display block
+  .artist-sticky-name
+    max-width 200px
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+  @media (max-width: 1150px)
+    #artist-sticky-follow-button
+      display none
