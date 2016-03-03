@@ -2,7 +2,6 @@ _ = require 'underscore'
 { STATUSES } = require('sharify').data
 Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
-Sticky = require '../../../../components/sticky/index.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
 # Main section
@@ -19,8 +18,7 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user }) ->
-    @sticky = new Sticky
+  initialize: ({ @user }) -> #
 
   setupArtworkFilter: ->
     test = splitTest('artist_works_infinite_scroll')
@@ -87,7 +85,6 @@ module.exports = class OverviewView extends Backbone.View
 
   setupRelatedSection: ($el) ->
     $section = @fadeInSection $el
-    @sticky.add $section.find('.artist-related-section-header')
     $el
 
   fadeInSection: ($el) ->
