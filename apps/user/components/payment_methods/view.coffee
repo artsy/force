@@ -6,19 +6,33 @@ module.exports = class PaymentMethodsView extends Backbone.View
   className: 'settings-payment-methods'
 
   events:
-    'click .js-settings-payment-methods__add': 'add'
+    'click .js-add': 'add'
+    'click .js-delete': 'delete'
 
   initialize: ({ @user }) ->
-    @listenTo @user.related().creditCards, 'sync', @render
+    @collection = @user.related().creditCards
+
+    @listenTo @collection, 'add remove sync destroy', @render
 
   fetch: ->
-    @user.related().creditCards.fetch()
+    @collection.fetch()
 
   add: (e) ->
     e.preventDefault()
     openCreditCardModal user: @user
 
+  delete: (e) ->
+    e.preventDefault()
+
+    id = $(e.currentTarget)
+      .attr 'data-state', 'loading'
+      .data 'id'
+
+    @collection
+      .get id
+      .destroy()
+
   render: ->
     @$el.html template
-      cards: @user.related().creditCards.toJSON()
+      cards: @collection.toJSON()
     this
