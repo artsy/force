@@ -1,12 +1,12 @@
-sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
+registered = false
 
 module.exports = (auction, user) ->
-  return if auction.isClosed() or sd.MEDIUM isnt 'search'
   user.checkRegisteredForAuction
     saleId: auction.get('id')
-    success: (registered) ->
-      return if registered
+    success: (isRegistered) -> registered = isRegistered
+    complete: ->
+      return if registered or auction.isClosed()
       ctaBarView = new CTABarView
         name: 'auction_register_cta'
         headline: 'Register to bid in Artsy Auctions'
@@ -16,5 +16,7 @@ module.exports = (auction, user) ->
           copy: 'Register to bid in Artsy Auctions'
           destination: "/auction-registration/#{auction.get('id')}"
       $('body').append ctaBarView.render().$el
-      $('.auction-artworks-container').waypoint (direction) ->
-        ctaBarView.transitionIn() if direction is 'down'
+      $('.auction-header').waypoint(
+        (direction) -> ctaBarView.transitionIn() if direction is 'down'
+        { offset: '-50%' }
+      )
