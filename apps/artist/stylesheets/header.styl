@@ -8,12 +8,13 @@
 
 .artist-header-meta-sep
   margin 0 0.5em
+.artist-header-birthdate
 .artist-header-follow-count
+  color gray-darker-color
 .artist-header-birthdate
   margin 15px 0
-  color gray-darker-color
 .artist-header-follow-count
-  margin-left 10px
+  margin 15px 10px
 .artist-header-empty
   margin 20px 0
 
@@ -55,7 +56,36 @@
 
 .artist-tabs
   margin 15px 0
-  // fade-in()
 
-// .artist-tab-section
-//   display none
+.artist-sticky-name
+.artist-sticky-follow
+  display none
+
+.artist-sticky-name
+  avant-garde-size('body')
+
+.artist-sticky-header-fixed
+  .artist-sticky-header-container
+    padding 0 15px
+    display flex
+    flex-direction row
+    align-items: center
+    flex-wrap: nowrap
+    border-bottom 1px
+    top 52px
+    background-color white
+    position fixed
+    left 0
+    width 100%
+    z-index 1
+    border-bottom 1px solid gray-dark-color
+  .artist-tablist
+    border none
+  .artist-tabs
+    margin 0 30px
+  .artist-sticky-name
+  .artist-sticky-follow
+    display block
+  .artist-sticky-follow
+    flex-grow 1
+    text-align right

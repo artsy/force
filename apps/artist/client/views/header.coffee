@@ -7,6 +7,8 @@ module.exports = class ArtistHeaderView extends Backbone.View
   initialize: ({ @user }) ->
     @setupShareButtons()
     @setupFollowButton()
+    @$window = $ window
+    @$window.on 'scroll', @popLock
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -20,4 +22,23 @@ module.exports = class ArtistHeaderView extends Backbone.View
       following: @following
       modelName: 'artist'
       model: @model
+    new FollowButton
+      analyticsFollowMessage: 'Followed artist, via artist header'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
+      el: @$('#artist-sticky-follow-button')
+      following: @following
+      modelName: 'artist'
+      model: @model
     @following?.syncFollows [@model.id]
+
+  popLock: =>
+    mainHeaderHeight = $('#main-layout-header').height()
+    bottomOfMenu = @$window.scrollTop() + mainHeaderHeight
+    tabsOffset = @$('.artist-sticky-header').offset().top
+    if tabsOffset <= bottomOfMenu
+      @$('.artist-sticky-header').addClass('artist-sticky-header-fixed')
+      responsiveMargin = $('.main-layout-container').offset().left
+
+    else
+      @$('.artist-sticky-header').removeClass('artist-sticky-header-fixed')
+
