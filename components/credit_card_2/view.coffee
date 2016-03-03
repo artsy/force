@@ -50,11 +50,11 @@ module.exports = class CreditCardView extends Backbone.View
 
     data = extend {}, sensitive, form.data()
 
-    stripe.tokenize data
+    @__submit__ = stripe.tokenize data
       .then ({ id }) =>
         @user.related().creditCards.create token: id, provider: 'stripe'
-      .then (card) =>
-        @trigger 'done'
+      .then =>
+        @trigger 'done', arguments...
       .catch (err) ->
         form.error err
 
