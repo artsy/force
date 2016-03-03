@@ -8,6 +8,7 @@ module.exports =
 
     CollectorProfile = require '../../collector_profile.coffee'
     Location = require '../../location.coffee'
+    CreditCards = require '../../../collections/credit_cards.coffee'
 
     collectorProfile = new CollectorProfile
 
@@ -22,8 +23,7 @@ module.exports =
     authentications = new Backbone.Collection
     authentications.url = "#{API_URL}/api/v1/me/authentications"
 
-    creditCards = new Backbone.Collection
-    creditCards.url = "#{API_URL}/api/v1/me/credit_cards"
+    creditCards = new CreditCards
 
     @__related__ =
       collectorProfile: collectorProfile
