@@ -36,8 +36,7 @@ header.artist-header
             )= link.name
             if i !== nav.sections().length - 1
               span.garamond-tab-separator
-      .artist-sticky-follow
-        if followCount
-          span.artist-header-follow-count= followCount
-        button#artist-sticky-follow-button.avant-garde-button-white.follow-button
+      if followCount
+        span.artist-header-follow-count= followCount
+      button#artist-sticky-follow-button.avant-garde-button-white.follow-button
 
