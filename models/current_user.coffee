@@ -114,6 +114,7 @@ module.exports = class CurrentUser extends User
     new Backbone.Collection().fetch _.extend {}, options,
       url: "#{sd.API_URL}/api/v1/me/bidders"
       data: sale_id: options.saleId, access_token: @get('accessToken')
+      complete: options.complete
       success: _.wrap options.success, (success, collection) ->
         success collection.length > 0
 
