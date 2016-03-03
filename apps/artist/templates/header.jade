@@ -24,12 +24,20 @@ header.artist-header
     nav.artist-share
       +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
-  #artist-tabs.artist-tabs
-    nav.garamond-bordered-tablist
-      for link, i in nav.sections()
-        a.garamond-tab(
-          href= link.href
-          class= activeClass(link.href)
-        )= link.name
-        if i !== nav.sections().length - 1
-          span.garamond-tab-separator
+  .artist-sticky-header
+    .artist-sticky-header-container
+      .artist-sticky-name= artist.get('name')
+      .artist-tabs
+        nav.artist-tablist.garamond-bordered-tablist
+          for link, i in nav.sections()
+            a.garamond-tab(
+              href= link.href
+              class= activeClass(link.href)
+            )= link.name
+            if i !== nav.sections().length - 1
+              span.garamond-tab-separator
+      .artist-sticky-follow
+        if followCount
+          span.artist-header-follow-count= followCount
+        button#artist-sticky-follow-button.avant-garde-button-white.follow-button
+
