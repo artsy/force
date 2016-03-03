@@ -99,6 +99,7 @@ that displays artwork. This component contains the save controls template and vi
 
 ## Garamond Tab List
 ![](images/garamond_tab_list.png)
+![](images/garamond_tab_list2.png)
 
 Defined in `components/main_layout/stylesheets/navigation.styl`
 Example:
@@ -112,11 +113,25 @@ The tab seperator will add a slash as an image. Can alternatively be used with
 other seperators typically wrapped in a span (to keep links displayed inline).
 
 ##### Uses:
-- Featured Partners [/partners](http://artsy.net/parnters), [/galleries](http://artsy.net/galleries),
-[/institutions](http://artsy.net/institutions)
+- Fair [/arco-madrid-2016](http://artsy.net/arco-madrid-2016)
+
+## Garamond Bordered Tab List
+![](images/garamond_bordered_tab_list.png)
+![](images/garamond_bordered_tab_list2.png)
+
+Defined in `components/main_layout/stylesheets/navigation.styl`
+Example:
+```jade
+.garamond-bordered-tablist
+  a.garamond-tab.is-active( href="/artist/#{artist.id}" ) Active Tab
+  span.garamond-tab-separator
+  a.garamond-tab( href="/artist/#{artist.id}" ) Inactive Tab
+```
+Like Garamond Tab List, but with borders on top and bottom.
+
+##### Uses:
 - Partner Profiles [/guggenheim](http://artsy.net/guggenheim)
-
-
+- Artist Profiles [/jeff-koons](http://artsy.net/jeff-koons)
 
 ## Profile Badge
 ![](images/profile_badge.png)

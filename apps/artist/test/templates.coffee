@@ -45,7 +45,7 @@ describe 'Artist header', ->
       $('body').html().should.not.containEql 'artist-auction-results-link'
 
     it 'renders the appropriate nav', ->
-      $navLinks = $('.garamond-tablist a')
+      $navLinks = $('.garamond-bordered-tablist a')
       $navLinks.length.should.equal 4
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Related Artists'
@@ -74,7 +74,7 @@ describe 'Artist header', ->
       $('body').html().should.containEql "There are no #{@artist.get('name')} works on Artsy yet."
 
     it 'renders the appropriate nav', ->
-      $navLinks = $('.garamond-tablist a')
+      $navLinks = $('.garamond-bordered-tablist a')
       $navLinks.length.should.equal 2
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Shows'
