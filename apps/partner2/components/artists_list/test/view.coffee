@@ -226,3 +226,14 @@ describe 'PartnerArtistsListView', ->
         @view.$('.artists-column > li > a').length.should.equal 3
         _.each @view.$('.artists-column > li > a'), (a) =>
           $(a).attr('href').should.startWith "/artist/"
+
+  describe '#render', ->
+    beforeEach ->
+      sinon.stub @view, 'remove'
+
+    afterEach ->
+      @view.remove.restore()
+
+    it 'removes the view if no artists', ->
+      @view.render []
+      @view.remove.calledOnce.should.be.ok()

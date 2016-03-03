@@ -94,3 +94,14 @@ describe 'PartnerArtistsGridView', ->
       groups[0].label.should.equal 'artists'
       groups[0].list.should.have.lengthOf 3
       groups[0].list.should.eql pas.models
+
+  describe '#render', ->
+    beforeEach ->
+      sinon.stub @view, 'remove'
+
+    afterEach ->
+      @view.remove.restore()
+
+    it 'removes the view if no artists', ->
+      @view.render []
+      @view.remove.calledOnce.should.be.ok()

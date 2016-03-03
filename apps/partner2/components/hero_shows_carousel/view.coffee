@@ -51,3 +51,7 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       ($dots = @$('.mgr-dot')).on 'click', -> flickity.select $dots.index $(this)
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
+
+  remove: ->
+    @$el.closest('.partner-overview-section').remove()
+    super

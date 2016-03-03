@@ -30,3 +30,7 @@ module.exports = class HeroArtworksCarousel extends Backbone.View
     @$el.html template artworks: artworks
     initCarousel @$el, wrapAround: true, imagesLoaded: true, (carousel) ->
       carousel.cells.flickity.resize()
+
+  remove: ->
+    @$el.closest('.partner-overview-section').remove()
+    super

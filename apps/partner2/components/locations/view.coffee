@@ -23,5 +23,5 @@ module.exports = class LocationsView extends Backbone.View
     @$el.html template locations: sortedLocations
 
   remove: ->
-    @$el.closest('.partner-overview-section').empty()
+    @$el.closest('.partner-overview-section').remove()
     super
