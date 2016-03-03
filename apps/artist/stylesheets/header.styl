@@ -58,7 +58,8 @@
   margin 15px 0
 
 .artist-sticky-name
-.artist-sticky-follow
+.artist-header-follow-count
+.artist-sticky-follow-button
   display none
 
 .artist-sticky-name
@@ -82,10 +83,12 @@
   .artist-tablist
     border none
   .artist-tabs
+    flex-shrink 0
+    flex-grow 1
     margin 0 30px
   .artist-sticky-name
-  .artist-sticky-follow
+  .artist-header-follow-count
+  .artist-sticky-follow-button
+    flex-grow 0
+    flex-shrink 0
     display block
-  .artist-sticky-follow
-    flex-grow 1
-    text-align right
