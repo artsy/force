@@ -25,7 +25,7 @@ module.exports = class ColorFilterView extends Backbone.View
   toggleColor: (e) ->
     color = $(e.currentTarget).data('value')
     if @params.get('color') is color
-      @params.unset('color')
+      @clear()
     else
       @params.set color: color, page: 1
 
@@ -33,7 +33,10 @@ module.exports = class ColorFilterView extends Backbone.View
     @$el.html template
 
   clear: ->
-    @params.unset('color')
+    # Here we want to unset a param, and also change the page param
+    # Use silent: true to only trigger one change event
+    @params.set page: 1, silent: true
+    @params.unset 'color'
 
   renderSelectedAndEmptyStates: =>
     # First remove all empty states

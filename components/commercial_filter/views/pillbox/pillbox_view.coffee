@@ -19,7 +19,10 @@ module.exports = class PillboxView extends Backbone.View
 
   clear: (e) ->
     param = $(e.currentTarget).data('value')
-    @params.unset(param)
+    # Here we want to unset a param, and also change the page param
+    # Use silent: true to only trigger one change event
+    @params.set page: 1, silent: true
+    @params.unset param
 
   medium: ->
     mediumMap[@params.get('medium')] if @params.has('medium')
