@@ -19,7 +19,7 @@ describe 'CreditCardView', ->
     sinon.stub stripe, 'initialize'
 
     @user = new CurrentUser id: 'foobar'
-    @view = new CreditCardView user: @user
+    @view = new CreditCardView collection: @user.related().creditCards
 
   afterEach ->
     stripe.initialize.restore()

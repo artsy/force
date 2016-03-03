@@ -9,9 +9,7 @@ module.exports = class PaymentMethodsView extends Backbone.View
     'click .js-add': 'add'
     'click .js-delete': 'delete'
 
-  initialize: ({ @user }) ->
-    @collection = @user.related().creditCards
-
+  initialize: ->
     @listenTo @collection, 'add remove sync destroy', @render
 
   fetch: ->
@@ -19,7 +17,7 @@ module.exports = class PaymentMethodsView extends Backbone.View
 
   add: (e) ->
     e.preventDefault()
-    openCreditCardModal user: @user
+    openCreditCardModal collection: @collection
 
   delete: (e) ->
     e.preventDefault()
