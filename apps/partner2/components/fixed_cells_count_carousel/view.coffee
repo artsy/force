@@ -47,3 +47,7 @@ module.exports = class FixedCellsCountCarousel extends Backbone.View
       fky = carousel.cells.flickity
       @$('.js-mgr-prev').on 'click', => fky.select fky.selectedIndex - @cellsCountPerPage
       @$('.js-mgr-next').on 'click', => fky.select fky.selectedIndex + @cellsCountPerPage
+
+  remove: ->
+    @$el.closest('.partner-overview-section').remove()
+    super

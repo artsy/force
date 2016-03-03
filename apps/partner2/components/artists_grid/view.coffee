@@ -32,4 +32,9 @@ module.exports = class PartnerArtistsGridView extends Backbone.View
     groups
 
   render: (groups) =>
+    return @remove() unless groups?.length > 0  # groups only contain non-empty groups.
     @$el.html template partner: @partner, groups: groups
+
+  remove: ->
+    @$el.closest('.partner-overview-section').remove()
+    super

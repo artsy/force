@@ -31,7 +31,7 @@ module.exports = class PartnerArtistsListView extends Backbone.View
       Q.promise (resolve) => resolve @collection.models
 
   render: (artists) =>
-    @remove() if artists.length is 0
+    return @remove() if artists.length is 0
 
     @$el.html template
       groups: @groupArtists(artists)
@@ -65,5 +65,5 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     _.filter [bigger, smaller], (g) -> g.list.length > 0
 
   remove: ->
-    @$el.closest('.partner-overview-section').empty()
+    @$el.closest('.partner-overview-section').remove()
     super
