@@ -66,14 +66,10 @@ galleryDefaultShows = (partner, profile) ->
 
 galleryDefaultArtists = (partner, profile) ->
   name: 'artists'
-  component: if partner.claimed() then ArtistsGridView else ArtistsListView
-  title: if partner.claimed() then null else 'Artists'
-  options: (
-    if partner.claimed()
-      { partner: partner }
-    else
-      { partner: partner, linkToPartnerArtist: false }
+  component: (
+    ArtistsGridView if partner.claimed()
   )
+  options: partner: partner
 
 galleryDefaultLocations = (partner, profile) ->
   name: 'locations'
