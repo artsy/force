@@ -11,7 +11,7 @@ module.exports = class PaymentsView extends Backbone.View
   initialize: ({ @user }) -> #
 
   postRender: ->
-    paymentMethodsView = new PaymentMethodsView user: @user
+    paymentMethodsView = new PaymentMethodsView collection: @user.related().creditCards
     @$('.js-settings-section__main--payment-methods')
       .html paymentMethodsView.render().$el
     paymentMethodsView.fetch()

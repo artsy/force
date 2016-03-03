@@ -1,8 +1,7 @@
-{ pick, negate, identity, map, extend } = require 'underscore'
+{ extend } = require 'underscore'
 Backbone = require 'backbone'
 { Countries } = require 'places'
 Form = require '../form/index.coffee'
-CurrentUser = require '../../models/current_user.coffee'
 stripe = require '../stripe/index.coffee'
 template = -> require('./index.jade') arguments...
 
@@ -14,8 +13,7 @@ module.exports = class CreditCardView extends Backbone.View
     'click .js-cancel': 'cancel'
     'click button': 'submit'
 
-  initialize: ({ @user } = {}) ->
-    @user ?= CurrentUser.orNull()
+  initialize: ->
     stripe.initialize()
 
   type: (e) ->
@@ -50,17 +48,15 @@ module.exports = class CreditCardView extends Backbone.View
 
     data = extend {}, sensitive, form.data()
 
-    stripe.tokenize data
+    @__submit__ = stripe.tokenize data
       .then ({ id }) =>
-        @user.related().creditCards.create token: id, provider: 'stripe'
-      .then (card) =>
-        @trigger 'done'
+        @collection.create token: id, provider: 'stripe'
+      .then =>
+        @trigger 'done', arguments...
       .catch (err) ->
         form.error err
 
   render: ->
     @$el.html template
-      user: @user.toJSON()
-      location: @user.related().location.toJSON()
       countries: Countries
     this
