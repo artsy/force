@@ -8,7 +8,7 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   initialize: ->
     return unless @eligibleToSignUp()
-    # return unless _.contains ['social', 'search'], sd.MEDIUM
+    return unless _.contains ['social', 'search'], sd.MEDIUM
     @setupAEArticlePage() if @inAEArticlePage()
     @setupAEMagazinePage() if @inAEMagazinePage()
 
