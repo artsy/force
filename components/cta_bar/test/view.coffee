@@ -29,6 +29,19 @@ describe 'CTABarView', ->
       it 'does not render the form (default mode of "link")', ->
         @view.$('.cta-bar-form').should.have.lengthOf 0
 
+      it 'opens the signup modal on clicking CTA', ->
+        @view.openModal = sinon.stub()
+        @view.onClickButton preventDefault: prevent = sinon.stub()
+        prevent.called.should.be.ok()
+        @view.openModal.called.should.be.ok()
+
+      it 'doesnt open the signup modal if theres a logged in user', ->
+        @view.openModal = sinon.stub()
+        @view.user = new Backbone.Model
+        @view.onClickButton preventDefault: prevent = sinon.stub()
+        prevent.called.should.not.be.ok()
+        @view.openModal.called.should.not.be.ok()
+
   describe 'extended configuration', ->
     beforeEach ->
       @view = new CTABarView
