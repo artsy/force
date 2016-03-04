@@ -18,7 +18,7 @@ describe 'EditorialSignupView', ->
         __dirname, '../../client/editorial_signup')
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView']
-        ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut']
+        ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
       @CTABarView::render.returns $el
       @setupCTAWaypoints = sinon.stub @EditorialSignupView::, 'setupCTAWaypoints'
       @view = new @EditorialSignupView el: $el
