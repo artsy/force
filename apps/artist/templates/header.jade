@@ -2,7 +2,7 @@ include ../../../components/share/template
 include ../../../components/util/activator
 
 header.artist-header
-  h1.extra-large-garamond-header= artist.get('name')
+  h1.artist-header-name.extra-large-garamond-header= artist.get('name')
 
   - var bday = artist.displayNationalityAndBirthdate()
   - var followCount = artist.displayFollowers()
