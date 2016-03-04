@@ -41,4 +41,15 @@ if(location.pathname.match('/article/')){
       });
     }
   });
+
+  analyticsHooks.on('submit:editorial-signup', function(options){
+    analytics.track('Sign up for editorial email', {
+      type: options.type
+    });
+  });
+
+  analyticsHooks.on('dismiss:editorial-signup', function(){
+    analytics.track('Dismiss editorial signup footer');
+  });
+
 }

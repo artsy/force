@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 Backbone = require 'backbone'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 editorialSignupTemplate = -> require('../templates/editorial_signup.jade') arguments...
 
 module.exports = class EditorialSignupView extends Backbone.View
@@ -13,7 +14,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     @setupAEMagazinePage() if @inAEMagazinePage()
 
   eligibleToSignUp: ->
-    # Also include where they are coming from
     (@inAEArticlePage() or @inAEMagazinePage()) and not sd.SUBSCRIBED_TO_EDITORIAL
 
   inAEArticlePage: ->
@@ -52,9 +52,10 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   events:
     'click .js-article-es': 'onSubscribe'
+    'click .js-article-es-dismiss': 'onDismiss'
 
   onSubscribe: (e) ->
-    $(e.currentTarget).addClass 'is-loading'
+    @$(e.currentTarget).addClass 'is-loading'
     $.ajax
       type: 'POST'
       url: '/editorial-signup/form'
@@ -65,10 +66,22 @@ module.exports = class EditorialSignupView extends Backbone.View
         @$(e.currentTarget).removeClass 'is-loading'
       success: (res) =>
         @$(e.currentTarget).removeClass 'is-loading'
-        @$('.article-es-header').fadeOut()
-        @$('.article-es-thanks').fadeIn()
-        @$('.cta-bar-container-editorial').fadeOut( =>
+        @$('.article-es-header').fadeOut =>
+          @$('.article-es-thanks').fadeIn()
+        @$('.cta-bar-container-editorial').fadeOut =>
           @$('.cta-bar-thanks').fadeIn()
-        )
+        @$('.article-es-header').css('display', 'none')
         setTimeout((=> @ctaBarView.close()), 2000)
         setTimeout((=> @$('.articles-es-cta').fadeOut()), 2000)
+        analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e))
+
+  getSubmissionType: (e)->
+    if @inAEMagazinePage()
+      'magazine page'
+    else if $(e.currentTarget).data('type') is 'inline'
+      'article in-line'
+    else
+      'article footer'
+
+  onDismiss: ->
+    analyticsHooks.trigger('dismiss:editorial-signup')

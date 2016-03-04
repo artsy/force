@@ -150,4 +150,4 @@ subscribedToEditorial = (email, callback) ->
     if response.ok
       res.send req.body
     else
-      res.send response.status, response.body
+      res.status(500).send(response.errormsg)
