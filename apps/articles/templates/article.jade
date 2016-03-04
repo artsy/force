@@ -47,7 +47,7 @@ block body
     //- Article footer content
     section#articles-footer
       if article.get('section_ids').length
-        if article.get('section_ids')[0] === '55550be07b8a750300db8430'
+        if article.get('section_ids')[0] === sd.GALLERY_INSIGHTS_SECTION_ID
           .articles-insights-show
             include gallery_insights_form
         h1 More From #{section.get('title')}

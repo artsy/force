@@ -8,7 +8,7 @@ Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
-{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
@@ -93,7 +93,7 @@ getArticleScrollType = (data) ->
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
-          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is '55550be07b8a750300db8430'
+          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
             email = res.locals.sd.CURRENT_USER?.email
             subscribed email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
