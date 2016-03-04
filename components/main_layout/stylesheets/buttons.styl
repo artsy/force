@@ -169,6 +169,23 @@
       background-color gray-darker-color
       color rgba(white, 0.75)
 
+.avant-garde-follow-button-black
+  @extends .avant-garde-button
+  @extends .follow-button
+  &, &:hover, &:focus
+    user-select none
+    text-align center
+    background-color black
+    color white
+    border 1px solid gray-lighter-color
+  &[data-state='following'], &.is-following
+    background-color white
+    color gray-color
+  &.no-touch[data-state='following'],
+  &.no-touch.is-following
+    &:hover
+      color purple-color
+
 .avant-garde-button-dark
   @extends .avant-garde-button
   color white
