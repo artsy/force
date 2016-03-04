@@ -34,6 +34,7 @@ module.exports = class ArtworkColumns extends FilterArtworks
     @fetch options
 
   nextPage: (options = {}) ->
+    return if @xhr? and @xhr.readyState isnt 4
     @params.next()
     options.error = _.wrap options.error, (error, collection, response, options) =>
       @params.prev()
