@@ -141,7 +141,7 @@ if superArticle
 
     .main-layout-container
       //- Footer social buttons
-      .article-social.article-share-bottom
+      .article-social
         h2.article-social__header Share article
         +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 

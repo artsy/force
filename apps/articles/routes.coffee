@@ -133,7 +133,7 @@ subscribed = (email, callback) ->
 subscribedToEditorial = (email, callback) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
     return callback err, false if err
-    subscribed = response.vars.receive_editorial_email
+    subscribed = response.vars?.receive_editorial_email
     callback null, subscribed
 
 @editorialForm = (req, res, next) ->

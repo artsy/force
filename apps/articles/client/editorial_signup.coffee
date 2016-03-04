@@ -8,6 +8,7 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   initialize: ->
     return unless @eligibleToSignUp()
+    # return unless _.contains ['social', 'search'], sd.MEDIUM
     @setupAEArticlePage() if @inAEArticlePage()
     @setupAEMagazinePage() if @inAEMagazinePage()
 
@@ -26,6 +27,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
     return if @ctaBarView.previouslyDismissed()
+    # Show the static CTA after the 6th article
     @$('.articles-feed-item').eq(5).after editorialSignupTemplate
       email: sd.CURRENT_USER?.email or ''
 
