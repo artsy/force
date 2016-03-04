@@ -25,7 +25,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
     new FollowButton
       analyticsFollowMessage: 'Followed artist, via artist header'
       analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
-      el: @$('#artist-sticky-follow-button')
+      el: @$('.artist-sticky-follow-button')
       following: @following
       modelName: 'artist'
       model: @model
