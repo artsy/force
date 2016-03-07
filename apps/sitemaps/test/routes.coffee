@@ -35,7 +35,7 @@ describe 'Sitemaps', ->
       routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
       routes.robots null, @res
       @res.send.args[0][0]
-        .should.equal  'Sitemap: https://www.artsy.net/sitemap.xml'
+        .should.equal  'Sitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml'
 
   describe '#news_sitemap', ->
 
