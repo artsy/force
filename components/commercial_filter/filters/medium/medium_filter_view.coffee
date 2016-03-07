@@ -18,6 +18,7 @@ module.exports = class MediumFilterView extends Backbone.View
 
   setMedium: (e) ->
     $target = $(e.currentTarget)
+    @params.unset 'gene_id', silent: true
     @params.set medium: $target.data('value'), page: 1
 
   hasResults: (counts, id) ->

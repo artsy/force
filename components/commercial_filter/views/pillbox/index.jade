@@ -1,5 +1,9 @@
-if color || medium || price || width || height
+if color || medium || price || width || height || category
   .cf-pillbox__pillboxes
+    if category
+      .cf-pillbox__pillboxes__category
+        span.cf-pillbox__pillboxes_display= category.name
+        span.cf-pillbox__pillboxes_clear(data-value='gene_id') ×
     if color
       .cf-pillbox__pillboxes__color
         span.cf-pillbox__pillboxes_display(class="cf-pillbox__pillboxes_display--#{color}")

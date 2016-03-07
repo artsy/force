@@ -2,7 +2,6 @@ module.exports =
   'painting' : 'Painting'
   'photography' : 'Photography'
   'sculpture' : 'Sculpture'
-  'drawing' : 'Drawing'
   'prints' : 'Prints & Multiples'
   'work-on-paper' : 'Works on Paper'
   'film-slash-video' : 'Film & Video'

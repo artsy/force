@@ -8,7 +8,8 @@ module.exports = class Params extends Backbone.Model
     'color',
     'price_range',
     'width',
-    'height'
+    'height',
+    'gene_id'
   ]
   defaults:
     size: 25
@@ -28,8 +29,13 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
+  initialize: (attributes, { @categoryMap }) ->
+    # no op
+
   current: ->
-    @attributes
+    categories = @categoryMap[@get('medium') || 'global']
+    extra_aggregation_gene_ids = _.pluck categories, 'id'
+    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids
 
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist

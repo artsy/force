@@ -10,7 +10,7 @@ module.exports = class PillboxView extends Backbone.View
   events:
     'click .cf-pillbox__pillboxes_clear' : 'clear'
 
-  initialize: ({ @params, @artworks }) ->
+  initialize: ({ @params, @artworks, @categoryMap }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an artworks collection' unless @artworks?
 
@@ -23,6 +23,11 @@ module.exports = class PillboxView extends Backbone.View
     # Use silent: true to only trigger one change event
     @params.set page: 1, silent: true
     @params.unset param
+
+  category: ->
+    if @params.get('gene_id')
+      categories = @categoryMap[@params.get('medium') || 'global']
+      _.findWhere categories, {id: "#{@params.get('gene_id')}"}
 
   medium: ->
     mediumMap[@params.get('medium')] if @params.has('medium')
@@ -42,6 +47,7 @@ module.exports = class PillboxView extends Backbone.View
   render: (hasResults = true) ->
     @$el.html template
       color: @params.get('color')
+      category: @category()
       medium: @medium()
       price: @price()
       width: @size 'Width', 'width'

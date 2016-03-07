@@ -1,0 +1,11 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'browse2'
+
+block body
+  for categories, index in categoryMap
+    include ../../../components/commercial_filter/filters/category/index

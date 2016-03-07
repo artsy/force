@@ -1,0 +1,44 @@
+.cf-categories
+  display block
+  padding-top padding-unit
+  padding-left padding-unit
+  &__category
+    display inline-block
+    width calc(20% \- padding-unit)
+    padding-bottom 13%
+    background #eee
+    margin-right padding-unit
+    margin-bottom padding-unit
+    text-align center
+    avant-garde-size('m-headline')
+    color white
+    position relative
+    background-position center
+    background-repeat no-repeat
+    background-size cover
+    vertical-align top
+    &__overlay
+      width 100%
+      height 100%
+      position absolute
+      top 0
+      left 0
+      background-color rgba(0,0,0,0.2)
+      transition background-color 0.3s
+      cursor pointer
+    &:hover &__overlay
+      background-color rgba(0,0,0,0.5)
+    &[data-has-results='false'] &__overlay
+      background-color rgba(255,255,255,0.7)
+      pointer-events none
+      cursor default
+    &__name
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      pointer-events none
+
+.has-selection
+  .is-selected .cf-categories__category__overlay
+    background-color rgba(0,0,0,0.5)

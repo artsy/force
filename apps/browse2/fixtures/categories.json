@@ -1,0 +1,460 @@
+{
+  "global": [
+    {
+      "id": "abstract-art",
+      "name": "Abstract",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "animals",
+      "name": "Animals",
+      "image": "images/animals.jpg"
+    },
+    {
+      "id": "art-and-technology",
+      "name": "Technology",
+      "image": "images/technology.jpg"
+    },
+    {
+      "id": "figurative-art",
+      "name": "Figurative",
+      "image": "images/figurative.jpg"
+    },
+    {
+      "id": "gender",
+      "name": "Gender & Sexuality",
+      "image": "images/gender.jpg"
+    },
+    {
+      "id": "geometric",
+      "name": "Geometric",
+      "image": "images/geometric.jpg"
+    },
+    {
+      "id": "landscapes-and-waterscapes",
+      "name": "Landscape",
+      "image": "images/landscape.jpg"
+    },
+    {
+      "id": "pop-and-contemporary-pop",
+      "name": "Pop",
+      "image": "images/pop.jpg"
+    },
+    {
+      "id": "portrait",
+      "name": "Portraiture",
+      "image": "images/portrait.jpg"
+    },
+    {
+      "id": "still-life",
+      "name": "Still Life",
+      "image": "images/stilllife.jpg"
+    }
+  ],
+  "photography": [
+    {
+      "id": "abstract-art",
+      "name": "Abstract"
+    },
+    {
+      "id": "fashion-photography",
+      "name": "Fashion"
+    },
+    {
+      "id": "architecture-in-art",
+      "name": "Architecture"
+    },
+    {
+      "id": "black-and-white",
+      "name": "Black"
+    },
+    {
+      "id": "celebrity",
+      "name": "Celebrity"
+    },
+    {
+      "id": "emerging-art",
+      "name": "Emerging"
+    },
+    {
+      "id": "landscapes-and-waterscapes",
+      "name": "Landscape"
+    },
+    {
+      "id": "modern-photography",
+      "name": "Modern Photography"
+    },
+    {
+      "id": "portrait",
+      "name": "Portraiture"
+    },
+    {
+      "id": "topographic-photography",
+      "name": "Topographic"
+    }
+  ],
+  "sculpture": [
+    {
+      "id": "abstract-art",
+      "name": "Abstract",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "traditional-arts-of-africa-oceania-and-the-americas",
+      "name": "Tribal Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "biomorphic",
+      "name": "Biomorphic",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "ceramic",
+      "name": "Ceramics",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "emerging-art",
+      "name": "Emerging Artists",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "found-objects-and-common-materials",
+      "name": "Found & Common Materials",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "installation",
+      "name": "Installation Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "light-art",
+      "name": "Light Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "minimalism-and-contemporary-minimalist",
+      "name": "Minimalist",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "textile-arts",
+      "name": "Textile Arts",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "prints": [
+    {
+      "id": "artists-books",
+      "name": "Artists’ Books",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "pop-and-contemporary-pop",
+      "name": "Pop",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "emerging-art",
+      "name": "Emerging",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "etching-slash-engraving",
+      "name": "Etchings & Intaglio",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "geometric-abstraction",
+      "name": "Geometric",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "lithograph-1",
+      "name": "Lithographs",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "modern-and-impressionist-prints",
+      "name": "Modern & Impressionist",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "silkscreen-1",
+      "name": "Silkscreen",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "ukiyo-e",
+      "name": "Japanese Woodblock",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "woodcut-and-linocut",
+      "name": "Woodcut & Linocut",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "work-on-paper": [
+    {
+      "id": "abstract-art",
+      "name": "Abstract",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "black-and-white",
+      "name": "Black & White",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "collage",
+      "name": "Collage",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "pop-and-contemporary-pop",
+      "name": "Pop",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "drawing",
+      "name": "Drawing",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "emerging-art",
+      "name": "Emerging Artists",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "human-figure",
+      "name": "Human Figure",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "modern-slash-impressionist-art",
+      "name": "Modern & Impressionist",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "pastel",
+      "name": "Pastels",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "watercolor",
+      "name": "Watercolors",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "film-slash-video": [
+    {
+      "id": "animation",
+      "name": "Animation",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "cinematic",
+      "name": "Cinematic",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "contemporary-conceptualism",
+      "name": "Conceptual",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "cultural-commentary",
+      "name": "Cultural Commentary",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "digital-art",
+      "name": "Digital Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "feminist-art-and-contemporary-feminist",
+      "name": "Feminist",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "installation",
+      "name": "Installation Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "interactive",
+      "name": "Interactive",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "performance-art",
+      "name": "Performance",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "post-internet-art",
+      "name": "Post-Internet",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "design": [
+    {
+      "id": "20th-century-art",
+      "name": "20th Century",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "ceramic",
+      "name": "Ceramics",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "contemporary-design",
+      "name": "Contemporary",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "emerging-design",
+      "name": "Emerging Designers",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "furniture",
+      "name": "Furniture",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "glass-objects",
+      "name": "Glass Objects",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "lighting",
+      "name": "Lighting",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "seating",
+      "name": "Seating",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "table",
+      "name": "Tables",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "textile-arts",
+      "name": "Textiles",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "jewelry": [
+    {
+      "id": "brooches",
+      "name": "Brooches",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "contemporary-jewelry",
+      "name": "Contemporary",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "gemstone",
+      "name": "Gemstones",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "geometric",
+      "name": "Geometric",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "jewelry-by-painters-and-sculptors",
+      "name": "Artist Jewelry",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "modern-jewelry",
+      "name": "Modern",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "necklaces",
+      "name": "Necklaces",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "rings",
+      "name": "Rings",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "image": "images/abstract.jpg"
+    }
+  ],
+  "painting": [
+    {
+      "id": "abstract-art",
+      "name": "Abstract Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "pop-and-contemporary-pop",
+      "name": "Pop",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "gemstone",
+      "name": "Emerging Painters",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "figurative-painting",
+      "name": "Figurative",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "graffiti-slash-street-art",
+      "name": "Street Art",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "hyperrealism",
+      "name": "Hyperrealism",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "east-asian-ink-and-wash-painting",
+      "name": "Ink & Wash",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "landscapes-and-waterscapes",
+      "name": "Landscape",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "portrait",
+      "name": "Portait",
+      "image": "images/abstract.jpg"
+    },
+    {
+      "id": "still-life",
+      "name": "Still Life",
+      "image": "images/abstract.jpg"
+    }
+  ]
+}

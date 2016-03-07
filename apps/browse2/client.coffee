@@ -7,6 +7,7 @@ PaginatorView = require '../../components/commercial_filter/filters/paginator/pa
 HeadlineView = require '../../components/commercial_filter/views/headline/headline_view.coffee'
 TotalView = require '../../components/commercial_filter/views/total/total_view.coffee'
 SortView = require '../../components/commercial_filter/views/sort/sort_view.coffee'
+CategoryFilterView = require '../../components/commercial_filter/filters/category/category_filter_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
@@ -18,12 +19,19 @@ sd = require('sharify').data
 
 module.exports.init = ->
   # Set initial params from the url params
-  params = new Params qs.parse(location.search.replace(/^\?/, ''))
+  params = new Params qs.parse(location.search.replace(/^\?/, '')),
+    categoryMap: sd.CATEGORIES
   filter = new Filter params: params
 
   headlineView = new HeadlineView
     el: $('.cf-headline')
     params: params
+
+  categoryView = new CategoryFilterView
+    el: $('.cf-categories')
+    params: params
+    aggregations: filter.aggregations
+    categoryMap: sd.CATEGORIES
 
   totalView = new TotalView
     el: $('.cf-total-sort__total')
@@ -37,6 +45,7 @@ module.exports.init = ->
     el: $('.cf-pillboxes')
     params: params
     artworks: filter.artworks
+    categoryMap: sd.CATEGORIES
 
   # Main Artworks view
   filter.artworks.on 'reset', ->
@@ -47,7 +56,8 @@ module.exports.init = ->
       gutterWidth: 30
       numberOfColumns: 3
 
-  filter.on 'change:loading', ->  $('.cf-artworks').attr 'data-loading', filter.get('loading')
+  filter.on 'change:loading', ->
+    $('.cf-artworks').attr 'data-loading', filter.get('loading')
 
   # Sidebar
   mediumsView = new MediumFilterView
