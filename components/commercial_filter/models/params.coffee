@@ -43,6 +43,3 @@ module.exports = class Params extends Backbone.Model
     omitted = _.omit whitelisted, (val, key) ->
       (key is 'page' and val is 1) or
       not val?
-
-  whitelistedChanged: ->
-    @changedAttributes @urlWhitelist

@@ -106,8 +106,8 @@ module.exports.init = ->
 
   params.on 'change', ->
     analytics.track 'Commericial filter: params changed',
-      current: params.attributes
-      changed: params.whitelistedChanged()
+      current: params.whitelisted()
+      changed: params.changedAttributes()
 
   # Handles sticky sidebar
   @sticky = false
