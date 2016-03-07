@@ -1,26 +1,29 @@
 .auction-my-active-bids
   h2 Your Active Bids
-  ul
-    for bid in myActiveBids
-      li
-        a.auction-mab-artist-artwork-container(
-          href=bid.sale_artwork.artwork.href
-        )
-          img.auction-mab-img( src=bid.sale_artwork.artwork.image.url )
-          .auction-mab-artist-artwork
-            h3= bid.sale_artwork.artwork.artist.name
-            .auction-mab-title
-              em= bid.sale_artwork.artwork.title
-              | ,
-              = bid.sale_artwork.artwork.date
-        .auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
-        .auction-mab-current-bid
-          strong Current Bid: <em>#{bid.highest_bid.display_amount_dollars}</em>
-        .auction-mab-bid-num (#{bid.sale_artwork.bidder_positions_count} Bids)
-        if bid.is_winning
-          .auction-mab-warning.is-winning: p Highest Bid
-        else
-          .auction-mab-warning: p Outbid
-        a.avant-garde-button-black.auction-mab-bid-button(
-          href=bid.sale_artwork.artwork.href
-        ) Bid
+  table
+    tbody
+      for bid in myActiveBids
+        tr
+          td.auction-mab-artist-artwork-container
+            a(
+              href=bid.sale_artwork.artwork.href
+            )
+              img.auction-mab-img( src=bid.sale_artwork.artwork.image.url )
+              .auction-mab-artist-artwork
+                h3= bid.sale_artwork.artwork.artist.name
+                .auction-mab-title
+                  em= bid.sale_artwork.artwork.title
+                  | ,
+                  = bid.sale_artwork.artwork.date
+          td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
+          td.auction-mab-current-bid
+            strong Current Bid: <em>#{bid.highest_bid.display_amount_dollars}</em>
+          td.auction-mab-bid-num (#{bid.sale_artwork.bidder_positions_count} Bids)
+          if bid.is_winning
+            td.auction-mab-warning.is-winning: p Highest Bid
+          else
+            td.auction-mab-warning: p Outbid
+          td
+            .avant-garde-button-black.auction-mab-bid-button(
+              href=bid.sale_artwork.artwork.href
+            ) Bid
