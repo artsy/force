@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 s = require 'underscore.string'
-categoryMap = require '../../filters/category/category_map.coffee'
 mediumMap = require '../../filters/medium/medium_map.coffee'
 { formatMoney } = require 'accounting'
 
@@ -11,7 +10,7 @@ module.exports = class PillboxView extends Backbone.View
   events:
     'click .cf-pillbox__pillboxes_clear' : 'clear'
 
-  initialize: ({ @params, @artworks }) ->
+  initialize: ({ @params, @artworks, @categoryMap }) ->
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an artworks collection' unless @artworks?
 
@@ -27,7 +26,8 @@ module.exports = class PillboxView extends Backbone.View
 
   category: ->
     if @params.get('gene_id')
-      _.findWhere categoryMap(@params.get('medium')), {id: "#{@params.get('gene_id')}"}
+      categories = @categoryMap[@params.get('medium') || 'global']
+      _.findWhere categories, {id: "#{@params.get('gene_id')}"}
 
   medium: ->
     mediumMap[@params.get('medium')] if @params.has('medium')

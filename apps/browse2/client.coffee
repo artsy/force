@@ -19,7 +19,8 @@ sd = require('sharify').data
 
 module.exports.init = ->
   # Set initial params from the url params
-  params = new Params qs.parse(location.search.replace(/^\?/, ''))
+  params = new Params qs.parse(location.search.replace(/^\?/, '')),
+    categoryMap: sd.CATEGORIES
   filter = new Filter params: params
 
   headlineView = new HeadlineView
@@ -44,6 +45,7 @@ module.exports.init = ->
     el: $('.cf-pillboxes')
     params: params
     artworks: filter.artworks
+    categoryMap: sd.CATEGORIES
 
   # Main Artworks view
   filter.artworks.on 'reset', ->

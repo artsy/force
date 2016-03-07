@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-categoryMap = require '../filters/category/category_map.coffee'
 
 module.exports = class Params extends Backbone.Model
   urlWhitelist:[
@@ -30,8 +29,11 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
+  initialize: (attributes, { @categoryMap }) ->
+    # no op
+
   current: ->
-    categories = categoryMap @get 'medium'
+    categories = @categoryMap[@get('medium') || 'global']
     extra_aggregation_gene_ids = _.pluck categories, 'id'
     _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids
 
