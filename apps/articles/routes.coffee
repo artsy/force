@@ -141,9 +141,9 @@ subscribedToEditorial = (email, callback) ->
     id: req.body.email
     lists:
       "#{sd.SAILTHRU_MASTER_LIST}": 1
-    source: 'editorial'
     name: req.body.name
     vars:
+      source: 'editorial'
       receive_editorial_email: true
       email_frequency: 'daily'
   , (err, response) ->
