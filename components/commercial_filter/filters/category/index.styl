@@ -23,13 +23,13 @@
       position absolute
       top 0
       left 0
-      background-color rgba(0,0,0,0.2)
+      background-color rgba(0,0,0,0.05)
       transition background-color 0.3s
       cursor pointer
     &:hover &__overlay
-      background-color rgba(0,0,0,0.5)
+      background-color rgba(0,0,0,.75)
     &[data-has-results='false'] &__overlay
-      background-color rgba(255,255,255,0.7)
+      background-color rgba(255,255,255,.9)
       pointer-events none
       cursor default
     &__name
@@ -38,7 +38,9 @@
       left 50%
       transform translate(-50%, -50%)
       pointer-events none
+      width 90%
+      line-height 1
 
 .has-selection
   .is-selected .cf-categories__category__overlay
-    background-color rgba(0,0,0,0.5)
+    background-color rgba(110,0,255,.75)
