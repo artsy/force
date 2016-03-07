@@ -1,0 +1,20 @@
+header.credit-card-modal__header
+  h1 Add Credit Card
+
+form.credit-card-modal__form
+  .credit-card-modal__form__fields.stacked-form
+    .form-errors( class='js-form-errors' )
+      //- Rendered client-side
+
+    include ../templates/credit_card
+
+    h3.credit-card-modal__form__fields__subheadline
+      | Billing Address
+
+    include ../templates/billing_address
+
+  .credit-card-modal__form__buttons
+    a.avant-garde-button-white( class='js-cancel' )
+      | Cancel
+    button.avant-garde-button-black
+      | Add
