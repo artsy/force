@@ -9,7 +9,8 @@ module.exports = class Params extends Backbone.Model
     'price_range',
     'width',
     'height',
-    'gene_id'
+    'gene_id',
+    'sort'
   ]
   defaults:
     size: 25
@@ -42,3 +43,6 @@ module.exports = class Params extends Backbone.Model
     omitted = _.omit whitelisted, (val, key) ->
       (key is 'page' and val is 1) or
       not val?
+
+  whitelistedChanged: ->
+    @changedAttributes @urlWhitelist

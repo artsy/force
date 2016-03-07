@@ -100,7 +100,13 @@ module.exports.init = ->
   params.trigger 'change'
 
   # Whenever params change, scroll to the top
-  params.on 'change', -> $('html,body').animate { scrollTop: 0 }, 400
+  params.on 'change', ->
+    $('html,body').animate { scrollTop: 0 }, 400
+
+  params.on 'change', ->
+    analytics.track 'Commericial filter: params changed',
+      current: params.attributes
+      changed: params.whitelistedChanged()
 
   # Handles sticky sidebar
   @sticky = false
