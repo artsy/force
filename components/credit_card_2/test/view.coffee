@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
 CreditCardView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
 stripe = CreditCardView.__get__ 'stripe'
+CreditCardView.__set__ 'jQueryPayment', sinon.stub()
 
 describe 'CreditCardView', ->
   before (done) ->
@@ -17,17 +18,21 @@ describe 'CreditCardView', ->
 
   beforeEach ->
     sinon.stub stripe, 'initialize'
+    sinon.stub CreditCardView::, 'postRender'
 
     @user = new CurrentUser id: 'foobar'
     @view = new CreditCardView collection: @user.related().creditCards
 
   afterEach ->
     stripe.initialize.restore()
+    @view.postRender.restore()
 
   describe '#render', ->
     it 'renders the template', ->
-      @view.render().$el.html()
-        .should.containEql 'Add Credit Card'
+      html = @view.render().$el.html()
+      html.should.containEql 'Credit Card Number'
+      html.should.containEql 'Name on Credit Card'
+      html.should.containEql 'Add Payment'
 
   describe '#submit', ->
     beforeEach ->
@@ -66,17 +71,6 @@ describe 'CreditCardView', ->
             .should.eql
               token: 'a_token'
               provider: 'stripe'
-
-      it 'triggers a `done` event', (done) ->
-        @view.once 'done', (card) ->
-          card.toJSON()
-            .should.eql
-              token: 'a_token'
-              provider: 'stripe'
-
-          done()
-
-        @view.$('button').click()
 
     describe 'error state', ->
       beforeEach ->

@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { Countries } = require 'places'
 Form = require '../form/index.coffee'
 stripe = require '../stripe/index.coffee'
+jQueryPayment = -> require 'jquery.payment'
 template = -> require('./index.jade') arguments...
 
 module.exports = class CreditCardView extends Backbone.View
@@ -10,11 +11,12 @@ module.exports = class CreditCardView extends Backbone.View
 
   events:
     'input .js-cc-number': 'type'
-    'click .js-cancel': 'cancel'
     'click button': 'submit'
+    'input input': 'change'
 
   initialize: ->
     stripe.initialize()
+    jQueryPayment()
 
   type: (e) ->
     number = $(e.currentTarget).val()
@@ -22,9 +24,14 @@ module.exports = class CreditCardView extends Backbone.View
     (@$type ?= @$('.js-cc-type'))
       .attr 'data-provider', provider
 
-  cancel: (e) ->
-    e.preventDefault()
-    @trigger 'abort'
+  change: ->
+    return if @__changed__
+
+    @__changed__ = yes
+
+    @$('button')
+      .removeClass 'avant-garde-button-white'
+      .addClass 'avant-garde-button-black'
 
   validate: (sensitive, validator) ->
     stripe.validate(sensitive).map ({ name, value }) ->
@@ -50,13 +57,24 @@ module.exports = class CreditCardView extends Backbone.View
 
     @__submit__ = stripe.tokenize data
       .then ({ id }) =>
-        @collection.create token: id, provider: 'stripe'
-      .then =>
-        @trigger 'done', arguments...
+        @collection.create { token: id, provider: 'stripe' },
+          success: -> form.state 'default' # `create` returns model, not Promise
+
       .catch (err) ->
         form.error err
+
+  postRender: ->
+    @$('[data-stripe="number"]')
+      .payment 'formatCardNumber'
+
+    @$('[data-stripe="exp"]')
+      .payment 'formatCardExpiry'
+
+    @$('[data-stripe="cvc"]')
+      .payment 'formatCardCVC'
 
   render: ->
     @$el.html template
       countries: Countries
+    @postRender()
     this

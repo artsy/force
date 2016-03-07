@@ -1,0 +1,60 @@
+credit-card-modal = {
+  header: {
+    height: 70px
+  }
+}
+
+.credit-card-modal
+  position relative
+  height 100%
+
+  &__header
+    garamond-size('headline')
+    position absolute
+    top 0
+    right 0
+    left 0
+    height: credit-card-modal.header.height
+    line-height @height
+    padding 0 gutter
+    border-bottom 1px solid gray-lighter-color
+
+  &__form
+    position absolute
+    top: credit-card-modal.header.height
+    right 0
+    bottom 0
+    left 0
+
+    &__fields
+      position absolute
+      margin: 0 0 credit-card-modal.header.height 0
+      padding gutter 25%
+      top 0
+      right 0
+      bottom 0
+      left 0
+      overflow-y auto
+      -webkit-overflow-scrolling touch
+
+      &__subheadline
+        avant-garde-size('s-headline')
+        margin gutter 0
+        padding 10px 0
+        border-top 1px solid gray-lighter-color
+
+    &__buttons
+      position absolute
+      display flex
+      justify-content flex-end
+      align-items center
+      height: credit-card-modal.header.height
+      right 0
+      bottom 0
+      left 0
+      padding 0 gutter
+      border-top 1px solid gray-lighter-color
+
+      > a
+      > button
+        inline-block-margins(gutter / 4)

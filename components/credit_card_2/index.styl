@@ -1,4 +1,5 @@
 @require '../grid'
+@require './modal'
 
 .credit-card-bordered-input
   position relative
@@ -26,31 +27,16 @@
     pointer-events none
 
 .credit-card-form
-  //
-
-  &__header
-    garamond-size('headline')
-    padding gutter
-    border-bottom 1px solid gray-lighter-color
+  width 75%
+  margin 0 auto
 
   &__form
-    width 50%
-    margin gutter auto
-
+    //
     &__subheadline
-      avant-garde-size('s-headline')
       margin gutter 0
       padding 10px 0
       border-top 1px solid gray-lighter-color
-
-  &__buttons
-    padding gutter
-    text-align right
-    border-top 1px solid gray-lighter-color
-
-    > a
-    > button
-      inline-block-margins(gutter / 4)
+      avant-garde-size('s-headline')
 
 icons = json('./icons.json', { hash: true })
 

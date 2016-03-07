@@ -11,6 +11,7 @@ app.get '/profile/edit', routes.settings
 app.get '/user/edit', routes.settings
 app.get '/user/delete', routes.settings
 app.get '/user/saves', routes.settings
+app.get '/user/payments', routes.settings
 
 { NODE_ENV } = require '../../config'
 stagingOrDevelopmentOnly = (req, res, next) ->
@@ -22,4 +23,3 @@ stagingOrDevelopmentOnly = (req, res, next) ->
     next err
 
 app.get '/user/auctions', stagingOrDevelopmentOnly, routes.settings
-app.get '/user/payments', stagingOrDevelopmentOnly, routes.settings
