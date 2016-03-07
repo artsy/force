@@ -8,7 +8,6 @@ LinkedAccountsView = benv.requireWithJadeify require.resolve('../view'), ['templ
 LinkedAccountsView.__set__ 'sd', AP:
   twitterPath: '/users/auth/twitter'
   facebookPath: '/users/auth/facebook'
-  linkedinPath: '/users/auth/linkedin'
 
 describe 'LinkedAccountsView', ->
   before (done) ->
