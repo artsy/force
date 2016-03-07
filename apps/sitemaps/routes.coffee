@@ -225,4 +225,4 @@ resultToBingJSON = (result) ->
     when 'production'
       "Sitemap: #{APP_URL}/sitemap.xml"
     else
-      "User-agent: *\nDisallow: /"
+      "User-agent: *\nNoindex: /"

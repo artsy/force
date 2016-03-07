@@ -25,11 +25,11 @@ describe 'Sitemaps', ->
     afterEach ->
       routes.__set__ 'NODE_ENV', 'test'
 
-    it 'renders a disallow in anything but production', ->
+    it 'renders a noindex in anything but production', ->
       routes.__set__ 'NODE_ENV', 'staging'
       routes.robots null, @res
       @res.send.args[0][0]
-        .should.equal  'User-agent: *\nDisallow: /'
+        .should.equal  'User-agent: *\nNoindex: /'
 
     it 'renders the normal robots with sitemap in production', ->
       routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
