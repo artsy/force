@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { Countries } = require 'places'
 Form = require '../form/index.coffee'
 stripe = require '../stripe/index.coffee'
+jQueryPayment = -> require 'jquery.payment'
 template = -> require('./index.jade') arguments...
 
 module.exports = class CreditCardView extends Backbone.View
@@ -15,6 +16,7 @@ module.exports = class CreditCardView extends Backbone.View
 
   initialize: ->
     stripe.initialize()
+    jQueryPayment()
 
   type: (e) ->
     number = $(e.currentTarget).val()
@@ -61,7 +63,18 @@ module.exports = class CreditCardView extends Backbone.View
       .catch (err) ->
         form.error err
 
+  postRender: ->
+    @$('[data-stripe="number"]')
+      .payment 'formatCardNumber'
+
+    @$('[data-stripe="exp"]')
+      .payment 'formatCardExpiry'
+
+    @$('[data-stripe="cvc"]')
+      .payment 'formatCardCVC'
+
   render: ->
     @$el.html template
       countries: Countries
+    @postRender()
     this
