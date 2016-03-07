@@ -37,6 +37,17 @@ positionWelcomeHeroMethod = (req, res) ->
 
   timeToCacheInSeconds = 300 # 5 Minutes
 
+  jsonLD = {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.artsy.net/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.artsy.net/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+
   Q.allSettled(_.compact([
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredLinks.fetch(cache: true)
@@ -54,6 +65,7 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredArtists: featuredArtists
       featuredArticles: featuredArticles
       featuredShows: featuredShows
+      jsonLD: JSON.stringify jsonLD
   ).done()
 
 @redirectToSignup = (req, res) ->
