@@ -223,6 +223,6 @@ resultToBingJSON = (result) ->
   res.set 'Content-Type', 'text/plain'
   res.send switch NODE_ENV
     when 'production'
-      "Sitemap: #{APP_URL}/sitemap.xml"
+      "Sitemap: #{APP_URL}/sitemap.xml\nSitemap: #{APP_URL}/images_sitemap.xml"
     else
       "User-agent: *\nNoindex: /"
