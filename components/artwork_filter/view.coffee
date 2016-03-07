@@ -74,6 +74,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
     visibleTop = @$el.offset().top - @$siteHeader.height()
+    visibleTop -= @topOffset if @topOffset
     @$htmlBody.animate { scrollTop: visibleTop - 1 }, 500
 
   handleState: (el, eventName) ->
