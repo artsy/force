@@ -56,8 +56,3 @@ describe 'image sitemap template', ->
       _: _
       sd: {}
     xml.should.not.containEql 'james'
-
-
-
-
-
