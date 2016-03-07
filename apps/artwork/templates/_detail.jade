@@ -80,7 +80,11 @@
           = artwork.priceLabel()
         .artwork-meta-price-amount= artwork.priceDisplay()
     else
-      if artwork.artworkPageSaleMessage()
+      if artwork.isAtLimitedFairPartner()
+        .artwork-meta-price.limited-fair-partnership
+          | This work is not available for purchase on Artsy
+          span.help-tooltip.artwork-meta-price(data-message=artwork.limitedFairPartnershipMessage(), data-anchor='top-right')
+      else if artwork.artworkPageSaleMessage()
         .artwork-meta-price
           = artwork.artworkPageSaleMessage()
 

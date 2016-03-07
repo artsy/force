@@ -195,6 +195,12 @@ module.exports = class Artwork extends Backbone.Model
     else
       @get('sale_message')
 
+  limitedFairPartnershipMessage: ->
+    "#{@partnerName()} is an art fair exhibitor, but not an Artsy partner."
+
+  isAtLimitedFairPartner: ->
+    @has('partner') and @get('partner').has_limited_fair_partnership
+
   # For edition sets larger than 1 we render the full list,
   # otherwise this string is displayed
   #

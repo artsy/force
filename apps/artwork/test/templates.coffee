@@ -7,6 +7,7 @@ Backbone = require 'backbone'
 { AToZ } = require 'artsy-backbone-mixins'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
+Partner = require '../../../models/partner'
 Artists = require '../../../collections/artists'
 Artwork = require '../../../models/artwork'
 SaleArtwork = require '../../../models/sale_artwork'
@@ -75,6 +76,19 @@ describe 'Artwork', ->
       @$template.html().should.containEql @artist.get('name')
       @$template.html().should.containEql 'artwork-meta-price'
       @$template.html().should.not.containEql undefined
+
+    it 'includes limited fair partnership message', ->
+      limitedFairPartner = fabricate('partner')
+      limitedFairPartner.has_limited_fair_partnership = true
+      @artwork.set(partner: limitedFairPartner)
+      template = render('_detail')
+        sd: @sd
+        artwork: @artwork
+        artist: @artist
+        artists: @artists
+        asset: ->
+      @$template = cheerio.load template
+      @$template.html().should.containEql 'This work is not available for purchase on Artsy'
 
     it 'renders without errors without an artist', ->
       template = render('_detail')
