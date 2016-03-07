@@ -28,10 +28,11 @@
       cursor pointer
     &:hover &__overlay
       background-color rgba(0,0,0,.75)
-    &[data-has-results='false'] &__overlay
-      background-color rgba(255,255,255,.9)
+    &[data-has-results='false']
       pointer-events none
       cursor default
+      .cf-categories__category__overlay
+        background-color rgba(255,255,255,.9)
     &__name
       position absolute
       top 50%
