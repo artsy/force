@@ -1,0 +1,13 @@
+.article-es-container
+  .article-es-header
+    .article-es-mainheader Subscribe to the Artsy editorial newsletter
+    .article-es-subheader Get the latest art stories and news delivered to your inbox
+    .article-es-form
+      - var email = ''
+      if sd.CURRENT_USER && sd.CURRENT_USER.email
+        - email = sd.CURRENT_USER.email
+      input.js-article-es-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your email address...', required value="#{email}")
+      button.avant-garde-button-black.js-article-es( data-type='inline' ) Sign Me Up
+  .article-es-thanks
+    .article-es-mainheader Thank you.
+    .article-es-subheader You are now subscribed to the Artsy editorial newsletter.

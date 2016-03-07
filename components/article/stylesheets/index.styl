@@ -1,6 +1,7 @@
 @require '../../stylus_lib'
 @require './super_article'
 @require './fullscreen_article'
+@require './editorial_signup'
 
 headline-font-size = 30px
 headline-line-height = 38px
@@ -79,15 +80,31 @@ body.body-article
   avant-garde-size('m-headline')
 
 .article-social
+  width 570px
   text-align center
   padding 10px 0 20px 0
+  margin gutter-size auto (gutter-size * 2)
   .article-social__header
-    avant-garde()
-    font-size default-avant-garde-font-size
-    margin-bottom 10px
-  &.add-bottom
-    margin gutter-size auto (gutter-size * 2)
-    padding-bottom 50px
+    float left
+    margin-top 16px
+    margin-right 70px
+    avant-garde-size('body')
+    left 0px
+  .share-item
+    display inline-block
+    width 130px
+    height 50px
+    border 1px solid gray-color
+    &:nth-child(3)
+      border-left 0px
+      border-right 0px
+  a
+    display block
+    height 100%
+    text-decoration none
+    .icon-in-table
+      display block
+      margin-top 8px
 
 .article-section-image
   width overflow-width

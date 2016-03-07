@@ -8,7 +8,8 @@ Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
-{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID } = require '../../config'
+sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @articles = (req, res, next) ->
@@ -21,6 +22,9 @@ request = require 'superagent'
         sort: '-published_at'
         featured: true
     )
+    if res.locals.sd.CURRENT_USER?.email?
+      subscribedToEditorial res.locals.sd.CURRENT_USER.email, (err, subscribed) ->
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
   ]).catch(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
@@ -39,25 +43,30 @@ request = require 'superagent'
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
       res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
+      res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
-      res.locals.sd.VIDEO_OPTIONS = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
 
-      # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-      if data.relatedArticles?.length
-        res.locals.sd.SCROLL_ARTICLE = 'static'
-      else if data.article.get('author_id') isnt '503f86e462d56000020002cc'
-        res.locals.sd.SCROLL_ARTICLE = 'static'
-      else
-        res.locals.sd.SCROLL_ARTICLE = 'infinite'
-
-      if res.locals.sd.CURRENT_USER?.email? and _.contains res.locals.sd.ARTICLE.section_ids, '55550be07b8a750300db8430'
+      # Email subscription checks - Mailchimp (to be replaced by Marketo) and Sailthru
+      if res.locals.sd.CURRENT_USER?.email?
         email = res.locals.sd.CURRENT_USER?.email
-        subscribed email, (cb) ->
-          res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-          res.render 'article', _.extend data, embedVideo: embedVideo
+        if _.contains res.locals.sd.ARTICLE.section_ids, sd.GALLERY_INSIGHTS_SECTION_ID
+          subscribed email, (cb) ->
+            res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
+            res.render 'article', _.extend data, embedVideo: embedVideo
+        else
+          subscribedToEditorial email, (err, subscribed) ->
+            res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
+            res.render 'article', _.extend data, embedVideo: embedVideo
       else
         res.locals.sd.MAILCHIMP_SUBSCRIBED = false
         res.render 'article', _.extend data, embedVideo: embedVideo
+
+getArticleScrollType = (data) ->
+  # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
+  if data.relatedArticles?.length or data.article.get('author_id') isnt sd.ARTSY_EDITORIAL_ID
+    'static'
+  else
+    'infinite'
 
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'
@@ -84,7 +93,7 @@ request = require 'superagent'
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
-          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is '55550be07b8a750300db8430'
+          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
             email = res.locals.sd.CURRENT_USER?.email
             subscribed email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
@@ -120,3 +129,25 @@ subscribed = (email, callback) ->
     ).query("emails[0][email]=#{email}").end (err, response) ->
       callback response.body.success_count is 1
   return
+
+subscribedToEditorial = (email, callback) ->
+  sailthru.apiGet 'user', { id: email }, (err, response) ->
+    return callback err, false if err
+    subscribed = response.vars?.receive_editorial_email
+    callback null, subscribed
+
+@editorialForm = (req, res, next) ->
+  sailthru.apiPost 'user',
+    id: req.body.email
+    lists:
+      "#{sd.SAILTHRU_MASTER_LIST}": 1
+    source: 'editorial'
+    name: req.body.name
+    vars:
+      receive_editorial_email: true
+      email_frequency: 'daily'
+  , (err, response) ->
+    if response.ok
+      res.send req.body
+    else
+      res.status(500).send(response.errormsg)

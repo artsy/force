@@ -22,7 +22,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
   createAndShowCTAForm: ->
     @ctaBarView = new CTABarView
       headline: 'Artsy Insights for Galleries'
-      mode: 'smaller-with-email'
+      mode: 'gallery-insights'
       name: 'gallery-insights-signup'
       persist: true
       subHeadline: "Receive periodical insights from Artsy's Gallery Team"

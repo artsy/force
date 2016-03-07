@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Articles = require '../../../collections/articles.coffee'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
-GalleryInsightsView = require './gallery_insights.coffee'
+EditorialSignupView = require './editorial_signup.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->
@@ -17,3 +17,4 @@ module.exports.init = ->
       featured: true
       sort: '-published_at'
   feedView.render()
+  new EditorialSignupView el: $('body')

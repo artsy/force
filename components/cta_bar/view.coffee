@@ -15,6 +15,7 @@ module.exports = class CTABarView extends Backbone.View
 
   events:
     'click .cta-bar-defer': 'close'
+    'click .cta-bar-defer-editorial': 'close'
     'click .cta-bar-button': 'onClickButton'
     'submit .cta-bar-form': 'submit'
 
@@ -35,7 +36,10 @@ module.exports = class CTABarView extends Backbone.View
 
   logDimissal: ->
     if @persist
-      Cookies.set @name, 1, expires: 31536000
+      if @name is 'editorial-signup'
+        Cookies.set @name, 1, expires: 864000
+      else
+        Cookies.set @name, 1, expires: 31536000
 
   __transition__: (state, cb) ->
     _.defer =>

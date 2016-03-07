@@ -9,7 +9,7 @@ module.exports = class ArticlesFeedView extends Backbone.View
   className: 'articles-feed'
 
   events:
-    'click button': 'more'
+    'click .js-load-more-articles': 'more'
 
   articleViews: []
 
@@ -22,7 +22,7 @@ module.exports = class ArticlesFeedView extends Backbone.View
   more: (e) ->
     return if @collection.length >= @collection.count
 
-    @$('button').attr 'data-state', 'loading'
+    @$('.js-load-more-articles').attr 'data-state', 'loading'
 
     data = _.extend({}, offset: @collection.length, @fetchWith)
 
