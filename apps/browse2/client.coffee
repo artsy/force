@@ -36,6 +36,7 @@ module.exports.init = ->
   totalView = new TotalView
     el: $('.cf-total-sort__total')
     filter: filter
+    artworks: filter.artworks
 
   totalView = new SortView
     el: $('.cf-total-sort__sort')
@@ -100,7 +101,13 @@ module.exports.init = ->
   params.trigger 'change'
 
   # Whenever params change, scroll to the top
-  params.on 'change', -> $('html,body').animate { scrollTop: 0 }, 400
+  params.on 'change', ->
+    $('html,body').animate { scrollTop: 0 }, 400
+
+  params.on 'change', ->
+    analytics.track 'Commericial filter: params changed',
+      current: params.whitelisted()
+      changed: params.changedAttributes()
 
   # Handles sticky sidebar
   @sticky = false
