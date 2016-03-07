@@ -1,18 +1,18 @@
 header.credit-card-form__header
   h1 Add Credit Card
 
-form
-  .credit-card-form__form.stacked-form
+form.credit-card-form__form
+  .credit-card-form__form__form.stacked-form
     .form-errors( class='js-form-errors' )
       //- Rendered client-side
 
     include ./templates/credit_card
 
-    h3.credit-card-form__form__subheadline
+    h3.credit-card-form__form__form__subheadline
       | Billing Address
     include ./templates/billing_address
 
-  .credit-card-form__buttons
+  .credit-card-form__form__buttons
     a.avant-garde-button-white( class='js-cancel' )
       | Cancel
     button.avant-garde-button-black

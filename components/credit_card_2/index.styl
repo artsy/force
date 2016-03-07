@@ -27,30 +27,32 @@
 
 .credit-card-form
   //
-
   &__header
-    garamond-size('headline')
-    padding gutter
+    padding (gutter / 2) gutter
     border-bottom 1px solid gray-lighter-color
+    garamond-size('headline')
 
   &__form
-    width 50%
-    margin gutter auto
+    //
+    &__form
+      width 50%
+      overflow-y auto
+      margin gutter auto
 
-    &__subheadline
-      avant-garde-size('s-headline')
-      margin gutter 0
-      padding 10px 0
+      &__subheadline
+        margin gutter 0
+        padding 10px 0
+        border-top 1px solid gray-lighter-color
+        avant-garde-size('s-headline')
+
+    &__buttons
+      padding (gutter / 2) gutter
+      text-align right
       border-top 1px solid gray-lighter-color
 
-  &__buttons
-    padding gutter
-    text-align right
-    border-top 1px solid gray-lighter-color
-
-    > a
-    > button
-      inline-block-margins(gutter / 4)
+      > a
+      > button
+        inline-block-margins(gutter / 4)
 
 icons = json('./icons.json', { hash: true })
 
