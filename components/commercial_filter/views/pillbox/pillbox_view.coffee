@@ -15,7 +15,6 @@ module.exports = class PillboxView extends Backbone.View
     throw new Error 'Requires an artworks collection' unless @artworks?
 
     @listenTo @params, 'change', @render
-    @listenTo @artworks, 'zero:results reset', @render
 
   clear: (e) ->
     param = $(e.currentTarget).data('value')
@@ -44,7 +43,7 @@ module.exports = class PillboxView extends Backbone.View
       plus = if max is @params.get('ranges').price_range.max then "+" else ""
       "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { precision: 0 })}#{plus}"
 
-  render: (hasResults = true) ->
+  render: ->
     @$el.html template
       color: @params.get('color')
       category: @category()
@@ -52,4 +51,3 @@ module.exports = class PillboxView extends Backbone.View
       price: @price()
       width: @size 'Width', 'width'
       height: @size 'Height', 'height'
-      hasResults: hasResults

@@ -36,6 +36,7 @@ module.exports.init = ->
   totalView = new TotalView
     el: $('.cf-total-sort__total')
     filter: filter
+    artworks: filter.artworks
 
   totalView = new SortView
     el: $('.cf-total-sort__sort')
