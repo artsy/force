@@ -1,8 +1,12 @@
+{ invoke } = require 'underscore'
 Backbone = require 'backbone'
-openCreditCardModal = require '../../../../components/credit_card_2/index.coffee'
+openCreditCardModal = require '../../../../components/credit_card_2/modal/index.coffee'
 template = -> require('./index.jade') arguments...
+CreditCardView = require '../../../../components/credit_card_2/view.coffee'
 
 module.exports = class PaymentMethodsView extends Backbone.View
+  subViews: []
+
   className: 'settings-payment-methods'
 
   events:
@@ -31,6 +35,19 @@ module.exports = class PaymentMethodsView extends Backbone.View
       .destroy()
 
   render: ->
-    @$el.html template
-      cards: @collection.toJSON()
+    if @collection.length
+      @$el.html template
+        cards: @collection.toJSON()
+
+    else
+      creditCardView = new CreditCardView collection: @collection
+      @$el.html creditCardView.render().$el
+      @subViews = [
+        creditCardView
+      ]
+
     this
+
+  remove: ->
+    invoke @subViews, 'remove'
+    super
