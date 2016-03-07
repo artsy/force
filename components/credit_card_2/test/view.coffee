@@ -26,8 +26,10 @@ describe 'CreditCardView', ->
 
   describe '#render', ->
     it 'renders the template', ->
-      @view.render().$el.html()
-        .should.containEql 'Add Credit Card'
+      html = @view.render().$el.html()
+      html.should.containEql 'Credit Card Number'
+      html.should.containEql 'Name on Credit Card'
+      html.should.containEql 'Add Payment'
 
   describe '#submit', ->
     beforeEach ->
@@ -66,17 +68,6 @@ describe 'CreditCardView', ->
             .should.eql
               token: 'a_token'
               provider: 'stripe'
-
-      it 'triggers a `done` event', (done) ->
-        @view.once 'done', (card) ->
-          card.toJSON()
-            .should.eql
-              token: 'a_token'
-              provider: 'stripe'
-
-          done()
-
-        @view.$('button').click()
 
     describe 'error state', ->
       beforeEach ->

@@ -10,8 +10,8 @@ module.exports = class CreditCardView extends Backbone.View
 
   events:
     'input .js-cc-number': 'type'
-    'click .js-cancel': 'cancel'
     'click button': 'submit'
+    'input input': 'change'
 
   initialize: ->
     stripe.initialize()
@@ -22,9 +22,14 @@ module.exports = class CreditCardView extends Backbone.View
     (@$type ?= @$('.js-cc-type'))
       .attr 'data-provider', provider
 
-  cancel: (e) ->
-    e.preventDefault()
-    @trigger 'abort'
+  change: ->
+    return if @__changed__
+
+    @__changed__ = yes
+
+    @$('button')
+      .removeClass 'avant-garde-button-white'
+      .addClass 'avant-garde-button-black'
 
   validate: (sensitive, validator) ->
     stripe.validate(sensitive).map ({ name, value }) ->
@@ -50,9 +55,9 @@ module.exports = class CreditCardView extends Backbone.View
 
     @__submit__ = stripe.tokenize data
       .then ({ id }) =>
-        @collection.create token: id, provider: 'stripe'
-      .then =>
-        @trigger 'done', arguments...
+        @collection.create { token: id, provider: 'stripe' },
+          success: -> form.state 'default' # `create` returns model, not Promise
+
       .catch (err) ->
         form.error err
 
