@@ -8,7 +8,7 @@ mixin author-date
     .article-contributing-author
       include ../../article_figure/contributing_author.jade
     .article-date
-      = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+      = article.date('published_at').format('MMM Do, YYYY h:mm a')
 
 mixin video(video)
   .article-video-container
