@@ -8,7 +8,7 @@ openSpecialistModal = require '../../../components/simple_contact/specialist_fee
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 setupClocks = require './clocks.coffee'
-setupEmailRegistration = require './email_registration_flow.coffee'
+EmailRegistrationView = require './email_registration.coffee'
 attachCTA = require './cta.coffee'
 
 module.exports.init = ->
@@ -28,7 +28,10 @@ module.exports.init = ->
     collection: artworks
     user: user
 
-  setupEmailRegistration(auction) unless user.id
+  new EmailRegistrationView(
+    el: $('.auction-preview-sidebar-email')
+    auction: auction
+  ) unless user.id
   attachCTA auction, user
 
   # Re-fetch due to cache

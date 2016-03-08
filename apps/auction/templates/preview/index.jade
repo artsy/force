@@ -41,7 +41,13 @@ block body
           .auction-preview-sidebar-text
             | Receive an email invitation when the auction begins.
           .auction-preview-sidebar-email
-            //- rendered on the client
+            form.auction-preview-sidebar-form
+              label( for='email' ) Email
+              input.bordered-input.is-block(
+                name='email', type='email', value= email, required, autofocus= autofocus
+              )
+              .form-errors.js-form-errors
+              button.avant-garde-button-black.is-block Notify me
           .auction-preview-register-now
             | You can also #[a(href=auction.registerUrl()) Register Now]
 
