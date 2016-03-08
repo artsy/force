@@ -221,8 +221,17 @@ resultToBingJSON = (result) ->
 
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
+  robotsText = """
+    Sitemap: #{APP_URL}/sitemap.xml
+    Sitemap: #{APP_URL}/images_sitemap.xml
+    Noindex: ?sort=
+    Noindex: ?dimension_range=
+    Disallow: ?dns_source=
+    Disallow: ?microsite=
+    Disallow: ?from-show-guide=
+  """
   res.send switch NODE_ENV
     when 'production'
-      "Sitemap: #{APP_URL}/sitemap.xml\nSitemap: #{APP_URL}/images_sitemap.xml"
+      robotsText
     else
       "User-agent: *\nNoindex: /"
