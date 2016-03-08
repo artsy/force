@@ -120,7 +120,7 @@ module.exports = class Article extends Backbone.Model
     crop @get(attr), args...
 
   date: (attr) ->
-    moment @get(attr)
+    moment(@get(attr)).local()
 
   strip: (attr) ->
     stripTags(@get attr)
