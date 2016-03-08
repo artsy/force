@@ -15,6 +15,7 @@ SizeFilterView = require '../../components/commercial_filter/filters/size/size_f
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 Sticky = require '../../components/sticky/index.coffee'
+scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 
 module.exports.init = ->
@@ -109,11 +110,13 @@ module.exports.init = ->
       current: params.whitelisted()
       changed: params.changedAttributes()
 
+  scrollFrame '.cf-artworks a' unless sd.EIGEN
+
   # Handles sticky sidebar
   @sticky = false
   filter.artworks.on 'reset zero:artworks', =>
     if @sticky
-      _.delay (=> @sticky.rebuild()), 300
+      _.defer => @sticky.rebuild()
     else
       @sticky = new Sticky
       @sticky.add $('.cf-sidebar')
