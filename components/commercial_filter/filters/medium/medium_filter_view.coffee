@@ -30,7 +30,7 @@ module.exports = class MediumFilterView extends Backbone.View
 
   render: ->
     @$el.html template
-      counts: @aggregations.get('MEDIUM').get('counts')
+      counts: @aggregations.get('MEDIUM')?.get('counts')
       mediums: mediumMap
       selected: @params.get('medium')
       hasResults: @hasResults
