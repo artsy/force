@@ -113,7 +113,7 @@ module.exports.init = ->
   @sticky = false
   filter.artworks.on 'reset zero:artworks', =>
     if @sticky
-      _.delay (=> @sticky.rebuild()), 300
+      _.defer => @sticky.rebuild()
     else
       @sticky = new Sticky
       @sticky.add $('.cf-sidebar')

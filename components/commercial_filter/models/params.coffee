@@ -9,8 +9,7 @@ module.exports = class Params extends Backbone.Model
     'price_range',
     'width',
     'height',
-    'gene_id',
-    'sort'
+    'gene_id'
   ]
   defaults:
     size: 25
