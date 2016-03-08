@@ -9,7 +9,6 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   initialize: ->
     return unless @eligibleToSignUp()
-    return unless _.contains ['social', 'search'], sd.MEDIUM
     @setupAEArticlePage() if @inAEArticlePage()
     @setupAEMagazinePage() if @inAEMagazinePage()
 
@@ -37,11 +36,10 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    @setupCTAWaypoints()
+    @setupCTAWaypoints() if not @ctaBarView.previouslyDismissed() and
+      sd.MEDIUM in ['social', 'search']
 
   setupCTAWaypoints: ->
-    return if @ctaBarView.previouslyDismissed()
-    @$('.article-es').show()
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'

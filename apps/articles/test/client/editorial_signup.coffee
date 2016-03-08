@@ -20,25 +20,14 @@ describe 'EditorialSignupView', ->
         ['CTABarView']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
       @CTABarView::render.returns $el
-      @setupCTAWaypoints = sinon.stub @EditorialSignupView::, 'setupCTAWaypoints'
+      @CTABarView::previouslyDismissed.returns false
+      @setupCTAWaypoints = sinon.spy @EditorialSignupView::, 'setupCTAWaypoints'
       @view = new @EditorialSignupView el: $el
       done()
 
   after ->
     $.ajax.restore()
-    @setupCTAWaypoints.restore()
     benv.teardown()
-
-  describe '#initialize', ->
-
-    it 'returns if page does not come from social or search traffic', ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
-        SUBSCRIBED_TO_EDITORIAL: false
-        MEDIUM: 'unknown'
-      @view.initialize()
-      @setupCTAWaypoints.called.should.be.false()
 
   describe '#eligibleToSignUp', ->
 
@@ -58,6 +47,15 @@ describe 'EditorialSignupView', ->
 
   describe '#setupCTAWaypoints', ->
 
+    it 'does not render CTA bar if page does not come from social or search traffic', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: author_id: '123'
+        ARTSY_EDITORIAL_ID: '123'
+        SUBSCRIBED_TO_EDITORIAL: false
+        MEDIUM: 'unknown'
+      @view.initialize()
+      @setupCTAWaypoints.called.should.not.be.ok()
+
     it 'only sets up waypoints for editorial article page', ->
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: author_id: '123'
@@ -65,7 +63,7 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()
-      @setupCTAWaypoints.called.should.be.true()
+      @setupCTAWaypoints.called.should.be.ok()
 
   describe '#onSubscribe', ->
 
