@@ -19,19 +19,18 @@ module.exports = class MediumFilterView extends Backbone.View
   setMedium: (e) ->
     medium = $(e.currentTarget).data('value')
     if medium is @params.get('medium')
-      @params.clear(silent: true).set _.defaults medium: medium, @params.defaults
+      @params.clear().set _.defaults medium: medium, @params.defaults
     else
       @params.unset 'gene_id', silent: true
       @params.set { medium: medium, page: 1 }, silent: true
       @params.trigger 'change'
-
 
   hasResults: (counts, id) ->
     _.any counts, (count) -> count.id is id
 
   render: ->
     @$el.html template
-      counts: @aggregations.get('MEDIUM').get('counts')
+      counts: @aggregations.get('MEDIUM')?.get('counts')
       mediums: mediumMap
       selected: @params.get('medium')
       hasResults: @hasResults
