@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Params = require '../../../models/params'
+categories = require '../../../../../apps/browse2/fixtures/categories.json'
 { resolve } = require 'path'
 
 describe 'PillboxView', ->
@@ -19,14 +20,18 @@ describe 'PillboxView', ->
     benv.teardown()
 
   beforeEach ->
-    @params = new Params
+    paramAttrs =
       medium: 'painting'
       gene_id: 'abstract-art'
       price_range: '1000-20000'
       width: '24.00-120.00'
       height: '1.00-107.00'
+    @params = new Params paramAttrs, categoryMap: categories
     @artworks = new Backbone.Collection
-    @view = new @PillboxView params: @params, artworks: @artworks
+    @view = new @PillboxView
+      params: @params
+      artworks: @artworks
+      categoryMap: categories
 
   describe '#category', ->
     it 'gets the proper category if medium and gene_id are set', ->
@@ -42,9 +47,9 @@ describe 'PillboxView', ->
 
   describe '#size', ->
     it 'gets the proper size if attribute is set', ->
-      @view.size('Height', 'height').should.eql 'Height: 1 – 107 in.'
-      @view.size('Width', 'width').should.eql 'Width: 24 – 120+ in.'
+      @view.size('Height', 'height').should.eql 'Height: 1 – 107 in'
+      @view.size('Width', 'width').should.eql 'Width: 24 – 120+ in'
 
   describe '#price', ->
     it 'gets the proper size if attribute is set', ->
-      @view.price().should.eql '$1,000 – $20,000'
+      @view.price().should.eql '$1,000 – 20,000'
