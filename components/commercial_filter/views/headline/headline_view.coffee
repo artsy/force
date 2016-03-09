@@ -31,7 +31,7 @@ module.exports = class HeadlineView extends Backbone.View
       [ min, max ] = _.map @params.get('price_range').split("-"), (val) -> parseInt val
       if min > 0 and max < 50000
         "Between #{formatMoney(min, { precision: 0 })} and #{formatMoney(max, { precision: 0 })}"
-      else if min > 0 and max is 50000
+      else if min > 0 and isNaN(max)
         "Above #{formatMoney(min, { precision: 0 })}"
       else if min is 0 and max < 50000
         "Below #{formatMoney(max, { precision: 0 })}"

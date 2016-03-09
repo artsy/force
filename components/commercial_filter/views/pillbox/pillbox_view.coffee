@@ -40,7 +40,11 @@ module.exports = class PillboxView extends Backbone.View
   price: ->
     if @params.has('price_range')
       [ min, max ] = _.map @params.get('price_range').split("-"), (val) -> parseInt val
-      plus = if max is @params.get('ranges').price_range.max then "+" else ""
+      if isNaN(max)
+        max = @params.get('ranges').price_range.max
+        plus = '+'
+      else
+        plus = ''
       "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { symbol: "", precision: 0 })}#{plus}"
 
   render: ->
