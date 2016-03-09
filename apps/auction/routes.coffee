@@ -13,6 +13,8 @@ State = require '../../components/auction_artworks/models/state'
 footerItems = require './footer_items'
 metaphysics = require '../../lib/metaphysics'
 myActiveBidsQuery = require '../../components/my_active_bids/query'
+{ SAILTHRU_AUCTION_NOTIFICATION_LIST, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config'
+sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 setupUser = (user, auction) ->
   if user?
@@ -100,3 +102,19 @@ setupUser = (user, auction) ->
     error: res.backboneError
     success: (collection, response, options) ->
       res.redirect "/feature/#{collection.first().get('owner').id}"
+
+@inviteForm = (req, res, next) ->
+  sailthru.apiGet 'user', { id: req.body.email }, (err, response) ->
+    return next err if err
+    auctionSlugs = _.uniq (response.vars.auction_slugs or []).concat [req.params.id]
+    source = response.vars.source or 'auction'
+    sailthru.apiPost 'user',
+      id: req.body.email
+      lists:
+        "#{SAILTHRU_AUCTION_NOTIFICATION_LIST}": 1
+      vars:
+        source: source
+        auction_slugs: auctionSlugs
+    , (err, response) ->
+      return next err if err
+      res.send req.body

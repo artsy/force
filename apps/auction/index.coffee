@@ -10,3 +10,4 @@ app.get '/sale/:id/confirm-registration', routes.index
 
 app.get '/auction/:id', routes.index, routes.redirect
 app.get '/auction/:id/confirm-registration', routes.index
+app.post '/auction/:id/form', routes.inviteForm
