@@ -33,6 +33,9 @@ module.exports = class Items extends PageableCollection
       when 'PartnerShow'
         PartnerShow = require '../models/partner_show.coffee'
         new PartnerShow attrs, options
+      when 'Artwork'
+        Artwork = require '../models/artwork.coffee'
+        new Artwork attrs, options
       else
         new Item attrs, options
 
