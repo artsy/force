@@ -1,7 +1,5 @@
-
-@import '../components/merry_go_round'
-@import '../components/fillwidth_row'
-@import '../components/artwork_item/stylesheets'
+@require '../components/merry_go_round'
+@require '../components/artwork_item/stylesheets'
 
 arrow-offset = -90px
 
@@ -24,7 +22,7 @@ arrow-offset = -90px
 .arv-view-all
   position absolute
   right 0
-  top 5px
+  top 0
 
 .arv-fillwidth-row
   padding-bottom 120px
@@ -35,14 +33,12 @@ arrow-offset = -90px
   max-height 360px
 
   &:hover
-    .arv-carousel-arrow
-      opacity 1
-
-  .arv-carousel-arrow:hover
-    opacity 0.5
+    .arv-carousel-nav__prev
+    .arv-carousel-nav__next
+      opacity 0.5
 
   .artwork-item-caption
-    height 120px
+    max-height 120px
 
 .arv-carousel-nav
   position absolute
@@ -55,23 +51,25 @@ arrow-offset = -90px
   &.is-hidden
     display none
 
-.arv-carousel-arrow
-  cursor pointer
-  pointer-events all
-  transition opacity .25s
-  opacity 0
-  position absolute
-  user-select none
-  height 250px
-  width 90px
-  text-align center
-  > i
+  &__next
+  &__prev
+    position absolute
+    top 50%
+    transform translateY(-50%)
+    width 90px
+    text-align center
+    cursor pointer
     user-select none
+    pointer-events all
+    transition opacity .25s
+    opacity 0
 
-.arv-carousel-arrow-next
-  right arrow-offset
-.arv-carousel-arrow-prev
-  left arrow-offset
+    > i
+      user-select none
+    &:hover
+      opacity 1 !important
 
-
-
+  &__next
+    right arrow-offset
+  &__prev
+    left arrow-offset
