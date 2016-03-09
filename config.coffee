@@ -92,6 +92,7 @@ module.exports =
   GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
+  CONSIGNMENTS_APP_URL: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

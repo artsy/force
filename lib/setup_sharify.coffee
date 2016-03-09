@@ -62,6 +62,7 @@ sharify.data = _.extend _.pick(config,
   'METAPHYSICS_ENDPOINT'
   'GALLERY_INSIGHTS_SECTION_ID'
   'ARTSY_EDITORIAL_ID'
+  'CONSIGNMENTS_APP_URL'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"
