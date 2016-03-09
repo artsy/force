@@ -33,9 +33,9 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       upcoming.fetch url: url, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria)
       past.fetch     url: url, data: _.defaults(status: 'closed', criteria)
     ])
-    .then ->
+    .then =>
       _.each [current, upcoming, past], (a) -> a.remove featured.models
-      _.reduce([featured, current, upcoming, past], ((m, a) -> m.concat(a.models)), []).slice(0, 10)
+      _.reduce([featured, current, upcoming, past], ((m, a) -> m.concat(a.models)), []).slice(0, @maxNumberOfShows)
 
   initCarousel: (partnerShows) =>
     return @remove() unless partnerShows.length > 0

@@ -36,6 +36,7 @@ describe 'HeroShowsCarousel', ->
       _.each [1..3], => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
       _.each [0..3], => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
       _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
+      @expected = @featured.concat(@current[1..3]).concat(@upcoming).concat(@past[0..1])
 
     it 'makes proper requests to fetch shows', ->
       @view.fetchShows()
@@ -50,20 +51,26 @@ describe 'HeroShowsCarousel', ->
     it 'returns a thenable promise', ->
       _.isFunction(@view.fetchShows().then).should.be.ok()
 
-    it 'fetches shows and organizes them in proper order', (done) ->
-      @view.fetchShows()
-        .then (partnerShows) =>
-          partnerShows.length.should.equal 10
-          expected = @featured.concat(@current[1..3]).concat(@upcoming).concat(@past[0..1])
-          partnerShows.should.eql expected
-          done()
-        .done()
+    it 'fetches shows and organizes them in proper order', ->
+      _.each [@featured, @current, @upcoming, @past], (collection, index) ->
+        Backbone.sync
+          .onCall index
+          .yieldsTo 'success', collection
 
-      requests = Backbone.sync.args
-      requests[0][2].success @featured
-      requests[1][2].success @current
-      requests[2][2].success @upcoming
-      requests[3][2].success @past
+      @view.fetchShows().then (partnerShows) =>
+        partnerShows.should.have.lengthOf 10
+        partnerShows.should.eql @expected
+
+    it 'returns @maxNumberOfShows shows', ->
+      _.each [@featured, @current, @upcoming, @past], (collection, index) ->
+        Backbone.sync
+          .onCall index
+          .yieldsTo 'success', collection
+
+      view = new HeroShowsCarousel partner: @partner, maxNumberOfShows: 2
+      view.fetchShows().then (partnerShows) =>
+        partnerShows.should.have.lengthOf 2
+        partnerShows.should.eql @expected.slice(0, 2)
 
   describe '#initCarousel', ->
     beforeEach ->
