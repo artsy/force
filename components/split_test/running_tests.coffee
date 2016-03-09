@@ -28,3 +28,11 @@ module.exports =
       infinite: 0.5
       finite: 0.5
     dimension: 'dimension9'
+
+  commercial_filtering:
+    key: 'commercial_filtering'
+    edge: 'collect'
+    outcomes:
+      browse: 0.5
+      collect: 0.5
+    dimension: 'dimension10'
