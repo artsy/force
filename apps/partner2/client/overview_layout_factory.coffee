@@ -135,15 +135,15 @@ galleryTwoHero = (partner, profile) ->
   name: 'hero'
   component:
     switch partner.get('profile_banner_display')
-      when 'Shows' then HeroShowsCarousel
-      else HeroArtworksCarousel
+      when 'Artworks' then HeroArtworksCarousel
+      else HeroShowsCarousel
   options: (
     options =
       partner: partner
       maxNumberOfShows: 2 # HeroShowsCarousel options
     switch partner.get('profile_banner_display')
-      when 'Shows' then _.pick options, 'partner', 'maxNumberOfShows'
-      else _.pick options, 'partner'
+      when 'Artworks' then _.pick options, 'partner'
+      else _.pick options, 'partner', 'maxNumberOfShows'
   )
 
 galleryTwoNews = (partner, parfile) ->
@@ -186,13 +186,13 @@ galleryThreeHero = (partner, profile) ->
   name: 'hero'
   component:
     switch partner.get('profile_banner_display')
-      when 'Shows' then HeroShowsCarousel
-      else HeroArtworksCarousel
+      when 'Artworks' then HeroArtworksCarousel
+      else HeroShowsCarousel
   options: (
     options =
       partner: partner
       maxNumberOfShows: 10
     switch partner.get('profile_banner_display')
-      when 'Shows' then _.pick options, 'partner', 'maxNumberOfShows'
-      else _.pick options, 'partner'
+      when 'Artworks' then _.pick options, 'partner'
+      else _.pick options, 'partner', 'maxNumberOfShows'
   )
