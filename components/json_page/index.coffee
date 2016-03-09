@@ -23,7 +23,7 @@ module.exports = class JSONPage
       error = (message) ->
         err = new Error message
         reject err
-        callback err
+        callback? err
 
       request
         .get "http://#{@bucket}.s3.amazonaws.com#{@path()}"
@@ -32,7 +32,7 @@ module.exports = class JSONPage
             try
               @data = JSON.parse res.text
               resolve @data
-              callback null, @data
+              callback? null, @data
             catch e
               error e
           else

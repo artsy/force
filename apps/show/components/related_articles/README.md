@@ -6,7 +6,7 @@ This component is used to render a series of articles related to a show.
 
 Include the stylesheet in your pages .styl file
 ````
-@import './components/related_articles/index.styl'
+@require './components/related_articles/index.styl'
 ````
 
 Require in the backbone view and build the view by passing it a collection of articles and optionally a limit for initial display ( if there are more articles in the collection that this optional amount there will be a 'Show More Related Articles' button).

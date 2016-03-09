@@ -1,15 +1,14 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 User = require '../../../models/user.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-FillwidthView = require '../../fillwidth_row/view.coffee'
 initCarousel = require '../../merry_go_round/index.coffee'
 openInquiryQuestionnaireFor = require '../../inquiry_questionnaire/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-template = -> require('../templates/artwork_rail.jade') arguments...
+template = -> require('../templates/index.jade') arguments...
 
 module.exports = class ArtworkRailView extends Backbone.View
   className: 'arv-container'
+
   delayBy: 600 # 10 minutes
 
   events:
@@ -17,19 +16,22 @@ module.exports = class ArtworkRailView extends Backbone.View
     'click .js-mgr-prev': 'prev'
     'click .artwork-item-contact-seller': 'contactSeller'
 
-  initialize: ({ @title, @viewAllUrl, @railId })->
-    @collection.on 'sync', @render, @
+  initialize: ({ @title, @viewAllUrl, @railId }) ->
     @user ?= User.instantiate()
 
+    @collection.on 'sync', @render, this
+
   next: ->
-    @carousel.cells.flickity.next(true)
+    @carousel.cells.flickity.next true
 
   prev: ->
-    @carousel.cells.flickity.previous(true)
+    @carousel.cells.flickity.previous true
 
-  contactSeller: (e) =>
+  contactSeller: (e) ->
     e.preventDefault()
+
     analyticsHooks.trigger 'rail:clicked-contact', e
+
     inquiry = new ArtworkInquiry notification_delay: @delayBy
     artwork = @collection.get $(e.currentTarget).data 'id'
 
@@ -49,8 +51,7 @@ module.exports = class ArtworkRailView extends Backbone.View
       includeContact: true
 
     @postRender()
-
-    return this
+    this
 
   postRender: ->
     @carouselPromise = initCarousel @$('.js-my-carousel'),
@@ -58,10 +59,11 @@ module.exports = class ArtworkRailView extends Backbone.View
     , (carousel) =>
       @carousel = carousel
 
-      # hide arrows if the cells don't fill the carousel width
+      # Hide arrows if the cells don't fill the carousel width
       @cellWidth = @$('.js-mgr-cell')
-        .map((i, e) -> $(e).outerWidth(true))
+        .map (i, e) -> $(e).outerWidth true
         .get()
-        .reduce( (prev, curr) -> prev + curr )
+        .reduce (prev, curr) -> prev + curr
+
       unless @cellWidth > @$('.js-my-carousel').width()
         @$('.arv-carousel-nav').addClass 'is-hidden'

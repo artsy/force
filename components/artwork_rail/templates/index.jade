@@ -1,0 +1,19 @@
+.arv-inner( data-rail= railId )
+  .arv-header
+    h1= title
+
+    if viewAllUrl
+      a.arv-view-all( href= viewAllUrl )
+        | View All
+
+  .arv-carousel( class='js-my-carousel' )
+    .mgr-cells( class='js-mgr-cells' )
+      for artwork in artworks
+        .mgr-cell( class='js-mgr-cell' )
+          include ../../../components/artwork_item/templates/artwork
+
+    .arv-carousel-nav
+      .arv-carousel-nav__prev( class='js-mgr-prev' )
+        i.icon-chevron-left
+      .arv-carousel-nav__next( class='js-mgr-next' )
+        i.icon-chevron-right

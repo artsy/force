@@ -8,7 +8,8 @@ bucket = "force-#{environment or 'staging'}"
 try
   data = require path
 catch error
-  return console.log 'Cannot find the data.'
+  console.log 'NOTE: paths are relative'
+  return console.log error
 
 display = ['..'].concat(_.last path.split('/'), 2).join '/'
 

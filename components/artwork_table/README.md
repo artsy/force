@@ -8,7 +8,7 @@ Include the stylesheet
 
 assets/foo.styl
 ````
-@import '../components/artwork_table/stylesheets'
+@require '../components/artwork_table/stylesheets'
 ````
 
 Pass a collection of artworks to a new ArtworkTableView
