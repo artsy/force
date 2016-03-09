@@ -27,12 +27,14 @@ module.exports = class PriceFilterView extends Backbone.View
     @slider.set([@min, @max])
 
   _postRender: ->
+    range = @params.get('price_range')?.split('-')
+    range[1] = @max if range?[1] is '*'
     @slider = createSlider
       $container: @$('.cf-price-slider')
       name: 'Price'
       min: @min
       max: @max
-      start: @params.get('price_range')?.split('-')
+      start: range
       step: 100
       formatter: (val, index) ->
         if index is 0
@@ -49,6 +51,7 @@ module.exports = class PriceFilterView extends Backbone.View
       @params.set page: 1, silent: true
       @params.unset 'price_range'
     else
+      values[1] = '*' if parsedValues[1] is @max
       @params.set
         price_range: values.join '-'
         page: 1
