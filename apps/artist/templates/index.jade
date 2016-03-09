@@ -8,10 +8,11 @@ append locals
   - assetPackage = 'artist'
 
 block body
-  - hasCarousel = carousel.figures.length >= 4
+  - carousel = artist.carousel
+  - hasCarousel = carousel.images.length >= 4
 
   if hasCarousel
-    include ./carousel
+    include ../components/carousel/index
 
   #artist-page.responsive-layout-container(
     class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
@@ -20,6 +21,6 @@ block body
       #artist-page-header: include ./header
       #artist-page-content.artist-page-content
         unless tab
-          include ./overview
+          include ./sections/overview
 
   include ../../../components/main_layout/templates/json_ld

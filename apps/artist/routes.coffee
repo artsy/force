@@ -8,42 +8,37 @@ ReferrerParser = require 'referer-parser'
 { stringifyJSONForWeb } = require '../../components/util/json'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
-Statuses = require './statuses'
 Nav = require './nav'
-Carousel = require './carousel'
+metaphysics = require '../../lib/metaphysics'
+query = require './query'
+helpers = require './view_helpers'
 
 @index = (req, res, next) ->
-  artist = new Artist id: req.params.id
-  carousel = new Carousel artist: artist
-  statuses = new Statuses artist: artist
+  metaphysics(
+    query: query
+    variables: artist_id: req.params.id
+  ).then(({artist}) ->
+    nav = new Nav artist: artist
 
-  Q.all [
-    artist.fetch cache: true
-    carousel.fetch cache: true
-    statuses.fetch cache: true
-  ]
-    .then ->
-      nav = new Nav artist: artist, statuses: statuses.statuses
+    if req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH
+      console.log artist.statuses
+      res.locals.sd.ARTIST = artist
+      res.locals.sd.TAB = tab = req.params.tab or ''
 
-      if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
+      res.render 'index',
+        viewHelpers: helpers
+        artist: artist
+        tab: tab
+        nav: nav
+        # jsonLD: stringifyJSONForWeb artist.toJSONLD()
 
-        res.locals.sd.ARTIST = artist.toJSON()
-        res.locals.sd.TAB = tab = req.params.tab or ''
-        res.locals.sd.STATUSES = statuses = statuses.statuses
+    else
+      res.redirect artist.href
 
-        res.render 'index',
-          artist: artist
-          carousel: carousel
-          tab: tab
-          statuses: statuses
-          nav: nav
-          jsonLD: stringifyJSONForWeb artist.toJSONLD()
-
-      else
-        res.redirect artist.href()
-
-    .catch next
-    .done()
+  ).catch (e) ->
+    console.log e
+    next()
+  .done()
 
 @tab = (req, res) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()

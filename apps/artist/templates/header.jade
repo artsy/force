@@ -2,16 +2,16 @@ include ../../../components/share/template
 include ../../../components/util/activator
 
 header.artist-header
-  h1.artist-header-name.extra-large-garamond-header= artist.get('name')
+  h1.artist-header-name.extra-large-garamond-header= artist.name
 
-  - var bday = artist.displayNationalityAndBirthdate()
-  - var followCount = artist.displayFollowers()
+  - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+  - var followCount = viewHelpers.displayFollowers(artist)
   if bday
     .artist-header-birthdate= bday
 
-  unless artist.get('published_artworks_count')
+  unless artist.counts.artworks
     .artist-header-empty
-      | There are no #{artist.get('name')} works on Artsy yet.
+      | There are no #{artist.name} works on Artsy yet.
       br
       | Follow the artist to get alerts when works are added.
 
@@ -20,13 +20,13 @@ header.artist-header
     if followCount
       span.artist-header-follow-count= followCount
 
-  if artist.get('published_artworks_count')
+  if artist.counts.artworks
     nav.artist-share
-      +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+      +share(artist.name + ' on Artsy', artist.image.large)
 
   .artist-sticky-header
     .artist-sticky-header-container
-      .artist-sticky-name= artist.get('name')
+      .artist-sticky-name= artist.name
       .artist-tabs
         nav.artist-tablist.garamond-bordered-tablist
           for link, i in nav.sections()
@@ -37,4 +37,3 @@ header.artist-header
             if i !== nav.sections().length - 1
               span.garamond-tab-separator
       button.artist-sticky-follow-button.is-small.avant-garde-follow-button-black
-

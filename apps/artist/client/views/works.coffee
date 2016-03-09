@@ -33,7 +33,7 @@ module.exports = class WorksView extends Backbone.View
     @setupArtworkFilter()
 
   render: ->
-    @$el.html template(artist: @model)
+    @$el.html template hasWorks: @model.get('published_artworks_count') > 0
     _.defer => @postRender()
     this
 

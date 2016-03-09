@@ -1,0 +1,42 @@
+module.exports = """
+  query artist($artist_id: String!) {
+    artist(id: $artist_id){
+      _id
+      id
+      href
+      name
+      alternate_names
+      nationality
+      birthday
+      deathday
+      years
+      blurb
+      counts {
+        follows
+        artworks
+      }
+      ... image
+      ... statuses
+      ... carousel
+    }
+  }
+
+  fragment image on Artist {
+    image {
+      versions
+      large: url(version:"large")
+    }
+  }
+
+  fragment statuses on Artist{
+    statuses {
+      artworks
+      shows
+      artists
+      contemporary
+      articles
+    }
+  }
+
+  #{require './components/carousel/query'}
+"""

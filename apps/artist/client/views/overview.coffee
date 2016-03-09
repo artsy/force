@@ -1,5 +1,4 @@
 _ = require 'underscore'
-{ STATUSES } = require('sharify').data
 Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
@@ -11,24 +10,25 @@ RelatedArticlesView = require '../../../../components/related_articles/view.coff
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 lastModified = require './last_modified.coffee'
-template = -> require('../../templates/overview.jade') arguments...
+template = -> require('../../templates/sections/overview.jade') arguments...
 splitTest = require '../../../../components/split_test/index.coffee'
+viewHelpers = require '../../view_helpers.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user }) -> #
+  initialize: ({ @user, @statuses }) -> #
 
   setupArtworkFilter: ->
     test = splitTest('artist_works_infinite_scroll')
     outcome = test.outcome()
-
+    showSeeMore = outcome is 'finite'
     filterRouter = ArtworkFilter.init
       el: @$('#artwork-section')
       model: @model
       mode: 'grid'
-      showSeeMoreLink: outcome is 'finite'
+      showSeeMoreLink: showSeeMore
 
     @filterView = filterRouter.view
     @filterView.topOffset = $('.artist-sticky-header-container').height()
@@ -54,7 +54,7 @@ module.exports = class OverviewView extends Backbone.View
       @filterView.loadNextPage() if bottomInView
 
   setupRelatedShows: ->
-    if STATUSES.shows
+    if @statuses.shows
       @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: true, size: 4)
       @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: false, size: 4)
       subView = new RelatedShowsView model: @model, collection: @model.related().shows
@@ -63,7 +63,7 @@ module.exports = class OverviewView extends Backbone.View
       @setupRelatedSection @$('#artist-related-shows-section')
 
   setupRelatedArticles: ->
-    if STATUSES.articles
+    if @statuses.articles
       @fetches.push @model.related().articles.fetch()
       subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
       @$('#artist-related-articles').html subView.render().$el
@@ -85,7 +85,7 @@ module.exports = class OverviewView extends Backbone.View
     $el
 
   setupRelatedArtists: ->
-    _.each _.pick(STATUSES, 'artists', 'contemporary'), (display, key) =>
+    _.each _.pick(@statuses, 'artists', 'contemporary'), (display, key) =>
       if display
         @fetches.push @model.related()[key].fetch
           data: size: 5
@@ -130,7 +130,10 @@ module.exports = class OverviewView extends Backbone.View
     @setupLastModifiedDate()
 
   render: ->
-    @$el.html template(artist: @model)
+    # Template expects plain JSON, not a Backbone model.
+    @$el.html template
+      artist: _.extend @model.toJSON()
+      viewHelpers: viewHelpers
     _.defer => @postRender()
     this
 
