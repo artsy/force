@@ -27,6 +27,10 @@ header_design:
 
 Tests are by default initialized globally meaning as soon as there is a configuration in the running tests file you'll get access to a Sharify variable the same name as your configuration key with the outcome and the test will set itself up client-side.
 
+## Getting the outcome of a split test on the server
+
+By default, this component sets an `sd` variable with the uppercase key of your test. If the key of your test is `artist_view_test`, `sd.ARTIST_VIEW_TEST` will contain the outcome of the split test.
+
 ## Manually initializing a test on the client-side (optional)
 
 ```coffeescript
