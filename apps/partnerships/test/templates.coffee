@@ -21,7 +21,7 @@ describe 'Partnerships templates', ->
 
   it 'shows the h2 headers for each section', ->
     _.map($(render()).find('h2'), (x) -> $(x).html()).should.eql [
-      'Network', 'Audience', 'Access', 'Editorial',
+      'Network', 'Audience', 'Access',
       'Tools', 'Artsy Folio', 'Support'
     ]
 
