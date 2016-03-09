@@ -3,7 +3,10 @@ span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
   .hover-pulldown-menu
     div.mlh-pulldown-top
       a.mlh-pulldown-top-link( data-priority='1' href='/artists', class= activeClass('/artists') ) Artists
-      a.mlh-pulldown-top-link( data-priority='2' href='/#{sd.COMMERCIAL_FILTERING}', class= activeClass("/#{sd.COMMERCIAL_FILTERING}")  ) Artworks
+      if sd.COMMERCIAL_FILTERING == 'collect'
+        a.mlh-pulldown-top-link( data-priority='2' href='/collect', class= activeClass("/collect") ) Artworks
+      else
+        a.mlh-pulldown-top-link( data-priority='2' href='/browse', class= activeClass("/browse") ) Artworks
       a.mlh-pulldown-top-link( data-priority='6' href='/shows', class= activeClass('/shows') ) Shows
       a.mlh-pulldown-top-link( data-priority='7' href='/galleries', class= activeClass('/galleries') ) Galleries
       a.mlh-pulldown-top-link( data-priority='8' href='/institutions', class= activeClass('/institutions') ) Museums
