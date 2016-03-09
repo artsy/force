@@ -11,8 +11,11 @@ describe '/auction routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     sinon.stub Q, 'promise'
+    routes.__set__ 'sailthru', @sailthru =
+      apiGet: sinon.stub()
+      apiPost: sinon.stub()
     @req = params: id: 'foobar'
-    @res = render: sinon.stub(), locals: sd: {}
+    @res = render: sinon.stub(), send: sinon.stub(), locals: sd: {}
     @next = sinon.stub()
 
   afterEach ->
@@ -103,3 +106,13 @@ describe '/auction routes', ->
         done()
       routes.index @req, @res, @next
 
+  describe '#inviteForm', ->
+
+    it 'submits to sailthru including previously subscribed auctions', ->
+      @sailthru.apiGet.callsArgWith(2, null, vars: auction_slugs: ['foo'])
+      @sailthru.apiPost.callsArgWith(2, null, {})
+      @req.params.id = 'bar'
+      @req.body = { email: 'foobar@baz.com' }
+      routes.inviteForm @req, @res, @next
+      @sailthru.apiPost.args[0][1].vars.auction_slugs.join(',')
+        .should.equal 'foo,bar'

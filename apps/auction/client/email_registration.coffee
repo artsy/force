@@ -1,7 +1,7 @@
 sd = require('sharify').data
 ThankYouView = require './thank_you_view.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 modalize = require '../../../components/modalize/index.coffee'
 Backbone = require 'backbone'
 

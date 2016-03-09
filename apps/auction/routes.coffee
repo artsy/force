@@ -104,15 +104,16 @@ setupUser = (user, auction) ->
       res.redirect "/feature/#{collection.first().get('owner').id}"
 
 @inviteForm = (req, res, next) ->
-  sailthru.apiPost 'user',
-    id: req.body.email
-    lists:
-      "#{SAILTHRU_AUCTION_NOTIFICATION_LIST}": 1
-    vars:
-      source: 'auction'
-      auction_id: req.params.id
-  , (err, response) ->
-    if response.ok
+  sailthru.apiGet 'user', { id: req.body.email }, (err, response) ->
+    return next err if err
+    auctionSlugs = _.uniq (response.vars.auction_slugs or []).concat [req.params.id]
+    sailthru.apiPost 'user',
+      id: req.body.email
+      lists:
+        "#{SAILTHRU_AUCTION_NOTIFICATION_LIST}": 1
+      vars:
+        source: 'auction'
+        auction_slugs: auctionSlugs
+    , (err, response) ->
+      return next err if err
       res.send req.body
-    else
-      res.status(500).send(response.errormsg)
