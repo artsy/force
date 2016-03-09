@@ -88,8 +88,20 @@
 .hulk-edit-upload-form
   block-margins(10px)
 
-.hulk-map-pair > .hulk-map-key
-  margin-bottom 10px
+.hulk-collapse-item
+  &.collapsed
+    opacity 0.5
+
+.hulk-map-pair
+  margin-top -10px
+  padding-top 10px
+  padding-left 10px
+  border-left 2px solid gray-lightest-color
+  &:hover
+    border-color black
+
+  > .hulk-map-key
+    margin-bottom 10px
 
 .hulk-preview-image
   max-width 100%
