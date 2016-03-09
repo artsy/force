@@ -175,9 +175,12 @@
   &, &:hover, &:focus
     user-select none
     text-align center
-    background-color black
     color white
     border 1px solid gray-lighter-color
+  &, &:focus
+    background-color black
+  &:hover
+    background-color purple-color
   &[data-state='following'], &.is-following
     background-color white
     color gray-color
