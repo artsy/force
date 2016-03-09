@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Params = require '../../../models/params'
-categories = require '../../../../../apps/browse2/fixtures/categories.json'
+categories = require '../../../../../apps/collect/fixtures/categories.json'
 { resolve } = require 'path'
 
 describe 'MediumFilterView', ->

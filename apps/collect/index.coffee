@@ -8,7 +8,7 @@ app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
-app.get '/browse2', routes.index
+app.get '/collect', routes.index
 
 page = new JSONPage name: 'browse-categories', paths: show: '/browse-categories', edit: '/browse-categories/edit'
 { data, edit, upload } = require('../../components/json_page/routes')(page)
