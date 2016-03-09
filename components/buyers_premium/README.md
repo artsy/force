@@ -6,7 +6,7 @@ Include the stylesheet
 
 assets/foo.styl
 ````
-@import '../components/buyers_premium'
+@require '../components/buyers_premium'
 ````
 
 Use the helper

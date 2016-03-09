@@ -149,14 +149,14 @@ Add a reference to the component's stylus file in the app's asset package and ov
 as needed.
 
 ```stylus
-@import '../components/main_layout/stylesheets'
-@import '../components/modal'
-@import '../components/feedback'
-@import '../components/auth_modal'
-@import '../components/fillwidth_row'
-@import '../components/tooltips'
-@import '../components/profile_badge' // <-- ref to the component stylus
-@import '../apps/artist/stylesheets'
+@require '../components/main_layout/stylesheets'
+@require '../components/modal'
+@require '../components/feedback'
+@require '../components/auth_modal'
+@require '../components/fillwidth_row'
+@require '../components/tooltips'
+@require '../components/profile_badge' // <-- ref to the component stylus
+@require '../apps/artist/stylesheets'
 ```
 See `apps/artist/stylesheets/index.styl` for an example of a customized layout
 ```stylus
@@ -470,7 +470,7 @@ Check out usage in `apps/personalize`
 Fetches and displays a page of markdown content in a modal window
 
 ```stylus
-@import '../apps/page'
+@require '../apps/page'
 ```
 
 ```coffeescript
@@ -513,7 +513,7 @@ req.flash 'info', 'Hello world.'
 
 ![](images/zig_zag.png)
 
-Add `@import '../components/zig_zag_banner'` to the relevant asset package and:
+Add `@require '../components/zig_zag_banner'` to the relevant asset package and:
 
 ```coffeescript
 ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'

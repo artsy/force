@@ -7,7 +7,7 @@ This component is used to render a pop-up modal with an interactive google map s
 Include the stylesheet in your pages .styl file
 
 ````
-@import '../components/map_modal'
+@require '../components/map_modal'
 ````
 
 Require in the components backbone view.
