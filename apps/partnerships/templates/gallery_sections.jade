@@ -35,24 +35,6 @@ mixin access(section)
           li.browser-image.access-image( class=(i === 0 ? 'is-active' : undefined) )
             img( src=image.src )
 
-mixin visibility(section)
-  .partnerships-section-header
-    .grid-2-up
-      .grid-item
-        h2= section.title
-        h3!= section.heading
-      .grid-item
-        p.preamble!= section.preamble
-
-  .partnerships-section-content
-    .browser-images-container
-      .browser-frame
-        img( src=section.images[0].src )
-      ul.browser-images.editorial-images
-        for image, i in section.images.slice(1)
-          li.browser-image.editorial-image( class=(i === 0 ? 'is-active' : undefined) )
-            img( src=image.src )
-
 mixin artsy-folio(section)
   .partnerships-section-header
     .grid-2-up
@@ -82,8 +64,7 @@ mixin artsy-folio(section)
 section.partnerships-section( id= sections[0].slug, data-href="/gallery-partnerships/#{sections[0].slug}" ): +network(sections[0])
 section.partnerships-section( id= sections[1].slug, data-href="/gallery-partnerships/#{sections[1].slug}" ): +audience(sections[1])
 section.partnerships-section( id= sections[2].slug, data-href="/gallery-partnerships/#{sections[2].slug}" ): +access(sections[2])
-section.partnerships-section( id= sections[3].slug, data-href="/gallery-partnerships/#{sections[3].slug}" ): +visibility(sections[3])
-section.partnerships-section( id= sections[4].slug, data-href="/gallery-partnerships/#{sections[4].slug}" ): +tools(sections[4])
-section.partnerships-section( id= sections[5].slug, data-href="/gallery-partnerships/#{sections[5].slug}" ): +artsy-folio(sections[5])
-section.partnerships-section( id= sections[6].slug, data-href="/gallery-partnerships/#{sections[6].slug}" ): +support(sections[6])
-section.partnerships-section( id= sections[7].slug, data-href="/gallery-partnerships/#{sections[7].slug}" ): +apply(sections[7])
+section.partnerships-section( id= sections[3].slug, data-href="/gallery-partnerships/#{sections[3].slug}" ): +tools(sections[3])
+section.partnerships-section( id= sections[4].slug, data-href="/gallery-partnerships/#{sections[4].slug}" ): +artsy-folio(sections[4])
+section.partnerships-section( id= sections[5].slug, data-href="/gallery-partnerships/#{sections[5].slug}" ): +support(sections[5])
+section.partnerships-section( id= sections[6].slug, data-href="/gallery-partnerships/#{sections[6].slug}" ): +apply(sections[6])
