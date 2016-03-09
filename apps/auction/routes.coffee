@@ -107,12 +107,13 @@ setupUser = (user, auction) ->
   sailthru.apiGet 'user', { id: req.body.email }, (err, response) ->
     return next err if err
     auctionSlugs = _.uniq (response.vars.auction_slugs or []).concat [req.params.id]
+    source = response.vars.source or 'auction'
     sailthru.apiPost 'user',
       id: req.body.email
       lists:
         "#{SAILTHRU_AUCTION_NOTIFICATION_LIST}": 1
       vars:
-        source: 'auction'
+        source: source
         auction_slugs: auctionSlugs
     , (err, response) ->
       return next err if err

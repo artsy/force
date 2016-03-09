@@ -30,7 +30,7 @@ describe 'EmailRegistrationView', ->
 
   describe '#submit', ->
 
-    it 'sends ', ->
+    it 'sends the email to our sailthru endpoint', ->
       $target = $("<div><input name='email' value='craig@foo.com'></div>")
       @view.submit(target: $target, preventDefault: sinon.stub())
       $.ajax.args[0][0].data.email.should.equal 'craig@foo.com'

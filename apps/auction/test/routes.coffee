@@ -14,7 +14,7 @@ describe '/auction routes', ->
     routes.__set__ 'sailthru', @sailthru =
       apiGet: sinon.stub()
       apiPost: sinon.stub()
-    @req = params: id: 'foobar'
+    @req = body: {}, params: id: 'foobar'
     @res = render: sinon.stub(), send: sinon.stub(), locals: sd: {}
     @next = sinon.stub()
 
@@ -112,7 +112,15 @@ describe '/auction routes', ->
       @sailthru.apiGet.callsArgWith(2, null, vars: auction_slugs: ['foo'])
       @sailthru.apiPost.callsArgWith(2, null, {})
       @req.params.id = 'bar'
-      @req.body = { email: 'foobar@baz.com' }
+      @req.body.email = 'foobar@baz.com'
       routes.inviteForm @req, @res, @next
       @sailthru.apiPost.args[0][1].vars.auction_slugs.join(',')
         .should.equal 'foo,bar'
+
+    it 'sets source if it doesnt exist', ->
+      @sailthru.apiGet.callsArgWith(2, null, vars: source: 'foo')
+      routes.inviteForm @req, @res, @next
+      @sailthru.apiPost.args[0][1].vars.source.should.equal 'foo'
+      @sailthru.apiGet.callsArgWith(2, null, vars: source: null)
+      routes.inviteForm @req, @res, @next
+      @sailthru.apiPost.args[1][1].vars.source.should.equal 'auction'
