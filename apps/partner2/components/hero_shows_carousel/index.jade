@@ -2,7 +2,8 @@
 - var imageHeight = 450
 
 .hero-shows-carousel
-  a.mgr-arrow-left.icon-chevron-left.js-mgr-prev
+  if partnerShows.length > 1
+    a.mgr-arrow-left.icon-chevron-left.js-mgr-prev
 
   .hero-shows-carousel-captions
     for show, i in partnerShows
@@ -14,9 +15,10 @@
             = show.get('name')
         .hero-show-location-and-time
           = _.compact([show.formatShowOrFairCity(), show.runningDates()]).join(', ')
-    .mgr-dots
-      for _, i in partnerShows
-        .mgr-dot.js-mgr-select(class= (i == 0 ? 'is-active' : undefined)) •
+    if partnerShows.length > 1
+      .mgr-dots
+        for _, i in partnerShows
+          .mgr-dot.js-mgr-select(class= (i == 0 ? 'is-active' : undefined)) •
 
   .hero-shows-carousel-images
     .mgr-cells.js-mgr-cells
@@ -25,4 +27,5 @@
           a( href= show.href() )
             img( src= show.cropUrlFor({ width: imageWidth, height: imageHeight }) )
 
-  a.mgr-arrow-right.icon-chevron-right.js-mgr-next
+  if partnerShows.length > 1
+    a.mgr-arrow-right.icon-chevron-right.js-mgr-next

@@ -44,7 +44,7 @@ module.exports = class HeroShowsCarousel extends Backbone.View
     return @remove() unless partnerShows.length > 0
 
     @$el.html template partnerShows: partnerShows
-    initCarousel @$el, wrapAround: true, imagesLoaded: true, (carousel) =>
+    initCarousel(@$el, wrapAround: true, imagesLoaded: true, (carousel) =>
       flickity = carousel.cells.flickity
       flickity.on 'cellSelect', =>
         i = flickity.selectedIndex
@@ -54,6 +54,7 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       ($dots = @$('.mgr-dot')).on 'click', -> flickity.select $dots.index $(this)
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
+    ) if partnerShows.length > 1
 
   remove: ->
     @$el.closest('.partner-overview-section').remove()
