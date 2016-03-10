@@ -23,7 +23,7 @@ describe 'setupLastModifiedDate', ->
         deathDate: ""
         image: "https://d32dm0rphc51dk.cloudfront.net/Uqad2mGhbNGhAUgb8bUvIA/large.jpg"
         name: "Jeff Koons"
-        url: "http://localhost:5000/artist/jeff-koons"
+        url: "http://localhost:5000/artist/jeff-koons-1"
       }
       done()
 
@@ -58,7 +58,7 @@ describe 'setupLastModifiedDate', ->
         deathDate: '',
         image: 'https://d32dm0rphc51dk.cloudfront.net/Uqad2mGhbNGhAUgb8bUvIA/large.jpg',
         name: 'Jeff Koons',
-        url: 'http://localhost:5000/artist/jeff-koons',
+        url: 'http://localhost:5000/artist/jeff-koons-1',
         datePublished: '2014-06-14T20:49:00.000Z',
         dateModified: '2014-06-15T20:49:00.000Z'
       }

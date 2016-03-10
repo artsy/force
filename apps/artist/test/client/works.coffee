@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Artist = require '../../../../models/artist'
+artistJSON = require '../fixtures'
 
 describe 'WorksView', ->
   before (done) ->
@@ -12,7 +13,7 @@ describe 'WorksView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @WorksView = benv.requireWithJadeify resolve(__dirname, '../../client/views/works'), ['template']
-      @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
+      @model = new Artist artistJSON
       done()
 
   after ->
@@ -23,7 +24,7 @@ describe 'WorksView', ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     @WorksView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: new Backbone.View)
-    @view = new @WorksView model: @model
+    @view = new @WorksView model: @model, statuses: artistJSON.statuses
 
   afterEach ->
     _.defer.restore()

@@ -132,7 +132,6 @@ module.exports = class OverviewView extends Backbone.View
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
-    console.log @model.toJSON()
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers

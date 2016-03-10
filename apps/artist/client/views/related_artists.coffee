@@ -16,7 +16,6 @@ module.exports = class RelatedArtistsView extends Backbone.View
       if display
         collection = @model.related()[key]
         collection.fetch success: =>
-          console.log 'hello'
           subView = new ArtistFillwidthList
             el: @$("#artist-related-#{key}")
             collection: collection
@@ -33,7 +32,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
     $el
 
   render: ->
-    @$el.html template(statuses: @statuses)
+    @$el.html template
     _.defer => @postRender()
     this
 

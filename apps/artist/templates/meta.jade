@@ -18,7 +18,8 @@ if artist.deathday
   meta( property="og:deathyear", content= artist.deathday )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name="fragment", content="!" )
-if artist.image.versions.indexOf('large')
+- var hasImage = artist.image && artist.image.versions.length
+if hasImage && artist.image.versions.indexOf('large')
   meta( property="twitter:card", content="summary_large_image" )
   meta( property="og:image", content= artist.image.large)
   meta( name="thumbnail", content= artist.image.large )

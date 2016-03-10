@@ -29,10 +29,10 @@ describe 'OverviewView', ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub(Artist::, 'related').returns({
-      artists: new Backbone.Collection
-      contemporary: new Backbone.Collection
-      shows: new Backbone.Collection
-      articles: new Backbone.Collection
+      artists: length: 0
+      contemporary: length: 0
+      shows: length: 0
+      articles: length: 0
     })
     @model = new Artist artistJSON
     filterView = new Backbone.View
@@ -41,7 +41,7 @@ describe 'OverviewView', ->
     @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
     @OverviewView::setupRelatedArticles = ->
     @OverviewView.__set__ 'lastModified', sinon.stub()
-    @view = new @OverviewView model: @model, statuses: artistJSON.statuses
+    @view = new @OverviewView model: @model, statuses: {}
     @view.render()
 
   afterEach ->

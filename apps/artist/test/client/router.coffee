@@ -33,9 +33,13 @@ describe 'ArtistRouter', ->
       @renderStub = renderStub = sinon.stub()
       class @StubbedView extends Backbone.View
         render: -> renderStub(); this
-      @router.view = new @StubbedView
-      @router.headerView = new @StubbedView
+
+    it 'renders if a view is not alrady rendered', ->
+      @router.execute => @router.view = new @StubbedView
+      @renderStub.called.should.be.true()
 
     it 'returns if a view is already rendered', ->
-      @router.execute()
+      @router.view = new @StubbedView
+      @router.headerView = new @StubbedView
+      @router.execute => @router.view = new @StubbedView
       @renderStub.called.should.be.false()

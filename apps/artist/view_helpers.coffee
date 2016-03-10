@@ -5,7 +5,10 @@ sd = require('sharify').data
 
 module.exports =
   pageTitle: (artist) ->
-    artist = new Artist name: artist.name, published_artworks_count: artist.counts.artworks
+    artist = new Artist
+      id: artist.id
+      name: artist.name
+      published_artworks_count: artist.counts.artworks
     artist.toPageTitle()
 
   pageDescription: (artist, limit) ->

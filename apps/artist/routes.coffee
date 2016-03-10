@@ -15,10 +15,10 @@ helpers = require './view_helpers'
 
 
 @index = (req, res, next) ->
-  metaphysics(
+  metaphysics
     query: query
     variables: artist_id: req.params.id
-  ).then(({artist}) ->
+  .then ({artist}) ->
     nav = new Nav artist: artist
 
     if req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH
@@ -37,9 +37,7 @@ helpers = require './view_helpers'
     else
       res.redirect artist.href
 
-  ).catch (e) ->
-    console.log e
-    next()
+  .catch next
   .done()
 
 @tab = (req, res) =>
