@@ -35,3 +35,7 @@ module.exports = ->
     el: $('.js-recently-sold-rail')
     collection: artworks
   rail.render()
+
+  # Handle taps on 'In Demand' artist thumbs
+  $('.js-in-demand-submit').click ->
+    $(this).closest('form').submit()

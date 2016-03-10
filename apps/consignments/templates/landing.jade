@@ -19,17 +19,18 @@ block body
       .consignments-header__cta
         h3= header.cta
         form( action= sd.CONSIGNMENTS_APP_URL, class='js-typeahead-form' )
-          input( type='hidden', name='user_id', value= user.id )
-          input( type='hidden', name='name', value= user.get('name') )
-          input( type='hidden', name='email', value= user.get('email') )
+          if user
+            input( type='hidden', name='user_id', value= user.id )
+            input( type='hidden', name='name', value= user.get('name') )
+            input( type='hidden', name='email', value= user.get('email') )
           input.bordered-input.is-block(
             class='js-typeahead'
             placeholder='Enter artist name'
           )
 
-  .consignments-sections.main-layout-container
+  .consignments-sections
     //- Estimate
-    section.consignments-section
+    section.consignments-section.consignments-section--estimate
       .consignments-section__about
         h3.consignments-section__about__headline
           = sections.estimate.headline
@@ -39,7 +40,7 @@ block body
         img( src= sections.estimate.image.src )
 
     //- Placement
-    section.consignments-section
+    section.consignments-section.consignments-section--logos
       .consignments-section__images.consignments-section__images--logos
         for logo in sections.placement.logos
           img.consignments-section__images__logo( src= logo.src )
@@ -62,7 +63,7 @@ block body
               p= step.description
 
     //- Privacy
-    section.consignments-section
+    section.consignments-section.consignments-section--privacy
       .consignments-section__about
         h3.consignments-section__about__headline
           = sections.privacy.headline
@@ -84,19 +85,24 @@ block body
       h3= sections.in_demand.headline
       .consignments-in-demand__artists
         for artist in inDemand.models
-          .consignments-in-demand__artists__artist
-            img.consignments-in-demand__artists__artist__thumbnail(
-              src= artist.imageUrl('square')
-              alt= artist.get('name')
-            )
-            h4.consignments-in-demand__artists__artist__name
-              = artist.get('name')
-            form( action= sd.CONSIGNMENTS_APP_URL )
+          form.consignments-in-demand__artists__artist( action= sd.CONSIGNMENTS_APP_URL )
+            input( type='hidden', name='artist_id', value= artist.id )
+            input( type='hidden', name='artist_name', value= artist.get('name') )
+            if user
               input( type='hidden', name='user_id', value= user.id )
               input( type='hidden', name='name', value= user.get('name') )
               input( type='hidden', name='email', value= user.get('email') )
-              input( type='hidden', name='artist_id', value= artist.id )
-              input( type='hidden', name='artist_name', value= artist.get('name') )
+
+            a.consignments-in-demand__artists__artist__thumbnail( class='js-in-demand-submit' )
+              img(
+                src= artist.imageUrl('square')
+                alt= artist.get('name')
+              )
+
+            h4.consignments-in-demand__artists__artist__name
+              = artist.get('name')
+
+            .consignments-in-demand__artists__artist__button
               button.avant-garde-button-white.is-small
                 | Consign
 
