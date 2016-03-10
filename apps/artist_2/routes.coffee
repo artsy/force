@@ -21,7 +21,7 @@ helpers = require './view_helpers'
   .then ({artist}) ->
     nav = new Nav artist: artist
 
-    if req.params.tab? or artist.href.replace "/artist/", "/artist_2" is res.locals.sd.CURRENT_PATH
+    if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
 
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
@@ -35,7 +35,8 @@ helpers = require './view_helpers'
         jsonLD: stringifyJSONForWeb jsonLD
 
     else
-      res.redirect artist.href.replace "/artist/", "/artist_2"
+      console.log 'redirect'
+      res.redirect artist.href.replace "/artist/", "/artist_2/"
 
   .catch (e) ->
     console.log e
