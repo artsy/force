@@ -28,16 +28,6 @@ describe 'HeroShowsCarousel', ->
     Backbone.sync.restore()
 
   describe '#fetchShows', ->
-    before ->
-      @featured = [new PartnerShow fabricate 'show', featured: true]
-      @current = [@featured[0]]
-      @upcoming = []
-      @past = []
-      _.each [1..3], => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
-      _.each [0..3], => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
-      _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
-      @expected = @featured.concat(@current[1..3]).concat(@upcoming).concat(@past[0..1])
-
     it 'makes proper requests to fetch shows', ->
       @view.fetchShows()
       (requests = Backbone.sync.args).length.should.equal 4
@@ -51,26 +41,87 @@ describe 'HeroShowsCarousel', ->
     it 'returns a thenable promise', ->
       _.isFunction(@view.fetchShows().then).should.be.ok()
 
-    it 'fetches shows and organizes them in proper order', ->
-      _.each [@featured, @current, @upcoming, @past], (collection, index) ->
-        Backbone.sync
-          .onCall index
-          .yieldsTo 'success', collection
+    describe 'with featured, current, and upcoming shows', ->
+      before ->
+        @featured = [new PartnerShow fabricate 'show', featured: true]
+        @current = [@featured[0]]
+        @upcoming = []
+        @past = []
+        _.each [1..3], => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
+        _.each [0..3], => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
+        _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
+        @expected = @featured.concat(@current[1..3]).concat(@upcoming)
 
-      @view.fetchShows().then (partnerShows) =>
-        partnerShows.should.have.lengthOf 10
-        partnerShows.should.eql @expected
+      beforeEach ->
+        _.each [@featured, @current, @upcoming, @past], (collection, index) ->
+          Backbone.sync
+            .onCall index
+            .yieldsTo 'success', collection
 
-    it 'returns @maxNumberOfShows shows', ->
-      _.each [@featured, @current, @upcoming, @past], (collection, index) ->
-        Backbone.sync
-          .onCall index
-          .yieldsTo 'success', collection
+      it 'fetches shows and organizes them in proper order without past shows', ->
+        @view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 8
+          partnerShows.should.eql @expected
 
-      view = new HeroShowsCarousel partner: @partner, maxNumberOfShows: 2
-      view.fetchShows().then (partnerShows) =>
-        partnerShows.should.have.lengthOf 2
-        partnerShows.should.eql @expected.slice(0, 2)
+      it 'returns @maxNumberOfShows shows without past shows', ->
+        view = new HeroShowsCarousel partner: @partner, maxNumberOfShows: 2
+        view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 2
+          partnerShows.should.eql @expected.slice(0, 2)
+
+    describe 'with current and upcoming shows but without featured', ->
+      before ->
+        @featured = [new PartnerShow fabricate 'show', featured: false]
+        @current = []
+        @upcoming = []
+        @past = []
+        _.each [0..2], => @current.push new PartnerShow fabricate 'show', featured: false, status: 'running'
+        _.each [0..3], => @upcoming.push new PartnerShow fabricate 'show', featured: false, status: 'upcoming'
+        _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
+        @expected = @current.concat(@upcoming)
+
+      beforeEach ->
+        _.each [@featured, @current, @upcoming, @past], (collection, index) ->
+          Backbone.sync
+            .onCall index
+            .yieldsTo 'success', collection
+
+      it 'fetches shows and organizes them in proper order without past shows', ->
+        @view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 7
+          partnerShows.should.eql @expected
+
+      it 'returns @maxNumberOfShows shows without past shows', ->
+        view = new HeroShowsCarousel partner: @partner, maxNumberOfShows: 2
+        view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 2
+          partnerShows.should.eql @expected.slice(0, 2)
+
+    describe 'with only past shows', ->
+      before ->
+        @featured = []
+        @current = []
+        @upcoming = []
+        @past = []
+        _.each [0..3], => @past.push new PartnerShow fabricate 'show', featured: false, status: 'closed'
+        @expected = @past
+
+      beforeEach ->
+        _.each [@featured, @current, @upcoming, @past], (collection, index) ->
+          Backbone.sync
+            .onCall index
+            .yieldsTo 'success', collection
+
+      it 'fetches shows and returns only 2 past shows', ->
+        @view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 2
+          partnerShows.should.eql @expected.slice(0, 2)
+
+      it 'returns @maxNumberOfShows past shows', ->
+        view = new HeroShowsCarousel partner: @partner, maxNumberOfShows: 1
+        view.fetchShows().then (partnerShows) =>
+          partnerShows.should.have.lengthOf 1
+          partnerShows.should.eql @expected.slice(0, 1)
 
   describe '#initCarousel', ->
     beforeEach ->

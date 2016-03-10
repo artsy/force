@@ -34,8 +34,11 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       past.fetch     url: url, data: _.defaults(status: 'closed', criteria)
     ])
     .then =>
+      featured.reset() unless featured.first()?.get('featured')  # Empty the collection if the show is not featured.
       _.each [current, upcoming, past], (a) -> a.remove featured.models
-      _.reduce([featured, current, upcoming, past], ((m, a) -> m.concat(a.models)), []).slice(0, @maxNumberOfShows)
+      displayable = _.flatten _.map [featured, current, upcoming], (c) -> c.models
+      displayable = past.models.slice(0, 2) if displayable.length is 0
+      displayable.slice(0, @maxNumberOfShows)
 
   initCarousel: (partnerShows) =>
     return @remove() unless partnerShows.length > 0
