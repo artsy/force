@@ -54,8 +54,9 @@ module.exports = class ArtworkRailView extends Backbone.View
     this
 
   postRender: ->
-    @carouselPromise = initCarousel @$('.js-my-carousel'),
+    initCarousel @$('.js-my-carousel'),
       imagesLoaded: true
+      wrapAround: true
     , (carousel) =>
       @carousel = carousel
 
