@@ -25,12 +25,14 @@ module.exports = class SizeFilterView extends Backbone.View
       @_postRender()
 
   _postRender: ->
+    range = @params.get(@attr)?.split('-')
+    range[1] = @max if range?[1] is '*'
     @slider = createSlider
       $container: @$('.cf-size-slider')
       name: @attr
       min: @min
       max: @max
-      start: @params.get(@attr)?.split('-')
+      start: range
       step: 1
       append: " in"
       formatter: (val) -> "#{parseInt val}"
@@ -43,6 +45,7 @@ module.exports = class SizeFilterView extends Backbone.View
       @params.set page: 1, silent: true
       @params.unset @attr
     else
+      values[1] = '*' if parsedValues[1] is @max
       @params.set
         "#{@attr}": values.join '-'
         page: 1
