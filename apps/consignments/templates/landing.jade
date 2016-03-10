@@ -18,9 +18,14 @@ block body
         = header.subheadline
       .consignments-header__cta
         h3= header.cta
-        input.bordered-input.is-block(
-          placeholder='Enter artist name'
-        )
+        form( action= sd.CONSIGNMENTS_APP_URL, class='js-typeahead-form' )
+          input( type='hidden', name='user_id', value= user.id )
+          input( type='hidden', name='name', value= user.get('name') )
+          input( type='hidden', name='email', value= user.get('email') )
+          input.bordered-input.is-block(
+            class='js-typeahead'
+            placeholder='Enter artist name'
+          )
 
   .consignments-sections.main-layout-container
     //- Estimate
@@ -69,7 +74,7 @@ block body
     //- Recently Sold
     section.consignments-recently-sold
       h3= sections.recently_sold.headline
-      .consignments-recently-sold__artworks
+      .consignments-recently-sold__artworks( class='js-recently-sold-rail' )
         - var artworks = recentlySold.models
         - var imageHeight = 220
         include ../../../components/artwork_rail/templates/index
@@ -91,6 +96,7 @@ block body
               input( type='hidden', name='name', value= user.get('name') )
               input( type='hidden', name='email', value= user.get('email') )
               input( type='hidden', name='artist_id', value= artist.id )
+              input( type='hidden', name='artist_name', value= artist.get('name') )
               button.avant-garde-button-white.is-small
                 | Consign
 
@@ -98,6 +104,7 @@ block body
     footer.consignments-footer
       h3= sections.cta.headline
       input.bordered-input.is-block(
+        class='js-typeahead'
         placeholder='Enter artist name'
       )
 

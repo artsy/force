@@ -18,6 +18,7 @@ suggestion-height = suggestion-thumbnail-size + 20px
     font-size 20px
     transform translateY(-50%)
     color gray-color
+    z-index 1
 
   .bordered-input
     display block
@@ -48,6 +49,8 @@ suggestion-height = suggestion-thumbnail-size + 20px
     display flex
     align-items center
     cursor pointer
+    color black
+    background-color white
     &.is-empty
       cursor normal
       &
@@ -60,6 +63,22 @@ suggestion-height = suggestion-thumbnail-size + 20px
   .tt-suggestion:hover
     background-color black
     color white
+
+  .tt-message
+    display flex
+    align-items center
+    position absolute
+    top 100%
+    left 0
+    right 0
+    height suggestion-height
+    padding 10px
+    text-align left
+    color black
+    background-color yellow-light-color
+    font-style italic
+    border 2px solid black
+    border-top none
 
 .typeahead-loading-indicator
   display none

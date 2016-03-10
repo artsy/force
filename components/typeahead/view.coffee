@@ -8,6 +8,7 @@ device = require '../util/device.coffee'
 templates =
   index: -> require('./templates/index.jade') arguments...
   empty: -> require('./templates/empty.jade') arguments...
+  message: -> require('./templates/message.jade') arguments...
   suggestion: (suggestion) -> require('./templates/suggestion.jade') suggestion: suggestion
 
 module.exports = class AutocompleteView extends Backbone.View
@@ -129,6 +130,16 @@ module.exports = class AutocompleteView extends Backbone.View
 
   exclude: (ids...) ->
     @selected = _.unique @selected.concat(ids)
+
+  message: (message) ->
+    $message = $ templates.message
+      message: message
+
+    @$el.append $message
+
+    @input()
+      .one 'input focus blur', ->
+        $message.remove()
 
   postRender: ->
     @engine ?= new Engine @engineSettings()
