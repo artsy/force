@@ -4,14 +4,15 @@ fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { APPLICATION_NAME } = require '../../config'
-{ stringifyJSONForWeb } = require '../../components/util/json'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
 metaphysics = require '../../lib/metaphysics'
 query = require './query'
 helpers = require './view_helpers'
+
 
 @index = (req, res, next) ->
   metaphysics(
@@ -21,16 +22,17 @@ helpers = require './view_helpers'
     nav = new Nav artist: artist
 
     if req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH
-      console.log artist.statuses
+
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
+      res.locals.sd.JSONLD = jsonLD = helpers.toJSONLD(artist)
 
       res.render 'index',
         viewHelpers: helpers
         artist: artist
         tab: tab
         nav: nav
-        # jsonLD: stringifyJSONForWeb artist.toJSONLD()
+        jsonLD: stringifyJSONForWeb jsonLD
 
     else
       res.redirect artist.href

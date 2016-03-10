@@ -11,7 +11,7 @@ template = -> require('../../templates/sections/works.jade') arguments...
 module.exports = class WorksView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user }) ->
+  initialize: ({ @user, @statuses }) ->
     @sticky = new Sticky
 
   fadeInSection: ($el) ->
@@ -33,7 +33,7 @@ module.exports = class WorksView extends Backbone.View
     @setupArtworkFilter()
 
   render: ->
-    @$el.html template hasWorks: @model.get('published_artworks_count') > 0
+    @$el.html template hasWorks: @statuses.artworks
     _.defer => @postRender()
     this
 

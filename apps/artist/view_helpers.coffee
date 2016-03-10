@@ -1,10 +1,11 @@
-Artist = require '../../models/artist.coffee'
 _ = require 'underscore'
 _s = require 'underscore.string'
+Artist = require '../../models/artist.coffee'
+sd = require('sharify').data
 
 module.exports =
   pageTitle: (artist) ->
-    artist = new Artist _.pick artist, 'name', 'published_artworks_count'
+    artist = new Artist name: artist.name, published_artworks_count: artist.counts.artworks
     artist.toPageTitle()
 
   pageDescription: (artist, limit) ->
@@ -27,3 +28,16 @@ module.exports =
   mdToHtml: (artist, attr) ->
     artist = new Artist _.pick artist, attr
     artist.mdToHtml attr
+
+  toJSONLD: (artist) ->
+    return {
+      "@context": "http://schema.org"
+      "@type": "Person"
+      image: artist.image.large
+      name: artist.name
+      url: "#{sd.APP_URL}#{artist.href}"
+      gender: artist.gender
+      birthDate: artist.birthday
+      deathDate: artist.deathday
+      additionalType: 'Artist'
+    }

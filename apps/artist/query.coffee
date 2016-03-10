@@ -5,6 +5,7 @@ module.exports = """
       id
       href
       name
+      gender
       alternate_names
       nationality
       birthday

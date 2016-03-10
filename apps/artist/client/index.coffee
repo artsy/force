@@ -7,7 +7,7 @@ ArtistRouter = require './router.coffee'
 
 module.exports.init = ->
   statuses = ARTIST.statuses
-  artist = new Artist _.extend published_artworks_count: ARTIST.counts.artworks, ARTIST
+  artist = new Artist ARTIST
   user = CurrentUser.orNull()
   scrollFrame 'a.artwork-item-image-link' unless sd.EIGEN
   router = new ArtistRouter

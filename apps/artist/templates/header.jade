@@ -9,7 +9,7 @@ header.artist-header
   if bday
     .artist-header-birthdate= bday
 
-  unless artist.counts.artworks
+  unless artist.statuses.artworks
     .artist-header-empty
       | There are no #{artist.name} works on Artsy yet.
       br

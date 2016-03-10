@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+{ JSONLD } = require('sharify').data
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
@@ -96,7 +97,7 @@ module.exports = class OverviewView extends Backbone.View
     @fetches.push @waitForFilter()
     $.when.apply(null, @fetches).then =>
       mediator.trigger 'overview:fetches:complete'
-      lastModified @model, @filterView.artworks
+      lastModified JSONLD, @model, @filterView.artworks
 
   waitForFilter: ->
     dfd = $.Deferred()
@@ -131,8 +132,9 @@ module.exports = class OverviewView extends Backbone.View
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
+    console.log @model.toJSON()
     @$el.html template
-      artist: _.extend @model.toJSON()
+      artist: @model.toJSON()
       viewHelpers: viewHelpers
     _.defer => @postRender()
     this

@@ -14,11 +14,22 @@ describe 'setupLastModifiedDate', ->
       @artist = new Artist fabricate 'artist'
       @artworks = new Backbone.Collection
       @baselineDate = '2014-06-17T20:49:00+00:00'
+      @old = {
+        "@context": "http://schema.org"
+        "@type": "Person"
+        additionalType: "Artist"
+        gender: 'male'
+        birthDate: "1955"
+        deathDate: ""
+        image: "https://d32dm0rphc51dk.cloudfront.net/Uqad2mGhbNGhAUgb8bUvIA/large.jpg"
+        name: "Jeff Koons"
+        url: "http://localhost:5000/artist/jeff-koons"
+      }
       done()
 
   describe 'no relevant data', ->
     it 'displays last modified date as N/A', ->
-      lastModified @artist, @artworks
+      lastModified @old, @artist, @artworks
       text = $('.last-modified-section').text()
       text.should.containEql 'Page Last Modified:'
       text.should.containEql 'N/A'
@@ -31,12 +42,25 @@ describe 'setupLastModifiedDate', ->
       ]
 
     it 'displays last modified date the most recent of the dates in the related data', ->
-      lastModified @artist, @artworks
+      lastModified @old, @artist, @artworks
       text = $('.last-modified-section').text()
       text.should.containEql 'Page Last Modified:'
       text.should.containEql 'June 15th, 2014'
 
-    it 'sets artist attributes properly', ->
-      lastModified @artist, @artworks
-      @artist.get('lastModified').should.eql '2014-06-15T20:49:00.000Z'
-      @artist.get('createdAt').should.eql '2014-06-14T20:49:00.000Z'
+    it 'generates updated JSONLD', ->
+      newJSONLD = lastModified @old, @artist, @artworks
+      newJSONLD.should.eql {
+        '@context': 'http://schema.org',
+        '@type': 'Person',
+        additionalType: 'Artist',
+        gender: 'male',
+        birthDate: '1955',
+        deathDate: '',
+        image: 'https://d32dm0rphc51dk.cloudfront.net/Uqad2mGhbNGhAUgb8bUvIA/large.jpg',
+        name: 'Jeff Koons',
+        url: 'http://localhost:5000/artist/jeff-koons',
+        datePublished: '2014-06-14T20:49:00.000Z',
+        dateModified: '2014-06-15T20:49:00.000Z'
+      }
+
+
