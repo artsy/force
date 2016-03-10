@@ -15,14 +15,14 @@ attachCTA = require './cta.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
-    'artist/:id': 'overview'
-    'artist/:id/works': 'works'
-    'artist/:id/shows': 'shows'
-    'artist/:id/articles': 'articles'
-    'artist/:id/collections': 'collections'
-    'artist/:id/publications': 'publications'
-    'artist/:id/related-artists': 'relatedArtists'
-    'artist/:id/biography': 'biography'
+    'artist_2/:id': 'overview'
+    'artist_2/:id/works': 'works'
+    'artist_2/:id/shows': 'shows'
+    'artist_2/:id/articles': 'articles'
+    'artist_2/:id/collections': 'collections'
+    'artist_2/:id/publications': 'publications'
+    'artist_2/:id/related-artists': 'relatedArtists'
+    'artist_2/:id/biography': 'biography'
 
   initialize: ({ @model, @user, @statuses }) ->
     @options = model: @model, user: @user, statuses: @statuses
