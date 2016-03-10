@@ -21,7 +21,7 @@ helpers = require './view_helpers'
   .then ({artist}) ->
     nav = new Nav artist: artist
 
-    if req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH
+    if req.params.tab? or artist.href.replace "/artist/", "/artist_2" is res.locals.sd.CURRENT_PATH
 
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
@@ -35,9 +35,11 @@ helpers = require './view_helpers'
         jsonLD: stringifyJSONForWeb jsonLD
 
     else
-      res.redirect artist.href
+      res.redirect artist.href.replace "/artist/", "/artist_2"
 
-  .catch next
+  .catch (e) ->
+    console.log e
+    next()
   .done()
 
 @tab = (req, res) =>
@@ -45,8 +47,8 @@ helpers = require './view_helpers'
   @index req, res
 
 @follow = (req, res) ->
-  return res.redirect "/artist/#{req.params.id}" unless req.user
+  return res.redirect "/artist_2/#{req.params.id}" unless req.user
   req.user.followArtist req.params.id,
     error: res.backboneError
     success: ->
-      res.redirect "/artist/#{req.params.id}"
+      res.redirect "/artist_2/#{req.params.id}"

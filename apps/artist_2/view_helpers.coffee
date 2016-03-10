@@ -38,7 +38,7 @@ module.exports =
       "@type": "Person"
       image: artist.image.large
       name: artist.name
-      url: "#{sd.APP_URL}#{artist.href}"
+      url: "#{sd.APP_URL}#{artist.href.replace "/artist/", "/artist_2"}"
       gender: artist.gender
       birthDate: artist.birthday
       deathDate: artist.deathday
