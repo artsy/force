@@ -23,6 +23,8 @@ landing = new JSONPage name: 'consignments/landing'
       ]
 
     .then ->
+      res.locals.sd.RECENTLY_SOLD = recentlySold.toJSON()
+
       res.render 'landing', extend {},
         landing.data,
         resizer,
