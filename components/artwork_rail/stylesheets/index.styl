@@ -2,8 +2,6 @@
 @require '../components/inquiry_questionnaire/stylesheets'
 @require '../components/artwork_item/stylesheets'
 
-arrow-offset = -90px
-
 .arv-container
   margin-top 20px
   padding-top 40px
@@ -57,7 +55,6 @@ arrow-offset = -90px
     position absolute
     top 50%
     transform translateY(-50%)
-    width 90px
     text-align center
     cursor pointer
     user-select none
@@ -71,6 +68,6 @@ arrow-offset = -90px
       opacity 1 !important
 
   &__next
-    right arrow-offset
+    left 100%
   &__prev
-    left arrow-offset
+    right 100%
