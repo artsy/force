@@ -33,15 +33,18 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       upcoming.fetch url: url, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria)
       past.fetch     url: url, data: _.defaults(status: 'closed', criteria)
     ])
-    .then ->
+    .then =>
+      featured.reset() unless featured.first()?.get('featured')  # Empty the collection if the show is not featured.
       _.each [current, upcoming, past], (a) -> a.remove featured.models
-      _.reduce([featured, current, upcoming, past], ((m, a) -> m.concat(a.models)), []).slice(0, 10)
+      displayable = _.flatten _.map [featured, current, upcoming], (c) -> c.models
+      displayable = past.models.slice(0, 2) if displayable.length is 0
+      displayable.slice(0, @maxNumberOfShows)
 
   initCarousel: (partnerShows) =>
     return @remove() unless partnerShows.length > 0
 
     @$el.html template partnerShows: partnerShows
-    initCarousel @$el, wrapAround: true, imagesLoaded: true, (carousel) =>
+    initCarousel(@$el, wrapAround: true, imagesLoaded: true, (carousel) =>
       flickity = carousel.cells.flickity
       flickity.on 'cellSelect', =>
         i = flickity.selectedIndex
@@ -51,6 +54,7 @@ module.exports = class HeroShowsCarousel extends Backbone.View
       ($dots = @$('.mgr-dot')).on 'click', -> flickity.select $dots.index $(this)
       @$('.js-mgr-prev').on 'click', -> flickity.previous()
       @$('.js-mgr-next').on 'click', -> flickity.next()
+    ) if partnerShows.length > 1
 
   remove: ->
     @$el.closest('.partner-overview-section').remove()
