@@ -3,23 +3,22 @@ Q = require 'bluebird-q'
 geolib = require 'geolib'
 request = require 'superagent'
 { Cities } = require 'places'
-{ NODE_ENV } = require '../../config'
+{ NODE_ENV, GEOIP_ENDPOINT } = require '../../config'
 
 geoIP = (ip) ->
   Q.promise (resolve, reject) ->
-    endpoint = 'https://freegeoip.net/json/'
+    endpoint = GEOIP_ENDPOINT
     endpoint += ip unless NODE_ENV is 'development'
     request
       .get endpoint
       .end (err, response) ->
-        return reject if err?
+        return reject err if err?
         resolve response.body
 
 @ip = (req, res, next) ->
   geoIP req.ip
     .then res.send.bind(res)
     .catch next
-    .done()
 
 @nearest = (req, res, next) ->
   cities = Cities.map (city) ->
@@ -33,6 +32,4 @@ geoIP = (ip) ->
     .then (nearest) ->
       yourCity = _.findWhere cities, _.pick(nearest, 'latitude', 'longitude')
       res.send _.extend nearest, yourCity
-
     .catch next
-    .done()

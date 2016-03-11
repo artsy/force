@@ -93,6 +93,7 @@ module.exports =
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
   CONSIGNMENTS_APP_URL: null
+  GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
