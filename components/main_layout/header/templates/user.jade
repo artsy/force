@@ -1,7 +1,7 @@
 .main-layout-header-user
   if user
     span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
-      a( href='/settings' )
+      a( href='/user/saves' )
         = user.get('name') ? user.get('name') : 'Account'
 
       .hover-pulldown-menu
