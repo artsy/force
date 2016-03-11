@@ -1,6 +1,7 @@
-.artwork-item-image( style= "padding-bottom: #{ViewHelpers.factor(artwork.image) * 100}%" )
-  img(
-    src= artwork.image.url
-    nopin= ViewHelpers.noPinAttr(artwork)
-    alt= ViewHelpers.toAltText(artwork)
-  )
+if artwork.image
+  .artwork-item-image( style= "padding-bottom: #{ViewHelpers.factor(artwork.image) * 100}%" )
+    img(
+      src= artwork.image.url
+      nopin= ViewHelpers.noPinAttr(artwork)
+      alt= ViewHelpers.toAltText(artwork)
+    )
