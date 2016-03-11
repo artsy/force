@@ -1,3 +1,4 @@
+_ = require 'underscore'
 jade = require 'jade'
 fs = require 'fs'
 benv = require 'benv'
@@ -80,7 +81,8 @@ describe 'Artist header', ->
 
   describe 'artist with no artworks (on the overview page)', ->
     beforeEach (done) ->
-      @artist = artistJSON
+      @artist = _.clone artistJSON
+      @artist.statuses = _.clone artistJSON.statuses
       @artist.statuses.artworks = false
       @nav = new Nav artist: @artist
 

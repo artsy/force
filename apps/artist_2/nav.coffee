@@ -2,7 +2,7 @@ _ = require 'underscore'
 sections = require './sections.coffee'
 
 module.exports = class Nav
-  constructor: ({ @artist}) -> #
+  constructor: ({ @artist }) -> #
 
   sections: ->
     @__sections__ ?= _.filter _.map(sections, _.clone), (section) =>
