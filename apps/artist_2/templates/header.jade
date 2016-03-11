@@ -1,0 +1,39 @@
+include ../../../components/share/template
+include ../../../components/util/activator
+
+header.artist-header
+  h1.artist-header-name.extra-large-garamond-header= artist.name
+
+  - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+  - var followCount = viewHelpers.displayFollowers(artist)
+  if bday
+    .artist-header-birthdate= bday
+
+  unless artist.statuses.artworks
+    .artist-header-empty
+      | There are no #{artist.name} works on Artsy yet.
+      br
+      | Follow the artist to get alerts when works are added.
+
+  .artist-follow
+    button#artist-follow-button.is-small.avant-garde-follow-button-black
+    if followCount
+      span.artist-header-follow-count= followCount
+
+  if artist.counts.artworks
+    nav.artist-share
+      +share(artist.name + ' on Artsy', artist.image.large)
+
+  .artist-sticky-header
+    .artist-sticky-header-container
+      .artist-sticky-name= artist.name
+      .artist-tabs
+        nav.artist-tablist.garamond-bordered-tablist
+          for link, i in nav.sections()
+            a.garamond-tab(
+              href= link.href
+              class= activeClass(link.href)
+            )= link.name
+            if i !== nav.sections().length - 1
+              span.garamond-tab-separator
+      button.artist-sticky-follow-button.is-small.avant-garde-follow-button-black

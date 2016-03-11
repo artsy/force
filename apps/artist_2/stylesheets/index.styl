@@ -1,0 +1,83 @@
+@require '../../../components/stylus_lib'
+
+#artist-page
+  position relative
+
+// To accomodate full-bleed carousel
+#main-layout-container
+  margin-left 0
+  margin-right 0
+
+#artist-related-last-modified
+  margin-top 40px
+  color gray-darker-color
+
+#artist-fillwidth-section
+#artist-related-shows-section
+#artist-related-articles-section
+#artist-related-artists-section
+#artist-related-contemporary-section
+  display none
+  fade-in()
+
+.artist-works-sort
+  margin 20px 0
+
+.artist-works-section-old
+  border-top 1px solid gray-lighter-color
+  h3
+    padding 10px 0
+    avant-garde()
+    font-size 13px
+  .loading-spinner
+    position relative
+    margin 150px 0
+
+.artist-related-section
+  border-top 1px solid gray-lighter-color
+  margin 40px 0
+.artist-related-section
+  clearfix()
+
+.artist-fillwidth-list-see-more
+  display none
+
+.artist-related-section-header
+.artist-related-section-content
+  float left
+  padding 30px 0 10px 0
+.artist-related-section-header
+  width 26%
+  padding-right 40px
+  font-size 26px
+  line-height 1.5
+.artist-related-section-content
+  width 74%
+
+.artist-related-see-more
+  margin 20px auto
+
+#artist-related-moreinfo
+  padding-top 40px
+
+// Tab sections
+.artist-section-header
+  margin 20px 0
+  font-size 26px
+  line-height 1.5
+
+.artist-page-content
+  position relative
+  margin-bottom 80px
+
+#artist-page-content-section
+  position relative
+
+// Articles section
+.artist-page-related-articles
+  width 75%
+  margin 20px auto
+
+@require './header'
+@require './carousel'
+@require './sections'

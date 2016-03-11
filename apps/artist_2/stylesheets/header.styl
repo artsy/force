@@ -1,0 +1,104 @@
+.artist-header
+  position relative
+  margin-top 80px
+  h2
+    margin 10px 0
+  a
+    text-decoration none
+.artist-header-name
+  margin 15px 0
+.artist-header-meta-sep
+  margin 0 0.5em
+.artist-header-birthdate
+.artist-header-follow-count
+  color gray-darker-color
+.artist-header-birthdate
+  margin 15px 0
+.artist-header-follow-count
+  margin 15px 10px
+.artist-header-empty
+  margin 20px 0
+
+.artist-blurb
+  p > a
+    text-decoration underline
+
+.artist-works-sort
+  text-align right
+  *
+    text-align left
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color gray-color
+  .bordered-pulldown
+    width 170px
+
+.artist-share
+  position absolute
+  top 40px
+  right 0
+  text-align right
+  > a
+    display inline-block
+    line-height 0
+    vertical-align bottom
+    // Tooltips
+    &::after
+      garamond()
+      text-decoration none
+      font-size 16px
+      line-height 1
+      font-weight normal
+      text-transform none
+
+.has-carousel
+  .artist-share
+    right 40px
+
+.artist-tabs
+  margin 15px 0
+
+.artist-sticky-name
+.artist-sticky-follow-button
+  display none
+
+.artist-sticky-name
+  avant-garde-size('body')
+
+.artist-sticky-header
+  height 97px
+
+.artist-sticky-header-fixed
+  .artist-sticky-header-container
+    padding 0 15px
+    display flex
+    flex-direction row
+    align-items center
+    flex-wrap nowrap
+    border-bottom 1px
+    top 52px
+    background-color white
+    position fixed
+    left 0
+    width 100%
+    z-index 1
+    border-bottom 1px solid gray-lighter-color
+  .artist-tablist
+    border none
+  .artist-tabs
+    flex-shrink 0
+    flex-grow 1
+    margin 0 30px
+  .artist-sticky-name
+  .artist-sticky-follow-button
+    flex-grow 0
+    flex-shrink 0
+    display block
+  .artist-sticky-name
+    max-width 200px
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+  @media (max-width: 1150px)
+    .artist-sticky-follow-button
+      display none

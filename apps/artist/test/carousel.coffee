@@ -27,7 +27,7 @@ describe 'Carousel', ->
       Backbone.sync.args[0][2].success []
       Backbone.sync.args[1][2].success [fabricate 'artwork', id: 'iconic-artwork', title: 'Iconic Artwork']
 
-    it 'protects against missing states', ->
+    it 'protects against missing states', (done) ->
       @carousel.fetch().then (collection) ->
         collection.last().get('href').should.equal '/artwork/iconic-artwork'
         collection.last().get('title').should.equal 'Iconic Artwork'

@@ -1,0 +1,27 @@
+
+extends ../../../components/fair_layout/templates/conditional
+include ./header
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'artist_2'
+
+block body
+  - carousel = artist.carousel
+  - hasCarousel = carousel.images.length >= 4
+
+  if hasCarousel
+    include ../components/carousel/index
+
+  #artist-page.responsive-layout-container(
+    class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
+  )
+    .main-layout-container
+      #artist-page-header: include ./header
+      #artist-page-content.artist-page-content
+        unless tab
+          include ./sections/overview
+
+  include ../../../components/main_layout/templates/json_ld
