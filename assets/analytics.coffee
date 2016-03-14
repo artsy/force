@@ -42,6 +42,7 @@ $ -> analytics.ready ->
   require '../analytics/layered_search.js'
   require '../analytics/error.js'
   require '../analytics/artwork_rail.js'
+  require '../analytics/commercial_filtering.js'
 
   if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
     require '../analytics/embedded_inquiry.js'
