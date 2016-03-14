@@ -20,6 +20,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   initialize: (options={}) ->
     { @scroll, @noArtworks, @pageSize, @nextPage, @allArtworks } = _.defaults options, @defaults
+    @partnerArtist = @model
     @artist = new Artist @model.get('artist')
     @partner = new Partner @model.get('partner')
     @initializeElement()
@@ -38,9 +39,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     brief = (_.compact [@artist.get('nationality'), @artist.get('years')]).join(", ")
     @$('.partner-artist-brief').html brief
     @$('.partner-artist-name').html @artist.get('name')
-    @$('.partner-artist-blurb').html @artist.mdToHtml('blurb')
-
-    @initializeBlurb()
+    @initializeBio()
 
     @$el.css "visibility", "visible"
     @scrollToMe() if @scroll
@@ -83,6 +82,14 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.partner-artist-artworks')
     @fetchNextPageArtworks() unless fold < $lastItem.offset()?.top + $lastItem.height()
+
+  initializeBio: ->
+    if @partnerArtist.get('use_default_biography')
+      @$('.partner-artist-blurb').html @artist.mdToHtml('blurb')
+    else
+      @$('.partner-artist-blurb').html(@partnerArtist.get('biography'))
+        .after "<div class='partner-artist-blurb-postfix'>&mdash; Submitted by #{@partner.get('name')}</div>"
+    @initializeBlurb()
 
   initializeBlurb: ->
     $blurb = @$('.partner-artist-blurb')
