@@ -6,7 +6,7 @@ module.exports = [
     title: 'How to bid on Artsy'
   },
   {
-    href: 'https://iphone.artsy.net/'
+    href: 'https://app.adjust.com/v627ct'
     target: '_blank'
     src: '/images/preview-iphone.jpg'
     alt: 'iPhone'
