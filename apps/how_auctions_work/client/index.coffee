@@ -7,7 +7,7 @@ module.exports.init = ->
   ($faq = $('.js-multi-page-embed'))
     .html view.render().$el
 
-  $('a[href*=#]').click (e) ->
+  $('a[href*=#]:not(.avant-garde-button-black)').click (e) ->
     e.preventDefault()
     id = $(this).attr('href').replace '#', ''
     view.state.set 'active', id
