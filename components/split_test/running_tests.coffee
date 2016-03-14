@@ -36,3 +36,11 @@ module.exports =
       browse: 0.5
       collect: 0.5
     dimension: 'dimension10'
+
+  masonry_artwork_sort:
+    key: 'masonry_artwork_sort'
+    edge: 'for_sale'
+    outcomes:
+      default: 0.5
+      for_sale: 0.5
+    dimension: 'dimension11'
