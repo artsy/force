@@ -14,6 +14,8 @@ templates =
 module.exports = class AutocompleteView extends Backbone.View
   className: 'typeahead'
 
+  templates: templates
+
   defaults:
     # UI settings
     autoselect: true
@@ -98,7 +100,7 @@ module.exports = class AutocompleteView extends Backbone.View
 
   dataset: ->
     name: _.uniqueId 'typeahead'
-    templates: templates
+    templates: @templates
     source: (query, cb) =>
       @engine.get query, (suggestions) =>
         cb @withoutSelected(suggestions)
