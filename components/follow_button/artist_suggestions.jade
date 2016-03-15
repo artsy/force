@@ -1,0 +1,8 @@
+.popover-header
+  span.avant-garde-s-headline.popover-left-side You might also like
+  span.popover-close ×
+.popover-artists
+  ul
+    for artist in artists
+      -var artist = artist
+      include ./artist_suggestion

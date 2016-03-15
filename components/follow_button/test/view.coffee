@@ -2,23 +2,40 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 Profile = require '../../../models/profile.coffee'
+Artist = require '../../../models/artist.coffee'
 rewire = require 'rewire'
 FollowButton = rewire '../view.coffee'
 { fabricate } = require 'antigravity'
+Following = require '../collection'
 
 describe 'FollowButton', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        sd: { CURRENT_USER: { type: 'Admin' } }
       sinon.stub Backbone, 'sync'
       FollowButton.__set__ 'mediator', @mediator = trigger: sinon.stub()
+      FollowButton.__set__ 'ArtistSuggestions', @artistSuggestionSpy = sinon.spy()
       Backbone.$ = $
       done()
 
   after ->
     benv.teardown()
     Backbone.sync.restore()
+
+  describe 'initializing artist suggestions', ->
+    before ->
+      @following = new Following null, kind: 'profile'
+      @view = new FollowButton
+        el: $("<div></div>")
+        model: new Artist(fabricate 'artist')
+        modelName: 'artist'
+        following: @following
+
+    it 'initializes the suggestions view for an artist context and an admin', ->
+      @artistSuggestionSpy.called.should.be.ok()
 
   describe '#toggle without label', ->
     before ->
@@ -42,5 +59,3 @@ describe 'FollowButton', ->
     it 'triggers an auth modal with the passed in label', ->
       @view.$el.click()
       @mediator.trigger.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
-
-

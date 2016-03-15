@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+ArtistSuggestions = require './artist_suggestions.coffee'
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -26,6 +27,12 @@ module.exports = class FollowButton extends Backbone.View
     @analyticsUnfollowMessage = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
 
     @$el.addClass "no-touch"
+
+    if @modelName is 'artist' and sd?.CURRENT_USER?.type is 'Admin'
+      @artistSuggestionsView = new ArtistSuggestions
+        model: @model
+        el: @$el
+        following: @following
 
     @change()
 
@@ -56,6 +63,8 @@ module.exports = class FollowButton extends Backbone.View
         id: @model.id
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
+      $('.artist-suggestion-popover').remove()
+      @artistSuggestionsView?.renderSuggestedArtists()
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500

@@ -17,7 +17,9 @@ describe 'ArtistFillwidthList', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        sd: {}
       Backbone.$ = $
       done()
 
