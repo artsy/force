@@ -47,7 +47,7 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     if bigger.list.length < smaller.list.length
       temp = bigger; bigger = smaller; smaller = temp
     if smaller.list.length is 0
-      bigger.label = "artists"
+      bigger.label = ''
 
     smaller.numOfCols = Math.ceil smaller.list.length / h
     bigger.numOfCols = @numberOfColumns - smaller.numOfCols

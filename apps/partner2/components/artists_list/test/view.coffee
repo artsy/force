@@ -144,7 +144,7 @@ describe 'PartnerArtistsListView', ->
 
       groups = view.groupArtists pas.models
       groups.should.have.lengthOf 1
-      groups[0].label.should.equal "artists"
+      groups[0].label.should.equal ''
       groups[0].cols.should.have.lengthOf 4
       groups[0].cols[0].should.have.lengthOf 2
       groups[0].cols[1].should.have.lengthOf 2
@@ -167,7 +167,7 @@ describe 'PartnerArtistsListView', ->
 
       groups = view.groupArtists pas.models
       groups.should.have.lengthOf 1
-      groups[0].label.should.equal "artists"
+      groups[0].label.should.equal ''
       groups[0].cols.should.have.lengthOf 4
       groups[0].cols[0].should.have.lengthOf 2
       groups[0].cols[1].should.have.lengthOf 2
@@ -190,7 +190,7 @@ describe 'PartnerArtistsListView', ->
 
       groups = view.groupArtists pas.models
       groups.should.have.lengthOf 1
-      groups[0].label.should.equal "artists"
+      groups[0].label.should.equal ''
       groups[0].cols.should.have.lengthOf 1
       groups[0].cols[0].should.have.lengthOf 6
 
