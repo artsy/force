@@ -1,9 +1,13 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Artist = require '../../models/artist.coffee'
 sd = require('sharify').data
+{ timespanInWords } = require '../../components/util/date_helpers.coffee'
+{ capitalize, numberFormat } = require 'underscore.string'
 
 module.exports =
+  timespanInWords: timespanInWords
+  capitalize: capitalize
+
   pageTitle: (artist) ->
     artist = new Artist
       id: artist.id
@@ -26,7 +30,7 @@ module.exports =
 
   displayFollowers: (artist) ->
     if c = artist.counts.follows
-      "#{_s.numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
+      "#{numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
 
   mdToHtml: (artist, attr) ->
     artist = new Artist _.pick artist, attr
