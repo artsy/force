@@ -181,7 +181,7 @@ module.exports = class ArtworkView extends Backbone.View
     return unless @artist?.get('artworks_count') > 1
     split = splitTest('masonry_artwork_sort').outcome()
     additionalParams = if split is 'default' then {} else
-      sort: '-merchandisability'
+      sort: 'availability'
     @listenTo @artist.related().artworks, 'sync', @renderArtistArtworks
     @artist.related().artworks.fetch data: additionalParams
 
