@@ -59,7 +59,7 @@ module.exports = class CTABarView extends Backbone.View
     @openModal userData: @serializeForm()
 
   onClickButton: (e) ->
-    return if @user
+    return true if @user
     e.preventDefault()
     @openModal()
 

@@ -2,135 +2,187 @@
 // Generic events around bidding for auctions
 //
 
-var AUCTION_ID = (
-  sd.AUCTION && sd.AUCTION.id ||
-  sd.SALE && sd.SALE.id ||
-  sd.UPCOMING_AUCTIONS && sd.UPCOMING_AUCTIONS[0].id ||
-  location.pathname.replace('/auction/', '').split('/')[0] ||
-  location.search.replace('?auction_id=','') ||
-  null
-);
-var USER_AUCTION = {};
-if (sd.CURRENT_USER) USER_AUCTION.user_id = sd.CURRENT_USER.id;
-if (AUCTION_ID) USER_AUCTION.auction_slug = AUCTION_ID;
+var USER_ID = sd.CURRENT_USER ? sd.CURRENT_USER.id : null
+var AUCTION_ID = sd.AUCTION && sd.AUCTION.id
+var AUCTION_STATE = sd.AUCTION && sd.AUCTION.auction_state
 
-// -----------------------------------------------------------------------------
-// Events from https://trello.com/c/nqmq1yjL/264-web-send-data-to-segment
-// -----------------------------------------------------------------------------
+// Clicked "Register to bid" (context_type: 'auctions landing')
+$(".auctions-placeholder-metadata .avant-garde-button-black").click(function() {
+  analytics.track('Clicked "Register to bid"', {
+    context_type: 'auctions landing',
+    auction_slug: sd.UPCOMING_AUCTIONS[0].id,
+    auction_state: sd.UPCOMING_AUCTIONS[0].auction_state,
+    user_id: USER_ID
+  })
+})
 
-// Notify me auction form opened
-$('.auctions-placeholder-metadata .js-sign-up-button').click(function() {
-  analytics.track('Notify me auction form opened');
-});
+// Sign up to be noti..... goes here
+// $(".auctions-placeholder-metadata .avant-garde-button-black, .auctions-placeholder-hero img")
 
-// Notify me form submitted on the auction registration page
-analyticsHooks.on('auction:notify-me', function(data) {
-  analytics.track('Notify me form submitted on the auction registration page',
-    { email: data.email, auction_slug: AUCTION_ID });
-});
-analyticsHooks.on('auth:register', function() {
-  if (location.pathname !== '/auctions') return;
-  var email = $('.auth-form #js-mailcheck-input-modal').val();
-  analytics.track('Notify me form submitted on the auction registration page',
-    { email: email, auction_slug: AUCTION_ID });
-});
+// Clicked "Register to bid" (context_type: 'upcoming auction feature')
+$(".auction-preview-sidebar .avant-garde-button-black").click(function() {
+  if (sd.CURRENT_USER) {
+    analytics.track('Clicked "Register to bid"', {
+      context_type: 'upcoming auction feature',
+      auction_slug: sd.AUCTION.id,
+      auction_state: sd.AUCTION.auction_state,
+      user_id: USER_ID
+    })
+  }
+})
 
-// Clicked “Register to bid” on the auction feature page
+// Clicked "Register to bid" (context_type: 'notify me register now')
+$('.auction-preview-register-now a').click(function() {
+  analytics.track('Clicked "Register to bid"', {
+    context_type: 'notify me register now',
+    auction_slug: sd.AUCTION.id,
+    auction_state: sd.AUCTION.auction_state,
+    user_id: USER_ID
+  })
+})
+
+// TODO: Follow up about "Notify me auction form opened"
+
+// Notify me auction form submitted
+$('.auction-preview-sidebar-form').submit(function() {
+  analytics.track('Notify me auction form submitted', {
+    auction_slug: sd.AUCTION.id,
+    user_id: USER_ID
+  })
+})
+
+// TODO: Clicked "Register to bid" (context_type: "notify me thank you modal")
+// * include auction_state as well
+// * includes some Sign Up events down the flow
+
+// Clicked "Register to bid" (context_type: 'current auction feature top')
 analytics.trackLink(
-  $(
-    [
-      'a:contains(Register to bid)',
-      '.auctions-placeholder-metadata .avant-garde-button-black'
-    ].join(',')
-  )[0],
-  'Clicked “Register to bid” on the auction feature page',
-  USER_AUCTION
-);
+  $('.auction-info-register-button .avant-garde-button-black'),
+  'Clicked "Register to bid"',
+  {
+    context_type: 'current auction feature top',
+    auction_slug: AUCTION_ID,
+    auction_state: AUCTION_STATE,
+    user_id: USER_ID
+  }
+)
 
-// Clicked "Register" in the Thank You / Auction modal
-$(document).on('click', '.email-to-registration-transition-register', function() {
-  analytics.track('Clicked "Register" in the Thank You / Auction modal');
-});
+// Clicked "Register to bid" (context_type: 'current auction feature banner')
+analytics.trackLink(
+  $('[href*=auction-registration].cta-bar-button'),
+  'Clicked "Register to bid"',
+  {
+    context_type: 'current auction feature banner',
+    auction_slug: AUCTION_ID,
+    auction_state: AUCTION_STATE,
+    user_id: USER_ID
+  }
+)
 
-// Successful registration on auction feature page
-analyticsHooks.on('auction:sign_up:success', function(data) {
-  analytics.track(
-    'Successful registration on auction feature page', USER_AUCTION);
-});
+// Clicked "Register to bid" (context_type: 'settings')
+// TODO: Add analytics hook to fire after render with the auction state data
+
+
+// Registration failed to submit
+analyticsHooks.on('registration:submit-address', function() {
+  setTimeout(function() {
+    var errorMessages = $('.error').map(function() { return $(this).text() }).toArray()
+    if (errorMessages.length > 0) {
+      analytics.track('Registration failed to submit', {
+        auction_slug: sd.SALE.id,
+        user_id: USER_ID,
+        error_messages: errorMessages
+      })
+    }
+  })
+})
 
 // Registration submitted
-analyticsHooks.on('registration:success', function(){
-  analytics.track('Registration submitted', USER_AUCTION);
-});
+analyticsHooks.on('registration:success', function(data) {
+  setTimeout(function() {
+    analytics.track('Registration submitted', {
+      auction_slug: sd.SALE.id,
+      user_id: USER_ID,
+      bidder_id: data.bidder_id
+    })
+  })
+})
 
-// Registration submit billing address
-analyticsHooks.on('registration:submit-address', function(options){
-  analytics.track('Registration submit billing address', USER_AUCTION);
-});
-
-// Registration card validated
-analyticsHooks.on('registration:validated', function(){
-  analytics.track('Registration card validated', USER_AUCTION);
-});
-
-// Clicked “Bid” on the artwork page
-$(document).on('click', '.artwork-bid-form :contains(Bid)', function() {
-  analytics.track('Clicked “Bid” on the artwork page', USER_AUCTION);
-});
-
-// Clicked “Bid” button on artwork item from auction feature page
-$('.auction-artworks .aga-bid-button').each(function(i, el) {
+// Clicked "Bid" (context_type: auction grid artwork)
+// TODO: Some really strange order of click even stuff happnening b/t this
+// and the AuctionArtworksView::authOrPass method
+// Check out using mediator.trigger 'open:auth' instead
+$('.aga-bid-button .avant-garde-button-black').each(function() {
   analytics.trackLink(
-    el,
-    'Clicked “Bid” button on artwork item from auction feature page',
-    USER_AUCTION
-  );
-});
+    $(this),
+    'Clicked "Bid"',
+    {
+      auction_slug: AUCTION_ID,
+      user_id: USER_ID,
+      context_type: 'auction grid artwork',
+      artwork_slug: $(this).attr('data-id')
+    }
+  )
+})
 
-// Clicked “Confirm Bid” on bid page
-$('.avant-garde-button-black:contains(Confirm Bid)').click(function() {
-  analytics.track('Clicked “Confirm Bid” on bid page', USER_AUCTION);
+// Clicked "Bid" (context_type: auction list artwork)
+// TODO: Some really strange order of click even stuff happnening b/t this
+// and the AuctionArtworksView::authOrPass method
+$('.ala-bid-button .avant-garde-button-black').each(function() {
+  analytics.trackLink(
+    $(this),
+    'Clicked "Bid"',
+    {
+      auction_slug: AUCTION_ID,
+      user_id: USER_ID,
+      context_type: 'auction list artwork',
+      artwork_slug: $(this).attr('data-id')
+    }
+  )
+})
 
-  // Confirmed bid on bid page
-  $(document).on('ajaxSuccess', function(e, x, req, bidderPosition) {
-    if (!(req.url.match('/api/v1/me/bidder_position'))) return;
-    analytics.track('Confirmed bid on bid page', {
-      user_id: USER_AUCTION.user_id,
-      auction_slug: USER_AUCTION.auction_slug,
-      bidder_position_id: bidderPosition.id
-    });
-  });
+// Clicked "Bid" (context_type: your active bids)
+$('.auction-mab-bid-button').each(function() {
+  analytics.trackLink(
+    $(this),
+    'Clicked "Bid"',
+    {
+      auction_slug: AUCTION_ID,
+      user_id: USER_ID,
+      context_type: 'your active bids',
+      artwork_slug: $(this).attr('href').replace('/artwork/','')
+    }
+  )
+})
 
-  // Error placing your bid
-  $(document).one('ajaxError', function(e, jqXHR, settings, error) {
-    analytics.track('Error placing your bid', jqXHR.responseText);
-  });
-});
+// Clicked "Bid" (context_type: artwork page)
+analyticsHooks.on('artwork:auction:bid:success', function(data) {
+  analytics.track('Clicked "Bid"', {
+    auction_slug: data.auction_slug,
+    user_id: USER_ID,
+    context_type: 'artwork page',
+    artwork_slug: sd.ARTWORK.id
+  })
+})
 
-// Auction Page Pageview
-if (location.pathname.match(new RegExp('auction/.*')) &&
-   !location.pathname.match(new RegExp('auction/.*/'))) {
-  analytics.track("Auction Page Pageview", {
-    slug: AUCTION_ID, preview: sd.AUCTION.auction_state
-  });
-}
+// Confirm bid failed
+analyticsHooks.on('error', function(message) {
+  if (message.match('bid must be higher')) {
+    analytics.track('Confirm bid failed', {
+      auction_slug: sd.SALE.id,
+      user_id: USER_ID,
+      artwork_slug: sd.SALE_ARTWORK.artwork.id
+    })
+  }
+})
 
-// -----------------------------------------------------------------------------
-// Misc Events
-// -----------------------------------------------------------------------------
-
-// Clicked "Skip" in the Thank You / Auction modal
-$(document).on('click', '.email-to-registration-transition-skip', function() {
-  analytics.track('Clicked "Skip" in the Thank You / Auction modal');
-});
-
-// Showed ‘Confirm bid on artwork page’
-if (location.pathname.match(/artwork\/.*\/confirm-bid/)) {
-  $(document).on('ajaxSuccess', function(e, x, req, bidderPositions) {
-    if (!(req.url.match('bidder_positions'))) return;
-    analytics.track("Showed 'Confirm bid on artwork page'", {
-      nonInteraction: 1,
-      bidder_position_id: bidderPositions[0].id
-    });
-  });
-}
+// Confirmed bid on bid page
+analyticsHooks.on('confirm:bid:form:success', function(data) {
+  analytics.track('Confirmed bid on bid page', {
+    auction_slug: sd.SALE.id,
+    user_id: USER_ID,
+    artwork_slug: sd.SALE_ARTWORK.artwork.id,
+    bidder_position_id: data.bidder_position_id,
+    bidder_id: data.bidder_id
+  })
+})

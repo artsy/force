@@ -3,6 +3,7 @@ mediator = require '../../../../lib/mediator.coffee'
 BuyersPremiumModal = require './buyers_premium_modal.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
@@ -25,6 +26,9 @@ module.exports = class AuctionDetailView extends Backbone.View
   submit: (e) ->
     e.preventDefault()
     unless @user
+      analyticsHooks.trigger 'artwork:auction:bid:success', {
+        auction_slug: @auction.id
+      }
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: 'Sign up to bid'
@@ -33,6 +37,9 @@ module.exports = class AuctionDetailView extends Backbone.View
     else
       @$('button').attr 'data-state', 'loading'
       if (val = @validate @$('input').val())
+        analyticsHooks.trigger 'artwork:auction:bid:success', {
+          auction_slug: @auction.id
+        }
         location.assign "#{@$('form').attr('action')}?bid=#{val}"
       else
         @displayValidationError()
