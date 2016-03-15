@@ -89,8 +89,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               resolve()
             else
               reject "Registration submission error: #{xhr.responseJSON?.message}"
-    .then =>
-      analyticsHooks.trigger 'registration:success'
+    .then (bidder) =>
+      analyticsHooks.trigger 'registration:success', bidder_id: bidder.id
       @success()
 
   savePhoneNumber: ->

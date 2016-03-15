@@ -40,7 +40,6 @@ $ -> analytics.ready ->
   require '../analytics/search.js'
   require '../analytics/auth.js'
   require '../analytics/layered_search.js'
-  require '../analytics/error.js'
   require '../analytics/artwork_rail.js'
   require '../analytics/commercial_filtering.js'
 
