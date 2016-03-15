@@ -1,0 +1,94 @@
+.artist-suggestion-popover 
+  opacity 0
+  background-color #fff
+  border-radius 3px
+  border 1px solid #ddd
+  z-index 969
+  position absolute
+  width 290px
+  height 207px
+
+.popover.show 
+  opacity 1
+
+.popover-bottom 
+  margin-top 5px
+
+.popover-top 
+  margin-top -5px
+
+.popover-content 
+  padding 15px
+
+.popover-close
+  color gray-dark-color
+  float right
+  font-size 22px
+  cursor pointer
+
+.popover-left-side
+  color gray-dark-color
+  
+.popover-artists
+  li
+    padding 15px 0px 15px 0px
+    border-bottom 1px solid gray-lighter-color
+  img
+    display inline
+    vertical-align middle
+    margin-right 10px
+    float left
+  span
+    garamond-size('s-body')
+    margin-top 2px
+  a
+    margin-top 2px
+    float right
+    &[data-state='following']
+      color purple-color
+  
+/* Arrow */
+
+.popover-arrow, .popover-arrow:after 
+  position absolute
+  display block
+  width 0
+  height 0
+  border-color transparent
+  border-style solid
+
+.popover-arrow 
+  border-width 11px
+
+.popover-bottom > .popover-arrow 
+  left 50%
+  margin-left -11px
+  border-top-width 0
+  border-bottom-color #ddd
+  top -11px
+
+.popover-top > .popover-arrow 
+  left 50%
+  margin-left -11px
+  border-bottom-width 0
+  border-top-color #ddd
+  bottom -11px
+
+.popover-arrow:after 
+  border-width 10px
+  content ""
+
+/* direction specific */
+.popover-bottom > .popover-arrow:after 
+  content " "
+  top 1px
+  margin-left -10px
+  border-top-width 0
+  border-bottom-color #fff
+
+.popover-top > .popover-arrow:after 
+  content " "
+  bottom 1px
+  margin-left -10px
+  border-bottom-width 0
+  border-top-color #fff
