@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
