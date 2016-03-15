@@ -72,7 +72,7 @@ module.exports = class BidForm extends ErrorHandlingForm
            @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
           analyticsHooks.trigger 'confirm:bid:form:success', {
             bidder_position_id: bidderPosition.id
-            bidder_id: bidderPosition.get('bidder').id
+            bidder_id: bidderPosition.get('bidder')?.id
           }
           @showSuccessfulBidMessage()
         else
