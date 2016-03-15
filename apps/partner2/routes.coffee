@@ -1,8 +1,3 @@
-# Skip the rest of the middlewares from this route stack for non-admins,
-# and fallback (next) to the old partner app routes.
-@requireAdmin = (req, res, next) ->
-  if req.user?.isAdmin() then next() else next('route')
-
 @requireNewLayout = (req, res, next) ->
   deprecated = res.locals.profile?.get('owner')?.profile_layout is 'gallery_deprecated'
   if deprecated then next('route') else next()

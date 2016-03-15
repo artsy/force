@@ -35,70 +35,92 @@ partnerRoutes = [
   '/:id/contact', '/:id/about'
 ]
 
-describe 'partner2 index', ->
-  beforeEach ->
-    @app = express()
-    @app.use prepareLocals(nonDeprecatedLayoutPartnerProfile)
+subscriptions2_0Specs = (partnerRoutes) ->
+  _.each _.without(partnerRoutes, '/:id/overview'), (route) ->
+    it "renders partner2 for #{route}", ->
+      request(@app)
+        .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
+        .expect 200
+        .expect (res) ->
+          # https://github.com/visionmedia/supertest/issues/253
+          res.text.should.startWith '<!DOCTYPE html>'
 
-  describe 'public', ->
+  it 'redirects to /:id for /:id/overview', ->
+    request(@app)
+      .get '/partner-id/overview'
+      .expect 302
+      .expect (res) ->
+        res.text.should.endWith 'Redirecting to /partner-id'
+
+subscriptions1_0Specs = (partnerRoutes) ->
+  _.each partnerRoutes, (route) ->
+    it "renders partner1 for #{route}", ->
+      request(@app)
+        .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
+        .expect 200
+        .expect 'partner1'
+
+# Shared examples for Subscriptions 2.0
+itShouldBehaveLikeSubscriptions2_0 = (partnerRoutes) ->
+  context 'public', ->
     beforeEach ->
       @app.use partner2
       @app.use partner1
 
-    _.each partnerRoutes, (route) ->
-      it "renders partner1 for #{route}", ->
-        request(@app)
-          .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
-          .expect 200
-          .expect 'partner1'
+    subscriptions2_0Specs(partnerRoutes)
 
-  describe 'users', ->
+  context 'user', ->
     beforeEach ->
       @app.use loginAsUser
       @app.use partner2
       @app.use partner1
 
-    _.each partnerRoutes, (route) ->
-      it "renders partner1 for #{route}", ->
-        request(@app)
-          .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
-          .expect 200
-          .expect 'partner1'
+    subscriptions2_0Specs(partnerRoutes)
 
-  describe 'admins', ->
-    describe 'with partner profile layout other than gallery_deprecated', ->
-      beforeEach ->
-        @app.use loginAsAdmin
-        @app.use partner2
-        @app.use partner1
+  context 'admin', ->
+    beforeEach ->
+      @app.use loginAsAdmin
+      @app.use partner2
+      @app.use partner1
 
-      _.each _.without(partnerRoutes, '/:id/overview'), (route) ->
-        it "renders partner2 for #{route}", ->
-          request(@app)
-            .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
-            .expect 200
-            .expect (res) ->
-              # https://github.com/visionmedia/supertest/issues/253
-              res.text.should.startWith '<!DOCTYPE html>'
+    subscriptions2_0Specs(partnerRoutes)
 
-      it 'redirects to /:id for /:id/overview', ->
-        request(@app)
-          .get '/partner-id/overview'
-          .expect 302
-          .expect (res) ->
-            res.text.should.endWith 'Redirecting to /partner-id'
+# Shared examples for old subscriptions
+itShouldBehaveLikeSubscriptions1_0 = (partnerRoutes) ->
+  context 'public', ->
+    beforeEach ->
+      @app.use partner2
+      @app.use partner1
 
-    describe 'with partner profile layout gallery_deprecated', ->
-      beforeEach ->
-        @app = express()
-        @app.use prepareLocals(deprecatedLayoutPartnerProfile)
-        @app.use loginAsAdmin
-        @app.use partner2
-        @app.use partner1
+    subscriptions1_0Specs(partnerRoutes)
 
-      _.each partnerRoutes, (route) ->
-        it "renders partner1 for #{route}", ->
-          request(@app)
-            .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
-            .expect 200
-            .expect 'partner1'
+  context 'user', ->
+    beforeEach ->
+      @app.use loginAsUser
+      @app.use partner2
+      @app.use partner1
+
+    subscriptions1_0Specs(partnerRoutes)
+
+  context 'admin', ->
+    beforeEach ->
+      @app.use loginAsAdmin
+      @app.use partner2
+      @app.use partner1
+
+    subscriptions1_0Specs(partnerRoutes)
+
+describe 'partner2 index', ->
+  context 'with partner profile layout other than gallery_deprecated', ->
+    beforeEach ->
+      @app = express()
+      @app.use prepareLocals(nonDeprecatedLayoutPartnerProfile)
+
+    itShouldBehaveLikeSubscriptions2_0(partnerRoutes)
+
+  context 'with partner profile layout gallery_deprecated', ->
+    beforeEach ->
+      @app = express()
+      @app.use prepareLocals(deprecatedLayoutPartnerProfile)
+
+    itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
