@@ -17,25 +17,6 @@ describe 'Partner routes', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#requireAdmin', ->
-    it 'skips the middlewares from this route stack if no logged-in user', ->
-      @req.user = null
-      routes.requireAdmin @req, @res, @next
-      @next.calledOnce.should.be.ok
-      @next.args[0][0].should.equal 'route'
-
-    it 'skips the middlewares from this route stack if logged-in user is not an admin', ->
-      @req.user = new CurrentUser fabricate 'user', type: 'User'
-      routes.requireAdmin @req, @res, @next
-      @next.calledOnce.should.be.ok
-      @next.args[0][0].should.equal 'route'
-
-    it 'nexts to the middleware in this route stack if logged-in user is an admin', ->
-      @req.user = new CurrentUser fabricate 'user', type: 'Admin'
-      routes.requireAdmin @req, @res, @next
-      @next.calledOnce.should.be.ok
-      _.isUndefined(@next.args[0][0]).should.be.ok()
-
   describe '#requireNewLayout', ->
     it 'skips the middlewares from this route stack if partner with gallery_deprecated layout', ->
       deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
