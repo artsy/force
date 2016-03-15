@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
@@ -69,6 +70,10 @@ module.exports = class BidForm extends ErrorHandlingForm
       success: (bidderPosition) =>
         if bidderPosition.has('processed_at') or
            @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
+          analyticsHooks.trigger 'confirm:bid:form:success', {
+            bidder_position_id: bidderPosition.id
+            bidder_id: bidderPosition.get('bidder').id
+          }
           @showSuccessfulBidMessage()
         else
           @timesPolledForBidPlacement += 1

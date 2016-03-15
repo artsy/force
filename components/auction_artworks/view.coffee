@@ -40,18 +40,20 @@ module.exports = class AuctionArtworksView extends Backbone.View
 
   setState: (e) ->
     e.preventDefault()
-
     @state.set $(e.currentTarget).data()
 
   authOrPass: (e) ->
-    return if @user?.isLoggedIn()
-
     e.preventDefault()
-    new AuthModalView
-      width: '500px'
-      mode: 'register'
-      copy: 'Sign up to bid'
-      redirectTo: $(e.currentTarget).attr('href')
+    if @user
+      location.assign $(e.target).attr('href')
+    else
+      new AuthModalView
+        width: '500px'
+        mode: 'register'
+        copy: 'Sign up to bid'
+        # TODO: Figure out why this redirects immediately after opening
+        # redirectTo: $(e.currentTarget).attr('href')
+    return true
 
   inquire: (e) ->
     e.preventDefault()

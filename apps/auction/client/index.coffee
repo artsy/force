@@ -1,4 +1,4 @@
-{ FEATURE, AUCTION, ARTWORKS, CURRENT_USER, USER } = require('sharify').data
+{ FEATURE, AUCTION, ARTWORKS } = require('sharify').data
 Feature = require '../../../models/feature.coffee'
 Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -15,11 +15,11 @@ module.exports.init = ->
   feature = new Feature FEATURE
   auction = new Auction AUCTION
   artworks = new Artworks ARTWORKS
-  user = new CurrentUser USER
+  user = CurrentUser.orNull()
 
   # If we are on the confirm-registration path then pop up a modal
   # Page is otherwise unchanged
-  if window.location.pathname.match('/confirm-registration') and USER?
+  if window.location.pathname.match('/confirm-registration') and user?
     new ConfirmRegistrationModal paddleNumber: user.get('paddle_number'), model: auction
 
   new AuctionArtworksView
@@ -31,7 +31,7 @@ module.exports.init = ->
   new EmailRegistrationView(
     el: $('.auction-preview-sidebar-email')
     auction: auction
-  ) unless user.id
+  ) unless user
   attachCTA auction, user
 
   # Re-fetch due to cache
@@ -44,5 +44,3 @@ module.exports.init = ->
   $('.js-specialist-contact-link').click (e) ->
     e.preventDefault()
     openSpecialistModal()
-
-  require('./analytics.coffee')(feature)
