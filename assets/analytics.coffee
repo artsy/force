@@ -34,6 +34,7 @@ $ -> analytics.ready ->
   require '../analytics/artwork.js'
   require '../analytics/fair.js'
   require '../analytics/following.js'
+  require '../analytics/follow_widget.js'
   require '../analytics/partner.js'
   require '../analytics/checkout.js'
   require '../analytics/personalize.js'
