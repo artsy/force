@@ -21,9 +21,3 @@ analyticsHooks.on('mediator:auth:error', function(message) {
   if (message == 'invalid email or password')
     analytics.track('Login: The password you entered is incorrect.');
 });
-
-// Visited logged in
-if (sd.CURRENT_USER) analytics.track('Visited logged in', { nonInteraction: 1 });
-
-// Visited logged out
-if (!sd.CURRENT_USER) analytics.track('Visited logged out', { nonInteraction: 1 });
