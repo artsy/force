@@ -6,7 +6,7 @@
   z-index 969
   position absolute
   width 290px
-  height 207px
+  height 192px
 
 .popover.show 
   opacity 1
@@ -31,21 +31,31 @@
   
 .popover-artists
   li
-    padding 15px 0px 15px 0px
+    padding 10px 0px 10px 0px
     border-bottom 1px solid gray-lighter-color
+    clearfix()
   img
-    display inline
-    vertical-align middle
     margin-right 10px
     float left
-  span
+  .artist-suggestion-name
     garamond-size('s-body')
     margin-top 2px
-  a
-    margin-top 2px
+    text-decoration none
+    border-bottom 2px solid transparent
+    float left
+    max-width 128px
+    display block
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap
+    &:hover
+      border-bottom-color black
+  .follow-button
+    margin-top 5px
     float right
     &[data-state='following']
       color purple-color
+      border-bottom-color purple-color
   
 /* Arrow */
 
@@ -58,37 +68,37 @@
   border-style solid
 
 .popover-arrow 
-  border-width 11px
+  border-width 14px
 
 .popover-bottom > .popover-arrow 
   left 50%
-  margin-left -11px
+  margin-left -14px
   border-top-width 0
   border-bottom-color #ddd
-  top -11px
+  top -14px
 
 .popover-top > .popover-arrow 
   left 50%
-  margin-left -11px
+  margin-left -14px
   border-bottom-width 0
   border-top-color #ddd
-  bottom -11px
+  bottom -14px
 
 .popover-arrow:after 
-  border-width 10px
+  border-width 14px
   content ""
 
 /* direction specific */
 .popover-bottom > .popover-arrow:after 
   content " "
   top 1px
-  margin-left -10px
+  margin-left -14px
   border-top-width 0
   border-bottom-color #fff
 
 .popover-top > .popover-arrow:after 
   content " "
   bottom 1px
-  margin-left -10px
+  margin-left -14px
   border-bottom-width 0
   border-top-color #fff
