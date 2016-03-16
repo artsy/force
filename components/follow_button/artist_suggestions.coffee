@@ -4,6 +4,7 @@ Popover = require 'popover'
 { API_URL } = require('sharify').data
 listTemplate = -> require('./artist_suggestions.jade') arguments...
 rowTemplate = -> require('./artist_suggestion.jade') arguments...
+Artists = require '../../collections/artists.coffee'
 
 module.exports = class ArtistSuggestions extends Backbone.View
   
@@ -15,16 +16,18 @@ module.exports = class ArtistSuggestions extends Backbone.View
     e.preventDefault()
     id = $(e.currentTarget).data('artist-id')
     @following.follow id
-    $oldLi = $(e.currentTarget).parent('li')
-    $oldLi.find('a').attr 'data-state', 'following'
-    $oldLi.find('a').off 'click'
+    $li = $(e.currentTarget).parent().parent('li')
+    $li.find('.follow-button').attr 'data-state', 'following'
     return unless (nextArtist = @remainingArtists?.shift())
-    $newLi = $(rowTemplate artist: nextArtist)
-    $oldLi.fadeOut =>
-      $oldLi.replaceWith($newLi)
-      $oldLi.fadeIn()
-      # re-bind follow event
-      @$popoverEl.find(@followButtonSelector(nextArtist.get('id'))).on 'click', @followAndMaybeSwap
+    _.delay (=> @replaceTextAndFade($li, nextArtist)), 500   # give a bit of time to see the 'Following' message
+
+  replaceTextAndFade: ($li, artist) ->
+    html = rowTemplate artist: artist
+    $li.find('.artist-suggestion-row').replaceWith html
+    $newRow = $li.find('.artist-suggestion-row')
+    $newRow.css 'opacity', 0
+    $newRow.fadeTo('slow', 1)
+    @$popoverEl.find(@followButtonSelector(artist.get('id'))).on 'click', @followAndMaybeSwap
 
   remove: =>
     @popover.remove()
@@ -33,17 +36,17 @@ module.exports = class ArtistSuggestions extends Backbone.View
     "a[data-artist-id='#{artistId}']"
 
   renderSuggestedArtists: ->
-    @model.related().artists.url = "#{API_URL}/api/v1/me/suggested/artists"
-
-    @model.related().artists.fetch
+    artists = new Artists
+    artists.url = "#{API_URL}/api/v1/me/suggested/artists"
+    artists.fetch
       data:
         exclude_followed_artists: true
-        artist_id: @model.get('id')
+        artist_id: @model.id
         exclude_artists_without_artworks: true
       success: =>
-        return unless @model.related().artists.length > 0
-        @initialArtists = @model.related().artists.models[0...3]
-        @remainingArtists = @model.related().artists.models[3...-1] if @model.related().artists.length > 3
+        return unless artists.length > 3
+        @initialArtists = artists.models[0...3]
+        @remainingArtists = artists.models[3...-1]
         html = listTemplate
           artists: @initialArtists
         position = @bestPosition(@$el[0])

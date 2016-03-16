@@ -4,5 +4,6 @@
 .popover-artists
   ul
     for artist in artists
-      -var artist = artist
-      include ./artist_suggestion
+      li
+        -var artist = artist
+        include ./artist_suggestion
