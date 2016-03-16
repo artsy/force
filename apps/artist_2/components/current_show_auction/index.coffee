@@ -1,15 +1,17 @@
 _ = require 'underscore'
 
 current = (type, artist) ->
-  currentItems = artist[type]
-  count = currentItems.length
-  hasMany = count > 1
-  imageUrl = currentItems[0].cover_image.cropped.url
-  item = _.pick currentItems[0], 'start_at', 'end_at', 'name', 'href'
+  return if not items = artist[type]
+  firstItem = _.find items, (item) -> not item.fair
+  return if not firstItem
+  hasMany = items.length > 1
+  imageUrl = firstItem.cover_image.cropped.url
+  item = _.pick firstItem, 'start_at', 'end_at', 'name', 'href'
   _.extend item, { hasMany, type, imageUrl }
-  return item
+  item
 
 module.exports = (artist) ->
-  type = _.find ['auction', 'show'], (type) ->
-    artist[type]?.length > 0
-  current(type, artist)
+  type = _.reduce ['auction', 'show'], (memo, type) ->
+    memo ?= current(type, artist)
+  , undefined
+

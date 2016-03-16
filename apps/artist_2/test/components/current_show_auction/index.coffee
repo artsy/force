@@ -25,6 +25,28 @@ describe 'current show or auction', ->
       end_at: '2016-12-05T12:00:00+00:00',
       type: 'show'
 
+  it 'ignores fair shows', ->
+    fairBooth = {
+      "fair": { "id": "fair_id" }
+      "name": "A Fair Booth"
+      "href": "/show/a-fair-booth"
+      "start_at": "2016-09-01T12:00:00+00:00",
+      "end_at": "2016-12-05T12:00:00+00:00",
+      "cover_image": "cropped": "url": "/fair-booth.jpg"
+    }
+    # artist = show: [fairBooth]
+    # (currentItem(artist) == undefined).should.be.true()
+
+    artist = show: [fairBooth].concat show
+    currentItem(artist).should.eql
+      hasMany: true,
+      href: '/show/a-show'
+      imageUrl: '/foo.jpg',
+      name: 'A Show',
+      start_at: '2016-09-01T12:00:00+00:00',
+      end_at: '2016-12-05T12:00:00+00:00',
+      type: 'show'
+
   it 'indicates if one or many', ->
     artist = { show }
     currentItem(artist).hasMany.should.be.true()
