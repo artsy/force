@@ -12,7 +12,7 @@ Nav = require './nav'
 metaphysics = require '../../lib/metaphysics'
 query = require './query'
 helpers = require './view_helpers'
-
+currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
   metaphysics
@@ -22,7 +22,6 @@ helpers = require './view_helpers'
     nav = new Nav artist: artist
 
     if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
-
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
       res.locals.sd.JSONLD = jsonLD = helpers.toJSONLD(artist)
@@ -32,20 +31,18 @@ helpers = require './view_helpers'
         artist: artist
         tab: tab
         nav: nav
+        currentItem: currentShowAuction(artist)
         jsonLD: stringifyJSONForWeb jsonLD
 
     else
-      console.log 'redirect'
       res.redirect artist.href.replace "/artist/", "/artist_2/"
 
-  .catch (e) ->
-    console.log e
-    next()
+  .catch next
   .done()
 
-@tab = (req, res) =>
+@tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  @index req, res
+  @index req, res, next
 
 @follow = (req, res) ->
   return res.redirect "/artist_2/#{req.params.id}" unless req.user

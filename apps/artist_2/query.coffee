@@ -16,6 +16,7 @@ module.exports = """
         follows
         artworks
       }
+      ... shows
       ... image
       ... statuses
       ... carousel
@@ -40,4 +41,5 @@ module.exports = """
   }
 
   #{require './components/carousel/query'}
+  #{require './components/current_show_auction/query'}
 """

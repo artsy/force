@@ -10,7 +10,7 @@ append locals
 
 block body
   - carousel = artist.carousel
-  - hasCarousel = carousel.images.length >= 4
+  - hasCarousel = carousel && carousel.images.length >= 4
 
   if hasCarousel
     include ../components/carousel/index
