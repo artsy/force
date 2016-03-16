@@ -7,6 +7,7 @@ Items = require '../../collections/items'
 landing = new JSONPage name: 'consignments/landing'
 
 @landing = (req, res, next) ->
+  return next() unless req.user?.get('type') is 'Admin'
   recentlySold = new Items [], item_type: 'Artwork'
   inDemand = new Items [], item_type: 'Artist'
 
