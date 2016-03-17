@@ -5,6 +5,7 @@ Popover = require 'popover'
 listTemplate = -> require('./artist_suggestions.jade') arguments...
 rowTemplate = -> require('./artist_suggestion.jade') arguments...
 Artists = require '../../collections/artists.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtistSuggestions extends Backbone.View
   
@@ -16,6 +17,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
     e.preventDefault()
     id = $(e.currentTarget).data('artist-id')
     @following.follow id
+    analyticsHooks.trigger 'follow-widget:follow', id
     $li = $(e.currentTarget).parent().parent('li')
     $li.find('.follow-button').attr 'data-state', 'following'
     return unless (nextArtist = @remainingArtists?.shift())
@@ -30,6 +32,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
     @$popoverEl.find(@followButtonSelector(artist.get('id'))).on 'click', @followAndMaybeSwap
 
   remove: =>
+    analyticsHooks.trigger 'follow-widget:closed'
     @popover.remove()
 
   followButtonSelector: (artistId) ->
@@ -67,6 +70,11 @@ module.exports = class ArtistSuggestions extends Backbone.View
     else
       'bottom'
 
+  trackArtistClick: (e) ->
+    analyticsHooks.trigger('follow-widget:clicked-artist-name')
+
   bindPopoverEvents: ->
     @$popoverEl.find('.popover-close').on 'click', @remove
     @$popoverEl.find('.follow-button').on 'click', @followAndMaybeSwap
+    @$popoverEl.find('.artist-suggestion-name').on 'click', @trackArtistClick
+
