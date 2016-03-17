@@ -12,14 +12,16 @@ describe 'blurb', ->
   after ->
     benv.teardown()
 
+  beforeEach ->
+    $('body').html "
+      <div class='to-blurb' style='height: 400px'>A short text ...</div>
+    "
+    @$el = $('.to-blurb')
+
   describe 'long text', ->
     beforeEach ->
-      $('body').html "
-        <div class='to-blurb' style='height: 400px'>A long text ...</div>
-      "
-      @$el = $('.to-blurb')
 
-    it 'blurbifies the text', ->
+    it 'blurbifies the text if height is greater than limit', ->
       blurb @$el, limit: 399, label: 'Read more by clicking here'
       @$el.css('max-height').should.equal '399px'
       @$el.hasClass('gradient-blurb').should.be.true()
@@ -27,15 +29,26 @@ describe 'blurb', ->
       @$el.find('.gradient-blurb-read-more').text().should.equal 'Read more by clicking here'
 
   describe 'short text', ->
-    beforeEach ->
-      $('body').html "
-        <div class='to-blurb' style='height: 200px'>A short text ...</div>
-      "
-      @$el = $('.to-blurb')
 
-    it 'does not blurbify the text', ->
-      blurb @$el, limit: 399, label: 'Read more by clicking here'
 
+    it 'does not blurbify the text if height is not greater than limit', ->
+      blurb @$el, limit: 401, label: 'Read more by clicking here'
       @$el.css('max-height').should.equal ''
       @$el.hasClass('gradient-blurb').should.be.false()
       @$el.find('.gradient-blurb-read-more').should.have.lengthOf 0
+
+  describe 'with an offset window specified', ->
+
+    it 'blurbifies the text if height is greater than limit and offset window', ->
+      blurb @$el, limit: 389, label: 'Read more by clicking here', heightBreakOffset: 10
+      @$el.css('max-height').should.equal '389px'
+      @$el.hasClass('gradient-blurb').should.be.true()
+      @$el.find('.gradient-blurb-read-more').should.have.lengthOf 1
+      @$el.find('.gradient-blurb-read-more').text().should.equal 'Read more by clicking here'
+
+    it 'does not blurbify text if height is not greater than limit and offset window', ->
+      blurb @$el, limit: 399, label: 'Read more by clicking here', heightBreakOffset: 10
+      @$el.css('max-height').should.equal ''
+      @$el.hasClass('gradient-blurb').should.be.false()
+      @$el.find('.gradient-blurb-read-more').should.have.lengthOf 0
+
