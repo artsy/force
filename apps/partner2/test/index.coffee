@@ -7,9 +7,11 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Profile = require '../../../models/profile.coffee'
 
-nonDeprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile'
-deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
-  owner: fabricate 'partner', profile_layout: 'gallery_deprecated'
+newLayoutPartnerProfiles = _.map ['gallery_one', 'gallery_two', 'gallery_three'], (layout) ->
+  new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: layout
+
+deprecatedLayoutPartnerProfiles = _.map ['institution', 'gallery_default', 'gallery_deprecated'], (layout) ->
+  new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: layout
 
 prepareLocals = (profile) ->
   (req, res, next) ->
@@ -111,16 +113,18 @@ itShouldBehaveLikeSubscriptions1_0 = (partnerRoutes) ->
     subscriptions1_0Specs(partnerRoutes)
 
 describe 'partner2 index', ->
-  context 'with partner profile layout other than gallery_deprecated', ->
-    beforeEach ->
-      @app = express()
-      @app.use prepareLocals(nonDeprecatedLayoutPartnerProfile)
+  _.each newLayoutPartnerProfiles, (profile) ->
+    context "with partner profile layout #{profile.get('owner').profile_layout}", ->
+      beforeEach ->
+        @app = express()
+        @app.use prepareLocals(profile)
 
-    itShouldBehaveLikeSubscriptions2_0(partnerRoutes)
+      itShouldBehaveLikeSubscriptions2_0(partnerRoutes)
 
-  context 'with partner profile layout gallery_deprecated', ->
-    beforeEach ->
-      @app = express()
-      @app.use prepareLocals(deprecatedLayoutPartnerProfile)
+  _.each deprecatedLayoutPartnerProfiles, (profile) ->
+    context "with partner profile layout #{profile.get('owner').profile_layout}", ->
+      beforeEach ->
+        @app = express()
+        @app.use prepareLocals(profile)
 
-    itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
+      itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
