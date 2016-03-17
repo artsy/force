@@ -18,15 +18,20 @@ describe 'Partner routes', ->
     Backbone.sync.restore()
 
   describe '#requireNewLayout', ->
-    it 'skips the middlewares from this route stack if partner with gallery_deprecated layout', ->
-      deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
-        owner: fabricate 'partner', profile_layout: 'gallery_deprecated'
-      @res.locals.profile = deprecatedLayoutPartnerProfile
-      routes.requireNewLayout @req, @res, @next
-      @next.calledOnce.should.be.ok
-      @next.args[0][0].should.equal 'route'
+    _.each ['gallery_one', 'gallery_two', 'gallery_three'], (layout) ->
+      it "nexts to the middleware in this route stack if the profile layout is #{layout}", ->
+        partnerProfile = new Profile fabricate 'partner_profile',
+          owner: fabricate 'partner', profile_layout: layout
+        @res.locals.profile = partnerProfile
+        routes.requireNewLayout @req, @res, @next
+        @next.calledOnce.should.be.ok
+        _.isUndefined(@next.args[0][0]).should.be.ok()
 
-    it 'nexts to the middleware in this route stack otherwise', ->
-      routes.requireNewLayout @req, @res, @next
-      @next.calledOnce.should.be.ok
-      _.isUndefined(@next.args[0][0]).should.be.ok()
+    _.each ['institution', 'gellery_default', 'gallery_deprecated'], (layout) ->
+      it "skips the middlewares from this route stack if the profile layout is #{layout}", ->
+        deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
+          owner: fabricate 'partner', profile_layout: layout
+        @res.locals.profile = deprecatedLayoutPartnerProfile
+        routes.requireNewLayout @req, @res, @next
+        @next.calledOnce.should.be.ok
+        @next.args[0][0].should.equal 'route'
