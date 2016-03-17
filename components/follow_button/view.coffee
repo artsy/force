@@ -28,7 +28,7 @@ module.exports = class FollowButton extends Backbone.View
 
     @$el.addClass "no-touch"
 
-    if @modelName is 'artist' and sd?.CURRENT_USER?.type is 'Admin'
+    if @modelName is 'artist' and @following
       @artistSuggestionsView = new ArtistSuggestions
         model: @model
         el: @$el
