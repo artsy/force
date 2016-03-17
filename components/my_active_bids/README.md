@@ -2,7 +2,22 @@
 
 Small widget that indicates bids placed by the current user and if they're winning.
 
-## Client-side
+## Polling View
+
+The easiest way is to just render client-side and drop in this view which will poll for updates to keep things fresh.
+
+````coffeescript
+MyActiveBids = require '../../components/my_active_bids/view.coffee'
+view = new MyActiveBids
+  el: $('.home-active-bids')
+  template: -> # Leave blank for default view
+````
+
+## DIY
+
+Or build your own if you so desire.
+
+### Client-side
 
 ````coffeescript
 query = require '../../components/my_active_bids/query.coffee'
@@ -14,7 +29,7 @@ metaphysics(query: query, req: user: user).then (data) ->
   $('.el').html myActiveBidsTemplate(myActiveBids: data.me.bidder_positions)
 ````
 
-## Server-side
+### Server-side
 
 ````coffeescript
 query = require '../components/my_active_bids/query.coffee'
