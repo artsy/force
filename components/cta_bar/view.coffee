@@ -59,18 +59,19 @@ module.exports = class CTABarView extends Backbone.View
     @openModal userData: @serializeForm()
 
   onClickButton: (e) ->
-    return true if @user
+    return if @user
     e.preventDefault()
     @openModal()
 
   openModal: (options = {}) ->
     @close()
     new AuthModalView _.extend {
-      width: '500px', mode: 'register'
+      width: '500px', mode: 'register', redirectTo: @linkHref
     }, @modalOptions, options
 
   render: ->
     @$el.html template
+      user: @user
       headline: @headline
       mode: @mode
       subHeadline: @subHeadline
