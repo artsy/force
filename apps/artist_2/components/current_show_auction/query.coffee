@@ -1,6 +1,6 @@
 module.exports = """
   fragment current on Artist {
-    auction: sales(size:2){
+    auction: sales(size:2, live: true, is_auction: true){
       cover_image {
         cropped(width: 150, height: 104) {
           url
