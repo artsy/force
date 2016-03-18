@@ -9,8 +9,6 @@ HomeAuthRouter = require './auth_router.coffee'
 HomeTopRailView = require '../components/top_rail/view.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
 JumpView = require '../../../components/jump/view.coffee'
-myActiveBidsQuery = require '../../../components/my_active_bids/query.coffee'
-myActiveBidsTemplate = -> require('../../../components/my_active_bids/template.jade') arguments...
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: (options) ->
