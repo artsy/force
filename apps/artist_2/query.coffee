@@ -16,7 +16,7 @@ module.exports = """
         follows
         artworks
       }
-      ... shows
+      ... current
       ... image
       ... statuses
       ... carousel
