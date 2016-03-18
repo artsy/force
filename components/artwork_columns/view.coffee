@@ -2,6 +2,9 @@ _ = require 'underscore'
 AdditionalImage = require '../../models/additional_image.coffee'
 Backbone = require 'backbone'
 CurrentUser = require '../../models/current_user.coffee'
+User = require '../../models/user.coffee'
+ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 SaveControls = require '../artwork_item/save_controls.coffee'
 artworkColumns = -> require('./template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
@@ -21,6 +24,7 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
+    'click .js-artwork-item-contact-seller': 'contactGallery'
 
   initialize: (options) ->
     _.extend @, options
@@ -62,6 +66,23 @@ module.exports = class ArtworkColumns extends Backbone.View
       width: "#{@_columnWidth()}px"
     @$columns.filter(':first-child').css marginLeft: 0
     @$columns.filter(':last-child').css marginRight: 0
+
+  contactGallery: (e)->
+    e.stopPropagation()
+    e.preventDefault()
+
+    @user ?= User.instantiate()
+
+    analyticsHooks.trigger 'artwork-item:clicked-contact', e
+
+    inquiry = new ArtworkInquiry notification_delay: @delayBy
+    artwork = @collection.get $(e.currentTarget).data 'id'
+
+    if artwork
+      openInquiryQuestionnaireFor
+        user: @user
+        artwork: artwork
+        inquiry: inquiry
 
   setUserSavedArtworks: ->
     @currentUser ?= CurrentUser.orNull()
