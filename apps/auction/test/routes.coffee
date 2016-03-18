@@ -75,8 +75,6 @@ describe '/auction routes', ->
   describe 'with logged in user', ->
     beforeEach (done) ->
       @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
-      routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
-      @metaphysics.returns Q.resolve { me: bidder_positions: [] }
       routes.index @req, @res, @next
       _.defer => _.defer =>
         @userReqs = _.last Backbone.sync.args, 2
@@ -89,22 +87,6 @@ describe '/auction routes', ->
     it 'sets the `registered_to_bid` attr', ->
       @userReqs[1][2].success ['existy']
       @req.user.get('registered_to_bid').should.be.true()
-
-  describe 'with logged in user that has bid on something', ->
-    beforeEach ->
-      @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
-      routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
-
-    it 'filters to bids in this auction sorted by losing bids', (done) ->
-      @metaphysics.returns catch: => then: (callback) =>
-        myActiveBids = callback { me: bidder_positions: [
-          { id: 'a', sale_artwork: { sale_id: 'foobar' }, is_winning: true }
-          { id: 'b', sale_artwork: { sale_id: 'baz' } }
-          { id: 'c', sale_artwork: { sale_id: 'foobar' }, is_winning: false }
-        ] }
-        (bid.id for bid in myActiveBids).join('').should.equal 'ca'
-        done()
-      routes.index @req, @res, @next
 
   describe '#inviteForm', ->
 
