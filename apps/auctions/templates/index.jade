@@ -40,10 +40,7 @@ block body
                 span= auction.date('end_at').format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
-        if myActiveBids && myActiveBids.length
-          .auctions-my-active-bids
-            h3 Your Active Bids
-            include ../../../components/my_active_bids/template
+        .auctions-my-active-bids
         a.auction-cta-group(href="https://app.adjust.com/ogmho0")
           .auction-cta-group__left
             img(src="images/mobile-cta.png", alt="Bid from your phone")

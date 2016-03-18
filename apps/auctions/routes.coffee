@@ -3,7 +3,6 @@ Q = require 'bluebird-q'
 Auctions = require '../../collections/auctions'
 AuctionReminders = require '../../components/auction_reminders/fetch'
 metaphysics = require '../../lib/metaphysics'
-myActiveBidsQuery = require '../../components/my_active_bids/query'
 
 setupUser = (user, auction) ->
   if user? and auction?

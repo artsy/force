@@ -11,8 +11,6 @@ OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
 footerItems = require './footer_items'
-metaphysics = require '../../lib/metaphysics'
-myActiveBidsQuery = require '../../components/my_active_bids/query'
 { SAILTHRU_AUCTION_NOTIFICATION_LIST, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
@@ -27,13 +25,6 @@ setupUser = (user, auction) ->
         error: ->
           user.set 'registered_to_bid', false
       )
-      metaphysics(query: myActiveBidsQuery, req: user: user)
-        .catch(-> me: bidder_positions: [])
-        .then((data) ->
-          bids =_.filter data.me.bidder_positions, (position) ->
-            position.sale_artwork.sale_id is auction.id
-          _.sortBy bids, (bid) -> bid.is_winning
-        )
     ]
   else
     Q.resolve()

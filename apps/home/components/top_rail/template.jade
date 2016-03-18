@@ -1,5 +1,5 @@
 .home-top-rail-container(
-  class=myActiveBids && myActiveBids.length ? 'is-with-active-bids' : ''
+  class=activeBids ? 'is-with-active-bids' : ''
 )
   .home-top-rail-left
     if artworks.length
@@ -27,4 +27,4 @@
 
   .home-top-rail-right
     h2.home-featured-header Your Active Bids
-    include ../../../../components/my_active_bids/template
+    .home-top-rail-right-mab

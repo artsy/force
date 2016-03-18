@@ -8,9 +8,8 @@ The easiest way is to just render client-side and drop in this view which will p
 
 ````coffeescript
 MyActiveBids = require '../../components/my_active_bids/view.coffee'
-view = new MyActiveBids
-  el: $('.home-active-bids')
-  template: -> # Leave blank for default view
+view = new MyActiveBids user: user, el: $('.home-active-bids')
+view.start().then ->
 ````
 
 ## DIY
