@@ -161,9 +161,7 @@ module.exports = class Artwork extends Backbone.Model
     @get('collecting_institution')?.length > 0
 
   partnerName: ->
-    if @hasCollectingInstitution()
-      @get('collecting_institution')
-    else if @has 'partner'
+    if @has 'partner'
       @get('partner').name
     else
       ''
@@ -302,11 +300,18 @@ module.exports = class Artwork extends Backbone.Model
     return if @get('sale_message') is 'Contact For Price'
     if @get('sale_message')?.indexOf('Sold') > - 1
       _.compact([
-        'SOLD'
+        'Sold'
         @get('price')
       ]).join(' – ')
     else
       @get 'sale_message'
+
+  availabilityMessage: ->
+    return if @get('availability') is 'for sale'
+    if @get('partner').has_limited_fair_partnership
+      'Not inquireable'
+    else
+      _s(@get('availability')).capitalize().value()
 
   salePrice: (isAuction = false) ->
     @saleMessage() if @saleMessage() and not isAuction

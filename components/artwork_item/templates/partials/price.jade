@@ -1,0 +1,5 @@
+//- Display price for non-auctions
+if artwork.saleMessage() && displayPrice && !isAuction
+  p.artwork-item-sale-price= artwork.saleMessage()
+else if artwork.availabilityMessage()
+  p.artwork-item-availability= artwork.availabilityMessage()

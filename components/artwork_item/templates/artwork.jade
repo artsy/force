@@ -3,121 +3,31 @@
 - imageHeight = imageHeight || false
 - displayPurchase = displayPurchase || false
 - showBlurbs = showBlurbs || false
-- includeContact = includeContact || false
+- includeContact = includeContact || true
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
 - displayPrice != null ? displayPrice : displayPrice = true
 - saleArtwork = artwork.related().saleArtwork
+- hasAuctionPartner = artwork.get('partner') && artwork.get('partner').type == 'Auction'
+- showContact = (includeContact || displayPurchase) && !isAuction && !hasAuctionPartner && !artwork.get('acquireable') && !artwork.get('sold') && artwork.isContactable()
+- showBuyButton = displayPurchase && artwork.get('acquireable')
+- showBuyLink = artwork.get('acquireable') && artwork.get('ecommerce') && !showBuyButton
 
 figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
-      if imageWidth
-        include ./fixed_width_image
-      else if imageHeight
-        include ./fixed_height_image
-      else
-        include ./variable_width_image
-      if artwork.collection && artwork.collection.artworkCollection
-        .artwork-item-remove.icon-remove-small(
-          data-id=artwork.get('id')
-          data-collection-id=artwork.collection.artworkCollection.id
-        )
-      include ../save_controls/template
+      include ./partials/image
+      include ./partials/save
   figcaption.artwork-item-caption
-    if artwork.related().artists.length
-      p.artwork-item-artist.artwork-item-overflow
-        for artist, i in artwork.related().artists.models
-          if artist.get('public')
-            a.faux-underline-hover( href=artist.href() )= artist.displayName()
-          else
-            = artist.displayName()
-    if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
-      .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
-    p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
-    if artwork.partnerName()
-      //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
-      p.artwork-item-partner.artwork-item-overflow
-        if artwork.partnerLink()
-          a.faux-underline-hover( href=artwork.partnerLink() )= artwork.partnerName()
-        else
-          = artwork.partnerName()
-
-    //- Display price for non-auctions
-    if artwork.saleMessage() && displayPrice && !isAuction
-      p.artwork-item-sale-price= artwork.saleMessage()
-
-    if includeContact && artwork.isContactable()
-      a.artwork-item-contact-seller(
-        href=artwork.href(), data-id=artwork.get('id')
-      ) Contact #{artwork.contactLabel()}
-
-    //- Auction estimate
-    if saleArtwork.id && isAuction
-      if saleArtwork.estimate()
-        .artwork-item-estimate
-          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
-
-    //- Auction related pricing information
-    - var displayBidStatus = saleArtwork.id && isAuction
-    - var displayBuyNowPrice = artwork.saleMessage() && displayPrice && isAuction
-    if displayBuyNowPrice || displayBidStatus
-      .artwork-item-sale-metadata
-        if artwork.get('sold')
-          .artwork-item-buy-now-price
-            = artwork.saleMessage()
-        else
-          if displayBidStatus
-            - var saleArtwork = artwork.related().saleArtwork
-            .artwork-item-auction-bid-status
-              | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
-              if saleArtwork.get('bidder_positions_count') >= 1
-                | &nbsp;(#{saleArtwork.bidCount()})
-
-          if displayBuyNowPrice
-            .artwork-item-buy-now-price
-              | Buy Now Price: #{artwork.saleMessage()}
-
-    //- In the case of auctions this blurb is usually an estimate
-    if saleArtwork.id || showBlurbs
-      - var saleArtwork = artwork.related().saleArtwork
-      if artwork.has('blurb') && artwork.get('blurb')
-        .artwork-item-blurb!= artwork.mdToHtml('blurb')
-      else
-        if saleArtwork && saleArtwork.get('user_notes')
-          .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
-
-    if saleArtwork.id || showBlurbs
-      a.artwork-item-more-info.avant-garde-button-black.is-tiny(
-        href=artwork.href()
-        data-id=artwork.get('_id')
-      ) More Info
-
-    if isAuction && !artwork.get('sold')
-      a.artwork-item-bid.avant-garde-button-black.is-tiny(
-        href=artwork.href()
-        data-id=artwork.get('_id')
-      ) Bid
-
-      if artwork.get('acquireable')
-        a.artwork-item-buy-now.avant-garde-button-black.is-tiny(
-          href=artwork.href(), data-id=artwork.get('id')
-        ) Buy Now
-
-    if displayPurchase && !isAuction
-      if artwork.get('acquireable')
-        a.artwork-item-buy.avant-garde-button-black.is-tiny(
-          href=artwork.href(), data-id=artwork.get('id')
-        ) Buy
-      else if artwork.get('sold')
-        .artwork-item-sold.avant-garde-button-black.is-tiny Sold
-      else if artwork.isContactable()
-        a.artwork-item-contact-seller.avant-garde-button-black.is-tiny(
-          href=artwork.href(), data-id=artwork.get('id')
-        ) Contact #{artwork.contactLabel()}
-
-    if artwork.collection && artwork.collection.artworkCollection
-      a.artwork-item-collection-name(
-        href=(sd.CURRENT_USER.default_profile_id + '/collection/' +
-              artwork.collection.artworkCollection.get('id'))
-      )
-        = artwork.collection.artworkCollection.get('name')
+    include ./partials/artist
+    include ./partials/title
+    include ./partials/partner
+    include ./partials/price
+    include ./partials/auction_info
+    if hasAuctionPartner
+      include ./partials/bid_now
+    if showContact
+      include ./partials/contact
+    if showBuyButton
+      include ./partials/buy_button
+    if showBuyLink
+      include ./partials/buy_link
