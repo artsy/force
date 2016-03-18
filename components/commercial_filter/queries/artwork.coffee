@@ -32,6 +32,7 @@ module.exports = """
     partner {
       name
       href
+      type
       locations {
         city
         phone
