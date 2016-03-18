@@ -4,7 +4,7 @@ Popover = require 'popover'
 { API_URL } = require('sharify').data
 listTemplate = -> require('./artist_suggestions.jade') arguments...
 rowTemplate = -> require('./artist_suggestion.jade') arguments...
-Artists = require '../../collections/artists.coffee'
+Artist = require '../../models/artist.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtistSuggestions extends Backbone.View
@@ -39,7 +39,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
     "a[data-artist-id='#{artistId}']"
 
   renderSuggestedArtists: ->
-    artists = new Artists
+    artists = new Backbone.Collection [], model: Artist
     artists.url = "#{API_URL}/api/v1/me/suggested/artists"
     artists.fetch
       data:
