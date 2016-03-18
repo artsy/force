@@ -3,7 +3,9 @@
   if mode === 'link'
     h3.cta-bar-headline
       = headline
-    a.cta-bar-button.avant-garde-button-dark( href=linkHref )
+    a.cta-bar-button.avant-garde-button-dark(
+      href=user ? linkHref : '#' + linkHref
+    )
       = linkCopy
     .cta-bar-defer: a( href='#' )
       | Maybe Later
