@@ -6,15 +6,11 @@ metaphysics = require '../../lib/metaphysics'
 
 setupUser = (user, auction) ->
   if user? and auction?
-    Q.all [
-      user.checkRegisteredForAuction(
-        saleId: auction.id
-        success: (boolean) -> user.set 'registered_to_bid', boolean
-        error: -> user.set 'registered_to_bid', false
-      ),
-      metaphysics(query: myActiveBidsQuery, req: user: user)
-        .catch(-> me: bidder_positions: [])
-    ]
+    user.checkRegisteredForAuction(
+      saleId: auction.id
+      success: (boolean) -> user.set 'registered_to_bid', boolean
+      error: -> user.set 'registered_to_bid', false
+    )
   else
     Q.promise (resolve) -> resolve()
 
