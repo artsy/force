@@ -22,7 +22,6 @@ module.exports = class MyActiveBids extends Backbone.View
   fetch: ->
     metaphysics(query: query, req: user: @user).then (data) =>
       @bidderPositions = data.me.bidder_positions
-      @remove() unless @bidderPositions.length
 
   render: =>
     @$el.html @template myActiveBids: @bidderPositions
