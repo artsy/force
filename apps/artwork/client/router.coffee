@@ -76,9 +76,8 @@ module.exports = class ArtworkRouter extends Backbone.Router
       mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   confirmRegistration: ->
-    @fetchUser =>
-      @artwork.related().sales.fetch success: (sales) =>
-        auction = sales.where(is_auction: true)[0]
-        new ConfirmRegistrationModal auction: auction
-        mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
-        analyticsHooks.trigger 'artwork:confirm-registration'
+    @artwork.related().sales.fetch success: (sales) =>
+      auction = sales.where(is_auction: true)[0]
+      new ConfirmRegistrationModal auction: auction
+      mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+      analyticsHooks.trigger 'artwork:confirm-registration'

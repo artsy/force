@@ -12,7 +12,6 @@ module.exports = class ConfirmRegistrationModal extends ModalView
 
   initialize: ({ @auction }) ->
     @user = CurrentUser.orNull()
-    debugger
     _.extend @templateData, paddleNumber: @user.get('paddle_number')
     super width: '510px'
 
