@@ -21,8 +21,6 @@ describe 'ConfirmRegistration', ->
       for method in ['initialize', 'isLoading', 'isLoaded', 'updatePosition']
         sinon.stub ConfirmRegistration.prototype, method
       @view = new ConfirmRegistration
-        paddleNumber: '123'
-        model: new Auction fabricate 'sale', id: 'foo-bar-auction'
         el: $ """
           <div>
             <div class='credit-card-unqualified-msg'>
@@ -30,6 +28,7 @@ describe 'ConfirmRegistration', ->
             </div>
           </div>
         """
+      @view.auction = new Auction fabricate 'sale', id: 'foo-bar-auction'
       @view.user = new CurrentUser fabricate 'user'
       done()
 
