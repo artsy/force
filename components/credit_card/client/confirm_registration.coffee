@@ -4,29 +4,20 @@ mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 template = -> require('../templates/registration-confirmation.jade') arguments...
 
-module.exports = class ConfirmRegistration extends ModalView
+module.exports = class ConfirmRegistrationModal extends ModalView
 
   className: 'confirm'
 
   template: template
 
-  defaults: ->
-    width: '510px'
-    artwork: null
-    paddleNumber: null
-
-  initialize: (options = {}) ->
+  initialize: ({ @auction }) ->
     @user = CurrentUser.orNull()
-    @options = _.defaults options, @defaults()
-    _.extend @templateData,
-      artwork: @options.artwork
-      paddleNumber: @options.paddleNumber
-      auction: @model
-    super @options
+    _.extend @templateData, paddleNumber: @user.get('paddle_number')
+    super width: '510px'
 
   postRender: ->
     @isLoading()
-    @user.fetchBidderForAuction @model,
+    @user.fetchBidderForAuction @auction,
       error: @isLoaded
       success: (bidder) =>
         if bidder and not bidder.get 'qualified_for_bidding'

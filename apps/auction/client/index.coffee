@@ -22,7 +22,7 @@ module.exports.init = ->
   # If we are on the confirm-registration path then pop up a modal
   # Page is otherwise unchanged
   if window.location.pathname.match('/confirm-registration') and user?
-    new ConfirmRegistrationModal paddleNumber: user.get('paddle_number'), model: auction
+    new ConfirmRegistrationModal auction: auction
 
   new AuctionArtworksView
     el: $('.js-auction-artworks-section')
