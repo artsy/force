@@ -68,9 +68,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   fetchUser: (success) =>
     @currentUser = CurrentUser.orNull()
-    if @currentUser
-      @currentUser.fetch
-        success: success
+    @currentUser.fetch success: success if @currentUser
 
   confirmBid: ->
     @fetchUser =>
@@ -79,6 +77,8 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   confirmRegistration: ->
     @fetchUser =>
-      new ConfirmRegistrationModal artwork: @artwork, paddleNumber: @currentUser.get('paddle_number')
-      mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
-      analyticsHooks.trigger 'artwork:confirm-registration'
+      @artwork.related().sales.fetch success: (sales) =>
+        auction = sales.where(is_auction: true)[0]
+        new ConfirmRegistrationModal auction: auction
+        mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+        analyticsHooks.trigger 'artwork:confirm-registration'
