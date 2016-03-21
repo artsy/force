@@ -1,4 +1,4 @@
-{ invoke } = require 'underscore'
+{ extend, invoke } = require 'underscore'
 GenericFormView = require '../generic_form/view.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
 template = -> require('./index.jade') arguments...
@@ -8,7 +8,14 @@ module.exports = class AboutYouView extends GenericFormView
 
   className: 'settings-about-you'
 
+  events: extend GenericFormView::events,
+    'change select[name="price_range"]': 'priceRange'
+
   initialize: ({ @user }) -> #
+
+  priceRange: (e) ->
+    [min, max] = $(e.currentTarget).val().split ':'
+    @user.set price_range_min: min, price_range_max: max
 
   postRender: ->
     city = @model.related().location.toString()
