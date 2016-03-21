@@ -3,7 +3,7 @@
 - imageHeight = imageHeight || false
 - displayPurchase = displayPurchase || false
 - showBlurbs = showBlurbs || false
-- includeContact = sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' || false
+- includeContact = sd && sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' || false
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
 - hasInstitutionPartner = artwork.get('partner') && artwork.get('partner').type === 'Institution'
 - displayPrice != null ? displayPrice : displayPrice = true
