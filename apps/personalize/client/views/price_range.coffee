@@ -1,6 +1,5 @@
 _ = require 'underscore'
 StepView = require './step.coffee'
-priceBuckets = require '../mixins/price_buckets.coffee'
 template = -> require('../../templates/price_range.jade') arguments...
 
 module.exports = class PriceRangeView extends StepView
@@ -23,5 +22,5 @@ module.exports = class PriceRangeView extends StepView
       ).emulateTransitionEnd 500
 
   render: ->
-    @$el.html template(state: @state, prices: priceBuckets)
+    @$el.html template(state: @state, user: @user)
     this

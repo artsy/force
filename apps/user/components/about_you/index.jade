@@ -26,6 +26,7 @@ form.stacked-form
   label.avant-garde-form-label
     | Price Range
   label.bordered-select: select( name='price_range' )
+    option Select a price range
     for bucket in user.priceBuckets
       option(
         value= bucket.value
