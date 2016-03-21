@@ -16,7 +16,7 @@ describe 'Artwork', ->
   describe '#saleMessage', ->
     it 'formats sold sale message', ->
       @artwork.set sale_message: '$6,000 - Sold', price: '$6,000'
-      @artwork.saleMessage().should.equal "Sold – $6,000"
+      @artwork.saleMessage().should.equal "Sold - $6,000"
       @artwork.set sale_message: '$6,000'
       @artwork.saleMessage().should.equal '$6,000'
 
