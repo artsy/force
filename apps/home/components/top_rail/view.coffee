@@ -2,6 +2,9 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 SaveControls = require '../../../../components/artwork_item/save_controls.coffee'
 FeaturedArtworks = require './collection.coffee'
+User = require '../../../../models/user.coffee'
+ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
+openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 template = -> require('./template.jade') arguments...
 MyActiveBids = require '../../../../components/my_active_bids/view.coffee'
 

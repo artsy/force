@@ -7,7 +7,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 HomeTopRailView = require '../components/top_rail/view.coffee'
-splitTest = require '../../../components/split_test/index.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View

@@ -1,0 +1,7 @@
+if artwork.related().artists.length
+  p.artwork-item-artist.artwork-item-overflow
+    for artist, i in artwork.related().artists.models
+      if artist.get('public')
+        a.faux-underline-hover( href=artist.href() )= artist.displayName()
+      else
+        = artist.displayName()

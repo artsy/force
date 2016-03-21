@@ -7,6 +7,9 @@ setupSaveControls = require '../save_artworks/index.coffee'
 
 module.exports = class ArtworkColumnsView extends Backbone.View
 
+  events:
+    'click .js-artwork-item-contact-seller': 'contactGallery'
+
   initialize: (options = {}) ->
     { @page, @showId, @artworks } = options
     setupSaveControls @artworks

@@ -22,6 +22,9 @@
   position relative
   overflow hidden
 
+.artwork-item-caption a.artwork-item-contact-seller
+  text-decoration underline
+
 .artwork-item-caption
   min-height 55px
   color gray-darker-color
@@ -40,6 +43,15 @@
 
   p.artwork-item-overflow
     overflow ellipsis
+
+  &__bid-now:before
+    content ''
+    background-image url('/images/paddle.png')
+    background-repeat no-repeat
+    background-position 2px 1px
+    background-size 70%
+    padding-right 15px
+    height 10px
 
 .artwork-item-artist
   font-weight bold

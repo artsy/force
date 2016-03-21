@@ -210,6 +210,9 @@ body.body-article
 .article-section-container
   margin (gutter-size * 1.5) auto
   &.main-layout-container
+    &[data-section-type="artworks"]
+      .artwork-item-sale-price, .artwork-item-contact-seller
+        display none
     // Override the main layout container width here
     &[data-layout="overflow_fillwidth"]
       width 100%

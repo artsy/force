@@ -1,0 +1,6 @@
+if artwork.collection && artwork.collection.artworkCollection
+  .artwork-item-remove.icon-remove-small(
+    data-id=artwork.get('id')
+    data-collection-id=artwork.collection.artworkCollection.id
+  )
+include ../../save_controls/template
