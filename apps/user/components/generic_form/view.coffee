@@ -3,7 +3,7 @@ FlashMessage = require '../../../../components/flash/index.coffee'
 Form = require '../../../../components/form/index.coffee'
 
 module.exports = class GenericFormView extends Backbone.View
-  events: ->
+  events:
     'click button': 'submit'
     'input input': 'change'
 
