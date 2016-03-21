@@ -24,7 +24,5 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
     //- Display price for non-auctions
     if artwork.sale_message != 'Contact For Price'
       p.artwork-item-sale-price= artwork.sale_message
-
-    - console.log('artwork.is_contactable', artwork.is_contactable)
     if includeContact
       a.artwork-item-contact-seller( href="#{artwork.href}/contact-gallery" ) Contact #{artwork.partner.type}
