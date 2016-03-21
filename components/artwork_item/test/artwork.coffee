@@ -126,6 +126,15 @@ describe 'Artwork Item template', ->
         sd: {}
       $('.artwork-item-sale-price').length.should.equal 1
 
+    it 'displays on hold with the price if present', ->
+      @artwork.set
+        price: "$5,200"
+        availability: 'on hold'
+      $ = cheerio.load render('artwork')
+        artwork: @artwork
+        sd: {}
+      $('.artwork-item-availability').text().should.equal 'On hold - $5,200'
+
   describe 'nopin', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork'
@@ -230,10 +239,10 @@ describe 'Artwork Item template', ->
       $('.artwork-item-lot-number').text().should.containEql 'Lot 10'
 
   describe 'contact button', ->
-    it 'says "Contact Gallery"', ->
+    it 'says "Contact gallery"', ->
       @artwork = new Artwork fabricate 'artwork', forsale: true
       $ = cheerio.load render('artwork')
         artwork: @artwork
         displayPurchase: true
         sd: {}
-      $('.artwork-item-contact-seller').text().should.equal 'Contact Gallery'
+      $('.artwork-item-contact-seller').text().should.equal 'Contact gallery'
