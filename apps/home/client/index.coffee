@@ -9,11 +9,9 @@ HomeAuthRouter = require './auth_router.coffee'
 HomeTopRailView = require '../components/top_rail/view.coffee'
 myActiveBidsQuery = require '../../../components/my_active_bids/query.coffee'
 myActiveBidsTemplate = -> require('../../../components/my_active_bids/template.jade') arguments...
+JumpView = require '../../../components/jump/view.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
-  events:
-    'click .js-artwork-item-contact-seller': 'contactGallery'
-
   initialize: (options) ->
     @user = CurrentUser.orNull()
 

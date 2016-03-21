@@ -7,7 +7,7 @@ if myActiveBids && myActiveBids.length
           .my-active-bids-item-details
             h4 Lot #{bid.sale_artwork.lot_number}
             strong= bid.sale_artwork.artwork.artist.name
-            p #{bid.highest_bid.display_amount_dollars} (#{bid.sale_artwork.bidder_positions_count} Bids)
+            p #{accounting.formatMoney(bid.sale_artwork.highest_bid.amount_cents / 100, '$', 0)} (#{bid.sale_artwork.bidder_positions_count} Bids)
         if bid.is_winning
           p.my-active-bids-warning Highest Bid
         else
@@ -15,3 +15,5 @@ if myActiveBids && myActiveBids.length
         a.avant-garde-button-black.my-active-bids-bid-button(
           href=bid.sale_artwork.artwork.href
         ) Bid
+else
+  | Nothing yet.

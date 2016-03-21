@@ -1,6 +1,9 @@
+_ = require 'underscore'
+
 @requireNewLayout = (req, res, next) ->
-  deprecated = res.locals.profile?.get('owner')?.profile_layout is 'gallery_deprecated'
-  if deprecated then next('route') else next()
+  layout = res.locals.profile?.get('owner')?.profile_layout
+  isNewLayout = _.contains ['gallery_one', 'gallery_two', 'gallery_three'], layout
+  if isNewLayout then next() else next('route')
 
 @overview = (req, res, next) ->
   return next() unless res.locals.profile?.isPartner()

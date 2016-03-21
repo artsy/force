@@ -14,7 +14,7 @@ describe 'FollowButton', ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
-        sd: { CURRENT_USER: { type: 'Admin' } }
+        sd: {}
       sinon.stub Backbone, 'sync'
       FollowButton.__set__ 'mediator', @mediator = trigger: sinon.stub()
       FollowButton.__set__ 'ArtistSuggestions', @artistSuggestionSpy = sinon.spy()
@@ -34,7 +34,7 @@ describe 'FollowButton', ->
         modelName: 'artist'
         following: @following
 
-    it 'initializes the suggestions view for an artist context and an admin', ->
+    it 'initializes the suggestions view for an artist context with a following (logged-in) collection', ->
       @artistSuggestionSpy.called.should.be.ok()
 
   describe '#toggle without label', ->

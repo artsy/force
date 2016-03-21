@@ -12,14 +12,4 @@ app.get '/user/edit', routes.settings
 app.get '/user/delete', routes.settings
 app.get '/user/saves', routes.settings
 app.get '/user/payments', routes.settings
-
-{ NODE_ENV } = require '../../config'
-stagingOrDevelopmentOnly = (req, res, next) ->
-  if NODE_ENV in ['development', 'staging']
-    next()
-  else
-    err = new Error
-    err.status = 403
-    next err
-
-app.get '/user/auctions', stagingOrDevelopmentOnly, routes.settings
+app.get '/user/auctions', routes.settings
