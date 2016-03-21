@@ -135,6 +135,9 @@ bordered-select-border-width = 2px
   display inline-block
   // Hides the default caret button in FF
   &:before
+  &:after
+    pointer-events none
+  &:before
     display block
     position absolute
     content ''
@@ -146,7 +149,6 @@ bordered-select-border-width = 2px
     border-top 10px solid white // faux margins
     border-bottom @border-top
     border-left 1px solid gray-lighter-color
-    pointer-events none
   &:after
     caret(gray-color)
     position absolute
