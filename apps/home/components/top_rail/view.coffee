@@ -10,8 +10,6 @@ openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionna
 template = -> require('./template.jade') arguments...
 
 module.exports = class HomeTopRailView extends Backbone.View
-  events:
-    'click .js-artwork-item-contact-seller': 'contactGallery'
 
   initialize: ({ @user }) ->
     @collection = new FeaturedArtworks [], user: @user
@@ -24,23 +22,6 @@ module.exports = class HomeTopRailView extends Backbone.View
       el: $el
       artworkCollection: @savedArtworks
       model: artwork
-
-  contactGallery: (e)->
-    e.stopPropagation()
-    e.preventDefault()
-
-    user = User.instantiate()
-
-    analyticsHooks.trigger 'artwork-item:clicked-contact', e
-
-    inquiry = new ArtworkInquiry notification_delay: @delayBy
-    artwork = @collection.get $(e.currentTarget).data 'id'
-
-    if artwork
-      openInquiryQuestionnaireFor
-        user: user
-        artwork: artwork
-        inquiry: inquiry
 
   syncArtworks: ->
     @user?.initializeDefaultArtworkCollection()

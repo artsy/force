@@ -5,7 +5,9 @@ ViewInRoomView = require './view_in_room.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
+User = require '../../../models/user.coffee'
+ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
+openInquiryQuestionnaireFor = require '../../../components/inquiry_questionnaire/index.coffee'
 InquiryView = require "../../../components/contact/inquiry.coffee"
 ConfirmBidModal = require '../../../components/credit_card/client/confirm_bid.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
@@ -24,6 +26,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
     'artwork/:id/zoom': 'zoom'
 
   initialize: ({ @artwork }) ->
+    @user ?= User.instantiate()
     @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork
 
   # Called prior to any of the routing callbacks
@@ -57,9 +60,15 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @view.render()
 
   contactPartner: ->
-    analyticsHooks.trigger 'artwork:contact-gallery'
-    new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
-    mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+    analyticsHooks.trigger 'artwork:inquiry-from-url'
+
+    inquiry = new ArtworkInquiry notification_delay: @delayBy
+
+    if @artwork
+      openInquiryQuestionnaireFor
+        user: @user
+        artwork: @artwork
+        inquiry: inquiry
 
   inquire: ->
     analyticsHooks.trigger 'artwork:contact-specialist'

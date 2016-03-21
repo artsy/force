@@ -24,7 +24,6 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
-    'click .js-artwork-item-contact-seller': 'contactGallery'
 
   initialize: (options) ->
     _.extend @, options
@@ -66,23 +65,6 @@ module.exports = class ArtworkColumns extends Backbone.View
       width: "#{@_columnWidth()}px"
     @$columns.filter(':first-child').css marginLeft: 0
     @$columns.filter(':last-child').css marginRight: 0
-
-  contactGallery: (e)->
-    e.stopPropagation()
-    e.preventDefault()
-
-    @user ?= User.instantiate()
-
-    analyticsHooks.trigger 'artwork-item:clicked-contact', e
-
-    inquiry = new ArtworkInquiry notification_delay: @delayBy
-    artwork = @collection.get $(e.currentTarget).data 'id'
-
-    if artwork
-      openInquiryQuestionnaireFor
-        user: @user
-        artwork: artwork
-        inquiry: inquiry
 
   setUserSavedArtworks: ->
     @currentUser ?= CurrentUser.orNull()
