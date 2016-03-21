@@ -28,7 +28,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
 
   setup: ->
     { artist_id } = @params()
-
     return unless artist_id?
 
     @pinnedArtist = new Artist id: artist_id

@@ -20,11 +20,11 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
     @following = new Following FOLLOWING, kind: 'artist'
-    { artist } = qs.parse(location.search.substring(1))
+    { artist, forSale } = qs.parse(location.search.substring(1))
     Cookies.expire('notification-count')
 
     @filterState = new Backbone.Model
-      forSale: false
+      forSale: !!forSale || true
       artist: artist or null
       loading: true
       empty: false

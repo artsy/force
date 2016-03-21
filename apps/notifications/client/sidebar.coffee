@@ -16,30 +16,44 @@ module.exports = class SidebarView extends Backbone.View
     if @filterState.get 'artist'
       @$selectedArtist = @$(".filter-artist[data-artist=#{@filterState.get('artist')}]")
       @$selectedArtist.attr 'data-state', 'selected'
+
+    if @filterState.get 'forSale'
+      @$('#for-sale').attr('checked', true)
+
     @setupSearch()
 
+  paramsForUrl: ->
+    params = _.pick @filterState.attributes, [ 'artist', 'forSale' ]
+    _.omit params, (val, key) ->
+      not val?
+
   toggleForSale: (e) ->
+    forSale = $(e.currentTarget).prop('checked')
     @filterState.set
-      forSale: $(e.currentTarget).prop('checked')
+      forSale: forSale
       loading: true
       empty: false
       initialLoad: false
+    if forSale
+      @history.pushState({}, 'For Sale', '/works-for-you?' + qs.stringify(@paramsForUrl()))
+    else
+      @history.pushState({}, 'Not For Sale', '/works-for-you?' + qs.stringify(@paramsForUrl()))
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    @history.pushState({}, "Artist", "/works-for-you?artist=#{@$selectedArtist.attr('data-artist')}")
     @filterState.set
       artist: @$selectedArtist.attr('data-artist')
       loading: true
       empty: false
       initialLoad: false
+    @history.pushState({}, "Artist", '/works-for-you?' + qs.stringify(@paramsForUrl()))
 
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    @history.pushState({},"Clear","/works-for-you")
+    @history.pushState({}, "Clear", "/works-for-you")
     @filterState.set
       artist: null
       loading: true
