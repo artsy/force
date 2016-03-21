@@ -13,8 +13,6 @@ require '../analytics/before_ready.js'
 $ -> analytics.ready ->
   setupSplitTests()
 
-  require '../analytics/identify.js'
-
   if sd.CURRENT_USER?.id
     whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type'];
     traits = _.extend _.pick(sd.CURRENT_USER, whitelist), session_id: sd.SESSION_ID
