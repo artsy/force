@@ -9,6 +9,7 @@ JumpView = require '../../../components/jump/view.coffee'
 SidebarView = require './sidebar.coffee'
 RecentlyAddedWorksView = require './recently_added_works.coffee'
 ArtistWorksView = require './artist_works.coffee'
+UrlUpdater = require './url_updater.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
 Cookies = require '../../../components/cookies/index.coffee'
 emptyTemplate = -> require('../templates/empty.jade') arguments...
@@ -20,11 +21,11 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
     @following = new Following FOLLOWING, kind: 'artist'
-    { artist, forSale } = qs.parse(location.search.substring(1))
+    { artist, for_sale } = qs.parse(location.search.substring(1))
     Cookies.expire('notification-count')
 
     @filterState = new Backbone.Model
-      forSale: !!forSale || true
+      forSale: !!for_sale || true
       artist: artist or null
       loading: true
       empty: false
@@ -45,7 +46,11 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @filterState.on 'change', @render
     @setupJumpView()
+
     @filterState.trigger 'change'
+
+    urlUpdater = new UrlUpdater
+      filterState: @filterState
 
   render: =>
     @$('#notifications-page').attr 'data-state', (
