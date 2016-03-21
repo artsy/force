@@ -113,6 +113,7 @@ module.exports = class HeaderView extends Backbone.View
       url: '/users/sign_out'
       type: 'DELETE'
       success: ->
+        analyticsHooks.trigger 'auth:logged-out'
         location.reload()
       error: (xhr, status, errorMessage) ->
         new FlashMessage message: errorMessage
