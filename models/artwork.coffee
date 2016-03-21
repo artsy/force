@@ -156,7 +156,7 @@ module.exports = class Artwork extends Backbone.Model
     not _.isEmpty(@get('literature'))
 
   contactLabel: ->
-    if @get('partner')?.type is 'Gallery' then 'Gallery' else 'Seller'
+    if @get('partner')?.type is 'Gallery' then 'gallery' else 'seller'
 
   hasCollectingInstitution: ->
     @get('collecting_institution')?.length > 0
@@ -303,7 +303,7 @@ module.exports = class Artwork extends Backbone.Model
       _.compact([
         'Sold'
         @get('price')
-      ]).join(' – ')
+      ]).join(' - ')
     else
       @get 'sale_message'
 
@@ -311,6 +311,11 @@ module.exports = class Artwork extends Backbone.Model
     return if @get('availability') is 'for sale'
     if @get('partner').has_limited_fair_partnership
       'Not inquireable'
+    else if @get('availability')?.indexOf('on hold') > - 1
+      _.compact([
+        'On hold'
+        @get('price')
+      ]).join(' - ')
     else
       _s(@get('availability')).capitalize().value()
 
