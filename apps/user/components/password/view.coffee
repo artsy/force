@@ -7,7 +7,7 @@ template = -> require('./index.jade') arguments...
 module.exports = class SettingsPasswordView extends GenericFormView
   className: 'settings-password'
 
-  events: -> extend {}, super,
+  events: extend GenericFormView::events,
     'click .js-settings-password__toggle': 'toggle'
 
   initialize: ({ @user }) ->
