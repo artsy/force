@@ -16,7 +16,7 @@ describe 'Artwork', ->
   describe '#saleMessage', ->
     it 'formats sold sale message', ->
       @artwork.set sale_message: '$6,000 - Sold', price: '$6,000'
-      @artwork.saleMessage().should.equal "SOLD – $6,000"
+      @artwork.saleMessage().should.equal "Sold – $6,000"
       @artwork.set sale_message: '$6,000'
       @artwork.saleMessage().should.equal '$6,000'
 
@@ -220,11 +220,11 @@ describe 'Artwork', ->
   describe '#contactLabel', ->
     it 'says to contact the appropriate thing', ->
       @artwork.set 'partner', { type: 'Gallery' }
-      @artwork.contactLabel().should.equal 'Gallery'
+      @artwork.contactLabel().should.equal 'gallery'
       @artwork.set 'partner', { type: 'Institution' }
-      @artwork.contactLabel().should.equal 'Seller'
+      @artwork.contactLabel().should.equal 'seller'
       @artwork.unset 'partner'
-      @artwork.contactLabel().should.equal 'Seller'
+      @artwork.contactLabel().should.equal 'seller'
 
   describe '#priceDisplay', ->
     it 'displays the price or not', ->
@@ -278,16 +278,6 @@ describe 'Artwork', ->
       @artwork.titleAndYear().should.equal '<em>title</em>, 1905'
 
   describe '#partnerName', ->
-    it "collecting institution over partner name", ->
-      @artwork.set partner: fabricate 'partner'
-      @artwork.set collecting_institution: 'collecting'
-      @artwork.partnerName().should.equal 'collecting'
-
-    it "nothing without partner name or collecting institution", ->
-      @artwork.unset 'partner'
-      @artwork.unset 'collecting_institution'
-      @artwork.partnerName().should.equal ''
-
     it "partner name", ->
       @artwork.set partner: fabricate 'partner'
       @artwork.unset 'collecting_institution'
