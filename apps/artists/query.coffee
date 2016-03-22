@@ -9,7 +9,7 @@ module.exports = """
           subtitle
           href
           image {
-            thumb: cropped(width: 600, height: 500, version: "wide") {
+            thumb: cropped(width: 800, height: 600, version: "wide") {
               width
               height
               url
