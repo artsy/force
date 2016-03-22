@@ -22,13 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  artist_works_infinite_scroll:
-    key: 'artist_works_infinite_scroll'
-    outcomes:
-      infinite: 0.5
-      finite: 0.5
-    dimension: 'dimension9'
-
   commercial_filtering:
     key: 'commercial_filtering'
     edge: 'collect'
