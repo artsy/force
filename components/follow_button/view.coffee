@@ -66,7 +66,7 @@ module.exports = class FollowButton extends Backbone.View
       $('.artist-suggestion-popover').remove()
       if @artistSuggestionsView?
         @artistSuggestionsView.renderSuggestedArtists()
-        analyticsHooks.trigger 'follow-widget:opened'
+
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
