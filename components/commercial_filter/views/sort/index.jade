@@ -1,5 +1,4 @@
 include ../../../bordered_pulldown/mixin
-+bordered-pulldown('Recently Added', 'Sort by:')
-  a( data-sort='-published_at', href="#" ) Recently Added
-  a( data-sort='-prices', href="#" ) Most Expensive
-  a( data-sort='prices', href="#" ) Least Expensive
++bordered-pulldown(map[currentSort], 'Sort by:')
+  each val, key in map
+    a( data-sort=key, href="#" )= val

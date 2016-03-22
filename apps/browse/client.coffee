@@ -10,7 +10,7 @@ module.exports.init = ->
     el: $ '#browse-filter'
     aggregations: aggregationParams
 
-  scrollFrame '#browse-filter a' unless sd.EIGEN
+  scrollFrame '#browse-filter a:not(.js-artwork-item-contact-seller)' unless sd.EIGEN
 
   params.on 'change:for_sale change:price_range change:dimension_range change:medium', ->
     analytics.track 'Commericial filter: params changed',

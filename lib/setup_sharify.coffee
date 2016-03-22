@@ -64,6 +64,7 @@ sharify.data = _.extend _.pick(config,
   'ARTSY_EDITORIAL_ID'
   'CONSIGNMENTS_APP_URL'
   'SAILTHRU_MASTER_LIST'
+  'ACTIVE_BIDS_POLL_INTERVAL'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

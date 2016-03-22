@@ -36,6 +36,7 @@ describe 'NotificationsView', ->
       mod.__set__ 'RecentlyAddedWorksView', sinon.stub()
       mod.__set__ 'ArtistWorksView', sinon.stub()
       mod.__set__ 'scrollFrame', sinon.stub()
+      mod.__set__ 'UrlUpdater', sinon.stub()
       mod.__set__ 'Cookies', { expire: (->) }
       done()
 
@@ -50,7 +51,7 @@ describe 'NotificationsView', ->
       @view = new @NotificationsView el: $('body')
 
     it 'should create a filterState model with defaults', ->
-      @view.filterState.get('forSale').should.equal false
+      @view.filterState.get('forSale').should.equal true
       @view.filterState.get('loading').should.equal true
       (@view.filterState.get('artist') == null).should.equal true
 

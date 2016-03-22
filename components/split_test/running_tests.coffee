@@ -22,13 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  artist_works_infinite_scroll:
-    key: 'artist_works_infinite_scroll'
-    outcomes:
-      infinite: 0.5
-      finite: 0.5
-    dimension: 'dimension9'
-
   commercial_filtering:
     key: 'commercial_filtering'
     edge: 'collect'
@@ -44,3 +37,11 @@ module.exports =
       default: 0.5
       for_sale: 0.5
     dimension: 'dimension11'
+
+  artwork_item_contact_gallery:
+    key: 'artwork_item_contact_gallery'
+    edge: 'contact'
+    outcomes:
+      default: 0.5
+      contact: 0.5
+    dimension: 'dimension12'

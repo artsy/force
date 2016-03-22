@@ -1,0 +1,6 @@
+.artwork-item-caption__bid-now
+  if artwork.get('forsale')
+    a(href=artwork.href(), data-id=artwork.get('id')) Bid now
+  else
+    | Sold
+

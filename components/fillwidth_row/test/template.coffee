@@ -14,9 +14,9 @@ render = ->
   )
 
 describe 'Fillwidth row', ->
-  describe 'artwork with a partner and a collecting institution field', ->
+  describe 'artwork with a partner', ->
     beforeEach ->
-      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: 'House of Bitty' }]
+      @artworks = [new Artwork fabricate 'artwork', { partner: name: 'House of Bitty' }]
       @template = render('index')(
         sd: {}
         artworks: @artworks
@@ -34,24 +34,4 @@ describe 'Fillwidth row', ->
       )
 
     it 'correctly renders and displays the partner name', ->
-      @template.should.containEql 'MOMA'
-
-  describe 'artwork with a partner and a collecting institution field', ->
-    it 'correctly renders and does not display the partner name', ->
-      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: 'House of Bitty', partner: fabricate('partner') }]
-      @template = render('index')(
-        sd: {}
-        artworks: @artworks
-      )
-      @template.should.containEql 'House of Bitty'
-
-  describe 'artwork with no partner and no collecting institution field', ->
-    beforeEach ->
-      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: '', partner: null }]
-      @template = render('index')(
-        sd: {}
-        artworks: @artworks
-      )
-    it 'correctly renders and does not display the partner name', ->
-      $ = cheerio.load @template
-      $('.artwork-item-partner').should.have.lengthOf 0
+      @template.should.containEql 'Gagosian'

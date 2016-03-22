@@ -1,3 +1,5 @@
+- includeContact = sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' && artwork.is_contactable || false
+
 figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href)
@@ -13,7 +15,6 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
             = artist.name
     p.artwork-item-title.artwork-item-overflow!= ViewHelpers.titleAndYear(artwork)
     if artwork.partner
-      //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
       p.artwork-item-partner.artwork-item-overflow
         if artwork.partner.href
           a.faux-underline-hover( href=artwork.partner.href )= artwork.partner.name
@@ -21,5 +22,7 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
           = artwork.partner.name
 
     //- Display price for non-auctions
-    if artwork.sale_message
+    if artwork.sale_message != 'Contact For Price'
       p.artwork-item-sale-price= artwork.sale_message
+    if includeContact
+      a.artwork-item-contact-seller( href="#{artwork.href}/contact-gallery" ) Contact #{artwork.partner.type}

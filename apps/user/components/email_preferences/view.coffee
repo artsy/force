@@ -8,7 +8,7 @@ module.exports = class EmailPreferencesView extends GenericFormView
   attributes: ->
     'data-enabled': @model.get('receive_emails')
 
-  events: -> extend {}, super,
+  events: extend GenericFormView::events,
     'click input': 'change'
     'click input[name="receive_emails"]': 'toggleSubscriptions'
 

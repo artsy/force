@@ -8,7 +8,7 @@ CurrentUser = require '../../../../../models/current_user'
 HomeTopRailView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 Q = require 'bluebird-q'
 
-describe 'HomeTopRailView', ->
+xdescribe 'HomeTopRailView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'

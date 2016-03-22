@@ -10,7 +10,7 @@ BIN = node_modules/.bin
 
 # Start the server
 s:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development foreman start
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development $(BIN)/nf start
 
 # Start the server using forever
 sf:
@@ -22,27 +22,27 @@ sd:
 
 # Start the server pointing to staging
 ss:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start
 
 # Start the server pointing to staging with cache
 ssc:
-	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
+	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start
 
 # Start the server pointing to production
 sp:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
 
 # Start server pointing to production with cache
 spc:
-	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
+	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
 
 # Start the server pointing to production with debugger
 spd:
-	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start -f ./Procfile.dev
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start -f ./Procfile.dev
 
 # Start the server pointing to staging with debugger
 ssd:
-	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start -f ./Procfile.dev
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start -f ./Procfile.dev
 
 # Run all of the project-level tests, followed by app-level tests
 test:

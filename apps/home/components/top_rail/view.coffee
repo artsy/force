@@ -1,10 +1,12 @@
 Q = require 'bluebird-q'
-metaphysics = require '../../../../lib/metaphysics.coffee'
 Backbone = require 'backbone'
 SaveControls = require '../../../../components/artwork_item/save_controls.coffee'
-myActiveBidsQuery = require '../../../../components/my_active_bids/query.coffee'
 FeaturedArtworks = require './collection.coffee'
+User = require '../../../../models/user.coffee'
+ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
+openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 template = -> require('./template.jade') arguments...
+MyActiveBids = require '../../../../components/my_active_bids/view.coffee'
 
 module.exports = class HomeTopRailView extends Backbone.View
 
@@ -30,12 +32,13 @@ module.exports = class HomeTopRailView extends Backbone.View
   fetchAndRender: ->
     promises = [@collection.fetch()]
     if @user
-      promises.push(
-        metaphysics(query: myActiveBidsQuery, req: user: @user)
-          .catch(-> me: bidder_positions: [])
-      )
+      mabView = new MyActiveBids(user: @user)
+      promises.push mabView.fetch()
     Q.all(promises).then ([c, data]) =>
       @syncArtworks()
       @$el.html template
         artworks: @collection
-        myActiveBids: data.me.bidder_positions if @user
+        activeBids: activeBids = mabView?.bidderPositions.length
+      if activeBids
+        mabView.$el = @$('.home-top-rail-right-mab')
+        mabView.render().poll()

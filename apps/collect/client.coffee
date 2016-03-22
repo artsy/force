@@ -110,8 +110,6 @@ module.exports.init = ->
       current: params.whitelisted()
       changed: params.changedAttributes()
 
-  scrollFrame '.cf-artworks a' unless sd.EIGEN
-
   # Handles sticky sidebar
   @sticky = false
   filter.artworks.on 'reset zero:artworks', =>

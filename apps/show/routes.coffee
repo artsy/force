@@ -84,6 +84,7 @@ query = """
         date
         title
         sale_message
+        is_contactable
       }
       artists {
         id

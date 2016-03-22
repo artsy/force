@@ -109,6 +109,7 @@ module.exports = class Artwork extends Backbone.Model
   # Should we include a form or button to contact the partner?
   #
   isContactable: ->
+    return true if @get('is_contactable')
     return true if @isPartOfContactableAuctionPromo()
     return false if @isPartOfAuction()
     @isArtworkContactable()
@@ -155,15 +156,13 @@ module.exports = class Artwork extends Backbone.Model
     not _.isEmpty(@get('literature'))
 
   contactLabel: ->
-    if @get('partner')?.type is 'Gallery' then 'Gallery' else 'Seller'
+    if @get('partner')?.type is 'Gallery' then 'gallery' else 'seller'
 
   hasCollectingInstitution: ->
     @get('collecting_institution')?.length > 0
 
   partnerName: ->
-    if @hasCollectingInstitution()
-      @get('collecting_institution')
-    else if @has 'partner'
+    if @has 'partner'
       @get('partner').name
     else
       ''
@@ -302,11 +301,24 @@ module.exports = class Artwork extends Backbone.Model
     return if @get('sale_message') is 'Contact For Price'
     if @get('sale_message')?.indexOf('Sold') > - 1
       _.compact([
-        'SOLD'
+        'Sold'
         @get('price')
-      ]).join(' – ')
+      ]).join(' - ')
     else
       @get 'sale_message'
+
+  availabilityMessage: ->
+    return if @get('partner')?.type is "Institutional Seller"
+    return if @get('availability') is 'for sale'
+    if @get('partner').has_limited_fair_partnership
+      'Not inquireable'
+    else if @get('availability')?.indexOf('on hold') > - 1
+      _.compact([
+        'On hold'
+        @get('price')
+      ]).join(' - ')
+    else
+      _s(@get('availability')).capitalize().value()
 
   salePrice: (isAuction = false) ->
     @saleMessage() if @saleMessage() and not isAuction
