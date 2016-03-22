@@ -104,6 +104,7 @@
     "typeahead.js": "0.10.x",
     "uglifyify": "^3.0.1",
     "validator": "^4.1.0",
-    "zombie": "^4.1.0"
+    "zombie": "^4.1.0",
+    "foreman": "^1.4.1"
   }
 }
