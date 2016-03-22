@@ -21,25 +21,21 @@ module.exports = class OverviewView extends Backbone.View
   initialize: ({ @user }) -> #
 
   setupArtworkFilter: ->
-    test = splitTest('artist_works_infinite_scroll')
-    outcome = test.outcome()
 
     filterRouter = ArtworkFilter.init
       el: @$('#artwork-section')
       model: @model
       mode: 'grid'
-      showSeeMoreLink: outcome is 'finite'
-
+      showSeeMoreLink: false
     @filterView = filterRouter.view
     @filterView.topOffset = $('.artist-sticky-header-container').height()
     @subViews.push @filterView
 
-    if outcome is 'infinite'
-      @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-      @$('#artwork-section').waypoint (direction) =>
-        return if not direction is 'down'
-        @filterView.loadNextPage()
-      , { offset: 'bottom-in-view' }
+    @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
+    @$('#artwork-section').waypoint (direction) =>
+      return if not direction is 'down'
+      @filterView.loadNextPage()
+    , { offset: 'bottom-in-view' }
 
 
   # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
