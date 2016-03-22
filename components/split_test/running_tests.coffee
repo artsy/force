@@ -40,8 +40,8 @@ module.exports =
 
   artwork_item_contact_gallery:
     key: 'artwork_item_contact_gallery'
-    edge: 'contact'
+    edge: 'default'
     outcomes:
-      default: 0.5
-      contact: 0.5
+      default: 1
+      contact: 0
     dimension: 'dimension12'
