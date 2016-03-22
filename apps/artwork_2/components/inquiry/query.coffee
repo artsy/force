@@ -3,6 +3,7 @@ module.exports = """
     id
     is_contactable
     partner {
+      id
       name
       type
       is_pre_qualify
