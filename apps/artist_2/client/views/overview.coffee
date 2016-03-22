@@ -101,17 +101,11 @@ module.exports = class OverviewView extends Backbone.View
           success: =>
             @renderRelatedArtists key
 
-  setupLastModifiedDate: ->
-    @fetches.push @waitForFilter()
-    $.when.apply(null, @fetches).then =>
-      mediator.trigger 'overview:fetches:complete'
-      lastModified JSONLD, @model, @filterView.artworks
-
   waitForFilter: ->
     dfd = $.Deferred()
     { filter, artworks } = @filterView
     @listenToOnce artworks, 'sync error', dfd.resolve
-    dfd.promise()
+    @fetches.push dfd.promise()
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
@@ -140,7 +134,9 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedArticles()
-    @setupLastModifiedDate()
+    @waitForFilter()
+    $.when.apply(null, @fetches).then =>
+      mediator.trigger 'overview:fetches:complete'
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
