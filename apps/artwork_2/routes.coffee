@@ -43,9 +43,7 @@ bootstrap = (res, { artwork }) ->
 @index = (req, res, next) ->
   send = query: query, variables: req.params
 
-  if req.query.query?
-    get = extend {}, send, variables: JSON.stringify send.variables
-    return res.redirect "#{METAPHYSICS_ENDPOINT}?#{qs.stringify get}"
+  return if metaphysics.debug req, res, send
 
   metaphysics send
     .then (data) ->
