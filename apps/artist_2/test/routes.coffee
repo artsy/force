@@ -37,7 +37,6 @@ describe 'Artist routes', ->
       routes.index @req, @res
       _.defer => _.defer =>
         @res.locals.sd.ARTIST.should.equal artistJSON
-        @res.locals.sd.JSONLD.should.containEql helpers.toJSONLD(artistJSON)
         done()
 
     it 'redirects to canonical url', (done) ->

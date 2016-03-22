@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ JSONLD } = require('sharify').data
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
@@ -11,7 +10,6 @@ Sticky = require '../../../../components/sticky/index.coffee'
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
-lastModified = require './last_modified.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'

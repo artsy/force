@@ -4,7 +4,6 @@ fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { APPLICATION_NAME } = require '../../config'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
@@ -24,7 +23,6 @@ currentShowAuction = require './components/current_show_auction/index'
     if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
-      res.locals.sd.JSONLD = jsonLD = helpers.toJSONLD(artist)
 
       res.render 'index',
         viewHelpers: helpers
@@ -32,7 +30,6 @@ currentShowAuction = require './components/current_show_auction/index'
         tab: tab
         nav: nav
         currentItem: currentShowAuction(artist)
-        jsonLD: stringifyJSONForWeb jsonLD
 
     else
       res.redirect artist.href.replace "/artist/", "/artist_2/"
