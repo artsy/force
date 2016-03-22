@@ -21,12 +21,12 @@ block body
           | It maps the characteristics (we call them &ldquo;genes&rdquo;) that connect artists, artworks, architecture, and design objects across history.
           | There are currently over 1,000 characteristics in The Art Genome Project, including art historical movements, subject matter, and formal qualities.
 
-    section.categores-featured
+    section.categories-featured
       h3.category-set-header
         | Featured Categories
       .grid-2-up
         for gene in featuredGenes.models
-          .grid-item: a.hoverable-image-link( href= gene.get('href') )
+          .grid-item: a.hoverable-image-link( href= gene.get('href'), data-id=gene.get('id') )
             img( src= gene.imageUrl('large_rectangle'), alt= gene.get('title') )
             .csc-title
               = gene.get('title')
@@ -34,12 +34,12 @@ block body
     if geneCategories && geneCategories.at(0)
       section#categories-page-gene-categories
         for categorySet in geneCategories.at(0).get('items').models
-          .category-set
+          .category-set.gene-category
             h3.category-set-header
               = categorySet.get('name')
             .category-set-categories
               for gene in categorySet.get('items').models
-                a.category-set-category.hoverable-image-link( href=gene.get('href') )
+                a.category-set-category.hoverable-image-link( href=gene.get('href'), data-id=gene.get('id') )
                   img.hoverable-image.csc-image(
                     src= gene.imageUrl('medium_rectangle')
                     alt= gene.get('title')
