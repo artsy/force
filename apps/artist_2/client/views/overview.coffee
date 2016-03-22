@@ -14,6 +14,7 @@ lastModified = require './last_modified.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
+gradient = require '../../../../components/gradient_blurb/index.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
@@ -69,8 +70,15 @@ module.exports = class OverviewView extends Backbone.View
 
   setupRelatedGenes: ->
     subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
-    subView.collection.on 'sync', -> mediator.trigger 'related:genes:render'
+    subView.collection.on 'sync', =>
+      @setupBlurb()
+      mediator.trigger 'related:genes:render'
     @subViews.push subView
+
+
+  setupBlurb: ->
+    gradient $('.artist-overview-header'), limit: 280, label: 'Read More', heightBreakOffset: 20
+    _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
   setupRelatedSection: ($el) ->
     $section = @fadeInSection $el
