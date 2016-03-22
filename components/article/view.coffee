@@ -162,6 +162,7 @@ module.exports = class ArticleView extends Backbone.View
         $($calloutSection).append calloutTemplate
           section: section
           calloutArticle: new Article article if article
+          crop: crop
     .done =>
       @loadedCallouts = true
       @maybeFinishedLoading()
