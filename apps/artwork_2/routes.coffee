@@ -1,5 +1,5 @@
-{ extend, pick } = require 'underscore'
 qs = require 'qs'
+{ extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
 { METAPHYSICS_ENDPOINT } = require('sharify').data
 
@@ -36,21 +36,19 @@ helpers = extend [
   artists: require './components/artists/helpers'
 ]...
 
-bootstrap = (res, { artwork }) ->
-  if { banner } = artwork
-    res.locals.sd.BANNER = pick banner, 'end_at'
+bootstrap = ->
+  require('./components/banner/bootstrap') arguments...
+  require('./components/inquiry/bootstrap') arguments...
 
 @index = (req, res, next) ->
   send = query: query, variables: req.params
 
-  if req.query.query?
-    get = extend {}, send, variables: JSON.stringify send.variables
-    return res.redirect "#{METAPHYSICS_ENDPOINT}?#{qs.stringify get}"
+  return if metaphysics.debug req, res, send
 
   metaphysics send
     .then (data) ->
       extend res.locals.helpers, helpers
-      bootstrap res, data
+      bootstrap res.locals.sd, data
       res.render 'index', data
 
     .catch next
