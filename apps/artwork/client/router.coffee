@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 ArtworkView = require './view.coffee'
-DeepZoomView = require './deep_zoom.coffee'
+DeepZoomView = require '../../../components/deep_zoom/view.coffee'
 ViewInRoomView = require './view_in_room.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 mediator = require '../../../lib/mediator.coffee'
@@ -43,10 +43,14 @@ module.exports = class ArtworkRouter extends Backbone.Router
   zoom: ->
     analyticsHooks.trigger 'artwork:zoom'
     @baseView.route 'zoom'
-    @view = new DeepZoomView
-      artwork: @artwork
-      image: @artwork.related().images.active()
-    $('#artwork-deep-zoom-container').html @view.render().$el
+    image = @artwork.related().images.active()
+    if image.canDeepZoom()
+      @view = new DeepZoomView image: image.deepZoomJson()
+      $('body').prepend @view.render().$el
+      @view.once 'removed', =>
+        Backbone.history.navigate @artwork.href(),
+          trigger: true
+          replace: true
 
   viewInRoom: ->
     analyticsHooks.trigger 'artwork:view-in-room'
