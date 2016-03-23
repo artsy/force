@@ -1,5 +1,6 @@
 { throttle } = require 'underscore'
 Backbone = require 'backbone'
+deepZoom = require '../deep_zoom/index.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ArtworkImagesView extends Backbone.View
@@ -57,5 +58,8 @@ module.exports = class ArtworkImagesView extends Backbone.View
     i = @index() - 1
     @__activate__ $(@images().get i).data 'id'
 
-  zoom: $.noop
+  zoom: (e) ->
+    e.preventDefault()
+    deepZoom $(e.currentTarget).data 'id'
+
   render: $.noop

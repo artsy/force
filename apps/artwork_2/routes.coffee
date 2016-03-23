@@ -8,6 +8,7 @@ query = """
     artwork(id: $id) {
       ... banner
       ... images
+      ... deep_zoom
       ... actions
       ... metadata
       ... inquiry
@@ -19,6 +20,7 @@ query = """
   }
   #{require './components/banner/query'}
   #{require './components/images/query'}
+  #{require './components/deep_zoom/query'}
   #{require './components/actions/query'}
   #{require './components/metadata/query'}
   #{require './components/inquiry/query'}
@@ -39,6 +41,7 @@ helpers = extend [
 bootstrap = ->
   require('./components/banner/bootstrap') arguments...
   require('./components/inquiry/bootstrap') arguments...
+  require('./components/deep_zoom/bootstrap') arguments...
 
 @index = (req, res, next) ->
   send = query: query, variables: req.params
