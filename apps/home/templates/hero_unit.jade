@@ -3,7 +3,7 @@
   style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
   data-type=heroUnit.get('type').toLowerCase()
 )
-  a.hhu-frame( href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
+  a.hhu-frame( class='js-homepage-hero-unit', href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
     .vam-outer: .vam-inner: .hhu-inner
       if heroUnit.get('type') === 'welcome'
         i.icon-logotype
