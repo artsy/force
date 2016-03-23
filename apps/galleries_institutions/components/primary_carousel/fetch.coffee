@@ -1,9 +1,9 @@
-Q = require 'bluebird-q'
-OrderedSets = require '../../../../collections/ordered_sets.coffee'
 _ = require 'underscore'
-FilterPartners = require './collections/filter_partners.coffee'
+Q = require 'bluebird-q'
 Profile = require '../../../../models/profile.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
+OrderedSets = require '../../../../collections/ordered_sets.coffee'
+FilterPartners = require './collections/filter_partners.coffee'
 
 key =
   gallery: 'galleries:carousel-galleries' # https://admin.artsy.net/set/5638fdfb7261690296000031
@@ -30,7 +30,7 @@ fetchWithParams = (params) ->
       profile = new Profile id: partner.get('default_profile_id')
       profiles.add profile
       Q(profile.fetch(cache: true)).then ->
-        Q(profile.related().owner.related().shows.fetch cache:true)
+        Q(profile.related().owner.related().shows.fetch cache: true)
     ).then ->
       profiles
   )
@@ -40,4 +40,3 @@ module.exports = (params) ->
     fetchWithParams params
   else
     fetchFeaturedSet(params.type)
-

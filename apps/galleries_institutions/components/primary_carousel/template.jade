@@ -13,7 +13,7 @@
         if show
           a( href= show.href() )
             .gpc-subheadline
-              | Current #{show.has('location') ? show.formatCity() : ''} Show
+              | #{show.statusLabel()} #{show.has('location') ? show.formatCity() : ''} Show
             .gpc-subheadline-alt
               = show.get('name')
             .gpc-location-dates
