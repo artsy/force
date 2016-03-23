@@ -10,7 +10,7 @@ $('.home-top-feature-link').click(function () {
   var href = $(this).find('.htfl-image-link').attr('href')
   var context_type = $(this).find('.htfl-details h3').text()
   analytics.track('Clicked homepage featured link', {
-  	featured_link_path: href
+  	featured_link_path: href,
 	context_type: context_type
   })
 })
