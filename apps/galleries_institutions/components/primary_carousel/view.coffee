@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { MAIN_PROFILES } = require('sharify').data
-initCarousel = require '../../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 template = -> require('./template.jade') arguments...
 fetchProfiles = require './fetch.coffee'

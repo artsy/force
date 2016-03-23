@@ -3,9 +3,8 @@ benv = require 'benv'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 existy = _.negate _.isUndefined
-MerryGoRoundNavView = benv.requireWithJadeify require.resolve('../view'), ['template']
 initCarousel = rewire '../index'
-initCarousel.__set__ 'MerryGoRoundNavView', MerryGoRoundNavView
+template = require('jade').compileFile(require.resolve '../templates/bottom_navigation.jade')
 
 describe '#initCarousel', ->
   before (done) ->
@@ -41,19 +40,19 @@ describe '#initCarousel', ->
     benv.teardown()
 
   it 'sets up the carousel', ->
-    instance = initCarousel $('.js-carousel')
+    instance = initCarousel $('.js-carousel'), template: template
     existy(instance.cells).should.be.true()
     existy(instance.navigation).should.be.true()
 
   it 'pre-renders the navigation', ->
-    instance = initCarousel $('.js-carousel')
+    instance = initCarousel $('.js-carousel'), template: template
     html = instance.navigation.$el.html()
     html.should.containEql 'mgr-arrow-left'
     html.should.containEql 'mgr-dots'
     html.should.containEql 'mgr-arrow-right'
 
   it 'accepts a callback', ->
-    initCarousel $('.js-carousel'), null, (instance) ->
+    initCarousel $('.js-carousel'), template: template, (instance) ->
       existy(instance.cells).should.be.true()
       existy(instance.navigation).should.be.true()
 
@@ -64,7 +63,7 @@ describe '#initCarousel', ->
 
   describe 'option `imagesLoaded` is `true`', ->
     it 'returns a thennable', ->
-      initCarousel $('.js-carousel'), imagesLoaded: true
+      initCarousel $('.js-carousel'), imagesLoaded: true, template: template
         .then (instance) ->
           existy(instance.cells).should.be.true()
           existy(instance.navigation).should.be.true()

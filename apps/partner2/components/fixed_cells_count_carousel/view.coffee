@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-initCarousel = require '../../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 
 module.exports = class FixedCellsCountCarousel extends Backbone.View
   defaults:

@@ -2,7 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
-initCarousel = require '../../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class HeroShowsCarousel extends Backbone.View

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 metaphysics = require '../../../../lib/metaphysics.coffee'
-initCarousel = require '../../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 template = -> require('../../templates/carousel.jade') arguments...
 FlickityZoomSequence = require './index.coffee'

@@ -1,5 +1,29 @@
 @require '../stylus_lib'
 
+.mgr-horizontal-nav
+  position relative
+  .mgr-navigation
+    padding 0
+    margin 0
+    display block
+  .mgr-arrow-left
+  .mgr-arrow-right
+    width auto
+    height auto
+    padding 1px
+    display block
+    border none
+    position absolute
+    top 50%
+    transform translateY(-50%)
+    padding 10px
+  .mgr-arrow-left
+    right 100%
+  .mgr-arrow-right
+    left 100%
+  .mgr-cell
+    padding 0 15px 0 0
+
 .mgr-cells
   white-space nowrap
   overflow hidden
