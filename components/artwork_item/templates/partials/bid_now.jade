@@ -1,5 +1,5 @@
 .artwork-item-caption__bid-now
-  if artwork.get('forsale')
+  if artwork.get('forsale') || artwork.get('is_for_sale')
     a(href=artwork.href(), data-id=artwork.get('id')) Bid now
   else
     | Auction closed
