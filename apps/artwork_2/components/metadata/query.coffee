@@ -21,6 +21,8 @@ module.exports = """
     partner {
       name
       href
+      initials
+      is_limited_fair_partner
       locations {
         city
         phone

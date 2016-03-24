@@ -3,6 +3,7 @@ module.exports = """
     partner {
       name
       href
+      initials
       locations {
         city
       }

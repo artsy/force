@@ -9,11 +9,14 @@
     padding 0 (gutter / 2)
 
   &__icon
-    > img
+    > a
+      display block
       width 90px
       height @width
-      background-color gray-color
       margin 0 auto
+      background-size cover
+      background-position center center
+      initials()
 
   &__metadata
     border-left 1px solid gray-lighter-color

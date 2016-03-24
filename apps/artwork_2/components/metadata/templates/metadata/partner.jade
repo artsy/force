@@ -6,18 +6,23 @@ unless artwork.auction
       h3 Offered by
 
     a( href= partner.href )
-      = [partner.name, helpers.metadata.consolidate(helpers.metadata.pluck(partner.locations, 'city'), 'locations')].join(', ')
+      = partner.name
+      - var location = helpers.metadata.consolidate(helpers.metadata.pluck(partner.locations, 'city'), 'locations')
+      if location
+        | , #{location}
 
     if artwork.is_contactable && partner.locations.length
+      - var locations = helpers.metadata.uniq(partner.locations)
       .artwork-metadata__partner__phone
-        a( class='js-artwork-metadata__partner__phone' )
-          | Show phone number
+        a( class='js-artwork-metadata-phone-toggle' )
+          | Show phone number#{locations.length === 1 ? '' : 's'}
+
         .artwork-metadata__partner__phone__locations(
-          class='js-artwork-metadata__partner__phone__locations'
+          class='js-artwork-metadata-phone-toggleable'
         )
-          for location in partner.locations
+          for location in locations
             .artwork-metadata__partner__phone__locations__location
-              if partner.locations.length > 1
+              if locations.length > 1
                 | #{location.city}:
                 = ' '
               = location.phone
