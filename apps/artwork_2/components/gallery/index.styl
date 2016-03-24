@@ -1,0 +1,37 @@
+.artwork-gallery
+  display flex
+  block-margins(gutter / 2)
+  padding gutter 0
+  align-items center
+
+  &__icon
+  &__metadata
+    padding 0 (gutter / 2)
+
+  &__icon
+    > img
+      width 90px
+      height @width
+      background-color gray-color
+      margin 0 auto
+
+  &__metadata
+    border-left 1px solid gray-lighter-color
+
+    &__name
+      garamond-size('s-headline')
+      text-decoration none
+    &__locations
+      garamond-size('s-body')
+      color gray-dark-color
+    &__bio
+      margin (gutter / 4) 0 (gutter / 2) 0
+      garamond-size('s-body')
+    &__actions
+      margin-top (gutter / 2)
+      > a
+      > span
+        inline-block-margins(gutter / 4)
+      &__followers
+        garamond-size('l-caption')
+        color gray-dark-color
