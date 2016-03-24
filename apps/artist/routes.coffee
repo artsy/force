@@ -12,7 +12,7 @@ Statuses = require './statuses'
 Nav = require './nav'
 Carousel = require './carousel'
 
-@index = (req, res, next) ->
+@index = index = (req, res, next) ->
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
@@ -43,11 +43,10 @@ Carousel = require './carousel'
         res.redirect artist.href()
 
     .catch next
-    .done()
 
-@tab = (req, res) =>
+@tab = (req, res, next) ->
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  @index req, res
+  index req, res, next
 
 @follow = (req, res) ->
   return res.redirect "/artist/#{req.params.id}" unless req.user
