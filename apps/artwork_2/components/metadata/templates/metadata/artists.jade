@@ -3,7 +3,11 @@ if artwork.artists.length
     .artwork-metadata__artist
       a.entity-link( href= artist.href )
         = artist.name
-      a.entity-follow.artist-follow( data-id= artist.id )
+
+      a.entity-follow.artist-follow(
+        data-id= artist.id
+        class='js-artist-follow-button'
+      )
 
 else if artwork.cultural_maker
   .artwork-metadata__artist
