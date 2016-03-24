@@ -24,8 +24,15 @@ module.exports = class Filter
 
   by: (keyOrObj, value, options = {}) ->
     @engaged = true
-    @selected.reset silent: true unless keyOrObj is 'for_sale'
-    @selected.set keyOrObj, value
+
+    if keyOrObj is 'for_sale'
+      forSale = value
+    else
+      forSale = @selected.get 'for_sale'
+      @selected.reset silent: true
+      @selected.set keyOrObj, value
+
+    @selected.set 'for_sale', forSale if forSale
     @newState options
 
   priced: ->
