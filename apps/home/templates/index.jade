@@ -23,16 +23,17 @@ block body
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
         if exploreSections.length
-          include explore_sections
-        if exploreSections.length
-        ul#home-top-featured-links
+          #home-explore-section( class='js-homepage-featured-links', data-context='explore sections' )
+            include explore_sections
+
+        ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
           include featured_links
 
-        #home-top-rail-section
+        #home-top-rail-section( class='js-homepage-featured-links', data-context='works by artists you follow' )
           .loading-spinner
           //- Rendered client-side
 
-        #home-featured-shows-section
+        #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
           h2.home-featured-header Featured Shows
             .home-browse-all-right
               a( href='/shows' )
@@ -42,7 +43,7 @@ block body
             - displayLocation = true
             include featured_shows
 
-        #home-featured-articles-section
+        #home-featured-articles-section( class='js-homepage-featured-links', data-context='featured articles' )
           h2.home-featured-header Featured Articles
             .home-browse-all-right
               a( href='/articles' )
@@ -51,7 +52,7 @@ block body
             - articleLinks = featuredArticles.take(7)
             include featured_articles
 
-        #home-featured-artists-section
+        #home-featured-artists-section( class='js-homepage-featured-links', data-context='featured artists' )
           h2.home-featured-header Featured Artists
             .home-browse-all-right
               a( href='/artists' )

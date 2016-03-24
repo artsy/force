@@ -145,7 +145,7 @@ if superArticle
         h2.article-social__header Share article
         +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
-    if sd.SUBSCRIBED_TO_EDITORIAL === false && article.get('author_id') === sd.ARTSY_EDITORIAL_ID
+    if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('author_id') === sd.ARTSY_EDITORIAL_ID
       .main-layout-container.article-es
         include ./editorial_signup.jade
 

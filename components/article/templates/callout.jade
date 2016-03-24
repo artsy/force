@@ -1,7 +1,7 @@
 mixin callout-content(calloutArticle, section)
   if !section.hide_image
     if calloutArticle
-      img( src=(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image')) )
+      img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
     else if section.thumbnail_url
       img( src=section.thumbnail_url )
 

@@ -104,9 +104,12 @@ describe 'Filter', ->
       Backbone.sync.args[0][2].data.should.containEql foo: 'bar'
       @filter.by 'baz', 'qux'
       Backbone.sync.args[1][2].data.should.containEql baz: 'qux'
-      # Only price range can be combined
+      # Preserves other critera when adding for_sale
       @filter.by 'for_sale', 'true'
       Backbone.sync.args[2][2].data.should.containEql baz: 'qux', for_sale: 'true'
+      # Preserves for_sale when changing other criteria
+      @filter.by 'foo', 'bar'
+      Backbone.sync.args[3][2].data.should.containEql foo: 'bar', for_sale: 'true'
 
     it 'also accepts objects', ->
       @filter.by foo: 'bar'
@@ -128,6 +131,7 @@ describe 'Filter', ->
       @filter.selected.has('medium').should.be.true()
       @filter.deselect 'medium'
       @filter.selected.has('medium').should.be.false()
+      @filter.selected.has('for_sale').should.be.true()
       @filter.engaged.should.be.true()
       Backbone.sync.callCount.should.equal 3
       @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&for_sale=true', 'for_sale=true']

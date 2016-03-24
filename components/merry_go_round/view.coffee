@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-template = -> require('./templates/navigation.jade') arguments...
 
 module.exports = class MerryGoRoundNavView extends Backbone.View
   tagName: 'nav'
@@ -10,7 +9,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     'click .js-mgr-prev': 'prev'
     'click .js-mgr-select': 'select'
 
-  initialize: ({ @flickity, @contain }) ->
+  initialize: ({ @flickity, @contain, @template }) ->
     @flickity.on 'cellSelect', @render
     @flickity.on 'cellSelect', @announce
 
@@ -54,7 +53,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @flickity.select $(e.currentTarget).data('index')
 
   render: =>
-    @$el.html template
+    @$el.html @template
       length: @flickity.cells.length
       index: @flickity.selectedIndex
       contain: @contain

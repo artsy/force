@@ -34,6 +34,13 @@
     analytics.track("Viewed 'Comparables'");
   });
 
+  $document.on('click', '.artwork-item-contact-seller', function() {
+    analytics.track('Clicked "Contact Gallery" button', {
+      artwork_id: $(this).data('artwork-id'),
+      context_type: 'artwork feed item'
+    });
+  });
+
   analyticsHooks.on('artwork:zoom', function(){
     analytics.track('Clicked to zoom in on artwork');
   });

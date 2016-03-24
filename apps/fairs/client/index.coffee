@@ -4,7 +4,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-initCarousel = require '../../../components/merry_go_round/index.coffee'
+initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
@@ -41,7 +41,7 @@ module.exports.FairsView = class FairsView extends Backbone.View
 
           fair.profile.id
     )
-    
+
     following.syncFollows ids if @user
 
   triggerOpenAuth: (e)->

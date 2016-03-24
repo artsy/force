@@ -1,4 +1,4 @@
-module.exports = '''
+module.exports = """
   fragment images on Artwork {
     images {
       id
@@ -8,4 +8,4 @@ module.exports = '''
       }
     }
   }
-'''
+"""

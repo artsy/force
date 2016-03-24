@@ -8,7 +8,7 @@ Artist = require '../../models/artist.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtistSuggestions extends Backbone.View
-  
+
   initialize: (options) ->
     { @following } = options
 
@@ -48,6 +48,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
         exclude_artists_without_artworks: true
       success: =>
         return unless artists.length > 3
+        analyticsHooks.trigger 'follow-widget:opened'
         @initialArtists = artists.models[0...3]
         @remainingArtists = artists.models[3...-1]
         html = listTemplate
