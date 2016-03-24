@@ -11,3 +11,6 @@ module.exports.init = ->
   exec require '../components/inquiry/index.coffee'
   exec require '../components/tabs/index.coffee'
   exec require '../components/artists/index.coffee'
+
+  # Client-side fetches
+  exec require '../components/gallery/index.coffee'
