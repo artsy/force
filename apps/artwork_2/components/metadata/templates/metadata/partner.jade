@@ -12,10 +12,11 @@ unless artwork.auction
       .artwork-metadata__partner__phone
         a( class='js-artwork-metadata__partner__phone' )
           | Show phone number
+
         .artwork-metadata__partner__phone__locations(
           class='js-artwork-metadata__partner__phone__locations'
         )
-          for location in partner.locations
+          for location in helpers.metadata.uniq(partner.locations)
             .artwork-metadata__partner__phone__locations__location
               if partner.locations.length > 1
                 | #{location.city}:

@@ -1,7 +1,9 @@
-{ pluck } = require 'underscore'
+_ = require 'underscore'
 
 module.exports =
-  pluck: pluck
+  uniq: _.partial(_.uniq, _, (x) -> JSON.stringify x)
+
+  pluck: _.pluck
 
   consolidate: (list, kinds) ->
     if list.length is 0
