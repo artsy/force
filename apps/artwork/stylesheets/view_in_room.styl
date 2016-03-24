@@ -40,8 +40,23 @@ wall-height = 43.5%
       box-shadow 0 2px 5px rgba(0,0,0,0.4)
 
 .view-in-room-close
+  position absolute
+  top 20px
+  left @top
+  width 75px
+  height @width
+  text-align center
+  background-color gray-darker-color
+  z-index 2
+  opacity 0.6
+  transition opacity 0.25s
+  text-decoration none
   > i
     color #dfdbd8
+    font-size 50px
+    line-height @width
+  &:hover
+    opacity 1
 
 .vir-room
   position absolute
