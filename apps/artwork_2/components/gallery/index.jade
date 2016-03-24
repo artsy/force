@@ -15,8 +15,9 @@ if gallery
       a.artwork-gallery__metadata__name( href= gallery.href )
         = gallery.name
 
-      .artwork-gallery__metadata__locations
-        = helpers.gallery.cities(gallery.locations)
+      if gallery.cities && gallery.cities.length
+        .artwork-gallery__metadata__locations
+          = helpers.gallery.cities(gallery.locations)
 
       if profile
         .artwork-gallery__metadata__bio
