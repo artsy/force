@@ -35,7 +35,7 @@ describe 'Sitemaps', ->
       routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
       routes.robots null, @res
       @res.send.args[0][0]
-        .should.containEql  'Sitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml\nNoindex: ?sort='
+        .should.containEql  'User-agent: *\nNoindex: ?sort=\nNoindex: ?dimension_range=\nDisallow: ?dns_source=\nDisallow: ?microsite=\nDisallow: ?from-show-guide=\nSitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml'
 
   describe '#news_sitemap', ->
 
@@ -62,7 +62,7 @@ describe 'Sitemaps', ->
     it 'displays the correct artwork URLs in the sitemap', ->
       routes.__set__ 'request', get: -> query: -> end: (cb) ->
         cb(null, { body: results: [fabricate 'artwork', { id: 'foo'}] })
-      @req = 
+      @req =
         params:
           date: '2012-01-01'
           page: 3
@@ -72,11 +72,11 @@ describe 'Sitemaps', ->
 
   describe '#bingNew', ->
 
-    it 'only displays artworks published in the past week', ->      
+    it 'only displays artworks published in the past week', ->
       routes.__set__ 'request', get: -> query: (query) ->
         moment(query.published_at_since).isAfter(moment().subtract(8, 'days')).should.be.true()
         end: (cb) ->
           cb(null, { body: results: [fabricate 'artwork', { id: 'foo', title: 'bar' }] })
       routes.bingNew(@req, @res)
-      @res.send.args[0][0][0].name.should.equal('bar') 
+      @res.send.args[0][0][0].name.should.equal('bar')
 
