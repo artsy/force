@@ -1,12 +1,13 @@
+@require '../../../../components/tooltips'
+
 .artwork-metadata
   garamond-size('s-body')
-  overflow hidden
 
   &__lot-number
   &__artist
   &__partner
   &__secondary-metadata
-    block-margins(15px)
+    block-margins(gutter / 2)
 
   &__lot-number
     avant-garde-size('body')
@@ -27,12 +28,13 @@
     margin-top 0
 
   &__image-rights
-    block-margins(15px)
+    block-margins(gutter / 2)
     garamond-size('s-caption')
 
+  &__limited-partner-message
   &__sale-message
-    block-margins(15px)
-    padding 15px 0
+    block-margins(gutter / 2)
+    padding (gutter / 2) 0
     border-top 1px solid gray-lighter-color
     border-bottom @border-top
 
@@ -50,7 +52,7 @@
         display none
 
 .artwork-edition-sets
-  block-margins(15px)
+  block-margins(gutter / 2)
 
 .artwork-edition-set
   display table
