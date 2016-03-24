@@ -99,6 +99,7 @@ module.exports = class ArticleView extends Backbone.View
       @setupMaxImageHeights()
     else if @loadedArtworks and @loadedEmbeds and @loadedCallouts and @loadedImageHeights
       @breakCaptions()
+      @setupWaypointUrls() if @waypointUrls
       @addReadMore() if @gradient
 
   setupMaxImageHeights: ->
@@ -296,12 +297,17 @@ module.exports = class ArticleView extends Backbone.View
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
-      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'down'
-      $('.article-edit-container a').attr 'href', editUrl
-      @trackPageview()
+      if direction is 'down'
+        window.history.replaceState({}, @article.get('id'), @article.href())
+        $('.article-edit-container a').attr 'href', editUrl
+        @trackPageview()
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
-      window.history.pushState({}, @article.get('id'), @article.href()) if direction is 'up'
-      $('.article-edit-container a').attr 'href', editUrl
+      console.log 'bottom is in view'
+      if direction is 'up'
+        console.log 'bottom is in view and the direction is up'
+        console.log @article.href()
+        window.history.replaceState({}, @article.get('id'), @article.href())
+        $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
 
   # Methods for super articles
