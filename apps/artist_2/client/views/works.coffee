@@ -26,6 +26,9 @@ module.exports = class WorksView extends Backbone.View
       mode: 'grid'
       showSeeMoreLink: false
     @subViews.push filterRouter.view
+    @sticky.headerHeight = $('#main-layout-header').outerHeight(true) +
+      $('.artist-sticky-header-container').outerHeight(true) + 20
+    @sticky.add @$('#artwork-filter-selection')
     $.onInfiniteScroll ->
       filterRouter.view.loadNextPage()
 

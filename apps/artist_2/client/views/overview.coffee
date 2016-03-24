@@ -45,7 +45,6 @@ module.exports = class OverviewView extends Backbone.View
         @fadeInSections()
       else
         @filterView.loadNextPage()
-    , offset: 2000
 
   # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
   # The waypoint must be pushed below the the window bottom in order to be triggered again on subsequent scroll events.
