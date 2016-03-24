@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 User = require '../../../models/user.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-initCarousel = require '../../merry_go_round/index.coffee'
+initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 openInquiryQuestionnaireFor = require '../../inquiry_questionnaire/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/index.jade') arguments...
