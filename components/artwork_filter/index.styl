@@ -4,8 +4,9 @@ small-avant-garde-size = 11px
 sidebar-width = 26%
 
 .artwork-section
-  position relative
   min-height 500px
+  display flex
+  flex-direction row
   clearfix()
 .artwork-filter
 .artwork-section__content > .artwork-section__artworks
@@ -17,16 +18,14 @@ sidebar-width = 26%
 .artwork-filter
   padding 20px 0
 .artwork-section__content
-  width (100% - sidebar-width)
-  float right
+  flex-basis (100% - sidebar-width)
   > .artwork-columns
     margin-bottom 40px
   h2
     margin 5px 0 20px 0
     font-style italic
 .artwork-filter
-  width sidebar-width
-  float left
+  flex-basis sidebar-width
   padding-right 40px
   section
     margin 20px 0

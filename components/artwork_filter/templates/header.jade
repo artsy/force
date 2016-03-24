@@ -1,10 +1,9 @@
 h2
-  | #{artist.get('name')}:
-  = ' '
-  if labels = filter.selected.labels(filter.root.attributes)
-    | #{labels} &mdash; #{total} works
+  - var forSale = filter.forSaleCount()
+  if total == forSale
+    | #{total} works for sale
   else
-    | #{total} works
+    | #{total} works, #{forSale} for sale
 
 include ../../bordered_pulldown/mixin
 
