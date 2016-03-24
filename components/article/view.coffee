@@ -302,10 +302,7 @@ module.exports = class ArticleView extends Backbone.View
         $('.article-edit-container a').attr 'href', editUrl
         @trackPageview()
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
-      console.log 'bottom is in view'
       if direction is 'up'
-        console.log 'bottom is in view and the direction is up'
-        console.log @article.href()
         window.history.replaceState({}, @article.get('id'), @article.href())
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
