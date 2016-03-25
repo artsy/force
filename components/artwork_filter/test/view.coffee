@@ -39,7 +39,9 @@ describe 'ArtworkFilterView', ->
 
     describe '#render', ->
       it 'renders the container template', ->
+        @view.$el.html().should.containEql '<h2>Works</h2>'
         @view.$el.html().should.containEql 'artwork-filter'
+        @view.$el.html().should.containEql 'artwork-filter-selection'
         @view.$el.html().should.containEql 'artwork-section'
 
     it 'fetches the filter', ->
@@ -78,7 +80,7 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'renders the filter template', ->
-      @view.$filter.html().should.containEql '<h2>Works</h2>'
+      @view.$filter.html().should.containEql 'artwork-filter-for-sale'
 
   describe '#handleState', ->
     describe '#handleFilterState', ->

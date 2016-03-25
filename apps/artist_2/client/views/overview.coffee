@@ -7,6 +7,7 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 # Main section
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
+Sticky = require '../../../../components/sticky/index.coffee'
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
@@ -20,7 +21,8 @@ module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
-  initialize: ({ @user, @statuses }) -> #
+  initialize: ({ @user, @statuses }) ->
+    @sticky = new Sticky
 
   setupArtworkFilter: ->
     filterRouter = ArtworkFilter.init
@@ -30,15 +32,19 @@ module.exports = class OverviewView extends Backbone.View
       showSeeMoreLink: false
 
     @filterView = filterRouter.view
-    @filterView.topOffset = $('.artist-sticky-header-container').height()
+    stickyHeaderHeight = $('.artist-sticky-header-container').outerHeight(true)
+    @filterView.topOffset = stickyHeaderHeight
     @subViews.push @filterView
 
     @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-    @$('#artwork-section').waypoint (direction) =>
-      return if not direction is 'down'
-      @filterView.loadNextPage()
-    , { offset: 'bottom-in-view' }
+    @sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
+    @sticky.add @filterView.$('#artwork-filter-selection')
 
+    $.onInfiniteScroll =>
+      if @filterView.remaining() is 0
+        @fadeInSections()
+      else
+        @filterView.loadNextPage()
 
   # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
   # The waypoint must be pushed below the the window bottom in order to be triggered again on subsequent scroll events.
@@ -58,7 +64,6 @@ module.exports = class OverviewView extends Backbone.View
       subView = new RelatedShowsView model: @model, collection: @model.related().shows
       @$('#artist-related-shows').html subView.render().$el
       @subViews.push subView
-      @setupRelatedSection @$('#artist-related-shows-section')
 
   setupRelatedArticles: ->
     if @statuses.articles
@@ -66,7 +71,6 @@ module.exports = class OverviewView extends Backbone.View
       subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
       @$('#artist-related-articles').html subView.render().$el
       @subViews.push subView
-      @setupRelatedSection @$('#artist-related-articles-section')
 
   setupRelatedGenes: ->
     subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
@@ -111,8 +115,7 @@ module.exports = class OverviewView extends Backbone.View
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
-    if @model.related()[type].length
-      @setupRelatedSection $section
+    if @statuses[type]
       collection = new Backbone.Collection(@model.related()[type].take 5)
       subView = new ArtistFillwidthList
         el: @$("#artist-related-#{type}")
@@ -122,6 +125,11 @@ module.exports = class OverviewView extends Backbone.View
       @subViews.push subView
     else
       $section.remove()
+
+  fadeInSections: ->
+    _.each @statuses, (status, key) =>
+      @setupRelatedSection @$("#artist-related-#{key}-section") if status
+      @renderRelatedArtists key if key is ('artists' or 'contemporary')
 
   postRender: ->
     # Sub-header

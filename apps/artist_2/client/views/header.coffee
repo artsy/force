@@ -8,7 +8,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @setupShareButtons()
     @setupFollowButton()
     @$window = $ window
-    @$window.on 'scroll', @popLock
+    @$window.on 'scroll', _.throttle(@popLock, 150)
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
