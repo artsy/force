@@ -112,7 +112,7 @@ module.exports = class SearchBarView extends Backbone.View
 
   emptyItemTemplate: (options) =>
     if @displayEmptyItem
-      emptyItemTemplate query: options.query
+      emptyItemTemplate query: decodeURIComponent(options.query)
 
   announceQuery: (query) ->
     mediator.trigger 'search:doge' if query is 'doge'
@@ -164,7 +164,7 @@ module.exports = class SearchBarView extends Backbone.View
     @set ''
 
   set: (value) ->
-    @$input.typeahead 'val', value
+    @$input.typeahead 'val', decodeURIComponent value
 
   emptyItemClick: ->
     analyticsHooks.trigger 'search:empty-item:click',
