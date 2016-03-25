@@ -74,7 +74,7 @@ mapTypeClasses =
     aToZGroup = partners.groupByAlphaWithColumns 3
     res.render 'a_z',
       type: type
-      showAZLink: false
+      showBrowseLink: true
       aToZGroup: aToZGroup
 
   .catch next

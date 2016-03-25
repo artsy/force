@@ -17,7 +17,7 @@ describe 'PrimaryCarousel template', ->
     @$ = $.load @html
 
     @$('.gpc-subheadline').text()
-      .should.equal 'Current New York Show'
+      .should.equal 'Past New York Show'
 
     @$('.gpc-location-dates').text()
       .should.equal 'New York, Jul 12 – Aug 23, 2013'

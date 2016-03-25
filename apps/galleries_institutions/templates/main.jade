@@ -15,6 +15,9 @@ block body
         | Browse #{pluralType}
 
       nav.galleries-institutions-subnav
+        if showBrowseLink
+          a.fine-faux-underline( href=pluralType.toLowerCase() )
+            | Browse
         if showAZLink
           a.fine-faux-underline( href="/#{pluralType.toLowerCase()}-a-z" )
             | A–Z
