@@ -34,9 +34,9 @@
     analytics.track("Viewed 'Comparables'");
   });
 
-  $document.on('click', '.artwork-item-contact-seller', function() {
+  $document.on('click', '.js-artwork-item-contact-seller', function() {
     analytics.track('Clicked "Contact Gallery"', {
-      artwork_id: $(this).data('artwork-id'),
+      artwork_id: $(this).data('id'),
       context_type: 'artwork feed item'
     });
   });
