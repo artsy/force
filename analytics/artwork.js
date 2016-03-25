@@ -34,9 +34,9 @@
     analytics.track("Viewed 'Comparables'");
   });
 
-  $document.on('click', '.artwork-item-contact-seller', function() {
-    analytics.track('Clicked "Contact Gallery" button', {
-      artwork_id: $(this).data('artwork-id'),
+  $document.on('click', '.js-artwork-item-contact-seller', function() {
+    analytics.track('Clicked "Contact Gallery"', {
+      artwork_id: $(this).data('id'),
       context_type: 'artwork feed item'
     });
   });
@@ -49,8 +49,11 @@
     analytics.track("Entered 'View In Room'");
   });
 
-  analyticsHooks.on('artwork:contact-gallery', function(){
-    analytics.track("Clicked 'Contact Gallery'");
+  analyticsHooks.on('artwork:contact-gallery', function(args){
+    analytics.track("Clicked 'Contact Gallery'", {
+      artwork_id: args.artwork_id,
+      context_type: args.context_type
+    });
   });
 
   analyticsHooks.on('artwork:contact-specialist', function(){
