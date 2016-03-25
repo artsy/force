@@ -176,7 +176,9 @@
 
   bindOnce('inquiry:sync', function(context) {
     analytics.track('Sent artwork inquiry', {
-      label: 'Artwork:' + context.artwork.id
+      artwork_id: context.artwork.get('_id'),
+      artwork_slug: context.artwork.id,
+      inquiry_id: context.inquiry.id
     });
   });
 
