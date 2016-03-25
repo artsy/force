@@ -24,7 +24,7 @@ figure.artwork-item( data-artwork=artwork.get('id') data-id=artwork.get('_id') )
     include ./partials/partner
     include ./partials/price
     include ./partials/auction_info
-    if hasAuctionPartner
+    if hasAuctionPartner && !isAuction
       include ./partials/bid_now
     if showContact && !hasAuctionPartner
       include ./partials/contact
