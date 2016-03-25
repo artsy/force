@@ -22,14 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  commercial_filtering:
-    key: 'commercial_filtering'
-    edge: 'collect'
-    outcomes:
-      browse: 0.5
-      collect: 0.5
-    dimension: 'dimension10'
-
   masonry_artwork_sort:
     key: 'masonry_artwork_sort'
     edge: 'for_sale'
