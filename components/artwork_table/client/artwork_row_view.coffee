@@ -36,7 +36,7 @@ module.exports = class ArtworkRowView extends SaleArtworkView
 
   contactSeller: (e) ->
     e.preventDefault()
-    analyticsHooks.trigger 'artwork:contact-gallery'
+    analyticsHooks.trigger 'artwork:contact-gallery', artwork_id: @model.id, context_type: 'artist page'
     new ConfirmInquiryView
       artwork: @model
       partner: @model.get 'partner'
