@@ -29,7 +29,10 @@ block body
         ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
           include featured_links
 
-        #home-top-rail-section( class='js-homepage-featured-links', data-context='works by artists you follow' )
+        #home-top-rail-section(
+          class='js-homepage-featured-links',
+          data-context=(user ? 'works by artists you follow' : 'featured artworks for sale')
+        )
           .loading-spinner
           //- Rendered client-side
 

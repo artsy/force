@@ -23,11 +23,16 @@
   });
 
   // Artworks rail is rendered client-side
+  var selectors = [
+    '.js-homepage-featured-links[data-context="works by artists you follow"] a',
+    '.js-homepage-featured-links[data-context="featured artworks for sale"] a'
+  ].join(',');
   $(document)
-    .on('click', '.js-homepage-featured-links[data-context="works by artists you follow"] a', function() {
+    .on('click', selectors, function() {
+      var $el = $(this);
       analytics.track('Clicked homepage featured link', {
-        featured_link_path: $(this).attr('href'),
-        context_type: 'works by artists you follow'
+        featured_link_path: $el.attr('href'),
+        context_type: $el.closest('.js-homepage-featured-links').data('context')
       });
     });
 })();
