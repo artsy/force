@@ -12,7 +12,7 @@ module.exports = class Filter
     'for_sale': for_sale: 'true'
 
   sorts:
-    '-published_at': 'Recently Added'
+    '-partner_updated_at': 'Recently Updated'
     '-year': 'Artwork Year (desc.)'
     'year': 'Artwork Year (asc.)'
 

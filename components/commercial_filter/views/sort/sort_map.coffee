@@ -1,4 +1,4 @@
 module.exports =
-  '-published_at': "Recently Added"
+  '-partner_updated_at': "Recently Updated"
   '-prices': "Most Expensive"
   'prices': "Least Expensive"
