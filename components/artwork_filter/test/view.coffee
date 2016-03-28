@@ -154,7 +154,7 @@ describe 'ArtworkFilterView', ->
 
     it 'pulls the sort criteria out of the link and selects it', ->
       @view.$('.bordered-pulldown-options a').first().click()
-      @view.filter.selected.attributes.should.eql sort: '-published_at'
+      @view.filter.selected.attributes.should.eql sort: '-partner_updated_at'
       @view.$('.bordered-pulldown-options a').last().click()
       @view.filter.selected.attributes.should.eql sort: 'year'
 

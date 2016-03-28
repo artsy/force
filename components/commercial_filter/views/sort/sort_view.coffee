@@ -8,7 +8,7 @@ module.exports = class SortView extends Backbone.View
   events:
     'click .bordered-pulldown-options a': 'setSort'
 
-  defaultSort: '-published_at'
+  defaultSort: '-partner_updated_at'
 
   initialize: ({ @params }) ->
     throw new Error 'Requires a params model' unless @params?
