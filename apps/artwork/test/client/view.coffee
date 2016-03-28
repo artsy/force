@@ -54,7 +54,7 @@ describe 'ArtworkView', ->
         ['detailTemplate', 'auctionPlaceholderTemplate', 'actionsTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
-      @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
+      @ArtworkView.__set__ 'openShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       @ArtworkView.__set__ 'RelatedNavigationView', Backbone.View
       @ArtworkView.__set__ 'EmbeddedInquiryView', Backbone.View
@@ -142,7 +142,6 @@ describe 'ArtworkView', ->
       it 'opens the share view when the share button is clicked', ->
         @view.$('.circle-icon-button-share').click()
         @shareViewStub.args[0][0].description.should.containEql @artwork.toAltText()
-        @shareViewStub.args[0][0].width.should.equal '350px'
 
     describe '#route', ->
       it 'transitions the state of the el with data attributes', ->

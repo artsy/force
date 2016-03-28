@@ -1,4 +1,4 @@
-include ../share/template
+include ../share/mixin
 
 mixin article-figure(article, width, showDate, showShare)
   - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.7), quality: 95 })

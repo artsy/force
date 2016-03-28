@@ -1,8 +1,10 @@
-h1.avant-garde-header-center Share
+h3.share-menu__header
+  | Share
 
-.stacked-button-menu.share-menu
-  .share-menu-buttons
+.share-menu__options.stacked-button-menu
+  .share-menu__options__buttons
     a.share-to-facebook(
+      class='js-pop-up'
       data-message='Post to Facebook',
       data-service='facebook',
       href="https://www.facebook.com/sharer/sharer.php?u=#{url}",
@@ -10,7 +12,9 @@ h1.avant-garde-header-center Share
     )
       i.icon-facebook
       | Facebook
+
     a.share-to-twitter(
+      class='js-pop-up'
       data-message='Share on Twitter',
       data-service='twitter',
       href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
@@ -18,7 +22,9 @@ h1.avant-garde-header-center Share
     )
       i.icon-twitter
       | Twitter
+
     a.share-to-pinterest(
+      class='js-pop-up'
       data-message='Pin It on Pinterest',
       data-service='pinterest',
       href="https://pinterest.com/pin/create/button/?url=#{url}&media=#{media}&description=#{description}",
@@ -26,22 +32,22 @@ h1.avant-garde-header-center Share
     )
       i.icon-pinterest
       | Pinterest
+
     a.share-to-tumblr(
-      href=[
-        "https://www.tumblr.com/share/photo",
-        "?source=#{media}",
-        "&caption=#{description}",
-        "&clickthru=#{url}"].join('')
+      class='js-pop-up'
+      href='https://www.tumblr.com/share/photo?source=#{media}&caption=#{description}&clickthru=#{url}'
     )
       i.icon-tumblr
       | Tumblr
+
     a.share-by-email(
       data-message='Share via email',
       data-service='email',
-      href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}",
+      href='mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}',
     )
       i.icon-mail
       | Email
+
   span
     i.icon-link
     input.bordered-input(
