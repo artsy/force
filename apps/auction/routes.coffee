@@ -95,10 +95,17 @@ setupUser = (user, auction) ->
       res.redirect "/feature/#{collection.first().get('owner').id}"
 
 @inviteForm = (req, res, next) ->
+  fail = (err) -> res.status(500).send(err.errormsg)
   sailthru.apiGet 'user', { id: req.body.email }, (err, response) ->
-    return next err if err
-    auctionSlugs = _.uniq (response.vars.auction_slugs or []).concat [req.params.id]
-    source = response.vars.source or 'auction'
+    return fail err if err and err.error isnt 99
+    if not err
+      auctionSlugs = _.uniq(
+        (response.vars.auction_slugs or []).concat [req.params.id]
+      )
+      source = response.vars.source or 'auction'
+    else
+      auctionSlugs = [req.params.id]
+      source = 'auction'
     sailthru.apiPost 'user',
       id: req.body.email
       lists:
@@ -107,5 +114,5 @@ setupUser = (user, auction) ->
         source: source
         auction_slugs: auctionSlugs
     , (err, response) ->
-      return next err if err
+      return fail err if err
       res.send req.body
