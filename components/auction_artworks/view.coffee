@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 AuthModalView = require '../auth_modal/view.coffee'
 State = require './models/state.coffee'
+mediator = require '../../lib/mediator.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
 { acquireArtwork } = require '../acquire/view.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -47,12 +48,11 @@ module.exports = class AuctionArtworksView extends Backbone.View
     if @user
       location.assign $(e.target).attr('href')
     else
-      new AuthModalView
+      mediator.trigger 'open:auth',
         width: '500px'
         mode: 'register'
         copy: 'Sign up to bid'
-        # TODO: Figure out why this redirects immediately after opening
-        # redirectTo: $(e.currentTarget).attr('href')
+        redirectTo: $(e.currentTarget).attr('href')
     return true
 
   inquire: (e) ->

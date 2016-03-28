@@ -24,8 +24,8 @@ $(".auction-preview-sidebar .avant-garde-button-black").click(function() {
   if (sd.CURRENT_USER) {
     analytics.track('Clicked "Register to bid"', {
       context_type: 'upcoming auction feature',
-      auction_slug: sd.AUCTION.id,
-      auction_state: sd.AUCTION.auction_state,
+      auction_slug: AUCTION_ID,
+      auction_state: AUCTION_STATE,
       user_id: USER_ID
     })
   }
@@ -35,8 +35,8 @@ $(".auction-preview-sidebar .avant-garde-button-black").click(function() {
 $('.auction-preview-register-now a').click(function() {
   analytics.track('Clicked "Register to bid"', {
     context_type: 'notify me register now',
-    auction_slug: sd.AUCTION.id,
-    auction_state: sd.AUCTION.auction_state,
+    auction_slug: AUCTION_ID,
+    auction_state: AUCTION_STATE,
     user_id: USER_ID
   })
 })
@@ -44,13 +44,20 @@ $('.auction-preview-register-now a').click(function() {
 // Notify me auction form submitted
 $('.auction-preview-sidebar-form').submit(function() {
   analytics.track('Notify me auction form submitted', {
-    auction_slug: sd.AUCTION.id,
+    auction_slug: AUCTION_ID,
     user_id: USER_ID
   })
 })
 
 // TODO: Clicked "Register to bid" (context_type: "notify me thank you modal")
-// * include auction_state as well
+$(document).on('click', '.email-to-registration-transition-register', function() {
+  analytics.track('Clicked "Register to bid"', {
+    context_type: 'notify me thank you modal',
+    auction_slug: AUCTION_ID,
+    auction_state: AUCTION_STATE,
+    user_id: USER_ID
+  })
+})
 
 // Clicked "Register to bid" (context_type: 'current auction feature top')
 analytics.trackLink(
@@ -65,19 +72,24 @@ analytics.trackLink(
 )
 
 // Clicked "Register to bid" (context_type: 'current auction feature banner')
-analytics.trackLink(
-  $('[href*=auction-registration].cta-bar-button'),
-  'Clicked "Register to bid"',
-  {
+$(document).on('click', '[href*=auction-registration].cta-bar-button', function() {
+  analytics.track('Clicked "Register to bid"', {
     context_type: 'current auction feature banner',
     auction_slug: AUCTION_ID,
     auction_state: AUCTION_STATE,
     user_id: USER_ID
-  }
-)
+  })
+})
 
 // Clicked "Register to bid" (context_type: 'settings')
-// TODO: Add analytics hook to fire after render with the auction state data
+$(document).on('click', '.settings-auction-registration___button a', function() {
+  analytics.track('Clicked "Register to bid"', {
+    context_type: 'settings',
+    auction_slug: $(this).attr('href').split('/')[2],
+    auction_state: 'open',
+    user_id: USER_ID
+  })
+})
 
 // Registration failed to submit
 analyticsHooks.on('registration:submit-address', function() {
@@ -86,6 +98,7 @@ analyticsHooks.on('registration:submit-address', function() {
     if (errorMessages.length > 0) {
       analytics.track('Registration failed to submit', {
         auction_slug: sd.SALE.id,
+        auction_state: sd.SALE.auction_state,
         user_id: USER_ID,
         error_messages: errorMessages
       })
@@ -98,44 +111,37 @@ analyticsHooks.on('registration:success', function(data) {
   setTimeout(function() {
     analytics.track('Registration submitted', {
       auction_slug: sd.SALE.id,
+      auction_state: sd.SALE.auction_state,
       user_id: USER_ID,
       bidder_id: data.bidder_id
     })
   })
 })
 
+// Credit card not valid
+analyticsHooks.on('creditcard:unqualified', function(data) {
+  analytics.track('Credit card not valid', data)
+})
+
 // Clicked "Bid" (context_type: auction grid artwork)
-// TODO: Some really strange order of click even stuff happnening b/t this
-// and the AuctionArtworksView::authOrPass method
-// Check out using mediator.trigger 'open:auth' instead
-// $('.aga-bid-button .avant-garde-button-black').each(function() {
-//   analytics.trackLink(
-//     $(this),
-//     'Clicked "Bid"',
-//     {
-//       auction_slug: AUCTION_ID,
-//       user_id: USER_ID,
-//       context_type: 'auction grid artwork',
-//       artwork_slug: $(this).attr('data-id')
-//     }
-//   )
-// })
+$(document).on('click', '.aga-bid-button .avant-garde-button-black', function() {
+  analytics.track('Clicked "Bid"', {
+    auction_slug: AUCTION_ID,
+    user_id: USER_ID,
+    context_type: 'auction grid artwork',
+    artwork_slug: $(this).attr('data-id')
+  })
+})
 
 // Clicked "Bid" (context_type: auction list artwork)
-// TODO: Some really strange order of click even stuff happnening b/t this
-// and the AuctionArtworksView::authOrPass method
-// $('.ala-bid-button .avant-garde-button-black').each(function() {
-//   analytics.trackLink(
-//     $(this),
-//     'Clicked "Bid"',
-//     {
-//       auction_slug: AUCTION_ID,
-//       user_id: USER_ID,
-//       context_type: 'auction list artwork',
-//       artwork_slug: $(this).attr('data-id')
-//     }
-//   )
-// })
+$(document).on('click', '.ala-bid-button .avant-garde-button-black', function() {
+  analytics.track('Clicked "Bid"', {
+    auction_slug: AUCTION_ID,
+    user_id: USER_ID,
+    context_type: 'auction list artwork',
+    artwork_slug: $(this).attr('data-id')
+  })
+})
 
 // Clicked "Bid" (context_type: your active bids)
 $('.auction-mab-bid-button').each(function() {
