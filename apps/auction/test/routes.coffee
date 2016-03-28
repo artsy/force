@@ -106,3 +106,10 @@ describe '/auction routes', ->
       @sailthru.apiGet.callsArgWith(2, null, vars: source: null)
       routes.inviteForm @req, @res, @next
       @sailthru.apiPost.args[1][1].vars.source.should.equal 'auction'
+
+    it 'continues fine for ST error 99 (user not found)', ->
+      @sailthru.apiGet.callsArgWith(2, { error: 99 })
+      routes.inviteForm @req, @res, @next
+      @sailthru.apiGet.callsArgWith(2, null, vars: source: null)
+      routes.inviteForm @req, @res, @next
+      @sailthru.apiPost.args[1][1].vars.source.should.equal 'auction'
