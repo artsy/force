@@ -104,7 +104,7 @@ setupUser = (user, auction) ->
       )
       source = response.vars.source or 'auction'
     else
-      auctionSlugs = []
+      auctionSlugs = [req.params.id]
       source = 'auction'
     sailthru.apiPost 'user',
       id: req.body.email
