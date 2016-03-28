@@ -40,3 +40,20 @@ artwork-action = {
     font-size 26px
     line-height 1
     transform translate(-50%, -50%)
+
+  &--save
+    &[data-state='saved']
+      background-color purple-color
+      border-color @background-color
+      > i
+        color white
+      &:after
+        content 'Remove'
+      &:hover
+        background-color gray-darker-color
+        border-color @background-color
+        &.is-clicked
+          background-color purple-color
+          border-color @background-color
+          &:after
+            content 'Saved'
