@@ -109,6 +109,7 @@ module.exports = class Artwork extends Backbone.Model
   # Should we include a form or button to contact the partner?
   #
   isContactable: ->
+    return false if @isAtLimitedFairPartner()
     return true if @get('is_contactable')
     return true if @isPartOfContactableAuctionPromo()
     return false if @isPartOfAuction()
