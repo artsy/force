@@ -80,17 +80,17 @@ module.exports = class Artwork extends Backbone.Model
   isMultipleEditions: ->
     @get('edition_sets')?.length > 1
 
-  # Outputs the [height, width, depth || height, width || diameter] in decimal/inches
+  # Outputs the [height, width, depth || height, width || diameter] in decimal/cm
   #
   # return {Array}
   normalizedDimensions: ->
-    _.map @dimensions(metric: 'in', format: 'decimal').replace('in', '').split(' × '), parseFloat
+    _.map @dimensions(metric: 'cm', format: 'decimal').replace('cm', '').split(' × '), parseFloat
 
-  # Is any side larger than 600 inches?
+  # Is any side larger than 1524 cm?
   #
   # return {Boolean}
   tooBig: ->
-    _.any @normalizedDimensions(), (x) -> x > 600
+    _.any @normalizedDimensions(), (x) -> x > 1524
 
   # Is the work two-dimensional and can be
   # used in conjunction with 'View in Room'?
