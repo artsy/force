@@ -14,8 +14,8 @@ describe 'countdown', ->
 
     countdown timestamp
       .should.eql [
-        { send: 'days', label: 'days', value: '01' }
-        { send: 'hours', label: 'hrs', value: '00' }
+        { send: 'days', label: 'day', value: '01' }
+        { send: 'hours', label: 'hr', value: '00' }
         { send: 'minutes', label: 'min', value: '00' }
         { send: 'seconds', label: 'sec', value: '00' }
       ]
@@ -24,8 +24,8 @@ describe 'countdown', ->
 
     countdown timestamp
       .should.eql [
-        { send: 'days', label: 'days', value: '00' }
-        { send: 'hours', label: 'hrs', value: '23' }
+        { send: 'days', label: 'day', value: '00' }
+        { send: 'hours', label: 'hr', value: '23' }
         { send: 'minutes', label: 'min', value: '59' }
         { send: 'seconds', label: 'sec', value: '59' }
       ]
