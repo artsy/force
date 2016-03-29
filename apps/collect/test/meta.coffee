@@ -4,7 +4,7 @@ jade = require 'jade'
 describe 'Meta tags', ->
   describe 'browse page', ->
     before ->
-      @file = "#{process.cwd()}/apps/browse/templates/meta.jade"
+      @file = "#{process.cwd()}/apps/collect/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(),
         sd:
           CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
