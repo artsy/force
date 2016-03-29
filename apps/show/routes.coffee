@@ -32,6 +32,7 @@ query = """
         name
         is_linkable
         default_profile_id
+        is_limited_fair_partner
       }
       fair {
         id
