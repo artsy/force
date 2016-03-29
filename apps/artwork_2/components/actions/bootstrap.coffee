@@ -8,3 +8,6 @@ module.exports = (sd, { artwork }) ->
     share:
       media: artwork.images[0].url
       description: description artwork
+
+    view_in_room:
+      dimensions: artwork.dimensions.cm

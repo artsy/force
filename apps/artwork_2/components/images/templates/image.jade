@@ -1,15 +1,19 @@
 a.artwork-images__images__image(
   class='js-artwork-images__images__image'
   data-id= image.id
-  data-state=(i === (artwork.images.length - 1) ? 'active' : 'inactive')
-  href='#zoom'
-  rel='nofollow'
+  data-state= (i === (artwork.images.length - 1) ? 'active' : 'inactive')
 )
   .artwork-images__images__image__placeholder(
     class='js-artwork-images__images__image__placeholder'
     style='background-image: url(#{image.placeholder.url})'
   )
+
   .artwork-images__images__image__display(
     class='js-artwork-images__images__image__display'
-    data-src= image.url
   )
+    img.artwork-images__images__image__display__img(
+      class='js-artwork-images__images__image__display__img'
+      data-src= image.url
+      data-default= (i === (artwork.images.length - 1))
+      alt= artwork.title
+    )
