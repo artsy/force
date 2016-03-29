@@ -89,27 +89,3 @@ describe 'ArtistViewHelpers', ->
       <p>Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “<a href="/artwork/jeff-koons-balloon-dog-blue">Balloon Dog</a>” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved <a href="/gene/surrealism">Surrealism</a> and <a href="/gene/dada">Dada</a> and <a href="/gene/pop-art">Pop</a>, so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-<a href="/gene/baroque">Baroque</a> sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral <em>Puppy</em> (1992), reference 17th-century French garden design.</p>
     """
 
-  it 'toJSONLD', ->
-    artist = {
-      image: large: '/foo/bar/large.jpg'
-      name: 'Foo Bar'
-      href: '/foo-bar'
-      gender: 'male'
-      birthday: '1900'
-      deathday: '2000'
-    }
-
-    result = helpers.toJSONLD(artist)
-    result.should.containEql {
-      "@context": "http://schema.org"
-      "@type": "Person"
-      image: '/foo/bar/large.jpg'
-      name: 'Foo Bar'
-      gender: 'male'
-      birthDate: '1900'
-      deathDate: '2000'
-      additionalType: 'Artist'
-    }
-    result.url.should.containEql '/foo-bar'
-
-
