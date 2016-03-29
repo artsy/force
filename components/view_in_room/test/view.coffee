@@ -30,7 +30,7 @@ describe 'ViewInRoomView', ->
 
     @view = new ViewInRoomView
       $img: $img
-      artwork: @artwork
+      dimensions: '40 × 40 cm'
 
     @view.__render__()
     @view.cacheSelectors()
@@ -75,14 +75,14 @@ describe 'ViewInRoomView', ->
 
   describe '#artworkScalingFactor', ->
     it 'returns a non-zero factor to scale the artwork by', ->
-      @view.$placeholder.width(200)
+      @view.$placeholder.width 200
       @view.getArtworkDimensions = -> [20, 20]
 
       @view.artworkScalingFactor()
-        .should.equal 0.55
+        .should.equal 0.22
 
   describe '#scalePlaceholder', ->
-    it 'scales the placeholder and sets it at eye level if the significant dimension is less than 100', ->
+    it 'scales the placeholder and sets it at eye level if the significant dimension is less than 254', ->
       @view.$placeholder.css = sinon.stub()
       @view.scalePlaceholder()
 
@@ -92,9 +92,9 @@ describe 'ViewInRoomView', ->
       @view.$placeholder.css.args[0][0].bottom
         .should.equal '868.296px'
 
-    it 'scales the placeholder and sets it at ground level if the significant dimension is greater than 100', ->
+    it 'scales the placeholder and sets it at ground level if the significant dimension is greater than 254', ->
       @view.$placeholder.css = sinon.stub()
-      @view.artwork.dimensions = -> '101 x 20 x 30in'
+      @view.dimensions = '255 x 20 x 30cm'
       @view.scalePlaceholder()
 
       Object.keys @view.$placeholder.css.args[0][0]

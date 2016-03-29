@@ -60,8 +60,12 @@ module.exports = class ArtworkRouter extends Backbone.Router
     unless @artwork.related().images.active().get('is_default')
       $('.artwork-additional-image').first().click()
 
-    @view = new ViewInRoomView $img: $('#the-artwork-image'), artwork: @artwork
+    @view = new ViewInRoomView
+      $img: $('#the-artwork-image')
+      dimensions: @artwork.dimensions metric: 'cm', format: 'decimal'
+
     $('body').prepend @view.render().$el
+
     @view.once 'removed', =>
       Backbone.history.navigate @artwork.href(),
         trigger: true

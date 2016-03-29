@@ -7,7 +7,7 @@ module.exports = class ViewInRoom extends Backbone.View
   className: 'view-in-room'
 
   roomWidth: 6578
-  benchRatio: 5.5
+  benchRatio: 2.17
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
@@ -20,7 +20,7 @@ module.exports = class ViewInRoom extends Backbone.View
   events:
     'click .js-view-in-room-close': 'remove'
 
-  initialize: ({ @$img, @artwork }) ->
+  initialize: ({ @$img, @dimensions }) ->
     $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
     @scrollbar = new Scrollbar
 
@@ -73,11 +73,6 @@ module.exports = class ViewInRoom extends Backbone.View
       .css artworkTransformCSS
       .one $.support.transition.end, =>
         @$artwork.addClass 'is-notransition'
-
-        if @artworkScalingFactor() > 1
-          @$artwork.attr 'src',
-            @artwork.defaultImage().imageUrlFor(@$artwork.width(), @$artwork.height())
-
       .emulateTransitionEnd 750
 
   transitionOut: ->
@@ -89,7 +84,7 @@ module.exports = class ViewInRoom extends Backbone.View
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
 
-    options = if significantDimension > 100
+    options = if significantDimension > 254
       bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
@@ -123,21 +118,14 @@ module.exports = class ViewInRoom extends Backbone.View
     Math.ceil(factor * 100) / 100
 
   artworkScalingFactor: ->
-    @__artworkFactor__ ?= if @artwork.hasDimension('diameter') and not @artwork.hasDimension('width')
-      [diameter] = @getArtworkDimensions()
-      Math.round diameter * @benchRatio
-    else if @artwork.hasDimension('width')
-      [height, width] = @getArtworkDimensions()
-      Math.round width * @benchRatio
-    else
-      1
+    [height, width] = @getArtworkDimensions()
+    factor = Math.round(width * @benchRatio) or 1
+    scaling = factor / @$placeholder.width()
+    Math.round(scaling * 100) / 100
 
-    scaling = @__artworkFactor__ / @$placeholder.width()
-    Math.round(scaling * 100)/100
-
-  # @return {Array} height, width
+  # @return [height, width]
   getArtworkDimensions: ->
-    @__dimensions__ ?= @artwork.normalizedDimensions()
+    @__dimensions__ ?= _.map @dimensions.replace('cm', '').split(' × '), parseFloat
 
   remove: ->
     $(window).off 'resize.view-in-room'

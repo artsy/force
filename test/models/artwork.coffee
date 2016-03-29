@@ -87,23 +87,23 @@ describe 'Artwork', ->
       @artwork.isMultipleEditions().should.be.true()
 
     it 'normalizes dimensions', ->
-      @artwork.set dimensions: in: '10 × 200 × 30in'
+      @artwork.set dimensions: cm: '10 × 200 × 30cm'
       @artwork.normalizedDimensions().should.eql [10, 200, 30]
-      @artwork.set dimensions: in: '10 × 200 × 30'
+      @artwork.set dimensions: cm: '10 × 200 × 30'
       @artwork.normalizedDimensions().should.eql [10, 200, 30]
-      @artwork.set dimensions: in: '101 × 20in'
+      @artwork.set dimensions: cm: '101 × 20cm'
       @artwork.normalizedDimensions().should.eql [101, 20]
-      @artwork.set dimensions: in: '601in'
-      @artwork.normalizedDimensions().should.eql [601]
+      @artwork.set dimensions: cm: '1525cm'
+      @artwork.normalizedDimensions().should.eql [1525]
 
-    it 'might be too big (more than 600 inches on a side)', ->
-      @artwork.set dimensions: in: '10 × 20in'
+    it 'might be too big (more than 1524 cmches on a side)', ->
+      @artwork.set dimensions: cm: '10 × 20cm'
       @artwork.tooBig().should.be.false()
-      @artwork.set dimensions: in: '600 × 600in'
+      @artwork.set dimensions: cm: '1524 × 1524cm'
       @artwork.tooBig().should.be.false()
-      @artwork.set dimensions: in: '600.5 × 600in'
+      @artwork.set dimensions: cm: '1524.5 × 1524cm'
       @artwork.tooBig().should.be.true()
-      @artwork.set dimensions: in: '600 × 601in'
+      @artwork.set dimensions: cm: '1524 × 1525cm'
       @artwork.tooBig().should.be.true()
 
     it 'can be hung', ->
@@ -115,11 +115,11 @@ describe 'Artwork', ->
       @artwork.set 'depth', 1
       @artwork.isHangable().should.be.false()
       @artwork.unset 'depth'
-      @artwork.set dimensions: in: '600 × 20in'
+      @artwork.set dimensions: cm: '1524 × 20cm'
       @artwork.isHangable().should.be.true()
-      @artwork.set dimensions: in: '601 × 20in'
+      @artwork.set dimensions: cm: '1525 × 20cm'
       @artwork.isHangable().should.be.false()
-      @artwork.set dimensions: in: '600 × 20in'
+      @artwork.set dimensions: cm: '1524 × 20cm'
       @artwork.isHangable().should.be.true()
       @artwork.set 'diameter', 1
       @artwork.isHangable().should.be.false()
