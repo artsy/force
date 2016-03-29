@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 ArtworkView = require './view.coffee'
 DeepZoomView = require '../../../components/deep_zoom/view.coffee'
-ViewInRoomView = require './view_in_room.coffee'
+ViewInRoomView = require '../../../components/view_in_room/view.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -60,8 +60,12 @@ module.exports = class ArtworkRouter extends Backbone.Router
     unless @artwork.related().images.active().get('is_default')
       $('.artwork-additional-image').first().click()
 
-    @view = new ViewInRoomView $container: $('#artwork-view-in-room-container'), $img: $('#the-artwork-image'), artwork: @artwork
-    @view.render()
+    @view = new ViewInRoomView $img: $('#the-artwork-image'), artwork: @artwork
+    $('body').prepend @view.render().$el
+    @view.once 'removed', =>
+      Backbone.history.navigate @artwork.href(),
+        trigger: true
+        replace: true
 
   contactPartner: ->
     analyticsHooks.trigger 'artwork:inquiry-from-url'

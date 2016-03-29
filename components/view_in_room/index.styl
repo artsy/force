@@ -1,0 +1,70 @@
+view-in-room = {
+  room: {
+    width: 6578px,
+    height: 1368px
+  },
+  wall: {
+    color: #dfdbd8
+  }
+}
+
+.view-in-room
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index zindex-modal
+  &[data-state='in']
+    .view-in-room__room
+      opacity 1
+    .view-in-room__artwork
+      box-shadow 0 2px 5px rgba(black, 0.4)
+
+  &__close
+    position absolute
+    top 20px
+    left @top
+    width 75px
+    height @width
+    text-align center
+    background-color gray-darker-color
+    z-index 2
+    opacity 0.6
+    transition opacity 0.25s
+    text-decoration none
+
+    > i
+      color: view-in-room.wall.color
+      font-size 50px
+      line-height @width
+
+    &:hover
+      opacity 1
+
+  &__room
+    position absolute
+    width: view-in-room.room.width
+    height: view-in-room.room.height
+    top 50%
+    left 50%
+    margin-top -(@height / 2)
+    margin-left -(@width / 2)
+    background: view-in-room.wall.color url('https://d1ycxz9plii3tb.cloudfront.net/misc/room.jpg') bottom center no-repeat
+    opacity 0
+    transition opacity 0.5s
+
+  &__placeholder
+  &__artwork
+    position fixed
+    z-index 2
+
+  &__placeholder
+    left 50%
+    visibility hidden
+
+  &__artwork
+    &.is-transition
+      transition all 0.75s
+    &.is-notransition
+      transition none

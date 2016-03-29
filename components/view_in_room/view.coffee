@@ -1,16 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('../templates/view_in_room.jade') arguments...
+Scrollbar = require '../scrollbar/index.coffee'
+template = -> require('./index.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
-  className: 'artwork-view-in-room'
-  bodyClasses: 'body-hide-header'
+  className: 'view-in-room'
 
   roomWidth: 6578
   benchRatio: 5.5
-
-  events:
-    'click .view-in-room-close': 'return'
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
@@ -20,74 +17,74 @@ module.exports = class ViewInRoom extends Backbone.View
   groundLevel: ->
     0.095 * @roomWidth
 
-  initialize: (options) ->
-    { @$container, @$img, @artwork } = options
+  events:
+    'click .js-view-in-room-close': 'remove'
 
-    @$window = $(window)
-    @$body = $('body')
+  initialize: ({ @$img, @artwork }) ->
+    $(window).on 'resize.view-in-room', _.throttle(@scale, 100)
+    @scrollbar = new Scrollbar
 
-    @$window.on 'resize.view-in-room', _.throttle(@scale, 100)
-
-  _render: ->
-    @$el.html template(artwork: @artwork)
-    @$container.html @$el
+  __render__: ->
+    @$el.html template()
+    this
 
   render: ->
-    imagesLoaded = require 'imagesloaded'
-
-    @adjustViewport()
-    @_render()
+    @__render__()
+    @scrollbar.disable()
     @cacheSelectors()
     @injectImage()
+
     @$room.imagesLoaded().always =>
       @scaleRoom()
       @scalePlaceholder()
       @transitionIn()
 
-  return: ->
-    Backbone.history.navigate @artwork.href(), trigger: true, replace: true
-    false
+    this
 
   cacheSelectors: ->
-    @$artwork = @$('#vir-artwork')
-    @$placeholder = @$('#vir-placeholder')
-    @$room = @$('.vir-room')
+    @$artwork = @$('.js-view-in-room-artwork')
+    @$placeholder = @$('.js-view-in-room-placeholder')
+    @$room = @$('.js-view-in-room-room')
 
   injectImage: ->
-    @$placeholder.add(@$artwork).attr('src', @$img.attr 'src')
+    @$placeholder.add @$artwork
+      .attr 'src', @$img.attr 'src'
+
     # Position exactly where original image was
     @$artwork.css @getRect(@$img)
 
   getRect: ($el) ->
-    _.pick($el[0].getBoundingClientRect(), 'height', 'width', 'top', 'left')
+    _.pick $el[0].getBoundingClientRect(), 'height', 'width', 'top', 'left'
 
   transitionIn: ->
     @$el.attr 'data-state', 'in'
     @$img.css visibility: 'hidden'
 
-    artworkTransformCSS = @getRect(@$placeholder)
+    artworkTransformCSS = @getRect @$placeholder
 
     # We need to manually compute in IE < 11
-    if navigator.userAgent.match('MSIE')
+    if navigator.userAgent.match 'MSIE'
       for key in ['top', 'height', 'width']
-        artworkTransformCSS[key] = Math.abs(artworkTransformCSS[key] * @roomScalingFactor())
-      artworkTransformCSS['left'] = Math.floor( ($(window).innerWidth() - artworkTransformCSS['width']) / 2)
+        artworkTransformCSS[key] = Math.abs artworkTransformCSS[key] * @roomScalingFactor()
+      artworkTransformCSS['left'] = Math.floor ($(window).innerWidth() - artworkTransformCSS['width']) / 2
 
-    @$artwork.
-      addClass('is-transition').
-      css(artworkTransformCSS).
-      one($.support.transition.end, =>
-        @$artwork.addClass('is-notransition')
+    @$artwork
+      .addClass 'is-transition'
+      .css artworkTransformCSS
+      .one $.support.transition.end, =>
+        @$artwork.addClass 'is-notransition'
+
         if @artworkScalingFactor() > 1
           @$artwork.attr 'src',
             @artwork.defaultImage().imageUrlFor(@$artwork.width(), @$artwork.height())
-      ).emulateTransitionEnd(750)
+
+      .emulateTransitionEnd 750
 
   transitionOut: ->
     @$el.attr 'data-state', 'out'
-    @$artwork.
-      removeClass('is-notransition').
-      css @getRect(@$img)
+    @$artwork
+      .removeClass 'is-notransition'
+      .css @getRect(@$img)
 
   scalePlaceholder: ->
     [significantDimension] = @getArtworkDimensions()
@@ -97,6 +94,7 @@ module.exports = class ViewInRoom extends Backbone.View
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
       transformOrigin: "50% #{@$placeholder.height()}px 0"
+
     else
       bottom: "#{@eyeLevel()}px"
       marginBottom: -(@$placeholder.height() / 2)
@@ -127,27 +125,25 @@ module.exports = class ViewInRoom extends Backbone.View
   artworkScalingFactor: ->
     @__artworkFactor__ ?= if @artwork.hasDimension('diameter') and not @artwork.hasDimension('width')
       [diameter] = @getArtworkDimensions()
-      Math.round(diameter * @benchRatio)
+      Math.round diameter * @benchRatio
     else if @artwork.hasDimension('width')
       [height, width] = @getArtworkDimensions()
-      Math.round(width * @benchRatio)
+      Math.round width * @benchRatio
     else
       1
-    scailing = @__artworkFactor__ / @$placeholder.width()
-    Math.round(scailing * 100)/100
+
+    scaling = @__artworkFactor__ / @$placeholder.width()
+    Math.round(scaling * 100)/100
 
   # @return {Array} height, width
   getArtworkDimensions: ->
     @__dimensions__ ?= @artwork.normalizedDimensions()
 
-  adjustViewport: ->
-    $('html, body').scrollTop 0
-    @$body.addClass @bodyClasses
-
   remove: ->
-    @$window.off 'resize.view-in-room'
-    @transitionOut().one $.support.transition.end, =>
-      $('.artwork-container').attr style: null # Remove hard-coded height
-      @$body.removeClass @bodyClasses
-      @$img.css visibility: 'visible'
-      ViewInRoom.__super__.remove.apply(@, arguments)
+    $(window).off 'resize.view-in-room'
+    @transitionOut()
+      .one $.support.transition.end, =>
+        @$img.css visibility: 'visible'
+        @scrollbar.reenable()
+        ViewInRoom.__super__.remove.apply this, arguments
+        @trigger 'removed'
