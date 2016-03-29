@@ -1,5 +1,6 @@
 module.exports = """
   fragment images on Artwork {
+    title
     images {
       id
       url(version: ["larger", "large"])

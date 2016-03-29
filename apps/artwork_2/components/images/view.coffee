@@ -35,9 +35,11 @@ module.exports = class ArtworkImagesView extends Backbone.View
       .attr 'data-state', 'active'
       .find '.js-artwork-images__images__image__display'
 
+    $img = $loader.find 'img'
+    $img.attr 'src', $img.data 'src'
+
     $loader
-      .css 'background-image': "url(#{$loader.data 'src'})"
-      .imagesLoaded background: true, ->
+      .imagesLoaded ->
         $loader.attr 'data-state', 'loaded'
 
   index: ->
