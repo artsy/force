@@ -26,3 +26,5 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
       p.artwork-item-sale-price= artwork.sale_message
     if includeContact
       a.artwork-item-contact-seller( href="#{artwork.href}/contact-gallery" ) Contact #{artwork.partner.type}
+    else if partner_show.partner.is_limited_fair_partner
+      p Not inquireable
