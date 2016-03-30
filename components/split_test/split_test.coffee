@@ -19,7 +19,7 @@ module.exports = class SplitTest
   set: (outcome) ->
     @cookies().set @_key(), outcome
 
-    analytics.track 'Experiment Viewed',
+    analytics?.track 'Experiment Viewed',
       experiment_id: @key
       experiment_name: @key
       variation_id: outcome
