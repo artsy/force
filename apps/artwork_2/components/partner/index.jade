@@ -28,8 +28,11 @@ if helpers.partner.isDisplayable(partner)
             | Contact Gallery
 
         if profile
-          a.avant-garde-button-white.is-small( class='js-artwork-partner-follow', data-id= profile.id )
-            | Follow
+          a.avant-garde-button-white.follow-button.is-small(
+            class='js-artwork-partner-follow'
+            data-type='profile'
+            data-id= profile.id
+          )
 
           if profile.counts.follows
             span.artwork-partner__metadata__actions__followers

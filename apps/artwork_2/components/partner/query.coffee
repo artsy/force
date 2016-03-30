@@ -10,6 +10,7 @@ module.exports = """
         city
       }
       profile {
+        id
         bio
         icon {
           url(version: "square140")
