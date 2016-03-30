@@ -15,14 +15,9 @@ sidebar-width = 26%
     opacity 0.5
     pointer-events none
 .artwork-section__content
-.artwork-filter
-  padding 20px 0
-.artwork-section__content
   flex-basis (100% - sidebar-width)
   > .artwork-columns
     margin-bottom 40px
-  h2
-    margin 5px 0 20px 0
 .artwork-filter
   flex-basis sidebar-width
   padding-right 40px
@@ -107,15 +102,18 @@ sidebar-width = 26%
   margin-left 0.25em
   color purple-color
   text-decoration underline
+
+// Header
+#artwork-section__header
+  display flex
+  margin-bottom 20px
+  align-items center
+  h2
+    flex-grow 1
 .artwork-filter-sort-count-pulldown
-  float right
   margin-right 9px
-  margin-top -10px
-.artwork-filter-sort-count
-  clearfix()
 .artwork-filter-view-mode
-  float right
-  margin-top -10px
+  margin-left 9px
   border 2px solid gray-lighter-color
   height 40px
   overflow hidden
@@ -133,8 +131,6 @@ sidebar-width = 26%
     display inline-block
   &.is-active svg, &:hover svg
     fill black
-#artwork-section__header
-  h2
-    float left
+
 .artwork-spinner-container
   position relative

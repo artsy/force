@@ -4,6 +4,11 @@ module.exports = [
   name: 'Overview'
   predicate: -> true
 ,
+  slug: 'cv'
+  href: 'artist_2/:id/cv'
+  name: 'CV'
+  predicate: -> ({ articles, shows }) -> articles or shows
+,
   slug: 'works'
   href: 'artist_2/:id/works'
   name: 'Works'

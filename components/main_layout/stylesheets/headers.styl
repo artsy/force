@@ -39,14 +39,14 @@
 .bisected-header
   clearfix()
   margin 20px 0
-.bisected-header-cell
+.evenly-bisected-header-cell
   float left
   text-align left
   garamond-size('s-body')
   &:last-child
-    width 40%
+    width 50%
   &:first-child
-    width 60%
+    width 50%
     padding-right 20px
   h2
     margin-bottom 20px
@@ -64,8 +64,17 @@
     &:first-child
       .bisected-header-cell-section:last-child
         margin-bottom 40px
-.evenly-bisected-header-cell
-  @extends .bisected-header-cell
-  &:last-child
+
+.sixty-forty-bisected-header-cell
+  @extends .evenly-bisected-header-cell
   &:first-child
-    width 50%
+    width 60%
+  &:last-child
+    width 40%
+
+.thirty-seventy-bisected-header-cell
+  @extends .evenly-bisected-header-cell
+  &:first-child
+    width 30%
+  &:last-child
+    width 70%

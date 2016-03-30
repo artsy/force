@@ -6,6 +6,7 @@ initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.co
 HeaderView = require './views/header.coffee'
 OverviewView = require './views/overview.coffee'
 WorksView = require './views/works.coffee'
+CVView = require './views/cv.coffee'
 ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
@@ -16,6 +17,7 @@ attachCTA = require './cta.coffee'
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
     'artist_2/:id': 'overview'
+    'artist_2/:id/cv': 'cv'
     'artist_2/:id/works': 'works'
     'artist_2/:id/shows': 'shows'
     'artist_2/:id/articles': 'articles'
@@ -52,6 +54,9 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view = new OverviewView @options
     mediator.on 'overview:fetches:complete', =>
       attachCTA @model
+
+  cv: ->
+    @view = new CVView @options
 
   works: ->
     @view = new WorksView @options
