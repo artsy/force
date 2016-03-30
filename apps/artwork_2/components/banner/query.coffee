@@ -5,6 +5,7 @@ module.exports = """
       ... on RelatedSale {
         name
         href
+        start_at
         end_at
       }
       ... on RelatedFair {
