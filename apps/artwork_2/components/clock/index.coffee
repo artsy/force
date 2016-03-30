@@ -3,8 +3,8 @@ moment = require 'moment'
 
 UNITS = [
   { send: 'months', label: 'mos' }
-  { send: 'days', label: 'days' }
-  { send: 'hours', label: 'hrs' }
+  { send: 'days', label: 'day' }
+  { send: 'hours', label: 'hr' }
   { send: 'minutes', label: 'min' }
   { send: 'seconds', label: 'sec' }
 ]

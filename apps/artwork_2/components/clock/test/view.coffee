@@ -24,13 +24,13 @@ describe 'ClockView', ->
     timestamp = moment().add(1, 'day').format()
     view = new ClockView timestamp: timestamp
     view.render().$el.text()
-      .should.equal '01days00hrs00min00sec'
+      .should.equal '01day00hr00min00sec'
 
   it 'optionally accepts a label', ->
     timestamp = moment().add(1, 'day').format()
     view = new ClockView label: 'Auction closes in', timestamp: timestamp
     view.render().$el.text()
-      .should.equal 'Auction closes in01days00hrs00min00sec'
+      .should.equal 'Auction closes in01day00hr00min00sec'
 
   it 'renders empty if the timestamp has passed', ->
     timestamp = moment().subtract(1, 'day').format()
