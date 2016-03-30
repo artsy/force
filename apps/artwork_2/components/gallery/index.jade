@@ -13,7 +13,7 @@ if gallery
       a.artwork-gallery__metadata__name( href= gallery.href )
         = gallery.name
 
-      if gallery.cities && gallery.cities.length
+      if gallery.locations && gallery.locations.length
         .artwork-gallery__metadata__locations
           = helpers.gallery.cities(gallery.locations)
 
