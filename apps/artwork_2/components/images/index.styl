@@ -1,5 +1,3 @@
-page-height = 30px
-
 .artwork-images
   position relative
   block-margins(10px)
@@ -7,7 +5,9 @@ page-height = 30px
 
   &.artwork-images--multiple
     > .artwork-images__images
-      bottom page-height
+      right gutter
+      bottom gutter
+      left @right
 
   &__images
     position absolute
@@ -65,7 +65,7 @@ page-height = 30px
     right 0
     bottom 0
     left 0
-    height page-height
+    height gutter
     block-margins(10px)
     display flex
     align-items center
@@ -98,18 +98,21 @@ page-height = 30px
     &__next
       position absolute
       transform translateY(-50%)
-      padding 30px
+      padding (gutter * 2)
       cursor pointer
       color gray-color
+      text-align center
       transition color 0.25s
       &:hover
         color black
     &__prev
       left 0
       padding-left 0
+      cursor w-resize
     &__next
       right 0
       padding-right 0
+      cursor e-resize
 
   &[data-focus='active'] > .artwork-images__arrows
     opacity 1
