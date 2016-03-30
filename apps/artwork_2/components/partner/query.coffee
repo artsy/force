@@ -1,5 +1,6 @@
 module.exports = """
   fragment partner on Artwork {
+    is_contactable
     partner {
       type
       name
