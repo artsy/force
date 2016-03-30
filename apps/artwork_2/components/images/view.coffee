@@ -1,4 +1,3 @@
-{ throttle } = require 'underscore'
 Backbone = require 'backbone'
 deepZoom = require '../deep_zoom/index.coffee'
 template = -> require('./index.jade') arguments...
@@ -9,22 +8,11 @@ module.exports = class ArtworkImagesView extends Backbone.View
     'click .js-artwork-images__pages__page': 'activate'
     'click .js-artwork-images__arrows__next': 'next'
     'click .js-artwork-images__arrows__prev': 'prev'
-    'mousemove': -> @detect arguments...
 
   @cache: (selector) -> -> @[selector] ?= @$(selector)
 
   pages: @cache '.js-artwork-images__pages__page'
   images: @cache '.js-artwork-images__images__image'
-
-  initialize: ->
-    @detect = throttle @__detect__, 500
-
-  __detect__: (e) ->
-    @$el.attr 'data-focus', 'active'
-    clearTimeout @activity
-    @activity = setTimeout =>
-      @$el.attr 'data-focus', 'inactive'
-    , 1000
 
   __activate__: (id) ->
     @$active = @images().add @pages()
