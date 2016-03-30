@@ -51,7 +51,7 @@ representation = (fair) ->
         moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
 
       # redirect to fair if there is a fair currently running.
-      return res.redirect(current.fairOrgHref()) if current
+      return res.redirect(current.href()) if current
 
       # fetch the past fairs and their respective representations
       # to get the two small images
