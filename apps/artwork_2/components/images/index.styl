@@ -1,12 +1,19 @@
+artwork-images = {
+  pages: {
+    height: 7px
+  }
+}
+
 .artwork-images
   position relative
   block-margins(10px)
   height 65vh
+  min-height 400px
 
   &.artwork-images--multiple
     > .artwork-images__images
-      right gutter
-      bottom gutter
+      right (gutter * 1.25)
+      bottom: artwork-images.pages.height + 10px
       left @right
 
   &__images
@@ -15,6 +22,7 @@
     right 0
     left 0
     bottom 0
+    prevent-content-shift()
 
     &__image
       position absolute
@@ -65,7 +73,6 @@
     right 0
     bottom 0
     left 0
-    height gutter
     block-margins(10px)
     display flex
     align-items center
@@ -74,17 +81,18 @@
 
     &__page
       display inline-block
-      padding 2px
-      color gray-color
       cursor pointer
-      font-family Verdana, sans-serif
-      font-size 20px
-      line-height 1
-      transition color 0.2s ease-in-out
+      height: artwork-images.pages.height
+      width @height
+      margin 0 4px
+      border-radius 50%
+      vertical-align bottom
+      background-color gray-color
+      transition background-color 0.2s ease-in-out
       user-select none
       &:hover
       &[data-state='active']
-        color black
+        background-color black
 
   &__arrows
     position absolute
@@ -109,4 +117,3 @@
     &__next
       right 0
       padding-right 0
-
