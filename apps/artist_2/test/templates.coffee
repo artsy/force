@@ -42,11 +42,12 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 5
+      $navLinks.length.should.equal 6
       $navLinks.text().should.containEql ('Related Artists')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Shows')
 
   describe 'artist with some artworks (on the overview page)', ->
@@ -68,11 +69,12 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 5
+      $navLinks.length.should.equal 6
       $navLinks.text().should.containEql ('Related Artists')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Shows')
 
     it 'should display an artworks section with artworks', ->
@@ -100,11 +102,12 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 4
+      $navLinks.length.should.equal 5
       $navLinks.text().should.containEql ('Related Artists')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.not.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Shows')
 
     it 'should display an artworks section with artworks', ->

@@ -68,7 +68,7 @@ module.exports = class Filter
     @get(key)?[value]
 
   currentSort: ->
-    @sorts[@selected.get('sort') or '-published_at']
+    @sorts[@selected.get('sort') or '-partner_updated_at']
 
   buildState: ->
     new FilterState { id: @stateId() }, artistId: @model.id
