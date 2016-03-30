@@ -1,6 +1,7 @@
 module.exports = """
-  fragment gallery on Artwork {
+  fragment partner on Artwork {
     partner {
+      type
       name
       href
       initials

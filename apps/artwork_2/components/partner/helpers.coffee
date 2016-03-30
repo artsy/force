@@ -2,6 +2,9 @@
 { numberFormat } = require 'underscore.string'
 
 module.exports =
+  isDisplayable: ({ type }) ->
+    type in ['Gallery', 'Institution']
+
   numberFormat: numberFormat
 
   pluralize: (word, count, irregular = null) ->

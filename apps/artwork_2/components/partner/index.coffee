@@ -1,5 +1,5 @@
 { extend } = require 'underscore'
-{ GALLERY } = require('sharify').data
+{ PARTNER } = require('sharify').data
 metaphysics = require '../../../../lib/metaphysics.coffee'
 helpers = require './helpers.coffee'
 template = -> require('./index.jade') arguments...
@@ -7,18 +7,18 @@ template = -> require('./index.jade') arguments...
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
-      ... gallery
+      ... partner
     }
   }
   #{require './query.coffee'}
 """
 
 module.exports = ->
-  $el = $('.js-artwork-gallery')
+  $el = $('.js-artwork-partner')
 
-  metaphysics query: query, variables: id: GALLERY.artwork.id
+  metaphysics query: query, variables: id: PARTNER.artwork.id
     .then (data) ->
-      $el.replaceWith template(extend data, helpers: gallery: helpers)
+      $el.replaceWith template(extend data, helpers: partner: helpers)
 
     .then ->
       # TODO: Initialize contact/follow buttons
