@@ -11,7 +11,7 @@ module.exports = """
       start_at
       end_at
     }
-    show: partner_shows(size:2, exclude_fair_booths: true, active:true, sort:end_at_asc) {
+    show: partner_shows(size:2, at_a_fair: false, active:true, sort:end_at_asc) {
       cover_image {
         cropped(width: 150, height: 104) {
           url
