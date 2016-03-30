@@ -63,7 +63,7 @@ describe 'Fair Organization routes', ->
         end_at: moment().utc().add(3, 'days').format()
       routes.fetchFairOrgData @req, @res, (next = sinon.stub())
       Backbone.sync.args[0][2].success @fairs.models
-      @res.redirect.args[0][0].should.equal '/the-armory-show/1969'
+      @res.redirect.args[0][0].should.equal '/the-armory-show'
 
     it 'sets showName if the all the fairs dont have identical names', ->
       fair = @fairs.first()
