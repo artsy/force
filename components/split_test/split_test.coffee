@@ -57,4 +57,4 @@ module.exports = class SplitTest
     if outcome?
       @set outcome
     else
-      @set toss()
+      @set @toss()
