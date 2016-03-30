@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
-{ load, getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
+{ setDimension } = require '../../lib/analytics.coffee'
 IS_TEST_ENV = require '../../lib/is_test_env.coffee'
 
 module.exports = class SplitTest
@@ -19,13 +19,12 @@ module.exports = class SplitTest
   set: (outcome) ->
     @cookies().set @_key(), outcome
 
-    # Set for Mixpanel
-    unsetProperty @_key() # Force unset
-    property = _.tap({}, (hsh) => hsh[@_key()] = outcome)
-    if IS_TEST_ENV
-      setProperty property
-    else
-      load -> setProperty property
+    if _.isFunction analytics?.track
+      analytics?.track 'Experiment Viewed',
+        experiment_id: @key
+        experiment_name: @key
+        variation_id: outcome
+        variation_name: outcome
 
     # Set for Google Analytics
     setDimension @dimension, outcome if @dimension?
@@ -33,11 +32,10 @@ module.exports = class SplitTest
     outcome
 
   get: ->
-    getProperty(@_key()) or @cookies().get(@_key())
+    @cookies().get(@_key())
 
   unset: ->
     @cookies().expire @_key()
-    unsetProperty @_key()
     location.reload()
 
   cssClass: ->
