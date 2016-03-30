@@ -1,13 +1,20 @@
-page-height = 30px
+artwork-images = {
+  pages: {
+    height: 7px
+  }
+}
 
 .artwork-images
   position relative
   block-margins(10px)
   height 65vh
+  min-height 400px
 
   &.artwork-images--multiple
     > .artwork-images__images
-      bottom page-height
+      right (gutter * 1.25)
+      bottom: artwork-images.pages.height + 10px
+      left @right
 
   &__images
     position absolute
@@ -15,6 +22,7 @@ page-height = 30px
     right 0
     left 0
     bottom 0
+    prevent-content-shift()
 
     &__image
       position absolute
@@ -26,6 +34,10 @@ page-height = 30px
 
       &[data-state='active']
         z-index 1
+      &[data-zoomable]
+        cursor -moz-zoom-in
+        cursor -webkit-zoom-in
+        cursor zoom-in
 
       &__placeholder
       &__display
@@ -61,7 +73,6 @@ page-height = 30px
     right 0
     bottom 0
     left 0
-    height page-height
     block-margins(10px)
     display flex
     align-items center
@@ -70,17 +81,18 @@ page-height = 30px
 
     &__page
       display inline-block
-      padding 2px
-      color gray-color
       cursor pointer
-      font-family Verdana, sans-serif
-      font-size 20px
-      line-height 1
-      transition color 0.2s ease-in-out
+      height: artwork-images.pages.height
+      width @height
+      margin 0 4px
+      border-radius 50%
+      vertical-align bottom
+      background-color gray-color
+      transition background-color 0.2s ease-in-out
       user-select none
       &:hover
       &[data-state='active']
-        color black
+        background-color black
 
   &__arrows
     position absolute
@@ -88,15 +100,14 @@ page-height = 30px
     top 50%
     left 0
     right 0
-    opacity 0
-    transition opacity 0.33s
     &__prev
     &__next
       position absolute
       transform translateY(-50%)
-      padding 30px
+      padding (gutter * 2)
       cursor pointer
       color gray-color
+      text-align center
       transition color 0.25s
       &:hover
         color black
@@ -106,8 +117,3 @@ page-height = 30px
     &__next
       right 0
       padding-right 0
-
-  &[data-focus='active'] > .artwork-images__arrows
-    opacity 1
-  &[data-focus='inactive'] > .artwork-images__arrows
-    opacity 0

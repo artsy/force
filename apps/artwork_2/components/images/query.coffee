@@ -7,6 +7,7 @@ module.exports = """
       placeholder: resized(width: 30, height: 30, version: "small") {
         url
       }
+      is_zoomable
     }
   }
 """
