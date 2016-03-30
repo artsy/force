@@ -6,7 +6,8 @@ if gallery
     .artwork-gallery__icon: a(
       href= gallery.href
       data-initials= gallery.initials
-      style=(profile && profile.icon ? 'background-image: url(#{profile.icon.url})' : undefined)
+      class= (profile && profile.icon ? 'artwork-gallery__icon--icon' : undefined)
+      style= (profile && profile.icon ? 'background-image: url(#{profile.icon.url})' : undefined)
     )
 
     .artwork-gallery__metadata
