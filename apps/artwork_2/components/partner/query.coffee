@@ -1,6 +1,8 @@
 module.exports = """
-  fragment gallery on Artwork {
+  fragment partner on Artwork {
+    is_contactable
     partner {
+      type
       name
       href
       initials
@@ -8,6 +10,7 @@ module.exports = """
         city
       }
       profile {
+        id
         bio
         icon {
           url(version: "square140")

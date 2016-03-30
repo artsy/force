@@ -1,4 +1,7 @@
-.artwork-gallery
+@require '../../../../components/inquiry_questionnaire/stylesheets'
+
+
+.artwork-partner
   display flex
   block-margins(gutter / 2)
   padding gutter 0
@@ -9,12 +12,16 @@
     padding 0 (gutter / 2)
 
   &__icon
+    &--icon
+      background-color white
+
     > a
       display block
       width 90px
       height @width
       margin 0 auto
-      background-size cover
+      background-size contain
+      background-repeat no-repeat
       background-position center center
       initials()
 

@@ -14,4 +14,4 @@ module.exports.init = ->
   exec require '../components/artists/index.coffee'
 
   # Client-side fetches
-  exec require '../components/gallery/index.coffee'
+  exec require '../components/partner/index.coffee'
