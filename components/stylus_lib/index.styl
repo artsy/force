@@ -109,8 +109,12 @@ transparify(color, basecolor)
   else
     rgba(basecolor, unit(lightness(color), '') * 0.01)
 
-block-margins(margin-size = 20px)
-  margin margin-size 0
+block-margins(margin-size = 20px, bottom-margin-size = false)
+  if bottom-margin-size
+    margin margin-size 0 bottom-margin-size 0
+  else
+    margin margin-size 0
+
   &:first-child
     margin-top 0
   &:last-child

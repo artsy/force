@@ -3,41 +3,59 @@
 
 .artwork-highlight
   display flex
-  align-items center
+  align-items flex-start
   width 100%
-  padding 30px 0
   border-bottom 1px solid gray-lighter-color
+  block-margins(distance(gutter / 2))
+  padding-bottom distance(gutter)
+
   &:last-child
     border-bottom none
+    padding-bottom 0
 
   &__metadata
     max-width 355px
-    padding-right 30px
+    padding-right gutter
+
     &__context
-      avant-garde-size('s-headline')
+      sans('s-headline')
+      margin-bottom distance(gutter / 2)
+
     &__title
-      margin 10px 0 5px 0
-      garamond-size('s-headline')
+      serif('s-headline')
+      margin distance(gutter / 2) 0
+
       > a
         display block
         text-decoration none
+
     &__byline
       display block
-      margin 5px 0
-      avant-garde-size('body')
+      sans('body')
+      margin distance(gutter / 2) 0
       text-decoration none
+
     &__where-and-when
       color gray-darker-color
 
   &__images
     &:first-child > .artwork-highlight__images__image
-      margin 0 30px 0 0
+      margin 0 gutter 0 0
 
     &__context
-      avant-garde-size('s-headline')
+      sans('s-headline')
       margin-bottom 20px
 
     &__image
       display inline-block
       margin 0 7px
       background-color gray-color
+
+  &[data-type='HighlightedShow']
+    //
+
+  &[data-type='HighlightedArticle']
+    .artwork-highlight__metadata__byline
+      sans('s-headline')
+      margin distance(gutter / 2) 0
+      color gray-darker-color
