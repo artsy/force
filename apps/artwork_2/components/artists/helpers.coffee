@@ -5,7 +5,7 @@ module.exports =
 
   tabs: tabs = [
     'biography'
-    'exhibition_history'
+    'exhibition_highlights'
     'articles'
   ]
 
@@ -14,8 +14,8 @@ module.exports =
       switch section
         when 'biography'
           artist.biography?
-        when 'exhibition_history'
-          artist.exhibition_history.length > 0
+        when 'exhibition_highlights'
+          artist.exhibition_highlights.length > 0
         when 'articles'
           artist.articles.length > 0
         else

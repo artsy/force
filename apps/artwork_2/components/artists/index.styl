@@ -4,29 +4,29 @@
   //
 
 .artwork-artist
-  //
   &__name
-    margin 20px 0 35px 0
-    garamond-size('s-headline')
+    serif('s-headline')
+    margin 0 0 distance(gutter) 0
 
   &__content
-    //
     &__biography
-      garamond-size('s-body')
+      serif('s-body')
       a
         fine-faux-underline()
 
-    &__exhibition-history
-      > h3
-        block-margins(10px)
-        avant-garde-size('s-headline')
+    &__exhibition-highlights
+      &__type
+        block-margins(distance(40px, 'garamond-s-body'))
+        > h3
+          sans('body')
+          block-margins(distance(13px))
 
-      &__show
-        display flex
-        &__year
-          padding-right 10px
-        &__info > a
-          fine-faux-underline()
+        &__show
+          display flex
+          &__year
+            padding-right 10px
+          &__info > a
+            fine-faux-underline()
 
     &__articles
       //
@@ -36,22 +36,23 @@
         text-decoration none
 
         &__image
-          margin-right 30px
+          margin-right gutter
 
         &__image
         &__metadata
           > h2
-            garamond-size('s-headline')
+            serif('s-headline')
+            margin-bottom distance(20px)
           > h3
-            margin 10px 0
-            avant-garde-size('s-headline')
+            sans('s-headline')
+            color gray-darker-color
 
   &__jump
-    block-margins(30px)
-
+    margin-top gutter
     > a
       display inline-block
-      padding 20px 45px 0 0
-      avant-garde-size('body')
+      vertical-align bottom
+      sans('body')
+      padding distance(20px) 45px 0 0
       text-decoration none
       border-top 1px solid gray-lighter-color

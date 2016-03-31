@@ -18,7 +18,7 @@ module.exports = """
           }
         }
       }
-      exhibition_history: partner_shows {
+      exhibition_highlights: partner_shows {
         kind
         year: start_at(format: "YYYY")
         name
