@@ -19,6 +19,8 @@ module.exports = """
       ... on HighlightedShow {
         name
         href
+        kind
+        status
         partner {
           href
           name

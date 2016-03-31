@@ -1,22 +1,41 @@
 - var show = highlight
 
-.artwork-highlight
-  .artwork-highlight__metadata
-    h3.artwork-highlight__metadata__context
-      | In Current Show
-    h2.artwork-highlight__metadata__title: a( href= show.href )
-      = show.name
-    a.artwork-highlight__metadata__byline( href= show.partner.href )
-      = show.partner.name
-    .artwork-highlight__metadata__where-and-when
-      | #{show.start_at}–#{show.end_at}
+.artwork-highlight__metadata
+  h3.artwork-highlight__metadata__context
+    case show.status
+      when 'upcoming'
+        | In Upcoming Show
+      when 'running'
+        | In Current Show
+      when 'closed'
+        | In Past Show
 
-  .artwork-highlight__images
-    for image in show.images
-      a.artwork-highlight__images__image( href= show.href )
-        img(
-          src= image.thumb.url
-          width= image.thumb.width
-          height= image.thumb.hight
-          alt= show.name
-        )
+  h2.artwork-highlight__metadata__title: a( href= show.href )
+    = show.name
+
+  a.artwork-highlight__metadata__byline( href= show.partner.href )
+    = show.partner.name
+    br
+    case show.kind
+      when 'solo'
+        | Solo Show
+      when 'group'
+        | Group Show
+      when 'fair'
+        | Fair Booth
+
+  .artwork-highlight__metadata__where-and-when
+    if show.location && show.location.city
+      = show.location.city
+      = ', '
+    | #{show.start_at} – #{show.end_at}
+
+.artwork-highlight__images
+  for image in show.images
+    a.artwork-highlight__images__image( href= show.href )
+      img(
+        src= image.thumb.url
+        width= image.thumb.width
+        height= image.thumb.hight
+        alt= show.name
+      )
