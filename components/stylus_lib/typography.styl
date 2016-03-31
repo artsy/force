@@ -3,41 +3,55 @@ json('./type_sizes.json')
 // Load as a hash
 sizings = json('./type_sizes.json', { hash: true })
 
+sans-font-stack = 'ITC Avant Garde Gothic W04', 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
+serif-font-stack = 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
+
 default-avant-garde-font-size = sizings.avant-garde.body.font-size
 default-garamond-font-size = sizings.garamond.s-body.font-size
 
-garamond-size(size, mixinFont = false)
+garamond-size(size, includeFontDeclaration = false)
   sizing = sizings.garamond[size]
-  fs = sizing.font-size
-  font-size fs
-  lh = sizing.line-height
-  line-height lh
-  if mixinFont
+  font-size: sizing.font-size
+  line-height: sizing.line-height
+  if includeFontDeclaration
     garamond()
 
-avant-garde-size(size, mixinFont = true)
+serif = garamond-size
+
+avant-garde-size(size, includeFontDeclaration = true)
   sizing = sizings.avant-garde[size]
-  fs = sizing.font-size
-  font-size fs
-  lh = sizing.line-height
-  line-height lh
-  if mixinFont
+  font-size: sizing.font-size
+  line-height: sizing.line-height
+  if includeFontDeclaration
     avant-garde()
+
+sans = avant-garde-size
 
 monospace()
   font-family 'Menlo', 'Monaco', 'Andale Mono', 'Lucida Console', 'Courier New', 'monospace'
   font-smoothing antialiased
 
 avant-garde()
-  font-family 'ITC Avant Garde Gothic W04', 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
+  font-family sans-font-stack
   font-smoothing antialiased
   text-transform uppercase
   letter-spacing 1px
 
 garamond()
-  font-family 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
+  font-family serif-font-stack
   font-smoothing antialiased
 
 small-caps()
   text-transform uppercase
   letter-spacing 1px
+
+distance(value, font-style = false)
+  if font-style
+    line-height = lookup(font-style + '-line-height')
+    font-size = lookup(font-style + '-font-size')
+  else
+    line-height = @line-height or 1
+    font-size = @font-size or 1
+
+  offset = (line-height * font-size) - font-size
+  floor(value - offset)
