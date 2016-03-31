@@ -36,7 +36,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @user?.initializeDefaultArtworkCollection()
 
   setupCarousel: ->
-    initCarousel $('.js-artist-carousel')
+    initCarousel $('.js-artist-carousel'), imagesLoaded: true
 
   setupHeaderView: ->
     @headerView = new HeaderView _.extend el: $('#artist-page-header'), @options
