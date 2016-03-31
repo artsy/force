@@ -1,4 +1,4 @@
-- includeContact = sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' && artwork.is_contactable || false
+- includeContact = sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' && artwork.is_contactable && !artwork.partner.is_limited_fair_partner || false
 
 figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
   .artwork-item-image-container
