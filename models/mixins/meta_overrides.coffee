@@ -11,7 +11,7 @@ module.exports =
     else
       @defaultMetaTitle?() or (@get('title') or @get('name') + " | Artsy")
 
-  toPageDescription: (length = 200) ->    
+  toPageDescription: (length = 200) ->
     if description = @metaOverrides('description')
       description
     else if @.constructor.name is 'Fair'
@@ -21,6 +21,14 @@ module.exports =
 
 
 metaOverrides = (model) ->
+
+  'zsona-maco-2016':
+    title: 'ZsONA MACO 2016 | Artsy'
+    description: 'Browse works by leading contemporary artists—Rachel Howard, Candida Höfer, and Jose Dávila included—shown in Mexico’s Distrito Federal'
+
+  'art-rotterdam-2016':
+    title: 'Art Rotterdam 2016 | Artsy'
+    description: 'Preview work by up-and-coming artists—Evren Tekinoktay, Catherine Parsonage, and Mahmoud Bakhshi among them—at this fair in Rotterdam'
 
   'fog-design-plus-art-2016':
     title: 'FOG Art + Design 2016 | Artsy'
@@ -330,4 +338,4 @@ metaOverrides = (model) ->
   'david-lachapelle':
     title: "David LaChapelle - #{model.get('published_artworks_count')} Artworks, Bio & Shows on Artsy"
     description: 'Find the best of David LaChapelle, including photographs, prints for sale, his biography, current shows, and articles on Artsy. Discovered by Andy Warhol at the age of 17...'
-  
+
