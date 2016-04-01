@@ -25,6 +25,7 @@ module.exports = class SplitTest
         experiment_name: @key
         variation_id: outcome
         variation_name: outcome
+        nonInteraction: 1
 
     # Set for Google Analytics
     setDimension @dimension, outcome if @dimension?
