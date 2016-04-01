@@ -4,8 +4,14 @@ if artwork.description
 if artwork.additional_information
   != artwork.additional_information
 
-if artwork.signature
-  != artwork.signature
-
 if artwork.series
   p= artwork.series
+
+if artwork.signature
+  p Signature: #{artwork.signature}
+
+if artwork.publisher
+  p Publisher: #{artwork.publisher}
+
+if artwork.manufacturer
+  p Manufacturer: #{artwork.manufacturer}
