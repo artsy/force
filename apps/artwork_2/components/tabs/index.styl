@@ -9,11 +9,14 @@
 
   &__nav
     width 25%
+    // Always be at least 2 nav items tall
+    min-height ((avant-garde-body-font-size * avant-garde-body-line-height) + distance(10px, 'avant-garde-body')) * 2
     padding 0 20px 0 0
     border-right 1px solid gray-lighter-color
     > a
       display block
       sans('body')
+      overflow ellipsis
       padding distance(10px) 0
       color gray-darker-color
       &:first-child
@@ -35,6 +38,6 @@
 
   > p
     serif('s-body')
-    block-margins(distance(gutter / 2))
+    block-margins(distance(20px))
     > a
       fine-faux-underline()
