@@ -37,6 +37,7 @@ module.exports = """
       artists
       contemporary
       articles
+      biography
     }
   }
 
