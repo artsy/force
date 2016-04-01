@@ -10,6 +10,7 @@ Articles = require '../../collections/articles.coffee'
 Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
+{ Following, FollowButton } = require '../follow_button/index.coffee'
 initCarousel = require '../merry_go_round/bottom_nav_mgr.coffee'
 { oembed } = require('embedly-view-helpers')(sd.EMBEDLY_KEY)
 Q = require 'bluebird-q'
@@ -54,6 +55,7 @@ module.exports = class ArticleView extends Backbone.View
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
+    @setupFollowButtons()
 
     # Resizing
     @sizeVideo()
@@ -167,6 +169,24 @@ module.exports = class ArticleView extends Backbone.View
     .done =>
       @loadedCallouts = true
       @maybeFinishedLoading()
+
+  setupFollowButtons: ->
+    @artists = []
+    @$('.artist-follow').each (i, artist) =>
+      id = $(artist).data('id')
+      @artists.push id: id
+    @following = new Following(null, kind: 'artist') if @user?
+    @followButtons = @artists.map (artist) =>
+      new FollowButton
+        el: @$(".artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        analyticsFollowMessage: 'Followed artist, via artwork info'
+        analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+        href: sd.APP_URL + sd.CURRENT_PATH
+
+    @following.syncFollows(@artists) if @user?
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
