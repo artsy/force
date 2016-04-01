@@ -1,14 +1,24 @@
 _ = require 'underscore'
 
+uniq = _.partial _.uniq, _, (x) ->
+  JSON.stringify x
+
+consolidate = (list, kinds) ->
+  if list.length is 0
+    return
+  else if list.length is 1
+    list[0]
+  else if _.uniq(list).length is 1
+    list[0]
+  else
+    "#{list.length} #{kinds}"
+
 module.exports =
-  uniq: _.partial(_.uniq, _, (x) -> JSON.stringify x)
+  location: (locations) ->
+    cities = _.pluck locations, 'city'
+    consolidate cities, 'locations'
 
-  pluck: _.pluck
-
-  consolidate: (list, kinds) ->
-    if list.length is 0
-      return
-    else if list.length is 1
-      list[0]
-    else
-      "#{list.length} #{kinds}"
+  contacts: (locations) ->
+    uniq locations
+      .filter ({ phone }) ->
+        phone?

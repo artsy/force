@@ -4,5 +4,8 @@
   include templates/metadata/title
   include templates/metadata/series
   include templates/metadata/secondary
+  if !artwork.is_contactable
+    include templates/metadata/partner
   include templates/metadata/price
-  include templates/metadata/partner
+  if artwork.is_contactable
+    include templates/metadata/partner

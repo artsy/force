@@ -1,24 +1,29 @@
 @require '../../../../components/tooltips'
 
 .artwork-metadata
-  garamond-size('s-body')
+  serif('s-body')
+  line-height 1.25
 
-  &__lot-number
   &__artist
   &__partner
   &__secondary-metadata
-    block-margins(gutter / 2)
+    block-margins(distance(gutter / 2))
 
   &__lot-number
-    avant-garde-size('body')
+    sans('s-headline')
+    block-margins(distance(10px))
 
-  &__artist > .entity-follow
-    display block
-    // Offset icon spacing from within 32px square
-    margin-left -8px
+  &__artist
+    > .entity-link
+      sans('m-headline')
+
+    > .entity-follow
+      display block
+      // Offset icon spacing from within 32px square
+      margin-left -8px
 
   &__title
-    garamond-size('s-body')
+    //
 
   &__secondary-metadata
     color gray-darker-color
@@ -28,28 +33,47 @@
     margin-top 0
 
   &__image-rights
-    block-margins(gutter / 2)
-    garamond-size('s-caption')
+    serif('s-caption')
+    line-height 1.25
+    block-margins(distance(gutter / 2))
 
   &__limited-partner-message
   &__sale-message
     block-margins(gutter / 2)
-    padding (gutter / 2) 0
+    padding distance(gutter / 2) 0
     border-top 1px solid gray-lighter-color
     border-bottom @border-top
 
   &__partner
-    > h3
+    &__label
+      sans('s-headline')
       margin-bottom 5px
-      avant-garde-size('s-headline')
-    > a
+
+    &__name
       text-decoration none
+      > span
+        color gray-darker-color
+
     &__phone
+      serif('l-caption')
+      margin distance(5px) 0
+
+      &
       > a
         color gray-darker-color
+      > a
         fine-faux-underline()
+        margin-top -2px
+        padding-bottom -(@margin-top)
+
       &__locations
         display none
+        margin distance(gutter / 2) 0
+        &[data-length='1']
+          margin 0
+
+        &__location
+          //
 
 .artwork-edition-sets
   block-margins(gutter / 2)
@@ -57,9 +81,10 @@
 .artwork-edition-set
   display table
   width 100%
+  serif('m-caption')
   padding 5px 0
-  garamond-size('m-caption')
   border-top 1px dotted gray-lighter-color
+
   &:first-child
     border-top-style solid
 
@@ -69,9 +94,12 @@
     display table-cell
     height 100%
     vertical-align top
+
   &__radio
     text-align center
+
   &__details
     padding 0 10px
+
   &__price
     text-align right

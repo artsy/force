@@ -9,6 +9,7 @@ module.exports = """
       href
     }
     cultural_maker
+    collecting_institution
     medium
     dimensions {
       in
@@ -21,6 +22,7 @@ module.exports = """
     partner {
       name
       href
+      type
       initials
       is_limited_fair_partner
       locations {
