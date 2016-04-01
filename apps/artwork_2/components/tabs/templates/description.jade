@@ -1,11 +1,17 @@
-if tab.description
-  != tab.description
+if artwork.description
+  != artwork.description
 
-if tab.additional_information
-  != tab.additional_information
+if artwork.additional_information
+  != artwork.additional_information
 
-if tab.signature
-  != tab.signature
+if artwork.series
+  p= artwork.series
 
-if tab.series
-  p= tab.series
+if artwork.signature
+  p Signature: #{artwork.signature}
+
+if artwork.publisher
+  p Publisher: #{artwork.publisher}
+
+if artwork.manufacturer
+  p Manufacturer: #{artwork.manufacturer}
