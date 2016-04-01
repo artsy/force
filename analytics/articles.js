@@ -31,7 +31,7 @@ if(location.pathname.match('/article/')){
 
   analyticsHooks.on('scrollarticle', function(options){
     analytics.page({path: location.pathname});
-    analytics.track('Article pageview', { message: location.pathname });
+    analytics.track('Article pageview', { message: location.pathname, nonInteraction: 1 });
     if(window.PARSELY){
       window.PARSELY.beacon.trackPageView({
         url: location.href,
