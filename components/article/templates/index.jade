@@ -1,77 +1,6 @@
 include ../../article_figure/mixin
 include ./share
-
-mixin author-date
-  .article-author-date
-    .article-author(class= article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
-      = article.related().author.get('name')
-    .article-contributing-author
-      include ../../article_figure/contributing_author.jade
-    .article-date
-      = article.date('published_at').format('MMM Do, YYYY h:mm a')
-
-mixin video(video)
-  .article-video-container
-    if video.cover_image_url
-      .article-video-cover-image(
-        style=("background-image: url(#{resize(video.cover_image_url, { width: 1100 })})")
-      )
-        button.article-video-play-button
-          .article-video-play-button-caret
-    .article-video
-      != embedVideo(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
-
-mixin image(image)
-  figure.article-section-image
-    img( src=resize(image.url, { width: 1100 }) )
-    if image.caption
-      figcaption!= image.caption
-
-mixin fullscreen(article)
-  figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
-    if article.get('hero_section').background_url
-      .article-fullscreen-overlay
-      video.article-fullscreen-video-player( src=article.get('hero_section').background_url, autoplay=true, controls=false, loop=true)
-    else if article.get('hero_section').background_image_url
-      .article-fullscreen-overlay
-      img.article-fullscreen-image(
-        src=resize(article.get('hero_section').background_image_url, { height: 2000, width: 2000 })
-      )
-
-    .article-fullscreen-down-arrow
-      a.icon-chevron-down
-
-    if article.get('is_super_article')
-      .main-layout-container.article-sa-fullscreen-logos
-        .article-sa-primary-logos
-          a( href="/" ).article-sa-artsy-logo.icon-logotype
-          .article-sa-primary-logo
-            if article.get('super_article').partner_logo && article.get('super_article').partner_logo_link
-              a( href=article.get('super_article').partner_logo_link )
-                img( src=article.get('super_article').partner_fullscreen_header_logo )
-        .article-share-fixed-fullscreen(data-id=article.get('id'))
-          +share-fixed( (article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
-
-    .main-layout-container.article-fullscreen-text
-      .article-fullscreen-text-overlay
-        if article.get('hero_section').title
-          h1.large-garamond-header.article-fullscreen-title= article.get('title')
-        if !article.get('is_super_article')
-          +author-date
-         if article.get('hero_section').intro
-          .article-lead-paragraph-container
-            .article-lead-paragraph.article-fullscreen-intro
-              != article.get('hero_section').intro
-
-mixin pullquote(section)
-  .article-section-callout
-    if !section.hide_image && section.thumbnail_url
-      img( src=section.thumbnail_url )
-    .article-section-callout-text(
-      class=("article-section-callout-pullquote #{section.hide_image ? 'article-section-callout-no-image' : ''}")
-    )
-      if section.text
-        .article-section-callout-title= section.text
+include ./mixins
 
 //- Super article header needs to be outside the article-container
 if superArticle
@@ -138,6 +67,10 @@ if superArticle
                 //- Rendered on client
             else
               +pullquote(section)
+          when 'toc'
+            if section.links.length > 0
+              .article-section-toc
+                +toc(section)
 
     .main-layout-container
       //- Footer social buttons

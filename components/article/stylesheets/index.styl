@@ -8,7 +8,7 @@ headline-line-height = 38px
 headline2-font-size = 30px
 gutter-size = 30px
 overflow-width = 1100px
-body-width = 570px
+body-width = 580px
 artwork-height = 500px
 gutter-size = 30px
 play-button-size = 30px
@@ -43,13 +43,47 @@ body.body-article
 .article-section-text
   margin auto
 
+.article-section-toc
+  margin auto
+  max-width body-width
+  .article-section-toc-header
+    avant-garde-size('body')
+    border-bottom 1px solid gray-color
+    padding-bottom 20px
+  .article-section-toc-links
+    padding 20px 0px
+    border-bottom 1px solid gray-color
+  .article-section-toc-links:after
+    content ""
+    display table
+    clear both
+  .article-section-toc-link
+    padding 10px 15px
+    min-width 140px
+    width 33.33%
+    float left
+    min-width 140px
+    box-sizing border-box
+  .article-section-toc-link:nth-child(3n + 4), .article-section-toc-link:first-child
+    padding-left 0px
+  .article-section-toc-link:nth-child(3n + 3)
+    padding-right 0px
+  a
+    text-decoration none
+    garamond-size('s-body')
+    &:hover
+      color purple-color
+
 .article-lead-paragraph, .article-section-text
   font-size 20px
   line-height 27px
   width body-width
-  a
+  a:not(.is-jump-link)
     text-decoration none
     fine-faux-underline()
+  a.is-jump-link
+    cursor text
+    padding-top 50px
   p
     margin-bottom 1em
     &:last-child

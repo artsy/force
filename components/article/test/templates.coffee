@@ -62,3 +62,40 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'article-fullscreen-image'
 
+  it 'renders a TOC', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'toc'
+            links: [ {name: 'Kana Abe', value: 'Kana'}, { name: 'Bob Olsen', value: 'Bob' } ]
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql '<a href="#Kana">Kana Abe</a>'
+
+  it 'does not render a TOC header if there are no links', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'toc'
+            links: []
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.not.containEql 'Table Of Contents'
