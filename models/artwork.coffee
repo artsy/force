@@ -163,7 +163,9 @@ module.exports = class Artwork extends Backbone.Model
     @get('collecting_institution')?.length > 0
 
   partnerName: ->
-    if @has 'partner'
+    if @hasCollectingInstitution()
+      @get('collecting_institution')
+    else if @has 'partner'
       @get('partner').name
     else
       ''
