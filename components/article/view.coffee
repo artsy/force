@@ -41,6 +41,7 @@ module.exports = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
+    @following = new Following(null, kind: 'artist') if @user?
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
@@ -175,7 +176,6 @@ module.exports = class ArticleView extends Backbone.View
     @$('.artist-follow').each (i, artist) =>
       id = $(artist).data('id')
       @artists.push id: id
-    @following = new Following(null, kind: 'artist') if @user?
     @followButtons = @artists.map (artist) =>
       new FollowButton
         el: @$(".artist-follow[data-id='#{artist.id}']")
@@ -185,8 +185,7 @@ module.exports = class ArticleView extends Backbone.View
         analyticsFollowMessage: 'Followed artist, via artwork info'
         analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
         href: sd.APP_URL + sd.CURRENT_PATH
-
-    @following.syncFollows(@artists) if @user?
+    @following.syncFollows(_.pluck @artists, 'id') if @user?
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
