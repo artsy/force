@@ -27,6 +27,7 @@ describe 'ArticleView', ->
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
+      @ArticleView.__set__ 'CurrentUser', fabricate 'user'
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
@@ -36,7 +37,7 @@ describe 'ArticleView', ->
         article: @article = new Article _.extend fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
-            { type: 'text', body: 'Foo' }
+            { type: 'text', body: '<p><a class="is-follow-link">Damon Zucconi</a><a class="artist-follow" data-id="damon-zucconi"></a></p>' }
             {
               type: 'artworks',
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
@@ -139,3 +140,9 @@ describe 'ArticleView', ->
       @view.renderCalloutSections()
       _.defer =>
         @view.$('.article-section-callout-container').html().should.containEql 'Callout title'
+
+  describe '#setupFollowButtons', ->
+
+    it 'sets the list of artists in an article with ids', ->
+      @view.setupFollowButtons()
+      @view.artists[0].id.should.equal 'damon-zucconi'
