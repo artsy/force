@@ -174,16 +174,15 @@ module.exports = class ArticleView extends Backbone.View
   setupFollowButtons: ->
     @artists = []
     @$('.artist-follow').each (i, artist) =>
-      id = $(artist).data('id')
-      @artists.push id: id
+      @artists.push id: $(artist).data('id')
     @followButtons = @artists.map (artist) =>
       new FollowButton
         el: @$(".artist-follow[data-id='#{artist.id}']")
         following: @following
         modelName: 'artist'
         model: artist
-        analyticsFollowMessage: 'Followed artist, via artwork info'
-        analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+        analyticsFollowMessage: 'Followed artist, via article'
+        analyticsUnfollowMessage: 'Unfollowed artist, via article'
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 
