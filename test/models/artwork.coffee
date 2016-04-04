@@ -283,6 +283,10 @@ describe 'Artwork', ->
       @artwork.unset 'collecting_institution'
       @artwork.partnerName().should.equal 'Gagosian Gallery'
 
+    it "partner name with collecting institution", ->
+      @artwork.set partner: fabricate 'partner'
+      @artwork.partnerName().should.equal 'MOMA'
+
   describe '#partnerLink', ->
     it "empty without partner", ->
       @artwork.unset 'partner'
