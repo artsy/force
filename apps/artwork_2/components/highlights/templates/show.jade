@@ -11,18 +11,10 @@
         | In Past Show
 
   h2.artwork-highlight__metadata__title: a( href= show.href )
-    = show.name
+    = helpers.highlights.truncate(show.name, '50', '…')
 
   a.artwork-highlight__metadata__byline( href= show.partner.href )
     = show.partner.name
-    br
-    case show.kind
-      when 'solo'
-        | Solo Show
-      when 'group'
-        | Group Show
-      when 'fair'
-        | Fair Booth
 
   .artwork-highlight__metadata__where-and-when
     if show.location && show.location.city

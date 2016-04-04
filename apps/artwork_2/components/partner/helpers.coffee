@@ -14,5 +14,5 @@ module.exports =
       irregular or word + 's'
 
   cities: (locations) ->
-    uniq locations.map ({ city }) -> city
+    uniq locations.map ({ city }) -> city.trim()
       .join ' • '
