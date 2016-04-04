@@ -7,11 +7,13 @@
   width 100%
   border-bottom 1px solid gray-lighter-color
   block-margins(distance(gutter / 2))
-  padding-bottom distance(gutter)
+  padding distance(gutter / 2) 0 distance(gutter) 0
 
   &:last-child
     border-bottom none
     padding-bottom 0
+    // Offset <section> margins
+    margin-bottom -(gutter)
 
   &__metadata
     max-width 355px
@@ -19,10 +21,11 @@
 
     &__context
       sans('s-headline')
-      margin-bottom distance(gutter / 2)
+      margin-bottom distance(10px)
 
     &__title
       serif('s-headline')
+      line-height 1.25 // compact-line-height
       margin distance(gutter / 2) 0
 
       > a
@@ -32,15 +35,14 @@
     &__byline
       display block
       sans('body')
-      margin distance(gutter / 2) 0
+      margin distance(10px) 0
       text-decoration none
 
     &__where-and-when
       color gray-darker-color
 
   &__images
-    &:first-child > .artwork-highlight__images__image
-      margin 0 gutter 0 0
+    overflow-y hidden
 
     &__context
       sans('s-headline')
@@ -50,12 +52,21 @@
       display inline-block
       margin 0 7px
       background-color gray-color
+      vertical-align bottom
 
+  // Type-specific variants
   &[data-type='HighlightedShow']
-    //
+    .artwork-highlight
+      &__images
+        height 145px
 
   &[data-type='HighlightedArticle']
-    .artwork-highlight__metadata__byline
-      sans('s-headline')
-      margin distance(gutter / 2) 0
-      color gray-darker-color
+    .artwork-highlight
+      &__metadata
+        margin-left gutter
+        padding-top (avant-garde-s-headline-font-size * avant-garde-s-headline-line-height) + distance(gutter / 2, 'avant-garde-s-headline')
+
+        &__byline
+          sans('s-headline')
+          margin distance(gutter / 2) 0
+          color gray-darker-color

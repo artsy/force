@@ -36,6 +36,7 @@ helpers = extend [
   actions: require './components/actions/helpers'
   metadata: require './components/metadata/helpers'
   auction: require './components/auction/helpers'
+  highlights: require './components/highlights/helpers'
   artists: require './components/artists/helpers'
   tabs: require './components/tabs/helpers'
   partner: require './components/partner/helpers'
