@@ -61,6 +61,7 @@
     "sharify": "^0.1.6",
     "spark-md5": "^1.0.0",
     "superagent": "^1.4.0",
+    "tween": "^0.9.0",
     "twilio": "^2.5.1",
     "ua-parser": "^0.3.5",
     "underscore": "^1.8.3",

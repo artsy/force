@@ -8,9 +8,6 @@ template = -> require('../templates/index.jade') arguments...
 
 module.exports = class ArtworkRailView extends Backbone.View
   className: 'arv-container'
-
-  delayBy: 600 # 10 minutes
-
   events:
     'click .js-mgr-next': 'next'
     'click .js-mgr-prev': 'prev'

@@ -1,0 +1,32 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+  if sd.INCLUDE_ESCAPED_FRAGMENT
+    meta( name="fragment", content="!" )
+
+append locals
+  - assetPackage = 'home'
+  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
+  - bodyClass = bodyClass + (heroUnits.length && heroUnits.first().get('menu_color_class') == 'black' ? '-white' : '')
+
+block body
+  include hero_units
+  #home-foreground
+    #home-hero-units-controls( data-length= heroUnits.length )
+      button#home-hero-units-left-arrow.icon-chevron-left
+      ul#home-hero-unit-dots
+        for x, i in heroUnits.models
+          li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
+      button#home-hero-units-right-arrow.icon-chevron-right
+
+    #home-layout-container.responsive-layout-container
+      .main-layout-container: #home-body
+        each module in homePage.modules.models
+          - title = module.get('title')
+          - railId = module.get('key')
+          - artworks = module.artworks().models
+          div(id="hpm-#{railId}").arv-container
+            include ../../../components/artwork_rail/templates/index
+
+  include ../../../components/main_layout/templates/json_ld

@@ -1,2 +1,6 @@
 require('backbone').$ = $
-$ require('../apps/home/client/index.coffee').init
+$ ->
+  if sd.CURRENT_USER?.type == "Admin"
+    require('../apps/home_2/client/index.coffee').init()
+  else
+    require('../apps/home/client/index.coffee').init()

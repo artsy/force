@@ -21,7 +21,8 @@ positionWelcomeHeroMethod = (req, res) ->
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
   method
 
-@index = (req, res) ->
+@index = (req, res, next) ->
+  return next() if req.user?.isAdmin()
   heroUnits = new HeroUnits
 
   # homepage:featured-sections
