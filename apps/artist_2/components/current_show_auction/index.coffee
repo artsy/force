@@ -12,4 +12,4 @@ current = (type, artist) ->
  module.exports = (artist) ->
    type = _.find ['auction', 'show'], (type) ->
      artist[type]?.length > 0
-   current(type, artist)
+   current(type, artist) if type
