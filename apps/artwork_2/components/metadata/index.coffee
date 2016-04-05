@@ -1,26 +1,32 @@
-{ CURRENT_USER } = require('sharify').data
-{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
-Artist = require '../../../../models/artist.coffee'
+follow = require '../../lib/follow.coffee'
+Form = require '../../../../components/form/index.coffee'
+PendingOrder = require '../../../../models/pending_order.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports = ->
-  $('.js-artwork-metadata-phone-toggle').click (e) ->
-    e.preventDefault()
-    $(this).hide()
-    $('.js-artwork-metadata-phone-toggleable').show()
+  $el = $('.js-artwork-metadata')
 
-  if CURRENT_USER?
-    following = new Following null, kind: 'artist'
+  follow $el.find('.js-artist-follow-button')
 
-  ids = $('.js-artist-follow-button')
-    .map ->
-      id = ($el = $(this)).data 'id'
-      new FollowButton
-        following: following
-        model: new Artist id: id
-        modelName: 'artist'
-        el: $el
-      id
-    .get()
+  $el
+    .find '.js-artwork-metadata-phone-toggle'
+    .click (e) ->
+      e.preventDefault()
 
-  if CURRENT_USER?
-    following.syncFollows ids
+      $(this).hide()
+
+      $el
+        .find '.js-artwork-metadata-phone-toggleable'
+        .show()
+
+  $el
+    .find '.js-artwork-acquire-button'
+    .click (e) ->
+      order = new PendingOrder
+
+      form = new Form $form: $el, model: order
+      form.submit e, success: ->
+        location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
+
+      analyticsHooks
+        .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"

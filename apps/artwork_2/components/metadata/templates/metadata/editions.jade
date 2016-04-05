@@ -1,14 +1,15 @@
 if artwork.edition_sets.length > 1
-  form.artwork-edition-sets
+  .artwork-edition-sets
     for edition_set, i in artwork.edition_sets
       label.artwork-edition-set
-        .artwork-edition-set__radio
-          input.artwork-edition-set__radio-button(
-            type= 'radio'
-            value= edition_set.id
-            name= 'edition'
-            checked=(i === 0 ? true : undefined)
-          )
+        if edition_set.is_acquireable
+          .artwork-edition-set__radio
+            input.artwork-edition-set__radio-button(
+              type= 'radio'
+              name= 'edition_set_id'
+              value= edition_set.id
+              checked=(i === 0 ? true : undefined)
+            )
 
         .artwork-edition-set__details
           .artwork-edition-set__imperial
