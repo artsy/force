@@ -21,7 +21,7 @@
     .container-left
       .fair-follow
         p Follow the fair for updates and personalized recommendations.
-        button.avant-garde-button-white.follow-button.no-touch( id='fair-follow-button', data-id= fair.get('default_profile_id') )
+        button.avant-garde-follow-button-black.follow-button.no-touch( id='fair-follow-button', data-id= fair.get('default_profile_id') )
       if primarySets.where({ key: 'explore' })
         for set in primarySets.where({ key: 'explore' })
           for item in set.get('items').models.slice(0,2)

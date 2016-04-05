@@ -4,7 +4,7 @@ header.partner-header
       h1.partner-name= profile.displayName()
       .partner-locations
       .partner-actions
-        button.avant-garde-button-black.follow-button.is-small
+        button.avant-garde-follow-button-black.follow-button.is-small
         if profile.get('follows_count')
           .partner-followers
             = profile.formatFollowText()

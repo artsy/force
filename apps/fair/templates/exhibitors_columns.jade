@@ -10,4 +10,4 @@ for column in columns
                   img( src=item.artworks().models[0].defaultImageUrl('square') )
           a.exhibitor-name( href="/show/" + item.get('id') )= item.get('partner').name
           if item.get('partner').artworks_count > 0
-            button.avant-garde-button-white.follow-button.is-small( data-id=item.get('partner').default_profile_id )
+            button.avant-garde-follow-button-black.follow-button.is-small( data-id=item.get('partner').default_profile_id )

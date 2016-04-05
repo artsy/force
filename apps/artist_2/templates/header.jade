@@ -17,7 +17,7 @@ header.artist-header
           | Follow the artist to get alerts when works are added.
 
       .artist-follow
-        button#artist-follow-button.is-small.avant-garde-follow-button-black
+        button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
         if followCount
           span.artist-header-follow-count= followCount
 
@@ -37,5 +37,5 @@ header.artist-header
             )= link.name
             if i !== nav.sections().length - 1
               span.garamond-tab-separator
-      button.artist-sticky-follow-button.is-small.avant-garde-follow-button-black
+      button.artist-sticky-follow-button.is-small.avant-garde-follow-button-black.follow-button
 
