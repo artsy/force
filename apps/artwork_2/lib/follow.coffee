@@ -7,6 +7,8 @@ MODELS =
 module.exports = ($el) ->
   following = null
 
+  return unless $el.length
+
   { id, type } = $el.data()
 
   if user = CurrentUser.orNull()
