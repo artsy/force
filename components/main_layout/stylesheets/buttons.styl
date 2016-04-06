@@ -171,12 +171,10 @@
 
 .avant-garde-follow-button-black
   @extends .avant-garde-button
-  @extends .follow-button
   &, &:hover, &:focus
     user-select none
     text-align center
     color white
-    border 1px solid gray-lighter-color
   &, &:focus
     background-color black
   &:hover
@@ -184,6 +182,7 @@
   &[data-state='following'], &.is-following
     background-color white
     color gray-color
+    border 1px solid gray-lighter-color
   &.no-touch[data-state='following'],
   &.no-touch.is-following
     &:hover
