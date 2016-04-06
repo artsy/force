@@ -1,6 +1,7 @@
 .current-item
   a.current-item-left(href= currentItem.href)
-    img.current-item-image(src= currentItem.imageUrl)
+    if currentItem.imageUrl
+      img.current-item-image(src= currentItem.imageUrl)
   a.current-item-right(href= currentItem.href)
     - var copy = (currentItem.type == 'show' && currentItem.hasMany) ? 'Featured ' : 'In Current '
     .current-item-label.avant-garde-s-headline= copy + viewHelpers.capitalize(currentItem.type)

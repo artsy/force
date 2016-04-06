@@ -21,9 +21,22 @@ describe 'Current auction of show', ->
   after ->
     benv.teardown()
 
+  it 'with no image', (done) ->
+    benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
+      currentItem: _.extend {}, @item, hasMany: false, type: 'show', imageUrl: null
+      viewHelpers: helpers
+    }, =>
+      $('.current-item-image').length.should.eql 0
+      $('.current-item-label').text().should.eql 'In Current Show'
+      $('.current-item-name').text().should.eql 'Foo Bar'
+      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $('.current-item-left').attr('href').should.eql '/foo/bar'
+      $('.current-item-right').attr('href').should.eql '/foo/bar'
+      done()
+
   it 'with one show', (done) ->
     benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
-      currentItem: _.extend hasMany: false, type: 'show', @item
+      currentItem: _.extend {}, @item, hasMany: false, type: 'show'
       viewHelpers: helpers
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
@@ -36,7 +49,7 @@ describe 'Current auction of show', ->
 
   it 'with many shows', ->
     benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
-      currentItem: _.extend hasMany: true, type: 'show', @item
+      currentItem: _.extend {}, @item, hasMany: true, type: 'show'
       viewHelpers: helpers
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
@@ -49,7 +62,7 @@ describe 'Current auction of show', ->
 
   it 'with one auction', ->
     benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
-      currentItem: _.extend hasMany: false, type: 'auction', @item
+      currentItem: _.extend {}, @item, hasMany: false, type: 'auction'
       viewHelpers: helpers
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
@@ -62,7 +75,7 @@ describe 'Current auction of show', ->
 
   it 'with one auction', ->
     benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
-      currentItem: _.extend hasMany: true, type: 'auction', @item
+      currentItem: _.extend {}, @item, hasMany: true, type: 'auction'
       viewHelpers: helpers
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
