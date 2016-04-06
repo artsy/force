@@ -31,5 +31,4 @@ module.exports = ->
           .then ->
             $this.attr 'data-state', null
 
-      followButton = follow $el.find('.js-artwork-partner-follow')
-
+      follow $el.find('.js-artwork-partner-follow')
