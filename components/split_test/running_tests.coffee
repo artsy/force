@@ -22,14 +22,6 @@ module.exports =
       join: 0.5
       apply: 0.5
 
-  masonry_artwork_sort:
-    key: 'masonry_artwork_sort'
-    edge: 'for_sale'
-    outcomes:
-      default: 0.5
-      for_sale: 0.5
-    dimension: 'dimension11'
-
   artwork_item_contact_gallery:
     key: 'artwork_item_contact_gallery'
     edge: 'contact'

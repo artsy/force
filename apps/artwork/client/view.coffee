@@ -25,7 +25,6 @@ ImagesView = require '../components/images/view.coffee'
 PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedNavigationView = require '../components/related_navigation/view.coffee'
-splitTest = require '../../../components/split_test/index.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
 actionsTemplate = -> require('../templates/_actions.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
@@ -179,11 +178,8 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
-    split = splitTest('masonry_artwork_sort').outcome()
-    additionalParams = if split is 'default' then {} else
-      sort: 'availability'
     @listenTo @artist.related().artworks, 'sync', @renderArtistArtworks
-    @artist.related().artworks.fetch data: additionalParams
+    @artist.related().artworks.fetch data: sort: 'availability'
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
