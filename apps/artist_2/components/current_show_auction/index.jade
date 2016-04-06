@@ -6,5 +6,7 @@
     - var copy = (currentItem.type == 'show' && currentItem.hasMany) ? 'Featured ' : 'In Current '
     .current-item-label.avant-garde-s-headline= copy + viewHelpers.capitalize(currentItem.type)
     .current-item-name= currentItem.name
-    .current-item-duration
-      = viewHelpers.timespanInWords(currentItem.start_at, currentItem.end_at)
+    if currentItem.secondaryName
+      .current-item-name= currentItem.secondaryName
+    .current-item-detail
+      = viewHelpers.currentItemDetail(currentItem)

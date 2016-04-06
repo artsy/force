@@ -5,7 +5,6 @@ sd = require('sharify').data
 { capitalize, numberFormat } = require 'underscore.string'
 
 module.exports =
-  timespanInWords: timespanInWords
   capitalize: capitalize
 
   pageTitle: (artist) ->
@@ -35,3 +34,10 @@ module.exports =
   mdToHtml: (artist, attr) ->
     artist = new Artist _.pick artist, attr
     artist.mdToHtml attr
+
+  currentItemDetail: (item) ->
+    _.compact([
+      item.city
+      timespanInWords(item.start_at, item.end_at, day: 'D')
+    ]).join ', '
+

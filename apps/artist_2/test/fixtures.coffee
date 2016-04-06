@@ -30,14 +30,16 @@ module.exports = {
     "articles": true
   },
   "show": [{
-    "name": "A Show"
-    "href": "/show/a-show"
+    "name": "A Show",
+    "href": "/show/a-show",
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
     "cover_image": "cropped": "url": "/foo.jpg"
         }, {
-    "name": "Another Show"
-    "href": "/show/another-show"
+    "name": "Another Show",
+    "partner": "name": "Gallery Name",
+    "location": "city": "New York",
+    "href": "/show/another-show",
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
     "cover_image": "cropped": "url": "/bar.jpg"

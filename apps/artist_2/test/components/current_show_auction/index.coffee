@@ -5,7 +5,7 @@ _ = require 'underscore'
 describe 'current show or auction', ->
   it 'prioritizes an auction', ->
     artist = { show, auction }
-    currentItem(artist).should.eql
+    currentItem(artist).should.containEql
       hasMany: true,
       href: '/auction/an-auction'
       imageUrl: '/baz.jpg',
@@ -16,7 +16,7 @@ describe 'current show or auction', ->
 
   it 'falls back to a show', ->
     artist = { show }
-    currentItem(artist).should.eql
+    currentItem(artist).should.containEql
       hasMany: true,
       href: '/show/a-show'
       imageUrl: '/foo.jpg',
