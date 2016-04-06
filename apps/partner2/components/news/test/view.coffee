@@ -74,19 +74,19 @@ describe 'NewsView', ->
       @view.consolidate(@partnerShowEvents, @fairBooths).should.eql [
           start_at: '2015-02-09T02:00:00+00:00'
           subtitle: 'Artist Talk'
-          time: 'Monday, Feb. 9th, 2am – Thursday, Feb. 9th, 8pm'
+          time: 'Monday, Feb 9th, 2am – Thursday, Feb 9th, 8pm'
           title: @partnerShowEvents.at(1).get('partner_show').name
           titleLink: new PartnerShow(@partnerShowEvents.at(1).get('partner_show')).href()
         ,
           start_at: '2015-02-10T02:00:00+00:00'
           subtitle: 'Fair Booth'
-          time: "Feb. 10th – 17th 2015"
+          time: "Feb 10th – 17th 2015"
           title: @fairBooths.at(0).get('name')
           titleLink: @fairBooths.at(0).href()
         ,
           start_at: '2015-02-11T02:00:00+00:00'
           subtitle: 'Opening Receiption'
-          time: 'Wednesday, Feb. 11th, 2am – Thursday, Feb. 9th, 8pm'
+          time: 'Wednesday, Feb 11th, 2am – Thursday, Feb 9th, 8pm'
           title: @partnerShowEvents.at(0).get('partner_show').name
           titleLink: new PartnerShow(@partnerShowEvents.at(0).get('partner_show')).href()
       ]
@@ -95,13 +95,13 @@ describe 'NewsView', ->
       @view.consolidate(@partnerShowEvents, new PartnerShows).should.eql [
           start_at: '2015-02-09T02:00:00+00:00'
           subtitle: 'Artist Talk'
-          time: 'Monday, Feb. 9th, 2am – Thursday, Feb. 9th, 8pm'
+          time: 'Monday, Feb 9th, 2am – Thursday, Feb 9th, 8pm'
           title: @partnerShowEvents.at(1).get('partner_show').name
           titleLink: new PartnerShow(@partnerShowEvents.at(1).get('partner_show')).href()
         ,
           start_at: '2015-02-11T02:00:00+00:00'
           subtitle: 'Opening Receiption'
-          time: 'Wednesday, Feb. 11th, 2am – Thursday, Feb. 9th, 8pm'
+          time: 'Wednesday, Feb 11th, 2am – Thursday, Feb 9th, 8pm'
           title: @partnerShowEvents.at(0).get('partner_show').name
           titleLink: new PartnerShow(@partnerShowEvents.at(0).get('partner_show')).href()
       ]
@@ -110,7 +110,7 @@ describe 'NewsView', ->
       @view.consolidate(new PartnerShowEvents, @fairBooths).should.eql [
           start_at: '2015-02-10T02:00:00+00:00'
           subtitle: 'Fair Booth'
-          time: "Feb. 10th – 17th 2015"
+          time: "Feb 10th – 17th 2015"
           title: @fairBooths.at(0).get('name')
           titleLink: @fairBooths.at(0).href()
       ]

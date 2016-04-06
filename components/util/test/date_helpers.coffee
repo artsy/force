@@ -14,7 +14,3 @@ describe 'DateHelpers', ->
 
     it 'transforms a UTC date into a readable string', ->
       DateHelpers.formatDate('2012-05-07T04:00:00+00:00').should.equal "May 7th"
-
-    it 'does not add a period to the month of May', ->
-      DateHelpers.formatDate('2012-09-07T04:00:00+00:00').should.equal "Sep 7th"
-      DateHelpers.formatDate('2012-11-08T05:00:00+00:00').should.equal "Nov 8th"

@@ -4,7 +4,7 @@ module.exports =
   date: (attr) ->
     moment.utc @get(attr)
 
-  formatDateRange: (start_attr, end_attr, format = 'dddd, MMM. Do, h:mma') ->
+  formatDateRange: (start_attr, end_attr, format = 'dddd, MMM Do, h:mma') ->
     start = @date start_attr
     end = @date end_attr
 
