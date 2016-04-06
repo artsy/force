@@ -65,6 +65,7 @@ query = """
         id
         _id
         href
+        collecting_institution
         image {
           url(version: "large")
           width
