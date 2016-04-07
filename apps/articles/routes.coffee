@@ -46,20 +46,22 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      # Email subscription checks - Mailchimp (to be replaced by Marketo) and Sailthru
-      if res.locals.sd.CURRENT_USER?.email?
-        email = res.locals.sd.CURRENT_USER?.email
-        if _.contains res.locals.sd.ARTICLE.section_ids, sd.GALLERY_INSIGHTS_SECTION_ID
-          subscribed email, (cb) ->
-            res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-            res.render 'article', _.extend data, embedVideo: embedVideo
-        else
-          subscribedToEditorial email, (err, subscribed) ->
-            res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-            res.render 'article', _.extend data, embedVideo: embedVideo
-      else
-        res.locals.sd.MAILCHIMP_SUBSCRIBED = false
+      setupEmailSubscriptions res.locals.sd.CURRENT_USER, data.article, (results) ->
+        res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+
         res.render 'article', _.extend data, embedVideo: embedVideo
+
+setupEmailSubscriptions = (user, article, cb) ->
+  return cb { mailchimp: false, editorial: false } unless user?.email
+  if _.contains article.get('section_ids'), sd.GALLERY_INSIGHTS_SECTION_ID
+    subscribedToGA user.email, (isSubscribed) ->
+      return cb { mailchimp: isSubscribed, editorial: false }
+  else if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
+    subscribedToEditorial user.email, (err, isSubscribed) ->
+      return cb { editorial: isSubscribed, mailchimp: false }
+  else
+    return cb { mailchimp: false, editorial: false }
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
@@ -95,7 +97,7 @@ getArticleScrollType = (data) ->
           res.locals.sd.SECTION = section.toJSON()
           if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
             email = res.locals.sd.CURRENT_USER?.email
-            subscribed email, (cb) ->
+            subscribedToGA email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
               res.render 'section', section: section, articles: articles
           else
@@ -121,7 +123,7 @@ getArticleScrollType = (data) ->
       else
         res.send(response.status, response.body.error)
 
-subscribed = (email, callback) ->
+subscribedToGA = (email, callback) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
     .query(
       apikey: MAILCHIMP_KEY
@@ -150,3 +152,13 @@ subscribedToEditorial = (email, callback) ->
       res.send req.body
     else
       res.status(500).send(response.errormsg)
+
+topPosts = (callback) ->
+  request.get('https://api.parsely.com/v2/analytics/posts')
+    .query
+      apikey: sd.PARSELY_KEY
+      secret: sd.PARSELY_SECRET
+      limit: 10
+      sort: '_hits'
+    .end (err, response) ->
+      return callback response

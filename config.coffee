@@ -95,6 +95,8 @@ module.exports =
   CONSIGNMENTS_APP_URL: null
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   ACTIVE_BIDS_POLL_INTERVAL: 5000
+  PARSELY_KEY: null
+  PARSELY_SECRET: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
