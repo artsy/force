@@ -20,7 +20,6 @@ module.exports = class OverviewView extends Backbone.View
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    console.log @$el
     @sticky = new Sticky
 
   setupArtworkFilter: ->
@@ -139,7 +138,6 @@ module.exports = class OverviewView extends Backbone.View
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
-    console.log @$el
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers
