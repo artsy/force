@@ -1,11 +1,23 @@
+- var isWithDate = item.day && item.month && item.year
+
 a.press-item( href= item.href )
-  .vam-outer: .vam-inner
-    if item.subtitle
-      h4.press-item-subtitle
-        = item.subtitle
-    if item.title
-      h3.press-item-title
-        = item.title
-    if item.description
-      p.press-item-description
-        = item.description
+  if item.subtitle
+    h4.press-item__subtitle
+      = item.subtitle
+
+  if item.title
+    h3.press-item__title
+      = item.title
+
+  if item.author || isWithDate
+    .press-item__metadata
+      if item.author
+        = item.author
+      if item.author && isWithDate
+        = ' — '
+      if isWithDate
+        = moment([item.day, item.month, item.year].join('/'), 'D/MMMM/YYYY').format('MMMM D, YYYY')
+
+  if item.description
+    p.press-item__description
+      = item.description
