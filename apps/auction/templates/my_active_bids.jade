@@ -17,8 +17,8 @@ if myActiveBids && myActiveBids.length
                   = bid.sale_artwork.artwork.date
           td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
           td.auction-mab-current-bid
-            strong Current Bid: <em>#{accounting.formatMoney(bid.sale_artwork.highest_bid.amount_cents / 100, '$', 0)}</em>
-          td.auction-mab-bid-num (#{bid.sale_artwork.bidder_positions_count} Bids)
+            strong Current Bid: <em>#{bid.sale_artwork.highest_bid.amount}</em>
+          td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
           if bid.is_winning
             td.auction-mab-warning.is-winning: p Highest Bid
           else

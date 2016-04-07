@@ -5,9 +5,11 @@ fixture = -> [
     "sale_artwork": {
       "id": "ed-ruscha-cockroaches-from-insects-portfolio",
       "lot_number": "10",
-      "bidder_positions_count": 5,
+      "counts": {
+        "bidder_positions": 5,
+      },
       "highest_bid": {
-        "amount_cents": "$4,000"
+        "amount": "$4,000"
       },
       "artwork": {
         "image": {

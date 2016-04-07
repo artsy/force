@@ -7,10 +7,12 @@ module.exports = """
         sale_artwork {
           id
           lot_number
-          bidder_positions_count
+          counts {
+            bidder_positions
+          }
           sale_id
           highest_bid {
-            amount_cents
+            amount
           }
           artwork {
             href
