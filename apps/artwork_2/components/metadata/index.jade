@@ -1,4 +1,6 @@
-.artwork-metadata
+form.artwork-metadata( class='js-artwork-metadata' )
+  input( type='hidden', name='artwork_id', value= artwork.id )
+
   include templates/metadata/lot_number
   include templates/metadata/artists
   include templates/metadata/title
@@ -9,3 +11,4 @@
   include templates/metadata/price
   if artwork.is_contactable
     include templates/metadata/partner
+  include templates/metadata/acquire

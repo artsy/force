@@ -1,27 +1,52 @@
 .artwork-auction
-  block-margins(15px)
+  block-margins(gutter / 2)
 
   &__estimate
   &__bid-status
+  &__bid-form
   &__help
-    block-margins(15px)
+    block-margins(distance(gutter / 2, 'garamond-s-body'))
 
   &__bid-status
-    padding 15px 0
+    serif('l-caption')
+    padding distance(gutter / 2) 0
     border-top 1px solid gray-lighter-color
     border-bottom @border-top
+
     &__bid
-      avant-garde-size('body')
+      sans('body')
+
     &__amount
-      avant-garde-size('xl-headline')
+      sans('xl-headline')
+
     &__count
       color gray-dark-color
 
+  &__bid-form
+    &__errors
+      serif('l-caption')
+      margin distance(gutter / 2) 0 0 0
+
+    &__next-bid
+      serif('s-body')
+      color gray-dark-color
+
+    &__input
+      margin distance(10px, 'garamond-s-body') 0
+
+    &__button
+      margin-top 10px !important
+
   &__buyers-premium
-    block-margins(15px)
+    serif('s-body')
+    margin distance(10px) 0
     color gray-dark-color
 
-  &__help > a
+  &__help
+    serif('s-body')
+    margin-top distance(gutter)
+
   &__buyers-premium > a
+  &__help > a
     color gray-dark-color
     fine-faux-underline(gray-dark-color)

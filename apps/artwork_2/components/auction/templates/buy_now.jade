@@ -1,0 +1,9 @@
+//- TODO: Needs artwork to test on
+if auction.is_open && artwork.is_acquireable && !sale_artwork.is_bid_on
+  form
+    if artwork.sale_message
+      .artwork-metadata__sale-message
+        = artwork.sale_message
+
+    button.avant-garde-button-black
+      | Buy Now

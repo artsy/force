@@ -1,5 +1,6 @@
 module.exports = """
   fragment metadata on Artwork {
+    id
     href
     title
     date
@@ -17,6 +18,7 @@ module.exports = """
     }
     image_rights
     sale_message
+    is_acquireable
     is_for_sale
     is_contactable
     partner {
@@ -38,6 +40,8 @@ module.exports = """
     }
     edition_of
     edition_sets {
+      id
+      is_acquireable
       edition_of
       price
       dimensions {

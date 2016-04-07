@@ -1,11 +1,13 @@
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 MODELS =
-  artwork: require '../../../models/artwork.coffee'
+  artist: require '../../../models/artist.coffee'
   profile: require '../../../models/profile.coffee'
 
 module.exports = ($el) ->
   following = null
+
+  return unless $el.length
 
   { id, type } = $el.data()
 

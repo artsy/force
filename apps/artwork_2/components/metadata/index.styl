@@ -23,7 +23,7 @@
       margin-left -8px
 
   &__title
-    //
+    break-word()
 
   &__secondary-metadata
     color gray-darker-color
@@ -100,6 +100,10 @@
 
   &__details
     padding 0 10px
+
+    // When not acquireable, radio button is disabled
+    &:first-child
+      padding-left 0
 
   &__price
     text-align right
