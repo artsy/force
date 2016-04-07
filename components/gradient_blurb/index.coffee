@@ -10,6 +10,7 @@ module.exports = ($el, options = {}) ->
     # range of the limit. Prevents collapsing of elements that are just a few pixels over the limit,
     # but will not affect the max-height for the collapsed state.
 
+    debugger
     return unless (height = $el.outerHeight()) > (options.limit + options.heightBreakOffset)
 
     $button = $("<div class='gradient-blurb-read-more-container'><a class='gradient-blurb-read-more' href='#'>#{options.label}</a></div>")

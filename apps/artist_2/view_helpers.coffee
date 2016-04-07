@@ -27,6 +27,20 @@ module.exports =
       artist.years
     ]).join ', '
 
+  birthDetail: (artist) ->
+    return if not (artist.birthday?.length or artist.hometown?.length)
+    'b. ' + _.compact([
+      artist.birthday if artist.birthday?.length
+      artist.hometown if artist.hometown?.length
+    ]).join ', '
+
+  locationDetail: (artist) ->
+    return if not artist.location?.length
+    dead = artist.deathday?.length
+    lives = if dead then 'Lived' else 'Lives'
+    works = if dead then 'worked' else 'works'
+    lives + ' and ' + works + ' in ' + artist.location
+
   displayFollowers: (artist) ->
     if c = artist.counts.follows
       "#{numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
