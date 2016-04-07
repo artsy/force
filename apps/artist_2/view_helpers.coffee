@@ -1,4 +1,5 @@
 _ = require 'underscore'
+moment = require 'moment'
 Artist = require '../../models/artist.coffee'
 sd = require('sharify').data
 { timespanInWords } = require '../../components/util/date_helpers.coffee'
@@ -49,9 +50,16 @@ module.exports =
     artist = new Artist _.pick artist, attr
     artist.mdToHtml attr
 
+
   currentItemDetail: (item) ->
-    _.compact([
-      item.city
-      timespanInWords(item.start_at, item.end_at, day: 'D')
-    ]).join ', '
+
+    if item.type is 'auction'
+      end = moment.utc(item.end_at)
+      minuteFormat = if end.minute() > 0 then ':mm' else ''
+      end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A Z');
+    else
+      _.compact([
+        item.city
+        timespanInWords(item.start_at, item.end_at, day: 'D')
+      ]).join ', '
 
