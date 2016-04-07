@@ -155,4 +155,4 @@ describe 'RecentlyAddedWorksView', ->
       @view.publishedAt(new Backbone.Collection [
         { published_changed_at: '2015-03-23T09:10:03.000Z' }
         { published_changed_at: '2015-03-23T09:10:04.000Z' }
-      ]).should.equal 'Mar. 23rd'
+      ]).should.equal 'Mar 23rd'

@@ -11,6 +11,7 @@ module.exports = """
       birthday
       deathday
       years
+      location
       blurb
       counts {
         follows

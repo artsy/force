@@ -17,6 +17,12 @@ module.exports = """
           url
         }
       }
+      partner {
+        name
+      }
+      location {
+        city
+      }
       href
       name
       start_at

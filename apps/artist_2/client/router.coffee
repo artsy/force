@@ -27,7 +27,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist_2/:id/biography': 'biography'
 
   initialize: ({ @model, @user, @statuses }) ->
-    @options = model: @model, user: @user, statuses: @statuses
+    @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
     @setupUser()
     @setupCarousel()
     @setupHeaderView()
@@ -39,7 +39,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     initCarousel $('.js-artist-carousel'), imagesLoaded: true
 
   setupHeaderView: ->
-    @headerView = new HeaderView _.extend el: $('#artist-page-header'), @options
+    @headerView = new HeaderView _.extend {}, @options, el: $('#artist-page-header')
 
   execute: ->
     return if @view? # Sets up a view once, depending on route
@@ -47,8 +47,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @renderCurrentView()
 
   renderCurrentView: ->
-    (@$content ?= $('#artist-page-content'))
-      .html @view.render().$el
+    @view.render()
 
   overview: ->
     @view = new OverviewView @options

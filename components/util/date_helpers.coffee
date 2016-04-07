@@ -1,4 +1,5 @@
 moment = require 'moment'
+_ = require 'underscore'
 
 module.exports = class DateHelpers
 
@@ -6,25 +7,26 @@ module.exports = class DateHelpers
     date = moment.utc utc_date
 
     month = date.format('MMM')
-    if date.month() isnt 4 then month += "."
-
     day = date.format('Do')
 
     "#{month} #{day}"
 
-  @timespanInWords: (utc_start, utc_end) ->
+  @timespanInWords: (utc_start, utc_end, formats = {}) ->
+    defaultFormats =
+      day: 'Do'
+      month: 'MMM'
+      year: 'YYYY'
+
+    formats = _.defaults formats, defaultFormats
+
     start = moment.utc utc_start
     end = moment.utc utc_end
 
-    startMonth = start.format('MMM')
-    # don't append a . for May, 0-based months
-    if start.month() isnt 4 then startMonth += "."
-    startDay = start.format('Do')
+    startMonth = start.format(formats.month)
+    startDay = start.format(formats.day)
 
-    endMonth = end.format('MMM')
-    # don't append a . for May, 0-based months
-    if end.month() isnt 4 then endMonth += "."
-    endDay = end.format('Do')
+    endMonth = end.format(formats.month)
+    endDay = end.format(formats.day)
 
     if start.year() is end.year()
       if start.month() is end.month() and start.date() is end.date()
@@ -39,4 +41,5 @@ module.exports = class DateHelpers
       else
         monthAndDate
     else
-      "#{startMonth} #{startDay}, #{start.format('YYYY')} – #{endMonth} #{endDay}, #{end.format('YYYY')}"
+      "#{startMonth} #{startDay}, #{start.format(formats.year)} – #{endMonth} #{endDay}, #{end.format(formats.year)}"
+

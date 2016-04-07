@@ -61,4 +61,4 @@ describe 'MapModalView', ->
       @view.$('.map-modal-partner-name').html().should.containEql 'Gagosian Gallery'
       @view.$('.map-modal-partner-location-address').html().should.containEql '529 W 20th St.'
       @view.$('.map-modal-partner-location-city').html().should.containEql 'New York, NY'
-      @view.$('.map-modal-show-running-dates').html().should.containEql 'Jul. 12th – Aug. 23rd 2013'
+      @view.$('.map-modal-show-running-dates').html().should.containEql 'Jul 12th – Aug 23rd 2013'

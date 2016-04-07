@@ -90,7 +90,7 @@ describe 'PartnerShow', ->
   describe '#runningDates', ->
 
     it 'gives a formatted date span for the running dates', ->
-      @partnerShow.runningDates().should.equal "Jul. 12th – Aug. 23rd 2013"
+      @partnerShow.runningDates().should.equal "Jul 12th – Aug 23rd 2013"
 
   describe '#shareTitle', ->
 

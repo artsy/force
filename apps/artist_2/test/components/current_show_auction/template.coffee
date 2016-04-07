@@ -14,6 +14,8 @@ describe 'Current auction of show', ->
       imageUrl: '/foo.jpg',
       name: 'Foo Bar',
       href: '/foo/bar'
+      city: 'New York'
+      secondaryName: 'Foo Bar Baz'
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       done()
@@ -28,8 +30,9 @@ describe 'Current auction of show', ->
     }, =>
       $('.current-item-image').length.should.eql 0
       $('.current-item-label').text().should.eql 'In Current Show'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $($('.current-item-name')[0]).text().should.eql 'Foo Bar'
+      $($('.current-item-name')[1]).text().should.eql 'Foo Bar Baz'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
       $('.current-item-left').attr('href').should.eql '/foo/bar'
       $('.current-item-right').attr('href').should.eql '/foo/bar'
       done()
@@ -41,8 +44,9 @@ describe 'Current auction of show', ->
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
       $('.current-item-label').text().should.eql 'In Current Show'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $($('.current-item-name')[0]).text().should.eql 'Foo Bar'
+      $($('.current-item-name')[1]).text().should.eql 'Foo Bar Baz'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
       $('.current-item-left').attr('href').should.eql '/foo/bar'
       $('.current-item-right').attr('href').should.eql '/foo/bar'
       done()
@@ -54,8 +58,9 @@ describe 'Current auction of show', ->
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
       $('.current-item-label').text().should.eql 'Featured Show'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $($('.current-item-name')[0]).text().should.eql 'Foo Bar'
+      $($('.current-item-name')[1]).text().should.eql 'Foo Bar Baz'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
       $('.current-item-left').attr('href').should.eql '/foo/bar'
       $('.current-item-right').attr('href').should.eql '/foo/bar'
       done()
@@ -67,21 +72,24 @@ describe 'Current auction of show', ->
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
       $('.current-item-label').text().should.eql 'In Current Auction'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $($('.current-item-name')[0]).text().should.eql 'Foo Bar'
+      $($('.current-item-name')[1]).text().should.eql 'Foo Bar Baz'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
       $('.current-item-left').attr('href').should.eql '/foo/bar'
       $('.current-item-right').attr('href').should.eql '/foo/bar'
       done()
 
-  it 'with one auction', ->
+  it 'with many auctions', ->
     benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
       currentItem: _.extend {}, @item, hasMany: true, type: 'auction'
       viewHelpers: helpers
     }, =>
       $('.current-item-image').attr('src').should.eql '/foo.jpg'
       $('.current-item-label').text().should.eql 'In Current Auction'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-duration').text().should.eql 'Sep. 1st – Dec. 5th'
+      $($('.current-item-name')[0]).text().should.eql 'Foo Bar'
+      $($('.current-item-name')[1]).text().should.eql 'Foo Bar Baz'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
+      $('.current-item-detail').text().should.eql 'New York, Sep 1 – Dec 5'
       $('.current-item-left').attr('href').should.eql '/foo/bar'
       $('.current-item-right').attr('href').should.eql '/foo/bar'
       done()
