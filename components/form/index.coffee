@@ -39,7 +39,7 @@ module.exports = class Form
 
   error: (modelOrString, response, options) ->
     @state 'error'
-    @reenable false
+    @reenable()
     @$errors.text if typeof modelOrString is 'string'
       modelOrString
     else
@@ -71,6 +71,13 @@ module.exports = class Form
   state: (state) ->
     @$submit.attr 'data-state', state
     this
+
+  action: ->
+    @model?.url() or
+    @$form.attr 'action'
+
+  find: ->
+    @$form.find arguments...
 
   data: ->
     @serializer.data()
