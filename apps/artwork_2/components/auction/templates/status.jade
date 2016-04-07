@@ -1,0 +1,15 @@
+- var count = helpers.auction.count(sale_artwork);
+
+.artwork-auction__bid-status
+  .artwork-auction__bid-status__bid
+    if sale_artwork.counts.bidder_positions
+      | Current Bid:
+    else
+      | Starting Bid:
+
+  .artwork-auction__bid-status__amount
+    = sale_artwork.current_bid.amount
+
+  if count
+    .artwork-auction__bid-status__count
+      | (#{count})

@@ -1,5 +1,6 @@
 module.exports = """
   fragment auction on Artwork {
+    is_acquireable
     auction: sale {
       id
       name
@@ -11,9 +12,18 @@ module.exports = """
       is_with_buyers_premium
       sale_artwork(id: $id) {
         id
+        reserve_message
         estimate
-        current_bid
-        bidder_positions_count
+        current_bid {
+          amount
+        }
+        minimum_next_bid {
+          amount
+          cents
+        }
+        counts {
+          bidder_positions
+        }
       }
     }
   }

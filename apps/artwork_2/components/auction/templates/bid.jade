@@ -1,0 +1,33 @@
+if auction.is_open
+  form.artwork-auction__bid-form.stacked-form(
+    method='GET'
+    action='/auction/#{auction.id}/bid/#{artwork.id}'
+    class='js-artwork-auction-bid'
+  )
+    .artwork-auction__bid-form__errors.form-errors( class='js-form-errors' )
+      //- Rendered client-side
+
+    if user
+      .artwork-auction__bid-form__next-bid
+        | Enter #{sale_artwork.minimum_next_bid.amount} or higher
+
+      .artwork-auction__bid-form__input.typed-bordered-input.is-block
+        span $
+        input.bordered-input(
+          class='js-artwork-auction-bid-amount'
+          name='bid'
+          autocomplete='off'
+          required
+        )
+
+    //- TODO: Bid button state contingent on user
+    button.artwork-auction__bid-form__button.avant-garde-button-black(
+      class='js-artwork-auction-bid-button'
+    ) Bid
+
+  if auction.is_with_buyers_premium
+    .artwork-auction__buyers-premium
+      | This work has a
+      = ' '
+      a( class='js-artwork-auction-buyers-premium' )
+        | Buyer’s Premium
