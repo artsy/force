@@ -10,7 +10,6 @@ module.exports =
     has: (section) ->
       switch section
         when 'description'
-          artwork.series? or
           artwork.publisher? or
           artwork.signature? or
           artwork.description? or
