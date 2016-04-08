@@ -6,6 +6,7 @@ metaphysics = require '../../lib/metaphysics'
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
+      ... meta
       ... banner
       ... images
       ... deep_zoom
@@ -18,6 +19,7 @@ query = """
       ... artists
     }
   }
+  #{require './components/meta/query'}
   #{require './components/banner/query'}
   #{require './components/images/query'}
   #{require './components/deep_zoom/query'}
