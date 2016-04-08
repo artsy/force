@@ -1,0 +1,28 @@
+- var img = artwork.meta_image && artwork.meta_image.resized
+
+//- General tags
+title= artwork.meta.title
+meta( name='description', content= artwork.meta.description )
+if img
+  meta( name='thumbnail', content= img.url )
+link( rel='alternate', media= sd.MOBILE_MEDIA_QUERY, href= sd.CANONICAL_MOBILE_URL + artwork.href )
+link( rel='canonical', href= sd.APP_URL + artwork.href )
+
+//- Twitter tags
+meta( property='twitter:description', content= artwork.meta.long_description )
+meta(
+  property='twitter:card'
+  content= (artwork.is_shareable && img ? 'summary_large_image' : 'summary')
+)
+
+//- Open Graph tags
+meta( property='og:title', content= artwork.meta.title )
+meta( property='og:description', content= artwork.meta.description )
+meta( property='og:url', content= sd.APP_URL + artwork.href )
+meta( property='og:type', content='#{sd.FACEBOOK_APP_NAMESPACE}:artwork' )
+if artwork.is_shareable && img
+  meta( property='og:image', content= img.url )
+  meta( property='og:image:width' content= img.width )
+  meta( property='og:image:height' content= img.height )
+else
+  meta( property='og:image', content= asset('/images/icon-152.png') )
