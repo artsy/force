@@ -3,6 +3,7 @@ module.exports = """
     id
     href
     title
+    series
     date
     artists {
       id

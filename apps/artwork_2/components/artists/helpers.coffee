@@ -5,7 +5,7 @@ module.exports =
 
   tabs: tabs = [
     'biography'
-    'exhibition_highlights'
+    'exhibition_history'
     'articles'
   ]
 
@@ -14,8 +14,8 @@ module.exports =
       switch section
         when 'biography'
           artist.biography?
-        when 'exhibition_highlights'
-          artist.exhibition_highlights.length > 0
+        when 'exhibition_history'
+          artist.exhibition_history.length > 0
         when 'articles'
           artist.articles.length > 0
         else
@@ -23,7 +23,9 @@ module.exports =
 
   build: (artist) ->
     tabs.filter (tab) ->
-      sections(artist).has(tab)
+      sections artist
+        .has tab
 
   name: (section) ->
-    section.split('_').join ' '
+    section.split '_'
+      .join ' '

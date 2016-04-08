@@ -1,7 +1,7 @@
-if artist.exhibition_highlights.length
-  .artwork-artist__content__exhibition-highlights
-    for shows, kind in helpers.artists.groupBy(artist.exhibition_highlights, 'kind')
-      .artwork-artist__content__exhibition-highlights__type
+if artist.exhibition_history.length
+  .artwork-artist__content__exhibition-history
+    for shows, kind in helpers.artists.groupBy(artist.exhibition_history, 'kind')
+      .artwork-artist__content__exhibition-history__type
         h3
           case kind
             when 'solo'
@@ -12,10 +12,10 @@ if artist.exhibition_highlights.length
               | Fair Participation on Artsy
 
         for show in shows
-          .artwork-artist__content__exhibition-highlights__type__show
-            .artwork-artist__content__exhibition-highlights__type__show__year
+          .artwork-artist__content__exhibition-history__type__show
+            .artwork-artist__content__exhibition-history__type__show__year
               = show.year
-            .artwork-artist__content__exhibition-highlights__type__show__info
+            .artwork-artist__content__exhibition-history__type__show__info
                 a( href= show.href )
                   = show.name
                 if show.partner
