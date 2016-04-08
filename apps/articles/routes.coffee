@@ -8,7 +8,7 @@ Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
-{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
@@ -49,8 +49,11 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       setupEmailSubscriptions res.locals.sd.CURRENT_USER, data.article, (results) ->
         res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
-
-        res.render 'article', _.extend data, embedVideo: embedVideo
+        console.log 'ookkkk'
+        topParselyArticles (parselyArticles) ->
+          res.locals.sd.PARSELY_ARTICLES = parselyArticles
+          console.log 'hereeee'
+          res.render 'article', _.extend data, embedVideo: embedVideo
 
 setupEmailSubscriptions = (user, article, cb) ->
   return cb { mailchimp: false, editorial: false } unless user?.email
@@ -129,13 +132,12 @@ subscribedToGA = (email, callback) ->
       apikey: MAILCHIMP_KEY
       id: sd.GALLERY_INSIGHTS_LIST
     ).query("emails[0][email]=#{email}").end (err, response) ->
-      callback response.body.success_count is 1
-  return
+      return callback response.body.success_count is 1
 
 subscribedToEditorial = (email, callback) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
     return callback err, false if err
-    callback null, response.vars?.receive_editorial_email
+    return callback null, response.vars?.receive_editorial_email
 
 @editorialForm = (req, res, next) ->
   sailthru.apiPost 'user',
@@ -153,12 +155,14 @@ subscribedToEditorial = (email, callback) ->
     else
       res.status(500).send(response.errormsg)
 
-topPosts = (callback) ->
+topParselyArticles = (callback) ->
   request.get('https://api.parsely.com/v2/analytics/posts')
     .query
-      apikey: sd.PARSELY_KEY
-      secret: sd.PARSELY_SECRET
+      apikey: PARSELY_KEY
+      secret: PARSELY_SECRET
       limit: 10
+      days: 7
       sort: '_hits'
     .end (err, response) ->
-      return callback response
+      posts = _.where response.body.data, section: 'Editorial'
+      return callback posts

@@ -13,6 +13,10 @@ if superArticle
 
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
 
+    if sd.PARSELY_ARTICLES && article.get('layout') === 'left'
+      - topStories = sd.PARSELY_ARTICLES
+      include top_stories.jade
+
     .main-layout-container.first
       //- Article lead content
       if article.get('hero_section') && article.get('hero_section').type === 'video'
