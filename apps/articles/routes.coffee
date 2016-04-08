@@ -46,25 +46,26 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      setupEmailSubscriptions res.locals.sd.CURRENT_USER, data.article, (results) ->
+      user = res.locals.sd.CURRENT_USER
+      setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
-        console.log 'ookkkk'
-        topParselyArticles (parselyArticles) ->
+
+        topParselyArticles data.article, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
-          console.log 'hereeee'
           res.render 'article', _.extend data, embedVideo: embedVideo
+      return
 
 setupEmailSubscriptions = (user, article, cb) ->
-  return cb { mailchimp: false, editorial: false } unless user?.email
+  return cb({ mailchimp: false, editorial: false }) unless user?.email
   if _.contains article.get('section_ids'), sd.GALLERY_INSIGHTS_SECTION_ID
     subscribedToGA user.email, (isSubscribed) ->
-      return cb { mailchimp: isSubscribed, editorial: false }
+      cb { mailchimp: isSubscribed, editorial: false }
   else if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
     subscribedToEditorial user.email, (err, isSubscribed) ->
-      return cb { editorial: isSubscribed, mailchimp: false }
+      cb { editorial: isSubscribed, mailchimp: false }
   else
-    return cb { mailchimp: false, editorial: false }
+    cb { mailchimp: false, editorial: false }
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
@@ -126,18 +127,20 @@ getArticleScrollType = (data) ->
       else
         res.send(response.status, response.body.error)
 
-subscribedToGA = (email, callback) ->
+subscribedToGA = (email, cb) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
-    .query(
+    .query
       apikey: MAILCHIMP_KEY
       id: sd.GALLERY_INSIGHTS_LIST
-    ).query("emails[0][email]=#{email}").end (err, response) ->
-      return callback response.body.success_count is 1
+      "emails[0][email]": email
+    .timeout 3000
+    .end (err, response) ->
+      cb response.body.success_count is 1
 
-subscribedToEditorial = (email, callback) ->
+subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
-    return callback err, false if err
-    return callback null, response.vars?.receive_editorial_email
+    return cb err, false if err
+    cb null, response.vars?.receive_editorial_email
 
 @editorialForm = (req, res, next) ->
   sailthru.apiPost 'user',
@@ -155,8 +158,10 @@ subscribedToEditorial = (email, callback) ->
     else
       res.status(500).send(response.errormsg)
 
-topParselyArticles = (callback) ->
-  request.get('https://api.parsely.com/v2/analytics/posts')
+topParselyArticles = (article, cb) ->
+  return cb [] unless article.hasTopStories()
+  request
+    .get('https://api.parsely.com/v2/analytics/posts')
     .query
       apikey: PARSELY_KEY
       secret: PARSELY_SECRET
@@ -164,5 +169,6 @@ topParselyArticles = (callback) ->
       days: 7
       sort: '_hits'
     .end (err, response) ->
+      return cb [] if err
       posts = _.where response.body.data, section: 'Editorial'
-      return callback posts
+      return cb posts

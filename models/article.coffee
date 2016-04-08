@@ -134,6 +134,9 @@ module.exports = class Article extends Backbone.Model
 
     bodyClass
 
+  hasTopStories: ->
+    @get('featured') is true and @get('layout') is 'left'
+
   #
   # Super Article helpers
   fetchRelatedArticles: (relatedArticles) ->
