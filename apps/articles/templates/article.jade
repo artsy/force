@@ -38,6 +38,9 @@ block body
 
     //- Article body
     #articles-body-container
+      //- if article.get('layout') === 'left'
+      //-   include ../../../components/article/templates/left
+      //- else
       include ../../../components/article/templates/index
 
     if sd.SCROLL_ARTICLE === "infinite"
