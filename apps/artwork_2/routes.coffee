@@ -6,50 +6,50 @@ metaphysics = require '../../lib/metaphysics'
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
-      ... meta
-      ... banner
-      ... images
-      ... deep_zoom
       ... actions
-      ... metadata
-      ... inquiry
-      ... auction
-      ... highlights
-      ... tabs
       ... artists
+      ... auction
+      ... banner
+      ... deep_zoom
+      ... highlights
+      ... images
+      ... inquiry
+      ... meta
+      ... metadata
+      ... tabs
     }
   }
-  #{require './components/meta/query'}
-  #{require './components/banner/query'}
-  #{require './components/images/query'}
-  #{require './components/deep_zoom/query'}
   #{require './components/actions/query'}
-  #{require './components/metadata/query'}
-  #{require './components/inquiry/query'}
-  #{require './components/auction/query'}
-  #{require './components/highlights/query'}
-  #{require './components/tabs/query'}
   #{require './components/artists/query'}
+  #{require './components/auction/query'}
+  #{require './components/banner/query'}
+  #{require './components/deep_zoom/query'}
+  #{require './components/highlights/query'}
+  #{require './components/images/query'}
+  #{require './components/inquiry/query'}
+  #{require './components/meta/query'}
+  #{require './components/metadata/query'}
+  #{require './components/tabs/query'}
 """
 
 helpers = extend [
   {}
-  banner: require './components/banner/helpers'
   actions: require './components/actions/helpers'
-  metadata: require './components/metadata/helpers'
-  auction: require './components/auction/helpers'
-  highlights: require './components/highlights/helpers'
   artists: require './components/artists/helpers'
-  tabs: require './components/tabs/helpers'
+  auction: require './components/auction/helpers'
+  banner: require './components/banner/helpers'
+  highlights: require './components/highlights/helpers'
+  metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
+  tabs: require './components/tabs/helpers'
 ]...
 
 bootstrap = ->
-  require('./components/banner/bootstrap') arguments...
   require('./components/actions/bootstrap') arguments...
-  require('./components/inquiry/bootstrap') arguments...
   require('./components/auction/bootstrap') arguments...
+  require('./components/banner/bootstrap') arguments...
   require('./components/deep_zoom/bootstrap') arguments...
+  require('./components/inquiry/bootstrap') arguments...
   require('./components/partner/bootstrap') arguments...
 
 @index = (req, res, next) ->
