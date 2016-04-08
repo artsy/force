@@ -30,6 +30,12 @@ module.exports =
   noPinAttr: (artwork) ->
     if artwork.can_share_image then undefined else 'nopin'
 
+  partnerName: (artwork) ->
+    if artwork.collecting_institution
+      artwork.collecting_institution
+    else
+      artwork.partner.name
+
   toAltText: (artwork) ->
     _.compact([
       (artwork.artists[0].name if artwork.artists.size > 0),

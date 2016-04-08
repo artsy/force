@@ -17,9 +17,9 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
     if artwork.partner
       p.artwork-item-partner.artwork-item-overflow
         if artwork.partner.href
-          a.faux-underline-hover( href=artwork.partner.href )= artwork.partner.name
+          a.faux-underline-hover( href=artwork.partner.href )= ViewHelpers.partnerName(artwork)
         else
-          = artwork.partner.name
+          = ViewHelpers.partnerName(artwork)
 
     //- Display price for non-auctions
     if artwork.sale_message != 'Contact For Price'
