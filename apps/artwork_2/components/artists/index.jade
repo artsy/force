@@ -36,5 +36,6 @@ if artwork.artists.length
                       include ./templates/articles
 
               .artwork-artist__jump
-                a( href= artist.href )
+                a.avant-garde-jump-link( href= artist.href )
                   | Go to #{artist.name}’s Artist Page
+                  i.icon-chevron-small-right
