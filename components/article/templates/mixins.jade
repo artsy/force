@@ -76,3 +76,12 @@ mixin toc(section)
     each link in section.links
       .article-section-toc-link
         a(href="##{link.value}")= link.name
+
+mixin imageSet(section)
+  .article-section-image-set__images
+    for item in section.images.slice(0,4)
+      - var image = resize( (item.image || item.url || ''), {height: 150} )
+      img(src=image)
+  .article-section-image-set__remaining
+    .article-section-image-set__preview
+    .article-section-image-set__text Enter Slideshow

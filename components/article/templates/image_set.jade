@@ -1,0 +1,5 @@
+.article-section-image-set-modal.modalize
+  for section in collection
+    for item in section.images
+      - var image = resize( (item.image || item.url || ''), {height: 300} )
+      img(src=image)

@@ -71,6 +71,11 @@ if superArticle
             if section.links.length > 0
               .article-section-toc
                 +toc(section)
+          when 'image_set'
+            if section.images.length > 0
+              .article-section-image-set__modal
+              .article-section-image-set
+                +imageSet(section)
 
     .main-layout-container
       //- Footer social buttons
