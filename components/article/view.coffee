@@ -191,11 +191,6 @@ module.exports = class ArticleView extends Backbone.View
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 
   setupImageSets: ->
-    # Slideshow Modal
-    imageSet = new ImageSetView
-      collection: _.where @article.get('sections'), type: 'image_set'
-    @modal = modalize imageSet
-
     # Slideshow Preview
     allowedPixels = 580.0 - 40
     totalPixels = 0.0
@@ -206,6 +201,12 @@ module.exports = class ArticleView extends Backbone.View
         $(value).css('display', 'inline-block')
 
   toggleModal: ->
+    # Slideshow Modal
+    sections = _.where @article.get('sections'), type: 'image_set'
+    collection = _.flatten _.pluck sections, 'images'
+    imageSet = new ImageSetView
+      collection: collection
+    @modal = modalize imageSet
     @modal.open()
 
   getWidth: (section) ->

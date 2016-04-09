@@ -6,6 +6,7 @@ module.exports = class ImageSetView extends Backbone.View
 
   initialize: (options) ->
     { @collection } = options
+    @currentIndex = 0
 
   render: ->
     @$el.html template(collection: @collection, resize: resize)
