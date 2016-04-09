@@ -1,20 +1,26 @@
 .article-section-image-set-modal
 
+  .js__left.__navigation
+    .icon-chevron-left
 
-  if item.type === 'artwork' && item.artist && item.artist.name
-    .__artist-name= item.artist.name
-    //- .entity-follow.artist-name
+  .__container
+    if item.type === 'artwork' && item.artist && item.artist.name
+      a.__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
+      a.entity-follow.artist-name(data-id=item.artist.slug)
 
-  .js__left.icon-chevron-left
-  - var image = resize( (item.image || item.url || ''), { height: 900 } )
-  img.__image(src=image)
-  .js__right.icon-chevron-right
+    - var image = resize( (item.image || item.url || ''), { height: 900 } )
+    img.__image(src=image)
 
-  if item.type === 'image'
-    .__caption!= item.caption
+    .__pagination= index + "/" + length
+    if item.type === 'image'
+      .__caption!= item.caption
 
-  if item.type === 'artwork'
-    .__title= item.title + ", " + item.date
-    .__partner= item.partner.name
-    a.__link(href="/artwork/#{item.slug}") View Details
+    if item.type === 'artwork'
+      .__title-container
+        .__title= item.title
+        .__date= ", " + item.date
+      .__partner= item.partner.name
+      a.__link(href="/artwork/#{item.slug}") View Details
 
+  .js__right.__navigation
+    .icon-chevron-right

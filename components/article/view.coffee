@@ -192,13 +192,14 @@ module.exports = class ArticleView extends Backbone.View
 
   setupImageSets: ->
     # Slideshow Preview
-    allowedPixels = 580.0 - 40
-    totalPixels = 0.0
-    $('.article-section-image-set__images img').each (i, value) ->
-      _.defer ->
-        totalPixels = totalPixels + value.width
-        return if totalPixels > allowedPixels
-        $(value).css('display', 'inline-block')
+    $('.article-section-container[data-section-type="image_set"]').each (i, value) ->
+      allowedPixels = 580.0 - 100 # min-width + margins
+      totalPixels = 0.0
+      $(value).find('img').each (i, value) ->
+        _.defer ->
+          totalPixels = totalPixels + value.width
+          return if totalPixels > allowedPixels
+          $(value).css('display', 'inline-block')
 
   toggleModal: (e) ->
     # Slideshow Modal

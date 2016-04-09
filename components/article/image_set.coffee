@@ -19,7 +19,7 @@ module.exports = class ImageSetView extends Backbone.View
       item: @collection[@currentIndex]
       resize: resize
       length: @length
-      currentIndex: @currentIndex
+      index: @currentIndex + 1
     this
 
   next: ->
