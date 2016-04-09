@@ -5,8 +5,8 @@ template = -> require('./templates/image_set.jade') arguments...
 module.exports = class ImageSetView extends Backbone.View
 
   events:
-    'click .js__left': 'previous'
-    'click .js__right': 'next'
+    'click .image-set-modal-js__left': 'previous'
+    'click .image-set-modal-js__right': 'next'
 
   initialize: (options) ->
     { @collection } = options

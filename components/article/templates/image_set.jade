@@ -1,26 +1,26 @@
-.article-section-image-set-modal
+.image-set-modal
 
-  .js__left.__navigation
+  .image-set-modal-js__left.image-set-modal__navigation
     .icon-chevron-left
 
-  .__container
+  .image-set-modal__container
     if item.type === 'artwork' && item.artist && item.artist.name
-      a.__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
+      a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
       a.entity-follow.artist-name(data-id=item.artist.slug)
 
     - var image = resize( (item.image || item.url || ''), { height: 900 } )
-    img.__image(src=image)
+    img.image-set-modal__image(src=image)
 
-    .__pagination= index + "/" + length
+    .image-set-modal__pagination= index + "/" + length
     if item.type === 'image'
-      .__caption!= item.caption
+      .image-set-modal__caption!= item.caption
 
     if item.type === 'artwork'
-      .__title-container
-        .__title= item.title
-        .__date= ", " + item.date
-      .__partner= item.partner.name
-      a.__link(href="/artwork/#{item.slug}") View Details
+      .image-set-modal__title-container
+        .image-set-modal__title= item.title
+        .image-set-modal__date= ", " + item.date
+      .image-set-modal__partner= item.partner.name
+      a.image-set-modal__link(href="/artwork/#{item.slug}") View Details
 
-  .js__right.__navigation
+  .image-set-modal-js__right.image-set-modal__navigation
     .icon-chevron-right

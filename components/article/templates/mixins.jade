@@ -83,7 +83,7 @@ mixin imageSet(section)
       - var image = resize( (item.image || item.url || ''), {height: 150} )
       img(src=image)
   .article-section-image-set__remaining
-    .article-section-image-set__icon( data-total=section.images.length )
+    .article-section-image-set__icon( data-total=section.images.length )(class= section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
       //-   .article-section-image-set__total= section.images.length
     .article-section-image-set__text Enter Slideshow

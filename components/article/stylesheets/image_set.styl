@@ -26,11 +26,15 @@
     margin 30px auto 20px auto
     svg
       width 32px
+  &__icon
     &::after
       content attr(data-total)
       left 8px
       top 13px
       position absolute
+  &__icon.is-double-digit
+    &::after
+      left 5px
   &__preview
     text-align center
     margin 25px 0px 20px 0px
@@ -56,21 +60,21 @@ body.body-article-left
       background-color black
       color gray-lighter-color
 
-.article-section-image-set-modal
+.image-set-modal
   height 100vh
   width 100vw
-  .__navigation
+  &__navigation
     height 100%
     display block
 
   // Artist + Follow
-  .__artist-name
+  &__artist-name
     garamond-size('headline')
     faux-underline()
     margin-bottom 20px
 
   // Navigation arrows
-  .__navigation
+  &__navigation
     z-index 2
     position fixed
     padding 50vh 40px
@@ -82,36 +86,35 @@ body.body-article-left
       background-color gray-lightest-color
     .icon-chevron-right
       vertical-align middle
-    &.js__right
+    &.image-set-modal-js__right
       right 0
       top 0
 
   // Image + Metadata
-  .__container
+  &__container
     padding 0px navigation-width
     position absolute
     transform translate(-50%, -50%)
     top 50%
     left 50%
-  .__image
+  &__image
     max-height 70vh
     max-width 70vw
     margin-top 20px
-  .__title
+  &__title
     font-style italic
-  .__title, .__date
+  &__title, &__date
     display inline-block
-  .__title-container, .__caption, .__pagination
+  &__title-container, &__caption, &__pagination
     margin-top 20px
-  .__caption, .__title-container, .__link, .__partner
+  &__caption, &__title-container, &__link, &__partner
     color gray-dark-color
     garamond-size('s-body',true)
-  .__link
+  &__link
     faux-underline()
-  .__pagination
+  &__pagination
     float right
     avant-garde-size('body',true)
 
   .entity-follow
     display inline-block
-    margin-left 20px
