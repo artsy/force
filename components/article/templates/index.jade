@@ -73,7 +73,7 @@ if superArticle
                 +toc(section)
           when 'image_set'
             if section.images.length > 0
-              .article-section-image-set
+              .article-section-image-set( data-index= i )
                 +imageSet(section)
 
     .main-layout-container

@@ -200,13 +200,13 @@ module.exports = class ArticleView extends Backbone.View
         return if totalPixels > allowedPixels
         $(value).css('display', 'inline-block')
 
-  toggleModal: ->
+  toggleModal: (e) ->
     # Slideshow Modal
-    sections = _.where @article.get('sections'), type: 'image_set'
-    collection = _.flatten _.pluck sections, 'images'
+    section = @article.get('sections')[$(e.currentTarget).data('index')]
     imageSet = new ImageSetView
-      collection: collection
-    @modal = modalize imageSet
+      collection: section.images
+    @modal = modalize imageSet,
+      dimensions: width: '100vw', height: '100vh'
     @modal.open()
 
   getWidth: (section) ->

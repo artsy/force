@@ -1,4 +1,20 @@
 .article-section-image-set-modal
-  for item in collection
-    - var image = resize( (item.image || item.url || ''), {height: 900} )
-    img(src=image)
+
+
+  if item.type === 'artwork' && item.artist && item.artist.name
+    .__artist-name= item.artist.name
+    //- .entity-follow.artist-name
+
+  .js__left.icon-chevron-left
+  - var image = resize( (item.image || item.url || ''), { height: 900 } )
+  img.__image(src=image)
+  .js__right.icon-chevron-right
+
+  if item.type === 'image'
+    .__caption!= item.caption
+
+  if item.type === 'artwork'
+    .__title= item.title + ", " + item.date
+    .__partner= item.partner.name
+    a.__link(href="/artwork/#{item.slug}") View Details
+

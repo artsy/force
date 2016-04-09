@@ -36,7 +36,19 @@
 
 .article-section-image-set-modal
   display block
+  img
+    max-height 70vh
 
 body.body-article-left
   .modalize-backdrop
     background-color white
+  .modalize-dialog
+    max-width 100%
+    max-height 100%
+  .modalize-close
+    padding 40px
+    top 0px
+    right 0px
+    &:hover
+      background-color black
+      color gray-lighter-color
