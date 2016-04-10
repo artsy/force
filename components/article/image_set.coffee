@@ -1,7 +1,8 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 template = -> require('./templates/image_set.jade') arguments...
-{ Following, FollowButton } = require '../follow_button/index.coffee'
+{ Following, FollowButton } = Follow = require '../follow_button/index.coffee'
 { resize } = require '../resizer/index.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
@@ -50,7 +51,7 @@ module.exports = class ImageSetView extends Backbone.View
   addFollowButton: ->
     item = @collection[@currentIndex]
     return unless item.artist?.slug
-    artist = id: item.artist?.slug
+    artist = id: item.artist.slug
     new FollowButton
       el: @$(".artist-follow[data-id='#{artist.id}']")
       following: @following
