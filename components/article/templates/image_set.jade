@@ -6,7 +6,7 @@
   .image-set-modal__container
     if item.type === 'artwork' && item.artist && item.artist.name
       a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
-      a.entity-follow.artist-name(data-id=item.artist.slug)
+      a.entity-follow.artist-follow(data-id=item.artist.slug)
 
     - var image = resize( (item.image || item.url || ''), { height: 900 } )
     img.image-set-modal__image(src=image)

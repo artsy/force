@@ -206,6 +206,7 @@ module.exports = class ArticleView extends Backbone.View
     section = @article.get('sections')[$(e.currentTarget).data('index')]
     imageSet = new ImageSetView
       collection: section.images
+      user: @user
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
     @modal.open()
