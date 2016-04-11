@@ -63,26 +63,29 @@ sidebar-width = 26%
     color red-color
 
 .artwork-filter-for-sale
+.artwork-filter-criterion
+  display flex
+
+.artwork-filter-select
+  text-decoration none
+
+.artwork-filter-for-sale
   margin 0
-  .artwork-filter-count
-    float none
+
+.artwork-filter
+  max-width 26%
 
 .artwork-filter-criterion
-  display block
-  clearfix()
   font-size 18px
   text-decoration none
   transition color 0.25s
   &:hover
     color gray-darker-color
   &.is-active
-    .artwork-filter-label
-      max-width 65%
-    .artwork-filter-label
-    .artwork-filter-count
+    a.artwork-filter-select
       color purple-color
   &.is-disabled
-    a:first-child
+    a.artwork-filter-select
       cursor arrow
       pointer-events none
     .artwork-filter-label
@@ -90,11 +93,7 @@ sidebar-width = 26%
     .artwork-filter-remove
       color gray-dark-color
 .artwork-filter-label
-.artwork-filter-count
-  float left
-.artwork-filter-label
   overflow ellipsis
-  max-width 80%
 .artwork-filter-count
   margin-left 0.25em
   color gray-darker-color

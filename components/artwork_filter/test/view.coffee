@@ -163,11 +163,11 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'fetches the artworks, passing in the selected filters + view params', ->
-      @view.$('.artwork-filter-select:eq(0)').click()
+      @view.$('.artwork-filter-label:eq(0)').click()
       _.last(Backbone.sync.args)[2].data.should.containEql medium: 'painting'
-      @view.$('.artwork-filter-select:eq(1)').click()
+      @view.$('.artwork-filter-label:eq(1)').click()
       _.last(Backbone.sync.args)[2].data.should.containEql medium: 'work-on-paper'
-      @view.$('.artwork-filter-select').last().click()
+      @view.$('.artwork-filter-label').last().click()
       _.last(Backbone.sync.args)[2].data.should.containEql medium: 'jewelry'
 
   describe '#fetchArtworksFromBeginning', ->
@@ -175,8 +175,8 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
     it 'fetches resets the params before fetching artworks when a filter is clicked', ->
-      @view.$('.artwork-filter-select:eq(0)').click()
-      @view.$('.artwork-filter-select:eq(1)').click()
+      @view.$('.artwork-filter-label:eq(0)').click()
+      @view.$('.artwork-filter-label:eq(1)').click()
       _.last(Backbone.sync.args)[2].data.should.containEql medium: 'work-on-paper'
 
   describe '#toggleBoolean', ->
