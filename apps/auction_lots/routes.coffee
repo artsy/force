@@ -44,7 +44,7 @@ randomPage = (total, pageSize) ->
   totalCount(artsyXapp.token, auctionLots.url()).then (total) ->
     auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
     auctionLots.fetch
-      cache: true
+      data: access_token: req.user?.get('accessToken')
       error: res.backboneError
       success: (collection, response, options) ->
         res.locals.sd.AUCTION_LOTS = response
@@ -85,6 +85,7 @@ randomPage = (total, pageSize) ->
       render()
 
   auctionLots.fetch
+    data: access_token: req.user?.get('accessToken')
     error: res.backboneError
     success: (collection, response, options) ->
       res.locals.sd.AUCTION_LOTS = response
@@ -111,7 +112,7 @@ randomPage = (total, pageSize) ->
       render()
 
   auctionLots.fetch
-    cache: true
+    data: access_token: req.user?.get('accessToken')
     error: res.backboneError
     success: (collection, response, options) ->
       res.locals.sd.AUCTION_LOTS = response
