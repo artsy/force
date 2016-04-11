@@ -1,4 +1,6 @@
+sinon = require 'sinon'
 helpers = require '../view_helpers'
+moment = require 'moment'
 
 describe 'ArtistViewHelpers', ->
   describe 'pageTitle', ->
@@ -113,3 +115,14 @@ describe 'ArtistViewHelpers', ->
     it 'returns null if no location', ->
       artist = {}
       (helpers.locationDetail(artist) is undefined).should.be.true()
+
+  it 'formatShowDetail', ->
+    item =
+      start_at: '2016-09-01T12:00:00+00:00',
+      end_at: '2016-12-05T12:00:00+00:00',
+      city: 'New York'
+    helpers.formatShowDetail(item).should.eql 'New York, Sep 1 – Dec 5'
+
+  it 'formatAuctionDetail', ->
+    end = moment.utc('2016-12-05T12:00:00+00:00')
+    helpers.formatAuctionDetail(end).should.eql 'Auction Closes Dec 5 at 12 PM'

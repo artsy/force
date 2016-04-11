@@ -22,6 +22,16 @@ module.exports = class OverviewView extends Backbone.View
   initialize: ({ @user, @statuses }) ->
     @sticky = new Sticky
 
+    $.onInfiniteScroll =>
+      return if not @filterView
+      if @filterView.remaining() is 0
+        $('#main-layout-footer').css(display: 'block', opacity: 1)
+        @fadeInSections()
+        $.destroyInfiniteScroll()
+      else
+        @filterView.loadNextPage()
+    , offset: 2 * $(window).height()
+
   setupArtworkFilter: ->
     filterRouter = ArtworkFilter.init
       el: @$('#artwork-section')
@@ -34,25 +44,20 @@ module.exports = class OverviewView extends Backbone.View
     @filterView.topOffset = stickyHeaderHeight
     @subViews.push @filterView
 
+    $('#main-layout-footer').css(display: 'none', opacity: 0)
     @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-    @sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
-    @sticky.add @filterView.$('#artwork-filter-selection')
+    @listenToOnce @filterView.artworks, 'sync', ->
+      @sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
+      @sticky.add @filterView.$('#artwork-filter-selection')
 
-    $.onInfiniteScroll =>
-      if @filterView.remaining() is 0
-        @fadeInSections()
-      else
-        @filterView.loadNextPage()
-
-  # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
-  # The waypoint must be pushed below the the window bottom in order to be triggered again on subsequent scroll events.
+  # A new page of artworks may not reach all the way to the bottom of the window, but the next fetch
+  # won't be triggered until next scroll.
   fetchWorksToFillPage: ->
+    @sticky.rebuild()
     _.defer =>
-      $.waypoints 'refresh'
       viewportBottom = $(window).scrollTop() + $(window).height()
       viewBottom = @$('#artwork-section').height() + @$('#artwork-section').scrollTop()
-      bottomInView = viewBottom < viewportBottom
-
+      bottomInView = viewBottom <= viewportBottom
       @filterView.loadNextPage() if bottomInView
 
   setupRelatedShows: ->
@@ -76,7 +81,6 @@ module.exports = class OverviewView extends Backbone.View
       @setupBlurb()
       mediator.trigger 'related:genes:render'
     @subViews.push subView
-
 
   setupBlurb: ->
     gradient $('.artist-overview-header'), limit: 280, label: 'Read More', heightBreakOffset: 20
