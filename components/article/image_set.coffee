@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 template = -> require('./templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../follow_button/index.coffee'
+imagesLoaded = require 'imagesloaded'
 { resize } = require '../resizer/index.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
@@ -25,6 +26,9 @@ module.exports = class ImageSetView extends Backbone.View
       resize: resize
       length: @length
       index: @currentIndex + 1
+    @$('.image-set-modal').imagesLoaded =>
+      @$('.loading-spinner').remove()
+      @$('.image-set-modal').attr 'data-state', 'loaded'
     @addFollowButton()
     this
 
