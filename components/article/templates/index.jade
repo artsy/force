@@ -71,6 +71,10 @@ if superArticle
             if section.links.length > 0
               .article-section-toc
                 +toc(section)
+          when 'image_set'
+            if section.images.length > 0
+              .article-section-image-set( data-index= i )
+                +imageSet(section)
 
     .main-layout-container
       //- Footer social buttons
