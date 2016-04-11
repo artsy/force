@@ -52,4 +52,16 @@ if(location.pathname.match('/article/')){
     analytics.track('Dismiss editorial signup footer');
   });
 
+  $(document.body).on('click', '.article-section-toc-link a', function() {
+    analytics.track('Clicked TOC Link', {})
+  })
+
+  $(document.body).on('click', '.article-section-image-set', function() {
+    analytics.track('Clicked Image Set', {})
+  })
+
+  $(document.body).on('click', '.article-section-top-stories__item a', function() {
+    analytics.track('Clicked Top Stories Link', {})
+  })
+
 }
