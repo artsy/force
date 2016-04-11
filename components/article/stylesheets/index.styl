@@ -2,8 +2,6 @@
 @require './super_article'
 @require './fullscreen_article'
 @require './editorial_signup'
-@require './top_stories'
-@require './left'
 @require './image_set'
 
 headline-font-size = 30px
@@ -434,7 +432,7 @@ a.article-section-callout
 
 .article-section-top-stories
   float right
-  width 400px
+  width 362px
   margin-left 20px
   &__headline
     avant-garde-size('body')
@@ -442,10 +440,9 @@ a.article-section-callout
     border-bottom 1px solid gray-lighter-color
   &__item
     display flex
-    min-width 327px
     garamond-size('s-body')
-    padding 20px 0px
-    border-bottom 1px solid gray-lighter-color
+    padding 20px 20px
+    border 1px solid gray-lighter-color
     &:hover
       transition background-color 0.25s
       background-color #f8f8f8
@@ -457,4 +454,4 @@ a.article-section-callout
     display inline-block
     vertical-align middle
   p
-    max-width 300px
+    max-width 230px

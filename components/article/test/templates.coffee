@@ -99,3 +99,32 @@ describe 'article show template', ->
       sd: {}
       asset: ->
     html.should.not.containEql 'Table Of Contents'
+
+  it 'renders top stories', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'callout'
+            top_stories: true
+            article: ''
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: PARSELY_ARTICLES: [
+        {
+          url: 'http://artsy.net/article/editorial-cool-article'
+          image_url: 'http://artsy.net/image.png'
+          title: '5 Must Read Stories'
+        }
+      ]
+      asset: ->
+    html.should.containEql 'Top Stories on Artsy'
+    html.should.containEql '5 Must Read Stories'
+    html.should.containEql 'http://artsy.net/article/editorial-cool-article'
+    html.should.containEql 'http://artsy.net/image.png'
