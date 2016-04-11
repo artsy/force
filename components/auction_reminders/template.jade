@@ -12,7 +12,7 @@ if auction.isWithHeaderImage()
 
 .auction-reminder-metadata
   h4 Closing Soon
-  h3= auction.get('name')
+  h3= _s.truncate(auction.get('name'), 50)
   h4 Go to auction
 
 .auction-reminder-clock.js-auction-reminder-clock

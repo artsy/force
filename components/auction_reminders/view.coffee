@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 ClockView = require '../clock/view.coffee'
 template = -> require('./template.jade') arguments...
@@ -35,6 +36,7 @@ module.exports = class AuctionReminderView extends Backbone.View
   render: ->
     @$el.html template
       auction: @model
+      _s: _s
     @postRender()
     this
 
