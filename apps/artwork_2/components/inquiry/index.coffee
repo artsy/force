@@ -6,5 +6,5 @@ module.exports = ->
   artwork = new Artwork INQUIRY.artwork
 
   view = new EmbeddedInquiryView
-    el: @$('.js-artwork-inquiry-form')
+    el: $('.js-artwork-inquiry-form')
     artwork: artwork
