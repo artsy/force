@@ -1,0 +1,123 @@
+.article-section-image-set
+  margin auto
+  width 580px
+  display block
+  cursor pointer
+  &__images
+    float left
+    height 150px
+    img
+      display none
+      height 150px
+      margin-right 10px
+  &__remaining
+    avant-garde-size('s-headline')
+    height 150px
+    border 2px solid gray-lighter-color
+    vertical-align top
+    padding 5px
+    min-width 80px
+    width auto
+    overflow hidden
+  &__icon
+    width  32px
+    position relative
+    text-align center
+    margin 30px auto 20px auto
+    svg
+      width 32px
+  &__icon
+    &::after
+      content attr(data-total)
+      left 8px
+      top 13px
+      position absolute
+  &__icon.is-double-digit
+    &::after
+      left 5px
+  &__preview
+    text-align center
+    margin 25px 0px 20px 0px
+  &__text
+    text-align center
+
+// Slideshow Modal
+navigation-width= 115px
+
+body.body-article-left
+  .modalize-backdrop
+    background-color white
+  .modalize-dialog
+    max-width 100%
+    max-height 100%
+  .modalize-close
+    width navigation-width
+    padding 45px
+    top 0px
+    right 0px
+    z-index 3
+    &:hover
+      background-color black
+      color gray-lighter-color
+  .artist-suggestion-popover
+    z-index 1080
+
+.image-set-modal
+  height 100vh
+  width 100vw
+  &__navigation
+    height 100%
+    display block
+
+  // Artist + Follow
+  &__artist-name
+    garamond-size('headline')
+    faux-underline()
+    margin-bottom 20px
+
+  // Navigation arrows
+  &__navigation
+    z-index 2
+    position fixed
+    padding 50vh 40px
+    width navigation-width
+    cursor pointer
+    vertical-align top
+    &:hover
+      transition background-color 0.25s
+      background-color gray-lightest-color
+    .icon-chevron-right
+      vertical-align middle
+    &.image-set-modal-js__right
+      right 0
+      top 0
+
+  // Image + Metadata
+  &__container
+    padding 0px navigation-width
+    position absolute
+    transform translate(-50%, -50%)
+    top 50%
+    left 50%
+  &__image
+    max-height 70vh
+    max-width 70vw
+    margin-top 20px
+  &__title
+    font-style italic
+  &__title, &__date
+    display inline-block
+  &__title-container, &__caption, &__pagination
+    margin-top 20px
+  &__caption, &__title-container, &__link, &__partner
+    color gray-dark-color
+    garamond-size('s-body',true)
+  &__link
+    faux-underline()
+  &__pagination
+    float right
+    avant-garde-size('body',true)
+
+  .entity-follow
+    display inline-block
+    margin 0 0 10px 20px

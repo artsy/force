@@ -4,10 +4,12 @@ block head
   include meta
 
 block content
-  section.press-items
+  section.press-items( data-page='press-releases' )
     for year in years
       for month in year.months
-        h2.press-date #{year.year} #{month.month}
-        section.press-items-list.large-chevron-list
+        h2.press-items__date
+          | #{year.year} #{month.month}
+
+        section.press-items__list.large-chevron-list
           for item in month.items
             include ../item

@@ -10,6 +10,8 @@ Articles = require '../../collections/articles.coffee'
 Artworks = require '../../collections/artworks.coffee'
 ShareView = require '../share/view.coffee'
 CTABarView = require '../cta_bar/view.coffee'
+ImageSetView = require './image_set.coffee'
+modalize = require '../modalize/index.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 initCarousel = require '../merry_go_round/bottom_nav_mgr.coffee'
 { oembed } = require('embedly-view-helpers')(sd.EMBEDLY_KEY)
@@ -38,6 +40,7 @@ module.exports = class ArticleView extends Backbone.View
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
     'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
+    'click .article-section-image-set': 'toggleModal'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -60,6 +63,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
+    @setupImageSets()
 
     # FS and Super Article setup
     @setupArticleWaypoints()
@@ -185,6 +189,27 @@ module.exports = class ArticleView extends Backbone.View
         analyticsUnfollowMessage: 'Unfollowed artist, via article'
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
+
+  setupImageSets: ->
+    # Slideshow Preview
+    $('.article-section-container[data-section-type="image_set"]').each (i, value) ->
+      allowedPixels = 580.0 - 100 # min-width + margins
+      totalPixels = 0.0
+      $(value).find('img').each (i, value) ->
+        _.defer ->
+          totalPixels = totalPixels + value.width
+          return if totalPixels > allowedPixels
+          $(value).css('display', 'inline-block')
+
+  toggleModal: (e) ->
+    # Slideshow Modal
+    section = @article.get('sections')[$(e.currentTarget).data('index')]
+    imageSet = new ImageSetView
+      collection: section.images
+      user: @user
+    @modal = modalize imageSet,
+      dimensions: width: '100vw', height: '100vh'
+    @modal.open()
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
@@ -325,7 +350,7 @@ module.exports = class ArticleView extends Backbone.View
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
 
-  # Methods for super articles
+# Methods for super articles
   duration: 500
   scrollPastFullscreenHeader: ->
     position = @$('.article-fullscreen').height()

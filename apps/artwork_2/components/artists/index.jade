@@ -30,11 +30,12 @@ if artwork.artists.length
                   case tab
                     when 'biography'
                       include ./templates/biography
-                    when 'exhibition_highlights'
-                      include ./templates/exhibition_highlights
+                    when 'exhibition_history'
+                      include ./templates/exhibition_history
                     when 'articles'
                       include ./templates/articles
 
               .artwork-artist__jump
-                a( href= artist.href )
+                a.avant-garde-jump-link( href= artist.href )
                   | Go to #{artist.name}’s Artist Page
+                  i.icon-chevron-small-right

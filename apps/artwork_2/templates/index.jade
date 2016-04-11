@@ -1,10 +1,10 @@
 extends ../../../components/main_layout/templates/index
 
-block head
-  title= [artwork.title, 'Artsy'].join(' | ')
-
 append locals
   - assetPackage = 'artwork_2'
+
+block head
+  include ../components/meta/index
 
 block body
   .artwork-page.main-layout-container

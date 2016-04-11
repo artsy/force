@@ -26,6 +26,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
               id
               _id
               href
+              collecting_institution
               image {
                 url(version: "large")
                 width
