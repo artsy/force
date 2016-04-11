@@ -1,6 +1,6 @@
 if artwork.is_contactable
-  .js-artwork-inquiry-form
-    form.artwork-inquiry-form.stacked-form
+  .artwork-inquiry-form( class='js-artwork-inquiry-form' )
+    form.stacked-form
       input( type='hidden', name='artwork', value= artwork.id )
 
       //- Only button is displayed for pre-qualification
@@ -24,26 +24,27 @@ if artwork.is_contactable
             placeholder='Your email address'
             required
           )
-          textarea.bordered-input(
-            rows='5'
-            name='message'
-            required
-          )
-            = artwork.partner.contact_message
-            = ' '
 
-          if artwork.fair
-            .artsy-checkbox
-              .artsy-checkbox--checkbox
-                input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
-                label( for='embedded-inquiry-form-attending' )
+        textarea.bordered-input(
+          rows='5'
+          name='message'
+          required
+        )
+          = artwork.partner.contact_message
+          = ' '
 
-              label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
-                | I will attend #{artwork.fair.name}
-                span.help-tooltip(
-                  data-anchor='bottom-right'
-                  data-message='This artwork is part of the art fair—#{artwork.fair.name}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service.'
-                )
+        if artwork.fair
+          .artsy-checkbox
+            .artsy-checkbox--checkbox
+              input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
+              label( for='embedded-inquiry-form-attending' )
+
+            label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
+              | I will attend #{artwork.fair.name}
+              span.help-tooltip(
+                data-anchor='bottom-right'
+                data-message='This artwork is part of the art fair—#{artwork.fair.name}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service.'
+              )
 
       button.avant-garde-button-black( data-artwork-id= artwork.id )
         | Contact #{artwork.partner.type}
