@@ -10,6 +10,7 @@ query = """
       ... artists
       ... auction
       ... banner
+      ... collapsed_metadata
       ... deep_zoom
       ... highlights
       ... images
@@ -23,6 +24,7 @@ query = """
   #{require './components/artists/query'}
   #{require './components/auction/query'}
   #{require './components/banner/query'}
+  #{require './components/collapsed_metadata/query'}
   #{require './components/deep_zoom/query'}
   #{require './components/highlights/query'}
   #{require './components/images/query'}
@@ -38,6 +40,7 @@ helpers = extend [
   artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
+  collapsed_metadata: require './components/collapsed_metadata/helpers'
   highlights: require './components/highlights/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
