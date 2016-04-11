@@ -17,12 +17,15 @@ module.exports = """
       in
       cm
     }
+    website
     image_rights
     sale_message
+    is_downloadable
     is_acquireable
     is_for_sale
     is_contactable
     partner {
+      id
       name
       href
       type
