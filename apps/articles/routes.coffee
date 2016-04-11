@@ -59,7 +59,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ mailchimp: false, editorial: false }) unless user?.email
   if _.contains article.get('section_ids'), sd.GALLERY_INSIGHTS_SECTION_ID
-    subscribedToGA user.email, (isSubscribed) ->
+    subscribedToGI user.email, (isSubscribed) ->
       cb { mailchimp: isSubscribed, editorial: false }
   else if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
     subscribedToEditorial user.email, (err, isSubscribed) ->
@@ -101,7 +101,7 @@ getArticleScrollType = (data) ->
           res.locals.sd.SECTION = section.toJSON()
           if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
             email = res.locals.sd.CURRENT_USER?.email
-            subscribedToGA email, (cb) ->
+            subscribedToGI email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
               res.render 'section', section: section, articles: articles
           else
@@ -127,7 +127,7 @@ getArticleScrollType = (data) ->
       else
         res.send(response.status, response.body.error)
 
-subscribedToGA = (email, cb) ->
+subscribedToGI = (email, cb) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
     .query
       apikey: MAILCHIMP_KEY
