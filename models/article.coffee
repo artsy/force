@@ -134,6 +134,12 @@ module.exports = class Article extends Backbone.Model
 
     bodyClass
 
+  hasTopStories: ->
+    # TODO: @get('featured') is true and @get('layout') is 'left'
+    sections = _.filter @get('sections'), (section) ->
+      section.type is 'callout' and section.top_stories
+    sections.length > 0
+
   #
   # Super Article helpers
   fetchRelatedArticles: (relatedArticles) ->

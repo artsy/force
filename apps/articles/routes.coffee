@@ -8,7 +8,7 @@ Sections = require '../../collections/sections'
 embedVideo = require 'embed-video'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
-{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
@@ -46,20 +46,26 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
-      # Email subscription checks - Mailchimp (to be replaced by Marketo) and Sailthru
-      if res.locals.sd.CURRENT_USER?.email?
-        email = res.locals.sd.CURRENT_USER?.email
-        if _.contains res.locals.sd.ARTICLE.section_ids, sd.GALLERY_INSIGHTS_SECTION_ID
-          subscribed email, (cb) ->
-            res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-            res.render 'article', _.extend data, embedVideo: embedVideo
-        else
-          subscribedToEditorial email, (err, subscribed) ->
-            res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-            res.render 'article', _.extend data, embedVideo: embedVideo
-      else
-        res.locals.sd.MAILCHIMP_SUBSCRIBED = false
-        res.render 'article', _.extend data, embedVideo: embedVideo
+      user = res.locals.sd.CURRENT_USER
+      setupEmailSubscriptions user, data.article, (results) ->
+        res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+
+        topParselyArticles data.article, (parselyArticles) ->
+          res.locals.sd.PARSELY_ARTICLES = parselyArticles
+          res.render 'article', _.extend data, embedVideo: embedVideo
+      return
+
+setupEmailSubscriptions = (user, article, cb) ->
+  return cb({ mailchimp: false, editorial: false }) unless user?.email
+  if _.contains article.get('section_ids'), sd.GALLERY_INSIGHTS_SECTION_ID
+    subscribedToGI user.email, (isSubscribed) ->
+      cb { mailchimp: isSubscribed, editorial: false }
+  else if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
+    subscribedToEditorial user.email, (err, isSubscribed) ->
+      cb { editorial: isSubscribed, mailchimp: false }
+  else
+    cb { mailchimp: false, editorial: false }
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
@@ -95,7 +101,7 @@ getArticleScrollType = (data) ->
           res.locals.sd.SECTION = section.toJSON()
           if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
             email = res.locals.sd.CURRENT_USER?.email
-            subscribed email, (cb) ->
+            subscribedToGI email, (cb) ->
               res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
               res.render 'section', section: section, articles: articles
           else
@@ -121,19 +127,20 @@ getArticleScrollType = (data) ->
       else
         res.send(response.status, response.body.error)
 
-subscribed = (email, callback) ->
+subscribedToGI = (email, cb) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
-    .query(
+    .query
       apikey: MAILCHIMP_KEY
       id: sd.GALLERY_INSIGHTS_LIST
-    ).query("emails[0][email]=#{email}").end (err, response) ->
-      callback response.body.success_count is 1
-  return
+      "emails[0][email]": email
+    .timeout 3000
+    .end (err, response) ->
+      cb response.body.success_count is 1
 
-subscribedToEditorial = (email, callback) ->
+subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
-    return callback err, false if err
-    callback null, response.vars?.receive_editorial_email
+    return cb err, false if err
+    cb null, response.vars?.receive_editorial_email
 
 @editorialForm = (req, res, next) ->
   sailthru.apiPost 'user',
@@ -150,3 +157,18 @@ subscribedToEditorial = (email, callback) ->
       res.send req.body
     else
       res.status(500).send(response.errormsg)
+
+topParselyArticles = (article, cb) ->
+  return cb [] unless article.hasTopStories()
+  request
+    .get('https://api.parsely.com/v2/analytics/posts')
+    .query
+      apikey: PARSELY_KEY
+      secret: PARSELY_SECRET
+      limit: 10
+      days: 7
+      sort: '_hits'
+    .end (err, response) ->
+      return cb [] if err
+      posts = _.where response.body.data, section: 'Editorial'
+      return cb posts

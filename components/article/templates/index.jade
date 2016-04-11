@@ -63,10 +63,12 @@ if superArticle
                 //- Rendered on client
           when 'callout'
             if section.article.length > 0
-              .article-section-callout-container( data-id=section.article )
+              .article-section-callout-container(data-id=section.article)
                 //- Rendered on client
-            else
+            else if section.text && section.text.length > 0
               +pullquote(section)
+            else
+              +topStories
           when 'toc'
             if section.links.length > 0
               .article-section-toc
