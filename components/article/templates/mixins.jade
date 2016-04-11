@@ -86,3 +86,13 @@ mixin imageSet(section)
     .article-section-image-set__icon( data-total=section.images.length class= section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
     .article-section-image-set__text Enter Slideshow
+
+mixin topStories
+  .article-section-top-stories
+    .article-section-top-stories__headline Top Stories on Artsy
+    ul.article-section-top-stories__list
+      for article in sd.PARSELY_ARTICLES.slice(0,3)
+        li.article-section-top-stories__item
+          a( href=article.url )
+            img( src=crop(article.image_url, { height: 180, width: 240 }) )
+            p= article.title

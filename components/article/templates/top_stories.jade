@@ -1,8 +1,0 @@
-.article-ts-container
-  h4 Top Stories
-  ul.article-ts-list
-    for article in topStories.slice(0,4)
-      li.article-ts-item
-        a( href=article.url )
-          img( src=crop(article.image_url, { height: 180, width: 240 }) )
-          p= article.title

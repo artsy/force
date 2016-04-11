@@ -6,7 +6,7 @@ include ./mixins
 if superArticle
   include ./super_article_sticky_header.jade
 
-.article-container(data-id=article.get('id') data-layout=article.get('layout'))
+.article-container(data-id=article.get('id'))
 
   if article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
     +fullscreen(article)
@@ -25,10 +25,6 @@ if superArticle
     //- Article Share Fixed Nav
     .article-share-fixed(data-id=article.get('id'))
       +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
-
-    if sd.PARSELY_ARTICLES && article.get('layout') === 'left'
-      - topStories = sd.PARSELY_ARTICLES
-      include top_stories.jade
 
     .main-layout-container
       h1.large-garamond-header= article.get('title')
@@ -67,10 +63,12 @@ if superArticle
                 //- Rendered on client
           when 'callout'
             if section.article.length > 0
-              .article-section-callout-container( data-id=section.article )
+              .article-section-callout-container(data-id=section.article)
                 //- Rendered on client
-            else
+            else if section.text && section.text.length > 0
               +pullquote(section)
+            else
+              +topStories
           when 'toc'
             if section.links.length > 0
               .article-section-toc
