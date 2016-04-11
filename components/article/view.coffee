@@ -20,6 +20,7 @@ Q = require 'bluebird-q'
 blurb = require '../gradient_blurb/index.coffee'
 Sticky = require '../sticky/index.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
+JumpView = require '../jump/view.coffee'
 artworkItemTemplate = -> require(
   '../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('./templates/edit.jade') arguments...
@@ -41,6 +42,7 @@ module.exports = class ArticleView extends Backbone.View
     'click .article-video-play-button': 'playVideo'
     'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
     'click .article-section-image-set': 'toggleModal'
+    'click .article-section-toc-link a': 'jumpSmooth'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -51,6 +53,7 @@ module.exports = class ArticleView extends Backbone.View
     @loadedArtworks = @loadedEmbeds = @loadedCallouts = @loadedImageHeights = false
     @$window = $(window)
     @sticky = new Sticky
+    @jump = new JumpView
 
     # Render sections
     @renderSlideshow()
@@ -210,6 +213,11 @@ module.exports = class ArticleView extends Backbone.View
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
     @modal.open()
+
+  jumpSmooth: (e) ->
+    e.preventDefault()
+    name = $(e.currentTarget).attr('href').substring(1)
+    @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
   getWidth: (section) ->
     if section.layout is 'overflow' then 1060 else 500
