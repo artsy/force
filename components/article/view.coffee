@@ -193,7 +193,7 @@ module.exports = class ArticleView extends Backbone.View
   setupImageSets: ->
     # Slideshow Preview
     $('.article-section-container[data-section-type="image_set"]').each (i, value) ->
-      allowedPixels = 580.0 - 100 # min-width + margins
+      allowedPixels = 580.0 - 120 # min-width + margins
       totalPixels = 0.0
       $(value).find('img').each (i, value) ->
         _.defer ->
