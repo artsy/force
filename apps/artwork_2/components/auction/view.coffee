@@ -29,7 +29,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
   submit: (e) ->
     e.preventDefault()
 
-    form = new Form $form: $('.js-artwork-auction-bid')
+    form = new Form $form: @$('.js-artwork-auction-bid')
     return unless form.isReady()
 
     form.state 'loading'
