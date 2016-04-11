@@ -25,6 +25,8 @@ module.exports = """
       in
       cm
     }
+    acquireable: is_acquireable
+    ecommerce: is_acquireable
     image_rights
     sale_message
     is_for_sale
