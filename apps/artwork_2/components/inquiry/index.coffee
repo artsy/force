@@ -1,10 +1,8 @@
 { INQUIRY } = require('sharify').data
-Artwork = require '../../../../models/artwork.coffee'
-EmbeddedInquiryView = require '../../../../components/embedded_inquiry/view.coffee'
+ArtworkInquiryView = require './view.coffee'
 
 module.exports = ->
-  artwork = new Artwork INQUIRY.artwork
 
-  view = new EmbeddedInquiryView
+  view = new ArtworkInquiryView
     el: $('.js-artwork-inquiry-form')
-    artwork: artwork
+    data: INQUIRY
