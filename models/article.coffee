@@ -2,7 +2,8 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
-sd = require('sharify').data
+{ POSITRON_URL, APP_URL } = sd = require('sharify').data
+request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
@@ -14,7 +15,7 @@ Relations = require './mixins/relations/article.coffee'
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
 
-  urlRoot: "#{sd.POSITRON_URL}/api/articles"
+  urlRoot: "#{POSITRON_URL}/api/articles"
 
   defaults:
     sections: [{ type: 'text', body: '' }]
@@ -111,7 +112,7 @@ module.exports = class Article extends Backbone.Model
     "/article/#{@get('slug')}"
 
   fullHref: ->
-    "#{sd.APP_URL}/article/#{@get('slug')}"
+    "#{APP_URL}/article/#{@get('slug')}"
 
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
@@ -139,6 +140,22 @@ module.exports = class Article extends Backbone.Model
     sections = _.filter @get('sections'), (section) ->
       section.type is 'callout' and section.top_stories
     sections.length > 0
+
+  topParselyArticles: (article, key, secret, cb) ->
+    return cb [] unless @hasTopStories()
+    request
+      .get('https://api.parsely.com/v2/analytics/posts')
+      .query
+        apikey: key
+        secret: secret
+        limit: 10
+        days: 7
+        sort: '_hits'
+      .end (err, response) =>
+        return cb [] if err
+        posts = _.where response.body.data, section: 'Editorial'
+        posts = _.reject posts, (post) => post.url.indexOf(@href()) > 0
+        return cb posts
 
   #
   # Super Article helpers
