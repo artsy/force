@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ slugify } = require 'underscore.string'
 
 uniq = _.partial _.uniq, _, (x) ->
   JSON.stringify x
@@ -22,3 +23,10 @@ module.exports =
     uniq locations
       .filter ({ phone }) ->
         phone?
+
+  filename: ({ artists, title, date }) ->
+    slugify _.compact([
+      artists.map(({ name }) -> name).join ', '
+      title
+      date
+    ]).join ' '
