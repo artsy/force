@@ -31,7 +31,7 @@ describe 'ArtworkView', ->
     # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
     # and we're using numeric-looking strings for fabricated artwork image IDs.
     edition_sets = _.times(2, -> fabricate('edition_set', forsale: true, acquireable: true))
-    artwork = fabricate('artwork', can_share_image: true, edition_sets: edition_sets, acquireable: true, artists: [{id: 'artist', artworks_count: 2}], artist: {id: 'artist', artworks_count: 2})
+    artwork = fabricate('artwork', can_share_image: true, edition_sets: edition_sets, acquireable: true, artists: [{id: 'artist', artworks_count: 2}], artist: {id: 'artist', forsale_artworks_count: 2, artworks_count: 2})
 
     _.each (artwork).images, (image) ->
       image.id = _.uniqueId('stringy')
