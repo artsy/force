@@ -13,9 +13,9 @@ module.exports = class ImageSetView extends Backbone.View
     'click .image-set-modal-js__right': 'next'
 
   initialize: (options) ->
-    { @collection, @user } = options
+    { @collection, @user, @startIndex } = options
     @length = @collection.length
-    @currentIndex = 0
+    @currentIndex = @startIndex
     $(window).on 'keyup.modalize', @onKeyUp
     @following = new Following(null, kind: 'artist') if @user?
     @setupFollowButtons()

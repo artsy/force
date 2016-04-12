@@ -41,7 +41,7 @@ module.exports = class ArticleView extends Backbone.View
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
     'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
-    'click .article-section-image-set': 'toggleModal'
+    'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
     'click .article-section-toc-link a': 'jumpSmooth'
 
   initialize: (options) ->
@@ -202,14 +202,21 @@ module.exports = class ArticleView extends Backbone.View
         _.defer ->
           totalPixels = totalPixels + value.width
           return if totalPixels > allowedPixels
-          $(value).css('display', 'inline-block')
+          $(value).parent('.article-section-image-set__image-container').css('display', 'inline-block')
 
   toggleModal: (e) ->
     # Slideshow Modal
-    section = @article.get('sections')[$(e.currentTarget).data('index')]
+    $current = $(e.currentTarget)
+    $parent = $($current).closest('.article-section-image-set')
+    if _.contains e.currentTarget.classList, "article-section-image-set__remaining"
+      startIndex = 0
+    else
+      startIndex = $($current).data('index')
+    section = @article.get('sections')[$($parent).data('index')]
     imageSet = new ImageSetView
       collection: section.images
       user: @user
+      startIndex: startIndex
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
     @modal.open()
