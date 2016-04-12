@@ -32,11 +32,6 @@ body.body-fullscreen-article
   overflow hidden
   &.hidden
     opacity 0
-  &.article-sa-fullscreen
-    h1
-      margin-bottom 60px
-    .main-layout-container
-      margin-top 0px
   a
     color white
   .article-lead-paragraph-container
@@ -118,9 +113,15 @@ body.body-fullscreen-article
   font-style italic
   line-height 110%
   width 750px
-  text-align left
+  text-align center
   @media screen and (min-width 1100px)
     width 900px
+.article-fullscreen.article-sa-fullscreen
+  h1
+    margin-bottom 60px
+    text-align left
+  .main-layout-container
+    margin-top 0px
 .article-fullscreen-intro.article-lead-paragraph
   font-size 22px
   line-height 120%

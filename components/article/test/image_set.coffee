@@ -45,7 +45,11 @@ describe 'ImageSetView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @view = new @ImageSetView el: $('body'), collection: @collection, user: @user
+    @view = new @ImageSetView
+      el: $('body')
+      items: @collection
+      user: @user
+      startIndex: 0
 
   afterEach ->
     Backbone.sync.restore()
