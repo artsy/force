@@ -32,8 +32,8 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
     res.render 'articles', section: section, articles: articles, crop: crop
 
 @article = (req, res, next) ->
-  @articleItem = new Article id: req.params.slug
-  @articleItem.fetchWithRelated
+  articleItem = new Article id: req.params.slug
+  articleItem.fetchWithRelated
     accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (data) ->
@@ -52,8 +52,9 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+
         # Parsely Articles
-        @articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
           res.render 'article', _.extend data, embedVideo: embedVideo
       return
