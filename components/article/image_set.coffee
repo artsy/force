@@ -13,8 +13,8 @@ module.exports = class ImageSetView extends Backbone.View
     'click .image-set-modal-js__right': 'next'
 
   initialize: (options) ->
-    { @collection, @user, @startIndex } = options
-    @length = @collection.length
+    { @items, @user, @startIndex } = options
+    @length = @items.length
     @currentIndex = @startIndex
     $(window).on 'keyup.modalize', @onKeyUp
     @following = new Following(null, kind: 'artist') if @user?
@@ -22,7 +22,7 @@ module.exports = class ImageSetView extends Backbone.View
 
   render: ->
     @$el.html template
-      item: @collection[@currentIndex]
+      item: @items[@currentIndex]
       resize: resize
       length: @length
       index: @currentIndex + 1
@@ -53,7 +53,7 @@ module.exports = class ImageSetView extends Backbone.View
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 
   addFollowButton: ->
-    item = @collection[@currentIndex]
+    item = @items[@currentIndex]
     return unless item.artist?.slug
     artist = id: item.artist.slug
     new FollowButton
