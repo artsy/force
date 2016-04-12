@@ -10,17 +10,19 @@ if(location.pathname.match('/article/')){
       position: 'bottom',
       service: $(this).attr('data-service')
     })
-  })
-
-  $(document.body).on('click', '.article-share-fixed > a', function() {
+  }).on('click', '.article-share-fixed > a', function() {
     analytics.track('Clicked Article Share', {
       position: 'fixed',
       service: $(this).attr('data-service')
     })
-  })
-
-  $(document.body).on('click', '.article-related-widget a', function() {
+  }).on('click', '.article-related-widget a', function() {
     analytics.track('Clicked Related Article', {})
+  }).on('click', '.article-section-toc-link a', function() {
+    analytics.track('Clicked TOC Link', {})
+  }).on('click', '.article-section-image-set', function() {
+    analytics.track('Clicked Image Set', {})
+  }).on('click', '.article-section-top-stories__item a', function() {
+    analytics.track('Clicked Top Stories Link', {})
   })
 
   analyticsHooks.on('readmore', function() {
@@ -52,16 +54,5 @@ if(location.pathname.match('/article/')){
     analytics.track('Dismiss editorial signup footer');
   });
 
-  $(document.body).on('click', '.article-section-toc-link a', function() {
-    analytics.track('Clicked TOC Link', {})
-  })
-
-  $(document.body).on('click', '.article-section-image-set', function() {
-    analytics.track('Clicked Image Set', {})
-  })
-
-  $(document.body).on('click', '.article-section-top-stories__item a', function() {
-    analytics.track('Clicked Top Stories Link', {})
-  })
 
 }
