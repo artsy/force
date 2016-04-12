@@ -118,7 +118,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   handleShows: (shows) ->
     return unless shows.length
-
+    return if @artwork.related().partner.get('has_limited_fair_partnership')
     @$('#artist-artworks-section').remove()
     new RelatedShowView
       el: @$('#artwork-related-show-section')
@@ -177,9 +177,9 @@ module.exports = class ArtworkView extends Backbone.View
     @following = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
-    return unless @artist?.get('artworks_count') > 1
+    return unless @artist?.get('forsale_artworks_count') > 1
     @listenTo @artist.related().artworks, 'sync', @renderArtistArtworks
-    @artist.related().artworks.fetch data: sort: 'availability'
+    @artist.related().artworks.fetch data: filter: ['for_sale']
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
