@@ -20,6 +20,7 @@ describe 'ImageSetView', ->
         resolve(__dirname, '../image_set')
         ['template' ]
       )
+      @ImageSetView.__set__ 'Image', ->
       @ImageSetView.__set__ 'resize', (url) -> url
       @ImageSetView.__set__ 'Follow', { Following: sinon.stub(), FollowButton: sinon.stub() }
       stubChildClasses @ImageSetView, this,
