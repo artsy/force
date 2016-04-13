@@ -1,0 +1,10 @@
+section.artwork-artist-artworks( class='js-artwork-artist-artworks' )
+  if artwork.artist && artwork.artist.artworks.length
+    header.artwork-artist-artworks__header
+      h3.artwork-artist-artworks__header__name
+        | Other works by #{artwork.artist.name}
+
+      a.artwork-artist-artworks__header__jump
+        | View All
+
+    include ../../../../components/artwork_masonry/index
