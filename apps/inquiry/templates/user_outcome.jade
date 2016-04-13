@@ -15,7 +15,7 @@ block body
         .inquiry-details-info
           .inquiry-details-info-artist_name.strong
             b 
-              = artwork.related().artist.get('name')
+              = artwork.related().artist.get('name').toUpperCase()
           em
             = artwork.get('title')
             | , 
@@ -29,7 +29,20 @@ block body
           em.inquiry-options-user-outcome-selected-option.is-center-aligned
             | "#{inquiry.get('user_reported_outcome')}"
         else
-          textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...', disabled=already_submitted)
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='I purchased the work' )
+            label.artsy-radio--label( for='inquiry-outcome-form-purchased' )
+                | I PURCHASED THE WORK
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='The work was not available' )
+            label.artsy-radio--label( for='inquiry-outcome-form-not-available' )
+              | THE WORK WAS NOT AVAILABLE
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='Other' )
+            label.artsy-radio--label( for='inquiry-outcome-form-other' )
+              | NONE OF THE ABOVE
+
+          textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Tell us what happened...', disabled=already_submitted, style='display: none')
       button.inquiry-outcome-submit.avant-garde-button-black(type='submit', disabled=already_submitted)
         if already_submitted
           | Feedback Already Submitted
