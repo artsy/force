@@ -19,6 +19,7 @@ module.exports = class ImageSetView extends Backbone.View
     $(window).on 'keyup.modalize', @onKeyUp
     @following = new Following(null, kind: 'artist') if @user?
     @setupFollowButtons()
+    @preload()
 
   render: ->
     @$el.html template
@@ -26,9 +27,10 @@ module.exports = class ImageSetView extends Backbone.View
       resize: resize
       length: @length
       index: @currentIndex + 1
-    @$('.image-set-modal').imagesLoaded =>
+    $set = @$('.image-set-modal')
+    $set.imagesLoaded =>
+      $set.attr 'data-state', 'loaded'
       @$('.loading-spinner').remove()
-      @$('.image-set-modal').attr 'data-state', 'loaded'
     @addFollowButton()
     this
 
@@ -64,3 +66,9 @@ module.exports = class ImageSetView extends Backbone.View
       analyticsFollowMessage: 'Followed artist, via image set modal'
       analyticsUnfollowMessage: 'Unfollowed artist, via image set modal'
       href: sd.APP_URL + sd.CURRENT_PATH
+
+  preload: ->
+    for item in @items
+      url = item.url or item.image
+      image = new Image()
+      image.src = resize(url, { height: 900 } )
