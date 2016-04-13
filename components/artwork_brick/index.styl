@@ -1,0 +1,36 @@
+@require '../stylus_lib'
+
+.artwork-brick
+  margin-bottom gutter
+
+  &__image
+    background-color gray-color
+    position relative
+
+    > img
+      position absolute
+      top 0
+      left 0
+      width 100%
+      vertical-align bottom
+
+  &__metadata
+    serif('l-caption')
+    margin distance(gutter / 2) 0
+    color gray-darker-color
+
+    &__artists
+    &__title
+    &__partner
+    &__sale-message
+    &__contact
+      display block
+      overflow ellipsis
+
+      &
+      > a
+        color gray-darker-color
+        text-decoration none
+
+    &__artists
+      font-weight bold

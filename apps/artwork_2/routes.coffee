@@ -1,7 +1,5 @@
-qs = require 'qs'
 { extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
-{ METAPHYSICS_ENDPOINT } = require('sharify').data
 
 query = """
   query artwork($id: String!) {
@@ -48,6 +46,8 @@ helpers = extend [
 ]...
 
 bootstrap = ->
+  require('./client/bootstrap') arguments...
+
   require('./components/actions/bootstrap') arguments...
   require('./components/auction/bootstrap') arguments...
   require('./components/banner/bootstrap') arguments...

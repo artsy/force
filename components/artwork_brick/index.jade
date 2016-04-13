@@ -1,0 +1,27 @@
+.artwork-brick
+  a( href= artwork.href )
+    .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
+      img(
+        src= artwork.image.thumb.url
+        alt= artwork.title
+      )
+
+  .artwork-brick__metadata
+    if artwork.artists && artwork.artists.length
+      h4.artwork-brick__metadata__artists
+        = artwork.artists.map(function(artist) { return artist.name; }).join(', ')
+
+    a.artwork-brick__metadata__title( href= artwork.href )
+      em= artwork.title
+      if artwork.date
+        | , #{artwork.date}
+
+    a.artwork-brick__metadata__partner( href= artwork.href )
+      = artwork.partner.name
+
+    //- .artwork-brick__metadata__sale-message
+    //-   = artwork.sale_message
+
+    //- .artwork-brick__metadata__contact
+    //-   if artwork.is_contactable
+    //-     a Contact Gallery
