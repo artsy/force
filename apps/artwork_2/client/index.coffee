@@ -1,46 +1,53 @@
+{ extend } = require 'underscore'
 { CLIENT } = require('sharify').data
 metaphysics = require '../../../lib/metaphysics.coffee'
+template = -> require('./index.jade') arguments...
 
-exec = (fn) ->
-  try
-    fn()
-  catch err
-    console.error err
+exec = (fns) ->
+  for fn in fns
+    try
+      fn()
+    catch err
+      console.error err
 
-query = (queries) -> """
+query = """
   query artwork($id: String!) {
     artwork(id: $id) {
-      #{queries.map(({ name }) -> "... #{name}").join ' '}
+      ... partner
+      ... artist_artworks
     }
   }
-  #{queries.map(({ query }) -> query).join "\n"}
+  #{require '../components/partner/query.coffee'}
+  #{require '../components/artist_artworks/query.coffee'}
 """
 
-init = (components) ->
-  metaphysics
-    variables: CLIENT
-    query: query components.map ({ query }) -> query
-
-  .then (data) ->
-    components.map ({ init }) ->
-      exec ->
-        init data
-
-  .catch (err) ->
-    console.error err
+helpers = extend [
+  {}
+  partner: require '../components/partner/helpers.coffee'
+  artist_artworks: require '../components/artist_artworks/helpers.coffee'
+]...
 
 module.exports.init = ->
-  exec require '../components/actions/index.coffee'
-  exec require '../components/auction/index.coffee'
-  exec require '../components/artists/index.coffee'
-  exec require '../components/banner/index.coffee'
-  exec require '../components/collapsed_metadata/index.coffee'
-  exec require '../components/images/index.coffee'
-  exec require '../components/inquiry/index.coffee'
-  exec require '../components/metadata/index.coffee'
-  exec require '../components/tabs/index.coffee'
-
-  init [
-    require '../components/partner/index.coffee'
-    require '../components/artist_artworks/index.coffee'
+  exec [
+    require '../components/actions/index.coffee'
+    require '../components/auction/index.coffee'
+    require '../components/artists/index.coffee'
+    require '../components/banner/index.coffee'
+    require '../components/collapsed_metadata/index.coffee'
+    require '../components/images/index.coffee'
+    require '../components/inquiry/index.coffee'
+    require '../components/metadata/index.coffee'
+    require '../components/tabs/index.coffee'
   ]
+
+  $el = $('.js-artwork-overview-fold')
+
+  metaphysics query: query, variables: CLIENT
+    .then (data) ->
+      $el.html template extend data,
+        helpers: helpers
+
+      exec [
+        require '../components/partner/index.coffee'
+        require '../components/artist_artworks/index.coffee'
+      ]
