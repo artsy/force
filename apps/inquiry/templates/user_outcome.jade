@@ -27,18 +27,18 @@ block body
       .inquiry-options
         if inquiry.get('user_reported_outcome').toUpperCase() != 'OTHER'
           em.inquiry-options-user-outcome-selected-option.is-center-aligned
-            | "#{inquiry.get('user_reported_outcome')}"
+            = options_map[inquiry.get('user_reported_outcome')]
         else
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='I purchased the work' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='PURCHASED' )
             label.artsy-radio--label( for='inquiry-outcome-form-purchased' )
-                | I PURCHASED THE WORK
+              = options_map['PURCHASED']
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='The work was not available' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='WORK_UNAVAILABLE' )
             label.artsy-radio--label( for='inquiry-outcome-form-not-available' )
-              | THE WORK WAS NOT AVAILABLE
+              = options_map['WORK_UNAVAILABLE']
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='Other' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='OTHER' )
             label.artsy-radio--label( for='inquiry-outcome-form-other' )
               | NONE OF THE ABOVE
 
