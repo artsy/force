@@ -8,6 +8,4 @@ module.exports = """
       }
     }
   }
-
-  #{require '../../../../components/artwork_brick/query.coffee'}
 """

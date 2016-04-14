@@ -13,18 +13,22 @@ exec = (fns) ->
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
-      ... partner
       ... artist_artworks
+      ... partner
+      ... related_artworks
     }
   }
-  #{require '../components/partner/query.coffee'}
+  #{require '../../../components/artwork_brick/query.coffee'}
   #{require '../components/artist_artworks/query.coffee'}
+  #{require '../components/partner/query.coffee'}
+  #{require '../components/related_artworks/query.coffee'}
 """
 
 helpers = extend [
   {}
-  partner: require '../components/partner/helpers.coffee'
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
+  partner: require '../components/partner/helpers.coffee'
+  related_artworks: require '../components/related_artworks/helpers.coffee'
 ]...
 
 module.exports.init = ->
@@ -48,6 +52,7 @@ module.exports.init = ->
         helpers: helpers
 
       exec [
-        require '../components/partner/index.coffee'
         require '../components/artist_artworks/index.coffee'
+        require '../components/partner/index.coffee'
+        require '../components/related_artworks/index.coffee'
       ]
