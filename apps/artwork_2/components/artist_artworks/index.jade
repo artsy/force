@@ -1,10 +1,12 @@
-section.artwork-artist-artworks( class='js-artwork-artist-artworks' )
-  if artwork.artist && artwork.artist.artworks.length
+if artwork.artist && artwork.artist.artworks.length
+  section.artwork-artist-artworks( class='js-artwork-artist-artworks' )
     header.artwork-artist-artworks__header
       h3.artwork-artist-artworks__header__name
         | Other works by #{artwork.artist.name}
 
-      a.artwork-artist-artworks__header__jump
-        | View All
+      a.artwork-artist-artworks__header__jump(
+        href='#{artwork.artist.href}/works'
+      ) View All
 
+    - var columns = helpers.artist_artworks.masonry(artwork.artist.artworks)
     include ../../../../components/artwork_masonry/index

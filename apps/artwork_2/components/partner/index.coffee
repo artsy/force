@@ -1,20 +1,13 @@
-{ extend } = require 'underscore'
 { PARTNER } = require('sharify').data
-helpers = require './helpers.coffee'
 inquire = require '../../lib/inquire.coffee'
 follow = require '../../lib/follow.coffee'
-template = -> require('./index.jade') arguments...
 
-module.exports =
-  query:
-    name: 'partner'
-    query: require './query.coffee'
+module.exports = (data) ->
+  $el = $('.js-artwork-partner')
 
-  init: (data) ->
-    $el = $('.js-artwork-partner')
-    $el.replaceWith $el = $(template(extend data, helpers: partner: helpers))
-
-    $el.find('.js-artwork-partner-contact').click (e) ->
+  $el
+    .find '.js-artwork-partner-contact'
+    .click (e) ->
       e.preventDefault()
 
       $this = $(this)
@@ -26,4 +19,4 @@ module.exports =
         .catch ->
           $this.attr 'data-state', 'error'
 
-    follow $el.find('.js-artwork-partner-follow')
+  follow $el.find('.js-artwork-partner-follow')
