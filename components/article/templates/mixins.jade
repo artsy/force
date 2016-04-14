@@ -95,5 +95,5 @@ mixin topStories
       for article in sd.PARSELY_ARTICLES.slice(0,3)
         li.article-section-top-stories__item
           a( href=article.url )
-            img( src=crop(article.image_url, { height: 180, width: 240 }) )
+            img( src=resize(article.image_url, { height: 180, width: 240 }) )
             p= article.title
