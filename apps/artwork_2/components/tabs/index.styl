@@ -33,8 +33,13 @@
 
 .artwork-tab
   display none
+  transition opacity 0.25s
+
   &[data-state='active']
     display block
+
+  &[data-loading='true']
+    opacity 0.5
 
   > p
     serif('s-body')
