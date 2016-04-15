@@ -22,7 +22,8 @@ header.artist-header
           span.artist-header-follow-count= followCount
 
     .artist-header-right.current-item
-      include ../components/current_show_auction/index
+      if currentItem
+        include ../components/current_show_auction/index
 
   .artist-sticky-header
     .artist-sticky-header-container

@@ -3,13 +3,11 @@ Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
-# Main section
-ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
-Sticky = require '../../../../components/sticky/index.coffee'
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
+initWorksSection = require '../../components/works_section/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
@@ -20,45 +18,6 @@ module.exports = class OverviewView extends Backbone.View
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    @sticky = new Sticky
-
-    $.onInfiniteScroll =>
-      return if not @filterView
-      if @filterView.remaining() is 0
-        $('#main-layout-footer').css(display: 'block', opacity: 1)
-        @fadeInSections()
-        $.destroyInfiniteScroll()
-      else
-        @filterView.loadNextPage()
-    , offset: 2 * $(window).height()
-
-  setupArtworkFilter: ->
-    filterRouter = ArtworkFilter.init
-      el: @$('#artwork-section')
-      model: @model
-      mode: 'grid'
-      showSeeMoreLink: false
-
-    @filterView = filterRouter.view
-    stickyHeaderHeight = $('.artist-sticky-header-container').outerHeight(true)
-    @filterView.topOffset = stickyHeaderHeight
-    @subViews.push @filterView
-
-    $('#main-layout-footer').css(display: 'none', opacity: 0)
-    @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-    @listenToOnce @filterView.artworks, 'sync', ->
-      @sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
-      @sticky.add @filterView.$('#artwork-filter-selection')
-
-  # A new page of artworks may not reach all the way to the bottom of the window, but the next fetch
-  # won't be triggered until next scroll.
-  fetchWorksToFillPage: ->
-    @sticky.rebuild()
-    _.defer =>
-      viewportBottom = $(window).scrollTop() + $(window).height()
-      viewBottom = @$('#artwork-section').height() + @$('#artwork-section').scrollTop()
-      bottomInView = viewBottom <= viewportBottom
-      @filterView.loadNextPage() if bottomInView
 
   setupRelatedShows: ->
     if @statuses.shows
@@ -131,7 +90,11 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupRelatedGenes()
     # Main section
-    @setupArtworkFilter()
+    @filterView = initWorksSection
+      el: @$('#artwork-section')
+      model: @model
+      allLoaded: => @fadeInSection()
+    @subViews.push @filterView
     # Bottom sections
     @setupRelatedArtists()
     @setupRelatedShows()
@@ -149,4 +112,5 @@ module.exports = class OverviewView extends Backbone.View
     this
 
   remove: ->
+    @filterView.artworks.off 'sync'
     _.invoke @subViews, 'remove'

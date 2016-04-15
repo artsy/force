@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 { CURRENT_SHOW_AUCTION } = require('sharify').data
 ShareView = require '../../../../components/share/view.coffee'
-currentItemTeplate = require '../../components/current_show_auction/index.jade'
+currentItemTeplate = -> require('../../components/current_show_auction/index.jade') arguments...
 viewHelpers = require '../../view_helpers.coffee'
 
 module.exports = class ArtistHeaderView extends Backbone.View
@@ -37,8 +37,8 @@ module.exports = class ArtistHeaderView extends Backbone.View
 
   updateCurrentItem: =>
     currentItem = CURRENT_SHOW_AUCTION
-    if currentItem.type is 'auction'
-      currentItem.detail = viewHelpers.formatShowDetail item
+    if currentItem?.type is 'auction'
+      currentItem.detail = viewHelpers.formatShowDetail currentItem
       @$('.current-item').html currentItemTeplate { currentItem, viewHelpers }
 
   popLock: =>
