@@ -22,7 +22,6 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
-  return next() if req.user?.isAdmin()
   heroUnits = new HeroUnits
 
   # homepage:featured-sections
