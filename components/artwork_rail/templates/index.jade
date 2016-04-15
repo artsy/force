@@ -7,10 +7,13 @@
         | View All
 
   .arv-carousel( class='js-my-carousel' )
-    .mgr-cells( class='js-mgr-cells' )
-      for artwork in artworks
-        .mgr-cell( class='js-mgr-cell' )
-          include ../../../components/artwork_item/templates/artwork
+    ul.arv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class='js-mgr-cells' )
+      if artworks && artworks.length
+        for artwork in artworks
+          li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
+            include ../../../components/artwork_item/templates/artwork
+      else
+        .loading-spinner
 
     .arv-carousel-nav
       .arv-carousel-nav__prev( class='js-mgr-prev' )

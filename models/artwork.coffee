@@ -313,7 +313,7 @@ module.exports = class Artwork extends Backbone.Model
   availabilityMessage: ->
     return if @get('partner')?.type is "Institutional Seller"
     return if @get('availability') is 'for sale'
-    if @get('partner').has_limited_fair_partnership
+    if @get('partner')?.has_limited_fair_partnership
       'Not inquireable'
     else if @get('availability')?.indexOf('on hold') > - 1
       _.compact([

@@ -3,11 +3,12 @@ Q = require 'bluebird-q'
 { parse } = require 'url'
 Backbone = require 'backbone'
 sd = require('sharify').data
-HeroUnits = require '../../collections/hero_units'
 Items = require '../../collections/items'
+HeroUnits = require '../../collections/hero_units'
 { client } = require '../../lib/cache'
+metaphysics = require '../../lib/metaphysics.coffee'
 welcomeHero = require './welcome'
-FilterArtworks = require '../../collections/filter_artworks'
+query = require './queries/initial'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or
@@ -22,50 +23,38 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
+  return next() unless req.user?
   heroUnits = new HeroUnits
+  timeToCacheInSeconds = 300 # 5 Minutes
 
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
-  # homepage:explore
-  exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
-  # homepage:featured-artists
-  featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
   # homepage:featured-links
   featuredArticles = new Items [], id: '5172bbb97695afc60a000001', item_type: 'FeaturedLink'
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
-  timeToCacheInSeconds = 300 # 5 Minutes
-
-  jsonLD = {
-    "@context": "http://schema.org",
-    "@type": "WebSite",
-    "url": "https://www.artsy.net/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://www.artsy.net/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-
   Q.allSettled(_.compact([
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
+    metaphysics query: query, req: req
     featuredLinks.fetch(cache: true)
-    exploreSections.fetch(cache: true) unless req.user?
-    featuredArtists.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-  ])).then(->
+  ])).spread( (heroUnitPromise, { value: { home_page_modules } }) ->
+    # filter related_artists out until data is available
+    modules = _.reject home_page_modules, (module) -> module.key is 'related_artists'
+
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+
     res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+    res.locals.sd.USER_HOME_PAGE = modules
+
     res.render 'index',
       heroUnits: heroUnits
+      modules: modules
       featuredLinks: featuredLinks
-      exploreSections: exploreSections
-      featuredArtists: featuredArtists
       featuredArticles: featuredArticles
       featuredShows: featuredShows
-      jsonLD: JSON.stringify jsonLD
   ).done()
 
 @redirectToSignup = (req, res) ->
