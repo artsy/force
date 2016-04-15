@@ -34,7 +34,7 @@ mapTypeClasses =
       variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
     ).then (data) ->
       _.compact _.map data.partner_categories, (category) ->
-        return null if category.primary.length + category.secondary.length < 3
+        return if category.primary.length + category.secondary.length is 0
         _.extend _.omit(category, 'primary', 'secondary'),
           partners: mergeBuckets(category.primary, category.secondary),
           facet: 'category'
