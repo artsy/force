@@ -38,11 +38,11 @@ map = require '../../components/inquiry_questionnaire/map'
       # following 8 lines can be removed in a separate PR after a week from when we went live
       # This logic basically translate old values to their new ones
       legacy_options_map =
-        'I purchased the work': 'PURCHASED',
-        'I\'m still considering the work': 'STILL_CONSIDERING',
-        'The asking price is too high': 'HIGH_PRICE',
-        'I\'m no longer interested in this work': 'LOST_INTEREST',
-        'The work was not available': 'WORK_UNAVAILABLE'
+        'I purchased the work': 'purchased',
+        'I\'m still considering the work': 'still_considering',
+        'The asking price is too high': 'high_price',
+        'I\'m no longer interested in this work': 'lost_interest',
+        'The work was not available': 'work_unavailable'
       if req.query.option of legacy_options_map
         req.query.option = legacy_options_map[req.query.option]
       inquiry.set 'user_reported_outcome', req.query.option
@@ -52,12 +52,12 @@ map = require '../../components/inquiry_questionnaire/map'
       artwork: inquiry.related().inquireable
       inquiry: inquiry
       options_map:
-        'PURCHASED': 'I purchased the work',
-        'STILL_CONSIDERING': 'I\'m still considering it',
-        'HIGH_PRICE': 'The asking price is too high',
-        'LOST_INTEREST': 'I\'m no longer interested',
-        'WORK_UNAVAILABLE': 'The work was not available',
-        'OTHER': 'Other'
+        'purchased': 'I purchased the work',
+        'still_considering': 'I\'m still considering it',
+        'high_price': 'The asking price is too high',
+        'lost_interest': 'I\'m no longer interested',
+        'work_unavailable': 'The work was not available',
+        'other': 'Other'
       already_submitted: already_submitted
       views: Object.keys map.views
       NODE_ENV: NODE_ENV
