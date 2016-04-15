@@ -62,19 +62,22 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"og:image\" content=\"/foo/bar/large"
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"
 
-  describe 'artist with no published works', ->
+  describe 'artist with no bio and no published works', ->
     beforeEach ->
       @artist = new Artist fabricate 'artist'
-      @artist.set published_artworks_count: 0
+      @artist.set
+        biography: ""
+        published_artworks_count: 0
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
         nav: rels: sinon.stub().returns {}
 
     it 'renders a noindex meta tag', ->
+      console.log('artist.hasNoContent()', @artist.hasNoContent())
       @html.should.containEql "<meta name=\"robots\" content=\"noindex, follow\""
 
-  describe 'artist with no bio and no published works', ->
+  describe 'artist with no bio and 1 published work', ->
     beforeEach ->
       @artist = new Artist fabricate 'artist'
       @artist.set
@@ -85,5 +88,5 @@ describe 'Meta tags', ->
         sd: @sd
         nav: rels: sinon.stub().returns {}
 
-    it 'renders a noindex meta tag', ->
-      @html.should.containEql "<meta name=\"robots\" content=\"noindex, follow\""
+    it 'does not render a noindex meta tag', ->
+      @html.should.not.containEql "<meta name=\"robots\" content=\"noindex, follow\""

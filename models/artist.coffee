@@ -35,6 +35,9 @@ module.exports = class Artist extends Backbone.Model
   fetchArtworks: (options = {}) ->
     @related().artworks.fetch options
 
+  hasNoContent: ->
+    parseInt(@get('published_artworks_count')) < 1 && @get('biography')  == ""
+
   fetchRelatedArtists: (type, options = {}) ->
     @related()[type.toLowerCase()].fetch _.extend
       remove: false
