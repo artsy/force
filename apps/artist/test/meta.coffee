@@ -61,3 +61,39 @@ describe 'Meta tags', ->
     it 'includes og:image and twitter card', ->
       @html.should.containEql "<meta property=\"og:image\" content=\"/foo/bar/large"
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"
+
+  describe 'artist with no published works', ->
+    beforeEach ->
+      @artist = new Artist fabricate 'artist'
+      @artist.set published_artworks_count: 0
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artist: @artist
+        sd: @sd
+        nav: rels: sinon.stub().returns {}
+
+    it 'renders a noindex meta tag', ->
+      @html.should.containEql "<meta name=\"robots\" content=\"noindex, follow\""
+
+  describe 'artist with no bio', ->
+    beforeEach ->
+      @artist = new Artist fabricate 'artist'
+      @artist.set biography: ""
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artist: @artist
+        sd: @sd
+        nav: rels: sinon.stub().returns {}
+
+    it 'renders a noindex meta tag', ->
+      @html.should.containEql "<meta name=\"robots\" content=\"noindex, follow\""
+
+  describe 'artist with published works', ->
+    beforeEach ->
+      @artist = new Artist fabricate 'artist'
+      @artist.set published_artworks_count: 1
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artist: @artist
+        sd: @sd
+        nav: rels: sinon.stub().returns {}
+
+    it 'renders a noindex meta tag', ->
+      @html.should.not.containEql "<meta name=\"robots\" content=\"noindex, follow\""

@@ -25,6 +25,9 @@ if artist.hasImage('large')
 else
   meta( property="twitter:card", content="summary" )
 
+if parseInt(artist.get('published_artworks_count')) < 1 && artist.get('biography')  == ""
+  meta(name="robots" content="noindex, follow")
+
 if nav
   - var rels = nav.rels(sd.CURRENT_PATH)
   if rels.prev
