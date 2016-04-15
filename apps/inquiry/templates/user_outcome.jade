@@ -27,9 +27,22 @@ block body
       .inquiry-options
         if inquiry.get('user_reported_outcome').toUpperCase() != 'OTHER'
           em.inquiry-options-user-outcome-selected-option.is-center-aligned
-            | "#{inquiry.get('user_reported_outcome')}"
+            = options_map[inquiry.get('user_reported_outcome')]
         else
-          textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Add your comment here...', disabled=already_submitted)
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='purchased' )
+            label.artsy-radio--label( for='inquiry-outcome-form-purchased' )
+              = options_map['purchased']
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='work_unavailable' )
+            label.artsy-radio--label( for='inquiry-outcome-form-not-available' )
+              = options_map['work_unavailable']
+          .user-outcome-option
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='other' )
+            label.artsy-radio--label( for='inquiry-outcome-form-other' )
+              | NONE OF THE ABOVE
+
+          textarea.inquiry-options-comment.bordered-input(type='text', name='user_reported_outcome_comment', placeholder='Tell us what happened...', disabled=already_submitted, style='display: none')
       button.inquiry-outcome-submit.avant-garde-button-black(type='submit', disabled=already_submitted)
         if already_submitted
           | Feedback Already Submitted
