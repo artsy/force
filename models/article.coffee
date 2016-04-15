@@ -135,14 +135,7 @@ module.exports = class Article extends Backbone.Model
 
     bodyClass
 
-  hasTopStories: ->
-    # TODO: @get('featured') is true and @get('layout') is 'left'
-    sections = _.filter @get('sections'), (section) ->
-      section.type is 'callout' and section.top_stories
-    sections.length > 0
-
   topParselyArticles: (article, key, secret, cb) ->
-    return cb [] unless @hasTopStories()
     request
       .get('https://api.parsely.com/v2/analytics/posts')
       .query

@@ -17,10 +17,12 @@ describe 'Article routes', ->
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     sinon.stub Article.prototype, 'fetchWithRelated'
+    sinon.stub(Article.prototype, 'topParselyArticles').yields []
 
   afterEach ->
     Backbone.sync.restore()
     Article::fetchWithRelated.restore()
+    Article::topParselyArticles.restore()
 
   describe '#article', ->
 
