@@ -30,15 +30,15 @@ block body
             = options_map[inquiry.get('user_reported_outcome')]
         else
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='PURCHASED' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-purchased', value='purchased' )
             label.artsy-radio--label( for='inquiry-outcome-form-purchased' )
-              = options_map['PURCHASED']
+              = options_map['purchased']
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='WORK_UNAVAILABLE' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-not-available', value='work_unavailable' )
             label.artsy-radio--label( for='inquiry-outcome-form-not-available' )
-              = options_map['WORK_UNAVAILABLE']
+              = options_map['work_unavailable']
           .user-outcome-option
-            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='OTHER' )
+            input.outcome-option-radio-box( type='radio', name='user_reported_outcome', id='inquiry-outcome-form-other', value='other' )
             label.artsy-radio--label( for='inquiry-outcome-form-other' )
               | NONE OF THE ABOVE
 
