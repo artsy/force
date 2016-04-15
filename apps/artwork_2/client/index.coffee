@@ -1,7 +1,9 @@
-{ extend } = require 'underscore'
+{ extend, map } = require 'underscore'
 { CLIENT } = require('sharify').data
 metaphysics = require '../../../lib/metaphysics.coffee'
-template = -> require('./index.jade') arguments...
+templates =
+  fold: -> require('./fold.jade') arguments...
+  footer: -> require('./footer.jade') arguments...
 
 exec = (fns) ->
   for fn in fns
@@ -44,12 +46,12 @@ module.exports.init = ->
     require '../components/tabs/index.coffee'
   ]
 
-  $el = $('.js-artwork-overview-fold')
-
   metaphysics query: query, variables: CLIENT
     .then (data) ->
-      $el.html template extend data,
-        helpers: helpers
+      for key, template of templates
+        $(".js-artwork-#{key}")
+          .html template extend data,
+            helpers: helpers
 
       exec [
         require '../components/artist_artworks/index.coffee'

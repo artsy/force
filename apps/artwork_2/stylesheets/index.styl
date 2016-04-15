@@ -16,7 +16,6 @@
 @require '../components/tabs/index'
 
 artwork-page = {
-  gutter: 30px,
   metadata: {
     width: 230px
   }
@@ -26,22 +25,25 @@ artwork-page = {
   padding (gutter / 2) 0
 
 .artwork
-  clearfix()
-  position relative
+  //
 
-  &__overview
-  &__metadata
-    float left
+  &__main
+    display flex
+    align-items stretch
 
-  &__metadata
-    width: artwork-page.metadata.width
+    &__overview
+    &__metadata
+      //
 
-  &__overview
-    width calc('100% - %s' % (artwork-page.metadata.width + artwork-page.gutter))
-    margin-right: artwork-page.gutter
+    &__metadata
+      width: artwork-page.metadata.width
 
-    section
-      block-margins(10px, (gutter * 2))
-      padding-top distance(25px, 'garamond-s-headline')
-      garamond-size('s-body')
-      border-top 1px solid gray-lighter-color
+    &__overview
+      width calc('100% - %s' % (artwork-page.metadata.width + gutter))
+      margin-right: gutter
+
+.artwork-section
+  margin (gutter /3) 0 (gutter * 2) 0
+  padding-top distance(25px, 'garamond-s-headline')
+  garamond-size('s-body')
+  border-top 1px solid gray-lighter-color
