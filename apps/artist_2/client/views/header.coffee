@@ -1,12 +1,16 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ShareView = require '../../../../components/share/view.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ CURRENT_SHOW_AUCTION } = require('sharify').data
+ShareView = require '../../../../components/share/view.coffee'
+currentItemTeplate = -> require('../../components/current_show_auction/index.jade') arguments...
+viewHelpers = require '../../view_helpers.coffee'
 
 module.exports = class ArtistHeaderView extends Backbone.View
   initialize: ({ @user }) ->
     @setupShareButtons()
     @setupFollowButton()
+    @updateCurrentItem()
     @$window = $ window
     @$window.on 'scroll', _.throttle(@popLock, 150)
 
@@ -30,6 +34,12 @@ module.exports = class ArtistHeaderView extends Backbone.View
       modelName: 'artist'
       model: @model
     @following?.syncFollows [@model.id]
+
+  updateCurrentItem: =>
+    currentItem = CURRENT_SHOW_AUCTION
+    if currentItem?.type is 'auction'
+      currentItem.detail = viewHelpers.formatShowDetail currentItem
+      @$('.current-item').html currentItemTeplate { currentItem, viewHelpers }
 
   popLock: =>
     mainHeaderHeight = $('#main-layout-header').height()

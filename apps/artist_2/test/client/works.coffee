@@ -25,10 +25,12 @@ describe 'WorksView', ->
     sinon.stub Backbone, 'sync'
     @WorksView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: new Backbone.View)
     @view = new @WorksView model: @model, statuses: artistJSON.statuses
+    sinon.stub @view, 'postRender'
 
   afterEach ->
     _.defer.restore()
     Backbone.sync.restore()
+    @view.postRender.restore()
     @view.remove()
 
   describe '#render', ->

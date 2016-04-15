@@ -1,9 +1,9 @@
 h2
   - var forSale = filter.forSaleCount()
   if total == forSale
-    | #{total} works for sale
+    | #{total} work#{total > 1 ? 's' : ''} for sale
   else
-    | #{total} works, #{forSale} for sale
+    | #{total} work#{total > 1 ? 's' : ''}, #{forSale} for sale
 
 include ../../bordered_pulldown/mixin
 

@@ -19,14 +19,16 @@ describe 'ArtistRouter', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub @ArtistRouter::, 'navigate'
     @model = new Artist fabricate 'artist', id: 'foo-bar'
     @user = new CurrentUser fabricate 'user'
+    sinon.stub @ArtistRouter::, 'setupHeaderView'
+    sinon.stub @ArtistRouter::, 'navigate'
     @router = new @ArtistRouter model: @model, user: @user
 
   afterEach ->
     Backbone.sync.restore()
     @router.navigate.restore()
+    @router.setupHeaderView.restore()
 
   describe '#execute', ->
     beforeEach ->
