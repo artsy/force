@@ -36,6 +36,7 @@ helpers = extend [
 module.exports.init = ->
   exec [
     require '../components/actions/index.coffee'
+    require '../components/additional_info/index.coffee'
     require '../components/auction/index.coffee'
     require '../components/artists/index.coffee'
     require '../components/banner/index.coffee'
@@ -43,7 +44,6 @@ module.exports.init = ->
     require '../components/images/index.coffee'
     require '../components/inquiry/index.coffee'
     require '../components/metadata/index.coffee'
-    require '../components/tabs/index.coffee'
   ]
 
   metaphysics query: query, variables: CLIENT
