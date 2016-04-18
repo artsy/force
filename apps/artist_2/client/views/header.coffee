@@ -7,12 +7,13 @@ currentItemTeplate = -> require('../../components/current_show_auction/index.jad
 viewHelpers = require '../../view_helpers.coffee'
 
 module.exports = class ArtistHeaderView extends Backbone.View
-  initialize: ({ @user }) ->
+  initialize: ({ @user, @jump }) ->
     @setupShareButtons()
     @setupFollowButton()
     @updateCurrentItem()
     @$window = $ window
     @$window.on 'scroll', _.throttle(@popLock, 150)
+    @$('a').click @navClick
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -35,11 +36,16 @@ module.exports = class ArtistHeaderView extends Backbone.View
       model: @model
     @following?.syncFollows [@model.id]
 
-  updateCurrentItem: =>
+  updateCurrentItem: ->
     currentItem = CURRENT_SHOW_AUCTION
     if currentItem?.type is 'auction'
       currentItem.detail = viewHelpers.formatShowDetail currentItem
       @$('.current-item').html currentItemTeplate { currentItem, viewHelpers }
+
+  navClick: (e) =>
+    if e.target.pathname is window.location.pathname
+      e.preventDefault()
+      @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   popLock: =>
     mainHeaderHeight = $('#main-layout-header').height()
