@@ -28,10 +28,10 @@ module.exports = ( { el, model, allLoaded } ) ->
   filterView.artworks.on 'sync', ->
     sticky.rebuild()
     _.defer =>
-      viewportBottom = $(window).scrollTop() + $(window).height()
+      threshold = $(window).scrollTop() + 2 * $(window).height()
       viewBottom = $el.height() + $el.scrollTop()
-      bottomInView = viewBottom <= viewportBottom
-      filterView.loadNextPage() if bottomInView
+      loadMore = viewBottom <= threshold
+      filterView.loadNextPage() if loadMore
 
   filterView.artworks.once 'sync', ->
     sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
