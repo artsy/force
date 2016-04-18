@@ -13,3 +13,5 @@ if auction
       include ./templates/bid
       include ./templates/buy_now
       include ./templates/help
+    else if auction.is_closed
+      include ./templates/closed
