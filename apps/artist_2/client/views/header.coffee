@@ -7,7 +7,7 @@ currentItemTeplate = -> require('../../components/current_show_auction/index.jad
 viewHelpers = require '../../view_helpers.coffee'
 
 module.exports = class ArtistHeaderView extends Backbone.View
-  initialize: ({ @user }) ->
+  initialize: ({ @user, @jump }) ->
     @setupShareButtons()
     @setupFollowButton()
     @updateCurrentItem()
@@ -42,10 +42,10 @@ module.exports = class ArtistHeaderView extends Backbone.View
       currentItem.detail = viewHelpers.formatShowDetail currentItem
       @$('.current-item').html currentItemTeplate { currentItem, viewHelpers }
 
-  navClick: (e) ->
+  navClick: (e) =>
     if e.target.pathname is window.location.pathname
       e.preventDefault()
-      $('html body').animate { scrollTop: 0 }, 500
+      @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   popLock: =>
     mainHeaderHeight = $('#main-layout-header').height()

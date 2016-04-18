@@ -11,6 +11,7 @@ ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
 BiographyView = require './views/biography.coffee'
 HeaderView = require './views/header.coffee'
+JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
 
@@ -29,17 +30,21 @@ module.exports = class ArtistRouter extends Backbone.Router
   initialize: ({ @model, @user, @statuses }) ->
     @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
     @setupUser()
+    @setupJump()
     @setupCarousel()
     @setupHeaderView()
 
   setupUser: ->
     @user?.initializeDefaultArtworkCollection()
 
+  setupJump: ->
+    @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+
   setupCarousel: ->
     initCarousel $('.js-artist-carousel'), imagesLoaded: true
 
   setupHeaderView: ->
-    @headerView = new HeaderView _.extend {}, @options, el: $('#artist-page-header')
+    @headerView = new HeaderView _.extend {}, @options, el: $('#artist-page-header'), jump: @jump
 
   execute: ->
     return if @view? # Sets up a view once, depending on route
@@ -51,6 +56,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
+    $('body').append @jump.$el
     mediator.on 'overview:fetches:complete', =>
       attachCTA @model
 
@@ -59,6 +65,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   works: ->
     @view = new WorksView @options
+    $('body').append @jump.$el
 
   shows: ->
     @view = new ShowsView @options
