@@ -15,7 +15,15 @@ module.exports = """
       id
       is_auction
       sale_artwork(id: $id) {
-        lot_number
+        id
+        reserve_message
+        estimate
+        current_bid {
+          amount
+        }
+        counts {
+          bidder_positions
+        }
       }
     }
   }

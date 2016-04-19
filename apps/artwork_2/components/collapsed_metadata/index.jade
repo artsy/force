@@ -29,12 +29,14 @@
       ) Contact #{artwork.partner.type}
 
   if artwork.sale && artwork.sale.is_auction
-    .artwork-collapsed-metadata__auction(
-      class='js-artwork-collapsed-metadata-auction'
-    )
-      - var auction = artwork.sale
-      - var sale_artwork = auction.sale_artwork
+    - var auction = artwork.sale
+    - var sale_artwork = auction.sale_artwork
 
-      include ../auction/templates/status
-      include ../auction/templates/bid
-      include ../auction/templates/buy_now
+    if auction.is_preview || auction.is_open
+      .artwork-collapsed-metadata__auction(
+        class='js-artwork-collapsed-metadata-auction'
+      )
+
+        include ../auction/templates/status
+        include ../auction/templates/bid
+        include ../auction/templates/buy_now
