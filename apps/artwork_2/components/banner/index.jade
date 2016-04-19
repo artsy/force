@@ -30,4 +30,4 @@ if artwork.banner
           when 'RelatedFair'
             | Explore Fair
           when 'RelatedSale'
-            | Explore Auction
+            | Explore #{banner.is_auction ? 'Auction' : 'Sale'}

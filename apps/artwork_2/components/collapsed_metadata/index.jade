@@ -1,9 +1,9 @@
 .artwork-collapsed-metadata(
   class='js-artwork-collapsed-metadata'
 )
-  if artwork.auction && artwork.auction.sale_artwork && artwork.auction.sale_artwork.lot_number
+  if artwork.sale && artwork.sale.sale_artwork && artwork.sale.sale_artwork.lot_number
     .artwork-collapsed-metadata__lot-number
-      | Lot #{artwork.auction.sale_artwork.lot_number}
+      | Lot #{artwork.sale.sale_artwork.lot_number}
 
   if artwork.artists
     .artwork-collapsed-metadata__artists
@@ -28,11 +28,11 @@
         data-artwork-id= artwork.id
       ) Contact #{artwork.partner.type}
 
-  if artwork.auction
+  if artwork.sale && artwork.sale.is_auction
     .artwork-collapsed-metadata__auction(
       class='js-artwork-collapsed-metadata-auction'
     )
-      - var auction = artwork.auction
+      - var auction = artwork.sale
       - var sale_artwork = auction.sale_artwork
 
       include ../auction/templates/status

@@ -1,5 +1,5 @@
 module.exports = """
-  fragment tabs on Artwork {
+  fragment additional_info on Artwork {
     publisher
     manufacturer
     signature

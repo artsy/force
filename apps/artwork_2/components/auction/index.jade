@@ -1,6 +1,5 @@
-- var auction = artwork.auction
-
-if auction
+if artwork.is_in_auction
+  - var auction = artwork.sale
   - var sale_artwork = auction.sale_artwork
 
   .artwork-auction( class='js-artwork-auction' )
@@ -13,3 +12,5 @@ if auction
       include ./templates/bid
       include ./templates/buy_now
       include ./templates/help
+    else if auction.is_closed
+      include ./templates/closed

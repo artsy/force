@@ -7,6 +7,6 @@ if artwork.partner.is_limited_fair_partner
       data-message='#{artwork.partner.name} is an art fair exhibitor, but not an Artsy partner.'
     )
 
-else if artwork.sale_message && !artwork.auction
+else if artwork.sale_message && !artwork.is_in_auction
   .artwork-metadata__sale-message
     = artwork.sale_message

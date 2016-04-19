@@ -24,6 +24,7 @@ module.exports = """
     is_acquireable
     is_for_sale
     is_contactable
+    is_in_auction
     partner {
       id
       name
@@ -36,8 +37,9 @@ module.exports = """
         phone
       }
     }
-    auction: sale {
+    sale {
       id
+      is_auction
       sale_artwork(id: $id) {
         lot_number
       }

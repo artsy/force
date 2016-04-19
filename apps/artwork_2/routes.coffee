@@ -5,6 +5,7 @@ query = """
   query artwork($id: String!) {
     artwork(id: $id) {
       ... actions
+      ... additional_info
       ... artists
       ... auction
       ... banner
@@ -15,10 +16,10 @@ query = """
       ... inquiry
       ... meta
       ... metadata
-      ... tabs
     }
   }
   #{require './components/actions/query'}
+  #{require './components/additional_info/query'}
   #{require './components/artists/query'}
   #{require './components/auction/query'}
   #{require './components/banner/query'}
@@ -29,12 +30,12 @@ query = """
   #{require './components/inquiry/query'}
   #{require './components/meta/query'}
   #{require './components/metadata/query'}
-  #{require './components/tabs/query'}
 """
 
 helpers = extend [
   {}
   actions: require './components/actions/helpers'
+  additional_info: require './components/additional_info/helpers'
   artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
@@ -42,7 +43,6 @@ helpers = extend [
   highlights: require './components/highlights/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
-  tabs: require './components/tabs/helpers'
 ]...
 
 bootstrap = ->
