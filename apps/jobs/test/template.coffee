@@ -10,4 +10,5 @@ describe '/jobs', ->
   describe 'index', ->
     it 'renders correctly', ->
       template(data)
-        .should.containEql '<h1 class="jobs-header-headline evenly-bisected-header-cell">Join Our Team</h1>'
+        .should.containEql '<h1 class="jobs-header-headline bisected-header-cell">Join Our Team</h1>'
+

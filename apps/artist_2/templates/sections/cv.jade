@@ -20,11 +20,11 @@ mixin cv-link-shows-section(shows, title, trailPartnerName)
 #artist-cv-section
   h2.artist-section-header Curriculum Vitae
   #artist-cv
-    .bisected-header
-      .thirty-seventy-bisected-header-cell
+    .thirty-seventy-bisected-header
+      .bisected-header-cell
         .bisected-header-cell-section
 
-      .thirty-seventy-bisected-header-cell
+      .bisected-header-cell
         if soloShows && soloShows.length
           mixin cv-link-shows-section(soloShows, "Solo Shows On Artsy", true)
 

@@ -1,7 +1,7 @@
 .artist-overview-header
-  .bisected-header
+  .sixty-forty-bisected-header
     if artist.blurb
-      .sixty-forty-bisected-header-cell
+      .bisected-header-cell
         .artist-blurb.bisected-header-cell-section
           h2 Biography
           .blurb!= viewHelpers.mdToHtml(artist, 'blurb')
@@ -14,7 +14,7 @@
             if location
               .location-detail!= location
 
-    .sixty-forty-bisected-header-cell
+    .bisected-header-cell
       .artist-related-genes.related-links.bisected-header-cell-section
         //- Rendered client-side
 

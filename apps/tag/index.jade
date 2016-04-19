@@ -14,9 +14,9 @@ block body
       #tag-share-buttons
         +share(tag.get('name') + ' on Artsy')
 
-    .bisected-header
+    .sixty-forty-bisected-header
       if tag.get('description')
-        .sixty-forty-bisected-header-cell.tag-blurb
+        .bisected-header-cell.tag-blurb
           .bisected-header-cell-section
             h2 About
             .blurb!= tag.mdToHtml('description')
