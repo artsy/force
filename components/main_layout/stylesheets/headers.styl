@@ -36,45 +36,40 @@
   font-size 37px
   line-height 1
 
-.bisected-header
+bisected-header(leftWidth)
   clearfix()
   margin 20px 0
-.evenly-bisected-header-cell
-  float left
-  text-align left
-  garamond-size('s-body')
-  &:last-child
-    width 50%
-  &:first-child
-    width 50%
-    padding-right 20px
-  h2
-    margin-bottom 20px
-    avant-garde-size('body')
-  .bisected-header-cell-section
-    margin-bottom 40px
-    &:last-child
-      margin-bottom 0
-  @media screen and (max-width: 768px)
-    float none
-    block-margins(20px)
-    &:first-child
-    &:last-child
-      width 100% !important
-    &:first-child
-      .bisected-header-cell-section:last-child
-        margin-bottom 40px
 
-.sixty-forty-bisected-header-cell
-  @extends .evenly-bisected-header-cell
-  &:first-child
-    width 60%
-  &:last-child
-    width 40%
+  .bisected-header-cell
+    gutter = distance(40px, 'garamond-s-body')
+    &:first-child
+      padding-right 20px
+      width leftWidth
+    &:last-child
+      width 100% - leftWidth
+    float left
+    text-align left
+    garamond-size('s-body')
+    h2
+      margin-bottom 8px
+      avant-garde-size('body')
+    .bisected-header-cell-section
+      block-margins(gutter)
+    @media screen and (max-width: 768px)
+      float none
+      block-margins(20px)
+      &:first-child
+      &:last-child
+        width 100% !important
+      &:first-child
+        .bisected-header-cell-section:last-child
+          block-margins(gutter, gutter)
 
-.thirty-seventy-bisected-header-cell
-  @extends .evenly-bisected-header-cell
-  &:first-child
-    width 30%
-  &:last-child
-    width 70%
+.evenly-bisected-header
+  bisected-header(50%)
+
+.sixty-forty-bisected-header
+  bisected-header(60%)
+
+.thirty-seventy-bisected-header
+  bisected-header(30%)
