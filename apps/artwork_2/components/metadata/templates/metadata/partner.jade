@@ -2,7 +2,7 @@
 - var contacts = helpers.metadata.contacts(partner.locations)
 - var location = helpers.metadata.location(partner.locations)
 
-unless artwork.auction
+unless artwork.is_in_auction
   .artwork-metadata__partner
     if artwork.collecting_institution
       .artwork-metadata__partner__name

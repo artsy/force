@@ -11,8 +11,9 @@ module.exports = """
     partner {
       type
     }
-    auction: sale {
+    sale {
       id
+      is_auction
       sale_artwork(id: $id) {
         lot_number
       }

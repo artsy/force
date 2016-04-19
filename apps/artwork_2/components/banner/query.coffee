@@ -7,6 +7,7 @@ module.exports = """
         href
         start_at
         end_at
+        is_auction
       }
       ... on RelatedFair {
         name

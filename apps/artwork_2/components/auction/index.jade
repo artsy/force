@@ -1,6 +1,5 @@
-- var auction = artwork.auction
-
-if auction
+if artwork.is_in_auction
+  - var auction = artwork.sale
   - var sale_artwork = auction.sale_artwork
 
   .artwork-auction( class='js-artwork-auction' )
