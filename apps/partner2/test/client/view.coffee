@@ -5,6 +5,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 Partner = require '../../../../models/partner.coffee'
 Profile = require '../../../../models/profile.coffee'
+Articles = require '../../../../collections/articles.coffee'
 _ = require 'underscore'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -61,13 +62,13 @@ describe 'PartnerView', ->
           @partner.set claimed: true
           @profile.set owner_type: 'PartnerGallery'
           sections = @view.getDisplayableSections @view.getSections()
-          sections.should.eql ['overview', 'articles', 'contact']
+          sections.should.eql ['overview', 'contact']
 
         it 'institution', ->
           @partner.set type: 'Institution'
           @profile.set owner_type: 'PartnerInstitution'
           sections = @view.getDisplayableSections @view.getSections()
-          sections.should.eql ['articles', 'about']
+          sections.should.eql ['about']
 
       describe 'with maximum data to display', ->
         beforeEach ->
@@ -87,12 +88,22 @@ describe 'PartnerView', ->
           it 'returns proper sections when display works section is disabled', ->
             @partner.set display_works_section: false
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['overview', 'shows', 'artists', 'articles', 'contact']
+            sections.should.eql ['overview', 'shows', 'artists', 'contact']
 
           it 'returns proper sections when display work section is enabled', ->
             @partner.set display_works_section: true
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
+            sections.should.eql ['overview', 'shows', 'works', 'artists', 'contact']
+
+          it 'includes articles when @partnerArticlesCount > 0', ->
+            @view.partnerArticlesCount = 1
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'artists', 'articles', 'contact']
+
+          it 'does not include articles when @partnerArticlesCount is 0', ->
+            @view.partnerArticlesCount = 0
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'artists', 'contact']
 
         describe 'institution', ->
           beforeEach ->
@@ -102,16 +113,52 @@ describe 'PartnerView', ->
           it 'returns proper sections when display works section is disabled', ->
             @partner.set display_works_section: false
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'articles', 'shop', 'about']
+            sections.should.eql ['shows', 'shop', 'about']
 
           it 'returns proper sections when display work section is enabled', ->
             @partner.set display_works_section: true
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'collection', 'articles', 'shop', 'about']
+            sections.should.eql ['shows', 'collection', 'shop', 'about']
+
+          it 'includes articles when @partnerArticlesCount > 0', ->
+            @view.partnerArticlesCount = 1
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['shows', 'articles', 'shop', 'about']
+
+          it 'does not include articles when @partnerArticlesCount is 0', ->
+            @view.partnerArticlesCount = 0
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['shows', 'shop', 'about']
 
     describe '#initializeTablistAndContent', ->
 
       it 'renders tabs properly', ->
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
-        _.last(@tablistTemplate.args)[0].sections.should.eql ['articles', 'about']
+        _.last(@tablistTemplate.args)[0].sections.should.eql ['about']
+
+    describe '#initializePartnerAndCounts', ->
+      it 'returns a thenable promise', ->
+        @view.initializePartnerAndCounts().then.should.be.a.Function()
+
+      it 'makes proper requests to fetch partner and articles', ->
+        @view.initializePartnerAndCounts()
+        requests = _.last(Backbone.sync.args, 2)
+        requests[0][1].url().should.endWith "/api/v1/partner/#{@partner.get('id')}"
+        requests[1][1].url.should.endWith '/api/articles'
+        requests[1][2].data.should.eql partner_id: @partner.get('_id'), limit: 1, published: true
+
+      it 'fetches and returns partner and articles and sets articles count', ->
+        nextSyncCall = Backbone.sync.args.length
+        articles = new Articles [fabricate('article'), fabricate('article')]
+        articles.count = 2
+        Backbone.sync
+          .onCall nextSyncCall
+          .yieldsTo 'success', @partner
+
+        Backbone.sync
+          .onCall nextSyncCall + 1
+          .yieldsTo 'success', articles
+
+        @view.initializePartnerAndCounts().then =>
+          @view.partnerArticlesCount.should.equal 2

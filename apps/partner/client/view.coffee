@@ -1,9 +1,11 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
+Articles = require '../../../collections/articles.coffee'
 ContactView = require './contact.coffee'
 FilteredArtworks = require './artworks_filter.coffee'
 ShowsView = require './shows.coffee'
@@ -38,9 +40,8 @@ module.exports = class PartnerView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     { @currentSection, @partner } = _.defaults options, @defaults
     @profile = @model # alias
-    @listenTo @partner, 'sync', @initializeTablistAndContent
+    @initializePartnerAndCounts().then(@initializeTablistAndContent).done()
     @initializeCache()
-    @initializePartner()
     @initializeFollows()
 
   renderSection: (section, @sectionViewParams={}) ->
@@ -70,9 +71,17 @@ module.exports = class PartnerView extends Backbone.View
   initializeCache: ->
     @cache = {}; _.each sectionToView, (v, k) => @cache[k] = {}
 
-  initializePartner: -> @partner.fetch cache: true
+  initializePartnerAndCounts: ->
+    articles = new Articles
+    articlesFetchData =
+      partner_id: @partner.get('_id')
+      published: true
+      limit: 1
 
-  initializeTablistAndContent: ->
+    Q.allSettled([@partner.fetch(), articles.fetch(data: articlesFetchData)])
+      .then => @partnerArticlesCount = articles.count
+
+  initializeTablistAndContent: =>
     @isPartnerFetched = true
     @sections = @getDisplayableSections @getSections()
 
@@ -91,18 +100,6 @@ module.exports = class PartnerView extends Backbone.View
     # Only render content for centain tabs
     else if @currentSection is 'overview'
       @renderSection @currentSection, @sectionViewParams
-
-    # hide articles tab if this partner has no articles
-    $.ajax
-      url: "#{sd.POSITRON_URL}/api/articles"
-      data:
-        partner_id: sd.PROFILE && sd.PROFILE.owner._id
-        published: true
-        limit: 1
-      success: (res) ->
-        return if res.count > 0
-        $('.partner-tabs [href*=articles]').prev().hide()
-        $('.partner-tabs [href*=articles]').hide()
 
   initializeFollows: ->
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
@@ -150,7 +147,7 @@ module.exports = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0 and @partner.get('display_works_section')
       contact: => true
       about: => true
-      articles: => true
+      articles: => @partnerArticlesCount > 0
       shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()

@@ -1,9 +1,11 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
+Articles = require '../../../collections/articles.coffee'
 ShowsView = require './shows.coffee'
 OverviewView = require './overview.coffee'
 FilteredArtworks = require './artworks_filter.coffee'
@@ -37,9 +39,8 @@ module.exports = class PartnerView extends Backbone.View
   initialize: (options={}) ->
     @currentUser = CurrentUser.orNull()
     { @currentSection, @partner, @profile } = _.defaults options, @defaults
-    @listenTo @partner, 'sync', @initializeTablistAndContent
     @initializeCache()
-    @initializePartner()
+    @initializePartnerAndCounts().then(@initializeTablistAndContent).done()
     @initializePartnerLocations()
     @initializeFollows()
 
@@ -70,14 +71,22 @@ module.exports = class PartnerView extends Backbone.View
   initializeCache: ->
     @cache = {}; _.each sectionToView, (v, k) => @cache[k] = {}
 
-  initializePartner: -> @partner.fetch()
+  initializePartnerAndCounts: ->
+    articles = new Articles
+    articlesFetchData =
+      partner_id: @partner.get('_id')
+      published: true
+      limit: 1
+
+    Q.allSettled([@partner.fetch(), articles.fetch(data: articlesFetchData)])
+      .then => @partnerArticlesCount = articles.count
 
   initializePartnerLocations: ->
     @partner.related().locations.fetch
       success: (locations) =>
         @$('.partner-header .partner-locations').html locations.displayCities(' • ')
 
-  initializeTablistAndContent: ->
+  initializeTablistAndContent: =>
     @isPartnerFetched = true
     @sections = @getDisplayableSections @getSections()
 
@@ -146,7 +155,7 @@ module.exports = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0 and @partner.get('display_works_section')
       contact: => true
       about: => true
-      articles: => true
+      articles: => @partnerArticlesCount > 0
       shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()
