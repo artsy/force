@@ -4,12 +4,12 @@ Backbone = require 'backbone'
 Artwork = require '../../models/artwork'
 { stringifyJSONForWeb } = require '../../components/util/json'
 { client } = require '../../lib/cache'
-{ FUSION_URL, ARTWORK_2_USER_IDS } = require '../../config'
+{ FUSION_URL } = require '../../config'
 
 appToDisplay = (req) ->
   if req.path.match(/artwork_1/)?
     'artwork_1'
-  else if req.user?.id in ARTWORK_2_USER_IDS.split ','
+  else if req.user?.hasLabFeature 'New Artwork Page'
     'artwork_2'
   else
     'default'
