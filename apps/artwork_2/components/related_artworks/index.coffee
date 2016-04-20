@@ -21,8 +21,8 @@ query = """
 module.exports = ->
   $el = $('.js-artwork-related-artworks')
 
-  $content = $el.find '.js-artwork-tab'
-  $links = $el.find '.js-artwork-tabs__nav__link'
+  $links = $el.find '.js-artwork-tabs-link'
+  $sections = $el.find '.js-artwork-tabs-section'
 
   $links
     .click ->
@@ -33,12 +33,12 @@ module.exports = ->
         .attr 'data-state', 'active'
         .data()
 
-      $content
+      $sections
         .attr 'data-loading', true
 
       metaphysics query: query, variables: id: id, artwork_id: CLIENT.id
         .then (data) ->
-          $content
+          $sections
             .attr 'data-loading', false
             .html template
               columns: masonry data.artwork.layer.artworks
