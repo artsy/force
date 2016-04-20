@@ -30,6 +30,7 @@ nvm alias default 5
 ``` sh
 # For Artsy Staff
 git clone git@github.com:[my_name]/force.git && cd force
+
 # For OSS participants
 git clone git@github.com:artsy/force-public.git force && cd force
 
@@ -42,12 +43,16 @@ npm install
 
 - Create a `.env` file and paste in the sensitive configuration.
   * Artsy: You can find these keys in the Artsy Shared vault of One Password under "Force.env" or ask someone in #web Slack.
-  * OSS: You can run `make oss` to auto-generate this
+  * OSS: You can skip this step
 
 - Start Force pointing to the staging [Gravity](https://github.com/artsy/gravity) API
 
 ```sh
+# For Artsy Staff
 make ss
+
+# For OSS participants
+make oss
 ```
 
 - Force should now be running at [http://localhost:5000/](http://localhost:5000/)

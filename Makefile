@@ -8,44 +8,9 @@
 
 BIN = node_modules/.bin
 
-# OSS version of the `.env` file
-# Note: The ARTSY_ID & ARTSY_SECRET are known keys for Artsy OSS
-# projects, and are not a problem. OSS peeople: Please don't abuse the keys,
-# as then we'll have to change it, making it harder for others to learn from.
-# As such, these keys do not come under the artsy security bounty editor.
-
-define OSS_ENV_BODY
-	SESSION_SECRET=oss-session
-	SESSION_COOKIE_KEY=force.session
-	ARTSY_ID=e750db60ac506978fc70
-	ARTSY_SECRET=3a33d2085cbd1176153f99781bbce7c6
-	METAPHYSICS_ENDPOINT=http://metaphysics-staging.artsy.net
-	POSITRON_URL=http://writer.artsy.net
-	IMAGES_URL_PREFIX=http://static%d.artsy.net
-	NODE_ENV=development
-	EMPTY_COLLECTION_SET_ID=51ba3bcc0abd8521b300002f
-	STRIPE_PUBLISHABLE_KEY=FAKE123123123
-	FACEBOOK_ID=FAKE123123123
-	FACEBOOK_SECRET=FAKE123123123
-	TWITTER_KEY=FAKE123123123
-	TWITTER_SECRET=FAKE123123123
-	EMBEDLY_KEY=FAKE123123123
-	MIXPANEL_ID=FAKE123123123
-	GEMINI_S3_ACCESS_KEY=FAKE123123123
-	GOOGLE_SEARCH_KEY=FAKE123123123
-	GOOGLE_SEARCH_CX=FAKE123123123
-	SEGMENT_WRITE_KEY=FAKE123123123
-	S3_KEY=FAKE123123123
-	S3_SECRET=FAKE123123123
-	MAILCHIMP_KEY=FAKE123123123
-	GALLERY_INSIGHTS_LIST=FAKE123123123
-	SAILTHRU_KEY=FAKE123123123
-	SAILTHRU_SECRET=FAKE123123123
-endef
-
-# Prepares the local setup for running as an OSS version of force
+# Start the server with the OSS env vars instead of the developer's `.env`
 oss:
-	echo '$(subst $(newline),\n,${OSS_ENV_BODY})' > .env
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development $(BIN)/nf start --env .env.oss
 
 # Start the server
 s:
@@ -123,11 +88,3 @@ deploy_custom:
 	git push -f git@heroku.com:$(app).git $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD):master
 
 .PHONY: test
-
-# This is needed as a part of `make oss`, it ensures that the .env given in this file has line-breaks,
-# see: http://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile
-
-define newline
-
-
-endef
