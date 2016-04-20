@@ -13,6 +13,7 @@ module.exports = """
       years
       location
       blurb
+      consignable
       counts {
         follows
         artworks

@@ -1,8 +1,8 @@
 include ../../../components/util/activator
 
 header.artist-header
-  .artist-header-split
-    .artist-header-left
+  .artist-header-flex
+    .artist-header-meta
       h1.artist-header-name.extra-large-garamond-header= artist.name
 
       - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
@@ -21,9 +21,13 @@ header.artist-header
         if followCount
           span.artist-header-follow-count= followCount
 
-    .artist-header-right.current-item
-      if currentItem
+    if currentItem
+      .current-item(class= (artist.consignable ? 'compact' : ''))
         include ../components/current_show_auction/index
+
+    if artist.consignable
+      .consignment-cta
+        | Interested in selling a work by #{artist.name}?  #[a(href="/consignment") Consign with Artsy.]
 
   .artist-sticky-header
     .artist-sticky-header-container
