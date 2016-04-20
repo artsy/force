@@ -15,6 +15,7 @@ describe 'Artwork routes', ->
       .returns set: sinon.stub()
 
     @req =
+      path: '/artwork/foo'
       params: id: 'foo'
       query: sort: '-published_at'
       pipe: sinon.stub().returns pipe: sinon.stub()
