@@ -81,6 +81,49 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql '<a href="#Kana">Kana Abe</a>'
 
+  it 'can optionally exclude share buttons', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'toc'
+            links: [ {name: 'Kana Abe', value: 'Kana'}, { name: 'Bob Olsen', value: 'Bob' } ]
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      hideShare: true
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+
+    html.should.not.containEql 'share'
+
+  it 'can optionally exclude subscribe section', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'toc'
+            links: [ {name: 'Kana Abe', value: 'Kana'}, { name: 'Bob Olsen', value: 'Bob' } ]
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      hideSubscribe: true
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+
+    html.should.not.containEql 'Subscribe'
+
+
   it 'does not render a TOC header if there are no links', ->
     html = render('index')
       article: new Article
