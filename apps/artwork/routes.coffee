@@ -1,20 +1,33 @@
 Q = require 'bluebird-q'
-Artwork = require '../../models/artwork'
+request = require 'superagent'
 Backbone = require 'backbone'
+Artwork = require '../../models/artwork'
 { stringifyJSONForWeb } = require '../../components/util/json'
 { client } = require '../../lib/cache'
-request = require 'superagent'
 { FUSION_URL } = require '../../config'
 
+appToDisplay = (req) ->
+  if req.path.match(/artwork_1/)?
+    'artwork_1'
+  else if req.user?.hasLabFeature 'New Artwork Page'
+    'artwork_2'
+  else
+    'default'
+
 @index = (req, res, next) ->
+  app = appToDisplay req
+
+  return next() if app is 'artwork_2'
+
   artwork = new Artwork id: req.params.id
   artwork
     .fetch cache: not FUSION_URL?
     .then ->
-      # Remove the current artwork tab from the path to more easily test against artwork.href()
-      artworkPath = res.locals.sd.CURRENT_PATH
-      artworkPath = artworkPath.replace("/#{req.params.tab}", '') if req.params?.tab
-      return res.redirect artwork.href() if artworkPath isnt artwork.href()
+      if app is 'default'
+        # Remove the current artwork tab from the path to more easily test against artwork.href()
+        artworkPath = res.locals.sd.CURRENT_PATH
+        artworkPath = artworkPath.replace("/#{req.params.tab}", '') if req.params?.tab
+        return res.redirect artwork.href() if artworkPath isnt artwork.href()
 
       res.locals.sd.ARTWORK = artwork.toJSON()
 
