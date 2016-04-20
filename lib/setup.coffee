@@ -45,6 +45,7 @@ splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
+uncapitalize = require 'express-uncapitalize'
 
 module.exports = (app) ->
 
@@ -128,6 +129,7 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
+  app.use uncapitalize()
   app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
