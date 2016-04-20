@@ -1,0 +1,13 @@
+if artwork.shows && artwork.shows.length
+  - var show = artwork.shows[0]
+
+  section.artwork-section.artwork-show-artworks( class='js-artwork-show-artworks' )
+    header.artwork-show-artworks__header
+      h3.artwork-show-artworks__header__name
+        | Other Works in
+        = ' '
+        a( href= show.href )
+          = show.name
+
+    - var columns = helpers.show_artworks.masonry(show.artworks)
+    include ../../../../components/artwork_masonry/index
