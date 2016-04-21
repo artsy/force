@@ -31,8 +31,6 @@
     analytics.track('Clicked view all from notification dropdown');
   });
 
-  if(location.pathname.match(/works-for-you/)) analytics.track('"Works For You" page', { nonInteraction: 1 });
-
   $document.on('click', '#for-sale', function(e){
     analytics.track('Toggled "For Sale" on "Works For You" page');
   });

@@ -3,8 +3,6 @@
 
   if (location.pathname !== '/') return;
 
-  analytics.track('Home page', { nonInteraction: 1 });
-
   var $heroUnits = $('.js-homepage-hero-unit');
   analytics.trackLink($heroUnits, 'Clicked homepage banner', function(el) {
     var $el = $(el);

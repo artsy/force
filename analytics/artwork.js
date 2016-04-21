@@ -1,8 +1,6 @@
 (function() {
   'use strict';
 
-  if(location.pathname.match(/artwork/) && sd.ARTWORK) analytics.track('Artwork page', { id: sd.ARTWORK.id, nonInteraction: 1 });
-
   // DOM events
   var $document = $(document);
 
@@ -20,10 +18,6 @@
 
   $document.on('click', '.artwork-buy-button', function(e){
     analytics.track('Clicked "Buy" on the artwork page');
-  });
-
-  $document.on('click', '.artwork-download-button', function(e){
-    analytics.track('Downloaded lo-res image');
   });
 
   $document.on('click', '.artwork-partner-name', function(e){
@@ -61,7 +55,7 @@
   });
 
   analyticsHooks.on('artwork:confirm-registration', function(){
-    analytics.track("Showed 'Confirm registration on artwork page'");
+    analytics.track("Showed 'Confirm registration on artwork page'", {nonInteraction: 1});
   });
 
 })();
