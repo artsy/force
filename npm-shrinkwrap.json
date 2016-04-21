@@ -1732,6 +1732,28 @@
       "from": "foreach@>=2.0.5 <3.0.0",
       "resolved": "https://registry.npmjs.org/foreach/-/foreach-2.0.5.tgz"
     },
+    "foreman": {
+      "version": "1.4.1",
+      "from": "foreman@>=1.4.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/foreman/-/foreman-1.4.1.tgz",
+      "dependencies": {
+        "commander": {
+          "version": "2.1.0",
+          "from": "commander@>=2.1.0 <2.2.0",
+          "resolved": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz"
+        },
+        "http-proxy": {
+          "version": "1.11.3",
+          "from": "http-proxy@>=1.11.1 <1.12.0",
+          "resolved": "https://registry.npmjs.org/http-proxy/-/http-proxy-1.11.3.tgz"
+        },
+        "shell-quote": {
+          "version": "1.4.3",
+          "from": "shell-quote@>=1.4.2 <1.5.0",
+          "resolved": "https://registry.npmjs.org/shell-quote/-/shell-quote-1.4.3.tgz"
+        }
+      }
+    },
     "forever": {
       "version": "0.15.1",
       "from": "forever@>=0.15.1 <0.16.0",
@@ -3295,6 +3317,10 @@
       "from": "ms@0.7.1",
       "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz"
     },
+    "mu2": {
+      "version": "0.5.20",
+      "from": "mu2@>=0.5.20 <0.6.0"
+    },
     "mute-stream": {
       "version": "0.0.5",
       "from": "mute-stream@>=0.0.4 <0.1.0",
@@ -4658,14 +4684,7 @@
     "places": {
       "version": "0.0.1",
       "from": "git://github.com/artsy/places.git",
-      "resolved": "git://github.com/artsy/places.git#4da6850e76b69103f5e2623e897b33a47501f725",
-      "dependencies": {
-        "underscore": {
-          "version": "1.8.3",
-          "from": "underscore@*",
-          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
-        }
-      }
+      "resolved": "git://github.com/artsy/places.git#a2859ff2c4df3552e331be9f16c14f229c2bed48"
     },
     "plist": {
       "version": "1.2.0",
