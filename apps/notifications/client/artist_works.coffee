@@ -33,7 +33,6 @@ module.exports = class ArtistWorksView extends Backbone.View
       artworkSize: 'large'
       numberOfColumns: 3
       gutterWidth: 40
-      maxArtworkHeight: 600
     @page = 1
     @forSaleArtist = if @filterState.get('forSale') then 'for_sale' else ''
 
