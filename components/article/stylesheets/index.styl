@@ -22,7 +22,7 @@ body.body-article
     max-width 100%
 
 .article-container h1
-  width 900px
+  max-width 900px
   margin auto
   font-size 40px
   line-height 48px
@@ -163,7 +163,6 @@ body.body-article
 
 .article-section-artworks
   position relative
-  min-height (body-width * .33)
 
 .article-section-artworks[data-layout="column_width"]
   width body-width
@@ -177,7 +176,7 @@ body.body-article
       width auto
 
 .article-section-artworks[data-layout="overflow_fillwidth"]
-  width (overflow-width + gutter-size)
+  max-width (overflow-width + gutter-size)
   margin 0 auto
   text-align center
   &.is-loading
@@ -255,7 +254,6 @@ body.body-article
     // Override the main layout container width here
     &[data-layout="overflow_fillwidth"]
       width 100%
-      max-width 10000px !important
       // Go over the share buttons
       z-index 1
       position relative

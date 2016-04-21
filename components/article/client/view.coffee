@@ -42,7 +42,6 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
-    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
     'click .article-section-toc-link a': 'jumpSmooth'
 
