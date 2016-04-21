@@ -12,7 +12,7 @@ module.exports =
       }
     }
 
-    results: filter_partners(eligible_for_listing:true, aggregations:[TOTAL], page: $page, size: 9, near: $near, partner_categories:$category type: $type, default_profile_public:true) @include(if: $includeResults) {
+    results: filter_partners(eligible_for_listing:true, aggregations:[TOTAL], sort: RELATIVE_SIZE_ASC, page: $page, size: 9, near: $near, partner_categories:$category type: $type, default_profile_public:true) @include(if: $includeResults) {
       total
       hits {
         ... partner
