@@ -16,7 +16,7 @@ Include the template passing in the `article` local
 Add the view on the client-side
 
 ````coffeescript
-ArticleView = require '../components/article/view.coffee'
+ArticleView = require '../components/article/client/view.coffee'
 
 new ArticleView
   el: $('#article-container')

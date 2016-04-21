@@ -22,7 +22,7 @@ describe 'ArticleView', ->
       Backbone.$ = $
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
-        resolve(__dirname, '../view')
+        resolve(__dirname, '../client/view')
         ['artworkItemTemplate', 'editTemplate', 'embedTemplate', 'calloutTemplate' ]
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()

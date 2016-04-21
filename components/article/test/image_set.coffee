@@ -17,7 +17,7 @@ describe 'ImageSetView', ->
       Backbone.$ = $
       $.fn.imagesLoaded = ->
       @ImageSetView = benv.requireWithJadeify(
-        resolve(__dirname, '../image_set')
+        resolve(__dirname, '../client/image_set')
         ['template' ]
       )
       @ImageSetView.__set__ 'Image', ->
