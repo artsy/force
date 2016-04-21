@@ -1,0 +1,40 @@
+mixin hero_section(hero)
+  figure
+    case hero.type
+      when 'image'
+        img(src=hero.url)
+        figcaption= hero.caption
+      when 'fullscreen'
+        if hero.background_url
+          //- No support yet.
+        else
+          img(src= hero.background_image_url)
+      when 'video'
+        //- No support yet.
+
+mixin artworks(section)
+  each artwork in section.artworks
+    +artwork(artwork)
+
+mixin artwork(artwork)
+  figure
+    img(src= artwork.image)
+    figcaption= artwork.title + ", " + artwork.date
+    figcaption= artwork.artist.name
+    figcaption= artwork.partner.name
+
+mixin image(section)
+  figure
+    img(src= section.url)
+    figcaption!= section.caption
+
+mixin imageSet(section)
+  figure.op-slideshow
+    each item in section.images
+      if item.type === 'image'
+        +image(item)
+      else if item.type === 'artwork'
+        +artwork(item)
+
+mixin video(url)
+  

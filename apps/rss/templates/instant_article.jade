@@ -1,0 +1,53 @@
+//- Markup for the individual Instant Article
+
+include instant_article_mixins
+
+head
+  meta(charset='utf-8')
+  meta(property='op:markup_version' content='v1.0')
+
+  link(rel='canonical' href=article.fullHref())
+  meta(property='fb:article_style' content='editorialstyle')
+
+body
+  article
+    header
+      if article.get('hero_section')
+        +hero_section(article.get('hero_section'))
+
+      h1= article.get('title')
+
+      h3= article.get('lead_paragraph')
+
+      address
+        each author in article.getAuthorArray()
+          p= author
+
+      time(class='op-published' dateTime=article.get('published_at'))= article.date('published_at').format('MMM Do, YYYY h:mm a')
+      time(class='op-modified' dateTime=article.get('updated_at'))= article.date('updated_at').format('MMM Do, YYYY h:mm a')
+
+
+    each section in article.get('sections')
+      case section.type
+        when 'text'
+          .article-text= section.body
+        when 'artworks'
+          +artworks(section)
+        when 'image'
+          +image(section)
+        when 'video'
+          +video(section)
+        when 'embed'
+          //- Not yet supported.
+        when 'callout'
+          if section.article.length > 0
+            //- Article Callout
+          else if section.text && section.text.length > 0
+            //- Pullquote
+            blockquote= section.text
+          else
+            //- Top Stories
+        when 'image_set'
+          +imageSet(section)
+
+    include parselyTracking.html

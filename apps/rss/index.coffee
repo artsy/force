@@ -11,3 +11,4 @@ app.locals.crop = crop
 app.locals.embedVideo = embedVideo
 
 app.get '/rss/news', routes.news
+app.get '/rss/instant-articles', routes.instantArticles
