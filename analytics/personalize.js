@@ -11,10 +11,6 @@
     analytics.track('Changed name on introduction step of personalize flow');
   });
 
-  analyticsHooks.on('personalize:impression', function(data){
-    analytics.track('Landed on personalize page', data);
-  });
-
   analyticsHooks.on('personalize:reonboarding', function(){
     analytics.track('Started re-onboarding');
   });
