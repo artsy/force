@@ -1,14 +1,18 @@
-@require '../tabs'
 @require '../../../../components/artwork_masonry'
 
-.artwork-related-artworks
+.artwork-show-artworks
   //
 
   &__header
+    display flex
+    align-items center
+    justify-content space-between
     margin-bottom gutter
 
     &__name
       serif('s-headline')
+      > a
+        fine-faux-underline()
 
   &__masonry
     //
