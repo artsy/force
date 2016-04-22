@@ -10,6 +10,7 @@ describe 'metaphysics', ->
     @request = {}
     @request.set = sinon.stub().returns @request
     @request.get = sinon.stub().returns @request
+    @request.post = sinon.stub().returns @request
     @request.query = sinon.stub().returns @request
     @request.end = sinon.stub().returns @request
 
@@ -30,12 +31,22 @@ describe 'metaphysics', ->
         }
       '
 
+    @request.post.called.should.be.false()
     @request.get.args[0][0].should.equal 'https://metaphysics.test'
     @request.set.args.should.eql [
       ['Accept', 'application/json']
     ]
     @request.query.args[0][0].query.should.equal query
     @request.query.args[0][0].variables.should.equal '{"id":"foo-bar","size":3}'
+
+  it 'optionally can make POST requests', ->
+    @request.end.yields null, ok: true, body: data: artist: id: 'foo-bar'
+
+    metaphysics method: 'post'
+      .then =>
+        @request.get.called.should.be.false()
+        @request.post.called.should.be.true()
+        @request.post.args[0][0].should.equal 'https://metaphysics.test'
 
   describe 'success', ->
     it 'yields with the data', ->

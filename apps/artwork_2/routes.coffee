@@ -57,7 +57,7 @@ bootstrap = ->
   require('./components/partner/bootstrap') arguments...
 
 @index = (req, res, next) ->
-  send = query: query, variables: req.params
+  send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
 
