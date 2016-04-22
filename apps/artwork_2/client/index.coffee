@@ -15,6 +15,7 @@ exec = (fns) ->
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
+  auction_artworks: require '../components/auction_artworks/helpers.coffee'
   partner: require '../components/partner/helpers.coffee'
   related_artworks: require '../components/related_artworks/helpers.coffee'
   show_artworks: require '../components/show_artworks/helpers.coffee'
@@ -33,7 +34,19 @@ module.exports.init = ->
     require '../components/metadata/index.coffee'
   ]
 
-  query = if CLIENT.is_in_show
+  query = if CLIENT.is_in_auction
+    """
+      query artwork($id: String!) {
+        artwork(id: $id) {
+          ... partner
+          ... auction_artworks
+        }
+      }
+      #{require '../../../components/artwork_brick/query.coffee'}
+      #{require '../components/partner/query.coffee'}
+      #{require '../components/auction_artworks/query.coffee'}
+    """
+  else if CLIENT.is_in_show
     """
       query artwork($id: String!) {
         artwork(id: $id) {
@@ -68,11 +81,18 @@ module.exports.init = ->
           .html template extend data,
             helpers: helpers
 
-      exec if CLIENT.is_in_show
+      exec if CLIENT.is_in_auction
+        [
+          require '../components/partner/index.coffee'
+          require '../components/auction_artworks/index.coffee'
+        ]
+
+      else if CLIENT.is_in_show
         [
           require '../components/partner/index.coffee'
           require '../components/show_artworks/index.coffee'
         ]
+
       else
         [
           require '../components/artist_artworks/index.coffee'

@@ -1,6 +1,6 @@
 module.exports = """
-  fragment show_artworks on Artwork {
-    shows(size: 1, active: true) {
+  fragment auction_artworks on Artwork {
+    sale {
       name
       href
       artworks(all: true, size: 50) {
