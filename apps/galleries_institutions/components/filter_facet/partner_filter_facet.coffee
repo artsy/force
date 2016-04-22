@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+_s = require 'underscore.string'
 
 module.exports = class PartnerFilterFacet extends Backbone.Model
 
@@ -20,11 +21,18 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
 
   matcher: (query, callback) =>
     if query.length
-      substrRegex = new RegExp(query, 'i');
-      matches = [@allItemsSuggestion].concat _.select @countItems, ({name}) ->
-        substrRegex.test name
+      matches = [@allItemsSuggestion].concat _.select @countItems, ({name}) =>
+        @isMatched(query, name)
     else
       matches = [@allItemsSuggestion].concat _.select @countItems, ({id}) =>
         id in @emptyStateItemIDs
 
-    callback(matches);
+    callback(matches)
+
+  isMatched: (query, string) ->
+    escape= (s) ->
+      s.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
+
+    regex = _s.clean(escape(query)).replace(' ', '\\W* \\W*')
+    substrRegex = new RegExp(regex, 'i')
+    substrRegex.test string
