@@ -3,10 +3,10 @@ _ = require 'underscore'
 sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
-ArticleView = require '../../../components/article/view.coffee'
+ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
-{ resize } = require '../../../components/resizer/index.coffee'
+{ resize, crop } = require '../../../components/resizer/index.coffee'
 embedVideo = require 'embed-video'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
@@ -64,6 +64,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           resize: resize
           moment: moment
           embedVideo: embedVideo
+          crop: crop
 
         previousHref = @displayedArticles[@displayedArticles.indexOf(article.get('slug'))-1]
         # Initialize client

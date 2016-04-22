@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-ArticleView = require '../../../../components/article/view.coffee'
+ArticleView = require '../../../../components/article/client/view.coffee'
 template = -> require('../../../../components/article/templates/index.jade') arguments...
 sd = require('sharify').data
 

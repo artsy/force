@@ -3,30 +3,32 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 embedVideo = require 'embed-video'
-CurrentUser = require '../../models/current_user.coffee'
-Article = require '../../models/article.coffee'
-Artwork = require '../../models/artwork.coffee'
-Articles = require '../../collections/articles.coffee'
-Artworks = require '../../collections/artworks.coffee'
-ShareView = require '../share/view.coffee'
-CTABarView = require '../cta_bar/view.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+Article = require '../../../models/article.coffee'
+Artwork = require '../../../models/artwork.coffee'
+Articles = require '../../../collections/articles.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+ShareView = require '../../share/view.coffee'
+CTABarView = require '../../cta_bar/view.coffee'
 ImageSetView = require './image_set.coffee'
-modalize = require '../modalize/index.coffee'
-{ Following, FollowButton } = require '../follow_button/index.coffee'
-initCarousel = require '../merry_go_round/bottom_nav_mgr.coffee'
+SuperArticleView = require './super_article.coffee'
+FullscreenView = require './fullscreen.coffee'
+modalize = require '../../modalize/index.coffee'
+{ Following, FollowButton } = require '../../follow_button/index.coffee'
+initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 { oembed } = require('embedly-view-helpers')(sd.EMBEDLY_KEY)
 Q = require 'bluebird-q'
-{ crop } = require '../resizer/index.coffee'
-blurb = require '../gradient_blurb/index.coffee'
-Sticky = require '../sticky/index.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-JumpView = require '../jump/view.coffee'
+{ crop } = require '../../resizer/index.coffee'
+blurb = require '../../gradient_blurb/index.coffee'
+Sticky = require '../../sticky/index.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+JumpView = require '../../jump/view.coffee'
 artworkItemTemplate = -> require(
-  '../artwork_item/templates/artwork.jade') arguments...
-editTemplate = -> require('./templates/edit.jade') arguments...
-relatedTemplate = -> require('./templates/related.jade') arguments...
-embedTemplate = -> require('./templates/embed.jade') arguments...
-calloutTemplate = -> require('./templates/callout.jade') arguments...
+  '../../artwork_item/templates/artwork.jade') arguments...
+editTemplate = -> require('../templates/edit.jade') arguments...
+relatedTemplate = -> require('../templates/related.jade') arguments...
+embedTemplate = -> require('../templates/embed.jade') arguments...
+calloutTemplate = -> require('../templates/callout.jade') arguments...
 
 DATA =
   sort: '-published_at'
@@ -40,7 +42,6 @@ module.exports = class ArticleView extends Backbone.View
     'click .articles-section-right-chevron, \
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
-    'click .article-fullscreen-down-arrow a': 'scrollPastFullscreenHeader'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
     'click .article-section-toc-link a': 'jumpSmooth'
 
@@ -51,7 +52,6 @@ module.exports = class ArticleView extends Backbone.View
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
     @loadedArtworks = @loadedEmbeds = @loadedCallouts = @loadedImageHeights = false
-    @$window = $(window)
     @sticky = new Sticky
     @jump = new JumpView
 
@@ -63,46 +63,20 @@ module.exports = class ArticleView extends Backbone.View
     @setupFooterArticles()
     @setupStickyShare()
     @setupFollowButtons()
+    @setupImageSets()
 
     # Resizing
     @sizeVideo()
-    @setupImageSets()
 
     # FS and Super Article setup
-    @setupArticleWaypoints()
-    @initFullscreenHeader($header) if ($header = @$('.article-fullscreen')).length
-    @renderSuperArticle() if sd.RELATED_ARTICLES?.length > 0
+    if ($header = @$('.article-fullscreen')).length
+      new FullscreenView el: @$el, article: @article, header: $header
+    if sd.RELATED_ARTICLES?.length > 0
+      new SuperArticleView el: @$el, article: @article
 
     # Utility
     @checkEditable()
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
-
-  centerFullscreenHeader: ($header) ->
-    # Center header
-    $container = $header.find('.article-fullscreen-text-overlay')
-    maxHeight = @$window.height()
-    margin = Math.round((maxHeight - $container.height()) / 2)
-    minMargin = 158
-    if margin < minMargin
-      margin = minMargin
-
-      # fix for small screens
-      headerHeight = $container.height() + (margin * 2)
-      @$('.article-fullscreen, .article-fullscreen-overlay, .article-fullscreen-video-player, .article-fullscreen-image').css 'min-height', headerHeight
-
-    $container.css 'margin-top': "#{margin}px"
-
-  initFullscreenHeader: ($header) ->
-    @centerFullscreenHeader $header
-
-    $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
-    $superArticleArrow.show()
-
-    @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
-
-    # Show after css modifications are done
-    $header.find('.main-layout-container').addClass 'visible'
 
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedEmbeds and @loadedCallouts and not @loadedImageHeights
@@ -366,57 +340,3 @@ module.exports = class ArticleView extends Backbone.View
         window.history.replaceState({}, @article.get('id'), @article.href())
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
-
-# Methods for super articles
-  duration: 500
-  scrollPastFullscreenHeader: ->
-    position = @$('.article-fullscreen').height()
-    (@$htmlBody ?= $('html, body'))
-      .animate { scrollTop: position }, @duration
-    false
-
-  renderSuperArticle: ->
-    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
-
-    @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
-      return if @$superArticleNavToc.hasClass('visible')
-      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 50
-      @$superArticleNavToc.css 'max-height', "#{height}px"
-      @$superArticleNavToc.addClass 'visible'
-
-
-    @$('.article-sa-sticky-header').mouseleave =>
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
-
-    @$('footer').hide()
-
-    throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
-    @$window.on 'scroll', throttledScroll
-
-  onSuperArticleScroll: ->
-    if @$superArticleNavToc.hasClass('visible')
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
-
-  # Sets up waypoint for both fullscreen video and super article
-  setupArticleWaypoints: ->
-    $stickyHeader = @$('.article-sa-sticky-header')
-    $fullscreenVideo = @$('.article-fullscreen')
-
-    return unless $stickyHeader.length or $fullscreenVideo.length
-
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
-    @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
-      if direction == 'down'
-        if @article.get('is_super_article')
-          $stickyHeader.addClass 'visible'
-        if $fullscreenVideo.length
-          $fullscreenVideo.addClass 'hidden'
-          @$el.removeClass 'body-transparent-header body-transparent-header-white'
-      else
-        if @article.get('is_super_article')
-          $stickyHeader.removeClass 'visible'
-        if $fullscreenVideo.length
-          $fullscreenVideo.removeClass 'hidden'
-          @$el.addClass 'body-transparent-header body-transparent-header-white'
