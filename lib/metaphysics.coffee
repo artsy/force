@@ -14,19 +14,23 @@ metaphysics = ({ method, query, variables, req } = {}) ->
     if (token = req?.user?.get 'accessToken')?
       r.set 'X-ACCESS-TOKEN': token
 
-    r
-      .query
+    if method is 'get'
+      r.query
         query: query
         variables: JSON.stringify variables
+    else
+      r.send
+        query: query
+        variables: variables
 
-      .end (err, response) ->
-        if err?
-          return reject err
+    r.end (err, response) ->
+      if err?
+        return reject err
 
-        if response.body.errors?
-          return reject JSON.stringify(response.body.errors)
+      if response.body.errors?
+        return reject JSON.stringify(response.body.errors)
 
-        resolve response.body.data
+      resolve response.body.data
 
 metaphysics.debug = (req, res, send) ->
   if req.query.query?
