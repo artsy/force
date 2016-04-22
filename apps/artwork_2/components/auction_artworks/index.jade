@@ -1,0 +1,13 @@
+if artwork.sale && artwork.sale.artworks
+  - var auction = artwork.sale
+
+  section.artwork-section.artwork-auction-artworks( class='js-artwork-auction-artworks' )
+    header.artwork-auction-artworks__header
+      h3.artwork-auction-artworks__header__name
+        | Other Works in
+        = ' '
+        a( href= auction.href )
+          = auction.name
+
+    - var columns = helpers.auction_artworks.masonry(auction.artworks)
+    include ../../../../components/artwork_masonry/index
