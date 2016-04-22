@@ -21,11 +21,3 @@ module.exports =
     outcomes:
       join: 0.5
       apply: 0.5
-
-  artwork_item_contact_gallery:
-    key: 'artwork_item_contact_gallery'
-    edge: 'contact'
-    outcomes:
-      default: 0.5
-      contact: 0.5
-    dimension: 'dimension12'
