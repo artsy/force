@@ -3,7 +3,7 @@ module.exports = """
     shows(size: 1, active: true) {
       name
       href
-      artworks {
+      artworks(all: true, size: 50) {
         ... artwork_brick
       }
     }
