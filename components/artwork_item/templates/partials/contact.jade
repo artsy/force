@@ -1,3 +1,5 @@
-a.artwork-item-contact-seller.js-artwork-item-contact-seller(
-    href="#{artwork.href()}/contact-gallery", data-id=artwork.get('_id')
-  ) Contact #{artwork.contactLabel()}
+a.artwork-item-contact-seller(
+  class='js-artwork-item-contact-seller'
+  href= artwork.href()
+  data-id= artwork.get('_id')
+) Contact #{artwork.contactLabel()}
