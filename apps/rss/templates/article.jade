@@ -3,7 +3,7 @@
 if hero
   case hero.type
     when 'video'
-      != embedVideo(hero.url)
+      != particle(hero.url)
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
@@ -39,6 +39,6 @@ for section, i in article.get('sections')
       if section.caption
         p!= section.caption
     when 'video'
-      != embedVideo(section.url)
+      != particle(section.url)
     //- TODO
     //- when 'artworks'

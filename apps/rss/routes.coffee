@@ -27,7 +27,8 @@ PAGE_SIZE = 100
       limit: PAGE_SIZE
     error: res.backboneError
     success: (articles) ->
+      articles.each (article) -> article.prepForInstant()
       res.set('Content-Type', 'application/rss+xml')
-      res.render 'instant_articles'
+      res.render 'instant_articles',
         articles: articles
         pretty: true

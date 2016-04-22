@@ -61,7 +61,7 @@ describe 'ArticleView', ->
         sd:
           SCROLL_ARTICLE: 'static'
         asset: (->)
-        embedVideo: require('embed-video')
+        embed: require('particle')
         moment: require('moment')
         resize: sinon.stub()
       }, =>

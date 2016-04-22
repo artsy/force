@@ -3,7 +3,7 @@ Fair = require '../../models/fair'
 FairEvent = require '../../models/fair_event'
 FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
-embedVideo = require 'embed-video'
+embed = require 'particle'
 { resize } = require '../../components/resizer/index.coffee'
 Article = require '../../models/article'
 InfoMenu = require '../../components/info_menu/index.coffee'
@@ -72,7 +72,7 @@ fetchArticle = (articleParam, req, res, next) ->
       res.locals.sd.ARTICLE = articles.first().toJSON() if articles.length > 0
 
       res.render 'article',
-        embedVideo: embedVideo,
+        embed: embed,
         resize: resize,
         article: articles.first()
 
@@ -102,7 +102,7 @@ aawMap = require './maps/armory_arts_week_neighborhoods'
   .then ->
     res.render 'armory_arts_week_all',
       neighborhoods: neighborhoods,
-      embedVideo: embedVideo,
+      embed: embed,
       resize: resize
   .catch (err) ->
     next err

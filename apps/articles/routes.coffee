@@ -5,7 +5,7 @@ Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
 Sections = require '../../collections/sections'
-embedVideo = require 'embed-video'
+embed = require 'particle'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
 { POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
@@ -56,7 +56,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         # Parsely Articles
         articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
-          res.render 'article', _.extend data, embedVideo: embedVideo, crop: crop
+          res.render 'article', _.extend data, embed: embed, crop: crop
       return
 
 setupEmailSubscriptions = (user, article, cb) ->

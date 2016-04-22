@@ -7,7 +7,8 @@ head
   meta(property='op:markup_version' content='v1.0')
 
   link(rel='canonical' href=article.fullHref())
-  meta(property='fb:article_style' content='editorialstyle')
+  meta(property='fb:article_style' content='default')
+  meta(property='fb:admins' content='7961740')
 
 body
   article
@@ -19,18 +20,16 @@ body
 
       h3= article.get('lead_paragraph')
 
-      address
-        each author in article.getAuthorArray()
-          p= author
+      each author in article.getAuthorArray()
+        address= author
 
       time(class='op-published' dateTime=article.get('published_at'))= article.date('published_at').format('MMM Do, YYYY h:mm a')
       time(class='op-modified' dateTime=article.get('updated_at'))= article.date('updated_at').format('MMM Do, YYYY h:mm a')
 
-
     each section in article.get('sections')
       case section.type
         when 'text'
-          .article-text= section.body
+          != section.body
         when 'artworks'
           +artworks(section)
         when 'image'
@@ -38,16 +37,13 @@ body
         when 'video'
           +video(section)
         when 'embed'
-          //- Not yet supported.
+          +embed(section)
         when 'callout'
           if section.article.length > 0
-            //- Article Callout
+            //- TODO: Article Callout
           else if section.text && section.text.length > 0
-            //- Pullquote
-            blockquote= section.text
-          else
-            //- Top Stories
+            aside= section.text
         when 'image_set'
           +imageSet(section)
 
-    include parselyTracking.html
+    include tracking
