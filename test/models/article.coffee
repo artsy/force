@@ -137,3 +137,14 @@ describe "Article", ->
       @article.strip('lead_paragraph').should.equal ''
       @article.set 'lead_paragraph', '<p>Existy</p>'
       @article.strip('lead_paragraph').should.equal 'Existy'
+
+  describe '#prepForInstant', ->
+
+    it 'returns the article with empty tags removed', ->
+      @article.set 'sections', [
+        { type: 'text', body: '<p>First Paragraph</p><p></p>' },
+        { type: 'text', body: '<p>Second Paragraph</p><br>'}
+      ]
+      @article.prepForInstant()
+      @article.get('sections')[0].body.should.equal '<p>First Paragraph</p>'
+      @article.get('sections')[1].body.should.equal '<p>Second Paragraph</p>'

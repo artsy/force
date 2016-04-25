@@ -15,8 +15,9 @@ mixin hero_section(hero)
         +video(hero)
 
 mixin artworks(section)
-  each artwork in section.artworks
-    +artwork(artwork)
+  if section.artworks
+    each artwork in section.artworks
+      +artwork(artwork)
 
 mixin artwork(artwork)
   figure

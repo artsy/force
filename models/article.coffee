@@ -130,7 +130,7 @@ module.exports = class Article extends Backbone.Model
   getAuthorArray: ->
     creator = []
     creator.push @get('author').name if @get('author')
-    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length
+    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors')?.length
     creator
 
   getBodyClass: ->
