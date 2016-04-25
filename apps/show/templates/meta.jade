@@ -18,7 +18,7 @@ if partner_show.location
   meta( property="og:location", content= ViewHelpers.singleLine(partner_show.location) )
 if partner_show.partner.name
   meta( property="og:host", content= partner_show.partner.name )
-if partner_show.cover_image
-  meta( property="og:image", content= partner_show.cover_image.meta_image_url )
+if partner_show.meta_image
+  meta( property="og:image", content= partner_show.meta_image.meta_image_url )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name="fragment", content="!" )
