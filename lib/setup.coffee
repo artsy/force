@@ -48,6 +48,7 @@ CurrentUser = require '../models/current_user'
 downcase = require './middleware/downcase'
 
 module.exports = (app) ->
+  app.use require '../apps/blank'
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
