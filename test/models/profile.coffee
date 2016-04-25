@@ -43,6 +43,19 @@ describe 'Profile', ->
     it "returns the icon url for the model's default icon version", ->
       @profile.iconImageUrl().should.containEql "square"
 
+  describe '#hasIconImage', ->
+
+    it 'returns true if profile has an icon', ->
+      @profile.hasIconImage().should.be.ok()
+
+    it 'returns false if profile has no valid icon', ->
+      @profile.set 'icon', null
+      @profile.hasIconImage().should.not.be.ok()
+
+    it 'returns false if profile has no valid icon', ->
+      @profile.set 'icon', id: '51eefb79275b2420810001fe'
+      @profile.hasIconImage().should.not.be.ok()
+
   describe '#bestAvailableImage', ->
 
     it "returns the icon image url if there is no cover", ->
