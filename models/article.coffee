@@ -2,7 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
-{ POSITRON_URL, APP_URL, EMBEDLY_KEY } = sd = require('sharify').data
+{ POSITRON_URL, APP_URL } = sd = require('sharify').data
 request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
@@ -12,7 +12,6 @@ Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
 { compactObject } = require './mixins/compact_object.coffee'
 cheerio = require 'cheerio'
-{ oembed } = require('embedly-view-helpers')(EMBEDLY_KEY)
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations

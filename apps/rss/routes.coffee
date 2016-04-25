@@ -22,7 +22,7 @@ PAGE_SIZE = 100
     data:
       author_id: sd.ARTSY_EDITORIAL_ID
       published: true
-      sort: '-published_at'
+      sort: '-updated_at'
       instant_article: true
       limit: PAGE_SIZE
     error: res.backboneError
