@@ -6,7 +6,8 @@ sd = require('sharify').data
 HeroUnits = require '../../collections/hero_units'
 Items = require '../../collections/items'
 { client } = require '../../lib/cache'
-welcomeHero = require './welcome'
+welcomeHero = require './heros/welcome'
+fallbackHero = require './heros/fallback'
 FilterArtworks = require '../../collections/filter_artworks'
 
 getRedirectTo = (req) ->
@@ -48,25 +49,29 @@ positionWelcomeHeroMethod = (req, res) ->
     }
   }
 
-  Q.allSettled(_.compact([
+  Q.allSettled _.compact [
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
     featuredArtists.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-  ])).then(->
-    heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
-    res.locals.sd.HERO_UNITS = heroUnits.toJSON()
-    res.render 'index',
-      heroUnits: heroUnits
-      featuredLinks: featuredLinks
-      exploreSections: exploreSections
-      featuredArtists: featuredArtists
-      featuredArticles: featuredArticles
-      featuredShows: featuredShows
-      jsonLD: JSON.stringify jsonLD
-  ).done()
+  ]
+    .then ->
+      if req.user?
+        heroUnits.push fallbackHero if heroUnits.length is 0
+      else
+        heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero)
+
+      res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+      res.render 'index',
+        heroUnits: heroUnits
+        featuredLinks: featuredLinks
+        exploreSections: exploreSections
+        featuredArtists: featuredArtists
+        featuredArticles: featuredArticles
+        featuredShows: featuredShows
+        jsonLD: JSON.stringify jsonLD
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"
