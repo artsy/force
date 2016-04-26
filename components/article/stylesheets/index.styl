@@ -13,7 +13,7 @@ body-width = 580px
 artwork-height = 500px
 gutter-size = 30px
 play-button-size = 30px
-column-width = 540px
+column-width = 580px
 
 body.body-article
   #main-layout-container
@@ -157,7 +157,6 @@ body.body-article
     margin auto
   figcaption
     margin-top 10px
-    font-style italic
     color gray-dark-color
     text-align left
 
@@ -212,7 +211,7 @@ body.body-article
 .article-section-embed[data-layout="column_width"]
   width column-width
   .article-embed-container
-    width 500px
+    width 540px
 
 .article-section-embed
   margin auto
@@ -251,19 +250,19 @@ body.body-article
     &[data-section-type="artworks"]
       .artwork-item-sale-price, .artwork-item-contact-seller
         display none
-    // Override the main layout container width here
     &[data-layout="overflow_fillwidth"]
       width 100%
-      // Go over the share buttons
       z-index 1
       position relative
       &[data-section-type="embed"]
         background black
         width 100%
+        max-width 100000px !important
         .article-embed-container
           width 100%
           margin auto
       &[data-section-type="video"]
+        max-width 100000px !important
         .article-section-video
           width 100%
           padding-top 40px

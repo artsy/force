@@ -15,7 +15,6 @@ FullscreenView = require './fullscreen.coffee'
 modalize = require '../../modalize/index.coffee'
 { Following, FollowButton } = require '../../follow_button/index.coffee'
 initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
-{ oembed } = require('embedly-view-helpers')(sd.EMBEDLY_KEY)
 Q = require 'bluebird-q'
 { crop } = require '../../resizer/index.coffee'
 blurb = require '../../gradient_blurb/index.coffee'
@@ -26,7 +25,6 @@ artworkItemTemplate = -> require(
   '../../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('../templates/edit.jade') arguments...
 relatedTemplate = -> require('../templates/related.jade') arguments...
-embedTemplate = -> require('../templates/embed.jade') arguments...
 calloutTemplate = -> require('../templates/callout.jade') arguments...
 
 DATA =
@@ -50,14 +48,13 @@ module.exports = class ArticleView extends Backbone.View
     { @article, @gradient, @waypointUrls, @seenArticleIds } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
-    @loadedArtworks = @loadedEmbeds = @loadedCallouts = @loadedImageHeights = false
+    @loadedArtworks = @loadedCallouts = @loadedImageHeights = false
     @sticky = new Sticky
     @jump = new JumpView
 
     # Render sections
     @renderSlideshow()
     @renderArtworks()
-    @renderEmbedSections()
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
@@ -78,9 +75,9 @@ module.exports = class ArticleView extends Backbone.View
     @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and @loadedEmbeds and @loadedCallouts and not @loadedImageHeights
+    if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedEmbeds and @loadedCallouts and @loadedImageHeights
+    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @breakCaptions()
       @setupWaypointUrls() if @waypointUrls
       @addReadMore() if @gradient
@@ -113,26 +110,6 @@ module.exports = class ArticleView extends Backbone.View
         Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
-      @maybeFinishedLoading()
-
-  renderEmbedSections: =>
-    sections = []
-    Q.all( for section in @article.get 'sections' when section.type is 'embed'
-      $.get oembed section.url, { maxwidth: @getWidth(section) }
-    ).then (responses) =>
-      if responses.length
-        for section in @article.get('sections') when section.type is 'embed'
-          $embedSection = @$(".article-section-embed[data-id='#{section.url}']")
-          $embedSectionContainer = $($embedSection.children('.article-embed-container')[0])
-          response = responses.shift()
-          # Use Embedly's iframe constructor or just generate our own iframe
-          if response.html?
-            $embedSectionContainer.html response.html
-          else
-            $embedSectionContainer.append embedTemplate url: section.url, height: section.height
-          $embedSection.children('.loading-spinner').remove()
-    .done =>
-      @loadedEmbeds = true
       @maybeFinishedLoading()
 
   renderCalloutSections: =>
