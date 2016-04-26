@@ -1,10 +1,15 @@
 .artwork-brick
-  a( href= artwork.href )
-    .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
-      img(
+  .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
+    a( href= artwork.href )
+      img.artwork-brick__image__img(
         src= artwork.image.thumb.url
         alt= artwork.title
       )
+
+    a.artwork-brick__image__save(
+      href= artwork.href
+      data-id= artwork.id
+    )
 
   .artwork-brick__metadata
     if artwork.artists && artwork.artists.length
