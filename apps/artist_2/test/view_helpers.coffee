@@ -106,12 +106,9 @@ describe 'ArtistViewHelpers', ->
       (helpers.birthDetail(artist) is undefined).should.be.true()
 
   describe 'locationDetail', ->
-    it 'formats location for living artist', ->
+    it 'formats location', ->
       artist = location: 'New York'
-      helpers.locationDetail(artist).should.eql 'Lives and works in New York'
-    it 'formats location for dead artist', ->
-      artist = location: 'New York', deathday: '1975'
-      helpers.locationDetail(artist).should.eql 'Lived and worked in New York'
+      helpers.locationDetail(artist).should.eql 'Based in New York'
     it 'returns null if no location', ->
       artist = {}
       (helpers.locationDetail(artist) is undefined).should.be.true()

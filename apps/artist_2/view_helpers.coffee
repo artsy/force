@@ -35,11 +35,7 @@ module.exports =
     ]).join ', '
 
   locationDetail: (artist) ->
-    return if not artist.location?.length
-    dead = artist.deathday?.length
-    lives = if dead then 'Lived' else 'Lives'
-    works = if dead then 'worked' else 'works'
-    lives + ' and ' + works + ' in ' + artist.location
+    "Based in #{artist.location}" if artist.location?.length
 
   displayFollowers: (artist) ->
     if c = artist.counts.follows
