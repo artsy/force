@@ -97,3 +97,7 @@ mixin topStories
           a( href=article.url )
             img( src=crop(article.image_url, { height: 180, width: 240 }) )
             p= article.title
+
+mixin embed(section)
+  .article-embed-container
+    iframe(src=section.url style="height:#{section.height}px" scrolling='no' frameborder='0')
