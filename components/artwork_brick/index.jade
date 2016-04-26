@@ -24,9 +24,11 @@
     a.artwork-brick__metadata__partner( href= artwork.href )
       = artwork.partner.name
 
-    //- .artwork-brick__metadata__sale-message
-    //-   = artwork.sale_message
+    if artwork.is_contactable
+      .artwork-brick__metadata__contact
+        a( href= artwork.href )
+          | Contact Gallery
 
-    //- .artwork-brick__metadata__contact
-    //-   if artwork.is_contactable
-    //-     a Contact Gallery
+    else if artwork.sale_message
+      .artwork-brick__metadata__sale-message
+        = artwork.sale_message
