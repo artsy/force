@@ -42,7 +42,7 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push subView
 
   setupBlurb: ->
-    gradient $('.artist-overview-header'), limit: 280, label: 'Read More', heightBreakOffset: 20
+    gradient $('.artist-overview-header'), limit: 170, label: 'Read More', heightBreakOffset: 20
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
   setupRelatedSection: ($el) ->

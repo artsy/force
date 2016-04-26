@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+moment = require 'moment'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 { CURRENT_SHOW_AUCTION } = require('sharify').data
 ShareView = require '../../../../components/share/view.coffee'
@@ -39,7 +40,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
   updateCurrentItem: ->
     currentItem = CURRENT_SHOW_AUCTION
     if currentItem?.type is 'auction'
-      currentItem.detail = viewHelpers.formatShowDetail currentItem
+      currentItem.detail = viewHelpers.formatAuctionDetail moment(currentItem.end_at)
       @$('.current-item').html currentItemTeplate { currentItem, viewHelpers }
 
   navClick: (e) =>
