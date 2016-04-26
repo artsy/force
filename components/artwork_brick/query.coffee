@@ -1,5 +1,6 @@
 module.exports = """
   fragment artwork_brick on Artwork {
+    id
     href
     title
     date
@@ -12,11 +13,11 @@ module.exports = """
         height
       }
     }
-    artists {
+    artists(shallow: true) {
       href
       name
     }
-    partner {
+    partner(shallow: true) {
       href
       name
     }
