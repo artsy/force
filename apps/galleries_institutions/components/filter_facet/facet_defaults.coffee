@@ -4,4 +4,8 @@ module.exports = [{
   }, {
     facetName: 'category'
     displayName: 'Specialties'
+  }, {
+    facetName: 'term',
+    displayName: 'Names',
+    search: true
   }]

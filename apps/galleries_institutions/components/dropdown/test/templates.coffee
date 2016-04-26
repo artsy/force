@@ -16,6 +16,8 @@ describe 'templates', ->
       @el.should.containEql "<div class=\"partners-facet-dropdown filter-partners-dropdown dropdown-some-parameter\">"
     it 'assigns initial placeholder', ->
       @el.should.containEql "<input placeholder=\"All Things\" class=\"partners-facet-input no-selection\"/>"
+    it 'renders correct search icon', ->
+      @el.should.containEql "<span class=\"icon-chevron-down\">"
 
   describe 'suggestion template', ->
 
@@ -33,3 +35,15 @@ describe 'templates', ->
       item = name: 'Foo Bar', id: 'some-id', count: 1
       el = render 'suggestion', item: item
       el.should.equal "<a class=\"js-partner-filter partner-search-filter-item\">Foo Bar (1)</a>"
+  
+  describe 'search facet', ->
+    before ->
+      facet = facetName: 'some-parameter', displayName: 'Things', search: true
+      @el = render 'template', facet: facet
+
+    it 'assigns correct class', ->
+      @el.should.containEql "<div class=\"partners-facet-dropdown filter-partners-dropdown dropdown-some-parameter\">"
+    it 'assigns initial placeholder', ->
+      @el.should.containEql "<input placeholder=\"All Things\" class=\"partners-facet-input no-selection\"/>"
+    it 'renders correct search icon', ->
+      @el.should.containEql "<span class=\"icon-search\">"
