@@ -7,7 +7,7 @@ ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
-embedVideo = require 'embed-video'
+embed = require 'particle'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
@@ -63,7 +63,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           sd: sd
           resize: resize
           moment: moment
-          embedVideo: embedVideo
+          embed: embed
           crop: crop
 
         previousHref = @displayedArticles[@displayedArticles.indexOf(article.get('slug'))-1]

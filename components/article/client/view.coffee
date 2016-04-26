@@ -2,7 +2,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-embedVideo = require 'embed-video'
 CurrentUser = require '../../../models/current_user.coffee'
 Article = require '../../../models/article.coffee'
 Artwork = require '../../../models/artwork.coffee'

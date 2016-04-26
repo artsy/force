@@ -11,6 +11,7 @@ Artworks = require '../collections/artworks.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
 { compactObject } = require './mixins/compact_object.coffee'
+cheerio = require 'cheerio'
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
@@ -126,6 +127,12 @@ module.exports = class Article extends Backbone.Model
   strip: (attr) ->
     stripTags(@get attr)
 
+  getAuthorArray: ->
+    creator = []
+    creator.push @get('author').name if @get('author')
+    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors')?.length
+    creator
+
   getBodyClass: ->
     bodyClass = "body-article body-article-#{@get('layout')}"
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'
@@ -150,6 +157,18 @@ module.exports = class Article extends Backbone.Model
         posts = _.reject posts, (post) => post.url.indexOf(@href()) > 0
         return cb posts
 
+  prepForInstant: ->
+    sections =  _.map @get('sections'), (section) ->
+      if section.type is 'text'
+        $ = cheerio.load(section.body)
+        $('br').remove()
+        $('*:empty').remove()
+        section.body = $.html()
+        section
+      else
+        section
+    @set 'sections', sections
+
   #
   # Super Article helpers
   fetchRelatedArticles: (relatedArticles) ->
@@ -160,9 +179,6 @@ module.exports = class Article extends Backbone.Model
 
   # article metadata tag for parse.ly
   toJSONLD: ->
-    creator = []
-    creator.push @get('author').name if @get('author')
-    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
@@ -171,6 +187,6 @@ module.exports = class Article extends Backbone.Model
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
       "articleSection": if @get('section') then @get('section').get('title') else "Editorial"
-      "creator": creator
+      "creator": @getAuthorArray()
       "keywords": @get('tags')
     }
