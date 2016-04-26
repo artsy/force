@@ -2,7 +2,7 @@
 rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
   channel
     title Artsy
-    <link>"#{sd.APP_URL}"</link>
+    <link>#{sd.APP_URL}</link>
     atom:link(href='#{sd.APP_URL}/rss/instant-articles', rel='self', type='application/rss+xml')
     description Featured Artsy articles
     language en-US
@@ -11,7 +11,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
     each article in articles.models
       item
         title= article.get('title')
-        <link>"#{article.fullHref()}"</link>
+        <link>#{article.fullHref()}</link>
         content:encoded
           | <![CDATA[
           include instant_article.jade
