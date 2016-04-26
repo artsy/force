@@ -39,6 +39,6 @@ for section, i in article.get('sections')
       if section.caption
         p!= section.caption
     when 'video'
-      != particle(section.url)
+      != embed(section.url)
     //- TODO
     //- when 'artworks'
