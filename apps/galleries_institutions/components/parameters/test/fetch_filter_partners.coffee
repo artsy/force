@@ -16,7 +16,7 @@ describe 'FetchFilterPartners', ->
   describe '#initialize', ->
     beforeEach ->
       @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
-      @filterPartners = new FetchFilterPartners params: @params
+      @filterPartners = new FetchFilterPartners params: @params, term: 'test'
 
     it 'sets all starting values', ->
       @filterPartners.page.should.equal(1)
@@ -59,6 +59,7 @@ describe 'FetchFilterPartners', ->
       beforeEach ->
         @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
         @filterPartners = new FetchFilterPartners params: @params
+        @filterPartnersWithSearch = new FetchFilterPartners params: @params, term: 'search term'
 
       it 'includes correct types for galleries', ->
         variables = @filterPartners.formatVariables()
@@ -72,6 +73,14 @@ describe 'FetchFilterPartners', ->
       it 'formats city', ->
         variables = @filterPartners.formatVariables()
         variables.near.should.equal "40.7127837,-74.0059413"
+
+      it 'includes term when it was initialized with term', ->
+        variables = @filterPartnersWithSearch.formatVariables()
+        variables.term.should.equal 'search term'
+
+      it 'should not include term when it was not initialized with term', ->
+        variables = @filterPartners.formatVariables()
+        variables.should.not.have.keys 'term'
 
       it 'excludes keys absent from parameters', ->
         @filterPartners.unset 'location', 'category'
@@ -121,7 +130,7 @@ describe 'FetchFilterPartners', ->
             resolve _.extend {}, results, aggregationsResponse
 
           @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
-          @filterPartners = new FetchFilterPartners params: @params
+          @filterPartners = new FetchFilterPartners params: @params, term: 'search term'
 
         afterEach ->
           @filterPartners.off 'partnerAdded'
@@ -157,6 +166,7 @@ describe 'FetchFilterPartners', ->
               category: 'painting',
               type: [ 'GALLERY' ],
               near: '40.7127837,-74.0059413',
+              term: 'search term',
               page: 1,
               includeAggregations: true,
               includeResults: true

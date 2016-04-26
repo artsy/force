@@ -17,4 +17,11 @@ module.exports = ({params, aggregations}) -> [
       params: params
       aggregations: aggregations
     }, _.find facetDefaults, facetName: 'category'
-  )]
+  ),
+  new PartnerFilterFacet(_.extend {
+      allItems: [],
+      params: params,
+      aggregations: aggregations,
+    }, _.find facetDefaults, facetName: 'term'
+  )
+]

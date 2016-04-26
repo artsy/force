@@ -1,8 +1,12 @@
 - var displayName = facet.displayName
 - var facetName = facet.facetName
+- var search = facet.search
 
 .partners-facet-dropdown.filter-partners-dropdown(class= "dropdown-#{facetName}")
   input.partners-facet-input.no-selection(
     placeholder= "All " + displayName
   )
-  span.icon-chevron-down
+  if search
+    span.icon-search
+  else 
+    span.icon-chevron-down

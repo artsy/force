@@ -1,6 +1,9 @@
-PartnerFilterFacet = require '../partner_filter_facet.coffee'
 Backbone = require 'backbone'
 _ = require 'underscore'
+sinon = require 'sinon'
+rewire = require 'rewire'
+
+PartnerFilterFacet = rewire '../partner_filter_facet.coffee'
 
 describe 'PartnerFilterFacet', ->
   aggreationsUpdate = location: { total: 10, countItems: [
@@ -138,3 +141,25 @@ describe 'PartnerFilterFacet', ->
 
     it 'allows additinal whitespaces', ->
       @facet.isMatched('  st   petersburg ', 'St. Petersburg').should.be.ok()
+
+  describe '#async_matcher', ->
+    beforeEach ->
+      # stub methods for FetchFilterPartner
+      @fetch = sinon.stub()
+      @fetch.returns then: sinon.stub()
+      @fetchFilterPartnersStub = sinon.stub()
+      @fetchFilterPartnersStub.returns { fetch: @fetch }
+      PartnerFilterFacet.__set__ 'FetchFilterPartners', @fetchFilterPartnersStub
+      
+      @aggregations.set aggreationsUpdate
+    
+    describe 'empty query', ->
+      it 'returns empty list', ->
+        @facet.emptyStateItemIDs = ['location-2', 'location-3']
+        @facet.async_matcher '', (matches) =>
+          matches.should.eql []
+        @fetch.called.should.not.be.ok()
+    describe 'with query', ->
+      it 'does not call fetch', ->
+        @facet.async_matcher 'test', (matches) =>
+        @fetch.calledOnce.should.be.ok()
