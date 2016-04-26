@@ -40,7 +40,8 @@ module.exports = class PrimaryCarousel extends Backbone.View
   setupFlickity: =>
     return if not @profiles.length
 
-    { cells } = initCarousel @$el, wrapAround: true, autoPlay: true
+    autoPlay = @profiles.length > 1
+    { cells } = initCarousel @$el, wrapAround: true, autoPlay: autoPlay
     { @flickity } = cells
 
     $overlays = $('.js-gpc-overlay')
