@@ -23,7 +23,7 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['artworkItemTemplate', 'editTemplate', 'embedTemplate', 'calloutTemplate' ]
+        ['artworkItemTemplate', 'editTemplate', 'calloutTemplate' ]
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
@@ -116,17 +116,6 @@ describe 'ArticleView', ->
       @view.user = _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a', has_partner_access: true } )
       @view.checkEditable()
       @view.renderedEditButton.should.be.ok()
-
-  describe '#renderEmbedSections', ->
-
-    it 'renders embedded content from the article', ->
-      @view.renderEmbedSections()
-      _.defer => _.defer =>
-        @view.$('.article-section-embed').html().should.containEql '<iframe>Test</iframe>'
-
-    it 'removes the loading spinner after loading', ->
-      @view.renderEmbedSections()
-      @view.$('.article-section-embed').html().should.not.containEql 'loading-spinner'
 
   describe '#renderCalloutSections', ->
 

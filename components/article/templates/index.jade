@@ -58,10 +58,8 @@ if superArticle
             .article-section-video( class="article-video-background-" + section.background_color )
               +video(section)
           when 'embed'
-            .article-section-embed( data-id=section.url data-layout=section.layout )
-              .loading-spinner
-              .article-embed-container
-                //- Rendered on client
+            .article-section-embed( data-layout=section.layout )
+              +embed(section)
           when 'callout'
             if section.article.length > 0
               .article-section-callout-container(data-id=section.article)
