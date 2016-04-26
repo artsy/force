@@ -11,7 +11,7 @@ module.exports = class FilterDropdownView extends Backbone.View
 
   initialize: ({ @params, @facet }) ->
     @$input = @$('.partners-facet-input')
-    source = if @facet.search then _.throttle(@facet.async_matcher, 1500) else @facet.matcher
+    source = if @facet.search then _.debounce(@facet.async_matcher, 500) else @facet.matcher
     @$input.typeahead({
       hint: false
       highlight: true,
