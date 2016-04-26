@@ -3,15 +3,34 @@
   margin-top 30px
   h2
     margin 10px 0
-  a
-    text-decoration none
 
-.artist-header-split
+.artist-header-flex
   display flex
   flex-direction row
   align-content stretch
   align-items flex-start
   justify-content space-between
+  .artist-header-meta
+    flex-basis calc(50% \- 15px)
+    flex-grow 1
+    flex-shrink 0
+  .consignment-cta
+  .current-item
+    margin-left 30px
+    flex-grow 0
+    flex-shrink 0
+
+  .current-item
+    max-width calc(33% \- 20px)
+    flex-basis calc(33% \- 20px)
+    &.compact
+      .current-item-image
+        display none
+
+  .consignment-cta, .current-item.compact
+    max-width calc(25% \- 22.5px)
+    flex-basis calc(25% \- 22.5px)
+
 .artist-header-name
   margin-bottom 3px
 .artist-header-meta-sep

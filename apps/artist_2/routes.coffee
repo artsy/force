@@ -25,7 +25,7 @@ currentShowAuction = require './components/current_show_auction/index'
       res.locals.sd.TAB = tab = req.params.tab or ''
       if currentItem = currentShowAuction(artist)
         if currentItem.type is 'auction'
-          currentItem.detail = '&nbsp;'
+          currentItem.detail = "&nbsp;"
         else
           currentItem.detail = helpers.formatShowDetail currentItem
 
