@@ -1,0 +1,30 @@
+@require '../stylus_lib'
+
+.artwork-save
+  display none
+  iconfont-styling()
+  width 40px
+  height @width
+  cursor pointer
+  color white
+  background-color gray-dark-color
+  background-color transparify(gray-dark-color, black)
+  text-align center
+  border-radius 50%
+  font-size 16px
+  line-height @height
+
+  &:before
+    content '\e622' // icon-heart
+  &:hover
+    background-color black
+
+  &[data-saved='true']
+    display block
+    background-color purple-color
+    &:hover
+      background-color red-color
+      &:before
+        content '\e621'
+      &.is-clicked
+        background-color purple-color
