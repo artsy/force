@@ -323,8 +323,8 @@
       "resolved": "git://github.com/artsy/artsy-newrelic.git#af87a882c2918b3f14f9f6d75a76ed9848a755d6"
     },
     "artsy-passport": {
-      "version": "1.0.6",
-      "from": "artsy-passport@latest"
+      "version": "1.0.8",
+      "from": "artsy-passport@1.0.8"
     },
     "artsy-xapp": {
       "version": "1.0.4",
