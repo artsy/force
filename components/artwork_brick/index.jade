@@ -6,15 +6,20 @@
         alt= artwork.title
       )
 
-    a.artwork-brick__image__save(
-      href= artwork.href
+    .artwork-brick__image__save(
+      class='js-artwork-brick-save-controls'
       data-id= artwork.id
     )
+      //- Rendered client-side
 
   .artwork-brick__metadata
     if artwork.artists && artwork.artists.length
       h4.artwork-brick__metadata__artists
-        = artwork.artists.map(function(artist) { return artist.name; }).join(', ')
+        for artist, i in artwork.artists
+          a( href= artist.href )
+            = artist.name
+          unless i === artwork.artists.length - 1
+            = ', '
 
     a.artwork-brick__metadata__title( href= artwork.href )
       em= artwork.title
