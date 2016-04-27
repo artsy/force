@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 template = -> require('../../templates/sections/shows.jade') arguments...
+ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 
 module.exports = class ShowsView extends Backbone.View
   subViews: []
@@ -9,6 +10,7 @@ module.exports = class ShowsView extends Backbone.View
   initialize: ->
     @listenTo @model.related().shows, 'sync', @renderHeader
     @model.related().shows.fetchUntilEnd()
+    @model.related().artworks.fetch(data: size: 15)
 
   postRender: ->
     relatedShowsSubView = new RelatedShowsView
@@ -17,7 +19,15 @@ module.exports = class ShowsView extends Backbone.View
       nUp: 3
       maxShows: 20
     @subViews.push relatedShowsSubView
+
     @$('#artist-page-content-section').html relatedShowsSubView.render().$el
+
+    @subViews.push new ArtworkRailView
+      $el: @$(".artist-artworks-rail")
+      collection: @model.related().artworks
+      title: "Works by #{@model.get('name')}"
+      viewAllUrl: "#{@model.href()}/works"
+      imageHeight: 180
 
   renderHeader: ->
     statuses = @model.related().shows.invoke 'has', 'fair'

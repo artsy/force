@@ -9,7 +9,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     'click .js-mgr-prev': 'prev'
     'click .js-mgr-select': 'select'
 
-  initialize: ({ @flickity, @advanceBy, @template }) ->
+  initialize: ({ @flickity, @advanceBy = 1, @template }) ->
     @flickity.on 'cellSelect', @render
     @flickity.on 'cellSelect', @announce
 
@@ -36,7 +36,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @flickity.selectedIndex >= @flickity.cells.length - @advanceBy - 1
 
   next: (e) ->
-    # return if @flickity.options.wrapAround and @isEnd()
+    return if !@flickity.options.wrapAround and @isEnd()
     e.preventDefault()
     if @advanceBy > 1
       @flickity.select @flickity.selectedIndex + @advanceBy
@@ -44,13 +44,12 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
       @flickity.next true
 
   prev: (e) ->
-    # return if @flickity.options.wrapAround and @isStart()
+    return if !@flickity.options.wrapAround and @isStart()
     e.preventDefault()
     if @advanceBy > 1
       @flickity.select @flickity.selectedIndex - @advanceBy
     else
       @flickity.previous true
-
 
   select: (e) ->
     e.preventDefault()
@@ -60,10 +59,8 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @$el.html @template
       length: @flickity.cells.length
       index: @flickity.selectedIndex
-      wrapAround: @flickity.options.wrapAround
-      contain: @flickity.options.contain
-      isStart: @isStart()
-      isEnd: @isEnd()
+      disableStart: !@flickity.options.wrapAround && @isStart()
+      disableEnd: !@flickity.options.wrapAround && @isEnd()
     this
 
   remove: ->
