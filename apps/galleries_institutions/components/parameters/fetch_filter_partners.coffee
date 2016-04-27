@@ -52,7 +52,8 @@ module.exports = class FetchFilterPartners extends Backbone.Model
     data.term = @term if @term
     data.page = @page
     data.includeAggregations = @page == 1
-    data.includeResults = @params.hasSelection()
+    # include results only if any of facets is selected or we are doing search by term
+    data.includeResults = @params.hasSelection() || not _.isEmpty data.term
     return data
 
   reset: =>
