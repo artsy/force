@@ -1,5 +1,4 @@
 .artwork-collapsed-metadata
-  display none
   position fixed
   top main-header-height
   width 230px // Extract
@@ -7,13 +6,11 @@
   serif('l-caption')
   padding distance(gutter / 2) 0
   opacity 0
-  transform translateY(-@top)
-  transition opacity 0.25s, transform 0.5s
+  transition opacity 0.25s
   pointer-events none
 
   &[data-state='down']
     opacity 1
-    transform translateY(0)
     pointer-events inherit
 
   &__lot-number

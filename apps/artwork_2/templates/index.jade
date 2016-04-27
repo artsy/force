@@ -22,11 +22,12 @@ block body
             include ../client/fold
 
         .artwork__main__metadata
-          include ../components/metadata/index
-          include ../components/inquiry/index
-          include ../components/auction/index
+          .js-collapsed-metadata--enter
+            include ../components/metadata/index
+            include ../components/inquiry/index
+            include ../components/auction/index
+
           include ../components/collapsed_metadata/index
 
-
-      .artwork__footer( class='js-artwork-footer' )
+      .artwork__footer( class='js-artwork-footer js-collapsed-metadata--exit' )
         include ../client/footer
