@@ -3,7 +3,7 @@ module.exports = """
     artist {
       name
       href
-      artworks(size: 10, sort: merchandisability_desc) {
+      artworks(size: 10, filter: [IS_FOR_SALE]) {
         ... artwork_brick
       }
     }

@@ -1,23 +1,35 @@
 @require '../stylus_lib'
+@require '../artwork_save'
 
 .artwork-brick
-  margin-bottom gutter
-
   &__image
     background-color gray-color
     position relative
 
-    > img
+    &__img
       position absolute
       top 0
       left 0
       width 100%
       vertical-align bottom
 
+    &__save
+      position absolute
+      right (gutter / 3)
+      bottom @right
+
+    &:hover
+      .artwork-brick__image__save
+      .artwork-brick__image__save > .artwork-save
+        display block
+
   &__metadata
     serif('l-caption')
-    margin distance(gutter / 2) 0
+    margin distance(gutter / 2) 0 distance(gutter) 0
     color gray-darker-color
+    lines = 4
+    height ((@line-height * @font-size) * lines)
+    overflow hidden
 
     &__artists
     &__title
@@ -31,6 +43,9 @@
       > a
         color gray-darker-color
         text-decoration none
+
+    &__contact > a
+      text-decoration underline
 
     &__artists
       font-weight bold

@@ -45,6 +45,7 @@ helpers = extend [
   highlights: require './components/highlights/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
+  related_artworks: require './components/related_artworks/helpers'
 ]...
 
 bootstrap = ->

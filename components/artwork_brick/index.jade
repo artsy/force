@@ -1,15 +1,25 @@
 .artwork-brick
-  a( href= artwork.href )
-    .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
-      img(
+  .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
+    a( href= artwork.href )
+      img.artwork-brick__image__img(
         src= artwork.image.thumb.url
         alt= artwork.title
       )
 
+    .artwork-brick__image__save(
+      class='js-artwork-brick-save-controls'
+      data-id= artwork.id
+    )
+      //- Rendered client-side
+
   .artwork-brick__metadata
     if artwork.artists && artwork.artists.length
       h4.artwork-brick__metadata__artists
-        = artwork.artists.map(function(artist) { return artist.name; }).join(', ')
+        for artist, i in artwork.artists
+          a( href= artist.href )
+            = artist.name
+          unless i === artwork.artists.length - 1
+            = ', '
 
     a.artwork-brick__metadata__title( href= artwork.href )
       em= artwork.title
@@ -19,9 +29,11 @@
     a.artwork-brick__metadata__partner( href= artwork.href )
       = artwork.partner.name
 
-    //- .artwork-brick__metadata__sale-message
-    //-   = artwork.sale_message
+    if artwork.is_contactable
+      .artwork-brick__metadata__contact
+        a( href= artwork.href )
+          | Contact Gallery
 
-    //- .artwork-brick__metadata__contact
-    //-   if artwork.is_contactable
-    //-     a Contact Gallery
+    else if artwork.sale_message
+      .artwork-brick__metadata__sale-message
+        = artwork.sale_message

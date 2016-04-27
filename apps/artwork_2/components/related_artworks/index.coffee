@@ -1,6 +1,6 @@
 { CLIENT } = require('sharify').data
 metaphysics = require '../../../../lib/metaphysics.coffee'
-masonry = require '../../../../components/artwork_masonry/index.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
 template = -> require('../../../../components/artwork_masonry/index.jade') arguments...
 
 query = """
@@ -21,8 +21,22 @@ query = """
 module.exports = ->
   $el = $('.js-artwork-related-artworks')
 
+  return unless $el.length
+
   $links = $el.find '.js-artwork-tabs-link'
   $sections = $el.find '.js-artwork-tabs-section'
+
+  masonryView = new ArtworkMasonryView el: $sections
+
+  artworks = $sections
+    .find '[data-id]'
+    .map -> $(this).data 'id'
+    .get()
+    .map (id) -> id: id
+
+  masonryView
+    .reset artworks
+    .postRender()
 
   $links
     .click ->
@@ -38,7 +52,7 @@ module.exports = ->
 
       metaphysics query: query, variables: id: id, artwork_id: CLIENT.id
         .then (data) ->
-          $sections
-            .attr 'data-loading', false
-            .html template
-              columns: masonry data.artwork.layer.artworks
+          masonryView
+            .reset data.artwork.layer.artworks
+            .render()
+            .$el.attr 'data-loading', false
