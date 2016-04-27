@@ -108,6 +108,7 @@ describe 'FetchFilterPartners', ->
       beforeEach ->
         @params = new Params { type: 'gallery' }
         @filterPartners = new FetchFilterPartners params: @params
+        @filterPartnersWithSearch = new FetchFilterPartners params: @params, term: 'search term'
 
       it 'requests aggregations and not results', ->
         variables = @filterPartners.formatVariables()
@@ -115,6 +116,14 @@ describe 'FetchFilterPartners', ->
         variables.includeResults.should.be.false()
         variables.should.have.keys 'page', 'includeAggregations', 'includeResults', 'type'
         variables.should.not.have.keys 'near', 'category'
+
+      it 'should not include resutls when we dont have facet params and search term', ->
+        variables = @filterPartners.formatVariables()
+        variables.includeResults.should.be.false()
+
+      it 'should include results when we dont have facet params but we have term', ->
+        variables = @filterPartnersWithSearch.formatVariables()
+        variables.includeResults.should.be.true()
 
   describe '#fetch', (done) ->
     describe 'with parameters', ->
