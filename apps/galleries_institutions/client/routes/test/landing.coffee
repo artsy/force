@@ -4,7 +4,6 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-facetDefaults = require '../../../components/filter_facet/facet_defaults.coffee'
 LandingCarouselView = rewire '../landing'
 Params = require '../../../components/parameters/filter_params.coffee'
 

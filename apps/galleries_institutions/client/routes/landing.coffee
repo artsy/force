@@ -16,7 +16,7 @@ module.exports = class LandingCarouselView extends Backbone.View
   initialize: ({ @following, @params }) ->
     @listenTo @params, 'firstLoad', @paramsChanged
 
-    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+    _.each _.pluck(facetDefaults(), 'facetName'), (f) =>
       @listenTo @params, "change:#{f}", @paramsChanged
 
   setup: (type) ->

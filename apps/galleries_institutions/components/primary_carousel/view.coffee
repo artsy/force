@@ -14,7 +14,7 @@ module.exports = class PrimaryCarousel extends Backbone.View
     'click .js-gpc-prev': -> @flickity.previous()
 
   initialize: ({ params, @following, @profiles}) ->
-    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+    _.each _.pluck(facetDefaults(), 'facetName'), (f) =>
       @listenTo params, "change:#{f}", @fetch
     @listenTo params, 'firstLoad', @setupFlickity
     @listenTo @profiles, 'reset', @render

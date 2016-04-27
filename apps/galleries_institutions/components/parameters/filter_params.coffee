@@ -6,7 +6,7 @@ facetDefaults = require '../filter_facet/facet_defaults.coffee'
 module.exports = class PartnersFilterParams extends Backbone.Model
 
   currentSelection: ->
-    @pick _.pluck(facetDefaults, 'facetName') || {}
+    @pick _.pluck(facetDefaults(), 'facetName') || {}
 
   hasSelection: ->
     not _.isEmpty @currentSelection()

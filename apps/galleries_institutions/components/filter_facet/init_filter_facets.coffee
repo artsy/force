@@ -10,18 +10,18 @@ module.exports = ({params, aggregations}) -> [
       emptyStateItemIDs: _.pluck FeaturedCities, 'slug'
       params: params
       aggregations: aggregations
-    }, _.find facetDefaults, facetName: 'location'
+    }, _.find facetDefaults(params.get('type')), facetName: 'location'
   ),
   new PartnerFilterFacet(_.extend {
       allItems: CATEGORIES
       params: params
       aggregations: aggregations
-    }, _.find facetDefaults, facetName: 'category'
+    }, _.find facetDefaults(params.get('type')), facetName: 'category'
   ),
   new PartnerFilterFacet(_.extend {
       allItems: [],
       params: params,
       aggregations: aggregations,
-    }, _.find facetDefaults, facetName: 'term'
+    }, _.find facetDefaults(params.get('type')), facetName: 'term'
   )
 ]

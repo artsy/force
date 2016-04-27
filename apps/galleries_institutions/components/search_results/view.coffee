@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 PartnerCellView = require '../partner_cell/view.coffee'
-facetDefaults = require '../filter_facet/facet_defaults.coffee'
 
 module.exports = class ResultsView extends Backbone.View
 

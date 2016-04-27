@@ -9,7 +9,7 @@ facetDefaults = require '../filter_facet/facet_defaults.coffee'
 module.exports = class FetchFilterPartners extends Backbone.Model
 
   initialize: ({ @params, @term }) ->
-    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+    _.each _.pluck(facetDefaults(@params.get('type')), 'facetName'), (f) =>
       @listenTo @params, "change:#{f}", @reset
     @page = 1
     @partners = []

@@ -49,7 +49,7 @@ mapTypeClasses =
       type: type
       profiles: profiles.models
       categories: _.shuffle categories
-      facets: facetDefaults
+      facets: facetDefaults(type)
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
   .catch next
