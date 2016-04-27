@@ -2,7 +2,7 @@ mixin hero_section(hero)
   figure
     case hero.type
       when 'image'
-        img(src=hero.url)
+        img(src=hero.url)/
         figcaption= hero.caption
       when 'fullscreen'
         if hero.background_url
@@ -10,7 +10,7 @@ mixin hero_section(hero)
             video(loop=true)
               source(src=hero.background_url type='video/mp4')
         else
-          img(src= hero.background_image_url)
+          img(src= hero.background_image_url)/
       when 'video'
         +video(hero)
 
@@ -21,12 +21,12 @@ mixin artworks(section)
 
 mixin artwork(artwork)
   figure
-    img(src= artwork.image)
+    img(src= artwork.image)/
     +artworkCaption(artwork)
 
 mixin image(section)
   figure
-    img(src= section.url)
+    img(src= section.url)/
     if section.caption && section.caption.length > 0
       figcaption
         h1!= section.caption

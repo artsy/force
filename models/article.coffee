@@ -163,6 +163,8 @@ module.exports = class Article extends Backbone.Model
         $ = cheerio.load(section.body)
         $('br').remove()
         $('*:empty').remove()
+        $('p').each ->
+          $(this).remove() if $(this).text().length is 0
         section.body = $.html()
         section
       else
