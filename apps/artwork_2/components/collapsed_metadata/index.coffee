@@ -1,12 +1,25 @@
-_ = require 'underscore'
 { AUCTION } = require('sharify').data
 inquire = require '../../lib/inquire.coffee'
 ArtworkAuctionView = require '../auction/view.coffee'
 
 module.exports = ->
-  return null # Disable for the time being
+  $(document).on 'ajaxStop', ->
+    $.waypoints 'refresh'
 
   $el = $('.js-artwork-collapsed-metadata')
+
+  $enter = $('.js-collapsed-metadata--enter')
+  $enter
+    .waypoint (direction) ->
+      $el.attr 'data-state', direction
+    , offset: -(($enter.outerHeight() + $enter.offset().top) - $el.offset().top)
+
+  $exit = $('.js-collapsed-metadata--exit')
+  $exit
+    .waypoint (direction) ->
+      $el.attr 'data-state', if direction is 'up' then 'down' else 'up'
+    , offset: ($el.outerHeight() + $el.offset().top)
+
   $el
     .find '.js-artwork-collapsed-metadata-inquire'
     .click (e) ->
