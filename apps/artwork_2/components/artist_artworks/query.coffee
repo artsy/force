@@ -3,7 +3,7 @@ module.exports = """
     artist {
       name
       href
-      artworks(size: 10, filter: [IS_FOR_SALE]) {
+      artworks(size: 10, filter: [IS_FOR_SALE], exclude: [$id]) {
         ... artwork_brick
       }
     }

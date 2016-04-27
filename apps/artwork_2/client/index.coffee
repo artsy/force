@@ -73,7 +73,6 @@ module.exports.init = ->
       #{require '../components/related_artworks/query.coffee'}
     """
 
-
   metaphysics query: query, variables: id: CLIENT.id
     .then (data) ->
       for key, template of templates
