@@ -155,5 +155,5 @@ describe 'FilterDropdownView', ->
         @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: 'location-2'}} , {}
         @$input.is(":focus").should.be.false()
       it 'redirects to profile page', ->
-        @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: 'location-2'}} , {}
-        @dropdown.goToProfile.args[0][0].should.equal 'location-2'
+        @dropdown.selected { target: @$input }, { id: 'location-2', name: 'Location 2', profile: {href: '/partner-profile-url'}} , {}
+        @dropdown.goToProfile.args[0][0].should.equal '/partner-profile-url'
