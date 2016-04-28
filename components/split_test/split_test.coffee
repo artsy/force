@@ -21,11 +21,16 @@ module.exports = class SplitTest
 
     if _.isFunction analytics?.track
       analytics?.track 'Experiment Viewed',
-        experiment_id: @key
-        experiment_name: @key
-        variation_id: outcome
-        variation_name: outcome
-        nonInteraction: 1
+        {
+          experiment_id: @key
+          experiment_name: @key
+          variation_id: outcome
+          variation_name: outcome
+          nonInteraction: 1
+        },
+        {
+          Mixpanel: 'false'
+        }
 
     # Set for Google Analytics
     setDimension @dimension, outcome if @dimension?
