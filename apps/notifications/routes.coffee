@@ -5,7 +5,12 @@ sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
 
 @worksForYou = (req, res) ->
-  return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
+  # If the user is logged-out, redirect to /log_in unless they are coming from email.
+  # If they are coming from email, redirect to artist works page.
+  unless req.user
+    { artist_id, from_email } = req.query
+    return res.redirect("/log_in?redirect_uri=#{req.url}") unless artist_id and from_email
+    return res.redirect("/artist/#{artist_id}/works?sort=-published_at")
 
   Q.allSettled([
     req.user.followingArtists()

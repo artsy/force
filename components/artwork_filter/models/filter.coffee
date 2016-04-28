@@ -13,6 +13,7 @@ module.exports = class Filter
 
   sorts:
     '-partner_updated_at': 'Recently Updated'
+    '-published_at': 'Recently Added'
     '-year': 'Artwork Year (desc.)'
     'year': 'Artwork Year (asc.)'
 
