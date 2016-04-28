@@ -41,7 +41,7 @@ module.exports = class FilterDropdownView extends Backbone.View
   selected: (e, suggestion, dataset) =>
     if suggestion.id
       if @facet.search
-        @goToProfile suggestion.id
+        @goToProfile suggestion.profile.href
       else
         @params.set @facet.facetName, suggestion.id
     else
@@ -49,9 +49,8 @@ module.exports = class FilterDropdownView extends Backbone.View
 
     $(e.target).blur()
 
-  goToProfile: (profile_id) ->
-    # go to profile page
-    window.location.href = "/#{profile_id}"
+  goToProfile: (profileUrl) ->
+    window.location.href = profileUrl
 
   suggestionTemplate: (item) ->
     suggestionTemplate item: item
