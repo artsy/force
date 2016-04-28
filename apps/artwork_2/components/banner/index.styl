@@ -10,16 +10,25 @@
   text-align left
   border-bottom 1px solid gray-lighter-color
 
+  &[data-type='ArtworkContextPartnerShow']
+    .artwork-banner__name
+      serif('s-body')
+
+      &__status
+        sans('s-headline')
+
   &__logo
+  &__thumbnail
     margin-right (gutter / 2)
+
+  &__logo
     padding-right @margin-right
     border-right 1px solid gray-lighter-color
 
   &__name
     position relative
     flex 1
-    garamond-size('s-headline')
-    margin-bottom -9px // Compensates to align baseline
+    serif('s-headline')
     white-space nowrap
     overflow hidden
 
