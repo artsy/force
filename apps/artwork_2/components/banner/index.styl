@@ -1,25 +1,35 @@
 @require '../clock'
 
 .artwork-banner
+  position relative
   display flex
   flex-direction row
   justify-content space-between
   align-items flex-end
   block-margins(gutter / 2)
-  padding (gutter / 2) 0
+  padding-bottom (gutter / 3)
   text-align left
   border-bottom 1px solid gray-lighter-color
 
+  &[data-type='ArtworkContextPartnerShow']
+    .artwork-banner__name
+      serif('s-body')
+
+      &__status
+        sans('s-headline')
+
   &__logo
+  &__thumbnail
     margin-right (gutter / 2)
-    padding-right @margin-right
+
+  &__logo
+    padding-right (gutter / 2)
     border-right 1px solid gray-lighter-color
 
   &__name
     position relative
     flex 1
-    garamond-size('s-headline')
-    margin-bottom -9px // Compensates to align baseline
+    serif('s-headline')
     white-space nowrap
     overflow hidden
 
@@ -39,8 +49,15 @@
 
   &__countdown
     margin 0 (gutter / 2)
-    margin-bottom -2px // Compensates to align baseline
 
-  &__jump
-    > a
-      white-space nowrap
+    .countdown-clock
+      margin-bottom -2px // Pull into place with baseline
+
+  &__jump > a
+    white-space nowrap
+
+  &__logo
+  &__thumbnail
+  &__countdown
+    // Pull into place with baseline
+    margin-top -(gutter / 3)

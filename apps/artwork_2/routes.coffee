@@ -12,7 +12,6 @@ query = """
       ... client
       ... collapsed_metadata
       ... deep_zoom
-      ... highlights
       ... images
       ... inquiry
       ... meta
@@ -27,7 +26,6 @@ query = """
   #{require './client/query'}
   #{require './components/collapsed_metadata/query'}
   #{require './components/deep_zoom/query'}
-  #{require './components/highlights/query'}
   #{require './components/images/query'}
   #{require './components/inquiry/query'}
   #{require './components/meta/query'}
@@ -42,7 +40,6 @@ helpers = extend [
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
   collapsed_metadata: require './components/collapsed_metadata/helpers'
-  highlights: require './components/highlights/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
   related_artworks: require './components/related_artworks/helpers'
