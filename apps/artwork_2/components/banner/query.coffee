@@ -30,7 +30,7 @@ module.exports = """
           name
         }
         thumbnail: cover_image {
-          image: cropped(width: 100, height: 50, version: ["medium", "featured"]) {
+          image: cropped(width: 75, height: 50, version: ["medium", "featured"]) {
             url
             width
             height

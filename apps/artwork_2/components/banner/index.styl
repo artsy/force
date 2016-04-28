@@ -1,12 +1,13 @@
 @require '../clock'
 
 .artwork-banner
+  position relative
   display flex
   flex-direction row
   justify-content space-between
   align-items flex-end
   block-margins(gutter / 2)
-  padding (gutter / 2) 0
+  padding-bottom (gutter / 3)
   text-align left
   border-bottom 1px solid gray-lighter-color
 
@@ -22,7 +23,7 @@
     margin-right (gutter / 2)
 
   &__logo
-    padding-right @margin-right
+    padding-right (gutter / 2)
     border-right 1px solid gray-lighter-color
 
   &__name
@@ -48,8 +49,15 @@
 
   &__countdown
     margin 0 (gutter / 2)
-    margin-bottom -2px // Compensates to align baseline
 
-  &__jump
-    > a
-      white-space nowrap
+    .countdown-clock
+      margin-bottom -2px // Pull into place with baseline
+
+  &__jump > a
+    white-space nowrap
+
+  &__logo
+  &__thumbnail
+  &__countdown
+    // Pull into place with baseline
+    margin-top -(gutter / 3)
