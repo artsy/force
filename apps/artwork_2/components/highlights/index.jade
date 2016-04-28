@@ -1,9 +1,0 @@
-if artwork.highlights.length
-  section.artwork-section.artwork-highlights
-    for highlight in artwork.highlights
-      .artwork-highlight( data-type= highlight.__typename )
-        case highlight.__typename
-          when 'HighlightedShow'
-            include ./templates/show
-          when 'HighlightedArticle'
-            include ./templates/article
