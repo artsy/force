@@ -5,14 +5,10 @@
         .artist-blurb.bisected-header-cell-section
           h2 Biography
           .blurb!= viewHelpers.mdToHtml(artist, 'blurb')
-          - var birth = viewHelpers.birthDetail(artist)
-          - var location = viewHelpers.locationDetail(artist)
-          if birth || location
+          - var artistMeta = viewHelpers.artistMeta(artist)
+          if artistMeta.length
             br
-            if birth
-              .birth-detail!= birth
-            if location
-              .location-detail!= location
+            .artist-meta-detail!= artistMeta
 
     .bisected-header-cell
       .artist-related-genes.related-links.bisected-header-cell-section

@@ -91,27 +91,22 @@ describe 'ArtistViewHelpers', ->
       <p>Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “<a href="/artwork/jeff-koons-balloon-dog-blue">Balloon Dog</a>” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved <a href="/gene/surrealism">Surrealism</a> and <a href="/gene/dada">Dada</a> and <a href="/gene/pop-art">Pop</a>, so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-<a href="/gene/baroque">Baroque</a> sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral <em>Puppy</em> (1992), reference 17th-century French garden design.</p>
     """
 
-  describe 'birthDetail', ->
-    it 'formats birthday only', ->
+  describe 'overviewMeta', ->
+    it 'formats correctly', ->
       artist = birthday: '1900'
-      helpers.birthDetail(artist).should.eql 'b. 1900'
-    it 'formats hometown only', ->
-      artist = hometown: 'New York, New York'
-      helpers.birthDetail(artist).should.eql 'b. New York, New York'
-    it 'formats hometown and birthday', ->
-      artist = birthday: '1900', hometown: 'New York, New York'
-      helpers.birthDetail(artist).should.eql 'b. 1900, New York, New York'
-    it 'returns null for no hometown or birthday', ->
-      artist = {}
-      (helpers.birthDetail(artist) is undefined).should.be.true()
+      helpers.artistMeta(artist).should.eql 'b. 1900'
 
-  describe 'locationDetail', ->
-    it 'formats location', ->
-      artist = location: 'New York'
-      helpers.locationDetail(artist).should.eql 'Based in New York'
-    it 'returns null if no location', ->
-      artist = {}
-      (helpers.locationDetail(artist) is undefined).should.be.true()
+      artist = hometown: 'New York, New York'
+      helpers.artistMeta(artist).should.eql 'New York, New York'
+
+      artist = birthday: '1900', hometown: 'New York, New York'
+      helpers.artistMeta(artist).should.eql 'b. 1900, New York, New York'
+
+      artist = birthday: '1900', hometown: 'New York, New York', nationality: 'American', location: 'Chicago, Illinois'
+      helpers.artistMeta(artist).should.eql 'American, b. 1900, New York, New York, based in Chicago, Illinois'
+
+      artist = birthday: '1900', deathday: '1970', hometown: 'New York, New York', nationality: 'American', location: 'Chicago, Illinois'
+      helpers.artistMeta(artist).should.eql 'American, 1900–1970, New York, New York, based in Chicago, Illinois'
 
   it 'formatShowDetail', ->
     item =
