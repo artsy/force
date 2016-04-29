@@ -10,3 +10,8 @@ if artwork.artist && artwork.artist.artworks.length
 
     - var columns = helpers.artist_artworks.masonry(artwork.artist.artworks)
     include ../../../../components/artwork_masonry/index
+
+    .artwork-artist-artworks__jump
+      a.avant-garde-jump-link( href='#{artwork.artist.href}/works' )
+        | View all #{artwork.artist.counts.artworks} #{helpers.artist_artworks.pluralize('work', artwork.artist.counts.artworks)}
+        i.icon-chevron-small-right
