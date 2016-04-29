@@ -1,0 +1,21 @@
+a.artwork-additional-info__article( href= article.href )
+  if article.thumbnail.image
+    - var img = article.thumbnail.image
+
+    img.artwork-additional-info__article__image(
+      src= img.url
+      width= img.width
+      height= img.height
+      alt= article.title
+    )
+
+  .artwork-additional-info__article__metadata
+    .artwork-additional-info__article__metadata__context
+      | Mentioned in
+
+    h3.artwork-additional-info__article__metadata__title
+      = article.title
+
+    if article.author
+      h4.artwork-additional-info__article__metadata__author
+        = article.author.name

@@ -3,15 +3,15 @@ include ../tabs/mixins
 - var tabs = helpers.additional_info.build(artwork)
 
 if tabs.length
-  section.artwork-section.artwork-tabs( class='js-artwork-additional-info' )
+  section.artwork-additional-info.artwork-section.artwork-tabs( class='js-artwork-additional-info' )
     +nav(tabs, helpers.artists.name)
 
-    .artwork-tabs__content
+    .artwork-additional-info__content.artwork-tabs__content
       for tab, i in tabs
         +tab(tab, i)
           case tab
-            when 'description'
-              include ./templates/description
+            when 'about_the_work'
+              include ./templates/about_the_work
             when 'exhibition_history'
               include ./templates/exhibition_history
             when 'bibliography'
