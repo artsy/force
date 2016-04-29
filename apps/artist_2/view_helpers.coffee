@@ -27,15 +27,19 @@ module.exports =
       artist.years
     ]).join ', '
 
-  birthDetail: (artist) ->
-    return if not (artist.birthday?.length or artist.hometown?.length)
-    'b. ' + _.compact([
-      artist.birthday if artist.birthday?.length
-      artist.hometown if artist.hometown?.length
-    ]).join ', '
+  formatBirthDeath: (artist) ->
+    if artist.deathday?.length
+      "#{artist.birthday}–#{artist.deathday}"
+    else
+      "b. #{artist.birthday}"
 
-  locationDetail: (artist) ->
-    "Based in #{artist.location}" if artist.location?.length
+  artistMeta: (artist) ->
+    _.compact([
+      artist.nationality if artist.nationality?.length
+      @formatBirthDeath(artist) if artist.birthday?.length
+      artist.hometown if artist.hometown?.length
+      "based in #{artist.location}" if artist.location?.length
+    ]).join ', '
 
   displayFollowers: (artist) ->
     if c = artist.counts.follows
