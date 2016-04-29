@@ -1,6 +1,6 @@
 module.exports =
   tabs: tabs = [
-    'description'
+    'about_the_work'
     'exhibition_history'
     'bibliography'
     'provenance'
@@ -9,7 +9,8 @@ module.exports =
   sections: sections = (artwork) ->
     has: (section) ->
       switch section
-        when 'description'
+        when 'about_the_work'
+          artwork.articles.length or
           artwork.publisher? or
           artwork.signature? or
           artwork.description? or
