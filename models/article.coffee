@@ -165,6 +165,8 @@ module.exports = class Article extends Backbone.Model
         $('*:empty').remove()
         $('p').each ->
           $(this).remove() if $(this).text().length is 0
+        $('h3').each ->
+          $(this).replaceWith($('<h2>' + $(this).html() + '</h2>'))
         section.body = $.html()
         section
       else
