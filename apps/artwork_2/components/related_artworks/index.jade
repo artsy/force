@@ -23,5 +23,4 @@ if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
           data-id= layer.id
           data-state='active'
         )
-          - var columns = helpers.related_artworks.masonry(layer.artworks)
-          include ../../../../components/artwork_masonry/index
+          include ./templates/masonry
