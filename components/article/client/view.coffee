@@ -257,7 +257,7 @@ module.exports = class ArticleView extends Backbone.View
     resizeVideo()
 
   setupStickyShare: ->
-    @sticky.add $(".article-share-fixed[data-id=#{@article.get('id')}]")
+    @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
@@ -311,6 +311,7 @@ module.exports = class ArticleView extends Backbone.View
         window.history.replaceState({}, @article.get('id'), @article.href())
         $('.article-edit-container a').attr 'href', editUrl
         @trackPageview()
+        @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeIn()
     $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
       if direction is 'up'
         window.history.replaceState({}, @article.get('id'), @article.href())
