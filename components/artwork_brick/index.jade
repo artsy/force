@@ -32,7 +32,7 @@
     if artwork.is_contactable
       .artwork-brick__metadata__contact
         a( href= artwork.href )
-          | Contact Gallery
+          | Contact #{artwork.partner.type.toLowerCase()}
 
     else if artwork.sale_message
       .artwork-brick__metadata__sale-message
