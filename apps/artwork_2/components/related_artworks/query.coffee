@@ -7,6 +7,7 @@ module.exports = """
     layer(id: "main") {
       id
       name
+      href
       artworks {
         ... artwork_brick
       }
