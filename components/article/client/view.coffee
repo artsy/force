@@ -257,6 +257,7 @@ module.exports = class ArticleView extends Backbone.View
     resizeVideo()
 
   setupStickyShare: ->
+    @fadeInShare = _.once -> @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeTo(250, 1)
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
 
   setupFooterArticles: =>
@@ -306,14 +307,21 @@ module.exports = class ArticleView extends Backbone.View
 
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+    @$container = $(".article-container[data-id=#{@article.get('id')}]")
+    $(@$container).waypoint (direction) =>
       if direction is 'down'
-        window.history.replaceState({}, @article.get('id'), @article.href())
-        $('.article-edit-container a').attr 'href', editUrl
+        # Set the pageview
+        window.history.replaceState {}, @article.get('id'), @article.href()
         @trackPageview()
-        @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeIn()
-    $(".article-container[data-id=#{@article.get('id')}]").waypoint (direction) =>
+        # Update Edit button
+        $('.article-edit-container a').attr 'href', editUrl
+        # Fade in the share button
+        @fadeInShare()
+
+    $(@$container).waypoint (direction) =>
       if direction is 'up'
-        window.history.replaceState({}, @article.get('id'), @article.href())
+        # Setup the pageview
+        window.history.replaceState {}, @article.get('id'), @article.href()
+        # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
