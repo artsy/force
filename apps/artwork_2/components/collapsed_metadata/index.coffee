@@ -3,10 +3,11 @@ inquire = require '../../lib/inquire.coffee'
 ArtworkAuctionView = require '../auction/view.coffee'
 
 module.exports = ->
-  $(document).on 'ajaxStop', ->
-    $.waypoints 'refresh'
-
   $el = $('.js-artwork-collapsed-metadata')
+
+  return unless $el.length
+
+  $(document).on 'ajaxStop', -> $.waypoints 'refresh'
 
   $enter = $('.js-collapsed-metadata--enter')
   $enter
