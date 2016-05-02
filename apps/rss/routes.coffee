@@ -21,10 +21,11 @@ PAGE_SIZE_FACEBOOK = 50
 @instantArticles = (req, res, next) ->
   new Articles().fetch
     data:
+      author_id: sd.ARTSY_EDITORIAL_ID
       published: true
       sort: '-updated_at'
+      instant_article: true
       limit: PAGE_SIZE_FACEBOOK
-      featured: true
     error: res.backboneError
     success: (articles) ->
       articles.each (article) -> article.prepForInstant()

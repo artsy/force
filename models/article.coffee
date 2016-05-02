@@ -158,6 +158,13 @@ module.exports = class Article extends Backbone.Model
         return cb posts
 
   prepForInstant: ->
+
+    replaceTagWith = (htmlStr, findTag, replaceTag ) ->
+      $ = cheerio.load(htmlStr)
+      $(findTag).each ->
+        $(this).replaceWith($('<' + replaceTag + '>' + $(this).html() + '</' + replaceTag + '>'))
+      $.html()
+
     sections =  _.map @get('sections'), (section) ->
       if section.type is 'text'
         $ = cheerio.load(section.body)
@@ -165,9 +172,17 @@ module.exports = class Article extends Backbone.Model
         $('*:empty').remove()
         $('p').each ->
           $(this).remove() if $(this).text().length is 0
-        $('h3').each ->
-          $(this).replaceWith($('<h2>' + $(this).html() + '</h2>'))
         section.body = $.html()
+        section.body = replaceTagWith(section.body, 'h3', 'h2')
+        section
+      else if section.type is 'image'
+        section.caption = replaceTagWith(section.caption, 'p', 'h1') if section.caption
+        section
+      else if section.type is 'image_set'
+        section.images = _.map section.images, (image) ->
+          if image.type is 'image'
+            image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption
+          image
         section
       else
         section
