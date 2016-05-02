@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { AUCTION } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
+inquire = require '../../lib/inquire.coffee'
 helpers = require './helpers.coffee'
 template = -> require('./index.jade') arguments...
 
@@ -11,6 +12,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'click .js-artwork-auction-buyers-premium': 'openBuyersPremium'
     'click .js-artwork-auction-bid-button': 'submit'
     'click .js-artwork-auction-help-modal': 'openHelpModal'
+    'click .js-artwork-auction-ask-specialist': 'askSpecialist'
 
   initialize: ({ @data }) -> #
 
@@ -34,9 +36,13 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     id = $(e.currentTarget).data 'id'
 
     openMultiPageModal 'auction-faqs', ({ view }) ->
-      console.log view, id
       view.subView.state
         .set 'active', id
+
+  askSpecialist: (e) ->
+    e.preventDefault()
+
+    inquire AUCTION.artwork_id
 
   submit: (e) ->
     e.preventDefault()
