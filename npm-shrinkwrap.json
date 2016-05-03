@@ -324,7 +324,8 @@
     },
     "artsy-passport": {
       "version": "1.0.8",
-      "from": "artsy-passport@1.0.8"
+      "from": "artsy-passport@1.0.8",
+      "resolved": "https://registry.npmjs.org/artsy-passport/-/artsy-passport-1.0.8.tgz"
     },
     "artsy-xapp": {
       "version": "1.0.4",
@@ -412,7 +413,8 @@
       "dependencies": {
         "underscore": {
           "version": "1.8.3",
-          "from": "underscore@>=1.5.0 <2.0.0"
+          "from": "underscore@1.8.3",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
         }
       }
     },
@@ -2852,9 +2854,9 @@
       "resolved": "https://registry.npmjs.org/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.3.tgz"
     },
     "jquery-on-infinite-scroll": {
-      "version": "0.0.1",
-      "from": "jquery-on-infinite-scroll@0.0.1",
-      "resolved": "https://registry.npmjs.org/jquery-on-infinite-scroll/-/jquery-on-infinite-scroll-0.0.1.tgz"
+      "version": "1.0.0",
+      "from": "jquery-on-infinite-scroll@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/jquery-on-infinite-scroll/-/jquery-on-infinite-scroll-1.0.0.tgz"
     },
     "jquery.dotdotdot": {
       "version": "0.0.1",
