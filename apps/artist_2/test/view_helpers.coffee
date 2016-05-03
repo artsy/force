@@ -67,14 +67,14 @@ describe 'ArtistViewHelpers', ->
     helpers.formatAlternateNames(alternate_names: ['Joe Shmoe', 'Someone Else']).should.containEql 'Joe Shmoe; Someone Else'
 
   it 'displayNationalityAndBirthdate', ->
-    helpers.displayNationalityAndBirthdate(nationality: 'American', years: 'born 1955')
-      .should.containEql 'American, born 1955'
+    helpers.displayNationalityAndBirthdate(nationality: 'American', birthday: '1955')
+      .should.containEql 'American, b. 1955'
 
     helpers.displayNationalityAndBirthdate(nationality: 'American')
       .should.containEql 'American'
 
-    helpers.displayNationalityAndBirthdate(years: 'born 1955')
-      .should.containEql 'born 1955'
+    helpers.displayNationalityAndBirthdate(birthday: '1955')
+      .should.containEql 'b. 1955'
 
     helpers.displayNationalityAndBirthdate({}).should.containEql ''
 

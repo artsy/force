@@ -93,7 +93,7 @@ module.exports = class OverviewView extends Backbone.View
     @filterView = initWorksSection
       el: @$('#artwork-section')
       model: @model
-      allLoaded: => @fadeInSection()
+      allLoaded: => @fadeInSections()
     @subViews.push @filterView
     # Bottom sections
     @setupRelatedArtists()
