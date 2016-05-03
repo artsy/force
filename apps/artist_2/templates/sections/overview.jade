@@ -1,13 +1,15 @@
 .artist-overview-header
   .sixty-forty-bisected-header
-    if artist.blurb
+    - var artistMeta = viewHelpers.artistMeta(artist)
+    if artist.blurb || artistMeta.length
       .bisected-header-cell
         .artist-blurb.bisected-header-cell-section
           h2 Biography
-          .blurb!= viewHelpers.mdToHtml(artist, 'blurb')
-          - var artistMeta = viewHelpers.artistMeta(artist)
-          if artistMeta.length
+          if artist.blurb
+            .blurb!= viewHelpers.mdToHtml(artist, 'blurb')
+          if artist.blurb && artistMeta.length
             br
+          if artistMeta.length
             .artist-meta-detail!= artistMeta
 
     .bisected-header-cell
