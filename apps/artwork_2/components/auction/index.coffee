@@ -1,7 +1,12 @@
-{ AUCTION } = require('sharify').data
 ArtworkAuctionView = require './view.coffee'
+Sticky = require '../../../../components/sticky/index.coffee'
 
 module.exports = ->
-  return unless AUCTION?
+  $el = $('.js-artwork-auction')
 
-  view = new ArtworkAuctionView el: $('.js-artwork-auction')
+  return unless $el.length
+
+  view = new ArtworkAuctionView el: $el
+
+  sticky = new Sticky
+  sticky.add $el
