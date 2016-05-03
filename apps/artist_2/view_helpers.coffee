@@ -24,7 +24,7 @@ module.exports =
   displayNationalityAndBirthdate: (artist) ->
     _.compact([
       artist.nationality
-      @formatBirthDeath(artist) if artist.birthday?.length
+      @formatBirthDeath artist if artist.birthday?.length
     ]).join ', '
 
   formatBirthDeath: (artist) ->
@@ -36,7 +36,7 @@ module.exports =
   artistMeta: (artist) ->
     _.compact([
       artist.nationality if artist.nationality?.length
-      @formatBirthDeath(artist) if artist.birthday?.length
+      @formatBirthDeath artist if artist.birthday?.length
       artist.hometown if artist.hometown?.length
       "based in #{artist.location}" if artist.location?.length
     ]).join ', '

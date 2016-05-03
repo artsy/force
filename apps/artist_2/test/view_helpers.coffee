@@ -80,7 +80,7 @@ describe 'ArtistViewHelpers', ->
       .should.containEql 'American, 1955–2000'
 
     helpers.displayNationalityAndBirthdate(nationality: 'American', deathday: '2000')
-      .should.containEql 'American, 1955–2000'
+      .should.containEql 'American'
 
     helpers.displayNationalityAndBirthdate(birthday: '1955', deathday: '2000')
       .should.containEql '1955–2000'
