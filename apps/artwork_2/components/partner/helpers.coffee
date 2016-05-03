@@ -1,4 +1,4 @@
-{ uniq } = require 'underscore'
+{ uniq, compact } = require 'underscore'
 { numberFormat } = require 'underscore.string'
 
 module.exports =
@@ -14,5 +14,5 @@ module.exports =
       irregular or word + 's'
 
   cities: (locations) ->
-    uniq locations.map ({ city }) -> city.trim()
+    uniq compact(locations.map ({ city }) -> city?.trim())
       .join ' • '
