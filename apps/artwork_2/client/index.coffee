@@ -28,9 +28,8 @@ module.exports.init = ->
     require '../components/auction/index.coffee'
     require '../components/artists/index.coffee'
     require '../components/banner/index.coffee'
-    require '../components/collapsed_metadata/index.coffee'
+    require '../components/commercial/index.coffee'
     require '../components/images/index.coffee'
-    require '../components/inquiry/index.coffee'
     require '../components/metadata/index.coffee'
   ]
 

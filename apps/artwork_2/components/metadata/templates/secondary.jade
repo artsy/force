@@ -11,7 +11,7 @@
     .artwork-metadata__manufacturer
       = artwork.manufacturer
 
-  unless artwork.edition_sets.length > 1
+  unless artwork.edition_sets && artwork.edition_sets.length > 1
     .artwork-metadata__dimensions
       .artwork-metadata__dimensions__imperial
         = artwork.dimensions.in
@@ -26,4 +26,3 @@
     .artwork-metadata__image-rights
       = artwork.image_rights
 
-  include editions
