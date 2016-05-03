@@ -137,9 +137,13 @@ body.body-article
     width 130px
     height 50px
     border 1px solid gray-color
+    background-color white
+    transition background-color 0.25s
     &:nth-child(3)
       border-left 0px
       border-right 0px
+    &:hover
+      background-color black
   a
     display block
     height 100%
@@ -147,9 +151,11 @@ body.body-article
     .icon-in-table
       display block
       margin-top 8px
+    &:hover
+      color white
 
 .article-section-image
-  width overflow-width
+  max-width overflow-width
   margin auto
   img
     max-width 100%
@@ -379,17 +385,28 @@ body.body-article
   vertical-align middle
 
 .article-share-fixed
-  padding-top 78px
-  margin-left -35px
-  padding-left 93px
-  float left
+  opacity 0
+  padding-top 80px
+  max-width 54px
   z-index 2
+  float left
   a
+    background-color white
     text-decoration none
     display block
-    color gray-dark-color
+    color black
+    transition background-color 0.25s
+    padding 10px
+    border 1px solid gray-lighter-color
+    border-left none
+  a:nth-child(2)
+    border-top none
+    border-bottom none
   a:hover
-    color gray-darker-color
+    background-color black
+    color white
+  i
+    vertical-align middle
 
 .article-section-callout
   float right
@@ -402,12 +419,11 @@ body.body-article
     display inline-block
     vertical-align middle
   .article-section-callout-title
-    font-size 25px
-    line-height 131%
+    garamond-size('l-body')
   .article-section-callout-link
-    avant-garde()
+    avant-garde-size('body')
     text-decoration none
-    font-size 14px
+    margin-top 5px
   img
     max-width 180px
     margin-right 20px
