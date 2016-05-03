@@ -102,8 +102,6 @@ describe 'ArtistViewHelpers', ->
 
   describe 'overviewMeta', ->
     it 'formats correctly', ->
-      artist = birthday: '1900'
-      helpers.artistMeta(artist).should.eql 'b. 1900'
 
       artist = hometown: 'New York, New York'
       helpers.artistMeta(artist).should.eql 'New York, New York'
@@ -111,11 +109,20 @@ describe 'ArtistViewHelpers', ->
       artist = birthday: '1900', hometown: 'New York, New York'
       helpers.artistMeta(artist).should.eql 'b. 1900, New York, New York'
 
+      artist = location: 'New York, New York'
+      helpers.artistMeta(artist).should.eql 'based in New York, New York'
+
+      artist = birthday: '1900', location: 'New York, New York'
+      helpers.artistMeta(artist).should.eql 'b. 1900, based in New York, New York'
+
       artist = birthday: '1900', hometown: 'New York, New York', nationality: 'American', location: 'Chicago, Illinois'
       helpers.artistMeta(artist).should.eql 'American, b. 1900, New York, New York, based in Chicago, Illinois'
 
       artist = birthday: '1900', deathday: '1970', hometown: 'New York, New York', nationality: 'American', location: 'Chicago, Illinois'
       helpers.artistMeta(artist).should.eql 'American, 1900–1970, New York, New York, based in Chicago, Illinois'
+
+      artist = birthday: '1900', deathday: '1970', nationality: 'American'
+      helpers.artistMeta(artist).should.eql ''
 
   it 'formatShowDetail', ->
     item =

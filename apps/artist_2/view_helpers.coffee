@@ -34,6 +34,7 @@ module.exports =
       "b. #{artist.birthday}"
 
   artistMeta: (artist) ->
+    return '' if not (artist.hometown or artist.location)
     _.compact([
       artist.nationality if artist.nationality?.length
       @formatBirthDeath artist if artist.birthday?.length
