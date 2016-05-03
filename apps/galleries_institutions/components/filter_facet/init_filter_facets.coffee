@@ -1,6 +1,7 @@
 PartnerFilterFacet = require './partner_filter_facet.coffee'
 { CATEGORIES } = require('sharify').data
-{ Cities, FeaturedCities } = require 'places'
+{ Cities, FeaturedCities } = require '../partner_cities/index.coffee'
+
 _ = require 'underscore'
 facetDefaults = require './facet_defaults.coffee'
 
