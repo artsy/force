@@ -10,10 +10,12 @@ module.exports = class RelatedArticlesView extends Backbone.View
     numToShow: 4
 
   initialize: (options = {}) ->
+    debugger
     { @numToShow } = _.defaults options, @defaults
     @listenTo @collection, 'sync', @render
 
   render: ->
+    debugger
     @$el.html template
       articles: @collection.take(@numToShow)
       remaining: Math.max((@collection.length - @numToShow), 0)

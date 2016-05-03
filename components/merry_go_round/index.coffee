@@ -12,7 +12,6 @@ setup = ($el, options = {}, callback) ->
   navigation = new MerryGoRoundNavView _.extend {}, options,
     el: $navigation
     flickity: cells.flickity
-
   {
     cells: cells
     navigation: navigation.render()

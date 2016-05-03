@@ -13,14 +13,12 @@ module.exports = class ShowsView extends Backbone.View
     @model.related().artworks.fetch(data: size: 15)
 
   postRender: ->
-    relatedShowsSubView = new RelatedShowsView
+    @subViews.push new RelatedShowsView
       model: @model
       collection: @model.related().shows
       nUp: 3
       maxShows: 20
-    @subViews.push relatedShowsSubView
-
-    @$('#artist-page-content-section').html relatedShowsSubView.render().$el
+      el: @$('#artist-page-content-section')
 
     @subViews.push new ArtworkRailView
       $el: @$(".artist-artworks-rail")
