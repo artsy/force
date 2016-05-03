@@ -10,12 +10,12 @@ query = """
       ... auction
       ... banner
       ... client
-      ... collapsed_metadata
+      ... commercial
       ... deep_zoom
       ... images
-      ... inquiry
       ... meta
       ... metadata
+      ... partner_stub
     }
   }
   #{require './components/actions/query'}
@@ -24,12 +24,12 @@ query = """
   #{require './components/auction/query'}
   #{require './components/banner/query'}
   #{require './client/query'}
-  #{require './components/collapsed_metadata/query'}
+  #{require './components/commercial/query'}
   #{require './components/deep_zoom/query'}
   #{require './components/images/query'}
-  #{require './components/inquiry/query'}
   #{require './components/meta/query'}
   #{require './components/metadata/query'}
+  #{require './components/partner_stub/query'}
 """
 
 helpers = extend [
@@ -39,9 +39,9 @@ helpers = extend [
   artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
-  collapsed_metadata: require './components/collapsed_metadata/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
+  partner_stub: require './components/partner_stub/helpers'
   related_artworks: require './components/related_artworks/helpers'
 ]...
 
@@ -50,8 +50,8 @@ bootstrap = ->
   require('./components/auction/bootstrap') arguments...
   require('./components/banner/bootstrap') arguments...
   require('./client/bootstrap') arguments...
+  require('./components/commercial/bootstrap') arguments...
   require('./components/deep_zoom/bootstrap') arguments...
-  require('./components/inquiry/bootstrap') arguments...
   require('./components/partner/bootstrap') arguments...
 
 @index = (req, res, next) ->

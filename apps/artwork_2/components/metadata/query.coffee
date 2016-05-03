@@ -5,13 +5,13 @@ module.exports = """
     title
     series
     date
+    edition_of
     artists {
       id
       name
       href
     }
     cultural_maker
-    collecting_institution
     medium
     dimensions {
       in
@@ -19,40 +19,11 @@ module.exports = """
     }
     website
     image_rights
-    sale_message
     is_downloadable
-    is_acquireable
-    is_for_sale
     is_contactable
-    is_in_auction
-    partner {
-      id
-      name
-      href
-      type
-      initials
-      is_limited_fair_partner
-      locations {
-        city
-        phone
-      }
-    }
     sale {
-      id
-      is_auction
       sale_artwork(id: $id) {
         lot_number
-      }
-    }
-    edition_of
-    edition_sets {
-      id
-      is_acquireable
-      edition_of
-      price
-      dimensions {
-        in
-        cm
       }
     }
   }

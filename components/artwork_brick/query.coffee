@@ -20,6 +20,7 @@ module.exports = """
     partner(shallow: true) {
       href
       name
+      type
     }
   }
 """

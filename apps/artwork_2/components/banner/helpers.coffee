@@ -3,7 +3,7 @@ clock = require '../clock/index.coffee'
 
 module.exports =
   countdownLabel: (startAt) ->
-    if moment(startAt).isAfter()
+    if moment(startAt).isBefore()
       'Bidding closes in'
     else
       'Bidding opens in'
