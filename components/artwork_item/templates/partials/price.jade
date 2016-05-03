@@ -1,6 +1,6 @@
 //- Display price for non-auctions
 if !hasInstitutionPartner && !hasAuctionPartner && !isAuction
   if artwork.saleMessage() && displayPrice
-    p.artwork-item-sale-price= artwork.saleMessage()
+    p.artwork-item-sale-price.artwork-item-overflow= artwork.saleMessage()
   else if artwork.availabilityMessage()
     p.artwork-item-availability= artwork.availabilityMessage()
