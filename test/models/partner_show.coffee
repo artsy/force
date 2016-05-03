@@ -87,6 +87,12 @@ describe 'PartnerShow', ->
       )
       show.location().should.be.instanceOf(FairLocation)
 
+  describe '#formatShowOrFairCity', ->
+
+    it 'returns undefined without location and fair', ->
+      show = new PartnerShow fabricate 'show', fair: null, location: null
+      _.isUndefined(show.formatShowOrFairCity()).should.be.true()
+
   describe '#runningDates', ->
 
     it 'gives a formatted date span for the running dates', ->
