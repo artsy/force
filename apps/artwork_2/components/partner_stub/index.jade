@@ -1,0 +1,40 @@
+- var partner = artwork.partner
+- var contacts = helpers.partner_stub.contacts(partner.locations)
+- var location = helpers.partner_stub.location(partner.locations)
+
+unless artwork.is_in_auction
+  .artwork-partner-stub( class='js-artwork-partner-stub' )
+    if artwork.collecting_institution
+      .artwork-partner-stub__name
+        = artwork.collecting_institution
+
+    else
+
+      //- Default view
+      h3.artwork-partner-stub__label
+        if artwork.is_for_sale
+          | Offered by
+        else
+          = partner.type
+
+      a.artwork-partner-stub__name( href= partner.href )
+        = partner.name
+        if location
+          = ', '
+          span= location
+
+      if artwork.is_contactable && contacts.length
+        .artwork-partner-stub__phone
+          a( class='js-artwork-partner-stub-phone-toggle' )
+            | Show phone number#{contacts.length === 1 ? '' : 's'}
+
+          .artwork-partner-stub__phone__locations(
+            class='js-artwork-partner-stub-phone-toggleable'
+            data-length= contacts.length
+          )
+            for location in contacts
+              .artwork-partner-stub__phone__locations__location
+                if contacts.length > 1
+                  | #{location.city}:
+                  | &nbsp;
+                = location.phone
