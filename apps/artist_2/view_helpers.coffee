@@ -24,7 +24,7 @@ module.exports =
   displayNationalityAndBirthdate: (artist) ->
     _.compact([
       artist.nationality
-      "b. #{artist.birthday}" if artist.birthday?.length
+      @formatBirthDeath(artist) if artist.birthday?.length
     ]).join ', '
 
   formatBirthDeath: (artist) ->

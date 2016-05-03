@@ -76,6 +76,15 @@ describe 'ArtistViewHelpers', ->
     helpers.displayNationalityAndBirthdate(birthday: '1955')
       .should.containEql 'b. 1955'
 
+    helpers.displayNationalityAndBirthdate(nationality: 'American', birthday: '1955', deathday: '2000')
+      .should.containEql 'American, 1955–2000'
+
+    helpers.displayNationalityAndBirthdate(nationality: 'American', deathday: '2000')
+      .should.containEql 'American, 1955–2000'
+
+    helpers.displayNationalityAndBirthdate(birthday: '1955', deathday: '2000')
+      .should.containEql '1955–2000'
+
     helpers.displayNationalityAndBirthdate({}).should.containEql ''
 
   it 'displayFollowers', ->
