@@ -42,7 +42,12 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push subView
 
   setupBlurb: ->
-    gradient $('.artist-overview-header'), limit: 170, label: 'Read More', heightBreakOffset: 20
+    gradient $('.artist-overview-header'),
+      limit: 170,
+      label: 'Read More',
+      heightBreakOffset: 20
+      onClick: =>
+        @sticky.rebuild()
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
   setupRelatedSection: ($el) ->
@@ -64,8 +69,7 @@ module.exports = class OverviewView extends Backbone.View
 
   waitForFilter: ->
     dfd = $.Deferred()
-    { filter, artworks } = @filterView
-    @listenToOnce artworks, 'sync error', dfd.resolve
+    @listenToOnce @filterView.artworks, 'sync error', dfd.resolve
     @fetches.push dfd.promise()
 
   renderRelatedArtists: (type) ->
@@ -90,7 +94,7 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupRelatedGenes()
     # Main section
-    @filterView = initWorksSection
+    { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
       model: @model
       allLoaded: => @fadeInSections()
