@@ -12,7 +12,7 @@ module.exports = class FollowButton extends Backbone.View
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
-    { @following, @notes, @modelName, @href } = options
+    { @following, @notes, @modelName, @href, @contextPage, @contextModule } = options
 
     @label = if options.label then options.label else "#{@modelName}s"
 
@@ -22,10 +22,6 @@ module.exports = class FollowButton extends Backbone.View
 
     @listenTo @following, "add:#{@model.id}", @change
     @listenTo @following, "remove:#{@model.id}", @change
-
-    @analyticsFollowMessage = options.analyticsFollowMessage or @defaultAnalyticsMessage('Followed')
-    @analyticsUnfollowMessage = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
-
     @$el.addClass "no-touch"
 
     if @modelName is 'artist' and @following
@@ -35,9 +31,6 @@ module.exports = class FollowButton extends Backbone.View
         following: @following
 
     @change()
-
-  defaultAnalyticsMessage: (action) ->
-    "#{action} #{@modelName}"
 
   change: ->
     state = if @following.isFollowing(@model.id) then 'following' else 'follow'
@@ -54,13 +47,20 @@ module.exports = class FollowButton extends Backbone.View
         destination: @href || "#{@model.href()}/follow"
       return false
 
+    # remove null values
+    analyticsOptions = _.pick
+      modelName: @modelName
+      entity_slug: @model.id
+      entity_id: @model.get('_id')
+      contextPage: @contextPage
+      contextModule: @contextModule
+    , _.identity
+
     if @following.isFollowing @model.id
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
-      analyticsHooks.trigger 'followable:unfollowed',
-        message: @analyticsUnfollowMessage
-        modelName: @modelName
-        id: @model.id
+      analyticsHooks.trigger 'followable:unfollowed', analyticsOptions
+
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
       $('.artist-suggestion-popover').remove()
@@ -71,9 +71,7 @@ module.exports = class FollowButton extends Backbone.View
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
-      analyticsHooks.trigger 'followable:followed',
-        message: @analyticsFollowMessage
-        modelName: @modelName
-        id: @model.id
+      analyticsHooks.trigger 'followable:followed', analyticsOptions
+
 
     false
