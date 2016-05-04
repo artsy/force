@@ -32,8 +32,8 @@ mapTypeClasses =
 
   Q.all([
     fetchPrimaryCarousel(params)
-    partnerCities.fetch()
-    partnerFeaturedCities.fetch()
+    partnerCities.fetch(cache: true)
+    partnerFeaturedCities.fetch(cache: true)
     metaphysics(
       query: query
       variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
