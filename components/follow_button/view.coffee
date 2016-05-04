@@ -57,6 +57,7 @@ module.exports = class FollowButton extends Backbone.View
     if @following.isFollowing @model.id
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
+      @trigger 'unfollowed'
       analyticsHooks.trigger 'followable:unfollowed',
         message: @analyticsUnfollowMessage
         modelName: @modelName
@@ -71,6 +72,7 @@ module.exports = class FollowButton extends Backbone.View
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
+      @trigger 'followed'
       analyticsHooks.trigger 'followable:followed',
         message: @analyticsFollowMessage
         modelName: @modelName
