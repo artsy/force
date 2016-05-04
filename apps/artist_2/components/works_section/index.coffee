@@ -37,4 +37,4 @@ module.exports = ( { el, model, allLoaded } ) ->
     sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
     sticky.add filterView.$('#artwork-filter-selection')
 
-  return filterView
+  return { filterView, sticky }
