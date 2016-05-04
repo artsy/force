@@ -4,8 +4,9 @@ Q = require 'bluebird-q'
 qs = require 'qs'
 metaphysics = require '../../lib/metaphysics'
 { API_URL } = require('sharify').data
-{ FeaturedCities } = require 'places'
 Partners = require '../../collections/partners'
+PartnerCities = require '../../collections/partner_cities'
+PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 Profiles = require '../../collections/profiles'
 ViewHelpers = require './components/partner_cell/view_helpers'
 query = require './queries/partner_categories_query'
@@ -26,9 +27,13 @@ mapTypeClasses =
   type = mapType[req.params.type]
   searchParams = _.pick(req.query, 'location', 'category')
   params = _.extend type: type, searchParams
+  partnerCities = new PartnerCities()
+  partnerFeaturedCities = new PartnerFeaturedCities()
 
   Q.all([
     fetchPrimaryCarousel(params)
+    partnerCities.fetch(cache: true)
+    partnerFeaturedCities.fetch(cache: true)
     metaphysics(
       query: query
       variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
@@ -39,8 +44,10 @@ mapTypeClasses =
           partners: mergeBuckets(category.primary, category.secondary),
           facet: 'category'
 
-  ]).spread (profiles, categories) ->
+  ]).spread (profiles, partnerCities, partnerFeaturedCities, categories) ->
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
+    res.locals.sd.PARTNER_CITIES = partnerCities
+    res.locals.sd.PARTNER_FEATURED_CITIES = partnerFeaturedCities
     res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
     res.render 'index',

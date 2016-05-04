@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-{ Cities } = require 'places'
+{ Cities } = require '../../../../components/partner_cities/index.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require './view_helpers.coffee'
 Profile = require '../../../../models/profile.coffee'

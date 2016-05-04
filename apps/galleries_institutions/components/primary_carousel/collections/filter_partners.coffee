@@ -3,7 +3,7 @@ qs = require 'qs'
 Backbone = require 'backbone'
 Partners = require '../../../../../collections/partners.coffee'
 { API_URL } = require('sharify').data
-{ Cities } = require 'places'
+{ Cities } = require '../../../../../components/partner_cities/index.coffee'
 
 module.exports = class FilterPartners extends Partners
 
