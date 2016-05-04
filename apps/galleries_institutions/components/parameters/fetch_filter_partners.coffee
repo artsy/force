@@ -4,7 +4,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 partnerTypes = require '../../queries/partner_types.coffee'
 query = require '../../queries/partners_filter_query.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
-{ Cities } = require '../partner_cities/index.coffee'
+{ Cities } = require '../../../../components/partner_cities/index.coffee'
 
 module.exports = class FetchFilterPartners extends Backbone.Model
 
