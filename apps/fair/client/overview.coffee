@@ -64,8 +64,7 @@ module.exports = class Overview extends Backbone.View
       modelName: 'profile'
       model: @model
       label: @model.name
-      analyticsFollowMessage: 'Followed fair, via fair microsite page'
-      analyticsUnfollowMessage: 'Unfollowed fair, via fair microsite page'
+      contextPage: "Fair page"
     @following?.syncFollows [@model.id]
 
 
