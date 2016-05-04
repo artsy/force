@@ -12,10 +12,12 @@ nPartners = (n) ->
   [1..n].map (n) ->
     fabricate 'partner', _id: _.uniqueId(), id: _.uniqueId()
 
+FetchFilterPartners.__set__ 'Cities', [{"slug": "new-york-ny-usa", "name": "New York", "full_name": "New York, NY, USA", "coords": [40.71, -74.01 ] }]
+
 describe 'FetchFilterPartners', ->
   describe '#initialize', ->
     beforeEach ->
-      @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
+      @params = new Params { location: 'new-york-ny-usa', category: 'painting', type: 'gallery' }
       @filterPartners = new FetchFilterPartners params: @params, term: 'test'
 
     it 'sets all starting values', ->
@@ -28,7 +30,7 @@ describe 'FetchFilterPartners', ->
 
   describe '#reset', ->
     beforeEach ->
-      @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
+      @params = new Params { location: 'new-york-ny-usa', category: 'painting', type: 'gallery' }
       @filterPartners = new FetchFilterPartners params: @params
 
     afterEach ->
@@ -57,7 +59,7 @@ describe 'FetchFilterPartners', ->
   describe 'formatVariables', ->
     describe 'with parameters', ->
       beforeEach ->
-        @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
+        @params = new Params { location: 'new-york-ny-usa', category: 'painting', type: 'gallery' }
         @filterPartners = new FetchFilterPartners params: @params
         @filterPartnersWithSearch = new FetchFilterPartners params: @params, term: 'search term'
 
@@ -72,7 +74,7 @@ describe 'FetchFilterPartners', ->
 
       it 'formats city', ->
         variables = @filterPartners.formatVariables()
-        variables.near.should.equal "40.7127837,-74.0059413"
+        variables.near.should.equal "40.71,-74.01"
 
       it 'includes term when it was initialized with term', ->
         variables = @filterPartnersWithSearch.formatVariables()
@@ -138,7 +140,7 @@ describe 'FetchFilterPartners', ->
           @stub.returns Q.promise (resolve, reject) ->
             resolve _.extend {}, results, aggregationsResponse
 
-          @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
+          @params = new Params { location: 'new-york-ny-usa', category: 'painting', type: 'gallery' }
           @filterPartners = new FetchFilterPartners params: @params, term: 'search term'
 
         afterEach ->
@@ -174,7 +176,7 @@ describe 'FetchFilterPartners', ->
             @stub.args[0][0].variables.should.deepEqual {
               category: 'painting',
               type: [ 'GALLERY' ],
-              near: '40.7127837,-74.0059413',
+              near: '40.71,-74.01',
               term: 'search term',
               page: 1,
               includeAggregations: true,
@@ -205,7 +207,7 @@ describe 'FetchFilterPartners', ->
           @stub.returns Q.promise (resolve, reject) ->
             resolve results: hits: nPartners(10)
 
-          @params = new Params { location: 'new-york', category: 'painting', type: 'gallery' }
+          @params = new Params { location: 'new-york-ny-usa', category: 'painting', type: 'gallery' }
           @filterPartners = new FetchFilterPartners params: @params
           @filterPartners.page = 2
           @filterPartners.partners = nPartners(10)
@@ -241,7 +243,7 @@ describe 'FetchFilterPartners', ->
             @stub.args[0][0].variables.should.deepEqual {
               category: 'painting',
               type: [ 'GALLERY' ],
-              near: '40.7127837,-74.0059413',
+              near: '40.71,-74.01',
               page: 2,
               includeAggregations: false,
               includeResults: true
