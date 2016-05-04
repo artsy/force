@@ -28,14 +28,12 @@
 
 .pcc-body
   position relative
+  .mgr-arrow-right
+  .mgr-arrow-left
+    offset = partner-cell-metadata-height/2
+    top calc('50% - %s' % offset)
+    user-select none
 
 .pcc-content
   white-space nowrap
   overflow hidden
-
-.pcc-prev
-.pcc-next
-  > i
-    offset = partner-cell-metadata-height/2
-    top calc('50% - %s' % offset)
-    user-select none
