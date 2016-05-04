@@ -15,7 +15,7 @@ module.exports = class ArticlesView extends Backbone.View
 
   postRender: ->
     @subViews.push new RelatedArticlesView
-      el: @$('.artist-page-related-articles')
+      el: @$('#artist-related-articles-content')
       collection: @model.related().articles
       numToShow: 4
 
@@ -25,6 +25,9 @@ module.exports = class ArticlesView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+
+    $el = @$('#artist-related-articles-section').show()
+    _.defer -> $el.addClass 'is-fade-in'
 
   render: ->
     @$el.html template

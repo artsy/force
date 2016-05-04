@@ -18,7 +18,7 @@ module.exports = class ShowsView extends Backbone.View
       collection: @model.related().shows
       nUp: 3
       maxShows: 20
-      el: @$('#artist-page-content-section')
+      el: @$('#artist-related-shows-content')
 
     @subViews.push new ArtworkRailView
       $el: @$(".artist-artworks-rail")
@@ -26,6 +26,9 @@ module.exports = class ShowsView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+
+    $el = $('#artist-related-shows-section').show()
+    _.defer -> $el.addClass 'is-fade-in'
 
   renderHeader: ->
     statuses = @model.related().shows.invoke 'has', 'fair'

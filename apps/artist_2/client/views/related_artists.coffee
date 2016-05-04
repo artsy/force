@@ -19,7 +19,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
         collection = @model.related()[key]
         collection.fetch success: =>
           subView = new ArtistFillwidthList
-            el: @$("#artist-related-#{key}")
+            el: @$("#artist-related-#{key}-content")
             collection: collection
             user: @user
           subView.fetchAndRender()

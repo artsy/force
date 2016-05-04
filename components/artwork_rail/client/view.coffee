@@ -12,7 +12,6 @@ module.exports = class ArtworkRailView extends Backbone.View
     'click .artwork-item-contact-seller': 'contactSeller'
 
   initialize: ({ @$el, @title, @viewAllUrl, @imageHeight = 220, @railId, @collection, @includeContact = true }) ->
-    debugger
     @user ?= User.instantiate()
     @collection.on 'sync', @render, this
 
@@ -31,7 +30,6 @@ module.exports = class ArtworkRailView extends Backbone.View
         inquiry: inquiry
 
   render: ->
-    debugger
     @$el.html template
       artworks: @collection.models
       title: @title
@@ -44,7 +42,6 @@ module.exports = class ArtworkRailView extends Backbone.View
     this
 
   postRender: ->
-    debugger
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: true
       wrapAround: true
