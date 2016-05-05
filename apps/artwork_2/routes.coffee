@@ -63,6 +63,7 @@ bootstrap = ->
     .then (data) ->
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
+      res.locals.sd.PARAMS = req.params
       res.render 'index', data
 
     .catch next
