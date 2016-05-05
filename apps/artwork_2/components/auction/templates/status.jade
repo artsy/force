@@ -3,9 +3,20 @@
 .artwork-auction__bid-status
   .artwork-auction__bid-status__bid
     if sale_artwork.counts.bidder_positions
-      | Current Bid:
+      | Current Bid
     else
-      | Starting Bid:
+      | Starting Bid
+
+    if me && me.bidder_status
+      - var status = me.bidder_status
+
+      .artwork-auction__bid-status__bidder-status(
+        data-status= (status.is_highest_bidder ? 'highest' : 'outbid')
+      )
+        if status.is_highest_bidder
+          | Highest Bid ▲
+        else
+          | Outbid ▼
 
   .artwork-auction__bid-status__amount
     = sale_artwork.current_bid.amount

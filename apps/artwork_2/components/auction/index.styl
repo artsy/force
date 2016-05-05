@@ -8,13 +8,26 @@
     block-margins(distance(gutter / 2, 'garamond-s-body'))
 
   &__bid-status
+    position relative
     serif('l-caption')
     padding distance(gutter / 2) 0
     border-top 1px solid gray-lighter-color
     border-bottom @border-top
 
     &__bid
-      sans('body')
+    &__bidder-status
+      sans('s-headline')
+
+    &__bidder-status
+      position absolute
+      top distance(gutter / 2)
+      right @top
+
+      &[data-status='highest']
+        color new-green-color
+
+      &[data-status='outbid']
+        color new-red-color
 
     &__amount
       sans('xl-headline')

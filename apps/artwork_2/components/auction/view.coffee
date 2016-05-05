@@ -1,13 +1,16 @@
 { defer, extend } = require 'underscore'
 Backbone = require 'backbone'
-{ AUCTION } = require('sharify').data
+{ AUCTION, CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
+AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 helpers = require './helpers.coffee'
-template = -> require('./index.jade') arguments...
+template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkAuctionView extends Backbone.View
+  className: 'artwork-auction'
+
   events:
     'click .js-artwork-auction-buyers-premium': 'openBuyersPremium'
     'click .js-artwork-auction-bid-button': 'submit'
@@ -48,6 +51,14 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     e.preventDefault()
 
     form = new Form $form: @$('.js-artwork-auction-bid')
+
+    if not CURRENT_USER?
+      return new AuthModalView
+        width: '500px',
+        mode: 'register'
+        copy: 'Sign up to bid'
+        destination: form.action()
+
     return unless form.isReady()
 
     form.state 'loading'

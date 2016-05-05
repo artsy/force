@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-{ CLIENT } = require('sharify').data
 metaphysics = require '../../../../lib/metaphysics.coffee'
 ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
 helpers = require './helpers.coffee'

@@ -1,16 +1,4 @@
 if artwork.is_in_auction
-  - var auction = artwork.sale
-  - var sale_artwork = auction.sale_artwork
-
-  .artwork-auction( class='js-artwork-auction' )
-    if auction.is_auction_promo
-      //- TODO: Is this still a thing?
-    else if auction.is_preview || auction.is_open
-      include ./templates/estimate
-      include ./templates/bidder
-      include ./templates/status
-      include ./templates/bid
-      include ./templates/buy_now
-      include ./templates/help
-    else if auction.is_closed
-      include ./templates/closed
+  .js-artwork-auction-container
+    .artwork-auction( class='js-artwork-auction' )
+      include ./templates/index
