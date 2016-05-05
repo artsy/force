@@ -17,7 +17,7 @@ unless artwork.is_in_auction
         else
           = partner.type
 
-      a.artwork-partner-stub__name( href= partner.href )
+      a.artwork-partner-stub__name( href= (partner.is_linkable ? partner.href : undefined) )
         = partner.name
         if location
           = ', '

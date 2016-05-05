@@ -6,6 +6,7 @@ module.exports = """
     is_for_sale
     partner {
       type
+      is_linkable
       href
       name
       locations {
