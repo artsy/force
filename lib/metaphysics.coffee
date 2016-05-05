@@ -11,7 +11,7 @@ metaphysics = ({ method, query, variables, req } = {}) ->
     r = request[method] METAPHYSICS_ENDPOINT
       .set 'Accept', 'application/json'
 
-    if (token = req?.user?.get 'accessToken')?
+    if (token = req?.user?.get?('accessToken') or req?.user?.accessToken)?
       r.set 'X-ACCESS-TOKEN': token
 
     if method is 'get'
