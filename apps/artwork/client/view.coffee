@@ -272,8 +272,8 @@ module.exports = class ArtworkView extends Backbone.View
         following: @following
         modelName: 'artist'
         model: artist
-        contextPage: "Artwork page"
-        contextModule: "Artwork"
+        context_page: "Artwork page"
+        context_module: "Artwork"
 
     @following.syncFollows(@artists.pluck 'id') if @currentUser?
 

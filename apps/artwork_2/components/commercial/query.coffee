@@ -1,5 +1,6 @@
 module.exports = """
   fragment commercial on Artwork {
+    _id
     id
     is_acquireable
     is_contactable

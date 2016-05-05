@@ -1,5 +1,6 @@
 module.exports = """
   fragment metadata on Artwork {
+    _id
     id
     href
     title
@@ -7,6 +8,7 @@ module.exports = """
     date
     edition_of
     artists {
+      _id
       id
       name
       href

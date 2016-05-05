@@ -64,8 +64,8 @@ module.exports = class PrimaryCarousel extends Backbone.View
         following: @following
         model: profile
         modelName: 'profile'
-        contextPage: "Galleries / Institutions page"
-        contextModule: "Main carousel"
+        context_page: "Galleries / Institutions page"
+        context_module: "Main carousel"
 
   remove: ->
     @destroyFlickity()

@@ -31,7 +31,12 @@
 
     if artwork.is_contactable
       .artwork-brick__metadata__contact
-        a( href= artwork.href )
+        a(
+          class='analytics-artwork-contact-seller'
+          href= artwork.href
+          data-artwork_id= artwork._id
+          data-context_type='artwork feed item'
+        )
           | Contact #{artwork.partner.type.toLowerCase()}
 
     else if artwork.sale_message

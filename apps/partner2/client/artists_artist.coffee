@@ -100,8 +100,8 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     $button = @$('.follow-button')
     following = new Following null, kind: 'artist' if sd.CURRENT_USER?
     new FollowButton
-      contextPage: "Partner profile page"
-      contextModule: "Artists tab"
+      context_page: "Partner profile page"
+      context_module: "Artists tab"
       following: following
       model: @artist
       modelName: 'artist'

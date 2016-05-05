@@ -22,8 +22,8 @@ module.exports = class RelatedShowView extends Backbone.View
     @following.syncFollows [@partner.get('default_profile_id')]
 
     @followButton = new FollowButton
-      contextPage: "Artwork page"
-      contextModule: "Related Show module"
+      context_page: "Artwork page"
+      context_module: "Related Show module"
       el: @$('.plus-follow-button')
       following: @following
       modelName: 'profile'

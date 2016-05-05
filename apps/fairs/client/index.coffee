@@ -37,7 +37,7 @@ module.exports.FairsView = class FairsView extends Backbone.View
             model: new Profile fair.profile
             label: fair.name
             href: "#{fair.profile.href}/follow"
-            contextPage: "Fairs page"
+            context_page: "Fairs page"
 
           fair.profile.id
     )

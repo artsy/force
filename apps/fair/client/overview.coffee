@@ -64,7 +64,7 @@ module.exports = class Overview extends Backbone.View
       modelName: 'profile'
       model: @model
       label: @model.name
-      contextPage: "Fair page"
+      context_page: "Fair page"
     @following?.syncFollows [@model.id]
 
 

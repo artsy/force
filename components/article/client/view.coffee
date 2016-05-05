@@ -138,7 +138,7 @@ module.exports = class ArticleView extends Backbone.View
         following: @following
         modelName: 'artist'
         model: artist
-        contextPage: "Article page"
+        context_page: "Article page"
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 

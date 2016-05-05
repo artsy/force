@@ -25,7 +25,11 @@ unless artwork.is_in_auction
 
       if artwork.is_contactable && contacts.length
         .artwork-partner-stub__phone
-          a( class='js-artwork-partner-stub-phone-toggle' )
+          a(
+            class='js-artwork-partner-stub-phone-toggle analytics-artwork-show-phone-number'
+            data-partner_id= partner._id
+            data-artwork_id= artwork._id
+          )
             | Show phone number#{contacts.length === 1 ? '' : 's'}
 
           .artwork-partner-stub__phone__locations(

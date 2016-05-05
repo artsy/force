@@ -1,5 +1,6 @@
 module.exports = """
   fragment artwork_brick on Artwork {
+    _id
     id
     href
     title

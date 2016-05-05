@@ -55,7 +55,7 @@ module.exports = class CategoriesView extends StepView
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      contextPage: "Personalize page"
+      context_page: "Personalize page"
       modelName: 'Gene'
       model: model
       el: el
