@@ -17,6 +17,7 @@ module.exports = class PartnerCellView extends Backbone.View
       following: @following
       model: new Profile @partner.profile
       modelName: 'profile'
+      contextPage: "Galleries / Institutions page"
 
   render: ->
     city = _.findWhere Cities, slug: @preferredCitySlug if @preferredCitySlug

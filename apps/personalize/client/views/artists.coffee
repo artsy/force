@@ -83,6 +83,7 @@ module.exports = class ArtistsView extends StepView
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
       notes: 'Followed from /personalize'
+      contextPage: "Personalize page"
       following: @following
       model: model
       modelName: 'artist'

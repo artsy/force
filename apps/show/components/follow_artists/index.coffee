@@ -14,8 +14,7 @@ module.exports = (artists) ->
       modelName: 'artist'
       model: artist
       href: "#{artist.href}/follow"
-      analyticsFollowMessage: 'Followed artist, via show page'
-      analyticsUnfollowMessage: 'Unfollowed artist, via show page'
+      contextPage: "Show page"
 
     artist.id
 

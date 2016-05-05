@@ -63,8 +63,8 @@ module.exports = class ImageSetView extends Backbone.View
       following: @following
       modelName: 'artist'
       model: artist
-      analyticsFollowMessage: 'Followed artist, via image set modal'
-      analyticsUnfollowMessage: 'Unfollowed artist, via image set modal'
+      contextPage: "Article page"
+      contextModule: "Image set module"
       href: sd.APP_URL + sd.CURRENT_PATH
 
   preload: ->

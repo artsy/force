@@ -14,8 +14,6 @@ module.exports = class ShowsFeed extends FeedView
         el: $feedItem.find(".feed-item-top-section")
         model: model
         followProfiles: @followProfiles
-        analyticsFollowMessage: @analyticsFollowMessage
-        analyticsUnfollowMessage: @analyticsUnfollowMessage
 
     profileIds = shows.map (s) -> s.get('partner')?.default_profile_id
     @followProfiles?.syncFollows profileIds

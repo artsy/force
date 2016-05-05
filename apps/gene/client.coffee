@@ -68,6 +68,7 @@ module.exports.init = ->
     following: following
     modelName: 'categorie'
     model: gene
+    contextPage: "Gene page"
   following?.syncFollows [ gene.id ]
 
   blurb $('.js-gene-blurb'), limit: 250

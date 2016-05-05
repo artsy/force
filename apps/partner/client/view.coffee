@@ -109,8 +109,7 @@ module.exports = class PartnerView extends Backbone.View
       following: @following
       modelName: 'partner'
       model: @model
-      analyticsFollowMessage: 'Followed partner profile from /partner'
-      analyticsUnfollowMessage: 'Unfollowed partner profile from /partner'
+      contextPage: "Partner profile page"
 
     @following?.syncFollows [@profile.get('id')]
 

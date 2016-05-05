@@ -21,6 +21,9 @@ module.exports = (req, res, next) ->
   res.locals.helpers = helpers
   res.locals[key] = helper for key, helper of templateModules
 
+  # Cache views if production or staging
+  res.locals.cache = true if NODE_ENV is 'production' or NODE_ENV is 'staging'
+
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')
 
