@@ -1,3 +1,6 @@
+include ../../../components/bordered_pulldown/mixin
+include ../../../node_modules/artsy-ezel-components/pagination/paginator
+
 a( href="/artist/#{artist.id}" ).contextual-return-link
   i.icon-chevron-small-left
   | Back to #{artist.get('name')}
