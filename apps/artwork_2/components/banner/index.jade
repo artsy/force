@@ -24,7 +24,9 @@ if artwork.banner
                 | In Past Show
 
           a( href= banner.href )
-            | #{banner.name} at #{banner.partner.name}
+            | #{banner.name}
+            if banner.partner
+              | at #{banner.partner.name}
 
     else
       if banner.profile && banner.profile.icon
