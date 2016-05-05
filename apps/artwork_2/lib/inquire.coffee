@@ -1,3 +1,4 @@
+Promise = require 'bluebird-q'
 User = require '../../../models/user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
@@ -8,8 +9,9 @@ module.exports = (id) ->
   inquiry = new ArtworkInquiry notification_delay: 600
   artwork = new Artwork id: id
 
-  artwork.fetch().then ->
-    openInquiryQuestionnaireFor
-      user: user
-      artwork: artwork
-      inquiry: inquiry
+  Promise artwork.fetch()
+    .then ->
+      openInquiryQuestionnaireFor
+        user: user
+        artwork: artwork
+        inquiry: inquiry
