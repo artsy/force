@@ -39,6 +39,7 @@ helpers = extend [
   artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
+  commercial: require './components/commercial/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
   partner_stub: require './components/partner_stub/helpers'
