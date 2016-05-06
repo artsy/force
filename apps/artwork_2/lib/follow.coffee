@@ -12,7 +12,7 @@ module.exports = ($els) ->
   $els.map ->
     $el = $(this)
 
-    { id, type } = $el.data()
+    { id, _id, type } = $el.data()
 
     if user = CurrentUser.orNull()
       following = new Following null, kind: type
@@ -22,5 +22,5 @@ module.exports = ($els) ->
       el: $el
       following: following
       modelName: type
-      model: new MODELS[type] id: id
-      contextPage: "Artwork page"
+      model: new MODELS[type] id: id, _id: _id
+      context_page: 'Artwork page'

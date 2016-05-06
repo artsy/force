@@ -29,7 +29,10 @@
 
 .artwork-table__cell.artwork-table__cell--location
     if artwork.partnerLink()
-      a.artwork-partner-name( href= artwork.partnerLink() )
+      a.artwork-partner-name(
+        class='analytics-artwork-partner-link'
+        href= artwork.partnerLink()
+      )
         = artwork.partnerName()
     else
       | #{artwork.partnerName()}

@@ -68,6 +68,6 @@ module.exports.init = ->
     model: profile
     modelName: 'profile'
     label: fairOrg.get('name')
-    contextPage: "Year round fair page"
+    context_page: "Year round fair page"
 
   following?.syncFollows [fairOrg.get('profile_id')]

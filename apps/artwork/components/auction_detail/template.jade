@@ -61,7 +61,9 @@ else
     .artwork-meta-price
       .artwork-meta-price-label.is-not-sold Buy Now Price
       .artwork-meta-price-amount= artwork.priceDisplay()
-    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button(
+      class='analytics-artwork-acquire'
+    )
       | Buy Now
 
   .abf-help

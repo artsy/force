@@ -24,13 +24,18 @@ if helpers.partner.isDisplayable(partner)
 
       .artwork-partner__metadata__actions
         if artwork.is_contactable
-          a.avant-garde-button-black.is-small( class='js-artwork-partner-contact' )
-            | Contact Gallery
+          a.avant-garde-button-black.is-small(
+            class='js-artwork-partner-contact analytics-artwork-contact-seller'
+            data-artwork_id= artwork._id
+            data-context_type='partner-module'
+          )
+            | Contact #{artwork.partner.type}
 
         if profile
           a.avant-garde-button-white.follow-button.is-small(
             class='js-artwork-partner-follow'
             data-type='profile'
+            data-_id= profile._id
             data-id= profile.id
           )
 

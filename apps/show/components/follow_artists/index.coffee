@@ -14,7 +14,7 @@ module.exports = (artists) ->
       modelName: 'artist'
       model: artist
       href: "#{artist.href}/follow"
-      contextPage: "Show page"
+      context_page: "Show page"
 
     artist.id
 

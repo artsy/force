@@ -46,7 +46,8 @@ if artwork.is_contactable
             )
 
     button.avant-garde-button-black(
-      class='js-artwork-inquire-button'
-      data-artwork-id= artwork.id
+      class='js-artwork-inquire-button analytics-artwork-contact-seller'
+      data-artwork_id= artwork._id
+      data-context_type='sidebar'
     )
       | Contact #{artwork.partner.type}

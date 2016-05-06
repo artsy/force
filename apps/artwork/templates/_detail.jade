@@ -119,7 +119,9 @@
 
   //- Buy
   if artwork.get('acquireable')
-    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button(
+      class='analytics-artwork-acquire'
+    )
       | Buy
 
   if artwork.showActionsList(user)
@@ -131,6 +133,7 @@
 
       if artwork.isDownloadable(user)
         a.artwork-download-button(
+          class='analytics-artwork-download'
           href= "#{artwork.href()}/download/#{artwork.downloadableFilename()}"
           target='_blank'
           download

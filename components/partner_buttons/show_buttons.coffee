@@ -16,7 +16,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
       modelName: 'profile'
       model: new Profile(id: @model.get('partner')?.default_profile_id)
       following: @following
-      contextModule: 'Partner show module'
+      context_module: 'Partner show module'
 
   events:
     'click .partner-buttons-contact': 'contactGallery'
