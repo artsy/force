@@ -310,7 +310,7 @@
     "artsy-ezel-components": {
       "version": "0.0.5",
       "from": "git://github.com/artsy/artsy-ezel-components.git",
-      "resolved": "git://github.com/artsy/artsy-ezel-components.git#3a3ab6fae68aff2ab3c574182573de40f8c28601"
+      "resolved": "git://github.com/artsy/artsy-ezel-components.git#7d88dea9a488fca5a3bd63074445a5ac5e877ab1"
     },
     "artsy-gemini-upload": {
       "version": "0.0.6",
