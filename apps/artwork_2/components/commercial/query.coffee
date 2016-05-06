@@ -6,6 +6,10 @@ module.exports = """
     is_contactable
     is_in_auction
     sale_message
+    artists {
+      name
+      is_consignable
+    }
     partner {
       id
       name
