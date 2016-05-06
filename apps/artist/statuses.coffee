@@ -23,7 +23,7 @@ module.exports = class Statuses
           @fetchStatus 'contemporary'
         ]
           .then (statuses) =>
-            @statuses = _.extend { artworks: @artist.get('published_artworks_count') > 0 }, statuses...
+            @statuses = _.extend { artworks: @artist.get('published_artworks_count') > 0, auction_lots: @artist.get('display_auction_link') }, statuses...
             cache.setHash @key, @statuses
             resolve @statuses
           .catch reject

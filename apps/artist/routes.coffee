@@ -23,6 +23,7 @@ Carousel = require './carousel'
     statuses.fetch cache: true
   ]
     .then ->
+      return next() unless artist.get('display_auction_link')
       nav = new Nav artist: artist, statuses: statuses.statuses
 
       if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
