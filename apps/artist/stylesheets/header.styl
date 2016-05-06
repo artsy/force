@@ -1,21 +1,47 @@
 .artist-header
   position relative
-  margin-top 80px
+  margin-top 30px
   h2
     margin 10px 0
-  a
-    text-decoration none
+
+.artist-header-flex
+  display flex
+  flex-direction row
+  align-content stretch
+  align-items flex-start
+  justify-content space-between
+  .artist-header-meta
+    flex-basis calc(50% \- 15px)
+    flex-grow 1
+    flex-shrink 0
+  .consignment-cta
+  .current-item
+    margin-left 30px
+    flex-grow 0
+    flex-shrink 0
+
+  .current-item
+    max-width calc(33% \- 20px)
+    flex-basis calc(33% \- 20px)
+    &.compact
+      .current-item-image
+        display none
+
+  .consignment-cta, .current-item.compact
+    max-width calc(25% \- 22.5px)
+    flex-basis calc(25% \- 22.5px)
+
 .artist-header-name
-  margin 15px 0
+  margin-bottom 3px
 .artist-header-meta-sep
   margin 0 0.5em
 .artist-header-birthdate
 .artist-header-follow-count
   color gray-darker-color
-.artist-header-birthdate
-  margin 15px 0
 .artist-header-follow-count
   margin 15px 10px
+.artist-header-birthdate
+  margin-bottom 8px
 .artist-header-empty
   margin 20px 0
 
@@ -55,18 +81,18 @@
   .artist-share
     right 40px
 
-.artist-tabs
-  margin 15px 0
-
 .artist-sticky-name
 .artist-sticky-follow-button
   display none
 
 .artist-sticky-name
   avant-garde-size('body')
+  a
+    text-decoration none
 
 .artist-sticky-header
-  height 97px
+  height 67px
+  margin-top 15px
 
 .artist-sticky-header-fixed
   .artist-sticky-header-container
@@ -81,7 +107,7 @@
     position fixed
     left 0
     width 100%
-    z-index 1
+    z-index 2
     border-bottom 1px solid gray-lighter-color
   .artist-tablist
     border none

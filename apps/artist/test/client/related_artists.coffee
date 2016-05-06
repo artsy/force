@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
+artistJSON = require '../fixtures'
 
 describe 'RelatedArtistsView', ->
   before (done) ->
@@ -13,8 +14,7 @@ describe 'RelatedArtistsView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template']
-      @RelatedArtistsView.__set__ 'STATUSES', artists: true, contemporary: true
-      @model = new Artist fabricate 'artist', id: 'foo-bar'
+      @model = new Artist artistJSON
       done()
 
   after ->
@@ -26,7 +26,7 @@ describe 'RelatedArtistsView', ->
     stubChildClasses @RelatedArtistsView, this,
       ['ArtistFillwidthList']
       ['fetchAndRender', 'remove']
-    @view = new @RelatedArtistsView model: @model
+    @view = new @RelatedArtistsView model: @model, statuses: artistJSON.statuses
 
   afterEach ->
     _.defer.restore()
