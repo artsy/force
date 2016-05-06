@@ -83,6 +83,6 @@ describe '/instant_articles', ->
       article = new Article fabricate 'article'
       rendered = iaTemplate(sd: sd, article: article)
       rendered.should.containEql '<img src="https://artsy-media-uploads.s3.amazonaws.com/9-vuUwfMbo9-dibbqjZQHQ%2FSterling_Ruby_2013_%282%29.jpg"/>'
-      rendered.should.containEql '<figcaption><h1><p>Sterling Ruby, Los Angeles, 2013. Photo by CG Watkins. Courtesy Sterling Ruby Studio and Gagosian Gallery</p></h1></figcaption>'
-      rendered.should.containEql '<h1><p>Installation view of&nbsp;“The Los Angeles Project” at Ullens Center for Contemporary Art, Beijing. Courtesy UCCA</p></h1>'
+      rendered.should.containEql '<figcaption><p>Sterling Ruby, Los Angeles, 2013. Photo by CG Watkins. Courtesy Sterling Ruby Studio and Gagosian Gallery</p></figcaption>'
+      rendered.should.containEql '<p>Installation view of&nbsp;“The Los Angeles Project” at Ullens Center for Contemporary Art, Beijing. Courtesy UCCA</p>'
       rendered.should.containEql '<a href="https://artsy.net/ucca">'

@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Articles = require '../../collections/articles'
 PAGE_SIZE = 100
+PAGE_SIZE_FACEBOOK = 50
 
 @news = (req, res, next) ->
   new Articles().fetch
@@ -24,7 +25,7 @@ PAGE_SIZE = 100
       published: true
       sort: '-updated_at'
       instant_article: true
-      limit: PAGE_SIZE
+      limit: PAGE_SIZE_FACEBOOK
     error: res.backboneError
     success: (articles) ->
       articles.each (article) -> article.prepForInstant()

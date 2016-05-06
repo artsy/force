@@ -84,7 +84,7 @@ describe 'FairInfo routes', ->
       afterEach ->
         Backbone.sync.restore()
 
-      it 'renders the article page', ->
+      xit 'renders the article page', ->
         routes.programming(@req, @res, @next)
         @res.render.called.should.be.true
         @res.render.args[0][0].should.equal 'article'

@@ -29,7 +29,7 @@ mixin image(section)
     img(src= section.url)/
     if section.caption && section.caption.length > 0
       figcaption
-        h1!= section.caption
+        != section.caption
 
 mixin imageSet(section)
   figure.op-slideshow
@@ -41,11 +41,12 @@ mixin imageSet(section)
 
 mixin video(section)
   figure.op-social
-    != embed(section.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" }, classNames: 'no-margin column-width' })
+    != embed(section.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" }, classNames: 'no-margin column-width', protocol: 'http:' })
 
 mixin artworkCaption(artwork)
   figcaption
-    h1= artwork.title + ", " + artwork.date + ". "
+    h1
+      a(href="#{sd.APP_URL}/artwork/#{artwork.slug}")= artwork.title + ", " + artwork.date + ". "
     h2
       if artwork.artist
         = artwork.artist.name
