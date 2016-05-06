@@ -6,7 +6,7 @@ Artwork = require '../../../../models/artwork'
 describe 'Meta tags', ->
 
   before ->
-    @file = "#{process.cwd()}/apps/auction_lots/templates/meta/artwork.jade"
+    @file = "#{process.cwd()}/components/auction_lots/templates/meta/artwork.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'

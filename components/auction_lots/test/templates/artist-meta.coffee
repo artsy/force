@@ -6,7 +6,7 @@ Artist = require '../../../../models/artist'
 describe 'Meta tags', ->
 
   before ->
-    @file = "#{process.cwd()}/apps/auction_lots/templates/meta/artist.jade"
+    @file = "#{process.cwd()}/components/auction_lots/templates/meta/artist.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
       API_URL: 'http://localhost:5000'
