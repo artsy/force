@@ -5,48 +5,48 @@ request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
 { APPLICATION_NAME } = require '../../config'
-{ stringifyJSONForWeb } = require '../../components/util/json'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
-Statuses = require './statuses'
 Nav = require './nav'
-Carousel = require './carousel'
+metaphysics = require '../../lib/metaphysics'
+query = require './query'
+helpers = require './view_helpers'
+currentShowAuction = require './components/current_show_auction/index'
 
-@index = index = (req, res, next) ->
-  artist = new Artist id: req.params.id
-  carousel = new Carousel artist: artist
-  statuses = new Statuses artist: artist
+@index = (req, res, next) ->
+  metaphysics
+    query: query
+    variables: artist_id: req.params.id
+  .then ({artist}) ->
+    nav = new Nav artist: artist
 
-  Q.all [
-    artist.fetch cache: true
-    carousel.fetch cache: true
-    statuses.fetch cache: true
-  ]
-    .then ->
-      nav = new Nav artist: artist, statuses: statuses.statuses
+    if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
+      res.locals.sd.ARTIST = artist
+      res.locals.sd.TAB = tab = req.params.tab or ''
+      if currentItem = currentShowAuction(artist)
+        if currentItem.type is 'auction'
+          currentItem.detail = "&nbsp;"
+        else
+          currentItem.detail = helpers.formatShowDetail currentItem
 
-      if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
+      res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
-        res.locals.sd.ARTIST = artist.toJSON()
-        res.locals.sd.TAB = tab = req.params.tab or ''
-        res.locals.sd.STATUSES = statuses = statuses.statuses
+      res.render 'index',
+        viewHelpers: helpers
+        artist: artist
+        tab: tab
+        nav: nav
+        currentItem: currentItem
 
-        res.render 'index',
-          artist: artist
-          carousel: carousel
-          tab: tab
-          statuses: statuses
-          nav: nav
-          jsonLD: stringifyJSONForWeb artist.toJSONLD()
+    else
+      res.redirect artist.href
 
-      else
-        res.redirect artist.href()
+  .catch -> next()
+  .done()
 
-    .catch next
-
-@tab = (req, res, next) ->
+@tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  index req, res, next
+  @index req, res, next
 
 @follow = (req, res) ->
   return res.redirect "/artist/#{req.params.id}" unless req.user

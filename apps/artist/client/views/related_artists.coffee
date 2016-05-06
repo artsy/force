@@ -1,6 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-{ STATUSES } = require('sharify').data
 Backbone = require 'backbone'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
@@ -8,10 +7,10 @@ template = -> require('../../templates/sections/related_artists.jade') arguments
 module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user }) -> #
+  initialize: ({ @user, @statuses }) -> #
 
   postRender: ->
-    sections = _.pick STATUSES, 'artists', 'contemporary'
+    sections = _.pick @statuses, 'artists', 'contemporary'
     _.each sections, (display, key) =>
       $section = @$("#artist-related-#{key}-section")
       if display
@@ -33,7 +32,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
     $el
 
   render: ->
-    @$el.html template(statuses: STATUSES)
+    @$el.html template
     _.defer => @postRender()
     this
 

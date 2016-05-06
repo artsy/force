@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Artist = require '../../../../models/artist'
+artistJSON = require '../fixtures'
 
 describe 'OverviewView', ->
   before (done) ->
@@ -33,15 +34,16 @@ describe 'OverviewView', ->
       shows: length: 0
       articles: length: 0
     })
-    @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
+    @model = new Artist artistJSON
     filterView = new Backbone.View
     filterView.artworks = new Backbone.Collection
     filterView.filter = root: new Backbone.Model
-    @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
+    @OverviewView.__set__ 'initWorksSection', sinon.stub()
     @OverviewView::setupRelatedArticles = ->
-    @OverviewView.__set__ 'STATUSES', {}
     @OverviewView.__set__ 'lastModified', sinon.stub()
-    @view = new @OverviewView model: @model
+    @view = new @OverviewView model: @model, statuses: {}
+    sinon.stub @view, 'postRender'
+    @view.filterView = filterView
     @view.render()
 
   afterEach ->
