@@ -1,3 +1,4 @@
+_ = require 'underscore'
 jade = require 'jade'
 fs = require 'fs'
 benv = require 'benv'
@@ -7,7 +8,8 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
 Nav = require '../nav'
-Carousel = require '../carousel'
+artistJSON = require './fixtures'
+helpers = require '../view_helpers'
 
 describe 'Artist header', ->
   before (done) ->
@@ -20,65 +22,115 @@ describe 'Artist header', ->
 
   describe 'artist with some artworks', ->
     before (done) ->
-      @artist = new Artist fabricate 'artist', published_artworks_count: 1
-      @carousel = new Carousel artist: @artist
-      @nav = new Nav artist: @artist, statuses:
-        artworks: true
-        shows: true
-        articles: false
-        artists: false
-        contemporary: true
+      @artist = artistJSON
+      @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         asset: (->)
         artist: @artist
         nav: @nav
-        carousel: @carousel
+        viewHelpers: helpers
       }, done
 
     it 'should not display the no works message if there is more than 0 artworks', ->
-      @artist.get('published_artworks_count').should.be.above 0
-      $('body').html().should.not.containEql "There are no #{@artist.get('name')} on Artsy yet."
+      @artist.statuses.artworks.should.be.true()
+      $('body').html().should.not.containEql "There are no #{@artist.name} works on Artsy yet."
 
     it 'should not display an auction results link', ->
       $('body').html().should.not.containEql 'artist-auction-results-link'
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 4
-      $navLinks.first().text().should.equal 'Overview'
-      $navLinks.last().text().should.equal 'Related Artists'
+      $navLinks.length.should.equal 5
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
 
   describe 'artist with some artworks (on the overview page)', ->
     beforeEach (done) ->
-      @artist = new Artist fabricate 'artist', published_artworks_count: 0
-      @carousel = new Carousel artist: @artist
-      @nav = new Nav artist: @artist, statuses:
-        artworks: false
-        shows: true
-        articles: false
-        artists: false
-        contemporary: false
+      @artist = artistJSON
+      @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         asset: (->)
         artist: @artist
         nav: @nav
-        carousel: @carousel
+        viewHelpers: helpers
       }, done
 
-    it 'should display the no works message if there is 0 artworks', ->
-      @artist.get('published_artworks_count').should.equal 0
-      $('body').html().should.containEql "There are no #{@artist.get('name')} works on Artsy yet."
+    it 'should not display the no works message if there is more than 0 artworks', ->
+      @artist.statuses.artworks.should.be.true()
+      $('body').html().should.not.containEql "There are no #{@artist.name} works on Artsy yet."
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 2
-      $navLinks.first().text().should.equal 'Overview'
-      $navLinks.last().text().should.equal 'Shows'
-      $navLinks.text().should.not.containEql 'Works'
+      $navLinks.length.should.equal 5
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
 
-    it 'should not display an artworks section with no artworks', ->
+    it 'should display an artworks section with artworks', ->
+      $('body').html().should.containEql 'artwork-section'
+
+
+  describe 'artist with no artworks (on the overview page)', ->
+    beforeEach (done) ->
+      @artist = _.clone artistJSON
+      @artist.statuses = _.clone artistJSON.statuses
+      @artist.statuses.artworks = false
+      @nav = new Nav artist: @artist
+
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
+        artist: @artist
+        nav: @nav
+        viewHelpers: helpers
+      }, done
+
+    it 'should display the no works message if there are no artworks', ->
+      @artist.statuses.artworks.should.be.false()
+      $('body').html().should.containEql "There are no #{@artist.name} works on Artsy yet."
+
+    it 'renders the appropriate nav', ->
+      $navLinks = $('.garamond-bordered-tablist a')
+      $navLinks.length.should.equal 4
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.not.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
+
+    it 'should display an artworks section with artworks', ->
       $('body').html().should.not.containEql 'artwork-section'
+
+  describe 'artist with embedded auction lots and lab feature enabled', ->
+    beforeEach (done) ->
+      @artist = _.clone artistJSON
+      @artist.statuses = _.clone artistJSON.statuses
+      @artist.statuses.artworks = false
+      @nav = new Nav artist: @artist, auctionLotLabFeature: true
+
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
+        artist: @artist
+        nav: @nav
+        viewHelpers: helpers
+      }, done
+
+    it 'renders the appropriate nav', ->
+      $navLinks = $('.garamond-bordered-tablist a')
+      $navLinks.length.should.equal 5
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.not.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
+      $navLinks.text().should.containEql ('Auction Results')

@@ -17,6 +17,6 @@ module.exports = class BiographyView extends Backbone.View
     unless @articles?.length
       @$el.html "<div class='loading-spinner'></div>"
       return this
-    @$el.html template article: @articles.first()
+    @$el.html template article: @articles.first(), hideShare: true, hideSubscribe: true
     new ArticleView el: @$el, article: @articles.first()
     this

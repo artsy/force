@@ -34,4 +34,4 @@ describe 'EmailRegistrationView', ->
       $target = $("<div><input name='email' value='craig@foo.com'></div>")
       @view.submit(target: $target, preventDefault: sinon.stub())
       $.ajax.args[0][0].data.email.should.equal 'craig@foo.com'
-      $.ajax.args[0][0].url.should.equal '/form'
+      $.ajax.args[0][0].url.should.containEql '/form'

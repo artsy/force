@@ -5,49 +5,52 @@ request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
 { APPLICATION_NAME } = require '../../config'
-{ stringifyJSONForWeb } = require '../../components/util/json'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
-Statuses = require './statuses'
 Nav = require './nav'
-Carousel = require './carousel'
+metaphysics = require '../../lib/metaphysics'
+query = require './query'
+helpers = require './view_helpers'
+currentShowAuction = require './components/current_show_auction/index'
 
-@index = index = (req, res, next) ->
-  artist = new Artist id: req.params.id
-  carousel = new Carousel artist: artist
-  statuses = new Statuses artist: artist
+@index = (req, res, next) ->
+  metaphysics
+    query: query
+    variables: artist_id: req.params.id
+  .then ({artist}) ->
+    if req.params.tab is 'auction-results'
+      return next() unless req.user?.hasLabFeature 'Other Auction Lot Providers'
+      return next() unless artist.display_auction_link
 
-  Q.all [
-    artist.fetch cache: true
-    carousel.fetch cache: true
-    statuses.fetch cache: true
-  ]
-    .then ->
-      return next() unless artist.get('display_auction_link')
-      nav = new Nav artist: artist, statuses: statuses.statuses
+    nav = new Nav artist: artist, auctionLotLabFeature: req.user?.hasLabFeature 'Other Auction Lot Providers'
 
-      if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
+    if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
+      res.locals.sd.ARTIST = artist
+      res.locals.sd.TAB = tab = req.params.tab or ''
+      if currentItem = currentShowAuction(artist)
+        if currentItem.type is 'auction'
+          currentItem.detail = "&nbsp;"
+        else
+          currentItem.detail = helpers.formatShowDetail currentItem
 
-        res.locals.sd.ARTIST = artist.toJSON()
-        res.locals.sd.TAB = tab = req.params.tab or ''
-        res.locals.sd.STATUSES = statuses = statuses.statuses
+      res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
-        res.render 'index',
-          artist: artist
-          carousel: carousel
-          tab: tab
-          statuses: statuses
-          nav: nav
-          jsonLD: stringifyJSONForWeb artist.toJSONLD()
+      res.render 'index',
+        viewHelpers: helpers
+        artist: artist
+        tab: tab
+        nav: nav
+        currentItem: currentItem
 
-      else
-        res.redirect artist.href()
+    else
+      res.redirect artist.href
 
-    .catch next
+  .catch -> next()
+  .done()
 
-@tab = (req, res, next) ->
+@tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  index req, res, next
+  @index req, res, next
 
 @follow = (req, res) ->
   return res.redirect "/artist/#{req.params.id}" unless req.user
