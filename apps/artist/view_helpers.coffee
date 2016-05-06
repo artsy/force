@@ -43,8 +43,7 @@ module.exports =
     ]).join ', '
 
   displayFollowers: (artist) ->
-    if c = artist.counts.follows
-      "#{numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
+    "#{numberFormat(c)}" if c = artist.counts.follows
 
   mdToHtml: (artist, attr) ->
     artist = new Artist _.pick artist, attr

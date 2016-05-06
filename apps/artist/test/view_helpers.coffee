@@ -90,8 +90,8 @@ describe 'ArtistViewHelpers', ->
   it 'displayFollowers', ->
     result = helpers.displayFollowers(counts: follows: 0)
     (result == undefined).should.be.true()
-    helpers.displayFollowers(counts: follows: 1).should.containEql '1 Follower'
-    helpers.displayFollowers(counts: follows: 2).should.containEql '2 Followers'
+    helpers.displayFollowers(counts: follows: 1).should.containEql '1'
+    helpers.displayFollowers(counts: follows: 4000).should.containEql '4,000'
 
   it 'mdToHtml', ->
     artist = blurb: "Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “[Balloon Dog](/artwork/jeff-koons-balloon-dog-blue)” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved [Surrealism](/gene/surrealism) and [Dada](/gene/dada) and [Pop](/gene/pop-art), so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-[Baroque](/gene/baroque) sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral _Puppy_ (1992), reference 17th-century French garden design."
