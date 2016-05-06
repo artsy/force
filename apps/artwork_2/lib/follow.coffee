@@ -23,3 +23,4 @@ module.exports = ($els) ->
       following: following
       modelName: type
       model: new MODELS[type] id: id
+      contextPage: "Artwork page"

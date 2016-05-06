@@ -272,8 +272,8 @@ module.exports = class ArtworkView extends Backbone.View
         following: @following
         modelName: 'artist'
         model: artist
-        analyticsFollowMessage: 'Followed artist, via artwork info'
-        analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+        contextPage: "Artwork page"
+        contextModule: "Artwork"
 
     @following.syncFollows(@artists.pluck 'id') if @currentUser?
 

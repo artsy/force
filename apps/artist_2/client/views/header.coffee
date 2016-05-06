@@ -25,8 +25,8 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @following = new Following(null, kind: 'artist') if @user
     @$('#artist-follow-button, .artist-sticky-follow-button').each ->
       followButton = new FollowButton
-        analyticsFollowMessage: 'Followed artist, via artist header'
-        analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
+        contextPage: "Artist page"
+        contextModule: "Header"
         el: $(this)
         following: view.following
         modelName: 'artist'

@@ -39,8 +39,7 @@ module.exports = class AuctionResultsView extends Backbone.View
     if @user
       @following = new Following null, kind: 'artist'
     new FollowButton
-      analyticsFollowMessage: 'Followed artist, via auction result'
-      analyticsUnfollowMessage: 'Unfollowed artist, via auction result'
+      contextPage: "Auction results"
       el: @$('#ara-follow-button')
       following: @following
       modelName: 'artist'

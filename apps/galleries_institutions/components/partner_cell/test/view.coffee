@@ -5,6 +5,8 @@ Backbone = require 'backbone'
 Partner = require '../../../../../models/partner'
 PartnerCellView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
+PartnerCellView.__set__ 'Cities', [{"slug": "new-york-ny-usa", "name": "New York", "full_name": "New York, NY, USA", "coords": [40.71, -74.01 ] }]
+
 describe 'PartnerCellView', ->
   before (done) ->
     benv.setup ->
@@ -62,7 +64,7 @@ describe 'PartnerCellView', ->
 
     describe 'preferred city', ->
       it 'lists preferred city first if gallery location matches', ->
-        @view = new PartnerCellView partner: @partner, preferredCitySlug: 'new-york'
+        @view = new PartnerCellView partner: @partner, preferredCitySlug: 'new-york-ny-usa'
         @view.render()
 
         @view.$('.partner-cell-location').text().should.equal 'New York & 1 other location'

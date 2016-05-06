@@ -49,6 +49,7 @@ module.exports = class GalleriesInstitutionsView extends QuasiInfiniteView
         following: @allFollows
         modelName: 'profile'
         model: profile
+        contextPage: "User settings page"
 
       @subViews.push view
 

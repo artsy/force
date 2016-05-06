@@ -13,7 +13,6 @@ module.exports = (profile) ->
     modelName: 'profile'
     href: "#{profile.href}/follow"
     model: profile
-    analyticsFollowMessage: 'Followed profile, via show page'
-    analyticsUnfollowMessage: 'Unfollowed profile, via show page'
+    contextPage: "Show page"
 
   following.syncFollows [profile.id] if user

@@ -4,8 +4,12 @@
     analytics.page('Favorites/Follows page');
   }
 
-  analyticsHooks.on('followable:unfollowed followable:followed', function(options) {
-    analytics.track(options.message, { id: options.id, modelName: options.modelName } );
+  analyticsHooks.on('followable:followed', function(options) {
+    analytics.track("Followed " + options.modelName, options);
+  });
+
+  analyticsHooks.on('followable:unfollowed', function(options) {
+    analytics.track("Unfollowed " + options.modelName, options);
   });
 
   analyticsHooks.on('follow:sign-up', function(options) {
