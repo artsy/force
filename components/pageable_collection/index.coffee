@@ -6,8 +6,10 @@ module.exports = class PageableCollection extends BackbonePageableCollection
     pageSize: 'size'
 
   parseState: (response, queryParams, state, options) ->
+    if options.xhr?.getResponseHeader('x-total-count')  # for client-side usage
+      return totalRecords: parseInt(options.xhr.getResponseHeader('x-total-count') or 0)
     if options.res
-      totalRecords: parseInt(options.res.headers['x-total-count'] or 0)
+      return totalRecords: parseInt(options.res.headers['x-total-count'] or 0)
 
   fetchUntilEnd: ->
     throw new Error 'fetchUntilEnd is not implemented'

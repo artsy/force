@@ -29,6 +29,11 @@ module.exports = [
   name: 'Shows'
   predicate: ({ shows }) -> shows
 ,
+  slug: 'auction-results'
+  href: 'artist/:id/auction-results'
+  name: 'Auction Results'
+  predicate: ({ auction_lots }) -> auction_lots
+,
   slug: 'related-artists'
   href: 'artist/:id/related-artists'
   name: 'Related Artists'

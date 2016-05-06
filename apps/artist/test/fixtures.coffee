@@ -27,7 +27,8 @@ module.exports = {
     "shows": true,
     "artists": true,
     "contemporary": true,
-    "articles": true
+    "articles": true,
+    "auction_lots": true
   },
   "show": [{
     "name": "A Show",

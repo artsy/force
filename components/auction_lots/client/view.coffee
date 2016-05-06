@@ -21,7 +21,7 @@ module.exports = class AuctionResultsView extends Backbone.View
 
     @user = CurrentUser.orNull()
 
-    @setupArtworks()
+    @setupArtworks() if @artworks?.length
     @setupFollowButton()
 
   setupArtworks: ->

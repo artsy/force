@@ -15,6 +15,7 @@ module.exports = """
       hometown
       blurb
       consignable
+      display_auction_link
       counts {
         follows
         artworks
@@ -41,6 +42,7 @@ module.exports = """
       contemporary
       articles
       biography
+      auction_lots
     }
   }
 

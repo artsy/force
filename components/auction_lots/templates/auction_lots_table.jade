@@ -26,6 +26,7 @@ tbody
             a.auction-lot-details-link(
               href= "/artist/#{artist.id}/auction-result/#{lot.id}"
               data-client
+              data-auction-lot-id="#{lot.id}"
             ) See details
       td= lot.get('dates_text')
       td.auction-lot-medium= lot.get('medium_text')

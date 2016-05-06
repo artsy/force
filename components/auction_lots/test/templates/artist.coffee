@@ -27,9 +27,6 @@ describe 'Artist auction lots template', ->
         auctionLots: @auctionLots
       )
 
-    it 'Displays the <h1>', ->
-      @template.should.containEql @artist.get('name')
-
     it 'Shows only the number of results and not the number of pages', ->
       @template.should.containEql '10 Results'
       @template.should.not.containEql 'Page 1 of'

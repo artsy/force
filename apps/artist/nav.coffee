@@ -2,12 +2,15 @@ _ = require 'underscore'
 sections = require './sections.coffee'
 
 module.exports = class Nav
-  constructor: ({ @artist }) -> #
+  constructor: ({ @artist, @auctionLotLabFeature }) -> #
 
   sections: ->
     @__sections__ ?= _.filter _.map(sections, _.clone), (section) =>
       section.href = @evaluateHref section
-      section.predicate @artist.statuses
+      if section.slug is 'auction-results'
+        section.predicate(@artist.statuses) and @auctionLotLabFeature
+      else
+        section.predicate @artist.statuses
 
   evaluateHref: (section) ->
     '/' + section.href.replace ':id', @artist.id

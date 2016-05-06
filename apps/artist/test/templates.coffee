@@ -109,3 +109,28 @@ describe 'Artist header', ->
 
     it 'should display an artworks section with artworks', ->
       $('body').html().should.not.containEql 'artwork-section'
+
+  describe 'artist with embedded auction lots and lab feature enabled', ->
+    beforeEach (done) ->
+      @artist = _.clone artistJSON
+      @artist.statuses = _.clone artistJSON.statuses
+      @artist.statuses.artworks = false
+      @nav = new Nav artist: @artist, auctionLotLabFeature: true
+
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
+        artist: @artist
+        nav: @nav
+        viewHelpers: helpers
+      }, done
+
+    it 'renders the appropriate nav', ->
+      $navLinks = $('.garamond-bordered-tablist a')
+      $navLinks.length.should.equal 5
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.not.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
+      $navLinks.text().should.containEql ('Auction Results')
