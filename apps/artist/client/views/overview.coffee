@@ -74,6 +74,7 @@ module.exports = class OverviewView extends Backbone.View
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
+
     if @statuses[type]
       collection = new Backbone.Collection(@model.related()[type].take 5)
       subView = new ArtistFillwidthList
@@ -88,7 +89,7 @@ module.exports = class OverviewView extends Backbone.View
   fadeInSections: ->
     _.each @statuses, (status, key) =>
       @setupRelatedSection @$("#artist-related-#{key}-section") if status
-      @renderRelatedArtists key if key is ('artists' or 'contemporary')
+      @renderRelatedArtists key if key is 'artists' or key is 'contemporary'
 
   postRender: ->
     # Sub-header
