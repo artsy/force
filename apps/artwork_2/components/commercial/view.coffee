@@ -7,14 +7,20 @@ Form = require '../../../../components/form/index.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
+template = -> require('./templates/index.jade') arguments...
+confirmation = -> require('./templates/confirmation.jade') arguments...
 
 module.exports = class ArtworkCommercialView extends Backbone.View
+  tagName: 'form'
+  className: 'artwork-commercial'
+
   events:
     'click .js-artwork-inquire-button': 'inquire'
     'click .js-artwork-acquire-button': 'acquire'
 
-  initialize: ({ data }) ->
-    { artwork, @fair } = data
+  initialize: ({ @data }) ->
+    { artwork } = @data
+    { @fair } = artwork
 
     @user = User.instantiate()
     @artwork = new Artwork artwork
@@ -23,9 +29,9 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     e.preventDefault()
 
     order = new PendingOrder
-    form = new Form $form: @$el, model: order
+    @form = new Form $form: @$el, model: order
 
-    form.submit e, success: ->
+    @form.submit e, success: ->
       location.assign "/order/#{order.id}/resume?token=#{order.get 'token'}"
 
     analyticsHooks
@@ -49,7 +55,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     if attending
       @user.related()
         .collectorProfile.related()
-        .userFairActions.related()
+        .userFairActions
         .attendFair @fair
 
     @artwork.fetch().then =>
@@ -68,5 +74,15 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       # Success
       @listenToOnce @inquiry, 'sync', =>
-        @$el.html confirmation
-          artwork: @artwork
+        @$('.js-artwork-inquiry-form')
+          .html confirmation()
+
+  render: ->
+    @$el.html template extend @data,
+      helpers: extend [
+        {}
+        commercial: require './helpers.coffee'
+        partner_stub: require '../partner_stub/helpers.coffee'
+      ]...
+
+    this

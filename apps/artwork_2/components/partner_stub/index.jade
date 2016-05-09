@@ -23,7 +23,7 @@ unless artwork.is_in_auction
           = ', '
           span= location
 
-      if artwork.is_contactable && contacts.length
+      if artwork.is_inquireable && contacts.length
         .artwork-partner-stub__phone
           a(
             class='js-artwork-partner-stub-phone-toggle analytics-artwork-show-phone-number'

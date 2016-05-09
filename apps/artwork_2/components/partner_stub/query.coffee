@@ -3,7 +3,7 @@ module.exports = """
     _id
     collecting_institution
     is_in_auction
-    is_contactable
+    is_inquireable
     is_for_sale
     partner {
       _id

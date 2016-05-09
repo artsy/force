@@ -3,7 +3,7 @@ module.exports = """
     _id
     id
     is_acquireable
-    is_contactable
+    is_inquireable
     is_in_auction
     sale_message
     artists {
