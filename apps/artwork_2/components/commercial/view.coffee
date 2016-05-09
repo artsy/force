@@ -7,7 +7,6 @@ Form = require '../../../../components/form/index.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
-helpers = require '../partner_stub/helpers.coffee'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 
@@ -80,5 +79,10 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
   render: ->
     @$el.html template extend @data,
-      helpers: partner_stub: helpers
+      helpers: extend [
+        {}
+        commercial: require './helpers.coffee'
+        partner_stub: require '../partner_stub/helpers.coffee'
+      ]...
+
     this
