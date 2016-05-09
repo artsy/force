@@ -45,7 +45,7 @@ currentShowAuction = require './components/current_show_auction/index'
     else
       res.redirect artist.href
 
-  .catch -> next()
+  .catch -> next(err if NODE_ENV is 'development')
   .done()
 
 @tab = (req, res, next) =>
