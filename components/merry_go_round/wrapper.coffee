@@ -10,3 +10,4 @@ module.exports = class MerryGoRoundFlickity
 
   constructor: (@$el, options = {}) ->
     @flickity = new (require 'flickity') @$el[0], _.defaults options, @defaults
+    @flickity

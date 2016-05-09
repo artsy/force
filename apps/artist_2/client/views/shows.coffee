@@ -37,7 +37,7 @@ module.exports = class ShowsView extends Backbone.View
       'fair booths' if _.any statuses # Has fairs
     ]
 
-    (@$header ?= @$('#artist-shows-header'))
+    (@$header ?= @$('.artist-shows-header'))
       .text "#{@model.get 'name'} #{things.join ' and '} on Artsy"
 
   render: ->

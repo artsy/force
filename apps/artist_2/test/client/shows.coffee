@@ -30,21 +30,9 @@ describe 'ShowsView', ->
     Backbone.sync.restore()
     @view.remove()
 
-  describe '#initialize', ->
-    it 'fetches shows until the end', ->
-      Backbone.sync.callCount.should.equal 1
-      Backbone.sync.args[0][2].data.page.should.equal 1
-      Backbone.sync.args[0][2].success [fabricate 'show']
-      Backbone.sync.callCount.should.equal 2
-      _.last(Backbone.sync.args)[2].data.page.should.equal 2
-
   describe '#render', ->
     it 'renders, sets up the template', ->
       @view.$el.html().should.containEql 'Foo Bar shows on Artsy'
-
-  describe '#postRender', ->
-    it 'fetches the artist shows', ->
-      _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist_id=foo-bar&sort=-end_at&displayable=true'
 
   describe '#renderHeader', ->
     it 're-renders the header copy if new fairs or shows come in', ->
