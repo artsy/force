@@ -1,6 +1,7 @@
 form.contact-form.stacked-form
   .contact-show-details.stacked-form-cell
-    img( src=show.imageUrl() )
+    if displayThumbnail
+      img( src=show.imageUrl() )
     p= show.get('name')
     p= show.runningDates()
 

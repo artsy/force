@@ -18,6 +18,7 @@ module.exports = class ShowInquiryModal extends ContactView
     formTemplate _.extend locals,
       show: @show
       user: @user
+      displayThumbnail: !@show.get('fair')
 
   defaults: -> _.extend super,
     url: "#{API_URL}/api/v1/me/inquiry_request"
