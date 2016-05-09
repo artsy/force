@@ -110,7 +110,7 @@ module.exports = class Artwork extends Backbone.Model
   #
   isContactable: ->
     return false if @isAtLimitedFairPartner()
-    return true if @get('is_contactable')
+    return true if @get('is_inquireable')
     return true if @isPartOfContactableAuctionPromo()
     return false if @isPartOfAuction()
     @isArtworkContactable()

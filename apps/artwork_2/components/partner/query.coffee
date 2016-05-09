@@ -1,7 +1,7 @@
 module.exports = """
   fragment partner on Artwork {
     _id
-    is_contactable
+    is_inquireable
     partner {
       type
       name

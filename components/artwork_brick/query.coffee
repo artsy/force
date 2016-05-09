@@ -6,7 +6,7 @@ module.exports = """
     title
     date
     sale_message
-    is_contactable
+    is_inquireable
     image {
       placeholder
       thumb: resized(width: 350, version: ["large", "larger"]) {

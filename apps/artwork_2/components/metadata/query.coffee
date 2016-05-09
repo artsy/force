@@ -22,7 +22,7 @@ module.exports = """
     website
     image_rights
     is_downloadable
-    is_contactable
+    is_inquireable
     sale {
       sale_artwork(id: $id) {
         lot_number
