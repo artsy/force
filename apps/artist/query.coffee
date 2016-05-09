@@ -16,6 +16,9 @@ module.exports = """
       blurb
       consignable
       display_auction_link
+      meta {
+        title
+      }
       counts {
         follows
         artworks
