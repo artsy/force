@@ -1,0 +1,62 @@
+{
+  "data": {
+    "artwork": {
+      "_id": "56e86588b202a366da000571",
+      "id": "yee-wong-exploding-powder-movement-blue-and-pink",
+      "is_acquireable": true,
+      "is_inquireable": false,
+      "is_in_auction": false,
+      "sale_message": "$150 - 1,250",
+      "partner": {
+        "id": "artstar",
+        "name": "Artstar",
+        "type": "Gallery",
+        "is_pre_qualify": false,
+        "contact_message": "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?"
+      },
+      "fair": null,
+      "edition_sets": [
+        {
+          "id": "56e866cd275b241d87000510",
+          "is_acquireable": true,
+          "edition_of": "Edition of 50",
+          "price": "$150",
+          "dimensions": {
+            "in": "11 3/10 × 13 1/2 in",
+            "cm": "28.7 × 34.3 cm"
+          }
+        },
+        {
+          "id": "56e866cd7622dd6c2900051e",
+          "is_acquireable": true,
+          "edition_of": "Edition of 25",
+          "price": "$325",
+          "dimensions": {
+            "in": "19 3/5 × 23 1/2 in",
+            "cm": "49.8 × 59.7 cm"
+          }
+        },
+        {
+          "id": "56e866ce7622dd6c29000520",
+          "is_acquireable": true,
+          "edition_of": "Edition of 15",
+          "price": "$575",
+          "dimensions": {
+            "in": "32 9/10 × 39 1/2 in",
+            "cm": "83.6 × 100.3 cm"
+          }
+        },
+        {
+          "id": "56e866cecd530e03ac00042f",
+          "is_acquireable": true,
+          "edition_of": "Edition of 5",
+          "price": "$1,250",
+          "dimensions": {
+            "in": "49 3/5 × 59 1/2 in",
+            "cm": "126 × 151.1 cm"
+          }
+        }
+      ]
+    }
+  }
+}

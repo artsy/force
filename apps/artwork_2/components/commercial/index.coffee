@@ -5,7 +5,7 @@ initPartnerStub = require '../partner_stub/index.coffee'
 
 shouldStick = ->
   COMMERCIAL.artwork.is_acquireable or
-  COMMERCIAL.artwork.is_contactable
+  COMMERCIAL.artwork.is_inquireable
 
 module.exports = ->
   $el = $('.js-artwork-commercial')
