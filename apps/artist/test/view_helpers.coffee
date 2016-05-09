@@ -3,38 +3,6 @@ helpers = require '../view_helpers'
 moment = require 'moment'
 
 describe 'ArtistViewHelpers', ->
-  describe 'pageTitle', ->
-    it 'formats correctly with or without name and count', ->
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: null
-        counts: artworks: null
-      ).should.containEql 'Unnamed Artist - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: null
-        counts: artworks: 0
-      ).should.containEql 'Unnamed Artist - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        counts: artworks: 0
-      ).should.containEql 'Foo Bar - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        counts: artworks: 10
-      ).should.containEql 'Foo Bar - 10 Artworks, Bio & Shows on Artsy'
-
-    it 'formats correctly with meta override', ->
-      helpers.pageTitle(
-        id: 'art-stage-singapore-2016'
-        name: 'Foo Bar'
-        counts: artworks: 10
-      ).should.containEql 'Art Stage Singapore  2016 | Artsy'
 
   describe 'pageDescription', ->
     it 'formats correctly without character limit', ->

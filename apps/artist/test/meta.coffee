@@ -17,7 +17,7 @@ describe 'Meta tags', ->
 
   describe 'basic artist with name and short blurb', ->
     beforeEach ->
-      @artist = _.pick artistJSON, '_id', 'id', 'name', 'gender', 'blurb', 'stastuses', 'counts'
+      @artist = _.pick artistJSON, '_id', 'id', 'name', 'gender', 'blurb', 'stastuses', 'counts', 'meta'
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
@@ -33,7 +33,7 @@ describe 'Meta tags', ->
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/jeff-koons-1"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/jeff-koons-1"
       @html.should.containEql "<meta property=\"og:description\" content=\"#{helpers.pageDescription(@artist, 155).replace('&', '&amp;')}"
-      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 185 Artworks, Bio"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 100+ Artworks"
       @html.should.containEql "<link rel=\"next\" href=\"http://localhost:5000/artist/jeff-koons-1/shows\""
       @html.should.containEql "<link rel=\"prev\" href=\"http://localhost:5000/artist/jeff-koons-1/works\""
 
@@ -49,7 +49,7 @@ describe 'Meta tags', ->
 
     it 'renders correctly', ->
       @html.should.containEql "<meta property=\"og:description\" content=\"#{helpers.pageDescription(@artist).replace('&', '&amp;')}"
-      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 185 Artworks, Bio"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 100+ Artworks"
 
   describe 'with an image', ->
     beforeEach ->

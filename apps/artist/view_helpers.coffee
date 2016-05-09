@@ -7,13 +7,6 @@ Artist = require '../../models/artist.coffee'
 module.exports =
   capitalize: capitalize
 
-  pageTitle: (artist) ->
-    artist = new Artist
-      id: artist.id
-      name: artist.name
-      published_artworks_count: artist.counts.artworks
-    artist.toPageTitle()
-
   pageDescription: (artist, limit) ->
     artist = new Artist _.pick artist, 'id', 'name', 'gender', 'blurb'
     artist.toPageDescription(limit)

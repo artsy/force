@@ -13,6 +13,9 @@ module.exports = {
     "follows": 11790,
     "artworks": 185
   },
+  "meta": {
+    "title": "Jeff Koons - 100+ Artworks, Bio &amp; Shows on Artsy"
+  },
   "image": {
     "versions": [
       "four_thirds",
