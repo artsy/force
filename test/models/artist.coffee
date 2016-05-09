@@ -113,6 +113,15 @@ describe 'Artist', ->
       @artist.unset 'follow_count'
       _.isUndefined(@artist.displayFollowers()).should.be.true()
 
+  describe '#toAuctionResultsPageTitle', ->
+    it 'renders the correct string', ->
+      @artist.set id: 'sigmar-polke', name: 'Sigmar Polke'
+      @artist.toAuctionResultsPageTitle().should.equal 'Free Sigmar Polke Auction Results | Artsy'
+      @artist.set id: 'wolfgang-tillmans', name: 'Wolfgang Tillmans'
+      @artist.toAuctionResultsPageTitle().should.equal 'Instant Wolfgang Tillmans Auction Results | Artsy'
+      @artist.set id: 'damon-zucconi', name: 'Damon Zucconi'
+      @artist.toAuctionResultsPageTitle().should.equal 'Auction Results for Damon Zucconi on Artsy'
+
   describe '#alternateNames', ->
     it 'concatenates alternate names into a string', ->
       @artist.alternateNames().should.equal ''
