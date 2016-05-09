@@ -18,7 +18,6 @@ module.exports = class BiographyView extends Backbone.View
       data: limit: 50
 
   postRender: ->
-
     @subViews.push new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks

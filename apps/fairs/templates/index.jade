@@ -8,12 +8,12 @@ append locals
 
 block body
   #fairs-page.main-layout-container
-    //- if currentFairRows.length
+    if currentFairRows.length
       .fairs__current-fairs
         h1.fair-header Current Fairs
         include current_fairs
-    //- else
-    include promo
+    else
+      include promo
     .fairs__past-fairs
       h1.fair-header.fair-header--underlined Past Fairs
       .fairs__past-fairs-list
