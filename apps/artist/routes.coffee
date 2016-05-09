@@ -4,7 +4,7 @@ fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
-{ APPLICATION_NAME } = require '../../config'
+{ APPLICATION_NAME, NODE_ENV } = require '../../config'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
@@ -45,7 +45,7 @@ currentShowAuction = require './components/current_show_auction/index'
     else
       res.redirect artist.href
 
-  .catch -> next(err if NODE_ENV is 'development')
+  .catch (err) -> next(err if NODE_ENV is 'development')
   .done()
 
 @tab = (req, res, next) =>
