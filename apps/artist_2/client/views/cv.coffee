@@ -39,4 +39,5 @@ module.exports = class BiographyView extends Backbone.View
     this
 
   remove: ->
+    super
     _.invoke @subViews, 'remove'
