@@ -9,7 +9,6 @@ module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
   initialize: ({ @user, @statuses }) ->
-    @model.related().artworks.fetch(data: size: 15)
 
   postRender: ->
     sections = _.pick @statuses, 'artists', 'contemporary'

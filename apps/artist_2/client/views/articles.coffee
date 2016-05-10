@@ -10,8 +10,6 @@ module.exports = class ArticlesView extends Backbone.View
   subViews: []
 
   initialize: ->
-    @model.related().articles.fetch()
-    @model.related().artworks.fetch(data: size: 15)
 
   postRender: ->
     @subViews.push new RelatedArticlesView

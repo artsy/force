@@ -11,12 +11,6 @@ module.exports = class BiographyView extends Backbone.View
     @listenTo @model.related().shows, 'sync', @render
     @listenTo @model.related().articles, 'sync', @render
 
-    @model.related().shows.fetchUntilEnd()
-    @model.related().artworks.fetch(data: size: 15)
-    @model.related().articles.fetch
-      cache: true
-      data: limit: 50
-
   postRender: ->
     @subViews.push new ArtworkRailView
       $el: @$(".artist-artworks-rail")

@@ -9,8 +9,6 @@ module.exports = class ShowsView extends Backbone.View
 
   initialize: ->
     @listenTo @model.related().shows, 'sync', @renderHeader
-    @model.related().shows.fetchUntilEnd()
-    @model.related().artworks.fetch(data: size: 15)
 
   postRender: ->
     @subViews.push new RelatedShowsView
