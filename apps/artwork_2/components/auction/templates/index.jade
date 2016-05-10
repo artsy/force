@@ -2,13 +2,14 @@
 - var sale_artwork = auction.sale_artwork
 
 if auction.is_auction_promo
-  //- TODO: Is this still a thing?
+  //- Unimplemented
 
 else if auction.is_preview || auction.is_open
   include ./estimate
   include ./status
   include ./bid
   include ./buy_now
+  include ./buyers_premium
   include ./help
 else if auction.is_closed
   include ./closed
