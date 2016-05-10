@@ -13,5 +13,5 @@ if artwork.artist && artwork.artist.artworks.length
 
     .artwork-section__jump
       a.avant-garde-jump-link( href='#{artwork.artist.href}/works' )
-        | View all #{artwork.artist.counts.artworks} #{helpers.artist_artworks.pluralize('work', artwork.artist.counts.artworks)}
+        | View all #{artwork.artist.counts.artworks} #{helpers.artist_artworks.pluralize('work', artwork.artist.counts.artworks)} by #{artwork.artist.name}
         i.icon-chevron-small-right

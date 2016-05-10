@@ -12,6 +12,10 @@
       left 0
       width 100%
       vertical-align bottom
+      // Rounding errors in placeholder calculation *may* cause 1px
+      // of gray to peek out of the bottom of the image, outline in
+      // white to compensate
+      outline 1px solid white
 
     &__save
       position absolute

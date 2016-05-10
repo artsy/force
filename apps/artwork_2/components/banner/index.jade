@@ -26,6 +26,7 @@ if artwork.banner
           a( href= banner.href )
             | #{banner.name}
             if banner.partner
+              = ' '
               | at #{banner.partner.name}
 
     else
