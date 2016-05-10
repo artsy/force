@@ -5,34 +5,13 @@ PartnerCellView = require '../partner_cell/view.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require '../partner_cell/view_helpers.coffee'
 template = -> require('./template.jade') arguments...
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports = class PartnerCellCarouselView extends Backbone.View
   className: 'partner-category-carousel'
-  cellsPerRow: 3
-  subViews: []
-
-  events:
-    'click .js-pcc-prev': 'prev'
-    'click .js-pcc-next': 'next'
-
-  initialize: ({ @following }) -> #
-
-  next: (e) ->
-    @flickity.select @flickity.selectedIndex + @cellsPerRow
-
-  prev: (e) ->
-    @flickity.select @flickity.selectedIndex - @cellsPerRow
-
-  setupFlickity: ->
-    Flickity = require 'flickity'
-    @flickity = new Flickity @$('.js-partner-cells')[0],
-      cellAlign: 'left'
-      prevNextButtons: false
-      pageDots: false
-      wrapAround: true
 
   postRender: -> _.defer =>
-    @setupFlickity()
+    initCarousel @$('.js-partner-cell-carousel'), imagesLoaded: true, advanceBy: 3, wrapAround: true
     profileIDs = @$('.js-follow-button').each((index, el) =>
       id = ($el = $(el)).attr('data-id')
       new FollowButtonView
@@ -49,7 +28,4 @@ module.exports = class PartnerCellCarouselView extends Backbone.View
     @postRender()
     this
 
-  remove: ->
-    @flickity?.destroy()
-    super
 

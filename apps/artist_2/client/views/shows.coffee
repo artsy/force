@@ -2,22 +2,31 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 template = -> require('../../templates/sections/shows.jade') arguments...
+ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 
 module.exports = class ShowsView extends Backbone.View
   subViews: []
 
   initialize: ->
     @listenTo @model.related().shows, 'sync', @renderHeader
-    @model.related().shows.fetchUntilEnd()
 
   postRender: ->
-    relatedShowsSubView = new RelatedShowsView
+    @subViews.push new RelatedShowsView
       model: @model
       collection: @model.related().shows
       nUp: 3
       maxShows: 20
-    @subViews.push relatedShowsSubView
-    @$('#artist-page-content-section').html relatedShowsSubView.render().$el
+      el: @$('#artist-related-shows-content')
+
+    @subViews.push new ArtworkRailView
+      $el: @$(".artist-artworks-rail")
+      collection: @model.related().artworks
+      title: "Works by #{@model.get('name')}"
+      viewAllUrl: "#{@model.href()}/works"
+      imageHeight: 180
+
+    $el = $('#artist-related-shows-section').show()
+    _.defer -> $el.addClass 'is-fade-in'
 
   renderHeader: ->
     statuses = @model.related().shows.invoke 'has', 'fair'
@@ -28,7 +37,7 @@ module.exports = class ShowsView extends Backbone.View
       'fair booths' if _.any statuses # Has fairs
     ]
 
-    (@$header ?= @$('#artist-shows-header'))
+    (@$header ?= @$('.artist-shows-header'))
       .text "#{@model.get 'name'} #{things.join ' and '} on Artsy"
 
   render: ->

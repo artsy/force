@@ -8,18 +8,10 @@ setup = ($el, options = {}, callback) ->
   $cells = $viewport.find options.cellSelector or '.js-mgr-cell'
   $navigation = $el.find options.navigationSelector or '.js-mgr-navigation'
 
-  totalWidth = _.reduce $cells, ((memo, el) -> $(el).width() + memo), 0
-  averageWidth = totalWidth / $cells.length
-  sufficientWidth = (totalWidth - averageWidth) >= $(window).width()
-
-  options.wrapAround ?= sufficientWidth
-  options.contain ?= not sufficientWidth
-
   cells = new MerryGoRoundFlickity $viewport, options
   navigation = new MerryGoRoundNavView _.extend {}, options,
     el: $navigation
     flickity: cells.flickity
-
   {
     cells: cells
     navigation: navigation.render()

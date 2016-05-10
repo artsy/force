@@ -54,20 +54,29 @@
 
 // Tab sections
 .artist-section-header
-  margin 30px 0 50px 0
-  font-size 26px
+  garamond-size('headline')
+  margin-bottom 30px
 
 .artist-page-content
   position relative
   margin 30px 0 80px 0
+  .arv-container
+    padding-top 20px
 
 #artist-page-content-section
   position relative
 
-// Articles section
-.artist-page-related-articles
-  width 75%
-  margin 20px auto
+.artist-page-section-block
+  margin-bottom 60px
+  padding-top 30px
+  boreder-top 1px solid gray-lighter-color
+  &:first-child
+    margin-top 0
+    padding-top 0
+    border-top none
+
+.arv-fillwidth-list
+  width 100%
 
 @require './header'
 @require '../components/carousel'

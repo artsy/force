@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 User = require '../../../models/user.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
+initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 openInquiryQuestionnaireFor = require '../../inquiry_questionnaire/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/index.jade') arguments...
@@ -9,20 +9,11 @@ template = -> require('../templates/index.jade') arguments...
 module.exports = class ArtworkRailView extends Backbone.View
   className: 'arv-container'
   events:
-    'click .js-mgr-next': 'next'
-    'click .js-mgr-prev': 'prev'
     'click .artwork-item-contact-seller': 'contactSeller'
 
-  initialize: ({ @title, @viewAllUrl, @railId }) ->
+  initialize: ({ @$el, @title, @viewAllUrl, @imageHeight = 220, @railId, @collection, @includeContact = true }) ->
     @user ?= User.instantiate()
-
     @collection.on 'sync', @render, this
-
-  next: ->
-    @carousel.cells.flickity.next true
-
-  prev: ->
-    @carousel.cells.flickity.previous true
 
   contactSeller: (e) ->
     e.preventDefault()
@@ -43,9 +34,9 @@ module.exports = class ArtworkRailView extends Backbone.View
       artworks: @collection.models
       title: @title
       viewAllUrl: @viewAllUrl
-      imageHeight: 220
+      imageHeight: @imageHeight
       railId: @railId
-      includeContact: true
+      includeContact: @includeContact
 
     @postRender()
     this
@@ -64,4 +55,7 @@ module.exports = class ArtworkRailView extends Backbone.View
         .reduce (prev, curr) -> prev + curr
 
       unless @cellWidth > @$('.js-my-carousel').width()
-        @$('.arv-carousel-nav').addClass 'is-hidden'
+        @$('.mgr-navigation').addClass 'is-hidden'
+
+  remove: ->
+     @collection.off 'sync',

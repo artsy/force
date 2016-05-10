@@ -7,13 +7,14 @@
     data-id= category.id
     data-facet= category.facet
   ) See All
-.pcc-body.gi-carousel-arrow-reveal
-  if category.partners.length > 3
-    .pcc-nav.js-pcc-nav
-      .pcc-prev.gi-carousel-arrow-prev.js-pcc-prev: i.icon-chevron-left
-      .pcc-next.gi-carousel-arrow-next.js-pcc-next: i.icon-chevron-right
 
-  .pcc-content.js-partner-cells
-    each partner in category.partners
-      .partner-cell(data-id= partner.id)
+.pcc-body.js-partner-cell-carousel.gi-carousel-arrow-reveal.mgr-horizontal-nav
+  .mgr-cells.js-mgr-cells
+    for partner in category.partners
+      .mgr-cell.js-mgr-cell.partner-cell(data-id= partner.id)
         include ../partner_cell/index
+
+  - length = category.partners.length
+  if length > 1
+    nav.mgr-navigation.js-mgr-navigation
+      include ../../../../components/merry_go_round/templates/horizontal_navigation

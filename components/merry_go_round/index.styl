@@ -2,10 +2,17 @@
 
 .mgr-horizontal-nav
   position relative
+  &:hover .mgr-navigation
+    opacity 1 !important
   .mgr-navigation
+    transition opacity .25s
+    opacity 0
+    pointer-events none
     padding 0
     margin 0
     display block
+    &.is-hidden
+     display none
   .mgr-arrow-left
   .mgr-arrow-right
     width auto
@@ -17,6 +24,11 @@
     top 50%
     transform translateY(-50%)
     padding 10px
+    cursor pointer
+    user-select none
+    pointer-events all
+    > i
+      user-select none
   .mgr-arrow-left
     right 100%
   .mgr-arrow-right
@@ -36,7 +48,6 @@
     font-size inherit
   img
     display inline-block
-    background-color gray-color
 
 .mgr-navigation
   display table

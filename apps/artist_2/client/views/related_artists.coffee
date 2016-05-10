@@ -2,12 +2,13 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
+ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
 
 module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user, @statuses }) -> #
+  initialize: ({ @user, @statuses }) ->
 
   postRender: ->
     sections = _.pick @statuses, 'artists', 'contemporary'
@@ -17,7 +18,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
         collection = @model.related()[key]
         collection.fetch success: =>
           subView = new ArtistFillwidthList
-            el: @$("#artist-related-#{key}")
+            el: @$("#artist-related-#{key}-content")
             collection: collection
             user: @user
           subView.fetchAndRender()
@@ -25,6 +26,13 @@ module.exports = class RelatedArtistsView extends Backbone.View
           @fadeInSection $section
       else
         $section.remove()
+
+    @subViews.push new ArtworkRailView
+      $el: @$(".artist-artworks-rail")
+      collection: @model.related().artworks
+      title: "Works by #{@model.get('name')}"
+      viewAllUrl: "#{@model.href()}/works"
+      imageHeight: 180
 
   fadeInSection: ($el) ->
     $el.show()

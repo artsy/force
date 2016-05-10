@@ -9,12 +9,7 @@ moment = require 'moment'
 module.exports = class BiographyView extends Backbone.View
 
   initialize: ->
-    @model.related().articles.fetch
-      cache: true
-      data:
-        limit: 1
-        biography_for_artist_id: @model.get('_id')
-      success: (@articles) => @render()
+    @listenTo @model.related().articles, 'sync', (@articles) => @render()
 
   render: ->
     unless @articles?.length

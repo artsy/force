@@ -7,14 +7,19 @@
           alt= article.get('title')
         )
       .ra-blurb
+        if article.get('thumbnail_title')
+          a( href="/article/#{article.get('slug')}" )
+            h3.ra-title= article.get('thumbnail_title')
+
         a.ra-author( href="/#{article.related().author.get('profile_handle')}" )
           | By #{article.related().author.get('name')}
-        a( href="/article/#{article.get('slug')}" )
-          if article.get('thumbnail_title')
-            h3.ra-title= article.get('thumbnail_title')
-          if article.get('thumbnail_teaser')
+
+        if article.get('thumbnail_teaser')
+          a( href="/article/#{article.get('slug')}" )
+            - if (!teaserLimit) { var teaserLimit = 450 }
             .ra-summary
-              = _s.prune(article.get('thumbnail_teaser'), 450)
+              = _s.prune(article.get('thumbnail_teaser'), teaserLimit)
+              | &nbsp
               span.ra-go Go to article
   if remaining > 0
     .related-articles-show-all.avant-garde-button-white.is-block
