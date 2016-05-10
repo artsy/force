@@ -29,7 +29,10 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     section = sections.running()?[0]
-    res.render 'articles', section: section, articles: articles, crop: crop
+    res.render 'articles',
+      section: section
+      articles: articles
+      crop: crop
 
 @article = (req, res, next) ->
   articleItem = new Article id: req.params.slug
@@ -56,7 +59,10 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         # Parsely Articles
         articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
-          res.render 'article', _.extend data, embed: embed, crop: crop
+          res.render 'article', _.extend data,
+            embed: embed
+            crop: crop
+            lushSignup: true
       return
 
 setupEmailSubscriptions = (user, article, cb) ->

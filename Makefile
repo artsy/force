@@ -36,6 +36,10 @@ ssc:
 sp:
 	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
 
+# Start the server pointing to production on artsy domain
+spl:
+	APP_URL=http://local.artsy.net:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
+
 # Start server pointing to production with cache
 spc:
 	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start

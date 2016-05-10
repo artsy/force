@@ -22,32 +22,34 @@ module.exports = class ArticleIndexView extends Backbone.View
       sort: '-published_at'
       is_super_article: false
 
-    @article = new Article sd.ARTICLE
-    @displayedArticles = [@article.get('slug')]
-    @collection = new Articles
-      cache: true
-      data: @params.toJSON()
-
     # Main Article
+    @article = new Article sd.ARTICLE
     new ArticleView
       el: $('body')
       article: @article
       waypointUrls: true
+      lushSignup: true
 
-    if sd.SCROLL_ARTICLE is 'infinite'
-      @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
-      $('#articles-show').append @jump.$el
-      @listenTo @collection, 'sync', @render
+    @setupInfiniteScroll() if sd.SCROLL_ARTICLE is 'infinite'
 
-      @listenTo @params, 'change:offset', =>
-        $('#articles-show').addClass 'is-loading'
-        @collection.fetch
-          cache: true
-          remove: false
-          data: @params.toJSON()
-          complete: => $('#articles-show').removeClass 'is-loading'
+  setupInfiniteScroll: ->
+    @displayedArticles = [@article.get('slug')]
+    @collection = new Articles
+      cache: true
+      data: @params.toJSON()
+    @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+    $('#articles-show').append @jump.$el
+    @listenTo @collection, 'sync', @render
 
-      $.onInfiniteScroll(@nextPage)
+    @listenTo @params, 'change:offset', =>
+      $('#articles-show').addClass 'is-loading'
+      @collection.fetch
+        cache: true
+        remove: false
+        data: @params.toJSON()
+        complete: => $('#articles-show').removeClass 'is-loading'
+
+    $.onInfiniteScroll(@nextPage)
 
   render: (collection, response) =>
     if response
@@ -65,6 +67,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           moment: moment
           embed: embed
           crop: crop
+          lushSignup: false
 
         previousHref = @displayedArticles[@displayedArticles.indexOf(article.get('slug'))-1]
         # Initialize client

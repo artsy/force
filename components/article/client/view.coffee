@@ -45,7 +45,7 @@ module.exports = class ArticleView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @following = new Following(null, kind: 'artist') if @user?
-    { @article, @gradient, @waypointUrls, @seenArticleIds } = options
+    { @article, @gradient, @waypointUrls, @seenArticleIds, @lushSignup } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
     @loadedArtworks = @loadedCallouts = @loadedImageHeights = false
@@ -261,7 +261,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
-    if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1
+    if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1 and not @lushSignup
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data: _.extend _.clone DATA,
