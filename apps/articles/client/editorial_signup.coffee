@@ -100,7 +100,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         # Inline Signup
         @$('.article-es-header').fadeOut =>
           @$('.article-es-thanks').fadeIn()
-          @$(this).css('display', 'none')
+          @$('.article-es-header').css('display', 'none')
         # CTA Popup
         @$('.cta-bar-container-editorial').fadeOut =>
           @$('.cta-bar-thanks').fadeIn()
