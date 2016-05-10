@@ -53,7 +53,7 @@ module.exports = class EditorialSignupView extends Backbone.View
   fetchSignupImages: (cb) ->
     $.ajax
       type: 'GET'
-      url: "#{sd.POSITRON_URL}/api/curations/#{sd.EMAIL_SIGNUP_IMAGES}"
+      url: "#{sd.POSITRON_URL}/api/curations/#{sd.EMAIL_SIGNUP_IMAGES_ID}"
       success: (results) ->
         cb results.images
       error: ->
