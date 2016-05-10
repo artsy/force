@@ -2,7 +2,8 @@ module.exports = """
   fragment auction on Artwork {
     id
     href
-    is_acquireable
+    sale_message
+    is_buy_nowable
     is_in_auction
     sale {
       id

@@ -6,6 +6,7 @@
   &__estimate
   &__bid-status
   &__bid-form
+  &__buyers-premium
   &__help
     block-margins(distance(gutter / 2, 'garamond-s-body'))
 
@@ -54,8 +55,19 @@
 
   &__buyers-premium
     serif('s-body')
-    margin distance(10px) 0
     color gray-dark-color
+
+  &__buy-now
+    margin-top gutter
+
+    &__label
+      sans('s-headline')
+
+    &__amount
+      sans('xl-headline')
+
+    &__form
+      block-margins(distance(gutter / 2, 'garamond-s-body'))
 
   &__help
     serif('s-body')

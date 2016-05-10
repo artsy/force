@@ -5,6 +5,7 @@ Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
+acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 template = -> require('./templates/index.jade') arguments...
 
@@ -15,7 +16,8 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'click .js-artwork-auction-buyers-premium': 'openBuyersPremium'
     'click .js-artwork-auction-bid-button': 'submit'
     'click .js-artwork-auction-help-modal': 'openHelpModal'
-    'click .js-artwork-auction-ask-specialist': 'askSpecialist'
+    'click .js-artwork-auction-ask-specialist': 'inquire'
+    'click .js-artwork-auction-buy-now': 'acquire'
 
   initialize: ({ @data }) -> #
 
@@ -42,10 +44,20 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       view.subView.state
         .set 'active', id
 
-  askSpecialist: (e) ->
+  inquire: (e) ->
+    e.preventDefault()
+    inquire AUCTION.artwork_id
+
+  acquire: (e) ->
     e.preventDefault()
 
-    inquire AUCTION.artwork_id
+    $target = $(e.currentTarget)
+    $target.attr 'data-state', 'loading'
+
+    acquire AUCTION.artwork_id
+      .catch ->
+        $target.attr 'data-state', 'error'
+        location.reload()
 
   submit: (e) ->
     e.preventDefault()
