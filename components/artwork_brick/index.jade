@@ -26,8 +26,12 @@
       if artwork.date
         | , #{artwork.date}
 
-    a.artwork-brick__metadata__partner( href= artwork.href )
-      = artwork.partner.name
+    if artwork.collecting_institution
+      .artwork-brick__metadata__partner
+        = artwork.collecting_institution
+    else
+      a.artwork-brick__metadata__partner( href= artwork.href )
+        = artwork.partner.name
 
     if artwork.is_inquireable
       .artwork-brick__metadata__contact

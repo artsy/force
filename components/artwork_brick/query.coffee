@@ -18,6 +18,7 @@ module.exports = """
       href
       name
     }
+    collecting_institution
     partner(shallow: true) {
       href
       name
