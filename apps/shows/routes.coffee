@@ -20,7 +20,6 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
       featuredCities: partnerFeaturedCities.toJSON()
       shows: shows.take 8 # 2, 3, 3
   .catch next
-  .done()
 
 @redirectShow = (req, res) ->
   res.redirect 301, req.url.replace 'show', 'shows'
@@ -59,7 +58,6 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
       past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
     ]).then ->
       opening = upcoming.groupBy (show) -> show.openingThisWeek()
-
       res.render 'city',
         city: city
         cities: partnerCities.toJSON()
@@ -68,3 +66,4 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
         upcoming: opening.false or []
         current: current
         past: past
+    .catch next
