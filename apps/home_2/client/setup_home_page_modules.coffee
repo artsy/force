@@ -5,6 +5,7 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
+viewHelpers = require '../view_helpers.coffee'
 
 module.exports = ->
   user = CurrentUser.orNull()
@@ -21,6 +22,7 @@ module.exports = ->
         el: $("#hpm-#{module.key}")
         collection: artworks
         title: module.title
+        viewAllUrl: viewHelpers.viewAllUrl(module)
 
       artworks.trigger 'sync'
 
