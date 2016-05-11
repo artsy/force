@@ -30,9 +30,36 @@
   position relative
   max-width 100%
   height 360px
+  overflow hidden
+
+  .mgr-cells:not(.flickity-enabled) .mgr-cell
+    visibility hidden
+
+  .mgr-cells--loading
+    display flex
+    .mgr-cell--loading
+      flex 1
+      visibility visible !important
+    .mgr-cell__image-placeholder
+      display block
+      width 100%
+      height 230px
+      background-color gray-lightest-color
+    .mgr-cell__text-placeholder
+      display block
+      height 16px
+      margin 5px 0
+      background-color gray-lightest-color
+      &:nth-child(2)
+        width 68%
+      &:nth-child(3)
+        width 82%
+      &:nth-child(4)
+        width 47%
 
   .artwork-item-caption
     height 120px
     position absolute
     bottom 0
     vertical-align top
+    padding-right 15px

@@ -58,4 +58,5 @@ module.exports = class ArtworkRailView extends Backbone.View
         @$('.mgr-navigation').addClass 'is-hidden'
 
   remove: ->
-     @collection.off 'sync',
+     @collection.off 'sync'
+     super

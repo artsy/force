@@ -6,6 +6,17 @@ module.exports = """
       results{
         ... artwork
       }
+      context {
+        ... on HomePageModuleContextFair {
+          href
+        }
+        ... on HomePageModuleContextSale {
+          href
+        }
+        ... on HomePageModuleContextGene {
+          href
+        }
+      }
     }
   }
   #{require '../../../components/commercial_filter/queries/artwork.coffee'}

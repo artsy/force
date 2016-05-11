@@ -7,6 +7,7 @@ Items = require '../../collections/items'
 HeroUnits = require '../../collections/hero_units'
 { client } = require '../../lib/cache'
 metaphysics = require '../../lib/metaphysics.coffee'
+viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'
 query = require './queries/initial'
 
@@ -55,6 +56,7 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredLinks: featuredLinks
       featuredArticles: featuredArticles
       featuredShows: featuredShows
+      viewHelpers: viewHelpers
   ).done()
 
 @redirectToSignup = (req, res) ->
