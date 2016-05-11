@@ -66,4 +66,4 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
         upcoming: opening.false or []
         current: current
         past: past
-    .catch next
+  .catch next
