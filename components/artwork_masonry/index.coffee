@@ -5,6 +5,9 @@ module.exports = (artworks) ->
     [], [], []
   ]
 
+  valid = ({ image }) ->
+    image.thumb.height?
+
   calculate = (column) ->
     reduce column, (memo, { image }) ->
       memo + image.thumb.height
@@ -14,7 +17,8 @@ module.exports = (artworks) ->
     min columns, calculate
 
   artworks.map (artwork) ->
-    choose artwork.image
-      .push artwork
+    if valid artwork
+      choose artwork.image
+        .push artwork
 
   columns
