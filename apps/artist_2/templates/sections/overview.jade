@@ -1,3 +1,14 @@
+mixin rail(title, viewAllUrl)
+  .artist-rail-header
+    h1= title
+    a(href= viewAllUrl) View All
+  .artist-related-section-content.js-artist-rail.mgr-horizontal-nav
+    ul.mgr-cells.js-mgr-cells.artist-related-rail
+      //- Rendered client-side
+
+    nav.mgr-navigation.js-mgr-navigation
+      include ../../../../components/merry_go_round/templates/horizontal_navigation
+
 .artist-overview-header
   .sixty-forty-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
@@ -19,22 +30,15 @@
 - var hasWorks = artist.statuses.artworks
 include ./works
 
-#artist-related-shows-section.artist-related-section
-  h3.artist-related-section-header Shows on Artsy
-  #artist-related-shows.artist-related-section-content
-    //- Rendered client-side
+if statuses.shows
+  #artist-related-shows-section.artist-related-section
+    +rail('Shows on Artsy', artist.href + 'shows')
 
-#artist-related-articles-section.artist-related-section
-  h3.artist-related-section-header Articles about #{artist.name}
-  #artist-related-articles.artist-related-section-content
-    //- Rendered client-side
+if statuses.articles
+  #artist-related-articles-section.artist-related-section
+    +rail('Articles about ' + artist.name, artist.href + 'shows')
 
-#artist-related-artists-section.artist-related-section
-  h3.artist-related-section-header Related Artists
-  #artist-related-artists.artist-related-section-content
-    //- Rendered client-side
+if statuses.artists
+  #artist-related-artists-section.artist-related-section
+    +rail('Related Artists', artist.href + 'related-artists')
 
-#artist-related-contemporary-section.artist-related-section
-  h3.artist-related-section-header Suggested Contemporary Artists
-  #artist-related-contemporary.artist-related-section-content
-    //- Rendered client-side

@@ -21,8 +21,10 @@ module.exports = ( { el, model, allLoaded } ) ->
 
   sticky = new Sticky
   filterView.artworks.on 'sync', ->
+    console.log 'sync'
     sticky.rebuild()
     if filterView.remaining() is 0
+      console.log 'allLoaded'
       $('#main-layout-footer').css(display: 'block', opacity: 1)
       $.destroyInfiniteScroll()
       allLoaded() if allLoaded

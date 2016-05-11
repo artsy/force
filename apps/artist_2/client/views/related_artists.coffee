@@ -12,30 +12,11 @@ query =
   """
   query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
     artist(id: $artist_id) {
-      contemporary @include(if: $contemporary){
-        ... relatedArtist
-      }
-      artists  @include(if: $artists){
-        ... relatedArtist
-      }
+      ... relatedArtists
     }
   }
+  #{require '../../components/related_artists/query.coffee'}
 
-  fragment relatedArtist on Artist {
-    id
-    name
-    nationality
-    years
-    birthday
-    href
-    image {
-      url(version: "tall")
-    }
-    counts {
-      artworks
-      for_sale_artworks
-    }
-  }
   """
 
 module.exports = class RelatedArtistsView extends Backbone.View
@@ -43,7 +24,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @keys = _.select ['artists', 'contemporaory'], (key) => @statuses[key]
-    if CURRENT_USER?
+    if @user?
       @following = new Following(null, kind: 'artist')
 
     @listenTo this, 'metaphysicsSync', @renderRelated
@@ -56,30 +37,34 @@ module.exports = class RelatedArtistsView extends Backbone.View
         contemporary: @statuses.contemporary
         artists: @statuses.artists
 
-    .then ({artist}) =>
-      @trigger 'metaphysicsSync', artist
+    .then ({artist}) => @trigger 'metaphysicsSync', artist
 
   renderRelated: (artist)->
+    console.log 'render related'
     _.each artist, (value, key) =>
       $section = @$("#artist-related-#{key}-section")
       $body = $section.find("#artist-related-#{key}-content")
       $body.html _.map value, (artist) ->
+        artist.counts.artworks ?= 0
+        artist.counts.for_sale_artworks ?= 0
         $(artistCellTemplate artist: artist).addClass 'grid-item'
       @fadeInSection $section
 
-    _.defer =>
-      ids = @$('#artist-related-artists-sections').find('.follow-button').map ->
-        following = @following
-        id = ($el = $(this)).data 'id'
-        new FollowButton
-          context_page: "Artists page"
-          context_module: "Related Artists tab"
-          following: following
-          model: new Backbone.Model id: id
-          modelName: 'artist'
-          el: $el
+    _.defer @setupFollowButtons
 
-      @following?.syncFollows ids
+  setupFollowButtons: =>
+    ids = @$('#artist-related-artists-sections').find('.follow-button').map ->
+      following = @following
+      id = ($el = $(this)).data 'id'
+      new FollowButton
+        context_page: "Artists page"
+        context_module: "Related Artists tab"
+        following: following
+        model: new Backbone.Model id: id
+        modelName: 'artist'
+        el: $el
+
+    @following?.syncFollows ids
 
   postRender: ->
     @subViews.push new ArtworkRailView
@@ -88,7 +73,6 @@ module.exports = class RelatedArtistsView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
-    debugger
 
   fadeInSection: ($el) ->
     $el.show()

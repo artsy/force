@@ -3,6 +3,8 @@ initCarousel = require './index.coffee'
 template = -> require('./templates/horizontal_navigation.jade') arguments...
 
 module.exports = ($el, options = {}, callback) ->
+  console.log $el
+  console.log $el.parent()
   defaults =
     wrapAround: true
     contain: true

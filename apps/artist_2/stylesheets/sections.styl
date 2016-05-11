@@ -59,6 +59,20 @@
     right 0
     border-bottom 2px dotted gray-lighter-color
 
+mgr-n-up(n, padding = 30px)
+  .mgr-cell
+    padding-right padding
+    percent = 25%
+    lastPadding = 12px
+    width calc('%s + %s' % (percent lastPadding))
+    display inline-block
+
+.artist-related-rail
+  mgr-n-up(4, 30px)
+  a
+    width 100%
+
+
 // Artwork Rail
 .artist-artworks-rail .mgr-horizontal-nav
   .mgr-arrow-left
