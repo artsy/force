@@ -35,10 +35,10 @@ module.exports = class HomeTopRailView extends Backbone.View
       mabView = new MyActiveBids(user: @user)
       promises.push mabView.fetch()
     Q.all(promises).then ([c, data]) =>
-      @syncArtworks()
       @$el.html template
         artworks: @collection
         activeBids: activeBids = mabView?.bidderPositions.length
+      @syncArtworks()
       if activeBids
         mabView.$el = @$('.home-top-rail-right-mab')
         mabView.render().poll()
