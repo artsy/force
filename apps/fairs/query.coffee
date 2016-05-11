@@ -31,7 +31,7 @@ module.exports = '''
         is_published
         href
         icon {
-          url(version: "square")
+          url(version: "square140")
         }
       }
     }
