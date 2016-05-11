@@ -29,7 +29,7 @@ module.exports = class SplitTest
           nonInteraction: 1
         },
         {
-          Mixpanel: 'false'
+          Mixpanel: false
         }
 
     # Set for Google Analytics
