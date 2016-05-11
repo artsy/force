@@ -23,6 +23,7 @@ module.exports = """
       href
       name
       type
+      is_limited_fair_partner
     }
   }
 """
