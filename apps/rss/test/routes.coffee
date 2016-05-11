@@ -4,6 +4,8 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
 sd = require('sharify').data
+_ = require 'underscore'
+Q = require 'bluebird-q'
 
 describe 'RSS', ->
 
@@ -59,3 +61,44 @@ describe 'RSS', ->
     it 'only displays articles from Artsy Editorial', ->
       routes.news(@req, @res)
       Backbone.sync.args[0][2].data.author_id.should.equal('foo')
+
+  describe '#partnerUpdates', ->
+
+    beforeEach ->
+      @section = {id: '55356a9deca560a0137aa4b7'}
+      @articles = {
+        total: 16088,
+        count: 2,
+        results: [
+          fabricate('article', { id: 1, published_at: new Date().toISOString() })
+          fabricate('article', { id: 2, published_at: new Date().toISOString() })
+        ]
+      }
+
+      Backbone.sync
+        .onCall 0
+        .returns Q.resolve()
+        .yieldsTo 'success', @section
+
+      Backbone.sync
+        .onCall 1
+        .returns Q.resolve()
+        .yieldsTo 'success', @articles
+
+    it 'fetches section and articles', (done) ->
+      routes.partnerUpdates @req, @res
+      _.defer =>
+        Backbone.sync.args.should.have.lengthOf 2
+        Backbone.sync.args[1][2].data.should.eql
+          section_id: @section.id
+          published: true
+          sort: '-published_at'
+          limit: 100
+        done()
+
+    it 'renders articles', (done) ->
+      routes.partnerUpdates @req, @res
+      _.defer =>
+        @res.render.args[0][0].should.equal 'partner_updates'
+        @res.render.args[0][1].articles.should.have.lengthOf 2
+        done()

@@ -1,6 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Articles = require '../../collections/articles'
+Section = require '../../models/section'
 PAGE_SIZE = 100
 PAGE_SIZE_FACEBOOK = 50
 
@@ -32,3 +33,21 @@ PAGE_SIZE_FACEBOOK = 50
       res.render 'instant_articles',
         articles: articles
         pretty: true
+
+@partnerUpdates = (req, res, next) ->
+  section = new Section id: 'artsy-partner-updates'
+  articles = new Articles
+
+  section.fetch()
+    .then ->
+      articles.fetch
+        data:
+          section_id: section.get('id')
+          published: true
+          sort: '-published_at'
+          limit: PAGE_SIZE
+    .then ->
+      res.set('Content-Type', 'application/rss+xml')
+      res.render('partner_updates', articles: articles, pretty: true)
+    .catch res.backboneError
+    .done()

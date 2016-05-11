@@ -12,3 +12,4 @@ app.locals.embed = embed
 
 app.get '/rss/news', routes.news
 app.get '/rss/instant-articles', routes.instantArticles
+app.get '/rss/partner-updates', routes.partnerUpdates
