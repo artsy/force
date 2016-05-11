@@ -79,8 +79,8 @@ module.exports = class ArticleView extends Backbone.View
       @setupMaxImageHeights()
     else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @breakCaptions()
-      @setupWaypointUrls() if @waypointUrls
       @addReadMore() if @gradient
+      @setupWaypointUrls() if @waypointUrls and not @gradient
 
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-image img").css('max-height', window.innerHeight * 0.7 )
@@ -258,6 +258,8 @@ module.exports = class ArticleView extends Backbone.View
   setupStickyShare: ->
     @fadeInShare = _.once -> @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeTo(250, 1)
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
+    $(@$el).waypoint (direction) =>
+      @fadeInShare() if direction is 'down'
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
@@ -298,10 +300,13 @@ module.exports = class ArticleView extends Backbone.View
           blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
             limit: limit
             afterApply: =>
-              @sticky.rebuild()
               @setupWaypointUrls() if @waypointUrls
-              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', ->
-                analyticsHooks.trigger 'readmore', {}
+              @sticky.rebuild()
+              $(window).trigger 'resize'
+            onClick: =>
+              @sticky.rebuild()
+              $(window).trigger 'resize'
+              analyticsHooks.trigger 'readmore', {}
           break
 
   setupWaypointUrls: =>
@@ -314,9 +319,6 @@ module.exports = class ArticleView extends Backbone.View
         @trackPageview()
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
-        # Fade in the share button
-        @fadeInShare()
-
     $(@$container).waypoint (direction) =>
       if direction is 'up'
         # Setup the pageview

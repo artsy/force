@@ -1,4 +1,7 @@
-.articles-es-cta(class=articlePage ? 'is-article-page' : '')
+.articles-es-cta(
+  class= articlePage ? 'is-article-page' : '',
+  data-signup="#{isSignup}"
+)
   .articles-es-cta__background-cover
   ul.articles-es-cta__background
     if images

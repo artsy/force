@@ -388,14 +388,17 @@ body.body-article
   opacity 0
   padding-top 80px
   max-width 54px
-  z-index 2
+  z-index 10
   float left
+  top 0
+  position sticky
+  position -webkit-sticky
   a
     background-color white
     text-decoration none
     display block
     color black
-    transition background-color 0.25s
+    transition background-color 0.25s, border-color 0.25s
     padding 10px
     border 1px solid gray-lighter-color
     border-left none
@@ -405,6 +408,7 @@ body.body-article
   a:hover
     background-color black
     color white
+    border-color black
   i
     vertical-align middle
 

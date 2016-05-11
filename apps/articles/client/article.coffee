@@ -49,7 +49,7 @@ module.exports = class ArticleIndexView extends Backbone.View
         data: @params.toJSON()
         complete: => $('#articles-show').removeClass 'is-loading'
 
-    $.onInfiniteScroll(@nextPage)
+    $.onInfiniteScroll(@nextPage, {offset: 1000})
 
   render: (collection, response) =>
     if response

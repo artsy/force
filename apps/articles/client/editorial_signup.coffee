@@ -16,7 +16,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .js-article-es-dismiss': 'onDismiss'
 
   initialize: ->
-    return unless @eligibleToSignUp()
     @setupAEArticlePage() if @inAEArticlePage()
     @setupAEMagazinePage() if @inAEMagazinePage()
 
@@ -33,13 +32,31 @@ module.exports = class EditorialSignupView extends Backbone.View
     @ctaBarView = new CTABarView
       name: 'editorial-signup'
       persist: true
-    return if @ctaBarView.previouslyDismissed()
     # Show the lush CTA after the 6th article
     @fetchSignupImages (images) =>
       @$('.articles-feed-item').eq(5).after editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
         images: images
         crop: crop
+        isSignup: @eligibleToSignUp() and not @ctaBarView.previouslyDismissed()
+      mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
+      @cycleImages() if images
+
+  setupAEArticlePage: ->
+    @ctaBarView = new CTABarView
+      mode: 'editorial-signup'
+      name: 'editorial-signup'
+      persist: true
+      email: sd.CURRENT_USER?.email or ''
+    @setupCTAWaypoints() if not @ctaBarView.previouslyDismissed() and
+      sd.MEDIUM in ['social', 'search']
+    @fetchSignupImages (images) =>
+      @$('.article-content').append editorialSignupLushTemplate
+        email: sd.CURRENT_USER?.email or ''
+        images: images
+        crop: crop
+        articlePage: true
+        isSignup: @eligibleToSignUp() and not @ctaBarView.previouslyDismissed()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
 
@@ -59,23 +76,6 @@ module.exports = class EditorialSignupView extends Backbone.View
       error: ->
         cb null
 
-  setupAEArticlePage: ->
-    @ctaBarView = new CTABarView
-      mode: 'editorial-signup'
-      name: 'editorial-signup'
-      persist: true
-      email: sd.CURRENT_USER?.email or ''
-    @setupCTAWaypoints() if not @ctaBarView.previouslyDismissed() and
-      sd.MEDIUM in ['social', 'search']
-    @fetchSignupImages (images) =>
-      @$('.article-content').append editorialSignupLushTemplate
-        email: sd.CURRENT_USER?.email or ''
-        images: images
-        crop: crop
-        articlePage: true
-      mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
-      @cycleImages() if images
-
   setupCTAWaypoints: ->
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
@@ -85,6 +85,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       @ctaBarView.transitionIn() if direction is 'up'
     , { offset: 'bottom-in-view' }
 
+  # Subscribe controls
   onSubscribe: (e) ->
     @$(e.currentTarget).addClass 'is-loading'
     $.ajax
