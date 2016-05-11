@@ -1,7 +1,8 @@
 for fair in pastFairs
   a.fairs__past-fair(href=fair.href)
     .fairs__past-fair__cell.fairs__past-fair__cell--icon
-      img.large-profile-image( alt=fair.name, title=fair.name, src=fair.profile.icon.url )
+      if fair.profile.icon
+        img.large-profile-image( alt=fair.name, title=fair.name, src=fair.profile.icon.url )
     .fairs__past-fair__cell.fairs__past-fair__cell--name
       .fairs-fair__name= fair.name
       .fairs-fair__follow
