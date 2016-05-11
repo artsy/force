@@ -63,7 +63,6 @@ li.grid-item .artwork-item-contact-seller
   padding 0 (column-gap / 2)
   vertical-align middle
   overflow hidden
-  border-right 1px solid gray-lighter-color
   &:first-child
     padding-left 0
   &:last-child
@@ -77,19 +76,16 @@ li.grid-item .artwork-item-contact-seller
   display table-cell
   vertical-align middle
 .htfl-image > img
-  max-width 80px
+  max-width 60px
   max-height @max-width
 .htfl-details
-  padding (column-gap / 2) 10px
+  padding (column-gap / 2)
   avant-garde()
   > h3
-    font-size 11px
+    avant-garde-size('s-headline')
     color gray-darker-color
   > h4
-    font-size 14px
-  > h3
-  > h4
-    line-height 1.4
+    avant-garde-size('body')
 
 // Featured articles
 // --------------
