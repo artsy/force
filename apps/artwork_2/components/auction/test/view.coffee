@@ -1,4 +1,5 @@
 benv = require 'benv'
+sinon = require 'sinon'
 Backbone = require 'backbone'
 ArtworkAuctionView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
 
@@ -15,6 +16,7 @@ describe 'auction', ->
   beforeEach ->
     @view = new ArtworkAuctionView data:
       artwork:
+        id: 'peter-alexander-wedge-with-puff'
         is_in_auction: true
         sale:
           id: 'los-angeles-modern-auctions-march-2015'
@@ -60,3 +62,33 @@ describe 'auction', ->
     it 'Handles numbers', ->
       @view.parseBid 1000
         .should.equal 100000
+
+  describe '#submit', ->
+    before ->
+      ArtworkAuctionView.__set__
+        CURRENT_USER: 'existy'
+        AUCTION:
+          artwork_id: 'peter-alexander-wedge-with-puff'
+          minimum_next_bid:
+            amount: '$60,000'
+            cents: 6000000
+
+    after ->
+      ArtworkAuctionView.__set__
+        CURRENT_USER: null
+        AUCTION: null
+
+    beforeEach ->
+      sinon.stub ArtworkAuctionView::, 'redirectTo'
+
+      @view.data.user = 'existy'
+      @view.render()
+
+    afterEach ->
+      @view.redirectTo.restore()
+
+    it 'submits the bid by redirecting to the confirmation page', ->
+      @view.$('input[name="bid"]').val '60,000'
+      @view.$('button').click()
+      @view.redirectTo.args[0][0]
+        .should.equal '/auction/los-angeles-modern-auctions-march-2015/bid/peter-alexander-wedge-with-puff?bid=6000000'

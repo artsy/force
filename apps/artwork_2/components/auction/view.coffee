@@ -59,6 +59,9 @@ module.exports = class ArtworkAuctionView extends Backbone.View
         $target.attr 'data-state', 'error'
         location.reload()
 
+  redirectTo: (path) ->
+    location.assign path
+
   submit: (e) ->
     e.preventDefault()
 
@@ -78,7 +81,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     { bid } = form.data()
 
     if @validBid amount = @parseBid bid
-      location.assign "#{form.action()}?bid=#{amount}"
+      @redirectTo "#{form.action()}?bid=#{amount}"
 
     else
       message = "Your bid needs to be at least #{AUCTION.minimum_next_bid.amount}"
