@@ -9,6 +9,7 @@ if auction.get('live_start_at') && moment().isAfter(auction.get('live_start_at')
       h1 Live Bidding Now Open
       a.avant-garde-button-white(
         href="#{sd.PREDICTION_URL}/#{auction.get('id')}"
+        target='_blank'
       ) Enter live auction
 else
   - imgUrl = auction.cropUrlFor({ width: 1800, height: 300 })

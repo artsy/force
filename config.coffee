@@ -97,6 +97,7 @@ module.exports =
   ACTIVE_BIDS_POLL_INTERVAL: 5000
   PARSELY_KEY: null
   PARSELY_SECRET: null
+  PREDICTION_URL: 'https://live.artsy.net'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
