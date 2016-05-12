@@ -305,6 +305,7 @@ module.exports = class ArticleView extends Backbone.View
               @setupWaypointUrls() if @waypointUrls
             onClick: =>
               @sticky.rebuild()
+              $.waypoints 'refresh'
               analyticsHooks.trigger 'readmore', {}
           break
 
