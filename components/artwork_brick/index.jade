@@ -1,52 +1,6 @@
 .artwork-brick
-  .artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
-    a( href= artwork.href )
-      img.artwork-brick__image__img(
-        src= artwork.image.thumb.url
-        alt= artwork.title
-      )
-
-    .artwork-brick__image__save(
-      class='js-artwork-brick-save-controls'
-      data-id= artwork.id
-    )
-      //- Rendered client-side
+  include ./templates/image
 
   .artwork-brick__metadata
-    if artwork.artists && artwork.artists.length
-      h4.artwork-brick__metadata__artists
-        for artist, i in artwork.artists
-          a( href= artist.href )
-            = artist.name
-          unless i === artwork.artists.length - 1
-            = ', '
-
-    a.artwork-brick__metadata__title( href= artwork.href )
-      em= artwork.title
-      if artwork.date
-        | , #{artwork.date}
-
-    if artwork.collecting_institution
-      .artwork-brick__metadata__partner
-        = artwork.collecting_institution
-    else
-      a.artwork-brick__metadata__partner( href= artwork.href )
-        = artwork.partner.name
-
-    if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
-      .artwork-brick__metadata__contact
-        a(
-          class='analytics-artwork-contact-seller'
-          href= artwork.href
-          data-artwork_id= artwork._id
-          data-context_type='artwork feed item'
-        )
-          | Contact #{artwork.partner.type.toLowerCase()}
-
-    else if artwork.partner.is_limited_fair_partner
-      .artwork-brick__metadata__contact
-        | Not inquireable
-
-    else if artwork.sale_message
-      .artwork-brick__metadata__sale-message
-        = artwork.sale_message
+    include ./templates/metadata
+    include ./templates/contact
