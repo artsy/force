@@ -4,8 +4,10 @@ module.exports = """
       name
       href
       artworks(all: true, size: 50) {
-        ... artwork_brick
+        ... auction_artwork_brick
       }
     }
   }
+
+  #{require '../../../../components/auction_artwork_brick/query.coffee'}
 """
