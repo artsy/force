@@ -45,3 +45,29 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   text-align center
   // Often overwritten unintentionally
   text-transform uppercase !important
+
+.white-overlay-clock
+  color white
+  left 50%
+  top 50%
+  display inline-block
+  position absolute
+  transform translate(-50%, -50%)
+  z-index 1
+  .clock-header.clock-closed
+    avant-garde-size('xl-headline')
+    color white
+    border 0
+    letter-spacing 2px
+  .clock
+    text-align center
+  .clock-header
+    margin-bottom 5px
+    avant-garde-size('s-headline')
+  .clock-days, .clock-hours, .clock-minutes, .clock-seconds
+    avant-garde-size('xl-headline')
+    margin 0 12px
+    small
+      avant-garde-size('s-headline')
+      color white
+      margin-top 5px

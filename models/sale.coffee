@@ -77,7 +77,7 @@ module.exports = class Sale extends Backbone.Model
 
   bidButtonState: (user, artwork) ->
     if @isClosed()
-      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: ''
+      label: 'Auction Closed', enabled: false, classes: 'is-disabled', href: ''
     else if artwork.get('sold') and not artwork.get('acquireable')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
     else

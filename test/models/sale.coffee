@@ -108,7 +108,7 @@ describe 'Sale', ->
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
         @sale.set 'auction_state', 'closed'
         @artwork.set sold: true, acquireable: false
-        @sale.bidButtonState(@user, @artwork).label.should.equal 'Online Bidding Closed'
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Auction Closed'
         # If the artwork is sold, then it's sold
         @sale.set 'auction_state', 'open'
         @user.set 'registered_to_bid', true

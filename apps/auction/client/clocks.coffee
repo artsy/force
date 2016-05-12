@@ -6,6 +6,7 @@ startClock = (sale) ->
     el: $(".js-auction-clock[data-id='#{sale.id}']")
     model: sale
     modelName: 'Auction'
+    label: 'moo'
     closedText: 'Auction Closed' if sale.isAuctionPromo()
   clock.start()
 

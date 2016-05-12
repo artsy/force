@@ -47,14 +47,14 @@ describe 'templates', ->
           $template = $(templates.list @data)
           $template.find('.ala-bid-status').should.have.lengthOf 0
           $template.find('.ala-bid-count').should.have.lengthOf 0
-          $template.find('.avant-garde-button').text().should.equal 'Online Bidding Closed'
+          $template.find('.avant-garde-button').text().should.equal 'Auction Closed'
 
       describe 'grid', ->
         it 'renders correctly', ->
           $template = $(templates.grid @data)
           $template.find('.aga-bid-status').length.should.equal 0
           $template.find('.js-bid-button').should.have.lengthOf 0
-          $template.find('.avant-garde-button').text().should.equal 'Online Bidding Closed'
+          $template.find('.avant-garde-button').text().should.equal 'Auction Closed'
 
   describe 'auction promo', ->
     describe 'preview state', ->

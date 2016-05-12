@@ -17,7 +17,9 @@ module.exports =
 
   updateState: ->
     @set('clockState', (
-      if moment().isAfter(@get 'offsetEndAtMoment')
+      if @get('live_start_at')
+        'live'
+      else if moment().isAfter(@get 'offsetEndAtMoment')
         'closed'
       else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
         'open'
