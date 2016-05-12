@@ -1,3 +1,4 @@
+Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 
@@ -12,7 +13,7 @@ module.exports = (artists) ->
       el: $el
       following: following
       modelName: 'artist'
-      model: artist
+      model: new Backbone.Model artist
       href: "#{artist.href}/follow"
       context_page: "Show page"
 
