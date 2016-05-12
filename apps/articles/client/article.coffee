@@ -21,6 +21,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       tier: 1
       sort: '-published_at'
       is_super_article: false
+      limit: 5
 
     # Main Article
     @article = new Article sd.ARTICLE
@@ -49,7 +50,8 @@ module.exports = class ArticleIndexView extends Backbone.View
         data: @params.toJSON()
         complete: => $('#articles-show').removeClass 'is-loading'
 
-    $.onInfiniteScroll(@nextPage)
+    $.onInfiniteScroll(@nextPage, {offset: 5000})
+    $(window).scroll(_.debounce( (-> $.waypoints('refresh')), 100))
 
   render: (collection, response) =>
     if response
@@ -80,7 +82,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           previousHref: previousHref
 
   nextPage: =>
-    @params.set offset: (@params.get('offset') + 10) or 0
+    @params.set offset: (@params.get('offset') + 5) or 0
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')

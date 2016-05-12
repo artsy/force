@@ -72,18 +72,19 @@ module.exports = class ArticleView extends Backbone.View
 
     # Utility
     @checkEditable()
-    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
+    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: @article.href() || ''}
 
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
     else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @breakCaptions()
-      @setupWaypointUrls() if @waypointUrls
       @addReadMore() if @gradient
+      @setupWaypointUrls() if @waypointUrls and not @gradient
 
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-image img").css('max-height', window.innerHeight * 0.7 )
+    @$('.article-section-artworks, .article-section-image').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
 
@@ -258,6 +259,8 @@ module.exports = class ArticleView extends Backbone.View
   setupStickyShare: ->
     @fadeInShare = _.once -> @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeTo(250, 1)
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
+    $(@$el).waypoint (direction) =>
+      @fadeInShare() if direction is 'down'
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
@@ -300,13 +303,15 @@ module.exports = class ArticleView extends Backbone.View
             afterApply: =>
               @sticky.rebuild()
               @setupWaypointUrls() if @waypointUrls
-              $(".article-container[data-id=#{@article.get('id')}] .gradient-blurb-read-more").on 'click', ->
-                analyticsHooks.trigger 'readmore', {}
+            onClick: =>
+              @sticky.rebuild()
+              $.waypoints 'refresh'
+              analyticsHooks.trigger 'readmore', {}
           break
 
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-    @$container = $(".article-container[data-id=#{@article.get('id')}]")
+    @$container = $(".article-container[data-id=#{@article.get('id')}] .article-content")
     $(@$container).waypoint (direction) =>
       if direction is 'down'
         # Set the pageview
@@ -314,9 +319,6 @@ module.exports = class ArticleView extends Backbone.View
         @trackPageview()
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
-        # Fade in the share button
-        @fadeInShare()
-
     $(@$container).waypoint (direction) =>
       if direction is 'up'
         # Setup the pageview

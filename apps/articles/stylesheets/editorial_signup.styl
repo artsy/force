@@ -8,6 +8,11 @@
   width 100vw
   background-color black
   color white
+  &[data-signup=false]
+    .articles-es-cta__container
+      display none
+    .articles-es-cta__social
+      display block
   &.is-article-page
     margin-bottom 100px
   &__container, &__social

@@ -169,6 +169,12 @@ body.body-article
 .article-section-artworks
   position relative
 
+.article-section-artworks, .article-section-image
+  opacity 0
+  transition opacity 0.25s
+  &.images-loaded
+    opacity 1
+
 .article-section-artworks[data-layout="column_width"]
   width body-width
   margin auto
@@ -388,14 +394,14 @@ body.body-article
   opacity 0
   padding-top 80px
   max-width 54px
-  z-index 2
+  z-index 10
   float left
   a
     background-color white
     text-decoration none
     display block
     color black
-    transition background-color 0.25s
+    transition background-color 0.25s, border-color 0.25s
     padding 10px
     border 1px solid gray-lighter-color
     border-left none
@@ -405,6 +411,7 @@ body.body-article
   a:hover
     background-color black
     color white
+    border-color black
   i
     vertical-align middle
 
