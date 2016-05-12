@@ -169,6 +169,12 @@ body.body-article
 .article-section-artworks
   position relative
 
+.article-section-artworks, .article-section-image
+  opacity 0
+  transition opacity 0.25s
+  &.images-loaded
+    opacity 1
+
 .article-section-artworks[data-layout="column_width"]
   width body-width
   margin auto
@@ -391,8 +397,8 @@ body.body-article
   z-index 10
   float left
   top 0
-  position sticky
   position -webkit-sticky
+  position sticky
   a
     background-color white
     text-decoration none

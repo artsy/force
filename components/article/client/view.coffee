@@ -84,6 +84,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-image img").css('max-height', window.innerHeight * 0.7 )
+    @$('.article-section-artworks, .article-section-image').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
 
@@ -302,7 +303,6 @@ module.exports = class ArticleView extends Backbone.View
             afterApply: =>
               @setupWaypointUrls() if @waypointUrls
               @sticky.rebuild()
-              $(window).trigger 'resize'
             onClick: =>
               @sticky.rebuild()
               $(window).trigger 'resize'
