@@ -8,6 +8,7 @@ editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jad
 Cycle = require '../../../components/cycle/index.coffee'
 { crop } = require '../../../components/resizer/index.coffee'
 mailcheck = require '../../../components/mailcheck/index.coffee'
+FlashMessage = require '../../../components/flash/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
@@ -95,8 +96,10 @@ module.exports = class EditorialSignupView extends Backbone.View
         email: @$(e.currentTarget).prev('input').val()
         name: sd.CURRENT_USER?.name or= ''
       error: (res) =>
+        new FlashMessage message: 'Whoops, there was an error. Please try again.'
         @$(e.currentTarget).removeClass 'is-loading'
       success: (res) =>
+        new FlashMessage message: 'Thank you for signing up.'
         @$(e.currentTarget).removeClass 'is-loading'
         # Inline Signup
         @$('.article-es-header').fadeOut =>
