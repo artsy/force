@@ -16,7 +16,7 @@ mixin video(video)
         button.article-video-play-button
           .article-video-play-button-caret
     .article-video
-      != embedVideo(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
+      != embed(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
 
 mixin image(image)
   figure.article-section-image
@@ -79,9 +79,10 @@ mixin toc(section)
 
 mixin imageSet(section)
   .article-section-image-set__images
-    for item in section.images.slice(0,4)
-      - var image = resize( (item.image || item.url || ''), {height: 150} )
-      img(src=image)
+    for item, i in section.images.slice(0,4)
+      .article-section-image-set__image-container.hoverable-image-link( data-index=i )
+        - var image = resize( (item.image || item.url || ''), {height: 150} )
+        img.hoverable-image(src=image)
   .article-section-image-set__remaining
     .article-section-image-set__icon( data-total=section.images.length class= section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
@@ -96,3 +97,7 @@ mixin topStories
           a( href=article.url )
             img( src=crop(article.image_url, { height: 180, width: 240 }) )
             p= article.title
+
+mixin embed(section)
+  .article-embed-container
+    iframe(src=section.url style="height:#{section.height}px" scrolling='no' frameborder='0')

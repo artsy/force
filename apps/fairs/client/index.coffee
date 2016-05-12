@@ -4,6 +4,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
+Profile = require '../../../models/profile.coffee'
 initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
@@ -33,11 +34,10 @@ module.exports.FairsView = class FairsView extends Backbone.View
             el: $el
             following: following
             modelName: 'profile'
-            model: fair.profile
+            model: new Profile fair.profile
             label: fair.name
             href: "#{fair.profile.href}/follow"
-            analyticsFollowMessage: 'Followed fair, via fairs page'
-            analyticsUnfollowMessage: 'Unfollowed fair, via fairs page'
+            context_page: "Fairs page"
 
           fair.profile.id
     )

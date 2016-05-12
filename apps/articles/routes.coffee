@@ -5,7 +5,7 @@ Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
 Sections = require '../../collections/sections'
-embedVideo = require 'embed-video'
+embed = require 'particle'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
 { POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
@@ -29,10 +29,14 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
     section = sections.running()?[0]
-    res.render 'articles', section: section, articles: articles, crop: crop
+    res.render 'articles',
+      section: section
+      articles: articles
+      crop: crop
 
 @article = (req, res, next) ->
-  new Article(id: req.params.slug).fetchWithRelated
+  articleItem = new Article id: req.params.slug
+  articleItem.fetchWithRelated
     accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (data) ->
@@ -46,14 +50,19 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
 
+      # Email Subscriptions
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
 
-        topParselyArticles data.article, (parselyArticles) ->
+        # Parsely Articles
+        articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
-          res.render 'article', _.extend data, embedVideo: embedVideo
+          res.render 'article', _.extend data,
+            embed: embed
+            crop: crop
+            lushSignup: true
       return
 
 setupEmailSubscriptions = (user, article, cb) ->
@@ -157,18 +166,3 @@ subscribedToEditorial = (email, cb) ->
       res.send req.body
     else
       res.status(500).send(response.errormsg)
-
-topParselyArticles = (article, cb) ->
-  return cb [] unless article.hasTopStories()
-  request
-    .get('https://api.parsely.com/v2/analytics/posts')
-    .query
-      apikey: PARSELY_KEY
-      secret: PARSELY_SECRET
-      limit: 10
-      days: 7
-      sort: '_hits'
-    .end (err, response) ->
-      return cb [] if err
-      posts = _.where response.body.data, section: 'Editorial'
-      return cb posts

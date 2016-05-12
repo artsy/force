@@ -8,6 +8,10 @@
 
 BIN = node_modules/.bin
 
+# Start the server with the OSS env vars instead of the developer's `.env`
+oss:
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development $(BIN)/nf start --env .env.oss
+
 # Start the server
 s:
 	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development $(BIN)/nf start
@@ -31,6 +35,10 @@ ssc:
 # Start the server pointing to production
 sp:
 	APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
+
+# Start the server pointing to production on artsy domain
+spl:
+	APP_URL=http://local.artsy.net:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start
 
 # Start server pointing to production with cache
 spc:

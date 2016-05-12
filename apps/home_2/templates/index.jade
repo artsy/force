@@ -1,0 +1,50 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+  if sd.INCLUDE_ESCAPED_FRAGMENT
+    meta( name="fragment", content="!" )
+
+append locals
+  - assetPackage = 'home_2'
+  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
+  - bodyClass = bodyClass + (heroUnits.length && heroUnits.first().get('menu_color_class') == 'black' ? '-white' : '')
+
+block body
+  include hero_units
+  #home-foreground
+    #home-hero-units-controls( data-length= heroUnits.length )
+      ul#home-hero-unit-dots
+        for x, i in heroUnits.models
+          li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
+
+    #home-layout-container.responsive-layout-container
+      .main-layout-container: #home-body
+        ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
+          include featured_links
+        each module in modules
+          - title = module.title
+          - railId = module.key
+          - viewAllUrl = viewHelpers.viewAllUrl(module)
+          div(id="hpm-#{railId}").arv-container
+            include ../../../components/artwork_rail/templates/index
+        #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
+          h2.home-featured-header Featured Shows
+            .home-browse-all-right
+              a( href='/shows' )
+                | View All
+          ul#home-featured-shows.home-featured-list
+            - shows = featuredShows.take(8)
+            - displayLocation = true
+            include featured_shows
+
+        #home-featured-articles-section( class='js-homepage-featured-links', data-context='featured articles' )
+          h2.home-featured-header Featured Articles
+            .home-browse-all-right
+              a( href='/articles' )
+                | View All
+          ul#home-featured-articles.home-featured-list
+            - articleLinks = featuredArticles.take(7)
+            include featured_articles
+
+  include ../../../components/main_layout/templates/json_ld

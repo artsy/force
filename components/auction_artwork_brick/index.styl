@@ -1,0 +1,21 @@
+@require '../stylus_lib'
+@require '../artwork_brick'
+
+.artwork-brick--auction
+  .artwork-brick__metadata
+    height inherit
+    serif('l-caption')
+    margin distance(gutter / 2) 0 distance(gutter * 2) 0
+
+    &__sale-artwork
+      //
+
+      &__current-bid
+        sans('body')
+        m = (gutter / 1.5)
+        margin distance(m) 0 (m)
+        color black
+
+      &__buttons > a
+        inline-block-margins(gutter / 5)
+        min-width (gutter * 3)

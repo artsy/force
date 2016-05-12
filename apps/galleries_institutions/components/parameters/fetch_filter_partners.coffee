@@ -4,12 +4,12 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 partnerTypes = require '../../queries/partner_types.coffee'
 query = require '../../queries/partners_filter_query.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
-{ Cities } = require 'places'
+{ Cities } = require '../../../../components/partner_cities/index.coffee'
 
 module.exports = class FetchFilterPartners extends Backbone.Model
 
-  initialize: ({ @params }) ->
-    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+  initialize: ({ @params, @term }) ->
+    _.each _.pluck(facetDefaults(@params.get('type')), 'facetName'), (f) =>
       @listenTo @params, "change:#{f}", @reset
     @page = 1
     @partners = []
@@ -49,10 +49,11 @@ module.exports = class FetchFilterPartners extends Backbone.Model
     data = _.extend _.pick(paramsJSON, 'category'), type: partnerTypes[paramsJSON.type]
     city = _.findWhere Cities, slug: paramsJSON.location if paramsJSON.location
     data.near = city.coords.join (',') if city
-
+    data.term = @term if @term
     data.page = @page
     data.includeAggregations = @page == 1
-    data.includeResults = @params.hasSelection()
+    # include results only if any of facets is selected or we are doing search by term
+    data.includeResults = @params.hasSelection() || not _.isEmpty data.term
     return data
 
   reset: =>

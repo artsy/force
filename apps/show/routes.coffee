@@ -86,7 +86,7 @@ query = """
         date
         title
         sale_message
-        is_contactable
+        is_inquireable
       }
       artists {
         id
@@ -96,7 +96,7 @@ query = """
           url(version: "large")
         }
       }
-      cover_image {
+      meta_image {
         meta_image_url: url(version: "large")
       }
       install_shots: images(default: false) {

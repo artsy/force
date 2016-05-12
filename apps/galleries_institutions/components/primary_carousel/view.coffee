@@ -14,7 +14,7 @@ module.exports = class PrimaryCarousel extends Backbone.View
     'click .js-gpc-prev': -> @flickity.previous()
 
   initialize: ({ params, @following, @profiles}) ->
-    _.each _.pluck(facetDefaults, 'facetName'), (f) =>
+    _.each _.pluck(facetDefaults(), 'facetName'), (f) =>
       @listenTo params, "change:#{f}", @fetch
     @listenTo params, 'firstLoad', @setupFlickity
     @listenTo @profiles, 'reset', @render
@@ -40,7 +40,8 @@ module.exports = class PrimaryCarousel extends Backbone.View
   setupFlickity: =>
     return if not @profiles.length
 
-    { cells } = initCarousel @$el, wrapAround: true
+    autoPlay = @profiles.length > 1
+    { cells } = initCarousel @$el, wrapAround: true, autoPlay: autoPlay
     { @flickity } = cells
 
     $overlays = $('.js-gpc-overlay')
@@ -63,6 +64,8 @@ module.exports = class PrimaryCarousel extends Backbone.View
         following: @following
         model: profile
         modelName: 'profile'
+        context_page: "Galleries / Institutions page"
+        context_module: "Main carousel"
 
   remove: ->
     @destroyFlickity()

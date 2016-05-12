@@ -6,6 +6,9 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 routes = require '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+@articleItem = new Article
+
+
 describe 'Article routes', ->
 
   beforeEach ->
@@ -14,10 +17,12 @@ describe 'Article routes', ->
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     sinon.stub Article.prototype, 'fetchWithRelated'
+    sinon.stub(Article.prototype, 'topParselyArticles').yields []
 
   afterEach ->
     Backbone.sync.restore()
     Article::fetchWithRelated.restore()
+    Article::topParselyArticles.restore()
 
   describe '#article', ->
 
@@ -32,6 +37,7 @@ describe 'Article routes', ->
 
    it 'fetches an article, its related content, and renders it', ->
       @req.params.slug = 'bar'
+      routes.articleItem = new Article
       routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
         article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')

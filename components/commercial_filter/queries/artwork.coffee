@@ -30,7 +30,7 @@ module.exports = """
     image_rights
     sale_message
     is_for_sale
-    is_contactable
+    is_inquireable
     partner {
       name
       href

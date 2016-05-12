@@ -1,8 +1,8 @@
 include ../../../components/util/activator
 
 header.artist-header
-  .artist-header-split
-    .artist-header-left
+  .artist-header-flex
+    .artist-header-meta
       h1.artist-header-name.extra-large-garamond-header= artist.name
 
       - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
@@ -19,15 +19,20 @@ header.artist-header
       .artist-follow
         button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
         if followCount
-          span.artist-header-follow-count= followCount
+          span.artist-header-follow-count(class=followCount == 1 ? '' : 'is-plural' data-count=followCount) Follower
 
-    .artist-header-right
-      if currentItem
+    if currentItem
+      .current-item(class= (artist.consignable ? 'compact' : ''))
         include ../components/current_show_auction/index
+
+    if artist.consignable
+      .consignment-cta
+        | Interested in selling a work by #{artist.name}?  #[a(href="/consignment") Consign with Artsy.]
 
   .artist-sticky-header
     .artist-sticky-header-container
-      .artist-sticky-name= artist.name
+      .artist-sticky-name
+        a(href= "/artist_2/#{artist.id}")= artist.name
       .artist-tabs
         nav.artist-tablist.garamond-bordered-tablist
           for link, i in nav.sections()

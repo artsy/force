@@ -2,15 +2,7 @@
 
 #artist-page
   position relative
-
-// To accomodate full-bleed carousel
-#main-layout-container
-  margin-left 0
-  margin-right 0
-
-#artist-related-last-modified
-  margin-top 40px
-  color gray-darker-color
+  margin-top 80px
 
 #artist-fillwidth-section
 #artist-related-shows-section
@@ -62,13 +54,12 @@
 
 // Tab sections
 .artist-section-header
-  margin 20px 0
+  margin 30px 0 50px 0
   font-size 26px
-  line-height 1.5
 
 .artist-page-content
   position relative
-  margin-bottom 80px
+  margin 30px 0 80px 0
 
 #artist-page-content-section
   position relative
@@ -79,5 +70,8 @@
   margin 20px auto
 
 @require './header'
-@require './carousel'
+@require '../components/carousel'
+@require '../components/current_show_auction'
 @require './sections'
+@require '../../../components/auction_lots/stylesheets'
+@require '../../../node_modules/artsy-ezel-components/pagination'

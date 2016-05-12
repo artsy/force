@@ -4,8 +4,9 @@ Q = require 'bluebird-q'
 qs = require 'qs'
 metaphysics = require '../../lib/metaphysics'
 { API_URL } = require('sharify').data
-{ FeaturedCities } = require 'places'
 Partners = require '../../collections/partners'
+PartnerCities = require '../../collections/partner_cities'
+PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 Profiles = require '../../collections/profiles'
 ViewHelpers = require './components/partner_cell/view_helpers'
 query = require './queries/partner_categories_query'
@@ -26,21 +27,27 @@ mapTypeClasses =
   type = mapType[req.params.type]
   searchParams = _.pick(req.query, 'location', 'category')
   params = _.extend type: type, searchParams
+  partnerCities = new PartnerCities()
+  partnerFeaturedCities = new PartnerFeaturedCities()
 
   Q.all([
     fetchPrimaryCarousel(params)
+    partnerCities.fetch(cache: true)
+    partnerFeaturedCities.fetch(cache: true)
     metaphysics(
       query: query
       variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
     ).then (data) ->
       _.compact _.map data.partner_categories, (category) ->
-        return null if category.primary.length + category.secondary.length < 3
+        return if category.primary.length + category.secondary.length is 0
         _.extend _.omit(category, 'primary', 'secondary'),
           partners: mergeBuckets(category.primary, category.secondary),
           facet: 'category'
 
-  ]).spread (profiles, categories) ->
+  ]).spread (profiles, partnerCities, partnerFeaturedCities, categories) ->
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
+    res.locals.sd.PARTNER_CITIES = partnerCities
+    res.locals.sd.PARTNER_FEATURED_CITIES = partnerFeaturedCities
     res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
     res.render 'index',
@@ -49,7 +56,7 @@ mapTypeClasses =
       type: type
       profiles: profiles.models
       categories: _.shuffle categories
-      facets: facetDefaults
+      facets: facetDefaults(type)
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
   .catch next

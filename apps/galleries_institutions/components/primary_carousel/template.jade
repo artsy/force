@@ -1,6 +1,9 @@
-.gpc-bumpers.js-gpc-navigation
-  .gpc-bumper-prev.gi-carousel-arrow-prev.js-gpc-prev: i.icon-chevron-left
-  .gpc-bumber-next.gi-carousel-arrow-next.js-gpc-next: i.icon-chevron-right
+- var length = profiles.length
+
+if length > 1
+  .gpc-bumpers.js-gpc-navigation
+    .gpc-bumper-prev.gi-carousel-arrow-prev.js-gpc-prev: i.icon-chevron-left
+    .gpc-bumber-next.gi-carousel-arrow-next.js-gpc-next: i.icon-chevron-right
 
 .gpc-body
   .gpc-overlays
@@ -24,13 +27,13 @@
         )
 
     - var index = 0
-    - var length = profiles.length
     .mgr-dots
-      for x, i in new Array(length)
-        .mgr-dot.js-gpc-dot(
-          class= (index === i ? 'is-active' : undefined)
-          data-index= i
-        ) •
+      if length > 1
+        for x, i in new Array(length)
+          .mgr-dot.js-gpc-dot(
+            class= (index === i ? 'is-active' : undefined)
+            data-index= i
+          ) •
 
   .gpc-carousel
     .gpc-carousel-cells.js-mgr-cells

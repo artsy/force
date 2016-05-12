@@ -1,0 +1,73 @@
+@require '../../../../components/tooltips'
+@require '../../../../components/inquiry_questionnaire/stylesheets'
+
+.artwork-commercial
+  padding (gutter / 2) 0
+  serif('s-body')
+  line-height 1.25 // compact-line-height
+
+  &__limited-partner-message
+  &__sale-message
+    block-margins(gutter / 2)
+    padding distance(gutter / 2) 0
+    border-top 1px solid gray-lighter-color
+    border-bottom @border-top
+
+  &__consignables
+    margin (gutter + (gutter / 3)) 0
+
+    &__consign
+      margin-top -((gutter / 2) + 2)
+      padding distance(gutter / 2) 0
+      border-top 2px solid black
+      border-bottom @border-top
+
+      &:first-child
+        block-margins(gutter / 2)
+
+      > a
+        fine-faux-underline()
+
+  &__inquiry-success
+    color green-color
+
+    > h3
+      sans('s-headline')
+      margin-bottom 5px
+
+.artwork-inquiry-form
+.artwork-acquire-form
+  margin (gutter / 2) 0
+
+.artwork-edition-sets
+  block-margins(gutter / 2)
+
+.artwork-edition-set
+  display table
+  width 100%
+  serif('m-caption')
+  padding 5px 0
+  border-top 1px dotted gray-lighter-color
+
+  &:first-child
+    border-top-style solid
+
+  &__radio
+  &__details
+  &__price
+    display table-cell
+    height 100%
+    vertical-align top
+
+  &__radio
+    text-align center
+
+  &__details
+    padding 0 10px
+
+    // When not acquireable, radio button is disabled
+    &:first-child
+      padding-left 0
+
+  &__price
+    text-align right

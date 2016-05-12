@@ -110,7 +110,7 @@ module.exports = class Artwork extends Backbone.Model
   #
   isContactable: ->
     return false if @isAtLimitedFairPartner()
-    return true if @get('is_contactable')
+    return true if @get('is_inquireable')
     return true if @isPartOfContactableAuctionPromo()
     return false if @isPartOfAuction()
     @isArtworkContactable()
@@ -313,7 +313,7 @@ module.exports = class Artwork extends Backbone.Model
   availabilityMessage: ->
     return if @get('partner')?.type is "Institutional Seller"
     return if @get('availability') is 'for sale'
-    if @get('partner').has_limited_fair_partnership
+    if @get('partner')?.has_limited_fair_partnership
       'Not inquireable'
     else if @get('availability')?.indexOf('on hold') > - 1
       _.compact([

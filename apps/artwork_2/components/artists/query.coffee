@@ -4,32 +4,6 @@ module.exports = """
       name
       href
       biography: blurb(format: HTML)
-      articles {
-        title
-        href
-        author {
-          name
-        }
-        image: thumbnail_image {
-          thumb: cropped(width: 185, height: 130) {
-            width
-            height
-            url
-          }
-        }
-      }
-      exhibition_history: partner_shows {
-        kind
-        year: start_at(format: "YYYY")
-        name
-        href
-        partner {
-          name
-        }
-        location {
-          city
-        }
-      }
     }
   }
 """

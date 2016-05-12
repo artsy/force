@@ -6,10 +6,6 @@ module.exports = function(router) {
   var state = router.state
   var form = router.form
 
-  analytics.track('Landed on partner application form', _.extend(state.attributes, {
-    session_id: sd.SESSION_ID
-  }))
-
   router.on('route', function(route) {
     analytics.track('Changed partner application route', _.extend(state.attributes,
       {route: route}, {session_id: sd.SESSION_ID}

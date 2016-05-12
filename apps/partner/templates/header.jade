@@ -2,7 +2,7 @@ header.partner-header
   .partner-info-container
     a.profile-badge.partner-icon( href=profile.href() )
       .profile-badge-icon
-        if profile.has('icon')
+        if profile.hasIconImage()
           img( src=profile.iconImageUrl(), alt=profile.displayName() )
         else
           .profile-badge-initials= profile.defaultIconInitials()

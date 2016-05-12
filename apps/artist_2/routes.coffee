@@ -23,18 +23,25 @@ currentShowAuction = require './components/current_show_auction/index'
     if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
+      if currentItem = currentShowAuction(artist)
+        if currentItem.type is 'auction'
+          currentItem.detail = "&nbsp;"
+        else
+          currentItem.detail = helpers.formatShowDetail currentItem
+
+      res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
       res.render 'index',
         viewHelpers: helpers
         artist: artist
         tab: tab
         nav: nav
-        currentItem: currentShowAuction(artist)
+        currentItem: currentItem
 
     else
       res.redirect artist.href.replace "/artist/", "/artist_2/"
 
-  .catch next
+  .catch -> next()
   .done()
 
 @tab = (req, res, next) =>

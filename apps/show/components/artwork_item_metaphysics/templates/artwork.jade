@@ -1,4 +1,4 @@
-- includeContact = sd.ARTWORK_ITEM_CONTACT_GALLERY === 'contact' && artwork.is_contactable && !artwork.partner.is_limited_fair_partner || false
+- includeContact = artwork.is_inquireable && !artwork.partner.is_limited_fair_partner || false
 
 figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
   .artwork-item-image-container
@@ -25,6 +25,7 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
     if artwork.sale_message != 'Contact For Price'
       p.artwork-item-sale-price= artwork.sale_message
     if includeContact
-      a.artwork-item-contact-seller( href="#{artwork.href}/contact-gallery" ) Contact #{artwork.partner.type}
+      a.artwork-item-contact-seller( href= artwork.href )
+        | Contact #{artwork.partner.type}
     else if artwork.partner.is_limited_fair_partner
       p Not inquireable

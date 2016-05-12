@@ -98,6 +98,9 @@ module.exports =
   PARSELY_KEY: null
   PARSELY_SECRET: null
   PREDICTION_URL: 'https://live.artsy.net'
+  SEGMENT_WRITE_KEY_MICROGRAVITY: null
+  GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
+  EMAIL_SIGNUP_IMAGES_ID: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

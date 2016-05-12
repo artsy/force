@@ -13,7 +13,7 @@ body-width = 580px
 artwork-height = 500px
 gutter-size = 30px
 play-button-size = 30px
-column-width = 540px
+column-width = 580px
 
 body.body-article
   #main-layout-container
@@ -22,7 +22,7 @@ body.body-article
     max-width 100%
 
 .article-container h1
-  width 900px
+  max-width 900px
   margin auto
   font-size 40px
   line-height 48px
@@ -137,9 +137,13 @@ body.body-article
     width 130px
     height 50px
     border 1px solid gray-color
+    background-color white
+    transition background-color 0.25s
     &:nth-child(3)
       border-left 0px
       border-right 0px
+    &:hover
+      background-color black
   a
     display block
     height 100%
@@ -147,9 +151,11 @@ body.body-article
     .icon-in-table
       display block
       margin-top 8px
+    &:hover
+      color white
 
 .article-section-image
-  width overflow-width
+  max-width overflow-width
   margin auto
   img
     max-width 100%
@@ -157,13 +163,17 @@ body.body-article
     margin auto
   figcaption
     margin-top 10px
-    font-style italic
     color gray-dark-color
     text-align left
 
 .article-section-artworks
   position relative
-  min-height (body-width * .33)
+
+.article-section-artworks, .article-section-image
+  opacity 0
+  transition opacity 0.25s
+  &.images-loaded
+    opacity 1
 
 .article-section-artworks[data-layout="column_width"]
   width body-width
@@ -177,7 +187,7 @@ body.body-article
       width auto
 
 .article-section-artworks[data-layout="overflow_fillwidth"]
-  width (overflow-width + gutter-size)
+  max-width (overflow-width + gutter-size)
   margin 0 auto
   text-align center
   &.is-loading
@@ -213,7 +223,7 @@ body.body-article
 .article-section-embed[data-layout="column_width"]
   width column-width
   .article-embed-container
-    width 500px
+    width 540px
 
 .article-section-embed
   margin auto
@@ -252,20 +262,19 @@ body.body-article
     &[data-section-type="artworks"]
       .artwork-item-sale-price, .artwork-item-contact-seller
         display none
-    // Override the main layout container width here
     &[data-layout="overflow_fillwidth"]
       width 100%
-      max-width 10000px !important
-      // Go over the share buttons
       z-index 1
       position relative
       &[data-section-type="embed"]
         background black
         width 100%
+        max-width 100000px !important
         .article-embed-container
           width 100%
           margin auto
       &[data-section-type="video"]
+        max-width 100000px !important
         .article-section-video
           width 100%
           padding-top 40px
@@ -382,17 +391,29 @@ body.body-article
   vertical-align middle
 
 .article-share-fixed
-  padding-top 78px
-  margin-left -35px
-  padding-left 93px
+  opacity 0
+  padding-top 80px
+  max-width 54px
+  z-index 10
   float left
-  z-index 2
   a
+    background-color white
     text-decoration none
     display block
-    color gray-dark-color
+    color black
+    transition background-color 0.25s, border-color 0.25s
+    padding 10px
+    border 1px solid gray-lighter-color
+    border-left none
+  a:nth-child(2)
+    border-top none
+    border-bottom none
   a:hover
-    color gray-darker-color
+    background-color black
+    color white
+    border-color black
+  i
+    vertical-align middle
 
 .article-section-callout
   float right
@@ -405,12 +426,11 @@ body.body-article
     display inline-block
     vertical-align middle
   .article-section-callout-title
-    font-size 25px
-    line-height 131%
+    garamond-size('l-body')
   .article-section-callout-link
-    avant-garde()
+    avant-garde-size('body')
     text-decoration none
-    font-size 14px
+    margin-top 5px
   img
     max-width 180px
     margin-right 20px
@@ -432,8 +452,8 @@ a.article-section-callout
 
 .article-section-top-stories
   float right
-  width 388px
-  margin 0px 103px 0px 20px
+  width 415px
+  margin 0px 74px 20px 20px
   &__headline
     avant-garde-size('body')
     padding 10px
@@ -450,7 +470,7 @@ a.article-section-callout
       border-top 0px
     &:hover
       transition background-color 0.25s
-      background-color #f8f8f8
+      background-color gray-lightest-color
   img
     width 80px
     height 60px
@@ -459,4 +479,4 @@ a.article-section-callout
     display inline-block
     vertical-align middle
   p
-    max-width 250px
+    max-width 275px

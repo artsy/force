@@ -164,7 +164,7 @@ module.exports = class PartnerShow extends Backbone.Model
 
   formatShowOrFairCity: =>
     city = @formatCity()
-    city ?= @get('fair').location?.city?.trim()
+    city ?= @get('fair')?.location?.city?.trim()
 
   formatStreetAddress: ->
     @get('location')?.address?.trim()

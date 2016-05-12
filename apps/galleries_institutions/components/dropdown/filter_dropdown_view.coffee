@@ -11,13 +11,14 @@ module.exports = class FilterDropdownView extends Backbone.View
 
   initialize: ({ @params, @facet }) ->
     @$input = @$('.partners-facet-input')
+    source = if @facet.search then _.debounce(@facet.async_matcher, 500) else @facet.matcher
     @$input.typeahead({
       hint: false
       highlight: true,
       minLength: 0
     }, {
       name: @facet.facetName
-      source: @facet.matcher
+      source: source
       displayKey: 'name'
       template: 'custom'
       templates:
@@ -39,11 +40,17 @@ module.exports = class FilterDropdownView extends Backbone.View
 
   selected: (e, suggestion, dataset) =>
     if suggestion.id
-      @params.set @facet.facetName, suggestion.id
+      if @facet.search
+        @goToProfile suggestion.profile.href
+      else
+        @params.set @facet.facetName, suggestion.id
     else
       @params.unset @facet.facetName
 
     $(e.target).blur()
+
+  goToProfile: (profileUrl) ->
+    window.location.href = profileUrl
 
   suggestionTemplate: (item) ->
     suggestionTemplate item: item

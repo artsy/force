@@ -1,0 +1,19 @@
+@require '../../../../components/artwork_masonry'
+@require '../../../../components/auction_artwork_brick'
+
+.artwork-auction-artworks
+  //
+
+  &__header
+    display flex
+    align-items center
+    justify-content space-between
+    margin-bottom gutter
+
+    &__name
+      serif('headline')
+      > a
+        fine-faux-underline()
+
+  &__masonry
+    //

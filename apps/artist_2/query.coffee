@@ -12,7 +12,9 @@ module.exports = """
       deathday
       years
       location
+      hometown
       blurb
+      consignable
       counts {
         follows
         artworks

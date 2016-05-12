@@ -22,6 +22,7 @@ describe 'EditorialSignupView', ->
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
       @setupCTAWaypoints = sinon.spy @EditorialSignupView::, 'setupCTAWaypoints'
+      @cycleImages = sinon.spy @EditorialSignupView::, 'cycleImages'
       @view = new @EditorialSignupView el: $el
       done()
 

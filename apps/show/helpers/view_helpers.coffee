@@ -175,7 +175,7 @@ module.exports =
       "@context": "http://schema.org"
       "@type": "Event"
       name: @title(show)
-      image: show.cover_image?.meta_image_url
+      image: show.meta_image?.meta_image_url
       url: "#{sd.APP_URL}#{show.href}"
       startDate: (new Date(show.start_at)).toISOString()
       endDate: (new Date(show.end_at)).toISOString()

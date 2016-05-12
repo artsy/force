@@ -3,11 +3,11 @@ _ = require 'underscore'
 sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 Articles = require '../../../collections/articles.coffee'
-ArticleView = require '../../../components/article/view.coffee'
+ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
-{ resize } = require '../../../components/resizer/index.coffee'
-embedVideo = require 'embed-video'
+{ resize, crop } = require '../../../components/resizer/index.coffee'
+embed = require 'particle'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
@@ -21,33 +21,37 @@ module.exports = class ArticleIndexView extends Backbone.View
       tier: 1
       sort: '-published_at'
       is_super_article: false
-
-    @article = new Article sd.ARTICLE
-    @displayedArticles = [@article.get('slug')]
-    @collection = new Articles
-      cache: true
-      data: @params.toJSON()
+      limit: 5
 
     # Main Article
+    @article = new Article sd.ARTICLE
     new ArticleView
       el: $('body')
       article: @article
       waypointUrls: true
+      lushSignup: true
 
-    if sd.SCROLL_ARTICLE is 'infinite'
-      @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
-      $('#articles-show').append @jump.$el
-      @listenTo @collection, 'sync', @render
+    @setupInfiniteScroll() if sd.SCROLL_ARTICLE is 'infinite'
 
-      @listenTo @params, 'change:offset', =>
-        $('#articles-show').addClass 'is-loading'
-        @collection.fetch
-          cache: true
-          remove: false
-          data: @params.toJSON()
-          complete: => $('#articles-show').removeClass 'is-loading'
+  setupInfiniteScroll: ->
+    @displayedArticles = [@article.get('slug')]
+    @collection = new Articles
+      cache: true
+      data: @params.toJSON()
+    @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
+    $('#articles-show').append @jump.$el
+    @listenTo @collection, 'sync', @render
 
-      $.onInfiniteScroll(@nextPage)
+    @listenTo @params, 'change:offset', =>
+      $('#articles-show').addClass 'is-loading'
+      @collection.fetch
+        cache: true
+        remove: false
+        data: @params.toJSON()
+        complete: => $('#articles-show').removeClass 'is-loading'
+
+    $.onInfiniteScroll(@nextPage, {offset: 5000})
+    $(window).scroll(_.debounce( (-> $.waypoints('refresh')), 100))
 
   render: (collection, response) =>
     if response
@@ -63,7 +67,9 @@ module.exports = class ArticleIndexView extends Backbone.View
           sd: sd
           resize: resize
           moment: moment
-          embedVideo: embedVideo
+          embed: embed
+          crop: crop
+          lushSignup: false
 
         previousHref = @displayedArticles[@displayedArticles.indexOf(article.get('slug'))-1]
         # Initialize client
@@ -76,7 +82,7 @@ module.exports = class ArticleIndexView extends Backbone.View
           previousHref: previousHref
 
   nextPage: =>
-    @params.set offset: (@params.get('offset') + 10) or 0
+    @params.set offset: (@params.get('offset') + 5) or 0
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')

@@ -1,35 +1,59 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ShareView = require '../../../../components/share/view.coffee'
+moment = require 'moment'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ CURRENT_SHOW_AUCTION } = require('sharify').data
+ShareView = require '../../../../components/share/view.coffee'
+currentItemTemplate = -> require('../../components/current_show_auction/index.jade') arguments...
+viewHelpers = require '../../view_helpers.coffee'
+{ numberFormat } = require 'underscore.string'
 
 module.exports = class ArtistHeaderView extends Backbone.View
-  initialize: ({ @user }) ->
+  initialize: ({ @user, @jump }) ->
     @setupShareButtons()
     @setupFollowButton()
+    @updateCurrentItem()
     @$window = $ window
     @$window.on 'scroll', _.throttle(@popLock, 150)
+    @$('a').click @navClick
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
 
   setupFollowButton: ->
+    view = this
     @following = new Following(null, kind: 'artist') if @user
-    new FollowButton
-      analyticsFollowMessage: 'Followed artist, via artist header'
-      analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
-      el: @$('#artist-follow-button')
-      following: @following
-      modelName: 'artist'
-      model: @model
-    new FollowButton
-      analyticsFollowMessage: 'Followed artist, via artist header'
-      analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
-      el: @$('.artist-sticky-follow-button')
-      following: @following
-      modelName: 'artist'
-      model: @model
+    @$('#artist-follow-button, .artist-sticky-follow-button').each ->
+      followButton = new FollowButton
+        context_page: "Artist page"
+        context_module: "Header"
+        el: $(this)
+        following: view.following
+        modelName: 'artist'
+        model: view.model
+      view.listenTo followButton, 'followed', -> view.updateFollowCount 1
+      view.listenTo followButton, 'unfollowed', -> view.updateFollowCount -1
+
     @following?.syncFollows [@model.id]
+
+  updateFollowCount: (i) ->
+    count = parseInt(@$('.artist-header-follow-count').attr('data-count').replace(/,/g, "")) + i
+    @$('.artist-header-follow-count').attr 'data-count', numberFormat count
+    if count is 1
+      @$('.artist-header-follow-count').removeClass('is-plural')
+    else
+      @$('.artist-header-follow-count').addClass('is-plural')
+
+  updateCurrentItem: ->
+    currentItem = CURRENT_SHOW_AUCTION
+    if currentItem?.type is 'auction'
+      currentItem.detail = viewHelpers.formatAuctionDetail moment(currentItem.end_at)
+      @$('.current-item').html currentItemTemplate { currentItem, viewHelpers }
+
+  navClick: (e) =>
+    if e.target.pathname is window.location.pathname
+      e.preventDefault()
+      @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   popLock: =>
     mainHeaderHeight = $('#main-layout-header').height()

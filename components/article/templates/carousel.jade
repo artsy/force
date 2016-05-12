@@ -3,7 +3,7 @@ mixin carouselFigure(item)
     when 'image'
       img( src= item.url )
     when 'video'
-      != embedVideo(item.url)
+      != embed(item.url)
     when 'artwork'
       - imageWidth = '500'
       - artwork = slideshowArtworks.findWhere({ _id: item.id })

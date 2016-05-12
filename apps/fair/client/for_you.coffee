@@ -13,14 +13,11 @@ CurrentUser = require '../../../models/current_user.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
 
 module.exports = class ForYouView extends Backbone.View
 
   sortOrder: "-featured"
-  analyticsFollowMessage: 'Followed partner profile from for-you'
-  analyticsUnfollowMessage: 'Unfollowed partner profile from for-you'
 
   initialize: (options) ->
     { @fair, @profile, @onFetchFollowingArtists } = options
@@ -34,24 +31,6 @@ module.exports = class ForYouView extends Backbone.View
       @showHideBlankState()
 
     @fetchAndAppendShows()
-
-  initializeFollowButtons: ->
-    @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
-    ids = []
-    @$('.exhibitors-column-container .follow-button').each (index, item) =>
-      id = $(item).attr('data-id')
-      model = new Profile(id: id)
-      @initFollowButton model, item
-      ids.push id
-    @followProfiles?.syncFollows ids
-
-  initFollowButton: (profile, el) ->
-    new FollowProfileButton
-      el: el
-      model: profile
-      collection: @followProfiles
-      analyticsFollowMessage: @analyticsFollowMessage
-      analyticsUnfollowMessage: @analyticsUnfollowMessage
 
   fetchFollowingArtists: ->
     url = "#{sd.API_URL}/api/v1/me/follow/artists"
@@ -157,5 +136,3 @@ module.exports = class ForYouView extends Backbone.View
 
   appendFeedItems: (columns) ->
     @$('.exhibitors-column-container').html exhibitorsTemplate(columns: columns)
-    if @$('.exhibitors-column-container').length
-      @initializeFollowButtons()

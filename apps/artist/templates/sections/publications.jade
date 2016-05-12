@@ -1,4 +1,4 @@
-if STATUSES.merchandisable
+if @statuses.merchandisable
   h2.artist-section-header Books & Catalogs for purchase
   #artist-page-merchandisable-section.merchandisable-items
     if books.length
@@ -24,7 +24,7 @@ if STATUSES.merchandisable
 if books.length && bibliography.length
   hr
 
-if STATUSES.bibliography
+if @statuses.bibliography
   h2.artist-section-header
   #artist-page-bibliography-section: .loading-spinner
     //- Rendered elsewhere

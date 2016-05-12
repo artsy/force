@@ -32,7 +32,7 @@ module.exports = ->
   # 'Recently Sold' rail
   artworks = new Artworks RECENTLY_SOLD
   rail = new ArtworkRailView
-    el: $('.js-recently-sold-rail')
+    $el: $('.js-recently-sold-rail')
     collection: artworks
   rail.render()
 

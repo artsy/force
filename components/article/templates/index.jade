@@ -23,8 +23,9 @@ if superArticle
           +image(article.get('hero_section'))
 
     //- Article Share Fixed Nav
-    .article-share-fixed(data-id=article.get('id'))
-      +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
+    if !hideShare
+      .article-share-fixed(data-id=article.get('id'))
+        +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container
       h1.large-garamond-header= article.get('title')
@@ -57,10 +58,8 @@ if superArticle
             .article-section-video( class="article-video-background-" + section.background_color )
               +video(section)
           when 'embed'
-            .article-section-embed( data-id=section.url data-layout=section.layout )
-              .loading-spinner
-              .article-embed-container
-                //- Rendered on client
+            .article-section-embed( data-layout=section.layout )
+              +embed(section)
           when 'callout'
             if section.article.length > 0
               .article-section-callout-container(data-id=section.article)
@@ -78,13 +77,14 @@ if superArticle
               .article-section-image-set( data-index= i )
                 +imageSet(section)
 
-    .main-layout-container
-      //- Footer social buttons
-      .article-social
-        h2.article-social__header Share article
-        +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
+    if !hideShare
+      .main-layout-container
+        //- Footer social buttons
+        .article-social
+          h2.article-social__header Share article
+          +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
-    if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('author_id') === sd.ARTSY_EDITORIAL_ID
+    if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('featured') === true && !hideSubscribe && !lushSignup
       .main-layout-container.article-es
         include ./editorial_signup.jade
 

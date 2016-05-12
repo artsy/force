@@ -1,6 +1,7 @@
 module.exports = """
   fragment partner on Artwork {
-    is_contactable
+    _id
+    is_inquireable
     partner {
       type
       name
@@ -10,6 +11,7 @@ module.exports = """
         city
       }
       profile {
+        _id
         id
         bio
         icon {

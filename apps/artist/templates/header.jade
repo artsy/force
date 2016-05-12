@@ -1,32 +1,38 @@
-include ../../../components/share/mixin
 include ../../../components/util/activator
 
 header.artist-header
-  h1.artist-header-name.extra-large-garamond-header= artist.get('name')
+  .artist-header-flex
+    .artist-header-meta
+      h1.artist-header-name.extra-large-garamond-header= artist.name
 
-  - var bday = artist.displayNationalityAndBirthdate()
-  - var followCount = artist.displayFollowers()
-  if bday
-    .artist-header-birthdate= bday
+      - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+      - var followCount = viewHelpers.displayFollowers(artist)
+      if bday
+        .artist-header-birthdate= bday
 
-  unless artist.get('published_artworks_count')
-    .artist-header-empty
-      | There are no #{artist.get('name')} works on Artsy yet.
-      br
-      | Follow the artist to get alerts when works are added.
+      unless artist.statuses.artworks
+        .artist-header-empty
+          | There are no #{artist.name} works on Artsy yet.
+          br
+          | Follow the artist to get alerts when works are added.
 
-  .artist-follow
-    button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
-    if followCount
-      span.artist-header-follow-count= followCount
+      .artist-follow
+        button#artist-follow-button.is-small.avant-garde-follow-button-black.follow-button
+        if followCount
+          span.artist-header-follow-count(class=followCount == 1 ? '' : 'is-plural' data-count=followCount) Follower
 
-  if artist.get('published_artworks_count')
-    nav.artist-share
-      +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+    if currentItem
+      .current-item(class= (artist.consignable ? 'compact' : ''))
+        include ../components/current_show_auction/index
+
+    if artist.consignable
+      .consignment-cta
+        | Interested in selling a work by #{artist.name}?  #[a(href="/consignment") Consign with Artsy.]
 
   .artist-sticky-header
     .artist-sticky-header-container
-      .artist-sticky-name= artist.get('name')
+      .artist-sticky-name
+        a(href= "/artist_2/#{artist.id}")= artist.name
       .artist-tabs
         nav.artist-tablist.garamond-bordered-tablist
           for link, i in nav.sections()

@@ -1,0 +1,60 @@
+Backbone = require 'backbone'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+helpers = require './helpers.coffee'
+template = -> require('./templates/masonry.jade') arguments...
+
+query = """
+  query artwork($id: String!, $artwork_id: String!) {
+    artwork(id: $artwork_id) {
+      layer(id: $id) {
+        id
+        name
+        href
+        artworks {
+          ... artwork_brick
+        }
+      }
+    }
+  }
+  #{require '../../../../components/artwork_brick/query.coffee'}
+"""
+
+module.exports = class ArtworkRelatedArtworksView extends Backbone.View
+  events:
+    'click .js-artwork-tabs-link': 'activate'
+
+  @cache: (selector) -> ->@[selector] ?= @$(selector)
+
+  links: @cache '.js-artwork-tabs-link'
+  sections: @cache '.js-artwork-tabs-section'
+
+  initialize: ({ @id }) -> #
+
+  activate: (e) ->
+    e.preventDefault()
+
+    @links()
+      .attr 'data-state', 'inactive'
+
+    { id } = $(e.currentTarget)
+      .attr 'data-state', 'active'
+      .data()
+
+    @sections()
+      .attr 'data-loading', true
+
+    metaphysics query: query, variables: id: id, artwork_id: @id
+      .then ({ artwork }) =>
+        @sections()
+          .attr 'data-loading', false
+          .html template
+            layer: artwork.layer
+            helpers: related_artworks: helpers
+
+        @postRender artwork.layer.artworks
+
+  postRender: (artworks) ->
+    (@masonryView ?= new ArtworkMasonryView el: @sections())
+      .reset artworks
+      .postRender()

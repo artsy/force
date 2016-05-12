@@ -1,0 +1,32 @@
+{
+  "data": {
+    "artwork": {
+      "_id": "4e494b90866c680001001519",
+      "id": "lynn-hershman-leeson-wrapped",
+      "is_acquireable": false,
+      "is_inquireable": true,
+      "is_in_auction": false,
+      "sale_message": "Contact for price",
+      "partner": {
+        "id": "bitforms-gallery",
+        "name": "bitforms gallery",
+        "type": "Gallery",
+        "is_pre_qualify": false,
+        "contact_message": "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?"
+      },
+      "fair": null,
+      "edition_sets": [
+        {
+          "id": "4e6e709956736b000100297c",
+          "is_acquireable": false,
+          "edition_of": "Editions 2-6 of 6 + 1AP",
+          "price": "Available",
+          "dimensions": {
+            "in": "30 1/2 × 23 1/2 in",
+            "cm": "77.5 × 59.7 cm"
+          }
+        }
+      ]
+    }
+  }
+}

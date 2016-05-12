@@ -4,9 +4,15 @@
 #
 
 express = require 'express'
-routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
-app.get '/dev/blank', routes.blank
+
+{ NODE_ENV } = require '../../config'
+app.set 'view cache', NODE_ENV is 'production'
+
+app.get '/dev/blank', (req, res) ->
+  res.render 'blank',
+    env: NODE_ENV
+    view_cache_enabled: app.enabled 'view cache'

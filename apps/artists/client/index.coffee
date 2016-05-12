@@ -11,7 +11,7 @@ module.exports.init = ->
     $buttons.map(->
       id = ($el = $(this)).data 'id'
       new FollowButton
-        analyticsFollowMessage: message
+        context_page: "Artists page"
         following: collection
         notes: message
         model: new Artist id: id

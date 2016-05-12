@@ -49,10 +49,10 @@ module.exports = class ColorFilterView extends Backbone.View
     selected = @params.get('color')
     if selected
       @$checkmark.addClass(selected)
-      @$clear.show()
+      @$clear.css('visibility', 'visible')
       @$checkmark.show()
     else
-      @$clear.hide()
+      @$clear.css('visibility', 'hidden')
       @$checkmark.hide()
 
     # Add empty states

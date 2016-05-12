@@ -16,58 +16,50 @@
   position relative
   h1
     garamond-size('headline', true)
-    font-size 25px
 
 .arv-view-all
-  position absolute
+  faux-underline(black)
+  position absolute !important
   right 0
   top 0
 
-.arv-fillwidth-row
+.mgr-cell.arv-fillwidth-row
   padding-bottom 120px
 
 .arv-carousel
   position relative
   max-width 100%
-  max-height 360px
+  height 360px
+  overflow hidden
 
-  &:hover
-    .arv-carousel-nav__prev
-    .arv-carousel-nav__next
-      opacity 0.5
+  .mgr-cells:not(.flickity-enabled) .mgr-cell
+    visibility hidden
+
+  .mgr-cells--loading
+    display flex
+    .mgr-cell--loading
+      flex 1
+      visibility visible !important
+    .mgr-cell__image-placeholder
+      display block
+      width 100%
+      height 230px
+      background-color gray-lightest-color
+    .mgr-cell__text-placeholder
+      display block
+      height 16px
+      margin 5px 0
+      background-color gray-lightest-color
+      &:nth-child(2)
+        width 68%
+      &:nth-child(3)
+        width 82%
+      &:nth-child(4)
+        width 47%
 
   .artwork-item-caption
-    max-height 120px
-
-.arv-carousel-nav
-  position absolute
-  width 100%
-  height 100%
-  top 0px
-  left 0px
-  pointer-events none
-
-  &.is-hidden
-    display none
-
-  &__next
-  &__prev
+    height 120px
     position absolute
-    top 50%
-    transform translateY(-50%)
-    text-align center
-    cursor pointer
-    user-select none
-    pointer-events all
-    transition opacity .25s
-    opacity 0
-
-    > i
-      user-select none
-    &:hover
-      opacity 1 !important
-
-  &__next
-    left 100%
-  &__prev
-    right 100%
+    bottom 0
+    vertical-align top
+    padding-right 15px

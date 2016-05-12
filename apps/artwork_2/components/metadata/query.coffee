@@ -1,17 +1,19 @@
 module.exports = """
   fragment metadata on Artwork {
+    _id
     id
     href
     title
     series
     date
+    edition_of
     artists {
+      _id
       id
       name
       href
     }
     cultural_maker
-    collecting_institution
     medium
     dimensions {
       in
@@ -19,38 +21,11 @@ module.exports = """
     }
     website
     image_rights
-    sale_message
     is_downloadable
-    is_acquireable
-    is_for_sale
-    is_contactable
-    partner {
-      id
-      name
-      href
-      type
-      initials
-      is_limited_fair_partner
-      locations {
-        city
-        phone
-      }
-    }
-    auction: sale {
-      id
+    is_inquireable
+    sale {
       sale_artwork(id: $id) {
         lot_number
-      }
-    }
-    edition_of
-    edition_sets {
-      id
-      is_acquireable
-      edition_of
-      price
-      dimensions {
-        in
-        cm
       }
     }
   }

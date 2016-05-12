@@ -45,8 +45,10 @@ splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
+downcase = require './middleware/downcase'
 
 module.exports = (app) ->
+  app.use require '../apps/blank'
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
@@ -128,6 +130,7 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
+  app.use downcase
   app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
@@ -152,15 +155,16 @@ module.exports = (app) ->
 
   # Apps with hardcoded routes or "RESTful" routes
   app.use require "../apps/home"
+  app.use require "../apps/home_2"
   app.use require "../apps/toolkit"
   app.use require "../apps/apply"
-  app.use require "../apps/auction_lots"
   app.use require "../apps/auctions"
   app.use require "../apps/artist"
   app.use require "../apps/artist_2"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
   app.use require "../apps/artwork_2"
+  app.use require "../apps/auction_lots"
   app.use require "../apps/about"
   app.use require "../apps/collect"
   app.use require "../apps/categories"

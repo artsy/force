@@ -3,13 +3,11 @@ Backbone = require 'backbone'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
-# Main section
-ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
-Sticky = require '../../../../components/sticky/index.coffee'
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
+initWorksSection = require '../../components/works_section/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
@@ -20,40 +18,6 @@ module.exports = class OverviewView extends Backbone.View
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    @sticky = new Sticky
-
-  setupArtworkFilter: ->
-    filterRouter = ArtworkFilter.init
-      el: @$('#artwork-section')
-      model: @model
-      mode: 'grid'
-      showSeeMoreLink: false
-
-    @filterView = filterRouter.view
-    stickyHeaderHeight = $('.artist-sticky-header-container').outerHeight(true)
-    @filterView.topOffset = stickyHeaderHeight
-    @subViews.push @filterView
-
-    @listenTo @filterView.artworks, 'sync', @fetchWorksToFillPage
-    @sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
-    @sticky.add @filterView.$('#artwork-filter-selection')
-
-    $.onInfiniteScroll =>
-      if @filterView.remaining() is 0
-        @fadeInSections()
-      else
-        @filterView.loadNextPage()
-
-  # If you scroll quickly, a new page of artworks may not reach all the way to the bottom of the window.
-  # The waypoint must be pushed below the the window bottom in order to be triggered again on subsequent scroll events.
-  fetchWorksToFillPage: ->
-    _.defer =>
-      $.waypoints 'refresh'
-      viewportBottom = $(window).scrollTop() + $(window).height()
-      viewBottom = @$('#artwork-section').height() + @$('#artwork-section').scrollTop()
-      bottomInView = viewBottom < viewportBottom
-
-      @filterView.loadNextPage() if bottomInView
 
   setupRelatedShows: ->
     if @statuses.shows
@@ -77,9 +41,13 @@ module.exports = class OverviewView extends Backbone.View
       mediator.trigger 'related:genes:render'
     @subViews.push subView
 
-
   setupBlurb: ->
-    gradient $('.artist-overview-header'), limit: 280, label: 'Read More', heightBreakOffset: 20
+    gradient $('.artist-overview-header'),
+      limit: 170,
+      label: 'Read More',
+      heightBreakOffset: 20
+      onClick: =>
+        @sticky.rebuild()
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
   setupRelatedSection: ($el) ->
@@ -101,8 +69,7 @@ module.exports = class OverviewView extends Backbone.View
 
   waitForFilter: ->
     dfd = $.Deferred()
-    { filter, artworks } = @filterView
-    @listenToOnce artworks, 'sync error', dfd.resolve
+    @listenToOnce @filterView.artworks, 'sync error', dfd.resolve
     @fetches.push dfd.promise()
 
   renderRelatedArtists: (type) ->
@@ -127,7 +94,11 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupRelatedGenes()
     # Main section
-    @setupArtworkFilter()
+    { @filterView, @sticky } = initWorksSection
+      el: @$('#artwork-section')
+      model: @model
+      allLoaded: => @fadeInSections()
+    @subViews.push @filterView
     # Bottom sections
     @setupRelatedArtists()
     @setupRelatedShows()
@@ -145,4 +116,5 @@ module.exports = class OverviewView extends Backbone.View
     this
 
   remove: ->
+    @filterView.artworks.off 'sync'
     _.invoke @subViews, 'remove'

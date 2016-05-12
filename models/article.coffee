@@ -2,7 +2,8 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
-sd = require('sharify').data
+{ POSITRON_URL, APP_URL } = sd = require('sharify').data
+request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
@@ -10,11 +11,12 @@ Artworks = require '../collections/artworks.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
 { compactObject } = require './mixins/compact_object.coffee'
+cheerio = require 'cheerio'
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
 
-  urlRoot: "#{sd.POSITRON_URL}/api/articles"
+  urlRoot: "#{POSITRON_URL}/api/articles"
 
   defaults:
     sections: [{ type: 'text', body: '' }]
@@ -111,7 +113,7 @@ module.exports = class Article extends Backbone.Model
     "/article/#{@get('slug')}"
 
   fullHref: ->
-    "#{sd.APP_URL}/article/#{@get('slug')}"
+    "#{APP_URL}/article/#{@get('slug')}"
 
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
@@ -125,6 +127,12 @@ module.exports = class Article extends Backbone.Model
   strip: (attr) ->
     stripTags(@get attr)
 
+  getAuthorArray: ->
+    creator = []
+    creator.push @get('author').name if @get('author')
+    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors')?.length
+    creator
+
   getBodyClass: ->
     bodyClass = "body-article body-article-#{@get('layout')}"
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'
@@ -134,11 +142,51 @@ module.exports = class Article extends Backbone.Model
 
     bodyClass
 
-  hasTopStories: ->
-    # TODO: @get('featured') is true and @get('layout') is 'left'
-    sections = _.filter @get('sections'), (section) ->
-      section.type is 'callout' and section.top_stories
-    sections.length > 0
+  topParselyArticles: (article, key, secret, cb) ->
+    request
+      .get('https://api.parsely.com/v2/analytics/posts')
+      .query
+        apikey: key
+        secret: secret
+        limit: 10
+        days: 7
+        sort: '_hits'
+      .end (err, response) =>
+        return cb [] if err
+        posts = _.where response.body.data, section: 'Editorial'
+        posts = _.reject posts, (post) => post.url.indexOf(@href()) > 0
+        return cb posts
+
+  prepForInstant: ->
+
+    replaceTagWith = (htmlStr, findTag, replaceTag ) ->
+      $ = cheerio.load(htmlStr)
+      $(findTag).each ->
+        $(this).replaceWith($('<' + replaceTag + '>' + $(this).html() + '</' + replaceTag + '>'))
+      $.html()
+
+    sections =  _.map @get('sections'), (section) ->
+      if section.type is 'text'
+        $ = cheerio.load(section.body)
+        $('br').remove()
+        $('*:empty').remove()
+        $('p').each ->
+          $(this).remove() if $(this).text().length is 0
+        section.body = $.html()
+        section.body = replaceTagWith(section.body, 'h3', 'h2')
+        section
+      else if section.type is 'image'
+        section.caption = replaceTagWith(section.caption, 'p', 'h1') if section.caption
+        section
+      else if section.type is 'image_set'
+        section.images = _.map section.images, (image) ->
+          if image.type is 'image'
+            image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption
+          image
+        section
+      else
+        section
+    @set 'sections', sections
 
   #
   # Super Article helpers
@@ -150,9 +198,6 @@ module.exports = class Article extends Backbone.Model
 
   # article metadata tag for parse.ly
   toJSONLD: ->
-    creator = []
-    creator.push @get('author').name if @get('author')
-    creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors').length
     compactObject {
       "@context": "http://schema.org"
       "@type": "NewsArticle"
@@ -161,6 +206,6 @@ module.exports = class Article extends Backbone.Model
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
       "articleSection": if @get('section') then @get('section').get('title') else "Editorial"
-      "creator": creator
+      "creator": @getAuthorArray()
       "keywords": @get('tags')
     }

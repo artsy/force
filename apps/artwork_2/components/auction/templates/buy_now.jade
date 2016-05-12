@@ -1,9 +1,11 @@
-//- TODO: Needs artwork to test on
-if auction.is_open && artwork.is_acquireable && !sale_artwork.is_bid_on
-  form
-    if artwork.sale_message
-      .artwork-metadata__sale-message
-        = artwork.sale_message
-
-    button.avant-garde-button-black
+if artwork.is_buy_nowable
+  .artwork-auction__buy-now
+    .artwork-auction__buy-now__label
       | Buy Now
+
+    .artwork-auction__buy-now__amount
+      = artwork.sale_message
+
+    form.artwork-auction__buy-now__form
+      button.avant-garde-button-black.is-block( class='js-artwork-auction-buy-now' )
+        | Buy Now

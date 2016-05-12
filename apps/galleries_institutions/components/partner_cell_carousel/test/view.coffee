@@ -13,7 +13,6 @@ describe 'PartnerCellCarouselView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
-      sinon.stub PartnerCellCarouselView::, 'setupFlickity'
       done()
 
   after ->

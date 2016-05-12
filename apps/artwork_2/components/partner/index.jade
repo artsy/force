@@ -2,7 +2,7 @@
 - var profile = partner.profile
 
 if helpers.partner.isDisplayable(partner)
-  section.artwork-partner( class='js-artwork-partner' )
+  section.artwork-section.artwork-partner( class='js-artwork-partner' )
     .artwork-partner__icon: a(
       href= partner.href
       data-initials= partner.initials
@@ -23,14 +23,19 @@ if helpers.partner.isDisplayable(partner)
           = profile.bio
 
       .artwork-partner__metadata__actions
-        if artwork.is_contactable
-          a.avant-garde-button-black.is-small( class='js-artwork-partner-contact' )
-            | Contact Gallery
+        if artwork.is_inquireable
+          a.avant-garde-button-black.is-small(
+            class='js-artwork-partner-contact analytics-artwork-contact-seller'
+            data-artwork_id= artwork._id
+            data-context_type='partner-module'
+          )
+            | Contact #{artwork.partner.type}
 
         if profile
           a.avant-garde-button-white.follow-button.is-small(
             class='js-artwork-partner-follow'
             data-type='profile'
+            data-_id= profile._id
             data-id= profile.id
           )
 

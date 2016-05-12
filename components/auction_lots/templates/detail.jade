@@ -1,0 +1,36 @@
+header.auction-result-detail-header
+  h1( data-id= lot.id )
+    a( href= artist.href() ) #{artist.get('name')},&nbsp;
+    em= lot.get('title')
+    |  &mdash; Auction Result
+
+section.auction-result-detail
+  include ./_detail
+section.auction-result-artist
+  header.ara-header
+    .ara-header-cell
+      h2: a( href= artist.href() ) #{artist.get('name')} on Artsy
+    .ara-header-cell
+      a#ara-follow-button.avant-garde-follow-button-black.follow-button( href="#", rel='nofollow' )
+    .ara-header-cell
+      aside Follow #{artist.get('name')} to get updates about new shows and works
+
+  h3.ara-available-works-count: a( href= artist.href() )= artist.displayAvailableWorks()
+
+  #ara-artworks.ara-artworks
+    //- Rendered client-side
+
+  a.avant-garde-jump-link( href= artist.href() )
+    | See all available works, reference works, and artist bio
+    i.icon-chevron-small-right
+
+if auctionLots.length
+  section.auction-result-more-results
+    h2: a( href= "#{artist.href()}/auction-results" ) More auction results for #{artist.get('name')}
+
+    table.auction-lots-table
+      include ./auction_lots_table
+
+    a.avant-garde-jump-link( href= "#{artist.href()}/auction-results" )
+      | See all auction results for #{artist.get('name')}
+      i.icon-chevron-small-right

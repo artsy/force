@@ -69,6 +69,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
           following: @allFollows
           modelName: 'category'
           model: category
+          context_page: "User setttings page"
 
         @subViews.push view
 

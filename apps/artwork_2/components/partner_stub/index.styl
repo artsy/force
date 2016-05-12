@@ -1,0 +1,36 @@
+.artwork-partner-stub
+  serif('s-body')
+  line-height 1.25 // compact-line-height
+
+  &__label
+    sans('s-headline')
+    margin-bottom 5px
+
+  &__name
+    text-decoration none
+    > span
+      color gray-darker-color
+
+    &:not([href])
+      cursor default
+
+  &__phone
+    serif('l-caption')
+    margin distance(5px) 0
+
+    &
+    > a
+      color gray-darker-color
+    > a
+      fine-faux-underline()
+      margin-top -2px
+      padding-bottom -(@margin-top)
+
+    &__locations
+      display none
+      margin distance(gutter / 2) 0
+      &[data-length='1']
+        margin 0
+
+      &__location
+        //

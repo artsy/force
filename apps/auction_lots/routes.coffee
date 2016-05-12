@@ -7,6 +7,7 @@ AuctionLot = require '../../models/auction_lot'
 AuctionLots = require '../../collections/auction_lots'
 ComparableSales = require '../../collections/comparable_sales'
 totalCount = require '../../node_modules/artsy-ezel-components/pagination/total_count'
+totalCountWithAccessToken = require '../../node_modules/artsy-ezel-components/pagination/total_count_with_access_token'
 randomPage = (total, pageSize) ->
   Math.floor(Math.random() * (total / pageSize)) + 1
 
@@ -28,6 +29,7 @@ randomPage = (total, pageSize) ->
       next err
 
   lot.fetch
+    data: access_token: req.user?.get('accessToken')
     cache: true
     error: res.backboneError
     success: (model, response) ->
@@ -41,7 +43,11 @@ randomPage = (total, pageSize) ->
       res.locals.sd.ARTIST = response
       render()
 
-  totalCount(artsyXapp.token, auctionLots.url()).then (total) ->
+  if req.user?
+    totalCountPromise = totalCountWithAccessToken(req.user.get('accessToken'), auctionLots.url())
+  else
+    totalCountPromise = totalCount(artsyXapp.token, auctionLots.url())
+  totalCountPromise.then (total) ->
     auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
     auctionLots.fetch
       data: access_token: req.user?.get('accessToken')

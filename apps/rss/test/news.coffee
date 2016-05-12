@@ -19,8 +19,8 @@ describe '/rss', ->
 
     it 'renders articles', ->
       articles = new Articles [
-        new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString()),
-        new Article(thumbnail_title: 'World', published_at: new Date().toISOString())
+        new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString(), contributing_authors: []),
+        new Article(thumbnail_title: 'World', published_at: new Date().toISOString(), contributing_authors: [])
       ]
       rendered = newsTemplate(sd: sd, articles: articles, moment: moment)
       rendered.should.containEql '<title>Artsy News</title>'
@@ -93,6 +93,7 @@ describe '/rss', ->
             body: 'But sometimes fame chooses you.'
           }
         ]
+        contributing_authors: []
       )
       rendered = articleTemplate(sd: sd, article: article)
       rendered.should.containEql '<p>Andy Foobar never wanted fame.</p><p>But sometimes fame chooses you.</p>'

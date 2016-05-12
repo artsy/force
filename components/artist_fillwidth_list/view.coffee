@@ -62,6 +62,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           following: @following
           model: artist
           modelName: 'artist'
+          context_module: "Artist fillwidth row"
 
         # After rendering the row do some fillwidth things unique to this layout
         _.defer ->

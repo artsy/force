@@ -3,7 +3,7 @@ CurrentUser = require '../../models/current_user.coffee'
 { API_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require '../../config'
 { parse } = require 'url'
 qs = require 'querystring'
-sanitizeRedirect = require '../../components/sanitize_redirect/index'
+sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
 
 @resetPassword = (req, res) ->
   if req.query.reset_password_token?

@@ -7,8 +7,31 @@ artwork-action = {
 }
 
 .artwork-actions
-  margin 10px 0
+  position relative
+  margin (gutter / 3) 0
   text-align center
+
+  &__admin
+    position absolute
+    bottom 0
+    right 0
+
+    > a
+      display inline-block
+      text-decoration none
+      inline-block-margins(gutter / 5)
+      avant-garde()
+      font-size 10px
+      line-height 1
+      color gray-color
+
+      > i
+        font-size 18px
+        line-height 0
+        vertical-align middle
+
+      &:hover
+        color purple-color
 
 .artwork-action
   position relative

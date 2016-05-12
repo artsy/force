@@ -1,0 +1,31 @@
+doctype xml
+rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
+  channel
+    title Artsy Partner Updates
+    link= sd.APP_URL
+    atom:link(href='#{sd.APP_URL}/rss/partner-updates', rel='self', type='application/rss+xml')
+    description Artsy articles featured for Artsy Partner Updates.
+    language en-US
+    if articles.length
+      lastBuildDate= new Date(articles.first().get('published_at')).toUTCString()
+    each article in articles.models
+      item
+        title= article.get('thumbnail_title')
+        link #{sd.APP_URL}/article/#{article.get('slug')}
+        author
+          if article.get('contributing_authors').length > 0
+            - var authors = article.get('contributing_authors')
+            for author, i in authors
+              = author.name
+              if (authors.length > 1) && (i === (authors.length - 2))
+                | &nbsp;and&nbsp;
+              else if (authors.length > 1) && (i < (authors.length - 1))
+                | ,&nbsp;
+          else if article.get('author')
+            = article.get('author').name
+        description
+          | <![CDATA[
+          include partner_updates_article
+          | ]]>
+        pubDate= new Date(article.get('published_at')).toUTCString()
+        guid(isPermaLink='false') #{sd.APP_URL}/article/#{article.get('slug')}

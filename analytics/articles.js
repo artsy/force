@@ -10,17 +10,19 @@ if(location.pathname.match('/article/')){
       position: 'bottom',
       service: $(this).attr('data-service')
     })
-  })
-
-  $(document.body).on('click', '.article-share-fixed > a', function() {
+  }).on('click', '.article-share-fixed > a', function() {
     analytics.track('Clicked Article Share', {
       position: 'fixed',
       service: $(this).attr('data-service')
     })
-  })
-
-  $(document.body).on('click', '.article-related-widget a', function() {
+  }).on('click', '.article-related-widget a', function() {
     analytics.track('Clicked Related Article', {})
+  }).on('click', '.article-section-toc-link a', function() {
+    analytics.track('Clicked TOC Link', {})
+  }).on('click', '.article-section-image-set', function() {
+    analytics.track('Clicked Image Set', {})
+  }).on('click', '.article-section-top-stories__item a', function() {
+    analytics.track('Clicked Top Stories Link', {})
   })
 
   analyticsHooks.on('readmore', function() {
@@ -31,7 +33,6 @@ if(location.pathname.match('/article/')){
 
   analyticsHooks.on('scrollarticle', function(options){
     analytics.page({path: location.pathname});
-    analytics.track('Article pageview', { message: location.pathname, nonInteraction: 1 });
     if(window.PARSELY){
       window.PARSELY.beacon.trackPageView({
         url: location.href,
@@ -51,5 +52,6 @@ if(location.pathname.match('/article/')){
   analyticsHooks.on('dismiss:editorial-signup', function(){
     analytics.track('Dismiss editorial signup footer');
   });
+
 
 }

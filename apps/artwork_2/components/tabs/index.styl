@@ -13,16 +13,20 @@
     min-height ((avant-garde-body-font-size * avant-garde-body-line-height) + distance(10px, 'avant-garde-body')) * 2
     padding 0 20px 0 0
     border-right 1px solid gray-lighter-color
+
     > a
       display block
       sans('body')
       overflow ellipsis
       padding distance(10px) 0
       color gray-darker-color
+      user-select none
+
       &:first-child
         padding-top 0
       &:last-child
         padding-bottom 0
+
       &:hover
       &[data-state='active']
         color black
@@ -33,8 +37,13 @@
 
 .artwork-tab
   display none
+  transition opacity 0.25s
+
   &[data-state='active']
     display block
+
+  &[data-loading='true']
+    opacity 0.5
 
   > p
     serif('s-body')

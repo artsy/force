@@ -38,6 +38,7 @@ redirects =
   '/following/artists': '/user/saves#artists'
   '/following/genes': '/user/saves#categories'
   '/following/profiles': '/user/saves#galleries-institutions'
+  '/artsy.net/artwork/marilyn-minter-miley': '/artwork/marilyn-minter-miley'
 
 for from, path of redirects
   router.get from, to(path)

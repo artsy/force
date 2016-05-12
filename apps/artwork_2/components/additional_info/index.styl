@@ -1,0 +1,39 @@
+@require '../tabs'
+
+.artwork-additional-info
+  //
+  &__content
+    //
+    &__articles
+      //
+
+    p + &__articles
+      margin-top gutter
+
+  &__article
+    display table
+    width 75%
+    block-margins(gutter / 2)
+    text-decoration none
+
+    &__image
+    &__metadata
+      display table-cell
+      vertical-align middle
+
+    &__metadata
+      padding-left (gutter / 2)
+      width 100%
+
+      &__context
+      &__author
+        sans('s-headline')
+        line-height 1
+
+      &__title
+        serif('s-body')
+        line-height 1.25 // compact-line-height
+        margin (gutter / 3) 0
+
+      &__author
+        color gray-darker-color

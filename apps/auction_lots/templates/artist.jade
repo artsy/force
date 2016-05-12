@@ -1,9 +1,8 @@
 extends ../../../components/main_layout/templates/index
 include ../../../node_modules/artsy-ezel-components/pagination/paginator
-include ../../../components/bordered_pulldown/mixin
 
 block head
-  include ./meta/artist
+  include ../../../components/auction_lots/templates/meta/artist
   +paginateHead(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
 
 append locals
@@ -15,29 +14,8 @@ block body
       i.icon-chevron-small-left
       | Back to #{artist.get('name')}
 
-    header.auction-lots-header
-      h1.avant-garde-header-center
-        | Auction results for&nbsp;
+    header.auction-lots-header.extra-large-garamond-header
+      h1
+        | Auction Results for&nbsp;
         a( href="/artist/#{artist.id}")= artist.get('name')
-
-    .auction-lots-beta-alert.garamond-alert-info
-      em Note:&nbsp;
-      | Auction results are an experimental feature with limited data.
-
-    .auction-lots-interstital
-      .auction-lots-page-total
-          | #{auctionLots.state.totalRecords} Results
-          if (auctionLots.state.totalPages > 1)
-            | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
-
-      .auction-lots-sort
-        +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Sort by:')
-          a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
-          for k, v in auctionLots.sortCriteria
-            if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
-              a( href="?sort=#{v}" )= k
-
-    table.auction-lots-table
-      include ./auction_lots_table
-
-    +paginate(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
+    include ../../../components/auction_lots/templates/artist

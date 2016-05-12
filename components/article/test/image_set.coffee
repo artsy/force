@@ -1,10 +1,7 @@
-# Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-# Article = require '../../../models/article'
-# Articles = require '../../../collections/articles'
 CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 sd = require('sharify').data
@@ -18,10 +15,12 @@ describe 'ImageSetView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      $.fn.imagesLoaded = ->
       @ImageSetView = benv.requireWithJadeify(
-        resolve(__dirname, '../image_set')
+        resolve(__dirname, '../client/image_set')
         ['template' ]
       )
+      @ImageSetView.__set__ 'Image', ->
       @ImageSetView.__set__ 'resize', (url) -> url
       @ImageSetView.__set__ 'Follow', { Following: sinon.stub(), FollowButton: sinon.stub() }
       stubChildClasses @ImageSetView, this,
@@ -47,7 +46,11 @@ describe 'ImageSetView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @view = new @ImageSetView el: $('body'), collection: @collection, user: @user
+    @view = new @ImageSetView
+      el: $('body')
+      items: @collection
+      user: @user
+      startIndex: 0
 
   afterEach ->
     Backbone.sync.restore()

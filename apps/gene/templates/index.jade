@@ -19,14 +19,14 @@ block body
       .gene-share-buttons.js-gene-share-buttons
         +share(gene.displayName() + ' on Artsy', gene.imageUrl())
 
-    .bisected-header
+    .sixty-forty-bisected-header
       if gene.get('description')
-        .sixty-forty-bisected-header-cell
+        .bisected-header-cell
           .bisected-header-cell-section
             h2 About
             .gene-blurb.js-gene-blurb
               != gene.mdToHtml('description')
-      .sixty-forty-bisected-header-cell
+      .bisected-header-cell
         .related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
         .related-artists.related-links.bisected-header-cell-section

@@ -22,8 +22,6 @@ module.exports = class FeedView extends Backbone.View
   textColumnWidth: 404
   textColumnMargin: 80
   feedItemClass: 'feed-item-partner-show'
-  analyticsFollowMessage: 'Followed partner profile from feed'
-  analyticsUnfollowMessage: 'Unfollowed partner profile from feed'
   feedName: 'Shows Feed'
   items: []
 

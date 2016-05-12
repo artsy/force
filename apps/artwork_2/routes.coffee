@@ -1,62 +1,62 @@
-qs = require 'qs'
 { extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
-{ METAPHYSICS_ENDPOINT } = require('sharify').data
 
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
       ... actions
+      ... additional_info
       ... artists
       ... auction
       ... banner
-      ... collapsed_metadata
+      ... client
+      ... commercial
       ... deep_zoom
-      ... highlights
       ... images
-      ... inquiry
       ... meta
       ... metadata
-      ... tabs
+      ... partner_stub
     }
   }
   #{require './components/actions/query'}
+  #{require './components/additional_info/query'}
   #{require './components/artists/query'}
   #{require './components/auction/query'}
   #{require './components/banner/query'}
-  #{require './components/collapsed_metadata/query'}
+  #{require './client/query'}
+  #{require './components/commercial/query'}
   #{require './components/deep_zoom/query'}
-  #{require './components/highlights/query'}
   #{require './components/images/query'}
-  #{require './components/inquiry/query'}
   #{require './components/meta/query'}
   #{require './components/metadata/query'}
-  #{require './components/tabs/query'}
+  #{require './components/partner_stub/query'}
 """
 
 helpers = extend [
   {}
   actions: require './components/actions/helpers'
+  additional_info: require './components/additional_info/helpers'
   artists: require './components/artists/helpers'
   auction: require './components/auction/helpers'
   banner: require './components/banner/helpers'
-  collapsed_metadata: require './components/collapsed_metadata/helpers'
-  highlights: require './components/highlights/helpers'
+  commercial: require './components/commercial/helpers'
   metadata: require './components/metadata/helpers'
   partner: require './components/partner/helpers'
-  tabs: require './components/tabs/helpers'
+  partner_stub: require './components/partner_stub/helpers'
+  related_artworks: require './components/related_artworks/helpers'
 ]...
 
 bootstrap = ->
   require('./components/actions/bootstrap') arguments...
   require('./components/auction/bootstrap') arguments...
   require('./components/banner/bootstrap') arguments...
+  require('./client/bootstrap') arguments...
+  require('./components/commercial/bootstrap') arguments...
   require('./components/deep_zoom/bootstrap') arguments...
-  require('./components/inquiry/bootstrap') arguments...
   require('./components/partner/bootstrap') arguments...
 
 @index = (req, res, next) ->
-  send = query: query, variables: req.params
+  send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
 
@@ -64,6 +64,7 @@ bootstrap = ->
     .then (data) ->
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
+      res.locals.sd.PARAMS = req.params
       res.render 'index', data
 
     .catch next

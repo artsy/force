@@ -6,14 +6,15 @@
       a.arv-view-all( href= viewAllUrl )
         | View All
 
-  .arv-carousel( class='js-my-carousel' )
-    .mgr-cells( class='js-mgr-cells' )
-      for artwork in artworks
-        .mgr-cell( class='js-mgr-cell' )
-          include ../../../components/artwork_item/templates/artwork
+  .arv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
+    ul.arv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
+      if artworks && artworks.length
+        for artwork in artworks
+          li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
+            include ../../artwork_item/templates/artwork
+      else
+        include ./loading
 
-    .arv-carousel-nav
-      .arv-carousel-nav__prev( class='js-mgr-prev' )
-        i.icon-chevron-left
-      .arv-carousel-nav__next( class='js-mgr-next' )
-        i.icon-chevron-right
+    nav.mgr-navigation.js-mgr-navigation
+      if artworks && artworks.length
+        include ../../merry_go_round/templates/horizontal_navigation

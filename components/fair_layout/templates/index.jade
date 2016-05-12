@@ -7,7 +7,7 @@ html( data-useragent=userAgent )
     link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
-  body
+  body( class='body-eigen' )
     include ../../modal/template
     include ../../flash/template
     include ./header

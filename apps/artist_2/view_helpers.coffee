@@ -1,6 +1,6 @@
 _ = require 'underscore'
+moment = require 'moment'
 Artist = require '../../models/artist.coffee'
-sd = require('sharify').data
 { timespanInWords } = require '../../components/util/date_helpers.coffee'
 { capitalize, numberFormat } = require 'underscore.string'
 
@@ -24,34 +24,37 @@ module.exports =
   displayNationalityAndBirthdate: (artist) ->
     _.compact([
       artist.nationality
-      artist.years
+      @formatBirthDeath artist if artist.birthday?.length
     ]).join ', '
 
-  birthDetail: (artist) ->
-    return if not (artist.birthday?.length or artist.hometown?.length)
-    'b. ' + _.compact([
-      artist.birthday if artist.birthday?.length
+  formatBirthDeath: (artist) ->
+    if artist.deathday?.length
+      "#{artist.birthday}–#{artist.deathday}"
+    else
+      "b. #{artist.birthday}"
+
+  artistMeta: (artist) ->
+    return '' if not (artist.hometown or artist.location)
+    _.compact([
+      artist.nationality if artist.nationality?.length
+      @formatBirthDeath artist if artist.birthday?.length
       artist.hometown if artist.hometown?.length
+      "based in #{artist.location}" if artist.location?.length
     ]).join ', '
-
-  locationDetail: (artist) ->
-    return if not artist.location?.length
-    dead = artist.deathday?.length
-    lives = if dead then 'Lived' else 'Lives'
-    works = if dead then 'worked' else 'works'
-    lives + ' and ' + works + ' in ' + artist.location
 
   displayFollowers: (artist) ->
-    if c = artist.counts.follows
-      "#{numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
+    "#{numberFormat(c)}" if c = artist.counts.follows
 
   mdToHtml: (artist, attr) ->
     artist = new Artist _.pick artist, attr
     artist.mdToHtml attr
 
-  currentItemDetail: (item) ->
+  formatAuctionDetail: (end) ->
+    minuteFormat = if end.minute() > 0 then ':mm' else ''
+    end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
+
+  formatShowDetail: (item) ->
     _.compact([
       item.city
       timespanInWords(item.start_at, item.end_at, day: 'D')
     ]).join ', '
-

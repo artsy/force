@@ -55,8 +55,7 @@ module.exports = class CategoriesView extends StepView
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage: 'Unfollowed gene from featured personalize gene suggestions'
-      analyticsFollowMessage: 'Followed gene from featured personalize gene suggestions'
+      context_page: "Personalize page"
       modelName: 'Gene'
       model: model
       el: el

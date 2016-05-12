@@ -1,0 +1,15 @@
+if artwork.sale_artwork
+  - var sale_artwork = artwork.sale_artwork
+
+  .artwork-brick__metadata__sale-artwork
+    .artwork-brick__metadata__sale-artwork__estimate
+      = sale_artwork.estimate || sale_artwork.symbol + 'N/A'
+
+    .artwork-brick__metadata__sale-artwork__current-bid
+      | #{sale_artwork.current_bid.amount} (#{sale_artwork.counts.bids})
+
+    .artwork-brick__metadata__sale-artwork__buttons
+      a.avant-garde-button-black.is-tiny( href= artwork.href )
+        | More Info
+      a.avant-garde-button-black.is-tiny( href= artwork.href )
+        | Bid

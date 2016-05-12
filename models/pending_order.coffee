@@ -10,4 +10,3 @@ module.exports = class PendingOrder extends Backbone.Model
     quantity: null
     replace_order: true
     session_id: SESSION_ID
-

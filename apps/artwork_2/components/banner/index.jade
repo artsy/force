@@ -1,33 +1,63 @@
 if artwork.banner
   - var banner = artwork.banner
 
-  .artwork-banner
-    if banner.profile && banner.profile.icon
-      - var img = banner.profile.icon.img
-      .artwork-banner__logo
+  .artwork-banner( data-type= banner.__typename )
+    if banner.__typename === 'ArtworkContextPartnerShow'
+      if banner.thumbnail
+        - var img = banner.thumbnail.image
+        .artwork-banner__thumbnail
+          a( href= banner.href )
+            img(
+              src= img.url
+              width= img.width
+              height= img.height
+            )
+
+        h1.artwork-banner__name
+          .artwork-banner__name__status
+            case banner.status
+              when 'upcoming'
+                | In Upcoming Show
+              when 'running'
+                | In Current Show
+              when 'closed'
+                | In Past Show
+
+          a( href= banner.href )
+            | #{banner.name}
+            if banner.partner
+              = ' '
+              | at #{banner.partner.name}
+
+    else
+      if banner.profile && banner.profile.icon
+        - var img = banner.profile.icon.img
+        .artwork-banner__logo
+          a( href= banner.href )
+            img(
+              src= img.url
+              width= img.width
+              height= img.height
+            )
+
+      h1.artwork-banner__name
         a( href= banner.href )
-          img(
-            src= img.url
-            width= img.width
-            height= img.height
-          )
+          = banner.name
 
-    h1.artwork-banner__name
-      a( href= banner.href )
-        = banner.name
-
-    if banner.end_at
-      .artwork-banner__countdown(
-        class='js-artwork-banner__countdown'
-      )
-        - var label = helpers.banner.countdownLabel(banner.start_at)
-        - var countdown = helpers.banner.countdownClock(banner.start_at, banner.end_at)
-        include ../clock/index
+      if banner.end_at
+        .artwork-banner__countdown(
+          class='js-artwork-banner__countdown'
+        )
+          - var label = helpers.banner.countdownLabel(banner.start_at)
+          - var countdown = helpers.banner.countdownClock(banner.start_at, banner.end_at)
+          include ../clock/index
 
     .artwork-banner__jump
       a.avant-garde-button-white.is-small( href= banner.href )
         case banner.__typename
-          when 'RelatedFair'
+          when 'ArtworkContextFair'
             | Explore Fair
-          when 'RelatedSale'
-            | Explore Auction
+          when 'ArtworkContextSale'
+            | Explore #{banner.is_auction ? 'Auction' : 'Sale'}
+          when 'ArtworkContextPartnerShow'
+            | Explore Show

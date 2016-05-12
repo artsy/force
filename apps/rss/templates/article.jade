@@ -3,15 +3,13 @@
 if hero
   case hero.type
     when 'video'
-      != embedVideo(hero.url)
+      != particle(hero.url)
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
         p!= hero.caption
 
-//- Author - 'contributing' gets primacy for now b/c 'author' is always 
-//- 'Artsy Editorial', with people names listed in 'contributing_authors'
-if article.get('contributing_authors') && article.get('contributing_authors')[0] !== undefined
+if article.get('contributing_authors').length > 0
   h2
     | By&nbsp;
     - var authors = article.get('contributing_authors')
@@ -29,16 +27,25 @@ else if article.get('author')
 
 //- Content
 if article.strip('lead_paragraph')
-  p!= article.get('lead_paragraph')  
+  p!= article.get('lead_paragraph')
 for section, i in article.get('sections')
   case section.type
     when 'text'
       p!= section.body
     when 'image'
-      img( src=resize(section.url, { width: 1100 }) )
+      img( src=resize(section.url, { width: 500 }) )
       if section.caption
         p!= section.caption
     when 'video'
-      != embedVideo(section.url)
-    //- TODO
-    //- when 'artworks'
+      != embed(section.url)
+    when 'artworks'
+      if section.artworks
+        for artwork in section.artworks
+          img(src=resize(artwork.image, { width: 500 } ))
+          p= artwork.title + ", " + artwork.date + ". "
+            br
+            if artwork.artist
+              = artwork.artist.name
+            br
+            if artwork.partner
+              = artwork.partner.name

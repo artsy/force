@@ -1,0 +1,51 @@
+thead
+  tr
+    th Title
+    th Year
+    th Medium
+    th Size
+    th Auction House
+    th Date
+    th Estimate
+    th Sale Price
+tbody
+  for lot in auctionLots.models
+    tr.auction-lot( id= "auction-lot-#{lot.id}" )
+      td
+        .auction-lot-title-container
+          if lot.hasImage('thumbnail')
+            a.auction-lot-details-imagelink(
+              href= "/artist/#{artist.id}/auction-result/#{lot.id}"
+              data-client
+            )
+              img.auction-lot-image( src= lot.imageUrl('thumbnail'), alt= lot.get('title') )
+          else
+            .auction-lot-image-placeholder
+          .auction-lot-title
+            em= lot.get('title')
+            a.auction-lot-details-link(
+              href= "/artist/#{artist.id}/auction-result/#{lot.id}"
+              data-client
+              data-auction-lot-id="#{lot.id}"
+            ) See details
+      td= lot.get('dates_text')
+      td.auction-lot-medium= lot.get('medium_text')
+      td
+        != lot.dimensions({ metric: 'in', format: 'superscript' })
+        br
+        != lot.dimensions({ metric: 'cm', format: 'decimal' })
+      td.auction-lot-organization= lot.get('organization')
+      td= lot.get('auction_dates_text')
+      td
+        if lot.has('estimate_text')
+          - var estimate = lot.get('estimate_text').split(' - ')
+          = estimate[0]
+          | &nbsp;&ndash;
+          br
+          = estimate[1]
+      td
+        if (user)
+          = lot.get('price_realized_text')
+        else
+          a.auction-lot-sale-signup( href='/sign_up' )
+            | Sign up to see sale price

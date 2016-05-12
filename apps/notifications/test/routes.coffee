@@ -11,7 +11,7 @@ describe 'Notification Routing', ->
 
   beforeEach ->
     sinon.stub(Backbone, 'sync').returns('fetchUntilEnd').yieldsTo 'success', []
-    @req = { url: '/works-for-you' }
+    @req = { url: '/works-for-you', query: {} }
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -23,6 +23,16 @@ describe 'Notification Routing', ->
   describe '#worksForYou', ->
 
     it 'redirect to login without a user', ->
+      routes.worksForYou @req, @res
+      @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=/works-for-you'
+
+    it 'redirects to artist works page without a user, when linked to from email', ->
+      @req = { url: '/works-for-you', query: { artist_id: 'percy-the-cat', from_email: true } }
+      routes.worksForYou @req, @res
+      @res.redirect.args[0][0].should.equal '/artist/percy-the-cat/works?sort=-published_at'
+
+    it 'redirects to login without a user, when not linked to from email', ->
+      @req = { url: '/works-for-you', query: { artist_id: 'percy-the-cat' } }
       routes.worksForYou @req, @res
       @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=/works-for-you'
 

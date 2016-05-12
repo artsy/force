@@ -1,33 +1,8 @@
-@require '../../../../components/tooltips'
-
 .artwork-metadata
   serif('s-body')
   line-height 1.25 // compact-line-height
 
-  &__admin
-    avant-garde()
-    font-size 10px
-    line-height 1
-    padding-bottom distance(gutter / 3)
-    margin-bottom distance(gutter / 2)
-    border-bottom 1px solid gray-lighter-color
-
-    > a
-      display inline-block
-      text-decoration none
-      margin-left 5px
-      &:first-child
-        margin 0
-      > i
-        font-size 18px
-        line-height 0
-        vertical-align middle
-
-      &:hover
-        color purple-color
-
   &__artist
-  &__partner
   &__secondary-metadata
     block-margins(distance(gutter / 2))
 
@@ -59,73 +34,10 @@
     line-height 1.25 // compact-line-height
     block-margins(distance(gutter / 2))
 
-  &__limited-partner-message
-  &__sale-message
-    block-margins(gutter / 2)
-    padding distance(gutter / 2) 0
-    border-top 1px solid gray-lighter-color
-    border-bottom @border-top
+  &__actions
+    serif('s-body')
+    margin-top distance(gutter)
 
-  &__partner
-    &__label
-      sans('s-headline')
-      margin-bottom 5px
-
-    &__name
-      text-decoration none
-      > span
-        color gray-darker-color
-
-    &__phone
-      serif('l-caption')
-      margin distance(5px) 0
-
-      &
-      > a
-        color gray-darker-color
-      > a
-        fine-faux-underline()
-        margin-top -2px
-        padding-bottom -(@margin-top)
-
-      &__locations
-        display none
-        margin distance(gutter / 2) 0
-        &[data-length='1']
-          margin 0
-
-        &__location
-          //
-
-.artwork-edition-sets
-  block-margins(gutter / 2)
-
-.artwork-edition-set
-  display table
-  width 100%
-  serif('m-caption')
-  padding 5px 0
-  border-top 1px dotted gray-lighter-color
-
-  &:first-child
-    border-top-style solid
-
-  &__radio
-  &__details
-  &__price
-    display table-cell
-    height 100%
-    vertical-align top
-
-  &__radio
-    text-align center
-
-  &__details
-    padding 0 10px
-
-    // When not acquireable, radio button is disabled
-    &:first-child
-      padding-left 0
-
-  &__price
-    text-align right
+    > a
+      color gray-dark-color
+      fine-faux-underline(gray-dark-color)

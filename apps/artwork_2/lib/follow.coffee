@@ -4,19 +4,23 @@ MODELS =
   artist: require '../../../models/artist.coffee'
   profile: require '../../../models/profile.coffee'
 
-module.exports = ($el) ->
+module.exports = ($els) ->
   following = null
 
-  return unless $el.length
+  return unless $els.length
 
-  { id, type } = $el.data()
+  $els.map ->
+    $el = $(this)
 
-  if user = CurrentUser.orNull()
-    following = new Following null, kind: type
-    following.syncFollows [id]
+    { id, _id, type } = $el.data()
 
-  new FollowButton
-    el: $el
-    following: following
-    modelName: type
-    model: new MODELS[type] id: id
+    if user = CurrentUser.orNull()
+      following = new Following null, kind: type
+      following.syncFollows [id]
+
+    new FollowButton
+      el: $el
+      following: following
+      modelName: type
+      model: new MODELS[type] id: id, _id: _id
+      context_page: 'Artwork page'

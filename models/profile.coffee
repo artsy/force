@@ -29,6 +29,9 @@ module.exports = class Profile extends Backbone.Model
   iconImageUrl: ->
     @icon().imageUrl()
 
+  hasIconImage: ->
+    @iconImageUrl() isnt Icon.DefaultUserIconUrl
+
   coverImage: ->
     new CoverImage @get('cover_image'), profileId: @get('id')
 

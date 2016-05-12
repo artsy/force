@@ -1,0 +1,28 @@
+.artwork-metadata__secondary-metadata
+  if artwork.medium
+    .artwork-metadata__medium
+      = artwork.medium
+
+  if artwork.duration
+    .artwork-metadata__duration
+      = artwork.duration
+
+  if artwork.manufacturer
+    .artwork-metadata__manufacturer
+      = artwork.manufacturer
+
+  unless artwork.edition_sets && artwork.edition_sets.length > 1
+    .artwork-metadata__dimensions
+      .artwork-metadata__dimensions__imperial
+        = artwork.dimensions.in
+      .artwork-metadata__dimensions__metric
+        = artwork.dimensions.cm
+
+  if artwork.edition_of
+    .artwork-metadata__edition-of
+      = artwork.edition_of
+
+  if artwork.image_rights
+    .artwork-metadata__image-rights
+      = artwork.image_rights
+

@@ -9,6 +9,7 @@ module.exports =
     CollectorProfile = require '../../collector_profile.coffee'
     Location = require '../../location.coffee'
     CreditCards = require '../../../collections/credit_cards.coffee'
+    SavedArtworks = require '../../../collections/saved_artworks.coffee'
 
     collectorProfile = new CollectorProfile
 
@@ -25,9 +26,12 @@ module.exports =
 
     creditCards = new CreditCards
 
+    savedArtworks = new SavedArtworks
+
     @__related__ =
       collectorProfile: collectorProfile
       account: account
       location: location
       authentications: authentications
       creditCards: creditCards
+      savedArtworks: savedArtworks

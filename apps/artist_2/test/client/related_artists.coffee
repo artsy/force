@@ -47,6 +47,6 @@ describe 'RelatedArtistsView', ->
 
     it 'attaches the two related artist views', ->
       subView1 = @ArtistFillwidthList.args[0][0]
-      subView1.el.attr('id').should.equal 'artist-related-artists'
+      subView1.el.attr('id').should.equal 'artist-related-artists-content'
       subView2 = @ArtistFillwidthList.args[1][0]
-      subView2.el.attr('id').should.equal 'artist-related-contemporary'
+      subView2.el.attr('id').should.equal 'artist-related-contemporary-content'

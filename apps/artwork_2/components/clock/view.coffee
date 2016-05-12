@@ -1,9 +1,14 @@
+moment = require 'moment'
 Backbone = require 'backbone'
 countdown = require './index.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ClockView extends Backbone.View
-  initialize: ({ @label, @timestamp }) -> #
+  initialize: ({ @label, @timestamp }) ->
+    endAt = moment.utc @timestamp
+
+    if endAt.isAfter()
+      setTimeout (-> location.reload()), endAt.diff moment.utc()
 
   start: ->
     @timer = setInterval @render.bind(this), 1000

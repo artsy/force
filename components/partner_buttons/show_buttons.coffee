@@ -1,27 +1,22 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
-FollowProfileButton = require './follow_profile.coffee'
+{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-FollowProfiles = require '../../collections/follow_profiles.coffee'
 ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
 
 module.exports = class PartnerShowButtons extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
-    @setupFollowProfiles()
-    new FollowProfileButton
+    @following = new Following(null, kind: 'profile')
+    @following.syncFollows [@model.get('partner')?.default_profile_id]
+    new FollowButton
       el: @$('.plus-follow-button')
+      modelName: 'profile'
       model: new Profile(id: @model.get('partner')?.default_profile_id)
-      collection: @followProfiles
-      analyticsFollowMessage: @analyticsFollowMessage
-      analyticsUnfollowMessage: @analyticsUnfollowMessage
-
-  setupFollowProfiles: ->
-    return if @followProfiles
-    @followProfiles = CurrentUser.orNull() and new FollowProfiles
-    _.defer => @followProfiles?.syncFollows [@model.get('partner')?.default_profile_id]
+      following: @following
+      context_module: 'Partner show module'
 
   events:
     'click .partner-buttons-contact': 'contactGallery'

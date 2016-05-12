@@ -90,7 +90,6 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       numberOfColumns: 3
       gutterWidth: 40
       allowDuplicates: true
-      maxArtworkHeight: 600
       totalWidth: 900
 
   nextPage: =>

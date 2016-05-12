@@ -1,0 +1,26 @@
+if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
+  - var layer = artwork.layer
+  - var layers = artwork.layers
+
+  section.artwork-section.artwork-related-artworks( class='js-artwork-related-artworks' )
+    header.artwork-related-artworks__header
+      h3.artwork-related-artworks__header__name
+        | Related Works
+
+    .artwork-tabs( class='js-artwork-related-artworks-tabs' )
+      .artwork-tabs__nav
+        for layer, i in layers
+          a.artwork-tabs__nav__link(
+            class='js-artwork-tabs-link'
+            data-id= layer.id
+            data-state= (i === 0 ? 'active' : 'inactive')
+          )
+            = layer.name
+
+      .artwork-tabs__content
+        .artwork-tab(
+          class='js-artwork-tabs-section'
+          data-id= layer.id
+          data-state='active'
+        )
+          include ./templates/masonry

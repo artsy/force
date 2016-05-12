@@ -24,8 +24,8 @@ module.exports = ($el, options = {}) ->
       $(this).remove()
       $el
         .addClass 'is-expanded'
-        .css 'max-height', height
-        .on 'transitionend', ->
-          $.waypoints 'refresh'
+        .css 'max-height', 1000000
+      $.waypoints 'refresh'
+      options.onClick?()
 
     options.afterApply?()
