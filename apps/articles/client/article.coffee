@@ -51,7 +51,7 @@ module.exports = class ArticleIndexView extends Backbone.View
         complete: => $('#articles-show').removeClass 'is-loading'
 
     $.onInfiniteScroll(@nextPage, {offset: 5000})
-    $(window).scroll(_.debounce( (-> $(window).trigger('resize')), 100))
+    $(window).scroll(_.debounce( (-> $.waypoints('refresh')), 100))
 
   render: (collection, response) =>
     if response
