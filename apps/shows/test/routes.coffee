@@ -3,12 +3,16 @@ sinon = require 'sinon'
 moment = require 'moment'
 Backbone = require 'backbone'
 PartnerShow = require '../../../models/partner_show'
+PartnerCities = require '../../../collections/partner_cities'
+PartnerFeaturedCities = require '../../../collections/partner_featured_cities'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
 
 describe 'Shows routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    @cities = [{"slug": "new-york-ny-usa", "name": "New York", "full_name": "New York, NY, USA", "coords": [40.71, -74.01 ] }]
+    @featuredCities = [{"slug": "new-york-ny-usa", "name": "New York", "full_name": "New York, NY, USA", "coords": [40.71, -74.01 ] }]
 
   afterEach ->
     Backbone.sync.restore()
@@ -17,48 +21,62 @@ describe 'Shows routes', ->
     beforeEach ->
       @res = render: sinon.stub()
 
-    it 'fetches the set and renders the index template', ->
-      routes.index {}, @res
-      Backbone.sync.args[0][1].id.should.equal '530ebe92139b21efd6000071'
-      Backbone.sync.args[0][1].item_type.should.equal 'PartnerShow'
-      Backbone.sync.args[0][2].url.should.containEql 'api/v1/set/530ebe92139b21efd6000071/items'
-      Backbone.sync.args[0][2].success(_.times 10, -> fabricate 'show')
-      @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].shows.length.should.equal 8
+      Backbone.sync.onCall(0).yieldsTo 'success', @cities
+      Backbone.sync.onCall(1).yieldsTo 'success', @featuredCities
+      Backbone.sync.onCall(2).yieldsTo 'success', (_.times 10, -> fabricate 'show')
 
+    it 'fetches the cities & featured shows and renders the index template', ->
+      routes.index {}, @res
+        .then => 
+          Backbone.sync.args[2][1].id.should.equal '530ebe92139b21efd6000071'
+          Backbone.sync.args[2][1].item_type.should.equal 'PartnerShow'
+          Backbone.sync.args[2][2].url.should.containEql 'api/v1/set/530ebe92139b21efd6000071/items'
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].shows.should.have.length 8
+          @res.render.args[0][1].cities.should.have.length 1
+          @res.render.args[0][1].featuredCities.should.have.length 1
+          @res.render.args[0][1].cities[0].should.have.properties 'name', 'slug', 'coords'
+          @res.render.args[0][1].featuredCities[0].should.have.properties 'name', 'slug', 'coords'
 
   describe '#city', ->
     beforeEach ->
-      @res = render: sinon.stub()
+      @req = 
+        params: { city: 'new-york-ny-usa' }
+        query: { page: 1 }
+      @res = { render: sinon.stub() }
       @next = sinon.stub()
 
-    it 'nexts if the city is not valid', ->
-      routes.city { params: city: 'foobar' }, @res, @next
-      @next.called.should.be.true()
 
-    it 'fetches all the shows and renders the city template', (done) ->
-      routes.city { params: { city: 'new-york' }, query: {} }, @res, @next
-      Backbone.sync.callCount.should.equal 3
-      Backbone.sync.args[0][2].data.near.should.equal '40.7127837,-74.0059413'
-      Backbone.sync.args[0][2].data.status.should.equal 'upcoming'
-      Backbone.sync.args[0][2].data.sort.should.equal 'start_at'
-      Backbone.sync.args[0][2].data.displayable.should.equal true
-      Backbone.sync.args[0][2].data.at_a_fair.should.equal false
-      Backbone.sync.args[1][2].data.near.should.equal '40.7127837,-74.0059413'
-      Backbone.sync.args[1][2].data.status.should.equal 'running'
-      Backbone.sync.args[1][2].data.sort.should.equal 'end_at'
-      Backbone.sync.args[1][2].data.displayable.should.equal true
-      Backbone.sync.args[1][2].data.at_a_fair.should.equal false
-      Backbone.sync.args[2][2].data.near.should.equal '40.7127837,-74.0059413'
-      Backbone.sync.args[2][2].data.status.should.equal 'closed'
-      Backbone.sync.args[2][2].data.sort.should.equal '-start_at'
-      Backbone.sync.args[2][2].data.displayable.should.equal true
-      Backbone.sync.args[2][2].data.at_a_fair.should.equal false
-      _.defer => _.defer =>
-        @res.render.called.should.be.true()
-        @res.render.args[0][0].should.equal 'city'
-        @res.render.args[0][1].city.name.should.equal 'New York'
-        done()
+    it 'nexts with an unrecognized city', ->
+      Backbone.sync.onCall(0).yieldsTo 'success', @cities
+      Backbone.sync.onCall(1).yieldsTo 'success', @featuredCities
+
+      routes.city { params: {city: 'nowheresville'} }, @res, @next
+        .then =>
+          @next.called.should.be.true()
+
+    it 'fetches the cities & shows and renders the city template', ->
+      @upcomingShow = new PartnerShow fabricate('show', start_at: moment().add(5, 'days').format(), end_at: moment().add(15, 'days').format())
+      @openingShow = new PartnerShow fabricate('show', start_at: moment().add(1, 'days').format(), end_at: moment().add(10, 'days').format())
+      @currentShow = new PartnerShow fabricate('show', start_at: moment().subtract(5, 'days').format(), end_at: moment().add(5, 'days').format())
+      @pastShow = new PartnerShow fabricate('show', start_at: moment().subtract(15, 'days').format(), end_at: moment().subtract(5, 'days').format())
+      Backbone.sync.onCall(0).yieldsTo 'success', @cities
+      Backbone.sync.onCall(1).yieldsTo 'success', @featuredCities
+      Backbone.sync.onCall(2).yieldsTo 'success', [ @openingShow, @upcomingShow ]
+      Backbone.sync.onCall(3).yieldsTo 'success', [ @currentShow ]
+      Backbone.sync.onCall(4).yieldsTo 'success', [ @pastShow ]
+
+      routes.city @req, @res, @next
+        .then =>
+          @res.render.called.should.be.true()
+          @res.render.getCall(0).args[0].should.equal 'city'
+          @res.render.getCall(0).args[1].city.name.should.equal 'New York'
+          @res.render.getCall(0).args[1].cities.should.have.length 1
+          @res.render.getCall(0).args[1].featuredCities.should.have.length 1
+          @res.render.getCall(0).args[1].opening.should.have.length 1
+          @res.render.getCall(0).args[1].upcoming.should.have.length 1
+          @res.render.getCall(0).args[1].current.should.have.length 1
+          @res.render.getCall(0).args[1].past.should.have.length 1
 
     xit 'sorts the shows', (done) ->
       shows = [
