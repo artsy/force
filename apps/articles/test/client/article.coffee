@@ -76,7 +76,7 @@ describe 'ArticleIndexView', ->
       @view.nextPage()
       @view.params.get('offset').should.equal 0
       @view.nextPage()
-      @view.params.get('offset').should.equal 10
+      @view.params.get('offset').should.equal 5
 
     it 'excludes super articles', ->
       @view.params.get('is_super_article').should.be.false()
