@@ -72,7 +72,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Utility
     @checkEditable()
-    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: options.previousHref || ''}
+    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: @article.href() || ''}
 
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
@@ -301,17 +301,16 @@ module.exports = class ArticleView extends Backbone.View
           blurb $(".article-container[data-id=#{@article.get('id')}] .article-content"),
             limit: limit
             afterApply: =>
-              @setupWaypointUrls() if @waypointUrls
               @sticky.rebuild()
+              @setupWaypointUrls() if @waypointUrls
             onClick: =>
               @sticky.rebuild()
-              $(window).trigger 'resize'
               analyticsHooks.trigger 'readmore', {}
           break
 
   setupWaypointUrls: =>
     editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-    @$container = $(".article-container[data-id=#{@article.get('id')}]")
+    @$container = $(".article-container[data-id=#{@article.get('id')}] .article-content")
     $(@$container).waypoint (direction) =>
       if direction is 'down'
         # Set the pageview
