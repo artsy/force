@@ -1,0 +1,19 @@
+if artwork.artists && artwork.artists.length
+  h4.artwork-brick__metadata__artists
+    for artist, i in artwork.artists
+      a( href= artist.href )
+        = artist.name
+      unless i === artwork.artists.length - 1
+        = ', '
+
+a.artwork-brick__metadata__title( href= artwork.href )
+  em= artwork.title
+  if artwork.date
+    | , #{artwork.date}
+
+if artwork.collecting_institution
+  .artwork-brick__metadata__partner
+    = artwork.collecting_institution
+else
+  a.artwork-brick__metadata__partner( href= artwork.href )
+    = artwork.partner.name

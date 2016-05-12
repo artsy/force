@@ -1,0 +1,12 @@
+.artwork-brick__image( style='padding-bottom: #{artwork.image.placeholder}' )
+  a( href= artwork.href )
+    img.artwork-brick__image__img(
+      src= artwork.image.thumb.url
+      alt= artwork.title
+    )
+
+  .artwork-brick__image__save(
+    class='js-artwork-brick-save-controls'
+    data-id= artwork.id
+  )
+    //- Rendered client-side
