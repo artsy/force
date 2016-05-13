@@ -2,5 +2,7 @@ if auction.is_open && auction.is_with_buyers_premium
   .artwork-auction__buyers-premium
     | This work has a
     = ' '
-    a( class='js-artwork-auction-buyers-premium' )
-      | Buyer’s Premium
+    a(
+      class='js-artwork-auction-buyers-premium'
+      href='/auction/#{auction.id}/buyers-premium'
+    ) Buyer’s Premium
