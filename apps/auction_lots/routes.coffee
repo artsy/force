@@ -29,7 +29,6 @@ randomPage = (total, pageSize) ->
       next err
 
   lot.fetch
-    data: access_token: req.user?.get('accessToken')
     cache: true
     error: (err, resp) ->
       return res.backboneError unless resp.status is 404
@@ -45,20 +44,17 @@ randomPage = (total, pageSize) ->
       res.locals.sd.ARTIST = response
       render()
 
-  if req.user?
-    totalCountPromise = totalCountWithAccessToken(req.user.get('accessToken'), auctionLots.url())
-  else
-    totalCountPromise = totalCount(artsyXapp.token, auctionLots.url())
-  totalCountPromise.then (total) ->
-    auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
-    auctionLots.fetch
-      data: access_token: req.user?.get('accessToken')
-      error: res.backboneError
-      success: (collection, response, options) ->
-        res.locals.sd.AUCTION_LOTS = response
-        # Ensure the current lot is not in this collection
-        auctionLots.remove lot
-        render()
+  totalCount(artsyXapp.token, auctionLots.url())
+    .then (total) ->
+      auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
+      auctionLots.fetch
+        data: access_token: req.user?.get('accessToken')
+        error: res.backboneError
+        success: (collection, response, options) ->
+          res.locals.sd.AUCTION_LOTS = response
+          # Ensure the current lot is not in this collection
+          auctionLots.remove lot
+          render()
 
   artworks.url = artist.url() + '/artworks'
   totalCount(artsyXapp.token, artworks.url).then (total) ->
@@ -93,7 +89,6 @@ randomPage = (total, pageSize) ->
       render()
 
   auctionLots.fetch
-    data: access_token: req.user?.get('accessToken')
     error: res.backboneError
     success: (collection, response, options) ->
       res.locals.sd.AUCTION_LOTS = response
@@ -120,7 +115,6 @@ randomPage = (total, pageSize) ->
       render()
 
   auctionLots.fetch
-    data: access_token: req.user?.get('accessToken')
     error: res.backboneError
     success: (collection, response, options) ->
       res.locals.sd.AUCTION_LOTS = response
