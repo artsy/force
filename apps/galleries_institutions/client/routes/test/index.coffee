@@ -16,6 +16,7 @@ describe 'PartnersView', ->
       PartnersView.__set__ 'PrimaryCarousel', sinon.stub()
       PartnersView.__set__ 'SearchResultsView', sinon.stub()
       PartnersView.__set__ 'FetchFilterPartners', sinon.stub()
+      sinon.stub PartnersView::, 'updateUrl'
       $.fn.typeahead = sinon.stub()
       done()
 
