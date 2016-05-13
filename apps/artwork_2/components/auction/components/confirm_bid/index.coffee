@@ -8,7 +8,7 @@ module.exports = (number) ->
 
   modal = modalize view,
     className: 'modalize artwork-auction-confirm-bid-modal'
-    dimensions: '500px'
+    dimensions: width: '500px'
 
   modal.open()
   modal
