@@ -19,10 +19,9 @@ currentShowAuction = require './components/current_show_auction/index'
     variables: artist_id: req.params.id
   .then ({artist}) ->
     if req.params.tab is 'auction-results'
-      return next() unless req.user?.hasLabFeature 'Other Auction Lot Providers'
       return next() unless artist.display_auction_link
 
-    nav = new Nav artist: artist, auctionLotLabFeature: req.user?.hasLabFeature 'Other Auction Lot Providers'
+    nav = new Nav artist: artist
 
     if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
       res.locals.sd.ARTIST = artist

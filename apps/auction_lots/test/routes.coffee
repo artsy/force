@@ -20,7 +20,7 @@ describe 'Auction results routes', ->
   describe '#detail', ->
     beforeEach ->
       @req = params: artist_id: 'andy-foobar', id: 'a-lot'
-      @res = status: sinon.stub(), render: sinon.stub(), locals: sd: {}
+      @res = status: sinon.stub(), render: sinon.stub(), redirect: sinon.spy(), locals: sd: {}
       @next = sinon.stub()
 
     it 'makes the appropriate requests', (done) ->
@@ -55,6 +55,16 @@ describe 'Auction results routes', ->
         @next.args[0][0].message.should.equal 'Not Found'
 
         done()
+
+    it 'redirects to auction results page if the lot request 404s', ->
+      routes.detail @req, @res, @next
+      Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
+      Backbone.sync.args[1][1].set _id: 'mary-foobar'
+      Backbone.sync.args[0][2].error(status: 404, 'error')
+      @res.render.calledOnce.should.not.be.ok()
+      @res.redirect.calledOnce.should.be.ok()
+      @res.redirect.args[0][0].should.equal 301
+      @res.redirect.args[0][1].should.equal '/artist/andy-foobar/auction-results'
 
   describe '#artist', ->
     beforeEach ->

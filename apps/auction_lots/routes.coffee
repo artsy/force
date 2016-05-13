@@ -31,7 +31,9 @@ randomPage = (total, pageSize) ->
   lot.fetch
     data: access_token: req.user?.get('accessToken')
     cache: true
-    error: res.backboneError
+    error: (err, resp) ->
+      return res.backboneError unless resp.status is 404
+      res.redirect 301, "/artist/#{artist.get('id')}/auction-results"
     success: (model, response) ->
       res.locals.sd.AUCTION_LOT = response
       render()
