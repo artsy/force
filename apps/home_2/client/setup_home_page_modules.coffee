@@ -19,7 +19,7 @@ module.exports = ->
       module = home_page_modules[0]
       artworks = new Artworks module.results
       view = new ArtworkRailView
-        el: $("#hpm-#{module.key}")
+        $el: $("#hpm-#{module.key}")
         collection: artworks
         title: module.title
         viewAllUrl: viewHelpers.viewAllUrl(module)
