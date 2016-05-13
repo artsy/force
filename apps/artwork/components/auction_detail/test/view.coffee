@@ -101,7 +101,7 @@ describe 'AuctionDetailView', ->
         @auction.set 'clockState', 'closed'
         @view.render()
         $button = @view.$('.abf-button')
-        $button.text().should.equal 'Online Bidding Closed'
+        $button.text().should.equal 'Auction Closed'
         _.isUndefined($button.attr 'disabled').should.not.be.ok()
         $button.attr('class').should.containEql 'is-disabled'
 

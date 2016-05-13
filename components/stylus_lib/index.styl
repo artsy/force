@@ -244,3 +244,8 @@ break-word()
   -moz-hyphens auto
   -webkit-hyphens auto
   hyphens auto
+
+blur(radius)
+  vendor('filter', 'blur(%s)' % radius, only: webkit moz ms official)
+  if support-for-ie
+    filter '"progid:DXImageTransform.Microsoft.Blur(PixelRadius=%d)"' % radius

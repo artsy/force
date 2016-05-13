@@ -97,6 +97,7 @@ module.exports =
   ACTIVE_BIDS_POLL_INTERVAL: 5000
   PARSELY_KEY: null
   PARSELY_SECRET: null
+  PREDICTION_URL: 'https://live.artsy.net'
   SEGMENT_WRITE_KEY_MICROGRAVITY: null
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
   EMAIL_SIGNUP_IMAGES_ID: null

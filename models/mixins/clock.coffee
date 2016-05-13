@@ -19,6 +19,8 @@ module.exports =
     @set('clockState', (
       if moment().isAfter(@get 'offsetEndAtMoment')
         'closed'
+      else if @get('live_start_at')
+        'live'
       else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
         'open'
       else if moment().isBefore(@get 'offsetStartAtMoment')
