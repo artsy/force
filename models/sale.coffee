@@ -109,6 +109,9 @@ module.exports = class Sale extends Backbone.Model
   isClosed: ->
     @state() is 'closed'
 
+  isLiveOpen: ->
+    moment().isBefore(@get 'end_at') and moment().isAfter(@get 'live_start_at')
+
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'
 

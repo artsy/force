@@ -1,4 +1,4 @@
-if auction.get('live_start_at') && moment().isAfter(auction.get('live_start_at'))
+if auction.isLiveOpen()
   - imgUrl = auction.cropUrlFor({ width: 1800, height: 600 })
   .auction-banner.auction-banner-live-open
     .auction-banner-live-bg(
@@ -13,9 +13,10 @@ if auction.get('live_start_at') && moment().isAfter(auction.get('live_start_at')
       ) Enter live auction
 else
   - imgUrl = auction.cropUrlFor({ width: 1800, height: 300 })
-  .auction-banner(
-    style='background-image: url("' + imgUrl + '")'
-    alt= auction.get('name')
-  )
-    .auction-banner-clock.white-overlay-clock.js-auction-clock( data-id= auction.id )
-      include ../../../components/clock/template
+  .auction-banner
+    .auction-banner-live-bg(
+      style='background-image: url("' + imgUrl + '")'
+      alt= auction.get('name')
+    )
+      .auction-banner-clock.white-overlay-clock.js-auction-clock( data-id= auction.id )
+        include ../../../components/clock/template
