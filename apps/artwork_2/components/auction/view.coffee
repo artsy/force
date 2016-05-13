@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { AUCTION, CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
+openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
 AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
@@ -23,6 +24,8 @@ module.exports = class ArtworkAuctionView extends Backbone.View
 
   openBuyersPremium: (e) ->
     e.preventDefault()
+
+    openBuyersPremiumModal AUCTION.id
 
   parseBid: (amount = '') ->
     [dollars, cents] = String amount
