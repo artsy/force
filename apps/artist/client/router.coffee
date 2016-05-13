@@ -1,6 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
+qs = require 'querystring'
 Backbone = require 'backbone'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 OverviewView = require './views/overview.coffee'
@@ -10,6 +11,7 @@ ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
 BiographyView = require './views/biography.coffee'
+AuctionLots = require '../../../collections/auction_lots.coffee'
 AuctionResultsView = require './views/auction_results.coffee'
 HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
@@ -82,4 +84,9 @@ module.exports = class ArtistRouter extends Backbone.Router
     @view = new BiographyView @options
 
   auctionResults: ->
-    @view = new AuctionResultsView @options
+    { sort, page } = qs.parse(location.search.replace(/^\?/, ''))
+    currentPage = parseInt page or 1
+    auctionLots = new AuctionLots [], id: @model.get('id'), sortBy: sort, state: currentPage: currentPage
+    
+    @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
+    auctionLots.fetch()
