@@ -56,7 +56,7 @@ describe 'Shows routes', ->
           @next.called.should.be.true()
 
     it 'fetches the cities & shows and renders the city template', ->
-      @upcomingShow = new PartnerShow fabricate('show', start_at: moment().add(5, 'days').format(), end_at: moment().add(15, 'days').format())
+      @upcomingShow = new PartnerShow fabricate('show', start_at: moment().add(8, 'days').format(), end_at: moment().add(15, 'days').format())
       @openingShow = new PartnerShow fabricate('show', start_at: moment().add(1, 'days').format(), end_at: moment().add(10, 'days').format())
       @currentShow = new PartnerShow fabricate('show', start_at: moment().subtract(5, 'days').format(), end_at: moment().add(5, 'days').format())
       @pastShow = new PartnerShow fabricate('show', start_at: moment().subtract(15, 'days').format(), end_at: moment().subtract(5, 'days').format())
