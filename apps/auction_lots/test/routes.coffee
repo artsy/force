@@ -56,18 +56,15 @@ describe 'Auction results routes', ->
 
         done()
 
-    it 'redirects to auction results page if the lot request 404s', (done) ->
+    it 'redirects to auction results page if the lot request 404s', ->
       routes.detail @req, @res, @next
-      _.defer => _.defer =>
-        Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
-        Backbone.sync.args[1][1].set _id: 'mary-foobar'
-        Backbone.sync.args[0][2].error(status: 404, 'error')
-        @res.render.calledOnce.should.not.be.ok()
-        @res.redirect.calledOnce.should.be.ok()
-        @res.redirect.args[0][0].should.equal 301
-        @res.redirect.args[0][1].should.equal '/artist/andy-foobar/auction-results'
-
-        done()
+      Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
+      Backbone.sync.args[1][1].set _id: 'mary-foobar'
+      Backbone.sync.args[0][2].error(status: 404, 'error')
+      @res.render.calledOnce.should.not.be.ok()
+      @res.redirect.calledOnce.should.be.ok()
+      @res.redirect.args[0][0].should.equal 301
+      @res.redirect.args[0][1].should.equal '/artist/andy-foobar/auction-results'
 
   describe '#artist', ->
     beforeEach ->
