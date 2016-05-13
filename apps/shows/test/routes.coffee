@@ -27,7 +27,7 @@ describe 'Shows routes', ->
 
     it 'fetches the cities & featured shows and renders the index template', ->
       routes.index {}, @res
-        .then => 
+        .then =>
           Backbone.sync.args[2][1].id.should.equal '530ebe92139b21efd6000071'
           Backbone.sync.args[2][1].item_type.should.equal 'PartnerShow'
           Backbone.sync.args[2][2].url.should.containEql 'api/v1/set/530ebe92139b21efd6000071/items'
@@ -40,7 +40,7 @@ describe 'Shows routes', ->
 
   describe '#city', ->
     beforeEach ->
-      @req = 
+      @req =
         params: { city: 'new-york-ny-usa' }
         query: { page: 1 }
       @res = { render: sinon.stub() }
