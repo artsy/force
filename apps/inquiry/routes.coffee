@@ -32,19 +32,6 @@ map = require '../../components/inquiry_questionnaire/map'
   inquiry.fetch data: { outcome_token: inquiry.get('outcome_token') }, cache: false, error: res.backboneError, success: ->
     already_submitted = if inquiry.get('user_reported_outcome') then true else false
     if not already_submitted
-      # We have changed possible selected options value coming in from email
-      # so new emails will all have correct options
-      # but for a while we have to support old values that were in already sent out emails
-      # following 8 lines can be removed in a separate PR after a week from when we went live
-      # This logic basically translate old values to their new ones
-      legacy_options_map =
-        'I purchased the work': 'purchased',
-        'I\'m still considering the work': 'still_considering',
-        'The asking price is too high': 'high_price',
-        'I\'m no longer interested in this work': 'lost_interest',
-        'The work was not available': 'work_unavailable'
-      if req.query.option of legacy_options_map
-        req.query.option = legacy_options_map[req.query.option]
       inquiry.set 'user_reported_outcome', req.query.option
 
     res.locals.sd.INQUIRY = inquiry.toJSON()
