@@ -37,9 +37,9 @@ describe 'RSS', ->
       @res.render.args[0][0].should.equal('news')
       @res.render.args[0][1].articles.length.should.equal(2)
 
-    it 'only displays articles from Artsy Editorial', ->
+    it 'only displays articles that are featured', ->
       routes.news(@req, @res)
-      Backbone.sync.args[0][2].data.author_id.should.equal('foo')
+      Backbone.sync.args[0][2].data.featured.should.be.true()
 
   describe '#instantArticles', ->
 
@@ -58,9 +58,9 @@ describe 'RSS', ->
       @res.render.args[0][0].should.equal('instant_articles')
       @res.render.args[0][1].articles.length.should.equal(2)
 
-    it 'only displays articles from Artsy Editorial', ->
+    it 'only displays articles that are featured', ->
       routes.news(@req, @res)
-      Backbone.sync.args[0][2].data.author_id.should.equal('foo')
+      Backbone.sync.args[0][2].data.featured.should.be.true()
 
   describe '#partnerUpdates', ->
 
