@@ -15,8 +15,16 @@
   > *
     opacity 0
     transition 1s
+  &[data-mode='editorial-signup']
+    right 40px
+    bottom -40px
+    left inherit
+    background-color white
+    border 1px solid gray-lighter-color
+    padding 30px
   &[data-state='in']
     transform translateY(0%)
+    bottom 40px
     > *
       opacity 1
 
@@ -82,34 +90,40 @@
 
 // Editorial Signup
 .cta-bar-header-editorial
+  text-align left
+  margin-bottom 20px
   h2
-    garamond-size('l-headline')
-    margin-bottom 10px
+    avant-garde-size('body')
+    color black
   h3
-    garamond-size('s-headline')
-    margin-bottom 40px
+    garamond-size('l-body')
+    color black
 .cta-bar-defer-editorial
   position absolute
-  top 40px
-  right 40px
+  top 22px
+  right 27px
   > a
     color gray-darker-color
-    font-size 40px
+    font-size 20px
     text-decoration none
     border-bottom none
   > a:hover
-    color white
+    color black
 .cta-bar-form-editorial
-  height 50px
-  > input
+  width 100%
   > button
-    height 100%
-    margin 0 10px
-    width 170px
+    padding 10px
+    height 30px
+    width 90px
+    border-radius 2px
+    background-color black
+    avant-garde-size('s-headline')
+    line-height 1em
+    position absolute
+    right 40px
+    bottom 40px
   > input
+    border 1px solid gray-lighter-color
+    height 50px
+    width 430px
     background-color white
-    border none
-    width 617px
-.cta-bar-thanks-editorial
-  text-align center
-  height 179px

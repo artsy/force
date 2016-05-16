@@ -1,4 +1,5 @@
 moment = require 'moment'
+mediator = require '../../lib/mediator.coffee'
 Dismisser = require '../has_seen/dismisser.coffee'
 blacklist = require './blacklist.coffee'
 AuctionReminders = require './auction_reminders.coffee'
@@ -22,6 +23,8 @@ module.exports = ->
   reminders = new AuctionReminders
   reminders.fetch success: ->
 
+    dismissed = []
+
     reminders.map (auction) ->
       name = "reminder_#{auction.id}"
       end = auction.date 'end_at'
@@ -35,8 +38,11 @@ module.exports = ->
         # Expire any auction reminders when the auction is closed
         expires: secondsLeft
 
+      dismissed.push auction if dismisser.dismissed()
       return if dismisser.dismissed()
 
       attach new AuctionReminderView
         model: auction
         dismisser: dismisser
+
+    mediator.trigger 'auction-reminders:none' if reminders.length is dismissed.length
