@@ -1,6 +1,8 @@
 { extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
 
+PendingOrder = require '../../models/pending_order'
+
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
@@ -66,5 +68,24 @@ bootstrap = ->
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params
       res.render 'index', data
+
+    .catch next
+
+@acquire = (req, res, next) ->
+  headers = if req.user?
+    'X-ACCESS-TOKEN': req.user.get 'accessToken'
+  else
+    {}
+
+  order = new PendingOrder
+  order
+    .save {
+      artwork_id: req.body.artwork_id
+      edition_set_id: req.body.edition_set_id
+      session_id: req.session.id
+    }, headers: headers
+
+    .then ->
+      res.redirect "/order/#{order.id}/resume?token=#{order.get 'token'}"
 
     .catch next
