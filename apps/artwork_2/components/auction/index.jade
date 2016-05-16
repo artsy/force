@@ -1,4 +1,4 @@
-if artwork.is_in_auction
+if artwork.is_in_auction && !artwork.is_sold
   .js-artwork-auction-container
     .artwork-auction( class='js-artwork-auction' )
       include ./templates/index

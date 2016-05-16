@@ -3,6 +3,7 @@ module.exports = """
     id
     href
     sale_message
+    is_sold
     is_buy_nowable
     is_in_auction
     sale {
