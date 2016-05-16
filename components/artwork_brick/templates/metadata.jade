@@ -1,5 +1,9 @@
-if artwork.artists && artwork.artists.length
-  h4.artwork-brick__metadata__artists
+if artwork.cultural_maker
+  h4.artwork-brick__metadata__artists.artwork-brick__metadata__line
+    = artwork.cultural_maker
+
+else if artwork.artists && artwork.artists.length
+  h4.artwork-brick__metadata__artists.artwork-brick__metadata__line
     for artist, i in artwork.artists
       a( href= artist.href )
         = artist.name
