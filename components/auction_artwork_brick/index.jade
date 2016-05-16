@@ -1,6 +1,17 @@
-.artwork-brick.artwork-brick--auction
+- var auction = artwork.sale
+- var sale_artwork = artwork.sale_artwork
+
+.artwork-brick.artwork-brick--auction(
+  class='js-artwork-brick'
+  data-id= artwork.id
+  data-type= 'auction_artwork'
+)
   include ../artwork_brick/templates/image
 
   .artwork-brick__metadata
+    if sale_artwork.lot_number
+      .artwork-brick__metadata__lot-number
+        | Lot #{sale_artwork.lot_number}
+
     include ../artwork_brick/templates/metadata
-    include ./templates/sale_artwork
+    include ./templates/bid_status

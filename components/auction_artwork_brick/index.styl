@@ -7,15 +7,33 @@
     serif('l-caption')
     margin distance(gutter / 2) 0 distance(gutter * 2) 0
 
-    &__sale-artwork
-      //
-
-      &__current-bid
-        sans('body')
-        m = (gutter / 1.5)
-        margin distance(m) 0 (m)
+    &__line
+      &, > a
         color black
 
-      &__buttons > a
-        inline-block-margins(gutter / 5)
-        min-width (gutter * 3)
+    &__lot-number
+      sans('s-headline')
+      margin-bottom distance(gutter / 2)
+
+    &__sale-artwork
+      margin-top distance(gutter / 2)
+
+      &__estimate
+        margin-bottom distance(gutter / 1.5)
+
+      &__sale-message
+        sans('body')
+        color black
+
+      &__buttons
+        margin-top (gutter / 1.5)
+
+        > form
+          display inline
+
+        &[data-size='1'] .artwork-brick__metadata__sale-artwork__buttons__button
+          display block
+
+        &[data-size='2'] .artwork-brick__metadata__sale-artwork__buttons__button
+          width calc('50% - %s' % (gutter / 5))
+          inline-block-margins(gutter / 5)
