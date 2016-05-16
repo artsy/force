@@ -8,8 +8,7 @@ PAGE_SIZE_FACEBOOK = 50
 @news = (req, res, next) ->
   new Articles().fetch
     data:
-      # id for "Artsy Editorial" (exclude partner posts)
-      author_id: sd.ARTSY_EDITORIAL_ID
+      featured: true
       published: true
       sort: '-published_at'
       exclude_google_news: false
