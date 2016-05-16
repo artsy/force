@@ -10,14 +10,14 @@ else if artwork.artists && artwork.artists.length
       unless i === artwork.artists.length - 1
         = ', '
 
-a.artwork-brick__metadata__title( href= artwork.href )
+a.artwork-brick__metadata__title.artwork-brick__metadata__line( href= artwork.href )
   em= artwork.title
   if artwork.date
     | , #{artwork.date}
 
 if artwork.collecting_institution
-  .artwork-brick__metadata__partner
+  .artwork-brick__metadata__partner.artwork-brick__metadata__line
     = artwork.collecting_institution
 else
-  a.artwork-brick__metadata__partner( href= artwork.href )
+  a.artwork-brick__metadata__partner.artwork-brick__metadata__line( href= artwork.href )
     = artwork.partner.name
