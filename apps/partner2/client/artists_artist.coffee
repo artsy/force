@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -86,7 +87,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
   initializeBio: ->
     if @partnerArtist.get('use_default_biography')
       @$('.partner-artist-blurb').html @artist.mdToHtml('blurb')
-    else
+    else if not _s.isBlank(@partnerArtist.get('biography'))
       @$('.partner-artist-blurb').html(@partnerArtist.get('biography'))
         .after "<div class='partner-artist-blurb-postfix'>&mdash; Submitted by #{@partner.get('name')}</div>"
     @initializeBlurb()
