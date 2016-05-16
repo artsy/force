@@ -24,7 +24,6 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
-  return next() unless req.user?
   heroUnits = new HeroUnits
   timeToCacheInSeconds = 300 # 5 Minutes
 

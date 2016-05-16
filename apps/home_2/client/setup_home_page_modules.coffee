@@ -10,16 +10,16 @@ viewHelpers = require '../view_helpers.coffee'
 module.exports = ->
   user = CurrentUser.orNull()
 
-  _.each USER_HOME_PAGE, (module) ->
+  _.each USER_HOME_PAGE, (module, index) ->
     metaphysics(
       query: query
-      variables: include_keys: ["#{module.key}"]
+      variables: key: "#{module.key}", id: "#{module.params?.id}"
       req: { user: user }
-    ).then ({ home_page_modules }) ->
-      module = home_page_modules[0]
+    ).then ({ home_page_module }) ->
+      module = home_page_module
       artworks = new Artworks module.results
       view = new ArtworkRailView
-        $el: $("#hpm-#{module.key}")
+        $el: $("#hpm-#{module.key}-#{index}")
         collection: artworks
         title: module.title
         viewAllUrl: viewHelpers.viewAllUrl(module)
