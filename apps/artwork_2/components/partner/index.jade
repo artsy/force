@@ -1,7 +1,7 @@
-- var partner = artwork.partner
-- var profile = partner.profile
-
 if helpers.partner.isDisplayable(partner)
+  - var partner = artwork.partner
+  - var profile = partner.profile
+
   section.artwork-section.artwork-partner( class='js-artwork-partner' )
     .artwork-partner__icon: a(
       href= partner.href
