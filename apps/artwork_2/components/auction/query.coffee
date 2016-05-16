@@ -15,20 +15,21 @@ module.exports = """
       is_auction
       is_auction_promo
       is_with_buyers_premium
-      sale_artwork(id: $id) {
-        id
-        reserve_message
-        estimate
-        current_bid {
-          amount
-        }
-        minimum_next_bid {
-          amount
-          cents
-        }
-        counts {
-          bidder_positions
-        }
+    }
+    sale_artwork {
+      id
+      reserve_message
+      estimate
+      is_biddable
+      current_bid {
+        amount
+      }
+      minimum_next_bid {
+        amount
+        cents
+      }
+      counts {
+        bidder_positions
       }
     }
   }

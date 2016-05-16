@@ -23,10 +23,8 @@ module.exports = """
     image_rights
     is_downloadable
     is_inquireable
-    sale {
-      sale_artwork(id: $id) {
-        lot_number
-      }
+    sale_artwork {
+      lot_number
     }
   }
 """
