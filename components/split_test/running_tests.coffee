@@ -15,9 +15,16 @@
 # module.exports = {}
 
 module.exports =
+  redesigned_artwork_page:
+    key: 'redesigned_artwork_page'
+    edge: 'redesigned'
+    outcomes:
+      redesigned: 0.5
+      original: 0.5
 
   partner_application_copy:
     key: 'partner_application_copy'
     outcomes:
       join: 0.5
       apply: 0.5
+

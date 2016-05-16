@@ -4,10 +4,10 @@ if artwork.shows && artwork.shows.length
   section.artwork-section.artwork-show-artworks( class='js-artwork-show-artworks' )
     header.artwork-show-artworks__header
       h3.artwork-show-artworks__header__name
-        | Other works in
-        = ' '
-        a( href= show.href )
-          = show.name
+        | Other Works from the Show
+
+      a.artwork-artist-artworks__header__jump( href= show.href )
+        | View All
 
     - var columns = helpers.show_artworks.masonry(show.artworks)
     include ../../../../components/artwork_masonry/index

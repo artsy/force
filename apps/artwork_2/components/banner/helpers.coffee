@@ -8,8 +8,11 @@ module.exports =
     else
       'Bidding opens in'
 
-  countdownClock: (startAt, endAt) ->
-    if moment(startAt).isAfter()
-      clock startAt
+  countdownTimestamp: countdownTimestamp = (startAt, endAt) ->
+    if moment(startAt).isBefore()
+      endAt
     else
-      clock endAt
+      startAt
+
+  countdownClock: (startAt, endAt) ->
+    clock countdownTimestamp arguments...

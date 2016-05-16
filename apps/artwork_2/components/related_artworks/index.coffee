@@ -1,4 +1,5 @@
 { CLIENT } = require('sharify').data
+Sticky = require '../../../../components/sticky/index.coffee'
 ArtworkRelatedArtworksView = require './view.coffee'
 
 module.exports = ->
@@ -15,3 +16,6 @@ module.exports = ->
     .map (id) -> id: id
 
   view.postRender artworks
+
+  sticky = new Sticky
+  sticky.add $el.find '.js-artwork-related-artworks-tabs-nav'

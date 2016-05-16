@@ -30,21 +30,15 @@
   &__metadata
     serif('l-caption')
     margin distance(gutter / 2) 0 distance(gutter) 0
-    color gray-darker-color
     lines = 4
     height ((@line-height * @font-size) * lines)
     overflow hidden
 
-    &__artists
-    &__title
-    &__partner
-    &__sale-message
-    &__contact
+    &__line
       display block
       overflow ellipsis
 
-      &
-      > a
+      &, > a
         color gray-darker-color
         text-decoration none
 

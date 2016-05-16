@@ -7,8 +7,8 @@ if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
       h3.artwork-related-artworks__header__name
         | Related Works
 
-    .artwork-tabs( class='js-artwork-related-artworks-tabs' )
-      .artwork-tabs__nav
+    .artwork-related-artworks__tabs.artwork-tabs( class='js-artwork-related-artworks-tabs' )
+      .artwork-related-artworks__tabs__nav.artwork-tabs__nav( class='js-artwork-related-artworks-tabs-nav' )
         for layer, i in layers
           a.artwork-tabs__nav__link(
             class='js-artwork-tabs-link'

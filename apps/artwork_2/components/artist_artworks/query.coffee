@@ -4,7 +4,7 @@ module.exports = """
       name
       href
       counts {
-        artworks(format: "0,0")
+        artworks(format: "0,0", label: "work")
       }
       artworks(size: 10, filter: [IS_FOR_SALE], exclude: [$id]) {
         ... artwork_brick

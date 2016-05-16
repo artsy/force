@@ -4,10 +4,10 @@ if artwork.sale && artwork.sale.artworks
   section.artwork-section.artwork-auction-artworks( class='js-artwork-auction-artworks' )
     header.artwork-auction-artworks__header
       h3.artwork-auction-artworks__header__name
-        | Other works in
-        = ' '
-        a( href= auction.href )
-          = auction.name
+        | Other Works from the Auction
+
+      a.artwork-artist-artworks__header__jump( href= auction.href )
+        | View All
 
     - var columns = helpers.auction_artworks.masonry(auction.artworks)
     .artwork-masonry

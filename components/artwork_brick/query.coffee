@@ -14,6 +14,7 @@ module.exports = """
         height
       }
     }
+    cultural_maker
     artists(shallow: true) {
       href
       name

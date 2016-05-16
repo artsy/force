@@ -10,5 +10,15 @@
     &__name
       serif('headline')
 
-  &__masonry
+  &__tabs
     //
+
+    &__nav
+      // Offset for sticky
+      margin-top -(gutter / 2)
+      padding-top (gutter / 2)
+
+      // Trick borders into lining up with offset
+      border none
+      > a
+        border-right 1px solid gray-lighter-color

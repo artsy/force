@@ -2,8 +2,8 @@
 { numberFormat } = require 'underscore.string'
 
 module.exports =
-  isDisplayable: ({ type }) ->
-    type in ['Gallery', 'Institution']
+  isDisplayable: (partner) ->
+    partner? and partner.type in ['Gallery', 'Institution']
 
   numberFormat: numberFormat
 

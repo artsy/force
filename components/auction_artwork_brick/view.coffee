@@ -1,0 +1,38 @@
+{ invoke } = require 'underscore'
+Backbone = require 'backbone'
+{ CURRENT_USER } = require('sharify').data
+AuthModalView = require '../auth_modal/view.coffee'
+ArtworkSaveView = require '../artwork_save/view.coffee'
+
+module.exports = class AuctionArtworkBrickView extends Backbone.View
+  subViews: []
+
+  events:
+    'click .js-auction-artwork-brick-bid-button': 'bid'
+
+  initialize: ({ @id, @user }) -> #
+
+  bid: (e) ->
+    if not CURRENT_USER?
+      e.preventDefault()
+
+      return new AuthModalView
+        width: '500px',
+        mode: 'register'
+        copy: 'Sign up to bid'
+        destination: $(e.currentTarget).attr 'href'
+
+    else
+      # Passes through to `href`
+
+  postRender: ->
+    view = new ArtworkSaveView id: @id, user: @user
+
+    @$(".js-artwork-brick-save-controls[data-id='#{@id}']")
+      .html view.render().$el
+
+    @subViews.push view
+
+  remove: ->
+    invoke @subViews, 'remove'
+    super

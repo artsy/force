@@ -3,4 +3,4 @@ module.exports = (sd, { artwork }) ->
     sd.AUCTION =
       artwork_id: artwork.id
       id: artwork.sale.id
-      minimum_next_bid: artwork.sale.sale_artwork.minimum_next_bid
+      minimum_next_bid: artwork.sale_artwork.minimum_next_bid

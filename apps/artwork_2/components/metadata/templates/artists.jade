@@ -1,4 +1,10 @@
-if artwork.artists.length
+if artwork.cultural_maker
+  .artwork-metadata__artist
+    .artwork-detail-artist
+      span.entity-link
+        = artwork.cultural_maker
+
+else if artwork.artists.length
   for artist in artwork.artists
     .artwork-metadata__artist
       a.entity-link( href= artist.href )
@@ -10,9 +16,3 @@ if artwork.artists.length
         data-id= artist.id
         data-type= 'artist'
       )
-
-else if artwork.cultural_maker
-  .artwork-metadata__artist
-    .artwork-detail-artist
-      span.entity-link
-        = artwork.cultural_maker
