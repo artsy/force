@@ -1,4 +1,4 @@
-if helpers.partner.isDisplayable(partner)
+if helpers.partner.isDisplayable(artwork.partner)
   - var partner = artwork.partner
   - var profile = partner.profile
 
@@ -41,6 +41,4 @@ if helpers.partner.isDisplayable(partner)
 
           if profile.counts.follows
             span.artwork-partner__metadata__actions__followers
-              = helpers.partner.numberFormat(profile.counts.follows)
-              = ' '
-              = helpers.partner.pluralize('Follower', profile.counts.follows)
+              = profile.counts.follows
