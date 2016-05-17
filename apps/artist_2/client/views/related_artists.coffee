@@ -50,7 +50,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
       @fadeInSection $section
       value
 
-    _.defer @setupFollowButtons relatedArtists
+    _.defer => @setupFollowButtons relatedArtists
 
   setupFollowButtons: (artists) =>
     ids = @$('#artist-related-artists-sections').find('.follow-button').map ->

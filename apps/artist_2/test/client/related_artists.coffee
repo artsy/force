@@ -13,7 +13,7 @@ describe 'RelatedArtistsView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template']
+      @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template', 'artistCellTemplate']
       @model = new Artist artistJSON
       done()
 
@@ -24,7 +24,7 @@ describe 'RelatedArtistsView', ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub(Backbone, 'sync').yieldsTo('success').returns([fabricate('artist')])
     stubChildClasses @RelatedArtistsView, this,
-      ['ArtistFillwidthList']
+      ['ArtworkRailView']
       ['fetchAndRender', 'remove']
     @view = new @RelatedArtistsView model: @model, statuses: artistJSON.statuses
 
@@ -33,11 +33,29 @@ describe 'RelatedArtistsView', ->
     Backbone.sync.restore()
     @view.remove()
 
+  describe '#renderRelated', ->
+    it 'renders section content', ->
+      sinon.stub @view, 'setupFollowButtons', (artists) -> return
+      @view.render()
+      @view.renderRelated
+        artists:
+          [ id: 'id', name: 'Artist A', href: '/artist/a', image: { url: '/image.jpg' }, counts: { } ]
+        contemporary:
+          [ id: 'id', name: 'Artist B', href: '/artist/b', image: { url: '/image.jpg' }, counts: { } ]
+
+      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true()
+      $item = @view.$('#artist-related-artists-section .grid-item')
+      $item.length.should.equal 1
+      $item.html().should.containEql 'Artist A'
+
+      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true()
+      $item = @view.$('#artist-related-contemporary-section .grid-item')
+      $item.html().should.containEql 'Artist B'
+      $item.length.should.equal 1
+
   describe '#render', ->
     it 'renders, sets up the template', ->
       @view.render()
-      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true()
-      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true()
       @view.$('#artist-related-artists-section h2').text().should.equal 'Related Artists'
       @view.$('#artist-related-contemporary-section').text().should.equal 'Suggested Contemporary Artists'
 
@@ -45,8 +63,6 @@ describe 'RelatedArtistsView', ->
     beforeEach ->
       @view.render()
 
-    it 'attaches the two related artist views', ->
-      subView1 = @ArtistFillwidthList.args[0][0]
-      subView1.el.attr('id').should.equal 'artist-related-artists-content'
-      subView2 = @ArtistFillwidthList.args[1][0]
-      subView2.el.attr('id').should.equal 'artist-related-contemporary-content'
+    it 'renders related artwork rail', ->
+      subView1 = @ArtworkRailView.args[0][0]
+      subView1.$el.attr('class').should.containEql 'artist-artworks-rail'
