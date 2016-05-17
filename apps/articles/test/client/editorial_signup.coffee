@@ -8,7 +8,7 @@ mediator = require '../../../../lib/mediator.coffee'
 
 describe 'EditorialSignupView', ->
 
-  beforeEach (done) ->
+  before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       $.fn.waypoint = sinon.stub()
@@ -26,7 +26,7 @@ describe 'EditorialSignupView', ->
       @view = new @EditorialSignupView el: $el
       done()
 
-  afterEach ->
+  after ->
     $.ajax.restore()
     benv.teardown()
 
@@ -100,7 +100,8 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()
-      @setupCTAWaypoints.called.should.not.be.ok()
+      _.defer ->
+        @setupCTAWaypoints.called.should.not.be.ok()
 
     it 'is displayed if there arent any auction reminders', ->
       @EditorialSignupView.__set__ 'sd',
