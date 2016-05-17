@@ -6,7 +6,10 @@
 
     section#auth-body
       .auth-register
-        form.auth-form
+        form.auth-form(
+          action=sd.AP.loginPagePath + '?redirect-to=' + redirectTo
+          method='POST'
+        )
           .auth-errors
           input#js-mailcheck-input-modal.bordered-input.is-block(
             name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus

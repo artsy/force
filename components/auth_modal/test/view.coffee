@@ -81,7 +81,7 @@ describe 'AuthModalView', ->
     it 'passes the pathname to the template', ->
       _location = @AuthModalView.__get__ 'location'
       @AuthModalView.__set__ 'location', pathname: 'foobarbaz'
-      @view.preInitialize {}
+      @view.preInitialize mode: 'login'
       @view.templateData.redirectTo.should.equal 'foobarbaz'
       @AuthModalView.__set__ 'location', _location
 
@@ -102,20 +102,6 @@ describe 'AuthModalView', ->
       location.assign.restore()
       location.reload.restore()
 
-    it 'submits to signup when in that mode', ->
-      @view.redirectTo = 'foobarbaz'
-      @view.state.set mode: 'register'
-      @view.submit $.Event('click')
-      Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
-      location.assign.args[0][0].should.containEql 'foobarbaz'
-
-    it 'submits to signup with custom redirect url', ->
-      @view.redirectTo = '/awesome-fair'
-      @view.state.set mode: 'register'
-      @view.submit $.Event('click')
-      Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
-      location.assign.args[0][0].should.containEql '/awesome-fair'
-
     it 'sets a cookie named destination with whatever the passed in destination is', ->
       @view.destination = '/artist/some-guy/follow'
       @view.state.set mode: 'register'
@@ -127,15 +113,10 @@ describe 'AuthModalView', ->
       @view.submit $.Event('click')
       _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true()
 
-    it 'redirects to /personalize when mode is register by default', ->
-      @view.state.set mode: 'register'
-      @view.submit $.Event('click')
-      location.assign.args[0][0].should.containEql '/personalize'
-
     it 'sends a CSRF token', ->
       @view.$el.html $ "<form>" + render('register')(
         copy: new Backbone.Model
-        sd: CSRF_TOKEN: 'csrfoo'
+        sd: CSRF_TOKEN: 'csrfoo', AP: loginPagePath: 'foo'
       ) + "</form>"
       @view.state.set mode: 'register'
       @view.submit $.Event('click')

@@ -22,7 +22,6 @@ module.exports = class FilterRouter extends Backbone.Router
       @navigate "#{@urlRoot}/artworks?#{params}"
 
   artworks: ->
-    console.log location.search, 'moo'
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = _.extend queryParams, { page: 1, size: 10 }
 
