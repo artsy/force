@@ -11,6 +11,11 @@ module.exports = """
       symbol
       estimate
       is_biddable
+
+      sale {
+        is_closed
+      }
+
       current_bid {
         amount
       }

@@ -1,12 +1,13 @@
 .artwork-brick__metadata__sale-artwork
-  .artwork-brick__metadata__sale-artwork__estimate
-    | Estimate: #{sale_artwork.estimate || sale_artwork.symbol + 'N/A'}
+  if !sale_artwork.sale.is_closed
+    .artwork-brick__metadata__sale-artwork__estimate
+      | Estimate: #{sale_artwork.estimate || sale_artwork.symbol + 'N/A'}
 
   if artwork.is_sold
     .artwork-brick__metadata__sale-artwork__sale-message
       | Sold
 
-  else
+  else if !sale_artwork.sale.is_closed
     .artwork-brick__metadata__sale-artwork__sale-message
       = sale_artwork.counts.bidder_positions > 0 ? 'Current' : 'Starting'
       = ' '
