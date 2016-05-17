@@ -3,6 +3,9 @@ module.exports = """
     home_page_modules{
       key
       title
+      params{
+        id
+      }
       context{
         ... on HomePageModuleContextFair {
           href

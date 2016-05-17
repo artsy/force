@@ -18,7 +18,10 @@
             i.icon-twitter
             | Log in using Twitter
 
-      form.auth-login-email.auth-form( action=sd.AP.loginPagePath )
+      form.auth-login-email.auth-form(
+        action=sd.AP.loginPagePath + '?redirect-to=' + redirectTo
+        method='POST'
+      )
         .auth-errors
         input.bordered-input.is-block(
           name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus

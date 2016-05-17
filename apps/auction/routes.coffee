@@ -11,7 +11,12 @@ OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
 footerItems = require './footer_items'
-{ SAILTHRU_AUCTION_NOTIFICATION_LIST, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config'
+{
+  SAILTHRU_AUCTION_NOTIFICATION_LIST
+  SAILTHRU_KEY
+  SAILTHRU_SECRET
+  PREDICTION_URL
+} = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 setupUser = (user, auction) ->
@@ -116,3 +121,11 @@ setupUser = (user, auction) ->
     , (err, response) ->
       return fail err if err
       res.send req.body
+
+@redirectLive = (req, res, next) ->
+  auction = new Auction id: req.params.id
+  auction.fetch(cache: true).then(->
+    liveUrl = "#{PREDICTION_URL}/#{auction.get('id')}/login"
+    if auction.isLiveOpen() then res.redirect liveUrl
+    else next()
+  ).catch next
