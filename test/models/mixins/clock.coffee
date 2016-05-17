@@ -51,6 +51,15 @@ describe 'Image Sizes Mixin', ->
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 4)
         @model.get('clockState').should.equal 'closed'
 
+      it 'reflects server live state', ->
+        @model.set
+          live_start_at: moment().add('minutes', 5).format("YYYY-MM-DD HH:mm:ss ZZ")
+          end_at: moment().add('minutes', 10).format("YYYY-MM-DD HH:mm:ss ZZ")
+        @model.calculateOffsetTimes()
+        Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
+        @model.get('offsetLiveStartAtMoment').should.eql moment(@model.get('live_start_at')).subtract('minutes', 4)
+        @model.get('clockState').should.equal 'live'
+
     describe 'client time open', ->
 
       beforeEach ->
