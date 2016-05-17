@@ -219,6 +219,20 @@ resultToBingJSON = (result) ->
     }
   json
 
+@video = (req, res) ->
+  new Articles().fetch
+    data:
+      featured: true
+      published: true
+      sort: '-published_at'
+      exclude_google_news: false
+      limit: PAGE_SIZE
+      has_video
+    error: res.backboneError
+    success: (articles) ->
+      res.set 'Content-Type', 'text/xml'
+      res.render('video', { pretty: true, articles: articles })
+
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
   robotsText = """

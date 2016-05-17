@@ -1,0 +1,14 @@
+doctype xml
+urlset(
+  xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+)
+  for article in articles
+    url
+      loc= sd.APP_URL + '/article/' + article.get('slug')
+      video:video
+        video:title= article.get('thumbnail_title')
+        if article.strip('lead_paragraph')
+          video:description= 
+        video:thumbnail_loc= article.get('thumbnail_url')
+        video:player_loc
