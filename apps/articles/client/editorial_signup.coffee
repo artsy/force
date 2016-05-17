@@ -17,7 +17,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
 
-  initialize: ->
+  initialize: ({@article}) ->
     @setupAEArticlePage() if @inAEArticlePage()
     @setupAEMagazinePage() if @inAEMagazinePage()
 
@@ -50,7 +50,8 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
+       # and sd.MEDIUM in ['social', 'search']
+    if not @ctaBarView.previouslyDismissed()
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
@@ -82,10 +83,14 @@ module.exports = class EditorialSignupView extends Backbone.View
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
-    @$('#articles-show').waypoint (direction) =>
+    @$(".article-container[data-id=#{@article.id}] .article-social").waypoint (direction) =>
       @ctaBarView.transitionOut() if direction is 'down'
       @ctaBarView.transitionIn() if direction is 'up'
-    , { offset: 'bottom-in-view' }
+    , { offset: '90%' }
+    @$(".article-container[data-id=#{@article.id}] .article-social").waypoint (direction) =>
+      @ctaBarView.transitionOut() if direction is 'up'
+      @ctaBarView.transitionIn() if direction is 'down'
+    , { offset: '-10%' }
 
   # Subscribe controls
   onSubscribe: (e) ->
