@@ -4,7 +4,7 @@ module.exports =
     contemporary @include(if: $contemporary){
       ... relatedArtist
     }
-    artists  @include(if: $artists){
+    artists @include(if: $artists){
       ... relatedArtist
     }
   }

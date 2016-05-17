@@ -6,7 +6,7 @@
     )
 
   .ac-artist-information
-    h2.ac-artist-name: a( href= artist.href )
+    a.ac-artist-name( href= artist.href )
       = artist.name
     .ac-bio
       if artist.nationality
@@ -20,6 +20,6 @@
       if artist.counts.artworks != artist.counts.for_sale_artworks
         = ', ' + artist.counts.for_sale_artworks
       |  for sale
-    a.avant-garde-follow-button-black.follow-button.is-small(
-      data-id= artist.id
-    )
+  a.ac-follow-button.avant-garde-follow-button-black.follow-button.is-small(
+    data-id= artist.id
+  )

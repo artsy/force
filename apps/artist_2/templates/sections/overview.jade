@@ -1,13 +1,14 @@
-mixin rail(title, viewAllUrl)
-  .artist-rail-header
-    h1= title
-    a(href= viewAllUrl) View All
-  .artist-related-section-content.js-artist-rail.mgr-horizontal-nav
-    ul.mgr-cells.js-mgr-cells.artist-related-rail
-      //- Rendered client-side
+mixin rail(title, viewAllUrl, section)
+  .artist-overview-related-rail(id= 'artist-overview-' + section + '-rail')
+    .artist-rail-header
+      h1= title
+      a.artist-rail-view-all(href= viewAllUrl) View All
+    .artist-overview-related-rail-content.js-artist-rail.mgr-horizontal-nav(data-key= section)
+      ul.mgr-cells.js-mgr-cells.artist-related-rail-content-inner
+        //- Rendered client-side
 
-    nav.mgr-navigation.js-mgr-navigation
-      include ../../../../components/merry_go_round/templates/horizontal_navigation
+      nav.mgr-navigation.js-mgr-navigation
+        include ../../../../components/merry_go_round/templates/horizontal_navigation
 
 .artist-overview-header
   .sixty-forty-bisected-header
@@ -31,14 +32,11 @@ mixin rail(title, viewAllUrl)
 include ./works
 
 if statuses.shows
-  #artist-related-shows-section.artist-related-section
-    +rail('Shows on Artsy', artist.href + 'shows')
+  +rail('Shows on Artsy', artist.href + '/shows', 'shows')
 
 if statuses.articles
-  #artist-related-articles-section.artist-related-section
-    +rail('Articles about ' + artist.name, artist.href + 'shows')
+  +rail('Articles about ' + artist.name, artist.href + '/articles', 'articles')
 
 if statuses.artists
-  #artist-related-artists-section.artist-related-section
-    +rail('Related Artists', artist.href + 'related-artists')
+  +rail('Related Artists', artist.href + '/related-artists', 'artists')
 

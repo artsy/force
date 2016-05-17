@@ -40,8 +40,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
     .then ({artist}) => @trigger 'metaphysicsSync', artist
 
   renderRelated: (artist)->
-    console.log 'render related'
-    _.each artist, (value, key) =>
+    relatedArtists = _.flatten _.map artist, (value, key) =>
       $section = @$("#artist-related-#{key}-section")
       $body = $section.find("#artist-related-#{key}-content")
       $body.html _.map value, (artist) ->
@@ -49,10 +48,11 @@ module.exports = class RelatedArtistsView extends Backbone.View
         artist.counts.for_sale_artworks ?= 0
         $(artistCellTemplate artist: artist).addClass 'grid-item'
       @fadeInSection $section
+      value
 
-    _.defer @setupFollowButtons
+    _.defer @setupFollowButtons relatedArtists
 
-  setupFollowButtons: =>
+  setupFollowButtons: (artists) =>
     ids = @$('#artist-related-artists-sections').find('.follow-button').map ->
       following = @following
       id = ($el = $(this)).data 'id'
@@ -63,6 +63,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
         model: new Backbone.Model id: id
         modelName: 'artist'
         el: $el
+        href: _.findWhere(artists, id:id).href
 
     @following?.syncFollows ids
 

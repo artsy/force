@@ -13,6 +13,7 @@ module.exports = ( { el, model, allLoaded } ) ->
   $('#main-layout-footer').css(display: 'none', opacity: 0)
 
   $.onInfiniteScroll ->
+    'onInfiniteScroll'
     filterView.loadNextPage()
   , offset: 2 * $(window).height()
 
@@ -20,14 +21,18 @@ module.exports = ( { el, model, allLoaded } ) ->
   filterView.topOffset = stickyHeaderHeight
 
   sticky = new Sticky
-  filterView.artworks.on 'sync', ->
-    console.log 'sync'
+  filterView.artworks.on 'sync', (x, { hits }) ->
+    allLoaded() if allLoaded
     sticky.rebuild()
-    if filterView.remaining() is 0
-      console.log 'allLoaded'
+    if (
+        filterView.remaining() is 0 or
+        # `remaining` may be inaccurate (why?) so double check
+        # the hits array and if it is empty then stop
+        hits.length is 0
+    )
       $('#main-layout-footer').css(display: 'block', opacity: 1)
       $.destroyInfiniteScroll()
-      allLoaded() if allLoaded
+      # allLoaded() if allLoaded
     else
       _.defer =>
         threshold = $(window).scrollTop() + 2 * $(window).height()
