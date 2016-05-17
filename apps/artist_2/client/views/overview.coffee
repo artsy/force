@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ capitalize } = require 'underscore.string'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
@@ -16,17 +15,7 @@ gradient = require '../../../../components/gradient_blurb/index.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 renderRail = require '../../components/rails/index.coffee'
-
-query =
-  """
-  query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
-    artist(id: $artist_id) {
-      ... relatedArtists
-    }
-  }
-  #{require '../../components/related_artists/query.coffee'}
-
-  """
+query = require '../../components/related_artists/query.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []

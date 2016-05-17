@@ -38,6 +38,7 @@ module.exports = class FollowButton extends Backbone.View
 
   toggle: (e) ->
     @trigger 'click'
+
     unless @following
       analyticsHooks.trigger 'follow:sign-up'
       mediator.trigger 'open:auth',

@@ -7,23 +7,13 @@ FollowButton = require '../../../../components/follow_button/view.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
 artistCellTemplate = -> require('../../../../components/artist_cell/index.jade') arguments...
 metaphysics = require '../../../../lib/metaphysics.coffee'
-
-query =
-  """
-  query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
-    artist(id: $artist_id) {
-      ... relatedArtists
-    }
-  }
-  #{require '../../components/related_artists/query.coffee'}
-
-  """
+query = require '../../components/related_artists/query.coffee'
 
 module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
   initialize: ({ @user, @statuses }) ->
-    @keys = _.select ['artists', 'contemporaory'], (key) => @statuses[key]
+    @keys = _.select ['artists', 'contemporary'], (key) => @statuses[key]
     if @user?
       @following = new Following(null, kind: 'artist')
 
