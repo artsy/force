@@ -5,7 +5,9 @@ rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user'
+Auction = require '../../../models/auction'
 routes = rewire '../routes'
+moment = require 'moment'
 
 describe '/auction routes', ->
   beforeEach ->
@@ -15,7 +17,11 @@ describe '/auction routes', ->
       apiGet: sinon.stub()
       apiPost: sinon.stub()
     @req = body: {}, params: id: 'foobar'
-    @res = render: sinon.stub(), send: sinon.stub(), locals: sd: {}
+    @res =
+      render: sinon.stub()
+      redirect: sinon.stub()
+      send: sinon.stub()
+      locals: sd: {}
     @next = sinon.stub()
 
   afterEach ->
@@ -116,3 +122,17 @@ describe '/auction routes', ->
       @sailthru.apiPost.args[1][1].vars.source.should.equal 'auction'
       @sailthru.apiPost.args[0][1].vars.auction_slugs.join(',')
         .should.equal 'baz'
+
+  describe '#redirectLive', ->
+
+    it 'redirects on confirm if the auction is live', (done) ->
+      auction = fabricate 'sale',
+        id: 'foo'
+        is_auction: true
+        live_start_at: moment().startOf('day')
+        end_at: moment().endOf('day')
+      Backbone.sync.returns Q.resolve auction
+      routes.redirectLive @req, redirect: (url) ->
+        url.should.equal 'https://live.artsy.net/foo/login'
+        done()
+      Backbone.sync.args[0][2].success auction

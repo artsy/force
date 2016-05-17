@@ -46,7 +46,10 @@ module.exports = class AuthModalView extends ModalView
 
     @templateData = _.extend {
       copy: @renderCopy(options.copy)
-      redirectTo: @redirectTo or location.pathname
+      redirectTo: switch @state.get 'mode'
+        when 'login' then @redirectTo or location.pathname
+        when 'signup' then @redirectTo or '/personalize'
+        else @redirectTo or '/'
     }, options?.userData
 
     @listenTo @state, 'change:mode', @reRender
@@ -120,15 +123,13 @@ module.exports = class AuthModalView extends ModalView
       switch @state.get('mode')
         when 'login'
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
-          if @redirectTo
-            location.assign @redirectTo
-          else
-            location.reload()
         when 'register'
           mediator.trigger 'auth:sign_up:success'
-          location.assign @redirectTo or '/personalize'
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
+
+      @undelegateEvents()
+      @$('form').submit()
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'
