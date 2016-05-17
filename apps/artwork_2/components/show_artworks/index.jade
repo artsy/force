@@ -4,7 +4,7 @@ if artwork.shows && artwork.shows.length
   section.artwork-section.artwork-show-artworks( class='js-artwork-show-artworks' )
     header.artwork-show-artworks__header
       h3.artwork-show-artworks__header__name
-        | Other Works from the Show
+        | Other Works from the #{show.type}
 
       a.artwork-artist-artworks__header__jump( href= show.href )
         | View All
