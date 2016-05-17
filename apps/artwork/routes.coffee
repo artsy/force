@@ -6,16 +6,16 @@ Artwork = require '../../models/artwork'
 { client } = require '../../lib/cache'
 { FUSION_URL } = require '../../config'
 
-appToDisplay = (req) ->
+appToDisplay = (req, res) ->
   if req.path.match(/artwork_1/)?
     'artwork_1'
-  else if req.user?.hasLabFeature 'New Artwork Page'
+  else if res.locals.sd.REDESIGNED_ARTWORK_PAGE is 'redesigned'
     'artwork_2'
   else
     'default'
 
 @index = (req, res, next) ->
-  app = appToDisplay req
+  app = appToDisplay req, res
 
   return next() if app is 'artwork_2'
 
