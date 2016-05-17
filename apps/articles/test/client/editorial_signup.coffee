@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
+mediator = require '../../../../lib/mediator.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'EditorialSignupView', ->
@@ -14,15 +15,14 @@ describe 'EditorialSignupView', ->
       sinon.stub($, 'ajax')
       Backbone.$ = $
       $el = $('<div><div class="article-es-header"></div></div>')
-      @EditorialSignupView = benv.require resolve(
-        __dirname, '../../client/editorial_signup')
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate']
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
       @setupCTAWaypoints = sinon.spy @EditorialSignupView::, 'setupCTAWaypoints'
-      @cycleImages = sinon.spy @EditorialSignupView::, 'cycleImages'
+      sinon.stub @EditorialSignupView::, 'cycleImages'
       @view = new @EditorialSignupView el: $el
       done()
 
@@ -55,6 +55,7 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'unknown'
       @view.initialize()
+      mediator.trigger 'auction-reminders:none'
       @setupCTAWaypoints.called.should.not.be.ok()
 
     it 'only sets up waypoints for editorial article page', ->
@@ -64,6 +65,7 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()
+      mediator.trigger 'auction-reminders:none'
       @setupCTAWaypoints.called.should.be.ok()
 
   describe '#onSubscribe', ->
@@ -88,3 +90,25 @@ describe 'EditorialSignupView', ->
       $subscribe = $('<div></div>')
       @view.onSubscribe({currentTarget: $subscribe})
       $($subscribe).hasClass('loading-spinner').should.be.false()
+
+  describe 'CTA popup', ->
+
+    it 'is hidden if an auction reminder is visible', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: author_id: '123'
+        ARTSY_EDITORIAL_ID: '123'
+        SUBSCRIBED_TO_EDITORIAL: false
+        MEDIUM: 'social'
+      @view.initialize()
+      _.defer ->
+        @setupCTAWaypoints.called.should.not.be.ok()
+
+    it 'is displayed if there arent any auction reminders', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: author_id: '123'
+        ARTSY_EDITORIAL_ID: '123'
+        SUBSCRIBED_TO_EDITORIAL: false
+        MEDIUM: 'social'
+      @view.initialize()
+      mediator.trigger 'auction-reminders:none'
+      @setupCTAWaypoints.called.should.be.ok()

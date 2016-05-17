@@ -8,6 +8,7 @@ editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jad
 Cycle = require '../../../components/cycle/index.coffee'
 { crop } = require '../../../components/resizer/index.coffee'
 mailcheck = require '../../../components/mailcheck/index.coffee'
+mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../../components/flash/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
@@ -39,7 +40,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         email: sd.CURRENT_USER?.email or ''
         images: images
         crop: crop
-        isSignup: @eligibleToSignUp() and not @ctaBarView.previouslyDismissed()
+        isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
 
@@ -49,15 +50,15 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    @setupCTAWaypoints() if not @ctaBarView.previouslyDismissed() and
-      sd.MEDIUM in ['social', 'search']
+    if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
+      mediator.on 'auction-reminders:none', @setupCTAWaypoints
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
         images: images
         crop: crop
         articlePage: true
-        isSignup: @eligibleToSignUp() and not @ctaBarView.previouslyDismissed()
+        isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
 
@@ -77,14 +78,18 @@ module.exports = class EditorialSignupView extends Backbone.View
       error: ->
         cb null
 
-  setupCTAWaypoints: ->
+  setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
-    @$('#articles-show').waypoint (direction) =>
+    @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
       @ctaBarView.transitionOut() if direction is 'down'
       @ctaBarView.transitionIn() if direction is 'up'
-    , { offset: 'bottom-in-view' }
+    , { offset: '90%' }
+    @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
+      @ctaBarView.transitionOut() if direction is 'up'
+      @ctaBarView.transitionIn() if direction is 'down'
+    , { offset: '-10%' }
 
   # Subscribe controls
   onSubscribe: (e) ->
@@ -106,8 +111,7 @@ module.exports = class EditorialSignupView extends Backbone.View
           @$('.article-es-thanks').fadeIn()
           @$('.article-es-header').css('display', 'none')
         # CTA Popup
-        @$('.cta-bar-container-editorial').fadeOut =>
-          @$('.cta-bar-thanks').fadeIn()
+        @$('.cta-bar-container-editorial').fadeOut()
         # Lush Signup
         @$('.articles-es-cta__container').fadeOut =>
           @$('.articles-es-cta__social').fadeIn()

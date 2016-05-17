@@ -30,6 +30,7 @@ module.exports = class CTABarView extends Backbone.View
     { @headline, @mode, @name, @persist, @modalOptions, @subHeadline,
       @email, @linkCopy, @linkHref } = _.defaults options, @defaults
     @user = CurrentUser.orNull()
+    @$el.attr 'data-mode', @mode
 
   previouslyDismissed: ->
     @persist and Cookies.get(@name)?
