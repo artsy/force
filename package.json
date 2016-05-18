@@ -36,6 +36,7 @@
     "dompurify": "^0.7.1",
     "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",
     "express": "^4.13.3",
+    "express-ipfilter": "0.0.25",
     "forever": "^0.15.1",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "geolib": "^2.0.18",
