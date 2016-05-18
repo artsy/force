@@ -133,6 +133,15 @@ module.exports = class Article extends Backbone.Model
     creator = _.union(creator, _.pluck(@get('contributing_authors'), 'name')) if @get('contributing_authors')?.length
     creator
 
+  getVideoUrls: ->
+    urls = []
+    @get('sections').map (section) ->
+      if section.type is 'video'
+        urls.push section.url
+    if @get('hero_section')?.type is 'video'
+      urls.push @get('hero_section').url
+    urls = _.flatten urls
+
   getBodyClass: ->
     bodyClass = "body-article body-article-#{@get('layout')}"
     if @get('hero_section') and @get('hero_section').type == 'fullscreen'

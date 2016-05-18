@@ -80,3 +80,9 @@ describe 'Sitemaps', ->
       routes.bingNew(@req, @res)
       @res.send.args[0][0][0].name.should.equal('bar')
 
+  describe '#video', ->
+
+    it 'only displays articles that are featured AND has_video', ->
+      routes.video(@req, @res)
+      Backbone.sync.args[0][2].data.featured.should.be.true()
+      Backbone.sync.args[0][2].data.has_video.should.be.true()

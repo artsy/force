@@ -225,13 +225,12 @@ resultToBingJSON = (result) ->
       featured: true
       published: true
       sort: '-published_at'
+      has_video: true
       exclude_google_news: false
-      limit: PAGE_SIZE
-      has_video
     error: res.backboneError
     success: (articles) ->
       res.set 'Content-Type', 'text/xml'
-      res.render('video', { pretty: true, articles: articles })
+      res.render('video', { pretty: true, articles: articles, moment: moment })
 
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
