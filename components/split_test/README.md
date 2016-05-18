@@ -72,3 +72,10 @@ Logged in Artsy admins can override the outcome of a particular split test by pa
 
 For forcing the test `header_design` to have the outcome `old`:
 http://www.artsy.net?split_test[header_design]=old
+
+## Tracking experiments
+```coffeescript
+# On the client
+splitTest = require '../../../components/split_test/index.coffee'
+test = splitTest('header_design').view()
+```
