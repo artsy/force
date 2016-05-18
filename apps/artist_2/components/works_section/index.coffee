@@ -20,12 +20,13 @@ module.exports = ( { el, model, allLoaded } ) ->
   filterView.topOffset = stickyHeaderHeight
 
   sticky = new Sticky
-  filterView.artworks.on 'sync', ->
+  filterView.artworks.on 'sync', (x, { hits }) ->
+    allLoaded() if allLoaded
     sticky.rebuild()
     if filterView.remaining() is 0
       $('#main-layout-footer').css(display: 'block', opacity: 1)
       $.destroyInfiniteScroll()
-      allLoaded() if allLoaded
+      # allLoaded() if allLoaded
     else
       _.defer =>
         threshold = $(window).scrollTop() + 2 * $(window).height()

@@ -56,8 +56,9 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
+    @view.fetchRelated()
     $('body').append @jump.$el
-    mediator.on 'overview:fetches:complete', =>
+    @view.on 'metaphysicsSync', =>
       attachCTA @model
 
   cv: ->
@@ -85,6 +86,7 @@ module.exports = class ArtistRouter extends Backbone.Router
   relatedArtists: ->
     @view = new RelatedArtistsView @options
     @model.related().artworks.fetch(data: size: 15)
+    @view.fetchRelated()
 
   biography: ->
     @view = new BiographyView @options

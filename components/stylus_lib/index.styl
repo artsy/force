@@ -128,9 +128,9 @@ inline-block-margins(margin-size = 20px)
     margin-right 0
 
 // Grid mixins used in the grid component mostly, but elsewhere for custom gap sizes
-grid-n-up(n, gap)
+grid-n-up(n, horizontalGap, verticalGap = horizontalGap)
   > .grid-item
-    margin gap gap 0 gap
+    margin verticalGap horizontalGap 0 horizontalGap
     &:nth-child(-n+{n})
       margin-top 0
     &:nth-child(1n)
@@ -144,11 +144,11 @@ grid-n-up(n, gap)
     margin 0 !important
   @media screen and (max-width: 1024px)
     > .grid-item
-      margin (gap / 2) (gap / 2) 0 (gap / 2)
+      margin (verticalGap / 2) (horizontalGap / 2) 0 (horizontalGap / 2)
 
-grid-4-up(gap)
-  grid-n-up(4, gap)
-  offset = gap * 0.75
+grid-4-up(horizontalGap, verticalGap = horizontalGap)
+  grid-n-up(4, horizontalGap, verticalGap)
+  offset = horizontalGap * 0.75
   > .grid-item
     width 23%
     width calc('25% - %s' % offset)
@@ -158,8 +158,8 @@ grid-4-up(gap)
       width 23%
       width calc('25% - %s' % offset)
 
-grid-3-up(offset, gap)
-  grid-n-up(3, gap)
+grid-3-up(offset, horizongalGap, verticalGap = horizontalGap)
+  grid-n-up(3, horizongalGap, verticalGap)
   > .grid-item
     width 32%
     width calc('33.33% - %s' % offset)
@@ -168,8 +168,8 @@ grid-3-up(offset, gap)
       offset = offset / 2
       width calc('33.33% - %s' % offset)
 
-grid-2-up(offset, gap)
-  grid-n-up(2, gap)
+grid-2-up(offset, horizongalGap, verticalGap = horizontalGap)
+  grid-n-up(2, horizongalGap, verticalGap)
   > .grid-item
     width 48%
     width calc('50% - %s' % offset)
