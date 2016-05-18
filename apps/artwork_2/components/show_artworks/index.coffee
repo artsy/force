@@ -6,7 +6,7 @@ module.exports = ->
   masonryView = new ArtworkMasonryView el: $el
 
   artworks = $el
-    .find '[data-id]'
+    .find '.js-artwork-brick'
     .map -> $(this).data 'id'
     .get()
     .map (id) -> id: id

@@ -10,7 +10,7 @@ module.exports = ->
   view = new ArtworkRelatedArtworksView id: CLIENT.id, el: $el
 
   artworks = view.sections()
-    .find '[data-id]'
+    .find '.js-artwork-brick'
     .map -> $(this).data 'id'
     .get()
     .map (id) -> id: id

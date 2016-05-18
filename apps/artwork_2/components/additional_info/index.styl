@@ -21,13 +21,23 @@
       display table-cell
       vertical-align middle
 
-    &__metadata
+    &__image + &__metadata
+      // Only pad if the image is present
       padding-left (gutter / 2)
+
+      // For article stubs without thumbnails
+      // Maintain the original `line-height` for the first line
+      &__context
+        line-height 1
+
+    &__metadata
       width 100%
 
       &__context
       &__author
         sans('s-headline')
+
+      &__author
         line-height 1
 
       &__title

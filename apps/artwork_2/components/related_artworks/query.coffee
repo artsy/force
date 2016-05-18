@@ -4,7 +4,7 @@ module.exports = """
       id
       name
     }
-    layer(id: "main") {
+    layer {
       id
       name
       href

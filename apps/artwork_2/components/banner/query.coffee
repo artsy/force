@@ -2,12 +2,16 @@ module.exports = """
   fragment banner on Artwork {
     banner: context {
       __typename
-      ... on ArtworkContextSale {
+      ... on ArtworkContextAuction {
         name
         href
         start_at
         end_at
         is_auction
+      }
+      ... on ArtworkContextSale {
+        name
+        href
       }
       ... on ArtworkContextFair {
         name
@@ -25,6 +29,7 @@ module.exports = """
       ... on ArtworkContextPartnerShow {
         name
         href
+        type
         status
         partner {
           name

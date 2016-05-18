@@ -17,24 +17,24 @@
       .artwork-brick__metadata__sale-artwork__sale-message
         | Buy Now Price: #{artwork.sale_message}
 
-  if sale_artwork.is_biddable
-    .artwork-brick__metadata__sale-artwork__buttons(
-      data-size= (artwork.is_buy_nowable ? '2' : '1')
-    )
-      a.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
-        class='js-auction-artwork-brick-bid-button'
-        href= artwork.href
-      ) Bid
+    if sale_artwork.is_biddable
+      .artwork-brick__metadata__sale-artwork__buttons(
+        data-size= (artwork.is_buy_nowable ? '2' : '1')
+      )
+        a.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
+          class='js-auction-artwork-brick-bid-button'
+          href= artwork.href
+        ) Bid
 
-      if artwork.is_buy_nowable
-        form( action='#{artwork.href}/acquire', method='POST' )
-          input( type='hidden', name='artwork_id', value= artwork.id )
-          button.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
-            type='submit'
-          ) Buy Now
+        if artwork.is_buy_nowable
+          form( action='#{artwork.href}/acquire', method='POST' )
+            input( type='hidden', name='artwork_id', value= artwork.id )
+            button.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
+              type='submit'
+            ) Buy Now
 
-  else if artwork.is_sold
-    .artwork-brick__metadata__sale-artwork__buttons( data-size='1' )
-      a.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
-        disabled
-      ) Sold
+    else if artwork.is_sold
+      .artwork-brick__metadata__sale-artwork__buttons( data-size='1' )
+        a.artwork-brick__metadata__sale-artwork__buttons__button.avant-garde-button-black(
+          disabled
+        ) Sold

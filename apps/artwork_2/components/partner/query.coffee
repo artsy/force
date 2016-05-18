@@ -18,7 +18,7 @@ module.exports = """
           url(version: "square140")
         }
         counts {
-          follows
+          follows(format: "0,0", label: "follower")
         }
       }
     }
