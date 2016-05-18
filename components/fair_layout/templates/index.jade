@@ -1,4 +1,7 @@
+//- Override any locals with `append locals`
 block locals
+  - bodyClass = helpers ? helpers.buildBodyClass(sd) : '';
+
 doctype html
 html( data-useragent=userAgent )
   head
@@ -7,7 +10,7 @@ html( data-useragent=userAgent )
     link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
-  body( class='body-eigen' )
+  body
     include ../../modal/template
     include ../../flash/template
     include ./header
