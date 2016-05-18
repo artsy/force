@@ -3,7 +3,7 @@
 if hero
   case hero.type
     when 'video'
-      != particle(hero.url)
+      != embed(hero.url)
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
