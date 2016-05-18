@@ -7,7 +7,7 @@
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
   SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT,
-  FUSION_URL } = config = require "../config"
+  FUSION_URL, IP_BLACKLIST } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -46,8 +46,10 @@ hardcodedRedirects = require './routers/hardcoded_redirects'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
 downcase = require './middleware/downcase'
+ipfilter = require 'express-ipfilter'
 
 module.exports = (app) ->
+  app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
   app.use require '../apps/blank'
 
   # Increase max sockets. The goal of this is to improve app -> api
