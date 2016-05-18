@@ -17,11 +17,11 @@ if artwork.banner
           .artwork-banner__name__status
             case banner.status
               when 'upcoming'
-                | In Upcoming Show
+                | In Upcoming #{banner.type}
               when 'running'
-                | In Current Show
+                | In Current #{banner.type}
               when 'closed'
-                | In Past Show
+                | In Past #{banner.type}
 
           a( href= banner.href )
             | #{banner.name}
@@ -58,6 +58,8 @@ if artwork.banner
           when 'ArtworkContextFair'
             | Explore Fair
           when 'ArtworkContextSale'
-            | Explore #{banner.is_auction ? 'Auction' : 'Sale'}
+            | Explore Sale
+          when 'ArtworkContextAuction'
+            | Explore Auction
           when 'ArtworkContextPartnerShow'
-            | Explore Show
+            | Explore #{banner.type}

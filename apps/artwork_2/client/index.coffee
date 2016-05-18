@@ -1,16 +1,10 @@
 { extend, map } = require 'underscore'
 { CLIENT } = require('sharify').data
 metaphysics = require '../../../lib/metaphysics.coffee'
+exec = require '../lib/exec.coffee'
 templates =
   fold: -> require('./fold.jade') arguments...
   footer: -> require('./footer.jade') arguments...
-
-exec = (fns) ->
-  for fn in fns
-    try
-      fn()
-    catch err
-      console.error err
 
 helpers = extend [
   {}
@@ -33,44 +27,83 @@ module.exports.init = ->
     require '../components/metadata/index.coffee'
   ]
 
-  query = if CLIENT.is_in_auction
-    """
-      query artwork($id: String!) {
-        artwork(id: $id) {
-          ... partner
-          ... auction_artworks
-        }
-      }
-      #{require '../../../components/artwork_brick/query.coffee'}
-      #{require '../components/partner/query.coffee'}
-      #{require '../components/auction_artworks/query.coffee'}
-    """
-  else if CLIENT.is_in_show
-    """
-      query artwork($id: String!) {
-        artwork(id: $id) {
-          ... partner
-          ... show_artworks
-        }
-      }
-      #{require '../../../components/artwork_brick/query.coffee'}
-      #{require '../components/partner/query.coffee'}
-      #{require '../components/show_artworks/query.coffee'}
-    """
-  else
-    """
-      query artwork($id: String!) {
-        artwork(id: $id) {
-          ... artist_artworks
-          ... partner
-          ... related_artworks
-        }
-      }
-      #{require '../../../components/artwork_brick/query.coffee'}
-      #{require '../components/artist_artworks/query.coffee'}
-      #{require '../components/partner/query.coffee'}
-      #{require '../components/related_artworks/query.coffee'}
-    """
+  { query, init } = switch CLIENT.context
+    when 'ArtworkContextAuction'
+      query: """
+          query artwork($id: String!) {
+            artwork(id: $id) {
+              ... partner
+              ... auction_artworks
+            }
+          }
+          #{require '../../../components/artwork_brick/query.coffee'}
+          #{require '../components/partner/query.coffee'}
+          #{require '../components/auction_artworks/query.coffee'}
+        """
+      init: [
+          require '../components/partner/index.coffee'
+          require '../components/auction_artworks/index.coffee'
+        ]
+
+    when 'ArtworkContextFair'
+      query: """
+          query artwork($id: String!) {
+            artwork(id: $id) {
+              ... fair_artworks
+              ... partner
+              ... related_artworks
+            }
+          }
+          #{require '../../../components/artwork_brick/query.coffee'}
+          #{require '../components/fair_artworks/query.coffee'}
+          #{require '../components/partner/query.coffee'}
+          #{require '../components/related_artworks/query.coffee'}
+        """
+      init: [
+          require '../components/fair_artworks/index.coffee'
+          require '../components/partner/index.coffee'
+          require '../components/related_artworks/index.coffee'
+        ]
+
+    when 'ArtworkContextPartnerShow'
+      query: """
+          query artwork($id: String!) {
+            artwork(id: $id) {
+              ... partner
+              ... show_artworks
+            }
+          }
+          #{require '../../../components/artwork_brick/query.coffee'}
+          #{require '../components/partner/query.coffee'}
+          #{require '../components/show_artworks/query.coffee'}
+        """
+      init: [
+          require '../components/partner/index.coffee'
+          require '../components/show_artworks/index.coffee'
+        ]
+
+    # when 'ArtworkContextSale' # Unimplemented (loads default fold content)
+    #
+
+    else
+      query: """
+          query artwork($id: String!) {
+            artwork(id: $id) {
+              ... artist_artworks
+              ... partner
+              ... related_artworks
+            }
+          }
+          #{require '../../../components/artwork_brick/query.coffee'}
+          #{require '../components/artist_artworks/query.coffee'}
+          #{require '../components/partner/query.coffee'}
+          #{require '../components/related_artworks/query.coffee'}
+        """
+      init: [
+          require '../components/artist_artworks/index.coffee'
+          require '../components/partner/index.coffee'
+          require '../components/related_artworks/index.coffee'
+        ]
 
   metaphysics query: query, variables: id: CLIENT.id
     .then (data) ->
@@ -79,21 +112,4 @@ module.exports.init = ->
           .html template extend data,
             helpers: helpers
 
-      exec if CLIENT.is_in_auction
-        [
-          require '../components/partner/index.coffee'
-          require '../components/auction_artworks/index.coffee'
-        ]
-
-      else if CLIENT.is_in_show
-        [
-          require '../components/partner/index.coffee'
-          require '../components/show_artworks/index.coffee'
-        ]
-
-      else
-        [
-          require '../components/artist_artworks/index.coffee'
-          require '../components/partner/index.coffee'
-          require '../components/related_artworks/index.coffee'
-        ]
+      exec init
