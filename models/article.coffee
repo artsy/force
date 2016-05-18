@@ -64,7 +64,7 @@ module.exports = class Article extends Backbone.Model
             success: (artwork) ->
               slideshowArtworks.add(artwork)
       # Get related section content if a part of one
-      if @get('section_ids').length
+      if @get('section_ids')?.length
         dfds.push (section = new Section(id: @get('section_ids')[0])).fetch()
         dfds.push (sectionArticles = new Articles).fetch(
           data: section_id: @get('section_ids')[0], published: true, limit: 50
