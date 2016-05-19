@@ -1,14 +1,16 @@
 mixin rail(title, viewAllUrl, section)
-  .artist-overview-related-rail(id= 'artist-overview-' + section + '-rail')
-    .artist-rail-header
-      h1= title
-      a.artist-rail-view-all(href= viewAllUrl) View All
-    .artist-overview-related-rail-content.js-artist-rail.mgr-horizontal-nav(data-key= section)
-      ul.mgr-cells.js-mgr-cells.artist-related-rail-content-inner
-        //- Rendered client-side
+  if statuses[section]
+    .artist-related-rail(data-id= section)
+      .artist-related-rail__header
+        h1= title
+        a.artist-related-rail__view-all(href= viewAllUrl) View All
+      .artist-related-rail__content.js-artist-rail.mgr-horizontal-nav
+        .rail-content-outer
+          .mgr-cells.js-mgr-cells.rail-content-inner: .loading-spinner
+            //- Rendered client-side
 
-      nav.mgr-navigation.js-mgr-navigation
-        include ../../../../components/merry_go_round/templates/horizontal_navigation
+        nav.mgr-navigation.js-mgr-navigation
+          include ../../../../components/merry_go_round/templates/horizontal_navigation
 
 .artist-overview-header
   .sixty-forty-bisected-header
@@ -31,12 +33,7 @@ mixin rail(title, viewAllUrl, section)
 - var hasWorks = artist.statuses.artworks
 include ./works
 
-if statuses.shows
-  +rail('Shows on Artsy', artist.href + '/shows', 'shows')
-
-if statuses.articles
-  +rail('Articles about ' + artist.name, artist.href + '/articles', 'articles')
-
-if statuses.artists
-  +rail('Related Artists', artist.href + '/related-artists', 'artists')
++rail('Shows on Artsy', artist.href + '/shows', 'shows')
++rail('Articles about ' + artist.name, artist.href + '/articles', 'articles')
++rail('Related Artists', artist.href + '/related-artists', 'artists')
 

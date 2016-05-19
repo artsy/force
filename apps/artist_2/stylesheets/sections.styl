@@ -61,43 +61,49 @@
 
 
 // Overview Section Rails
-
-.artist-overview-related-rail
+.artist-related-rail
   padding-top 20px
   margin-top 20px
   border-top 1px solid gray-lighter-color
+  &__header
+    margin-bottom 15px
+    position relative
+    h1
+      garamond-size('headline', true)
 
-shadow-rail-n-up(n, padding = 15px)
+  &__view-all
+    faux-underline(black)
+    position absolute !important
+    right 0
+    top 0
+
   .artist-rail-cell
-    percent = 100% / n
-    padding padding
+    percent = 25%
     width percent
     display inline-block
 
-  .artist-rail-cell-inner
-    padding 10px
-    box-shadow 0 0 20px rgba(black, .12)
-
-#artist-overview-artists-rail
-  shadow-rail-n-up(4, 15px)
   .hoverable-image-link
     width 100%
 
-.artist-rail-header
-  margin-bottom 15px
-  position relative
-  h1
-    garamond-size('headline', true)
-
-.artist-rail-view-all
-  faux-underline(black)
-  position absolute !important
-  right 0
-  top 0
+  &[data-id='artists']
+    .rail-content-outer
+      overflow hidden
+    .rail-content-inner
+      margin 0 -25px
+    .artist-rail-cell
+      padding 15px
+    .artist-rail-cell-inner
+      padding 10px
+      box-shadow 0 0 20px rgba(black, .12)
 
 // Related Artists section
-#artist-related-contemporary-content
-#artist-related-artists-content
+.artist-related-artists-section
+  display none
+  fade-in()
+
+// Section Grid Views
+.artist-related-shows-content
+.artist-related-artists-content
   margin-bottom 60px
   grid-4-up(30px, 40px)
 

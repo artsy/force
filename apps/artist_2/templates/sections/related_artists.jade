@@ -1,15 +1,16 @@
-#artist-related-artists-sections
-  if statuses.artists
-    #artist-related-artists-section.artist-page-section
-      h2.artist-section-header Related Artists
-      #artist-related-artists-content
-        //- Rendered separately
+mixin relatedArtists(title, section, artists)
+  if statuses[section]
+    .artist-related-artists-section.artist-page-section-block(data-id= section)
+      h2.artist-section-header= title
+      .artist-related-artists-content
+        if artists && artists.length
+          each artist in artists
+            .grid-item
+              include ../../../../components/artist_cell/index.jade
 
-  if statuses.contemporary
-    #artist-related-contemporary-section.artist-page-section
-      h2.artist-section-header Suggested Contemporary Artists
-      #artist-related-contemporary-content
-        //- Rendered separately
+
++relatedArtists('Related Artists', 'artists', artists)
++relatedArtists('Suggested Contemporary Artists', 'contemporary', contemporary)
 
 .artist-rail.artist-artworks-rail.arv-container
   include ../../../../components/artwork_rail/templates/index

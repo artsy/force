@@ -3,8 +3,10 @@ moment = require 'moment'
 Artist = require '../../models/artist.coffee'
 { timespanInWords } = require '../../components/util/date_helpers.coffee'
 { capitalize, numberFormat } = require 'underscore.string'
+{ locationAndDate } = require '../../components/show_cell/helpers.coffee'
 
 module.exports =
+  locationAndDate: locationAndDate
   capitalize: capitalize
 
   pageTitle: (artist) ->
@@ -53,8 +55,3 @@ module.exports =
     minuteFormat = if end.minute() > 0 then ':mm' else ''
     end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
 
-  formatShowDetail: (item) ->
-    _.compact([
-      item.city
-      timespanInWords(item.start_at, item.end_at, day: 'D')
-    ]).join ', '

@@ -4,12 +4,11 @@ current = (type, artist) ->
   currentItems = artist[type]
   count = currentItems.length
   item = currentItems[0]
-  _.extend(_.pick(item, 'start_at', 'end_at', 'name', 'href'), {
+  _.extend(_.pick(item, 'location', 'start_at', 'end_at', 'name', 'href', 'exhibition_period'), {
     type: type
     hasMany: count > 1
     imageUrl: item.cover_image?.cropped.url
     secondaryName: item.partner?.name
-    city: item.location?.city
   })
 
  module.exports = (artist) ->

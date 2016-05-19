@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class MerryGoRoundNavView extends Backbone.View
@@ -55,12 +56,17 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     e.preventDefault()
     @flickity.select $(e.currentTarget).data('index')
 
+  checkWidth: ->
+    breaksWidth = $(this.flickity.viewport).width() < this.flickity.slideableWidth
+    @$('.js-mgr-prev, .js-mgr-next').addClass 'no-scroll' if not breaksWidth
+
   render: =>
     @$el.html @template
       length: @flickity.cells.length
       index: @flickity.selectedIndex
       disableStart: !@flickity.options.wrapAround && @isStart()
       disableEnd: !@flickity.options.wrapAround && @isEnd()
+    _.defer => @checkWidth()
     this
 
   remove: ->

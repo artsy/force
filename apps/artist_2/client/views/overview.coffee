@@ -12,17 +12,16 @@ FollowButton = require '../../../../components/follow_button/view.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
-renderRail = require '../../components/rails/index.coffee'
-query = require '../../components/related_artists/query.coffee'
+renderRail = require '../../components/rail/index.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    @listenTo this, 'metaphysicsSync', @renderRails
+    @listenTo mediator, 'artist:related:sync', @renderRails
 
   setupBlurb: ->
     gradient $('.artist-overview-header'),
@@ -33,32 +32,13 @@ module.exports = class OverviewView extends Backbone.View
         @sticky.rebuild()
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
-  fetchRelated: ->
-    metaphysics
-      query: query
-      variables:
-        artist_id: @model.get('id')
-        contemporary: false
-        artists: @statuses.artists
-    .then ({ artist }) =>
-      @trigger 'metaphysicsSync', artist
-
   renderRails: (artist)->
     following = @following
-    @$('.js-artist-rail').map ->
-      section = ($el = $(this)).data('key')
+    @$('.artist-related-rail').map ->
+      section = ($el = $(this)).data('id')
       items = artist[section]
       return if not items
-      renderRail { $el, section, items, following }
-
-  fadeInSection: ($el) ->
-    $el.show()
-    _.defer -> $el.addClass 'is-fade-in'
-    $el
-
-  fadeInSections: ->
-    _.each @statuses, (status, key) =>
-      @fadeInSection @$("#artist-related-#{key}-section") if status
+      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following }
 
   postRender: ->
     # Sub-header
@@ -67,8 +47,7 @@ module.exports = class OverviewView extends Backbone.View
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
       model: @model
-      allLoaded: =>
-        @fadeInSections()
+      allLoaded: => #
     @subViews.push @filterView
 
   setupRelatedGenes: ->

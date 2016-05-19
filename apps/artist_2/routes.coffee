@@ -27,7 +27,7 @@ currentShowAuction = require './components/current_show_auction/index'
         if currentItem.type is 'auction'
           currentItem.detail = "&nbsp;"
         else
-          currentItem.detail = helpers.formatShowDetail currentItem
+          currentItem.detail = helpers.locationAndDate currentItem
 
       res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 

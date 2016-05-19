@@ -16,9 +16,11 @@
       if artist.birthday
         = "b. " + artist.birthday
     .ac-followers
-      = artist.counts.artworks + ' works'
-      if artist.counts.artworks != artist.counts.for_sale_artworks
-        = ', ' + artist.counts.for_sale_artworks
+      - var total = artist.counts.artworks || 0
+      - var for_sale = artist.counts.for_sale_artworks || 0
+      = total + ' works'
+      if total != for_sale
+        = ', ' + for_sale
       |  for sale
   a.ac-follow-button.avant-garde-follow-button-black.follow-button.is-small(
     data-id= artist.id

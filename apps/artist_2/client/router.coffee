@@ -14,6 +14,8 @@ HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
+query = require './query.coffee'
+metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -56,10 +58,14 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
-    @view.fetchRelated()
     $('body').append @jump.$el
-    @view.on 'metaphysicsSync', =>
+    mediator.on 'artist:related:sync', =>
       attachCTA @model
+
+    @fetchRelated
+      artist_id: @model.get('id')
+      artists: @statuses.artists
+      exhibitionHighlights: @statuses.shows
 
   cv: ->
     @view = new CVView @options
@@ -69,14 +75,29 @@ module.exports = class ArtistRouter extends Backbone.Router
       cache: true
       data: limit: 50
 
+  fetchRelated: (variables)->
+    metaphysics
+      query: query
+      variables: _.defaults variables,
+        artist_id: false
+        contemporary: false
+        artists: false
+        exhibitionHighlights: false
+        showGroupings: false
+        fairs: false
+    .then ({ artist }) => mediator.trigger 'artist:related:sync', artist
+
   works: ->
     @view = new WorksView @options
     $('body').append @jump.$el
 
   shows: ->
     @view = new ShowsView @options
-    @model.related().shows.fetchUntilEnd()
     @model.related().artworks.fetch(data: size: 15)
+    @fetchRelated
+      artist_id: @model.get('id')
+      showGroupings: @statuses.shows
+      fairs: @statuses.shows
 
   articles: ->
     @view = new ArticlesView @options
@@ -86,7 +107,10 @@ module.exports = class ArtistRouter extends Backbone.Router
   relatedArtists: ->
     @view = new RelatedArtistsView @options
     @model.related().artworks.fetch(data: size: 15)
-    @view.fetchRelated()
+    @fetchRelated
+      artist_id: @model.get('id')
+      contemporary: @statuses.contemporary
+      artists: @statuses.artists
 
   biography: ->
     @view = new BiographyView @options
