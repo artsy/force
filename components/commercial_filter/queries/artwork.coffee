@@ -35,6 +35,8 @@ module.exports = """
       name
       href
       type
+      default_profile_public
+      default_profile_id
       locations {
         city
         phone

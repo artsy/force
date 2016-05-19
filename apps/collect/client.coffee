@@ -118,5 +118,3 @@ module.exports.init = ->
     else
       @sticky = new Sticky
       @sticky.add $('.cf-sidebar')
-
-
