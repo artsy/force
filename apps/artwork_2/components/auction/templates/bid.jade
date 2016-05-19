@@ -1,4 +1,4 @@
-if auction.is_open
+if auction.is_open && !artwork.is_sold
   form.artwork-auction__bid-form(
     method='GET'
     action='/auction/#{auction.id}/bid/#{artwork.id}'
