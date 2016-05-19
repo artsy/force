@@ -33,11 +33,10 @@ describe 'FairInfo routes', ->
     afterEach ->
       Backbone.sync.restore()
 
-    it 'assigns a fair model to locals', (done) ->
+    it 'assigns a fair model to locals', ->
       routes.assignFair(@req, @res, @next)
-      _.defer =>
-        @res.locals.fair.get('name').should.equal 'Armory Show 2013'
-        done()
+        .then =>
+          @res.locals.fair.get('name').should.equal 'Armory Show 2013'
 
   describe 'routes functions', ->
     beforeEach ->
