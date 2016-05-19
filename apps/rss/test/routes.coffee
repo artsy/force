@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
 sd = require('sharify').data
-_ = require 'underscore'
 Q = require 'bluebird-q'
 
 describe 'RSS', ->
@@ -85,20 +84,18 @@ describe 'RSS', ->
         .returns Q.resolve()
         .yieldsTo 'success', @articles
 
-    it 'fetches section and articles', (done) ->
+    it 'fetches section and articles', ->
       routes.partnerUpdates @req, @res
-      _.defer =>
-        Backbone.sync.args.should.have.lengthOf 2
-        Backbone.sync.args[1][2].data.should.eql
-          section_id: @section.id
-          published: true
-          sort: '-published_at'
-          limit: 100
-        done()
+        .then =>
+          Backbone.sync.args.should.have.lengthOf 2
+          Backbone.sync.args[1][2].data.should.eql
+            section_id: @section.id
+            published: true
+            sort: '-published_at'
+            limit: 100
 
-    it 'renders articles', (done) ->
+    it 'renders articles', ->
       routes.partnerUpdates @req, @res
-      _.defer =>
-        @res.render.args[0][0].should.equal 'partner_updates'
-        @res.render.args[0][1].articles.should.have.lengthOf 2
-        done()
+        .then =>
+          @res.render.args[0][0].should.equal 'partner_updates'
+          @res.render.args[0][1].articles.should.have.lengthOf 2
