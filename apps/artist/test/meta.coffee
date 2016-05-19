@@ -67,7 +67,6 @@ describe 'Meta tags', ->
   describe 'with no blurb or artworks', ->
     beforeEach ->
       @artist = _.extend artistJSON, counts: { artworks: 0 }, blurb: null
-      console.log 'counts', @artist.counts, @artist.blurb
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
