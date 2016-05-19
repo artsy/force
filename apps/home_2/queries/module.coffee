@@ -11,7 +11,12 @@ module.exports = """
           href
           name
           tagline
-          profile{
+          start_at
+          end_at
+          location {
+            city
+          }
+          profile {
             icon{
               url(version: "square140")
               versions

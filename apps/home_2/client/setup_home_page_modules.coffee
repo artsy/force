@@ -5,13 +5,15 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
-{ viewAllUrl } = require '../view_helpers.coffee'
+{ viewAllUrl, timeSpan } = require '../view_helpers.coffee'
+fairTemplate = -> require('../templates/contexts/_fair.jade') arguments...
 
 contexts =
   iconic_artists: -> # noop
   followed_artists: -> # noop
   live_auctions: -> # noop
-  current_fairs: -> # noop
+  current_fairs: (module) ->
+    fairTemplate fair: module.context, timeSpan: timeSpan
 
 module.exports = ->
   user = CurrentUser.orNull()
@@ -33,7 +35,9 @@ module.exports = ->
 
       artworks.trigger 'sync'
 
-      view.on 'post-render', ->
-        console.log 'everything setup'
+      if contexts[module.key]?
+        view.on 'post-render', ->
+          html = contexts[module.key](module)
+          $("#hpm-#{module.key}-#{index} .arv-context").html html
 
 
