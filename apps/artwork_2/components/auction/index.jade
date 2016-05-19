@@ -1,8 +1,4 @@
-if artwork.is_in_auction && artwork.sale_artwork.is_biddable
+if artwork.is_in_auction
   .js-artwork-auction-container
     .artwork-auction( class='js-artwork-auction' )
       include ./templates/index
-
-else if artwork.is_in_auction && !artwork.sale_artwork.is_biddable
-  .artwork-commercial__sale-message
-    = artwork.sale_message
