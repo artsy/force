@@ -18,7 +18,8 @@ module.exports = class Params extends Backbone.Model
     for_sale: true
     color: null
     medium: null
-    aggregations: ['TOTAL', 'COLOR', 'MEDIUM']
+    major_periods: []
+    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD']
     ranges:
       price_range:
         min: 50.00

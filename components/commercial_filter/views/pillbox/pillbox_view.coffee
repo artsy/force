@@ -18,10 +18,15 @@ module.exports = class PillboxView extends Backbone.View
 
   clear: (e) ->
     param = $(e.currentTarget).data('value')
+    filter = $(e.currentTarget).data('filter')
     # Here we want to unset a param, and also change the page param
     # Use silent: true to only trigger one change event
     @params.set { page: 1 }, silent: true
-    @params.unset param
+    if filter is 'major_period'
+      majorPeriods = _.without(@params.get('major_periods'), "#{param}")
+      @params.set { major_periods: majorPeriods }
+    else
+      @params.unset param
 
   category: ->
     if @params.get('gene_id')
@@ -59,3 +64,4 @@ module.exports = class PillboxView extends Backbone.View
       price: @price()
       width: @size 'Width', 'width'
       height: @size 'Height', 'height'
+      majorPeriods: @params.get('major_periods')

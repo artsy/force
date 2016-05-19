@@ -1,4 +1,4 @@
-if color || medium || price || width || height || category
+if color || medium || price || width || height || category || majorPeriods
   .cf-pillbox__pillboxes
     if category
       .cf-pillbox__pillboxes__category
@@ -21,6 +21,11 @@ if color || medium || price || width || height || category
         span.cf-pillbox__pillboxes_display= width
         span.cf-pillbox__pillboxes_clear(data-value='width') ×
     if height
-      .cf-pillbox__pillboxes__width
+      .cf-pillbox__pillboxes__height
         span.cf-pillbox__pillboxes_display= height
         span.cf-pillbox__pillboxes_clear(data-value='height') ×
+    if majorPeriods && majorPeriods.length
+      for majorPeriod in majorPeriods
+        .cf-pillbox__pillboxes__major-period
+          span.cf-pillbox__pillboxes_display= majorPeriod
+          span.cf-pillbox__pillboxes_clear(data-filter='major_period' data-value=majorPeriod) ×
