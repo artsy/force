@@ -56,7 +56,7 @@ module.exports =
   EMPTY_COLLECTION_SET_ID: null
   GEMINI_S3_ACCESS_KEY: null
   GEMINI_APP: 'http://localhost:3004'
-  GEMINI_ACCOUNT_KEY: 'admin'
+  GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GEMINI_LOAD_RATIO: 10
   BIDDER_H1_COPY: 'Please enter your credit card details'
