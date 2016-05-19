@@ -128,7 +128,7 @@ module.exports = (app) ->
     app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
   app.use express.static(path.resolve __dirname, '../public')
-  app.use '/apple-app-site-association', artsyEigenWebAssociation
+  app.use '/(.well-known/)?apple-app-site-association', artsyEigenWebAssociation
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
