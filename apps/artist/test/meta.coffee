@@ -63,3 +63,15 @@ describe 'Meta tags', ->
     it 'includes og:image and twitter card', ->
       @html.should.containEql "<meta property=\"og:image\" content=\"/foo/bar/large.jpg"
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"
+
+  describe 'with no blurb or artworks', ->
+    beforeEach ->
+      @artist = _.extend artistJSON, counts: { artworks: 0 }, blurb: null
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artist: @artist
+        sd: @sd
+        nav: rels: sinon.stub().returns {}
+        viewHelpers: helpers
+
+    it 'should have a noindex, follow tag', ->
+      @html.should.containEql "<meta name=\"robots\" content=\"noindex"
