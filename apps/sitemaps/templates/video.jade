@@ -13,4 +13,4 @@ urlset(
             video:description= article.strip('lead_paragraph')
           video:thumbnail_loc= article.get('thumbnail_image')
           video:player_loc= videoUrl
-          video:publication_date= moment(article.get('published_at')).format('YYYY-MM-DDThh:mm:ss+TZD')
+          video:publication_date= moment(article.get('published_at')).format('YYYY-MM-DDThh:mm:ssZ')
