@@ -13,3 +13,11 @@ $(".galleries-institutions-primary-carousel .gpc-overlays [style*='block'] [href
     show_slug: slug
   })
 })
+
+$(".galleries-institutions-primary-carousel .gpc-overlays .gpc-headline").click(function() {
+  var slug = $(this).attr("href").split("/")[1]
+
+  analytics.track('Clicked Galleries Banner', {
+    partner_slug: slug
+  })
+})
