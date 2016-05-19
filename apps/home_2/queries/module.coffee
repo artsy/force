@@ -9,6 +9,14 @@ module.exports = """
       context {
         ... on HomePageModuleContextFair {
           href
+          name
+          tagline
+          profile{
+            icon{
+              url(version: "square140")
+              versions
+            }
+          }
         }
         ... on HomePageModuleContextSale {
           href

@@ -1,3 +1,5 @@
+{ timespanInWords } = require '../../components/util/date_helpers.coffee'
+
 module.exports =
   viewAllUrl: (module) ->
     return module.context.href if module.context
@@ -14,3 +16,8 @@ module.exports =
       genes: false
 
     urls[module.key]
+
+  timeSpan: (start_at, end_at) ->
+    timespanInWords start_at, end_at
+
+

@@ -5,7 +5,13 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
-viewHelpers = require '../view_helpers.coffee'
+{ viewAllUrl } = require '../view_helpers.coffee'
+
+contexts =
+  iconic_artists: -> # noop
+  followed_artists: -> # noop
+  live_auctions: -> # noop
+  current_fairs: -> # noop
 
 module.exports = ->
   user = CurrentUser.orNull()
@@ -22,8 +28,12 @@ module.exports = ->
         $el: $("#hpm-#{module.key}-#{index}")
         collection: artworks
         title: module.title
-        viewAllUrl: viewHelpers.viewAllUrl(module)
+        viewAllUrl: viewAllUrl module
+        hasContext: contexts[module.key]?
 
       artworks.trigger 'sync'
+
+      view.on 'post-render', ->
+        console.log 'everything setup'
 
 
