@@ -27,8 +27,10 @@ module.exports.init = ->
     require '../components/metadata/index.coffee'
   ]
 
-  { query, init } = switch CLIENT.context
-    when 'ArtworkContextAuction'
+  context = CLIENT.context or {}
+
+  { query, init } =
+    if context.__typename is 'ArtworkContextAuction' and context.is_open
       query: """
           query artwork($id: String!) {
             artwork(id: $id) {
@@ -45,7 +47,13 @@ module.exports.init = ->
           require '../components/auction_artworks/index.coffee'
         ]
 
-    when 'ArtworkContextFair'
+    else if context.__typename is 'ArtworkContextAuction'
+      # Do nothing for Preview & Closed auctions
+
+    # else if context.__typename 'ArtworkContextSale' # Unimplemented (loads default fold content)
+    #
+
+    else if context.__typename is 'ArtworkContextFair'
       query: """
           query artwork($id: String!) {
             artwork(id: $id) {
@@ -65,7 +73,7 @@ module.exports.init = ->
           require '../components/related_artworks/index.coffee'
         ]
 
-    when 'ArtworkContextPartnerShow'
+    else if context.__typename is 'ArtworkContextPartnerShow' and context.is_active
       query: """
           query artwork($id: String!) {
             artwork(id: $id) {
@@ -81,9 +89,6 @@ module.exports.init = ->
           require '../components/partner/index.coffee'
           require '../components/show_artworks/index.coffee'
         ]
-
-    # when 'ArtworkContextSale' # Unimplemented (loads default fold content)
-    #
 
     else
       query: """

@@ -23,7 +23,7 @@ Articles = require '../../collections/articles'
     next()
   .catch (error) ->
     next()
-  .done()
+
 
 @visitors = (req, res) ->
   res.render("visitors")
