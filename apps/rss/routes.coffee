@@ -49,4 +49,4 @@ PAGE_SIZE_FACEBOOK = 50
       res.set('Content-Type', 'application/rss+xml')
       res.render('partner_updates', articles: articles, pretty: true)
     .catch res.backboneError
-    .done()
+
