@@ -1,6 +1,8 @@
 //- Display price for non-auctions
 if !hasInstitutionPartner && !hasAuctionPartner && !isAuction
   if artwork.saleMessage() && displayPrice
-    p.artwork-item-sale-price.artwork-item-overflow= artwork.saleMessage()
+    a.faux-underline-hover( href=artwork.href() )
+      p.artwork-item-sale-price.artwork-item-overflow= artwork.saleMessage()
   else if artwork.availabilityMessage()
-    p.artwork-item-availability= artwork.availabilityMessage()
+    a.faux-underline-hover( href=artwork.href() )
+      p.artwork-item-availability= artwork.availabilityMessage()

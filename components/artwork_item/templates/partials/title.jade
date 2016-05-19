@@ -1,4 +1,4 @@
-if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
-  .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
-p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
-
+a.faux-underline-hover( href=artwork.href() )
+  if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
+    .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
+  p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
