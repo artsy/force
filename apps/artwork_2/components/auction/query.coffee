@@ -10,6 +10,7 @@ module.exports = """
       id
       name
       is_open
+      is_live_open
       is_preview
       is_closed
       is_auction

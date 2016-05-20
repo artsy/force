@@ -36,7 +36,7 @@ else
       .abs-count= saleArtwork.formatBidsAndReserve()
 
     form.artwork-bid-form.js-artwork-bid-form( action= auction.bidUrl(saleArtwork) )
-      if auction.isOpen() && user
+      if auction.isOpen() && !auction.isLiveOpen() && user
         .abf-validation-error
           | Your bid needs to be at least #{saleArtwork.minBid()}
         .abf-min-next
@@ -50,12 +50,18 @@ else
           | This work has a&nbsp;
           a.js-buyers-premium.fine-faux-underline( href='#' ) Buyer's Premium
 
-      button.avant-garde-button-black.abf-button(
-        type= 'submit'
-        class= auction.bidButtonState(user, artwork).classes
-        disabled= !auction.bidButtonState(user, artwork).enabled
-      )
-        = auction.bidButtonState(user, artwork).label
+      if auction.isLiveOpen()
+        a.avant-garde-button-black(
+          href="#{sd.PREDICTION_URL}/#{auction.get('id')}"
+          target='_blank'
+        )= auction.bidButtonState(user, artwork).label
+      else
+        button.avant-garde-button-black.abf-button(
+          type= 'submit'
+          class= auction.bidButtonState(user, artwork).classes
+          disabled= !auction.bidButtonState(user, artwork).enabled
+        )
+          = auction.bidButtonState(user, artwork).label
 
   if auction.isOpen() && artwork.get('acquireable') && saleArtwork.get('bidder_positions_count') < 1
     .artwork-meta-price

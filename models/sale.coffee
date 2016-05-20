@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ API_URL, SECURE_IMAGES_URL } = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image } = require 'artsy-backbone-mixins'
@@ -75,9 +75,12 @@ module.exports = class Sale extends Backbone.Model
     else if @isOpen() and artwork.get('acquireable') and artwork.get('sold')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
 
+
   bidButtonState: (user, artwork) ->
     if @isClosed()
       label: 'Auction Closed', enabled: false, classes: 'is-disabled', href: ''
+    else if @isLiveOpen()
+      label: 'Enter Live Auction', enabled: true, href: "#{PREDICTION_URL}/#{@get 'id'}"
     else if artwork.get('sold') and not artwork.get('acquireable')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
     else
