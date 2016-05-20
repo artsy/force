@@ -26,6 +26,10 @@ setupFollowButtons = ({ $el, items, kind }) =>
   following?.syncFollows ids
 
 sections =
+  articles:
+    render: (items) ->
+      #
+
   artists:
     render: (items) ->
       artistsTemplate { items }

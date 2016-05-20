@@ -4,25 +4,32 @@ RelatedArticlesView = require '../../../../components/related_articles/view.coff
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 template = -> require('../../templates/sections/articles.jade') arguments...
 sd = require('sharify').data
+query = require '../../queries/articles.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 
 module.exports = class ArticlesView extends Backbone.View
 
   subViews: []
 
   initialize: ->
+    @listenTo this, 'artist:articles:sync', @render
+
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+    .then ({ artist }) => @trigger 'artist:articles:sync', artist
 
   postRender: ->
-    @subViews.push new RelatedArticlesView
-      el: @$('#artist-related-articles-content')
-      collection: @model.related().articles
-      numToShow: 4
-
-    @subViews.push new ArtworkRailView
+    @subViews.push rail = new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+
+    rail.collection.trigger 'sync'
 
     $el = @$('#artist-related-articles-section').show()
     _.defer -> $el.addClass 'is-fade-in'

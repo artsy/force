@@ -2,7 +2,7 @@ module.exports =
   """
   fragment relatedShow on PartnerShow {
     cover_image {
-      cropped(width: 150, height: 104) {
+      cropped(width: 400, height: 300) {
         url
       }
     }

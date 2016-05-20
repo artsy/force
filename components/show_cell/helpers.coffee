@@ -4,7 +4,7 @@ _ = require 'underscore'
 module.exports =
   isEndingSoon: (show, days = 5, today = moment().startOf('day')) ->
     soon = moment.duration(days, 'days').valueOf()
-    diff = date(show.end_at).diff(today)
+    diff = @date(show.end_at).diff(today)
     diff <= soon and diff >= 0
 
   endingIn: (show, today = moment().startOf('day')) ->

@@ -25,11 +25,13 @@ module.exports = class OverviewView extends Backbone.View
     @listenTo this, 'artist:overview:sync', @renderRails
 
   fetchRelated: ->
+    debugger
     metaphysics
       query: query
       variables:
         artist_id: @model.get('id')
         artists: @statuses.artists
+        articles: @statuses.articles
         shows: @statuses.shows
     .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
@@ -42,7 +44,8 @@ module.exports = class OverviewView extends Backbone.View
         @sticky.rebuild()
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
-  renderRails: (artist)->
+  renderRails: (artist) ->
+    debugger
     following = @following
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')

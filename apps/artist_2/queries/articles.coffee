@@ -1,6 +1,6 @@
 module.exports =
   """
-  query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
+  query artist($artist_id: String!) {
     artist(id: $artist_id) {
       articles (limit: 99) {
         title

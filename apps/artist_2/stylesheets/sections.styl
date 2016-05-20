@@ -60,6 +60,46 @@
     right 0
     border-bottom 2px dotted gray-lighter-color
 
+// Articles
+
+.article-list-item
+  block-margins(40px)
+  clearfix()
+  a
+    display block
+    text-decoration none
+
+  &__author
+    avant-garde()
+    font-size 11px
+    white-space nowrap
+    margin-top 8px
+    line-height 1
+    color gray-darker-color
+
+  &__title
+    width 90%
+    font-size 25px
+
+  &__image
+    float left
+    width 30%
+
+  &__blurb
+    float left
+    width 70%
+    padding-left 40px
+
+  &__summary
+    margin-top 25px
+
+  &__go
+    faux-underline()
+
+  &__author > *
+    margin-right 10px
+    &:last-child
+      margin 0
 
 // Overview Section Rails
 .artist-related-rail
