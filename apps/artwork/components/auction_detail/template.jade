@@ -19,7 +19,7 @@ else
     .artwork-auction-estimate
       | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
-  else if auction.isOpen()
+  if auction.isOpen()
     if bidderPositions && bidderPositions.length
       .artwork-bidder-position-status(
         class= bidderPositions.classes()
