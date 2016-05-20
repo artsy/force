@@ -2,14 +2,20 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('../../templates/sections/shows.jade') arguments...
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
-mediator = require '../../../../lib/mediator.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../../queries/shows.coffee'
 
 module.exports = class ShowsView extends Backbone.View
   subViews: []
 
   initialize: ->
-    @listenTo mediator, 'artist:related:sync', @render
+    @listenTo this, 'artist:shows:sync', @render
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+    .then ({ artist }) => @trigger 'artist:shows:sync', artist
 
   postRender: ->
     @subViews.push rail = new ArtworkRailView
@@ -26,13 +32,8 @@ module.exports = class ShowsView extends Backbone.View
     $el.show()
     _.defer -> $el.addClass 'is-fade-in'
 
-  render: ( options = { upcoming_shows, current_shows, past_shows } = {}) ->
-    if options.past_shows
-      options.past_fairs = []
-      options.past_shows = _.select options.past_shows, (show) ->
-        options.past_fairs.push show if show.fair
-        return !show.fair
-    @$el.html template _.extend options, { showHelpers }
+  render: (artist) ->
+    @$el.html template _.extend artist, { showHelpers }
     _.defer => @postRender()
     this
 

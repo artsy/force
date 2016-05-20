@@ -9,7 +9,7 @@ cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
 metaphysics = require '../../lib/metaphysics'
-query = require './query'
+query = require './queries/server.coffee'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
@@ -27,7 +27,7 @@ currentShowAuction = require './components/current_show_auction/index'
         if currentItem.type is 'auction'
           currentItem.detail = "&nbsp;"
         else
-          currentItem.detail = helpers.locationAndDate currentItem
+          currentItem.detail = helpers.showHelpers.locationAndDate currentItem
 
       res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
@@ -41,7 +41,9 @@ currentShowAuction = require './components/current_show_auction/index'
     else
       res.redirect artist.href.replace "/artist/", "/artist_2/"
 
-  .catch -> next()
+  .catch (e) ->
+    console.log e
+    next()
   .done()
 
 @tab = (req, res, next) =>

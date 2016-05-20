@@ -1,5 +1,5 @@
 mixin relatedArtists(title, section, artists)
-  if statuses[section]
+  if artists && artists.length
     .artist-related-artists-section.artist-page-section-block(data-id= section)
       h2.artist-section-header= title
       .artist-related-artists-content

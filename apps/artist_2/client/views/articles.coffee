@@ -27,10 +27,10 @@ module.exports = class ArticlesView extends Backbone.View
     $el = @$('#artist-related-articles-section').show()
     _.defer -> $el.addClass 'is-fade-in'
 
-  render: ->
+  render: ( { articles } = {} )->
     @$el.html template
       artist: @model
-      articles: @model.related().articles.models
+      articles: articles
     _.defer => @postRender()
     this
 

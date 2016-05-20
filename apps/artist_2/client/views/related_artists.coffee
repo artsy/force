@@ -5,21 +5,31 @@ ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 FollowButton = require '../../../../components/follow_button/view.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
-mediator = require '../../../../lib/mediator.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../../queries/artists.coffee'
 
 module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
   initialize: ({ @user, @statuses }) ->
-    @keys = _.select ['artists', 'contemporary'], (key) => @statuses[key]
     if @user?
       @following = new Following(null, kind: 'artist')
-    @listenTo mediator, 'artist:related:sync', @render
+
+    @listenTo this, 'artist:artists:sync', @render
+
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+        artists: @statuses.artists
+        contemporary: @statuses.contemporary
+    .then ({ artist }) => @trigger 'artist:artists:sync', artist
 
   setupFollowButtons: (artists)=>
     ids = @$('.artist-related-artists-section .follow-button').map ->
       following = @following
       id = ($el = $(this)).data 'id'
+      artist = _.findWhere(artists, id:id)
       new FollowButton
         context_page: "Artists page"
         context_module: "Related Artists tab"
@@ -50,8 +60,8 @@ module.exports = class RelatedArtistsView extends Backbone.View
     $el
 
   render: ({ artists, contemporary } = {})->
-    @relatedArtists = _.flatten artists, contemporary
-    @$el.html template { @statuses, artists, contemporary }
+    @relatedArtists = _.flatten [artists, contemporary]
+    @$el.html template { artists, contemporary }
     _.defer => @postRender()
     this
 

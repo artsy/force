@@ -7,7 +7,7 @@ module.exports = [
   slug: 'cv'
   href: 'artist_2/:id/cv'
   name: 'CV'
-  predicate: ({ articles, shows }) -> false
+  predicate: ({ articles, shows }) -> articles || shows
 ,
   slug: 'works'
   href: 'artist_2/:id/works'

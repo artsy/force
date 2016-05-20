@@ -1,7 +1,31 @@
 .artist-page-section-block#artist-related-articles-section
   h2.artist-section-header Articles on Artsy
   #artist-related-articles-content: .loading-spinner
-    //- Rendered client-side
+    for article in articles
+      .related-article
+        a.ra-image.hoverable-image-link( href="/article/#{article.slug}" )
+          - var image = article.thumbnail_image
+          - var cropped = image ? image.cropped : false
+          - var imageUrl = cropped ? cropped.url : false
+          .hoverable-image.is-four-three.is-cropped(
+            alt= article.title
+            style= imageUrl && 'background-image: url(#{imageUrl})'
+          )
+        .ra-blurb
+          if article.thumbnail_title
+            a( href="/article/#{article.slug}" )
+              h3.ra-title= article.thumbnail_title
+
+          a.ra-author( href="/#{article.related().author.profile_handle}" )
+            | By #{article.related().author.name}
+
+          if article.thumbnail_teaser
+            a( href="/article/#{article.slug}" )
+              - if (!teaserLimit) { var teaserLimit = 450 }
+              .ra-summary
+                = _s.prune(article.thumbnail_teaser, teaserLimit)
+                | &nbsp
+                span.ra-go Go to article
 
 .artist-rail.artist-artworks-rail.arv-container
   include ../../../../components/artwork_rail/templates/index

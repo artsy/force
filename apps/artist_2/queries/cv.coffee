@@ -1,0 +1,27 @@
+module.exports =
+  """
+  query artist($artist_id: String!, $shows: Boolean!, $articles: Boolean!) {
+    artist(id: $artist_id) {
+      ... on Artist @include(if: $shows) {
+        group_shows: partner_shows(at_a_fair: false, solo_show:false, size: 99) {
+          ... relatedShow
+        }
+        solo_shows: partner_shows(at_a_fair: false, solo_show:true, size: 99) {
+          ... relatedShow
+        }
+        fair_booths: partner_shows(at_a_fair: true, size: 99) {
+          ... relatedShow
+        }
+      }
+      articles (limit: 99) @include(if: $articles) {
+        title
+        href
+        thumbnail_title
+        published_at
+      }
+    }
+  }
+
+  #{require './show_fragment.coffee'}
+
+  """

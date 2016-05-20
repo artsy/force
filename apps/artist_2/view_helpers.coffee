@@ -3,11 +3,11 @@ moment = require 'moment'
 Artist = require '../../models/artist.coffee'
 { timespanInWords } = require '../../components/util/date_helpers.coffee'
 { capitalize, numberFormat } = require 'underscore.string'
-{ locationAndDate } = require '../../components/show_cell/helpers.coffee'
+showHelpers = require '../../components/show_cell/helpers.coffee'
 
 module.exports =
-  locationAndDate: locationAndDate
   capitalize: capitalize
+  showHelpers: showHelpers
 
   pageTitle: (artist) ->
     artist = new Artist

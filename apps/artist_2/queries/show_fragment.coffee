@@ -15,6 +15,9 @@ module.exports =
     href
     fair {
       id
+      location {
+        city
+      }
     }
     name
     start_at

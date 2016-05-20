@@ -15,7 +15,6 @@ JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
 query = require './query.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -54,38 +53,18 @@ module.exports = class ArtistRouter extends Backbone.Router
     @renderCurrentView()
 
   renderCurrentView: ->
+    @view.fetchRelated?()
     @view.render()
 
   overview: ->
     @view = new OverviewView @options
     $('body').append @jump.$el
-    mediator.on 'artist:related:sync', =>
+    @view.on 'artist:overview:sync', =>
       attachCTA @model
-
-    @fetchRelated
-      artist_id: @model.get('id')
-      artists: @statuses.artists
-      exhibitionHighlights: @statuses.shows
 
   cv: ->
     @view = new CVView @options
-    @model.related().shows.fetchUntilEnd()
     @model.related().artworks.fetch(data: size: 15)
-    @model.related().articles.fetch
-      cache: true
-      data: limit: 50
-
-  fetchRelated: (variables)->
-    metaphysics
-      query: query
-      variables: _.defaults variables,
-        artist_id: false
-        contemporary: false
-        artists: false
-        exhibitionHighlights: false
-        showGroupings: false
-        fairs: false
-    .then ({ artist }) => mediator.trigger 'artist:related:sync', artist
 
   works: ->
     @view = new WorksView @options
@@ -94,11 +73,6 @@ module.exports = class ArtistRouter extends Backbone.Router
   shows: ->
     @view = new ShowsView @options
     @model.related().artworks.fetch(data: size: 15)
-    @fetchRelated
-      artist_id: @model.get('id')
-      showGroupings: @statuses.shows
-      fairs: @statuses.shows
-
   articles: ->
     @view = new ArticlesView @options
     @model.related().articles.fetch()
@@ -107,11 +81,6 @@ module.exports = class ArtistRouter extends Backbone.Router
   relatedArtists: ->
     @view = new RelatedArtistsView @options
     @model.related().artworks.fetch(data: size: 15)
-    @fetchRelated
-      artist_id: @model.get('id')
-      contemporary: @statuses.contemporary
-      artists: @statuses.artists
-
   biography: ->
     @view = new BiographyView @options
     @model.related().articles.fetch

@@ -14,14 +14,24 @@ viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 renderRail = require '../../components/rail/index.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../../queries/overview.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    @listenTo mediator, 'artist:related:sync', @renderRails
+    @listenTo this, 'artist:overview:sync', @renderRails
+
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+        artists: @statuses.artists
+        shows: @statuses.shows
+    .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
   setupBlurb: ->
     gradient $('.artist-overview-header'),

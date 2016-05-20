@@ -15,5 +15,5 @@ module.exports = """
       ... relatedShow
     }
   }
-  #{require '../related_shows/fragment.coffee'}
+  #{require '../../queries/show_fragment.coffee'}
 """
