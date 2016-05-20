@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+Artist = require '../../../models/artist.coffee'
 template = -> require('../templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../../follow_button/index.coffee'
 imagesLoaded = require 'imagesloaded'
@@ -14,7 +15,7 @@ module.exports = class ImageSetView extends Backbone.View
 
   initialize: (options) ->
     { @items, @user, @startIndex } = options
-    @length = @items.length
+    @length = @items?.length
     @currentIndex = @startIndex
     $(window).on 'keyup.modalize', @onKeyUp
     @following = new Following(null, kind: 'artist') if @user?
@@ -50,14 +51,14 @@ module.exports = class ImageSetView extends Backbone.View
 
   setupFollowButtons: ->
     @artists = []
-    _.where(@collection, type: 'artwork').map (work) =>
+    _.where(@items, type: 'artwork').map (work) =>
       @artists.push id: work.artist?.slug
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 
   addFollowButton: ->
     item = @items[@currentIndex]
     return unless item.artist?.slug
-    artist = id: item.artist.slug
+    artist = new Artist id: item.artist.slug
     new FollowButton
       el: @$(".artist-follow[data-id='#{artist.id}']")
       following: @following

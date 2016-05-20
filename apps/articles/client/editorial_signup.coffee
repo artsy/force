@@ -50,6 +50,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
       email: sd.CURRENT_USER?.email or ''
+    sd.MEDIUM = 'social'
     if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
     @fetchSignupImages (images) =>
@@ -121,11 +122,13 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   getSubmissionType: (e)->
     if @inAEMagazinePage()
-      'magazine page'
+      'magazine lush'
     else if $(e.currentTarget).data('type') is 'inline'
       'article in-line'
+    else if $(e.currentTarget).data('type') is 'lush'
+      'article lush'
     else
-      'article footer'
+      'article cta-popup'
 
   onDismiss: ->
     analyticsHooks.trigger('dismiss:editorial-signup')

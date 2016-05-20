@@ -51,6 +51,7 @@ module.exports = class ArticleView extends Backbone.View
     @loadedArtworks = @loadedCallouts = @loadedImageHeights = false
     @sticky = new Sticky
     @jump = new JumpView
+    @previousHref = options.previousHref
 
     # Render sections
     @renderSlideshow()
@@ -72,7 +73,6 @@ module.exports = class ArticleView extends Backbone.View
 
     # Utility
     @checkEditable()
-    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: @article.href() || ''}
 
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
@@ -306,7 +306,7 @@ module.exports = class ArticleView extends Backbone.View
             onClick: =>
               @sticky.rebuild()
               $.waypoints 'refresh'
-              analyticsHooks.trigger 'readmore', {}
+              analyticsHooks.trigger 'readmore', {urlref: @previousHref || ''}
           break
 
   setupWaypointUrls: =>
@@ -316,7 +316,6 @@ module.exports = class ArticleView extends Backbone.View
       if direction is 'down'
         # Set the pageview
         window.history.replaceState {}, @article.get('id'), @article.href()
-        @trackPageview()
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     $(@$container).waypoint (direction) =>
@@ -326,3 +325,49 @@ module.exports = class ArticleView extends Backbone.View
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+  setupImpressions: ->
+    visibleItems = (articleItems) ->
+      items = $(articleTrackingItems).filter(function() {
+        var viewportTop = $(window).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+        var itemTop = $(this).offset().top;
+        var itemBottom = itemTop + $(this).outerHeight();
+
+        # Either item top or item bottom is below the top
+        # of the browser and above the fold.
+        var topInView = itemTop > viewportTop && itemTop < viewportBottom;
+        var bottomInView = itemBottom > viewportTop && itemBottom < viewportBottom;
+
+        return topInView || bottomInView;
+      }).map(function() {
+        var classList = $(this).prop('classList');
+        if(classList.contains('.article-es-cta')){
+          return 'Email Signup'
+        }
+      }).toArray();
+
+      # Don't double track the same impressions
+      items = _.difference(items, trackedIds);
+      trackedIds = trackedIds.concat(items);
+
+      # Return only the new impressions
+      return items.join();
+
+    trackImpressions = (items) ->
+      var visibleItems = visibleItems(items);
+      if (visibleItems.length > 0) {
+        visibleItems.map(function(item){
+          console.log('hello');
+        }
+        analytics.track(item.message, {
+          ids: { visibleItems, nonInteraction: 1 }
+        },{
+          integrations: { 'Mixpanel': false }
+        })
+      }
+
+    # Find all of the signups, cta, share buttons, artist follow, toc, and image sets
+    var articleTrackingItems = $('.articles-es-cta');
+    trackImpressions(articleTrackingItems);
+    $(window).on('scroll', _.throttle(trackImpressions(articleTrackingItems), 200));
