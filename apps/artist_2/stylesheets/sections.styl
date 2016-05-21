@@ -1,4 +1,6 @@
 @require '../../../components/gradient_blurb/index'
+@require '../../../components/merry_go_round/index'
+@require '../components/article_cell/index'
 
 // Books
 .merchandisable-items
@@ -87,7 +89,7 @@
 
   &__blurb
     float left
-    width 70%
+    max-width 450px
     padding-left 40px
 
   &__summary
@@ -103,6 +105,7 @@
 
 // Overview Section Rails
 .artist-related-rail
+  mgr-n-up(4, 30px, (3/4))
   padding-top 20px
   margin-top 20px
   border-top 1px solid gray-lighter-color
@@ -119,20 +122,22 @@
     top 0
 
   .artist-rail-cell
-    percent = 25%
-    width percent
     display inline-block
 
   .hoverable-image-link
     width 100%
 
   &[data-id='artists']
+    .mgr-arrow-left
+    .mgr-arrow-right
+      top 15px
+    .mgr-cell
+      margin-top 15px
+      margin-bottom 15px
     .rail-content-outer
       overflow hidden
     .rail-content-inner
-      margin 0 -25px
-    .artist-rail-cell
-      padding 15px
+      margin 0 -10px
     .artist-rail-cell-inner
       padding 10px
       box-shadow 0 0 20px rgba(black, .12)

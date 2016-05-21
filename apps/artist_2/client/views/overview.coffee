@@ -25,7 +25,6 @@ module.exports = class OverviewView extends Backbone.View
     @listenTo this, 'artist:overview:sync', @renderRails
 
   fetchRelated: ->
-    debugger
     metaphysics
       query: query
       variables:
@@ -45,7 +44,6 @@ module.exports = class OverviewView extends Backbone.View
     _.defer => @$('.artist-blurb').addClass('is-fade-in')
 
   renderRails: (artist) ->
-    debugger
     following = @following
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')

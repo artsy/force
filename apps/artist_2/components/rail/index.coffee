@@ -6,6 +6,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 { formatShowDetail } = require '../../view_helpers.coffee'
 artistsTemplate = -> require('./artists.jade') arguments...
 showsTemplate = -> require('./shows.jade') arguments...
+articlesTemplate = -> require('./articles.jade') arguments...
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 
 setupFollowButtons = ({ $el, items, kind }) =>
@@ -28,7 +29,8 @@ setupFollowButtons = ({ $el, items, kind }) =>
 sections =
   articles:
     render: (items) ->
-      #
+     debugger
+     articlesTemplate { items }
 
   artists:
     render: (items) ->

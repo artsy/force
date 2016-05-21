@@ -2,26 +2,26 @@
   a.hoverable-image-link( href= artist.href )
     .hoverable-image.is-four-three.is-cropped(
       data-initials= artist.initials
-      style= artist.image && 'background-image: url(#{artist.image.url})'
+      style= artist.image && 'background-image: url(#{artist.image.cropped.url})'
     )
 
-  .ac-artist-information
-    a.ac-artist-name( href= artist.href )
+  a.artist-cell-item__artist-information( href= artist.href )
+    .artist-cell-item__artist-name
       = artist.name
-    .ac-bio
+    .artist-cell-item__bio
       if artist.nationality
         = artist.nationality
       if artist.nationality && artist.birthday
         | ,&nbsp;
       if artist.birthday
         = "b. " + artist.birthday
-    .ac-followers
+    .artist-cell-item__followers
       - var total = artist.counts.artworks || 0
       - var for_sale = artist.counts.for_sale_artworks || 0
       = total + ' works'
       if total != for_sale
         = ', ' + for_sale
       |  for sale
-  a.ac-follow-button.avant-garde-follow-button-black.follow-button.is-small(
+  a.artist-cell-item__follow-button.avant-garde-follow-button-black.follow-button.is-small(
     data-id= artist.id
   )

@@ -5,11 +5,10 @@ module.exports =
       shows: exhibition_highlights @include(if: $shows) {
         ... relatedShow
       }
-      artists (size: 19) @include(if: $artists){
+      artists (size: 20) @include(if: $artists){
         ... relatedArtist
       }
-      articles (limit: 19) @include(if: $articles){
-        title
+      articles (limit: 20) @include(if: $articles){
         href
         thumbnail_title
         ... relatedArticleAuthorImage
