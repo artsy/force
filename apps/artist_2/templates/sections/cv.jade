@@ -44,5 +44,5 @@ mixin cv-link(year, href, linkText, trailingText)
           .bisected-header-cell-section
             h2 Articles On Artsy
             for article in articles
-              mixin cv-link(new Date(article.published_at).getFullYear(), article.href, article.title)
+              mixin cv-link(new Date(article.published_at).getFullYear(), article.href, article.thumbnail_title)
 
