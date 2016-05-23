@@ -147,11 +147,11 @@ module.exports = class Sale extends Backbone.Model
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
 
-  liveEvent: ->
+  event: ->
     event = new Backbone.Model
-      start_at: @get 'live_start_at'
-      end_at: @get 'end_at'
-      name: @get 'name'
+      start_at: @get('live_start_at') or @get('start_at') or moment()
+      end_at: @get('end_at') or moment()
+      name: @get('name')
     _.extend event, CalendarUrls({ title: 'name' })
     event
 

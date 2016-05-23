@@ -11,8 +11,8 @@ header.auction-header
     .auction-callout
       = auction.upcomingLabel()
       unless auction.isClosed()
-        +add-to-calendar(auction.liveEvent())
-      .auction-callout-label
+        +add-to-calendar(auction.event())
+      .auction-callout-live-label
         if auction.get('live_start_at')
           span.auction-live-label Live auction
           span.auction-live-tooltip.help-tooltip(
