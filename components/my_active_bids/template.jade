@@ -7,7 +7,7 @@ if myActiveBids && myActiveBids.length
           .my-active-bids-item-details
             h4 Lot #{bid.sale_artwork.lot_number}
             strong= bid.sale_artwork.artwork.artist.name
-            p #{bid.sale_artwork.highest_bid.amount} (#{bid.sale_artwork.counts.bidder_positions} Bids)
+            p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
         if bid.is_winning
           p.my-active-bids-warning Highest Bid
         else

@@ -9,7 +9,7 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
 
     if user
       .artwork-auction__bid-form__next-bid
-        | Enter #{sale_artwork.minimum_next_bid.amount} or higher
+        | Enter #{sale_artwork.minimum_next_bid.display} or higher
 
       .artwork-auction__bid-form__input.typed-bordered-input.is-block
         span $

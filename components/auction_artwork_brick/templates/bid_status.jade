@@ -11,7 +11,7 @@
     .artwork-brick__metadata__sale-artwork__sale-message
       = sale_artwork.counts.bidder_positions > 0 ? 'Current' : 'Starting'
       = ' '
-      | Bid: #{sale_artwork.current_bid.amount} (#{sale_artwork.counts.bids})
+      | Bid: #{sale_artwork.current_bid.display} (#{sale_artwork.counts.bids})
 
     if artwork.is_buy_nowable
       .artwork-brick__metadata__sale-artwork__sale-message

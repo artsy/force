@@ -12,7 +12,7 @@ module.exports = """
           }
           sale_id
           highest_bid {
-            amount
+            display
           }
           artwork {
             href

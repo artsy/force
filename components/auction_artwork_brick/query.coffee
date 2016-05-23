@@ -17,7 +17,7 @@ module.exports = """
       }
 
       current_bid {
-        amount
+        display
       }
       counts {
         bidder_positions
