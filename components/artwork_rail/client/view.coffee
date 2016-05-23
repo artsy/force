@@ -11,7 +11,17 @@ module.exports = class ArtworkRailView extends Backbone.View
   events:
     'click .artwork-item-contact-seller': 'contactSeller'
 
-  initialize: ({ @$el, @title, @viewAllUrl, @imageHeight = 220, @railId, @collection, @includeContact = true }) ->
+  initialize: (options) ->
+    {
+      @$el,
+      @title,
+      @viewAllUrl,
+      @imageHeight = 220,
+      @railId,
+      @collection,
+      @includeContact = true
+      @hasContext
+    } = options
     @user ?= User.instantiate()
     @collection.on 'sync', @render, this
 
@@ -37,6 +47,7 @@ module.exports = class ArtworkRailView extends Backbone.View
       imageHeight: @imageHeight
       railId: @railId
       includeContact: @includeContact
+      hasContext: @hasContext
 
     @postRender()
     this
@@ -44,8 +55,9 @@ module.exports = class ArtworkRailView extends Backbone.View
   postRender: ->
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: true
-      wrapAround: true
+      wrapAround: false
     , (carousel) =>
+      @trigger 'post-render'
       @carousel = carousel
 
       # Hide arrows if the cells don't fill the carousel width
