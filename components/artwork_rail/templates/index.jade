@@ -7,12 +7,11 @@
         | View All
 
   .arv-content
-    if hasContext
-      .arv-context
-        //- rendered on the client
-
     .arv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
       ul.arv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
+        if hasContext
+          li.arv-context.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
+            //- rendered on the client
         if artworks && artworks.length
           for artwork in artworks
             li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )

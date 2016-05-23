@@ -6,12 +6,16 @@ query = require '../queries/module.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
+iconicArtistsTemplate = -> require('../templates/contexts/_iconic_artists.jade') arguments...
+auctionTemplate = -> require('../templates/contexts/_auction.jade') arguments...
 fairTemplate = -> require('../templates/contexts/_fair.jade') arguments...
 
 contexts =
-  iconic_artists: -> # noop
+  iconic_artists: (module) ->
+    iconicArtistsTemplate artists: module.context.artists
   followed_artists: -> # noop
-  live_auctions: -> # noop
+  live_auctions: (module) ->
+    auctionTemplate auction: module.context
   current_fairs: (module) ->
     fairTemplate fair: module.context, timeSpan: timeSpan
 

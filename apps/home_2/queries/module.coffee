@@ -29,6 +29,12 @@ module.exports = """
         ... on HomePageModuleContextGene {
           href
         }
+        ... on HomePageModuleContextTrending{
+          artists{
+            name
+            id
+          }
+        }
       }
     }
   }
