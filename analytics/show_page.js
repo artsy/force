@@ -50,7 +50,7 @@ $('.js-open-show-events span:not(:contains("Multiple events for this show"))').c
 $(".responsive-layout-container .grid-2-up .featured-shows-featured-show [href*='/show']").click(function() {
   var slug = $(this).attr("href").split("/")[2]
 
-  analytics.track('Clicked Galleries Banner', {
+  analytics.track('Clicked Shows Position 1/2', {
     show_slug: slug
   })
 })
