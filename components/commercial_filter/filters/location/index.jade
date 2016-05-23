@@ -1,0 +1,9 @@
+.avant-garde-s-headline.cf-locations__title Gallery Location
+
+include ./all.jade
+
+each location in locations
+  - agg = findAggregation(counts, location)
+  - isSelected = _.contains(selected, location)
+
+  include ./location.jade
