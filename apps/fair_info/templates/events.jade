@@ -1,4 +1,5 @@
 extend ../../../components/fair_layout/templates/index
+include ../../../components/add_to_calendar/index
 
 block body
   .fair-info2-content-wrapper
@@ -14,14 +15,7 @@ block body
                   .fair-info-event-item-date
                     .fair-info-event-item-date__formatted-date= event.formatDate()
                     .fair-info-event-item-date__time= event.formatTime()
-                    a.fair-info-event-item-date__add-to-calender(href='#') + Add to Calendar
-                    .fair-info-event-calendar-wrapper
-                      .fair-info-event-arrow-up
-                      .fair-info-event-calendar-container
-                        a.outlook( href= event.icsCalendarUrl() ) Outlook
-                        a.google( href= event.googleCalendarUrl() target= '_blank' ) Google
-                        a.yahoo( href= event.yahooCalendarUrl() target= '_blank' ) Yahoo!
-                        a.ical( href= event.icsCalendarUrl()) iCal
+                    +add-to-calendar(event)
                   .fair-info-event-item-details
                     if event.get('image_url')
                       img.fair-info-event-item-details__image( src=event.get('image_url') )
