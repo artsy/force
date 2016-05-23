@@ -7,10 +7,8 @@ if auction.is_auction_promo
 else if auction.is_preview || auction.is_open || auction.is_live_open
   include ./estimate
   include ./status
-  if auction.is_live_open
-    include ./live
-  else
-    include ./bid
+  include ./live
+  include ./bid
   include ./buy_now
   include ./buyers_premium
   include ./help
