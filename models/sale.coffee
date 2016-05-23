@@ -2,7 +2,7 @@ _ = require 'underscore'
 { API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
-{ Fetch, Markdown, Image } = require 'artsy-backbone-mixins'
+{ Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
 
 Clock = require './mixins/clock.coffee'
 Relations = require './mixins/relations/sale.coffee'
@@ -146,3 +146,22 @@ module.exports = class Sale extends Backbone.Model
   # Support for Feature in artsy-backbone-mixins
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
+
+  liveEvent: ->
+    event = new Backbone.Model
+      start_at: @get 'live_start_at'
+      end_at: @get 'end_at'
+      name: @get 'name'
+    _.extend event, CalendarUrls({ title: 'name' })
+    event
+
+  upcomingLabel: ->
+    fmt = 'MMM D h:mm:ssA'
+    if @isClosed()
+      "Auction Closed"
+    else if @get('live_start_at') and not @isLiveOpen()
+      "Live bidding begins #{@date('live_start_at').format fmt} EST"
+    else if @isPreviewState()
+      "Auction opens #{@date('end_at').format fmt} EST"
+    else
+      "Bidding closes #{@date('end_at').format fmt} EST"

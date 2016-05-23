@@ -6,10 +6,9 @@
 
 .auction-header-primary
   width 75%
-  padding-right 15px
+  padding-right 30px
 .auction-header-metadata
   width 25%
-  padding-left 15px
 
 .auction-sub-header
   avant-garde-size('body', true)
@@ -20,7 +19,6 @@
 
 .auction-description
   margin 30px 0
-  padding-right 60px
   garamond-size('l-body')
   > p
     block-margins(15px)
@@ -39,3 +37,36 @@
 .auction-header-metadata-cell-contents
   > p
     block-margins(10px)
+
+.auction-callout
+  padding 15px 0 12px 0
+  margin 20px 0
+  position relative
+  border-bottom 1px solid gray-lighter-color
+  border-top 1px solid gray-lighter-color
+  garamond-size('l-body')
+  .add-to-calendar
+    margin-left 30px
+  .auction-callout-label
+    position absolute
+    right 0
+    top 15px
+    .auction-live-label
+      avant-garde-size('body')
+      letter-spacing 3px
+    .auction-live-tooltip
+      margin-left 10px
+      garamond-size('s-body')
+      top -3px
+      margin-left 14px
+      &:hover::before
+        color white
+        background gray-darker-color
+        border 0
+      &::before
+        background transparent
+        border 1px solid gray-lighter-color
+        color black
+        width 20px
+        height @width
+        line-height @width - 1px

@@ -11,6 +11,7 @@ setupClocks = require './clocks.coffee'
 EmailRegistrationView = require './email_registration.coffee'
 attachCTA = require './cta.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
+AddToCalendar = require '../../../components/add_to_calendar/index.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
 
 module.exports.init = ->
@@ -41,6 +42,8 @@ module.exports.init = ->
     el: $('.auction-my-active-bids')
     template: myActiveBidsTemplate
   ).start()
+
+  new AddToCalendar el: $('.auction-callout')
 
   # Re-fetch due to cache
   saleArtworks = new SaleArtworks [], id: auction.id
