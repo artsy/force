@@ -22,7 +22,7 @@ $('.show-partner .icon-twitter').click(function(e){
   analytics.track('Show page: Twitter share');
 })
 
-$('.js-related-shows a:contains("See more shows in")').click(function(e){ 
+$('.js-related-shows a:contains("See more shows in")').click(function(e){
   analytics.track('Show page: Click "See more shows in..."');
 })
 
@@ -47,4 +47,10 @@ $('.js-open-show-events span:not(:contains("Multiple events for this show"))').c
 })
 
 
+$(".responsive-layout-container .grid-2-up .featured-shows-featured-show [href*='/show']").click(function() {
+  var slug = $(this).attr("href").split("/")[2]
 
+  analytics.track('Clicked Galleries Banner', {
+    show_slug: slug
+  })
+})
