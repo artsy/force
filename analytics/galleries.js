@@ -17,3 +17,11 @@ $(".galleries-institutions-primary-carousel .gpc-overlay").click(function() {
     position: pos
   })
 })
+
+$(".galleries-institutions-main-content .galleries-institutions-carousels .mgr-cell.js-mgr-cell.partner-cell").click(function() {
+  var partner_slug = $(this).data("id")
+
+  analytics.track('Clicked Galleries Featured Link', {
+    partner_slug: partner_slug
+  })
+})
