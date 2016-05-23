@@ -1,0 +1,8 @@
+.arv-context__content.arv-context__content--auction
+  .arv-context__content--auction__info
+    p= auction.name
+    if auction.description
+      p= auction.description
+    p
+      div #{auction.start_at} - #{auction.end_at}
+    p Closes #{auction.closes}
