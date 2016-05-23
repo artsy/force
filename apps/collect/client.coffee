@@ -18,14 +18,14 @@ PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
-{ displayLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
+{ fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
-    displayLocations: displayLocations
+    fullyQualifiedLocations: fullyQualifiedLocations
   filter = new Filter params: params
 
   headlineView = new HeadlineView

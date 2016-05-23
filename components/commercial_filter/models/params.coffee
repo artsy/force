@@ -34,12 +34,12 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
-  initialize: (attributes, { @categoryMap, @displayLocations }) ->
+  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
 
   current: ->
     categories = @categoryMap[@get('medium') || 'global']
     extra_aggregation_gene_ids = _.pluck categories, 'id'
-    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @displayLocations
+    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @fullyQualifiedLocations
 
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist

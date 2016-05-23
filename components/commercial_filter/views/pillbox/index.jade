@@ -32,5 +32,5 @@ if color || medium || price || width || height || category || majorPeriods || pa
     if partnerCities && partnerCities.length
       for partnerCity in partnerCities
         .cf-pillbox__pillboxes__major-period
-          span.cf-pillbox__pillboxes_display= partnerCity
+          span.cf-pillbox__pillboxes_display= displayLocation(partnerCity)
           span.cf-pillbox__pillboxes_clear(data-filter='partner_city' data-value=partnerCity) ×

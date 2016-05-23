@@ -59,6 +59,10 @@ module.exports = class PillboxView extends Backbone.View
         plus = ''
       "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { symbol: "", precision: 0 })}#{plus}"
 
+  displayLocation: (location) ->
+    commaIndex = location.indexOf(',')
+    location.substring(0, commaIndex)
+
   render: ->
     @$el.html template
       color: @params.get('color')
@@ -69,3 +73,4 @@ module.exports = class PillboxView extends Backbone.View
       height: @size 'Height', 'height'
       majorPeriods: @params.get('major_periods')
       partnerCities: @params.get('partner_cities')
+      displayLocation: @displayLocation

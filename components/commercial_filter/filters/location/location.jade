@@ -2,7 +2,7 @@
   .artsy-checkbox--checkbox
     input( type='checkbox', id=location, checked=isSelected, disabled=!agg )
     label( for=location )
-  label.artsy-checkbox--label( for=location ) #{location}
+  label.artsy-checkbox--label( for=location ) #{displayLocation(location)}
     if agg
       | &nbsp;
       span.cf-periods__total.garamond-m-caption (#{numberFormat(agg.count)})

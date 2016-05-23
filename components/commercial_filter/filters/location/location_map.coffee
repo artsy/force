@@ -1,5 +1,5 @@
 module.exports = 
-  displayLocations: [
+  fullyQualifiedLocations: [
     'New York, NY, USA',
     'London, United Kingdom',
     'Los Angeles, CA, USA',
