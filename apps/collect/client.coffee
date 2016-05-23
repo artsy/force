@@ -9,6 +9,7 @@ TotalView = require '../../components/commercial_filter/views/total/total_view.c
 SortView = require '../../components/commercial_filter/views/sort/sort_view.coffee'
 CategoryFilterView = require '../../components/commercial_filter/filters/category/category_filter_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
+PeriodFilterView = require '../../components/commercial_filter/filters/period/period_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
@@ -18,8 +19,11 @@ scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 
 module.exports.init = ->
+
   # Set initial params from the url params
-  params = new Params qs.parse(location.search.replace(/^\?/, '')),
+  paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
+  paramsFromUrl['major_periods'] = [paramsFromUrl['major_periods']] if typeof paramsFromUrl['major_periods'] is 'string'
+  params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
   filter = new Filter params: params
 
@@ -63,6 +67,11 @@ module.exports.init = ->
   # Sidebar
   mediumsView = new MediumFilterView
     el: $('.cf-sidebar__mediums')
+    params: params
+    aggregations: filter.aggregations
+
+  periodsView = new PeriodFilterView
+    el: $('.cf-sidebar__periods')
     params: params
     aggregations: filter.aggregations
 

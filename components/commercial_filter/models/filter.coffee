@@ -44,7 +44,8 @@ module.exports = class Filter extends Backbone.Model
         $gene_id: String,
         $medium: String,
         $sort: String,
-        $extra_aggregation_gene_ids: [String]
+        $extra_aggregation_gene_ids: [String],
+        $major_periods: [String]
       ){
         filter_artworks(
           aggregations: $aggregations,
@@ -58,7 +59,8 @@ module.exports = class Filter extends Backbone.Model
           gene_id: $gene_id,
           medium: $medium,
           sort: $sort,
-          extra_aggregation_gene_ids: $extra_aggregation_gene_ids
+          extra_aggregation_gene_ids: $extra_aggregation_gene_ids,
+          major_periods: $major_periods
         ){
           total
           #{@aggregationSelector()}
