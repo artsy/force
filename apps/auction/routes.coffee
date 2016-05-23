@@ -67,16 +67,18 @@ setupUser = (user, auction) ->
 
       artworks.reset Artworks.__fromSale__(saleArtworks)
 
+      moment = require 'moment'
+      auction
+        .set('auction_state', 'preview')
+        .set('start_at', moment().endOf('day'))
+        .set('live_start_at', null)
+        .set('end_at', moment().endOf('day'))
+
       res.locals.sd.AUCTION = auction.toJSON()
       res.locals.sd.ARTWORKS = artworks.toJSON()
       res.locals.sd.USER = user.toJSON() if user?
 
-      template = if auction.isPreview() and not auction.isAuctionPromo()
-        'preview/index'
-      else
-        'index'
-
-      res.render template,
+      res.render 'index',
         auction: auction
         artworks: artworks
         saleArtworks: saleArtworks
