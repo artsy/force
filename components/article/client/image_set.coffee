@@ -6,6 +6,7 @@ template = -> require('../templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../../follow_button/index.coffee'
 imagesLoaded = require 'imagesloaded'
 { resize } = require '../../resizer/index.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
 
@@ -59,6 +60,7 @@ module.exports = class ImageSetView extends Backbone.View
     item = @items[@currentIndex]
     return unless item.artist?.slug
     artist = new Artist id: item.artist.slug
+    analyticsHooks.trigger 'view:image-set-item'
     new FollowButton
       el: @$(".artist-follow[data-id='#{artist.id}']")
       following: @following

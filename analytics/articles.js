@@ -5,7 +5,7 @@
 
 if(location.pathname.match('/article/')){
 
-  $(document.body).on('click', '.article-social > a', function() {
+  $(document.body).on('click', '.article-social a', function() {
     analytics.track('Clicked Article Share', {
       context: 'bottom',
       service: $(this).attr('data-service')
@@ -32,9 +32,8 @@ if(location.pathname.match('/article/')){
     analytics.track('Clicked Close Image Set', {})
 
   })
-  //
+
   // Hooks
-  //
   analyticsHooks.on('readmore', function(options) {
     analytics.track('Clicked Read More', {});
     analytics.page({path: location.pathname});
@@ -48,13 +47,16 @@ if(location.pathname.match('/article/')){
     }
   });
 
-  analyticsHook.on('impression:article', function(options){
-    analytics.track(options.message, { context: options.context })
+  analyticsHooks.on('view:editorial-signup', function() {
+    analytics.track('Article Impression',
+      { context: 'article cta-popup' },
+      { integrations: { 'Mixpanel': false } }
+    );
   });
 
 }
 
-// Shared /article and /articles
+// Applies to both /article/* and /articles
 if(location.pathname.match('/article/') || location.pathname.match('/articles')){
 
   analyticsHooks.on('submit:editorial-signup', function(options){
@@ -64,7 +66,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
   });
 
   analyticsHooks.on('dismiss:editorial-signup', function(){
-    analytics.track('Dismiss editorial signup', { context: 'cta-popup'});
+    analytics.track('Dismiss editorial signup', { context: 'article cta-popup'});
   });
 
 }

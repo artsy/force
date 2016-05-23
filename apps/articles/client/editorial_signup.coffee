@@ -83,6 +83,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
+      analyticsHooks.trigger('view:editorial-signup')
     @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
       @ctaBarView.transitionOut() if direction is 'down'
       @ctaBarView.transitionIn() if direction is 'up'

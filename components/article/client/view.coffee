@@ -5,6 +5,7 @@ imagesLoaded = require 'imagesloaded'
 CurrentUser = require '../../../models/current_user.coffee'
 Article = require '../../../models/article.coffee'
 Artwork = require '../../../models/artwork.coffee'
+Artist = require '../../../models/artist.coffee'
 Articles = require '../../../collections/articles.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../share/view.coffee'
@@ -134,6 +135,7 @@ module.exports = class ArticleView extends Backbone.View
     @$('.artist-follow').each (i, artist) =>
       @artists.push id: $(artist).data('id')
     @followButtons = @artists.map (artist) =>
+      artist = new Artist id: artist.id
       new FollowButton
         el: @$(".artist-follow[data-id='#{artist.id}']")
         following: @following
@@ -325,49 +327,3 @@ module.exports = class ArticleView extends Backbone.View
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
-
-  setupImpressions: ->
-    visibleItems = (articleItems) ->
-      items = $(articleTrackingItems).filter(function() {
-        var viewportTop = $(window).scrollTop();
-        var viewportBottom = viewportTop + $(window).height();
-        var itemTop = $(this).offset().top;
-        var itemBottom = itemTop + $(this).outerHeight();
-
-        # Either item top or item bottom is below the top
-        # of the browser and above the fold.
-        var topInView = itemTop > viewportTop && itemTop < viewportBottom;
-        var bottomInView = itemBottom > viewportTop && itemBottom < viewportBottom;
-
-        return topInView || bottomInView;
-      }).map(function() {
-        var classList = $(this).prop('classList');
-        if(classList.contains('.article-es-cta')){
-          return 'Email Signup'
-        }
-      }).toArray();
-
-      # Don't double track the same impressions
-      items = _.difference(items, trackedIds);
-      trackedIds = trackedIds.concat(items);
-
-      # Return only the new impressions
-      return items.join();
-
-    trackImpressions = (items) ->
-      var visibleItems = visibleItems(items);
-      if (visibleItems.length > 0) {
-        visibleItems.map(function(item){
-          console.log('hello');
-        }
-        analytics.track(item.message, {
-          ids: { visibleItems, nonInteraction: 1 }
-        },{
-          integrations: { 'Mixpanel': false }
-        })
-      }
-
-    # Find all of the signups, cta, share buttons, artist follow, toc, and image sets
-    var articleTrackingItems = $('.articles-es-cta');
-    trackImpressions(articleTrackingItems);
-    $(window).on('scroll', _.throttle(trackImpressions(articleTrackingItems), 200));
