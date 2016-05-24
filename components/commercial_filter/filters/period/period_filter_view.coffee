@@ -14,7 +14,8 @@ module.exports = class PeriodFilterView extends Backbone.View
     throw new Error 'Requires a params model' unless @params?
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
-    @showAllPeriods = false
+    # We want to expand the list on initial render if hidden options are pre-selected
+    @showAllPeriods = _.difference(@params.get('major_periods'), displayPeriods).length > 0 
     @listenTo @params, 'change:major_periods', @render
     @listenTo @aggregations, 'reset', @render
 
