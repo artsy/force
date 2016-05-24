@@ -50,7 +50,6 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    sd.MEDIUM = 'social'
     if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
     @fetchSignupImages (images) =>
