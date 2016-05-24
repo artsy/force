@@ -53,7 +53,6 @@ if(location.pathname.match('/article/')){
       { integrations: { 'Mixpanel': false } }
     );
   });
-
 }
 
 // Applies to both /article/* and /articles
