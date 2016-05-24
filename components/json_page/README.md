@@ -45,7 +45,7 @@ To sync data with the bucket:
 
 ```
 > foreman run node_modules/.bin/coffee components/json_page/seed.coffee your_page_name staging ../some/path/to/your/data.json
-> ? Update `your_page_name` in the bucket `force-staging` with data from `../some/path/to/your/data.json`? Yes
+> ? Update `your_page_name` in the bucket `force-staging` with data from `../../apps/your_app/test/fixture.json`? Yes
 > Updated `https://force-staging.s3.amazonaws.com/json/your_page_name.json`.
 ```
 
@@ -53,6 +53,6 @@ To update the fixture from the bucket data
 
 ```
 foreman run node_modules/.bin/coffee components/json_page/update.coffee your_page_name staging ../some/path/to/your/data.json
-? Update `../some/path/to/your/data.json` with data from `your_page_name` in the bucket `force-staging`? Yes
+? Update `../../apps/your_app/test/fixture.json` with data from `your_page_name` in the bucket `force-staging`? Yes
 Updated.
 ```
