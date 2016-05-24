@@ -1,0 +1,81 @@
+@require '../components/merry_go_round'
+@require '../components/inquiry_questionnaire/stylesheets'
+@require '../components/artwork_brick/'
+
+.abrv-container
+  margin-top 20px
+  padding-top 40px
+  border-top 1px solid gray-lighter-color
+  position relative
+  &:first-child
+    border-top none
+    padding-top 0
+
+.abrv-header
+  margin-bottom 30px
+  position relative
+  h1
+    garamond-size('headline', true)
+
+.abrv-view-all
+  faux-underline(black)
+  position absolute !important
+  right 0
+  top 0
+
+.abrv-content
+  clearfix()
+
+.abrv-context
+  width 170px
+  border-right 1px solid gray-lighter-color
+  margin 0 30px 20px 0
+  padding-right 30px
+  height 360px
+
+.mgr-cell.abrv-fillwidth-row
+  padding-bottom 120px
+
+.abrv-carousel
+  position relative
+  max-width 100%
+  height 340px
+  .artwork-brick__image
+    margin-bottom 30px
+    &__img
+      display inline-block
+      position static
+      width auto
+  .mgr-arrow-left, .mgr-arrow-right
+    margin-top -26px
+  .mgr-cells:not(.flickity-enabled) .mgr-cell
+    visibility hidden
+  .mgr-cells--loading
+    display flex
+    .mgr-cell--loading
+      flex 1
+      visibility visible !important
+    .mgr-cell__image-placeholder
+      display block
+      width 100%
+      height 230px
+      background-color gray-lightest-color
+    .mgr-cell__text-placeholder
+      display block
+      height 16px
+      margin 5px 0
+      background-color gray-lightest-color
+      &:nth-child(2)
+        width 68%
+      &:nth-child(3)
+        width 82%
+      &:nth-child(4)
+        width 47%
+
+  .artwork-item-caption, .artwork-brick__metadata
+    height 120px
+    position absolute
+    bottom 0
+    vertical-align top
+    padding-right 15px
+    max-width 100%

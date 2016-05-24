@@ -4,7 +4,7 @@ module.exports = """
       title
       key
       results{
-        ... artwork
+        ... artwork_brick
       }
       context {
         ... on HomePageModuleContextFair {
@@ -43,5 +43,5 @@ module.exports = """
       }
     }
   }
-  #{require '../../../components/commercial_filter/queries/artwork.coffee'}
+  #{require '../../../components/artwork_brick/query.coffee'}
 """
