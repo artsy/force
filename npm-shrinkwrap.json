@@ -1427,9 +1427,9 @@
       "resolved": "https://registry.npmjs.org/eyes/-/eyes-0.1.8.tgz"
     },
     "ezel-assets": {
-      "version": "1.0.1",
-      "from": "ezel-assets@>=1.0.0 <2.0.0",
-      "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-1.0.1.tgz"
+      "version": "1.0.2",
+      "from": "ezel-assets@latest",
+      "resolved": "https://registry.npmjs.org/ezel-assets/-/ezel-assets-1.0.2.tgz"
     },
     "fast-levenshtein": {
       "version": "1.1.3",
