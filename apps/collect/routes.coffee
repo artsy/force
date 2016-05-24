@@ -1,14 +1,21 @@
 qs = require 'qs'
+Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 JSONPage = require '../../components/json_page'
 page = new JSONPage name: 'browse-categories'
+GeocodedCities = require '../../collections/geocoded_cities'
 
 @index = (req, res, next) ->
-  page.get (err, data) ->
-    return next err if err
-    res.locals.sd.CATEGORIES = data
+  geocodedCities = new GeocodedCities()
+  Q.all([
+    geocodedCities.fetch(cache: true)
+    page.get()
+  ]).spread (geocodedCities, pageData) ->
+    res.locals.sd.CATEGORIES = pageData
+    res.locals.sd.GEOCODED_CITIES = geocodedCities
     res.render 'index'
+  .catch next
 
 @redirectBrowse = (req, res) ->
   query = req.query

@@ -25,6 +25,9 @@ module.exports = class PillboxView extends Backbone.View
     if filter is 'major_period'
       majorPeriods = _.without(@params.get('major_periods'), "#{param}")
       @params.set { major_periods: majorPeriods }
+    else if filter is 'partner_city'
+      partnerCities = _.without(@params.get('partner_cities'), "#{param}")
+      @params.set { partner_cities: partnerCities }
     else
       @params.unset param
 
@@ -56,6 +59,10 @@ module.exports = class PillboxView extends Backbone.View
         plus = ''
       "#{formatMoney(min, { precision: 0 })} – #{formatMoney(max, { symbol: "", precision: 0 })}#{plus}"
 
+  displayLocation: (location) ->
+    commaIndex = location.indexOf(',')
+    location.substring(0, commaIndex)
+
   render: ->
     @$el.html template
       color: @params.get('color')
@@ -65,3 +72,5 @@ module.exports = class PillboxView extends Backbone.View
       width: @size 'Width', 'width'
       height: @size 'Height', 'height'
       majorPeriods: @params.get('major_periods')
+      partnerCities: @params.get('partner_cities')
+      displayLocation: @displayLocation

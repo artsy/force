@@ -24,7 +24,7 @@ module.exports = class PeriodFilterView extends Backbone.View
     @params.set { major_periods: @resolvePeriods(selectedPeriod) }
 
   resolvePeriods: (selectedPeriod) ->
-    if selectedPeriod is 'all'
+    if selectedPeriod is 'period-all'
       []
     else if _.contains(@params.get('major_periods'), selectedPeriod)
       _.without(@params.get('major_periods'), selectedPeriod)

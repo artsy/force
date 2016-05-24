@@ -10,7 +10,9 @@ module.exports = class Params extends Backbone.Model
     'width',
     'height',
     'gene_id',
-    'sort'
+    'sort',
+    'major_periods',
+    'partner_cities'
   ]
   defaults:
     size: 50
@@ -19,7 +21,8 @@ module.exports = class Params extends Backbone.Model
     color: null
     medium: null
     major_periods: []
-    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD']
+    partner_cities: []
+    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY']
     ranges:
       price_range:
         min: 50.00
@@ -31,13 +34,15 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
-  initialize: (attributes, { @categoryMap }) ->
-    # no op
+  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
 
   current: ->
     categories = @categoryMap[@get('medium') || 'global']
     extra_aggregation_gene_ids = _.pluck categories, 'id'
-    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids
+    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @allLocations()
+
+  allLocations: ->
+    @fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities')
 
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist

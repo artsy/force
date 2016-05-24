@@ -1,4 +1,4 @@
-qs = require 'querystring'
+qs = require 'qs'
 Backbone = require 'backbone'
 Params = require '../../components/commercial_filter/models/params.coffee'
 Filter = require '../../components/commercial_filter/models/filter.coffee'
@@ -8,6 +8,7 @@ HeadlineView = require '../../components/commercial_filter/views/headline/headli
 TotalView = require '../../components/commercial_filter/views/total/total_view.coffee'
 SortView = require '../../components/commercial_filter/views/sort/sort_view.coffee'
 CategoryFilterView = require '../../components/commercial_filter/filters/category/category_filter_view.coffee'
+LocationFilterView = require '../../components/commercial_filter/filters/location/location_filter_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PeriodFilterView = require '../../components/commercial_filter/filters/period/period_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
@@ -17,14 +18,14 @@ PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
+{ fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
 
 module.exports.init = ->
-
   # Set initial params from the url params
   paramsFromUrl = qs.parse(location.search.replace(/^\?/, ''))
-  paramsFromUrl['major_periods'] = [paramsFromUrl['major_periods']] if typeof paramsFromUrl['major_periods'] is 'string'
   params = new Params paramsFromUrl,
     categoryMap: sd.CATEGORIES
+    fullyQualifiedLocations: fullyQualifiedLocations
   filter = new Filter params: params
 
   headlineView = new HeadlineView
@@ -75,6 +76,11 @@ module.exports.init = ->
     params: params
     aggregations: filter.aggregations
 
+  locationsView = new LocationFilterView
+    el: $('.cf-sidebar__locations')
+    params: params
+    aggregations: filter.aggregations
+
   priceView = new PriceFilterView
     el: $('.cf-sidebar__price')
     params: params
@@ -111,7 +117,7 @@ module.exports.init = ->
 
   # Whenever params change, scroll to the top
   params.on 'change', ->
-    if _.keys(params.changedAttributes())[0] in ['major_periods', 'silent']
+    if _.keys(params.changedAttributes())[0] in ['major_periods', 'partner_cities', 'silent']
       delayedScroll()
     else
       $('html,body').animate { scrollTop: 0 }, 400
