@@ -117,7 +117,7 @@ module.exports.init = ->
 
   # Whenever params change, scroll to the top
   params.on 'change', ->
-    if _.keys(params.changedAttributes())[0] in ['major_periods', 'silent']
+    if _.keys(params.changedAttributes())[0] in ['major_periods', 'partner_cities', 'silent']
       delayedScroll()
     else
       $('html,body').animate { scrollTop: 0 }, 400
