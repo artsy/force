@@ -24,13 +24,4 @@ header.auction-header
       != auction.mdToHtml('description')
 
   .auction-header-metadata
-    .auction-header-metadata-cell
-
-      unless auction.isAuctionPromo() || auction.isClosed()
-        .auction-header-register-button
-          .auction-info-register-button
-            include ./registration_button
-
-    include metadata/note
-    include metadata/event
-    include metadata/contact
+    include ./registration_component

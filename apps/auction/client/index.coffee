@@ -32,7 +32,7 @@ module.exports.init = ->
     user: user
 
   new EmailRegistrationView(
-    el: $('.auction-preview-sidebar-email')
+    el: $('.auction-registration-preview')
     auction: auction
   ) unless user
   attachCTA auction, user

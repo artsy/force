@@ -34,7 +34,7 @@ module.exports = class ClockView extends Backbone.View
         @$('.clock-header').html "Live bidding opening in:"
         @toDate = @model.get 'offsetLiveStartAtMoment'
       when 'preview'
-        @$('.clock-header').html "#{@modelName} opens in:"
+        @$('.clock-header').html "Opening in"
         @toDate = @model.get 'offsetStartAtMoment'
       when 'open'
         @$('.clock-header').html "#{@modelName} closes in:"

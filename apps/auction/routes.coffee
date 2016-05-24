@@ -71,12 +71,7 @@ setupUser = (user, auction) ->
       res.locals.sd.ARTWORKS = artworks.toJSON()
       res.locals.sd.USER = user.toJSON() if user?
 
-      template = if auction.isPreview() and not auction.isAuctionPromo()
-        'preview/index'
-      else
-        'index'
-
-      res.render template,
+      res.render 'index',
         auction: auction
         artworks: artworks
         saleArtworks: saleArtworks
