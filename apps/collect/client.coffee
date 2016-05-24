@@ -111,7 +111,18 @@ module.exports.init = ->
 
   # Whenever params change, scroll to the top
   params.on 'change', ->
-    $('html,body').animate { scrollTop: 0 }, 400
+    if _.keys(params.changedAttributes())[0] in ['major_periods', 'silent']
+      delayedScroll()
+    else
+      $('html,body').animate { scrollTop: 0 }, 400
+
+  # 1 second delay for checkbox selections
+  timer = null
+  delayedScroll = ->
+    clearTimeout(timer)
+    timer = setTimeout ->
+      $('html,body').animate { scrollTop: 0 }, 400
+    , 1000
 
   params.on 'change', ->
     analytics.track 'Commericial filter: params changed',
