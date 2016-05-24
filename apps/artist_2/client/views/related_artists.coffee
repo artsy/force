@@ -17,13 +17,15 @@ module.exports = class RelatedArtistsView extends Backbone.View
 
     @listenTo this, 'artist:artists:sync', @render
 
+  fetchRelated: ->
     metaphysics
       query: query
       variables:
         artist_id: @model.get('id')
         artists: @statuses.artists
         contemporary: @statuses.contemporary
-    .then ({ artist }) => @trigger 'artist:artists:sync', artist
+    .then ({artist}) =>
+      @trigger 'artist:artists:sync', artist
 
   setupFollowButtons: (artists)=>
     ids = @$('.artist-related-artists-section .follow-button').map ->
@@ -51,7 +53,6 @@ module.exports = class RelatedArtistsView extends Backbone.View
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
     @subViews.push rail
-    rail.collection.trigger 'sync'
     @fadeInSection @$('.artist-related-artists-section')
 
   fadeInSection: ($el) ->

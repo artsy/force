@@ -30,6 +30,7 @@ module.exports =
     ]).join ', '
 
   formatBirthDeath: (artist) ->
+    return '' if not artist.birthday
     if artist.deathday?.length
       "#{artist.birthday}–#{artist.deathday}"
     else

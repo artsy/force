@@ -10,6 +10,7 @@ artistHelpers = require '../../view_helpers.coffee'
 module.exports = class BiographyView extends Backbone.View
 
   subViews: []
+
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:cv:sync', @render
 

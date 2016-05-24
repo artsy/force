@@ -11,6 +11,8 @@ module.exports = class ShowsView extends Backbone.View
 
   initialize: ->
     @listenTo this, 'artist:shows:sync', @render
+
+  fetchRelated: ->
     metaphysics
       query: query
       variables:
@@ -33,7 +35,7 @@ module.exports = class ShowsView extends Backbone.View
     _.defer -> $el.addClass 'is-fade-in'
 
   render: (artist) ->
-    @$el.html template _.extend artist, { showHelpers }
+    @$el.html template _.extend { showHelpers }, artist
     _.defer => @postRender()
     this
 
