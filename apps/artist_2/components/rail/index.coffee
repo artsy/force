@@ -29,7 +29,6 @@ setupFollowButtons = ({ $el, items, kind }) =>
 sections =
   articles:
     render: (items) ->
-     debugger
      articlesTemplate { items }
 
   artists:
