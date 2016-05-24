@@ -1,0 +1,19 @@
+section.probuyer-proposition
+  h3.probuyer-proposition__headline
+    = proposition.headline
+
+  .probuyer-proposition__content
+  .probuyer-proposition__content__image
+    img( src= proposition.image )
+
+  .probuyer-proposition__content__figures
+    for figure in proposition.figures
+      .probuyer-proposition__figure
+        .probuyer-proposition__figure__number
+          = figure.number
+        .probuyer-proposition__figure__label
+          = figure.label
+
+    a.avant-garde-button-black.is-block(
+      href= proposition.cta.href
+    )= proposition.cta.label

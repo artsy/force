@@ -1,0 +1,15 @@
+section.probuyer-benefits
+  h3.probuyer-benefits__headline
+    = benefits.headline
+
+  .probuyer-benefits__benefits
+    for benefit in benefits.benefits
+      .probuyer-benefits__benefit
+        .probuyer-benefits__benefit__icon
+          img( src= benefit.icon )
+
+        .probuyer-benefits__benefit__metadata
+          h4
+            = benefit.headline
+          p
+            = benefit.description
