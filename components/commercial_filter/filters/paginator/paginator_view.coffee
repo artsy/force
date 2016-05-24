@@ -21,7 +21,7 @@ module.exports = class PaginatorView extends Backbone.View
     @params.set page: $(e.currentTarget).data('value')
 
   totalPages: ->
-    calculated = Math.floor(@filter.get('total') / @params.get('size'))
+    calculated = Math.ceil(@filter.get('total') / @params.get('size'))
     total = Math.min calculated, @maxPage
 
   render: ->
