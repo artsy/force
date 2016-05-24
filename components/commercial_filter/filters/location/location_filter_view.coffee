@@ -2,7 +2,11 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { fullyQualifiedLocations } = require './location_map.coffee'
 { numberFormat } = require 'underscore.string'
+TypeaheadView = require '../../../../components/typeahead/view.coffee'
+{ GEOCODED_CITIES } = require('sharify').data
 template = -> require('./index.jade') arguments...
+searchItemTemplate = -> require('./search_item.jade') arguments...
+emptyTemplate = -> require('./empty.jade') arguments...
 
 module.exports = class LocationFilterView extends Backbone.View
   className: 'cf-locations cf-filter'
@@ -16,6 +20,44 @@ module.exports = class LocationFilterView extends Backbone.View
 
     @listenTo @params, 'change:partner_cities', @render
     @listenTo @aggregations, 'reset', @render
+
+    @additionalLocations = @params.get('partner_cities') || []
+
+  bloodHound: ->
+    cities = _.pluck GEOCODED_CITIES, 'name'
+    @hound = new Bloodhound
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: cities
+    @hound.initialize()
+    @hound
+
+  setupTypeahead: ->
+    $input = @$('input#cf-location-search-bar-input')
+    $input.typeahead({}, {
+      source: @bloodHound().ttAdapter()
+      name: 'commercial-filtering'
+      templates:
+        suggestion: @suggestionTemplate
+        empty: @noResultsTemplate
+        header: ''
+    })
+    $input.on 'typeahead:selected', @onDropdownSelection
+
+  onDropdownSelection: (e, selectedLocation) =>
+    if selectedLocation and !_.contains(@params.get('partner_cities'), selectedLocation) 
+      partner_cities = @params.get('partner_cities').concat selectedLocation
+      @additionalLocations.push selectedLocation
+      @params.set { partner_cities: partner_cities, aggregation_partner_cities: @additionalLocations }
+
+  allLocations: ->
+    _.uniq(fullyQualifiedLocations.concat @additionalLocations.concat @params.get('partner_cities'))
+
+  noResultsTemplate: (result) =>
+    emptyTemplate query: result.query
+
+  suggestionTemplate: (item) =>
+    searchItemTemplate item: item
 
   toggleLocation: (e) ->
     selectedLocation = $(e.currentTarget).attr('id')
@@ -40,9 +82,10 @@ module.exports = class LocationFilterView extends Backbone.View
   render: ->
     @$el.html template
       counts: @aggregations.get('PARTNER_CITY')?.get('counts')
-      locations: fullyQualifiedLocations
+      locations: @allLocations()
       selected: @params.get('partner_cities')
       findAggregation: @findAggregation
       numberFormat: numberFormat
       _: _
       displayLocation: @displayLocation
+    @setupTypeahead()

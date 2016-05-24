@@ -39,7 +39,10 @@ module.exports = class Params extends Backbone.Model
   current: ->
     categories = @categoryMap[@get('medium') || 'global']
     extra_aggregation_gene_ids = _.pluck categories, 'id'
-    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @fullyQualifiedLocations
+    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @allLocations()
+
+  allLocations: ->
+    @fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities')
 
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist
