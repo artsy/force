@@ -52,7 +52,7 @@ module.exports = class JSONPageEditor
       $remove.click -> $el.remove()
 
     initImageUpload = ->
-      return unless $(this).val().match /\.jpg|\.png/
+      return unless $(this).val().match /\.jpg|png|gif|svg/
       $(this).after "<div class='hulk-edit-upload-form'>Replace Image</div>"
       $(this).before "<img src='#{$(this).val()}' class='hulk-preview-image'>"
 
