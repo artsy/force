@@ -1,0 +1,25 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  title Professional Buyer Program | Artsy
+
+append locals
+  - assetPackage = 'pro_buyer'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .probuyer-page
+    header.probuyer-header
+      = JSON.stringify(hero)
+
+    section.probuyer-proposition
+      = JSON.stringify(proposition)
+
+    section.probuyer-benefits
+      = JSON.stringify(benefits)
+
+    section.probuyer-testimonials
+      = JSON.stringify(testimonials)
+
+    footer.probuyer-cta
+      = JSON.stringify(cta)

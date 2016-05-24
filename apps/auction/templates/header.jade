@@ -1,3 +1,5 @@
+include ../../../components/add_to_calendar/index
+
 header.auction-header
   .auction-header-primary
     if auction.isAuctionPromo()
@@ -6,17 +8,20 @@ header.auction-header
 
     h1.auction-title
       = auction.get('name')
+    .auction-callout
+      = auction.upcomingLabel()
+      unless auction.isClosed()
+        +add-to-calendar(auction.event())
+      .auction-callout-live-label
+        if auction.get('live_start_at')
+          span.auction-live-label Live auction
+          span.auction-live-tooltip.help-tooltip(
+            data-message='Participating in a live auction means you’ll be competing against bidders in real time on an auction room floor. You can place max bids which will be represented by Artsy in the auction room or you can bid live when the auction opens.'
+            data-anchor='top-left'
+          )
+
     .auction-description
       != auction.mdToHtml('description')
 
   .auction-header-metadata
-    .auction-header-metadata-cell
-
-      unless auction.isAuctionPromo() || auction.isClosed()
-        .auction-header-register-button
-          .auction-info-register-button
-            include ./registration_button
-
-    include metadata/note
-    include metadata/event
-    include metadata/contact
+    include ./registration_component

@@ -11,8 +11,6 @@ mixin hero_section(hero)
               source(src=hero.background_url type='video/mp4')
         else
           img(src= hero.background_image_url)/
-      when 'video'
-        +video(hero)
 
 mixin artworks(section)
   if section.artworks
@@ -40,7 +38,7 @@ mixin imageSet(section)
         +artwork(item)
 
 mixin video(section)
-  figure.op-social
+  figure.op-interactive
     != embed(section.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" }, classNames: 'no-margin column-width', protocol: 'http:' })
 
 mixin artworkCaption(artwork)

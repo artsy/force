@@ -13,11 +13,7 @@
       if auction.get('live_start_at')
         h5.af-live-header Live Auction
       h3.af-name= auction.get('name')
-      h4.af-sale-time
-        if auction.get('live_start_at')
-          | Live bidding begins #{auction.date('live_start_at').format('MMM D h:mm:ssA')} EST
-        else
-          | Bidding closes #{auction.date('end_at').format('MMM D h:mm:ss A')} EST
+      h4.af-sale-time= auction.upcomingLabel()
 
     if auction.isOpen()
       a.af-go-button.avant-garde-button-black( href= auction.href() )

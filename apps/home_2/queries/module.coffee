@@ -9,12 +9,36 @@ module.exports = """
       context {
         ... on HomePageModuleContextFair {
           href
+          name
+          tagline
+          start_at
+          end_at
+          location {
+            city
+          }
+          profile {
+            icon{
+              url(version: "square140")
+              versions
+            }
+          }
         }
         ... on HomePageModuleContextSale {
           href
+          name
+          description
+          start_at(format: "MMM D")
+          end_at(format: "MMM D")
+          closes: end_at(format: "MMM D [at] ha")
         }
         ... on HomePageModuleContextGene {
           href
+        }
+        ... on HomePageModuleContextTrending{
+          artists{
+            name
+            id
+          }
         }
       }
     }

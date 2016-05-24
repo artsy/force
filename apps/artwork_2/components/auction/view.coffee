@@ -87,7 +87,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       @redirectTo "#{form.action()}?bid=#{amount}"
 
     else
-      message = "Your bid needs to be at least #{AUCTION.minimum_next_bid.amount}"
+      message = "Your bid needs to be at least #{AUCTION.minimum_next_bid.display}"
       defer -> form.error message
 
   render: ->

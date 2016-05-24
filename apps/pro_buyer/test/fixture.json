@@ -1,0 +1,74 @@
+{
+  "hero": {
+    "image": "foobar.jpg",
+    "headline": "Artsy Professional Buyer Program",
+    "subheadline": "Vetted fine art and design for your clients at any budget",
+    "cta": {
+      "label": "Complimentary Membership",
+      "href": "/sign_up"
+    }
+  },
+  "proposition": {
+    "image": "foobar.jpg",
+    "headline": "Buy Art and Design in One Place",
+    "figures": [
+      {
+        "number": "240,000+",
+        "label": "Works For Sale"
+      },
+      {
+        "number": "50,000+",
+        "label": "Artists & Designers"
+      },
+      {
+        "number": "4,000+",
+        "label": "Dealers & Galleries"
+      },
+      {
+        "number": "60+",
+        "label": "Art & Design Fairs and Auctions"
+      }
+    ],
+    "cta": {
+      "label": "Join for Free",
+      "href": "/sign_up"
+    }
+  },
+  "benefits": {
+    "headline": "Exclusive Membership Benefits",
+    "benefits": [
+      {
+        "icon": "check.svg",
+        "headline": "Professional Buyer Status",
+        "description": "Your inquires on works will be expedited, allowing faster access to 4,000+ dealers and galleries around the world."
+      },
+      {
+        "icon": "chat.svg",
+        "headline": "Expert Service from Artsy",
+        "description": "Our specialists are available to help you buy works that fit your requirements and offer complimentary advising."
+      },
+      {
+        "icon": "clock.svg",
+        "headline": "Advanced Access to Fairs & Auctions",
+        "description": "Get first access to art fair and auction previews before they can be accessed publicly."
+      },
+      {
+        "icon": "envelope.svg",
+        "headline": "Personal invitations to Artsy Events",
+        "description": "We will extend you invitations to private Artsy events at galleries, artist studios and fairs, and VIP previews."
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "quote": "While I have many gallery directors on speed dial, I still buy a great number of works through Artsy. The site helped me connect with tens of new galleries around the world and build collections for three clients, all online",
+      "author": "Monica, Miami"
+    }
+  ],
+  "cta": {
+    "headline": "Apply to Artsy’s Professional Buyer Program",
+    "button": {
+      "label": "Join for Free"
+    }
+  }
+}

@@ -63,12 +63,9 @@ describe 'auction templates', ->
       it 'renders correctly', ->
         $('.auction-sub-header').text().should.equal 'Sale Preview'
         $('.auction-title').text().should.equal 'An Auction Promo'
-        $('.js-register-button').should.have.lengthOf 0
         $('.auction-grid-artwork').should.have.lengthOf 2
         $('.garamond-tab').should.have.lengthOf 4
         $('.auction-associated-sale').should.have.lengthOf 0
-        $('.auction-header-metadata-cell')
-          .text().should.containEql 'This is a sale preview. Bidding for this auction does not take place on Artsy'
 
   describe 'with associated sale', ->
     before (done) ->

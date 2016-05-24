@@ -23,10 +23,10 @@ module.exports = """
       estimate
       is_biddable
       current_bid {
-        amount
+        display
       }
       minimum_next_bid {
-        amount
+        display
         cents
       }
       counts {
