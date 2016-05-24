@@ -1,10 +1,4 @@
-mixin cv-link(year, href, linkText, trailingText)
-  .artist-cv-link
-    = year
-    | &nbsp;&nbsp;&nbsp;
-    a(href= href)= linkText
-    if trailingText
-      = ", " + trailingText
+include ./cv_item
 
 #artist-cv-section
   h2.artist-section-header Curriculum Vitae
@@ -19,30 +13,25 @@ mixin cv-link(year, href, linkText, trailingText)
           .bisected-header-cell-section
             h2 Solo Shows On Artsy
             for show in solo_shows
-              - var year = showHelpers.date(show.start_at).year()
-              - var trailing = showHelpers.partnerNameAndLocation(show)
-              mixin cv-link(year, show.href, show.name, trailing)
+              +showItem(show, showHelpers.partnerNameAndLocation(show))
 
         if group_shows && group_shows.length
           .bisected-header-cell-section
             h2 Group Shows On Artsy
             for show in group_shows
-              - var year = showHelpers.date(show.start_at).year()
-              - var trailing = showHelpers.partnerNameAndLocation(show)
-              mixin cv-link(year, show.href, show.name, trailing)
-
+              +showItem(show, showHelpers.partnerNameAndLocation(show))
 
         if fair_booths && fair_booths.length
           .bisected-header-cell-section
             h2 Fair Participation on Artsy
             for show in fair_booths
-              - var year = showHelpers.date(show.start_at).year()
-              - var trailing = showHelpers.showOrFairLocation(show)
-              mixin cv-link(year, show.href, show.name, trailing)
+              +showItem(show, showHelpers.showOrFairLocation(show))
 
         if articles && articles.length
           .bisected-header-cell-section
             h2 Articles On Artsy
             for article in articles
-              mixin cv-link(new Date(article.published_at).getFullYear(), article.href, article.thumbnail_title)
-
+              .artist-cv-link
+                = new Date(article.published_at).getFullYear()
+                | &nbsp;&nbsp;&nbsp;
+                a(href= article.href)= article.thumbnail_title

@@ -40,7 +40,10 @@ sections =
 
   shows:
     render: (items) ->
-      showsTemplate { items, formatShowDetail, showHelpers }
+      showMore = items.length > 15
+      if showMore && items.length >= 3
+        items = items.slice 0, -(items.length % 4) - 1
+      showsTemplate { items, formatShowDetail, showHelpers, showMore  }
 
 module.exports = ({ $el, section, items }) ->
   $el.find('.js-mgr-cells').html sections[section].render items

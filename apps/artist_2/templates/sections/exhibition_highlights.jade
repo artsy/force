@@ -1,0 +1,11 @@
+include ./cv_item
+
+- var showHelpers = viewHelpers.showHelpers
+
+h2
+  = showMore ? 'Exhibition Highlights on Artsy' : 'Exhibition History on Artsy'
+each show in shows
+  +showItem(show, show.fair ? showHelpers.showOrFairLocation(show) : showHelpers.partnerNameAndLocation(show))
+if showMore
+  .exibition-highlights-see-more
+    a(href = model.href + '/cv') See More

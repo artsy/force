@@ -7,7 +7,7 @@ metaphysics = require '../../../../lib/metaphysics.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 artistHelpers = require '../../view_helpers.coffee'
 
-module.exports = class BiographyView extends Backbone.View
+module.exports = class CVView extends Backbone.View
 
   subViews: []
 

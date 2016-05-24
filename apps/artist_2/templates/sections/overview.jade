@@ -26,13 +26,17 @@ mixin rail(title, viewAllUrl, section)
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
-      .artist-related-genes.related-links.bisected-header-cell-section
-        //- Rendered client-side
+      if !statuses.shows
+        .artist-related-genes.related-links.bisected-header-cell-section
+          //- Rendered client-side
 
     .bisected-header-cell
       if statuses.shows
-        .artist-exhibition-heighlights.bisected-header-cell-section
-      //- Rendered client-side
+        .artist-exhibition-highlights.bisected-header-cell-section
+          //- Rendered client-side
+      else
+        .artist-related-genes.related-links.bisected-header-cell-section
+          //- Rendered client-side
 
 - var hasWorks = artist.statuses.artworks
 include ./works

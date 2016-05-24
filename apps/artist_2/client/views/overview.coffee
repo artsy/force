@@ -13,6 +13,7 @@ splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
+showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlights.jade') arguments...
 renderRail = require '../../components/rail/index.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 query = require '../../queries/overview.coffee'
@@ -23,6 +24,7 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRails
+    @listenTo this, 'artist:overview:sync', @renderExhibitionHighlights
 
   fetchRelated: ->
     metaphysics
@@ -45,11 +47,23 @@ module.exports = class OverviewView extends Backbone.View
 
   renderRails: (artist) ->
     following = @following
+    if artist.shows?.length <= 15
+      $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows On Artsy')
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')
       items = artist[section]
       return if not items
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following }
+
+  renderExhibitionHighlights: ({ shows }) ->
+    return if not @statuses.shows
+    $el = @$('.artist-overview-header .artist-exhibition-highlights')
+    showMore = shows.length > 15
+    if showMore
+      shows = _.take shows, 15
+    else
+      shows = _.take shows, 10
+    $el.html showHighlightsTemplate { @model, @statuses, shows, showMore, viewHelpers }
 
   postRender: ->
     # Sub-header
