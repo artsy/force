@@ -45,6 +45,15 @@ if(location.pathname.match('/article/')){
         action_name: 'infinite'
       });
     }
+    if(window.Sailthru){
+      Sailthru.track({
+        domain: 'horizon.artsy.net',
+        spider: true,
+        track_url: true,
+        url: sd.APP_URL + '/' + location.pathname,
+        use_stored_tags: true
+     });
+    }
   });
 
   analyticsHooks.on('view:editorial-signup', function() {
