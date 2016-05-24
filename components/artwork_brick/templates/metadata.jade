@@ -21,3 +21,7 @@ if artwork.collecting_institution
 else
   a.artwork-brick__metadata__partner.artwork-brick__metadata__line( href= artwork.href )
     = artwork.partner.name
+
+if artwork.sale_message && artwork.sale_message != 'Contact For Price'
+  .artwork-brick__metadata__sale-message.artwork-brick__metadata__line
+    = artwork.sale_message

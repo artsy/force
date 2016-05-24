@@ -11,7 +11,3 @@ if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
 else if artwork.partner.is_limited_fair_partner
   .artwork-brick__metadata__contact.artwork-brick__metadata__line
     | Not inquireable
-
-else if artwork.sale_message
-  .artwork-brick__metadata__sale-message.artwork-brick__metadata__line
-    = artwork.sale_message
