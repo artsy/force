@@ -5,6 +5,7 @@ imagesLoaded = require 'imagesloaded'
 CurrentUser = require '../../../models/current_user.coffee'
 Article = require '../../../models/article.coffee'
 Artwork = require '../../../models/artwork.coffee'
+Artist = require '../../../models/artist.coffee'
 Articles = require '../../../collections/articles.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../share/view.coffee'
@@ -51,6 +52,7 @@ module.exports = class ArticleView extends Backbone.View
     @loadedArtworks = @loadedCallouts = @loadedImageHeights = false
     @sticky = new Sticky
     @jump = new JumpView
+    @previousHref = options.previousHref
 
     # Render sections
     @renderSlideshow()
@@ -72,7 +74,6 @@ module.exports = class ArticleView extends Backbone.View
 
     # Utility
     @checkEditable()
-    @trackPageview = _.once -> analyticsHooks.trigger 'scrollarticle', {urlref: @article.href() || ''}
 
   maybeFinishedLoading: ->
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
@@ -134,6 +135,7 @@ module.exports = class ArticleView extends Backbone.View
     @$('.artist-follow').each (i, artist) =>
       @artists.push id: $(artist).data('id')
     @followButtons = @artists.map (artist) =>
+      artist = new Artist id: artist.id
       new FollowButton
         el: @$(".artist-follow[data-id='#{artist.id}']")
         following: @following
@@ -306,7 +308,7 @@ module.exports = class ArticleView extends Backbone.View
             onClick: =>
               @sticky.rebuild()
               $.waypoints 'refresh'
-              analyticsHooks.trigger 'readmore', {}
+              analyticsHooks.trigger 'readmore', {urlref: @previousHref || ''}
           break
 
   setupWaypointUrls: =>
@@ -316,7 +318,6 @@ module.exports = class ArticleView extends Backbone.View
       if direction is 'down'
         # Set the pageview
         window.history.replaceState {}, @article.get('id'), @article.href()
-        @trackPageview()
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     $(@$container).waypoint (direction) =>

@@ -82,6 +82,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
+      analyticsHooks.trigger('view:editorial-signup')
     @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
       @ctaBarView.transitionOut() if direction is 'down'
       @ctaBarView.transitionIn() if direction is 'up'
@@ -121,11 +122,13 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   getSubmissionType: (e)->
     if @inAEMagazinePage()
-      'magazine page'
+      'magazine lush'
     else if $(e.currentTarget).data('type') is 'inline'
       'article in-line'
+    else if $(e.currentTarget).data('type') is 'lush'
+      'article lush'
     else
-      'article footer'
+      'article cta-popup'
 
   onDismiss: ->
     analyticsHooks.trigger('dismiss:editorial-signup')

@@ -28,6 +28,8 @@ html(lang="en" prefix="op: http://media.facebook.com/op#")
         time(class='op-published' dateTime=article.get('published_at'))= article.date('published_at').format('MMM Do, YYYY h:mm a')
         time(class='op-modified' dateTime=article.get('updated_at'))= article.date('updated_at').format('MMM Do, YYYY h:mm a')
 
+      if article.get('hero_section') && article.get('hero_section').type === 'video'
+        +video(article.get('hero_section'))
       each section in article.get('sections')
         case section.type
           when 'text'
@@ -47,5 +49,10 @@ html(lang="en" prefix="op: http://media.facebook.com/op#")
               aside= section.text
           when 'image_set'
             +imageSet(section)
+
+      figure.op-tracker
+        iframe(hidden)
+          script(type="text/javascript").
+            PARSELY = { autotrack: false, onload: function() { PARSELY.beacon.trackPageView({ urlref: 'http://instantarticles.fb.com' }); return true; } }
 
       include tracking
