@@ -5,4 +5,5 @@ module.exports =
     'Los Angeles, CA, USA',
     'Paris, France',
     'Berlin, Germany',
+    'Hong Kong, Hong Kong'
   ]
