@@ -3,6 +3,7 @@ module.exports =
   query artist($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!) {
     artist(id: $artist_id) {
       shows: exhibition_highlights (size: 16) @include(if: $shows) {
+        artists { id }
         ... relatedShow
       }
       artists (size: 20) @include(if: $artists){

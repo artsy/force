@@ -28,25 +28,27 @@ setupFollowButtons = ({ $el, items, kind }) =>
 
 sections =
   articles:
-    render: (items) ->
-     articlesTemplate { items }
+    render: ({ items, showMore, baseHref}) ->
+      viewAllUrl = baseHref + '/articles'
+      articlesTemplate { items, showMore, viewAllUrl }
 
   artists:
-    render: (items) ->
-      artistsTemplate { items }
+    render: ({ items, showMore, baseHref}) ->
+      viewAllUrl = baseHref + '/related-artists'
+      artistsTemplate { items, showMore, viewAllUrl }
 
     postRenderSection: ( { $el, section, items } )->
       setupFollowButtons $el: $el, items: items, kind: 'artist'
 
   shows:
-    render: (items) ->
-      showMore = items.length > 15
-      if showMore && items.length >= 3
-        items = items.slice 0, -(items.length % 4) - 1
-      showsTemplate { items, formatShowDetail, showHelpers, showMore  }
+    render: ({ items, showMore, baseHref}) ->
+      viewAllUrl = baseHref + '/shows'
+      showsTemplate { items, formatShowDetail, showHelpers, showMore, viewAllUrl }
 
-module.exports = ({ $el, section, items }) ->
-  $el.find('.js-mgr-cells').html sections[section].render items
+module.exports = ({ $el, section, items, baseHref}) ->
+  showMore = items.length > 15
+  items = _.take items, 15 if showMore
+  $el.find('.js-mgr-cells').html sections[section].render { items, showMore, baseHref }
   _.defer ->
     initCarousel $el,
       advanceBy: 4

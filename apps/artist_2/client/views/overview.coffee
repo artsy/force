@@ -43,27 +43,44 @@ module.exports = class OverviewView extends Backbone.View
       heightBreakOffset: 20
       onClick: =>
         @sticky.rebuild()
-    _.defer => @$('.artist-blurb').addClass('is-fade-in')
+    _.defer =>
+      @$('.artist-blurb').addClass('is-fade-in')
+      @$('.artist-exhibition-highlights').addClass 'is-fade-in'
 
-  renderRails: (artist) ->
+  renderRails: (artist) =>
+    console.log artist.artists
     following = @following
     if artist.shows?.length <= 15
       $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows On Artsy')
+    baseHref = @model.href()
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')
       items = artist[section]
       return if not items
-      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following }
+      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following, baseHref }
 
   renderExhibitionHighlights: ({ shows }) ->
     return if not @statuses.shows
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
+    # If there are more than 15 shows, take ten and show a 'see more' link
+    # If there are less than 15 shows, show them all.
     showMore = shows.length > 15
     if showMore
-      shows = _.take shows, 15
+      highlights = _.take shows, 10
     else
-      shows = _.take shows, 10
-    $el.html showHighlightsTemplate { @model, @statuses, shows, showMore, viewHelpers }
+      solo = []
+      group = []
+      fair = []
+      shows = _.each _.take(shows, 15), (show) ->
+        if show.fair
+          fair.push show
+        else if show.artists.length > 1
+          group.push show
+        else
+          solo.push show
+    shows = { highlights, solo, group, fair }
+    options = { @model, @statuses, shows, viewHelpers }
+    $el.html showHighlightsTemplate options
 
   postRender: ->
     # Sub-header

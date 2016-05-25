@@ -19,9 +19,9 @@ describe 'ShowsView', ->
       @model = new Artist artistJSON
       @ShowsView.__set__ 'metaphysics', @metaphysics = sinon.stub()
       @metaphysics.returns Q.resolve artist:
-        current_shows: artistJSON.shows
-        past_shows: artistJSON.shows
-        upcoming_shows: artistJSON.shows
+        current_shows: artistJSON.show
+        past_shows: artistJSON.show
+        upcoming_shows: artistJSON.show
 
       stubChildClasses @ShowsView, this,
         ['ArtworkRailView']

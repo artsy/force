@@ -3,3 +3,8 @@ each item in items
     .artist-rail-cell-inner
       - var artist = item
       include ../../../../components/artist_cell/index
+
+if showMore
+  .mgr-cell.js-mgr-cell.artist-rail-cell.view-all-rail-cell
+    .artist-rail-cell-inner.view-all-rail-cell-inner
+      a(href= viewAllUrl) View All

@@ -31,6 +31,8 @@
   white-space nowrap
   text-overflow ellipsis
   overflow hidden
+  a
+    font-style italic
 
 // Overview
 .artist-overview-header
@@ -39,6 +41,12 @@
     margin 0
 .artist-blurb
   fade-in()
+.artist-exhibition-highlights
+  fade-in()
+.exibition-highlights-see-more
+  margin-top 40px
+  a
+    text-decoration none
 #main-layout-footer
   transition opacity 1s
 .gradient-blurb-read-more-container
@@ -120,6 +128,19 @@
     position absolute !important
     right 0
     top 0
+
+  .view-all-rail-cell
+    height 100%
+    .view-all-rail-cell-inner
+      height 100%
+      display flex
+      justify-content center
+      align-items center
+      border 2px solid gray-lightest-color
+      a
+        display block
+        text-decoration none
+        avant-garde-size('body')
 
   .artist-rail-cell
     display inline-block
