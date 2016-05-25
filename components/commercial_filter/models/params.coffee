@@ -42,7 +42,7 @@ module.exports = class Params extends Backbone.Model
     _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @allLocations()
 
   allLocations: ->
-    @fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities')
+    _.uniq(@fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities'))
 
   whitelisted: ->
     whitelisted = _.pick @current(), @urlWhitelist
