@@ -30,59 +30,6 @@ describe '/rss', ->
       rendered.should.containEql '<item><title>World</title>'
 
   describe 'article', ->
-    it 'renders contributing authors and their profiles by default', ->
-      article = new Article(
-        contributing_authors: [{
-          name: 'James'
-          profile_id: 'foo'
-        }],
-        author: {
-          name: 'Artsy Editorial'
-          profile_id: '5086df078523e60002000009'
-        }
-      )
-      rendered = articleTemplate(sd: sd, article: article)
-      rendered.should.containEql 'James'
-      rendered.should.containEql 'http://localhost/foo'
-      rendered.should.not.containEql 'Artsy Editorial'
-
-    it 'renders multiple contributing authors and their profiles', ->
-      article = new Article(
-        contributing_authors: [
-          {
-            name: 'James'
-            profile_id: 'foo'
-          },
-          {
-            name: 'Plato'
-            profile_id: 'bar'
-          },
-          {
-            name: 'Aeschylus'
-            profile_id: 'baz'
-          }
-        ],
-        author: {
-          name: 'Artsy Editorial'
-          profile_id: '5086df078523e60002000009'
-        }
-      )
-      rendered = articleTemplate(sd: sd, article: article)
-      rendered.should.containEql 'By&nbsp;<a href="http://localhost/foo">James</a>,&nbsp;'
-      rendered.should.containEql '<a href="http://localhost/bar">Plato</a>&nbsp;and&nbsp;'
-      rendered.should.containEql '<a href="http://localhost/baz">Aeschylus</a></h2>'
-      rendered.should.not.containEql 'Artsy Editorial'
-
-    it 'renders Artsy Editorial when there are no contributing authors', ->
-      article = new Article(
-        contributing_authors: []
-        author: {
-          name: 'Artsy Editorial'
-          profile_id: '5086df078523e60002000009'
-        }
-      )
-      rendered = articleTemplate(sd: sd, article: article)
-      rendered.should.containEql 'Artsy Editorial'
 
     it 'renders the lead paragraph and body text', ->
       article = new Article(
