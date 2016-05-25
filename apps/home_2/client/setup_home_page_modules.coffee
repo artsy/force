@@ -3,8 +3,7 @@ _ = require 'underscore'
 CurrentUser = require '../../../models/current_user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
+ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 iconicArtistsTemplate = -> require('../templates/contexts/_iconic_artists.jade') arguments...
 auctionTemplate = -> require('../templates/contexts/_auction.jade') arguments...
@@ -29,15 +28,14 @@ module.exports = ->
       req: { user: user }
     ).then ({ home_page_module }) ->
       module = home_page_module
-      artworks = new Artworks module.results
-      view = new ArtworkRailView
+      view = new ArtworkBrickRailView
         $el: $("#hpm-#{module.key}-#{index}")
-        collection: artworks
+        artworks: module.results
         title: module.title
         viewAllUrl: viewAllUrl module
         hasContext: contexts[module.key]?
 
-      artworks.trigger 'sync'
+      view.render()
 
       if contexts[module.key]?
         view.on 'post-render', ->

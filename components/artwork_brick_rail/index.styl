@@ -1,8 +1,7 @@
 @require '../components/merry_go_round'
-@require '../components/inquiry_questionnaire/stylesheets'
-@require '../components/artwork_item/stylesheets'
+@require '../components/artwork_brick/'
 
-.arv-container
+.abrv-container
   margin-top 20px
   padding-top 40px
   border-top 1px solid gray-lighter-color
@@ -11,39 +10,43 @@
     border-top none
     padding-top 0
 
-.arv-header
+.abrv-header
   margin-bottom 30px
   position relative
   h1
     garamond-size('headline', true)
 
-.arv-view-all
+.abrv-view-all
   faux-underline(black)
   position absolute !important
   right 0
   top 0
 
-.arv-content
+.abrv-content
   clearfix()
 
-.arv-context
+.abrv-context
   width 170px
   border-right 1px solid gray-lighter-color
   margin 0 30px 20px 0
   padding-right 30px
   height 360px
 
-.mgr-cell.arv-fillwidth-row
+.mgr-cell.abrv-fillwidth-row
   padding-bottom 120px
 
-.arv-carousel
+.abrv-carousel
   position relative
   max-width 100%
   height 340px
-
+  .artwork-brick__image
+    margin-bottom 30px
+    &__img
+      display inline-block
+      position static
+      width auto
   .mgr-arrow-left, .mgr-arrow-right
-    margin-top -26px
-
+    top 110px
   .mgr-cells:not(.flickity-enabled) .mgr-cell
     visibility hidden
   .mgr-cells--loading
@@ -68,9 +71,10 @@
       &:nth-child(4)
         width 47%
 
-  .artwork-item-caption
+  .artwork-item-caption, .artwork-brick__metadata
     height 120px
     position absolute
     bottom 0
     vertical-align top
     padding-right 15px
+    max-width 100%

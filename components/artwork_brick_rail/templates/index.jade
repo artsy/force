@@ -1,0 +1,25 @@
+.abrv-inner( data-rail= railId )
+  .abrv-header
+    h1= title
+
+    if viewAllUrl
+      a.abrv-view-all( href= viewAllUrl )
+        | View All
+
+  .abrv-content
+    .abrv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
+      ul.abrv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
+        if hasContext
+          li.abrv-context.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
+            //- rendered on the client
+        if artworks && artworks.length
+          for artwork in artworks
+            li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
+              include brick
+
+        else
+          include ./loading
+
+      nav.mgr-navigation.js-mgr-navigation
+        if artworks && artworks.length
+          include ../../merry_go_round/templates/horizontal_navigation
