@@ -9,22 +9,6 @@ if hero
       if hero.caption
         p!= hero.caption
 
-if article.get('contributing_authors').length > 0
-  h2
-    | By&nbsp;
-    - var authors = article.get('contributing_authors')
-    for author, i in authors
-      a( href="#{sd.APP_URL}/#{author.profile_id}" )
-        = author.name
-      if (authors.length > 1) && (i === (authors.length - 2))
-        | &nbsp;and&nbsp;
-      else if (authors.length > 1) && (i < (authors.length - 1))
-        | ,&nbsp;
-else if article.get('author')
-  h2
-    a( href="#{sd.APP_URL}/#{article.get('author').profile_id}" )
-      = article.get('author').name
-
 //- Content
 if article.strip('lead_paragraph')
   p!= article.get('lead_paragraph')
