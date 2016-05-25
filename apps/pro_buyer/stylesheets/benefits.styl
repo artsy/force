@@ -1,0 +1,36 @@
+.probuyer-benefits
+  //
+
+  &__headline
+    //
+
+  &__benefits
+    display flex
+    flex-wrap wrap
+
+  &__benefit
+    display table
+    width 50%
+    margin-bottom (gutter * 2)
+
+    &__icon
+    &__metadata
+      display table-cell
+      vertical-align top
+
+    &__icon
+      width 65px
+      height @width
+
+      > img
+        width 100%
+
+    &__metadata
+      padding 0 gutter
+
+      > h4
+        sans('m-headline')
+        margin-bottom distance(20px)
+
+      > p
+        serif('l-body')

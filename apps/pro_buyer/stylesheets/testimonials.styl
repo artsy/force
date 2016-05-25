@@ -1,0 +1,28 @@
+.probuyer-testimonials
+  //
+
+.probuyer-testimonial
+  position relative
+  width 50%
+  margin 50px auto 0
+  padding-top 40px
+  serif('s-headline')
+
+  &:after
+    position absolute
+    display block
+    content ''
+    top 0
+    width 85px
+    height 3px
+    background-color black
+
+  > p
+    margin-bottom (gutter / 2)
+
+  > cite
+    display block
+    text-align right
+
+    &:before
+      content '— '

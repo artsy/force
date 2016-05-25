@@ -1,0 +1,7 @@
+section.probuyer-testimonials
+  for testimonial in testimonials
+    blockquote.probuyer-testimonial
+      p
+        | &ldquo;#{testimonial.quote}&rdquo;
+      cite
+        = testimonial.author

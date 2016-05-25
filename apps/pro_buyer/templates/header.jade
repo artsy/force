@@ -1,0 +1,13 @@
+header.probuyer-header(
+  style='background-image: url(#{hero.image})'
+)
+  h1.probuyer-header__headline
+    = hero.headline
+
+  h2.probuyer-header__subheadline
+    = hero.subheadline
+
+  .probuyer-header__cta
+    a.avant-garde-button-white(
+      href= hero.cta.href
+    )= hero.cta.label
