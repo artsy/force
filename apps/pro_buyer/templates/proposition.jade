@@ -16,4 +16,5 @@ section.probuyer-proposition
 
     a.avant-garde-button-black.is-block(
       href= proposition.cta.href
-    )= proposition.cta.label
+    )
+      = user ? 'Join as ' + user.get('name') : proposition.cta.label

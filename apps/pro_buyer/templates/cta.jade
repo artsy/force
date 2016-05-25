@@ -3,41 +3,52 @@ footer.probuyer-cta
     = cta.headline
 
   form.probuyer-cta__form.stacked-form
-    input.bordered-input(
-      type='email'
-      name='email'
-      placeholder='Email'
-      required
-    )
+    if user
+      button.avant-garde-button-black
+        | Join as #{user.get('name')}
+    else
+      input.bordered-input(
+        type='email'
+        name='email'
+        placeholder='Email'
+        required
+      )
 
-    input.bordered-input(
-      type='password'
-      name='password'
-      placeholder='Password'
-      required
-    )
+      input.bordered-input(
+        type='password'
+        name='password'
+        placeholder='Password'
+        required
+      )
 
-    input.bordered-input(
-      type='text'
-      name='name'
-      placeholder='Full Name'
-      required
-    )
+      input.bordered-input(
+        type='text'
+        name='name'
+        placeholder='Full Name'
+        required
+      )
 
-    button.avant-garde-button-black
-      = cta.button.label
+      button.avant-garde-button-black
+        = cta.button.label
 
-    .probuyer-cta__form__terms
-      | By signing up, you agree to our
-      br
-      a( href='/terms' )
-        | Terms of Use
-      = ' and '
-      a( href='/privacy' )
-        | Privacy Policy
+      .probuyer-cta__form__terms
+        | By signing up, you agree to our
+        br
+        a( href='/terms' )
+          | Terms of Use
+        = ' and '
+        a( href='/privacy' )
+          | Privacy Policy
 
     .probuyer-cta__form__login
-      | Already have an account?
-      = ' '
-      a( href='/login' )
-        | Login
+      if user
+        | Not you?
+        = ' '
+        a( href='#' )
+          | Join as a different user.
+
+      else
+        | Already have an account?
+        = ' '
+        a( href='/login' )
+          | Login
