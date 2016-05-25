@@ -1,0 +1,80 @@
+@media (max-width: 640px)
+  //
+
+  .probuyer-page
+    padding 0 gutter
+
+  .probuyer-header
+    padding gutter
+
+    &__headline
+      serif('l-headline')
+
+    &__subheadline
+      margin-top distance(gutter)
+
+  .probuyer-proposition
+    //
+
+    &__content
+      display block
+
+      &__image
+      &__figures
+        display block
+        width 100%
+        padding 0
+
+      &__figures
+        margin-top distance(50px, 'garamond-s-headline')
+
+      &__button
+        display none
+
+    &__figure
+      display inline-block
+      width 50%
+      block-margins(0)
+      margin-bottom distance(gutter, 'garamond-s-headline')
+      vertical-align top
+
+      &__number
+        serif('s-headline')
+
+      &__label
+        serif('s-body')
+
+  .probuyer-benefits
+    //
+
+    &__headline
+      text-align center
+
+    &__benefits
+      display block
+
+    &__benefit
+      width 100%
+      block-margins(gutter)
+
+      &__icon
+        width gutter
+        height @width
+
+      &__metadata
+        padding 0 0 0 gutter
+
+        > p
+          serif('s-body')
+
+  .probuyer-testimonial
+    width 100%
+    padding-top 0
+    serif('l-body')
+
+    &:after
+      display none
+
+  .probuyer-cta
+    min-width 100%
+    width @min-width

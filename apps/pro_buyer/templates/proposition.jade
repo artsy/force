@@ -14,7 +14,7 @@ section.probuyer-proposition
         .probuyer-proposition__figure__label
           = figure.label
 
-    a.avant-garde-button-black.is-block(
+    a.probuyer-proposition__content__button.avant-garde-button-black.is-block(
       href= proposition.cta.href
     )
       = user ? 'Join as ' + user.get('name') : proposition.cta.label
