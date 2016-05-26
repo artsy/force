@@ -77,6 +77,8 @@ mgr-n-up(n, gutter, imageRatio)
   margin 10px auto
   padding 0 10px
   user-select none
+  &.no-scroll
+    display none
 .mgr-arrow-left
 .mgr-arrow-right
 .mgr-dots
@@ -93,7 +95,7 @@ mgr-n-up(n, gutter, imageRatio)
   cursor pointer
   &:hover
     border-color black
-  &[disabled], &.no-scroll
+  &[disabled]
     color gray-lighter-color
     border-color transparent
     cursor default

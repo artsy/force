@@ -60,15 +60,6 @@ module.exports = class ArtworkRailView extends Backbone.View
       @trigger 'post-render'
       @carousel = carousel
 
-      # Hide arrows if the cells don't fill the carousel width
-      @cellWidth = @$('.js-mgr-cell')
-        .map (i, e) -> $(e).outerWidth true
-        .get()
-        .reduce (prev, curr) -> prev + curr
-
-      unless @cellWidth > @$('.js-my-carousel').width()
-        @$('.mgr-navigation').addClass 'is-hidden'
-
   remove: ->
      @collection.off 'sync'
      super
