@@ -9,5 +9,9 @@ module.exports = """
       }
       is_zoomable
     }
+
+    ... video
   }
+
+  #{require '../video/query.coffee'}
 """
