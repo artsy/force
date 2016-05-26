@@ -45,17 +45,17 @@ describe 'ShowsView', ->
 
   describe '#render', ->
     it 'renders, sets up the template', ->
-      @view.$el.html().should.containEql 'Upcoming Shows and Fair Booths'
-      @view.$el.html().should.containEql 'Current Shows and Fair Booths'
-      @view.$el.html().should.containEql 'Past Shows'
+      @view.$el.text().should.containEql 'Upcoming Shows & Fair Booths'
+      @view.$el.text().should.containEql 'Current Shows & Fair Booths'
+      @view.$el.text().should.containEql 'Past Shows'
 
       @view.$el.find('.grid-item').length.should.eql 6
 
-      @view.$el.find('[data-id=current-shows]').html().should.containEql 'A Show'
-      @view.$el.find('[data-id=upcoming-shows]').html().should.containEql 'A Show'
-      @view.$el.find('[data-id=past-shows]').html().should.containEql 'A Show'
+      @view.$el.find('[data-id=current-shows]').text().should.containEql 'A Show'
+      @view.$el.find('[data-id=upcoming-shows]').text().should.containEql 'A Show'
+      @view.$el.find('[data-id=past-shows]').text().should.containEql 'A Show'
 
-      @view.$el.find('[data-id=current-shows]').html().should.containEql 'Another Show'
-      @view.$el.find('[data-id=upcoming-shows]').html().should.containEql 'Another Show'
-      @view.$el.find('[data-id=past-shows]').html().should.containEql 'Another Show'
+      @view.$el.find('[data-id=current-shows]').text().should.containEql 'Another Show'
+      @view.$el.find('[data-id=upcoming-shows]').text().should.containEql 'Another Show'
+      @view.$el.find('[data-id=past-shows]').text().should.containEql 'Another Show'
 

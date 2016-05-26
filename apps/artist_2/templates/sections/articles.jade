@@ -18,15 +18,15 @@
                 h3.article-list-item__title= article.thumbnail_title
             if article.author
               a.article-list-item__author( href="/#{article.author.profile_handle}" )
-                | By #{article.author.name}
+                | #{article.author.name}
 
             if article.thumbnail_teaser
               a( href="/article/#{article.href}" )
-                - if (!teaserLimit) { var teaserLimit = 450 }
+                - if (!teaserLimit) { var teaserLimit = 230 }
                 .article-list-item__summary
                   = _s.prune(article.thumbnail_teaser, teaserLimit)
                   | &nbsp
-                  span.article-list-item__go Go to article
+                  span.article-list-item__go Read more
     else
       .loading-spinner
 
