@@ -1,5 +1,5 @@
-.artwork-images.js-artwork-images(
-  class="#{artwork.images.length > 1 ? 'artwork-images--multiple' : ''}"
+.artwork-images(
+  class="js-artwork-images #{artwork.images.length > 1 ? 'artwork-images--multiple' : ''}"
 )
   .artwork-images__images
     for image, i in artwork.images.reverse()
@@ -8,3 +8,6 @@
   if artwork.images.length > 1
     include ./templates/arrows
     include ./templates/pages
+
+  if artwork.is_embeddable_video
+    a.play-button( class='js-artwork-images-play' )
