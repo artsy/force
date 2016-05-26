@@ -65,7 +65,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
-    @$('.article-section-text a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
+    @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
 
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
