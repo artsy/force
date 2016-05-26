@@ -14,6 +14,7 @@ HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
+query = require './query.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -52,22 +53,18 @@ module.exports = class ArtistRouter extends Backbone.Router
     @renderCurrentView()
 
   renderCurrentView: ->
+    @view.fetchRelated?()
     @view.render()
 
   overview: ->
     @view = new OverviewView @options
-    @view.fetchRelated()
     $('body').append @jump.$el
-    @view.on 'metaphysicsSync', =>
+    @view.on 'artist:overview:sync', =>
       attachCTA @model
 
   cv: ->
     @view = new CVView @options
-    @model.related().shows.fetchUntilEnd()
     @model.related().artworks.fetch(data: size: 15)
-    @model.related().articles.fetch
-      cache: true
-      data: limit: 50
 
   works: ->
     @view = new WorksView @options
@@ -75,9 +72,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   shows: ->
     @view = new ShowsView @options
-    @model.related().shows.fetchUntilEnd()
     @model.related().artworks.fetch(data: size: 15)
-
   articles: ->
     @view = new ArticlesView @options
     @model.related().articles.fetch()
@@ -86,8 +81,6 @@ module.exports = class ArtistRouter extends Backbone.Router
   relatedArtists: ->
     @view = new RelatedArtistsView @options
     @model.related().artworks.fetch(data: size: 15)
-    @view.fetchRelated()
-
   biography: ->
     @view = new BiographyView @options
     @model.related().articles.fetch

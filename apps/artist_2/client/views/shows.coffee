@@ -1,47 +1,41 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 template = -> require('../../templates/sections/shows.jade') arguments...
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
+showHelpers = require '../../../../components/show_cell/helpers.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../../queries/shows.coffee'
 
 module.exports = class ShowsView extends Backbone.View
   subViews: []
 
   initialize: ->
-    @listenTo @model.related().shows, 'sync', @renderHeader
+    @listenTo this, 'artist:shows:sync', @render
+
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+    .then ({ artist }) => @trigger 'artist:shows:sync', artist
 
   postRender: ->
-    @subViews.push new RelatedShowsView
-      model: @model
-      collection: @model.related().shows
-      nUp: 3
-      maxShows: 20
-      el: @$('#artist-related-shows-content')
-
-    @subViews.push new ArtworkRailView
+    @subViews.push rail = new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
 
-    $el = $('#artist-related-shows-section').show()
+    rail.collection.trigger 'sync'
+    @fadeInSection $('#artist-related-shows-section')
+
+  fadeInSection: ($el) ->
+    $el.show()
     _.defer -> $el.addClass 'is-fade-in'
 
-  renderHeader: ->
-    statuses = @model.related().shows.invoke 'has', 'fair'
-    return unless statuses.length
-
-    things = _.compact [
-      'shows' if _.any statuses, _.negate(Boolean) # Has shows
-      'fair booths' if _.any statuses # Has fairs
-    ]
-
-    (@$header ?= @$('.artist-shows-header'))
-      .text "#{@model.get 'name'} #{things.join ' and '} on Artsy"
-
-  render: ->
-    @$el.html template(artist: @model)
+  render: (artist) ->
+    @$el.html template _.extend { showHelpers }, artist
     _.defer => @postRender()
     this
 

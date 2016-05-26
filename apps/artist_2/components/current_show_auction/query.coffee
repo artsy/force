@@ -12,21 +12,8 @@ module.exports = """
       end_at
     }
     show: partner_shows(size:2, at_a_fair: false, status:"running", sort:end_at_asc, top_tier: true) {
-      cover_image {
-        cropped(width: 150, height: 104) {
-          url
-        }
-      }
-      partner {
-        name
-      }
-      location {
-        city
-      }
-      href
-      name
-      start_at
-      end_at
+      ... relatedShow
     }
   }
+  #{require '../../queries/show_fragment.coffee'}
 """

@@ -8,7 +8,7 @@
 
   .arv-content
     .arv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
-      ul.arv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
+      ul.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
         if hasContext
           li.arv-context.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
             //- rendered on the client
@@ -16,8 +16,6 @@
           for artwork in artworks
             li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
               include ../../artwork_item/templates/artwork
-        else
-          include ./loading
 
       nav.mgr-navigation.js-mgr-navigation
         if artworks && artworks.length

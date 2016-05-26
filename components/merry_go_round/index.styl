@@ -1,5 +1,27 @@
 @require '../stylus_lib'
 
+mgr-n-up(n, gutter, imageRatio)
+  n-up(n, gutter, imageRatio)
+    percent = 100% / n
+    gutterOffset = ((n - 1) / n) * gutter
+
+    .mgr-cell
+      top ratio
+      padding 0px
+      margin-right gutter
+      width calc('%s - %s' % (percent gutterOffset))
+
+    // Aligns arrows to cell's 3:4 image. Override if undesired.
+    .mgr-arrow-left
+    .mgr-arrow-right
+      margin-top calc('(%s - %s) * %s / 2' % (percent gutterOffset imageRatio))
+      top 0
+
+  n-up(n, gutter, imageRatio)
+  @media screen and (max-width: 1024px)
+    n-up(n, gutter/2, imageRatio)
+
+
 .mgr-horizontal-nav
   position relative
   &:hover .mgr-navigation
@@ -34,7 +56,8 @@
   .mgr-arrow-right
     left 100%
   .mgr-cell
-    padding 0 15px 0 0
+    padding 0
+    margin-right 15px
 
 .mgr-cells
   white-space nowrap
@@ -54,6 +77,8 @@
   margin 10px auto
   padding 0 10px
   user-select none
+  &.no-scroll
+    display none
 .mgr-arrow-left
 .mgr-arrow-right
 .mgr-dots

@@ -2,14 +2,26 @@ Backbone = require 'backbone'
 template = -> require('../../templates/sections/cv.jade') arguments...
 sd = require('sharify').data
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
+query = require '../../queries/cv.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+showHelpers = require '../../../../components/show_cell/helpers.coffee'
+artistHelpers = require '../../view_helpers.coffee'
 
-module.exports = class BiographyView extends Backbone.View
+module.exports = class CVView extends Backbone.View
 
   subViews: []
 
-  initialize: ->
-    @listenTo @model.related().shows, 'sync', @render
-    @listenTo @model.related().articles, 'sync', @render
+  initialize: ({ @user, @statuses }) ->
+    @listenTo this, 'artist:cv:sync', @render
+
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+        articles: @statuses.articles
+        shows: @statuses.shows
+    .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
   postRender: ->
     @subViews.push new ArtworkRailView
@@ -19,22 +31,9 @@ module.exports = class BiographyView extends Backbone.View
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
 
-  render: ->
-    { shows, articles } = @model.related()
-    articles = articles.models
-    fairBooths = _.map shows.select (show) ->
-      show.isFairBooth()
-
-    soloShows = shows.select (show) ->
-      show.isSolo() and not show.isFairBooth()
-
-    groupShows = shows.select (show) ->
-      show.isGroup() and not show.isFairBooth()
-
-    unless shows.length || articles.length
-      @$el.html "<div class='loading-spinner'></div>"
-      return this
-    @$el.html template { articles, fairBooths, soloShows, groupShows }
+  render: (artist = {}) ->
+    artistMetadata = artistHelpers.artistMeta @model.toJSON()
+    @$el.html template _.extend { showHelpers, artistMetadata }, artist
     _.defer => @postRender()
     this
 

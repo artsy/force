@@ -1,21 +1,4 @@
-mixin cv-link(year, href, linkText, trailingText)
-  .artist-cv-link
-    .artist-cv-link-year= year
-    a(href= href)= linkText
-    if trailingText
-      = ", " + trailingText
-
-mixin cv-link-shows-section(shows, title, trailPartnerName)
-  .bisected-header-cell-section
-    h2= title
-    for show in shows
-      - var year = show.date('start_at').year()
-      - var linkText = show.title()
-      - var href = show.href()
-      - var trailingText = show.formatShowOrFairCity()
-      if trailPartnerName
-        - trailingText = [show.partnerName(), trailingText].join(', ')
-      mixin cv-link(year, href, linkText, trailingText)
+include ./cv_item
 
 #artist-cv-section
   h2.artist-section-header Curriculum Vitae
@@ -23,20 +6,16 @@ mixin cv-link-shows-section(shows, title, trailPartnerName)
     .thirty-seventy-bisected-header
       .bisected-header-cell
         .bisected-header-cell-section
+          = artistMetadata
 
       .bisected-header-cell
-        if soloShows && soloShows.length
-          mixin cv-link-shows-section(soloShows, "Solo Shows On Artsy", true)
-
-        if groupShows && groupShows.length
-          mixin cv-link-shows-section(groupShows, "Group Shows On Artsy", true)
-
-        if fairBooths && fairBooths.length
-          mixin cv-link-shows-section(fairBooths, "Fair Participation On Artsy", false)
+        include ./show_groupings
 
         if articles && articles.length
           .bisected-header-cell-section
             h2 Articles On Artsy
             for article in articles
-              mixin cv-link(article.date().year(), article.href(), article.get('title'))
-
+              .artist-cv-link
+                = new Date(article.published_at).getFullYear()
+                | &nbsp;&nbsp;&nbsp;
+                a(href= article.href)= article.thumbnail_title

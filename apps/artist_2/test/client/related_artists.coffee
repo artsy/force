@@ -7,14 +7,22 @@ Backbone = require 'backbone'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
 artistJSON = require '../fixtures'
+Q = require 'bluebird-q'
 
 describe 'RelatedArtistsView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template', 'artistCellTemplate']
+      @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template']
       @model = new Artist artistJSON
+      @RelatedArtistsView.__set__ 'metaphysics', @metaphysics = sinon.stub()
+      @metaphysics.returns Q.resolve
+        artist:
+          artists:
+            [ id: 'id', name: 'Artist A', href: '/artist/a', image: { cropped: url: '/image.jpg' }, counts: { } ]
+          contemporary:
+            [ id: 'id', name: 'Artist B', href: '/artist/b', image: { cropped: url: '/image.jpg' }, counts: { } ]
       done()
 
   after ->
@@ -25,44 +33,31 @@ describe 'RelatedArtistsView', ->
     sinon.stub(Backbone, 'sync').yieldsTo('success').returns([fabricate('artist')])
     stubChildClasses @RelatedArtistsView, this,
       ['ArtworkRailView']
-      ['fetchAndRender', 'remove']
+      ['remove']
     @view = new @RelatedArtistsView model: @model, statuses: artistJSON.statuses
+    sinon.stub @view, 'postRender'
+    sinon.stub @view, 'setupFollowButtons', (artists) -> return
+    @view.fetchRelated()
 
   afterEach ->
     _.defer.restore()
     Backbone.sync.restore()
     @view.remove()
 
-  describe '#renderRelated', ->
-    it 'renders section content', ->
-      sinon.stub @view, 'setupFollowButtons', (artists) -> return
-      @view.render()
-      @view.renderRelated
-        artists:
-          [ id: 'id', name: 'Artist A', href: '/artist/a', image: { url: '/image.jpg' }, counts: { } ]
-        contemporary:
-          [ id: 'id', name: 'Artist B', href: '/artist/b', image: { url: '/image.jpg' }, counts: { } ]
-
-      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true()
-      $item = @view.$('#artist-related-artists-section .grid-item')
-      $item.length.should.equal 1
-      $item.html().should.containEql 'Artist A'
-
-      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true()
-      $item = @view.$('#artist-related-contemporary-section .grid-item')
-      $item.html().should.containEql 'Artist B'
-      $item.length.should.equal 1
-
   describe '#render', ->
-    it 'renders, sets up the template', ->
-      @view.render()
-      @view.$('#artist-related-artists-section h2').text().should.equal 'Related Artists'
-      @view.$('#artist-related-contemporary-section').text().should.equal 'Suggested Contemporary Artists'
+    it 'renders section content', ->
+      @view.$('.artist-related-artists-section').length.should.eql 2
+      $artists = @view.$('.artist-related-artists-section[data-id=artists]')
+      $contemporary = @view.$('.artist-related-artists-section[data-id=contemporary]')
 
-  describe '#postRender', ->
-    beforeEach ->
-      @view.render()
+      $artistItem = $artists.find('.grid-item')
+      $artistItem.length.should.equal 1
+      $artistItem.html().should.containEql 'Artist A'
 
-    it 'renders related artwork rail', ->
-      subView1 = @ArtworkRailView.args[0][0]
-      subView1.$el.attr('class').should.containEql 'artist-artworks-rail'
+      contemporaryItem = $contemporary.find('.grid-item')
+      contemporaryItem.html().should.containEql 'Artist B'
+      contemporaryItem.length.should.equal 1
+
+      $artists.find('h2').text().should.equal 'Related Artists'
+      $contemporary.find('h2').text().should.equal 'Suggested Contemporary Artists'
+

@@ -1,4 +1,6 @@
 @require '../../../components/gradient_blurb/index'
+@require '../../../components/merry_go_round/index'
+@require '../components/article_cell/index'
 
 // Books
 .merchandisable-items
@@ -25,9 +27,12 @@
   margin-left 1em
 
 // CV
-.artist-cv-link-year
-  margin-right 15px
-  display inline-block
+.artist-cv-link
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
+  a
+    font-style italic
 
 // Overview
 .artist-overview-header
@@ -36,6 +41,12 @@
     margin 0
 .artist-blurb
   fade-in()
+.artist-exhibition-highlights
+  fade-in()
+.exibition-highlights-see-more
+  margin-top 40px
+  a
+    text-decoration none
 #main-layout-footer
   transition opacity 1s
 .gradient-blurb-read-more-container
@@ -59,45 +70,107 @@
     right 0
     border-bottom 2px dotted gray-lighter-color
 
+// Articles
+
+.article-list-item
+  block-margins(40px)
+  clearfix()
+  a
+    display block
+    text-decoration none
+
+  &__author
+    avant-garde()
+    font-size 11px
+    white-space nowrap
+    margin-top 8px
+    line-height 1
+    color gray-darker-color
+
+  &__title
+    width 90%
+    font-size 25px
+
+  &__image
+    float left
+    width 30%
+
+  &__blurb
+    float left
+    max-width 450px
+    padding-left 40px
+
+  &__summary
+    margin-top 25px
+
+  &__go
+    faux-underline()
+
+  &__author > *
+    margin-right 10px
+    &:last-child
+      margin 0
 
 // Overview Section Rails
-
-.artist-overview-related-rail
+.artist-related-rail
+  mgr-n-up(4, 30px, (3/4))
   padding-top 20px
   margin-top 20px
   border-top 1px solid gray-lighter-color
+  &__header
+    margin-bottom 15px
+    position relative
+    h1
+      garamond-size('headline', true)
 
-shadow-rail-n-up(n, padding = 15px)
+  &__view-all
+    faux-underline(black)
+    position absolute !important
+    right 0
+    top 0
+
+  .view-all-rail-cell
+    height 100%
+    .view-all-rail-cell-inner
+      height 100%
+      display flex
+      justify-content center
+      align-items center
+      border 2px solid gray-lightest-color
+      a
+        display block
+        text-decoration none
+        avant-garde-size('body')
+
   .artist-rail-cell
-    percent = 100% / n
-    padding padding
-    width percent
     display inline-block
 
-  .artist-rail-cell-inner
-    padding 10px
-    box-shadow 0 0 20px rgba(black, .12)
-
-#artist-overview-artists-rail
-  shadow-rail-n-up(4, 15px)
   .hoverable-image-link
     width 100%
 
-.artist-rail-header
-  margin-bottom 15px
-  position relative
-  h1
-    garamond-size('headline', true)
-
-.artist-rail-view-all
-  faux-underline(black)
-  position absolute !important
-  right 0
-  top 0
+  &[data-id='artists']
+    .mgr-arrow-left
+    .mgr-arrow-right
+      top 15px
+    .mgr-cell
+      margin-top 15px
+      margin-bottom 15px
+    .rail-content-outer
+      overflow hidden
+    .rail-content-inner
+      margin 0 -10px
+    .artist-rail-cell-inner
+      padding 10px
+      box-shadow 0 0 20px rgba(black, .12)
 
 // Related Artists section
-#artist-related-contemporary-content
-#artist-related-artists-content
+.artist-related-artists-section
+  display none
+  fade-in()
+
+// Section Grid Views
+.artist-related-shows-content
+.artist-related-artists-content
   margin-bottom 60px
   grid-4-up(30px, 40px)
 

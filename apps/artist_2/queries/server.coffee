@@ -44,6 +44,6 @@ module.exports = """
     }
   }
 
-  #{require './components/carousel/query'}
-  #{require './components/current_show_auction/query'}
+  #{require '../components/carousel/query'}
+  #{require '../components/current_show_auction/query'}
 """

@@ -1,0 +1,15 @@
+.article-cell-item
+  a.hoverable-image-link( href=article.href )
+    .hoverable-image.is-four-three.is-cropped(
+      style= article.thumbnail_image && 'background-image: url(#{article.thumbnail_image.cropped.url})'
+      alt= article.thumbnail_title
+      onerror='this.style.display="none";'
+    )
+
+  a.article-cell-item__metadata(
+    href= article.href
+  )
+    .article-cell-item__title
+      = article.thumbnail_title
+    .article-cell-item__author
+      = article.author.name

@@ -1,7 +1,7 @@
 - index = index || 0
 
 a.mgr-arrow-left.icon-chevron-left.js-mgr-prev(
-  disabled= contain && isStart
+  disabled= disableStart
 )
 
 .mgr-dots
@@ -13,5 +13,5 @@ a.mgr-arrow-left.icon-chevron-left.js-mgr-prev(
       ) •
 
 a.mgr-arrow-right.icon-chevron-right.js-mgr-next(
-  disabled= contain && isEnd
+  disabled= disableEnd
 )

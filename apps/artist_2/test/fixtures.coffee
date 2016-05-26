@@ -32,30 +32,32 @@ module.exports = {
   "show": [{
     "name": "A Show",
     "href": "/show/a-show",
+    "partner": { "name": "Gallery One" },
+    "location": { "city": "New York" },
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/foo.jpg"
-        }, {
+    "cover_image": { "cropped": { "url": "/foo.jpg" } }
+  }, {
     "name": "Another Show",
-    "partner": "name": "Gallery Name",
-    "location": "city": "New York",
+    "partner": { "name": "Gallery Two" },
+    "location": { "city": "New York" },
     "href": "/show/another-show",
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/bar.jpg"
+    "cover_image": { "cropped": { "url": "/bar.jpg" } }
   }],
   "auction": [{
     "name": "An Auction"
     "href": "/auction/an-auction"
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/baz.jpg"
+    "cover_image": { "cropped": { "url": "/baz.jpg" } }
   }, {
     "name": "Another Auction"
     "href": "/auction/another-auction"
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/foobarbaz.jpg"
+    "cover_image": { "cropped": { "url": "/foobarbaz.jpg" } }
   }],
   "carousel": {
     "images": [

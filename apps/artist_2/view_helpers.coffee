@@ -3,9 +3,11 @@ moment = require 'moment'
 Artist = require '../../models/artist.coffee'
 { timespanInWords } = require '../../components/util/date_helpers.coffee'
 { capitalize, numberFormat } = require 'underscore.string'
+showHelpers = require '../../components/show_cell/helpers.coffee'
 
 module.exports =
   capitalize: capitalize
+  showHelpers: showHelpers
 
   pageTitle: (artist) ->
     artist = new Artist
@@ -28,6 +30,7 @@ module.exports =
     ]).join ', '
 
   formatBirthDeath: (artist) ->
+    return '' if not artist.birthday
     if artist.deathday?.length
       "#{artist.birthday}–#{artist.deathday}"
     else
@@ -53,8 +56,3 @@ module.exports =
     minuteFormat = if end.minute() > 0 then ':mm' else ''
     end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
 
-  formatShowDetail: (item) ->
-    _.compact([
-      item.city
-      timespanInWords(item.start_at, item.end_at, day: 'D')
-    ]).join ', '
