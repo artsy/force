@@ -5,14 +5,18 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
-iconicArtistsTemplate = -> require('../templates/contexts/_iconic_artists.jade') arguments...
-auctionTemplate = -> require('../templates/contexts/_auction.jade') arguments...
-fairTemplate = -> require('../templates/contexts/_fair.jade') arguments...
+iconicArtistsTemplate = -> require('../components/iconic_artists_context/templates/index.jade') arguments...
+auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
+fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
+followedArtistsTemplate = -> require('../components/followed_artists_context/templates/index.jade') arguments...
 
 contexts =
   iconic_artists: (module) ->
     iconicArtistsTemplate artists: module.context.artists
-  followed_artists: -> # noop
+  followed_artists: (module) ->
+    followedArtistsTemplate
+      artists: module.context.artists
+      counts: module.context.counts
   live_auctions: (module) ->
     auctionTemplate auction: module.context
   current_fairs: (module) ->
@@ -40,6 +44,6 @@ module.exports = ->
       if contexts[module.key]?
         view.on 'post-render', ->
           html = contexts[module.key](module)
-          $("#hpm-#{module.key}-#{index} .arv-context").html html
+          $("#hpm-#{module.key}-#{index} .abrv-context").html html
 
 

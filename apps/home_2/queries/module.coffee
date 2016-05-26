@@ -7,41 +7,18 @@ module.exports = """
         ... artwork_brick
       }
       context {
-        ... on HomePageModuleContextFair {
-          href
-          name
-          tagline
-          start_at
-          end_at
-          location {
-            city
-          }
-          profile {
-            icon{
-              url(version: "square140")
-              versions
-            }
-          }
-        }
-        ... on HomePageModuleContextSale {
-          href
-          name
-          description
-          start_at(format: "MMM D")
-          end_at(format: "MMM D")
-          closes: end_at(format: "MMM D [at] ha")
-        }
-        ... on HomePageModuleContextGene {
-          href
-        }
-        ... on HomePageModuleContextTrending{
-          artists{
-            name
-            id
-          }
-        }
+        ... fair_context
+        ... auction_context
+        ... gene_context
+        ... iconic_artists_context
+        ... followed_artists_context
       }
     }
   }
   #{require '../../../components/artwork_brick/query.coffee'}
+  #{require '../components/auction_context/query.coffee'}
+  #{require '../components/fair_context/query.coffee'}
+  #{require '../components/iconic_artists_context/query.coffee'}
+  #{require '../components/followed_artists_context/query.coffee'}
+  #{require '../components/gene_context/query.coffee'}
 """
