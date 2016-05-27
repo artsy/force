@@ -23,8 +23,8 @@ module.exports = class Serializer
       memo
     , {}
 
-  data: ->
-    _.extend {}, @inputs(), @checkboxes()
+  data: (data = {}) ->
+    _.extend data, @inputs(), @checkboxes()
 
   pick: (keys...) ->
     _.pick @data(), keys...

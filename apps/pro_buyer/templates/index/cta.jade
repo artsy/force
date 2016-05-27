@@ -1,0 +1,56 @@
+footer.probuyer-cta( class='js-cta' )
+  h3.probuyer-cta__headline
+    = cta.headline
+
+  .probuyer-cta__form
+    if user
+      a.avant-garde-button-black.is-block(
+        href='#{sd.CURRENT_PATH}/complete'
+      ) Join as #{user.get('name')}
+    else
+      form.stacked-form( class='js-register-form' )
+        input.bordered-input(
+          type='email'
+          name='email'
+          placeholder='Email'
+          required
+        )
+
+        input.bordered-input(
+          type='password'
+          name='password'
+          placeholder='Password'
+          required
+        )
+
+        input.bordered-input(
+          type='text'
+          name='name'
+          placeholder='Full Name'
+          required
+        )
+
+        button.avant-garde-button-black
+          = cta.button.label
+
+      .probuyer-cta__form__terms
+        | By signing up, you agree to our
+        br
+        a( href='/terms' )
+          | Terms of Use
+        = ' and '
+        a( href='/privacy' )
+          | Privacy Policy
+
+    .probuyer-cta__form__login
+      if user
+        | Not you?
+        = ' '
+        a( href='#', class='js-logout' )
+          | Join as a different user.
+
+      else
+        | Already have an account?
+        = ' '
+        a( href='/log_in', class='js-login' )
+          | Login
