@@ -1,0 +1,11 @@
+.arv-context__content.arv-context__content--followed-artists
+  if artists
+    each artist in artists
+      a.arv-context__content--followed-artists__artist(href="/artist/#{artist.id}")= artist.name
+    if counts.artists - artists.length > 0
+      a.arv-context__content--followed-artists__artist(href="/works-for-you") + #{counts.artists - artists.length} more artists
+  else
+    p Follow artists for better recommendations and to receive alerts when new works are available
+    P
+      span.avant-garde-body Or&nbsp;
+      a(href="/artists") Browse all artists

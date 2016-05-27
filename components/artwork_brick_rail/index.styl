@@ -26,11 +26,14 @@
   clearfix()
 
 .abrv-context
-  width 170px
+  width 200px
   border-right 1px solid gray-lighter-color
   margin 0 30px 20px 0
   padding-right 30px
   height 360px
+  white-space normal
+  p
+    margin-bottom 20px
 
 .mgr-cell.abrv-fillwidth-row
   padding-bottom 120px
@@ -49,6 +52,8 @@
     top 110px
   .mgr-cells:not(.flickity-enabled) .mgr-cell
     visibility hidden
+  .mgr-cells.mgr-cells--visible .mgr-cell
+    visibility visible !important
   .mgr-cells--loading
     display flex
     .mgr-cell--loading

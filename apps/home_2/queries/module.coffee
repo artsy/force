@@ -19,6 +19,6 @@ module.exports = """
   #{require '../components/auction_context/query.coffee'}
   #{require '../components/fair_context/query.coffee'}
   #{require '../components/iconic_artists_context/query.coffee'}
-  #{require '../components/followed_artists_context/query.coffee'}
+  #{require '../components/followed_artists/query.coffee'}
   #{require '../components/gene_context/query.coffee'}
 """
