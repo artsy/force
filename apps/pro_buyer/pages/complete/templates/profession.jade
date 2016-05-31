@@ -1,4 +1,5 @@
 - var professions = ['Interior Designer', 'Decorator', 'Art Consultant', 'Art Advisor', 'Architect']
+- var isWithOtherProfession = user.has('profession') && professions.indexOf(user.get('profession')) === -1
 - var isOther = user.get('profession') === 'Other'
 
 label.avant-garde-form-label( for='profession' )
@@ -16,16 +17,16 @@ label.bordered-select.is-block
     for profession in professions
       option(
         value= profession
-        selected = (user.get('profession') === profession ? true : undefined)
+        selected= (user.get('profession') === profession ? true : undefined)
       )= profession
 
     option(
       value= 'Other'
-      selected = (isOther ? true : undefined)
-    )
-      | Other
+      selected= isWithOtherProfession
+      disabled= isWithOtherProfession
+    ) Other
 
-if user.has('profession') && professions.indexOf(user.get('profession')) === -1
+if isWithOtherProfession
   input.bordered-input.is-block(
     id='profession'
     name='profession'
