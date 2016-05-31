@@ -32,7 +32,7 @@ header.artist-header
   .artist-sticky-header
     .artist-sticky-header-container
       .artist-sticky-name
-        a(href= "/artist_2/#{artist.id}")= artist.name
+        a(href= artist.href)= artist.name
       .artist-tabs
         nav.artist-tablist.garamond-bordered-tablist
           for link, i in nav.sections()
