@@ -89,7 +89,6 @@ describe 'ArtistViewHelpers', ->
 
   describe 'formatBirthDeath', ->
     it 'death only', ->
-      console.log helpers.formatBirthDeath( deathday: "1990" )
       helpers.formatBirthDeath( deathday: "1990" ).should.eql ''
 
     it 'birth only', ->
