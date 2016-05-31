@@ -8,12 +8,14 @@
       .auth-login-social
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
-            href=sd.AP.facebookPath rel='nofollow'
+            href=sd.AP.facebookPath + '?redirect-to=' + redirectTo
+            rel='nofollow'
           )
             i.icon-facebook
             | Log in using Facebook
           a.auth-login-twitter.avant-garde-button-black(
-            href=sd.AP.twitterPath rel='nofollow'
+            href=sd.AP.twitterPath + '?redirect-to=' + redirectTo
+            rel='nofollow'
           )
             i.icon-twitter
             | Log in using Twitter
