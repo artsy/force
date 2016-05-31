@@ -1,3 +1,6 @@
+if user.related().collectorProfile.has('professional_buyer_applied_at')
+  | professional_buyer_applied_at: #{user.related().collectorProfile.get('professional_buyer_applied_at')}
+
 .probuyer-complete
   h1
     | Complete Your Artsy
@@ -8,29 +11,34 @@ form.probuyer-complete__form.stacked-form
   .form-errors( class='js-form-errors' )
     //- Rendered client-side
 
+  input( type='hidden', name='professional_buyer', value='true' )
+
   div( class='js-profession' )
     include ./profession
 
   label.avant-garde-form-label( for='company_name' )
-    | Company Name
+    | Company Name*
   input.bordered-input(
     type='text'
     id='company_name'
     name='company_name'
+    value= user.related().collectorProfile.get('company_name')
     required
   )
 
   label.avant-garde-form-label( for='company_website' )
-    | Company Website
+    | Company Website*
   input.bordered-input(
-    type='text'
+    type='url'
     id='company_website'
     name='company_website'
+    placeholder='http://'
+    value= user.related().collectorProfile.get('company_website')
     required
   )
 
   label.avant-garde-form-label( for='location' )
-    | Location
+    | Location*
   input.bordered-input(
     class='js-location'
     type='text'
@@ -46,7 +54,8 @@ form.probuyer-complete__form.stacked-form
       id='price_range'
       name='price_range'
     )
-      option( disabled selected ) Select Price Range
+      option( disabled selected )
+        | Select a price range
       for bucket in user.priceBuckets
         option(
           value= bucket.value

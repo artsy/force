@@ -1,4 +1,4 @@
-extends ../../../../components/main_layout/templates/minimal_header
+extends ../../../../../components/main_layout/templates/index
 
 block head
   title Professional Buyer Program | Artsy
@@ -8,5 +8,5 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins'
 
 block body
-  .probuyer-page( class='js-probuyer-complete-view' )
+  div( class='js-probuyer-landing-view' )
     include ./page

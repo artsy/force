@@ -1,19 +1,36 @@
+Promise = require 'bluebird-q'
+
 module.exports = (page) ->
-  post:
-    complete: (req, res, next) ->
-      res.send req.body
+  middleware: (req, res, next) ->
+    unless req.user?
+      return res.redirect page.paths.show
+
+    next()
 
   get:
     index: (req, res, next) ->
       page
         .get()
         .then (data) ->
-          res.render 'index', data
+          res.render 'pages/landing/templates/index', data
 
         .catch next
 
-    complete: (req, res) ->
-      unless req.user?
-        return res.redirect 'back'
+    complete: (req, res, next) ->
+      { user } = req
+      { collectorProfile } = user.related()
 
-      res.render 'complete'
+      Promise
+        .all [
+          user.fetch()
+          collectorProfile.fetch data: access_token: user.get 'accessToken'
+        ]
+
+        .then ->
+          res.locals.sd.CURRENT_USER = user.toJSON()
+          res.locals.sd.COLLECTOR_PROFILE = collectorProfile.toJSON()
+          res.render 'pages/complete/templates/index'
+
+        .catch (err) ->
+          console.log err
+          next err

@@ -1,9 +1,9 @@
 { extend } = require 'underscore'
 { View } = require 'backbone'
 { CURRENT_PATH } = require('sharify').data
-scrollTo = require '../../../../components/smooth_scroll/index.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
-template = -> require('../../templates/index/page.jade') arguments...
+scrollTo = require '../../../../../components/smooth_scroll/index.coffee'
+AuthModalView = require '../../../../../components/auth_modal/view.coffee'
+template = -> require('../templates/page.jade') arguments...
 
 module.exports = class ProfessionalBuyerIndexView extends View
   events:
