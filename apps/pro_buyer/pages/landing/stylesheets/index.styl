@@ -1,0 +1,30 @@
+@require './header'
+@require './proposition'
+@require './benefits'
+@require './testimonials'
+@require './cta'
+
+.probuyer-page
+  // `.responsive-layout-container`-ish
+  margin 0 auto
+  padding 0 (gutter * 2)
+
+  @media screen and (min-width: 1440px)
+    padding 0 (gutter * 5)
+
+  @media screen and (min-width: 1660px)
+    padding 0 (gutter * 8)
+
+  > section
+    padding-bottom 50px
+    border-bottom 1px solid gray-lighter-color
+
+  > section
+  > footer
+    //
+
+    > h3
+      serif('l-headline')
+      margin distance(80px) 0 distance(50px)
+
+@require './mobile'

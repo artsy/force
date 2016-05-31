@@ -12,7 +12,7 @@ form.probuyer-complete__form.stacked-form
     include ./profession
 
   label.avant-garde-form-label( for='company_name' )
-    | Company Name
+    | Company Name*
   input.bordered-input(
     type='text'
     id='company_name'
@@ -21,7 +21,7 @@ form.probuyer-complete__form.stacked-form
   )
 
   label.avant-garde-form-label( for='company_website' )
-    | Company Website
+    | Company Website*
   input.bordered-input(
     type='text'
     id='company_website'
@@ -30,7 +30,7 @@ form.probuyer-complete__form.stacked-form
   )
 
   label.avant-garde-form-label( for='location' )
-    | Location
+    | Location*
   input.bordered-input(
     class='js-location'
     type='text'
@@ -46,7 +46,8 @@ form.probuyer-complete__form.stacked-form
       id='price_range'
       name='price_range'
     )
-      option( disabled selected ) Select Price Range
+      option( disabled selected )
+        | Select a price range
       for bucket in user.priceBuckets
         option(
           value= bucket.value

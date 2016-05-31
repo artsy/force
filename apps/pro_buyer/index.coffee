@@ -3,7 +3,7 @@ adminOnly = require '../../lib/middleware/admin_only'
 JSONPage = require '../../components/json_page'
 
 app = module.exports = express()
-app.set 'views', __dirname + '/templates'
+app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 page = new JSONPage

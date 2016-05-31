@@ -8,7 +8,7 @@ module.exports = (page) ->
       page
         .get()
         .then (data) ->
-          res.render 'index', data
+          res.render 'pages/landing/templates/index', data
 
         .catch next
 
@@ -16,4 +16,4 @@ module.exports = (page) ->
       unless req.user?
         return res.redirect 'back'
 
-      res.render 'complete'
+      res.render 'pages/complete/templates/index'

@@ -1,10 +1,10 @@
 { invoke } = require 'underscore'
 { View, Model } = require 'backbone'
-Form = require '../../../../components/form/index.coffee'
-LocationSearchView = require '../../../../components/location_search/index.coffee'
+Form = require '../../../../../components/form/index.coffee'
+LocationSearchView = require '../../../../../components/location_search/index.coffee'
 templates =
-  page: -> require('../../templates/complete/page.jade') arguments...
-  profession: -> require('../../templates/complete/profession.jade') arguments...
+  page: -> require('../templates/page.jade') arguments...
+  profession: -> require('../templates/profession.jade') arguments...
 
 module.exports = class ProfessionalBuyerCompleteView extends View
   events:
