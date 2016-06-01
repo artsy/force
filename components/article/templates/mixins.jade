@@ -101,3 +101,37 @@ mixin topStories
 mixin embed(section)
   .article-embed-container
     iframe(src=section.url style="height:#{section.height}px" scrolling='no' frameborder='0')
+
+mixin artwork(artwork)
+  li( data-id=artwork.id )
+    figure.artwork-item
+      .artwork-item-image-container
+        a.artwork-item-image-link( href='/artwork/' + artwork.slug )
+          .artwork-item-image
+            img( src=artwork.image )
+      figcaption.artwork-item-caption
+        if artwork.artist && artwork.artist.name
+          p.artwork-item-artist.artwork-item-overflow
+            if artwork.artist.slug
+              a(href='/artist/' + artwork.artist.slug )= artwork.artist.name
+            else
+              |= artwork.artist.name
+        if artwork.title
+          p.artwork-item-title.artwork-item-overflow
+            if artwork.slug
+              a(href='/artwork/' + artwork.slug)
+                em= artwork.title
+                if artwork.date
+                  | ,&nbsp
+                  = artwork.date
+            else
+              em= artwork.title
+              if artwork.date
+                | ,&nbsp
+                = artwork.date
+        if artwork.partner && artwork.partner.name
+          p.artwork-item-partner.artwork-item-overflow
+            if artwork.partner.slug
+              a(href='/' + artwork.partner.slug)= artwork.partner.name
+            else
+              = artwork.partner.name

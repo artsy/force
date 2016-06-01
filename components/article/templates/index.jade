@@ -46,11 +46,10 @@ if superArticle
           when 'text'
             .article-section-text!= section.body
           when 'artworks'
-            .article-section-artworks.is-loading( data-layout=section.layout )
-              .loading-spinner
+            .article-section-artworks( data-layout=section.layout )
               ul
-                for id in section.ids
-                  li( data-id=id )
+                for artwork in section.artworks
+                  +artwork(artwork)
           when 'image'
             .article-section-image
               +image(section)

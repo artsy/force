@@ -23,11 +23,12 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['artworkItemTemplate', 'editTemplate', 'calloutTemplate' ]
+        ['editTemplate', 'calloutTemplate' ]
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
       @ArticleView.__set__ 'CurrentUser', fabricate 'user'
+      @fillwidth = sinon.spy @ArticleView::fillwidth
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
@@ -42,6 +43,7 @@ describe 'ArticleView', ->
               type: 'artworks',
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
               layout: 'overflow_fillwidth'
+              artworks: []
             }
             {
               type: 'embed',
@@ -91,23 +93,10 @@ describe 'ArticleView', ->
 
   describe '#renderArtworks', ->
 
-    it 'renders artworks from the article', ->
-      Backbone.sync.restore()
-      sinon.stub Backbone, 'sync'
-      @view.renderArtworks(->)
-      for arg in Backbone.sync.args
-        arg[2].success fabricate 'artwork',
-          title: 'Andy Foobar Flowers'
-          _id: '5321b73dc9dc2458c4000196'
-      @view.$el.html().should.containEql 'Andy Foobar Flowers'
+    it 'fillwidth is called on each artwork section', ->
+      @view.renderArtworks()
+      
 
-    it 'does not render an artwork if unpublished', ->
-      Backbone.sync.restore()
-      sinon.stub Backbone, 'sync'
-      @view.renderArtworks(->)
-      for arg in Backbone.sync.args
-        arg[2].error()
-      @view.$('.article-section-artworks ul').html().length.should.equal 0
 
   describe '#checkEditable', ->
 

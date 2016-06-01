@@ -12,7 +12,7 @@ block body
   #articles-show
 
     //- Section header
-    if article.get('section_ids').length
+    if article.get('section_ids') && article.get('section_ids').length
       header.articles-section-show-header.main-layout-container
         section
           .articles-section-show-header-left
