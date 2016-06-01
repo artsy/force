@@ -1,10 +1,7 @@
 each item in items
   .mgr-cell.js-mgr-cell.artist-rail-cell
-    .artist-rail-cell-inner
-      - var show = item
-      include ../../../../components/show_cell/index
+    - var show = item
+    include ../../../../components/show_cell/index
 
 if showMore
-  .mgr-cell.js-mgr-cell.artist-rail-cell.view-all-rail-cell
-    .view-all-rail-cell-inner
-      a(href= viewAllUrl) View All
+  include ./view_all_cell

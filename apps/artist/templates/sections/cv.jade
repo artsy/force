@@ -26,13 +26,13 @@ mixin cv-link-shows-section(shows, title, trailPartnerName)
 
       .bisected-header-cell
         if soloShows && soloShows.length
-          mixin cv-link-shows-section(soloShows, "Solo Shows On Artsy", true)
+          mixin cv-link-shows-section(soloShows, "Solo Shows on Artsy", true)
 
         if groupShows && groupShows.length
-          mixin cv-link-shows-section(groupShows, "Group Shows On Artsy", true)
+          mixin cv-link-shows-section(groupShows, "Group Shows on Artsy", true)
 
         if fairBooths && fairBooths.length
-          mixin cv-link-shows-section(fairBooths, "Fair Participation On Artsy", false)
+          mixin cv-link-shows-section(fairBooths, "Fair History on Artsy", false)
 
         if articles && articles.length
           .bisected-header-cell-section

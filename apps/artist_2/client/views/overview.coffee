@@ -54,7 +54,7 @@ module.exports = class OverviewView extends Backbone.View
   renderRails: (artist) =>
     following = @following
     if artist.shows?.length <= 15
-      $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows On Artsy')
+      $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows on Artsy')
     baseHref = @model.href()
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')
