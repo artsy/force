@@ -25,6 +25,7 @@ module.exports = ->
   setupAuctionReminder()
   listenForInvert()
   listenForBounce()
+  require('../components/confirmation/client/index.coffee')()
   setupAnalytics()
 
 ensureFreshUser = (data) ->
