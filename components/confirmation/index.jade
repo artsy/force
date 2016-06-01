@@ -1,0 +1,21 @@
+.confirmation-modal
+  if title
+    h2.confirmation-modal__title
+      = title
+
+  if message
+    .confirmation-modal__message
+      = message
+
+  if confirm || ignore
+    .confirmation-modal__actions
+      a.avant-garde-button-black.is-block(
+        class='js-confirm'
+        href= confirm && confirm.href || undefined
+      )= confirm && confirm.label || 'OK'
+
+      if ignore
+        a.avant-garde-button-white.is-block(
+          class='js-ignore'
+          href= ignore && ignore.href || undefined
+        )= ignore && ignore.label || 'Maybe Later'
