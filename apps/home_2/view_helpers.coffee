@@ -2,6 +2,9 @@
 
 module.exports =
   viewAllUrl: (module) ->
+    if module.context?.artist?
+      return module.context.artist.href
+
     return module.context.href if module.context
 
     urls =

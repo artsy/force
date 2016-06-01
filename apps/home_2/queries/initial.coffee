@@ -16,8 +16,13 @@ module.exports = """
         ... on HomePageModuleContextGene {
           href
         }
-        ... on HomePageModuleContextRelatedArtists {
-          href
+        ... on HomePageModuleContextRelatedArtist {
+          artist {
+            href
+          }
+          based_on {
+            name
+          }
         }
       }
     }
