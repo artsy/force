@@ -1,5 +1,10 @@
 .abrv-inner( data-rail= railId )
   .abrv-header
+    if followAnnotation
+      .abrv-follow-annotation.avant-garde-s-headline Based on
+        | &nbsp;
+        = followAnnotation
+
     h1= title
 
     if viewAllUrl
