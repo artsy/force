@@ -145,7 +145,6 @@ module.exports = (app) ->
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware
-  app.use require "../components/confirmation/middleware"
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use hstsMiddleware
@@ -170,7 +169,6 @@ module.exports = (app) ->
   app.use require "../apps/artwork_2"
   app.use require "../apps/about"
   app.use require "../apps/collect"
-  app.use require "../components/confirmation/app"
   app.use require "../apps/categories"
   app.use require "../apps/consignments"
   app.use require "../apps/contact"

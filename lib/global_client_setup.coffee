@@ -17,6 +17,7 @@ setupAuctionReminder = require '../components/auction_reminders/index.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 listenForInvert = require '../components/eggs/invert/index.coffee'
 listenForBounce = require '../components/eggs/bounce/index.coffee'
+confirmation = require '../components/confirmation/index.coffee'
 
 module.exports = ->
   setupJquery()
@@ -25,7 +26,7 @@ module.exports = ->
   setupAuctionReminder()
   listenForInvert()
   listenForBounce()
-  require('../components/confirmation/client/index.coffee')()
+  confirmation.check()
   setupAnalytics()
 
 ensureFreshUser = (data) ->

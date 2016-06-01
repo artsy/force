@@ -3,6 +3,7 @@ Promise = require 'bluebird-q'
 { View, Model } = require 'backbone'
 Form = require '../../../../../components/form/index.coffee'
 LocationSearchView = require '../../../../../components/location_search/index.coffee'
+confirmation = require '../../../../../components/confirmation/index.coffee'
 templates =
   page: -> require('../templates/page.jade') arguments...
   profession: -> require('../templates/profession.jade') arguments...
@@ -55,17 +56,13 @@ module.exports = class ProfessionalBuyerCompleteView extends View
         @user.refresh()
 
       .then =>
-        form.state 'success'
-        form.reenable()
         @confirm()
-
-      .then =>
         @redirectTo '/collect'
 
       .catch form.error.bind form
 
   confirm: ->
-    Promise $.post '/confirmation',
+    confirmation.register
       title: 'Thank You for Joining'
       message: '''
         Make Artsy work for you: Follow artists, galleries, and

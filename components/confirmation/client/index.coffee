@@ -1,8 +1,7 @@
-{ CONFIRMATION } = require('sharify').data
 modalize = require '../../modalize/index.coffee'
 ConfirmationModal = require './view.coffee'
 
-module.exports = (data = CONFIRMATION) ->
+module.exports = (data) ->
   return unless data?
 
   view = new ConfirmationModal data: data
