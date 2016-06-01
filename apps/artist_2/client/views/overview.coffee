@@ -23,8 +23,7 @@ module.exports = class OverviewView extends Backbone.View
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
-    @listenTo this, 'artist:overview:sync', @renderRails
-    @listenTo this, 'artist:overview:sync', @renderExhibitionHighlights
+    @listenTo this, 'artist:overview:sync', @renderRelated
 
   fetchRelated: ->
     metaphysics
@@ -47,6 +46,11 @@ module.exports = class OverviewView extends Backbone.View
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
 
+  renderRelated: (artist) =>
+    artist.shows = _.sortBy artist.shows, 'end_at'
+    @renderRails artist
+    @renderExhibitionHighlights artist.shows
+
   renderRails: (artist) =>
     following = @following
     if artist.shows?.length <= 15
@@ -58,7 +62,7 @@ module.exports = class OverviewView extends Backbone.View
       return if not items
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following, baseHref }
 
-  renderExhibitionHighlights: ({ shows }) ->
+  renderExhibitionHighlights: (shows) ->
     return if not @statuses.shows
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
     # If there are more than 15 shows, take ten and show a 'see more' link
