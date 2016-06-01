@@ -1,4 +1,6 @@
-if !user && auction.isPreview()
+if auction.isClosed()
+  = ''
+else if !user && auction.isPreview()
   .auction-registration-wrapper
     .auction-registration-preview
       p Receive an email invitation when the auction begins.
@@ -19,6 +21,7 @@ else if user && user.get('registered_to_bid')
   .auction-registration-approved
     span.icon-check
     | Approved to Bid
+
 a.auction-registration-how-to-bid( href="/how-auctions-work" )
   img( src="/images/kiosk-cta.png" alt="How to Bid on Artsy" )
   | How to Bid on Artsy
