@@ -10,8 +10,8 @@ articlesTemplate = -> require('./articles.jade') arguments...
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 
 setupFollowButtons = ({ $el, items, kind }) =>
+  following = new Following(null, kind: kind) if CurrentUser.orNull()
   ids = $el.find('.follow-button').map ->
-    following = new Following(null, kind: kind) if CurrentUser.orNull()
 
     id = ($el = $(this)).data 'id'
     new FollowButton
@@ -52,6 +52,6 @@ module.exports = ({ $el, section, items, baseHref}) ->
   _.defer ->
     initCarousel $el,
       advanceBy: 4
-    sections[section].postRenderSection? { $el, section, items }
+    sections[section].postRenderSection?({ $el, section, items })
 
   $el

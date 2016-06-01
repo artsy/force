@@ -31,6 +31,8 @@ module.exports = class CVView extends Backbone.View
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
 
+    rail.collection.trigger 'sync'
+
   render: (artist = {}) ->
     artistMetadata = artistHelpers.artistMeta @model.toJSON()
     @$el.html template _.extend { showHelpers, artistMetadata }, artist

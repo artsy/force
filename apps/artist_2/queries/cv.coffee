@@ -13,7 +13,7 @@ module.exports =
           ... relatedShow
         }
       }
-      articles (limit: 99) @include(if: $articles) {
+      articles (limit: 99, sort: PUBLISHED_AT_DESC) @include(if: $articles) {
         href
         thumbnail_title
         published_at

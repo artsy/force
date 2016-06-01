@@ -9,7 +9,7 @@ module.exports =
       artists (size: 20) @include(if: $artists){
         ... relatedArtist
       }
-      articles (limit: 20) @include(if: $articles){
+      articles (limit: 20, sort: PUBLISHED_AT_DESC) @include(if: $articles){
         href
         thumbnail_title
         ... relatedArticleAuthorImage
