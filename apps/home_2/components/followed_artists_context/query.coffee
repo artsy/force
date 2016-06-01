@@ -1,5 +1,5 @@
 module.exports = """
-  fragment followed_artists_context on HomePageModuleContextFollowArists {
+  fragment followed_artists_context on HomePageModuleContextFollowArtists {
     counts {
       artists
     }
