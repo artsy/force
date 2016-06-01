@@ -1,0 +1,19 @@
+@require '../stylus_lib'
+
+.confirmation-modal
+  padding (gutter * 2) (gutter * 2) gutter (gutter * 2)
+
+  &__title
+    text-align center
+    serif('headline')
+
+  &__message
+    serif('s-body')
+    margin distance(gutter + (gutter / 3)) 0
+
+  &__actions
+    //
+
+    > .avant-garde-button-white
+      border-color transparent
+      color gray-darker-color
