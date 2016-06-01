@@ -54,11 +54,31 @@ module.exports = class ProfessionalBuyerCompleteView extends View
       .then =>
         @user.refresh()
 
-      .then ->
+      .then =>
         form.state 'success'
         form.reenable()
+        @confirm()
+
+      .then =>
+        @redirectTo '/collect'
 
       .catch form.error.bind form
+
+  confirm: ->
+    Promise $.post '/confirmation',
+      title: 'Thank You for Joining'
+      message: '''
+        Make Artsy work for you: Follow artists, galleries, and
+        categories to get alerts when new works are available.
+      '''
+      confirm:
+        href: '/personalize'
+        label: 'Personalize your Account'
+      ignore:
+        label: 'Maybe later, start browsing'
+
+  redirectTo: (path) ->
+    location.assign path
 
   postRender: ->
     city = @user.related().location.toString()
