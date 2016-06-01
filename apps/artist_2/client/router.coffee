@@ -73,6 +73,7 @@ module.exports = class ArtistRouter extends Backbone.Router
   shows: ->
     @view = new ShowsView @options
     @model.related().artworks.fetch(data: size: 15)
+
   articles: ->
     @view = new ArticlesView @options
     @model.related().articles.fetch()
