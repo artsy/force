@@ -1,3 +1,27 @@
-#arbv-follow-search-container
+@require '../../../../components/typeahead/index'
+
+.arbv-follow-search-container
   width 60%
   float left
+  .tt-suggestion-inner
+    display flex
+    align-items center
+    flex 1
+  .tt-dropdown-menu
+    border 1px solid gray-lighter-color
+  .tt-suggestion
+    padding 5px
+    border-bottom 1px solid gray-lighter-color
+    &:last-child
+      border-bottom none
+  .tt-cursor
+  .tt-suggestion:hover
+      background-color gray-lightest-color
+      color black
+  .typeahead-suggestion-follow
+    margin-right 10px
+    &[data-state="follow"] .avant-garde-button-underlined:before
+      content 'Follow'
+    &[data-state="following"] .avant-garde-button-underlined:before
+      content 'Following'
+      color purple-color
