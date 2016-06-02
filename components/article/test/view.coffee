@@ -19,6 +19,7 @@ describe 'ArticleView', ->
       benv.expose $: benv.require 'jquery'
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
+      $.fn.fillwidthLite = sinon.stub().yieldsTo('done')
       Backbone.$ = $
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
@@ -28,7 +29,7 @@ describe 'ArticleView', ->
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
       @ArticleView.__set__ 'CurrentUser', fabricate 'user'
-      @fillwidth = sinon.spy @ArticleView::fillwidth
+      @fillwidth = sinon.spy(@ArticleView::fillwidth)
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
@@ -42,8 +43,40 @@ describe 'ArticleView', ->
             {
               type: 'artworks',
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
-              layout: 'overflow_fillwidth'
-              artworks: []
+              layout: 'overflow_fillwidth',
+              artworks: [
+                {
+                  type: 'artwork'
+                  id: '5321b73dc9dc2458c4000196'
+                  slug: "govinda-sah-azad-in-between-1",
+                  date: "2015",
+                  title: "In Between",
+                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+                  partner: {
+                    name: "October Gallery",
+                    slug: "october-gallery"
+                  },
+                  artist: {
+                    name: "Govinda Sah 'Azad'",
+                    slug: "govinda-sah-azad"
+                  }
+                },{
+                  type: 'artwork'
+                  id: '5321b71c275b24bcaa0001a5'
+                  slug: "govinda-sah-azad-in-between-2",
+                  date: "2015",
+                  title: "In Between 2",
+                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ2/larger.jpg",
+                  partner: {
+                    name: "October Gallery",
+                    slug: "october-gallery"
+                  },
+                  artist: {
+                    name: "Govinda Sah 'Azad'",
+                    slug: "govinda-sah-azad"
+                  }
+                }
+              ]
             }
             {
               type: 'embed',
@@ -95,8 +128,8 @@ describe 'ArticleView', ->
 
     it 'fillwidth is called on each artwork section', ->
       @view.renderArtworks()
-      
-
+      _.defer =>
+        @fillwidth.callCount.should.equal 1
 
   describe '#checkEditable', ->
 
