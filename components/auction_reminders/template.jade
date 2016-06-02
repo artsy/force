@@ -11,7 +11,7 @@ if auction.isWithHeaderImage()
     )
 
 .auction-reminder-metadata
-  h4 Closing Soon
+  h4= auction.isLiveOpen() ? 'Live Bidding Open' : 'Closing Soon'
   h3= _s.truncate(auction.get('name'), 50)
   h4 Go to auction
 
