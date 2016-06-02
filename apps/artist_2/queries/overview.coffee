@@ -6,10 +6,10 @@ module.exports =
         artists { id }
         ... relatedShow
       }
-      artists (size: 20) @include(if: $artists){
+      artists (size: 16) @include(if: $artists){
         ... relatedArtist
       }
-      articles (limit: 20, sort: PUBLISHED_AT_DESC) @include(if: $articles){
+      articles (limit: 16, sort: PUBLISHED_AT_DESC) @include(if: $articles){
         href
         thumbnail_title
         ... relatedArticleAuthorImage
