@@ -1,11 +1,11 @@
 module.exports = """
   query {
-    home_page_modules{
+    home_page_modules {
       key
       params{
         id
       }
-      context{
+      context {
         ... on HomePageModuleContextFair {
           href
         }
