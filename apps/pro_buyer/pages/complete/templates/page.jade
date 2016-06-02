@@ -1,0 +1,64 @@
+.probuyer-complete
+  h1
+    | Complete Your Artsy
+    br
+    | Professional Buyer Information
+
+form.probuyer-complete__form.stacked-form
+  .form-errors( class='js-form-errors' )
+    //- Rendered client-side
+
+  input( type='hidden', name='professional_buyer', value='true' )
+
+  div( class='js-profession' )
+    include ./profession
+
+  label.avant-garde-form-label( for='company_name' )
+    | Company Name*
+  input.bordered-input(
+    type='text'
+    id='company_name'
+    name='company_name'
+    value= user.related().collectorProfile.get('company_name')
+    required
+  )
+
+  label.avant-garde-form-label( for='company_website' )
+    | Company Website*
+  input.bordered-input(
+    type='url'
+    id='company_website'
+    name='company_website'
+    placeholder='http://'
+    value= user.related().collectorProfile.get('company_website')
+    required
+  )
+
+  label.avant-garde-form-label( for='location' )
+    | Location*
+  input.bordered-input(
+    class='js-location'
+    type='text'
+    id='location'
+    name='location'
+  )
+
+  label.avant-garde-form-label( for='price_range' )
+    | Budget Per Work
+
+  label.bordered-select
+    select(
+      id='price_range'
+      name='price_range'
+    )
+      option( disabled selected )
+        | Select a price range
+      for bucket in user.priceBuckets
+        option(
+          value= bucket.value
+          selected= (bucket.value === user.get('price_range') ? true : undefined)
+        )= bucket.display
+
+  button.avant-garde-button-black(
+    type='submit'
+  ) Submit

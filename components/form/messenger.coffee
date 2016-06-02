@@ -59,7 +59,7 @@ module.exports = class Messenger
 
   custom: ({ name, type, validity }) ->
     if validity.valueMissing
-      if name then "Please enter your #{name}" else 'Please fill out this field'
+      if name then "Please enter your #{_s.humanize(name).toLowerCase()}" else 'Please fill out this field'
     else if validity.patternMismatch
       'Please match the requested format'
     else if validity.typeMismatch

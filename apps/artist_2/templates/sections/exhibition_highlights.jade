@@ -6,8 +6,8 @@ if shows.highlights && shows.highlights.length
     +showItem(show, show.fair ? showHelpers.showOrFairLocation(show) : showHelpers.partnerNameAndLocation(show))
 
   .exibition-highlights-see-more
-    button.avant-garde-button-white
-      a(href = model.href() + '/cv') See More
+    button.avant-garde-button-white.is-small
+      a(href = model.href() + '/cv') View Artist's CV
 else
   - var group_shows = shows.group
   - var solo_shows = shows.solo

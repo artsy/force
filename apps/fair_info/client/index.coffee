@@ -7,7 +7,6 @@ FairEvent = require '../../../models/fair_event.coffee'
 Profile = require '../../../models/profile.coffee'
 Article = require '../../../models/article.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
-FairInfoArticleView = require './article.coffee'
 sd = require('sharify').data
 
 module.exports = class FairInfoRouter extends Backbone.Router

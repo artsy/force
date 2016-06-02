@@ -13,8 +13,9 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @imageHeight = 220,
       @railId,
       @artworks,
-      @includeContact = true
-      @hasContext
+      @includeContact = true,
+      @hasContext,
+      @followAnnotation
     } = options
 
   render: ->
@@ -26,6 +27,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       railId: @railId
       includeContact: @includeContact
       hasContext: @hasContext
+      followAnnotation: @followAnnotation
 
     @postRender()
     this

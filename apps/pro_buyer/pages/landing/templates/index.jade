@@ -1,0 +1,12 @@
+extends ../../../../../components/main_layout/templates/index
+
+block head
+  title Professional Buyer Program | Artsy
+
+append locals
+  - assetPackage = 'pro_buyer'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  div( class='js-probuyer-landing-view' )
+    include ./page

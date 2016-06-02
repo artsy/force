@@ -19,7 +19,7 @@ module.exports =
     '
     pages:
       'Selling On Artsy': 'collector-faqs-selling-on-artsy'
-      'Other Requests': 'collector-faqs-other-requests'
+      'Buying on Artsy': 'collector-faqs-other-requests'
   'artist-faqs':
     title: 'Artist FAQs'
     description: '

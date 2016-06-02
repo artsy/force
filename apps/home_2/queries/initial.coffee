@@ -5,6 +5,25 @@ module.exports = """
       params{
         id
       }
+      context{
+        ... on HomePageModuleContextFair {
+          href
+        }
+        ... on HomePageModuleContextSale {
+          href
+        }
+        ... on HomePageModuleContextGene {
+          href
+        }
+        ... on HomePageModuleContextRelatedArtist {
+          artist {
+            href
+          }
+          based_on {
+            name
+          }
+        }
+      }
     }
   }
 """

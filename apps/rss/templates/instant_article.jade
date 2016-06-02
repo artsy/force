@@ -50,9 +50,4 @@ html(lang="en" prefix="op: http://media.facebook.com/op#")
           when 'image_set'
             +imageSet(section)
 
-      figure.op-tracker
-        iframe(hidden)
-          script(type="text/javascript").
-            PARSELY = { autotrack: false, onload: function() { PARSELY.beacon.trackPageView({ urlref: 'http://instantarticles.fb.com' }); return true; } }
-
       include tracking

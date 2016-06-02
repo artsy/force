@@ -1,8 +1,8 @@
 include ./cv_item
 
-#artist-cv-section
+.artist-page-section-block#artist-cv-section
   h2.artist-section-header Curriculum Vitae
-  #artist-cv
+  #artist-cv-content
     .thirty-seventy-bisected-header
       .bisected-header-cell
         .bisected-header-cell-section
@@ -13,9 +13,12 @@ include ./cv_item
 
         if articles && articles.length
           .bisected-header-cell-section
-            h2 Articles On Artsy
+            h2 Articles on Artsy
             for article in articles
               .artist-cv-link
-                = new Date(article.published_at).getFullYear()
-                | &nbsp;&nbsp;&nbsp;
-                a(href= article.href)= article.thumbnail_title
+                .artist-cv-link__year= new Date(article.published_at).getFullYear()
+                .artist-cv-link__text
+                  a(href= article.href)= article.thumbnail_title
+
+.artist-rail.artist-artworks-rail.arv-container
+  include ../../../../components/artwork_rail/templates/index

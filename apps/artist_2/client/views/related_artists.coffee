@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 Backbone = require 'backbone'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
-FollowButton = require '../../../../components/follow_button/view.coffee'
+{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
 metaphysics = require '../../../../lib/metaphysics.coffee'
 query = require '../../queries/artists.coffee'
@@ -27,11 +27,12 @@ module.exports = class RelatedArtistsView extends Backbone.View
     .then ({artist}) =>
       @trigger 'artist:artists:sync', artist
 
-  setupFollowButtons: (artists)=>
+  setupFollowButtons: =>
+    relatedArtists = @relatedArtists
+    following = @following
     ids = @$('.artist-related-artists-section .follow-button').map ->
-      following = @following
       id = ($el = $(this)).data 'id'
-      artist = _.findWhere(artists, id:id)
+      artist = _.findWhere(relatedArtists, id:id)
       new FollowButton
         context_page: "Artists page"
         context_module: "Related Artists tab"
@@ -39,13 +40,13 @@ module.exports = class RelatedArtistsView extends Backbone.View
         model: new Backbone.Model id: id
         modelName: 'artist'
         el: $el
-        href: _.findWhere(artists, id:id).href
+        href: artist.href
       id
 
     @following?.syncFollows ids
 
   postRender: ->
-    @setupFollowButtons @relatedArtists
+    @setupFollowButtons()
     rail = new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks
@@ -61,7 +62,7 @@ module.exports = class RelatedArtistsView extends Backbone.View
     $el
 
   render: ({ artists, contemporary } = {})->
-    @relatedArtists = _.flatten [artists, contemporary]
+    @relatedArtists = _.compact(_.flatten([artists, contemporary]))
     @$el.html template { artists, contemporary }
     _.defer => @postRender()
     this

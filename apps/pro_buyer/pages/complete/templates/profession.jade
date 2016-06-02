@@ -1,0 +1,37 @@
+- var professions = ['Interior Designer', 'Decorator', 'Art Consultant', 'Art Advisor', 'Architect']
+- var isWithOtherProfession = user.has('profession') && professions.indexOf(user.get('profession')) === -1
+- var isOther = user.get('profession') === 'Other'
+
+label.avant-garde-form-label( for='profession' )
+  | Profession*
+
+label.bordered-select.is-block
+  select(
+    id='profession'
+    name= (isOther ? undefined : 'profession')
+    required
+  )
+    option( disabled selected )
+      | Select Profession
+
+    for profession in professions
+      option(
+        value= profession
+        selected= (user.get('profession') === profession ? true : undefined)
+      )= profession
+
+    option(
+      value= 'Other'
+      selected= isWithOtherProfession
+      disabled= isWithOtherProfession
+    ) Other
+
+if isWithOtherProfession
+  input.bordered-input.is-block(
+    id='profession'
+    name='profession'
+    placeholder='Your Profession'
+    value= user.get('profession') !== 'Other' && user.get('profession')
+    required
+    autofocus
+  )

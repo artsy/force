@@ -43,6 +43,7 @@ module.exports = ->
         title: module.title
         viewAllUrl: viewAllUrl module
         hasContext: contexts[module.key]?
+        followAnnotation: module.context?.based_on?.name
 
       view.render()
 

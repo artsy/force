@@ -1,22 +1,21 @@
 .show-cell-item
-  a.hoverable-image-link( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
-    .hoverable-image.is-four-three.is-cropped(
-      style= show.cover_image && 'background-image: url(#{show.cover_image.cropped.url})'
-      alt= show.name
-      onerror='this.style.display="none";'
-    )
+  a.artist-rail-cell__link.show-cell-item__link.artist-rail-hoverable( href=show.href + (fromShowGuide ? '?from-show-guide=true' : '') )
+    .hoverable-image-link
+      .hoverable-image.is-four-three.is-cropped(
+        style= show.cover_image && 'background-image: url(#{show.cover_image.cropped.url})'
+        alt= show.name
+        onerror='this.style.display="none";'
+      )
 
-  a.show-cell-item__metadata(
-    href= show.href + (fromShowGuide ? '?from-show-guide=true' : '')
-  )
-    .show-cell-item__partner-name
-      = show.partner.name
-    .show-cell-item__show-name
-      = show.name
+    .show-cell-item__metadata
+      .show-cell-item__partner-name
+        = show.partner.name
+      .show-cell-item__show-name
+        = show.name
 
-    .show-cell-item__running-dates
-      = showHelpers.locationAndDate(show)
+      .show-cell-item__running-dates
+        = showHelpers.locationAndDate(show)
 
-    if showHelpers.isEndingSoon(show)
-      .show-cell-item__warning
-        = 'Closing' + showHelpers.endingIn(show)
+      if showHelpers.isEndingSoon(show)
+        .show-cell-item__warning
+          = 'Closing ' + showHelpers.endingIn(show)
