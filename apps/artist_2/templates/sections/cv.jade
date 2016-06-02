@@ -4,9 +4,10 @@ include ./cv_item
   h2.artist-section-header Curriculum Vitae
   #artist-cv-content
     .thirty-seventy-bisected-header
-      .bisected-header-cell
-        .bisected-header-cell-section
-          = artistMetadata
+      if artistMetadata && artistMetadata.length
+        .bisected-header-cell
+          .bisected-header-cell-section
+            = artistMetadata
 
       .bisected-header-cell
         include ./show_groupings
