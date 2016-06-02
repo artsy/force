@@ -1,6 +1,7 @@
 Promise = require 'bluebird-q'
 { invoke, pick } = require 'underscore'
 { View, Model } = require 'backbone'
+{ isPhoneLike } = require '../../../../../components/util/device.coffee'
 Form = require '../../../../../components/form/index.coffee'
 LocationSearchView = require '../../../../../components/location_search/index.coffee'
 confirmation = require '../../../../../components/confirmation/index.coffee'
@@ -53,10 +54,11 @@ module.exports = class ProfessionalBuyerCompleteView extends View
         ]...
       ]
       .then =>
-        @user.refresh()
+        Promise @user.refresh()
+          .catch console.error.bind console
 
       .then =>
-        @confirm()
+        @confirm() unless isPhoneLike()
         @redirectTo '/collect'
 
       .catch form.error.bind form
