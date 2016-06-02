@@ -160,8 +160,8 @@ module.exports = class Sale extends Backbone.Model
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
-      "Live bidding begins #{@date('live_start_at').format fmt} EST"
+      "Live bidding begins #{moment(@get 'live_start_at').format fmt} EST"
     else if @isPreviewState()
-      "Auction opens #{@date('start_at').format fmt} EST"
+      "Auction opens #{moment(@get 'start_at').format fmt} EST"
     else
-      "Bidding closes #{@date('end_at').format fmt} EST"
+      "Bidding closes #{moment(@get 'end_at').format fmt} EST"

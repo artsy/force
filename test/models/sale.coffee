@@ -240,9 +240,10 @@ describe 'Sale', ->
     describe '#upcomingLabel', ->
 
       it 'renders the correct opening label', ->
+        time = moment().add(2, 'days')
         @sale.isPreviewState = -> true
         @sale.set
-          start_at: moment().add(2, 'days')
+          start_at: time
           end_at: time.add(2, 'days')
         @sale.upcomingLabel().should
-          .equal "Auction opens #{@sale.date('start_at').format 'MMM D h:mm:ssA'} EST"
+          .equal "Auction opens #{time.format 'MMM D h:mm:ssA'} EST"
