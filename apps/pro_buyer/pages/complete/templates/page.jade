@@ -30,7 +30,8 @@ form.probuyer-complete__form.stacked-form
     id='company_website'
     name='company_website'
     placeholder='http://'
-    value= user.related().collectorProfile.get('company_website')
+    value= user.related().collectorProfile.get('company_website') || 'http://'
+    onClick='this.setSelectionRange(0, this.value.length)'
     required
   )
 
