@@ -236,3 +236,14 @@ describe 'Sale', ->
         @sale.get('clockState').should.equal 'closed'
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
         @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
+
+    describe '#upcomingLabel', ->
+
+      it 'renders the correct opening label', ->
+        time = moment().add(2, 'days')
+        @sale.isPreviewState = -> true
+        @sale.set
+          start_at: time
+          end_at: time.add(2, 'days')
+        @sale.upcomingLabel().should
+          .equal "Auction opens #{time.format 'MMM D h:mm:ssA'} EST"
