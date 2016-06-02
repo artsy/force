@@ -33,6 +33,7 @@ describe 'auction', ->
           estimate: '$7,000–$9,000'
           current_bid: amount: '$55,000'
           counts: bidder_positions: 19
+          symbol: '$'
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
