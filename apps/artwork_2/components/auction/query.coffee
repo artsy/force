@@ -22,6 +22,7 @@ module.exports = """
       reserve_message
       estimate
       is_biddable
+      symbol
       current_bid {
         display
       }

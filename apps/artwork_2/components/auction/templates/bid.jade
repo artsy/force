@@ -12,12 +12,13 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
         | Enter #{sale_artwork.minimum_next_bid.display} or higher
 
       .artwork-auction__bid-form__input.typed-bordered-input.is-block
-        span $
+        span= sale_artwork.symbol
         input.bordered-input(
           class='js-artwork-auction-bid-amount'
           name='bid'
           autocomplete='off'
           required
+          style="padding-left: #{sale_artwork.symbol.length * 12 + 20}px"
         )
 
     button.artwork-auction__bid-form__button.avant-garde-button-black.is-block(
