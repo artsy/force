@@ -29,6 +29,9 @@ module.exports = {
     "contemporary": true,
     "articles": true
   },
+  "partner_shows": [{"id": "id_1"}, {"id": "id_2"}, {"id": "id_3"}, {"id": "id_4"}, {"id": "id_5"},
+    {"id": "id_6"}, {"id": "id_7"}, {"id": "id_8"}, {"id": "id_9"}, {"id": "id_10"}, {"id": "id_11"},
+    {"id": "id_11"}, {"id": "id_12"}, {"id": "id_13"}, {"id": "id_14"}, {"id": "id_15"}, {"id": "id_16"}]
   "show": [{
     "name": "A Show",
     "href": "/show/a-show",

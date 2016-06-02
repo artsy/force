@@ -97,6 +97,10 @@ describe 'ArtistViewHelpers', ->
     it 'birth and death', ->
       helpers.formatBirthDeath( birthday: "1920", deathday: "1990" ).should.eql '1920–1990'
 
+
+    it 'cleans stray characters', ->
+      helpers.formatBirthDeath( birthday: "b. 1920", deathday: "Died 1990" ).should.eql '1920–1990'
+
   describe 'artistMeta', ->
     it 'formats correctly', ->
 

@@ -12,10 +12,9 @@ mixin rail(title, viewAllUrl, section)
           include ../../../../components/merry_go_round/templates/horizontal_navigation
 
 .artist-overview-header
-  .eveny-bisected-header
+  .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
     - var hasMeta = artist.blurb || artistMeta.length
-
     .bisected-header-cell
       if hasMeta
         .artist-blurb.bisected-header-cell-section
@@ -27,15 +26,8 @@ mixin rail(title, viewAllUrl, section)
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
-      if statuses.shows
-        .artist-related-genes.related-links.bisected-header-cell-section
-          //- Rendered client-side
-
     .bisected-header-cell
-      if hasMeta && !statuses.shows
-        .artist-related-genes.related-links.bisected-header-cell-section
-          //- Rendered client-side
-      else
+      if statuses.shows
         .artist-exhibition-highlights.bisected-header-cell-section
           //- Rendered client-side
 

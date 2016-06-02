@@ -24,23 +24,28 @@ module.exports =
     if alts = artist.alternate_names then artist.alternate_names.join('; ') else ''
 
   displayNationalityAndBirthdate: (artist) ->
+    years = @formatBirthDeath artist
     _.compact([
       artist.nationality
-      @formatBirthDeath artist if artist.birthday?.length
+      years if years.length
     ]).join ', '
 
   formatBirthDeath: (artist) ->
-    return '' if not artist.birthday
-    if artist.deathday?.length
-      "#{artist.birthday}–#{artist.deathday}"
+    birthday = artist.birthday?.match(/\d+/)
+    deathday = artist.deathday?.match(/\d+/)
+    return '' if not birthday?.length
+
+    if deathday?.length
+      "#{birthday}–#{deathday}"
     else
-      "b. #{artist.birthday}"
+      "b. #{birthday}"
 
   artistMeta: (artist) ->
     return '' if not (artist.hometown or artist.location)
+    years = @formatBirthDeath artist
     _.compact([
       artist.nationality if artist.nationality?.length
-      @formatBirthDeath artist if artist.birthday?.length
+      years if years.length
       artist.hometown if artist.hometown?.length
       "based in #{artist.location}" if artist.location?.length
     ]).join ', '

@@ -19,6 +19,9 @@ module.exports = """
         follows
         artworks
       }
+      partner_shows(size:16) {
+        id
+      }
       ... current
       ... image
       ... statuses
