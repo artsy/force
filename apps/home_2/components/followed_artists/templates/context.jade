@@ -1,9 +1,9 @@
-.arv-context__content.arv-context__content--followed-artists
-  if artists
+.abrv-context__content.abrv-context__content--followed-artists
+  if artists && artists.length
     each artist in artists
-      a.arv-context__content--followed-artists__artist(href="/artist/#{artist.id}")= artist.name
+      a.abrv-context__content--followed-artists__artist(href="/artist/#{artist.id}")= artist.get('name')
     if counts.artists - artists.length > 0
-      a.arv-context__content--followed-artists__artist(href="/works-for-you") + #{counts.artists - artists.length} more artists
+      a.abrv-context__content--followed-artists__artist(href="/works-for-you") + #{counts.artists - artists.length} more artists
   else
     p Follow artists for better recommendations and to receive alerts when new works are available
     P

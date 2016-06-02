@@ -1,4 +1,3 @@
-
 .abrv-inner( data-rail="followed_artists" )
   .abrv-header
     if artworks
@@ -12,17 +11,18 @@
   .abrv-content
     .abrv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
       if artworks && artworks.length
-        ul.abrv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artists ? '' : 'mgr-cells--visible')
+        ul.abrv-fillwidth-list.fillwidth-list.js-mgr-cells.mgr-cells( class=artworks ? '' : 'mgr-cells--loading' )
           li.abrv-context.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
             include context
           for artwork in artworks
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
               include ../../../../../components/artwork_brick_rail/templates/brick
       else
-        .abrv-context.abrv-context--float
+        .abrv-context.abrv-context--float.arbv-context--followed-artists
           include context
-        include search
-
-      nav.mgr-navigation.js-mgr-navigation
-        if artworks && artworks.length
-          include ../../../../../components/merry_go_round/templates/horizontal_navigation
+        .arbv-follow-search-container
+          include search
+      if artworks && artworks.length
+        nav.mgr-navigation.js-mgr-navigation
+          if artworks && artworks.length
+            include ../../../../../components/merry_go_round/templates/horizontal_navigation
