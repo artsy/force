@@ -56,6 +56,8 @@ module.exports = class RelatedArtistsView extends Backbone.View
     @subViews.push rail
     @fadeInSection @$('.artist-related-artists-section')
 
+    rail.collection.trigger 'sync'
+
   fadeInSection: ($el) ->
     $el.show()
     _.defer -> $el.addClass 'is-fade-in'
