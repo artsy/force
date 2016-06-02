@@ -1,6 +1,6 @@
 @require '../stylus_lib'
 
-mgr-n-up(n, gutter, imageRatio)
+mgr-n-up(n, gutter, imageRatio, alignArrows = false)
   n-up(n, gutter, imageRatio)
     percent = 100% / n
     gutterOffset = ((n - 1) / n) * gutter
@@ -12,10 +12,13 @@ mgr-n-up(n, gutter, imageRatio)
       width calc('%s - %s' % (percent gutterOffset))
 
     // Aligns arrows to cell's 3:4 image. Override if undesired.
-    .mgr-arrow-left
-    .mgr-arrow-right
-      margin-top calc('(%s - %s) * %s / 2' % (percent gutterOffset imageRatio))
-      top 0
+    if alignArrows
+      .mgr-arrow-left
+      .mgr-arrow-right
+        display block
+        padding-top calc('(%s - %s) * %s / 2' % (percent gutterOffset imageRatio))
+      .mgr-arrow-icon
+        transform translateY(-50%)
 
   n-up(n, gutter, imageRatio)
   @media screen and (max-width: 1024px)
@@ -39,18 +42,20 @@ mgr-n-up(n, gutter, imageRatio)
   .mgr-arrow-right
     width auto
     height auto
-    padding 1px
     display block
     border none
     position absolute
-    top 50%
-    transform translateY(-50%)
-    padding 10px
+    display flex
+    align-items center
+    top 0
+    bottom 0
     cursor pointer
     user-select none
     pointer-events all
     > i
       user-select none
+  .mgr-arrow-icon
+    padding 10px
   .mgr-arrow-left
     right 100%
   .mgr-arrow-right

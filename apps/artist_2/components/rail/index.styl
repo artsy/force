@@ -1,11 +1,10 @@
 // Overview Section Rails
 .artist-related-rail
-  mgr-n-up(4, 30px, (3/4))
-  padding-top 20px
-  margin 20px 0 60px 0
+  padding-top 15px
+  margin 10px 0 60px 0
   border-top 1px solid gray-lighter-color
   &__header
-    margin-bottom 15px
+    margin-bottom 30px
     position relative
     h1
       garamond-size('headline', true)
@@ -15,6 +14,10 @@
     position absolute !important
     right 0
     top 0
+
+  &:hover
+    .mgr-navigation
+      opacity 1
 
   .view-all-rail-cell
     border 1px solid gray-lighter-color
@@ -44,14 +47,14 @@
   .hoverable-image-link
     width 100%
 
+  &:not([data-id='artists'])
+    mgr-n-up(4, 30px, (3/4), true)
+
   &[data-id='artists']
+    mgr-n-up(4, 30px, (3/4), false)
     .artist-rail-cell
       padding 10px
       border 1px solid gray-lighter-color
-    .mgr-arrow-left
-    .mgr-arrow-right
-      margin-top 0
-      top 50%
     .view-all-rail-cell
       height 100%
       &__inner
