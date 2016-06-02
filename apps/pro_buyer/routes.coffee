@@ -8,7 +8,7 @@ module.exports = (page) ->
     next()
 
   get:
-    index: (req, res, next) ->
+    landing: (req, res, next) ->
       page
         .get()
         .then (data) ->
