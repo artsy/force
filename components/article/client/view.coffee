@@ -52,7 +52,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Render sections
     @renderSlideshow()
-    @renderArtworks()
+    @resizeArtworks()
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
@@ -89,11 +89,12 @@ module.exports = class ArticleView extends Backbone.View
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
 
-  renderArtworks: =>
-    Q.all( for section in @article.get('sections') when section.type is 'artworks'
-      if section.layout is 'overflow_fillwidth'
-        $el = @$("[data-layout=overflow_fillwidth]" +
-          " li[data-id=#{section.artworks[0].id}]").parent()
+  resizeArtworks: =>
+    artworkSections = _.filter @article.get('sections'), (section) ->
+      section.type is 'artworks' and section.layout is 'overflow_fillwidth'
+    Q.all( _.map artworkSections, (section) =>
+      $el = @$("[data-layout=overflow_fillwidth]" +
+        " li[data-id=#{section.artworks[0].id}]").parent()
       Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
