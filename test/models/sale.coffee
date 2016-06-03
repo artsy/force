@@ -240,7 +240,7 @@ describe 'Sale', ->
     describe '#upcomingLabel', ->
 
       it 'renders the correct opening label', ->
-        time = moment().add(2, 'days')
+        time = moment().add(2, 'days').utcOffset(-4)
         @sale.isPreviewState = -> true
         @sale.set
           start_at: time

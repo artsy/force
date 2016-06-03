@@ -88,7 +88,7 @@ module.exports = class Sale extends Backbone.Model
         label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
       else if @isPreview() and user?.get('registered_to_bid')
         label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
-      else if @isOpen()
+      else
         label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
 
   isRegisterable: ->
@@ -156,12 +156,12 @@ module.exports = class Sale extends Backbone.Model
     event
 
   upcomingLabel: ->
-    fmt = 'MMM D h:mm:ssA'
+    est = (attr) => moment.utc(@get attr).utcOffset(-4).format 'MMM D h:mm:ssA'
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
-      "Live bidding begins #{moment(@get 'live_start_at').format fmt} EST"
+      "Live bidding begins #{est 'live_start_at'} EST"
     else if @isPreviewState()
-      "Auction opens #{moment(@get 'start_at').format fmt} EST"
+      "Auction opens #{est 'start_at'} EST"
     else
-      "Bidding closes #{moment(@get 'end_at').format fmt} EST"
+      "Bidding closes #{est 'end_at'} EST"
