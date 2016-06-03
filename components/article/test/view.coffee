@@ -124,10 +124,10 @@ describe 'ArticleView', ->
       @view.renderSlideshow()
       @initCarousel.called.should.be.ok()
 
-  describe '#renderArtworks', ->
+  describe '#resizeArtworks', ->
 
     it 'fillwidth is called on each artwork section', ->
-      @view.renderArtworks()
+      @view.resizeArtworks()
       _.defer =>
         @fillwidth.callCount.should.equal 1
 
