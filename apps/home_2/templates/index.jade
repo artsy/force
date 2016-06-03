@@ -45,7 +45,7 @@ block body
               a( href='/articles' )
                 | View All
           ul#home-featured-articles.home-featured-list
-            - articleLinks = featuredArticles.take(7)
+            - articles = featuredArticles.models.take(7)
             include featured_articles
 
   include ../../../components/main_layout/templates/json_ld

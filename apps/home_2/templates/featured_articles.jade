@@ -1,7 +1,6 @@
-for link, i in articleLinks
-  - imgUrl = link.imageUrl(i == 0 ? 'large_rectangle' : 'medium_rectangle')
+for article, i in articles
   li.home-featured-article-link
-    a( href=link.get('href') )
-      .home-featured-cover-img( style="background-image: url(" + imgUrl + ")" )
-      h4= link.get('title')
-      h5= link.get('subtitle')
+    a( href=article.href() )
+      .home-featured-cover-img( style="background-image: url(" + resize(article.get('thumbnail_url'), { width: 500 }) + ")" )
+      h4= article.get('thumbnail_title')
+      h5= article.getAuthorArray().join(',')
