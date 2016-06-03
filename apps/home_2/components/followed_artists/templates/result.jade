@@ -1,5 +1,5 @@
-.tt-suggestion(data-artist-id=suggestion.get('id'))
-  .tt-suggestion-inner
+.tt-suggestion
+  .tt-suggestion-inner(data-artist-id=suggestion.get('id'))
     .typeahead-suggestion-thumbnail
       span: img(
         src= suggestion.cropUrlFor({ width: 32, height: 32 })

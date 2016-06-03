@@ -1,4 +1,4 @@
-{ debounce, delay } = require 'underscore'
+{ debounce } = require 'underscore'
 { trim } = require 'underscore.string'
 { API_URL } = require('sharify').data
 Q = require 'bluebird-q'
@@ -13,7 +13,7 @@ resultsTemplate = -> require('./templates/results.jade') arguments...
 module.exports = class SearchArtistsView extends Backbone.View
   events:
     'keyup input': 'maybeSearch'
-    'click .tt-suggestion' : 'followAndSwap'
+    'click .tt-suggestion-inner' : 'followAndSwap'
 
   maybeSearch: debounce (-> @search()), 200
 
@@ -63,26 +63,41 @@ module.exports = class SearchArtistsView extends Backbone.View
     replacementDeferred = Q.defer()
     waitDeferred = Q.defer()
 
-    @findReplacement id, (artist) -> replacementDeferred.resolve(artist)
+    @findReplacement id, (artist) ->
+      console.log 'artist', artist.get('name')
+      replacementDeferred.resolve(artist)
     setTimeout ( -> waitDeferred.resolve() ), 500
-
     Q.all [replacementDeferred.promise, waitDeferred.promise]
 
   replaceRow: ($el, id, artist) ->
     html = itemTemplate suggestion: artist
-    $el.find('.tt-suggestion-inner').fadeOut 'slow', =>
-      $el.replaceWith html
+    $newRow = $(html).find('.tt-suggestion-inner').css 'display', 'none'
+    $el.parent().append $newRow
+    $el.fadeOut =>
+      $el.next().fadeIn 500, -> $el.remove()
+      @appendName id
+
+  removeRow: ($el, id) ->
+    $el.parent().fadeOut =>
+      $el.parent().remove()
+      @appendName id
+
+  appendName: (id) ->
+    followed = @match.get(id) || @initialSuggestions.get(id) || @pastMatches.get(id)
+    @followedArtists.unshift followed
 
   followAndSwap: (e) ->
     e.preventDefault()
     $suggestion = $(e.currentTarget)
     id = $suggestion.data('artist-id')
-    # @following.follow id
+    @following.follow(id) if @user
     $suggestion.find('.typeahead-suggestion-follow').attr 'data-state', 'following'
+    $suggestion.addClass 'tt-suggestion-inner__selected'
+    @$('input').select()
     @findReplacementAndWait(id).then ([ artists ]) =>
       if artists.length
         @replaceRow($suggestion, id, artists.first())
         @pastMatches.add artists.first()
-      followed = @match.get(id) || @initialSuggestions.get(id) || @pastMatches.get(id)
-      @followedArtists.unshift followed
+      else
+        @removeRow $suggestion, id
 
