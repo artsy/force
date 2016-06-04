@@ -168,6 +168,8 @@ body.body-article
 
 .article-section-artworks
   position relative
+  a
+    text-decoration none
 
 .article-section-artworks, .article-section-image
   opacity 0
@@ -184,7 +186,9 @@ body.body-article
     background transparent
     img
       max-width 100%
+      height auto
       width auto
+      position relative
 
 .article-section-artworks[data-layout="overflow_fillwidth"]
   max-width (overflow-width + gutter-size)

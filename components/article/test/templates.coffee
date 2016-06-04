@@ -6,7 +6,6 @@ fs = require 'fs'
 moment = require 'moment'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-fixtures = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -171,3 +170,60 @@ describe 'article show template', ->
     html.should.containEql '5 Must Read Stories'
     html.should.containEql 'http://artsy.net/article/editorial-cool-article'
     html.should.containEql 'http://artsy.net/image.png'
+
+  it 'renders artworks', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'artworks',
+            ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
+            layout: 'overflow_fillwidth',
+            artworks: [
+              {
+                type: 'artwork'
+                id: '5321b73dc9dc2458c4000196'
+                slug: "govinda-sah-azad-in-between-1",
+                date: "2015",
+                title: "In Between",
+                image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+                partner: {
+                  name: "October Gallery",
+                  slug: "october-gallery"
+                },
+                artist: {
+                  name: "Govinda Sah 'Azad'",
+                  slug: "govinda-sah-azad"
+                }
+              },{
+                type: 'artwork'
+                id: '5321b71c275b24bcaa0001a5'
+                slug: "govinda-sah-azad-in-between-2",
+                date: "2015",
+                title: "In Between 2",
+                image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ2/larger.jpg",
+                partner: {
+                  name: "October Gallery",
+                  slug: "october-gallery"
+                },
+                artist: {
+                  name: "Govinda Sah 'Azad'",
+                  slug: "govinda-sah-azad"
+                }
+              }
+            ]
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql '/artwork/govinda-sah-azad-in-between-1'
+    html.should.containEql '/artwork/govinda-sah-azad-in-between-2'
+    html.should.containEql 'October Gallery'
+    html.should.containEql "Govinda Sah 'Azad'"
+    html.should.containEql 'In Between 2'

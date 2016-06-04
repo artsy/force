@@ -4,10 +4,8 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 CurrentUser = require '../../../models/current_user.coffee'
 Article = require '../../../models/article.coffee'
-Artwork = require '../../../models/artwork.coffee'
 Artist = require '../../../models/artist.coffee'
 Articles = require '../../../collections/articles.coffee'
-Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../share/view.coffee'
 CTABarView = require '../../cta_bar/view.coffee'
 ImageSetView = require './image_set.coffee'
@@ -22,8 +20,6 @@ blurb = require '../../gradient_blurb/index.coffee'
 Sticky = require '../../sticky/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 JumpView = require '../../jump/view.coffee'
-artworkItemTemplate = -> require(
-  '../../artwork_item/templates/artwork.jade') arguments...
 editTemplate = -> require('../templates/edit.jade') arguments...
 relatedTemplate = -> require('../templates/related.jade') arguments...
 calloutTemplate = -> require('../templates/callout.jade') arguments...
@@ -56,7 +52,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Render sections
     @renderSlideshow()
-    @renderArtworks()
+    @resizeArtworks()
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
@@ -93,24 +89,13 @@ module.exports = class ArticleView extends Backbone.View
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
 
-  renderArtworks: (cb) =>
-    Q.all(for section in @article.get('sections') when section.type is 'artworks'
-      Q.allSettled(
-        for id in section.ids
-          new Artwork(id: id).fetch
-            success: (artwork) =>
-              @$("[data-id=#{artwork.get '_id'}]").html(
-                artworkItemTemplate artwork: artwork, artworkSize: ['larger', 'large']
-              )
-            error: (artwork) =>
-              @$("[data-id=#{artwork.get 'id'}]").remove()
-      ).spread (artworks...) =>
-        artworks = _.pluck(_.reject(artworks, (artwork) -> artwork.state is 'rejected'), 'value')
-        artworks = new Artworks artworks
-        if artworks.length
-          $el = @$("[data-layout=overflow_fillwidth]" +
-            " li[data-id=#{artworks.first().get '_id'}]").parent()
-        Q.nfcall @fillwidth, $el
+  resizeArtworks: =>
+    artworkSections = _.filter @article.get('sections'), (section) ->
+      section.type is 'artworks' and section.layout is 'overflow_fillwidth'
+    Q.all( _.map artworkSections, (section) =>
+      $el = @$("[data-layout=overflow_fillwidth]" +
+        " li[data-id=#{section.artworks[0].id}]").parent()
+      Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
@@ -192,7 +177,7 @@ module.exports = class ArticleView extends Backbone.View
   fillwidth: (el, cb) ->
     if @$(el).length < 1 or $(window).width() < 700
       @$(el).parent().removeClass('is-loading')
-      cb()
+      return cb()
     $list = @$(el)
     $list.fillwidthLite
       gutterSize: 30
