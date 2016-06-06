@@ -75,7 +75,7 @@ module.exports = class SearchArtistsView extends Backbone.View
       @appendName id
 
   appendName: (id) ->
-    followed = @match.get(id) || @initialSuggestions.get(id) || @pastMatches.get(id)
+    followed = @match.get(id) or @initialSuggestions.get(id) or @pastMatches.get(id)
     @followedArtists.unshift followed
 
   followAndSwap: (e) ->
