@@ -159,3 +159,22 @@ describe "Article", ->
       @article.prepForInstant()
       @article.get('sections')[0].caption.should.equal '<h1>First Paragraph</h1>'
       @article.get('sections')[1].images[0].caption.should.equal '<h1>A place for credit</h1>'
+
+  describe 'byline', ->
+
+    it 'returns the author when there are no contributing authors', ->
+      @article.set 'contributing_authors', []
+      @article.set 'author', { name: 'Molly' }
+      @article.byline().should.equal 'Molly'
+
+    it 'returns the contributing author name if there is one', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}]
+      @article.byline().should.equal 'Molly'
+
+    it 'returns "and" with two contributing authors', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}]
+      @article.byline().should.equal 'Molly and Kana'
+
+    it 'returns multiple contributing authors', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
+      @article.byline().should.equal 'Molly, Kana and Christina'

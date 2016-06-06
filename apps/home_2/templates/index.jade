@@ -39,11 +39,11 @@ block body
             - displayLocation = true
             include featured_shows
 
-        #home-featured-articles-section( class='js-homepage-featured-links', data-context='featured articles' )
-          h2.home-featured-header Featured Articles
+        #home-featured-articles-section( data-context='featured articles' )
+          h2.home-featured-header Artsy Magazine
             .home-browse-all-right
               a( href='/articles' )
-                | View All
+                | Explore the Magazine
           ul#home-featured-articles.home-featured-list
             - articles = featuredArticles.take(7)
             include featured_articles
