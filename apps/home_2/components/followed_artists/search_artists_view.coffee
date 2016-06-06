@@ -58,12 +58,8 @@ module.exports = class SearchArtistsView extends Backbone.View
         size: 1
 
   findReplacementAndWait: (id) ->
-    replacementDeferred = Q.defer()
-    waitDeferred = Q.defer()
-
-    @findReplacement id, (artist) -> replacementDeferred.resolve(artist)
-    setTimeout ( -> waitDeferred.resolve() ), 500
-    Q.all [replacementDeferred.promise, waitDeferred.promise]
+    replacement = new Promise (resolve) => @findReplacement id, resolve
+    Q.all [replacement, Q.delay(500)]
 
   replaceRow: ($el, id, artist) ->
     html = itemTemplate suggestion: artist
