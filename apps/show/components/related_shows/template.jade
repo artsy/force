@@ -9,6 +9,6 @@
     a.avant-garde-button-white.show-related-shows__more( href= '/shows/#{city.slug}' )
       | See more shows in #{city.name}
 
-  if show.fair.published && show.fair.profile && show.fair.profile.is_published
+  if linkToFair
     a.avant-garde-button-white.show-related-shows__more( href= show.fair.href )
       | See more booths from #{show.fair.name}
