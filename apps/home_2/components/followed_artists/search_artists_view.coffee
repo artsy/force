@@ -35,8 +35,6 @@ module.exports = class SearchArtistsView extends Backbone.View
 
     @pastMatches = new Backbone.Collection
 
-    @delegateEvents()
-
     @input().focus()
 
   renderResults: ->
