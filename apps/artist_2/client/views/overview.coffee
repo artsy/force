@@ -86,7 +86,7 @@ module.exports = class OverviewView extends Backbone.View
 
   postRender: ->
     # Sub-header
-    !@setupRelatedGenes()
+    @setupRelatedGenes()
     # Main section
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
