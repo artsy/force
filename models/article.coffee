@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
@@ -130,15 +131,7 @@ module.exports = class Article extends Backbone.Model
   byline: ->
     byline = ''
     if (length = @get('contributing_authors').length) > 0
-      _.map @get('contributing_authors'), (author, i) ->
-        if length > 1 and i is length - 2
-          delimiter = " and "
-        else if length is 1 or (i is length - 1)
-          delimiter = ''
-        else
-          delimiter = ", "
-        byline = byline.concat(author.name + delimiter)
-      return byline
+      _s.toSentence _.pluck @get('contributing_authors'), 'name'
     else
       @get('author').name
 
