@@ -5,10 +5,13 @@ footer.probuyer-cta( class='js-cta' )
   .probuyer-cta__form
     if user
       a.avant-garde-button-black.is-block(
-        href='#{sd.CURRENT_PATH}/complete'
+        href='#{paths.show}/complete'
       ) Join as #{user.get('name')}
     else
       form.stacked-form( class='js-register-form' )
+        .form-errors( class='js-form-errors' )
+          //- Rendered client-side
+
         input.bordered-input(
           type='email'
           name='email'
