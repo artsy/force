@@ -6,7 +6,6 @@ current = (type, artist) ->
   count = currentItems.length
   item = currentItems[0]
   heading = (if (type is 'show' and count > 1) then 'Featured ' else 'Current ') + helpers.capitalize(type)
-  console.log heading
   detail = if type is 'show'
     _.compact([
       item.partner?.name,
@@ -14,9 +13,6 @@ current = (type, artist) ->
     ]).join ', '
   else
     ''
-
-  console.log detail
-
   _.extend(_.pick(item, 'location', 'start_at', 'end_at', 'name', 'href', 'exhibition_period'), {
     heading: heading
     type: type

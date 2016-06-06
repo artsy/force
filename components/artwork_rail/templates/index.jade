@@ -17,6 +17,5 @@
             li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
               include ../../artwork_item/templates/artwork
 
-      nav.mgr-navigation.js-mgr-navigation
-        if artworks && artworks.length
-          include ../../merry_go_round/templates/horizontal_navigation
+      if artworks && artworks.length
+        include ../../merry_go_round/templates/horizontal_navigation

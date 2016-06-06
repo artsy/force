@@ -37,9 +37,7 @@ currentShowAuction = require './components/current_show_auction/index'
     else
       res.redirect artist.href.replace "/artist/", "/artist_2/"
 
-  .catch (e) ->
-    console.log e
-    next()
+  .catch -> next()
   .done()
 
 @tab = (req, res, next) =>

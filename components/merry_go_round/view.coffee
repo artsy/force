@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ isTouchDevice } = require '../util/device.coffee'
 Backbone = require 'backbone'
 
 module.exports = class MerryGoRoundNavView extends Backbone.View
@@ -64,6 +65,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
 
   render: =>
     @$el.html @template
+      isTouch: isTouchDevice()
       length: @flickity.cells.length
       index: @flickity.selectedIndex
       disableStart: !@flickity.options.wrapAround && @isStart()

@@ -24,7 +24,6 @@ mgr-n-up(n, gutter, imageRatio, alignArrows = false)
   @media screen and (max-width: 1024px)
     n-up(n, gutter/2, imageRatio)
 
-
 .mgr-horizontal-nav
   position relative
   &:hover .mgr-navigation
@@ -38,6 +37,8 @@ mgr-n-up(n, gutter, imageRatio, alignArrows = false)
     display block
     &.is-hidden
      display none
+    &.is-touch
+      opacity 1
   .mgr-arrow-left
   .mgr-arrow-right
     width auto

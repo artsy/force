@@ -5,6 +5,11 @@ module.exports =
       shows: exhibition_highlights (size: 16) @include(if: $shows) {
         artists { id }
         ... relatedShow
+        cover_image {
+          cropped(width: 400, height: 300) {
+            url
+          }
+        }
       }
       artists (size: 16) @include(if: $artists){
         ... relatedArtist

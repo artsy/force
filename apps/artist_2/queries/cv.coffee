@@ -8,9 +8,19 @@ module.exports =
         }
         solo_shows: partner_shows(at_a_fair: false, solo_show:true, sort: start_at_desc, size: 99) {
           ... relatedShow
+          cover_image {
+            cropped(width: 400, height: 300) {
+              url
+            }
+          }
         }
         fair_booths: partner_shows(at_a_fair: true, sort: start_at_desc, size: 99) {
           ... relatedShow
+          cover_image {
+            cropped(width: 400, height: 300) {
+              url
+            }
+          }
         }
       }
       articles (limit: 99, sort: PUBLISHED_AT_DESC) @include(if: $articles) {
