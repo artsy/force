@@ -1,3 +1,4 @@
+moment = require 'moment'
 _ = require 'underscore'
 benv = require 'benv'
 { fabricate } = require 'antigravity'
@@ -45,6 +46,10 @@ describe 'auction templates', ->
         $('.garamond-tab').should.have.lengthOf 6
         $('.auction-associated-sale').should.have.lengthOf 0
 
+      it 'shows the correct registration messages', ->
+        $('.auction-header-metadata').text().should.containEql 'Register to bid'
+        $('.auction-header-metadata').text().should.containEql 'Registration required to bid'
+
   describe 'auction promo', ->
     before (done) ->
       benv.setup =>
@@ -84,3 +89,67 @@ describe 'auction templates', ->
     it 'renders the associated sale stub as well', ->
       $('.auction-associated-sale').should.have.lengthOf 1
       $('.aas-metadata-title').text().should.equal 'An Associated Sale'
+
+  describe 'auction in preview with no user', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        data = _.extend {}, @baseData,
+          auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
+          user: null
+        benv.render require.resolve('../templates/index.jade'), data, ->
+          done()
+    after ->
+      benv.teardown()
+
+    it 'shows an email invite', ->
+      $('.auction-header-metadata').text().should.containEql 'Receive an email invitation when the auction begins.'
+
+  describe 'user not qualified_for_bidding', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        data = _.extend {}, @baseData,
+          auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
+        data.user.set qualified_for_bidding: false, registered_to_bid: true
+        benv.render require.resolve('../templates/index.jade'), data, ->
+          done()
+    after ->
+      benv.teardown()
+
+    it 'shows Registration pending', ->
+      $('.auction-header-metadata').text().should.containEql 'Registration pending'
+      $('.auction-header-metadata').text().should.containEql 'Reviewing submitted information'
+
+  describe 'user is qualified_for_bidding', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        data = _.extend {}, @baseData,
+          auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
+        data.user.set qualified_for_bidding: true, registered_to_bid: true
+        benv.render require.resolve('../templates/index.jade'), data, ->
+          done()
+    after ->
+      benv.teardown()
+
+    it 'shows Approved to bid', ->
+      $('.auction-header-metadata').text().should.containEql 'Approved to Bid'
+
+  describe 'registration is closed', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        data = _.extend {}, @baseData,
+          auction: @auction = new Auction fabricate 'sale', name: 'An Auction'
+          user: null
+        data.auction.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        benv.render require.resolve('../templates/index.jade'), data, ->
+          done()
+    after ->
+      benv.teardown()
+
+    it 'shows Registration closed', ->
+      $('.auction-header-metadata').text().should.containEql 'Registration closed'
+      $('.auction-header-metadata').text().should.containEql 'Registration required to bid'
+

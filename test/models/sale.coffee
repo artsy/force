@@ -36,6 +36,17 @@ describe 'Sale', ->
       new Sale end_at: moment().subtract(1, 'day').format()
         .isClosingSoon().should.be.false()
 
+  describe '#isRegistrationEnded', ->
+    it 'returns false if there is no registration_ends_at', ->
+      @sale.set is_auction: true, registration_ends_at: null
+      @sale.isRegistrationEnded().should.be.false()
+    it 'returns false if the registration_ends_at is in the future', ->
+      @sale.set is_auction: true, registration_ends_at: moment().add(2, 'days').format()
+      @sale.isRegistrationEnded().should.be.false()
+    it 'returns true if the registration_ends_at is in the past', ->
+      @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+      @sale.isRegistrationEnded().should.be.true()
+
   describe '#calculateAuctionState', ->
     before ->
       # moment#unix returns seconds
@@ -96,24 +107,61 @@ describe 'Sale', ->
         @sale.buyButtonState(@user, @artwork).label.should.equal 'Sold'
 
     describe 'bid', ->
-      it 'returns the correct button attributes', ->
+      it 'shows Register to bid if auction is a preview', ->
         @sale.set sale_type: 'default', auction_state: 'preview'
         @user.set 'registered_to_bid', false
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Register to bid'
+
+      it 'shows Registered to Bid if user has already registered', ->
+        @sale.set sale_type: 'default', auction_state: 'preview'
         @user.set 'registered_to_bid', true
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Registered to bid'
+
+      it 'shows Bid if the auction is open', ->
+        @sale.set sale_type: 'default', auction_state: 'preview'
         @sale.set 'auction_state', 'open'
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
-        @user.set 'registered_to_bid', false
-        @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
+
+      it 'shows Auction Closed if the auction is closed', ->
+        @sale.set sale_type: 'default', auction_state: 'preview'
         @sale.set 'auction_state', 'closed'
         @artwork.set sold: true, acquireable: false
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Auction Closed'
+
+      it 'shows Sold if the artwork is sold', ->
         # If the artwork is sold, then it's sold
         @sale.set 'auction_state', 'open'
         @user.set 'registered_to_bid', true
         @artwork.set 'sold', true
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Sold'
+
+      it 'shows Registration Closed when registration is closed', ->
+        @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Registration Closed'
+
+      it 'shows Registration Pending if user is awaiting approval and registration closed', ->
+        @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        @user.set 'registered_to_bid', true
+        @user.set 'qualified_for_bidding', false
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Registration Pending'
+
+      it 'shows Registration Pending if user is awaiting approval', ->
+        @user.set 'registered_to_bid', true
+        @user.set 'qualified_for_bidding', false
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Registration Pending'
+
+      it 'shows Bid if user has been qualified, even if registration is closed', ->
+        @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        @user.set 'registered_to_bid', true
+        @user.set 'qualified_for_bidding', true
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
+
+      it 'shows Enter Live Auction if live auction has opened', ->
+        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format()
+        @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        @user.set 'registered_to_bid', true
+        @user.set 'qualified_for_bidding', true
+        @sale.bidButtonState(@user, @artwork).label.should.equal 'Enter Live Auction'
 
   describe '#fetchArtworks', ->
 

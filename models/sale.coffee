@@ -88,6 +88,10 @@ module.exports = class Sale extends Backbone.Model
         label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
       else if @isPreview() and user?.get('registered_to_bid')
         label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
+      else if user?.get('registered_to_bid') and not user?.get('qualified_for_bidding')
+        label: 'Registration Pending', enabled: false, classes: 'is-disabled', href: ''
+      else if not user?.get('qualified_for_bidding') and @isRegistrationEnded()
+        label: 'Registration Closed', enabled: false, classes: 'is-disabled', href: ''
       else
         label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
 
@@ -111,6 +115,9 @@ module.exports = class Sale extends Backbone.Model
 
   isClosed: ->
     @state() is 'closed'
+
+  isRegistrationEnded: ->
+    @isAuction() and moment().isAfter(@get 'registration_ends_at')
 
   isLiveOpen: ->
     moment().isBefore(@get 'end_at') and moment().isAfter(@get 'live_start_at')
