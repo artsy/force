@@ -63,9 +63,7 @@ module.exports = class SearchArtistsView extends Backbone.View
     replacementDeferred = Q.defer()
     waitDeferred = Q.defer()
 
-    @findReplacement id, (artist) ->
-      console.log 'artist', artist.get('name')
-      replacementDeferred.resolve(artist)
+    @findReplacement id, (artist) -> replacementDeferred.resolve(artist)
     setTimeout ( -> waitDeferred.resolve() ), 500
     Q.all [replacementDeferred.promise, waitDeferred.promise]
 
