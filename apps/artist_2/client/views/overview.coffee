@@ -91,7 +91,8 @@ module.exports = class OverviewView extends Backbone.View
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
       model: @model
-      allLoaded: => #
+      allLoaded: =>
+        @$('.artist-related-rail').addClass('is-fade-in')
     @subViews.push @filterView
 
   setupRelatedGenes: ->

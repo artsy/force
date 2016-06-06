@@ -12,27 +12,39 @@ module.exports = ( { el, model, allLoaded } ) ->
   filterView = filterRouter.view
   $('#main-layout-footer').css(display: 'none', opacity: 0)
 
-  $.onInfiniteScroll ->
-    filterView.loadNextPage()
-  , offset: 2 * $(window).height()
-
   stickyHeaderHeight = $('.artist-sticky-header-container').outerHeight(true)
   filterView.topOffset = stickyHeaderHeight
-
   sticky = new Sticky
-  filterView.artworks.on 'sync', (x, { hits }) ->
-    allLoaded() if allLoaded
-    sticky.rebuild()
+
+  setupInfiniteScroll = ->
+    $.onInfiniteScroll ->
+      filterView.loadNextPage()
+    , offset: 2 * $(window).height()
+
+  setupInfiniteScroll()
+
+  onSync = ->
     if filterView.remaining() is 0
       $('#main-layout-footer').css(display: 'block', opacity: 1)
       $.destroyInfiniteScroll()
-      # allLoaded() if allLoaded
+      allLoaded() if allLoaded
     else
       _.defer =>
         threshold = $(window).scrollTop() + 2 * $(window).height()
         viewBottom = $el.height() + $el.scrollTop()
         loadMore = viewBottom <= threshold
         filterView.loadNextPage() if loadMore
+
+  filterView.artworks.on 'sync', (x, { hits }) ->
+    filterView.filter.get('total')?.value
+    if filterView.filter.fetching
+      filterView.filter.once 'sync', ->
+        onSync()
+    else
+      onSync()
+
+  filterView.filter.selected.on 'change', ->
+    setupInfiniteScroll()
 
   filterView.artworks.once 'sync', ->
     sticky.headerHeight = $('#main-layout-header').outerHeight(true) + stickyHeaderHeight + 20
