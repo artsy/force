@@ -1,6 +1,7 @@
 { extend } = require 'underscore'
 { View } = require 'backbone'
-{ CURRENT_PATH } = require('sharify').data
+{ SHOW_PATH } = require('sharify').data
+Form = require '../../../../../components/form/index.coffee'
 scrollTo = require '../../../../../components/smooth_scroll/index.coffee'
 AuthModalView = require '../../../../../components/auth_modal/view.coffee'
 template = -> require('../templates/page.jade') arguments...
@@ -32,14 +33,27 @@ module.exports = class ProfessionalBuyerIndexView extends View
 
   register: (e) ->
     e.preventDefault()
-    # To do
+
+    form = new Form $form: @$('.js-register-form')
+    return unless form.isReady()
+
+    form.state 'loading'
+
+    @user.set form.data()
+    @user.register
+      error: form.error.bind form
+      success: =>
+        @redirectTo "#{SHOW_PATH}/complete"
 
   authenticate: (mode) ->
     new AuthModalView
       mode: mode
       width: '500px'
       copy: 'Artsy Professional Buyer Program'
-      redirectTo: "#{CURRENT_PATH}/complete"
+      redirectTo: "#{SHOW_PATH}/complete"
+
+  redirectTo: (path) ->
+    location.assign path
 
   render: ->
     @$el.html template extend {}, @data,
