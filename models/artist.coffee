@@ -11,6 +11,7 @@ instantSlugs = require './mixins/auction_title_instant_slugs.coffee'
 freeSlugs = require './mixins/auction_title_free_slugs.coffee'
 Relations = require './mixins/relations/artist.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
+ImageSizes = require './mixins/image_sizes.coffee'
 
 module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Markdown
@@ -18,6 +19,7 @@ module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Relations
   _.extend @prototype, MetaOverrides
   _.extend @prototype, Fetch(API_URL)
+  _.extend @prototype, ImageSizes
 
   defaultMetaTitle: ->
     "#{@metaName()} - #{@pageTitleArtworksCount()}, Bio & Shows on Artsy"

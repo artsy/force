@@ -40,15 +40,15 @@ positionWelcomeHeroMethod = (req, res) ->
     featuredLinks.fetch(cache: true)
     featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-  ])).spread( (heroUnitPromise, { value: { home_page_modules } }) ->
+  ])).spread( (heroUnitPromise, { value }) ->
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
     res.locals.sd.HERO_UNITS = heroUnits.toJSON()
-    res.locals.sd.USER_HOME_PAGE = home_page_modules
+    res.locals.sd.USER_HOME_PAGE = value?.home_page_modules
 
     res.render 'index',
       heroUnits: heroUnits
-      modules: home_page_modules
+      modules: value?.home_page_modules
       featuredLinks: featuredLinks
       featuredArticles: featuredArticles
       featuredShows: featuredShows
