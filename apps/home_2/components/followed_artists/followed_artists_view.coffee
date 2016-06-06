@@ -10,3 +10,5 @@ module.exports = class FollowedArtistsView extends Backbone.View
     @$el.html template
       artists: @collection.first 7
       counts: artists: @collection.length
+
+    this
