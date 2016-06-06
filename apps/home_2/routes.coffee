@@ -30,11 +30,9 @@ positionWelcomeHeroMethod = (req, res) ->
 
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
+
   # homepage:featured-links
   featuredArticles = new Articles
-    published: true
-    featured: true
-    sort: '-published_at'
 
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
@@ -43,7 +41,13 @@ positionWelcomeHeroMethod = (req, res) ->
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     metaphysics query: query, req: req
     featuredLinks.fetch(cache: true)
-    # featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
+    featuredArticles.fetch
+      cache: true
+      cacheTime: timeToCacheInSeconds
+      data:
+        published: true
+        featured: true
+        sort: '-published_at'
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
   ])).spread( (heroUnitPromise, { value }) ->
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
