@@ -40,8 +40,7 @@ module.exports = class OverviewView extends Backbone.View
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onClick: =>
-        _.defer => @sticky.rebuild()
+      onClick: => @sticky.rebuild()
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
@@ -87,7 +86,7 @@ module.exports = class OverviewView extends Backbone.View
 
   postRender: ->
     # Sub-header
-    @setupRelatedGenes()
+    !@setupRelatedGenes()
     # Main section
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
@@ -96,22 +95,15 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push @filterView
 
   setupRelatedGenes: ->
-    $el = $('<div class="artist-related-genes related-links bisected-header-cell-section"></div>')
+    $el = @$('.artist-related-genes')
 
     subView = new RelatedGenesView(el: $el, id: @model.id)
     subView.collection.on 'sync', =>
-      columns = @$('.bisected-header-cell')
-      $left = $(columns[0])
-      $right = $(columns[1])
-
-      if subView.collection.length
-        if $right.children().length
-          $left.append $el
-        else
-          $right.append $el
-
-      $left.remove() if not $left.children().length
-      $right.remove() if not $right.children().length
+      # Remove bisected header cell if empty (ie artist is missing some info)
+      # so that the remaining cell doesn't have weird margins
+      @$('.bisected-header-cell').each ->
+        $el = $(this)
+        $el.remove() if not $el.children().length
 
       @setupBlurb()
     @subViews.push subView

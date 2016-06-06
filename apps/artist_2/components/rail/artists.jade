@@ -1,13 +1,5 @@
-each item in items
-  .mgr-cell.js-mgr-cell.artist-rail-cell
-    - var artist = item
-    include ../../../../components/artist_cell/index
+extends index
 
-if showMore
-  include ./view_all_cell
-
-else
-  - var i = 0
-  while i < 4 - items.length % 4
-    .mgr-cell.js-mgr-cell.artist-rail-cell.empty-cell
-    - i++
+block cell
+  - var artist = item
+  include ../../../../components/artist_cell/index

@@ -15,6 +15,7 @@ mixin rail(title, viewAllUrl, section)
   .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
     - var hasMeta = artist.blurb || artistMeta.length
+    - var hasShows = statuses.shows
     .bisected-header-cell
       if hasMeta
         .artist-blurb.bisected-header-cell-section
@@ -26,9 +27,16 @@ mixin rail(title, viewAllUrl, section)
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
+      if hasShows
+        .artist-related-genes.related-links.bisected-header-cell-section
+          //- Rendered client-side
+
     .bisected-header-cell
-      if statuses.shows
+      if hasShows
         .artist-exhibition-highlights.bisected-header-cell-section
+          //- Rendered client-side
+      else
+        .artist-related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
 
 - var hasWorks = artist.statuses.artworks
