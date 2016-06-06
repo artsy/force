@@ -31,14 +31,21 @@ module.exports =
     ]).join ', '
 
   formatBirthDeath: (artist) ->
-    birthday = artist.birthday?.match(/\d+/)
+    return '' if not artist.birthday?.length
     deathday = artist.deathday?.match(/\d+/)
-    return '' if not birthday?.length
 
     if deathday?.length
+      birthday = artist.birthday?.match(/\d+/)
+      return '' if not birthday?.length
       "#{birthday}–#{deathday}"
     else
-      "b. #{birthday}"
+      if (/^(\s+)?((b|born|Born|B)\b)?(\.)?(\s+)?\d+/).test artist.birthday
+        birthday = artist.birthday?.match(/\d+/)
+        return '' if not birthday?.length
+        "b. #{birthday}"
+      else
+        artist.birthday
+
 
   artistMeta: (artist) ->
     return '' if not (artist.hometown or artist.location)

@@ -94,6 +94,9 @@ describe 'ArtistViewHelpers', ->
     it 'birth only', ->
       helpers.formatBirthDeath( birthday: "1920" ).should.eql 'b. 1920'
 
+    it 'birth only with non-birth prefix', ->
+      helpers.formatBirthDeath( birthday: "Est 1920" ).should.eql 'Est 1920'
+
     it 'birth and death', ->
       helpers.formatBirthDeath( birthday: "1920", deathday: "1990" ).should.eql '1920–1990'
 
