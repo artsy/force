@@ -15,8 +15,8 @@ page = new JSONPage
 { data, edit, upload } = require('../../components/json_page/routes')(page)
 { get, middleware } = require('./routes')(page)
 
-app.get page.paths.show, adminOnly, get.landing
-app.get page.paths.show + '/data', adminOnly, data
+app.get page.paths.show, get.landing
+app.get "#{page.paths.show}/data", adminOnly, data
 app.get page.paths.edit, adminOnly, edit
 app.post page.paths.edit, adminOnly, upload
-app.get page.paths.show + '/complete', adminOnly, middleware, get.complete
+app.get "#{page.paths.show}/complete", middleware.isLoggedIn, get.complete
