@@ -57,13 +57,10 @@ describe 'JSONPage', ->
           err.message.should.equal 'cannot GET /json/wrong.json (403)'
           done()
 
-      it 'returns a promise; rejects with the error', (done) ->
+      it 'returns a promise; rejects with the error', ->
         @page.get()
-          .then -> false.should.be.true() # I am not invoked
           .catch (err) ->
             err.message.should.equal 'cannot GET /json/wrong.json (403)'
-            done()
-          .done()
 
   describe '#set', ->
     beforeEach ->

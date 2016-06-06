@@ -2,7 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class Params extends Backbone.Model
-  urlWhitelist:[
+  urlWhitelist: [
+    'source'
     'page'
     'medium'
     'color',
