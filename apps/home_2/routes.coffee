@@ -4,6 +4,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Items = require '../../collections/items'
+Articles = require '../../collections/articles'
 HeroUnits = require '../../collections/hero_units'
 { client } = require '../../lib/cache'
 metaphysics = require '../../lib/metaphysics.coffee'
@@ -29,8 +30,10 @@ positionWelcomeHeroMethod = (req, res) ->
 
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
+
   # homepage:featured-links
-  featuredArticles = new Items [], id: '5172bbb97695afc60a000001', item_type: 'FeaturedLink'
+  featuredArticles = new Articles
+
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
@@ -38,7 +41,13 @@ positionWelcomeHeroMethod = (req, res) ->
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     metaphysics query: query, req: req
     featuredLinks.fetch(cache: true)
-    featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
+    featuredArticles.fetch
+      cache: true
+      cacheTime: timeToCacheInSeconds
+      data:
+        published: true
+        featured: true
+        sort: '-published_at'
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
   ])).spread( (heroUnitPromise, { value }) ->
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
