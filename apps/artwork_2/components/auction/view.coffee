@@ -19,6 +19,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'click .js-artwork-auction-help-modal': 'openHelpModal'
     'click .js-artwork-auction-ask-specialist': 'inquire'
     'click .js-artwork-auction-buy-now': 'acquire'
+    'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
 
@@ -94,3 +95,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     @$el.html template extend {}, @data,
       helpers: auction: helpers
     this
+
+  setMaxBid: (e) ->
+    @$('.js-artwork-auction-bid-button')
+      .text "Bid #{$(e.target).find('option:selected').attr 'data-display'}"
