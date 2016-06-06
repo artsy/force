@@ -31,7 +31,7 @@ setupActiveBidsView = (module, $el, user) ->
     user: user
     el: $el
 
-  mabView.fetch().then -> mabView.render()
+  mabView.fetch().then -> mabView.render().poll()
 
 module.exports = ->
   user = CurrentUser.orNull()
