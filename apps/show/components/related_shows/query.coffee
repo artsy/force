@@ -12,6 +12,9 @@ module.exports = """
       }
       fair {
         id
+        profile {
+          is_published
+        }
         published
         has_full_feature
         name
