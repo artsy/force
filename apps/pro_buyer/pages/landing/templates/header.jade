@@ -10,5 +10,5 @@ header.probuyer-header(
   .probuyer-header__cta
     a.avant-garde-button-white(
       href='#{paths.show}/complete'
-      class= (user ? null : 'js-move-to-cta')
+      class= ((user ? '' : 'js-move-to-cta') + ' analytics-pro-buyer-join')
     )= hero.cta.label

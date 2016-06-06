@@ -5,6 +5,7 @@ footer.probuyer-cta( class='js-cta' )
   .probuyer-cta__form
     if user
       a.avant-garde-button-black.is-block(
+        class='analytics-pro-buyer-join'
         href='#{paths.show}/complete'
       ) Join as #{user.get('name')}
     else
@@ -49,7 +50,7 @@ footer.probuyer-cta( class='js-cta' )
       if user
         | Not you?
         = ' '
-        a( href='#', class='js-logout' )
+        a( href='#', class='js-logout analytics-pro-buyer-logout' )
           | Join as a different user.
 
       else
