@@ -3,6 +3,7 @@ _ = require 'underscore'
 CurrentUser = require '../../../models/current_user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
+MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
@@ -25,6 +26,13 @@ setupFollowedArtistsView = (module, $el) ->
 
   view.render()
 
+setupActiveBidsView = (module, $el, user) ->
+  mabView = new MyActiveBids
+    user: user
+    el: $el
+
+  mabView.fetch().then -> mabView.render()
+
 module.exports = ->
   user = CurrentUser.orNull()
 
@@ -36,7 +44,10 @@ module.exports = ->
     ).then ({ home_page_module }) ->
       module = home_page_module
       $el = $("#hpm-#{module.key}-#{index}")
+
+      return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
       return setupFollowedArtistsView(module, $el) if module.key is 'followed_artists'
+
       view = new ArtworkBrickRailView
         $el: $el
         artworks: module.results
