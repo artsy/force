@@ -51,6 +51,10 @@ module.exports = class User extends Backbone.Model
   isRecentlyRegistered: ->
     @__isRecentlyRegistered__
 
+  # Be sure to fetch this before calling
+  isWithAccount: ->
+    @related().account.id?
+
   @instantiate: (attributes = {}) ->
     CurrentUser = require './current_user.coffee'
     LoggedOutUser = require './logged_out_user.coffee'
