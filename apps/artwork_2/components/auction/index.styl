@@ -19,25 +19,19 @@
     border-bottom @border-top
 
     &__bid
-    &__bidder-status
       sans('s-headline')
 
     &__closed
       serif('s-body')
 
-    &__bidder-status
-      position absolute
-      top distance(gutter / 2)
-      right @top
-
-      &[data-status='highest']
-        color new-green-color
-
-      &[data-status='outbid']
-        color new-red-color
+    &__bid
+      margin-bottom 5px
 
     &__amount
-      sans('xl-headline')
+      serif('l-body')
+      position absolute
+      right 0
+      top 10px
 
     &__count
       color gray-dark-color
@@ -47,15 +41,37 @@
       serif('l-caption')
       margin distance(gutter / 2) 0 0 0
 
-    &__next-bid
-      serif('s-body')
-      color gray-dark-color
+    &__max-bid
+      position relative
+      margin 10px 0
+      .help-tooltip
+        position absolute
+        right 0
+        top 0
 
-    &__input
-      margin distance(10px, 'garamond-s-body') 0
+    &__max-bid-label
+      sans('s-headline')
+      &.is_winning
+        color new-green-color
+      &.is_losing
+        color new-red-color
+
+    &__select
+      width 100%
+      margin 5px 0
+      select
+        width 100%
 
     &__button
       margin-top 10px !important
+
+    &__conditions
+      display block
+      margin-top 20px
+      color gray-dark-color
+      serif('s-caption')
+      a
+        color gray-dark-color
 
   &__buyers-premium
     serif('s-body')

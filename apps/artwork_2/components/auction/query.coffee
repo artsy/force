@@ -25,6 +25,7 @@ module.exports = """
       symbol
       current_bid {
         display
+        cents
       }
       minimum_next_bid {
         display

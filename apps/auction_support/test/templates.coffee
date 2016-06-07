@@ -35,7 +35,8 @@ describe 'Auction', ->
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
       @order = new Order()
-      @saleArtwork = new SaleArtwork(fabricate 'sale_artwork')
+      @saleArtwork = new SaleArtwork fabricate 'sale_artwork',
+        highest_bid: amount_cents: 100
       @sale = new Sale(fabricate 'sale')
       done()
 
@@ -65,6 +66,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        accounting: formatMoney: ->
         asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
@@ -82,6 +84,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        accounting: formatMoney: ->
         asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
