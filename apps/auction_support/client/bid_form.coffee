@@ -25,7 +25,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
-    @$('input.max-bid').focus() unless @submitImmediately
+    @$('.max-bid').focus() unless @submitImmediately
 
     # extend form's errors with our own
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
@@ -41,8 +41,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   getBidAmount: =>
     val = @$('.max-bid').val()
-    if val
-      @saleArtwork.cleanBidAmount val
+    @saleArtwork.cleanBidAmount val if val
 
   placeBid: =>
     @timesPolledForBidPlacement = 0

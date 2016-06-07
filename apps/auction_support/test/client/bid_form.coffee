@@ -27,7 +27,10 @@ describe 'BidForm', ->
     sinon.stub _, 'delay', (cb) -> cb()
     @order = new Order()
     @sale = new Sale fabricate 'sale'
-    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 10000, display_minimum_next_bid_dollars: '$100'
+    @saleArtwork = new SaleArtwork fabricate 'sale_artwork',
+      minimum_next_bid_cents: 10000
+      display_minimum_next_bid_dollars: '$100'
+      highest_bid: amount_cents: 500
     @artwork = new Artwork fabricate 'artwork'
     @bidderPositions = new BidderPositions([fabricate('bidder_position', suggested_next_bid_cents: 0, display_suggested_next_bid_dollars: '$0')],
       { sale: @sale, saleArtwork: @saleArtwork })
@@ -41,6 +44,7 @@ describe 'BidForm', ->
       saleArtwork: @saleArtwork
       bidderPositions: @bidderPositions
       maxBid: 50
+      accounting: formatMoney: ->
       asset: (->)
     }, =>
       @view = new BidForm
@@ -57,24 +61,19 @@ describe 'BidForm', ->
   describe '#placeBid', ->
 
     it 'validates the form and displays errors', ->
+      @view.$('.max-bid').replaceWith('<input class="max-bid" value="$50.12">')
       @view.placeBid()
       html = @view.$el.html()
       @view.$('.error').text().should.equal "Your bid must be higher than $100"
 
     it 'validates the form and displays errors', ->
-      @view.$('input.max-bid').val '$50.12'
-      @view.placeBid()
-      html = @view.$el.html()
-      @view.$('.error').text().should.equal "Your bid must be higher than $100"
-
-    it 'validates the form and displays errors', ->
-      @view.$('input.max-bid').val '$50.00'
+      @view.$('.max-bid').replaceWith('<input class="max-bid" value="$50.00">')
       @view.placeBid()
       html = @view.$el.html()
       @view.$('.error').text().should.equal "Your bid must be higher than $100"
 
     it 'does not show errors if the bid amount is above the min next bid', ->
-      @view.$('input.max-bid').val '$150.12'
+      @view.$('.max-bid').replaceWith('<input class="max-bid" value="$150.12">')
       @view.placeBid()
       html = @view.$el.html()
       @view.$('.error').text().should.equal ""
@@ -85,14 +84,14 @@ describe 'BidForm', ->
 
     it 'validates against the bidder position min', ->
       @view.bidderPositions.first().set suggested_next_bid_cents: 100000, display_suggested_next_bid_dollars: '$1,000'
-      @view.$('input.max-bid').val '$50.00'
+      @view.$('.max-bid').replaceWith('<input class="max-bid" value="$50.00">')
       @view.placeBid()
       html = @view.$el.html()
       @view.$('.error').text().should.equal "Your bid must be higher than $1,000"
 
     describe 'polling', ->
       beforeEach ->
-        @view.$('input.max-bid').val '$150.12'
+        @view.$('.max-bid').replaceWith('<input class="max-bid" value="$150.12">')
         @messageSpy = sinon.spy @view, 'showSuccessfulBidMessage'
         @view.placeBid()
         Backbone.sync.args[0][2].success fabricate('bidder_position', id: 'cat') # Bid successfully placed
