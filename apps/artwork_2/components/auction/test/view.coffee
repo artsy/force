@@ -76,7 +76,7 @@ describe 'auction', ->
 
     beforeEach ->
       sinon.stub ArtworkAuctionView::, 'redirectTo'
-
+      @view.data.accounting = require 'accounting'
       @view.data.user = 'existy'
       @view.render()
 
@@ -84,7 +84,7 @@ describe 'auction', ->
       @view.redirectTo.restore()
 
     it 'submits the bid by redirecting to the confirmation page', ->
-      @view.$('input[name="bid"]').val '60,000'
+      @view.$('[name="bid"]').replaceWith '<input name="bid" value="60,000">'
       @view.$('button').click()
       @view.redirectTo.args[0][0]
         .should.equal '/auction/los-angeles-modern-auctions-march-2015/bid/peter-alexander-wedge-with-puff?bid=6000000'
