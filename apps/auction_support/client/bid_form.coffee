@@ -40,7 +40,7 @@ module.exports = class BidForm extends ErrorHandlingForm
       pageId: 'auction-info'
 
   getBidAmount: =>
-    val = @$('input.max-bid').val()
+    val = @$('.max-bid').val()
     if val
       @saleArtwork.cleanBidAmount val
 

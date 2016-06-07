@@ -48,17 +48,19 @@
       top: 12px
       left: 13px
       font-size: 21px
-      color gray-darker-color
+      color gray-dark-color
     .max-bid
       padding-left 30px
   .bid-input-help-text
-    color: gray-darker-color
+    color: gray-dark-color
     margin-top 8px
     margin-bottom 0px
 
   .bid-section-header
     font-size 21px
-    margin-top 30px
+    margin-top 23px
+    padding-top 30px
+    border-top 1px solid gray-lighter-color
 
   .current-bid
     margin-top 10px
@@ -70,7 +72,7 @@
 
   .bidding-question, .note
     margin-bottom 10px
-    color: gray-darker-color
+    color: gray-dark-color
     font-style italic
 
   .bidding-question
@@ -87,7 +89,7 @@
       font-size 13px
 
   .bidder-positions-count
-    color gray-darker-color
+    color gray-dark-color
 
   .user-bid-input-container
     .bid-group-label
@@ -112,9 +114,50 @@
     padding-top: 5px
     padding-bottom: 12px
 
+.auction-support-max-bid
+  width calc(100% \- 170px)
+
+.auction-support-max-bid-label
+  margin-right 38px
+  margin-top 20px
+  padding-top 10px
+
+.credit-card-form label
+  &.auction-support-max-bid
+  &.auction-support-max-bid-label
+    display inline-block
+    vertical-align center
+
 #auction-buyers-premium
   max-width 500px
   margin 100px auto
+
+.auction-support-artwork
+  padding 20px 0
+  border-top 1px solid gray-lighter-color
+  border-bottom 1px solid gray-lighter-color
+  height 150px
+
+.auction-support-artwork-img
+  height 100px
+  margin-right 20px
+  float left
+
+.auction-support-artwork-bid
+  margin-top 16px
+
+.auction-support-details
+  serif('l-caption')
+
+.auction-support-artwork-reserve
+  color gray-dark-color
+
+.auction-support-lot-num
+  sans('s-headline')
+  margin-bottom 2px
+
+.auction-support-max-bid + .registration-form-content
+  margin-top 30px
 
 @media (max-width: 600px)
   #auction-registration-page

@@ -8,19 +8,35 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
       //- Rendered client-side
 
     if user
-      .artwork-auction__bid-form__next-bid
-        | Enter #{sale_artwork.minimum_next_bid.display} or higher
-
-      .artwork-auction__bid-form__input.typed-bordered-input.is-block
-        span= sale_artwork.symbol
-        input.bordered-input(
-          class='js-artwork-auction-bid-amount'
-          name='bid'
-          autocomplete='off'
-          required
-          style="padding-left: #{sale_artwork.symbol.length * 12 + 20}px"
+      .artwork-auction__bid-form__max-bid
+        if me && me.bidder_status.is_highest_bidder
+          .artwork-auction__bid-form__max-bid-label.is_winning
+            | You're the highest bidder
+        else if me && !me.bidder_status.is_highest_bidder
+          .artwork-auction__bid-form__max-bid-label.is_losing
+            | You've been outbid, increase your bid
+        else
+          .artwork-auction__bid-form__max-bid-label Set your max bid
+        span.help-tooltip(
+          data-message='Set the maximum amount you would like Artsy to bid up to on your behalf'
+          data-anchor='top-right'
         )
+
+      label.bordered-select.artwork-auction__bid-form__select
+        select( name='bid' required ).js-artwork-auction-max-bid
+          - incr = sale_artwork.minimum_next_bid.cents - sale_artwork.current_bid.cents
+          for _, i in Array(100)
+            - val = (sale_artwork.minimum_next_bid.cents + (incr * i)) / 100
+            - display = accounting.formatMoney(val, sale_artwork.symbol, 0)
+            option( value=val data-display=display )= display
 
     button.artwork-auction__bid-form__button.avant-garde-button-black.is-block(
       class='js-artwork-auction-bid-button'
-    ) Bid
+    ) Bid #{sale_artwork.minimum_next_bid.display}
+    small.artwork-auction__bid-form__conditions
+      | By placing your bid you agree to Artsy's&nbsp;
+      a(
+        href='/conditions-of-sale'
+        class='js-artwork-auction-help-modal'
+        data-id='how-auctions-work-conditions-of-sale'
+      ) Conditions of Sale

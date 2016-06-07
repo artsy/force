@@ -9,20 +9,33 @@ block body
       include ../../../components/clock/template
     .auction-bid-form-container
       h2.garamond-header-center Confirm Your Bid
-      .auction-bid-form.credit-card-form
-        .small-artwork-container
-          include ../../../components/credit_card/templates/small_artwork
-        .user-bid-input-container
-          include ./artwork-bid-status
-          .bordered-bid-form-group.max-bid
-            .bid-group-label Your Max. Bid:
-            .bid-group-content
-              .bid-input-container
-                label.bid-dollar-sign $
-                input.max-bid.bordered-input( name='bid', autocomplete='off', autofocus='true', value=maxBid, pattern="\d*" )
-              .bid-input-help-text
-                | Enter #{bidderPositions.minBid()} or higher
-              a.bidding-question How Bidding Works
+      .credit-card-form
+        .auction-support-artwork
+          img.auction-support-artwork-img( src=artwork.defaultImageUrl() )
+          .auction-support-details
+            .auction-support-lot-num Lot #{saleArtwork.get('lot_number')}
+            p!= artwork.titleAndYear()
+            if artwork.get('artist')
+              p= artwork.artistName()
+            .auction-support-artwork-bid
+              | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
+              if saleArtwork.formatBidsAndReserve()
+                .auction-support-artwork-reserve= saleArtwork.formatBidsAndReserve()
+
+        label.auction-support-max-bid-label Set your max bid
+        label.bordered-select.auction-support-max-bid
+          select( name='bid' required ).max-bid
+            - minNext = saleArtwork.get('minimum_next_bid_cents')
+            - incr = minNext - saleArtwork.get('highest_bid').amount_cents
+            for _, i in Array(100)
+              - val = (minNext + (incr * i)) / 100
+              - display = accounting.formatMoney(val, saleArtwork.get('symbol'), 0)
+              option(
+                value=val
+                data-display=display
+                selected=(maxBid === val)
+              )= display
+
           .auction-bid-errors
         if isRegistered
           .registration-form-content
