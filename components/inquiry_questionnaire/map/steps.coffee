@@ -1,4 +1,5 @@
 module.exports = [
+  { is_logged_in: false: ['account'] }
   pre_qualify: {
     true: [
       { has_seen_commercial_interest: false: ['commercial_interest'] }
@@ -45,11 +46,6 @@ module.exports = [
       }
     ]
   }
-  {
-    is_logged_in: false: [
-      { has_seen_confirmation_this_session: false: ['confirmation'] }
-      'account'
-    ]
-  }
+  { has_seen_confirmation_this_session: false: ['confirmation'] }
   'done'
 ]
