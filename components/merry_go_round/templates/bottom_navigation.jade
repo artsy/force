@@ -1,17 +1,18 @@
-- index = index || 0
+nav.mgr-navigation.js-mgr-navigation
+  - index = index || 0
 
-a.mgr-arrow-left.icon-chevron-left.js-mgr-prev(
-  disabled= disableStart
-)
+  a.mgr-arrow-left.icon-chevron-left.js-mgr-prev(
+    disabled= disableStart
+  )
 
-.mgr-dots
-  unless contain
-    for x, i in new Array(length)
-      .mgr-dot.js-mgr-select(
-        class= (index === i ? 'is-active' : undefined)
-        data-index= i
-      ) •
+  .mgr-dots
+    unless contain
+      for x, i in new Array(length)
+        .mgr-dot.js-mgr-select(
+          class= (index === i ? 'is-active' : undefined)
+          data-index= i
+        ) •
 
-a.mgr-arrow-right.icon-chevron-right.js-mgr-next(
-  disabled= disableEnd
-)
+  a.mgr-arrow-right.icon-chevron-right.js-mgr-next(
+    disabled= disableEnd
+  )

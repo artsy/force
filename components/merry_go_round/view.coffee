@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ isTouchDevice } = require '../util/device.coffee'
 Backbone = require 'backbone'
 
 module.exports = class MerryGoRoundNavView extends Backbone.View
@@ -57,11 +58,14 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @flickity.select $(e.currentTarget).data('index')
 
   checkWidth: ->
-    breaksWidth = $(this.flickity.viewport).width() < this.flickity.slideableWidth
+    cells = this.flickity.cells
+    lastMargin = parseInt $(cells[cells.length - 1].element).css('marginRight')
+    breaksWidth = $(this.flickity.viewport).width() < this.flickity.slideableWidth - lastMargin
     @$el.addClass 'no-scroll' if not breaksWidth
 
   render: =>
     @$el.html @template
+      isTouch: isTouchDevice()
       length: @flickity.cells.length
       index: @flickity.selectedIndex
       disableStart: !@flickity.options.wrapAround && @isStart()

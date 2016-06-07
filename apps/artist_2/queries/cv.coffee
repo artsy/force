@@ -8,8 +8,10 @@ module.exports =
         }
         solo_shows: partner_shows(at_a_fair: false, solo_show:true, sort: start_at_desc, size: 99) {
           ... relatedShow
+          ... relatedShowImage
         }
         fair_booths: partner_shows(at_a_fair: true, sort: start_at_desc, size: 99) {
+          ... relatedShow
           ... relatedShow
         }
       }

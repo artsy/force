@@ -1,0 +1,20 @@
+each item in items
+  .mgr-cell.js-mgr-cell.artist-rail-cell
+    block cell
+
+if showMore
+  include ./view_all_cell
+
+else
+  //- if there are not enough shows to fill the carousel, the cells may
+  //- not paginate evenly when divided into pages of 4. add some blank
+  //- cells to the last page if cells are not already divisible by 4.
+
+  - var cellsPerPage = 4
+  - var cellsRemainder = items.length % cellsPerPage
+  - var blankCellsNeeded = cellsPerPage - cellsRemainder
+
+  - var i = 0
+  while i < blankCellsNeeded
+    .mgr-cell.js-mgr-cell.artist-rail-cell.empty-cell
+    - i++

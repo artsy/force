@@ -8,14 +8,13 @@ mixin rail(title, viewAllUrl, section)
         .mgr-cells.js-mgr-cells: .loading-spinner
           //- Rendered client-side
 
-        nav.mgr-navigation.js-mgr-navigation
-          include ../../../../components/merry_go_round/templates/horizontal_navigation
+        include ../../../../components/merry_go_round/templates/horizontal_navigation
 
 .artist-overview-header
-  .sixty-forty-bisected-header
+  .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
     - var hasMeta = artist.blurb || artistMeta.length
-
+    - var hasShows = statuses.shows
     .bisected-header-cell
       if hasMeta
         .artist-blurb.bisected-header-cell-section
@@ -27,16 +26,16 @@ mixin rail(title, viewAllUrl, section)
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
-      if statuses.shows
+      if hasShows
         .artist-related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
 
     .bisected-header-cell
-      if hasMeta && !statuses.shows
-        .artist-related-genes.related-links.bisected-header-cell-section
+      if hasShows
+        .artist-exhibition-highlights.bisected-header-cell-section
           //- Rendered client-side
       else
-        .artist-exhibition-highlights.bisected-header-cell-section
+        .artist-related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
 
 - var hasWorks = artist.statuses.artworks
