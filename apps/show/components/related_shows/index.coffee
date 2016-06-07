@@ -71,6 +71,6 @@ module.exports = (type, show) ->
       DateHelpers: DateHelpers
       ViewHelpers: ViewHelpers
       fromShowGuide: location.search.match 'from-show-guide'
-      linkToFair: show.fair && show.fair.published && show.fair.profile && show.fair.profile.is_published
+      linkToFair: show.fair?.published && show.fair.profile?.is_published
 
   .catch console.error.bind(console)
