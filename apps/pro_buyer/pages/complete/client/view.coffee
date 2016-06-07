@@ -52,6 +52,7 @@ module.exports = class ProfessionalBuyerCompleteView extends View
           'location'
           'price_range_min'
           'price_range_max'
+          'collector_level'
         ]...
 
         @user.related().collectorProfile.save pick data, [
