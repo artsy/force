@@ -24,7 +24,7 @@ form.probuyer-complete__form.stacked-form
   )
 
   label.avant-garde-form-label( for='company_website' )
-    | Company Website*
+    | Company Website
   input.bordered-input(
     type='url'
     id='company_website'
@@ -32,7 +32,6 @@ form.probuyer-complete__form.stacked-form
     placeholder='http://'
     value= user.related().collectorProfile.get('company_website') || 'http://'
     onClick='this.setSelectionRange(0, this.value.length)'
-    required
   )
 
   label.avant-garde-form-label( for='location' )
