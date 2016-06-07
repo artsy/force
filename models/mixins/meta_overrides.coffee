@@ -22,6 +22,102 @@ module.exports =
 
 metaOverrides = (model) ->
 
+  'arco-madrid-2016':
+    title: 'ARCOmadrid 2016 | Artsy'
+    description: "Explore a special section commemorating ARCOmadrid’s 35th edition, featuring galleries like Victoria Miro, Marian Goodman Gallery, and Annet Gelink Gallery"
+
+  'the-armory-show-2016':
+    title: 'The Armory Show 2016 | Artsy'
+    description: "From Galeria Nara Roesler to Tina Kim Gallery, browse works from the 170+ international galleries gathered in New York City on Piers 92 & 94"
+
+  'moving-image-new-york-2016':
+    title: 'Moving Image: New York 2016 | Artsy'
+    description: "Discover moving-image works by artists including boredomresearch, Lorna Mills, and Olivia McGilchrist"
+
+  'springbreak-2016':
+    title: 'SPRING/BREAK 2016 | Artsy'
+    description: "See how 70+ curators—including Arielle de Saint Phalle + Taylor Roy, Chris Bors, and Marly Hammer—tackle issues of appropriation and image reproduction through their interpretations of this year’s theme, “⌘COPY⌘PASTE”"
+
+  'pulse-new-york-2016':
+    title: 'PULSE New York 2016 | Artsy'
+    description: "As the art world gathers in New York, explore the work of emerging and established artists—Chitra Ganesh, Tony Feher, and William Powhida among them—on view in Chelsea at this international fair"
+
+  'art-basel-in-hong-kong-2016':
+    title: 'Art Basel in Hong Kong 2016 | Artsy'
+    description: "Find out what de Sarthe Gallery, Annely Juda Fine Art, and Simon Lee Gallery are bringing to the fair’s fourth edition"
+
+  'art-central-2016':
+    title: 'Art Central Hong Kong 2016 | Artsy'
+    description: "Preview work from galleries hailing from Asia and beyond—Whitestone Gallery, amanasalto, and Sundaram Tagore Gallery among them"
+
+  'sp-arte-2016':
+    title: 'SP-Arte 2016 | Artsy'
+    description: "Your first look inside the São Paulo fair that will bring together 140+ galleries from across the world for its 12th edition"
+
+  'miart-2016':
+    title: 'miart 2016 | Artsy'
+    description: "Explore the wealth of galleries—including Galerie Lelong, Steve Turner, and Lia Rumma—together in Milan for the 21st edition of this international modern and contemporary fair "
+
+  'dallas-art-fair-2016':
+    title: 'Dallas Art Fair 2016 | Artsy'
+    description: "Next week, the Lone Star state will play host to 90+ local and international galleries—bitforms gallery, Galerie Perrotin, and Conduit Gallery among them—for the eighth edition of this Dallas fair"
+
+  'art-cologne-2016':
+    title: 'Art Cologne 2016 | Artsy'
+    description: "An early look at the 100+ galleries exhibiting at the 50th edition of the world’s first modern and contemporary fair"
+
+  'aipad-2016':
+    title: 'AIPAD 2016 | Artsy'
+    description: "Explore the 36th edition of this New York fair, including work by the world’s leading photographers—Cig Harvey, Hellen van Meene, and Garry Winogrand among them"
+
+  'art-brussels-2016':
+    title: 'Art Brussels 2016 | Artsy'
+    description: "Underrepresented artists of the 20th century—Yuko Nasaka and Bruno Munari among them—get a second look in this Belgian fair’s new section, “REDISCOVERY”"
+
+  'london-original-print-fair-2016':
+    title: 'London Original Print Fair 2016 | Artsy'
+    description: "Here’s your sneak peek at the prints—from works by Old Masters to emerging artists—en route to London’s Royal Academy of Arts"
+
+  'collective-design-2016':
+    title: 'Collective Design Fair 2016 | Artsy'
+    description: "An early look at works by the world's leading designers, from the Campana Brothers to Lindsey Adelman"
+
+  'frieze-new-york-2016':
+    title: 'Frieze New York 2016 | Artsy'
+    description: "From Tatiana Trouvé to Michael E. Smith, preview works from the art world’s rising stars soon to be shown on Randall's Island"
+
+  'art-newyork-2016':
+    title: 'Art Miami New York 2016 | Artsy'
+    description: "Explore works by 250+ artists—including Carlos Cruz-Diez, Alexander Calder, and Yayoi Kusama—now on view at Pier 94"
+
+  '1-54-new-york-2016':
+    title: '1:54 Contemporary African Art Fair New York 2016 | Artsy'
+    description: "An offshoot of 1:54 London, this New York edition showcases work by 60+ artists from Africa and the African diaspora"
+
+  'art16':
+    title: 'Art16 | Artsy'
+    description: "In advance of this London fair, discover 1,100+ works from leading contemporary artists—Miya Ando and El Anatsui among them"
+
+  'photo-london-2016':
+    title: 'Photo London 2016 | Artsy'
+    description: "Get your first look at works by the world’s leading photographers—including Annie Leibovitz, Martin Schoeller, and Vivian Maier—soon to take up residence in London’s Somerset House"
+
+  'arteba-2016':
+    title: 'arteBA 2016 | Artsy'
+    description: "See what Galeria Marilia Razuk, Blau Projects, and Cosmocosa are bringing to Buenos Aires as 85 galleries gather for this Argentinian fair"
+
+  'loop-barcelona-2016':
+    title: 'LOOP Barcelona | 2016'
+    description: "Preview video work by 45+ galleries showing at this intimate fair in a Barcelona hotel"
+
+  'art-basel-2016':
+    title: 'Art Basel 2016 | Artsy'
+    description: "Explore work from the art world's much-anticipated summer event, bringing leading international galleries to Basel"
+
+  'design-miami-basel-2016':
+    title: 'Design Miami/ Basel 2016 | Artsy'
+    description: "See what's on view at Art Basel's sister fair, highlighting exquisite design pieces from around the world"
+
   'zsona-maco-2016':
     title: 'ZsONA MACO 2016 | Artsy'
     description: 'Browse works by leading contemporary artists—Rachel Howard, Candida Höfer, and Jose Dávila included—shown in Mexico’s Distrito Federal'
