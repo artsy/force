@@ -28,13 +28,15 @@ module.exports = class ArticlesView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+      totalArtworksCount: @model.get('counts').artworks
+      viewAllCell: true
 
     rail.collection.trigger 'sync'
 
     $el = @$('#artist-related-articles-section').show()
     _.defer -> $el.addClass 'is-fade-in'
 
-  render: ( { articles } = {} )->
+  render: ( { articles, counts } = {} )->
     @$el.html template
       artist: @model
       articles: articles
