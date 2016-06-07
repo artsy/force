@@ -87,7 +87,7 @@ module.exports = class ProfessionalBuyerCompleteView extends View
         categories to get alerts when new works are available.
       '''
       confirm:
-        href: '/personalize'
+        href: '/personalize?force=artists'
         label: 'Personalize your Account'
       ignore:
         label: 'Maybe later, start browsing'
