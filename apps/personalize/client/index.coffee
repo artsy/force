@@ -1,5 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+qs = require 'qs'
 Backbone = require 'backbone'
 PersonalizeState = require './state.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -18,11 +19,11 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   routes:
     'personalize/:step': 'step'
 
-  initialize: (options) ->
-    { @user, @reonboarding } = options
+  initialize: ({ @user, @reonboarding, @force }) ->
+    @$el = $('#personalize-page')
 
     @state = new PersonalizeState user: @user, reonboarding: @reonboarding
-    @$el = $('#personalize-page')
+    @state.set 'current_step', @force, silent: true if @force?
 
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
@@ -68,10 +69,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       location.assign @redirectLocation()
 
 module.exports.init = ->
-  reonboarding = /reonboarding/.test(window.location.search)
-  user = CurrentUser.orNull()
-  return unless user
+  { force, reonboarding } = qs.parse location.search.slice(1)
+  return unless user = CurrentUser.orNull()
   user.approximateLocation success: -> user.save()
-  new PersonalizeRouter user: user, reonboarding: reonboarding
+  new PersonalizeRouter user: user, reonboarding: reonboarding?, force: force
   Backbone.history.start pushState: true
   require('./analytics.coffee')(user)
