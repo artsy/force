@@ -61,5 +61,15 @@ module.exports = class User extends Backbone.Model
   prepareForInquiry: ->
     @findOrCreate silent: true
       .then =>
-        @related()
-          .collectorProfile.findOrCreate silent: true
+        Q.all [
+          Q.promise (resolve) =>
+            if @isLoggedIn()
+              resolve()
+            else
+              @related().account.fetch
+                silent: true
+                success: resolve
+                error: resolve
+
+          @related().collectorProfile.findOrCreate silent: true
+        ]
