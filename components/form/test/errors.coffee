@@ -17,6 +17,15 @@ describe 'Errors', ->
     @$form = $(template)
     @errors = new Errors @$form
 
+  describe '#__parse__', ->
+    it 'should automatically try to handle the arguments passed to it to pull out the appropriate response', ->
+      @errors.__parse__ responseText: '{"text":"Foo Bar"}'
+        .should.equal 'Foo Bar'
+      @errors.__parse__ null, responseText: '{"text":"Foo Bar"}'
+        .should.equal 'Foo Bar'
+      @errors.__parse__ 'Manually passed text'
+        .should.equal 'Manually passed text'
+
   describe '#parse', ->
     _.each errors, (response) ->
       it 'should handle a real world error response', ->
