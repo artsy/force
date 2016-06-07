@@ -133,6 +133,5 @@ setupUser = (user, auction) ->
           success: (bidder) =>
             if bidder?.get 'qualified_for_bidding'
               res.redirect liveUrl
-            else
-              next()
+            next()
       else next()

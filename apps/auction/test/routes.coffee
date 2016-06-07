@@ -130,20 +130,57 @@ describe '#redirectLive', ->
       body: {},
       params: id: 'foobar'
       user: new CurrentUser(fabricate 'user')
-    @res =
-      redirect: sinon.stub()
+    @res = redirect: sinon.stub()
     @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
 
-  it 'redirects on confirm if the auction is live', (done) ->
+  it 'redirects on confirm if the auction is live and bidder is qualified', (done) ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
       live_start_at: moment().startOf('day')
       end_at: moment().endOf('day')
-    routes.redirectLive @req, @res
+    bidder = {
+      id: 'me',
+      qualified_for_bidding: true,
+      sale: auction
+    }
+    @res =
+      redirect: (url) ->
+        url.should.equal 'https://live.artsy.net/foo/login'
+        done()
+    routes.redirectLive @req, @res, @next
     Backbone.sync.args[0][2].success auction
-    Backbone.sync.args[1][2].success fabricate 'bidder', qualified_for_bidding: false
+    Backbone.sync.args[1][2].success [bidder]
+    Backbone.sync.args[2][2].success bidder
+
+  it 'does not redirect if bidder is not qualified', () ->
+    auction = fabricate 'sale',
+      id: 'foo'
+      is_auction: true
+      live_start_at: moment().startOf('day')
+      end_at: moment().endOf('day')
+    bidder = {
+      id: 'me',
+      qualified_for_bidding: false,
+      sale: auction
+    }
+    routes.redirectLive @req, @res, @next
+    Backbone.sync.args[0][2].success auction
+    Backbone.sync.args[1][2].success [bidder]
+    Backbone.sync.args[2][2].success bidder
     @res.redirect.called.should.not.be.ok()
+    @next.called.should.be.ok()
+
+  it 'does not redirect on confirm if the auction is not live', () ->
+    auction = fabricate 'sale',
+      id: 'foo'
+      is_auction: true
+      live_start_at: null
+      end_at: moment().endOf('day')
+    routes.redirectLive @req, @res, @next
+    Backbone.sync.args[0][2].success auction
+    @res.redirect.called.should.not.be.ok()
+    @next.called.should.be.ok()
