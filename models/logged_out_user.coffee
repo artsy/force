@@ -45,6 +45,7 @@ module.exports = class LoggedOutUser extends User
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
           @trigger 'login'
+          @unset 'password' # Avoid 403 error on subsequent saves
           $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
             'X-ACCESS-TOKEN': response.user.accessToken
           success? model, response, options
