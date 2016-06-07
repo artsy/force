@@ -1,8 +1,8 @@
 .probuyer-complete
   h1
-    | Complete Your Artsy
+    | #{user.get('name')},
     br
-    | Professional Buyer Information
+    | Complete Your Application
 
 form.probuyer-complete__form.stacked-form
   .form-errors( class='js-form-errors' )
@@ -30,7 +30,8 @@ form.probuyer-complete__form.stacked-form
     id='company_website'
     name='company_website'
     placeholder='http://'
-    value= user.related().collectorProfile.get('company_website')
+    value= user.related().collectorProfile.get('company_website') || 'http://'
+    onClick='this.setSelectionRange(0, this.value.length)'
     required
   )
 
@@ -60,5 +61,6 @@ form.probuyer-complete__form.stacked-form
         )= bucket.display
 
   button.avant-garde-button-black(
+    class='analytics-pro-buyer-complete-submit'
     type='submit'
   ) Submit

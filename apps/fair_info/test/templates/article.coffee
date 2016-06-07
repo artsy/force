@@ -22,7 +22,9 @@ describe 'Article template', ->
   before ->
     @profile = new Profile fabricate 'profile'
     @fair = new Fair fabricate 'fair'
-    @article = new Article fabricate 'article', { contributing_authors: [] }
+    @article = new Article fabricate 'article',
+      contributing_authors: [],
+      sections: []
     @infoMenu = new InfoMenu fair: @fair
     @infoMenu.infoMenu = {
       events: true,

@@ -15,6 +15,6 @@ section.probuyer-proposition
           = figure.label
 
     a.probuyer-proposition__content__button.avant-garde-button-black.is-block(
-      href='#{sd.CURRENT_PATH}/complete'
-      class= (user ? null : 'js-move-to-cta')
+      href='#{paths.show}/complete'
+      class= ((user ? '' : 'js-move-to-cta') + ' analytics-pro-buyer-join')
     )= user ? 'Join as ' + user.get('name') : proposition.cta.label

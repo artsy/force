@@ -1,0 +1,35 @@
+@require '../../../../components/typeahead/index'
+
+.arbv-follow-search-container
+  width 60%
+  float left
+  .tt-suggestion
+    padding 0
+    border-bottom 1px solid gray-lighter-color
+    position relative
+    height 63px
+    &:last-child
+      border-bottom none
+  .tt-suggestion-inner
+    padding 5px
+    display flex
+    align-items center
+    flex 1
+    &__selected
+      color white
+      background-color purple-color !important
+  .tt-dropdown-menu
+    border 1px solid gray-lighter-color
+  .tt-cursor
+  .tt-suggestion:hover
+      background-color gray-lightest-color
+      color black
+  .typeahead-suggestion-follow
+    margin-right 10px
+    &[data-state="follow"] .avant-garde-button-underlined:before
+      content 'Follow'
+    &[data-state="following"] .avant-garde-button-underlined
+      border-bottom-color white
+      &:before
+        content 'Following'
+        color white

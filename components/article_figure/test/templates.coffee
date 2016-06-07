@@ -56,7 +56,7 @@ describe 'article figure template', ->
           {name: 'Kina' }
         ]
       sd: {}
-    html.should.containEql '&nbspand&nbsp'
+    html.should.containEql 'Kana and Kina'
     html.should.containEql 'Kina'
     html.should.containEql 'Kana'
     html.should.containEql 'has-contributing-author'
@@ -70,7 +70,7 @@ describe 'article figure template', ->
           {name: 'Yoshie' }
         ]
       sd: {}
-    html.should.containEql 'By <div class="article-figure-contributing-name">Kana,&nbsp</div><div class="article-figure-contributing-name">Kina&nbspand&nbsp</div><div class="article-figure-contributing-name">Yoshie</div>'
+    html.should.containEql '<div class="article-figure-contributing-name">By Kana, Kina and Yoshie</div>'
     html.should.containEql 'has-contributing-author'
 
   it 'does not render author name if Artsy Editorial, /articles, and has contributing authors', ->

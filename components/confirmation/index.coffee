@@ -11,6 +11,9 @@ module.exports =
   clear: clear = ->
     Cookies.expire key
 
+  isRegistered: ->
+    Cookies.get(key)?
+
   check: ->
     data = Cookies.get key
     return unless data?

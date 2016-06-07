@@ -5,8 +5,8 @@ module.exports = class ConfirmationModal extends View
   class: 'confirmation-modal'
 
   events:
-    'click .js-confirm': 'action'
-    'click .js-ignore': 'action'
+    'click .js-confirmation-confirm': 'action'
+    'click .js-confirmation-ignore': 'action'
 
   initialize: ({ @data }) -> #
 

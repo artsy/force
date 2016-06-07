@@ -1,18 +1,22 @@
+{ extend } = require 'underscore'
 Promise = require 'bluebird-q'
 
 module.exports = (page) ->
-  middleware: (req, res, next) ->
-    unless req.user?
-      return res.redirect page.paths.show
+  middleware:
+    isLoggedIn: (req, res, next) ->
+      unless req.user?
+        return res.redirect page.paths.show
 
-    next()
+      next()
 
   get:
-    index: (req, res, next) ->
+    landing: (req, res, next) ->
       page
         .get()
         .then (data) ->
-          res.render 'pages/landing/templates/index', data
+          res.locals.sd.SHOW_PATH = page.paths.show
+          res.render 'pages/landing/templates/index', extend data,
+            paths: page.paths
 
         .catch next
 
@@ -23,7 +27,8 @@ module.exports = (page) ->
       Promise
         .all [
           user.fetch()
-          collectorProfile.fetch data: access_token: user.get 'accessToken'
+          collectorProfile.fetch data:
+            access_token: user.get 'accessToken'
         ]
 
         .then ->
@@ -31,6 +36,4 @@ module.exports = (page) ->
           res.locals.sd.COLLECTOR_PROFILE = collectorProfile.toJSON()
           res.render 'pages/complete/templates/index'
 
-        .catch (err) ->
-          console.log err
-          next err
+        .catch next

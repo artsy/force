@@ -6,7 +6,7 @@ ProfessionalBuyerCompleteView = require '../pages/complete/client/view.coffee'
 
 module.exports = class ProfessionalBuyerRouter extends Router
   routes:
-    'professional-buyer': 'landing'
+    'professional-buyer(/)': 'landing'
     'professional-buyer/complete': 'complete'
 
   initialize: ->

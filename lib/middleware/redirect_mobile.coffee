@@ -35,6 +35,6 @@ router.all '/social-media-toolkit', isResponsive
 router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
 router.get '/consign', isResponsive
-router.get '/professional-buyer', isResponsive
+router.get '/professional-buyer*', isResponsive
 router.use redirect
 module.exports = router

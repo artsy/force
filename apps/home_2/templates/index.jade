@@ -22,12 +22,13 @@ block body
       .main-layout-container: #home-body
         ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
           include featured_links
-        each module, index in modules
-          - title = module.title
-          - railId = module.key
-          - viewAllUrl = viewHelpers.viewAllUrl(module)
-          div(id="hpm-#{railId}-#{index}").abrv-container
-            include ../../../components/artwork_brick_rail/templates/index
+        if modules
+          each module, index in modules
+            - title = module.title
+            - railId = module.key
+            - viewAllUrl = viewHelpers.viewAllUrl(module)
+            div(id="hpm-#{railId}-#{index}").abrv-container
+              include ../../../components/artwork_brick_rail/templates/index
         #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
           h2.home-featured-header Featured Shows
             .home-browse-all-right
@@ -38,13 +39,13 @@ block body
             - displayLocation = true
             include featured_shows
 
-        #home-featured-articles-section( class='js-homepage-featured-links', data-context='featured articles' )
-          h2.home-featured-header Featured Articles
+        #home-featured-articles-section( data-context='featured articles' )
+          h2.home-featured-header Artsy Magazine
             .home-browse-all-right
               a( href='/articles' )
-                | View All
+                | Explore the Magazine
           ul#home-featured-articles.home-featured-list
-            - articleLinks = featuredArticles.take(7)
+            - articles = featuredArticles.take(7)
             include featured_articles
 
   include ../../../components/main_layout/templates/json_ld

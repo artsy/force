@@ -24,6 +24,7 @@ describe 'ArticleIndexView', ->
             type: 'artworks',
             ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
             layout: 'overflow_fillwidth'
+            artworks: []
           }
         ]
       @options = {
