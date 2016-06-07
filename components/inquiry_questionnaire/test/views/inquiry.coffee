@@ -104,10 +104,15 @@ describe 'Inquiry', setup ->
         @view.state.current().should.equal 'after_inquiry'
 
     it 'prevents an initial send (but not subsequent) when submitting the default message', ->
+      sinon.stub Inquiry::, 'nudged'
+        .returns false
+
       @view.$('textarea[name="message"]').val()
         .should.containEql 'Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?'
 
       @view.$('button').click()
+
+      @view.nudged.returns true
 
       Backbone.sync.callCount.should.equal 0
 
@@ -118,6 +123,8 @@ describe 'Inquiry', setup ->
       @view.$('button').click()
 
       Backbone.sync.callCount.should.equal 2
+
+      @view.nudged.restore()
 
   describe 'in a fair context', ->
     beforeEach ->
