@@ -31,9 +31,13 @@ module.exports = class Filter
     else
       forSale = @selected.get 'for_sale'
       @selected.reset silent: true
+
+      # Triggers artwork fetch
       @selected.set keyOrObj, value
 
     @selected.set 'for_sale', forSale if forSale
+
+    # Fetches new filter counts
     @newState options
 
   priced: ->
@@ -90,8 +94,10 @@ module.exports = class Filter
       @trigger 'all sync', state
       return
     @trigger 'all request'
+    @fetching = true
     options.success = _.wrap options.success, (success, model, response, options) =>
       @filterStates.add filterState
+      @fetching = false
       success? model, response, options
       @trigger 'all sync', model
     options.data ?= @selected.attributes

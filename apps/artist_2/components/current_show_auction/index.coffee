@@ -1,14 +1,23 @@
 _ = require 'underscore'
+helpers = require '../../view_helpers.coffee'
 
 current = (type, artist) ->
   currentItems = artist[type]
   count = currentItems.length
   item = currentItems[0]
+  heading = (if (type is 'show' and count > 1) then 'Featured ' else 'Current ') + helpers.capitalize(type)
+  detail = if type is 'show'
+    _.compact([
+      item.partner?.name,
+      item.location.city
+    ]).join ', '
+  else
+    ''
   _.extend(_.pick(item, 'location', 'start_at', 'end_at', 'name', 'href', 'exhibition_period'), {
+    heading: heading
     type: type
-    hasMany: count > 1
     imageUrl: item.cover_image?.cropped.url
-    secondaryName: item.partner?.name
+    detail: detail
   })
 
 module.exports = (artist) ->

@@ -40,8 +40,7 @@ module.exports = class OverviewView extends Backbone.View
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onClick: =>
-        @sticky.rebuild()
+      onClick: => @sticky.rebuild()
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
@@ -92,12 +91,21 @@ module.exports = class OverviewView extends Backbone.View
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
       model: @model
-      allLoaded: => #
+      allLoaded: =>
+        @$('.artist-related-rail').addClass('is-fade-in')
     @subViews.push @filterView
 
   setupRelatedGenes: ->
-    subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
+    $el = @$('.artist-related-genes')
+
+    subView = new RelatedGenesView(el: $el, id: @model.id)
     subView.collection.on 'sync', =>
+      # Remove bisected header cell if empty (ie artist is missing some info)
+      # so that the remaining cell doesn't have weird margins
+      @$('.bisected-header-cell').each ->
+        $el = $(this)
+        $el.remove() if not $el.children().length
+
       @setupBlurb()
     @subViews.push subView
 

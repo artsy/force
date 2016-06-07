@@ -87,11 +87,11 @@ describe '/auction routes', ->
         done()
 
     it 'fetches the bidder positions', ->
-      @userReqs[1][2].url.should.containEql '/api/v1/me/bidders'
-      @userReqs[1][2].data.sale_id.should.equal 'foobar'
+      @userReqs[0][2].url.should.containEql '/api/v1/me/bidders'
+      @userReqs[0][2].data.sale_id.should.equal 'foobar'
 
     it 'sets the `registered_to_bid` attr', ->
-      @userReqs[1][2].success ['existy']
+      @userReqs[0][2].success ['existy']
       @req.user.get('registered_to_bid').should.be.true()
 
   describe '#inviteForm', ->
@@ -123,16 +123,64 @@ describe '/auction routes', ->
       @sailthru.apiPost.args[0][1].vars.auction_slugs.join(',')
         .should.equal 'baz'
 
-  describe '#redirectLive', ->
+describe '#redirectLive', ->
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req =
+      body: {},
+      params: id: 'foobar'
+      user: new CurrentUser(fabricate 'user')
+    @res = redirect: sinon.stub()
+    @next = sinon.stub()
 
-    it 'redirects on confirm if the auction is live', (done) ->
-      auction = fabricate 'sale',
-        id: 'foo'
-        is_auction: true
-        live_start_at: moment().startOf('day')
-        end_at: moment().endOf('day')
-      Backbone.sync.returns Q.resolve auction
-      routes.redirectLive @req, redirect: (url) ->
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'redirects on confirm if the auction is live and bidder is qualified', (done) ->
+    auction = fabricate 'sale',
+      id: 'foo'
+      is_auction: true
+      live_start_at: moment().startOf('day')
+      end_at: moment().endOf('day')
+    bidder = {
+      id: 'me',
+      qualified_for_bidding: true,
+      sale: auction
+    }
+    @res =
+      redirect: (url) ->
         url.should.equal 'https://live.artsy.net/foo/login'
         done()
-      Backbone.sync.args[0][2].success auction
+    routes.redirectLive @req, @res, @next
+    Backbone.sync.args[0][2].success auction
+    Backbone.sync.args[1][2].success [bidder]
+    Backbone.sync.args[2][2].success bidder
+
+  it 'does not redirect if bidder is not qualified', () ->
+    auction = fabricate 'sale',
+      id: 'foo'
+      is_auction: true
+      live_start_at: moment().startOf('day')
+      end_at: moment().endOf('day')
+    bidder = {
+      id: 'me',
+      qualified_for_bidding: false,
+      sale: auction
+    }
+    routes.redirectLive @req, @res, @next
+    Backbone.sync.args[0][2].success auction
+    Backbone.sync.args[1][2].success [bidder]
+    Backbone.sync.args[2][2].success bidder
+    @res.redirect.called.should.not.be.ok()
+    @next.called.should.be.ok()
+
+  it 'does not redirect on confirm if the auction is not live', () ->
+    auction = fabricate 'sale',
+      id: 'foo'
+      is_auction: true
+      live_start_at: null
+      end_at: moment().endOf('day')
+    routes.redirectLive @req, @res, @next
+    Backbone.sync.args[0][2].success auction
+    @res.redirect.called.should.not.be.ok()
+    @next.called.should.be.ok()

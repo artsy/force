@@ -27,6 +27,8 @@
   margin-left 1em
 
 // CV
+.artist-cv-note
+  color gray-darker-color
 .artist-cv-link
   display flex
   flex-direction row
@@ -87,8 +89,8 @@
     color gray-darker-color
 
   &__title
-    width 90%
-    font-size 25px
+    garamond-size('s-headline')
+    line-height 1.1
 
   &__image
     float left
@@ -110,7 +112,7 @@
     &:last-child
       margin 0
 
-// Related Artists section
+// Related Artists Section
 .artist-related-artists-section
   display none
   fade-in()

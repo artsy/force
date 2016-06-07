@@ -5,8 +5,14 @@ include ./cv_item
   #artist-cv-content
     .thirty-seventy-bisected-header
       .bisected-header-cell
-        .bisected-header-cell-section
-          = artistMetadata
+        if artistMetadata && artistMetadata.length
+          .bisected-header-cell-section
+            = artistMetadata
+
+        .artist-cv-note.bisected-header-cell-section
+          | Note: Artist CVs are assembled using
+          |  exhibition data available on Artsy;
+          |  they reflect partial exhibition histories.
 
       .bisected-header-cell
         include ./show_groupings

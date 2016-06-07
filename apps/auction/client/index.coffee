@@ -1,4 +1,4 @@
-{ FEATURE, AUCTION, ARTWORKS } = require('sharify').data
+{ FEATURE, AUCTION, ARTWORKS, USER } = require('sharify').data
 Feature = require '../../../models/feature.coffee'
 Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -18,7 +18,7 @@ module.exports.init = ->
   feature = new Feature FEATURE
   auction = new Auction AUCTION
   artworks = new Artworks ARTWORKS
-  user = CurrentUser.orNull()
+  user = new CurrentUser(USER)
 
   # If we are on the confirm-registration path then pop up a modal
   # Page is otherwise unchanged

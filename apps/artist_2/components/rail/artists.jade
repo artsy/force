@@ -1,7 +1,5 @@
-each item in items
-  .mgr-cell.js-mgr-cell.artist-rail-cell
-    - var artist = item
-    include ../../../../components/artist_cell/index
+extends index
 
-if showMore
-  include ./view_all_cell
+block cell
+  - var artist = item
+  include ../../../../components/artist_cell/index

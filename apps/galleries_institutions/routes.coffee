@@ -59,7 +59,7 @@ mapTypeClasses =
       facets: facetDefaults(type)
       state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
-  .catch next
+  .catch -> next()
   .done()
 
 # A to Z page
