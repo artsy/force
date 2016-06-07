@@ -14,7 +14,6 @@ HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
-query = require './query.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
