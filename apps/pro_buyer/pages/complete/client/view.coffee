@@ -29,6 +29,11 @@ module.exports = class ProfessionalBuyerCompleteView extends View
   submit: (e) ->
     e.preventDefault()
 
+    # If the URL is the default value; remove
+    # the http:// so that it passes validation
+    if ($url = @$('input[name="company_website"]')).val() is 'http://'
+      $url.val ''
+
     form = new Form $form: @$('form')
     return unless form.isReady()
 
