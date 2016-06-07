@@ -30,6 +30,9 @@ setupUser = (user, auction) ->
         error: ->
           user.set 'registered_to_bid', false
       )
+      user.fetchBidderForAuction auction,
+        success: (bidder) =>
+          user.set 'qualified_for_bidding', bidder?.get 'qualified_for_bidding'
     ]
   else
     Q.resolve()
@@ -119,8 +122,16 @@ setupUser = (user, auction) ->
 
 @redirectLive = (req, res, next) ->
   auction = new Auction id: req.params.id
-  auction.fetch(cache: true).then(->
-    liveUrl = "#{PREDICTION_URL}/#{auction.get('id')}/login"
-    if auction.isLiveOpen() then res.redirect liveUrl
-    else next()
-  ).catch next
+  auction.fetch
+    cache: true
+    error: res.backboneError
+    success: ->
+      liveUrl = "#{PREDICTION_URL}/#{auction.get('id')}/login"
+      if auction.isLiveOpen()
+        req.user.fetchBidderForAuction auction,
+          error: res.backboneError
+          success: (bidder) =>
+            if bidder?.get 'qualified_for_bidding'
+              res.redirect liveUrl
+            next()
+      else next()

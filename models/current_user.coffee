@@ -160,12 +160,14 @@ module.exports = class CurrentUser extends User
   fetchBidderForAuction: (auction, options) ->
     new Backbone.Collection().fetch
       url: "#{@url()}/bidders"
+      data: access_token: @get('accessToken')
       error: options.error
-      success: (bidders) ->
+      success: (bidders) =>
         bidder = bidders.find (b) -> b.get('sale').id is auction.get('id')
         return options.success null unless bidder
         bidder.fetch
           url: "#{sd.API_URL}/api/v1/bidder/#{bidder.id}"
+          data: access_token: @get('accessToken')
           error: options.error
           success: options.success
 
