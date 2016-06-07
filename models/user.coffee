@@ -42,6 +42,9 @@ module.exports = class User extends Backbone.Model
   isLoggedIn: ->
     @__isLoggedIn__
 
+  isLoggedOut: ->
+    not @isLoggedIn()
+
   isWithAnonymousSession: ->
     @id? and not @isLoggedIn()
 
