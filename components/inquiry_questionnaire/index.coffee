@@ -46,6 +46,9 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
+  # Disable <esc> close
+  $(window).off 'keyup.modalize'
+
   state
     # Log each step
     .on 'next', logger.log.bind(logger)
