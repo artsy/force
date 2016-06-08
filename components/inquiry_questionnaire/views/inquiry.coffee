@@ -5,6 +5,7 @@ Form = require '../../form/index.coffee'
 defaultMessage = require '../../contact/default_message.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 alertable = require '../../alertable_input/index.coffee'
+hasSeen = require '../../has_seen/index.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
@@ -19,7 +20,8 @@ module.exports = class Inquiry extends StepView
   defaultMessage: ->
     defaultMessage @artwork, @artwork.related().partner
 
-  nudged: false
+  nudged: ->
+    hasSeen 'inquiry-nudge'
 
   serialize: (e) ->
     e.preventDefault()
@@ -32,8 +34,7 @@ module.exports = class Inquiry extends StepView
       $submit: @$('button')
       label: 'Send Anyway?'
 
-    if not @nudged and alertable(nudge, ((value) => value is @defaultMessage()))
-      @nudged = true
+    if not @nudged() and alertable(nudge, ((value) => value is @defaultMessage()))
       return
 
     return unless form.isReady()

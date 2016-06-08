@@ -21,10 +21,10 @@ module.exports = class Specialist extends StepView
     super
 
   setup: ->
-    @__representatives__ = @representatives.fetch()
-      .then => (@representative = @representatives.first())?.fetch()
-      .then =>
-        @render().$el.removeClass 'is-loading'
+    @__representatives__ = Q @representatives.fetch()
+      .then => Q (@representative = @representatives.first())?.fetch()
+      .finally => @done()
+
 
   serialize: (e) ->
     e.preventDefault()
@@ -42,3 +42,6 @@ module.exports = class Specialist extends StepView
         @next()
       , (e) ->
         form.error null, e
+
+  done: ->
+    @render().$el.removeClass 'is-loading'

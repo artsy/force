@@ -42,11 +42,18 @@ module.exports = class User extends Backbone.Model
   isLoggedIn: ->
     @__isLoggedIn__
 
+  isLoggedOut: ->
+    not @isLoggedIn()
+
   isWithAnonymousSession: ->
     @id? and not @isLoggedIn()
 
   isRecentlyRegistered: ->
     @__isRecentlyRegistered__
+
+  # Be sure to fetch this before calling
+  isWithAccount: ->
+    @related().account.id?
 
   @instantiate: (attributes = {}) ->
     CurrentUser = require './current_user.coffee'
@@ -58,5 +65,15 @@ module.exports = class User extends Backbone.Model
   prepareForInquiry: ->
     @findOrCreate silent: true
       .then =>
-        @related()
-          .collectorProfile.findOrCreate silent: true
+        Q.all [
+          Q.promise (resolve) =>
+            if @isLoggedIn()
+              resolve()
+            else
+              @related().account.fetch
+                silent: true
+                success: resolve
+                error: resolve
+
+          @related().collectorProfile.findOrCreate silent: true
+        ]

@@ -1,10 +1,12 @@
 h1.iq-headline
-  | Please log in to save information to your profile.
-  if user.related().account.id
-    = ' '
+  if user.isWithAccount()
     | We found an Artsy account associated with
     = ' '
-    em= user.get('email')
+    em #{user.get('email')}.
+    = ' '
+    | Please log in to continue.
+  else
+    | Please log in to save information to your profile.
 
 form.stacked-form
   .iq-form-errors.js-form-errors
@@ -29,11 +31,14 @@ form.stacked-form
       a.fine-faux-underline.js-mode.js-forgot-password( data-mode='forgot' )
         | Forgot Password?
 
-      unless user.related().account.id
+      unless user.isWithAccount()
         span.garamond-tab-separator.is-vertical
         a.fine-faux-underline.js-mode( data-mode='signup' )
           | Sign up
 
   .iq-account-sub
-    a.fine-faux-underline.js-iq-save-skip
-      | No thanks don&rsquo;t save my information
+    if user.isWithAccount()
+      include ../partials/nevermind
+    else
+      a.fine-faux-underline.js-iq-save-skip
+        | No thanks don&rsquo;t save my information

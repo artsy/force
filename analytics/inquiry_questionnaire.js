@@ -32,8 +32,8 @@
     });
   });
 
-  $document.on('click', '.js-nevermind', function() {
-    track('Clicked on "Nevermind"');
+  $document.on('click', '.js-nevermind', function(e) {
+    track('Clicked on "Nevermind"', $(e.currentTarget).data());
   });
 
   $document.on('click', '.js-iq-collector-level', function(e) {

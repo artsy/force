@@ -3,6 +3,7 @@ FlashMessage = require '../flash/index.coffee'
 State = require '../branching_state/index.coffee'
 StateView = require '../branching_state/view.coffee'
 Logger = require '../logger/index.coffee'
+Trail = require './trail.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
 { steps, decisions, views } = require './map.coffee'
@@ -19,6 +20,7 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
 
   state = new State steps: steps, decisions: decisions
   logger = new Logger 'inquiry-questionnaire-log'
+  trail = new Trail
 
   questionnaire = new StateView
     className: 'inquiry-questionnaire'
@@ -37,6 +39,7 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
     modal: modal.view
     collectorProfile: collectorProfile
     userInterests: userInterests
+    trail: trail
 
   # Attach/teardown analytics events
   analytics.attach state.context
@@ -46,14 +49,23 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
   # Disable backdrop clicks
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
+  # Disable <esc> close
+  $(window).off 'keyup.modalize'
+
+  # Log to both the `Logger` and the `Trail`
+  log = (step) ->
+    trail.log step
+    logger.log step
+
   state
     # Log each step
-    .on 'next', logger.log.bind(logger)
+    .on 'next', log
 
     # Abort by clicking 'nevermind'
     .on 'abort', ->
       modal.close()
       logger.reset()
+      trail.reset()
 
     # End of complete flow
     .on 'done', ->
@@ -69,11 +81,11 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
   modal.load (open) ->
     user.prepareForInquiry()
       .then ->
+        log state.current()
         open()
       .catch (e) ->
         modal.close ->
           openErrorFlash e
         console.error e
-      .done()
 
   modal
