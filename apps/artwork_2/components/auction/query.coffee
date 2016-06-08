@@ -23,6 +23,7 @@ module.exports = """
       estimate
       is_biddable
       symbol
+      bid_increment
       current_bid {
         display
         cents

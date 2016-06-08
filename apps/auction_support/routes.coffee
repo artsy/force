@@ -6,6 +6,7 @@ Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
 BidderPositions = require '../../collections/bidder_positions.coffee'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
+metaphysics = require '../../lib/metaphysics'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -63,13 +64,11 @@ registerOrRender = (sale, req, res, next) ->
   unless req.user
     return res.redirect "/log_in?redirect_uri=/auction/#{req.params.id}/bid/#{req.params.artwork}"
 
-  # TODO: Refactor this cluster of business and fetching logic into a model/service layer.
-  # Potentitally in Artsy Backbone Mixins for Martsy.
   sale = new Sale(id: req.params.id)
   saleArtwork = new SaleArtwork(artwork: new Artwork(id: req.params.artwork), sale: sale)
   bidderPositions = new BidderPositions(null, { saleArtwork: saleArtwork, sale: sale })
 
-  render = _.after 3, ->
+  render = _.after 4, ->
     res.locals.sd.BIDDER_POSITIONS = bidderPositions.toJSON()
     res.locals.sd.SALE = sale.toJSON()
     res.locals.sd.SALE_ARTWORK = saleArtwork.toJSON()
@@ -82,6 +81,20 @@ registerOrRender = (sale, req, res, next) ->
       maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
       monthRange: new Order().getMonthRange()
       yearRange: new Order().getYearRange()
+
+  # TODO: Refactor all of this junk to use MP, or drop it in favor of
+  # inline bidding component, see: https://github.com/artsy/force/issues/5118
+  metaphysics
+    query: """ {
+      artwork(id: "louise-bourgeois-cockroaches-from-insects-portfolio-12") {
+        sale_artwork {
+          bid_increment
+        }
+      }
+    } """
+  .catch(next).then ({ artwork }) ->
+    res.locals.bidIncrement = artwork.sale_artwork.bid_increment
+    render()
 
   sale.fetch
     error: res.backboneError
