@@ -10,14 +10,15 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 module.exports = class ArtistSuggestions extends Backbone.View
 
   initialize: (options) ->
-    { @following } = options
+    { @following, @context_page } = options
 
   # Follow the artist, and if there are any remaining swap the next one in
   followAndMaybeSwap: (e) =>
     e.preventDefault()
     id = $(e.currentTarget).data('artist-id')
+    _id = $(e.currentTarget).data('id')
     @following.follow id
-    analyticsHooks.trigger 'follow-widget:follow', id
+    analyticsHooks.trigger 'follow-widget:follow', {entity_slug: id, entity_id: _id, context_page: @context_page}
     $li = $(e.currentTarget).parent().parent('li')
     $li.find('.follow-button').attr 'data-state', 'following'
     return unless (nextArtist = @remainingArtists?.shift())
