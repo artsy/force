@@ -24,8 +24,8 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
 
       label.bordered-select.artwork-auction__bid-form__select
         select( name='bid' required ).js-artwork-auction-max-bid
-          for _, i in Array(100)
-            - val = (sale_artwork.minimum_next_bid.cents + (sale_artwork.bid_increment * i)) / 100
+          for v in sale_artwork.bid_increments
+            - val = v / 100
             - display = accounting.formatMoney(val, sale_artwork.symbol, 0)
             option( value=val data-display=display )= display
 

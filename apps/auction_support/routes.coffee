@@ -109,14 +109,14 @@ registerOrRender = (sale, req, res, next) ->
   # inline bidding component, see: https://github.com/artsy/force/issues/5118
   metaphysics
     query: """ {
-      artwork(id: "louise-bourgeois-cockroaches-from-insects-portfolio-12") {
+      artwork(id: "#{req.params.artwork}") {
         sale_artwork {
-          bid_increment
+          bid_increments
         }
       }
     } """
   .catch(next).then ({ artwork }) ->
-    res.locals.bidIncrement = artwork.sale_artwork.bid_increment
+    res.locals.bidIncrements = artwork.sale_artwork.bid_increments
     render()
 
 @buyersPremium = (req, res, next) ->

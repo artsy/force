@@ -15,7 +15,7 @@ openSale = fabricate 'sale',
   start_at: moment().subtract(1, 'minutes').format()
   end_at: moment().add(3, 'minutes').format()
 routes.__set__ 'metaphysics', sinon.stub().returns(
-  Q.resolve(artwork: sale_artwork: bid_increment: 100)
+  Q.resolve(artwork: sale_artwork: bid_increments: [100])
 )
 
 describe '#auctionRegistration', ->
