@@ -66,7 +66,7 @@ module.exports.init = ->
   new FollowButton
     el: $('.follow-button')
     following: following
-    modelName: 'categorie'
+    modelName: 'gene'
     model: gene
     context_page: "Gene page"
   following?.syncFollows [ gene.id ]

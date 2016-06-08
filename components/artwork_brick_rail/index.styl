@@ -13,16 +13,25 @@
 .abrv-header
   margin-bottom 30px
   position relative
+  width 100%
+
   h1
     garamond-size('headline', true)
+    margin-right 10px
+    display inline-block
+
+  .abrv-follow-button
+    display inline-block
+    vertical-align text-bottom
+
   .abrv-follow-annotation
     color gray-darker-color
 
-.abrv-view-all
-  faux-underline(black)
-  position absolute !important
-  right 0
-  top 0
+  .abrv-view-all
+    faux-underline(black)
+    position absolute !important
+    right 0
+    top 10px
 
 .abrv-content
   clearfix()
@@ -51,7 +60,7 @@
       position static
       width auto
   .mgr-arrow-left, .mgr-arrow-right
-    top 110px
+    top 0px
   .mgr-cells:not(.flickity-enabled) .mgr-cell
     visibility hidden
   .mgr-cells.mgr-cells--visible .mgr-cell

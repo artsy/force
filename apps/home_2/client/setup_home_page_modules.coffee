@@ -7,6 +7,7 @@ MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
+setupFollowButton = require '../components/follow_button/index.coffee'
 iconicArtistsTemplate = -> require('../components/iconic_artists_context/templates/index.jade') arguments...
 auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
 fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
@@ -56,11 +57,17 @@ module.exports = ->
         hasContext: contexts[module.key]?
         followAnnotation: module.context?.based_on?.name
 
+      view.on 'post-render', ->
+        setupFollowButton
+          $el: $el.find(".abrv-follow-button")
+          module: module
+          user: user
+
+         if contexts[module.key]?
+            html = contexts[module.key](module)
+            $el.find(".abrv-context").html html
+
       view.render()
 
-      if contexts[module.key]?
-        view.on 'post-render', ->
-          html = contexts[module.key](module)
-          $el.find(".abrv-context").html html
 
 
