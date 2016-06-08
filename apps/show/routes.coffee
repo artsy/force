@@ -36,6 +36,9 @@ query = """
       fair {
         id
         _id
+        profile {
+          is_published
+        }
         published
         has_full_feature
         name
