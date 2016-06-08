@@ -1,6 +1,5 @@
 (function() {
   'use strict';
-
   if (location.pathname !== '/') return;
 
   var $heroUnits = $('.js-homepage-hero-unit');
@@ -20,11 +19,17 @@
     };
   });
 
+  // "New For You" bubble
+  $(document).on('click', '.new-for-you', function() {
+    analytics.track('Clicked "New For You" on homepage');
+  });
+
   // Artworks rail is rendered client-side
   var selectors = [
     '.js-homepage-featured-links[data-context="works by artists you follow"] a',
     '.js-homepage-featured-links[data-context="featured artworks for sale"] a'
   ].join(',');
+
   $(document)
     .on('click', selectors, function() {
       var $el = $(this);

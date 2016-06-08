@@ -8,11 +8,10 @@ HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 setupHomePageModules = require './setup_home_page_modules.coffee'
+maybeShowBubble = require '../components/new_for_you/index.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
-  initialize: (options) ->
-    @user = CurrentUser.orNull()
-
+  initialize: ->
     # Set up a router for the /log_in /sign_up and /forgot routes
     new HomeAuthRouter
     Backbone.history.start pushState: true
@@ -21,12 +20,16 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @setupHeroUnits()
 
   setupHeroUnits: ->
-    new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
+    new HeroUnitView
+      el: @$el
+      $mainHeader: $('#main-layout-header')
 
 module.exports.init = ->
+  user = CurrentUser.orNull()
+
   new HomeView el: $('body')
 
   setupHomePageModules()
-
+  maybeShowBubble user
 
 
