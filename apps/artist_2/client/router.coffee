@@ -14,6 +14,8 @@ HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
+AuctionLots = require '../../../collections/auction_lots.coffee'
+AuctionResultsView = require './views/auction_results.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -26,6 +28,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist_2/:id/publications': 'publications'
     'artist_2/:id/related-artists': 'relatedArtists'
     'artist_2/:id/biography': 'biography'
+    'artist/:id/auction-results': 'auctionResults'
 
   initialize: ({ @model, @user, @statuses }) ->
     @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
@@ -89,3 +92,11 @@ module.exports = class ArtistRouter extends Backbone.Router
       data:
         limit: 1
         biography_for_artist_id: @model.get('_id')
+
+  auctionResults: ->
+    { sort, page } = qs.parse(location.search.replace(/^\?/, ''))
+    currentPage = parseInt page or 1
+    auctionLots = new AuctionLots [], id: @model.get('id'), sortBy: sort, state: currentPage: currentPage
+
+    @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
+    auctionLots.fetch()

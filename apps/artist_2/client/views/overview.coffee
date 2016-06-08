@@ -52,14 +52,15 @@ module.exports = class OverviewView extends Backbone.View
 
   renderRails: (artist) =>
     following = @following
-    if artist.shows?.length <= 15
+    if artist.counts.shows <= 15
       $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows on Artsy')
     baseHref = @model.href()
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')
       items = artist[section]
+      count = artist.counts[section]
       return if not items
-      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, items, following, baseHref }
+      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
   renderExhibitionHighlights: (shows) ->
     return if not @statuses.shows
