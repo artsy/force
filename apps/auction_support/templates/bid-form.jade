@@ -23,10 +23,12 @@ block body
                 .auction-support-artwork-reserve= saleArtwork.formatBidsAndReserve()
 
         label.auction-support-max-bid-label Set your max bid
+        //- TODO: Use actual bid increments from Gravity
+        //- https://github.com/artsy/gravity/pull/10091
         label.bordered-select.auction-support-max-bid
           select( name='bid' required ).max-bid
             - minNext = saleArtwork.get('minimum_next_bid_cents')
-            - incr = minNext - saleArtwork.get('highest_bid').amount_cents
+            - incr = minNext - (saleArtwork.get('highest_bid') && saleArtwork.get('highest_bid').amount_cents || saleArtwork.get('opening_bid_cents')) || 500000
             for _, i in Array(100)
               - val = (minNext + (incr * i)) / 100
               - display = accounting.formatMoney(val, saleArtwork.get('symbol'), 0)
