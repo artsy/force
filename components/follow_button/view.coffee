@@ -29,6 +29,7 @@ module.exports = class FollowButton extends Backbone.View
         model: @model
         el: @$el
         following: @following
+        context_page: @context_page
 
     @change()
 
