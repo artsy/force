@@ -1,7 +1,10 @@
-#auction-results-section
+.artist-page-section-block#auction-results-section
   header.artist-section-header.auction-lots-header
     h1
       | Auction Results for&nbsp;
       a( href="/artist/#{artist.id}")= artist.get('name')
   include ../../../../node_modules/artsy-ezel-components/pagination/paginator
   include ../../../../components/auction_lots/templates/artist
+
+.artist-rail.artist-artworks-rail.arv-container
+  include ../../../../components/artwork_rail/templates/index

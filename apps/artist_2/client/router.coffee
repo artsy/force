@@ -1,6 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
+qs = require 'querystring'
 Backbone = require 'backbone'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 OverviewView = require './views/overview.coffee'
@@ -28,7 +29,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist_2/:id/publications': 'publications'
     'artist_2/:id/related-artists': 'relatedArtists'
     'artist_2/:id/biography': 'biography'
-    'artist/:id/auction-results': 'auctionResults'
+    'artist_2/:id/auction-results': 'auctionResults'
 
   initialize: ({ @model, @user, @statuses }) ->
     @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
@@ -100,3 +101,4 @@ module.exports = class ArtistRouter extends Backbone.Router
 
     @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
     auctionLots.fetch()
+    @model.related().artworks.fetch(data: size: 15)

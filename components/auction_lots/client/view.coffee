@@ -31,7 +31,7 @@ module.exports = class AuctionResultsView extends Backbone.View
       artworkCollection: @saved
       collection: @artworks
       seeMore: false
-      el: $('#ara-artworks')
+      el: @$('#ara-artworks')
     @artworksView.render()
     @artworksView.hideSecondRow()
 

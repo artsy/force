@@ -14,6 +14,7 @@ helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
+<<<<<<< d6254e2a7d530336da5720c083fd15a1ad3b8750
   send = query: query, variables: artist_id: req.params.id
 
   return if metaphysics.debug req, res, send
@@ -21,10 +22,12 @@ currentShowAuction = require './components/current_show_auction/index'
   metaphysics send
     .then ({artist}) ->
       nav = new Nav artist: artist
+      tab = req.params.tab or ''
+      next() if not _.find nav.sections(), slug: tab
 
       if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
         res.locals.sd.ARTIST = artist
-        res.locals.sd.TAB = tab = req.params.tab or ''
+        res.locals.sd.TAB = tab
         currentItem = currentShowAuction(artist)
 
         res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
