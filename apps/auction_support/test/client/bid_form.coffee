@@ -45,6 +45,7 @@ describe 'BidForm', ->
       bidderPositions: @bidderPositions
       maxBid: 50
       accounting: formatMoney: ->
+      bidIncrements: []
       asset: (->)
     }, =>
       @view = new BidForm
