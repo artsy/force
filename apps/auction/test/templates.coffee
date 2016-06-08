@@ -105,6 +105,21 @@ describe 'auction templates', ->
     it 'shows an email invite', ->
       $('.auction-header-metadata').text().should.containEql 'Receive an email invitation when the auction begins.'
 
+  describe 'open auction with no user', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        data = _.extend {}, @baseData,
+          auction: @auction = new Auction fabricate 'sale', name: 'An Auction'
+          user: null
+        benv.render require.resolve('../templates/index.jade'), data, ->
+          done()
+    after ->
+      benv.teardown()
+
+    it 'shows an email invite', ->
+      $('.auction-header-metadata').text().should.containEql 'Register to bid'
+
   describe 'user not qualified_for_bidding', ->
     before (done) ->
       benv.setup =>
