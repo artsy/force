@@ -12,4 +12,5 @@ module.exports = class ArticlesAdapter
         published: true
         fair_id: fair.get('_id')
         sort: '-published_at'
+        limit: 5
     view
