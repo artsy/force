@@ -21,6 +21,8 @@ module.exports = class ArtworkRailView extends Backbone.View
       @collection,
       @includeContact = true
       @hasContext
+      @totalArtworksCount = 0
+      @viewAllCell = false
     } = options
     @user ?= User.instantiate()
     @collection.on 'sync', @render, this
@@ -48,6 +50,7 @@ module.exports = class ArtworkRailView extends Backbone.View
       railId: @railId
       includeContact: @includeContact
       hasContext: @hasContext
+      viewAllCell: @viewAllCell && @totalArtworksCount > @collection.length
 
     @postRender()
     this
