@@ -11,9 +11,14 @@ module.exports = class ProfessionalBuyerIndexView extends View
     'click .js-move-to-cta': 'moveToCTA'
     'click .js-login': 'login'
     'click .js-logout': 'logout'
+    'click .js-forgot': 'forgot'
     'submit .js-register-form': 'register'
 
   initialize: ({ @data, @user }) -> #
+
+  forgot: (e) ->
+    e.preventDefault()
+    @authenticate 'forgot'
 
   login: (e) ->
     e.preventDefault()
@@ -41,7 +46,15 @@ module.exports = class ProfessionalBuyerIndexView extends View
 
     @user.set form.data()
     @user.register
-      error: form.error.bind form
+      error: ->
+        if form.errors.__parse__(arguments...) is 'User Already Exists'
+          form.error '''
+            Forgot your password?
+            Click <a href='#' class='js-forgot'>here</a>.
+          '''
+        else
+          form.error arguments...
+
       success: =>
         @redirectTo "#{SHOW_PATH}/complete"
 

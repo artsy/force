@@ -15,8 +15,8 @@ attributeMap =
   price_range:
     value: 'price_range'
     predicate: ->
-      @user.get('price_range') isnt '-1:1000000000000' and
-      @user.get('price_range')?
+      @user.related().collectorProfile.get('professional_buyer') or
+      @user.get('price_range') isnt '-1:1000000000000' and @user.get('price_range')?
   location:
     value: 'location'
     predicate: -> @user.hasLocation()

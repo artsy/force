@@ -1,5 +1,6 @@
 Promise = require 'bluebird-q'
-{ invoke, pick } = require 'underscore'
+{ stringify } = require 'qs'
+{ invoke, pick, last } = require 'underscore'
 { View, Model } = require 'backbone'
 { isPhoneLike } = require '../../../../../components/util/device.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
@@ -28,6 +29,11 @@ module.exports = class ProfessionalBuyerCompleteView extends View
   submit: (e) ->
     e.preventDefault()
 
+    # If the URL is the default value; remove
+    # the http:// so that it passes validation
+    if ($url = @$('input[name="company_website"]')).val() is 'http://'
+      $url.val ''
+
     form = new Form $form: @$('form')
     return unless form.isReady()
 
@@ -46,6 +52,7 @@ module.exports = class ProfessionalBuyerCompleteView extends View
           'location'
           'price_range_min'
           'price_range_max'
+          'collector_level'
         ]...
 
         @user.related().collectorProfile.save pick data, [
@@ -60,12 +67,18 @@ module.exports = class ProfessionalBuyerCompleteView extends View
 
       .then =>
         @confirm() unless isPhoneLike()
-        @redirectTo '/collect?source=professional-buyer'
+        @redirectTo '/collect',
+          source: 'professional-buyer'
+          price_range: @priceRange()
 
       .catch (err) ->
         form.error err
         analyticsHooks.trigger 'pro_buyer:complete:error',
           error_messages: [form.errors.parse err]
+
+  priceRange: ->
+    unless @user.get('price_range') is '-1:1000000000000' # No budget in mind
+      [50, @user.get 'price_range_max'].join '-'
 
   confirm: ->
     confirmation.register
@@ -75,13 +88,13 @@ module.exports = class ProfessionalBuyerCompleteView extends View
         categories to get alerts when new works are available.
       '''
       confirm:
-        href: '/personalize'
+        href: '/personalize?force=artists'
         label: 'Personalize your Account'
       ignore:
         label: 'Maybe later, start browsing'
 
-  redirectTo: (path) ->
-    location.assign path
+  redirectTo: (path, options = {}) ->
+    location.assign "#{path}?#{stringify options}"
 
   postRender: ->
     city = @user.related().location.toString()

@@ -1,10 +1,18 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
+{ humanize } = require 'underscore.string'
 errors =
   'Email not found': 'Sorry, we couldn&rsquo;t find an account with that email.'
 
 module.exports = class Errors
   constructor: (@$form) -> #
+
+  __parse__: (modelOrResponseOrString, response, options) ->
+    if typeof modelOrResponseOrString is 'string'
+      modelOrResponseOrString
+    else if _.has modelOrResponseOrString, 'responseText'
+      @parse modelOrResponseOrString
+    else
+      @parse response
 
   parse: (xhr) ->
     try
@@ -28,7 +36,7 @@ module.exports = class Errors
         # provided they have name attributes
         @$form.find("[name=#{k}]").attr 'data-state', 'error'
 
-        "#{_s.humanize(k)} #{v}"
+        "#{humanize(k)} #{v}"
       )
         .join('; ')
         # Multiple errors on a single param are
