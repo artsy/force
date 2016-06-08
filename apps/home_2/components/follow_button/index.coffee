@@ -15,7 +15,6 @@ module.exports = ({ module, user, $el }) ->
   return unless followableObject[module.key]? and user
 
   kind = if module.key is 'related_artists' then 'artist' else 'gene'
-  modelName = if module.key is 'related_artists' then 'artist' else 'categorie'
   Model = if module.key is 'related_artists' then Artist else Gene
 
   model = new Model followableObject[module.key](module)
@@ -27,6 +26,6 @@ module.exports = ({ module, user, $el }) ->
     el: $el.find('.plus-follow-button')
     following: following
     model: model
-    modelName: modelName
+    modelName: kind
     context_module: "Homepage rail"
 
