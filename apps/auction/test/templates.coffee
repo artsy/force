@@ -114,6 +114,7 @@ describe 'auction templates', ->
           user: null
         benv.render require.resolve('../templates/index.jade'), data, ->
           done()
+
     after ->
       benv.teardown()
 
