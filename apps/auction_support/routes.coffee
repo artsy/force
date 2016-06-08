@@ -82,20 +82,6 @@ registerOrRender = (sale, req, res, next) ->
       monthRange: new Order().getMonthRange()
       yearRange: new Order().getYearRange()
 
-  # TODO: Refactor all of this junk to use MP, or drop it in favor of
-  # inline bidding component, see: https://github.com/artsy/force/issues/5118
-  metaphysics
-    query: """ {
-      artwork(id: "louise-bourgeois-cockroaches-from-insects-portfolio-12") {
-        sale_artwork {
-          bid_increment
-        }
-      }
-    } """
-  .catch(next).then ({ artwork }) ->
-    res.locals.bidIncrement = artwork.sale_artwork.bid_increment
-    render()
-
   sale.fetch
     error: res.backboneError
     success: ->
@@ -118,6 +104,20 @@ registerOrRender = (sale, req, res, next) ->
     success: (registered) ->
       res.locals.sd.REGISTERED = registered
       render()
+
+  # TODO: Refactor all of this junk to use MP, or drop it in favor of
+  # inline bidding component, see: https://github.com/artsy/force/issues/5118
+  metaphysics
+    query: """ {
+      artwork(id: "louise-bourgeois-cockroaches-from-insects-portfolio-12") {
+        sale_artwork {
+          bid_increment
+        }
+      }
+    } """
+  .catch(next).then ({ artwork }) ->
+    res.locals.bidIncrement = artwork.sale_artwork.bid_increment
+    render()
 
 @buyersPremium = (req, res, next) ->
   new Sale(id: req.params.id).fetch
