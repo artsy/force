@@ -10,6 +10,7 @@ HeroUnits = require '../../collections/hero_units'
 metaphysics = require '../../lib/metaphysics.coffee'
 viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'
+browseCategories = require './browse_categories.coffee'
 query = require './queries/initial'
 
 getRedirectTo = (req) ->
@@ -30,10 +31,8 @@ positionWelcomeHeroMethod = (req, res) ->
 
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
-
   # homepage:featured-links
   featuredArticles = new Articles
-
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
@@ -62,6 +61,7 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredArticles: featuredArticles
       featuredShows: featuredShows
       viewHelpers: viewHelpers
+      browseCategories: browseCategories
   ).done()
 
 @redirectToSignup = (req, res) ->
