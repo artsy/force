@@ -8,6 +8,7 @@ State = require '../../../../components/branching_state/index.coffee'
 StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
 Logger = require '../../../../components/logger/index.coffee'
+Trail = require '../../../../components/inquiry_questionnaire/trail.coffee'
 analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
 { steps, decisions, views } = require '../map.coffee'
 
@@ -29,6 +30,7 @@ module.exports = (id, bypass) ->
 
   state = new State steps: steps, decisions: decisions
   logger = new Logger 'inquiry-questionnaire-log'
+  trail = new Trail
 
   state.inject
     user: user
@@ -38,11 +40,13 @@ module.exports = (id, bypass) ->
     collectorProfile: collectorProfile
     userInterests: userInterests
     state: state
+    trail: trail
 
   analytics.attach state.context
 
   state
     .on 'next', (step) ->
+      trail.log step
       logger.log step
       window.scrollTo 0, 0
 
@@ -69,10 +73,11 @@ module.exports = (id, bypass) ->
 
   user.prepareForInquiry()
     .then ->
+      trail.log state.current()
+      logger.log state.current()
       questionnaire.render()
     .catch (e) ->
       openErrorFlash e
       console.error e
-    .done()
 
   questionnaire
