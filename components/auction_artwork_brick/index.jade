@@ -8,10 +8,10 @@
 )
   include ../artwork_brick/templates/image
 
-  .artwork-brick__metadata
+  .artwork-metadata-stub
     if sale_artwork.lot_number
-      .artwork-brick__metadata__lot-number
+      .artwork-metadata-stub__lot-number
         | Lot #{sale_artwork.lot_number}
 
-    include ../artwork_metadata_stub/index
+    include ../artwork_metadata_stub/templates/didactics
     include ./templates/bid_status
