@@ -1,0 +1,13 @@
+if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
+  .artwork-metadata-stub__contact.artwork-metadata-stub__line
+    a(
+      class='analytics-artwork-contact-seller'
+      href= artwork.href
+      data-artwork_id= artwork._id
+      data-context_type='artwork feed item'
+    )
+      | Contact #{artwork.partner.type.toLowerCase()}
+
+else if artwork.partner.is_limited_fair_partner
+  .artwork-metadata-stub__contact.artwork-metadata-stub__line
+    | Not inquireable
