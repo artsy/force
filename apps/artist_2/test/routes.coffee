@@ -1,4 +1,3 @@
-_ = require 'underscore'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
@@ -14,6 +13,7 @@ helpers = require '../view_helpers'
 describe 'Artist routes', ->
   beforeEach ->
     routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
+    @metaphysics.debug = sinon.stub()
     @metaphysics.returns Q.resolve artist: artistJSON
 
     @req = params: { id: 'foo' }, get: (->), query: {}
@@ -25,26 +25,23 @@ describe 'Artist routes', ->
       locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist_2/jeff-koons-1'
 
   describe '#index', ->
-    it 'renders the artist template', (done) ->
+    it 'renders the artist template', ->
       routes.index @req, @res
-      _.defer => _.defer =>
-        @res.render.args[0][0].should.equal 'index'
-        @res.render.args[0][1].artist.id.should.equal 'jeff-koons-1'
-        @res.render.args[0][1].artist.name.should.equal 'Jeff Koons'
-        done()
+        .then =>
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].artist.id.should.equal 'jeff-koons-1'
+          @res.render.args[0][1].artist.name.should.equal 'Jeff Koons'
 
-    it 'bootstraps the artist', (done) ->
+    it 'bootstraps the artist', ->
       routes.index @req, @res
-      _.defer => _.defer =>
-        @res.locals.sd.ARTIST.should.equal artistJSON
-        done()
+        .then =>
+          @res.locals.sd.ARTIST.should.equal artistJSON
 
-    it 'redirects to canonical url', (done) ->
+    it 'redirects to canonical url', ->
       @res.locals.sd.CURRENT_PATH = '/artist_2/bar'
       routes.index @req, @res
-      _.defer => _.defer =>
-        @res.redirect.args[0][0].should.equal '/artist_2/jeff-koons-1'
-        done()
+        .then =>
+          @res.redirect.args[0][0].should.equal '/artist_2/jeff-koons-1'
 
   describe '#follow', ->
     beforeEach ->
