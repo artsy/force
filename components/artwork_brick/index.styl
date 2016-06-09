@@ -1,5 +1,6 @@
 @require '../stylus_lib'
 @require '../artwork_save'
+@require '../artwork_metadata_stub'
 
 .artwork-brick
   &__image
@@ -26,24 +27,3 @@
       .artwork-brick__image__save
       .artwork-brick__image__save > .artwork-save
         display block
-
-  &__metadata
-    serif('l-caption')
-    margin distance(gutter / 2) 0 distance(gutter) 0
-    lines = 5
-    height (line-height-in-px('garamond-l-caption') * lines)
-    overflow hidden
-
-    &__line
-      display block
-      overflow ellipsis
-
-      &, > a
-        color gray-darker-color
-        text-decoration none
-
-    &__contact > a
-      text-decoration underline
-
-    &__artists
-      font-weight bold
