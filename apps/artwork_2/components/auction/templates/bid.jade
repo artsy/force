@@ -1,5 +1,6 @@
 - myLastMaxBid = me && me.bidder_status.most_recent_bid.max_bid.cents
-- increments = sale_artwork.bid_increments.filter((inc) => inc > (myLastMaxBid || 0))
+- increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
+- firstIncr = increments[0]
 
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
@@ -32,7 +33,6 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
             - display = accounting.formatMoney(val, sale_artwork.symbol, 0)
             option( value=val data-display=display )= display
 
-    - firstIncr = increments[0]
     button.artwork-auction__bid-form__button.avant-garde-button-black.is-block(
       class='js-artwork-auction-bid-button'
     ) Bid #{accounting.formatMoney(firstIncr / 100, sale_artwork.symbol, 0)}

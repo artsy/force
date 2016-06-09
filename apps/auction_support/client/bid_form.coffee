@@ -4,9 +4,11 @@ sd = require('sharify').data
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 { SESSION_ID } = require('sharify').data
+metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -23,6 +25,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     'click .js-contact-specialist' : 'openContactModal'
 
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
+    @user = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
@@ -69,11 +72,29 @@ module.exports = class BidForm extends ErrorHandlingForm
       success: (bidderPosition) =>
         if bidderPosition.has('processed_at') or
            @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
-          analyticsHooks.trigger 'confirm:bid:form:success', {
-            bidder_position_id: bidderPosition.id
-            bidder_id: bidderPosition.get('bidder')?.id
-          }
-          @showSuccessfulBidMessage()
+          metaphysics(
+            req: user: @user
+            query: """
+              {
+                me {
+                  bidder_status(
+                    artwork_id: "#{@saleArtwork.get 'id'}"
+                    sale_id: "#{@model.get('id')}"
+                  ) {
+                    is_highest_bidder
+                  }
+                }
+              }
+            """
+          ).then ({ me }) =>
+            if me.bidder_status.is_highest_bidder
+              analyticsHooks.trigger 'confirm:bid:form:success', {
+                bidder_position_id: bidderPosition.id
+                bidder_id: bidderPosition.get('bidder')?.id
+              }
+              @showSuccessfulBidMessage()
+            else
+              @showError "You've been outbid, increase your bid"
         else
           @timesPolledForBidPlacement += 1
           _.delay =>
