@@ -87,7 +87,7 @@ module.exports = class BidForm extends ErrorHandlingForm
               }
             """
           ).then ({ me }) =>
-            if me.bidder_status.is_highest_bidder
+            if me?.bidder_status.is_highest_bidder
               analyticsHooks.trigger 'confirm:bid:form:success', {
                 bidder_position_id: bidderPosition.id
                 bidder_id: bidderPosition.get('bidder')?.id
