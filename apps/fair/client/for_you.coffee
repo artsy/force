@@ -79,6 +79,7 @@ module.exports = class ForYouView extends Backbone.View
       gutterWidth: 40
       totalWidth: width
       artworkSize: 'tall'
+      context_page: 'Fair page'
 
   fetchFollowingExhibitors: ->
     url = "#{sd.API_URL}/api/v1/me/follow/profiles"

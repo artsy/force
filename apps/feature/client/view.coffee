@@ -43,6 +43,7 @@ module.exports = class FeatureView extends Backbone.View
         gutterWidth: 0
         showBlurbs: true
         isAuction: false
+        context_page: 'Feature page'
 
     # Always append
     @appendArtworks artworks
@@ -69,6 +70,7 @@ module.exports = class FeatureView extends Backbone.View
         el: @$(".artwork-item[data-artwork='#{artwork.id}']")
         model: artwork
         sale: sale
+        context_page: 'Feature page'
 
     if @artworkCollection
       @artworkCollection.addRepoArtworks artworks

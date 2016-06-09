@@ -61,6 +61,7 @@ module.exports.init = ->
       allowDuplicates: true
       gutterWidth: 30
       numberOfColumns: 3
+      context_page: 'Collect page'
 
   filter.on 'change:loading', ->
     $('.cf-artworks').attr 'data-loading', filter.get('loading')
