@@ -113,3 +113,11 @@ describe 'BidForm', ->
         _.defer => _.defer =>
           @messageSpy.called.should.be.ok()
           done()
+
+      it 'shows outbid', (done) ->
+        sinon.stub @view, 'showError'
+        @metaphysics.returns Promise.resolve me: bidder_status: is_highest_bidder: false
+        Backbone.sync.args[1][2].success fabricate('bidder_position', processed_at: '2015-04-20T16:20:00-05:00')
+        _.defer => _.defer =>
+          @view.showError.args[0][0].should.containEql "You've been outbid"
+          done()
