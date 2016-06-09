@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { extend } = require 'underscore'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'Home routes', ->
   beforeEach ->
@@ -70,7 +71,7 @@ describe 'Home routes', ->
           .onCall 1
           .yieldsTo 'success', [fabricate 'featured_link']
 
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index extend({ user: new CurrentUser() }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.first().get 'description'
@@ -81,7 +82,7 @@ describe 'Home routes', ->
           .onCall 0
           .yieldsTo 'success', []
 
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index extend({ user: new CurrentUser() }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.first().get 'type'
