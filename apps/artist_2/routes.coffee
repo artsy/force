@@ -14,31 +14,32 @@ helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
-  metaphysics
-    query: query
-    variables: artist_id: req.params.id
-  .then ({artist}) ->
-    nav = new Nav artist: artist
+  send = query: query, variables: artist_id: req.params.id
 
-    if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
-      res.locals.sd.ARTIST = artist
-      res.locals.sd.TAB = tab = req.params.tab or ''
-      currentItem = currentShowAuction(artist)
+  return if metaphysics.debug req, res, send
 
-      res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
+  metaphysics send
+    .then ({artist}) ->
+      nav = new Nav artist: artist
 
-      res.render 'index',
-        viewHelpers: helpers
-        artist: artist
-        tab: tab
-        nav: nav
-        currentItem: currentItem
+      if (req.params.tab? or artist.href.replace("/artist/", "/artist_2/") is res.locals.sd.CURRENT_PATH)
+        res.locals.sd.ARTIST = artist
+        res.locals.sd.TAB = tab = req.params.tab or ''
+        currentItem = currentShowAuction(artist)
 
-    else
-      res.redirect artist.href.replace "/artist/", "/artist_2/"
+        res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
-  .catch -> next()
-  .done()
+        res.render 'index',
+          viewHelpers: helpers
+          artist: artist
+          tab: tab
+          nav: nav
+          currentItem: currentItem
+
+      else
+        res.redirect artist.href.replace "/artist/", "/artist_2/"
+
+    .catch next
 
 @tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
