@@ -1,27 +1,27 @@
 if artwork.cultural_maker
-  h4.artwork-brick__metadata__artists.artwork-brick__metadata__line
+  h4.artwork-metadata-stub__artists.artwork-metadata-stub__line
     = artwork.cultural_maker
 
 else if artwork.artists && artwork.artists.length
-  h4.artwork-brick__metadata__artists.artwork-brick__metadata__line
+  h4.artwork-metadata-stub__artists.artwork-metadata-stub__line
     for artist, i in artwork.artists
       a( href= artist.href )
         = artist.name
       unless i === artwork.artists.length - 1
         = ', '
 
-a.artwork-brick__metadata__title.artwork-brick__metadata__line( href= artwork.href )
+a.artwork-metadata-stub__title.artwork-metadata-stub__line( href= artwork.href )
   em= artwork.title
   if artwork.date
     | , #{artwork.date}
 
 if artwork.collecting_institution
-  .artwork-brick__metadata__partner.artwork-brick__metadata__line
+  .artwork-metadata-stub__partner.artwork-metadata-stub__line
     = artwork.collecting_institution
 else
-  a.artwork-brick__metadata__partner.artwork-brick__metadata__line( href= artwork.href )
+  a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.href )
     = artwork.partner.name
 
 if artwork.sale_message && artwork.sale_message != 'Contact For Price'
-  .artwork-brick__metadata__sale-message.artwork-brick__metadata__line
+  .artwork-metadata-stub__sale-message.artwork-metadata-stub__line
     = artwork.sale_message
