@@ -34,7 +34,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
 
   postRender: ->
     initCarousel @$('.js-my-carousel'),
-      imagesLoaded: true
+      imagesLoaded: false
       wrapAround: false
     , (carousel) =>
       @trigger 'post-render'

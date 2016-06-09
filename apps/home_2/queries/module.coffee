@@ -3,8 +3,15 @@ module.exports = """
     home_page_module(key: $key, id: $id) {
       title
       key
-      results{
+      results {
         ... artwork_brick
+        image {
+          cell: resized(height: 220, version: ["large", "larger"]) {
+            width
+            height
+            url
+          }
+        }
       }
       context {
         ... fair_context
