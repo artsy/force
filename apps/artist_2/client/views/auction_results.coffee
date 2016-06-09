@@ -19,6 +19,7 @@ module.exports = class AuctionResultsView extends Backbone.View
     'click .auction-lot-details-link': 'auctionDetail'
 
   auctionDetail: (e) ->
+    e.preventDefault()
     auctionLotId = $(e.currentTarget).data('auction-lot-id')
     @subViews.push new AuctionLotDetailView lot: @collection.get(auctionLotId), artist: @model, width: '900px'
 
@@ -43,12 +44,9 @@ module.exports = class AuctionResultsView extends Backbone.View
     _.defer -> $el.addClass 'is-fade-in'
 
   render: ->
-    unless @collection?.length
-      @$('#auction-results-section').html "<div class='loading-spinner'></div>"
-      return this
-
     @$el.html template(artist: @model, auctionLots: @collection, user: @user)
-    @subViews.push new AuctionLotsView el: @$('#auction-results-section'), artist: @model
+    if !@auctionLotsView
+      @subViews.push @auctionLotsView = new AuctionLotsView el: @$('#auction-results-section'), artist: @model
     _.defer => @postRender()
     this
 
