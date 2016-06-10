@@ -7,7 +7,7 @@ AuctionLotsView = require '../../../../components/auction_lots/client/view.coffe
 AuctionLotDetailView = require '../../../../components/auction_lots/client/detail.coffee'
 template = -> require('../../templates/sections/auction_lots.jade') arguments...
 
-module.exports = class AuctionResultsView extends Backbone.View
+module.exports = class ArtistAuctionResultsView extends Backbone.View
   subViews: []
 
   initialize: ({ @model, @user, @collection }) ->
@@ -15,11 +15,9 @@ module.exports = class AuctionResultsView extends Backbone.View
     mediator.on 'modal:closed', @return
     @listenTo @collection, 'sync', @render
 
-  events:
-    'click .auction-lot-details-link': 'auctionDetail'
-
   auctionDetail: (e) ->
     e.preventDefault()
+    Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: false
     auctionLotId = $(e.currentTarget).data('auction-lot-id')
     @subViews.push new AuctionLotDetailView lot: @collection.get(auctionLotId), artist: @model, width: '900px'
 
@@ -31,6 +29,12 @@ module.exports = class AuctionResultsView extends Backbone.View
     window.history.back()
 
   postRender: ->
+    @subViews.push new AuctionLotsView
+      el: @$('#auction-results-section')
+      artist: @model
+      onDetailClick: (e) =>
+        @auctionDetail(e)
+
     @subViews.push rail = new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks
@@ -45,8 +49,6 @@ module.exports = class AuctionResultsView extends Backbone.View
 
   render: ->
     @$el.html template(artist: @model, auctionLots: @collection, user: @user)
-    if !@auctionLotsView
-      @subViews.push @auctionLotsView = new AuctionLotsView el: @$('#auction-results-section'), artist: @model
     _.defer => @postRender()
     this
 

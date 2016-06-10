@@ -15,7 +15,7 @@ module.exports = class AuctionResultsView extends Backbone.View
     'click a[data-client]': 'intercept'
 
   initialize: (options) ->
-    { @artist, @artworks } = options
+    { @artist, @artworks, @onDetailClick } = options
 
     @touchAdjustments() if isTouchDevice()
 
@@ -58,12 +58,13 @@ module.exports = class AuctionResultsView extends Backbone.View
     e.preventDefault()
     mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to see full auction records — for free'
 
-  onRowClick: (e) ->
+  onRowClick: (e) =>
     return if @user
     e.stopPropagation()
     @signUp(e)
 
   # Handle links with the data-client attribute via pushState
-  intercept: (e) ->
+  intercept: (e) =>
+    return @onDetailClick(e) if @onDetailClick
     e.preventDefault()
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true

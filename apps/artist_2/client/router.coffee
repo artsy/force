@@ -16,7 +16,7 @@ JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
 AuctionLots = require '../../../collections/auction_lots.coffee'
-AuctionResultsView = require './views/auction_results.coffee'
+ArtistAuctionResultsView = require './views/auction_results.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -99,6 +99,6 @@ module.exports = class ArtistRouter extends Backbone.Router
     currentPage = parseInt page or 1
     auctionLots = new AuctionLots [], id: @model.get('id'), sortBy: sort, state: currentPage: currentPage
 
-    @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
+    @view = new ArtistAuctionResultsView _.extend {}, @options, collection: auctionLots
     auctionLots.fetch()
     @model.related().artworks.fetch(data: size: 15)
