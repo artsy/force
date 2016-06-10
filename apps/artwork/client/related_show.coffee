@@ -58,3 +58,4 @@ module.exports = class RelatedShowView extends Backbone.View
       allowDuplicates: true
       artworkSize: 'tall'
       context_page: 'Artwork page'
+      context_module: 'Related Show module'

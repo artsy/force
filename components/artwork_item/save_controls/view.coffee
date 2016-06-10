@@ -14,7 +14,7 @@ module.exports = class SaveControls extends Backbone.View
     throw 'You must pass a model' unless @model?
     return unless options.artworkCollection
 
-    { @artworkCollection, @context_page } = options
+    { @artworkCollection, @context_page, @context_module } = options
 
     @$button = @$('.overlay-button-save')
 
@@ -40,6 +40,7 @@ module.exports = class SaveControls extends Backbone.View
       entity_id: @model.get '_id'
       entity_slug: @model.get 'id'
       context_page: @context_page
+      context_module: @context_module
     }
 
     if @model.isSaved @artworkCollection

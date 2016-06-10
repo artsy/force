@@ -199,6 +199,7 @@ module.exports = class ArtworkView extends Backbone.View
       seeMore: false
       artworkSize: 'tall'
       context_page: 'Artwork page'
+      context_page: 'Artwork'
 
   renderActions: ->
     @$('.artwork-actions').html actionsTemplate
@@ -266,6 +267,7 @@ module.exports = class ArtworkView extends Backbone.View
       saved: @saved
       model: artwork
       context_page: 'Artwork page'
+      context_page: 'Artwork'
 
   setupFollowButtons: ->
     @followButtons = @artists.map (artist) =>
