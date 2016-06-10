@@ -8,6 +8,7 @@ module.exports = ( { el, model, allLoaded } ) ->
     model: model
     mode: 'grid'
     showSeeMoreLink: false
+    context_page: 'Artist page'
 
   filterView = filterRouter.view
   $('#main-layout-footer').css(display: 'none', opacity: 0)
