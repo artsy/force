@@ -19,6 +19,11 @@ module.exports = ($el, options = {}) ->
       .append $button
       .css 'max-height', options.limit
 
+    $el[0].addEventListener("transitionend", (e) ->
+      if e.propertyName is 'max-height'
+        options.onExpand()
+    , false);
+
     $button.one 'click', (e) ->
       e.preventDefault()
       $(this).remove()
@@ -26,6 +31,6 @@ module.exports = ($el, options = {}) ->
         .addClass 'is-expanded'
         .css 'max-height', 1000000
       $.waypoints 'refresh'
-      options.onClick?()
+      options.onClick()
 
     options.afterApply?()

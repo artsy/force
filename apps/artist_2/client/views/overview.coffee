@@ -40,7 +40,7 @@ module.exports = class OverviewView extends Backbone.View
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onClick: => @sticky.rebuild()
+      onExpand: => @sticky.rebuild()
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
