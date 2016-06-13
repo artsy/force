@@ -81,6 +81,8 @@ module.exports = class OverviewView extends Backbone.View
         el: @$("#artist-related-#{type}")
         collection: collection
         user: @user
+        context_page: 'Artist page'
+        context_module: 'Overview section'
       subView.fetchAndRender()
       @subViews.push subView
     else

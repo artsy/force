@@ -76,6 +76,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
             gutterWidth: 60
             allowDuplicates: true
             artworkSize: 'tall'
+            context_page: 'Partner profile page'
 
           ++@nextPage
 

@@ -55,6 +55,6 @@ module.exports = class ArtworkRelatedArtworksView extends Backbone.View
         @postRender artwork.layer.artworks
 
   postRender: (artworks) ->
-    (@masonryView ?= new ArtworkMasonryView el: @sections())
+    (@masonryView ?= new ArtworkMasonryView el: @sections(), context_page: 'Artwork page', context_module: 'Related artworks module')
       .reset artworks
       .postRender()

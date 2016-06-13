@@ -10,7 +10,7 @@ template = -> require('./index.jade') arguments...
 module.exports = class ArtworkMasonryView extends Backbone.View
   subViews: []
 
-  initialize: ({ @artworks }) ->
+  initialize: ({ @artworks, @context_page, @context_module }) ->
     @user = User.instantiate()
 
   postRender: ->
@@ -18,7 +18,11 @@ module.exports = class ArtworkMasonryView extends Backbone.View
       $el = @$(".js-artwork-brick[data-id='#{id}']")
 
       view = new BrickView[$el.data('type') or 'artwork']
-        el: $el, id: id, user: @user
+        el: $el
+        id: id
+        user: @user
+        context_page: @context_page
+        context_module: @context_module
 
       view.postRender()
       view

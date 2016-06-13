@@ -91,6 +91,7 @@ module.exports = class RecentlyAddedWorksView extends Backbone.View
       gutterWidth: 40
       allowDuplicates: true
       totalWidth: 900
+      context_page: 'Works for you page'
 
   nextPage: =>
     @notifications.getNextPage(

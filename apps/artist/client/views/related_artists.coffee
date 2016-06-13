@@ -7,7 +7,7 @@ template = -> require('../../templates/sections/related_artists.jade') arguments
 module.exports = class RelatedArtistsView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user, @statuses }) -> #
+  initialize: ({ @user, @statuses, @context_page }) -> #
 
   postRender: ->
     sections = _.pick @statuses, 'artists', 'contemporary'
@@ -20,6 +20,8 @@ module.exports = class RelatedArtistsView extends Backbone.View
             el: @$("#artist-related-#{key}")
             collection: collection
             user: @user
+            context_page: @context_page
+            context_module: 'Related artists module'
           subView.fetchAndRender()
           @subViews.push subView
           @fadeInSection $section

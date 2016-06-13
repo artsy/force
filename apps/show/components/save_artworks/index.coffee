@@ -13,4 +13,4 @@ module.exports = (artworks) ->
 
   _.each artworks, (artwork) =>
     $el = $artworks.filter("[data-artwork='#{artwork.id}']").find '.overlay-container'
-    new SaveControls el: $el, artworkCollection: saved, artwork: artwork
+    new SaveControls el: $el, artworkCollection: saved, artwork: artwork, context_page: 'Show page'

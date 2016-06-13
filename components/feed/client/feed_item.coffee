@@ -19,7 +19,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   artworksPage: 1
   artworksPageSize: 8
 
-  initialize: ({@additionalParams, @artworkCollection}) ->
+  initialize: ({@additionalParams, @artworkCollection, @context_page, @context_module}) ->
     throw 'requires a model' unless @model
     throw 'requires an $el' unless @$el.length > 0
     @hideArtworks()
@@ -63,6 +63,8 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
             el: overlay
             model: artwork
             artworkCollection: @artworkCollection
+            context_page: @context_page
+            context_module: @context_module
 
     if @artworkCollection
       @artworkCollection.addRepoArtworks @model.artworks()

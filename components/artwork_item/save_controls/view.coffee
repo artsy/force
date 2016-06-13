@@ -14,7 +14,7 @@ module.exports = class SaveControls extends Backbone.View
     throw 'You must pass a model' unless @model?
     return unless options.artworkCollection
 
-    { @artworkCollection } = options
+    { @artworkCollection, @context_page, @context_module } = options
 
     @$button = @$('.overlay-button-save')
 
@@ -36,12 +36,19 @@ module.exports = class SaveControls extends Backbone.View
         destination: "#{@model.href()}/save"
       return false
 
+    trackedProperties = {
+      entity_id: @model.get '_id'
+      entity_slug: @model.get 'id'
+      context_page: @context_page
+      context_module: @context_module
+    }
+
     if @model.isSaved @artworkCollection
-      analyticsHooks.trigger 'save:artwork-remove', message: @analyticsRemoveMessage
+      analyticsHooks.trigger 'save:artwork-remove', trackedProperties
       @artworkCollection.unsaveArtwork @model.id,
         error: => @$button.attr 'data-state', 'saved'
     else
-      analyticsHooks.trigger 'save:artwork-save', message: @analyticsSaveMessage
+      analyticsHooks.trigger 'save:artwork-save', trackedProperties
       @artworkCollection.saveArtwork @model.id,
         error: => @$button.attr 'data-state', 'unsaved'
 

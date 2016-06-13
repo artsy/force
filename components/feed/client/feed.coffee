@@ -29,6 +29,7 @@ module.exports = class FeedView extends Backbone.View
     throw 'Requires options' unless options
     throw 'Requires options.feedItems' unless options.feedItems?
 
+    { @context_page, @context_module } = options
     @$window = $(window)
     @windowHeight = @$window.innerHeight()
     @$htmlBody = $('html, body')
@@ -139,6 +140,8 @@ module.exports = class FeedView extends Backbone.View
       el: $item
       additionalParams: @additionalParams
       parent: @
+      context_page: @context_page
+      context_module: @context_module
     new FeedItemView params
 
   handleFetchedItems: (items) ->

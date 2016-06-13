@@ -7,7 +7,7 @@ sd = require('sharify').data
 module.exports = class FillwidthView extends Backbone.View
 
   initialize: (options) ->
-    { @seeMore, @fetchOptions, @artworkCollection, @empty } = options
+    { @seeMore, @fetchOptions, @artworkCollection, @empty, @context_page, @context_module } = options
     @page = 1
     @fetched = 0
     @listenTo @collection, 'request', @renderSpinner
@@ -38,6 +38,8 @@ module.exports = class FillwidthView extends Backbone.View
           artworkCollection: @artworkCollection
           model: artwork
           el: $($list[index]).find('.overlay-container')
+          context_page: @context_page
+          context_module: @context_module
 
     @syncSavedArtworks(artworks) if @artworkCollection
 
