@@ -1,6 +1,6 @@
 for bundle in bundles
   a.js-notification-bundle(
-    data-unread=(bundle.status == "unread" ? "true" : "false")
+    data-unread=(bundle.status !== "read" ? "true" : "false")
     data-message=bundle.message
     data-artist=bundle.object.artist.id
     href="/works-for-you?artist_id=#{bundle.object.artist.id}"
@@ -14,5 +14,5 @@ for bundle in bundles
         .bundle-actors= bundle.actors
       .bundle-information
         .bundle-date= bundle.date
-        if (bundle.status === "unread")
+        if (bundle.status !== "read")
           .bundle-read-status

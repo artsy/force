@@ -1,0 +1,39 @@
+@require '../stylus_lib'
+
+.artwork-metadata-stub
+  serif('l-caption')
+  margin distance(gutter / 2) 0 distance(gutter) 0
+  lines = 5
+  height (line-height-in-px('garamond-l-caption') * lines)
+  overflow hidden
+
+  &__line
+    display block
+    overflow ellipsis
+
+    &
+    & > a
+      color gray-darker-color
+      text-decoration none
+
+  &__contact > a
+    text-decoration underline
+
+  &__artists
+    font-weight bold
+
+  &__placeholder-line
+    offset = 3px
+    height (line-height-in-px('garamond-l-caption') - (offset * 2))
+    background-color gray-lightest-color
+    margin offset 0
+
+    &:nth-child(2)
+      width 68%
+    &:nth-child(3)
+      width 82%
+    &:nth-child(4)
+      width 47%
+    &:nth-child(5)
+      width 44%
+

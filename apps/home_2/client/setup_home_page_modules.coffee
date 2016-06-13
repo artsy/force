@@ -11,12 +11,13 @@ setupFollowButton = require '../components/follow_button/index.coffee'
 iconicArtistsTemplate = -> require('../components/iconic_artists_context/templates/index.jade') arguments...
 auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
 fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
+markdown = require '../../../components/util/markdown.coffee'
 
 contexts =
   iconic_artists: (module) ->
     iconicArtistsTemplate artists: module.context.artists
   live_auctions: (module) ->
-    auctionTemplate auction: module.context
+    auctionTemplate auction: module.context, md: markdown
   current_fairs: (module) ->
     fairTemplate fair: module.context, timeSpan: timeSpan
 
@@ -46,6 +47,7 @@ module.exports = ->
       module = home_page_module
       $el = $("#hpm-#{module.key}-#{index}")
 
+      return $el.remove() unless module.results.length
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
       return setupFollowedArtistsView(module, $el) if module.key is 'followed_artists'
 

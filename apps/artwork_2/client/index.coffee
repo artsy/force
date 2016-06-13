@@ -48,7 +48,9 @@ module.exports.init = ->
         ]
 
     else if context.__typename is 'ArtworkContextAuction'
-      # Do nothing for Preview & Closed auctions
+      # Do nothing for Preview & Closed & Live auctions
+      query: null
+      init: null
 
     # else if context.__typename 'ArtworkContextSale' # Unimplemented (loads default fold content)
     #
@@ -109,6 +111,8 @@ module.exports.init = ->
           require '../components/partner/index.coffee'
           require '../components/related_artworks/index.coffee'
         ]
+
+  return unless query? and init?
 
   metaphysics query: query, variables: id: CLIENT.id
     .then (data) ->

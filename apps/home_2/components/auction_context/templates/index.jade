@@ -1,8 +1,7 @@
 .abrv-context__content.abrv-context__content--auction
   .abrv-context__content--auction__info
-    p= auction.name
     if auction.description
-      p= auction.description
+      p!= md(_s.truncate(auction.description, 150))
     p
       div #{auction.start_at} - #{auction.end_at}
     p Closes #{auction.closes}

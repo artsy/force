@@ -1,15 +1,17 @@
 .artwork-brick.artwork-brick--on-rail(
   class='js-artwork-brick'
   data-id= artwork.id
-  data-type= 'artwork'
+  data-type='artwork'
+  style='width: #{artwork.image.cell.width}px'
 )
   .artwork-brick__image
     a( href= artwork.href )
       img.artwork-brick__image__img(
-        src= artwork.image.thumb.url
+        src= artwork.image.cell.url
         alt= artwork.title
+        width= artwork.image.cell.width
+        height= artwork.image.cell.height
         onerror='this.style.display="none";'
-        height=imageHeight
       )
 
     .artwork-brick__image__save(
@@ -17,6 +19,5 @@
       data-id= artwork.id
     )
       //- Rendered client-side
-  .artwork-brick__metadata
-    include ../../artwork_brick/templates/metadata
-    include ../../artwork_brick/templates/contact
+
+  include ../../artwork_metadata_stub/index

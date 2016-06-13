@@ -67,6 +67,7 @@ describe 'Auction', ->
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
         accounting: formatMoney: ->
+        bidIncrements: []
         asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
@@ -85,6 +86,7 @@ describe 'Auction', ->
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
         accounting: formatMoney: ->
+        bidIncrements: []
         asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'

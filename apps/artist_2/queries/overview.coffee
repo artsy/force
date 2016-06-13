@@ -2,15 +2,20 @@ module.exports =
   """
   query artist($artist_id: String!, $shows: Boolean!, $artists: Boolean!, $articles: Boolean!) {
     artist(id: $artist_id) {
-      shows: exhibition_highlights (size: 16) @include(if: $shows) {
+      counts {
+        shows: partner_shows
+        artists: related_artists
+        articles
+      }
+      shows: exhibition_highlights (size: 15) @include(if: $shows) {
         artists { id }
         ... relatedShow
-        ... relatedShow
+        ... relatedShowImage
       }
-      artists (size: 16) @include(if: $artists){
+      artists (size: 15) @include(if: $artists){
         ... relatedArtist
       }
-      articles (limit: 16, sort: PUBLISHED_AT_DESC) @include(if: $articles){
+      articles (limit: 15, sort: PUBLISHED_AT_DESC) @include(if: $articles){
         href
         thumbnail_title
         ... relatedArticleAuthorImage
@@ -20,4 +25,5 @@ module.exports =
   #{require './article_fragment.coffee'}
   #{require './artist_fragment.coffee'}
   #{require './show_fragment.coffee'}
+  #{require './related_show_image.coffee'}
   """

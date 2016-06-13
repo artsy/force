@@ -121,7 +121,7 @@ describe 'HeaderView', ->
         feed: [
           actors: "Kana"
           message: "1 Work Added"
-          status: "unread"
+          status: "viewed"
           date: "2015-08-04T16:44:28.000Z"
           object: fabricate('artwork', { images: [ image_urls: square: 'http://foo.jpg'] })
         ]
@@ -130,6 +130,7 @@ describe 'HeaderView', ->
       @view.$('.bundle-actors').text().should.containEql 'Kana'
       @view.$('.bundle-date').text().should.containEql 'Aug 4'
       @view.$('#hpm-bundles a')[0].href.should.containEql 'artist_id=andy-warhol'
+      @view.$('.bundle-information').html().should.containEql 'bundle-read-status'
       @Cookies.set.should.be.calledOnce
 
     it 'disables the hover-pulldown when there are no notifications', ->

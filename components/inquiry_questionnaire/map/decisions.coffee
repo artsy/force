@@ -23,6 +23,9 @@ decisions =
   is_logged_in: ({ user }) ->
     user.isLoggedIn()
 
+  is_logged_out_but_has_account: ({ user }) ->
+    user.isLoggedOut() and user.isWithAccount()
+
   has_completed_profile: ({ logger, user }) ->
     steps = [
       'commercial_interest'

@@ -7,8 +7,9 @@ Order = require '../../../../models/order'
 Sale = require '../../../../models/sale'
 SaleArtwork = require '../../../../models/sale_artwork'
 BidderPositions = require '../../../../collections/bidder_positions'
+rewire = require 'rewire'
 Artwork = require '../../../../models/artwork'
-BidForm = require '../../client/bid_form'
+BidForm = rewire '../../client/bid_form'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -25,6 +26,9 @@ describe 'BidForm', ->
   beforeEach (done) ->
     sinon.stub(Backbone, 'sync')
     sinon.stub _, 'delay', (cb) -> cb()
+    @metaphysics = sinon.stub()
+      .returns Promise.resolve(me: bidder_status: is_highest_bidder: true)
+    BidForm.__set__ 'metaphysics', @metaphysics
     @order = new Order()
     @sale = new Sale fabricate 'sale'
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork',
@@ -45,6 +49,7 @@ describe 'BidForm', ->
       bidderPositions: @bidderPositions
       maxBid: 50
       accounting: formatMoney: ->
+      bidIncrements: []
       asset: (->)
     }, =>
       @view = new BidForm
@@ -103,6 +108,16 @@ describe 'BidForm', ->
         Backbone.sync.args[1][1].url().should.containEql '/api/v1/me/bidder_position/cat'
         @messageSpy.called.should.be.not.ok()
 
-      it 'shows the bidder message when processed', ->
+      it 'shows the bidder message when processed', (done) ->
         Backbone.sync.args[1][2].success fabricate('bidder_position', processed_at: '2015-04-20T16:20:00-05:00')
-        @messageSpy.called.should.be.ok()
+        _.defer => _.defer =>
+          @messageSpy.called.should.be.ok()
+          done()
+
+      it 'shows outbid', (done) ->
+        sinon.stub @view, 'showError'
+        @metaphysics.returns Promise.resolve me: bidder_status: is_highest_bidder: false
+        Backbone.sync.args[1][2].success fabricate('bidder_position', processed_at: '2015-04-20T16:20:00-05:00')
+        _.defer => _.defer =>
+          @view.showError.args[0][0].should.containEql "You've been outbid"
+          done()

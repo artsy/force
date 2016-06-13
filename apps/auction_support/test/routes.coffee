@@ -1,16 +1,22 @@
 _ = require 'underscore'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
 moment = require 'moment'
+Q = require 'bluebird-q'
+
 openSale = fabricate 'sale',
   name: 'Awesome Sale'
   is_auction: true
   auction_state: 'open'
   start_at: moment().subtract(1, 'minutes').format()
   end_at: moment().add(3, 'minutes').format()
+routes.__set__ 'metaphysics', sinon.stub().returns(
+  Q.resolve(artwork: sale_artwork: bid_increments: [100])
+)
 
 describe '#auctionRegistration', ->
 

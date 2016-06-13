@@ -188,11 +188,8 @@ describe 'LoggedOutUser', ->
     beforeEach ->
       @user = new LoggedOutUser
 
-      @user.related()
-        .collectorProfile.related()
-          .userFairActions.attendFair fabricate 'fair'
-
       sinon.stub Backbone, 'sync'
+        .yieldsTo 'success', {}
         .returns Q.resolve()
 
     afterEach ->
@@ -201,29 +198,11 @@ describe 'LoggedOutUser', ->
     it 'creates or persists everything needed to make an inquiry', ->
       @user.prepareForInquiry()
         .then ->
-          Backbone.sync.callCount.should.equal 2
+          Backbone.sync.callCount.should.equal 3
 
           Backbone.sync.args[0][1].url()
             .should.containEql '/api/v1/me/anonymous_session'
           Backbone.sync.args[1][1].url
+            .should.containEql '/api/v1/user'
+          Backbone.sync.args[2][1].url
             .should.containEql '/api/v1/me/collector_profile'
-
-    describe 'on a UserFairAction error', ->
-      beforeEach ->
-        @user = new LoggedOutUser
-
-        Backbone.sync
-          .onCall 0
-            .returns Q.resolve()
-          .onCall 1
-            .returns Q.resolve()
-
-      it 'creates or persists everything needed to make an inquiry', ->
-        @user.prepareForInquiry()
-          .then ->
-            Backbone.sync.callCount.should.equal 2
-
-            Backbone.sync.args[0][1].url()
-              .should.containEql '/api/v1/me/anonymous_session'
-            Backbone.sync.args[1][1].url
-              .should.containEql '/api/v1/me/collector_profile'

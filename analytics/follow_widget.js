@@ -1,8 +1,13 @@
 (function() {
   'use strict';
   analyticsHooks.on('follow-widget:follow', function(options) {
-    analytics.track('Followed Artist', { artist_id: options.id, context_module: 'follow widget' } );
-  });
+    analytics.track('Followed Artist', {
+      entity_slug: options.entity_slug,
+      entity_id: options.entity_id,
+      context_page: options.context_page,
+      context_module: 'follow-widget'
+    } );
+});
 
   analyticsHooks.on('follow-widget:opened', function(options) {
     analytics.track('Show follow widget');
