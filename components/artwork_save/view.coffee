@@ -38,12 +38,11 @@ module.exports = class ArtworkSaveView extends Backbone.View
         processData: true
         data: user_id: @user.id
 
-      analyticsHooks.trigger 'save:remove-artwork', {
+      analyticsHooks.trigger 'save:remove-artwork',
         entity_id: save._id
         entity_slug: save.id
         context_page: @context_page
         context_module: @context_module
-      }
 
     else
       save = @savedArtworks.add
@@ -53,12 +52,11 @@ module.exports = class ArtworkSaveView extends Backbone.View
       clone = save.clone()
       clone.save {}, type: 'post'
 
-      analyticsHooks.trigger 'save:save-artwork', {
+      analyticsHooks.trigger 'save:save-artwork',
         entity_id: save._id
         entity_slug: save.id
         context_page: @context_page
         context_module: @context_module
-      }
 
   reRender: (saved) -> ({ id }) =>
     @render saved if id is @id
