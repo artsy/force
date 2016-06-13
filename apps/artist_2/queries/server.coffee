@@ -19,6 +19,10 @@ module.exports = """
         follows
         artworks
       }
+      meta {
+        title
+        description
+      }
       partner_shows(size:16) {
         id
       }
