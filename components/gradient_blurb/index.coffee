@@ -31,6 +31,6 @@ module.exports = ($el, options = {}) ->
         .addClass 'is-expanded'
         .css 'max-height', 1000000
       $.waypoints 'refresh'
-      options.onClick()
+      options.onClick?()
 
     options.afterApply?()

@@ -14,7 +14,6 @@ helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
-<<<<<<< d6254e2a7d530336da5720c083fd15a1ad3b8750
   send = query: query, variables: artist_id: req.params.id
 
   return if metaphysics.debug req, res, send

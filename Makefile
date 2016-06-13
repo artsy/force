@@ -86,7 +86,7 @@ deploy:
 # to a personal heroku app.
 # Run with `make deploy_custom app=app_name`.
 deploy_custom:
-	# $(BIN)/ezel-assets
+	$(BIN)/ezel-assets
 	$(BIN)/bucket-assets --bucket $(app)
 	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=$(app)
 	git push -f git@heroku.com:$(app).git $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD):master
