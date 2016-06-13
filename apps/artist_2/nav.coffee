@@ -7,7 +7,7 @@ module.exports = class Nav
   sections: ->
     @__sections__ ?= _.filter _.map(sections, _.clone), (section) =>
       section.href = @evaluateHref section
-      section.predicate @artist
+      section.predicate @artist.statuses
 
   evaluateHref: (section) ->
     '/' + section.href.replace ':id', @artist.id
