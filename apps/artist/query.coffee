@@ -18,6 +18,7 @@ module.exports = """
       display_auction_link
       meta {
         title
+        description
       }
       counts {
         follows

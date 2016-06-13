@@ -3,64 +3,6 @@ helpers = require '../view_helpers'
 moment = require 'moment'
 
 describe 'ArtistViewHelpers', ->
-  describe 'pageTitle', ->
-    it 'formats correctly with or without name and count', ->
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: null
-        counts: artworks: null
-      ).should.containEql 'Unnamed Artist - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: null
-        counts: artworks: 0
-      ).should.containEql 'Unnamed Artist - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        counts: artworks: 0
-      ).should.containEql 'Foo Bar - Artworks, Bio & Shows on Artsy'
-
-      helpers.pageTitle(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        counts: artworks: 10
-      ).should.containEql 'Foo Bar - 10 Artworks, Bio & Shows on Artsy'
-
-    it 'formats correctly with meta override', ->
-      helpers.pageTitle(
-        id: 'art-stage-singapore-2016'
-        name: 'Foo Bar'
-        counts: artworks: 10
-      ).should.containEql 'Art Stage Singapore  2016 | Artsy'
-
-  describe 'pageDescription', ->
-    it 'formats correctly without character limit', ->
-      helpers.pageDescription(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        gender: 'male'
-        blurb: 'Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah'
-      ).should.containEql 'Find the latest shows, biography, and artworks for sale by Foo Bar. Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah'
-
-    it 'formats correctly with character limit', ->
-      helpers.pageDescription(
-        id: 'foo-bar'
-        name: 'Foo Bar'
-        gender: 'male'
-        blurb: 'Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah'
-      , 100).should.containEql 'Find the latest shows, biography, and artworks for sale by Foo Bar. Blah Blah Blah Blah Blah Blah...'
-
-    it 'formats correctly with meta override', ->
-      helpers.pageDescription(
-        id: 'art-stage-singapore-2016'
-        name: 'Foo Bar'
-        gender: 'male'
-        blurb: 'Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah'
-      ).should.containEql 'Explore work from Asia and beyond as 140+ regional and international galleries—Tomio Koyama Gallery, Whitestone Gallery, and amanasalto among them—gather in Singapore.'
-
   it 'formatAlternateNames', ->
     helpers.formatAlternateNames(alternate_names: []).should.containEql ''
     helpers.formatAlternateNames(alternate_names: ['Joe Shmoe']).should.containEql 'Joe Shmoe'

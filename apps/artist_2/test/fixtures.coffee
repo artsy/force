@@ -13,6 +13,10 @@ module.exports = {
     "follows": 11790,
     "artworks": 185
   },
+  "meta": {
+    "title": "Jeff Koons - 100+ Artworks, Bio &amp; Shows on Artsy"
+    "description": "Welcome to the official Jeff Koons page on Artsy. Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely” ..."
+  },
   "image": {
     "versions": [
       "four_thirds",

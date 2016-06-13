@@ -20,6 +20,10 @@ module.exports = """
         artworks
         partner_shows
       }
+      meta {
+        title
+        description
+      }
       ... current
       ... image
       ... statuses
