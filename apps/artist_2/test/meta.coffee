@@ -17,7 +17,7 @@ describe 'Meta tags', ->
 
   describe 'basic artist with name and short blurb', ->
     beforeEach ->
-      @artist = _.pick artistJSON, '_id', 'id', 'name', 'gender', 'blurb', 'stastuses', 'counts'
+      @artist = _.pick artistJSON, '_id', 'id', 'name', 'gender', 'blurb', 'stastuses', 'counts', 'meta'
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
@@ -32,8 +32,8 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/jeff-koons-1"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/jeff-koons-1"
-      @html.should.containEql "<meta property=\"og:description\" content=\"Welcome to the official Jeff Koons page on Artsy. Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely” ..."
-      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 185 Artworks, Bio"
+      @html.should.containEql "<meta property=\"og:description\" content=\"Welcome to the official Jeff Koons page on Artsy. Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely”"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Jeff Koons - 100+ Artworks, Bio &amp;amp; Shows on Artsy"
       @html.should.containEql "<link rel=\"next\" href=\"http://localhost:5000/artist/jeff-koons-1/shows\""
       @html.should.containEql "<link rel=\"prev\" href=\"http://localhost:5000/artist/jeff-koons-1/works\""
 
