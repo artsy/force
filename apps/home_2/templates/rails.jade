@@ -2,6 +2,7 @@ if modules
   each module, index in modules
     - title = module.title
     - railId = module.key
-    - viewAllUrl = viewHelpers.viewAllUrl(module)
+    if (module.context)
+      - viewAllUrl = viewHelpers.viewAllUrl(module)
     div(id="hpm-#{railId}-#{index}").abrv-container
       include ../../../components/artwork_brick_rail/templates/index

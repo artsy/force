@@ -5,6 +5,7 @@ module.exports =
       ... on Artist @include(if: $shows) {
         group_shows: partner_shows(at_a_fair: false, solo_show:false, sort: start_at_desc, size: 99) {
           ... relatedShow
+          ... relatedShowImage
         }
         solo_shows: partner_shows(at_a_fair: false, solo_show:true, sort: start_at_desc, size: 99) {
           ... relatedShow
@@ -12,7 +13,7 @@ module.exports =
         }
         fair_booths: partner_shows(at_a_fair: true, sort: start_at_desc, size: 99) {
           ... relatedShow
-          ... relatedShow
+          ... relatedShowImage
         }
       }
       articles (limit: 99, sort: PUBLISHED_AT_DESC) @include(if: $articles) {
@@ -24,5 +25,6 @@ module.exports =
   }
 
   #{require './show_fragment.coffee'}
+  #{require './related_show_image.coffee'}
 
   """

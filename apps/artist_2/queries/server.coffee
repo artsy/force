@@ -14,17 +14,15 @@ module.exports = """
       location
       hometown
       blurb
-      consignable
+      is_consignable
       counts {
         follows
         artworks
+        partner_shows
       }
       meta {
         title
         description
-      }
-      partner_shows(size:16) {
-        id
       }
       ... current
       ... image
@@ -48,6 +46,8 @@ module.exports = """
       contemporary
       articles
       biography
+      cv
+      auction_lots
     }
   }
 

@@ -24,7 +24,7 @@ module.exports = class CVView extends Backbone.View
     .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
   postRender: ->
-    @subViews.push new ArtworkRailView
+    @subViews.push rail = new ArtworkRailView
       $el: @$(".artist-artworks-rail")
       collection: @model.related().artworks
       title: "Works by #{@model.get('name')}"

@@ -9,7 +9,7 @@ describe 'Nav', ->
   describe '#sections', ->
     it 'generates the sections of the nav based on the passed in statuses', ->
       _.pluck(@nav.sections(), 'name').should.eql [
-        'Overview', 'Works', 'CV', 'Articles', 'Shows', 'Related Artists'
+        'Overview', 'Works', 'CV', 'Articles', 'Shows', 'Auction Results', 'Related Artists'
       ]
 
     it 'evaluates the href given the artist id', ->
@@ -19,6 +19,7 @@ describe 'Nav', ->
         '/artist_2/jeff-koons-1/cv'
         '/artist_2/jeff-koons-1/articles'
         '/artist_2/jeff-koons-1/shows'
+        '/artist_2/jeff-koons-1/auction-results'
         '/artist_2/jeff-koons-1/related-artists'
       ]
 
@@ -51,8 +52,12 @@ describe 'Nav', ->
 
       { next, prev } = @nav.rels('/artist_2/jeff-koons-1/shows')
       prev.href.should.equal '/artist_2/jeff-koons-1/articles'
+      next.href.should.equal '/artist_2/jeff-koons-1/auction-results'
+
+      { next, prev } = @nav.rels('/artist_2/jeff-koons-1/auction-results')
+      prev.href.should.equal '/artist_2/jeff-koons-1/shows'
       next.href.should.equal '/artist_2/jeff-koons-1/related-artists'
 
       { next, prev } = @nav.rels('/artist_2/jeff-koons-1/related-artists')
-      prev.href.should.equal '/artist_2/jeff-koons-1/shows'
+      prev.href.should.equal '/artist_2/jeff-koons-1/auction-results'
       _.isUndefined(next).should.be.true()
