@@ -10,7 +10,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
   events:
     'click .js-auction-artwork-brick-bid-button': 'bid'
 
-  initialize: ({ @id, @user }) -> #
+  initialize: ({ @id, @user, @context_page, @context_module }) -> #
 
   bid: (e) ->
     if not CURRENT_USER?
@@ -26,7 +26,11 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
       # Passes through to `href`
 
   postRender: ->
-    view = new ArtworkSaveView id: @id, user: @user
+    view = new ArtworkSaveView
+      id: @id
+      user: @user
+      context_page: @context_page
+      context_module: @context_module
 
     @$(".js-artwork-brick-save-controls[data-id='#{@id}']")
       .html view.render().$el
