@@ -134,12 +134,22 @@ module.exports = class CurrentUser extends User
   fetchNotificationBundles: (options) ->
     new Backbone.Model().fetch
       url: "#{@url()}/notifications/feed"
+      success: options?.success
       data:
         size: 10
         access_token: @get('accessToken')
-      success: options?.success
 
-  fetchAndMarkNotifications: (options) ->
+  fetchUnviewedNotifications: (options) ->
+    new Backbone.Collection().fetch
+      url: "#{@url()}/notifications"
+      success: options?.success
+      data:
+        type: 'ArtworkPublished'
+        after_status: 'viewed'
+        size: 100
+        access_token: @get('accessToken')
+
+  fetchAndMarkNotifications: (status = 'read', options) ->
     url = "#{@url()}/notifications"
     @set unreadNotifications: new Backbone.Collection()
     @get('unreadNotifications').fetch
@@ -150,9 +160,12 @@ module.exports = class CurrentUser extends User
         size: 100
         access_token: @get('accessToken')
       success: =>
-        request.put(url)
-          .send({status: 'read', access_token: @get('accessToken')})
-          .end (err, res) -> options?.success
+        @markNotifications 'read', options
+
+  markNotifications: (status = 'read', options) ->
+    request.put("#{@url()}/notifications")
+      .send({status: status, access_token: @get('accessToken')})
+      .end (err, res) -> options?.success
 
   findOrCreate: (options = {}) ->
     Q(@fetch options)
