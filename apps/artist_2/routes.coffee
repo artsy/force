@@ -19,12 +19,12 @@ currentShowAuction = require './components/current_show_auction/index'
     query: query,
     variables:
       artist_id: req.params.id
-      includeBlurb: tab == 'overview'
+      includeBlurb: (tab is '')
 
   return if metaphysics.debug req, res, send
 
   metaphysics send
-    .then ({artist}) ->
+    .then ({ artist }) ->
       nav = new Nav artist: artist
       next() if not _.find nav.sections(), slug: tab
 

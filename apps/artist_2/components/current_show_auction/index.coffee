@@ -9,7 +9,7 @@ current = (type, artist) ->
   detail = if type is 'show'
     _.compact([
       item.partner?.name,
-      item.location.city
+      item.location?.city
     ]).join ', '
   else
     ''
