@@ -82,7 +82,7 @@ describe 'Auction results routes', ->
       @req = params: id: 'andy-foobar-artwork'
       @res = { redirect: @redirectStub = sinon.stub() }
 
-    it 'makes the appropriate requests', ->
+    it 'redirect artwork results to artwork page', ->
       routes.artwork @req, @res
       @redirectStub.called.should.be.ok()
 

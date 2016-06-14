@@ -94,4 +94,4 @@ randomPage = (total, pageSize) ->
       render()
 
 @artwork = (req, res) ->
-  res.redirect "/artwork/#{req.params.id}"
+  res.redirect 301, "/artwork/#{req.params.id}"
