@@ -69,6 +69,7 @@ sharify.data = _.extend _.pick(config,
   'SEGMENT_WRITE_KEY_MICROGRAVITY'
   'GEODATA_URL'
   'EMAIL_SIGNUP_IMAGES_ID'
+  'CRITEO_ACCOUNT_NUMBER'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

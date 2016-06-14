@@ -188,3 +188,44 @@ analyticsHooks.on('confirm:bid:form:success', function(data) {
     bidder_id: data.bidder_id
   })
 })
+
+// Criteo tracking
+window.criteo_q = window.criteo_q || [];
+var pathSplit = location.pathname.split('/')
+if (pathSplit[0] == '/auctions') {
+  criteo_q.push(
+    { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
+    { event: "setSiteType", type: "d" },
+    { event: "viewHome" }
+  )
+} else if (pathSplit[1] == 'auction' && pathSplit[3] == null) {
+  window.criteo_q.push(
+    { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
+    { event: "setSiteType", type: "d" },
+    { event: "viewList", item: sd.ARTWORKS.map(function(a) { return a._id }) }
+  )
+} else if (pathSplit[1] == 'artwork' && pathSplit[3] == null) {
+  window.criteo_q.push(
+    { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
+    { event: "setSiteType", type: "d" },
+    { event: "viewItem", item: sd.AUCTION.artwork_id }
+  )
+} else if (pathSplit[1] == 'auction' && pathSplit[3] == 'bid') {
+  analyticsHooks.on('confirm:bid:form:success', function(data) {
+    window.criteo_q.push(
+      { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
+      { event: "setSiteType", type: "d" },
+      {
+        event: "trackTransaction",
+        id: data.bidder_position_id,
+        item: [
+          {
+            id: sd.SALE_ARTWORK.artwork._id,
+            price: data.max_bid_amount_cents,
+            quantity: 1
+          }
+        ]
+      }
+    )
+  })
+}
