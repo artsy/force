@@ -39,6 +39,6 @@ if helpers.partner.isDisplayable(artwork.partner)
             data-id= profile.id
           )
 
-          if profile.counts.follows > 0
+          unless profile.counts.follows == '0 followers'
             span.artwork-partner__metadata__actions__followers
               = profile.counts.follows
