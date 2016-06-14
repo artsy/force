@@ -27,7 +27,7 @@ describe 'Artwork partner template', ->
     $ = cheerio.load(@html)
 
     it 'should not display zero followers count', ->
-      $('.artwork-partner__metadata__actions__followers').should.not.exist
+      $('.artwork-partner__metadata__actions__followers').should.have.lengthOf 0
 
   describe 'partner with follows', ->
     @artwork = fabricate 'artwork'
