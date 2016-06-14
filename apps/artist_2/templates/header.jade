@@ -21,13 +21,13 @@ header.artist-header
         if followCount
           span.artist-header-follow-count(class=followCount == 1 ? '' : 'is-plural' data-count=followCount) Follower
 
-    if currentItem
-      .current-item(class= (artist.consignable ? 'compact' : ''))
-        include ../components/current_show_auction/index
-
     if artist.is_consignable
       .consignment-cta
         | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Consign with Artsy.]
+
+    if currentItem
+      .current-item
+        include ../components/current_show_auction/index
 
   .artist-sticky-header
     .artist-sticky-header-container
