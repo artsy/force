@@ -13,7 +13,7 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 module.exports = class BidForm extends ErrorHandlingForm
 
   timesPolledForBidPlacement: 0
-  maxTimesPolledForBidPlacement: 6
+  maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
   errors:
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
