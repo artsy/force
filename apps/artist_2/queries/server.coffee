@@ -1,5 +1,5 @@
 module.exports = """
-  query artist($artist_id: String!) {
+  query artist($artist_id: String!, $includeBlurb: Boolean!) {
     artist(id: $artist_id){
       _id
       id
@@ -13,8 +13,11 @@ module.exports = """
       years
       location
       hometown
-      blurb
       is_consignable
+      biography_blurb @include(if: $includeBlurb) {
+        text
+        credit
+      }
       counts {
         follows
         artworks
