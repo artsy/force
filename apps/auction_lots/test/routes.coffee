@@ -17,7 +17,7 @@ describe 'Auction results routes', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#detail', ->
+  xdescribe '#detail', ->
     beforeEach ->
       @req = params: artist_id: 'andy-foobar', id: 'a-lot'
       @res = status: sinon.stub(), render: sinon.stub(), redirect: sinon.spy(), locals: sd: {}
