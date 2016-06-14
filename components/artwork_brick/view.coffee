@@ -5,10 +5,14 @@ ArtworkSaveView = require '../artwork_save/view.coffee'
 module.exports = class ArtworkBrickView extends Backbone.View
   subViews: []
 
-  initialize: ({ @id, @user }) -> #
+  initialize: ({ @id, @user, @context_page, @context_module }) -> #
 
   postRender: ->
-    view = new ArtworkSaveView id: @id, user: @user
+    view = new ArtworkSaveView
+      id: @id
+      user: @user
+      context_page: @context_page
+      context_module: @context_module
 
     @$(".js-artwork-brick-save-controls[data-id='#{@id}']")
       .html view.render().$el

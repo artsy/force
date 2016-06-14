@@ -1,3 +1,4 @@
+accounting = require 'accounting'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -34,7 +35,7 @@ describe 'auction', ->
           current_bid: amount: '$55,000'
           counts: bidder_positions: 19
           symbol: '$'
-          bid_increments: []
+          bid_increments: [100, 200]
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
@@ -77,7 +78,7 @@ describe 'auction', ->
 
     beforeEach ->
       sinon.stub ArtworkAuctionView::, 'redirectTo'
-      @view.data.accounting = require 'accounting'
+      @view.data.accounting = accounting
       @view.data.user = 'existy'
       @view.render()
 
@@ -93,6 +94,7 @@ describe 'auction', ->
   describe '#render', ->
     describe 'open auction', ->
       it 'renders correctly', ->
+        @view.data.accounting = accounting
         @view.render()
 
         @view.$el.html()
@@ -107,6 +109,7 @@ describe 'auction', ->
     describe 'preview auction', ->
       it 'renders correctly', ->
         data =
+          accounting: accounting
           artwork:
             id: 'peter-alexander-wedge-with-puff'
             is_in_auction: true
@@ -124,10 +127,10 @@ describe 'auction', ->
               estimate: '$7,000–$9,000'
               current_bid: amount: '$55,000'
               counts: bidder_positions: 0
+              bid_increments: [100, 200]
               minimum_next_bid:
                 amount: '$60,000'
                 cents: 6000000
-
         view = new ArtworkAuctionView data: data
         view.render()
 
@@ -158,6 +161,7 @@ describe 'auction', ->
               estimate: '$7,000–$9,000'
               current_bid: amount: '$55,000'
               counts: bidder_positions: 19
+              bid_increments: [100, 200]
               minimum_next_bid:
                 amount: '$60,000'
                 cents: 6000000
@@ -171,6 +175,7 @@ describe 'auction', ->
     describe  'buy now work', ->
       it 'renders correctly', ->
         data =
+          accounting: accounting
           artwork:
             id: 'peter-alexander-wedge-with-puff'
             is_in_auction: true
@@ -189,6 +194,7 @@ describe 'auction', ->
               estimate: '$7,000–$9,000'
               current_bid: amount: '$55,000'
               counts: bidder_positions: 0
+              bid_increments: [100, 200]
               minimum_next_bid:
                 amount: '$60,000'
                 cents: 6000000

@@ -7,10 +7,6 @@ Artist = require '../../models/artist.coffee'
 module.exports =
   capitalize: capitalize
 
-  pageDescription: (artist, limit) ->
-    artist = new Artist _.pick artist, 'id', 'name', 'gender', 'blurb'
-    artist.toPageDescription(limit)
-
   formatAlternateNames: (artist) ->
     if alts = artist.alternate_names then artist.alternate_names.join('; ') else ''
 

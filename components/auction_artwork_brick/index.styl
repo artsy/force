@@ -2,7 +2,7 @@
 @require '../artwork_brick'
 
 .artwork-brick--auction
-  .artwork-brick__metadata
+  .artwork-metadata-stub
     height inherit
     serif('l-caption')
     margin distance(gutter / 2) 0 distance(gutter * 2) 0
@@ -31,9 +31,9 @@
         > form
           display inline
 
-        &[data-size='1'] .artwork-brick__metadata__sale-artwork__buttons__button
+        &[data-size='1'] .artwork-metadata-stub__sale-artwork__buttons__button
           display block
 
-        &[data-size='2'] .artwork-brick__metadata__sale-artwork__buttons__button
+        &[data-size='2'] .artwork-metadata-stub__sale-artwork__buttons__button
           width calc('50% - %s' % (gutter / 5))
           inline-block-margins(gutter / 5)

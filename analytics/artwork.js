@@ -47,12 +47,6 @@
     .on('artwork:confirm-registration', function() {
       analytics.track("Showed 'Confirm registration on artwork page'", { nonInteraction: 1 });
     })
-    .on('save:save-artwork', function(context) {
-      // context.label.split(':')[1] === 'artwork_id'
-    })
-    .on('save:remove-artwork', function(context) {
-      // context.label.split(':')[1] === 'artwork_id'
-    })
     .on('artwork:view-in-room', function() {
       //
     });

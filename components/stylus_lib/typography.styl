@@ -55,3 +55,8 @@ distance(value, font-style = false)
 
   offset = (line-height * font-size) - font-size
   floor(value - offset)
+
+line-height-in-px(font-style)
+  line-height = lookup(font-style + '-line-height')
+  font-size = lookup(font-style + '-font-size')
+  line-height * font-size

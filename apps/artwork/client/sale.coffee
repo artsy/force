@@ -33,6 +33,7 @@ module.exports = class SaleView extends Backbone.View
         artworkCollection: @saved
         el: $artwork.find('.overlay-container')
         model: artwork
+        context_page: 'Artwork page'
 
   render: ->
     @$el.html template(sale: @sale)

@@ -31,8 +31,14 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/biography': 'biography'
     'artist/:id/auction-results': 'auctionResults'
 
-  initialize: ({ @model, @user, @statuses }) ->
-    @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
+  initialize: ({ @model, @user, @statuses, @context_page, @context_module }) ->
+    @options =
+      model: @model
+      user: @user
+      statuses: @statuses
+      el: $('.artist-page-content')
+      context_page: @context_page
+      context_module: @context_module
     @setupUser()
     @setupJump()
     @setupCarousel()
@@ -87,6 +93,6 @@ module.exports = class ArtistRouter extends Backbone.Router
     { sort, page } = qs.parse(location.search.replace(/^\?/, ''))
     currentPage = parseInt page or 1
     auctionLots = new AuctionLots [], id: @model.get('id'), sortBy: sort, state: currentPage: currentPage
-    
+
     @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
     auctionLots.fetch()

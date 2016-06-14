@@ -1,7 +1,7 @@
 Q = require 'bluebird-q'
 qs = require 'qs'
 request = require 'superagent'
-{ extend } = require 'underscore'
+{ extend, some } = require 'underscore'
 { METAPHYSICS_ENDPOINT } = require('sharify').data
 
 metaphysics = ({ method, query, variables, req } = {}) ->
@@ -28,7 +28,9 @@ metaphysics = ({ method, query, variables, req } = {}) ->
         return reject err
 
       if response.body.errors?
-        return reject JSON.stringify(response.body.errors)
+        error = new Error JSON.stringify response.body.errors
+        error.status = 404 if some(response.body.errors, ({ message }) -> message.match /Not Found/)
+        return reject error
 
       resolve response.body.data
 

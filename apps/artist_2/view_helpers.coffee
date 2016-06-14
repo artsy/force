@@ -16,10 +16,6 @@ module.exports =
       published_artworks_count: artist.counts.artworks
     artist.toPageTitle()
 
-  pageDescription: (artist, limit) ->
-    artist = new Artist _.pick artist, 'id', 'name', 'gender', 'blurb'
-    artist.toPageDescription(limit)
-
   formatAlternateNames: (artist) ->
     if alts = artist.alternate_names then artist.alternate_names.join('; ') else ''
 

@@ -26,6 +26,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     'click .artwork-columns-see-more': 'onSeeMoreClick'
 
   initialize: (options) ->
+    { @context_page, @context_module } = options
     _.extend @, options
 
     unless @collection and @collection.groupByColumnsInOrder
@@ -103,6 +104,8 @@ module.exports = class ArtworkColumns extends Backbone.View
           artworkCollection: @artworkCollection
           model: artwork
           el: $artwork.find('.overlay-container')
+          context_page: @context_page
+          context_module: @context_module
     if @artworkCollection
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()

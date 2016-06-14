@@ -3,7 +3,10 @@ ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee
 module.exports = ->
   $el = $('.js-artwork-auction-artworks')
 
-  masonryView = new ArtworkMasonryView el: $el
+  masonryView = new ArtworkMasonryView
+    el: $el
+    context_page: 'Artwork page'
+    context_module: 'Artwork auction module'
 
   artworks = $el
     .find '.js-artwork-brick'

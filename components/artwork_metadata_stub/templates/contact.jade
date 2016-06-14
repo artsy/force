@@ -1,5 +1,5 @@
 if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
-  .artwork-brick__metadata__contact.artwork-brick__metadata__line
+  .artwork-metadata-stub__contact.artwork-metadata-stub__line
     a(
       class='analytics-artwork-contact-seller'
       href= artwork.href
@@ -9,5 +9,5 @@ if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
       | Contact #{artwork.partner.type.toLowerCase()}
 
 else if artwork.partner.is_limited_fair_partner
-  .artwork-brick__metadata__contact.artwork-brick__metadata__line
+  .artwork-metadata-stub__contact.artwork-metadata-stub__line
     | Not inquireable

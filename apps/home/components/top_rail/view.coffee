@@ -21,6 +21,8 @@ module.exports = class HomeTopRailView extends Backbone.View
       el: $el
       artworkCollection: @savedArtworks
       model: artwork
+      context_page: 'Home page'
+      context_module: 'Home top rail module'
 
   syncArtworks: ->
     @user?.initializeDefaultArtworkCollection()

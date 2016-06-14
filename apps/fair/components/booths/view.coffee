@@ -64,6 +64,8 @@ module.exports = class BoothsView extends Backbone.View
       feedItems: items
       additionalParams: @params.toJSON()
       hideSeeMoreButtons: false
+      context_page: 'Fair page'
+      context_module: 'Booth'
     @feedView.feedName = 'Fair Feed'
 
   hideSpinner: ->

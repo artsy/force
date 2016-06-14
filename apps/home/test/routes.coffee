@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 { extend } = require 'underscore'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'Home routes', ->
   beforeEach ->
@@ -18,6 +19,8 @@ describe 'Home routes', ->
       render: sinon.stub()
       redirect: sinon.stub()
       cookie: @cookieStub = sinon.stub()
+
+    @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
@@ -70,7 +73,7 @@ describe 'Home routes', ->
           .onCall 1
           .yieldsTo 'success', [fabricate 'featured_link']
 
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index extend({ user: new CurrentUser() }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.first().get 'description'
@@ -81,13 +84,23 @@ describe 'Home routes', ->
           .onCall 0
           .yieldsTo 'success', []
 
-        routes.index extend({ user: 'existy' }, @req), @res
+        routes.index extend({ user: new CurrentUser() }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].heroUnits.first().get 'type'
               .should.equal 'welcome'
             @res.render.args[0][1].heroUnits.first().has 'link'
               .should.be.false() # Fallback is just welcome without the signup link
+
+      it 'calls next when user has personalized homepage lab feature', ->
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', []
+
+        user = new CurrentUser lab_features: ['Personalized Homepage']
+
+        routes.index(extend({ user: user}, @req), @res, @next)
+        @next.called.should.be.true()
 
   describe '#redirectToSignup', ->
     it 'redirects to signup', ->

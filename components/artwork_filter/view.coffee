@@ -44,10 +44,15 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.extend
       el: @$artworks
       collection: @artworks
+      context_page: @context_page
+      context_module: @context_module
     , viewModes[@viewMode.get('mode')]
 
-  initialize: ({ @mode, @showSeeMoreLink }) ->
-    @artworks = new ArtworkColumns [], artistId: @model.id
+  initialize: ({ @mode, @showSeeMoreLink, @context_page, @context_module }) ->
+    @artworks = new ArtworkColumns [],
+      artistId: @model.id,
+      context_page: @context_page,
+      context_module: @context_module
     @filter = new Filter model: @model
     @viewMode = new Backbone.Model mode: @mode
 

@@ -7,30 +7,35 @@ module.exports = [
   slug: 'works'
   href: 'artist_2/:id/works'
   name: 'Works'
-  predicate: ({ statuses }) -> statuses.artworks
+  predicate: ({ artworks }) -> artworks
 ,
   slug: 'cv'
   href: 'artist_2/:id/cv'
   name: 'CV'
-  predicate: ({ statuses, partner_shows }) -> statuses.shows && partner_shows.length > 15
+  predicate: ({ cv }) -> cv
 ,
   slug: 'articles'
   href: 'artist_2/:id/articles'
   name: 'Articles'
-  predicate: ({ statuses }) -> statuses.articles
+  predicate: ({ articles }) -> articles
 ,
   slug: 'biography'
   href: 'artist_2/:id/biography'
   name: 'Biography'
-  predicate: ({ statuses }) -> statuses.biography
+  predicate: ({ biography }) -> biography
 ,
   slug: 'shows'
   href: 'artist_2/:id/shows'
   name: 'Shows'
-  predicate: ({ statuses }) -> statuses.shows
+  predicate: ({ shows }) -> shows
+,
+  slug: 'auction-results'
+  href: 'artist_2/:id/auction-results'
+  name: 'Auction Results'
+  predicate: ({ auction_lots }) -> auction_lots
 ,
   slug: 'related-artists'
   href: 'artist_2/:id/related-artists'
   name: 'Related Artists'
-  predicate: ({ statuses }) -> statuses.artists or statuses.contemporary
+  predicate: ({ artists, contemporary }) -> artists or contemporary
 ]

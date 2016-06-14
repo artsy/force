@@ -11,6 +11,11 @@ query = """
     me {
       bidder_status(artwork_id: $id, sale_id: $sale_id) {
         is_highest_bidder
+        most_recent_bid {
+          max_bid {
+            cents
+          }
+        }
       }
     }
     artwork(id: $id) {

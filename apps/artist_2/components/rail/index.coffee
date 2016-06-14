@@ -45,9 +45,8 @@ sections =
       viewAllUrl = baseHref + '/shows'
       showsTemplate { items, formatShowDetail, showHelpers, showMore, viewAllUrl }
 
-module.exports = ({ $el, section, items, baseHref}) ->
-  showMore = items.length > 15
-  items = _.take items, 15 if showMore
+module.exports = ({ $el, section, count, items, baseHref}) ->
+  showMore = count > 15
   $el.find('.js-mgr-cells').html sections[section].render { items, showMore, baseHref }
   _.defer ->
     initCarousel $el,

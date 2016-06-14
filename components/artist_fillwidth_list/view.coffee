@@ -15,7 +15,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     syncFollows: true
 
   initialize: (options = {}) ->
-    { @user, @following } = options
+    { @user, @following, @context_page, @context_module } = options
     { @page, @per, @syncFollows } = _.defaults @defaults, options
     @$document = $(document)
     @user?.initializeDefaultArtworkCollection()
@@ -51,6 +51,8 @@ module.exports = class ArtistFillwidthList extends Backbone.View
           doneFetching: true
           collection: artworks
           el: $row.find('.artist-fillwidth-list-artworks')
+          context_page: @context_page
+          context_module: @context_module
 
         @subViews.push fillwidthView
 

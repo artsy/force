@@ -18,6 +18,7 @@ module.exports = ->
     el: $('.js-artwork-save')
     model: artwork
     saved: saved
+    context_page: 'Artwork page'
 
   $('.js-artwork-share').click (e) ->
     e.preventDefault()

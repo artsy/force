@@ -62,7 +62,6 @@ setupUser = (user, auction) ->
       myActiveBids = res?[2]?[2]
       Q.promise (resolve) ->
         articles.fetch
-          cache: true
           data: published: true, auction_id: auction.get('_id')
           complete: resolve
     .then ->
@@ -123,7 +122,6 @@ setupUser = (user, auction) ->
 @redirectLive = (req, res, next) ->
   auction = new Auction id: req.params.id
   auction.fetch
-    cache: true
     error: res.backboneError
     success: ->
       liveUrl = "#{PREDICTION_URL}/#{auction.get('id')}/login"
