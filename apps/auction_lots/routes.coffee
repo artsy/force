@@ -1,3 +1,4 @@
+Q = require 'bluebird-q'
 _ = require 'underscore'
 artsyXapp = require 'artsy-xapp'
 Artist = require '../../models/artist'
@@ -7,66 +8,61 @@ AuctionLot = require '../../models/auction_lot'
 AuctionLots = require '../../collections/auction_lots'
 ComparableSales = require '../../collections/comparable_sales'
 totalCount = require '../../node_modules/artsy-ezel-components/pagination/total_count'
-totalCountWithAccessToken = require '../../node_modules/artsy-ezel-components/pagination/total_count_with_access_token'
+
 randomPage = (total, pageSize) ->
   Math.floor(Math.random() * (total / pageSize)) + 1
 
 @detail = (req, res, next) ->
   lot = new AuctionLot id: req.params.id
   artist = new Artist id: req.params.artist_id
-  artworks = new Artworks
+  { artworks } = artist.related()
   auctionLots = new AuctionLots [], id: req.params.artist_id, state: currentPage: 1, pageSize: 3
-  render = _.after 4, ->
-    if lot.get('artist_id') is artist.get('_id')
-      res.render 'detail',
-        lot: lot
-        artist: artist
-        auctionLots: auctionLots
-        artworks: artworks
-    else
-      err = new Error('Not Found')
-      err.status = 404
-      next err
 
-  lot.fetch
-    cache: true
-    error: (err, resp) ->
-      return res.backboneError unless resp.status is 404
-      res.redirect 301, "/artist/#{artist.get('id')}/auction-results"
-    success: (model, response) ->
-      res.locals.sd.AUCTION_LOT = response
-      render()
+  Q
+    .all [
+      lot.fetch cache: true
+        .catch ->
+          error = new Error
+          error.lot = true
+          throw error
 
-  artist.fetch
-    cache: true
-    error: res.backboneError
-    success: (model, response) ->
-      res.locals.sd.ARTIST = response
-      render()
+      artist.fetch cache: true
+      totalCount artsyXapp.token, auctionLots.url()
+    ]
 
-  totalCount(artsyXapp.token, auctionLots.url())
-    .then (total) ->
-      auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
-      auctionLots.fetch
-        data: access_token: req.user?.get('accessToken')
-        error: res.backboneError
-        success: (collection, response, options) ->
-          res.locals.sd.AUCTION_LOTS = response
-          # Ensure the current lot is not in this collection
-          auctionLots.remove lot
-          render()
+    .then ([__lot__, __artist__, auctionLotsCount]) ->
+      auctionLots.state.currentPage = randomPage auctionLotsCount, auctionLots.state.pageSize
 
-  artworks.url = artist.url() + '/artworks'
-  totalCount(artsyXapp.token, artworks.url).then (total) ->
-    artworks.fetch
-      cache: true
-      error: res.backboneError
-      data:
-        size: 10
-        published: true
-      success: (collection, response) ->
-        res.locals.sd.ARTWORKS = response
-        render()
+      # Should really be catching the RangeError:
+      auctionLots.url = auctionLots.url().replace '&total_count=1', ''
+
+      Q.all [
+        artworks.fetch cache: true, data: size: 10, published: true
+        auctionLots.fetch cache: true
+      ]
+
+    .then ->
+      if lot.get('artist_id') is artist.get('_id')
+        res.locals.sd.AUCTION_LOT = lot.toJSON()
+        res.locals.sd.ARTIST = artist.toJSON()
+        res.locals.sd.AUCTION_LOTS = auctionLots.toJSON()
+        res.locals.sd.ARTWORKS = artworks.toJSON()
+
+        res.render 'detail',
+          lot: lot
+          artist: artist
+          auctionLots: auctionLots
+          artworks: artworks
+      else
+        err = new Error 'Not Found'
+        err.status = 404
+        throw err
+
+    .catch (err) ->
+      if err.lot
+        res.redirect 301, "#{artist.href()}/auction-results"
+      else
+        next err
 
 @artist = (req, res) ->
   currentPage = parseInt req.query.page or 1
