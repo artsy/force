@@ -109,8 +109,25 @@ describe 'metaphysics', ->
             }
           }
         '
-      .catch (errs) ->
-        errs.should.equal """[{"message":"some error"}]"""
+      .catch (err) ->
+        err.message.should.equal """[{"message":"some error"}]"""
+
+    it 'sets a status code of 404 if ANY of the errors contain a "Not Found" message', ->
+      @request.end.yields null, ok: true, body:
+        data: artist: id: 'foo-bar'
+        errors: [message: 'Artwork Not Found']
+
+      metaphysics
+        variables: id: 'foo-bar'
+        query: '
+          query artist($id: String!) {
+            artist(id: $id) {
+              id
+            }
+          }
+        '
+      .catch (err) ->
+        err.status.should.equal 404
 
   describe 'user auth', ->
     beforeEach ->
