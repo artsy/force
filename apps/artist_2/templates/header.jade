@@ -25,7 +25,7 @@ header.artist-header
       .current-item(class= (artist.consignable ? 'compact' : ''))
         include ../components/current_show_auction/index
 
-    if artist.consignable
+    if artist.is_consignable
       .consignment-cta
         | Interested in selling a work by #{artist.name}?  #[a(href="/consign") Consign with Artsy.]
 
