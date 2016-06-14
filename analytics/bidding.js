@@ -227,20 +227,5 @@ if (pathSplit[0] == '/auctions') {
         ]
       }
     )
-    console.log(
-      { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
-      { event: "setSiteType", type: "d" },
-      {
-        event: "trackTransaction",
-        id: data.bidder_position_id,
-        item: [
-          {
-            id: sd.SALE_ARTWORK.artwork._id,
-            price: data.max_bid_amount_cents,
-            quantity: 1
-          }
-        ]
-      }
-    )
   })
 }
