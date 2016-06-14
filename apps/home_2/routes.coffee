@@ -36,33 +36,37 @@ positionWelcomeHeroMethod = (req, res) ->
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
-  Q.allSettled(_.compact([
-    heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    metaphysics query: query, req: req
-    featuredLinks.fetch(cache: true)
-    featuredArticles.fetch
-      cache: true
-      cacheTime: timeToCacheInSeconds
-      data:
-        published: true
-        featured: true
-        sort: '-published_at'
-    featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-  ])).spread( (heroUnitPromise, { value }) ->
-    heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+  Q
+    .all [
+      heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
+      metaphysics query: query, req: req
+      featuredLinks.fetch cache: true
+      featuredArticles.fetch
+        cache: true
+        cacheTime: timeToCacheInSeconds
+        data:
+          published: true
+          featured: true
+          sort: '-published_at'
+      featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
+    ]
 
-    res.locals.sd.HERO_UNITS = heroUnits.toJSON()
-    res.locals.sd.USER_HOME_PAGE = value?.home_page_modules
+    .then ([x, { home_page_modules }]) ->
+      heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
-    res.render 'index',
-      heroUnits: heroUnits
-      modules: value?.home_page_modules
-      featuredLinks: featuredLinks
-      featuredArticles: featuredArticles
-      featuredShows: featuredShows
-      viewHelpers: viewHelpers
-      browseCategories: browseCategories
-  ).done()
+      res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+      res.locals.sd.USER_HOME_PAGE = home_page_modules
+
+      res.render 'index',
+        heroUnits: heroUnits
+        modules: home_page_modules
+        featuredLinks: featuredLinks
+        featuredArticles: featuredArticles
+        featuredShows: featuredShows
+        viewHelpers: viewHelpers
+        browseCategories: browseCategories
+
+    .catch next
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"
