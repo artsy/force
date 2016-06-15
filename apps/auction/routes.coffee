@@ -88,12 +88,13 @@ setupUser = (user, auction) ->
     .catch next
     .done()
 
-@redirect = (req, res) ->
+@redirect = (req, res, next) ->
   new Backbone.Collection().fetch
     cache: true
     url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
     error: res.backboneError
     success: (collection, response, options) ->
+      return next() unless collection.length
       res.redirect "/feature/#{collection.first().get('owner').id}"
 
 @inviteForm = (req, res, next) ->
