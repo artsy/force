@@ -1,0 +1,69 @@
+.new-for-you
+  position fixed
+  bottom 30px
+  left 50%
+  z-index 1
+  text-align center
+  transform translateX(-50%)
+  animation fadein 500ms ease
+  animation-delay 700ms
+  animation-fill-mode forwards
+  opacity 0
+
+  &__bubble
+    display inline-block
+    border 1px solid gray-color
+    background-color white
+    border-radius 100px
+    width 200px
+    height 50px
+    sans('body')
+    cursor pointer
+    text-align center
+    line-height 50px
+
+  &__arrow
+    font-size 16px
+    position relative
+    animation bounce 800ms infinite ease
+
+  &__is-faded-out
+    animation fadeout 300ms ease
+
+@keyframes fadeout {
+  from {
+    bottom 30px
+    opacity 1
+    transform translateX(-50%)
+  }
+  to {
+    bottom -75px
+    opacity 0
+    transform translateX(-50%)
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom -35px
+    opacity 0
+    transform translateX(-50%)
+  }
+  to {
+    bottom 30px
+    opacity 1
+    transform translateX(-50%)
+  }
+}
+
+@keyframes bounce {
+  0% {
+    top 0
+  }
+  50% {
+    top 5px
+  }
+  100% {
+    top 0
+  }
+}
