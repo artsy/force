@@ -11,7 +11,6 @@ DetailView = require './detail.coffee'
 module.exports = class AuctionResultsRouter extends Backbone.Router
   routes:
     'artist/:artist_id/auction-results': 'close'
-    'artwork/:artwork_id/auction-results': 'close'
     'artist/:artist_id/auction-result/:id': 'details'
 
   initialize: ->

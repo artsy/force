@@ -80,14 +80,11 @@ describe 'Auction results routes', ->
   describe '#artwork', ->
     beforeEach ->
       @req = params: id: 'andy-foobar-artwork'
-      @res = {}
+      @res = { redirect: @redirectStub = sinon.stub() }
 
-    it 'makes the appropriate requests', ->
+    it 'redirect artwork results to artwork page', ->
       routes.artwork @req, @res
-      Backbone.sync.args.length.should.equal 2
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/artwork/andy-foobar-artwork'
-      Backbone.sync.args[1][1].url().should.containEql '/api/v1/artwork/andy-foobar-artwork/comparable_sales'
-
+      @redirectStub.called.should.be.ok()
 
   describe 'no results', ->
     beforeEach ->
@@ -102,14 +99,6 @@ describe 'Auction results routes', ->
         @renderStub.called.should.not.be.ok()
         @redirectStub.called.should.be.ok()
 
-    describe '#artwork', ->
-      it 'redirects', ->
-        routes.artwork @req, @res
-        Backbone.sync.args[0][2].success {}
-        Backbone.sync.args[1][2].success null
-        @renderStub.called.should.not.be.ok()
-        @redirectStub.called.should.be.ok()
-
   describe 'has results', ->
     beforeEach ->
       @req = params: { id: 'foo-bar' }, query: {}
@@ -118,14 +107,6 @@ describe 'Auction results routes', ->
     describe '#artist', ->
       it 'renders', ->
         routes.artist @req, @res
-        Backbone.sync.args[0][2].success {}
-        Backbone.sync.args[1][2].success {}
-        @renderStub.called.should.be.ok()
-        @redirectStub.called.should.not.be.ok()
-
-    describe '#artwork', ->
-      it 'renders', ->
-        routes.artwork @req, @res
         Backbone.sync.args[0][2].success {}
         Backbone.sync.args[1][2].success {}
         @renderStub.called.should.be.ok()

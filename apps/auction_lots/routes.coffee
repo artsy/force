@@ -6,7 +6,6 @@ Artwork = require '../../models/artwork'
 Artworks = require '../../collections/artworks'
 AuctionLot = require '../../models/auction_lot'
 AuctionLots = require '../../collections/auction_lots'
-ComparableSales = require '../../collections/comparable_sales'
 totalCount = require '../../node_modules/artsy-ezel-components/pagination/total_count'
 
 randomPage = (total, pageSize) ->
@@ -85,27 +84,4 @@ randomPage = (total, pageSize) ->
       render()
 
 @artwork = (req, res) ->
-  artwork = new Artwork id: req.params.id
-  artist = null
-  auctionLots = new ComparableSales [], id: req.params.id
-  render = _.after 2, ->
-    if auctionLots.length
-      res.render 'artwork',
-        artwork: artwork
-        artist: artist
-        auctionLots: auctionLots
-    else
-      res.redirect artwork.href()
-
-  artwork.fetch
-    cache: true
-    success: (model, response, options) ->
-      res.locals.sd.ARTIST = response.artist
-      artist = new Artist response.artist
-      render()
-
-  auctionLots.fetch
-    error: res.backboneError
-    success: (collection, response, options) ->
-      res.locals.sd.AUCTION_LOTS = response
-      render()
+  res.redirect 301, "/artwork/#{req.params.id}"
