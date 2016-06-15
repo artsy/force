@@ -4,8 +4,8 @@ template =-> require('./index.jade') arguments...
 
 module.exports = (user) ->
   return unless user
-  user.hasUnviewedNotifications().then (notifications) ->
-    return if hasSeen('new-for-you') and not notifications.length
+  user.hasUnviewedNotifications().then (hasNotifications) ->
+    return if hasSeen('new-for-you') and not hasNotifications
 
     $('body').append template()
 

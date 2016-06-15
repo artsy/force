@@ -140,14 +140,20 @@ module.exports = class CurrentUser extends User
         access_token: @get('accessToken')
 
   hasUnviewedNotifications: (options) ->
-    new Backbone.Collection().fetch
-      url: "#{@url()}/notifications"
-      success: options?.success
-      data:
+    dfd = Q.defer()
+    request.
+      head("#{@url()}/notifications").
+      query(
         type: 'ArtworkPublished'
         after_status: 'viewed'
-        size: 1
+        size: 0
+        total_count: 1
         access_token: @get('accessToken')
+      ).
+      end (err, res) ->
+        dfd.resolve res.header['x-total-count'] > 0
+    dfd.promise
+
 
   fetchAndMarkNotifications: (status = 'read', options) ->
     url = "#{@url()}/notifications"
