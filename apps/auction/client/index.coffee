@@ -7,6 +7,7 @@ SaleArtworks = require '../../../collections/sale_artworks.coffee'
 openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 setupClocks = require './clocks.coffee'
 EmailRegistrationView = require './email_registration.coffee'
 attachCTA = require './cta.coffee'
@@ -18,7 +19,7 @@ module.exports.init = ->
   feature = new Feature FEATURE
   auction = new Auction AUCTION
   artworks = new Artworks ARTWORKS
-  user = new CurrentUser(USER)
+  user = new CurrentUser(USER) if USER
 
   # If we are on the confirm-registration path then pop up a modal
   # Page is otherwise unchanged
@@ -55,3 +56,10 @@ module.exports.init = ->
   $('.js-specialist-contact-link').click (e) ->
     e.preventDefault()
     openSpecialistModal()
+
+  $('.js-register-button').click (e) ->
+    return if user
+    e.preventDefault()
+    mediator.trigger 'open:auth',
+      mode: 'register'
+      redirectTo: $(e.target).attr('href')
