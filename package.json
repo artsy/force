@@ -16,7 +16,7 @@
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
     "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
-    "artsy-newrelic": "git://github.com/artsy/artsy-newrelic.git",
+    "artsy-newrelic": "^1.1.0",
     "artsy-passport": "^1.1.1",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^1.4.2",
