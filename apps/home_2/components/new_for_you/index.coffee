@@ -4,20 +4,19 @@ template =-> require('./index.jade') arguments...
 
 module.exports = (user) ->
   return unless user
-  unviewedNotifications = user.fetchUnviewedNotifications
-    success: (notifications) ->
-      user.markNotifications 'viewed'
+  user.hasUnviewedNotifications().then (notifications) ->
+    return if hasSeen('new-for-you') and not notifications.length
 
-      return if hasSeen('new-for-you') and not notifications.length
+    $('body').append template()
 
-      $('body').append template()
-
-      $('.abrv-container').first().waypoint
-        offset: 50
-        handler: ->
-          $('.new-for-you').addClass 'new-for-you__is-faded-out'
-
-      $('.new-for-you').click ->
-        $('html, body').animate
-          scrollTop: $('.abrv-container').first().offset().top - 50
+    $('.abrv-container').first().waypoint
+      offset: 50
+      handler: ->
+        user.markNotifications 'viewed'
         $('.new-for-you').addClass 'new-for-you__is-faded-out'
+
+    $('.new-for-you').click ->
+      $('html, body').animate
+        scrollTop: $('.abrv-container').first().offset().top - 50
+      $('.new-for-you').addClass 'new-for-you__is-faded-out'
+      user.markNotifications 'viewed'

@@ -139,14 +139,14 @@ module.exports = class CurrentUser extends User
         size: 10
         access_token: @get('accessToken')
 
-  fetchUnviewedNotifications: (options) ->
+  hasUnviewedNotifications: (options) ->
     new Backbone.Collection().fetch
       url: "#{@url()}/notifications"
       success: options?.success
       data:
         type: 'ArtworkPublished'
         after_status: 'viewed'
-        size: 100
+        size: 1
         access_token: @get('accessToken')
 
   fetchAndMarkNotifications: (status = 'read', options) ->
