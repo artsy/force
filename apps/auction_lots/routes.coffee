@@ -27,15 +27,9 @@ randomPage = (total, pageSize) ->
           throw error
 
       artist.fetch cache: true
-      totalCount artsyXapp.token, auctionLots.url()
     ]
 
-    .then ([__lot__, __artist__, auctionLotsCount]) ->
-      auctionLots.state.currentPage = randomPage auctionLotsCount, auctionLots.state.pageSize
-
-      # Should really be catching the RangeError:
-      auctionLots.url = auctionLots.url().replace '&total_count=1', ''
-
+    .then ->
       Q.all [
         artworks.fetch cache: true, data: size: 10, published: true
         auctionLots.fetch cache: true
