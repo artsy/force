@@ -208,7 +208,7 @@ if (pathSplit[0] == '/auctions') {
   window.criteo_q.push(
     { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
     { event: "setSiteType", type: "d" },
-    { event: "viewItem", item: sd.AUCTION.artwork_id }
+    { event: "viewItem", item: sd.AUCTION && sd.AUCTION.artwork_id }
   )
 } else if (pathSplit[1] == 'auction' && pathSplit[3] == 'bid') {
   analyticsHooks.on('confirm:bid:form:success', function(data) {
