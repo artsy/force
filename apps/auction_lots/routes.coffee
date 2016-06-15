@@ -57,31 +57,35 @@ randomPage = (total, pageSize) ->
       else
         next err
 
-@artist = (req, res) ->
+@artist = (req, res, next) ->
   currentPage = parseInt req.query.page or 1
   sort = req.query.sort
   artist = new Artist id: req.params.id
   auctionLots = new AuctionLots [], id: req.params.id, sortBy: sort, state: currentPage: currentPage
-  render = _.after 2, ->
-    if auctionLots.length
-      res.render 'artist',
-        auctionLots: auctionLots
-        artist: artist
-    else
-      res.redirect artist.href()
 
-  artist.fetch
-    cache: true
-    error: res.backboneError
-    success: (response) ->
-      res.locals.sd.ARTIST = response
-      render()
+  totalCount artsyXapp.token, auctionLots.url()
+    .then (count) ->
+      total = parseInt count, 10
+      maxPage = Math.ceil total / auctionLots.state.pageSize
+      auctionLots.state.currentPage = maxPage if maxPage < currentPage
 
-  auctionLots.fetch
-    error: res.backboneError
-    success: (collection, response, options) ->
-      res.locals.sd.AUCTION_LOTS = response
-      render()
+      Q
+        .all [
+          artist.fetch cache: true
+          auctionLots.fetch cache: true
+        ]
+        .then ->
+          res.locals.sd.ARTIST = artist.toJSON()
+          res.locals.sd.AUCTION_LOTS = auctionLots.toJSON()
+
+          if auctionLots.length
+            res.render 'artist',
+              auctionLots: auctionLots
+              artist: artist
+          else
+            res.redirect artist.href()
+
+        .catch next
 
 @artwork = (req, res) ->
   res.redirect 301, "/artwork/#{req.params.id}"
