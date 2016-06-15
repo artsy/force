@@ -22,7 +22,7 @@
     "async": "^1.4.2",
     "backbone": "^1.2.3",
     "backbone-super-sync": "^1.1.1",
-    "backbone.paginator": "^2.0.2",
+    "backbone.paginator": "git://github.com/artsy/backbone.paginator.git",
     "bluebird": "^2.10.2",
     "bluebird-q": "^1.0.3",
     "body-parser": "^1.14.1",

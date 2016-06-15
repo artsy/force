@@ -370,8 +370,8 @@
     },
     "backbone.paginator": {
       "version": "2.0.5",
-      "from": "backbone.paginator@>=2.0.2 <3.0.0",
-      "resolved": "https://registry.npmjs.org/backbone.paginator/-/backbone.paginator-2.0.5.tgz"
+      "from": "git://github.com/artsy/backbone.paginator.git",
+      "resolved": "git://github.com/artsy/backbone.paginator.git#66478e3cb9842f857e461f86601fcfa2a10002b9"
     },
     "balanced-match": {
       "version": "0.4.1",
