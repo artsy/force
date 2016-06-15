@@ -10,14 +10,14 @@ totalCount = sinon.stub()
 totalCount.returns(Q.resolve(100))
 routes.__set__ 'totalCount', totalCount
 
-describe 'Auction results routes', ->
+xdescribe 'Auction results routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
   afterEach ->
     Backbone.sync.restore()
 
-  xdescribe '#detail', ->
+  describe '#detail', ->
     beforeEach ->
       @req = params: artist_id: 'andy-foobar', id: 'a-lot'
       @res = status: sinon.stub(), render: sinon.stub(), redirect: sinon.spy(), locals: sd: {}
