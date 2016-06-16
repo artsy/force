@@ -7,7 +7,7 @@ template = -> require('./template.jade') arguments...
 
 module.exports = class MyActiveBids extends Backbone.View
 
-  initialize: ({ @user, @template = template }) ->
+  initialize: ({ @user, @saleId, @template = template }) ->
 
   start: ->
     @fetch().then => @render() and @poll()
@@ -20,7 +20,11 @@ module.exports = class MyActiveBids extends Backbone.View
     this
 
   fetch: ->
-    metaphysics(query: query, variables: { current: true }, req: user: @user).then (data) =>
+    metaphysics(
+      query: query
+      variables: current: true, sale_id: @saleId
+      req: user: @user
+    ).then (data) =>
       @bidderPositions = data.me.bidder_positions
 
   render: =>

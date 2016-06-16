@@ -42,6 +42,7 @@ module.exports.init = ->
     user: user
     el: $('.auction-my-active-bids')
     template: myActiveBidsTemplate
+    saleId: auction.get '_id'
   ).start()
 
   new AddToCalendar el: $('.auction-callout')
