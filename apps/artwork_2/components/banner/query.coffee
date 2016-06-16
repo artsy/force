@@ -7,6 +7,7 @@ module.exports = """
         href
         start_at
         end_at
+        live_start_at
         is_auction
       }
       ... on ArtworkContextSale {

@@ -1,7 +1,7 @@
 module.exports = """
-  query my_active_bids($current: Boolean!) {
+  query my_active_bids($current: Boolean!, $sale_id: String!) {
     me {
-      bidder_positions(current: $current) {
+      bidder_positions(current: $current, sale_id: $sale_id) {
         id
         is_winning
         sale_artwork {

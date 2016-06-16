@@ -1,4 +1,4 @@
-{ defer, extend } = require 'underscore'
+{ defer, extend, before } = require 'underscore'
 Backbone = require 'backbone'
 { AUCTION, CURRENT_USER } = require('sharify').data
 Form = require '../../../../components/form/index.coffee'
@@ -8,6 +8,7 @@ AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkAuctionView extends Backbone.View
@@ -22,6 +23,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
+    setInterval before(10, @updateBidLabel), 1000
 
   openBuyersPremium: (e) ->
     e.preventDefault()
@@ -99,3 +101,31 @@ module.exports = class ArtworkAuctionView extends Backbone.View
   setMaxBid: (e) ->
     @$('.js-artwork-auction-bid-button')
       .text "Bid #{$(e.target).find('option:selected').attr 'data-display'}"
+
+  updateBidLabel: =>
+    metaphysics
+      query: """
+        query artwork($id: String!, $sale_id: String!) {
+          me {
+            bidder_status(artwork_id: $id, sale_id: $sale_id) {
+              is_highest_bidder
+              most_recent_bid {
+                max_bid {
+                  cents
+                }
+              }
+            }
+          }
+          artwork(id: $id) {
+            ... auction
+          }
+        }
+        #{require './query.coffee'}
+      """
+      variables: id: AUCTION.artwork_id, sale_id: AUCTION.id
+      req: user: CURRENT_USER
+    .then (data) =>
+      @data = extend data, user: CURRENT_USER?
+      @render()
+    .catch console.error.bind console
+
