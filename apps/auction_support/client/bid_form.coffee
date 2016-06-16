@@ -8,7 +8,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 { SESSION_ID } = require('sharify').data
-metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class BidForm extends ErrorHandlingForm
 
