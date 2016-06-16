@@ -25,7 +25,9 @@ block body
         label.auction-support-max-bid-label Set your max bid
         label.bordered-select.auction-support-max-bid
           select( name='bid' required ).max-bid
-            for v in bidIncrements
+            - myLastMaxBid = maxBid * 100
+            - increments = bidIncrements.filter(function(i) { return i >= (myLastMaxBid || 0) })
+            for v in increments
               - val = v / 100
               - display = accounting.formatMoney(val, saleArtwork.get('symbol'), 0)
               option(
