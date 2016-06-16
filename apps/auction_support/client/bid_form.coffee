@@ -8,7 +8,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 { SESSION_ID } = require('sharify').data
-metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -70,32 +69,18 @@ module.exports = class BidForm extends ErrorHandlingForm
   pollForBidderPositionProcessed: (bidderPosition) ->
     bidderPosition.fetch
       success: (bidderPosition) =>
-        if bidderPosition.has('processed_at') or
-           @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
-          metaphysics(
-            req: user: @user
-            query: """
-              {
-                me {
-                  bidder_status(
-                    artwork_id: "#{@saleArtwork.get 'id'}"
-                    sale_id: "#{@model.get('id')}"
-                  ) {
-                    is_highest_bidder
-                  }
-                }
-              }
-            """
-          ).then ({ me }) =>
-            if me?.bidder_status.is_highest_bidder
-              analyticsHooks.trigger 'confirm:bid:form:success', {
-                bidder_position_id: bidderPosition.id
-                bidder_id: bidderPosition.get('bidder')?.id
-                max_bid_amount_cents: bidderPosition.get('max_bid_amount_cents')
-              }
-              @showSuccessfulBidMessage()
-            else
-              @showError "You've been outbid, increase your bid"
+        if bidderPosition.has('processed_at')
+          if bidderPosition.get('leading')
+            analyticsHooks.trigger 'confirm:bid:form:success', {
+              bidder_position_id: bidderPosition.id
+              bidder_id: bidderPosition.get('bidder')?.id
+              max_bid_amount_cents: bidderPosition.get('max_bid_amount_cents')
+            }
+            @showSuccessfulBidMessage()
+          else
+            @showError "You've been outbid, increase your bid"
+        else if @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
+          @showError "Your bid result is not yet available. Please contact support@artsy.net."
         else
           @timesPolledForBidPlacement += 1
           _.delay =>
