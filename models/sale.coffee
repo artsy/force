@@ -59,9 +59,6 @@ module.exports = class Sale extends Backbone.Model
     else if moment().isBefore(start) or moment().isSame(start)
       'preview'
 
-  state: ->
-    if @has('clockState') then @get('clockState') else @get('auction_state')
-
   auctionState: ->
     @calculateAuctionState _.values(@pick('start_at', 'end_at', 'offset'))...
 
@@ -108,13 +105,13 @@ module.exports = class Sale extends Backbone.Model
     @isAuction() and _.include(['preview'], @get('auction_state'))
 
   isOpen: ->
-    @state() is 'open'
+    @get('auction_state') is 'open'
 
   isPreview: ->
-    @state() is 'preview'
+    @get('auction_state') is 'preview'
 
   isClosed: ->
-    @state() is 'closed'
+    @get('auction_state') is 'closed'
 
   isRegistrationEnded: ->
     @isAuction() and moment().isAfter(@get 'registration_ends_at')
