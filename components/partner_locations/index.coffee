@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Partner = require '../../../../models/partner.coffee'
+Partner = require '../../models/partner.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 
 # Sets up the partner phone numbers while simultaneously rendering
@@ -26,7 +26,7 @@ module.exports = class PartnerLocations
         text = "#{locationString}"
       else
         text = ", #{locationString}"
-      @$el.find('#artwork-partner-locations')
+      @$el.find('.artwork-partner-locations')
         .text text
 
   renderFirstCities: (locations, n) ->
@@ -35,9 +35,9 @@ module.exports = class PartnerLocations
 
   setupPhoneNumbers: (locations) ->
     if @artwork.isContactable() and
-      @$el.find('#artwork-partner-phone-container').length and
+      @$el.find('.artwork-partner-phone-container').length and
       not @artwork.isPartOfAuctionPromo()
         new PartnerPhoneNumberView
-          el: @$el.find('#artwork-partner-phone-container')
+          el: @$el.find('.artwork-partner-phone-container')
           collection: locations
           model: @artwork

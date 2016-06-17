@@ -1,62 +1,29 @@
-extends ../../../components/fair_layout/templates/conditional
-
-block head
-  include meta
+extends ../../../components/main_layout/templates/index
 
 append locals
   - assetPackage = 'artwork'
 
+block head
+  include ../components/meta/index
+
 block body
-  #artwork-view-in-room-container
-    //- Rendered client-side
-  #artwork-deep-zoom-container
-    //- Rendered client-side
-  #artwork-page.main-layout-container( data-route='show' )
-    include artwork
-    section#artwork-for-sale-rail
-      //- rendered client side
-    section#more-info.artwork-related-information
-      #artwork-artist-related-extended.ari-container
-        if artwork.hasMoreInfo() || (artist && artist.get('blurb')) || artwork.isComparable()
-          .ari-cell
-            if artwork.hasMoreInfo()
-              .about-artwork-section
-                h2.avant-garde-header-center About This Artwork
-                include ./_more_info
+  .artwork-page.main-layout-container
+    section.artwork
+      .artwork__main
+        .artwork__main__overview
+          include ../components/banner/index
+          include ../components/images/index
+          include ../components/actions/index
+          include ../components/additional_info/index
+          include ../components/artists/index
 
-            for artist in artists.models
-              if artist.get('blurb')
-                .artwork-artist
-                  h2.avant-garde-header-center
-                    | About
-                    = ' '
-                    a( href= artist.href() )
-                      = artist.get('name')
-                  .artwork-artist-blurb
-                    != artist.mdToHtml('blurb')
+          .artwork__main__overview__fold( class='js-artwork-fold' )
+            include ../client/fold
 
-    section#artwork-related-show-section
-      //- Rendered client-side
+        .artwork__main__metadata
+          include ../components/metadata/index
+          include ../components/commercial/index
+          include ../components/auction/index
 
-    if artist
-      section#artist-artworks-section
-        h2.avant-garde-header-center
-          | More Works by
-          = ' '
-          a( href=artist.href() )
-            = artist.get('name')
-
-        .artworks-list
-          //- Rendered client-side
-
-        .artist-link-container
-          a.faux-underline-hover-large(
-            href="/artist/#{artist.id}"
-           ) Go to #{artist.get('name')}
-
-    section#artwork-rails
-      //- rendered client-side
-    section#artwork-below-the-fold-section
-      //- Rendered client-side
-
-  include ../../../components/main_layout/templates/json_ld
+      .artwork__footer( class='js-artwork-footer' )
+        include ../client/footer

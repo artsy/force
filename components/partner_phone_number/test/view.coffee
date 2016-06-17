@@ -4,8 +4,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Artwork = require '../../../../../models/artwork'
-PartnerLocations = require '../../../../../collections/partner_locations'
+Artwork = require '../../../models/artwork'
+PartnerLocations = require '../../../collections/partner_locations'
 PartnerPhoneNumberView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 describe 'PartnerPhoneNumberView', ->

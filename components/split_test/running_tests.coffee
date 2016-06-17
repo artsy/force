@@ -14,10 +14,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports =
-  redesigned_artwork_page:
-    key: 'redesigned_artwork_page'
-    edge: 'redesigned'
-    outcomes:
-      redesigned: 0.5
-      original: 0.5
+module.exports = {}
