@@ -1,21 +1,20 @@
-- size = 'large'
-- dimensions = image.imageSizeDimensionsFor(size)
-- src = image.bestImageUrl(['large', 'larger', 'medium', 'small'])
-
-.artwork-image
-  a(
-    class= image.canDeepZoom() ? 'artwork-image-zoom' : undefined
-    href= image.canDeepZoom() ? '#{artwork.href()}/zoom' : undefined
-    data-client
+a.artwork-images__images__image(
+  class='js-artwork-images__images__image'
+  data-id= image.id
+  data-state= (i === (artwork.images.length - 1) ? 'active' : 'inactive')
+  data-zoomable= image.is_zoomable
+)
+  .artwork-images__images__image__placeholder(
+    class='js-artwork-images__images__image__placeholder'
+    style='background-image: url(#{image.placeholder.url})'
   )
-    img#the-artwork-image(
-      alt= artwork.toAltText()
-      title= artwork.get('title')
-      nopin= artwork.noPinAttr()
-      src= src
-      width= dimensions.width
-      height= dimensions.height
-      data-pin-url= artwork.href()
-      data-pin-media= src
-      data-pin-description= artwork.toAltText()
+
+  .artwork-images__images__image__display(
+    class='js-artwork-images__images__image__display'
+  )
+    img.artwork-images__images__image__display__img(
+      class='js-artwork-images__images__image__display__img'
+      data-src= image.url
+      data-default= (i === (artwork.images.length - 1))
+      alt= artwork.title
     )

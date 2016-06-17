@@ -1,251 +1,63 @@
 @require '../../../components/stylus_lib'
+@require '../../../components/merry_go_round/index.styl'
+@require '../components/actions/index'
+@require '../components/additional_info/index'
+@require '../components/artist_artworks/index'
+@require '../components/artists/index'
+@require '../components/auction/index'
+@require '../components/auction_artworks/index'
+@require '../components/banner/index'
+@require '../components/deep_zoom/index'
+@require '../components/images/index'
+@require '../components/commercial/index'
+@require '../components/metadata/index'
+@require '../components/partner/index'
+@require '../components/partner_stub/index'
+@require '../components/related_artworks/index'
+@require '../components/show_artworks/index'
+@require '../components/video/index'
 
-artwork-image-size = 640px
-artwork-detail-width = 250px
-artwork-related-content-smaller-width = 175px
-artwork-detail-item-height = 36px
+artwork-page = {
+  metadata: {
+    width: 280px
+  }
+}
 
-#artwork-page
-  padding 20px 45px
-  > section
-    clearfix()
-    margin 20px 0
-    padding 20px 0
-    border-top 1px solid gray-lighter-color
-    h2
-    h3
-      margin 12px 0 27px
-      font-size 15px
-    h2 a
-      text-decoration none
+.artwork-page
+  padding (gutter / 2) 0
 
-.doge
-  position absolute
-  overflow hidden
-  top 0px
-  width 100%
-  .doge-container
-    position relative
-    margin 0px auto
-  .doge-text
-    font-family Comic Sans, Comic Sans MS, cursive
-    position absolute
-    text-transform lowercase
-    text-shadow 0px 0px 2px #000000
-    line-height 150%
+.artwork
+  //
 
-.artwork-image-zoom
-  cursor -moz-zoom-in
-  cursor -webkit-zoom-in
+  &__main
+    display flex
+    align-items stretch
 
-.artwork-container
-  display table
-  position relative
-  width 100%
-  height auto
-  z-index 1
-  // First step down
-  @media screen and (max-width: (artwork-image-size + (artwork-detail-width * 2) + (layout-side-margin * 2)))
-    .artwork-related-content
-      width artwork-related-content-smaller-width
-  // Second step down
-  @media screen and (max-width: (artwork-image-size + artwork-detail-width + artwork-related-content-smaller-width + (layout-side-margin * 2)))
-    .artwork-related-content
-      display none
+    &__overview
+    &__metadata
+      //
 
-.artwork-overview
-.artwork-detail
-.artwork-related-content
-  display table-cell
-  vertical-align top
+    &__metadata
+      width: artwork-page.metadata.width
 
-.artwork-related-content
-.artwork-detail
-  width artwork-detail-width
-  // margin-bottom 20px
-.artwork-detail
-  padding-left 20px
-.artwork-related-content
-  padding-right 20px
+    &__overview
+      width calc('100% - %s' % (artwork-page.metadata.width + gutter))
+      margin-right: gutter
 
-.artwork-overview
-  text-align center
-  prevent-content-shift()
-
-#the-artwork-image
-  margin 0 auto
-  background-color gray-color
-.artwork-additional-images
-  margin 20px auto
-.artwork-additional-image
-  display inline-block
-  height 45px
-  margin 5px
-  border 3px solid white
-  background-color gray-color
-  vertical-align middle
-  transition border-color 0.125s
-  > img
-    display inline-block
-    height 100%
-  &.is-active
-  &[data-state='active']
-    border-color purple-color
-
-.artwork-image-actions
-  display inline-block
-  position relative
-  padding 20px 0 40px
-
-// Below the fold
-
-// Hack around empty state
-.artwork-related-information
-  padding-top 0
-  border-top none !important
-#artwork-artist-related-extended
-  margin-top 0
-  padding-top 20px
-  border-top 1px solid gray-lighter-color
-  &:empty
-    display none
-
-.ari-container
-  margin 20px auto
-  text-align center
-.ari-cell
-  display inline-block
-  padding 0 40px
-  vertical-align top
-  text-align left
-  font-size 17px
-  line-height 1.5
-  // The order is important here:
-  &:last-child
-    border-left 1px solid gray-lighter-color
-  &:first-child
-    width 66.666%
-    border-left none
-  &.artwork-related-articles
-    width 33.333%
-
-// Merchandizable rails
-#artwork-for-sale-rail
-#artwork-rails
-  opacity 0
-  transition opacity 1s
-  &[data-state='fade-in']
-    opacity 1
-
-// Bio and related works
-.artwork-blurb
-.artwork-artist-blurb
-  margin 20px 0
-  text-align left
-  word-wrap break-word
-  p
-    block-margins(20px)
-
-#artwork-related-show-section
-#artist-artworks-section
-  display none
-  opacity 0
-  transition opacity 1s
-  &.is-fade-in
-    opacity 1
-
-#artist-artworks-section
-  .artworks-list
-    margin-top 20px
-  .artist-link-container
-    text-align center
-  .faux-underline-hover-large
-    display inline-block
-    text-align center
-    avant-garde()
-    font-size 13px
-    text-decoration none
-    margin-top 20px
-
-.ars-metadata
-  position relative
-  margin 20px 0
-.ars-partner-name
-  avant-garde()
-  margin-right 5px
-.ars-show-name
-  text-decoration none
-.ars-buttons
-  position absolute
-  top 0
-  right 0
-  button
-    margin-left 10px
-
-#artwork-below-the-fold-section
-  margin 20px auto
-  opacity 0
-  transition opacity 0.5s
-  &[data-state='fade-in']
-    opacity 1
-  h2 a
-    text-decoration none
-
-.monocle-zoom
-  width 256px
-  height 256px
-  position absolute
-  pointer-events none
-  border-radius 256px
-  background-repeat no-repeat
-  background-color white
-  box-shadow 0 10px 24px rgba(black, 0.12)
-
-.clock-closed
-  display none
-
-.about-artwork-section.add-margin-bottom
-  margin-bottom 40px
-
-.artwork-image
-  position relative
-
-.artwork-video
-  margin auto
-  height 100%
-  width 100%
-  position absolute
-  top 0
-  left 0
-  z-index 2
-  &:hover .play-button
-    background-color purple-color
-  iframe
-    z-index 1
-    position relative
-    display none
-  &.is-loaded iframe
-    display block
-
-#artwork-buyers-premium-link
-  margin 10px 0
+.artwork-section
+  margin (gutter /3) 0 (gutter * 2) 0
+  padding-top distance(25px, 'garamond-s-headline')
   garamond-size('s-body')
-  font-weight bold
-  > a
-    color currentColor
+  border-top 1px solid gray-lighter-color
 
-#artwork-lot-number
-  avant-garde()
-  font-size 13px
+  &__jump
+    margin-top gutter
 
-@require '../../../components/deep_zoom'
-@require './circle_buttons'
-@require '../../../components/view_in_room'
-@require './layered_search'
-@require './detail'
-@require './related_articles'
-@require '../../../components/share'
-@require '../components/partner_phone_number'
-@require '../components/related_navigation'
-@require '../components/auction_detail'
-@require '../../../components/artwork_rail/stylesheets'
+    > a
+      display inline-block
+      vertical-align bottom
+      sans('body')
+      padding distance(20px) 45px 0 0
+      text-decoration none
+      border-top 1px solid gray-lighter-color
+
