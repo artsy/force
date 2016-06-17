@@ -48,27 +48,27 @@ describe 'SaleArtworks', ->
     afterEach ->
       @sale.bidButtonState.restore()
 
-    describe 'clockState is open', ->
+    describe 'auction state is open', ->
       it 'only appends the auction id to links; does not hide anything', ->
-        @sale.set 'clockState', 'open'
+        @sale.set 'auction_state', 'open'
         @view.sale = @sale
         @view.setupClockState()
         @view.appendAuctionId.called.should.be.true()
         artworkLinks = _.map @view.$('a'), (a) -> $(a).attr('href')
         artworkLinks.should.match(new RegExp("auction_id=#{@sale.id}"))
 
-    describe 'clockState is preview', ->
+    describe 'auction state is preview', ->
       it 'hides the buy now buttons; does not hide the bid status', ->
-        @sale.set 'clockState', 'preview'
+        @sale.set 'auction_state', 'preview'
         @view.sale = @sale
         @view.setupClockState()
         @view.appendAuctionId.called.should.be.false()
         @view.hideBuyNowButtons.called.should.be.true()
         @view.hideBidStatuses.called.should.be.false()
 
-    describe 'clockState is closed', ->
+    describe 'auction state is closed', ->
       it 'hides the buy now buttons; hides the bid status', ->
-        @sale.set 'clockState', 'closed'
+        @sale.set 'auction_state', 'closed'
         @view.sale = @sale
         @view.setupClockState()
         @view.appendAuctionId.called.should.be.false()
