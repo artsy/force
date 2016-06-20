@@ -10,7 +10,6 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @$el,
       @title,
       @viewAllUrl,
-      @imageHeight = 220,
       @railId,
       @artworks,
       @includeContact = true,
@@ -23,7 +22,6 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       artworks: @artworks
       title: @title
       viewAllUrl: @viewAllUrl
-      imageHeight: @imageHeight
       railId: @railId
       includeContact: @includeContact
       hasContext: @hasContext
@@ -36,6 +34,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
+      advanceBy: 4
     , (carousel) =>
       @trigger 'post-render'
       @carousel = carousel

@@ -1,6 +1,10 @@
 @require '../components/merry_go_round'
 @require '../components/artwork_brick/'
 
+image-height = 180px
+header-height = 40px
+header-margin = 30px
+
 .abrv-container
   margin-top 20px
   padding-top 20px
@@ -11,10 +15,10 @@
     padding-top 0
 
 .abrv-header
-  margin-bottom 30px
+  margin-bottom header-padding
   position relative
   width 100%
-  height 40px
+  height header-height
 
   h1
     garamond-size('headline', true)
@@ -61,8 +65,8 @@
       display inline-block
       position static
       width auto
-  .mgr-arrow-left, .mgr-arrow-right
-    top 0px
+  .mgr-arrow-left .mgr-arrow-icon, .mgr-arrow-right .mgr-arrow-icon
+    margin-top -((image-height / 2) + header-height + (header-margin / 2))
   .mgr-cells:not(.flickity-enabled) .mgr-cell
     visibility hidden
   .mgr-cells.mgr-cells--visible .mgr-cell
@@ -75,7 +79,7 @@
     .mgr-cell__image-placeholder
       display block
       width 100%
-      height 180px
+      height image-height
       background-color gray-lightest-color
     .mgr-cell__text-placeholder
       display block
