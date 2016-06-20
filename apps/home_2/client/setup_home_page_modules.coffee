@@ -47,7 +47,7 @@ module.exports = ->
       module = home_page_module
       $el = $("#hpm-#{module.key}-#{index}")
 
-      return $el.remove() unless module.results.length
+      return $el.remove() unless module.results?.length
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
       return setupFollowedArtistsView(module, $el) if module.key is 'followed_artists'
 
@@ -70,6 +70,7 @@ module.exports = ->
             $el.find(".abrv-context").html html
 
       view.render()
+    .catch (err) -> console.log('err', err.stack)
 
 
 
