@@ -1,4 +1,4 @@
-- myLastMaxBid = me && me.bidder_status.most_recent_bid.max_bid.cents
+- myLastMaxBid = me && me.bidder_status && me.bidder_status.most_recent_bid.max_bid.cents
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 
