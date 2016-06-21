@@ -192,7 +192,7 @@ analyticsHooks.on('confirm:bid:form:success', function(data) {
 // Criteo tracking
 window.criteo_q = window.criteo_q || [];
 var pathSplit = location.pathname.split('/')
-if (pathSplit[0] == '/auctions') {
+if (pathSplit[1] == 'auctions') {
   criteo_q.push(
     { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
     { event: "setSiteType", type: "d" },
