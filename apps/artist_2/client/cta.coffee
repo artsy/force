@@ -16,7 +16,7 @@ module.exports = (artist) ->
     persist: true
     modalOptions:
       copy: modalCopy
-      destination: "#{artist.href().replace "/artist/", "/artist_2"}/follow"
+      destination: "#{artist.href()}/follow"
 
   unless ctaBarView.previouslyDismissed()
     $('body').append ctaBarView.render().$el

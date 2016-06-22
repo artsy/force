@@ -16,6 +16,7 @@
     flex-shrink 1
   .consignment-cta
   .current-item
+    overflow hidden
     margin-left 30px
     flex-grow 0
     flex-shrink 0
@@ -38,11 +39,6 @@
   color gray-darker-color
 .artist-header-follow-count
   margin 15px 10px
-  &:before
-    content attr(data-count)
-    margin-right 5px
-  &.is-plural:after
-    content 's'
 .artist-header-birthdate
   margin-bottom 8px
 .artist-header-empty

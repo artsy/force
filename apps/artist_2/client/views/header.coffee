@@ -31,18 +31,8 @@ module.exports = class ArtistHeaderView extends Backbone.View
         following: view.following
         modelName: 'artist'
         model: view.model
-      view.listenTo followButton, 'followed', -> view.updateFollowCount 1
-      view.listenTo followButton, 'unfollowed', -> view.updateFollowCount -1
 
     @following?.syncFollows [@model.id]
-
-  updateFollowCount: (i) ->
-    count = parseInt(@$('.artist-header-follow-count').attr('data-count').replace(/,/g, "")) + i
-    @$('.artist-header-follow-count').attr 'data-count', numberFormat count
-    if count is 1
-      @$('.artist-header-follow-count').removeClass('is-plural')
-    else
-      @$('.artist-header-follow-count').addClass('is-plural')
 
   updateCurrentItem: ->
     currentItem = CURRENT_SHOW_AUCTION
