@@ -19,7 +19,7 @@ if artwork.collecting_institution
   .artwork-metadata-stub__partner.artwork-metadata-stub__line
     = artwork.collecting_institution
 else
-  a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.href )
+  a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.partner.href )
     = artwork.partner.name
 
 if artwork.sale_message && artwork.sale_message != 'Contact For Price'
