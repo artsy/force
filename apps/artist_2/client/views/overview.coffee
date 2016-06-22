@@ -46,7 +46,7 @@ module.exports = class OverviewView extends Backbone.View
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
 
   renderRelated: (artist) =>
-    artist.shows = _.sortBy artist.shows, 'end_at'
+    artist.shows = _.sortBy(artist.shows, 'end_at').reverse()
     @renderRails artist
     @renderExhibitionHighlights artist.shows
 

@@ -11,9 +11,9 @@
   align-items flex-start
   justify-content space-between
   .artist-header-meta
-    flex-basis calc(50% \- 15px)
-    flex-grow 1
-    flex-shrink 0
+    flex-basis 66%
+    flex-grow 0
+    flex-shrink 1
   .consignment-cta
   .current-item
     margin-left 30px
@@ -21,14 +21,11 @@
     flex-shrink 0
 
   .current-item
-    max-width calc(33% \- 20px)
     flex-basis calc(33% \- 20px)
-    &.compact
-      .current-item-image
-        display none
+    &:hover
+      background-color gray-lightest-color
 
-  .consignment-cta, .current-item.compact
-    max-width calc(25% \- 22.5px)
+  .consignment-cta
     flex-basis calc(25% \- 22.5px)
 
 .artist-header-name
