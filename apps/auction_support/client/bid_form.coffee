@@ -70,7 +70,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     bidderPosition.fetch
       success: (bidderPosition) =>
         if bidderPosition.has('processed_at')
-          if bidderPosition.get('leading')
+          if bidderPosition.get('active')
             analyticsHooks.trigger 'confirm:bid:form:success', {
               bidder_position_id: bidderPosition.id
               bidder_id: bidderPosition.get('bidder')?.id
