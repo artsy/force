@@ -1,4 +1,4 @@
-if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
+if artwork.is_inquireable && !artwork.is_in_auction && !artwork.partner.is_limited_fair_partner
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
     a(
       class='analytics-artwork-contact-seller'
@@ -8,6 +8,10 @@ if artwork.is_inquireable && !artwork.partner.is_limited_fair_partner
     )
       | Contact #{artwork.partner.type.toLowerCase()}
 
+else if artwork.is_in_auction
+  .artwork-metadata-stub__contact.artwork-metadata-stub__line.artwork-metadata-stub__bid-now
+    a(href= artwork.href)
+      | Bid now
 else if artwork.partner.is_limited_fair_partner
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
     | Not inquireable
