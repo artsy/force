@@ -54,8 +54,21 @@ header-margin = 30px
   p
     margin-bottom 20px
 
-.mgr-cell.abrv-fillwidth-row
-  padding-bottom 120px
+.abrv-fillwidth-row
+  &__view-all
+    width 180px
+    height 180px
+    position relative
+    border 2px solid gray-lighter-color
+    &__link
+      position absolute
+      top 50%
+      transform translateY(-50%)
+      left 0px
+      width 100%
+      text-align center
+      text-decoration none
+      sans('body')
 
 .abrv-carousel
   position relative

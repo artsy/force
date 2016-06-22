@@ -27,6 +27,10 @@
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
               include brick
 
+        if viewAllUrl
+          li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
+            include view_all
+
         else
           include ./loading
 
