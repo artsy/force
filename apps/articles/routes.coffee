@@ -163,6 +163,10 @@ subscribedToEditorial = (email, cb) ->
       email_frequency: 'daily'
   , (err, response) ->
     if response.ok
-      res.send req.body
+      sailthru.apiPost 'event',
+        event: 'editorial_welcome'
+        id: req.body.email
+      , (err, response) ->
+        res.send req.body
     else
       res.status(500).send(response.errormsg)
