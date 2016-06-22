@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 Backbone = require 'backbone'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class GalleryInsightsView extends Backbone.View
 
@@ -73,4 +74,5 @@ module.exports = class GalleryInsightsView extends Backbone.View
         @$('.cta-bar-small').fadeOut( ->
           @$('.cta-bar-thanks').fadeIn()
         )
+        analyticsHooks.trigger('submit:gi-signup')
         setTimeout((-> @ctaBarView.close()), 2000)

@@ -5,6 +5,11 @@
 // Created account
 analyticsHooks.on('auth:register', function(options) {
   analytics.track('Created account');
+  if(window._fbq){
+    window._fbq('track','CompleteRegistration', {
+      content_name: 'Artsy Signup'
+    });
+  }
 });
 
 analyticsHooks.on('auth:login', function(options) {

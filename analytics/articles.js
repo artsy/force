@@ -65,12 +65,26 @@ if(location.pathname.match('/article/')){
 }
 
 // Applies to both /article/* and /articles
-if(location.pathname.match('/article/') || location.pathname.match('/articles')){
+if(location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights')){
 
   analyticsHooks.on('submit:editorial-signup', function(options){
     analytics.track('Sign up for editorial email', {
       context: options.type
     });
+    if(window._fbq){
+      window._fbq('track','CompleteRegistration', {
+        content_name: 'Editorial Signup'
+      })
+    }
+  });
+
+  analyticsHooks.on('submit:gi-signup', function(options){
+    analytics.track('Sign up for gallery insights email');
+    if(window._fbq){
+      window._fbq('track','CompleteRegistration', {
+        content_name: 'GI Signup'
+      })
+    }
   });
 
   analyticsHooks.on('dismiss:editorial-signup', function(){
