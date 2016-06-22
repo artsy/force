@@ -30,7 +30,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
   _postRender: ->
     return @_renderEmptyView() if @module.context.counts.artists < 1
     initCarousel @$('.js-my-carousel'),
-      imagesLoaded: true
+      imagesLoaded: false
       wrapAround: false
     , (carousel) =>
       @trigger 'post-render'

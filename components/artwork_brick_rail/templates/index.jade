@@ -4,8 +4,11 @@
       .abrv-follow-annotation.avant-garde-s-headline Based on
         | &nbsp;
         = followAnnotation
-
-    h1= title
+    if viewAllUrl
+      a( href= viewAllUrl )
+        h1= title
+    else
+      h1= title
     .abrv-follow-button
       //- rendered on the client
 

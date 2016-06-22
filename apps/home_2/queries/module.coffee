@@ -6,7 +6,7 @@ module.exports = """
       results {
         ... artwork_brick
         image {
-          cell: resized(height: 220, version: ["large", "larger"]) {
+          cell: resized(height: 180, version: ["large", "larger"]) {
             width
             height
             url
