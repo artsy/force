@@ -48,7 +48,7 @@ module.exports = class OverviewView extends Backbone.View
   renderRelated: (artist) =>
     artist.shows = _.sortBy(artist.shows, 'end_at').reverse()
     @renderRails artist
-    @renderExhibitionHighlights artist.shows
+    @renderExhibitionHighlights artist
 
   renderRails: (artist) =>
     following = @following
@@ -62,12 +62,12 @@ module.exports = class OverviewView extends Backbone.View
       return if not items
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
-  renderExhibitionHighlights: (shows) ->
+  renderExhibitionHighlights: ({shows, counts}) ->
     return if not @statuses.shows
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
     # If there are more than 15 shows, take ten and show a 'see more' link
     # If there are less than 15 shows, show them all.
-    showMore = shows.length > 15
+    showMore = counts.shows > 15
     if showMore
       highlights = _.take shows, 10
     else
