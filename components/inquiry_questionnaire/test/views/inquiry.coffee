@@ -93,12 +93,14 @@ describe 'Inquiry', setup ->
         @loggedOutUser.get('name').should.equal 'Foo Bar'
         @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-        Backbone.sync.callCount.should.equal 2
+        Backbone.sync.callCount.should.equal 3
 
         Backbone.sync.args[0][1].url()
           .should.containEql '/api/v1/me/artwork_inquiry_request'
         Backbone.sync.args[1][1].url()
           .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+        Backbone.sync.args[2][1].url
+          .should.containEql = '/api/v1/user'
 
         # Next
         @view.state.current().should.equal 'after_inquiry'
@@ -122,7 +124,7 @@ describe 'Inquiry', setup ->
       @view.$('button').text().should.equal 'Send Anyway?'
       @view.$('button').click()
 
-      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.callCount.should.equal 3
 
       @view.nudged.restore()
 
@@ -156,9 +158,9 @@ describe 'Inquiry', setup ->
         @view.$('button').click()
 
         @view.__serialize__.then =>
-          Backbone.sync.callCount.should.equal 3
+          Backbone.sync.callCount.should.equal 4
 
-          Backbone.sync.args[2][1].url()
+          Backbone.sync.args[3][1].url()
             .should.containEql '/api/v1/me/user_fair_action'
 
           @view.state.current().should.equal 'after_inquiry'
@@ -170,6 +172,8 @@ describe 'Inquiry', setup ->
           .onCall 1
             .returns Promise.resolve()
           .onCall 2
+            .returns Promise.resolve()
+          .onCall 3
             .returns Promise.reject('Action already taken')
 
         @view.$('input[name="name"]').val 'Foo Bar'
@@ -179,6 +183,6 @@ describe 'Inquiry', setup ->
         @view.$('button').click()
 
         @view.__serialize__.then =>
-          Backbone.sync.callCount.should.equal 3
+          Backbone.sync.callCount.should.equal 4
 
           @view.state.current().should.equal 'after_inquiry'
