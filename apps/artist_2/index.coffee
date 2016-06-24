@@ -11,7 +11,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-app.get '/artist_2/:id/follow', routes.follow
-app.get '/artist_2/:id', timeout('25s'), routes.index
+app.get '/artist/:id/follow', routes.follow
+app.get '/artist/:id', timeout('25s'), routes.index
 for { slug } in sections
-  app.get "/artist_2/:id/#{slug}", routes.tab
+  app.get "/artist/:id/#{slug}", routes.tab

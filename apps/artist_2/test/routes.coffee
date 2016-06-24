@@ -22,7 +22,7 @@ describe 'Artist routes', ->
       redirect: sinon.stub()
       send: sinon.stub()
       type: sinon.stub()
-      locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist_2/jeff-koons-1'
+      locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/jeff-koons-1'
 
   describe '#index', ->
     it 'renders the artist template', ->
@@ -38,10 +38,10 @@ describe 'Artist routes', ->
           @res.locals.sd.ARTIST.should.equal artistJSON
 
     it 'redirects to canonical url', ->
-      @res.locals.sd.CURRENT_PATH = '/artist_2/bar'
+      @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
         .then =>
-          @res.redirect.args[0][0].should.equal '/artist_2/jeff-koons-1'
+          @res.redirect.args[0][0].should.equal '/artist/jeff-koons-1'
 
   describe '#follow', ->
     beforeEach ->
@@ -52,7 +52,7 @@ describe 'Artist routes', ->
 
     it 'redirect to artist page without user', ->
       routes.follow @req, @res
-      @res.redirect.args[0][0].should.equal '/artist_2/foo'
+      @res.redirect.args[0][0].should.equal '/artist/foo'
 
     it 'follows an artist and redirects to the artist page', ->
       @res.redirect = sinon.stub()
@@ -61,4 +61,4 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/follow/artist'
       Backbone.sync.args[0][1].get('artist_id').should.equal 'foo'
       Backbone.sync.args[0][2].success()
-      @res.redirect.args[0][0].should.equal '/artist_2/foo'
+      @res.redirect.args[0][0].should.equal '/artist/foo'

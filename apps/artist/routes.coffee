@@ -14,6 +14,8 @@ helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
+  return next() if req.user?.hasLabFeature 'New Artist Page'
+
   metaphysics
     query: query
     variables: artist_id: req.params.id

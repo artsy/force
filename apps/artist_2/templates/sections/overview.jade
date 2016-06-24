@@ -13,7 +13,7 @@ mixin rail(title, viewAllUrl, section)
 .artist-overview-header
   .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
-    - var hasBlurb = artist.biography_blurb && artist.biography_blurb.text
+    - var hasBlurb = artist.blurb && artist.blurb.length
     - var hasMeta = hasBlurb || artistMeta.length
     - var hasShows = statuses.shows
     .bisected-header-cell
@@ -21,9 +21,14 @@ mixin rail(title, viewAllUrl, section)
         .artist-blurb.bisected-header-cell-section
           h2 Biography
           if hasBlurb
-            .blurb!= artist.biography_blurb.text
-          if hasBlurb && artist.biography_blurb.credit
-            .blurb-credit — #{artist.biography_blurb.credit}
+            .blurb!= artist.blurb
+
+          //- Removing this temporarily until partner-submitted bios are
+          //- improved, leaving this in here for ease of reverting the
+          //- change later.
+
+          //- if hasBlurb && artist.biography_blurb.credit
+          //-   .blurb-credit — #{artist.biography_blurb.credit}
 
           if hasBlurb && artistMeta.length
             br
