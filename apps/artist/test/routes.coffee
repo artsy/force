@@ -23,6 +23,7 @@ describe 'Artist routes', ->
       send: sinon.stub()
       type: sinon.stub()
       locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/jeff-koons-1'
+    @next = sinon.stub()
 
   describe '#index', ->
     it 'renders the artist template', (done) ->
@@ -46,6 +47,12 @@ describe 'Artist routes', ->
         @res.redirect.args[0][0].should.equal '/artist/jeff-koons-1'
         done()
 
+    it 'calls next when user has new artist page lab feature', ->
+      user = new CurrentUser lab_features: ['New Artist Page']
+
+      routes.index(_.extend({ user: user}, @req), @res, @next)
+      @next.called.should.be.true()
+
   describe '#follow', ->
     beforeEach ->
       sinon.stub Backbone, 'sync'
@@ -65,3 +72,9 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][1].get('artist_id').should.equal 'foo'
       Backbone.sync.args[0][2].success()
       @res.redirect.args[0][0].should.equal '/artist/foo'
+
+    it 'calls next when user has new artist page lab feature', ->
+      user = new CurrentUser lab_features: ['New Artist Page']
+
+      routes.index(_.extend({ user: user}, @req), @res, @next)
+      @next.called.should.be.true()
