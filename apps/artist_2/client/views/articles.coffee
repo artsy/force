@@ -37,7 +37,6 @@ module.exports = class ArticlesView extends Backbone.View
     _.defer -> $el.addClass 'is-fade-in'
 
   render: ( { articles, counts } = {} )->
-    console.log articles
     @$el.html template
       artist: @model
       articles: articles

@@ -45,9 +45,7 @@ currentShowAuction = require './components/current_show_auction/index'
       else
         res.redirect artist.href
 
-    .catch (err) ->
-      console.log err
-      next(err if NODE_ENV is 'development')
+    .catch (err) -> next(err if NODE_ENV is 'development')
 
 @tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
