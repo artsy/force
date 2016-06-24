@@ -32,6 +32,7 @@ module.exports = [
     ]
     false: [
       'inquiry'
+      { is_logged_out_but_has_account: true: ['account'] }
       { has_completed_profile: false: ['confirmation'] }
       { has_seen_commercial_interest: false: ['commercial_interest'] }
       { has_basic_info: false: ['basic_info'] }

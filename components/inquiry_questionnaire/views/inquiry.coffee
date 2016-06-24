@@ -51,6 +51,7 @@ module.exports = class Inquiry extends StepView
     @__serialize__ = Q.all [
       @inquiry.save _.extend { contact_gallery: true }, data
       @user.save @inquiry.pick('name', 'email')
+      @user.related().account.fetch()
     ]
       .then =>
         Q.allSettled(
