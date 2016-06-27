@@ -3,8 +3,8 @@ module.exports = """
     href
     name
     tagline
-    start_at
-    end_at
+    start_at(format: "MMM D")
+    end_at(format: "MMM D")
     location {
       city
     }
