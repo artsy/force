@@ -46,7 +46,6 @@ module.exports = class OverviewView extends Backbone.View
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
 
   renderRelated: (artist) =>
-    artist.shows = _.sortBy(artist.shows, 'end_at').reverse()
     @renderRails artist
     @renderExhibitionHighlights artist
 
@@ -69,12 +68,12 @@ module.exports = class OverviewView extends Backbone.View
     # If there are less than 15 shows, show them all.
     showMore = counts.shows > 15
     if showMore
-      highlights = _.take shows, 10
+      highlights = _.sortBy(_.take(shows, 10), 'end_at').reverse()
     else
       solo = []
       group = []
       fair = []
-      shows = _.each _.take(shows, 15), (show) ->
+      shows = _.each _.sortBy(_.take(shows, 15), 'end_at').reverse(), (show) ->
         if show.fair
           fair.push show
         else if show.artists.length > 1

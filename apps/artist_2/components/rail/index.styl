@@ -32,6 +32,10 @@
 
   &:not([data-id='artists'])
     mgr-n-up(4, 30px, (3/4), true)
+    .view-all-rail-cell
+      height 100%
+      &__inner
+        padding-bottom 75%
 
   &[data-id='artists']
     mgr-n-up(4, 30px, (3/4), false)
@@ -41,6 +45,5 @@
     .view-all-rail-cell
       height 100%
       &__inner
-        padding-bottom 0
         height 100%
         border 0

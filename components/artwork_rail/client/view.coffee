@@ -56,6 +56,13 @@ module.exports = class ArtworkRailView extends Backbone.View
     this
 
   postRender: ->
+    if @$('.view-all-rail-cell').length
+      dimension = @$('.artwork-item').height()
+      debugger
+      @$('.view-all-rail-cell__inner').css
+        width: dimension
+        height: dimension
+
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: true
       wrapAround: false
