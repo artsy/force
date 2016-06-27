@@ -16,8 +16,9 @@ module.exports = ({ module, user, $el }) ->
 
   kind = if module.key is 'related_artists' then 'artist' else 'gene'
   Model = if module.key is 'related_artists' then Artist else Gene
+  followable = followableObject[module.key](module)
 
-  model = new Model followableObject[module.key](module)
+  model = new Model followable
   following = new Following null, kind: kind
 
   $el.append template()
@@ -28,4 +29,6 @@ module.exports = ({ module, user, $el }) ->
     model: model
     modelName: kind
     context_module: "Homepage rail"
+
+  following.syncFollows [followable.id]
 
