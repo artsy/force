@@ -10,7 +10,7 @@ module.exports =
     urls =
       active_bids: false
       followed_artists: '/works-for-you'
-      followed_galleries: '/user/saves'
+      followed_galleries: '/user/saves#galleries-institutions'
       saved_works: '/user/saves'
       recommended_works: false
       live_auctions: false
