@@ -485,3 +485,27 @@ a.article-section-callout
     vertical-align middle
   p
     max-width 275px
+
+.article-content.gradient-blurb
+  .gradient-blurb-read-more-container
+    width 100%
+    height 32px
+    .gradient-blurb-read-more
+      padding 8px 29px
+      avant-garde-size(s-headline)
+      position absolute
+      left 50%
+      top 50%
+      transform translate(-50%, -50%)
+      background-color white
+      border 1px solid gray-lighter-color
+
+    &::before
+      content ''
+      position absolute
+      bottom 50%
+      left 0
+      right 0
+      border-bottom 2px dotted gray-lighter-color
+      max-width column-width
+      margin auto
