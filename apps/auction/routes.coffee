@@ -95,7 +95,7 @@ setupUser = (user, auction) ->
     error: res.backboneError
     success: (collection, response, options) ->
       return next() unless collection.length
-      res.redirect "/feature/#{collection.first().get('owner').id}"
+      res.redirect "/feature/#{collection?.first()?.get('owner')?.id}"
 
 @inviteForm = (req, res, next) ->
   fail = (err) -> res.status(500).send(err.errormsg)
