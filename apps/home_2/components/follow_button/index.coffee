@@ -12,14 +12,15 @@ followableObject =
     module.context
 
 module.exports = ({ module, user, $el }) ->
-  return unless followableObject[module.key]? and user
+  return unless followableObject[module.key]?
 
   kind = if module.key is 'related_artists' then 'artist' else 'gene'
   Model = if module.key is 'related_artists' then Artist else Gene
   followable = followableObject[module.key](module)
 
   model = new Model followable
-  following = new Following null, kind: kind
+  if user
+    following = new Following null, kind: kind
 
   $el.append template()
 
