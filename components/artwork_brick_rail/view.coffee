@@ -1,9 +1,13 @@
 Backbone = require 'backbone'
+{ each } = require 'underscore'
+User = require '../../models/user.coffee'
 initCarousel = require '../merry_go_round/horizontal_nav_mgr.coffee'
+ArtworkBrickView = require '../artwork_brick/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkBrickRailView extends Backbone.View
   className: 'abrv-container'
+  subViews: []
 
   initialize: (options) ->
     {
@@ -14,7 +18,8 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @artworks,
       @includeContact = true,
       @hasContext,
-      @followAnnotation
+      @followAnnotation,
+      @user
     } = options
 
   render: ->
@@ -31,6 +36,10 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
     this
 
   postRender: ->
+    @setupArtworkViews()
+    @setupCarousel()
+
+  setupCarousel: ->
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
@@ -47,3 +56,22 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
 
       unless @cellWidth > @$('.js-my-carousel').width()
         @$('.mgr-navigation').addClass 'is-hidden'
+
+  setupArtworkViews: ->
+    if @artworks.length
+      @subViews = @artworks.map ({ id }) =>
+        $el = @$(".js-artwork-brick[data-id='#{id}']")
+        view = new ArtworkBrickView
+          el: $el
+          id: id
+          user: @user
+
+        view.postRender()
+        view
+
+    @user.related().savedArtworks
+      .check @artworks.map ({ id }) -> id
+
+  remove: ->
+    invoke @subViews, 'remove'
+    super

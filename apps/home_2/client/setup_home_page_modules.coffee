@@ -1,6 +1,6 @@
-_ = require 'underscore'
+{ each } = require 'underscore'
 { USER_HOME_PAGE } = require('sharify').data
-CurrentUser = require '../../../models/current_user.coffee'
+User = require '../../../models/user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 query = require '../queries/module.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
@@ -11,13 +11,12 @@ setupFollowButton = require '../components/follow_button/index.coffee'
 iconicArtistsTemplate = -> require('../components/iconic_artists_context/templates/index.jade') arguments...
 auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
 fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
-markdown = require '../../../components/util/markdown.coffee'
 
 contexts =
   iconic_artists: (module) ->
     iconicArtistsTemplate artists: module.context.artists
   live_auctions: (module) ->
-    auctionTemplate auction: module.context, md: markdown
+    auctionTemplate auction: module.context
   current_fairs: (module) ->
     fairTemplate fair: module.context, timeSpan: timeSpan
 
@@ -36,9 +35,9 @@ setupActiveBidsView = (module, $el, user) ->
   mabView.fetch().then -> mabView.render().poll()
 
 module.exports = ->
-  user = CurrentUser.orNull()
+  user = User.instantiate()
 
-  _.each USER_HOME_PAGE, (module, index) ->
+  each USER_HOME_PAGE, (module, index) ->
     metaphysics(
       query: query
       variables: key: "#{module.key}", id: "#{module.params?.id}"
@@ -58,8 +57,10 @@ module.exports = ->
         viewAllUrl: viewAllUrl module
         hasContext: contexts[module.key]?
         followAnnotation: module.context?.based_on?.name
+        user: user
 
       view.on 'post-render', ->
+
         setupFollowButton
           $el: $el.find(".abrv-follow-button")
           module: module
@@ -70,7 +71,8 @@ module.exports = ->
             $el.find(".abrv-context").html html
 
       view.render()
-    .catch (err) -> console.log('err', err.stack)
+    .catch (err) ->
+      console.warn('Error rendering homepage rails', err.stack)
 
 
 

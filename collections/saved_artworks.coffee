@@ -18,15 +18,14 @@ module.exports = class SavedArtworks extends Backbone.Collection
 
   check: (ids) ->
     return unless CURRENT_USER?
-
     these = without ids, @pluck('id')...
-
     Promise
       .all map chunk(these, @chunk), (artworks) =>
         @fetch
           remove: false
           data: stringify {
             private: true
+            size: @chunk
             user_id: CURRENT_USER.id
             artworks: artworks
           }, arrayFormat: 'brackets'
