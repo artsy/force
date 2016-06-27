@@ -8,4 +8,9 @@ if (location.pathname.match('/artist/.*') && sd.ARTIST ) {
   $('.artist-image-module a').click(function(e){
     analytics.track('Clicked artwork on artist page image module');
   });
+
+  $('.artist-page-content .gradient-blurb-read-more').click(function(e){
+    analytics.track('Clicked to expand artist bio header');
+  });
+
 }
