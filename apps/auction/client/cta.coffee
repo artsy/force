@@ -22,6 +22,7 @@ module.exports = (auction, user) ->
     user.checkRegisteredForAuction
       saleId: auction.get('id')
       success: (isRegistered) -> registered = isRegistered
-      complete: -> attachCTA() unless registered or auction.isClosed()
+      complete: -> attachCTA() unless registered or auction.isClosed() or auction.isRegistrationEnded()
   else
-    attachCTA()
+    attachCTA() unless auction.isRegistrationEnded()
+
