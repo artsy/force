@@ -32,7 +32,7 @@
         white-space normal
 
   &--iconic-artists, &--followed-artists
-    &__artist
+    &__artist, &__more-artists
       display block
       avant-garde-size('body', true)
       text-decoration none
@@ -41,5 +41,7 @@
       white-space nowrap
       overflow hidden
       text-overflow ellipsis
+      &:hover
+        color purple-color
       &:first-child
         margin-top 0
