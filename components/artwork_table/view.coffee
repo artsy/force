@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+# mediator = require '../../lib/mediator.coffee'
 ArtworkRowView = require './client/artwork_row_view.coffee'
 
 artworkTable = -> require('./templates/artwork_table.jade') arguments...

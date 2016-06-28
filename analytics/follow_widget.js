@@ -6,8 +6,8 @@
       entity_id: options.entity_id,
       context_page: options.context_page,
       context_module: 'follow-widget'
-    } );
-});
+    });
+  });
 
   analyticsHooks.on('follow-widget:opened', function(options) {
     analytics.track('Show follow widget');
