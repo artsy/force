@@ -4,7 +4,7 @@
       a.abrv-context__content--followed-artists__artist(href="/artist/#{artist.id}")= artist.get('name')
     if counts.artists - artists.length > 0
       - s = counts.artists - artists.length == 1 ? '' : 's'
-      a.abrv-context__content--followed-artists__artist(href="/works-for-you") + #{counts.artists - artists.length} more artist#{s}
+      a.abrv-context__content--followed-artists__more-artists(href="/works-for-you") +#{counts.artists - artists.length} more artist#{s}
   else
     p Follow artists for better recommendations and to receive alerts when new works are available
     P

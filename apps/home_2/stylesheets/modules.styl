@@ -1,6 +1,7 @@
 .abrv-context--float
   float left
   position relative
+
 .abrv-content
   .my-active-bids-item
     border-bottom none
@@ -17,6 +18,7 @@
       right 15px
     @media screen and (max-width: 1200px)
       width calc(50% \- 15px)
+
 .abrv-context__content
   z-index 100
   overflow ellipsis
@@ -32,7 +34,7 @@
         white-space normal
 
   &--iconic-artists, &--followed-artists
-    &__artist
+    &__artist, &__more-artists
       display block
       avant-garde-size('body', true)
       text-decoration none
@@ -41,5 +43,27 @@
       white-space nowrap
       overflow hidden
       text-overflow ellipsis
+      &:hover
+        color purple-color
       &:first-child
         margin-top 0
+
+#home-featured-shows-section
+  .grid-2-up > .grid-item
+    width calc(50% \- 15px)
+    margin 30px 30px 0 30px
+    &:first-child, &:nth-child(1n)
+      margin-left 0
+    &:last-child, &:nth-child(2n)
+      margin-right 0
+    &::nth-child(-n+2)
+      margin-top 0
+  .grid-3-up > .grid-item
+    width calc(33% \- 17px)
+    margin 30px 30px 0 30px
+    &:first-child, &:nth-child(1n)
+      margin-left 0
+    &:nth-child(3n)
+      margin-right 0
+    &::nth-child(-n+3)
+      margin-top 0
