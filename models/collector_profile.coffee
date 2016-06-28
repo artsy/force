@@ -17,5 +17,11 @@ module.exports = class CollectorProfile extends Backbone.Model
   isCommercial: ->
     @get('collector_level') >= 2
 
+  isWithProfessionalBuyerApplicationPending: ->
+    @get('professional_buyer_applied_at')?
+
+  isProfessionalBuyer: ->
+    @get('professional_buyer_at')?
+
   findOrCreate: (options = {}) ->
     Q(@save {}, options)

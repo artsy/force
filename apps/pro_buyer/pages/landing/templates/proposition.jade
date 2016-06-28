@@ -15,6 +15,11 @@ section.probuyer-proposition
           = figure.label
 
     a.probuyer-proposition__content__button.avant-garde-button-black.is-block(
-      href='#{paths.show}/complete'
+      href= isPendingApproval ? undefined : '#{paths.show}/complete'
       class= ((user ? '' : 'js-move-to-cta') + ' analytics-pro-buyer-join')
-    )= user ? 'Join as ' + user.get('name') : proposition.cta.label
+      disabled= isPendingApproval ? 'disabled' : undefined
+    )
+      if isPendingApproval
+        | Application Submitted
+      else
+        = user ? 'Join as ' + user.get('name') : proposition.cta.label

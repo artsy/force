@@ -9,6 +9,11 @@ header.probuyer-header(
 
   .probuyer-header__cta
     a.avant-garde-button-white(
-      href='#{paths.show}/complete'
+      href= isPendingApproval ? undefined : '#{paths.show}/complete'
       class= ((user ? '' : 'js-move-to-cta') + ' analytics-pro-buyer-join')
-    )= hero.cta.label
+      disabled= isPendingApproval ? 'disabled' : undefined
+    )
+      if isPendingApproval
+        | Application Submitted
+      else
+        = hero.cta.label
