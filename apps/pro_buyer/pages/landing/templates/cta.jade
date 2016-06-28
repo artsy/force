@@ -1,13 +1,22 @@
 footer.probuyer-cta( class='js-cta' )
   h3.probuyer-cta__headline
-    = cta.headline
+    if isPendingApproval
+      | Thank You For Joining the Artsy Professional Buyer Program
+    else
+      = cta.headline
 
   .probuyer-cta__form
     if user
       a.avant-garde-button-black.is-block(
+        disabled= isPendingApproval ? 'disabled' : undefined
         class='analytics-pro-buyer-join'
-        href='#{paths.show}/complete'
-      ) Join as #{user.get('name')}
+        href= isPendingApproval ? undefined : '#{paths.show}/complete'
+      )
+        if isPendingApproval
+          | Application Submitted
+        else
+          | Join as #{user.get('name')}
+
     else
       form.stacked-form( class='js-register-form' )
         .form-errors( class='js-form-errors' )

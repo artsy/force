@@ -1,3 +1,5 @@
+- var isPendingApproval = user && user.related().collectorProfile.isWithProfessionalBuyerApplicationPending()
+
 .probuyer-complete
   h1
     | #{user.get('name')},
@@ -61,6 +63,11 @@ form.probuyer-complete__form.stacked-form
         )= bucket.display
 
   button.avant-garde-button-black(
+    disabled= isPendingApproval ? 'disabled' : undefined
     class='analytics-pro-buyer-complete-submit'
     type='submit'
-  ) Submit
+  )
+    if isPendingApproval
+      | Application Submitted
+    else
+      | Submit

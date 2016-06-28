@@ -1,4 +1,4 @@
-{ extend } = require 'underscore'
+{ extend, compact } = require 'underscore'
 Promise = require 'bluebird-q'
 
 module.exports = (page) ->
@@ -11,11 +11,19 @@ module.exports = (page) ->
 
   get:
     landing: (req, res, next) ->
-      page
-        .get()
-        .then (data) ->
+      { user } = req
+
+      Promise
+        .all compact [
+          page.get()
+          user.related().collectorProfile.fetch(
+            data: access_token: user.get 'accessToken'
+          ) if user?
+        ]
+
+        .then ->
           res.locals.sd.SHOW_PATH = page.paths.show
-          res.render 'pages/landing/templates/index', extend data,
+          res.render 'pages/landing/templates/index', extend {}, page.data,
             paths: page.paths
 
         .catch next
