@@ -1,0 +1,6 @@
+if articles.length && !(articles.length >= articles.count)
+  button.avant-garde-button-white.is-block.js-load-more-articles
+    | More Articles
+    = ' '
+    if articles.count
+      | (#{articles.count - articles.length})

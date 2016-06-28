@@ -129,11 +129,16 @@ module.exports = class Article extends Backbone.Model
     stripTags(@get attr)
 
   byline: ->
-    byline = ''
-    if (length = @get('contributing_authors').length) > 0
+    if @get('contributing_authors').length > 0
       _s.toSentence _.pluck @get('contributing_authors'), 'name'
     else
       @get('author').name
+
+  contributingByline: ->
+    if @get('contributing_authors').length > 0
+      _s.toSentence _.pluck @get('contributing_authors'), 'name'
+    else
+      ''
 
   getAuthorArray: ->
     creator = []
