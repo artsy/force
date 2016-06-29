@@ -44,11 +44,11 @@ module.exports = class SaveControls extends Backbone.View
     }
 
     if @model.isSaved @artworkCollection
-      analyticsHooks.trigger 'save:artwork-remove', trackedProperties
+      analyticsHooks.trigger 'save:remove-artwork', trackedProperties
       @artworkCollection.unsaveArtwork @model.id,
         error: => @$button.attr 'data-state', 'saved'
     else
-      analyticsHooks.trigger 'save:artwork-save', trackedProperties
+      analyticsHooks.trigger 'save:save-artwork', trackedProperties
       @artworkCollection.saveArtwork @model.id,
         error: => @$button.attr 'data-state', 'unsaved'
 
