@@ -8,7 +8,7 @@ describe 'FilterState', ->
 
   describe '#criteria', ->
     it 'selects the filter sections from the response', ->
-      _.keys(@filterState.criteria()).should.eql ['medium', 'gallery', 'institution', 'period']
+      _.keys(@filterState.criteria()).should.eql ['period', 'medium', 'gallery', 'institution']
 
     it 'sets up some labels by humanizing the keys', ->
       @filterState.criteria().medium.label.should.equal 'Medium'

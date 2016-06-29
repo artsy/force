@@ -1,6 +1,5 @@
 module.exports =
-  related_gene: 'Category'
+  period: 'Time Period'
   medium: 'Medium'
   gallery: 'Gallery'
   institution: 'Institution'
-  period: 'Time Period'
