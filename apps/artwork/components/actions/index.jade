@@ -7,13 +7,13 @@
   if artwork.is_shareable
     a.artwork-action.artwork-action--share.black-tooltip(
       data-message='Share'
-      class='js-artwork-share'
+      class='js-artwork-share analytics-artwork-share'
     ): i.icon-share
 
   if artwork.is_hangable
     a.artwork-action.artwork-action--view-in-room.black-tooltip(
       data-message='View in Room'
-      class='js-artwork-view-in-room'
+      class='js-artwork-view-in-room analytics-artwork-view-in-room'
     ): i.icon-frame
 
   if user && user.isAdmin()
