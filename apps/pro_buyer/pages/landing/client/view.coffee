@@ -4,6 +4,7 @@
 Form = require '../../../../../components/form/index.coffee'
 scrollTo = require '../../../../../components/smooth_scroll/index.coffee'
 AuthModalView = require '../../../../../components/auth_modal/view.coffee'
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/page.jade') arguments...
 
 module.exports = class ProfessionalBuyerIndexView extends View
@@ -57,6 +58,7 @@ module.exports = class ProfessionalBuyerIndexView extends View
 
       success: =>
         @redirectTo "#{SHOW_PATH}/complete"
+        analyticsHooks.trigger 'auth:register'
 
   authenticate: (mode) ->
     new AuthModalView
