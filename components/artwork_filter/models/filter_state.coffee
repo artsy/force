@@ -9,7 +9,6 @@ sectionMap = require '../sections.coffee'
 
 module.exports = class FilterState extends Backbone.Model
   mapppedParams:
-    related_gene: 'gene_id'
     gallery: 'partner_id'
     institution: 'partner_id'
 
@@ -38,13 +37,15 @@ module.exports = class FilterState extends Backbone.Model
   parse: (data) -> data.aggregations
 
   criteria: ->
-    _.reduce _.keys(@attributes), (criteria, x) =>
-      if sectionMap[x] and not _.isEmpty(@get x)
-        criteria[x] =
-          label: sectionMap[x]
-          filters: @sortFilters(x, _.map @get(x), ({ count, name }, key) =>
-            key: key, count: count, label: name
-          )
+    keys = _.reject _.keys(sectionMap), (key) =>
+      _.isEmpty(@get key)
+
+    _.reduce keys, (criteria, key) =>
+      criteria[key] =
+        label: sectionMap[key]
+        filters: @sortFilters(key, _.map @get(key), ({ count, name }, innerKey) =>
+          key: innerKey, count: count, label: name
+        )
       criteria
     , {}
 
