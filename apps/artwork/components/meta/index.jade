@@ -7,6 +7,8 @@ if img
   meta( name='thumbnail', content= img.url )
 link( rel='alternate', media= sd.MOBILE_MEDIA_QUERY, href= sd.CANONICAL_MOBILE_URL + artwork.href )
 link( rel='canonical', href= sd.APP_URL + artwork.href )
+if sd.INCLUDE_ESCAPED_FRAGMENT && !sd.PARAMS.action
+  meta( name='fragment', content='!' )
 
 //- Twitter tags
 meta( property='twitter:description', content= artwork.meta.long_description )
