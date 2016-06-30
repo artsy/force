@@ -1,7 +1,7 @@
 
 - var imgUrl = article.cropUrlFor('thumbnail_image', { width: 600, height: Math.round(600 / 1.5), quality: 95 })
 
-figure.articles-grid__figure
+figure.articles-grid__figure.grid-item
   a.articles-grid__img-container( href= article.href())
     .articles-grid__img( style="background-image: url(#{imgUrl})" )
     .articles-grid__overlay
