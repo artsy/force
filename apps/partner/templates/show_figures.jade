@@ -12,7 +12,7 @@ mixin showFigureContent(show, isFeatured)
 
 - var slicedShows = shows.slice(0,30)
 each show in slicedShows
-  figure.partner-show( data-show-id=show.get('id') )
+  figure.partner-show( data-show-id=show.get('id') ).grid-item
     if show.get('displayable')
       a( href=show.href() )
         +showFigureContent(show, isFeatured)
