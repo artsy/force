@@ -1,0 +1,49 @@
+@require '../../stylus_lib'
+@require '../../grid'
+
+gutter-unit = 60px
+
+.articles-grid
+  &__articles
+    display inline
+    vertical-align top
+    grid-3-up(40px, 60px)
+  &__figure.is-center-aligned
+      width 100%
+  &__img-container
+    display block
+    position relative
+    width 100%
+  &__img
+    width 100%
+    padding-bottom 66.66%
+    background-color gray-lightest-color
+    background-size cover
+    background-position center center
+  &__overlay
+    position absolute
+    top 0
+    bottom 0
+    width 100%
+    background-color black
+    opacity 0
+    transition opacity 0.3s ease-in-out
+    &:hover
+      opacity 0.4
+  &__figcaption
+    margin 30px 0 60px 0
+  &__title
+    garamond-size('s-headline')
+    text-decoration none
+  &__author
+    margin-top 20px
+  &__author-name
+    display inline-block
+    avant-garde-size('s-headline')
+  &__author-name-editorial
+    display inline-block
+    garamond-size('l-caption')
+    font-weight bold
+  &__more-button
+    max-width 1250px
+    margin auto

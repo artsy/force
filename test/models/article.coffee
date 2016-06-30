@@ -178,3 +178,21 @@ describe "Article", ->
     it 'returns multiple contributing authors', ->
       @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
       @article.byline().should.equal 'Molly, Kana and Christina'
+
+  describe 'contributingByline', ->
+
+    it 'returns an empty string when there are no contributing authors', ->
+      @article.set 'contributing_authors', []
+      @article.contributingByline().should.equal ''
+
+    it 'returns the contributing author name if there is one', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}]
+      @article.contributingByline().should.equal 'Molly'
+
+    it 'returns "and" with two contributing authors', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}]
+      @article.contributingByline().should.equal 'Molly and Kana'
+
+    it 'returns multiple contributing authors', ->
+      @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
+      @article.contributingByline().should.equal 'Molly, Kana and Christina'
