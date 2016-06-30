@@ -13,7 +13,7 @@
       .show-related-article-info
         a( href= article.href )
           .show-related-article-title= article.thumbnail_title
-        a.show-related-article-author( href=article.author.href )
+        .show-related-article-author
           | By #{article.author.name}
 
   if remaining > 0

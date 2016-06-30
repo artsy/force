@@ -17,8 +17,7 @@
               a( href= article.href )
                 h3.article-list-item__title= article.thumbnail_title
             if article.author
-              - var href = article.author.href ? article.author.href : '#'
-              a.article-list-item__author( href= href )
+              .article-list-item__author
                 | #{article.author.name}
 
             if article.thumbnail_teaser
