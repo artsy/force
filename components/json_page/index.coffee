@@ -28,7 +28,7 @@ module.exports = class JSONPage
       request
         .get "http://#{@bucket}.s3.amazonaws.com#{@path()}"
         .end (err, res) =>
-          if res.ok
+          if res?.ok
             try
               @data = JSON.parse res.text
               resolve @data
