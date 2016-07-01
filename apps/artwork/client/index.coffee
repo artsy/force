@@ -1,5 +1,6 @@
 { extend, map } = require 'underscore'
 { CLIENT } = require('sharify').data
+{ setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 exec = require '../lib/exec.coffee'
 templates =
@@ -16,6 +17,7 @@ helpers = extend [
 ]...
 
 module.exports.init = ->
+  setCookie(CLIENT.id)
   exec [
     require '../components/actions/index.coffee'
     require '../components/additional_info/index.coffee'
