@@ -14,7 +14,6 @@ module.exports = """
       location
       hometown
       is_consignable
-      blurb
       biography_blurb (format: HTML) @include(if: $includeBlurb) {
         text
         credit
