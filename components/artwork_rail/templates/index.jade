@@ -17,7 +17,11 @@
             li.mgr-cell.arv-fillwidth-row( class='js-mgr-cell' )
               include ../../artwork_item/templates/artwork
           if viewAllCell
-            include ../../merry_go_round/templates/view_all_rail_cell
+            li.arv-fillwidth-row.mgr-cell.js-mgr-cell.view-all-rail-cell
+              .view-all-rail-cell__inner
+                a.view-all-rail-cell__link(href= viewAllUrl)
+                  .view-all-rail-cell__text View All
+
       if artworks && artworks.length
         include ../../merry_go_round/templates/horizontal_navigation
 

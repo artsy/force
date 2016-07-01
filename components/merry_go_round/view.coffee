@@ -59,14 +59,13 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
 
   checkWidth: ->
     cells = this.flickity.cells
-
-    if cells.lenth
+    if cells.length > 0
       lastMargin = parseInt $(_.last(cells).element).css('marginRight')
       breaksWidth = $(this.flickity.viewport).width() < this.flickity.slideableWidth - lastMargin
 
-    if cells.length and breaksWidth
-      @$el.addClass 'no-scroll'
-    else @$el.removeClass 'no-scroll'
+    if breaksWidth
+      @$el.removeClass 'no-scroll'
+    else @$el.addClass 'no-scroll'
 
   render: =>
     @$el.html @template
