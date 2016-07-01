@@ -26,12 +26,11 @@ describe 'current auction or show', ->
       currentItem: _.extend {}, @item, imageUrl: null
       viewHelpers: helpers
     }, =>
-      $('.current-item-image').length.should.eql 0
-      $('.current-item-label').text().should.eql 'Current Show'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-detail').text().should.eql 'Item Detail'
-      $('.current-item-left').attr('href').should.eql '/foo/bar'
-      $('.current-item-right').attr('href').should.eql '/foo/bar'
+      $('.current-item').attr('href').should.eql '/foo/bar'
+      $('.current-item__image').length.should.eql 0
+      $('.current-item__label').text().should.eql 'Current Show'
+      $('.current-item__name').text().should.eql 'Foo Bar'
+      $('.current-item__detail').text().should.eql 'Item Detail'
       done()
 
   it 'with an image', ->
@@ -39,10 +38,9 @@ describe 'current auction or show', ->
       currentItem: _.extend {}, @item
       viewHelpers: helpers
     }, =>
-      $('.current-item-image').attr('src').should.eql '/foo.jpg'
-      $('.current-item-label').text().should.eql 'Current Show'
-      $('.current-item-name').text().should.eql 'Foo Bar'
-      $('.current-item-detail').text().should.eql 'Item Detail'
-      $('.current-item-left').attr('href').should.eql '/foo/bar'
-      $('.current-item-right').attr('href').should.eql '/foo/bar'
+      $('.current-item').attr('href').should.eql '/foo/bar'
+      $('.current-item__image').attr('src').should.eql '/foo.jpg'
+      $('.current-item__label').text().should.eql 'Current Show'
+      $('.current-item__name').text().should.eql 'Foo Bar'
+      $('.current-item__detail').text().should.eql 'Item Detail'
       done()
