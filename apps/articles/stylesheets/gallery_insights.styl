@@ -1,0 +1,82 @@
+@require '../../../components/stylus_lib'
+
+.gallery-insights-marketo-form
+  width 100%
+  .mktoOffset, .mktoGutter
+    display none
+  input
+    padding 12px !important
+    border 2px solid gray-lighter-color
+    font-size default-garamond-font-size
+    background-color transparent
+    transition border-color 0.25s
+    font-size 17px !important
+    &:focus
+    &:active
+    &.is-active
+      border-color purple-color
+      outline none
+      transition border-color 0.5s
+  form, input, .mktoFormCol, input, .mktoFieldWrap
+    width 100% !important
+  .mktoFieldWrap
+    width calc(100% \- 170px) !important
+  .mktoButtonWrap
+    margin 0 !important
+    button
+      padding 15px !important
+      border 0
+      color white
+      background black
+      avant-garde()
+      avant-garde-size('body')
+      width 160px
+      color transparent
+      transition background-color 0.3s
+      &::after
+        content 'Subscribe'
+        color white
+        width 100%
+        position absolute
+        left 0
+      &:hover, &:active
+        background purple-color
+  .mktoButtonRow
+    position absolute
+    right 0
+    top 0
+    display none !important
+  form
+    position relative
+    margin-top 10px
+  label
+    position absolute !important
+    margin-top -22px !important
+    avant-garde()
+    avant-garde-size('s-headline')
+    color black
+  & + .cta-bar-defer
+    display none
+  .mktoButtonRow
+    display block !important
+
+.cta-bar-container .gallery-insights-marketo-form
+  padding-right 20px !important
+  .mktoFormRow
+    display none
+    &:first-of-type
+      display block !important
+  .mktoButtonRow
+    display block !important
+    button
+      background-color gray-darkest-color !important
+  input
+    background white
+    border white
+  label
+    color white
+  .cta-bar-header
+    min-width 390px !important
+  & + .cta-bar-defer
+    position relative
+    top 20px !important
