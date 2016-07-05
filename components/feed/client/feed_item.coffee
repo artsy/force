@@ -14,7 +14,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   events:
     'click .see-more': 'fetchMoreArtworks'
     "click .artwork-item-buy": "acquire"
-    "click .artwork-item-contact-seller": "contactSeller"
 
   artworksPage: 1
   artworksPageSize: 8
@@ -79,15 +78,4 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
         if artwork.get('edition_sets_count') > 1
           window.location.href = artwork.href()
         AcquireArtwork artwork, $target
-    false
-
-  contactSeller: (event) ->
-    event.preventDefault()
-    $target = $(event.target)
-    id = $target.attr('data-id')
-    new Artwork(id: id).fetch
-      success: (artwork) =>
-          new ContactPartnerView
-            artwork: artwork
-            partner: artwork.related().partner
     false
