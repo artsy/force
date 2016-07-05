@@ -17,7 +17,7 @@ helpers = extend [
 ]...
 
 module.exports.init = ->
-  setCookie(CLIENT.id)
+  setCookie(CLIENT._id)
   exec [
     require '../components/actions/index.coffee'
     require '../components/additional_info/index.coffee'

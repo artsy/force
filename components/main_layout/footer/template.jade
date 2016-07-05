@@ -1,43 +1,45 @@
-footer#main-layout-footer: .responsive-layout-container
-  .mlf-upper: .main-layout-container
-    .mlf-upper-column-aside
-      h4 Want help collecting on Artsy?
-      a.mlf-specialist( href='#' ) Contact an Artsy specialist
-      h4 General questions & feedback?
-      a( href='/contact' ) Contact Artsy
-      a.mlf-feedback( href='#' ) Send us feedback
-    .mlf-upper-column
-      h4 Collecting
-      a( href='/about/collecting' ) Collecting on Artsy
-      a( href='/feature/collect-with-artsy' ) Collecting Resources
-      a( href='/auction-info' ) About Artsy Auctions
-    .mlf-upper-column
-      h4 Education
-      a( href='/artsy-education' ) Education
-      a( href='/about/the-art-genome-project' ) The Art Genome Project
-    .mlf-upper-column
-      h4 About Artsy
-      a( href='/about' ) About
-      a( href='/about/jobs' ) Jobs
-      a( href='http://artsy.github.com/open-source/', target='_blank' ) Open Source
-      a( href='/galleries' ) Galleries A–Z
-      a( href='/institutions' ) Museums A–Z
-    .mlf-upper-column
-      h4 Partnering & Press
-      a( href='/gallery-partnerships' ) Artsy for Galleries
-      a( href='/institution-partnerships' ) Artsy for Institutions
-      a( href='/auction-partnerships' ) Artsy for Auctions
-      a( href='/about/press' ) Press
+footer#main-layout-footer
+  #recently-viewed-artworks
+  .responsive-layout-container
+    .mlf-upper: .main-layout-container
+      .mlf-upper-column-aside
+        h4 Want help collecting on Artsy?
+        a.mlf-specialist( href='#' ) Contact an Artsy specialist
+        h4 General questions & feedback?
+        a( href='/contact' ) Contact Artsy
+        a.mlf-feedback( href='#' ) Send us feedback
+      .mlf-upper-column
+        h4 Collecting
+        a( href='/about/collecting' ) Collecting on Artsy
+        a( href='/feature/collect-with-artsy' ) Collecting Resources
+        a( href='/auction-info' ) About Artsy Auctions
+      .mlf-upper-column
+        h4 Education
+        a( href='/artsy-education' ) Education
+        a( href='/about/the-art-genome-project' ) The Art Genome Project
+      .mlf-upper-column
+        h4 About Artsy
+        a( href='/about' ) About
+        a( href='/about/jobs' ) Jobs
+        a( href='http://artsy.github.com/open-source/', target='_blank' ) Open Source
+        a( href='/galleries' ) Galleries A–Z
+        a( href='/institutions' ) Museums A–Z
+      .mlf-upper-column
+        h4 Partnering & Press
+        a( href='/gallery-partnerships' ) Artsy for Galleries
+        a( href='/institution-partnerships' ) Artsy for Institutions
+        a( href='/auction-partnerships' ) Artsy for Auctions
+        a( href='/about/press' ) Press
 
-  .mlf-lower: .main-layout-container
-    nav#main-layout-footer-internal
-      a#main-layout-footer-logo.icon-logo( href='/' )
-      span.mlf-links
-        span &copy; #{(new Date).getFullYear()} Artsy
-        a( href='/terms' ) Terms of Use
-        a( href='/privacy' ) Privacy Policy
-        a( href='/security' ) Security
-    nav#main-layout-footer-external
-      a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
-      a.mlf-social.icon-facebook( href='http://www.facebook.com/artsy', target='_blank')
-      a.mlf-social.icon-tumblr( href='http://artsy.tumblr.com', target='_blank')
+    .mlf-lower: .main-layout-container
+      nav#main-layout-footer-internal
+        a#main-layout-footer-logo.icon-logo( href='/' )
+        span.mlf-links
+          span &copy; #{(new Date).getFullYear()} Artsy
+          a( href='/terms' ) Terms of Use
+          a( href='/privacy' ) Privacy Policy
+          a( href='/security' ) Security
+      nav#main-layout-footer-external
+        a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
+        a.mlf-social.icon-facebook( href='http://www.facebook.com/artsy', target='_blank')
+        a.mlf-social.icon-tumblr( href='http://artsy.tumblr.com', target='_blank')

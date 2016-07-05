@@ -2816,9 +2816,9 @@
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.1.4.tgz"
     },
     "jquery-fillwidth-lite": {
-      "version": "1.0.3",
-      "from": "jquery-fillwidth-lite@>=1.0.3 <2.0.0",
-      "resolved": "https://registry.npmjs.org/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.3.tgz"
+      "version": "1.0.4",
+      "from": "jquery-fillwidth-lite@>=1.0.4 <2.0.0",
+      "resolved": "https://registry.npmjs.org/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.4.tgz"
     },
     "jquery-on-infinite-scroll": {
       "version": "1.0.1",

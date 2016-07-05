@@ -1,0 +1,14 @@
+.rva-container
+  .rva-header.avant-garde-s-headline
+    | Recently Viewed
+    
+  .rva-content
+    .rva-images
+      for artwork in artworks
+        .rva-artwork-image-container
+          a( href= artwork.href )
+            img.rva-artwork-image(
+              src= artwork.image.thumb.url
+              alt= artwork.title
+              onerror='this.style.display="none";'
+            )
