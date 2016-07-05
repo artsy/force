@@ -4,7 +4,9 @@
 .artwork-related-artworks
   //
 
+  headerHeight = 37
   &__header
+    height headerHeight
     margin-bottom gutter
 
     &__name
@@ -22,3 +24,6 @@
       border none
       > a
         border-right 1px solid gray-lighter-color
+
+    &__content
+      padding-top headerHeight + gutter
