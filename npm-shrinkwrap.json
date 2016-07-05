@@ -84,11 +84,13 @@
         },
         "express": {
           "version": "4.13.4",
-          "from": "express@*"
+          "from": "express@4.13.4",
+          "resolved": "https://registry.npmjs.org/express/-/express-4.13.4.tgz"
         },
         "qs": {
           "version": "4.0.0",
-          "from": "qs@4.0.0"
+          "from": "qs@4.0.0",
+          "resolved": "https://registry.npmjs.org/qs/-/qs-4.0.0.tgz"
         }
       }
     },
@@ -668,7 +670,8 @@
         },
         "superagent": {
           "version": "1.8.3",
-          "from": "superagent@>=1.2.0 <2.0.0"
+          "from": "superagent@1.8.3",
+          "resolved": "https://registry.npmjs.org/superagent/-/superagent-1.8.3.tgz"
         }
       }
     },
@@ -1546,7 +1549,8 @@
       "dependencies": {
         "async": {
           "version": "1.5.2",
-          "from": "async@>=1.5.0 <2.0.0"
+          "from": "async@>=1.5.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/async/-/async-1.5.2.tgz"
         }
       }
     },
@@ -1690,7 +1694,8 @@
       "dependencies": {
         "async": {
           "version": "1.5.2",
-          "from": "async@>=1.4.0 <2.0.0"
+          "from": "async@1.5.2",
+          "resolved": "https://registry.npmjs.org/async/-/async-1.5.2.tgz"
         }
       }
     },
@@ -2816,9 +2821,9 @@
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.1.4.tgz"
     },
     "jquery-fillwidth-lite": {
-      "version": "1.0.4",
-      "from": "jquery-fillwidth-lite@>=1.0.4 <2.0.0",
-      "resolved": "https://registry.npmjs.org/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.4.tgz"
+      "version": "1.0.5",
+      "from": "jquery-fillwidth-lite@latest",
+      "resolved": "https://registry.npmjs.org/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.5.tgz"
     },
     "jquery-on-infinite-scroll": {
       "version": "1.0.1",
@@ -3476,11 +3481,13 @@
         },
         "express": {
           "version": "4.13.4",
-          "from": "express@>=4.12.3 <5.0.0"
+          "from": "express@>=4.12.3 <5.0.0",
+          "resolved": "https://registry.npmjs.org/express/-/express-4.13.4.tgz"
         },
         "qs": {
           "version": "4.0.0",
-          "from": "qs@4.0.0"
+          "from": "qs@4.0.0",
+          "resolved": "https://registry.npmjs.org/qs/-/qs-4.0.0.tgz"
         }
       }
     },
@@ -4634,7 +4641,8 @@
         },
         "superagent": {
           "version": "1.8.3",
-          "from": "superagent@>=1.7.2 <2.0.0"
+          "from": "superagent@1.8.3",
+          "resolved": "https://registry.npmjs.org/superagent/-/superagent-1.8.3.tgz"
         }
       }
     },
@@ -4889,7 +4897,8 @@
       "dependencies": {
         "base64-url": {
           "version": "1.2.2",
-          "from": "base64-url@1.2.2"
+          "from": "base64-url@1.2.2",
+          "resolved": "https://registry.npmjs.org/base64-url/-/base64-url-1.2.2.tgz"
         }
       }
     },
