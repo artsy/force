@@ -21,5 +21,4 @@ app.get '/magazine', routes.redirectMagazine
 app.get '/articles', routes.articles
 app.get '/article/:slug', routes.article
 app.get '/:slug', routes.section
-app.post '/gallery-insights/form', routes.form
 app.post '/editorial-signup/form', routes.editorialForm

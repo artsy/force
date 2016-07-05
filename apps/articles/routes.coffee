@@ -117,25 +117,6 @@ getArticleScrollType = (data) ->
             res.locals.sd.MAILCHIMP_SUBSCRIBED = false
             res.render 'section', section: section, articles: articles
 
-@form = (req, res, next) ->
-  request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
-    .send(
-      apikey: MAILCHIMP_KEY
-      id: sd.GALLERY_INSIGHTS_LIST
-      email: email: req.body.email
-      send_welcome: true
-      merge_vars:
-        MMERGE1: req.body.fname
-        MMERGE2: req.body.lname
-        MMERGE3: 'Opt-in (artsy.net)'
-      double_optin: false
-      send_welcome: true
-    ).end (err, response) ->
-      if (response.ok)
-        res.send req.body
-      else
-        res.send(response.status, response.body.error)
-
 subscribedToGI = (email, cb) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
     .query
