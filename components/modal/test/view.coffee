@@ -6,7 +6,7 @@ mediator = require '../../../lib/mediator.coffee'
 { resolve } = require 'path'
 ModalView = benv.requireWithJadeify resolve(__dirname, '../view'), ['modalTemplate']
 
-describe 'ModalView', ->
+xdescribe 'ModalView', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
