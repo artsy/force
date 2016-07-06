@@ -18,5 +18,4 @@ module.exports = ->
   view.postRender artworks
 
   sticky = new Sticky
-  sticky.headerHeight = sticky.getHeaderHeight() + 15
-  sticky.add $el.find '.js-artwork-related-artworks-tabs-left'
+  sticky.add $el.find '.js-artwork-related-artworks-tabs-nav'
