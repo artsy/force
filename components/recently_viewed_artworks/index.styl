@@ -1,20 +1,18 @@
 @require '../components/stylus_lib'
 @require '../components/artwork_item/save_controls'
+
+#recently-viewed-artworks
+  background-color gray-lightest-color
+  padding-bottom 50px
 .rva-header
   color gray-darker-color
   padding-top 30px
   margin-bottom 20px
-.rva-container
-  padding-bottom 50px
-  padding-left 55px
-  background-color gray-lightest-color
 .rva-artwork-image-container
-  display inline
-  img
-    display inline
-  .overlay-container
-    position relative
-    display inline
-    right 45px
-    bottom 25px
-    
+  display inline-block
+  position relative
+  margin-right 30px
+  a, img
+    display block
+  &:last-child img
+    margin-right 0

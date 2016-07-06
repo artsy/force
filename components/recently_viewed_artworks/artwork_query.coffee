@@ -5,7 +5,7 @@ module.exports = """
       id
       href
       image {
-        thumb: resized(height: 170, version: "large") {
+        thumb: resized(height: 150, version: "large") {
           url
         }
       }

@@ -42,9 +42,9 @@ module.exports =
       .then (data) ->
         $el.html template
           artworks: data.artworks
-        $el.fillwidthLite
-          gutterSize: 15
-          targetHeight: 170
+        $el.find('.rva-container').fillwidthLite
+          gutterSize: 30
+          targetHeight: 150
           dontResizeUp: true
           done: =>
             if user.isLoggedIn()
