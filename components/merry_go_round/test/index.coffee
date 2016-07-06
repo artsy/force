@@ -8,7 +8,7 @@ initCarousel = rewire '../index'
 bottomNavTemplate = require('jade').compileFile(require.resolve '../templates/bottom_navigation.jade')
 horizontalNavTemplate = require('jade').compileFile(require.resolve '../templates/horizontal_navigation.jade')
 
-describe 'MerryGoRound', ->
+xdescribe 'MerryGoRound', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
