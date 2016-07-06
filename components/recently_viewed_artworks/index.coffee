@@ -3,6 +3,7 @@ metaphysics = require '../../lib/metaphysics.coffee'
 query = require './artwork_query.coffee'
 _ = require 'underscore'
 User = require '../../models/user.coffee'
+{ excludeList } = require './exclude_list.coffee'
 COOKIE_NAME = 'recently-viewed-artworks'
 COOKIE_EXPIRY = 60 * 60 * 24 * 365
 ARTWORK_COUNT = 6
@@ -12,6 +13,15 @@ template = -> require('./index.jade') arguments...
 cookieValue = ->
   JSON.parse(Cookies.get(COOKIE_NAME) or '[]')
 
+currentPathIsInExcludeList = ->
+  _.each(excludeList, (urlPattern) ->
+    if typeof urlPattern is 'object'
+      return true if window.location.pathname.match(urlPattern)
+    else if typeof urlPattern is 'string'
+      return true if window.location.pathname is urlPattern
+  )
+  return false
+
 module.exports =
   setCookie: (artworkId) ->
     uniqueArtworkIds = _.without(cookieValue(), artworkId)
@@ -20,6 +30,7 @@ module.exports =
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
   setupRail: ($el) ->
+    return if currentPathIsInExcludeList()
     artworkIds = cookieValue()
     return unless artworkIds.length > 0
     user = User.instantiate()
@@ -32,3 +43,4 @@ module.exports =
         $el.fillwidthLite
           gutterSize: 15
           targetHeight: 170
+          dontResizeUp: true
