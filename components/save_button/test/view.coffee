@@ -8,7 +8,7 @@ mediator = require '../../../lib/mediator'
 model = new Backbone.Model(id: 'artwork')
 model.isSaved = sinon.stub()
 
-describe 'SaveButton', ->
+xdescribe 'SaveButton', ->
   describe '#save', ->
     beforeEach (done) ->
       benv.setup =>
