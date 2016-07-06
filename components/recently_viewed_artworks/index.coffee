@@ -3,6 +3,8 @@ metaphysics = require '../../lib/metaphysics.coffee'
 query = require './artwork_query.coffee'
 _ = require 'underscore'
 User = require '../../models/user.coffee'
+Artwork = require '../../models/artwork.coffee'
+SaveControls = require '../artwork_item/save_controls/view.coffee'
 { excludeList } = require './exclude_list.coffee'
 COOKIE_NAME = 'recently-viewed-artworks'
 COOKIE_EXPIRY = 60 * 60 * 24 * 365
@@ -44,3 +46,18 @@ module.exports =
           gutterSize: 15
           targetHeight: 170
           dontResizeUp: true
+          done: =>
+            if user.isLoggedIn()
+              user.initializeDefaultArtworkCollection()
+              savedArtworks = user.defaultArtworkCollection()
+              _.map(data.artworks, (artwork) ->
+                $artworkEl = $el.find("div[data-artwork-id=#{artwork.id}] .overlay-container")
+                new SaveControls
+                  el: $artworkEl
+                  artworkCollection: savedArtworks
+                  model: new Artwork(artwork)
+                  context_module: 'Recently Viewed Artworks module'
+              )
+              savedArtworks.addRepoArtworks data.artworks
+              savedArtworks.syncSavedArtworks()
+      
