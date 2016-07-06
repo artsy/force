@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
+qs = require 'qs'
 
 @worksForYou = (req, res) ->
   # If the user is logged-out, redirect to /log_in unless they are coming from email.
@@ -10,7 +11,9 @@ Artists = require '../../collections/artists.coffee'
   unless req.user
     { artist_id, from_email } = req.query
     return res.redirect("/log_in?redirect_uri=#{req.url}") unless artist_id and from_email
-    return res.redirect("/artist/#{artist_id}/works?sort=-published_at")
+    params = _.extend sort: '-published_at', _.pick req.query, 'utm_content', 'utm_medium', 'utm_source', 'utm_campaign'
+    queryString = qs.stringify params
+    return res.redirect("/artist/#{artist_id}/works?#{queryString}")
 
   Q.allSettled([
     req.user.followingArtists()
