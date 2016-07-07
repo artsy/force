@@ -13,7 +13,8 @@ module.exports = class Params extends Backbone.Model
     'gene_id',
     'sort',
     'major_periods',
-    'partner_cities'
+    'partner_cities',
+    'include_artworks_by_followed_artists'
   ]
   defaults:
     size: 50
