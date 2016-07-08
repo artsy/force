@@ -48,7 +48,7 @@ module.exports = class Inquiry extends StepView
         .related().collectorProfile
         .related().userFairActions.attendFair @artwork.related().fairs.first()
 
-    @__serialize__ = Q.all [
+    @__serialize__ = Q.allSettled [
       @inquiry.save _.extend { contact_gallery: true }, data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()

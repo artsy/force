@@ -22,7 +22,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     { artwork } = @data
     { @fair } = artwork
 
-    @user = User.instantiate()
     @artwork = new Artwork artwork
 
   acquire: (e) ->
@@ -49,6 +48,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     { attending } = data = form.serializer.data()
 
+    @user = User.instantiate()
     @user.set pick data, 'name', 'email'
     @inquiry.set data
 
