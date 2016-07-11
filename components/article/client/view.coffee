@@ -182,11 +182,10 @@ module.exports = class ArticleView extends Backbone.View
     $list.fillwidthLite
       gutterSize: 30
       apply: (img) ->
-        img.$el.closest('li').css(padding: '0 15px').width(img.width)
-      done: ->
+        img.$el.closest('li').width(img.width)
+      done: (imgs) ->
         # Make sure the captions line up in case rounding off skewed things
-        tallest = _.max $list.find('.artwork-item-image-container').map(->
-          $(this).height()).toArray()
+        tallest = _.max _.map imgs, (img) -> img.height
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Remove loading state
         $list.parent().removeClass('is-loading')
