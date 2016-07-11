@@ -1,0 +1,16 @@
+include ../../checkbox
+
+form.stacked-form
+  .paf-checkbox-set
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Gallery profile page')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Promote artists & shows')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Artsy Folio (iPad / iPhone app)')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'International exposure')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Reach new clients')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Editorial coverage')
+
+  textarea.bordered-input( placeholder='Any other partnership goals?', name='00NC0000005RGgb' )= form.get('00NC0000005RGgb')
+
+  button.avant-garde-button-black.paf-next Next
+
+img.paf-linkedin-img(src='https://www.linkedin.com/profile/view?authToken=zRgB&authType=name&id=AAIAABqvN_MBJpMBzpvMllUIUUHRt-kJQ-MnLHA')

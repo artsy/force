@@ -1,0 +1,14 @@
+include ../../checkbox
+
+form.stacked-form
+  .paf-checkbox-set
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Online commercial auction')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Online benefit auction')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Live auction and online integration')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Auctions marketing and promotion')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Auction house marketing and promotion')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Auction tools and software')
+
+  textarea.bordered-input( placeholder='Any other partnership goals?', name='00NC0000005RGgb' )= form.get('00NC0000005RGgb')
+
+  button.avant-garde-button-black.paf-next Next
