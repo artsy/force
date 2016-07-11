@@ -1,9 +1,11 @@
 express = require 'express'
-routes = require './routes'
+{ APPLY_URL } = require '../../config'
 
 app = module.exports = express()
-app.set 'views', __dirname + '/templates'
-app.set 'view engine', 'jade'
+redirect = (path) -> (req, res) -> res.redirect 301, "#{APPLY_URL}/#{path}"
 
-app.get '/apply*', routes.index
-app.post '/apply/form', routes.form
+app.get '/apply/gallery', redirect 'galleries'
+app.get '/apply/institution', redirect 'institutions'
+app.get '/apply/auction', redirect 'auctions'
+app.get '/apply/fair', redirect 'fairs'
+app.get '/apply*', redirect 'partnerships'
