@@ -1,6 +1,7 @@
-.artsy-checkbox.cf-followed-artists__checkbox
+- var disabled = count == 0
+.artsy-checkbox.cf-followed_artists__checkbox(data-has-results=disabled ? 'false' : 'true')
   .artsy-checkbox--checkbox
-    - selected = selected && selected.length > 0
-    input( type='checkbox', id='period-all', checked=!hasParams, disabled=!hasParams )
-    label( for='period-all' )
-  label.artsy-checkbox--label( for='period-all' ) All
+    input( type='checkbox', id='followed-artists-filter', checked=selected, disabled=disabled )
+    label( for='followed-artists-filter' )
+  label.artsy-checkbox--label( for='followed-artists-filter' ) Artists You Follow&nbsp;
+    span.cf-followed_artists__total.garamond-m-caption (#{numberFormat(count)})

@@ -79,8 +79,9 @@ module.exports.init = ->
     aggregations: filter.aggregations
 
   followedArtistsView = new FollowedArtistFilterView
-    el: $('.cf-sidebar__followed-artists')
+    el: $('.cf-sidebar__followed_artists')
     params: params
+    filter: filter
 
   locationsView = new LocationFilterView
     el: $('.cf-sidebar__locations')

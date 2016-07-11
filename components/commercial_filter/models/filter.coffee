@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 Q = require 'bluebird-q'
 Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+User = require '../../../models/user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 
 module.exports = class Filter extends Backbone.Model
@@ -47,7 +48,8 @@ module.exports = class Filter extends Backbone.Model
         $extra_aggregation_gene_ids: [String],
         $major_periods: [String],
         $partner_cities: [String],
-        $aggregation_partner_cities: [String]
+        $aggregation_partner_cities: [String],
+        $include_artworks_by_followed_artists: Boolean
       ){
         filter_artworks(
           aggregations: $aggregations,
@@ -64,9 +66,11 @@ module.exports = class Filter extends Backbone.Model
           extra_aggregation_gene_ids: $extra_aggregation_gene_ids,
           major_periods: $major_periods,
           partner_cities: $partner_cities,
-          aggregation_partner_cities: $aggregation_partner_cities
+          aggregation_partner_cities: $aggregation_partner_cities,
+          include_artworks_by_followed_artists: $include_artworks_by_followed_artists
         ){
           total
+          followed_artists_total
           #{@aggregationSelector()}
           hits {
             ... artwork
@@ -80,12 +84,13 @@ module.exports = class Filter extends Backbone.Model
   fetch: ->
     @set loading: true
     Q.promise (resolve, reject) =>
-      metaphysics query: @query(), variables: @params.current()
+      metaphysics query: @query(), variables: @params.current(), req: user: User.instantiate()
         .then ({ filter_artworks }) =>
           if filter_artworks.hits.length
             @artworks.reset filter_artworks.hits
           @set loading: false
           @set total: filter_artworks.total
+          @set followed_artists_total: filter_artworks.followed_artists_total
           @aggregations.reset filter_artworks.aggregations if filter_artworks.aggregations
           resolve @
         .catch (error) ->
