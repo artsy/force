@@ -104,19 +104,30 @@ mixin auction_apply(section)
         h3#apply-h3 Interested in partnering with Artsy?
           aside  Apply to host your auctions on Artsy
 
-    //- Marketo
-    .partnerships-marketo-form
-      script(src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
-      form#mktoForm_1240
-      script.
-        MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
+      form.stacked-form.js-gallery-partnerships-apply-form(
+        action='/apply/auction/2'
+        method='get'
+      )
+        input.bordered-input( type='text', name='company', placeholder= 'Organization Name', id='apply-name-field' required )
 
-    .gallery-partnerships-privacy
-      | By clicking apply, you accept our&nbsp;
-      a( href='/privacy' ) Privacy Policy
-      | .
+        .stacked-form-cell.grid-3-up
+          .grid-item: input.bordered-input.is-block( type='text', name='first_name', placeholder='First Name', required )
+          .grid-item: input.bordered-input.is-block( type='text', name='last_name', placeholder='Last Name', required  )
+          .grid-item: input.bordered-input.is-block( type='text', name='title', placeholder= 'Title at organization' )
 
-    .partnerships-contact Call us: +1 800 589-1350
+        .stacked-form-cell.grid-2-up
+          .grid-item: input.bordered-input.is-block( type='text', name='URL', placeholder='Website', required )
+          .grid-item: input.bordered-input.is-block( type='email', name='email', placeholder='E-mail', required )
+
+        button.avant-garde-button-black.apply-button.js-gallery-partnerships-apply-submit
+          | Apply
+
+        .gallery-partnerships-privacy
+          | By clicking apply, you accept our&nbsp;
+          a( href='/privacy' ) Privacy Policy
+          | .
+
+        .partnerships-contact Call us: +1 800 589-1350
 
 
 section.partnerships-section( id= sections[0].slug, data-href="/auction-partnerships/#{sections[0].slug}" ): +experience(sections[0])

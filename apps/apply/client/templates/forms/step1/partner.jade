@@ -1,0 +1,22 @@
+form.stacked-form
+  input.bordered-input(
+    type='text'
+    name='company'
+    value= form.get('company')
+    placeholder= state.copy('company')
+    required= state.get('mode') !== 'general' ? 'required' : undefined
+  )
+
+  .grid-2-up
+    .grid-item: input.bordered-input.is-block( type='text', name='first_name', value= form.get('first_name'), placeholder='First Name', required )
+    .grid-item: input.bordered-input.is-block( type='text', name='last_name', value= form.get('last_name'), placeholder='Last Name', required  )
+
+  input.bordered-input( type='text', name='title', value= form.get('title'), placeholder= state.copy('title') )
+
+  input.bordered-input( type='text', name='phone', value= form.get('phone'), placeholder='Phone Number' )
+
+  input.bordered-input( type='email', name='email', value= form.get('email'), placeholder='E-mail', required )
+
+  input.bordered-input( type='text', name='URL', value= form.get('URL'), placeholder='Website', required )
+
+  button.avant-garde-button-black.paf-next Next

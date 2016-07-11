@@ -104,7 +104,6 @@ module.exports =
   EMAIL_SIGNUP_IMAGES_ID: null
   IP_BLACKLIST: ''
   CRITEO_ACCOUNT_NUMBER: 'ArtsyUS;7766801;7766802;28539'
-  APPLY_URL: 'http://apply.artsy.net'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
