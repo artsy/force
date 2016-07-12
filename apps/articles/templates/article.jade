@@ -36,6 +36,18 @@ block body
               +remainingStickies(section, allSectionArticles, 120, 80)
             button.articles-section-right-chevron.icon-chevron-small-right
 
+    if article.get('channel_id') === sd.PC_ARTSY_CHANNEL || article.get('channel_id') === sd.PC_AUCTION_CHANNEL
+      .articles-promoted
+        .articles-promoted__left
+          .articles-promoted__img
+            //- Rendered on client
+          .articles-promoted__title Promoted Content
+          .articles-promoted__name
+            //- Rendered on client
+        .articles-promoted__right
+          .articles-promoted__explore
+            //- Rendered on client
+
     //- Article body
     #articles-body-container
       include ../../../components/article/templates/index
