@@ -1,6 +1,7 @@
 Promise = require 'bluebird-q'
 { stringify } = require 'qs'
 { invoke, pick, last } = require 'underscore'
+{ startsWith } = require 'underscore.string'
 { View, Model } = require 'backbone'
 { isPhoneLike } = require '../../../../../components/util/device.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
@@ -31,8 +32,14 @@ module.exports = class ProfessionalBuyerCompleteView extends View
 
     # If the URL is the default value; remove
     # the http:// so that it passes validation
-    if ($url = @$('input[name="company_website"]')).val() is 'http://'
+    $url = @$('input[name="company_website"]')
+    urlValue = $url.val()
+    if urlValue is 'http://'
       $url.val ''
+
+    # Prepend with http:// if not blank and missing protocol.
+    else if urlValue isnt '' and not startsWith(urlValue, 'http://')
+      $url.val "http://#{urlValue}"
 
     form = new Form $form: @$('form')
     return unless form.isReady()
