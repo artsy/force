@@ -11,6 +11,7 @@ CategoryFilterView = require '../../components/commercial_filter/filters/categor
 LocationFilterView = require '../../components/commercial_filter/filters/location/location_filter_view.coffee'
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PeriodFilterView = require '../../components/commercial_filter/filters/period/period_filter_view.coffee'
+FollowedArtistFilterView = require '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
@@ -76,6 +77,11 @@ module.exports.init = ->
     el: $('.cf-sidebar__periods')
     params: params
     aggregations: filter.aggregations
+
+  followedArtistsView = new FollowedArtistFilterView
+    el: $('.cf-sidebar__followed_artists')
+    params: params
+    filter: filter
 
   locationsView = new LocationFilterView
     el: $('.cf-sidebar__locations')
