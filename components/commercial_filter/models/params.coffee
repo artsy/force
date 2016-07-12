@@ -13,8 +13,7 @@ module.exports = class Params extends Backbone.Model
     'gene_id',
     'sort',
     'major_periods',
-    'partner_cities',
-    'include_artworks_by_followed_artists'
+    'partner_cities'
   ]
   defaults:
     size: 50
@@ -24,7 +23,7 @@ module.exports = class Params extends Backbone.Model
     medium: null
     major_periods: []
     partner_cities: []
-    include_artworks_by_followed_artists: null
+    include_artworks_by_followed_artists: false
     aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS']
     ranges:
       price_range:
