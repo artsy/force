@@ -20,7 +20,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     @listenTo @filter, 'change:followed_artists_total', @render
 
   toggleFollowedArtists: (e) ->
-    currentValue = @params.get('include_artworks_by_followed_artists')?
+    currentValue = @params.get('include_artworks_by_followed_artists')
     @params.set include_artworks_by_followed_artists: !currentValue
 
   signup: (e) ->
