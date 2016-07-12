@@ -5,11 +5,7 @@ module.exports = """
       __typename
 
       ... on ArtworkContextAuction {
-        is_open
-      }
-
-      ... on ArtworkContextPartnerShow {
-        is_active
+        is_closed
       }
     }
   }

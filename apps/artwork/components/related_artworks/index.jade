@@ -1,6 +1,6 @@
 if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
   - var layer = artwork.layer
-  - var layers = artwork.layers
+  - var layers = helpers.related_artworks.filterLayers(artwork.layers)
 
   section.artwork-section.artwork-related-artworks( class='js-artwork-related-artworks' )
     header.artwork-related-artworks__header
