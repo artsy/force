@@ -19,7 +19,7 @@ module.exports = ({ module, user, $el }) ->
   followable = followableObject[module.key](module)
 
   model = new Model followable
-  if user.id
+  if user.isLoggedIn()
     following = new Following null, kind: kind
 
   $el.append template()
