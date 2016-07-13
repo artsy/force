@@ -92,16 +92,6 @@ describe 'Home routes', ->
             @res.render.args[0][1].heroUnits.first().has 'link'
               .should.be.false() # Fallback is just welcome without the signup link
 
-      it 'calls next when user has personalized homepage lab feature', ->
-        Backbone.sync
-          .onCall 0
-          .yieldsTo 'success', []
-
-        user = new CurrentUser lab_features: ['Personalized Homepage']
-
-        routes.index(extend({ user: user}, @req), @res, @next)
-        @next.called.should.be.true()
-
   describe '#redirectToSignup', ->
     it 'redirects to signup', ->
       routes.redirectToSignup @req, @res
