@@ -1,7 +1,9 @@
 @require '../../../components/stylus_lib'
 
+content-width=1250px
+
 #articles-show
-  margin-top 120px
+  // margin-top 120px
   &.is-loading
     #article-loading
       display block
@@ -33,3 +35,24 @@
 
 #articles-body-container
   position relative
+
+.articles-promoted
+  max-width content-width
+  display flex
+  justify-content space-between
+  padding 20px 0
+  border-bottom 1px solid gray-lighter-color
+  margin auto
+  &__left
+    display flex
+  &__img
+    width 100px
+    height 67px
+  &__text
+    display flex
+    flex-direction column
+    justify-content space-around
+  &__title
+    avant-garde-size('s-headline')
+  &__name
+    garamond-size('s-headline')

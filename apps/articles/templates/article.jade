@@ -38,15 +38,14 @@ block body
 
     if article.get('channel_id') === sd.PC_ARTSY_CHANNEL || article.get('channel_id') === sd.PC_AUCTION_CHANNEL
       .articles-promoted
+        //- Rendered on client
         .articles-promoted__left
           .articles-promoted__img
-            //- Rendered on client
-          .articles-promoted__title Promoted Content
-          .articles-promoted__name
-            //- Rendered on client
+          .articles-promoted__text
+            .articles-promoted__title Promoted Content
+            .articles-promoted__name Jon Snow
         .articles-promoted__right
-          .articles-promoted__explore
-            //- Rendered on client
+          .articles-promoted__explore.avant-garde-button-white Explore Gallery
 
     //- Article body
     #articles-body-container

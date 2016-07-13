@@ -105,6 +105,8 @@ module.exports =
   IP_BLACKLIST: ''
   CRITEO_ACCOUNT_NUMBER: 'ArtsyUS;7766801;7766802;28539'
   PERSONALIZED_HOMEPAGE_BUCKETS: ''
+  PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
+  PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
