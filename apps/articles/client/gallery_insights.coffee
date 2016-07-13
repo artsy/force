@@ -33,23 +33,28 @@ module.exports = class GalleryInsightsView extends Backbone.View
 
   setupCTAWaypoints: ->
     return if @ctaBarView.previouslyDismissed()
-    @ctaBarView.render()
-    MktoForms2?.whenReady (form) -> $('#mktoForm_1230').removeAttr 'id'
-    @ctaBarView.$el?.find('.cta-bar-small-form').replaceWith marketoForm()
-    @$el.append @ctaBarView.$el
-    if @inGIArticlePage()
-      @$(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) =>
-        @ctaBarView.transitionIn() if direction is 'down'
-      , { offset: -200 }
-      @$(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) =>
-        @ctaBarView.transitionOut() if direction is 'down'
-        @ctaBarView.transitionIn() if direction is 'up'
-      , { offset: 'bottom-in-view' }
-    else if @inGIVerticalPage()
-      @$('.js-articles-feed-articles').waypoint (direction) =>
-        @ctaBarView.transitionIn() if direction is 'down'
-      ,{ offset: '50%' }
-      @$('.js-articles-feed-articles').waypoint (direction) =>
-        @ctaBarView.transitionOut() if direction is 'down'
-        @ctaBarView.transitionIn() if direction is 'up'
-      , { offset: 'bottom-in-view' }
+    # We have to wait for the first Marketo form embedded at the bottom of
+    # the page to render and remove the Marketo id from the element. Otherwise
+    # Marketo will try to render the form in both places, causing the form to
+    # appear twice at the bottom of the page.
+    MktoForms2.whenReady _.once (form) =>
+      @$('#mktoForm_1230').removeAttr 'id'
+      @ctaBarView.render()
+      @ctaBarView.$el?.find('.cta-bar-small-form').replaceWith marketoForm()
+      @$el.append @ctaBarView.$el
+      if @inGIArticlePage()
+        @$(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) =>
+          @ctaBarView.transitionIn() if direction is 'down'
+        , { offset: -200 }
+        @$(".article-container[data-id=#{sd.ARTICLE.id}]").waypoint (direction) =>
+          @ctaBarView.transitionOut() if direction is 'down'
+          @ctaBarView.transitionIn() if direction is 'up'
+        , { offset: 'bottom-in-view' }
+      else if @inGIVerticalPage()
+        @$('.js-articles-feed-articles').waypoint (direction) =>
+          @ctaBarView.transitionIn() if direction is 'down'
+        ,{ offset: '50%' }
+        @$('.js-articles-feed-articles').waypoint (direction) =>
+          @ctaBarView.transitionOut() if direction is 'down'
+          @ctaBarView.transitionIn() if direction is 'up'
+        , { offset: 'bottom-in-view' }
