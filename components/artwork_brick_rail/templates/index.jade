@@ -2,6 +2,8 @@
   .abrv-header
     if followAnnotation
       .abrv-follow-annotation.avant-garde-s-headline Based on #{followAnnotation}
+    if category
+      .abrv-category-annotation.avant-garde-s-headline Category
     if viewAllUrl
       a( href= viewAllUrl )
         h1= title
