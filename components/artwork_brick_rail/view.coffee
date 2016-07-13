@@ -43,7 +43,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
-      advanceBy: 4
+      groupCells: true
     , (carousel) =>
       @trigger 'post-render'
       @carousel = carousel
