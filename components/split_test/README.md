@@ -6,8 +6,8 @@ To start a test, add your configuration to the `running_tests.coffee` file:
 header_design:
   key: 'header_design'
   outcomes:
-    old: 0.8
-    new: 0.2
+    old: 8
+    new: 2
   edge: 'new' # Optional
   dimension: 'dimension1' # Optional
   scope: 'local' # Optional
