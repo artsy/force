@@ -6,6 +6,9 @@ Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
+Sale = require '../../../models/sale.coffee'
+Partner = require '../../../models/partner.coffee'
+Profile = require '../../../models/profile.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
 JumpView = require '../../../components/jump/view.coffee'
@@ -32,6 +35,8 @@ module.exports = class ArticleIndexView extends Backbone.View
       lushSignup: true
 
     @setupInfiniteScroll() if sd.SCROLL_ARTICLE is 'infinite'
+    @setupPromotedContent() if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
+      @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
 
   setupInfiniteScroll: ->
     @displayedArticles = [@article.get('slug')]
@@ -83,6 +88,24 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 5) or 0
+
+  setupPromotedContent: =>
+    if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL
+      new Partner(id: @article.get('partner_ids')?[0]).fetch
+        error: => @$el('.articles-promoted').hide()
+        success: (partner) ->
+          new Profile(id: partner.get('id')).fetch
+            error: => @$el('.articles-promoted').hide()
+            success: (profile) ->
+              $('.articles-promoted__img').attr('src', profile.bestAvailableImage() )
+              $('.articles-promoted__name').text(partner.get('name'))
+              $('.articles-promoted__explore').text('Explore Gallery') if profile.isGallery()
+              $('.articles-promoted__explore').text('Explore Institution') if profile.isInstitution()
+              $('.articles-promoted__explore').attr('href', profile.href())
+    else if @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
+      new Auction(id: @article.get('auction_ids')?[0]).fetch
+        error: -> @$el('.articles-promoted').hide()
+        success: ->
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')

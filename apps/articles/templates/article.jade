@@ -37,15 +37,15 @@ block body
             button.articles-section-right-chevron.icon-chevron-small-right
 
     if article.get('channel_id') === sd.PC_ARTSY_CHANNEL || article.get('channel_id') === sd.PC_AUCTION_CHANNEL
-      .articles-promoted
+      .articles-promoted.main-layout-container
         //- Rendered on client
         .articles-promoted__left
-          .articles-promoted__img
+          img.articles-promoted__img
           .articles-promoted__text
             .articles-promoted__title Promoted Content
-            .articles-promoted__name Jon Snow
+            .articles-promoted__name
         .articles-promoted__right
-          .articles-promoted__explore.avant-garde-button-white Explore Gallery
+          a.articles-promoted__explore.avant-garde-button-white
 
     //- Article body
     #articles-body-container
