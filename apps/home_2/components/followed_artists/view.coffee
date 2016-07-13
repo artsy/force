@@ -6,6 +6,7 @@ Artist = require '../../../../models/artist.coffee'
 Artists = require '../../../../collections/artists.coffee'
 Items = require '../../../../collections/items.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+ArtworkBrickView = require '../../../../components/artwork_brick/view.coffee'
 SearchArtistsView = require './search_artists_view.coffee'
 FollowedArtistsView = require './followed_artists_view.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -13,8 +14,9 @@ template = -> require('./templates/index.jade') arguments...
 module.exports = class FollowedArtistsRailView extends Backbone.View
   subViews: []
 
-  initialize: ({ @module, @$el }) ->
+  initialize: ({ @module, @$el, @user }) ->
     # no op
+    console.log 'user', @user
 
   render: ->
     artists = new Backbone.Collection @module.context.artists
@@ -31,6 +33,25 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     if @module.context.counts.artists < 1 or @module.results.length < 1
       return @_renderEmptyView()
 
+    @setupArtworkViews()
+    @setupCarousel()
+
+  setupArtworkViews: ->
+    if @module.results.length
+      @subViews = @module.results.map ({ id }) =>
+        $el = @$(".js-artwork-brick[data-id='#{id}']")
+        view = new ArtworkBrickView
+          el: $el
+          id: id
+          user: @user
+
+        view.postRender()
+        view
+
+    @user.related().savedArtworks
+      .check @module.results.map ({ id }) -> id
+
+  setupCarousel: ->
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false

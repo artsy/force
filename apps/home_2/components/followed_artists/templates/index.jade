@@ -1,3 +1,5 @@
+- var viewAllUrl = "/works-for-you"
+
 .abrv-inner( data-rail="followed_artists" )
   .abrv-header
     if artworks && artworks.length
@@ -5,7 +7,7 @@
     else
       h1 Follow Artists and Keep Up-to-Date
 
-    a.abrv-view-all( href="/works-for-you" )
+    a.abrv-view-all( href=viewAllUrl )
       | View All
 
   .abrv-content
@@ -17,6 +19,8 @@
           for artwork in artworks
             li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
               include ../../../../../components/artwork_brick_rail/templates/brick
+          li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
+            include ../../../../../components/artwork_brick_rail/templates/view_all
       else
         .abrv-context.abrv-fillwidth-row.abrv-context--float.arbv-context--followed-artists
           include context
