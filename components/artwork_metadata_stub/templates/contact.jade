@@ -1,7 +1,11 @@
 if artwork.is_in_auction
-  .artwork-metadata-stub__contact.artwork-metadata-stub__line.artwork-metadata-stub__bid-now
-    a(href= artwork.href)
-      | Bid now
+  if artwork.is_biddable
+    .artwork-metadata-stub__contact.artwork-metadata-stub__line.artwork-metadata-stub__bid-now
+      a(href= artwork.href)
+        | Bid now
+  else
+    .artwork-metadata-stub__contact.artwork-metadata-stub__line
+      | Auction closed
 else if artwork.partner.is_limited_fair_partner
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
     | Not inquireable
