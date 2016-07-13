@@ -59,6 +59,7 @@ module.exports = ->
         hasContext: contexts[module.key]?
         followAnnotation: module.context?.based_on?.name
         user: user
+        category: module.key is 'genes' or module.key is 'generic_gene'
 
       view.on 'post-render', ->
 
