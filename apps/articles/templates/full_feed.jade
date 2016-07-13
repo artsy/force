@@ -29,7 +29,6 @@
     .js-articles-feed-more
       include ../../../components/articles_feed/templates/button
 
-  - console.log(section && section.get('slug') == sd.GALLERY_INSIGHTS_SLUG)
   if section && section.get('slug') == sd.GALLERY_INSIGHTS_SLUG
     .articles-insights-section.main-layout-container
       include gallery_insights_form

@@ -30,7 +30,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
     # We have to wait for the first Marketo form embedded at the bottom of
     # the page to render and remove the Marketo id from the element. Otherwise
     # Marketo will try to render the form in both places, causing the form to
-    # appear twice at the bottom of the page. We then hack in the Marketo
+    # appear twice at the bottom of the page. We then hack in the Marketo form
     # replacing our typical CTA form elements. ┐('～`；)┌
     MktoForms2?.whenReady _.once (form) =>
       @$('#mktoForm_1230').removeAttr 'id'
