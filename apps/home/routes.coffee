@@ -23,7 +23,7 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
-  activeBuckets = sd.PERSONALIZED_HOMEPAGE_BUCKETS?.split(',')
+  activeBuckets = res.locals.sd.PERSONALIZED_HOMEPAGE_BUCKETS?.split(',')
   outcome = res.locals.sd.PERSONALIZED_HOMEPAGE
 
   return next() if _.contains activeBuckets, outcome
