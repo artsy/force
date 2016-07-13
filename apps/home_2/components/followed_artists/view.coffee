@@ -16,7 +16,6 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
 
   initialize: ({ @module, @$el, @user }) ->
     # no op
-    console.log 'user', @user
 
   render: ->
     artists = new Backbone.Collection @module.context.artists
