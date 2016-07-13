@@ -38,14 +38,14 @@ module.exports = ->
   user = User.instantiate()
 
   each USER_HOME_PAGE, (module, index) ->
+    $el = $("#hpm-#{module.key}-#{index}")
+
     metaphysics(
       query: query
       variables: key: "#{module.key}", id: "#{module.params?.id}"
       req: { user: user }
     ).then ({ home_page_module }) ->
       module = home_page_module
-
-      $el = $("#hpm-#{module.key}-#{index}")
 
       return $el.remove() unless module.results?.length
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
@@ -73,7 +73,7 @@ module.exports = ->
 
       view.render()
     .catch (err) ->
-      $("#hpm-#{module.key}-#{index}").remove()
+      $el.remove()
       console.warn('Error rendering homepage rails', err.stack)
 
 
