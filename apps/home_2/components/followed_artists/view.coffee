@@ -32,6 +32,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
+      groupCells: true
     , (carousel) =>
       @trigger 'post-render'
       @carousel = carousel

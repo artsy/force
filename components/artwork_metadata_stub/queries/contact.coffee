@@ -4,6 +4,7 @@ module.exports = """
     href
     is_inquireable
     is_in_auction
+    is_biddable
     partner(shallow: true) {
       type
       is_limited_fair_partner

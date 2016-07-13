@@ -25,15 +25,6 @@ describe 'ArticleIndexView', ->
   after ->
     benv.teardown()
 
-  describe '#eligibleToSignUp', ->
-
-    it 'checks if in article or vertical of Gallery Insights', ->
-      @GalleryInsightsView.__set__ 'sd',
-        GALLERY_INSIGHTS_SECTION_ID: 'foo'
-        ARTICLE: null
-        SECTION: null
-      @view.eligibleToSignUp().should.not.be.ok
-
   describe '#setupCTAWaypoints', ->
 
     it 'only sets up waypoints for vertical page if in vertical page', ->

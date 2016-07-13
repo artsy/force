@@ -19,7 +19,8 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @includeContact = true,
       @hasContext,
       @followAnnotation,
-      @user
+      @user,
+      @category
     } = options
 
   render: ->
@@ -31,6 +32,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       includeContact: @includeContact
       hasContext: @hasContext
       followAnnotation: @followAnnotation
+      category: @category
 
     @postRender()
     this
@@ -43,7 +45,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
-      advanceBy: 4
+      groupCells: true
     , (carousel) =>
       @trigger 'post-render'
       @carousel = carousel

@@ -19,7 +19,7 @@ module.exports = ({ module, user, $el }) ->
   followable = followableObject[module.key](module)
 
   model = new Model followable
-  if user
+  if user.isLoggedIn()
     following = new Following null, kind: kind
 
   $el.append template()
@@ -31,5 +31,5 @@ module.exports = ({ module, user, $el }) ->
     modelName: kind
     context_module: "Homepage rail"
 
-  following.syncFollows [followable.id]
+  following?.syncFollows [followable.id]
 
