@@ -46,7 +46,7 @@ module.exports = ->
       module = home_page_module
       $el = $("#hpm-#{module.key}-#{index}")
 
-      return $el.remove() unless module.results?.length
+      return $el.remove() unless module.results?.length or module.key is 'followed_artists'
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
       return setupFollowedArtistsView(module, $el) if module.key is 'followed_artists'
 

@@ -28,7 +28,9 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     @_postRender()
 
   _postRender: ->
-    return @_renderEmptyView() if @module.context.counts.artists < 1
+    if @module.context.counts.artists < 1 or @module.results.length < 1
+      return @_renderEmptyView()
+
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
@@ -50,7 +52,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     # pre-populate search with featured artists
     featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
     # empty collection to pass along to keep track of new follows
-    followedArtists = new Artists []
+    followedArtists = new Artists @module.context.artists
     suggestedArtists = new Artists []
 
     Q.all [
