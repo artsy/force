@@ -28,7 +28,7 @@ describe 'ArticleIndexView', ->
           }
         ]
       @options = {
-        sd: sd
+        sd: _.extend sd, { PC_ARTSY_CHANNEL: '5086df098523e60002000013', PC_AUCTION_CHANNEL: '5086df098523e60002000012', ARTICLE: @model.attributes }
         resize: resize
         crop: crop
         article: @model
@@ -39,7 +39,8 @@ describe 'ArticleIndexView', ->
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
-      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/article'), ['articleTemplate']
+      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/article'), ['articleTemplate', 'promotedTemplate']
+      @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       done()
 
   after ->
@@ -57,6 +58,9 @@ describe 'ArticleIndexView', ->
 
     it 'renders the template with footer', ->
       $('#articles-footer').text().should.containEql 'What to Read Next'
+
+    it 'does not display promoted content banner for non-promoted', ->
+      $('.articles-promoted').length.should.equal 0
 
   describe '#initialize infinite scroll articles', ->
 
@@ -86,3 +90,40 @@ describe 'ArticleIndexView', ->
       articles = [_.extend fixtures.article, { id: '343', sections: [{ type: 'text', body: 'FooLa' }] } ]
       @view.render(@view.collection, results: articles )
       $('.article-container').length.should.equal 2
+
+    it 'does not display promoted content banner for non-promoted', ->
+      $('.articles-promoted').length.should.equal 0
+
+  describe 'promoted content gallery', ->
+
+    before (done) ->
+      @options.sd.PC_ARTSY_CHANNEL = '5086df098523e60002000011'
+      benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
+        @view = new @ArticleIndexView
+          el: $('body')
+        done()
+
+    it 'displays promoted content banner for partner', ->
+      Backbone.sync.args[2][2].success fabricate 'partner'
+      Backbone.sync.args[3][2].success fabricate 'partner_profile'
+      $('.articles-promoted__img').attr('src').should.equal '/images/missing_image.png'
+      $('.articles-promoted__name').text().should.equal 'Gagosian Gallery'
+      $('.articles-promoted__explore').text().should.equal 'Explore Institution'
+      $('.articles-promoted__explore').attr('href').should.equal '/getty'
+
+  describe 'promoted content auction', ->
+
+    before (done) ->
+      @options.sd.PC_AUCTION_CHANNEL = '5086df098523e60002000011'
+      @options.sd.PC_ARTSY_CHANNEL = '5086df098523e60002000012'
+      benv.render resolve(__dirname, '../../templates/article.jade'), @options, =>
+        @view = new @ArticleIndexView
+          el: $('body')
+        done()
+
+    it 'displays promoted content banner for auction', ->
+      Backbone.sync.args[4][2].success fabricate 'sale'
+      $('.articles-promoted__img').attr('src').should.equal 'https://i.embed.ly/1/display/crop?url=%2Fimages%2Fmissing_image.png&width=250&height=165&quality=95'
+      $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
+      $('.articles-promoted__explore').text().should.equal 'Explore Auction'
+      $('.articles-promoted__explore').attr('href').should.equal '/sale/whtney-art-party'

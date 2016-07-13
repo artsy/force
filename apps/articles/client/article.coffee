@@ -14,6 +14,7 @@ embed = require 'particle'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
+promotedTemplate = -> require('../templates/promoted_content.jade') arguments...
 
 module.exports = class ArticleIndexView extends Backbone.View
 
@@ -92,20 +93,25 @@ module.exports = class ArticleIndexView extends Backbone.View
   setupPromotedContent: =>
     if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL
       new Partner(id: @article.get('partner_ids')?[0]).fetch
-        error: => @$el('.articles-promoted').hide()
+        error: => $('.articles-promoted').hide()
         success: (partner) ->
-          new Profile(id: partner.get('id')).fetch
-            error: => @$el('.articles-promoted').hide()
+          new Profile(id: partner.get('default_profile_id')).fetch
+            error: => $('.articles-promoted').hide()
             success: (profile) ->
-              $('.articles-promoted__img').attr('src', profile.bestAvailableImage() )
-              $('.articles-promoted__name').text(partner.get('name'))
-              $('.articles-promoted__explore').text('Explore Gallery') if profile.isGallery()
-              $('.articles-promoted__explore').text('Explore Institution') if profile.isInstitution()
-              $('.articles-promoted__explore').attr('href', profile.href())
+              $('#articles-show').prepend promotedTemplate
+                src: profile.bestAvailableImage()
+                name: partner.get('name')
+                href: profile.href()
+                type: profile.profileType()
     else if @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
-      new Auction(id: @article.get('auction_ids')?[0]).fetch
+      new Sale(id: @article.get('auction_ids')?[0]).fetch
         error: -> @$el('.articles-promoted').hide()
-        success: ->
+        success: (sale) ->
+          $('#articles-show').prepend promotedTemplate
+            src: crop sale.bestImageUrl(), { width: 250, height: 165 }
+            name: sale.get('name')
+            href: sale.href()
+            type: 'Auction'
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')
