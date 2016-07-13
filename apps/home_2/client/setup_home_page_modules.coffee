@@ -20,10 +20,11 @@ contexts =
   current_fairs: (module) ->
     fairTemplate fair: module.context, timeSpan: timeSpan
 
-setupFollowedArtistsView = (module, $el) ->
+setupFollowedArtistsView = (module, $el, user) ->
   view = new FollowedArtistsRailView
     $el: $el
     module: module
+    user: user
 
   view.render()
 
@@ -47,9 +48,9 @@ module.exports = ->
     ).then ({ home_page_module }) ->
       module = home_page_module
 
-      return $el.remove() unless module.results?.length
+      return $el.remove() unless module.results?.length or module.key is 'followed_artists'
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
-      return setupFollowedArtistsView(module, $el) if module.key is 'followed_artists'
+      return setupFollowedArtistsView(module, $el, user) if module.key is 'followed_artists'
 
       view = new ArtworkBrickRailView
         $el: $el

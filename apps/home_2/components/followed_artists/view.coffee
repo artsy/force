@@ -6,6 +6,7 @@ Artist = require '../../../../models/artist.coffee'
 Artists = require '../../../../collections/artists.coffee'
 Items = require '../../../../collections/items.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+ArtworkBrickView = require '../../../../components/artwork_brick/view.coffee'
 SearchArtistsView = require './search_artists_view.coffee'
 FollowedArtistsView = require './followed_artists_view.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -13,7 +14,7 @@ template = -> require('./templates/index.jade') arguments...
 module.exports = class FollowedArtistsRailView extends Backbone.View
   subViews: []
 
-  initialize: ({ @module, @$el }) ->
+  initialize: ({ @module, @$el, @user }) ->
     # no op
 
   render: ->
@@ -28,7 +29,28 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     @_postRender()
 
   _postRender: ->
-    return @_renderEmptyView() if @module.context.counts.artists < 1
+    if @module.context.counts.artists < 1 or @module.results.length < 1
+      return @_renderEmptyView()
+
+    @setupArtworkViews()
+    @setupCarousel()
+
+  setupArtworkViews: ->
+    if @module.results.length
+      @subViews = @module.results.map ({ id }) =>
+        $el = @$(".js-artwork-brick[data-id='#{id}']")
+        view = new ArtworkBrickView
+          el: $el
+          id: id
+          user: @user
+
+        view.postRender()
+        view
+
+    @user.related().savedArtworks
+      .check @module.results.map ({ id }) -> id
+
+  setupCarousel: ->
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: false
       wrapAround: false
@@ -50,7 +72,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     # pre-populate search with featured artists
     featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
     # empty collection to pass along to keep track of new follows
-    followedArtists = new Artists []
+    followedArtists = new Artists @module.context.artists
     suggestedArtists = new Artists []
 
     Q.all [
