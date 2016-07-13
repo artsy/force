@@ -8,7 +8,7 @@ Sections = require '../../collections/sections'
 embed = require 'particle'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
-{ POST_TO_ARTICLE_SLUGS, MAILCHIMP_KEY, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
+{ POST_TO_ARTICLE_SLUGS, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
@@ -53,7 +53,6 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       # Email Subscriptions
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, data.article, (results) ->
-        res.locals.sd.MAILCHIMP_SUBSCRIBED = results.mailchimp
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
 
         # Parsely Articles
@@ -66,15 +65,12 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       return
 
 setupEmailSubscriptions = (user, article, cb) ->
-  return cb({ mailchimp: false, editorial: false }) unless user?.email
-  if _.contains article.get('section_ids'), sd.GALLERY_INSIGHTS_SECTION_ID
-    subscribedToGI user.email, (isSubscribed) ->
-      cb { mailchimp: isSubscribed, editorial: false }
-  else if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
+  return cb({ editorial: false }) unless user?.email
+  if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
     subscribedToEditorial user.email, (err, isSubscribed) ->
-      cb { editorial: isSubscribed, mailchimp: false }
+      cb { editorial: isSubscribed }
   else
-    cb { mailchimp: false, editorial: false }
+    cb { editorial: false }
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
@@ -108,24 +104,7 @@ getArticleScrollType = (data) ->
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
-          if res.locals.sd.CURRENT_USER?.email? and res.locals.sd.SECTION.id is GALLERY_INSIGHTS_SECTION_ID
-            email = res.locals.sd.CURRENT_USER?.email
-            subscribedToGI email, (cb) ->
-              res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
-              res.render 'section', section: section, articles: articles
-          else
-            res.locals.sd.MAILCHIMP_SUBSCRIBED = false
-            res.render 'section', section: section, articles: articles
-
-subscribedToGI = (email, cb) ->
-  request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
-    .query
-      apikey: MAILCHIMP_KEY
-      id: sd.GALLERY_INSIGHTS_LIST
-      "emails[0][email]": email
-    .timeout 3000
-    .end (err, response) ->
-      cb response.body.success_count is 1
+          res.render 'section', section: section, articles: articles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
