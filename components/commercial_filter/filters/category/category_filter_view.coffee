@@ -12,9 +12,17 @@ module.exports = class CategoryFilterView extends Backbone.View
 
     @listenTo @params, 'change:medium change:gene_id', @render
     @listenTo @aggregations, 'reset', @render
+    @listenTo @params, 'change:include_artworks_by_followed_artists', @toggleDisplay
 
   setCategory: (e) ->
     @params.set gene_id: $(e.currentTarget).data('id')
+
+  toggleDisplay: ->
+    if @params.get('include_artworks_by_followed_artists')
+      @params.unset('gene_id')
+      @$el.hide()
+    else
+      @$el.show()
 
   toggleCategory: (e) ->
     category = $(e.currentTarget).data('id')
@@ -27,9 +35,11 @@ module.exports = class CategoryFilterView extends Backbone.View
     _.any counts, (count) -> count.id is id
 
   render: ->
+    return if @params.get('include_artworks_by_followed_artists')
     @$el.html template
       categories: @categoryMap[@params.get('medium') || 'global']
       selectedCategory: @params.get('gene_id')
       hasResults: @hasResults
       counts: @aggregations.get('MEDIUM')?.get('counts')
+
 
