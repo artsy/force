@@ -34,6 +34,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
   setupCTAWaypoints: ->
     return if @ctaBarView.previouslyDismissed()
     @ctaBarView.render()
+    MktoForms2?.whenReady (form) -> $('#mktoForm_1230').removeAttr 'id'
     @ctaBarView.$el?.find('.cta-bar-small-form').replaceWith marketoForm()
     @$el.append @ctaBarView.$el
     if @inGIArticlePage()
