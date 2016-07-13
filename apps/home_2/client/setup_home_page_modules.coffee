@@ -44,6 +44,7 @@ module.exports = ->
       req: { user: user }
     ).then ({ home_page_module }) ->
       module = home_page_module
+
       $el = $("#hpm-#{module.key}-#{index}")
 
       return $el.remove() unless module.results?.length
@@ -72,6 +73,7 @@ module.exports = ->
 
       view.render()
     .catch (err) ->
+      $("#hpm-#{module.key}-#{index}").remove()
       console.warn('Error rendering homepage rails', err.stack)
 
 
