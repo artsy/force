@@ -3,7 +3,7 @@ _ = require 'underscore'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
-{ formatShowDetail } = require '../../view_helpers.coffee'
+{ formatShowDetail, nShowsByDate } = require '../../view_helpers.coffee'
 artistsTemplate = -> require('./artists.jade') arguments...
 showsTemplate = -> require('./shows.jade') arguments...
 articlesTemplate = -> require('./articles.jade') arguments...
@@ -42,6 +42,7 @@ sections =
 
   shows:
     render: ({ items, showMore, baseHref}) ->
+      items = nShowsByDate(items, 15)
       viewAllUrl = baseHref + '/shows'
       showsTemplate { items, formatShowDetail, showHelpers, showMore, viewAllUrl }
 

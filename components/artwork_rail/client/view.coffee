@@ -56,11 +56,11 @@ module.exports = class ArtworkRailView extends Backbone.View
     this
 
   postRender: ->
-    if @$('.view-all-rail-cell').length
-      dimension = @$('.artwork-item').height()
-      @$('.view-all-rail-cell__inner').css
-        width: dimension
-        height: dimension
+    @$('.view-all-rail-cell__inner').css
+      width: @imageHeight
+      height: @imageHeight
+
+    @$('.mgr-arrow-left, .mgr-arrow-right').css 'margin-top', "#{@imageHeight/2}px"
 
     initCarousel @$('.js-my-carousel'),
       imagesLoaded: true

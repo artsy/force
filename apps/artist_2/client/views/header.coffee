@@ -46,7 +46,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
     currentItem = CURRENT_SHOW_AUCTION
     if currentItem?.type is 'auction'
       currentItem.detail = viewHelpers.formatAuctionDetail moment(currentItem.end_at)
-      @$('.current-item').html currentItemTemplate { currentItem, viewHelpers }
+      @$('.current-item-container').html currentItemTemplate { currentItem, viewHelpers }
 
   navClick: (e) =>
     if e.target.pathname is window.location.pathname

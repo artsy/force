@@ -9,6 +9,9 @@ module.exports =
   capitalize: capitalize
   showHelpers: showHelpers
 
+  nShowsByDate: (shows, n) ->
+    _.sortBy(_.take(shows, n), 'end_at').reverse()
+
   pageTitle: (artist) ->
     artist = new Artist
       id: artist.id
