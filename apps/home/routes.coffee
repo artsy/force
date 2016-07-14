@@ -23,7 +23,11 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
-  return next() if req.user?.hasLabFeature 'Personalized Homepage'
+  activeBuckets = res.locals.sd.PERSONALIZED_HOMEPAGE_BUCKETS?.split(',')
+  outcome = res.locals.sd.PERSONALIZED_HOMEPAGE
+
+  return next() if _.contains activeBuckets, outcome
+
   heroUnits = new HeroUnits
 
   # homepage:featured-sections

@@ -92,14 +92,15 @@ describe 'Home routes', ->
             @res.render.args[0][1].heroUnits.first().has 'link'
               .should.be.false() # Fallback is just welcome without the signup link
 
-      it 'calls next when user has personalized homepage lab feature', ->
+      it 'calls next when user is in the Personalized homepage split test', ->
         Backbone.sync
           .onCall 0
           .yieldsTo 'success', []
 
-        user = new CurrentUser lab_features: ['Personalized Homepage']
+        @res.locals.sd.PERSONALIZED_HOMEPAGE_BUCKETS = 'new_homepage_1'
+        @res.locals.sd.PERSONALIZED_HOMEPAGE = 'new_homepage_1'
 
-        routes.index(extend({ user: user}, @req), @res, @next)
+        routes.index(@req, @res, @next)
         @next.called.should.be.true()
 
   describe '#redirectToSignup', ->
