@@ -39,7 +39,7 @@ module.exports = ( { el, model, allLoaded } ) ->
     if filterView.filter.__active__()
       onSync()
     else
-      filterView.filter.on 'sync:new', ->
+      filterView.filter.once 'sync:new', ->
         onSync()
 
   filterView.filter.selected.on 'change', ->

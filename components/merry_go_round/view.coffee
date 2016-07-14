@@ -35,7 +35,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     @flickity.selectedIndex <= 0
 
   isEnd: ->
-    @flickity.selectedIndex + @advanceBy > @flickity.cells.length - 1
+    @flickity.selectedIndex + @advanceBy > @flickity.slides.length - 1
 
   next: (e) ->
     return if !@flickity.options.wrapAround and @isEnd()
