@@ -12,6 +12,7 @@ LocationFilterView = require '../../components/commercial_filter/filters/locatio
 MediumFilterView = require '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 PeriodFilterView = require '../../components/commercial_filter/filters/period/period_filter_view.coffee'
 FollowedArtistFilterView = require '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
+PopularArtistsView = require '../../components/commercial_filter/views/popular_artists/popular_artists_view.coffee'
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
@@ -47,6 +48,10 @@ module.exports.init = ->
   totalView = new SortView
     el: $('.cf-total-sort__sort')
     params: params
+
+  totalView = new PopularArtistsView
+    el: $('.cf-artworks')
+    artists: filter.popular_artists
 
   pillboxView = new PillboxView
     el: $('.cf-pillboxes')
