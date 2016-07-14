@@ -14,8 +14,4 @@ block body
       i.icon-chevron-small-left
       | Back to #{artist.get('name')}
 
-    header.auction-lots-header.extra-large-garamond-header
-      h1
-        | Auction Results for&nbsp;
-        a( href="/artist/#{artist.id}")= artist.get('name')
     include ../../../components/auction_lots/templates/artist
