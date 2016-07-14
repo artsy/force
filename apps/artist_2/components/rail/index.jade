@@ -12,7 +12,7 @@ else
 
   - var cellsPerPage = 4
   - var cellsRemainder = items.length % cellsPerPage
-  - var blankCellsNeeded = cellsPerPage - cellsRemainder
+  - var blankCellsNeeded = (cellsPerPage - cellsRemainder) % 4
 
   - var i = 0
   while i < blankCellsNeeded
