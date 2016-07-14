@@ -69,20 +69,3 @@ describe 'article template', ->
         SCROLL_ARTICLE: 'static'
       asset: ->
     html.should.containEql 'This is a footer article'
-
-  it 'renders extra stickies if featured ones are missing and article is part of a section', ->
-    html = render('article')
-      article: new Article
-        title: 'hi'
-        sections: []
-        section_ids: ['55356a9deca560a0137aa4b7']
-        contributing_authors: []
-      crop: (url) -> url
-      resize: (url) -> url
-      moment: moment
-      sd:
-        SCROLL_ARTICLE: 'static'
-      asset: ->
-      section: new Section _.extend _.clone(fixtures.section), title: 'Moo Bar'
-      allSectionArticles: new Articles([_.extend(fixtures.article, tier: 1)])
-    html.should.containEql '<li class="grid-item"><a href="/article/foobar">'

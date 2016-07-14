@@ -6,11 +6,15 @@ Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require './gallery_insights.coffee'
 EditorialSignupView = require './editorial_signup.coffee'
+Sale = require '../../../models/sale.coffee'
+Partner = require '../../../models/partner.coffee'
+Profile = require '../../../models/profile.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
 JumpView = require '../../../components/jump/view.coffee'
 moment = require 'moment'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
+promotedTemplate = -> require('../templates/promoted_content.jade') arguments...
 
 module.exports = class ArticleIndexView extends Backbone.View
 
@@ -32,6 +36,8 @@ module.exports = class ArticleIndexView extends Backbone.View
       lushSignup: true
 
     @setupInfiniteScroll() if sd.SCROLL_ARTICLE is 'infinite'
+    @setupPromotedContent() if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
+      @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
 
   setupInfiniteScroll: ->
     @displayedArticles = [@article.get('slug')]
@@ -83,6 +89,29 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 5) or 0
+
+  setupPromotedContent: =>
+    if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL
+      new Partner(id: @article.get('partner_ids')?[0]).fetch
+        error: => $('.articles-promoted').hide()
+        success: (partner) ->
+          new Profile(id: partner.get('default_profile_id')).fetch
+            error: => $('.articles-promoted').hide()
+            success: (profile) ->
+              $('#articles-show').prepend promotedTemplate
+                src: profile.bestAvailableImage()
+                name: partner.get('name')
+                href: profile.href()
+                type: profile.profileType()
+    else if @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
+      new Sale(id: @article.get('auction_ids')?[0]).fetch
+        error: -> @$el('.articles-promoted').hide()
+        success: (sale) ->
+          $('#articles-show').prepend promotedTemplate
+            src: crop sale.bestImageUrl(), { width: 250, height: 165 }
+            name: sale.get('name')
+            href: sale.href()
+            type: 'Auction'
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')
