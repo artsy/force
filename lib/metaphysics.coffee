@@ -13,6 +13,7 @@ metaphysics = ({ method, query, variables, req } = {}) ->
 
     if (token = req?.user?.get?('accessToken') or req?.user?.accessToken)?
       r.set 'X-ACCESS-TOKEN': token
+      r.set 'X-USER-ID': req.user.id
 
     if method is 'get'
       r.query
