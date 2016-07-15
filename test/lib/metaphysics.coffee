@@ -131,7 +131,7 @@ describe 'metaphysics', ->
 
   describe 'user auth', ->
     beforeEach ->
-      @user = new Backbone.Model accessToken: 'xxx'
+      @user = new Backbone.Model accessToken: 'xxx', id: '007'
 
     it 'optionally accepts a req object, from which it extracts the user access token', ->
       @request.end.yields null, ok: true, body: data: {}
@@ -142,4 +142,5 @@ describe 'metaphysics', ->
             .should.eql [
               ['Accept', 'application/json']
               ['X-ACCESS-TOKEN': 'xxx']
+              ['X-USER-ID': '007']
             ]
