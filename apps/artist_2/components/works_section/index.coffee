@@ -36,12 +36,11 @@ module.exports = ( { el, model, allLoaded } ) ->
         filterView.loadNextPage() if loadMore
 
   filterView.artworks.on 'sync', (x, { hits }) ->
-    filterView.filter.get('total')?.value
-    if filterView.filter.fetching
-      filterView.filter.once 'sync', ->
-        onSync()
-    else
+    if filterView.filter.__active__()
       onSync()
+    else
+      filterView.filter.once 'sync:new', ->
+        onSync()
 
   filterView.filter.selected.on 'change', ->
     setupInfiniteScroll()

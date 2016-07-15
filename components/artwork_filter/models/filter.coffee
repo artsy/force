@@ -83,9 +83,15 @@ module.exports = class Filter
     filterState
 
   newState: (options = {}) ->
+    options.success = _.wrap options.success, (success, model, response, options) =>
+      success?(model, response, options)
+      @trigger 'sync:new'
     @fetchState @buildState(), options
 
   fetchRoot: (options = {}) ->
+    options.success = _.wrap options.success, (success, model, response, options) =>
+      @trigger 'sync:root'
+      success?(model, response, options)
     @fetchState @root, options
 
   fetch: (filterState, options = {}) ->
@@ -93,6 +99,7 @@ module.exports = class Filter
       options.success? state
       @trigger 'all sync', state
       return
+
     @trigger 'all request'
     @fetching = true
     options.success = _.wrap options.success, (success, model, response, options) =>

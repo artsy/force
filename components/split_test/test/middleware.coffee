@@ -10,12 +10,12 @@ describe 'splitTestMiddleware', ->
       @splitTestMiddleware.__set__ 'runningTests',
         header_design:
           key: 'header_design'
-          outcomes: old: 0, new: 1
+          outcomes: old: 0, new: 10
           edge: 'old'
 
         some_other_test:
           key: 'some_other_test'
-          outcomes: old: 1, new: 0
+          outcomes: old: 10, new: 0
           edge: 'new'
 
   after ->

@@ -72,6 +72,9 @@ sharify.data = _.extend _.pick(config,
   'CRITEO_ACCOUNT_NUMBER'
   'MAX_POLLS_FOR_MAX_BIDS'
   'APPLY_URL'
+  'PERSONALIZED_HOMEPAGE_BUCKETS'
+  'PC_ARTSY_CHANNEL'
+  'PC_AUCTION_CHANNEL'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

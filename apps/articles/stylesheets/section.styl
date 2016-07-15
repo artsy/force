@@ -93,87 +93,41 @@ gutter-size = 30px
     display inline
     vertical-align middle
 
-.articles-section-show-header
-  border-bottom 1px solid gray-lighter-color
-  position relative
-  top -50px
-  padding-bottom 20px
+.articles-insights-section
+  display none
+  padding 0 15%
+  margin 0 30px
 
-.articles-section-show-header-left
-  display inline-block
-  width 30%
-  h2, h3
-    text-align left
-  h2
-    font-size 30px
-    margin-bottom 15px
-    a
-      text-decoration none
-  h3
-    font-size 11px
-    avant-garde()
-  img
-    height 30px
-    margin-left 20px
-    vertical-align middle
-  h3, img
-    display inline-block
+.articles-insights-show
+  display none
+  width 100%
+  padding 60px 0
+  border-top 1px solid gray-lighter-color
 
-.articles-section-show-header-right
-  padding-left gutter-size - 1
-  overflow hidden
+.articles-insights-container
+  display block
   position relative
-  width 70%
-  &.is-over
-    ul
-      margin-left -100%
-    .articles-section-right-chevron
-      opacity 0
-    .articles-section-left-chevron
-      opacity 1
-  img
-    width 120px
-    height 80px
-    margin 0 18px 0 gutter-size
-  p
-    font-size 20px
-    line-height 1.2em
+  height 150px
+
+.articles-insights-form
+  display flex
+  margin-top 30px
+  input
+    width 100%
+    display inline
+    margin-right 10px
+  button
+    display inline
     width 190px
-  p, img
-    display inline-block
-    vertical-align middle
-  ul
-    width 200%
-    transition margin-left 0.4s ease-in-out
-    a
-      text-decoration none
-    li
-      padding 20px 0
-      display inline-block
-      vertical-align top
-      border-left 1px solid gray-lighter-color
-      width calc(25% \- gutter-size / 2)
-      &:nth-child(2)
-        margin-right gutter-size
 
-.articles-section-right-chevron, .articles-section-left-chevron
+.articles-insights-mainheader
+  garamond-size('headline')
+
+.articles-insights-subheader
+  garamond-size('s-body')
+  margin-top 10px
+
+.articles-insights
   position absolute
-  top 0
-  height 100%
-  background white
-  border 1px solid gray-lighter-color
-  font-size 28px
-  padding 0
-  cursor pointer
-  transition opacity 0.2s ease-in-out 0.2s
+  width 100%
 
-.articles-section-left-chevron
-  left 0
-  opacity 0
-
-.articles-section-right-chevron
-  right 0
-
-.articles-section-show-header-left, .articles-section-show-header-right
-  vertical-align middle
-  display inline-block

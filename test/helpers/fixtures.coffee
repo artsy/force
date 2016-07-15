@@ -162,6 +162,7 @@ moment = require 'moment'
     related_articles: ['5086df098523e60002000012']
   }
   hero_section: {}
+  channel_id: '5086df098523e60002000011'
 
 @searchResult =
   kind: 'customsearch#result'

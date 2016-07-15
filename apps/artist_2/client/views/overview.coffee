@@ -61,9 +61,6 @@ module.exports = class OverviewView extends Backbone.View
       return if not items
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
-  nShowsByDate: (shows, n) ->
-    _.sortBy(_.take(shows, n), 'end_at').reverse()
-
   renderExhibitionHighlights: ({shows, counts}) ->
     return if not @statuses.shows
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
@@ -71,12 +68,12 @@ module.exports = class OverviewView extends Backbone.View
     # If there are less than 15 shows, show them all.
     showMore = counts.shows > 15
     if showMore
-      highlights = @nShowsByDate(shows, 10)
+      highlights = viewHelpers.nShowsByDate(shows, 10)
     else
       solo = []
       group = []
       fair = []
-      shows = _.each @nShowsByDate(shows, 15), (show) ->
+      shows = _.each viewHelpers.nShowsByDate(shows, 15), (show) ->
         if show.fair
           fair.push show
         else if show.artists.length > 1
