@@ -4,10 +4,12 @@
 # populating sharify data
 #
 
-{ API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
+{
+  API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT,
-  FUSION_URL, IP_BLACKLIST } = config = require "../config"
+  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST,
+  LOGGER_FORMAT
+} = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -149,7 +151,7 @@ module.exports = (app) ->
   app.use sameOriginMiddleware
   app.use hstsMiddleware
   app.use escapedFragmentMiddleware
-  app.use logger('dev')
+  app.use logger LOGGER_FORMAT
   app.use unsupportedBrowserCheck
   app.use splitTestMiddleware
 

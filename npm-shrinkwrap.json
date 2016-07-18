@@ -216,16 +216,9 @@
       }
     },
     "artsy-error-handler": {
-      "version": "0.0.5",
+      "version": "1.0.0",
       "from": "git://github.com/artsy/artsy-error-handler.git",
-      "resolved": "git://github.com/artsy/artsy-error-handler.git#841cc9138d9f0b832cc374755bc703f3eac0bd13",
-      "dependencies": {
-        "jade": {
-          "version": "1.11.0",
-          "from": "jade@*",
-          "resolved": "https://registry.npmjs.org/jade/-/jade-1.11.0.tgz"
-        }
-      }
+      "resolved": "git://github.com/artsy/artsy-error-handler.git#1bf038a787f69a5c9003cbbcf2cca7a48e4bedc6"
     },
     "artsy-ezel-components": {
       "version": "0.0.5",
