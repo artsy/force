@@ -107,6 +107,7 @@ module.exports =
   PERSONALIZED_HOMEPAGE_BUCKETS: ''
   PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
+  LOGGER_FORMAT: 'combined'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
