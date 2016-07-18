@@ -20,12 +20,10 @@ currentShowAuction = require './components/current_show_auction/index'
     query: query
     variables: artist_id: req.params.id
   .then ({artist}) ->
-    if req.params.tab is 'auction-results'
-      return next() unless artist.display_auction_link
+    if req.params.tab is 'auction-results' and not artist.display_auction_link
+      res.redirect artist.href
 
-    nav = new Nav artist: artist
-
-    if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
+    else if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
       res.locals.sd.ARTIST = artist
       res.locals.sd.TAB = tab = req.params.tab or ''
       if currentItem = currentShowAuction(artist)
@@ -40,7 +38,7 @@ currentShowAuction = require './components/current_show_auction/index'
         viewHelpers: helpers
         artist: artist
         tab: tab
-        nav: nav
+        nav: new Nav artist: artist
         currentItem: currentItem
 
     else
