@@ -6,7 +6,6 @@ ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
-openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm
@@ -21,7 +20,6 @@ module.exports = class BidForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
     'click .bidding-question': 'showBiddingDialog'
-    'click .js-contact-specialist' : 'openContactModal'
 
   initialize: ({ @saleArtwork, @bidderPositions, @submitImmediately }) ->
     @user = CurrentUser.orNull()
@@ -31,9 +29,6 @@ module.exports = class BidForm extends ErrorHandlingForm
 
     # extend form's errors with our own
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
-
-  openContactModal: ->
-    openSpecialistModal()
 
   showBiddingDialog: (e) ->
     e.preventDefault()

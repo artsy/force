@@ -4,7 +4,6 @@ Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
-openSpecialistModal = require '../../../components/simple_contact/specialist_feedback.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
@@ -53,10 +52,6 @@ module.exports.init = ->
     artworks.reset Artworks.__fromSale__ saleArtworks
 
   setupClocks [auction, auction.related().sale]
-
-  $('.js-specialist-contact-link').click (e) ->
-    e.preventDefault()
-    openSpecialistModal()
 
   $('.js-register-button').click (e) ->
     return if user

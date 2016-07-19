@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
-openSpecialistModal = require '../../simple_contact/specialist_feedback.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class FooterView extends Backbone.View
@@ -22,7 +21,3 @@ module.exports = class FooterView extends Backbone.View
   openFeedback: (e) ->
     e.preventDefault()
     openFeedbackModal()
-
-  openSpecialist: (e) ->
-    e.preventDefault()
-    openSpecialistModal()

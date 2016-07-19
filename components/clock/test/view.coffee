@@ -102,7 +102,6 @@ describe 'ClockView', ->
       @triggerSpy.args[0][0].should.equal 'clock:is-over'
 
   # TODO: components/clock/test/view.coffee
-  # and components/contact/test/contact_partner.coffee conflict
   xdescribe '#stateCallback', ->
 
     it 'defaults to reloading the page when the clock state changes', ->
