@@ -9,9 +9,10 @@ if artwork.partner && artwork.partner.artworks && artwork.partner.artworks.lengt
       ) View All
 
     - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks)
+
     include ../../../../components/artwork_masonry/index
 
     .artwork-section__jump
       a.avant-garde-jump-link( href='#{artwork.partner.href}/works' )
-        | View all #{artwork.partner.counts.artworks} works from #{artwork.partner.name}
+        | View all #{artwork.partner.counts.artworks} from #{artwork.partner.name}
         i.icon-chevron-small-right

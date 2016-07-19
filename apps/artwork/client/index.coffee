@@ -1,12 +1,10 @@
-{ extend, map } = require 'underscore'
+{ extend, map, compact } = require 'underscore'
 { CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 exec = require '../lib/exec.coffee'
-templates =
-  fold: -> require('./fold.jade') arguments...
-  footer: -> require('./footer.jade') arguments...
-
+fold = -> require('./fold.jade') arguments...
+footer = -> require('./footer.jade') arguments...
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
@@ -17,21 +15,19 @@ helpers = extend [
   partner_artworks: require '../components/partner_artworks/helpers.coffee'
 ]...
 
-module.exports.init = ->
-  setCookie(CLIENT._id)
-  exec [
-    require '../components/actions/index.coffee'
-    require '../components/additional_info/index.coffee'
-    require '../components/auction/index.coffee'
-    require '../components/artists/index.coffee'
-    require '../components/banner/index.coffee'
-    require '../components/commercial/index.coffee'
-    require '../components/images/index.coffee'
-    require '../components/metadata/index.coffee'
-  ]
+sharedInit = [
+  require '../components/actions/index.coffee'
+  require '../components/additional_info/index.coffee'
+  require '../components/auction/index.coffee'
+  require '../components/artists/index.coffee'
+  require '../components/banner/index.coffee'
+  require '../components/commercial/index.coffee'
+  require '../components/images/index.coffee'
+  require '../components/metadata/index.coffee'
+]
 
-  context = CLIENT.context or {}
-  { query, init, variables } =
+module.exports =
+  setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
           query artwork($id: String!, $isClosed: Bool!) {
@@ -51,9 +47,9 @@ module.exports.init = ->
       variables:
         isClosed: context.is_closed
 
-      init: _.compact [
+      init: compact [
           require '../components/partner/index.coffee'
-          require '../components/auction_artworks/index.coffee' if !context.is_closed
+          require '../components/auction_artworks/index.coffee' unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
         ]
@@ -134,14 +130,23 @@ module.exports.init = ->
           require '../components/related_artworks/index.coffee'
         ]
 
-  return unless query? and init?
-  variables ?= {}
-  metaphysics query: query, variables: _.extend id: CLIENT.id, variables
-    .then (data) ->
-      for key, template of templates
-        $(".js-artwork-#{key}")
-          .html template extend data,
-            helpers: helpers
+  renderTemplates: renderTemplates = (data) ->
+    for key, template of { fold, footer }
+      $(".js-artwork-#{key}")
+        .html template extend data,
+          helpers: helpers
 
-      exec init
+  init: ->
+    setCookie(CLIENT._id)
+    exec sharedInit
+
+    context = CLIENT.context or {}
+    { query, init, variables } = setup(context)
+
+    return unless query? and init?
+    variables ?= {}
+    metaphysics query: query, variables: extend { id: CLIENT.id, variables }
+      .then (data) ->
+        renderTemplates(data)
+        exec init
 
