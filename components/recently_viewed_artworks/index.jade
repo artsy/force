@@ -1,16 +1,17 @@
-.rva-container.main-layout-container.responsive-layout-container
-  .rva-header.avant-garde-s-headline
-    | Recently Viewed
-    
-  .rva-content
-    .rva-images
-      for artwork in artworks
-        .rva-artwork-image-container.artwork-item( data-artwork-id=artwork.id )
-          a( href= artwork.href )
-            img.rva-artwork-image(
-              src= artwork.image.thumb.url
-              alt= artwork.title
-              onerror='this.style.display="none";'
-            )
+.responsive-layout-container
+  .rva-container.main-layout-container
+    .rva-header.avant-garde-s-headline
+      | Recently Viewed
 
-          include ../artwork_item/save_controls/template
+    .rva-content
+      .rva-images
+        for artwork in artworks
+          .rva-artwork-image-container.artwork-item( data-artwork-id=artwork.id )
+            a( href= artwork.href )
+              img.rva-artwork-image(
+                src= artwork.image.thumb.url
+                alt= artwork.title
+                onerror='this.style.display="none";'
+              )
+
+            include ../artwork_item/save_controls/template
