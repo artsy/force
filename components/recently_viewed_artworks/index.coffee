@@ -31,13 +31,13 @@ module.exports =
     artworkIdsToStore = uniqueArtworkIds.slice(0, ARTWORK_COUNT)
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
-  setupRail: ($el) ->
-    return if currentPathIsInExcludeList()
-    artworkIds = cookieValue()
-    return unless artworkIds.length > 0
+  shouldShowRVARail: ->
     user = User.instantiate()
-    return unless user.isLoggedIn() && user.hasLabFeature('Recently Viewed Artworks')
-    send = method: 'post', query: query, variables: ids: artworkIds
+    !currentPathIsInExcludeList() && cookieValue().length > 0 && user.isLoggedIn() && user.hasLabFeature('Recently Viewed Artworks') 
+
+  setupRail: ($el) ->
+    user = User.instantiate()
+    send = method: 'post', query: query, variables: ids: cookieValue()
     metaphysics send
       .then (data) ->
         $el.html template
