@@ -8,7 +8,7 @@ SaveControls = require '../artwork_item/save_controls/view.coffee'
 { excludeList } = require './exclude_list.coffee'
 COOKIE_NAME = 'recently-viewed-artworks'
 COOKIE_EXPIRY = 60 * 60 * 24 * 365
-ARTWORK_COUNT = 6
+ARTWORK_COUNT = 8
 
 template = -> require('./index.jade') arguments...
 
