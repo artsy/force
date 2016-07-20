@@ -1,0 +1,18 @@
+if artwork.partner && artwork.partner.artworks && artwork.partner.artworks.length
+  section.artwork-section.artwork-partner-artworks( class='js-artwork-partner-artworks' )
+    header.artwork-partner-artworks__header
+      h3.artwork-partner-artworks__header__name
+        | Other Works from #{artwork.partner.name}
+
+      a.artwork-partner-artworks__header__jump(
+        href='#{artwork.partner.href}/works'
+      ) View All
+
+    - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks)
+
+    include ../../../../components/artwork_masonry/index
+
+    .artwork-section__jump
+      a.avant-garde-jump-link( href='#{artwork.partner.href}/works' )
+        | View all #{artwork.partner.counts.artworks} from #{artwork.partner.name}
+        i.icon-chevron-small-right

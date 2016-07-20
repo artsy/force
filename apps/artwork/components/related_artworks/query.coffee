@@ -8,7 +8,7 @@ module.exports = """
       id
       name
       href
-      artworks {
+      artworks (size: 10) {
         ... artwork_brick
       }
     }
