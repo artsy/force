@@ -23,8 +23,8 @@ mixin rail(title, viewAllUrl, section)
 
     .bisected-header-cell
       if hasMeta
-        .artist-blurb.bisected-header-cell-section
-          if hasArtsyBlurb
+        if hasArtsyBlurb
+          .artist-blurb.bisected-header-cell-section
             h2 Biography
             .blurb!= artist.biography_blurb.text
 
