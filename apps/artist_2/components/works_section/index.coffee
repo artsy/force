@@ -1,5 +1,6 @@
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = ( { el, model, allLoaded } ) ->
   $el = $(el)
@@ -10,7 +11,7 @@ module.exports = ( { el, model, allLoaded } ) ->
     showSeeMoreLink: false
 
   filterView = filterRouter.view
-  $('#main-layout-footer').css(display: 'none', opacity: 0)
+  mediator.trigger 'infinite:scroll:start'
 
   stickyHeaderHeight = $('.artist-sticky-header-container').outerHeight(true)
   filterView.topOffset = stickyHeaderHeight
@@ -25,7 +26,7 @@ module.exports = ( { el, model, allLoaded } ) ->
 
   onSync = ->
     if filterView.remaining() is 0
-      $('#main-layout-footer').css(display: 'block', opacity: 1)
+      mediator.trigger 'infinite:scroll:end'
       $.destroyInfiniteScroll()
       allLoaded() if allLoaded
     else
