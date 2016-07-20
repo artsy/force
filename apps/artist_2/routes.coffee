@@ -26,7 +26,7 @@ currentShowAuction = require './components/current_show_auction/index'
   metaphysics send
     .then ({ artist }) ->
       nav = new Nav artist: artist
-      next() if not _.find nav.sections(), slug: tab
+      return next() if not _.find nav.sections(), slug: tab
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         res.locals.sd.ARTIST = artist
