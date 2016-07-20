@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
+{ setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
 
 module.exports = class FooterView extends Backbone.View
   events:
@@ -11,11 +12,17 @@ module.exports = class FooterView extends Backbone.View
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
     @listenTo mediator, 'infinite:scroll:end', @show
+    @$recentlyViewedArtworks = $('#recently-viewed-artworks')
+
+    if shouldShowRVARail()
+      setupRail @$recentlyViewedArtworks
+      @$('.mlf-upper').css('border', 'none')
 
   hide: ->
     @$el.hide()
 
   show: ->
+    reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail()
     @$el.show()
 
   openFeedback: (e) ->

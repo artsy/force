@@ -35,6 +35,12 @@ module.exports =
     user = User.instantiate()
     !currentPathIsInExcludeList() && cookieValue().length > 0 && user.isLoggedIn() && user.hasLabFeature('Recently Viewed Artworks') 
 
+  reInitRVARail: ($el) ->
+    $el.find('.rva-container').fillwidthLite
+      gutterSize: 30
+      targetHeight: 150
+      dontResizeUp: true
+
   setupRail: ($el) ->
     user = User.instantiate()
     send = method: 'post', query: query, variables: ids: cookieValue()

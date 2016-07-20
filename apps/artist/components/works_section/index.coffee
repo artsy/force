@@ -1,5 +1,6 @@
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 
 module.exports = ( { el, model, allLoaded } ) ->
   $el = $(el)
@@ -12,7 +13,7 @@ module.exports = ( { el, model, allLoaded } ) ->
     context_module: 'Works section'
 
   filterView = filterRouter.view
-  $('#main-layout-footer').css(display: 'none', opacity: 0)
+  mediator.trigger 'infinite:scroll:start'
 
   $.onInfiniteScroll ->
     filterView.loadNextPage()
@@ -30,7 +31,7 @@ module.exports = ( { el, model, allLoaded } ) ->
         # the hits array and if it is empty then stop
         hits.length is 0
     )
-      $('#main-layout-footer').css(display: 'block', opacity: 1)
+      mediator.trigger 'infinite:scroll:end'
       $.destroyInfiniteScroll()
       allLoaded() if allLoaded
     else
