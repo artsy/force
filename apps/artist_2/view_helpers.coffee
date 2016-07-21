@@ -67,3 +67,10 @@ module.exports =
     minuteFormat = if end.minute() > 0 then ':mm' else ''
     end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
 
+  hasArtsyBlurb: (artist) ->
+    artist.biography_blurb &&
+    artist.biography_blurb.text &&
+    artist.biography_blurb.text.length &&
+    !artist.biography_blurb.credit
+
+  hasOverviewHeaderMeta: (artist) -> @hasArtsyBlurb(artist) || @artistMeta(artist).length
