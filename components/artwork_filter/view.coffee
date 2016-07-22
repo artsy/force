@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
-ArtworkTableView = require '../artwork_table/view.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -21,32 +20,18 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click .bordered-pulldown-options a': 'selectCriteria'
     'click .artwork-filter-view-mode__toggle': 'changeViewMode'
 
-  view: ->
-    viewModes =
-      grid: ArtworkColumnsView
-      list: ArtworkTableView
-
-    new viewModes[@viewMode.get('mode')] @params()
-
   params: ->
-    viewModes =
-      grid:
-        numberOfColumns: 3
-        gutterWidth: 40
-        maxArtworkHeight: 400
-        isOrdered: false
-        seeMore: false
-        allowDuplicates: true
-        artworkSize: 'tall'
-      list:
-        show: true
-
-    _.extend
-      el: @$artworks
-      collection: @artworks
-      context_page: @context_page
-      context_module: @context_module
-    , viewModes[@viewMode.get('mode')]
+    numberOfColumns: 3
+    gutterWidth: 40
+    maxArtworkHeight: 400
+    isOrdered: false
+    seeMore: false
+    allowDuplicates: true
+    artworkSize: 'tall'
+    el: @$artworks
+    collection: @artworks
+    context_page: @context_page
+    context_module: @context_module
 
   initialize: ({ @mode, @showSeeMoreLink, @context_page, @context_module }) ->
     @artworks = new ArtworkColumns [],
@@ -54,7 +39,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
       context_page: @context_page,
       context_module: @context_module
     @filter = new Filter model: @model
-    @viewMode = new Backbone.Model mode: @mode
 
     @listenTo @artworks, 'all', @handleArtworksState
     @listenTo @artworks, 'sync', @renderColumns
@@ -63,8 +47,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @filter, 'sync', @renderHeader
     @listenTo @filter.selected, 'change', @fetchArtworksFromBeginning
     @listenTo @filter.selected, 'change', @scrollToTop
-    @listenTo @viewMode, 'change', @renderFilter
-    @listenTo @viewMode, 'change', @renderHeader
 
     @render()
 
@@ -102,13 +84,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     $target = $(e.currentTarget)
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
-
-  changeViewMode: (e) ->
-    $target = $(e.currentTarget)
-    mode = $target.data('mode')
-    @viewMode.set 'mode', mode
-    @artworksView = @view()
-    analyticsHooks.trigger 'artwork_viewmode:toggled', { mode: mode }
 
   remaining: ->
     length = @artworksView?.length() or 0
@@ -151,7 +126,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$header?.html headerTemplate
       filter: @filter
       artist: @model
-      mode: @viewMode.get('mode')
       total: @filter.get('total')?.value
 
     @sortView?.undelegateEvents()
@@ -162,7 +136,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
       @artworksView.appendArtworks @artworks.models
     else
       @artworksView?.stopListening()
-      @artworksView = @view()
+      @artworksView = new ArtworkColumnsView @params()
 
   pricedFilter: ->
     (if @filter.selected.has('for_sale') then @filter.priced() else @filter.root) or @filter.root
