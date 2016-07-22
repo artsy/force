@@ -20,6 +20,7 @@ if artist.deathday
   meta( property="og:deathyear", content= artist.deathday )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name="fragment", content="!" )
+
 - var hasImage = artist.image && artist.image.versions.length
 if hasImage && artist.image.versions.indexOf('large')
   meta( property="twitter:card", content="summary_large_image" )
@@ -28,7 +29,7 @@ if hasImage && artist.image.versions.indexOf('large')
 else
   meta( property="twitter:card", content="summary" )
 
-if (artist.counts.artworks == 0 && !artist.blurb) || sd.CURRENT_PATH.indexOf('works') == 1
+if (artist.counts.artworks == 0 && !artist.blurb) || nav && (active = nav.active(sd.CURRENT_PATH)) && active.name == 'Works'
   meta(name="robots" content="noindex, follow")
 
 if nav

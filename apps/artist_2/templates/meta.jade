@@ -1,4 +1,5 @@
 title= artist.meta.title
+
 meta( property="og:title", content= artist.meta.title )
 meta( name="description", content= artist.meta.description )
 meta( property="og:description", content= artist.meta.description )
@@ -28,7 +29,7 @@ if hasImage && artist.image.versions.indexOf('large')
 else
   meta( property="twitter:card", content="summary" )
 
-if (artist.counts.artworks == 0 && !artist.blurb) || sd.CURRENT_PATH.indexOf('works') == 1
+if (artist.counts.artworks == 0 && !artist.blurb) || nav && nav.active(sd.CURRENT_PATH).name == 'Works'
   meta(name="robots" content="noindex, follow")
 
 if nav
