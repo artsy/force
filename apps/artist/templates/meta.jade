@@ -1,4 +1,5 @@
 title= artist.meta.title
+
 meta( property="og:title", content= artist.meta.title )
 meta( name="description", content= artist.meta.description )
 meta( property="og:description", content= artist.meta.description )
@@ -8,6 +9,7 @@ link( rel="canonical", href="#{sd.APP_URL}/artist/#{artist.id}" )
 meta( property="og:url", content="#{sd.APP_URL}/artist/#{artist.id}" )
 meta( property="og:type", content="#{sd.FACEBOOK_APP_NAMESPACE}:artist" )
 meta( name="skos:prefLabel", content="#{artist.name}" )
+
 if artist.alternate_names
   meta( name="skos:altLabel", content="#{viewHelpers.formatAlternateNames(artist)}" )
 if artist.nationality
@@ -26,7 +28,7 @@ if hasImage && artist.image.versions.indexOf('large')
 else
   meta( property="twitter:card", content="summary" )
 
-if artist.counts.artworks == 0 && !artist.blurb
+if (artist.counts.artworks == 0 && !artist.blurb) || sd.CURRENT_PATH.indexOf('works') == 1
   meta(name="robots" content="noindex, follow")
 
 if nav
