@@ -50,13 +50,13 @@ describe 'Artist header', ->
       $navLinks.text().should.containEql ('Shows')
       $navLinks.text().should.containEql ('Auction Results')
 
-  describe 'artist with some artworks (on the overview page)', ->
+  describe 'artist with some artworks (on the works page)', ->
     beforeEach (done) ->
       @artist = artistJSON
       @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/works"
         asset: (->)
         artist: @artist
         nav: @nav
@@ -80,8 +80,7 @@ describe 'Artist header', ->
     it 'should display an artworks section with artworks', ->
       $('body').html().should.containEql 'artwork-section'
 
-
-  describe 'artist with no artworks (on the overview page)', ->
+  describe 'artist with no artworks (on the works page)', ->
     beforeEach (done) ->
       @artist = _.clone artistJSON
       @artist.statuses = _.clone artistJSON.statuses
@@ -89,7 +88,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        sd: CURRENT_PATH: "/artist/#{@artist.id}"
         asset: (->)
         artist: @artist
         nav: @nav
@@ -138,3 +137,27 @@ describe 'Artist header', ->
       $navLinks.text().should.containEql ('Shows')
       $navLinks.text().should.not.containEql ('Auction Results')
 
+  describe 'artist without auction lots', ->
+    beforeEach (done) ->
+      @artist = _.clone artistJSON
+      @artist.statuses = _.clone artistJSON.statuses
+      @artist.statuses.auction_lots = false
+      @nav = new Nav artist: @artist
+
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
+        artist: @artist
+        nav: @nav
+        viewHelpers: helpers
+      }, done
+
+    it 'renders the appropriate nav', ->
+      $navLinks = $('.garamond-bordered-tablist a')
+      $navLinks.length.should.equal 5
+      $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('Overview')
+      $navLinks.text().should.containEql ('Works')
+      $navLinks.text().should.containEql ('Articles')
+      $navLinks.text().should.containEql ('Shows')
+      $navLinks.text().should.not.containEql ('Auction Results')
