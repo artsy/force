@@ -15,7 +15,6 @@ describe 'ArtworkFilterView', ->
       Backbone.$ = $
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
-      @ArtworkFilterView.__set__ 'ArtworkTableView', sinon.stub().returns { length: -> 999 }
       @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub().returns { undelegateEvents: -> 1 }
       done()
 
@@ -58,22 +57,6 @@ describe 'ArtworkFilterView', ->
     it 'removes itself if the initial filter state errors', ->
       Backbone.sync.args[0][2].error {}
       @view.remove.called.should.be.true()
-
-    it 'starts in grid mode', ->
-      @view.viewMode.get('mode').should.equal 'grid'
-
-  describe '#changeViewMode', ->
-    beforeEach ->
-      Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
-
-    it 'sets the view mode when the toggle is clicked', ->
-      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
-      @view.viewMode.get('mode').should.eql 'list'
-
-    it 're-renders the artworks when the view mode is changed', ->
-      sinon.spy @ArtworkFilterView::, 'view'
-      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
-      @ArtworkFilterView::view.called.should.be.true()
 
   describe '#renderFilter', ->
     beforeEach ->

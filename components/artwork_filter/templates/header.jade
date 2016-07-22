@@ -14,9 +14,3 @@ include ../../bordered_pulldown/mixin
       data-key='sort'
       href='?sort=#{value}'
     )= label
-
-.artwork-filter-view-mode
-  .artwork-filter-view-mode__toggle(data-mode="grid" class= mode == 'grid' ? 'is-active' : '')
-    include ../../main_layout/public/icons/grid.svg
-  .artwork-filter-view-mode__toggle(data-mode="list" class= mode == 'list' ? 'is-active' : '')
-    include ../../main_layout/public/icons/list.svg
