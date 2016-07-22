@@ -33,7 +33,7 @@ module.exports = class AuthModalView extends ModalView
     return if isEigen.checkWith options
 
     { @destination } = options
-    @redirectTo = sanitizeRedirect(options.redirectTo) if options.redirectTo
+    @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     @preInitialize options
 
     super

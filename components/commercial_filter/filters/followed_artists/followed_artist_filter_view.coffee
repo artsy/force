@@ -28,7 +28,8 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
 
   signup: (e) ->
     e.preventDefault()
-    mediator.trigger 'open:auth', mode: 'register', copy: "Sign up to receive alerts when new works are available by artists you follow."
+    redirectTo = "#{window.location.pathname}#{window.location.search}"
+    mediator.trigger 'open:auth', mode: 'register', copy: "Sign up to receive alerts when new works are available by artists you follow.", redirectTo: redirectTo
 
   render: ->
     @$el.html template
