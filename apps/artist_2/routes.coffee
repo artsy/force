@@ -41,6 +41,7 @@ currentShowAuction = require './components/current_show_auction/index'
           tab: tab
           nav: nav
           currentItem: currentItem
+          jsonLD: JSON.stringify helpers.toJSONLD artist
 
       else
         res.redirect artist.href

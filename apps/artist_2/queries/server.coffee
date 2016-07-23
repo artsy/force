@@ -31,6 +31,7 @@ module.exports = """
       ... image
       ... statuses
       ... carousel
+      ... jsonLD
     }
   }
 
@@ -54,6 +55,7 @@ module.exports = """
     }
   }
 
+  #{require './jsonLD'}
   #{require '../components/carousel/query'}
   #{require '../components/current_show_auction/query'}
 """
