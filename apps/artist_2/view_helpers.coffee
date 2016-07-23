@@ -68,9 +68,6 @@ module.exports =
     end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
 
   hasArtsyBlurb: (artist) ->
-    artist.biography_blurb &&
-    artist.biography_blurb.text &&
-    artist.biography_blurb.text.length &&
-    !artist.biography_blurb.credit
+    artist.biography_blurb?.text?.length && !artist.biography_blurb.credit
 
   hasOverviewHeaderMeta: (artist) -> @hasArtsyBlurb(artist) || @artistMeta(artist).length

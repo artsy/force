@@ -115,10 +115,9 @@ module.exports = class OverviewView extends Backbone.View
           $(".js-artist-overview-header-#{append}").append subView.$el
 
         # If one half of the bisected header is empty, remove it.
-        remove = 'left' if not (hasMeta or append is 'left')
-        remove = 'right' if not (hasShows or hasGenes)
-        if remove
-          $(".js-artist-overview-header-#{remove}").remove()
+        @$('.bisected-header-cell').each ->
+          $el = $(this)
+          $el.remove() if not $el.children().length
 
       @setupBlurb()
     @subViews.push subView
