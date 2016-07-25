@@ -66,7 +66,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ editorial: false }) unless user?.email
-  if article.get('author_id') is sd.ARTSY_EDITORIAL_ID
+  if article.get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
     subscribedToEditorial user.email, (err, isSubscribed) ->
       cb { editorial: isSubscribed }
   else
@@ -74,7 +74,7 @@ setupEmailSubscriptions = (user, article, cb) ->
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-  if data.relatedArticles?.length or data.article.get('author_id') isnt sd.ARTSY_EDITORIAL_ID
+  if data.relatedArticles?.length or data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL
     'static'
   else
     'infinite'

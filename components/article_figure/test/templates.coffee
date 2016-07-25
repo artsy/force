@@ -80,5 +80,5 @@ describe 'article figure template', ->
         contributing_authors: [
           {name: 'Kana' }
         ]
-      sd: {CURRENT_PATH: '/articles', ARTSY_EDITORIAL_ID: '123'}
+      sd: {CURRENT_PATH: '/articles', ARTSY_EDITORIAL_CHANNEL: '123'}
     html.should.not.containEql 'class="article-figure-author"'

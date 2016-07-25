@@ -10,7 +10,7 @@ describe 'RSS', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    routes.__set__ 'sd', { ARTSY_EDITORIAL_ID: 'foo' }
+    routes.__set__ 'sd', { ARTSY_EDITORIAL_CHANNEL: 'foo' }
     @req = {}
     @res =
       render: sinon.stub()

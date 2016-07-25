@@ -50,8 +50,8 @@ describe 'EditorialSignupView', ->
 
     it 'does not render CTA bar if page does not come from social or search traffic', ->
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'unknown'
       @view.initialize()
@@ -60,8 +60,8 @@ describe 'EditorialSignupView', ->
 
     it 'only sets up waypoints for editorial article page', ->
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()
@@ -73,8 +73,8 @@ describe 'EditorialSignupView', ->
     it 'removes the form when successful', ->
       $.ajax.yieldsTo('success')
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.onSubscribe({currentTarget: $('<div></div>')})
@@ -83,8 +83,8 @@ describe 'EditorialSignupView', ->
     it 'removes the loading spinner if there is an error', ->
       $.ajax.yieldsTo('error')
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       $subscribe = $('<div></div>')
@@ -95,8 +95,8 @@ describe 'EditorialSignupView', ->
 
     it 'is hidden if an auction reminder is visible', ->
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()
@@ -105,8 +105,8 @@ describe 'EditorialSignupView', ->
 
     it 'is displayed if there arent any auction reminders', ->
       @EditorialSignupView.__set__ 'sd',
-        ARTICLE: author_id: '123'
-        ARTSY_EDITORIAL_ID: '123'
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
         MEDIUM: 'social'
       @view.initialize()

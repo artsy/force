@@ -15,7 +15,7 @@ mixin article-figure(article, width, showDate, showShare)
         = article.get('thumbnail_title')
 
       .article-figure-author-section
-        if article.get('contributing_authors').length === 0 || article.get('author_id') !== sd.ARTSY_EDITORIAL_ID || sd.CURRENT_PATH !== '/articles'
+        if article.get('contributing_authors').length === 0 || article.get('channel_id') !== sd.ARTSY_EDITORIAL_CHANNEL || sd.CURRENT_PATH !== '/articles'
           .article-figure-author(class = article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
             = article.get('author') ? article.get('author').name : ''
 

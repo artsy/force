@@ -25,7 +25,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     (@inAEArticlePage() or @inAEMagazinePage()) and not sd.SUBSCRIBED_TO_EDITORIAL
 
   inAEArticlePage: ->
-    sd.ARTICLE? and sd.ARTICLE.author_id is sd.ARTSY_EDITORIAL_ID
+    sd.ARTICLE? and sd.ARTICLE.channel_id is sd.ARTSY_EDITORIAL_CHANNEL
 
   inAEMagazinePage: ->
     sd.CURRENT_PATH is '/articles'

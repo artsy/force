@@ -12,7 +12,7 @@ describe 'ArticlesGridView', ->
     benv.setup ->
       benv.expose
         $: benv.require 'jquery'
-        sd: ARTSY_EDITORIAL_ID: '123'
+        sd: ARTSY_EDITORIAL_CHANNEL: '123'
       Backbone.$ = $
       done()
 
