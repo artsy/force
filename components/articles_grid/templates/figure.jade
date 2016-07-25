@@ -12,11 +12,11 @@ figure.articles-grid__figure.grid-item
       = article.get('thumbnail_title')
 
     .articles-grid__author
-      if article.get('author_id') === sd.ARTSY_EDITORIAL_ID && article.get('contributing_authors').length > 0
+      if article.get('channel_id') === sd.ARTSY_EDITORIAL_CHANNEL && article.get('contributing_authors').length > 0
         .articles-grid__author-name-editorial Artsy Editorial&nbsp;&nbsp;•&nbsp;&nbsp;
         .articles-grid__author-name
           = article.contributingByline()
-      else if article.get('author_id') === sd.ARTSY_EDITORIAL_ID
+      else if article.get('channel_id') === sd.ARTSY_EDITORIAL_CHANNEL
         .articles-grid__author-name-editorial Artsy Editorial
       else
         .articles-grid__author-name= article.byline()

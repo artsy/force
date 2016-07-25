@@ -12,7 +12,7 @@ describe 'ArticlesGridView', ->
     benv.setup ->
       benv.expose
         $: benv.require 'jquery'
-        sd: ARTSY_EDITORIAL_ID: '123'
+        sd: ARTSY_EDITORIAL_CHANNEL: '123'
       Backbone.$ = $
       done()
 
@@ -38,7 +38,7 @@ describe 'ArticlesGridView', ->
         { id: _.uniqueId(), thumbnail_title: 'Foo Bar', contributing_authors: [], author: {name: 'Molly'} }
         { id: _.uniqueId(), thumbnail_title: 'Foo Baz', contributing_authors: [], author_id: '123', author: {name: 'Artsy Editorial'} }
         { id: _.uniqueId(), thumbnail_title: 'Bar Baz', contributing_authors: [{name: 'Jon Snow'}], author: {name: 'Halley'}}
-        { id: _.uniqueId(), thumbnail_title: 'Bar Bar', contributing_authors: [{name: 'Sansa Stark'}, {name: 'Tyrion Lannister'}], author_id: '123', author: {name: 'Artsy Editorial'} }
+        { id: _.uniqueId(), thumbnail_title: 'Bar Bar', contributing_authors: [{name: 'Sansa Stark'}, {name: 'Tyrion Lannister'}], channel_id: '123', author: {name: 'Artsy Editorial'} }
       ]
       @articles.count = 15
       @view = new ArticlesGridView collection: @articles

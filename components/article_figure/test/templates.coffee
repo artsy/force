@@ -44,7 +44,7 @@ describe 'article figure template', ->
       article: new Article
         author_id: '123'
         contributing_authors: [ {name: 'Kana', profile_id: 'user345'} ]
-      sd: {CURRENT_PATH: '/articles'}
+      sd: {}
     html.should.not.containEql 'Kana,'
     html.should.containEql 'has-contributing-author'
 
@@ -80,5 +80,5 @@ describe 'article figure template', ->
         contributing_authors: [
           {name: 'Kana' }
         ]
-      sd: {CURRENT_PATH: '/articles', ARTSY_EDITORIAL_ID: '123'}
+      sd: {CURRENT_PATH: '/articles', ARTSY_EDITORIAL_CHANNEL: '123'}
     html.should.not.containEql 'class="article-figure-author"'

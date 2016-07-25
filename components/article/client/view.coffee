@@ -28,7 +28,7 @@ DATA =
   sort: '-published_at'
   published: true
   tier: 1
-  author_id: sd.ARTSY_EDITORIAL_ID
+  channel_id: sd.ARTSY_EDITORIAL_CHANNEL
 
 module.exports = class ArticleView extends Backbone.View
 

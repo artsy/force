@@ -20,7 +20,7 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   initialize: (options) ->
     @params = new Backbone.Model
-      author_id: sd.ARTSY_EDITORIAL_ID
+      channel_id: sd.ARTSY_EDITORIAL_CHANNEL
       published: true
       tier: 1
       sort: '-published_at'
