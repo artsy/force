@@ -19,7 +19,7 @@
       .artwork-metadata-stub__sale-artwork__sale-message
         | Buy Now Price: #{artwork.sale_message}
 
-    if sale_artwork.is_biddable
+    if artwork.is_biddable
       .artwork-metadata-stub__sale-artwork__buttons(
         data-size= (artwork.is_buy_nowable ? '2' : '1')
       )

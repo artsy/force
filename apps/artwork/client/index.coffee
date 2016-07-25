@@ -5,6 +5,7 @@ metaphysics = require '../../../lib/metaphysics.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
+
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
@@ -30,10 +31,10 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-          query artwork($id: String!, $isClosed: Bool!) {
+          query artwork($id: String!, $isClosed: Boolean!) {
             artwork(id: $id) {
               ... partner
-              ... auction_artworks @exclude(if: $isClosed)
+              ... auction_artworks @skip(if: $isClosed)
               ... artist_artworks @include(if: $isClosed)
               ... related_artworks @include(if: $isClosed)
             }
@@ -53,9 +54,6 @@ module.exports =
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
         ]
-
-    # else if context.__typename 'ArtworkContextSale' # Unimplemented (loads default fold content)
-    #
 
     else if context.__typename is 'ArtworkContextFair'
       query: """
@@ -145,7 +143,7 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
-    metaphysics query: query, variables: extend { id: CLIENT.id, variables }
+    metaphysics query: query, variables: extend { id: CLIENT.id }, variables
       .then (data) ->
         renderTemplates(data)
         exec init
