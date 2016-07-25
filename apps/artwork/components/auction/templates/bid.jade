@@ -13,13 +13,12 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
 
     if user
       .artwork-auction__bid-form__max-bid
-        if me
-          if me.bidder_status && me.bidder_status.is_highest_bidder
-            .artwork-auction__bid-form__max-bid-label.is_winning
-              | You're the highest bidder
-          else
-            .artwork-auction__bid-form__max-bid-label.is_losing
-              | You've been outbid, increase your bid
+        if me && me.bidder_status.is_highest_bidder
+          .artwork-auction__bid-form__max-bid-label.is_winning
+            | You're the highest bidder
+        else if me && !me.bidder_status.is_highest_bidder
+          .artwork-auction__bid-form__max-bid-label.is_losing
+            | You've been outbid, increase your bid
         else
           .artwork-auction__bid-form__max-bid-label Set your max bid
         span.help-tooltip(
