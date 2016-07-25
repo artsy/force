@@ -13,18 +13,17 @@ mixin rail(title, viewAllUrl, section)
 .artist-overview-header
   .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
-    - var hasBlurb = artist.biography_blurb && artist.biography_blurb.text && artist.biography_blurb.text.length
 
     //- Temporarily suppress partner-submitted bios until they are
     //- improved.
-    - var hasArtsyBlurb = hasBlurb && !artist.biography_blurb.credit
-    - var hasMeta = hasBlurb || artistMeta.length
+    - var hasArtsyBlurb = viewHelpers.hasArtsyBlurb(artist)
+    - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
     - var hasShows = statuses.shows
 
-    .bisected-header-cell
+    .bisected-header-cell.js-artist-overview-header-left
       if hasMeta
-        .artist-blurb.bisected-header-cell-section
-          if hasArtsyBlurb
+        if hasArtsyBlurb
+          .artist-blurb.bisected-header-cell-section
             h2 Biography
             .blurb!= artist.biography_blurb.text
 
@@ -34,21 +33,14 @@ mixin rail(title, viewAllUrl, section)
           //- if hasBlurb && artist.biography_blurb.credit
           //-   .blurb-credit — #{artist.biography_blurb.credit}
 
-          if hasBlurb && artistMeta.length
+          if hasArtsyBlurb && artistMeta.length
             br
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
-      if hasShows
-        .artist-related-genes.related-links.bisected-header-cell-section
-          //- Rendered client-side
-
-    .bisected-header-cell
+    .bisected-header-cell.js-artist-overview-header-right
       if hasShows
         .artist-exhibition-highlights.bisected-header-cell-section
-          //- Rendered client-side
-      else
-        .artist-related-genes.related-links.bisected-header-cell-section
           //- Rendered client-side
 
 - var hasWorks = artist.statuses.artworks

@@ -67,7 +67,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   cv: ->
     @view = new CVView @options
-    @model.related().artworks.fetch(data: { size: 20, sort:'-partner-updated-at' })
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   works: ->
     @view = new WorksView @options
@@ -75,16 +75,16 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   shows: ->
     @view = new ShowsView @options
-    @model.related().artworks.fetch(data: { size: 20, sort:'-partner-updated-at' })
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   articles: ->
     @view = new ArticlesView @options
     @model.related().articles.fetch()
-    @model.related().artworks.fetch(data: { size: 20, sort:'-partner-updated-at' })
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   relatedArtists: ->
     @view = new RelatedArtistsView @options
-    @model.related().artworks.fetch(data: { size: 20, sort:'-partner-updated-at' })
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   biography: ->
     @view = new BiographyView @options

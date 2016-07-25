@@ -96,15 +96,28 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push @filterView
 
   setupRelatedGenes: ->
-    $el = @$('.artist-related-genes')
 
-    subView = new RelatedGenesView(el: $el, id: @model.id)
+    subView = new RelatedGenesView
+      el: $('.artist-related-genes.related-links.bisected-header-cell-section')
+      id: @model.id
+
     subView.collection.on 'sync', =>
-      # Remove bisected header cell if empty (ie artist is missing some info)
-      # so that the remaining cell doesn't have weird margins
-      @$('.bisected-header-cell').each ->
-        $el = $(this)
-        $el.remove() if not $el.children().length
+      artist = @model.toJSON()
+      hasGenes = subView.collection.length
+      hasShows = @statuses.shows
+      hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
+
+      if not (hasGenes or hasShows or hasMeta)
+        $('.artist-overview-header').remove()
+      else
+        if hasGenes
+          append = if hasShows then 'left' else 'right'
+          $(".js-artist-overview-header-#{append}").append subView.$el
+
+        # If one half of the bisected header is empty, remove it.
+        @$('.bisected-header-cell').each ->
+          $el = $(this)
+          $el.remove() if not $el.children().length
 
       @setupBlurb()
     @subViews.push subView
