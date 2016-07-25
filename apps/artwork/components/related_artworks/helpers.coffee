@@ -1,8 +1,8 @@
 masonry = require '../../../../components/artwork_masonry/index.coffee'
 _ = require 'underscore'
 
-module.exports =
-  masonry: masonry
+module.exports = (artworks) ->
+  masonry: masonry _.take(artworks, 10)
 
   filterLayers: (layers) ->
     _.reject layers, (layer) ->
