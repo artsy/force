@@ -6,6 +6,7 @@ header.artist-header
       h1.artist-header-name.extra-large-garamond-header= artist.name
 
       - var bday = viewHelpers.displayNationalityAndBirthdate(artist)
+
       if bday
         .artist-header-birthdate= bday
 
