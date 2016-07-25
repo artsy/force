@@ -128,8 +128,8 @@ module.exports = class PartnerView extends Backbone.View
   # Get an ordered list of sections applicable to a partner.
   #
   getSections: ->
-    gallery          = ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
-    institution      = ['shows', 'collection', 'articles', 'shop', 'about']
+    gallery          = ['overview', 'shows', 'works', 'artists', 'articles', 'contact' ]
+    institution      = ['shows', 'collection', 'articles', 'shop', 'about' ]
     unclaimedGallery = ['overview']
 
     if @profile.isInstitution()

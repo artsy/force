@@ -131,8 +131,10 @@ module.exports = class Article extends Backbone.Model
   byline: ->
     if @get('contributing_authors').length > 0
       _s.toSentence _.pluck @get('contributing_authors'), 'name'
-    else
+    else if @get('author')
       @get('author').name
+    else
+      ''
 
   contributingByline: ->
     if @get('contributing_authors').length > 0
