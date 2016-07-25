@@ -10,7 +10,6 @@ module.exports = """
       lot_number
       symbol
       estimate
-      is_biddable
 
       sale {
         is_closed
@@ -19,6 +18,7 @@ module.exports = """
       current_bid {
         display
       }
+
       counts {
         bidder_positions
         bids: bidder_positions(label: "bid")
