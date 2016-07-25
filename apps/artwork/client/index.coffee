@@ -147,6 +147,4 @@ module.exports =
       .then (data) ->
         renderTemplates(data)
         exec init
-      .catch (err) ->
-        console.log 'err', err.stack
 

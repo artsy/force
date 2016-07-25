@@ -53,7 +53,6 @@ module.exports = class ArtworkRelatedArtworksView extends Backbone.View
             helpers: related_artworks: helpers
 
         @postRender artwork.layer.artworks
-      .catch (err) -> console.log 'err', err
 
   postRender: (artworks) ->
     (@masonryView ?= new ArtworkMasonryView el: @sections(), context_page: 'Artwork page', context_module: 'Related artworks module')
