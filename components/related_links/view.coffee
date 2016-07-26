@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 module.exports = class RelatedLinksView extends Backbone.View
   headerTemplate: _.template ''
   wrapperTemplate: _.template '<div><%= links %></div>'
+  className: 'artist-related-genes related-links bisected-header-cell-section'
 
   defaults:
     displayKey: 'name'

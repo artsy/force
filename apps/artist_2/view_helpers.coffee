@@ -70,4 +70,4 @@ module.exports =
   hasArtsyBlurb: (artist) ->
     artist.biography_blurb?.text?.length && !artist.biography_blurb.credit
 
-  hasOverviewHeaderMeta: (artist) -> @hasArtsyBlurb(artist) || @artistMeta(artist).length?
+  hasOverviewHeaderMeta: (artist) -> @hasArtsyBlurb(artist) || @artistMeta(artist).length
