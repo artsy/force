@@ -1,25 +1,31 @@
+_ = require 'underscore'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 Articles = require '../../../collections/articles.coffee'
 Article = require '../../../models/article.coffee'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 sd = require('sharify').data
-resize = require '../../../components/resizer/index.coffee'
+{ resize } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
+moment = require 'moment'
 
 module.exports = class ArticlesAdapter
   constructor: ({ @profile, @partner, @cache, @el }) ->
-    if window.location.pathname.includes '/article/'
-      @renderArticle()
-    else
-      @renderArticlesGrid()
+    @renderArticle() if @isArticle()
+    @renderArticlesGrid() if not @isArticle()
+
+  isArticle: ->
+    window.location.pathname.includes '/article/'
 
   renderArticlesGrid: ->
-    collection = new Articles
-    collection.url = "#{collection.url}/?partner_id=#{@partner.get('_id')}&published=true&limit=12&sort=-published_at"
-    view = new ArticlesGridView el: @el, collection: collection
+    @collection = new Articles
+    @collection.url = "#{@collection.url}/?partner_id=#{@partner.get('_id')}&published=true&limit=12&sort=-published_at"
+    view = new ArticlesGridView
+      el: @el
+      collection: @collection
+      partner: @partner
     @el.html '<div class="loading-spinner"></div>'
-    collection.fetch()
+    @collection.fetch()
     view
 
   renderArticle: ->
@@ -37,5 +43,4 @@ module.exports = class ArticlesAdapter
           el: @el
           article: article
       error: (err) =>
-        # window.location.replace '/articles'
-
+        window.location.replace @partner.href()

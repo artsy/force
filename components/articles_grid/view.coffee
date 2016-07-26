@@ -12,7 +12,7 @@ module.exports = class ArticlesGridView extends Backbone.View
 
   articles: []
 
-  initialize: ({ @fetchWith } = {}) ->
+  initialize: ({ @fetchWith, @partner } = {}) ->
     @renderOuter = _.once =>
       @$el.html template(articles: @collection)
 
@@ -36,7 +36,10 @@ module.exports = class ArticlesGridView extends Backbone.View
     article.set rendered: true
 
     options = _.extend {}, model: article, options
-    figure article: article
+    articleHref = if (@partner and article.get('partner_channel_id')) then @partner.href() + article.href() else article.href()
+    figure
+      article: article
+      articleHref: articleHref
 
   renderArticles: ->
     $els = @collection.chain()

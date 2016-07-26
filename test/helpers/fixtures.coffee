@@ -95,7 +95,7 @@ moment = require 'moment'
       items: [
         { type: 'artwork', id: '54276766fd4f50996aeca2b8' }
         { type: 'image', url: '', caption: '' }
-        { type: 'video', url: ''  }
+        { type: 'video', url: 'http://youtu.be/yYjLrJRuMnY'  }
       ]
     }
     {
