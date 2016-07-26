@@ -1,5 +1,5 @@
 module.exports = """
-  query artist($artist_id: String!, $includeBlurb: Boolean!) {
+  query artist($artist_id: String!, $includeBlurb: Boolean!, $includeJSONLD: Boolean!) {
     artist(id: $artist_id){
       _id
       id
@@ -31,6 +31,7 @@ module.exports = """
       ... image
       ... statuses
       ... carousel
+      ... jsonLD @include(if: $includeJSONLD)
     }
   }
 
@@ -54,6 +55,7 @@ module.exports = """
     }
   }
 
+  #{require './jsonLD'}
   #{require '../components/carousel/query'}
   #{require '../components/current_show_auction/query'}
 """
