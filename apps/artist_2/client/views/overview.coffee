@@ -98,7 +98,6 @@ module.exports = class OverviewView extends Backbone.View
   setupRelatedGenes: ->
 
     subView = new RelatedGenesView
-      el: $('.artist-related-genes.related-links.bisected-header-cell-section')
       id: @model.id
 
     subView.collection.on 'sync', =>
@@ -112,7 +111,7 @@ module.exports = class OverviewView extends Backbone.View
       else
         if hasGenes
           append = if hasShows then 'left' else 'right'
-          $(".js-artist-overview-header-#{append}").append subView.$el
+          $(".js-artist-overview-header-#{append}").append subView.render().$el
 
         # If one half of the bisected header is empty, remove it.
         @$('.bisected-header-cell').each ->
