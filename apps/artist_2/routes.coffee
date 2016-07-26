@@ -15,7 +15,7 @@ currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
   tab = req.params.tab or ''
-  
+  includeJSONLD = res.locals.sd.BROWSER?.family is 'PhantomJS'
   send =
     query: query,
     variables:
