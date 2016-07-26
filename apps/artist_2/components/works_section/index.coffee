@@ -25,7 +25,7 @@ module.exports = ( { el, model, allLoaded } ) ->
   setupInfiniteScroll()
 
   onSync = ->
-    if filterView.remaining() is 0
+    if filterView.remaining() is 0 or filterView.expired()
       mediator.trigger 'infinite:scroll:end'
       $.destroyInfiniteScroll()
       allLoaded() if allLoaded

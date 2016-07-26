@@ -13,6 +13,7 @@ filterTemplate = -> require('./templates/filter.jade') arguments...
 headerTemplate = -> require('./templates/header.jade') arguments...
 
 module.exports = class ArtworkFilterView extends Backbone.View
+  lastResponse: null
   events:
     'click .artwork-filter-select': 'selectCriteria'
     'click .artwork-filter-remove': 'removeCriteria'
@@ -89,9 +90,16 @@ module.exports = class ArtworkFilterView extends Backbone.View
     length = @artworksView?.length() or 0
     @filter.get('total')?.value - length
 
+  expired: (page) ->
+    @lastResponse?.length is 0 or @artworks.params.get('page') > 99
+
   loadNextPage: (options = {}) ->
-    return if @remaining() is 0
-    @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
+    return if @remaining() is 0 or @expired()
+    data = _.defaults(options, @filter.selected.toJSON())
+    @artworks.nextPage
+      data: data
+      success: (collection, response) =>
+        @lastResponse = response.hits
 
   fetchArtworks: ->
     @artworks.fetch data: @filter.selected.toJSON()
