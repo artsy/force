@@ -33,6 +33,8 @@ $(".artwork-detail-artist").click(function() {
 })
 ````
 
+If you are tracking navigational links that take you to a different page with an `href`, you'll want to use the 'Preserve Log' feature of Chrome Dev Tools.
+
 ## Tracking user interactions
 
 In the example above we used the `click` event, but there are many more...

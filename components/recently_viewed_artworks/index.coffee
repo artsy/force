@@ -62,7 +62,7 @@ module.exports =
                   el: $artworkEl
                   artworkCollection: savedArtworks
                   model: new Artwork(artwork)
-                  context_module: 'Recently Viewed Artworks module'
+                  context_module: 'recently_viewed_artworks'
               )
               savedArtworks.addRepoArtworks data.artworks
               savedArtworks.syncSavedArtworks()
