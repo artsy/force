@@ -15,11 +15,15 @@ currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
   tab = req.params.tab or ''
+  includeJSONLD = res.locals.sd.BROWSER?.family is 'PhantomJS'
+  includeJSONLD = true
+
   send =
     query: query,
     variables:
       artist_id: req.params.id
       includeBlurb: (tab is '')
+      includeJSONLD: includeJSONLD
 
   return if metaphysics.debug req, res, send
 
@@ -41,7 +45,7 @@ currentShowAuction = require './components/current_show_auction/index'
           tab: tab
           nav: nav
           currentItem: currentItem
-          jsonLD: JSON.stringify helpers.toJSONLD artist
+          jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
 
       else
         res.redirect artist.href
