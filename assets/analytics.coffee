@@ -32,6 +32,7 @@ $ -> analytics.ready ->
   require '../analytics/account_creation.js'
   require '../analytics/account_login.js'
   require '../analytics/bidding.js'
+  require '../analytics/collect.js'
   require '../analytics/notifications.js'
   require '../analytics/artists.js'
   require '../analytics/artwork.js'

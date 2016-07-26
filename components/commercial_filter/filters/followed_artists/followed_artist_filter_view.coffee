@@ -16,6 +16,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     throw new Error 'Requires a filter model' unless @filter?
 
     @user = User.instantiate()
+    @listenTo @params, 'change:include_artworks_by_followed_artists', @trackAnalytics
     @listenTo @params, 'change:include_artworks_by_followed_artists', @render
     @listenTo @filter, 'change:followed_artists_total', @render
 
@@ -30,6 +31,10 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     e.preventDefault()
     redirectTo = "#{window.location.pathname}#{window.location.search}"
     mediator.trigger 'open:auth', mode: 'register', copy: "Sign up to receive alerts when new works are available by artists you follow.", redirectTo: redirectTo
+
+  trackAnalytics: ->
+    if @params.get('include_artworks_by_followed_artists')
+      analyticsHooks.trigger 'cf:followed_artists:checked'
 
   render: ->
     @$el.html template
