@@ -6,7 +6,7 @@
     .rva-content
       .rva-images
         for artwork in artworks
-          .rva-artwork-image-container.artwork-item( data-artwork-id=artwork.id )
+          .rva-artwork-image-container.artwork-item( data-artwork-id=artwork._id )
             a.analytics-rva-artwork-thumbnail( href= artwork.href )
               img.rva-artwork-image(
                 src= artwork.image.thumb.url
