@@ -1,25 +1,27 @@
 module.exports = """
-  query($key: String, $id: String){
-    home_page_module(key: $key, id: $id) {
-      title
-      key
-      results {
-        ... artwork_brick
-        image {
-          cell: resized(height: 180, version: ["large", "larger"]) {
-            width
-            height
-            url
+  query($key: String, $id: String) {
+    home_page {
+      artwork_module(key: $key, id: $id) {
+        title
+        key
+        results {
+          ... artwork_brick
+          image {
+            cell: resized(height: 180, version: ["large", "larger"]) {
+              width
+              height
+              url
+            }
           }
         }
-      }
-      context {
-        ... fair_context
-        ... auction_context
-        ... gene_context
-        ... iconic_artists_context
-        ... followed_artists_context
-        ... related_artists_context
+        context {
+          ... fair_context
+          ... auction_context
+          ... gene_context
+          ... iconic_artists_context
+          ... followed_artists_context
+          ... related_artists_context
+        }
       }
     }
   }
