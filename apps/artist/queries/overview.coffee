@@ -13,7 +13,7 @@ module.exports =
         ... relatedShowImage
       }
       artists (size: 15) @include(if: $artists){
-        ... relatedArtist
+        ... artistCell
       }
       articles (limit: 15, sort: PUBLISHED_AT_DESC) @include(if: $articles){
         href
@@ -23,7 +23,7 @@ module.exports =
     }
   }
   #{require './article_fragment.coffee'}
-  #{require './artist_fragment.coffee'}
+  #{require '../../../components/artist_cell/query.coffee'}
   #{require './show_fragment.coffee'}
   #{require './related_show_image.coffee'}
   """
