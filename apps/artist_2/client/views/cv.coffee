@@ -30,6 +30,8 @@ module.exports = class CVView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+      totalArtworksCount: @model.get('counts').artworks
+      viewAllCell: true
 
     rail.collection.trigger 'sync'
 

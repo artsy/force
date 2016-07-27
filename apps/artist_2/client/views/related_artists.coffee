@@ -53,6 +53,9 @@ module.exports = class RelatedArtistsView extends Backbone.View
       title: "Works by #{@model.get('name')}"
       viewAllUrl: "#{@model.href()}/works"
       imageHeight: 180
+      totalArtworksCount: @model.get('counts').artworks
+      viewAllCell: true
+
     @subViews.push rail
     @fadeInSection @$('.artist-related-artists-section')
 
