@@ -34,6 +34,13 @@ module.exports = """
             initials
             image {
               url(version: "four_thirds")
+              cropped (width: 400, height: 300) {
+                url
+              }
+            }
+            counts {
+              artworks
+              for_sale_artworks
             }
           }
         }
