@@ -8,90 +8,81 @@ RelatedArticlesView = require '../../../../components/related_articles/view.coff
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 initWorksSection = require '../../components/works_section/index.coffee'
-template = -> require('../../templates/sections/overview.jade') arguments...
+FollowButton = require '../../../../components/follow_button/view.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
+template = -> require('../../templates/sections/overview.jade') arguments...
+showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlights.jade') arguments...
+renderRail = require '../../components/rail/index.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../../queries/overview.coffee'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
   fetches: []
 
   initialize: ({ @user, @statuses }) ->
+    @listenTo this, 'artist:overview:sync', @renderRelated
 
-  setupRelatedShows: ->
-    if @statuses.shows
-      @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: true, size: 4)
-      @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: false, size: 4)
-      subView = new RelatedShowsView model: @model, collection: @model.related().shows
-      @$('#artist-related-shows').html subView.render().$el
-      @subViews.push subView
-
-  setupRelatedArticles: ->
-    if @statuses.articles
-      @fetches.push @model.related().articles.fetch()
-      subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
-      @$('#artist-related-articles').html subView.render().$el
-      @subViews.push subView
-
-  setupRelatedGenes: ->
-    subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
-    subView.collection.on 'sync', =>
-      @setupBlurb()
-      mediator.trigger 'related:genes:render'
-    @subViews.push subView
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+        artists: @statuses.artists
+        articles: @statuses.articles
+        shows: @statuses.shows
+    .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
   setupBlurb: ->
     gradient $('.artist-overview-header'),
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onClick: =>
-        @sticky.rebuild()
-    _.defer => @$('.artist-blurb').addClass('is-fade-in')
+      onExpand: => @sticky.rebuild()
+    _.defer =>
+      @$('.artist-blurb').addClass('is-fade-in')
+      @$('.artist-exhibition-highlights').addClass 'is-fade-in'
 
-  setupRelatedSection: ($el) ->
-    $section = @fadeInSection $el
-    $el
+  renderRelated: (artist) =>
+    @renderRails artist
+    @renderExhibitionHighlights artist
 
-  fadeInSection: ($el) ->
-    $el.show()
-    _.defer -> $el.addClass 'is-fade-in'
-    $el
+  renderRails: (artist) =>
+    following = @following
+    if artist.counts.shows <= 15
+      $('.artist-related-rail[data-id=shows] .artist-related-rail__header h1').text ('Shows on Artsy')
+    baseHref = @model.href()
+    @$('.artist-related-rail').map ->
+      section = ($el = $(this)).data('id')
+      items = artist[section]
+      count = artist.counts[section]
+      return if not items
+      renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
-  setupRelatedArtists: ->
-    _.each _.pick(@statuses, 'artists', 'contemporary'), (display, key) =>
-      if display
-        @fetches.push @model.related()[key].fetch
-          data: size: 5
-          success: =>
-            @renderRelatedArtists key
-
-  waitForFilter: ->
-    dfd = $.Deferred()
-    @listenToOnce @filterView.artworks, 'sync error', dfd.resolve
-    @fetches.push dfd.promise()
-
-  renderRelatedArtists: (type) ->
-    $section = @$("#artist-related-#{type}-section")
-
-    if @statuses[type]
-      collection = new Backbone.Collection(@model.related()[type].take 5)
-      subView = new ArtistFillwidthList
-        el: @$("#artist-related-#{type}")
-        collection: collection
-        user: @user
-        context_page: 'Artist page'
-        context_module: 'Overview section'
-      subView.fetchAndRender()
-      @subViews.push subView
+  renderExhibitionHighlights: ({shows, counts}) ->
+    return if not @statuses.shows
+    $el = @$('.artist-overview-header .artist-exhibition-highlights')
+    # If there are more than 15 shows, take ten and show a 'see more' link
+    # If there are less than 15 shows, show them all.
+    showMore = counts.shows > 15
+    if showMore
+      highlights = viewHelpers.nShowsByDate(shows, 10)
     else
-      $section.remove()
-
-  fadeInSections: ->
-    _.each @statuses, (status, key) =>
-      @setupRelatedSection @$("#artist-related-#{key}-section") if status
-      @renderRelatedArtists key if key is 'artists' or key is 'contemporary'
+      solo = []
+      group = []
+      fair = []
+      shows = _.each viewHelpers.nShowsByDate(shows, 15), (show) ->
+        if show.fair
+          fair.push show
+        else if show.artists.length > 1
+          group.push show
+        else
+          solo.push show
+    shows = { highlights, solo, group, fair }
+    options = { @model, @statuses, shows, viewHelpers }
+    $el.html showHighlightsTemplate options
 
   postRender: ->
     # Sub-header
@@ -100,21 +91,42 @@ module.exports = class OverviewView extends Backbone.View
     { @filterView, @sticky } = initWorksSection
       el: @$('#artwork-section')
       model: @model
-      allLoaded: => @fadeInSections()
+      allLoaded: =>
+        @$('.artist-related-rail').addClass('is-fade-in')
     @subViews.push @filterView
-    # Bottom sections
-    @setupRelatedArtists()
-    @setupRelatedShows()
-    @setupRelatedArticles()
-    @waitForFilter()
-    $.when.apply(null, @fetches).then =>
-      mediator.trigger 'overview:fetches:complete'
+
+  setupRelatedGenes: ->
+
+    subView = new RelatedGenesView
+      id: @model.id
+
+    subView.collection.on 'sync', =>
+      artist = @model.toJSON()
+      hasGenes = subView.collection.length
+      hasShows = @statuses.shows
+      hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
+
+      if not (hasGenes or hasShows or hasMeta)
+        $('.artist-overview-header').remove()
+      else
+        if hasGenes
+          append = if hasShows then 'left' else 'right'
+          $(".js-artist-overview-header-#{append}").append subView.render().$el
+
+        # If one half of the bisected header is empty, remove it.
+        @$('.bisected-header-cell').each ->
+          $el = $(this)
+          $el.remove() if not $el.children().length
+
+      @setupBlurb()
+    @subViews.push subView
 
   render: ->
     # Template expects plain JSON, not a Backbone model.
     @$el.html template
       artist: @model.toJSON()
       viewHelpers: viewHelpers
+      statuses: @statuses
     _.defer => @postRender()
     this
 

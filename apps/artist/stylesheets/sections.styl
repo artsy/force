@@ -1,5 +1,7 @@
 @require '../../../components/gradient_blurb/index'
-
+@require '../../../components/merry_go_round/index'
+@require '../components/article_cell/index'
+@require '../components/rail/index'
 // Books
 .merchandisable-items
   position relative
@@ -25,9 +27,13 @@
   margin-left 1em
 
 // CV
-.artist-cv-link-year
-  margin-right 15px
-  display inline-block
+.artist-cv-note
+  color gray-darker-color
+.artist-cv-link
+  display flex
+  flex-direction row
+  &__text
+    margin-left 13px
 
 // Overview
 .artist-overview-header
@@ -36,6 +42,16 @@
     margin 0
 .artist-blurb
   fade-in()
+  .blurb-credit
+    color gray-darker-color
+    font-style italic
+    margin-top 10px
+.artist-exhibition-highlights
+  fade-in()
+.exibition-highlights-see-more
+  margin-top 20px
+  a
+    text-decoration none
 #main-layout-footer
   transition opacity 1s
 .gradient-blurb-read-more-container
@@ -58,3 +74,55 @@
     left 0
     right 0
     border-bottom 2px dotted gray-lighter-color
+
+// Articles
+
+.article-list-item
+  block-margins(40px)
+  clearfix()
+  a
+    display block
+    text-decoration none
+
+  &__author
+    avant-garde()
+    font-size 11px
+    white-space nowrap
+    margin-top 8px
+    line-height 1
+    color gray-darker-color
+
+  &__title
+    garamond-size('s-headline')
+    line-height 1.1
+
+  &__image
+    float left
+    width 30%
+
+  &__blurb
+    float left
+    max-width 450px
+    padding-left 40px
+
+  &__summary
+    margin-top 25px
+
+  &__go
+    faux-underline()
+
+  &__author > *
+    margin-right 10px
+    &:last-child
+      margin 0
+
+// Related Artists Section
+.artist-related-artists-section
+  display none
+  fade-in()
+
+// Section Grid Views
+.artist-related-shows-content
+.artist-related-artists-content
+  margin-bottom 60px
+  grid-4-up(30px, 40px)

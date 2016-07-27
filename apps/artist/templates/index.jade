@@ -20,6 +20,8 @@ block body
       #artist-page-header: include ./header
       #artist-page-content.artist-page-content
         unless tab
+          - var statuses = artist.statuses
           include ./sections/overview
 
-  include ../../../components/main_layout/templates/json_ld
+  if jsonLD
+    include ../../../components/main_layout/templates/json_ld

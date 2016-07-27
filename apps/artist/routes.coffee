@@ -9,43 +9,46 @@ cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
 metaphysics = require '../../lib/metaphysics'
-query = require './query'
+query = require './queries/server.coffee'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
 
 @index = (req, res, next) ->
-  return next() if req.user?.hasLabFeature 'New Artist Page'
+  tab = req.params.tab or ''
+  includeJSONLD = res.locals.sd.BROWSER?.family is 'PhantomJS'
+  send =
+    query: query,
+    variables:
+      artist_id: req.params.id
+      includeBlurb: (tab is '')
+      includeJSONLD: includeJSONLD
 
-  metaphysics
-    query: query
-    variables: artist_id: req.params.id
-  .then ({artist}) ->
-    if req.params.tab is 'auction-results' and not artist.display_auction_link
-      res.redirect artist.href
+  return if metaphysics.debug req, res, send
 
-    else if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
-      res.locals.sd.ARTIST = artist
-      res.locals.sd.TAB = tab = req.params.tab or ''
-      if currentItem = currentShowAuction(artist)
-        if currentItem.type is 'auction'
-          currentItem.detail = "&nbsp;"
-        else
-          currentItem.detail = helpers.formatShowDetail currentItem
+  metaphysics send
+    .then ({ artist }) ->
+      nav = new Nav artist: artist
+      return next() if not _.find nav.sections(), slug: tab
 
-      res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
+      if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
+        res.locals.sd.ARTIST = artist
+        res.locals.sd.TAB = tab
+        currentItem = currentShowAuction(artist)
 
-      res.render 'index',
-        viewHelpers: helpers
-        artist: artist
-        tab: tab
-        nav: new Nav artist: artist
-        currentItem: currentItem
+        res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
 
-    else
-      res.redirect artist.href
+        res.render 'index',
+          viewHelpers: helpers
+          artist: artist
+          tab: tab
+          nav: nav
+          currentItem: currentItem
+          jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
 
-  .catch (err) -> next(err if NODE_ENV is 'development')
-  .done()
+      else
+        res.redirect artist.href
+
+    .catch (err) -> next(err if NODE_ENV is 'development')
 
 @tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()

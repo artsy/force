@@ -1,33 +1,46 @@
 Backbone = require 'backbone'
 template = -> require('../../templates/sections/cv.jade') arguments...
 sd = require('sharify').data
+ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
+query = require '../../queries/cv.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
+showHelpers = require '../../../../components/show_cell/helpers.coffee'
+artistHelpers = require '../../view_helpers.coffee'
 
-module.exports = class BiographyView extends Backbone.View
+module.exports = class CVView extends Backbone.View
 
-  initialize: ->
-    @listenTo @model.related().shows, 'sync', @render
-    @listenTo @model.related().articles, 'sync', @render
+  subViews: []
 
-    @model.related().shows.fetchUntilEnd()
+  initialize: ({ @user, @statuses }) ->
+    @listenTo this, 'artist:cv:sync', @render
 
-    @model.related().articles.fetch
-      cache: true
-      data: limit: 50
+  fetchRelated: ->
+    metaphysics
+      query: query
+      variables:
+        artist_id: @model.get('id')
+        articles: @statuses.articles
+        shows: @statuses.shows
+    .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
-  render: ->
-    { shows, articles } = @model.related()
-    articles = articles.models
-    fairBooths = _.map shows.select (show) ->
-      show.isFairBooth()
+  postRender: ->
+    @subViews.push rail = new ArtworkRailView
+      $el: @$(".artist-artworks-rail")
+      collection: @model.related().artworks
+      title: "Works by #{@model.get('name')}"
+      viewAllUrl: "#{@model.href()}/works"
+      imageHeight: 180
+      totalArtworksCount: @model.get('counts').artworks
+      viewAllCell: true
 
-    soloShows = shows.select (show) ->
-      show.isSolo() and not show.isFairBooth()
+    rail.collection.trigger 'sync'
 
-    groupShows = shows.select (show) ->
-      show.isGroup() and not show.isFairBooth()
-
-    unless shows.length || articles.length
-      @$el.html "<div class='loading-spinner'></div>"
-      return this
-    @$el.html template { articles, fairBooths, soloShows, groupShows }
+  render: (artist = {}) ->
+    artistMetadata = artistHelpers.artistMeta @model.toJSON()
+    @$el.html template _.extend { showHelpers, artistMetadata }, artist
+    _.defer => @postRender()
     this
+
+  remove: ->
+    super
+    _.invoke @subViews, 'remove'

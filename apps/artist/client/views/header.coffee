@@ -23,7 +23,6 @@ module.exports = class ArtistHeaderView extends Backbone.View
   setupFollowButton: ->
     view = this
     @following = new Following(null, kind: 'artist') if @user
-
     @$('#artist-follow-button, .artist-sticky-follow-button').each ->
       followButton = new FollowButton
         context_page: "Artist page"
@@ -32,24 +31,22 @@ module.exports = class ArtistHeaderView extends Backbone.View
         following: view.following
         modelName: 'artist'
         model: view.model
+
       view.listenTo followButton, 'followed', -> view.updateFollowCount 1
       view.listenTo followButton, 'unfollowed', -> view.updateFollowCount -1
 
     @following?.syncFollows [@model.id]
 
   updateFollowCount: (i) ->
+    return if not @$('.artist-header-follow-count').length
     count = parseInt(@$('.artist-header-follow-count').attr('data-count').replace(/,/g, "")) + i
     @$('.artist-header-follow-count').attr 'data-count', numberFormat count
-    if count is 1
-      @$('.artist-header-follow-count').removeClass('is-plural')
-    else
-      @$('.artist-header-follow-count').addClass('is-plural')
 
   updateCurrentItem: ->
     currentItem = CURRENT_SHOW_AUCTION
     if currentItem?.type is 'auction'
       currentItem.detail = viewHelpers.formatAuctionDetail moment(currentItem.end_at)
-      @$('.current-item').html currentItemTemplate { currentItem, viewHelpers }
+      @$('.current-item-container').html currentItemTemplate { currentItem, viewHelpers }
 
   navClick: (e) =>
     if e.target.pathname is window.location.pathname

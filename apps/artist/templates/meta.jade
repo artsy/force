@@ -29,7 +29,7 @@ if hasImage && artist.image.versions.indexOf('large')
 else
   meta( property="twitter:card", content="summary" )
 
-if (artist.counts.artworks == 0 && !artist.blurb) || nav && (active = nav.active(sd.CURRENT_PATH)) && active.name == 'Works'
+if (artist.counts.artworks == 0 && !artist.blurb) || nav && nav.active(sd.CURRENT_PATH).name == 'Works'
   meta(name="robots" content="noindex, follow")
 
 if nav

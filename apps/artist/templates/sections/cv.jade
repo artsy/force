@@ -1,42 +1,30 @@
-mixin cv-link(year, href, linkText, trailingText)
-  .artist-cv-link
-    .artist-cv-link-year= year
-    a(href= href)= linkText
-    if trailingText
-      = ", " + trailingText
+include ./cv_item
 
-mixin cv-link-shows-section(shows, title, trailPartnerName)
-  .bisected-header-cell-section
-    h2= title
-    for show in shows
-      - var year = show.date('start_at').year()
-      - var linkText = show.title()
-      - var href = show.href()
-      - var trailingText = show.formatShowOrFairCity()
-      if trailPartnerName
-        - trailingText = [show.partnerName(), trailingText].join(', ')
-      mixin cv-link(year, href, linkText, trailingText)
-
-#artist-cv-section
+.artist-page-section-block#artist-cv-section
   h2.artist-section-header Curriculum Vitae
-  #artist-cv
+  #artist-cv-content
     .thirty-seventy-bisected-header
       .bisected-header-cell
-        .bisected-header-cell-section
+        if artistMetadata && artistMetadata.length
+          .bisected-header-cell-section
+            = artistMetadata
+
+        .artist-cv-note.bisected-header-cell-section
+          | Note: Artist CVs are assembled using
+          |  exhibition data available on Artsy;
+          |  they reflect partial exhibition histories.
 
       .bisected-header-cell
-        if soloShows && soloShows.length
-          mixin cv-link-shows-section(soloShows, "Solo Shows on Artsy", true)
-
-        if groupShows && groupShows.length
-          mixin cv-link-shows-section(groupShows, "Group Shows on Artsy", true)
-
-        if fairBooths && fairBooths.length
-          mixin cv-link-shows-section(fairBooths, "Fair History on Artsy", false)
+        include ./show_groupings
 
         if articles && articles.length
           .bisected-header-cell-section
-            h2 Articles On Artsy
+            h2 Articles on Artsy
             for article in articles
-              mixin cv-link(article.date().year(), article.href(), article.get('title'))
+              .artist-cv-link
+                .artist-cv-link__year= new Date(article.published_at).getFullYear()
+                .artist-cv-link__text
+                  a(href= article.href)= article.thumbnail_title
 
+.artist-rail.artist-artworks-rail.arv-container
+  include ../../../../components/artwork_rail/templates/index

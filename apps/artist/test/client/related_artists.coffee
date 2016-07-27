@@ -7,6 +7,7 @@ Backbone = require 'backbone'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
 artistJSON = require '../fixtures'
+Q = require 'bluebird-q'
 
 describe 'RelatedArtistsView', ->
   before (done) ->
@@ -15,6 +16,13 @@ describe 'RelatedArtistsView', ->
       Backbone.$ = $
       @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template']
       @model = new Artist artistJSON
+      @RelatedArtistsView.__set__ 'metaphysics', @metaphysics = sinon.stub()
+      @metaphysics.returns Q.resolve
+        artist:
+          artists:
+            [ id: 'id', name: 'Artist A', href: '/artist/a', image: { cropped: url: '/image.jpg' }, counts: { } ]
+          contemporary:
+            [ id: 'id', name: 'Artist B', href: '/artist/b', image: { cropped: url: '/image.jpg' }, counts: { } ]
       done()
 
   after ->
@@ -24,9 +32,12 @@ describe 'RelatedArtistsView', ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub(Backbone, 'sync').yieldsTo('success').returns([fabricate('artist')])
     stubChildClasses @RelatedArtistsView, this,
-      ['ArtistFillwidthList']
-      ['fetchAndRender', 'remove']
+      ['ArtworkRailView']
+      ['remove']
     @view = new @RelatedArtistsView model: @model, statuses: artistJSON.statuses
+    sinon.stub @view, 'postRender'
+    sinon.stub @view, 'setupFollowButtons', (artists) -> return
+    @view.fetchRelated()
 
   afterEach ->
     _.defer.restore()
@@ -34,19 +45,19 @@ describe 'RelatedArtistsView', ->
     @view.remove()
 
   describe '#render', ->
-    it 'renders, sets up the template', ->
-      @view.render()
-      @view.$('#artist-related-artists-section').hasClass('is-fade-in').should.be.true()
-      @view.$('#artist-related-contemporary-section').hasClass('is-fade-in').should.be.true()
-      @view.$('#artist-related-artists-section h2').text().should.equal 'Related Artists'
-      @view.$('#artist-related-contemporary-section').text().should.equal 'Suggested Contemporary Artists'
+    it 'renders section content', ->
+      @view.$('.artist-related-artists-section').length.should.eql 2
+      $artists = @view.$('.artist-related-artists-section[data-id=artists]')
+      $contemporary = @view.$('.artist-related-artists-section[data-id=contemporary]')
 
-  describe '#postRender', ->
-    beforeEach ->
-      @view.render()
+      $artistItem = $artists.find('.grid-item')
+      $artistItem.length.should.equal 1
+      $artistItem.html().should.containEql 'Artist A'
 
-    it 'attaches the two related artist views', ->
-      subView1 = @ArtistFillwidthList.args[0][0]
-      subView1.el.attr('id').should.equal 'artist-related-artists'
-      subView2 = @ArtistFillwidthList.args[1][0]
-      subView2.el.attr('id').should.equal 'artist-related-contemporary'
+      contemporaryItem = $contemporary.find('.grid-item')
+      contemporaryItem.html().should.containEql 'Artist B'
+      contemporaryItem.length.should.equal 1
+
+      $artists.find('h2').text().should.equal 'Related Artists'
+      $contemporary.find('h2').text().should.equal 'Suggested Contemporary Artists'
+

@@ -9,6 +9,9 @@ module.exports = {
   "deathday": "",
   "years": "born 1955",
   "blurb": "Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “[Balloon Dog](/artwork/jeff-koons-balloon-dog-blue)” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved [Surrealism](/gene/surrealism) and [Dada](/gene/dada) and [Pop](/gene/pop-art), so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-[Baroque](/gene/baroque) sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral _Puppy_ (1992), reference 17th-century French garden design.",
+  "biography_blurb": {
+    "text": "Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “[Balloon Dog](/artwork/jeff-koons-balloon-dog-blue)” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved [Surrealism](/gene/surrealism) and [Dada](/gene/dada) and [Pop](/gene/pop-art), so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-[Baroque](/gene/baroque) sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral _Puppy_ (1992), reference 17th-century French garden design.",
+  },
   "counts": {
     "follows": 11790,
     "artworks": 185
@@ -31,36 +34,42 @@ module.exports = {
     "shows": true,
     "artists": true,
     "contemporary": true,
-    "articles": true,
+    "articles": true
+    "cv": true
     "auction_lots": true
   },
+  "partner_shows": [{"id": "id_1"}, {"id": "id_2"}, {"id": "id_3"}, {"id": "id_4"}, {"id": "id_5"},
+    {"id": "id_6"}, {"id": "id_7"}, {"id": "id_8"}, {"id": "id_9"}, {"id": "id_10"}, {"id": "id_11"},
+    {"id": "id_11"}, {"id": "id_12"}, {"id": "id_13"}, {"id": "id_14"}, {"id": "id_15"}, {"id": "id_16"}]
   "show": [{
     "name": "A Show",
     "href": "/show/a-show",
+    "partner": { "name": "Gallery One" },
+    "location": { "city": "New York" },
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/foo.jpg"
-        }, {
+    "cover_image": { "cropped": { "url": "/foo.jpg" } }
+  }, {
     "name": "Another Show",
-    "partner": "name": "Gallery Name",
-    "location": "city": "New York",
+    "partner": { "name": "Gallery Two" },
+    "location": { "city": "New York" },
     "href": "/show/another-show",
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/bar.jpg"
+    "cover_image": { "cropped": { "url": "/bar.jpg" } }
   }],
   "auction": [{
     "name": "An Auction"
     "href": "/auction/an-auction"
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/baz.jpg"
+    "cover_image": { "cropped": { "url": "/baz.jpg" } }
   }, {
     "name": "Another Auction"
     "href": "/auction/another-auction"
     "start_at": "2016-09-01T12:00:00+00:00",
     "end_at": "2016-12-05T12:00:00+00:00",
-    "cover_image": "cropped": "url": "/foobarbaz.jpg"
+    "cover_image": { "cropped": { "url": "/foobarbaz.jpg" } }
   }],
   "carousel": {
     "images": [

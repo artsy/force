@@ -42,21 +42,22 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 6
+      $navLinks.length.should.equal 7
       $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
-      $navLinks.text().should.containEql ('Shows')
       $navLinks.text().should.containEql ('Auction Results')
+      $navLinks.text().should.containEql ('Shows')
 
-  describe 'artist with some artworks (on the works page)', ->
+  describe 'artist with some artworks (on the overview page)', ->
     beforeEach (done) ->
       @artist = artistJSON
       @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/works"
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         asset: (->)
         artist: @artist
         nav: @nav
@@ -69,18 +70,20 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 6
+      $navLinks.length.should.equal 7
       $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
-      $navLinks.text().should.containEql ('Shows')
       $navLinks.text().should.containEql ('Auction Results')
+      $navLinks.text().should.containEql ('Shows')
 
     it 'should display an artworks section with artworks', ->
       $('body').html().should.containEql 'artwork-section'
 
-  describe 'artist with no artworks (on the works page)', ->
+
+  describe 'artist with no artworks (on the overview page)', ->
     beforeEach (done) ->
       @artist = _.clone artistJSON
       @artist.statuses = _.clone artistJSON.statuses
@@ -88,7 +91,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}"
+        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         asset: (->)
         artist: @artist
         nav: @nav
@@ -101,63 +104,14 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 5
+      $navLinks.length.should.equal 6
       $navLinks.text().should.containEql ('Related Artists')
+      $navLinks.text().should.containEql ('CV')
       $navLinks.text().should.containEql ('Overview')
       $navLinks.text().should.not.containEql ('Works')
       $navLinks.text().should.containEql ('Articles')
-      $navLinks.text().should.containEql ('Shows')
       $navLinks.text().should.containEql ('Auction Results')
+      $navLinks.text().should.containEql ('Shows')
 
     it 'should display an artworks section with artworks', ->
       $('body').html().should.not.containEql 'artwork-section'
-
-  describe 'artist without auction lots', ->
-    beforeEach (done) ->
-      @artist = _.clone artistJSON
-      @artist.statuses = _.clone artistJSON.statuses
-      @artist.statuses.auction_lots = false
-      @nav = new Nav artist: @artist
-
-      benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
-        asset: (->)
-        artist: @artist
-        nav: @nav
-        viewHelpers: helpers
-      }, done
-
-    it 'renders the appropriate nav', ->
-      $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 5
-      $navLinks.text().should.containEql ('Related Artists')
-      $navLinks.text().should.containEql ('Overview')
-      $navLinks.text().should.containEql ('Works')
-      $navLinks.text().should.containEql ('Articles')
-      $navLinks.text().should.containEql ('Shows')
-      $navLinks.text().should.not.containEql ('Auction Results')
-
-  describe 'artist without auction lots', ->
-    beforeEach (done) ->
-      @artist = _.clone artistJSON
-      @artist.statuses = _.clone artistJSON.statuses
-      @artist.statuses.auction_lots = false
-      @nav = new Nav artist: @artist
-
-      benv.render resolve(__dirname, '../templates/index.jade'), {
-        sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
-        asset: (->)
-        artist: @artist
-        nav: @nav
-        viewHelpers: helpers
-      }, done
-
-    it 'renders the appropriate nav', ->
-      $navLinks = $('.garamond-bordered-tablist a')
-      $navLinks.length.should.equal 5
-      $navLinks.text().should.containEql ('Related Artists')
-      $navLinks.text().should.containEql ('Overview')
-      $navLinks.text().should.containEql ('Works')
-      $navLinks.text().should.containEql ('Articles')
-      $navLinks.text().should.containEql ('Shows')
-      $navLinks.text().should.not.containEql ('Auction Results')

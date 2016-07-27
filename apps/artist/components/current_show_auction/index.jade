@@ -1,11 +1,9 @@
-a.current-item-left(href= currentItem.href)
-  if currentItem.imageUrl
-    img.current-item-image(src= currentItem.imageUrl)
-a.current-item-right(href= currentItem.href)
-  - var copy = (currentItem.type == 'show' && currentItem.hasMany) ? 'Featured ' : 'In Current '
-  .current-item-label.avant-garde-s-headline= copy + viewHelpers.capitalize(currentItem.type)
-  .current-item-name= currentItem.name
-  if currentItem.secondaryName
-    .current-item-name= currentItem.secondaryName
-  if currentItem.detail
-    .current-item-detail!= currentItem.detail
+a.current-item(href= currentItem.href)
+  .current-item__left
+    if currentItem.imageUrl
+      img.current-item__image(src= currentItem.imageUrl)
+  .current-item__right
+    .current-item__label.avant-garde-s-headline= currentItem.heading
+    .current-item__name= currentItem.name
+    if currentItem.detail
+      .current-item__detail!= currentItem.detail

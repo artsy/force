@@ -11,12 +11,12 @@ ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
 BiographyView = require './views/biography.coffee'
-AuctionLots = require '../../../collections/auction_lots.coffee'
-AuctionResultsView = require './views/auction_results.coffee'
 HeaderView = require './views/header.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
+AuctionLots = require '../../../collections/auction_lots.coffee'
+ArtistAuctionResultsView = require './views/auction_results.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -31,14 +31,8 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/biography': 'biography'
     'artist/:id/auction-results': 'auctionResults'
 
-  initialize: ({ @model, @user, @statuses, @context_page, @context_module }) ->
-    @options =
-      model: @model
-      user: @user
-      statuses: @statuses
-      el: $('.artist-page-content')
-      context_page: @context_page
-      context_module: @context_module
+  initialize: ({ @model, @user, @statuses }) ->
+    @options = model: @model, user: @user, statuses: @statuses, el: $('.artist-page-content')
     @setupUser()
     @setupJump()
     @setupCarousel()
@@ -62,16 +56,18 @@ module.exports = class ArtistRouter extends Backbone.Router
     @renderCurrentView()
 
   renderCurrentView: ->
+    @view.fetchRelated?()
     @view.render()
 
   overview: ->
     @view = new OverviewView @options
     $('body').append @jump.$el
-    mediator.on 'overview:fetches:complete', =>
+    @view.on 'artist:overview:sync', =>
       attachCTA @model
 
   cv: ->
     @view = new CVView @options
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   works: ->
     @view = new WorksView @options
@@ -79,20 +75,30 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   shows: ->
     @view = new ShowsView @options
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   articles: ->
     @view = new ArticlesView @options
+    @model.related().articles.fetch()
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   relatedArtists: ->
     @view = new RelatedArtistsView @options
+    @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   biography: ->
     @view = new BiographyView @options
+    @model.related().articles.fetch
+      cache: true
+      data:
+        limit: 1
+        biography_for_artist_id: @model.get('_id')
 
   auctionResults: ->
     { sort, page } = qs.parse(location.search.replace(/^\?/, ''))
     currentPage = parseInt page or 1
     auctionLots = new AuctionLots [], id: @model.get('id'), sortBy: sort, state: currentPage: currentPage
 
-    @view = new AuctionResultsView _.extend {}, @options, collection: auctionLots
+    @view = new ArtistAuctionResultsView _.extend {}, @options, collection: auctionLots
     auctionLots.fetch()
+    @model.related().artworks.fetch(data: size: 15)

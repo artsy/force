@@ -4,16 +4,28 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
-ShowsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/shows'), ['template']
-ShowsView.__set__ 'RelatedShowsView', Backbone.View
+artistJSON = require '../fixtures'
+Q = require 'bluebird-q'
 
 describe 'ShowsView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @model = new Artist fabricate 'artist', id: 'foo-bar', name: 'Foo Bar'
+
+      @ShowsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/shows'), ['template']
+      @model = new Artist artistJSON
+      @ShowsView.__set__ 'metaphysics', @metaphysics = sinon.stub()
+      @metaphysics.returns Q.resolve artist:
+        current_shows: artistJSON.show
+        past_shows: artistJSON.show
+        upcoming_shows: artistJSON.show
+
+      stubChildClasses @ShowsView, this,
+        ['ArtworkRailView']
+        ['remove']
       done()
 
   after ->
@@ -22,40 +34,28 @@ describe 'ShowsView', ->
   beforeEach ->
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
-    @view = new ShowsView model: @model
-    @view.render()
+    @view = new @ShowsView model: @model
+    sinon.stub @view, 'postRender'
+    @view.fetchRelated()
 
   afterEach ->
     _.defer.restore()
     Backbone.sync.restore()
     @view.remove()
 
-  describe '#initialize', ->
-    it 'fetches shows until the end', ->
-      Backbone.sync.callCount.should.equal 1
-      Backbone.sync.args[0][2].data.page.should.equal 1
-      Backbone.sync.args[0][2].success [fabricate 'show']
-      Backbone.sync.callCount.should.equal 2
-      _.last(Backbone.sync.args)[2].data.page.should.equal 2
-
   describe '#render', ->
     it 'renders, sets up the template', ->
-      @view.$el.html().should.containEql 'Foo Bar shows on Artsy'
+      @view.$el.text().should.containEql 'Upcoming Shows & Fair Booths'
+      @view.$el.text().should.containEql 'Current Shows & Fair Booths'
+      @view.$el.text().should.containEql 'Past Shows'
 
-  describe '#postRender', ->
-    it 'fetches the artist shows', ->
-      _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist_id=foo-bar&sort=-end_at&displayable=true'
+      @view.$el.find('.grid-item').length.should.eql 6
 
-  describe '#renderHeader', ->
-    it 're-renders the header copy if new fairs or shows come in', ->
-      @model.related().shows.add [fabricate 'show']
-      @model.related().shows.trigger 'sync'
-      @view.$header.text().should.equal 'Foo Bar shows on Artsy'
+      @view.$el.find('[data-id=current-shows]').text().should.containEql 'A Show'
+      @view.$el.find('[data-id=upcoming-shows]').text().should.containEql 'A Show'
+      @view.$el.find('[data-id=past-shows]').text().should.containEql 'A Show'
 
-      @model.related().shows.add [fabricate 'show', fair: 'existy']
-      @model.related().shows.trigger 'sync'
-      @view.$header.text().should.equal 'Foo Bar shows and fair booths on Artsy'
+      @view.$el.find('[data-id=current-shows]').text().should.containEql 'Another Show'
+      @view.$el.find('[data-id=upcoming-shows]').text().should.containEql 'Another Show'
+      @view.$el.find('[data-id=past-shows]').text().should.containEql 'Another Show'
 
-      @model.related().shows.reset [fabricate 'show', fair: 'existy']
-      @model.related().shows.trigger 'sync'
-      @view.$header.text().should.equal 'Foo Bar fair booths on Artsy'

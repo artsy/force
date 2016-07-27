@@ -14,5 +14,4 @@ module.exports.init = ->
     model: artist,
     statuses: statuses,
     user: user
-    context_page: 'Artist page'
   Backbone.history.start pushState: true

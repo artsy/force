@@ -1,18 +1,19 @@
+_ = require 'underscore'
 module.exports = [
   slug: ''
   href: 'artist/:id'
   name: 'Overview'
-  predicate: -> true
-,
-  slug: 'cv'
-  href: 'artist/:id/cv'
-  name: 'CV'
-  predicate: ({ articles, shows }) -> false
+  predicate: (statuses) -> _.find _.values statuses, (v) -> v
 ,
   slug: 'works'
   href: 'artist/:id/works'
   name: 'Works'
   predicate: ({ artworks }) -> artworks
+,
+  slug: 'cv'
+  href: 'artist/:id/cv'
+  name: 'CV'
+  predicate: ({ cv }) -> cv
 ,
   slug: 'articles'
   href: 'artist/:id/articles'
