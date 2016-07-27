@@ -33,7 +33,7 @@
 
   $(window).on('scroll', _.throttle(trackImpressions, 200));
 
-  $('.analytics-rva-artwork-thumbnail').click(function(e) {
+  $(document).on('click', '.analytics-rva-artwork-thumbnail', function(e) {
     analytics.track('Click', {
       type: 'thumbnail',
       label: 'Recently viewed artwork',
