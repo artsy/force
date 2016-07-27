@@ -128,3 +128,10 @@ describe 'ArticlesAdapter', ->
       Backbone.sync.args[0][2].success fixtures.article
       @view.el.html().should.containEql 'Top Ten Booths'
       @view.el.html().should.containEql 'article-container'
+
+    it 'shows a header, and omits the More button', ->
+      Backbone.sync.args[0][2].success fixtures.article
+      @view.collection.add fabricate 'article'
+      @view.collection.trigger 'sync'
+      @view.el.html().should.containEql 'More From Gagosian Gallery'
+      @view.el.html().should.not.containEql 'articles-grid__more-button'
