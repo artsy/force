@@ -61,7 +61,7 @@ describe 'ArticlesAdapter', ->
         profile: new Profile fabricate 'partner_profile'
         partner: new Partner fabricate 'partner'
         cache: {}
-        el: ''
+        el: $('body')
       @renderArticlesGrid.callCount.should.equal 1
       @renderArticle.callCount.should.equal 0
       @ArticlesAdapter.prototype.isArticle.restore()
@@ -72,7 +72,7 @@ describe 'ArticlesAdapter', ->
         profile: new Profile fabricate 'partner_profile'
         partner: new Partner fabricate 'partner'
         cache: {}
-        el: ''
+        el: $('body')
       @renderArticlesGrid.callCount.should.equal 0
       @renderArticle.callCount.should.equal 1
       @ArticlesAdapter.prototype.isArticle.restore()
@@ -126,7 +126,7 @@ describe 'ArticlesAdapter', ->
 
     it 'displays an article', ->
       Backbone.sync.args[0][2].success fixtures.article
-      @view.el.html().should.containEql 'Top Ten Booths'
+      @view.el.html().should.containEql 'Just before the lines start forming'
       @view.el.html().should.containEql 'article-container'
 
     it 'shows a header, and omits the More button', ->
