@@ -57,7 +57,7 @@ module.exports =
               user.initializeDefaultArtworkCollection()
               savedArtworks = user.defaultArtworkCollection()
               _.map(data.artworks, (artwork) ->
-                $artworkEl = $el.find("div[data-artwork-id=#{artwork.id}] .overlay-container")
+                $artworkEl = $el.find("div[data-artwork-id=#{artwork._id}] .overlay-container")
                 new SaveControls
                   el: $artworkEl
                   artworkCollection: savedArtworks
