@@ -41,20 +41,37 @@ describe 'ArticlesGridView', ->
         { id: _.uniqueId(), thumbnail_title: 'Bar Bar', contributing_authors: [{name: 'Sansa Stark'}, {name: 'Tyrion Lannister'}], channel_id: '123', author: {name: 'Artsy Editorial'} }
       ]
       @articles.count = 15
-      @view = new ArticlesGridView collection: @articles
 
     describe '#render', ->
-      beforeEach ->
-        @view.render()
 
       it 'renders the articles', ->
+        @view = new ArticlesGridView collection: @articles
+        @view.render()
         @view.$('.articles-grid__figure').should.have.lengthOf 4
         @view.$('.articles-grid__title').map(-> $(this).text()).get()
           .should.eql ['Foo Bar', 'Foo Baz', 'Bar Baz', 'Bar Bar']
 
       it 'renders the button', ->
+        @view = new ArticlesGridView collection: @articles
+        @view.render()
         @view.$('button').text().should.equal 'More Articles (11)'
 
       it 'renders the author name', ->
+        @view = new ArticlesGridView collection: @articles
+        @view.render()
         @view.$('.articles-grid__author').map(-> $(this).text()).get()
           .should.eql ['Molly', 'Artsy Editorial', 'Jon Snow', 'Artsy Editorial  •  Sansa Stark and Tyrion Lannister']
+
+      it 'does not render the button if specified', ->
+        @view = new ArticlesGridView
+          collection: @articles
+          hideMore: true
+        @view.render()
+        @view.$('button').length.should.equal 0
+
+      it 'renders the header if specified', ->
+        @view = new ArticlesGridView
+          collection: @articles
+          header: 'Custom Header'
+        @view.render()
+        @view.$('.articles-grid__header').text().should.containEql 'Custom Header'

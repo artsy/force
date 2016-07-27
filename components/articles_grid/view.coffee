@@ -12,9 +12,9 @@ module.exports = class ArticlesGridView extends Backbone.View
 
   articles: []
 
-  initialize: ({ @fetchWith, @partner } = {}) ->
+  initialize: ({ @fetchWith, @partner, @header, @hideMore } = {}) ->
     @renderOuter = _.once =>
-      @$el.html template(articles: @collection)
+      @$el.html template(articles: @collection, hideMore: @hideMore?, header: @header)
 
     @listenTo @collection, 'sync', @render
 

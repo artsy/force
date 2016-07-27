@@ -39,8 +39,18 @@ module.exports = class ArticlesAdapter
           resize: resize
           embed: embed
           moment: moment
+        @el.append("<div class='article-footer'></div>")
         new ArticleView
           el: @el
           article: article
+        @collection = new Articles
+        @collection.url = "#{@collection.url}/?channel_id=#{@partner.get('_id')}&published=true&limit=6&sort=-published_at"
+        new ArticlesGridView
+          el: @el.children('.article-footer')
+          collection: @collection
+          partner: @partner
+          header: "More From #{@partner.displayName()}"
+          hideMore: true
+        @collection.fetch()
       error: (err) =>
         window.location.replace @partner.href()
