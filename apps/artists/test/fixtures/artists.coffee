@@ -7,7 +7,7 @@ module.exports = {
     "featured_artists": [
       {
         "name": "Featured Artists",
-        "artists": [artistFixture, artistFixture, artistFixture, artistFixture]
+        "artists": artistArray
       }
     ],
     "featured_genes": [
