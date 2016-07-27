@@ -1,0 +1,120 @@
+@require '../stylus_lib'
+
+small-avant-garde-size = 11px
+sidebar-width = 26%
+
+// Flex container
+
+#artwork-filter
+  min-height 500px
+  display flex
+  flex-direction row
+  clearfix()
+  &__left
+  // &__right .artwork-section__artworks
+    transition opacity 0.25s
+    &[data-state='loading']
+      opacity 0.5
+      pointer-events none
+
+  &__left
+    max-width 26%
+    flex-basis sidebar-width
+    padding-right 40px
+    section
+      margin 20px 0
+    h2
+    h3
+      margin 5px 0
+    h2
+      garamond-size('headline')
+      margin-bottom 20px
+    h3
+      avant-garde()
+      font-size small-avant-garde-size
+
+  &__right
+    flex-basis (100% - sidebar-width)
+    // .artwork-columns
+    //   margin-bottom 40px
+
+
+// .link-and-spinner
+//   &[data-state='loading']
+//     #artwork-see-more
+//       display none
+//     .loading-spinner
+//       display block
+
+//   &[data-state='loaded']
+//     #artwork-see-more
+//       display block
+//       margin 20px auto
+//     .loading-spinner
+//       display none
+
+// Filter Section
+.artwork-filter-criteria
+  &__for-sale
+  &__criterion
+    display flex
+    line-height 1.6
+  &__for-sale
+    margin 0
+  &__criterion
+    font-size 18px
+    text-decoration none
+    transition color 0.25s
+    .artwork-filter-select
+      text-decoration none
+    .artwork-filter-remove
+      margin-left 0.25em
+      color purple-color
+      text-decoration underline
+    &:hover .artwork-filter-select
+      color gray-darker-color
+    &.is-active .artwork-filter-select
+      color purple-color
+    &.is-disabled .artwork-filter-select
+      cursor arrow
+      pointer-events none
+      color gray-dark-color
+
+  .artwork-filter-label
+    overflow ellipsis
+  .artwork-filter-count
+    margin-left 0.25em
+    color gray-darker-color
+
+// Header
+#artwork-section__header
+  display flex
+  justify-content: space-between
+  margin-bottom 20px
+  align-items center
+  h2
+    flex-grow 1
+.artwork-filter-sort-count-pulldown
+  margin-right 9px
+.artwork-filter-view-mode
+  margin-left 9px
+  border 2px solid gray-lighter-color
+  height 40px
+  overflow hidden
+.artwork-filter-view-mode__toggle:first-child
+  border-right 2px solid gray-lighter-color
+.artwork-filter-view-mode__toggle
+  display inline-block
+  text-align center
+  padding 2px 2px
+  cursor pointer
+  fill gray-lighter-color
+  overflow hidden
+  svg
+    width 32px
+    display inline-block
+  &.is-active svg, &:hover svg
+    fill black
+
+.artwork-spinner-container
+  position relative

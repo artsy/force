@@ -1,0 +1,44 @@
+.artwork-filter-criteria__for-sale.artsy-checkbox
+  .artsy-checkbox--checkbox
+    input(
+      type='checkbox', name='for_sale', id='for_sale',
+      checked=(forSale ? 'checked' : undefined)
+      class=(forSaleTotal ? undefined : 'is-disabled' )
+      class= 'js-artwork-filter-toggle'
+    )
+    label( for='for_sale' )
+  label.artsy-checkbox--label.artwork-filter-label(
+    for='for_sale'
+    class=(forSaleTotal ? undefined : 'is-disabled' )
+  )
+    | Only For Sale
+    span.artwork-filter-count (#{forSaleTotal})
+
+for mapped in aggregationsMap
+  section
+    h3= mapped.label
+    ul
+      if aggregations
+        - var param = mapped.param
+        - var aggregation = aggregations[mapped.slice]
+        for item in aggregation
+          - var isActive = params.get(param) == item.id
+          li.artwork-filter-criteria__criterion(
+            class=(isActive ? 'is-active' : 'is-inactive')
+            class=(item.count ? undefined : 'is-disabled' )
+          )
+            a.artwork-filter-select.artwork-filter-label(
+              class= 'js-artwork-filter-select'
+              data-value!= item.id
+              data-key= param
+            )= item.name
+            a.artwork-filter-select.artwork-filter-count(
+              class= 'js-artwork-filter-select'
+              data-value!= item.id
+              data-key= param
+            ) (#{item.count})
+            if isActive
+              a.artwork-filter-remove(
+                data-key= param
+                class= 'js-artwork-filter-remove'
+              ) Clear
