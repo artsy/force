@@ -12,8 +12,11 @@ module.exports = class ArticlesGridView extends Backbone.View
 
   articles: []
 
-  initialize: ({ @fetchWith, @partner, @header, @hideMore } = {}) ->
+  initialize: ({ @fetchWith, @partner, @header, @hideMore, @article } = {}) ->
     @renderOuter = _.once =>
+      # For GPP, remove partner article from collection
+      @collection.remove @article
+      return if @partner and @collection.length is 0
       @$el.html template(articles: @collection, hideMore: @hideMore?, header: @header)
 
     @listenTo @collection, 'sync', @render

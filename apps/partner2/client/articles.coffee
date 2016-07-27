@@ -51,6 +51,7 @@ module.exports = class ArticlesAdapter
           partner: @partner
           header: "More From #{@partner.displayName()}"
           hideMore: true
+          article: article
         @collection.fetch()
       error: (err) =>
         window.location.replace @partner.href()

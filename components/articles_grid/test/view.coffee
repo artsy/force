@@ -4,6 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 ArticlesGridView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'button', 'empty', 'figure']
 
@@ -75,3 +76,22 @@ describe 'ArticlesGridView', ->
           header: 'Custom Header'
         @view.render()
         @view.$('.articles-grid__header').text().should.containEql 'Custom Header'
+
+      it 'does not render anything if the length of collection is 0 and it is from a partner article', ->
+        article = new Article fabricate 'article'
+        @view = new ArticlesGridView
+          collection: new Articles [article]
+          article: article
+          partner: fabricate 'partner'
+        @view.render()
+        $(@view.$el).children().length.should.equal 0
+
+      it 'removes the current article from More By section on a partner article', ->
+        article = new Article fabricate 'article'
+        article2 = new Article fabricate 'article', {id: '100'}
+        @view = new ArticlesGridView
+          collection: new Articles [article, article2]
+          article: article
+          partner: fabricate 'partner'
+        @view.render()
+        @view.$('.articles-grid__articles figure').length.should.equal 1
