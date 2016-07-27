@@ -16,6 +16,7 @@ module.exports = class ArticlesGridView extends Backbone.View
     @renderOuter = _.once =>
       # For GPP, remove partner article from collection
       @collection.remove @article
+      # For GPP, don't render empty state if there are no articles
       return if @partner and @collection.length is 0
       @$el.html template(articles: @collection, hideMore: @hideMore?, header: @header)
 
