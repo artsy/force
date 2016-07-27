@@ -26,6 +26,8 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
+  return if metaphysics.debug req, res, { method: 'post', query: query }
+
   heroUnits = new HeroUnits
   timeToCacheInSeconds = 300 # 5 Minutes
 
@@ -51,15 +53,15 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
     ]
 
-    .then ([x, { home_page_modules }]) ->
+    .then ([x, { home_page }]) ->
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       res.locals.sd.HERO_UNITS = heroUnits.toJSON()
-      res.locals.sd.USER_HOME_PAGE = home_page_modules
+      res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
 
       res.render 'index',
         heroUnits: heroUnits
-        modules: home_page_modules
+        modules: home_page.artwork_modules
         featuredLinks: featuredLinks
         featuredArticles: featuredArticles
         featuredShows: featuredShows
