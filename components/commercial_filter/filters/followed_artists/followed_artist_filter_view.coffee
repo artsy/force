@@ -25,7 +25,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
     if @filter.get('followed_artists_total') is 0 and !currentValue
       @params.clear(silent: true).set _.defaults include_artworks_by_followed_artists: true, @params.defaults
     else
-      @params.set include_artworks_by_followed_artists: !currentValue
+      @params.set include_artworks_by_followed_artists: !currentValue, page: 1
 
   signup: (e) ->
     e.preventDefault()
