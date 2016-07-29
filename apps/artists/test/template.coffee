@@ -18,7 +18,6 @@ describe 'Artists', ->
         asset: (->)
         sd: {}
       @html = render('index') data
-      console.log 'html', @html
       @$ = $.load @html
 
     it 'renders the alphabetical nav', ->
