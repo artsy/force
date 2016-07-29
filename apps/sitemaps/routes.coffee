@@ -5,7 +5,7 @@ request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
 { Cities } = require 'places'
-{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
+{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 FUSION_PAGE_SIZE = 5000
@@ -21,7 +21,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
   new Articles().fetch
     data:
       # id for "Artsy Editorial" (exclude partner posts)
-      author_id: "503f86e462d56000020002cc"
+      channel_id: ARTSY_EDITORIAL_CHANNEL
       published: true
       sort: '-published_at'
       exclude_google_news: false
