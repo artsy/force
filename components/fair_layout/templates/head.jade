@@ -49,7 +49,7 @@ if fair.get('location')
   if fair.get('location').country
     - tags = tags.concat([fair.get('location').country])
   meta( name='sailthru.tags', content=tags.join(', ') )
-meta( name='sailthru.page-type', content='landing-page')
+meta( name='sailthru.fair-page', content='landing-page')
 meta( name='sailthru.author', content=fair.get('name') )
 meta( name='sailthru.date', content=fair.get('autopublish_artworks_at') )
 meta( name='sailthru.expire_date', content=fair.get('end_at') )
