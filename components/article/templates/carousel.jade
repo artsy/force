@@ -6,9 +6,10 @@ mixin carouselFigure(item)
       != embed(item.url)
     when 'artwork'
       - imageWidth = '500'
-      - artwork = slideshowArtworks.findWhere({ _id: item.id })
-      if artwork
-        include ../../artwork_item/templates/artwork.jade
+      if slideshowArtworks
+        - artwork = slideshowArtworks.findWhere({ _id: item.id })
+        if artwork
+          include ../../artwork_item/templates/artwork.jade
 
 .js-article-carousel
   - items = article.get('sections')[0].items

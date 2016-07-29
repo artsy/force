@@ -1,14 +1,15 @@
 
 - var imgUrl = article.cropUrlFor('thumbnail_image', { width: 600, height: Math.round(600 / 1.5), quality: 95 })
+- var href = articleHref || article.href()
 
 figure.articles-grid__figure.grid-item
-  a.articles-grid__img-container( href= article.href())
+  a.articles-grid__img-container( href= href )
     .articles-grid__img( style="background-image: url(#{imgUrl})" )
     .articles-grid__overlay
 
   figcaption.articles-grid__figcaption
 
-    a.articles-grid__title( href= article.href() )
+    a.articles-grid__title( href= href )
       = article.get('thumbnail_title')
 
     .articles-grid__author

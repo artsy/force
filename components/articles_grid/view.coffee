@@ -12,9 +12,13 @@ module.exports = class ArticlesGridView extends Backbone.View
 
   articles: []
 
-  initialize: ({ @fetchWith } = {}) ->
+  initialize: ({ @fetchWith, @partner, @header, @hideMore, @article } = {}) ->
     @renderOuter = _.once =>
-      @$el.html template(articles: @collection)
+      # For GPP, remove partner article from collection
+      @collection.remove @article
+      # For GPP, don't render empty state if there are no articles
+      return if @partner and @collection.length is 0
+      @$el.html template(articles: @collection, hideMore: @hideMore?, header: @header)
 
     @listenTo @collection, 'sync', @render
 
@@ -36,7 +40,10 @@ module.exports = class ArticlesGridView extends Backbone.View
     article.set rendered: true
 
     options = _.extend {}, model: article, options
-    figure article: article
+    articleHref = if (@partner and article.get('partner_channel_id')) then @partner.href() + article.href() else article.href()
+    figure
+      article: article
+      articleHref: articleHref
 
   renderArticles: ->
     $els = @collection.chain()
