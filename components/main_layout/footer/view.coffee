@@ -22,8 +22,8 @@ module.exports = class FooterView extends Backbone.View
     @$el.hide()
 
   show: ->
-    reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail()
     @$el.show()
+    reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail()
 
   openFeedback: (e) ->
     e.preventDefault()
