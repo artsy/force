@@ -35,6 +35,7 @@ module.exports =
     !currentPathIsInExcludeList() && cookieValue().length > 0
 
   reInitRVARail: ($el) ->
+    return unless $el.find('.rva-container').length > 0
     $el.find('.rva-container').fillwidthLite
       gutterSize: 30
       targetHeight: 150
