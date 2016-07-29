@@ -54,8 +54,9 @@ describe 'Sitemaps', ->
       @res.render.args[0][1].articles.length.should.equal(1)
 
     it 'only displays articles from Artsy Editorial', ->
+      routes.__set__ 'ARTSY_EDITORIAL_CHANNEL', '123'
       routes.articles(@req, @res)
-      Backbone.sync.args[0][2].data.author_id.should.equal('503f86e462d56000020002cc')
+      Backbone.sync.args[0][2].data.channel_id.should.equal '123'
 
   describe '#artworks', ->
 

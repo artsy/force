@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
-{ POSITRON_URL, APP_URL } = sd = require('sharify').data
+{ POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
@@ -36,10 +36,9 @@ module.exports = class Article extends Backbone.Model
         error: options.error
         cache: true
         data:
-          # Tier 1 Artsy Editorial articles. TODO: Smart footer data.
-          author_id: '503f86e462d56000020002cc'
+          channel_id: ARTSY_EDITORIAL_CHANNEL
+          featured: true
           published: true
-          tier: 1
           sort: '-published_at'
       )
       superArticles.fetch(
