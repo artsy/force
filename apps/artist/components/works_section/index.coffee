@@ -24,8 +24,8 @@ module.exports = ( { el, model, allLoaded } ) ->
 
   setupInfiniteScroll()
 
-  onSync = ->
-    if filterView.remaining() is 0 or filterView.expired()
+  filterView.artworks.on 'sync', (x, { hits }) ->
+    if filterView.artworks.allFetched() or filterView.expired()
       mediator.trigger 'infinite:scroll:end'
       $.destroyInfiniteScroll()
       allLoaded() if allLoaded
@@ -35,13 +35,6 @@ module.exports = ( { el, model, allLoaded } ) ->
         viewBottom = $el.height() + $el.scrollTop()
         loadMore = viewBottom <= threshold
         filterView.loadNextPage() if loadMore
-
-  filterView.artworks.on 'sync', (x, { hits }) ->
-    if filterView.filter.__active__()
-      onSync()
-    else
-      filterView.filter.once 'sync:new', ->
-        onSync()
 
   filterView.filter.selected.on 'change', ->
     setupInfiniteScroll()

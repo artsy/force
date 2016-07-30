@@ -86,15 +86,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
-  remaining: ->
-    length = @artworksView?.length() or 0
-    @filter.get('total')?.value - length
 
   expired: (page) ->
     @lastResponse?.length is 0 or @artworks.params.get('page') > 99
 
   loadNextPage: (options = {}) ->
-    return if @remaining() is 0 or @expired()
+    return if @artworks.allFetched() or @expired()
     data = _.defaults(options, @filter.selected.toJSON())
     @artworks.nextPage
       data: data
