@@ -10,6 +10,8 @@ initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr
 module.exports = class PartnerCellCarouselView extends Backbone.View
   className: 'partner-category-carousel'
 
+  initialize: ({ @following }) ->
+
   postRender: -> _.defer =>
     initCarousel @$('.js-partner-cell-carousel'), imagesLoaded: true, advanceBy: 3, wrapAround: true
     profileIDs = @$('.js-follow-button').each((index, el) =>
