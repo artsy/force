@@ -44,7 +44,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         return res.redirect "/article/#{data.article.get 'slug'}"
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
-      res.locals.sd.INCLUDE_SAILTHRU = sd.ARTICLE && sd.ARTICLE.published
+      res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
       res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
