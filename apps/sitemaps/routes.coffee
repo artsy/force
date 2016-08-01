@@ -96,11 +96,9 @@ getArtworkBuckets = (callback) ->
   res.render('misc', pretty: true)
 
 @cities = (req, res, next) ->
-  console.log 'cities'
   partnerFeaturedCities = new PartnerFeaturedCities()
   partnerFeaturedCities.fetch
     success: ->
-      console.log 'partnerFeaturedCities', partnerFeaturedCities.models
       res.set 'Content-Type', 'text/xml'
       res.render 'cities', pretty: true, citySlugs: partnerFeaturedCities.pluck('slug')
 
