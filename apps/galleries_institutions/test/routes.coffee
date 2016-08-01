@@ -42,9 +42,12 @@ describe 'galleries_institutions routes', ->
           }
         ]
         routes.__set__ 'fetchPrimaryCarousel', -> new Backbone.Collection()
-        routes.__set__ 'metaphysics', (metaphysics = sinon.stub())
-        metaphysics.returns Q.promise (resolve, reject) ->
-          resolve partner_categories: partner_categories
+        routes.__set__ 'fetchPartnerCategories', (fetchPartnerCategories = sinon.stub())
+
+        filterPartnerCategories = routes.__get__ 'filterPartnerCategories'
+
+        fetchPartnerCategories.returns Q.promise (resolve, reject) ->
+          resolve filterPartnerCategories(partner_categories: partner_categories)
 
         routes.index @req, @res, @next
         _.defer =>
