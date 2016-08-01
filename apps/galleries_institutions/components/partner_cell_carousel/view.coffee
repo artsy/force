@@ -21,6 +21,7 @@ module.exports = class PartnerCellCarouselView extends Backbone.View
         following: @following
         model: new Profile id: id
         modelName: 'profile'
+        context_page: 'Galleries / Institutions page'
     )
 
   render: ->
