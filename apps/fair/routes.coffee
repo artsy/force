@@ -31,6 +31,7 @@ InfoMenu = require '../../components/info_menu/index.coffee'
     # TODO: Dependent on attribute of fair
     res.locals.sd.BODY_CLASS = 'body-transparent-header'
     res.locals.sd.SECTION = 'overview'
+    res.locals.sd.INCLUDE_SAILTHRU = true
     filterArtworks.fetch
       data: filterData
       success: ->
@@ -150,7 +151,6 @@ InfoMenu = require '../../components/info_menu/index.coffee'
   # set the profile that we fetched initially directly to the fair
   fair.set 'profile', profile
   res.locals.sd.PROFILE = profile.toJSON()
-  res.locals.sd.INCLUDE_SAILTHRU = true if res.locals.sd.PROFILE.owner_type is 'Fair'
 
   fair.fetchPrimarySets
     cache: true
