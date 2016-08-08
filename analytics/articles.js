@@ -89,7 +89,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles') 
   analyticsHooks.on('submit:editorial-signup', function(options){
     analytics.track('Sign up for editorial email', {
       article_id: $(this).closest('.article-container').data('id'),
-      context_type: options.context,
+      context_type: options.type,
       user_email: options.email
     });
   });
