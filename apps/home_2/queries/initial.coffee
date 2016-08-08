@@ -5,6 +5,8 @@ module.exports = """
         key
         params {
           id
+          related_artist_id
+          followed_artist_id
         }
       }
     }
