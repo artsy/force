@@ -1,5 +1,3 @@
-- includeContact = artwork.is_inquireable && !artwork.partner.is_limited_fair_partner || false
-
 figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href)
@@ -24,8 +22,6 @@ figure.artwork-item( data-artwork=artwork.id data-id=artwork._id )
     //- Display price for non-auctions
     if artwork.sale_message != 'Contact For Price'
       p.artwork-item-sale-price= artwork.sale_message
-    if includeContact
+    if artwork.is_inquireable
       a.artwork-item-contact-seller( href= artwork.href )
         | Contact #{artwork.partner.type}
-    else if artwork.partner.is_limited_fair_partner
-      p Not inquireable
