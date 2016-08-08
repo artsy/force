@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 Q = require 'bluebird-q'
 qs = require 'qs'
+cache = require '../../lib/cache'
 metaphysics = require '../../lib/metaphysics'
 { API_URL } = require('sharify').data
 Partners = require '../../collections/partners'
@@ -23,6 +24,29 @@ mapTypeClasses =
   galleries: ['PartnerGallery']
   institutions: ['PartnerInstitution', 'PartnerInstitutionalSeller']
 
+filterPartnerCategories = (data) ->
+  _.compact _.map data.partner_categories, (category) ->
+
+    return if category.primary.length + category.secondary.length is 0
+
+    _.extend _.omit(category, 'primary', 'secondary'),
+      partners: mergeBuckets(category.primary, category.secondary),
+      facet: 'category'
+
+fetchPartnerCategories = (type) ->
+  Q.promise (resolve, reject) ->
+    cache.get "partner_categories:#{type}", (err, cachedData) ->
+      return reject(err) if err
+      return resolve(JSON.parse(cachedData)) if cachedData
+
+      metaphysics(
+        query: query
+        variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
+      ).then (data) ->
+        categories = filterPartnerCategories data
+        cache.set "partner_categories:#{type}", JSON.stringify(categories)
+        resolve(categories)
+
 @index = (req, res, next) ->
   type = mapType[req.params.type]
   searchParams = _.pick(req.query, 'location', 'category')
@@ -34,16 +58,7 @@ mapTypeClasses =
     fetchPrimaryCarousel(params)
     partnerCities.fetch(cache: true)
     partnerFeaturedCities.fetch(cache: true)
-    metaphysics(
-      query: query
-      variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
-    ).then (data) ->
-      _.compact _.map data.partner_categories, (category) ->
-        return if category.primary.length + category.secondary.length is 0
-        _.extend _.omit(category, 'primary', 'secondary'),
-          partners: mergeBuckets(category.primary, category.secondary),
-          facet: 'category'
-
+    fetchPartnerCategories(type)
   ]).spread (profiles, partnerCities, partnerFeaturedCities, categories) ->
     res.locals.sd.MAIN_PROFILES = profiles.toJSON()
     res.locals.sd.PARTNER_CITIES = partnerCities
