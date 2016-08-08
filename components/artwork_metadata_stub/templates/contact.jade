@@ -6,9 +6,6 @@ if artwork.is_in_auction
   else
     .artwork-metadata-stub__contact.artwork-metadata-stub__line
       | Auction closed
-else if artwork.partner.is_limited_fair_partner
-  .artwork-metadata-stub__contact.artwork-metadata-stub__line
-    | Not inquireable
 else if artwork.is_inquireable
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
     a(

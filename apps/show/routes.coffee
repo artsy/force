@@ -79,7 +79,6 @@ query = """
           id
           type
           name
-          is_limited_fair_partner
         }
         artists {
           public
