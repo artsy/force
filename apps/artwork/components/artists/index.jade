@@ -19,6 +19,10 @@ if artwork.artists.length
                   case tab
                     when 'biography'
                       include ./templates/biography
+                    when 'exhibition_highlights'
+                      include ./templates/exhibition
+                    when 'articles'
+                      include ./templates/articles
 
               .artwork-section__jump
                 a.avant-garde-jump-link( href= artist.href )

@@ -1,3 +1,9 @@
 if artist.biography
   .artwork-artist__content__biography
     != artist.biography
+
+.artwork-artist__content__short-bio
+  p= artist.bio.replace('born', 'b.')
+
+if artist.exhibition_highlights.length < 16
+  include ./exhibition

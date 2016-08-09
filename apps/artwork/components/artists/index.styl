@@ -4,12 +4,42 @@
   //
 
 .artwork-artist
+  &-header-cell-section
+    margin-bottom 20px
+    h2
+      avant-garde-size('body', true)
+      margin-bottom 10px
   &__name
     serif('headline')
     margin 0 0 distance(gutter) 0
-
   &__content
     &__biography
+      margin-bottom 30px
       serif('s-body')
       a
         fine-faux-underline()
+    &__short-bio
+      margin-bottom 30px
+    &__exhibition-highlights
+      &__item
+        display flex
+        flex-direction row
+        margin 5px 0
+    &__article
+      display flex
+      margin-bottom 30px
+      margin-left 20px
+      &-thumbnail
+        margin-right 15px
+      &-text
+        display flex
+        flex-direction column
+        justify-content center
+        p:last-child
+          avant-garde-size('s-headline', true)
+          color gray-darker-color
+      &-link
+        margin-left 20px
+
+.artwork-artist__exhibition-highlights__item__text
+  margin-left 13px
