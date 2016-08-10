@@ -3,11 +3,11 @@ _ = require 'underscore'
 metaphysics = require '../../../lib/metaphysics.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
 query = """
-  query filterArtworks($artist_id: String!) {
-    all: filter_artworks(artist_id:$artist_id, aggregations: [TOTAL, GALLERY, PERIOD, MEDIUM]){
+  query filterArtworks($artist_id: String! $aggregations: [ArtworkAggregation]!) {
+    all: filter_artworks(artist_id:$artist_id, aggregations: $aggregations){
       ... aggregations
     }
-    for_sale: filter_artworks(artist_id:$artist_id, for_sale:true, aggregations: [TOTAL, GALLERY, PERIOD, MEDIUM]){
+    for_sale: filter_artworks(artist_id:$artist_id, for_sale:true, aggregations: $aggregations){
       ... aggregations
     }
   }
@@ -29,6 +29,8 @@ module.exports = class Counts extends Backbone.Model
   initialize: ({ params }) ->
     @listenToOnce params, 'firstSet', @fetch
 
+  aggregations: ['TOTAL', 'GALLERY', 'INSTITUTION', 'PERIOD', 'MEDIUM']
+
   mapData: ({ all, for_sale }) ->
     totals =
       for_sale: for_sale.total
@@ -46,10 +48,10 @@ module.exports = class Counts extends Backbone.Model
     , { for_sale: {}, all: {} }
     { totals, aggregations }
 
-  fetch: (artistID) =>
+  fetch: (artist_id) =>
     metaphysics
       query: query
-      variables: artist_id: artistID
+      variables: { artist_id, @aggregations }
     .then (data) =>
       @set @mapData(data)
 
