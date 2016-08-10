@@ -20,6 +20,9 @@ module.exports = '''
       is_published
       banner_size
       has_full_feature
+      organizer {
+        profile_id
+      }
       image {
         url(version: "wide")
       }
