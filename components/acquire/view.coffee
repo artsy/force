@@ -4,7 +4,6 @@ mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports =
-
   acquireArtwork: (artwork, $target, editionSetId) ->
     return false if @acquiring
     @acquiring = true
