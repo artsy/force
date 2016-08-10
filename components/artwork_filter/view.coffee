@@ -86,7 +86,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
-
   expired: (page) ->
     @lastResponse?.length is 0 or @artworks.params.get('page') > 99
 
