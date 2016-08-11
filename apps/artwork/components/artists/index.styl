@@ -1,4 +1,5 @@
 @require '../../../../components/side_tabs'
+@require '../../../../components/gradient_blurb'
 
 .artwork-artists
   //
@@ -43,3 +44,24 @@
 
 .artwork-artist__exhibition-highlights__item__text
   margin-left 13px
+
+.gradient-blurb-read-more-container
+  width 100%
+  height 32px
+  &::before
+    content ''
+    position absolute
+    bottom 50%
+    left 0
+    right 0
+    border-bottom 2px dotted #e5e5e5
+  .gradient-blurb-read-more
+    background-image none
+    padding 8px 29px
+    avant-garde-size(s-headline)
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    background-color white
+    border 1px solid gray-lighter-color
