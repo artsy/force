@@ -11,7 +11,7 @@ module.exports = '''
         }
       }
     }
-    fairs(page: $page, has_full_feature: true, sort: START_AT_DESC, size: 40) {
+    fairs(page: $page, has_listing: true, sort: START_AT_DESC, size: 40) {
       id
       href
       name
@@ -19,7 +19,7 @@ module.exports = '''
       end_at
       is_published
       banner_size
-      has_full_feature
+      has_listing
       image {
         url(version: "wide")
       }

@@ -48,5 +48,5 @@ describe 'FairsView', ->
 
     it 'appends the additional fair(s)', ->
       @view.$('.fairs__past-fairs-list a').length.should.eql 1
-      @view.renderPastFairs [fabricate('fair', is_published: true, has_full_feature: true, image: @image, profile: @profile, end_at: moment().subtract(10, 'days').format())]
+      @view.renderPastFairs [fabricate('fair', is_published: true, has_listing: true, image: @image, profile: @profile, end_at: moment().subtract(10, 'days').format())]
       @view.$('.fairs__past-fairs-list a').length.should.eql 2
