@@ -10,11 +10,11 @@ describe 'Fairs template', ->
     image = { url: "https://www.example.com/cat.jpg" }
     profile = { icon: { url: "https://www.example.com/cat.jpg" } }
     @currentFairs = _.times 2, ->
-      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'), banner_size: 'large')
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'), banner_size: 'large')
     @pastFairs = _.times 4, ->
-      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, has_listing: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
     @upcomingFairs = _.times 3, ->
-      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
+      fabricate('fair', profile: profile, image: image, id: _.uniqueId(), published: true, has_full_feature: true, has_listing: true, organizer: null, end_at: moment().add(10, 'days'))
 
     @rows = ViewHelpers.fillRows @currentFairs
 

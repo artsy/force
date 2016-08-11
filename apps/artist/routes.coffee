@@ -12,10 +12,11 @@ metaphysics = require '../../lib/metaphysics'
 query = require './queries/server.coffee'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
+sd = require('sharify').data
 
 @index = (req, res, next) ->
   tab = req.params.tab or ''
-  includeJSONLD = res.locals.sd.BROWSER?.family is 'PhantomJS'
+  includeJSONLD = res.locals.userAgent is 'PhantomJS'
   send =
     query: query,
     variables:
@@ -28,7 +29,8 @@ currentShowAuction = require './components/current_show_auction/index'
   metaphysics send
     .then ({ artist }) ->
       nav = new Nav artist: artist
-      return next() if not _.find nav.sections(), slug: tab
+
+      return res.redirect(artist.href) if not _.find nav.sections(), slug: tab
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         res.locals.sd.ARTIST = artist

@@ -16,8 +16,10 @@ module.exports = class PartnerCellView extends Backbone.View
       el: @$('.js-follow-button')
       following: @following
       model: new Profile @partner.profile
+      context_module: 'Rails'
       modelName: 'profile'
       context_page: "Galleries / Institutions page"
+
 
   render: ->
     city = _.findWhere Cities, slug: @preferredCitySlug if @preferredCitySlug

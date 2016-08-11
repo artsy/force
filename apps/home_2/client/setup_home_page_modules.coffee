@@ -45,8 +45,8 @@ module.exports = ->
       query: query
       variables: key: "#{module.key}", id: "#{module.params?.id}"
       req: { user: user }
-    ).then ({ home_page_module }) ->
-      module = home_page_module
+    ).then ({ home_page: { artwork_module } }) ->
+      module = artwork_module
 
       return $el.remove() unless module.results?.length or module.key is 'followed_artists'
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'

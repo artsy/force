@@ -2,6 +2,7 @@ $ = require 'cheerio'
 _ = require 'underscore'
 fs = require 'fs'
 jade = require 'jade'
+fixture = require './fixtures/artists'
 { fabricate } = require 'antigravity'
 ArtistsByLetter = require '../collections/artists_by_letter'
 
@@ -12,11 +13,11 @@ render = (template) ->
 describe 'Artists', ->
   describe '#index', ->
     before ->
-      @html = render('index') _.extend require('./fixtures/artists').data,
+      data = _.extend fixture.data,
         letters: ArtistsByLetter::range
         asset: (->)
         sd: {}
-
+      @html = render('index') data
       @$ = $.load @html
 
     it 'renders the alphabetical nav', ->
@@ -31,25 +32,22 @@ describe 'Artists', ->
     it 'renders the featured artists', ->
       @$('.afc-artist-name').map(-> $(this).text()).get()
         .should.eql [
-          'Kamrooz Aram'
-          'Tina Barney'
-          'Sarah Braman'
-          'Aaron Sandnes'
+          'Jeff Koons'
+          'Jeff Koons'
+          'Jeff Koons'
+          'Jeff Koons'
         ]
 
     it 'renders the gene sets', ->
-      @$('.artists-featured-genes-gene').should.have.lengthOf 10
+      @$('.artists-featured-genes-gene').length.should.equal 2
 
     it 'renders 4 trending artists for each gene', ->
-      @$('.afg-artist').should.have.lengthOf 40
+      @$('.artist-cell-item').length.should.equal 8
 
     it 'has jump links to the various gene pages', ->
       $links = @$('.avant-garde-jump-link')
-      $links.length.should.equal 10
+      $links.length.should.equal 2
       $links.first().text().should.equal 'Emerging Art'
-
-    it 'uses four_thirds images', ->
-      @$('.afg-artist').html().should.containEql 'four_thirds'
 
   describe 'letter page', ->
     before ->

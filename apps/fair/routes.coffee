@@ -31,6 +31,7 @@ InfoMenu = require '../../components/info_menu/index.coffee'
     # TODO: Dependent on attribute of fair
     res.locals.sd.BODY_CLASS = 'body-transparent-header'
     res.locals.sd.SECTION = 'overview'
+    res.locals.sd.INCLUDE_SAILTHRU = true
     filterArtworks.fetch
       data: filterData
       success: ->

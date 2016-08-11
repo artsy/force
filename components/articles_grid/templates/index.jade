@@ -1,5 +1,9 @@
+if header
+  .articles-grid__header= header
+
 .articles-grid__articles.js-articles-grid-articles.grid-3-up
   //- Rendered separately
 
-.js-articles-grid-more.articles-grid__more-button
-  include button
+unless hideMore
+  .js-articles-grid-more.articles-grid__more-button
+    include button

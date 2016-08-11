@@ -4,8 +4,8 @@ Artwork = require '../../models/artwork'
 request = require 'superagent'
 moment = require 'moment'
 async = require 'async'
-{ Cities } = require 'places'
-{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL } = require('sharify').data
+PartnerFeaturedCities = require '../../collections/partner_featured_cities'
+{ NODE_ENV, API_URL, POSITRON_URL, FUSION_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = require('sharify').data
 artsyXapp = require 'artsy-xapp'
 PAGE_SIZE = 100
 FUSION_PAGE_SIZE = 5000
@@ -21,7 +21,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
   new Articles().fetch
     data:
       # id for "Artsy Editorial" (exclude partner posts)
-      author_id: "503f86e462d56000020002cc"
+      channel_id: ARTSY_EDITORIAL_CHANNEL
       published: true
       sort: '-published_at'
       exclude_google_news: false
@@ -96,8 +96,11 @@ getArtworkBuckets = (callback) ->
   res.render('misc', pretty: true)
 
 @cities = (req, res, next) ->
-  res.set 'Content-Type', 'text/xml'
-  res.render('cities', pretty: true, citySlugs: _.pluck(Cities, 'slug'))
+  partnerFeaturedCities = new PartnerFeaturedCities()
+  partnerFeaturedCities.fetch
+    success: ->
+      res.set 'Content-Type', 'text/xml'
+      res.render 'cities', pretty: true, citySlugs: partnerFeaturedCities.pluck('slug')
 
 @artworksPage = (template) -> (req, res, next) ->
   request

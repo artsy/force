@@ -8,7 +8,7 @@ request = require 'superagent'
 geoIP = (ip) ->
   Q.promise (resolve, reject) ->
     endpoint = GEOIP_ENDPOINT
-    endpoint += ip unless NODE_ENV is 'development'
+    endpoint += if NODE_ENV is 'development' then '72.89.161.100' else ip
     request
       .get endpoint
       .end (err, response) ->

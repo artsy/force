@@ -26,18 +26,11 @@ module.exports = """
           name
           href
           trending_artists(sample: 4) {
-            id
-            href
-            name
-            years
-            nationality
-            initials
-            image {
-              url(version: "four_thirds")
-            }
+            ... artistCell
           }
         }
       }
     }
   }
+  #{require '../../components/artist_cell/query.coffee'}
 """

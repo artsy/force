@@ -94,10 +94,6 @@ describe 'ArtworkFilterView', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate2 'filter_artworks'
 
-    it 'calculates the remaining works to display', ->
-      @view.artworks.trigger 'sync'
-      @view.remaining().should.eql 11959
-
   describe '#loadNextPage', ->
     it 'loads the next page when the button is clicked', ->
       Backbone.sync.callCount.should.equal 2
@@ -105,25 +101,25 @@ describe 'ArtworkFilterView', ->
       @view.loadNextPage()
       @view.artworks.params.get('page').should.equal 2
       Backbone.sync.callCount.should.equal 3
-      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2&aggregations[]=total'
       @view.loadNextPage()
       @view.artworks.params.get('page').should.equal 3
       Backbone.sync.callCount.should.equal 4
-      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+      _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3&aggregations[]=total'
 
     describe 'error', ->
       it 'reverts the params', ->
-        @view.artworks.params.attributes.should.eql size: 9, page: 1
+        @view.artworks.params.attributes.should.eql size: 9, page: 1, aggregations: ['total']
         @view.loadNextPage()
-        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2'
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=2&aggregations[]=total'
         Backbone.sync.restore()
         sinon.stub(Backbone, 'sync').yieldsTo 'error'
         # Tries to get next page but errors
         @view.loadNextPage()
-        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3&aggregations[]=total'
         # Next try should have the same params
         @view.loadNextPage()
-        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3'
+        _.last(Backbone.sync.args)[2].data.should.eql 'size=9&page=3&aggregations[]=total'
 
   describe '#selectCriteria', ->
     beforeEach ->

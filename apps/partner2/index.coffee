@@ -16,3 +16,4 @@ app.get '/:id/artist/:artistId', routes.requireNewLayout, routes.artist
 app.get '/:id/articles', routes.requireNewLayout, routes.articles
 app.get '/:id/contact', routes.requireNewLayout, routes.contact
 app.get '/:id/about', routes.requireNewLayout, routes.about
+app.get '/:id/article/:articleId', routes.requireNewLayout, routes.articles

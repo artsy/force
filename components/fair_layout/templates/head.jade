@@ -40,3 +40,37 @@ else
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   script( type='text/javascript', src='//fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js' )
+
+//- Sailthru Metatags
+- var tags = ['fairs', fair.get('id')]
+if fair.get('location')
+  if fair.get('location').city
+    - tags = tags.concat([fair.get('location').city])
+  if fair.get('location').country
+    - tags = tags.concat([fair.get('location').country])
+  meta( name='sailthru.tags', content=tags.join(', ') )
+meta( name='sailthru.fair.page', content='landing-page' )
+meta( name='sailthru.author', content=fair.get('name') )
+meta( name='sailthru.date', content=fair.get('autopublish_artworks_at') )
+meta( name='sailthru.expire_date', content=fair.get('end_at') )
+if fair.get('about')
+  meta( name='sailthru.description', content=fair.mdToHtmlToText('about') )
+else if fair.get('summary')
+  meta( name='sailthru.description', content=fair.get('summary') )
+else if fair.get('tagline')
+  meta( name='sailthru.description', content=fair.get('tagline') )
+else
+  meta( name='sailthru.description', content=fair.toPageDescription() )
+meta( name='sailthru.image.full', content=fair.imageUrl('large_rectangle') )
+meta( name='sailthru.image.thumb' content=fair.imageUrl('square') )
+meta( name='sailthru.title' content=fair.get('name') )
+if fair.get('location') && fair.get('location').coordinates && fair.get('location').display
+  meta( name='sailthru.fair.location' content=fair.get('location').display )
+meta( name='sailthru.fair.start', content=fair.get('start_at') )
+meta( name='sailthru.fair.end', content=fair.get('end_at') )
+meta( name='sailthru.fair.partner.number' content=fair.get('partners_count') )
+if fair.get('hours')
+  meta( name='sailthru.fair.hours' content=fair.mdToHtmlToText('hours') )
+if fair.get('tickets')
+  meta( name='sailthru.fair.tickets' content=fair.mdToHtmlToText('tickets') )
+meta( name='sailthru.fair.slug', content=fair.get('id') )

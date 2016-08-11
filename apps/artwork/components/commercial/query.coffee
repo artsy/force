@@ -15,7 +15,6 @@ module.exports = """
       name
       type
       is_pre_qualify
-      is_limited_fair_partner
       contact_message
     }
     fair {

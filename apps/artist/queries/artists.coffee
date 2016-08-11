@@ -3,13 +3,13 @@ module.exports =
   query artist($artist_id: String!, $contemporary: Boolean!, $artists: Boolean!) {
     artist(id: $artist_id) {
       contemporary (size: 24) @include(if: $contemporary){
-        ... relatedArtist
+        ... artistCell
       }
       artists (size: 24) @include(if: $artists){
-        ... relatedArtist
+        ... artistCell
       }
     }
   }
 
-  #{require './artist_fragment.coffee'}
+  #{require '../../../components/artist_cell/query.coffee'}
   """

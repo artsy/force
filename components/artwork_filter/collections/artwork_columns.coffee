@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 
 class Params extends Backbone.Model
-  defaults: { size: 9, page: 1 }
+  defaults: { size: 9, page: 1, aggregations:['total'] }
 
   next: ->
     @set 'page', @get('page') + 1
@@ -21,7 +21,8 @@ module.exports = class ArtworkColumns extends FilterArtworks
     @params = new Params
     super
 
-  prepareCounts: -> # no op
+  allFetched: ->
+    @length >= @counts?.total?.value
 
   fetch: (options = {}) ->
     @xhr.abort() if @xhr? and @xhr.readyState isnt 4

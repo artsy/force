@@ -1,6 +1,6 @@
 module.exports =
   """
-  fragment relatedArtist on Artist {
+  fragment artistCell on Artist {
     id
     name
     image {

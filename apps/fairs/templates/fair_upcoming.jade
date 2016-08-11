@@ -1,5 +1,8 @@
 .fairs__upcoming-fair
-  .fairs-fair__name #{fair.name}
+  if fair.organizer && fair.organizer.profile_id
+    a(href="/#{fair.organizer.profile_id}").fairs-fair__name #{fair.name}
+  else
+    .fairs-fair__name #{fair.name}
   .fairs-fair__info #{ViewHelpers.formatDates(fair)}
   if fair.location && fair.location.city
     .fairs-fair__info= fair.location.city
