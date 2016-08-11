@@ -39,12 +39,7 @@ module.exports = ->
   user = User.instantiate()
 
   each USER_HOME_PAGE, (module, index) ->
-
-    console.log 'USER_HOME_PAGE', USER_HOME_PAGE
-
     $el = $("#hpm-#{module.key}-#{index}")
-
-    console.log '$("#hpm-#{module.key}-#{index}")', $("#hpm-#{module.key}-#{index}")
 
     metaphysics(
       query: query
