@@ -9,5 +9,5 @@ module.exports = ($el, options = {}, callback) ->
     template: template
 
   options = _.defaults options, defaults
-  initCarousel $el, options, callback
   $el.addClass 'mgr-horizontal-nav'
+  initCarousel $el, options, callback

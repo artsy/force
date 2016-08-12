@@ -1,7 +1,7 @@
 @require '../../../../../components/artist_cell'
 
 .artists-to-follow
-  height auto
+  height 450px
   background-color gray-lightest-color
   &__inner
     padding 30px 0 50px
@@ -22,7 +22,6 @@
           &.is-active
             color black
             border-bottom 2px solid black
-
     &__results
       padding-top 22px
       .artist-rail-cell
@@ -30,5 +29,6 @@
         margin-right 30px
         width calc(25% \- 22.5px)
         background-color white
+        // transition opacity, 800ms, ease
       .hoverable-image-link
         width 100%

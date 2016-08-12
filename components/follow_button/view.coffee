@@ -12,7 +12,14 @@ module.exports = class FollowButton extends Backbone.View
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
-    { @following, @notes, @modelName, @href, @context_page, @context_module } = options
+    {
+      @following,
+      @notes,
+      @modelName,
+      @href,
+      @context_page,
+      @hideSuggestions
+    } = options
 
     @label = if options.label then options.label else "#{@modelName}s"
 
@@ -24,7 +31,7 @@ module.exports = class FollowButton extends Backbone.View
     @listenTo @following, "remove:#{@model.id}", @change
     @$el.addClass "no-touch"
 
-    if @modelName is 'artist' and @following
+    if @modelName is 'artist' and @following and not @hideSuggestions
       @artistSuggestionsView = new ArtistSuggestions
         model: @model
         el: @$el

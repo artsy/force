@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 metaphysics = require '../../../../lib/metaphysics.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 query = require './query.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
@@ -17,6 +18,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
   initialize: ({ @user, @state, @results })->
     @listenTo @state, 'change', @selectTab
     @listenTo @state, 'change', @updateResults
+    @listenTo mediator, 'follow-button:follow', @afterFollow
 
   selectTab: (type) ->
     @$(".artists-to-follow-tab.is-active").removeClass('is-active')
@@ -39,7 +41,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
 
   _postRender: ->
     _.defer =>
-      initCarousel @$('.mgr-horizontal-nav'), groupCells: true
+      @carousel = initCarousel @$('.mgr-horizontal-nav'), groupCells: true
       @_setupFollowButtons()
 
   _setupFollowButtons: ->
@@ -54,8 +56,14 @@ module.exports = class ArtistsToFollowView extends Backbone.View
         following: following
         model: new Backbone.Model id: id
         modelName: 'artist'
+        hideSuggestions: true
         el: $el
         href: _.findWhere(view.results, id: id)?.href
       id
 
     following?.syncFollows ids
+
+  afterFollow: (el, model) =>
+    $cell = $(el).closest('.mgr-cell')
+    $cell.fadeOut 'slow', =>
+      @carousel.cells.flickity.remove $(el).closest('.mgr-cell')
