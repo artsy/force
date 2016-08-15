@@ -1,5 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+xssFilters = require 'xss-filters'
 
 module.exports = class Serializer
   constructor: (@$form) ->
@@ -24,7 +25,9 @@ module.exports = class Serializer
     , {}
 
   data: (data = {}) ->
-    _.extend data, @inputs(), @checkboxes()
+    data = _.extend data, @inputs(), @checkboxes()
+    data = _.mapObject data, (val, key) -> xssFilters.inHTMLData val
+    data
 
   pick: (keys...) ->
     _.pick @data(), keys...
