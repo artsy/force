@@ -7,7 +7,6 @@ module.exports = """
     is_biddable
     partner(shallow: true) {
       type
-      is_limited_fair_partner
       href
     }
   }

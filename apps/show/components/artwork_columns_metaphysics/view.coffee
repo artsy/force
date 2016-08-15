@@ -33,7 +33,6 @@ module.exports = class ArtworkColumnsView extends Backbone.View
                 id
                 type
                 name
-                is_limited_fair_partner
               }
               artists {
                 public

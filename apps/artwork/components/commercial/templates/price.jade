@@ -1,12 +1,3 @@
-if artwork.partner.is_limited_fair_partner
-  //- Regardless of whether or not the work is for sale
-  .artwork-commercial__limited-partner-message
-    | This work is not available for purchase on Artsy
-    span.help-tooltip(
-      data-anchor='top-right'
-      data-message='#{artwork.partner.name} is an art fair exhibitor, but not an Artsy partner.'
-    )
-
-else if artwork.sale_message
+if artwork.sale_message
   .artwork-commercial__sale-message
     = artwork.sale_message

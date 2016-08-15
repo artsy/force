@@ -97,11 +97,12 @@ module.exports = class EditorialSignupView extends Backbone.View
   # Subscribe controls
   onSubscribe: (e) ->
     @$(e.currentTarget).addClass 'is-loading'
+    @email = @$(e.currentTarget).prev('input').val()
     $.ajax
       type: 'POST'
       url: '/editorial-signup/form'
       data:
-        email: @$(e.currentTarget).prev('input').val()
+        email: @email
         name: sd.CURRENT_USER?.name or= ''
       error: (res) =>
         new FlashMessage message: 'Whoops, there was an error. Please try again.'
@@ -120,17 +121,16 @@ module.exports = class EditorialSignupView extends Backbone.View
           @$('.articles-es-cta__social').fadeIn()
         setTimeout((=> @ctaBarView.close()), 2000)
 
-        analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e))
+        analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
+    type = $(e.currentTarget).data('type')
     if @inAEMagazinePage()
-      'magazine lush'
-    else if $(e.currentTarget).data('type') is 'inline'
-      'article in-line'
-    else if $(e.currentTarget).data('type') is 'lush'
-      'article lush'
+      'magazine_fixed'
+    else if type in ['inline', 'lush']
+      'article_fixed'
     else
-      'article cta-popup'
+      'article_popup'
 
   onDismiss: ->
     analyticsHooks.trigger('dismiss:editorial-signup')

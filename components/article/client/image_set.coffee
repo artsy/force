@@ -67,7 +67,7 @@ module.exports = class ImageSetView extends Backbone.View
       modelName: 'artist'
       model: artist
       context_page: "Article page"
-      context_module: "Image set module"
+      context_module: 'article_image_set'
       href: sd.APP_URL + sd.CURRENT_PATH
 
   preload: ->

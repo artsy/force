@@ -49,7 +49,7 @@ module.exports =
     @isEligible(fair) and @isNotOver(fair)
 
   isEligible: (fair) ->
-    fair.has_full_feature and fair.is_published and fair.profile?.is_published
+    fair.is_published and fair.profile?.is_published
 
   isNotOver: (fair) ->
     Date.parse(fair.end_at) > new Date
@@ -64,7 +64,7 @@ module.exports =
     @isEventuallyEligible(fair) and @isNotOver(fair)
 
   isEventuallyEligible: (fair) ->
-    fair.has_full_feature and fair.is_published and not fair.profile?.is_published
+    fair.is_published and not fair.profile?.is_published
 
   bannerSize: (fair) ->
     sizes =

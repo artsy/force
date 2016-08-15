@@ -21,7 +21,7 @@ module.exports = ($el, options = {}) ->
 
     $el[0].addEventListener("transitionend", (e) ->
       if e.propertyName is 'max-height'
-        options.onExpand()
+        options.onExpand() if options.onExpand
     , false);
 
     $button.one 'click', (e) ->

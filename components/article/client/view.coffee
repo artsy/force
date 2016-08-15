@@ -81,8 +81,14 @@ module.exports = class ArticleView extends Backbone.View
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
   setupMaxImageHeights: ->
-    @$(".article-section-artworks[data-layout=overflow] img, .article-section-image img").css('max-height', window.innerHeight * 0.7 )
-    @$('.article-section-artworks, .article-section-image').addClass 'images-loaded'
+    @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
+      .each (i, img) ->
+        newWidth = ((img.width * window.innerHeight * 0.7) / img.height)
+        if newWidth < 580
+          $(img).css('max-width', 580)
+        else
+          $(img).css('max-height', window.innerHeight * 0.7 )
+    @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
 
@@ -128,6 +134,7 @@ module.exports = class ArticleView extends Backbone.View
         modelName: 'artist'
         model: artist
         context_page: "Article page"
+        context_module: 'article_artist_follow'
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
 

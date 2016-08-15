@@ -6,32 +6,49 @@
 if(location.pathname.match('/article/')){
 
   $(document.body).on('click', '.article-social a', function() {
-    analytics.track('Clicked Article Share', {
-      context: 'bottom',
+    var articleId = $(this).closest('.article-container').data('id');
+    analytics.track('Article Share', {
+      article_id: articleId,
+      context_type: sd.ARTICLE ? 'article_fixed' : 'magazine_fixed',
       service: $(this).attr('data-service')
-    })
-  }).on('click', '.article-share-fixed > a', function() {
-    analytics.track('Clicked Article Share', {
-      context: 'fixed',
-      service: $(this).attr('data-service')
-    })
+    });
 
-  }).on('click', '.article-related-widget a', function() {
-    analytics.track('Clicked Related Article', {})
+  }).on('click', '.article-share-fixed > a', function() {
+    var articleId = $(this).closest('.article-container').data('id');
+    analytics.track('Article Share', {
+      article_id: articleId,
+      context_type: 'article_sticky',
+      service: $(this).attr('data-service')
+    });
 
   }).on('click', '.article-section-toc-link a', function() {
-    analytics.track('Clicked TOC Link', {})
+    var articleId = $(this).closest('.article-container').data('id');
+    analytics.track('Clicked article impression', {
+      article_id: articleId,
+      destination_path: null,
+      impression_type: 'toc',
+      context_type: 'article_fixed'
+    });
 
   }).on('click', '.article-section-image-set', function() {
-    analytics.track('Clicked Image Set', {})
+    var articleId = $(this).closest('.article-container').data('id');
+    analytics.track('Clicked article impression', {
+      article_id: articleId,
+      destination_path: null,
+      impression_type: 'image_set',
+      context_type: 'article_fixed'
+    });
 
-  }).on('click', '.article-section-top-stories__item a', function() {
-    analytics.track('Clicked Top Stories Link', {})
+  }).on('click', '.article-section-callout', function(){
+    var articleId = $(this).closest('.article-container').data('id');
+    analytics.track('Clicked article impression', {
+      article_id: articleId,
+      destination_path: $(this)[0].href,
+      impression_type: 'article_callout',
+      context_type: 'article_fixed'
+    });
 
-  }).on('click', '.js-modalize-close', function() {
-    analytics.track('Clicked Close Image Set', {})
-
-  })
+  });
 
   // Hooks
   analyticsHooks.on('readmore', function(options) {
@@ -57,10 +74,12 @@ if(location.pathname.match('/article/')){
   });
 
   analyticsHooks.on('view:editorial-signup', function() {
-    analytics.track('Article Impression',
-      { context: 'article cta-popup' },
-      { integrations: { 'Mixpanel': false } }
-    );
+    analytics.track('Article impression', {
+      article_id: null,
+      destination_path: null,
+      impression_type: 'newsletter_signup',
+      context_type: 'article_popup'
+    }, { integrations: { 'Mixpanel': false } } );
   });
 }
 
@@ -69,12 +88,18 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles') 
 
   analyticsHooks.on('submit:editorial-signup', function(options){
     analytics.track('Sign up for editorial email', {
-      context: options.type
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: options.type,
+      user_email: options.email
     });
   });
 
   analyticsHooks.on('submit:gi-signup', function(options){
-    analytics.track('Sign up for gallery insights email');
+    analytics.track('Sign up for gallery insights email', {
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: 'article_fixed',
+      user_email: options.email
+    });
   });
 
   analyticsHooks.on('dismiss:editorial-signup', function(){
