@@ -1,10 +1,12 @@
 Backbone = require 'backbone'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-query = require './query.coffee'
+tabQuery = require './query.coffee'
+artistSuggestionQuery = require './artist_suggestion_query.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 
+cellsTemplate = -> require('./templates/_cells.jade') arguments...
 resultsTemplate = -> require('./templates/results.jade') arguments...
 
 module.exports = class ArtistsToFollowView extends Backbone.View
@@ -26,7 +28,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
 
   updateResults: ->
     metaphysics
-      query: query
+      query: tabQuery
       variables: type: @state.get('type')
       req: { user: @user }
     .then ({ home_page: { artist_module: { results } } }) =>
@@ -67,3 +69,14 @@ module.exports = class ArtistsToFollowView extends Backbone.View
     $cell = $(el).closest('.mgr-cell')
     $cell.fadeOut 'slow', =>
       @carousel.cells.flickity.remove $(el).closest('.mgr-cell')
+
+    @_appendSuggestions model.id
+
+  _appendSuggestions: (artist_id) ->
+    metaphysics
+      query: artistSuggestionQuery
+      variables: artist_id: artist_id
+      req: { user: @user }
+    .then ({ home_page: { artist_module: { results } } }) =>
+      @results = results
+      @renderResults()
