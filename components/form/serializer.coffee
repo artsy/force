@@ -14,7 +14,7 @@ module.exports = class Serializer
 
   inputs: ->
     _.reduce @$form.serializeArray(), (memo, input) ->
-      value = _s.trim input.value
+      value = xssFilters.inHTMLData _s.trim input.value
       if memo[input.name]? # Convert to array
         target = _.flatten [memo[input.name]]
         target.push value
@@ -25,9 +25,7 @@ module.exports = class Serializer
     , {}
 
   data: (data = {}) ->
-    data = _.extend data, @inputs(), @checkboxes()
-    data = _.mapObject data, (val, key) -> xssFilters.inHTMLData val
-    data
+    _.extend data, @inputs(), @checkboxes()
 
   pick: (keys...) ->
     _.pick @data(), keys...
