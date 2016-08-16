@@ -15,7 +15,7 @@ currentShowAuction = require './components/current_show_auction/index'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
-  tab = req.params.tab or ''
+  tab = if req.params.tab? then req.params.tab else ''
   includeJSONLD = res.locals.userAgent is 'PhantomJS'
   send =
     query: query,
@@ -30,7 +30,7 @@ sd = require('sharify').data
     .then ({ artist }) ->
       nav = new Nav artist: artist
 
-      return res.redirect(artist.href) if not _.find nav.sections(), slug: tab
+      return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
         res.locals.sd.ARTIST = artist
