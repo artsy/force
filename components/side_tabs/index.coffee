@@ -4,8 +4,8 @@ module.exports = ($els) ->
   $els.map ->
     $el = $(this)
 
-    $links = $el.find '.js-artwork-tabs-link'
-    $sections = $links.add $el.find '.js-artwork-tabs-section'
+    $links = $el.find '.js-side-tabs-link'
+    $sections = $links.add $el.find '.js-side-tabs-section'
 
     $links.click (e) ->
       e.preventDefault()

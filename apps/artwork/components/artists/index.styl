@@ -1,15 +1,64 @@
-@require '../tabs'
+@require '../../../../components/side_tabs'
+@require '../../../../components/gradient_blurb'
 
 .artwork-artists
   //
 
 .artwork-artist
+  &-header-cell-section
+    margin-bottom 20px
+    h2
+      avant-garde-size('body', true)
+      margin-bottom 10px
   &__name
     serif('headline')
     margin 0 0 distance(gutter) 0
-
   &__content
     &__biography
+      margin-bottom 30px
       serif('s-body')
       a
         fine-faux-underline()
+    &__short-bio
+      margin-top 30px
+    &__exhibition-highlights
+      &__item
+        display flex
+        flex-direction row
+        margin 5px 0
+    &__article
+      display flex
+      margin-bottom 30px
+      &-thumbnail
+        margin-right 15px
+      &-text
+        display flex
+        flex-direction column
+        justify-content center
+        p:last-child
+          avant-garde-size('s-headline', true)
+          color gray-darker-color
+
+.artwork-artist__exhibition-highlights__item__text
+  margin-left 13px
+
+.gradient-blurb-read-more-container
+  width 100%
+  height 32px
+  &::before
+    content ''
+    position absolute
+    bottom 50%
+    left 0
+    right 0
+    border-bottom 2px dotted gray-lighter-color
+  .gradient-blurb-read-more
+    background-image none
+    padding 8px 29px
+    avant-garde-size(s-headline)
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    background-color white
+    border 1px solid gray-lighter-color
