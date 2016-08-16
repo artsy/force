@@ -33,6 +33,10 @@ describe "Order", ->
     it "returns the shipping notes", ->
       @order.shippingNote().should.equal "HI I'm a shipping note"
 
+    it "returns the shipping notes stripped of html", ->
+      @order.set 'line_items', [{shipping_note: '<img>'}]
+      @order.shippingNote().should.equal "&lt;img>"
+
   describe '#getLineItemArtworks', ->
 
     it "returns artwork models in an order", ->
@@ -61,6 +65,12 @@ describe "Order", ->
     it "formatted shipping info", ->
       @order.set shippingInfo
       @order.formatShippingAddress().should.equal 'Artsy<br />401 Broadway<br />New York, NY 10012'
+
+    it "formatted shipping info stripped of HTML", ->
+      info = _.clone shippingInfo
+      info.shipping_address.name = "<img>"
+      @order.set info
+      @order.formatShippingAddress().should.equal '&lt;img><br />401 Broadway<br />New York, NY 10012'
 
   describe '#fetchPendingOrder', ->
 
