@@ -1,5 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+xssFilters = require 'xss-filters'
 
 module.exports = class Serializer
   constructor: (@$form) ->
@@ -13,7 +14,7 @@ module.exports = class Serializer
 
   inputs: ->
     _.reduce @$form.serializeArray(), (memo, input) ->
-      value = _s.trim input.value
+      value = xssFilters.inHTMLData _s.trim input.value
       if memo[input.name]? # Convert to array
         target = _.flatten [memo[input.name]]
         target.push value
