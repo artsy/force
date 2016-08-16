@@ -54,5 +54,5 @@ describe 'Artist Module template', ->
 
   it 'should display biography', ->
     @$('.side-tabs__nav').find('a[data-id=biography]').attr('data-id').should.equal 'biography'
-    @$('.artwork-artist__content__biography').html().should.equal "He is from Compton"
+    @$('.artwork-artist__content__biography').html().should.containEql "He is from Compton"
     @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
