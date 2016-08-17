@@ -1,6 +1,9 @@
 _ = require 'underscore'
+mediator = require '../../../../lib/mediator.coffee'
+sd = require('sharify').data
 
-module.exports = (artwork) ->
+module.exports = ->
+  mediator.on 'search:skrillex', => window.location = "#{sd.CLIENT.href}/skrillex"
   return unless location.pathname.match('/skrillex')
   $('.artwork-page.main-layout-container').prepend(
     "<audio id='skrillex' src='/sounds/skrillex(cut).mp3'></audio>" 
