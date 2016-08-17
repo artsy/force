@@ -35,6 +35,7 @@ module.exports = (req, res, next) ->
   res.locals.sd.REFERRER = referrer = req.get 'Referrer'
   res.locals.sd.MEDIUM = new Referrer(referrer).medium if referrer
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Artsy-Mobile')?
+  res.locals.sd.REFLECTION = req.headers?['user-agent']?.match('PhantomJS')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
 
