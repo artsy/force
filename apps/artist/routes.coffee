@@ -16,7 +16,7 @@ sd = require('sharify').data
 
 @index = (req, res, next) ->
   tab = if req.params.tab? then req.params.tab else ''
-  includeJSONLD = res.locals.userAgent is 'PhantomJS'
+  includeJSONLD = res.locals.sd.REFLECTION
   send =
     query: query,
     variables:
