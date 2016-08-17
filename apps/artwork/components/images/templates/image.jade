@@ -1,3 +1,5 @@
+- extraDisplayStyle = sd.REFLECTION ? 'artwork-images__images__image__display--visible' : ''
+
 a.artwork-images__images__image(
   class='js-artwork-images__images__image analytics-artwork-zoom'
   data-id= image.id
@@ -10,7 +12,7 @@ a.artwork-images__images__image(
   )
 
   .artwork-images__images__image__display(
-    class='js-artwork-images__images__image__display'
+    class="js-artwork-images__images__image__display #{extraDisplayStyle}"
   )
     img.artwork-images__images__image__display__img(
       class='js-artwork-images__images__image__display__img'
