@@ -1,6 +1,6 @@
 if artist.articles && artist.articles.length
   for article in artist.articles.slice(0,3)
-    .artwork-artist__content__article
+    a.artwork-artist__content__article(href=article.href)
       .artwork-artist__content__article-thumbnail
         img(src=article.thumbnail_image.cropped.url)
       .artwork-artist__content__article-text

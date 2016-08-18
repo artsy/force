@@ -24,6 +24,7 @@ module.exports = """
             url
           }
         }
+        href
         title
         author {
           name
