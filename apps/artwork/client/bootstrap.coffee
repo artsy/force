@@ -3,3 +3,4 @@ module.exports = (sd, { artwork }) ->
     id: artwork.id
     _id: artwork._id
     context: artwork.context
+    href: artwork.href
