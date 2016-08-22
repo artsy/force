@@ -34,37 +34,6 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       articles: articles
       crop: crop
 
-@article = (req, res, next) ->
-  articleItem = new Article id: req.params.slug
-  articleItem.fetchWithRelated
-    accessToken: req.user?.get('accessToken')
-    error: res.backboneError
-    success: (data) ->
-      if req.params.slug isnt data.article.get('slug')
-        return res.redirect "/article/#{data.article.get 'slug'}"
-      res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
-      res.locals.sd.ARTICLE = data.article.toJSON()
-      res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-      res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
-      res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
-      res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
-      res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
-      res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
-
-      # Email Subscriptions
-      user = res.locals.sd.CURRENT_USER
-      setupEmailSubscriptions user, data.article, (results) ->
-        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
-
-        # Parsely Articles
-        articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
-          res.locals.sd.PARSELY_ARTICLES = parselyArticles
-          res.render 'article', _.extend data,
-            embed: embed
-            crop: crop
-            lushSignup: true
-      return
-
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ editorial: false }) unless user?.email
   if article.get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
@@ -72,19 +41,6 @@ setupEmailSubscriptions = (user, article, cb) ->
       cb { editorial: isSubscribed }
   else
     cb { editorial: false }
-
-getArticleScrollType = (data) ->
-  # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-  if data.relatedArticles?.length or data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL
-    'static'
-  else
-    'infinite'
-
-@redirectPost = (req, res, next) ->
-  res.redirect 301, req.url.replace 'post', 'article'
-
-@redirectArticle = (req, res, next) ->
-  res.redirect 301, req.url.replace 'article', 'articles'
 
 @redirectMagazine = (req, res, next) ->
   res.redirect 301, req.url.replace 'magazine', 'articles'
