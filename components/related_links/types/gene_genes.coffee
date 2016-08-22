@@ -10,10 +10,7 @@ module.exports = class RelatedGenesLinksView extends RelatedLinksView
 
   initialize: (options = {}) ->
     @collection = new Genes
-    new Backbone.Model().fetch
-      url: "#{sd.API_URL}/api/v1/search/filtered/gene/#{options.id}/options"
-      success: (model, response, options) =>
-        @collection.reset _.map response.related_genes, (k, v) ->
-          _.tap {}, (hsh) -> hsh.id = k; hsh.name = v
-        @render()
+    @collection.fetch
+      url: "#{sd.API_URL}/api/v1/gene/#{options.id}/similar"
+      success: (collection) => @render()
     super
