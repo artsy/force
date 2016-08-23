@@ -27,6 +27,7 @@ describe 'Gene routes', ->
 
   describe '#index', ->
     it 'bootstraps the gene', (done)->
+      @req.path = '/gene/foo/artworks'
       routes.index @req, @res
       _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'foo'
       _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
@@ -54,6 +55,20 @@ describe 'Gene routes', ->
 
       _.defer => _.defer =>
         @res.locals.sd.GENE.id.should.equal 'foo'
+        @res.locals.sd.MODE.should.equal 'artworks'
+        @res.render.args[0][0].should.equal 'index'
+        done()
+
+    it 'sets the view mode properly if artworks or artist is in the title', (done)->
+      @req.path = '/gene/the-artists-pizza'
+      @req.params.id = 'the-artists-pizza'
+
+      routes.index @req, @res
+      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'the-artists-pizza', type: name: 'E1 - Content'
+      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
+
+      _.defer => _.defer =>
+        @res.locals.sd.GENE.id.should.equal 'the-artists-pizza'
         @res.locals.sd.MODE.should.equal 'artworks'
         @res.render.args[0][0].should.equal 'index'
         done()
