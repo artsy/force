@@ -13,12 +13,8 @@ app.locals.resize = resize
 app.locals.crop = crop
 
 # Permalink routes
-app.get '/posts', routes.redirectPost
-app.get '/post/:id', routes.redirectPost
-app.get '/:id/posts', routes.redirectPost
-app.get '/article', routes.redirectArticle
+app.get '/posts', routes.redirectMagazine
 app.get '/magazine', routes.redirectMagazine
 app.get '/articles', routes.articles
-app.get '/article/:slug', routes.article
 app.get '/:slug', routes.section
 app.post '/editorial-signup/form', routes.editorialForm
