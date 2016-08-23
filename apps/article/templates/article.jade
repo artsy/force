@@ -24,7 +24,7 @@ block body
       if article.get('section_ids').length
         if article.get('section_ids')[0] === sd.GALLERY_INSIGHTS_SECTION_ID
           .articles-insights-show
-            include ../../articles/templates/gallery_insights_form
+            include ../../../components/email/templates/gallery_insights_form
         h1 More From #{section.get('title')}
         ul#articles-footer-list
           for sectionArticle in allSectionArticles.models
