@@ -3,8 +3,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-mediator = require '../../../../lib/mediator.coffee'
-{ stubChildClasses } = require '../../../../test/helpers/stubs'
+mediator = require '../../../lib/mediator.coffee'
+{ stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'EditorialSignupView', ->
 
@@ -15,7 +15,7 @@ describe 'EditorialSignupView', ->
       sinon.stub($, 'ajax')
       Backbone.$ = $
       $el = $('<div><div class="article-es-header"></div></div>')
-      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate']
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate']
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
