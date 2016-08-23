@@ -50,12 +50,6 @@ module.exports = ->
         followed_artist_id: "#{module.params?.followed_artist_id}"
       req: { user: user }
     ).then ({ home_page: { artwork_module } }) ->
-
-      console.log
-        related_artist_id: "#{module.params?.related_artist_id}"
-        followed_artist_id: "#{module.params?.followed_artist_id}"
-        results: artwork_module.results
-
       module = artwork_module
 
       return $el.remove() unless module.results?.length or module.key is 'followed_artists'
