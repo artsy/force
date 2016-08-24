@@ -68,19 +68,19 @@ setupEmailSubscriptions = (user, article, cb) ->
   new Channel(id: req.params.slug).fetch
     error: -> next()
     success: (channel) ->
-      console.log channel
       return next() unless channel.isTeam()
       new Articles().fetch
         data:
           published: true
           limit: 12
           sort: '-published_at'
-          channel: channel.get('id')
+          channel_id: channel.get('id')
         error: res.backboneError
         success: (articles) ->
-          res.locals.sd.ARTICLES = articles.toJSON()
+          featured = articles.first(6)
+          res.locals.sd.FEATURED_ARTICLES = featured
           res.locals.sd.CHANNEL = channel.toJSON()
-          res.render 'team_channel', channel: channel, articles: articles
+          res.render 'team_channel', channel: channel, featuredArticles: featured
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->

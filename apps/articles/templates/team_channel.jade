@@ -1,33 +1,32 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  include meta/channel
+  include meta/team_channel
 
-//- append locals
-//-   - assetPackage = 'articles'
+append locals
+  - bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white'
+  - assetPackage = 'articles'
 
-//- block body
-//-   header.articles-section-header.main-layout-container
-//-     .articles-section-header-left
-//-       a( href='/posts' ) Magazine
-//-       h1= section.get('title')
-//-       p!= section.mdToHtml('description')
-//-     if section.get('partner_logo_url')
-//-       .articles-section-header-right
-//-         | In Partnership With
-//-         a( href=section.get('partner_website_url') target='_blank' )
-//-           img( src=section.get('partner_logo_url') )
-//-         hr
-//-         +share(section.get('title') + ' on Artsy')
-//-   include full_feed
-
-.team-channel-header
-  .team-channel-header__nav
+block body
+  .team-channel-nav
     .team-channel-header__artsy-logo
+      i.icon-logotype
     .team-channel-header__links
       for link in channel.get('links')
         a(href=link.url)= link.text
-.team-channel-featured
+  .team-channel-header(style="background-image:url(#{channel.get('image_url')})")
+    .team-channel-header__name= channel.get('name')
+    .team-channel-header__tagline= channel.get('tagline')
 
-.team-channel-grid
-  //- Rendered on Client
+  .responsive-layout-container
+    .team-channel-featured
+      .mgr-cells.js-mgr-cells
+      for article in featuredArticles
+        .mgr-cell.js-mgr-cell
+          include ../../../components/articles_grid/templates/figure
+      - length = 6
+      nav.mgr-navigation.js-mgr-navigation
+        include ../../../components/merry_go_round/templates/horizontal_navigation
+
+    .team-channel-grid
+      //- Rendered on Client
