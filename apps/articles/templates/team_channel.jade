@@ -1,0 +1,33 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta/channel
+
+//- append locals
+//-   - assetPackage = 'articles'
+
+//- block body
+//-   header.articles-section-header.main-layout-container
+//-     .articles-section-header-left
+//-       a( href='/posts' ) Magazine
+//-       h1= section.get('title')
+//-       p!= section.mdToHtml('description')
+//-     if section.get('partner_logo_url')
+//-       .articles-section-header-right
+//-         | In Partnership With
+//-         a( href=section.get('partner_website_url') target='_blank' )
+//-           img( src=section.get('partner_logo_url') )
+//-         hr
+//-         +share(section.get('title') + ' on Artsy')
+//-   include full_feed
+
+.team-channel-header
+  .team-channel-header__nav
+    .team-channel-header__artsy-logo
+    .team-channel-header__links
+      for link in channel.get('links')
+        a(href=link.url)= link.text
+.team-channel-featured
+
+.team-channel-grid
+  //- Rendered on Client

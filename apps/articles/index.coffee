@@ -16,5 +16,5 @@ app.locals.crop = crop
 app.get '/posts', routes.redirectMagazine
 app.get '/magazine', routes.redirectMagazine
 app.get '/articles', routes.articles
-app.get '/:slug', routes.section
+app.get '/:slug', routes.teamChannel
 app.post '/editorial-signup/form', routes.editorialForm

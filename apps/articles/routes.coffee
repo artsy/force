@@ -5,6 +5,7 @@ Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
 Sections = require '../../collections/sections'
+Channel = require '../../models/channel'
 embed = require 'particle'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
@@ -62,6 +63,24 @@ setupEmailSubscriptions = (user, article, cb) ->
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
           res.render 'section', section: section, articles: articles
+
+@teamChannel = (req, res, next) ->
+  new Channel(id: req.params.slug).fetch
+    error: -> next()
+    success: (channel) ->
+      console.log channel
+      return next() unless channel.isTeam()
+      new Articles().fetch
+        data:
+          published: true
+          limit: 12
+          sort: '-published_at'
+          channel: channel.get('id')
+        error: res.backboneError
+        success: (articles) ->
+          res.locals.sd.ARTICLES = articles.toJSON()
+          res.locals.sd.CHANNEL = channel.toJSON()
+          res.render 'team_channel', channel: channel, articles: articles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
