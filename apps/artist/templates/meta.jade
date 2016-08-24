@@ -1,4 +1,7 @@
-title= artist.meta.title
+if sd.CURRENT_PATH.includes('/auction-results')
+  title= viewHelpers.auctionResultsPageTitle(artist)
+else
+  title= artist.meta.title
 
 meta( property="og:title", content= artist.meta.title )
 meta( name="description", content= artist.meta.description )

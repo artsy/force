@@ -21,6 +21,13 @@ module.exports =
       published_artworks_count: artist.counts.artworks
     artist.toPageTitle()
 
+  auctionResultsPageTitle: (artist) ->
+    artist = new Artist
+      id: artist.id
+      name: artist.name
+      published_artworks_count: artist.counts.artworks
+    artist.toAuctionResultsPageTitle()
+
   formatAlternateNames: (artist) ->
     if alts = artist.alternate_names then artist.alternate_names.join('; ') else ''
 
