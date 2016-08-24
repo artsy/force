@@ -1,7 +1,7 @@
 .artwork-metadata-stub__sale-artwork
   if !sale_artwork.sale.is_closed
     .artwork-metadata-stub__sale-artwork__estimate
-      | Estimate: #{sale_artwork.estimate || sale_artwork.symbol + 'N/A'}
+      | Estimated value: #{sale_artwork.estimate || sale_artwork.symbol + 'N/A'}
 
   if artwork.is_sold
     .artwork-metadata-stub__sale-artwork__sale-message
@@ -13,6 +13,7 @@
       = ' '
       | Bid: #{sale_artwork.current_bid.display}
       if sale_artwork.counts.bids != "0 bids"
+        = ' '
         | (#{sale_artwork.counts.bids})
 
     if artwork.is_buy_nowable

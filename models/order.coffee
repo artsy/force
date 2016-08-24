@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Artwork = require './artwork.coffee'
 Partner = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
+xssFilters = require 'xss-filters'
 { API_URL, SESSION_ID } = require('sharify').data
 
 module.exports = class Order extends Backbone.Model
@@ -17,6 +18,7 @@ module.exports = class Order extends Backbone.Model
   shippingNote: ->
     notes = _.compact(li.shipping_note for li in @get('line_items'))
     return null if notes.length == 0
+    notes = _.map notes, xssFilters.inHTMLData
     notes.join('<br/><br/>')
 
   getLineItemArtworks: ->
@@ -31,16 +33,18 @@ module.exports = class Order extends Backbone.Model
 
   formatShippingLocal: ->
     address = @get('shipping_address')
-    _.compact([ _.compact([address?.city, address?.region]).join(', '), address?.postal_code]).join(' ')
+    xssFilters.inHTMLData _.compact([ _.compact([address?.city, address?.region]).join(', '), address?.postal_code]).join(' ')
 
   formatShippingAddress: ->
     address = @get('shipping_address')
-    _.compact([
+    address = _.compact([
       address?.name
       address?.street
       @formatShippingLocal()
       address?.country
-    ]).join('<br />')
+    ])
+    address = _.map address, xssFilters.inHTMLData
+    address.join('<br />')
 
   # TOOD: This and `getYearRange` should be able to be handled by moment, and if not
   # probably better served as a /lib or static method. [1..12] also doesn't need to be

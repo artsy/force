@@ -1,7 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 isCreditCard = require('validator').isCreditCard
+xssFilters = require 'xss-filters'
 isEmail = require('validator').isEmail
+
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class ErrorHandlingForm extends Backbone.View
@@ -30,6 +32,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
 
   validateForm: ->
     errors = {}
+    @filterHtml()
     @clearErrors()
     for own key, val of @fields
       continue unless val.el.is(':visible') && !val.validator(val.el)
@@ -37,6 +40,10 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       val.el.addClass 'has-error'
       val.el.last().after "<div class='error'>#{errors[key]}</div>"
     _.isEmpty(errors)
+
+  filterHtml: ->
+    for own key, field of @fields
+      field.el.val xssFilters.inHTMLData(field.el.val())
 
   showError: (description, response={}) =>
     if response.responseText? and (errorJson = try JSON.parse response.responseText)

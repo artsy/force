@@ -39,7 +39,7 @@ describe 'ArticleIndexView', ->
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
-      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/article'), ['articleTemplate', 'promotedTemplate']
+      @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       done()
 

@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ stubChildClasses } = require '../../../../test/helpers/stubs'
+{ stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'ArticleIndexView', ->
 
@@ -14,7 +14,7 @@ describe 'ArticleIndexView', ->
       Backbone.$ = $
       $el = $('<div></div>')
       @GalleryInsightsView = benv.require resolve(
-        __dirname, '../../client/gallery_insights')
+        __dirname, '../client/gallery_insights')
       stubChildClasses @GalleryInsightsView, this,
         ['CTABarView']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut']

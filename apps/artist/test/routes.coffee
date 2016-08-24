@@ -1,3 +1,4 @@
+_ = require 'underscore'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
@@ -42,6 +43,16 @@ describe 'Artist routes', ->
       routes.index @req, @res
         .then =>
           @res.redirect.args[0][0].should.equal '/artist/jeff-koons-1'
+
+    it 'renders a page if there are no artworks to show', ->
+      response = _.clone artistJSON
+      response.counts.artworks = 0
+      @metaphysics.returns Q.resolve artist: response
+      routes.index @req, @res
+        .then =>
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].artist.id.should.equal 'jeff-koons-1'
+          @res.render.args[0][1].artist.name.should.equal 'Jeff Koons'
 
   describe '#follow', ->
     beforeEach ->

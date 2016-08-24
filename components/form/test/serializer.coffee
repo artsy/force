@@ -30,6 +30,13 @@ describe 'Serializer', ->
 
       @serializer.data().should.containEql values
 
+    it 'should sanitize HTML', ->
+      values = name: '<script src=http://xss.rocks/xss.js></script>'
+
+      @$form.find('input[name="name"]').val values.name
+
+      @serializer.data().should.containEql name: "&lt;script src=http://xss.rocks/xss.js>&lt;/script>"
+
     describe 'multi-selects', ->
       beforeEach ->
         sinon.stub($.fn, 'serializeArray').returns [

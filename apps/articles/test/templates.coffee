@@ -1,10 +1,8 @@
 _ = require 'underscore'
-cheerio = require 'cheerio'
 path = require 'path'
 jade = require 'jade'
 fs = require 'fs'
 moment = require 'moment'
-Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 Section = require '../../../models/section'
 fixtures = require '../../../test/helpers/fixtures'
@@ -49,23 +47,3 @@ describe 'section template', ->
       section: new Section _.extend _.clone(fixtures.section),
         title: 'Moo Bar'
     html.should.containEql '<li class="grid-item"><a href="/article/foobar">'
-
-describe 'article template', ->
-
-  it "renders related footer articles", ->
-    html = render('article')
-      article: new Article
-        title: 'hi'
-        sections: []
-        section_ids: []
-        contributing_authors: []
-      footerArticles: new Articles [_.extend(_.clone(fixtures.article),
-        thumbnail_title: "This is a footer article"
-        section_ids: [])]
-      crop: (url) -> url
-      resize: (url) -> url
-      moment: moment
-      sd:
-        SCROLL_ARTICLE: 'static'
-      asset: ->
-    html.should.containEql 'This is a footer article'

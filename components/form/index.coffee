@@ -40,7 +40,7 @@ module.exports = class Form
   error: ->
     @state 'error'
     @reenable()
-    @$errors.html @errors.__parse__(arguments...)
+    @$errors.text @errors.__parse__(arguments...)
 
   submitting: ->
     return @__submitting__ if @__submitting__

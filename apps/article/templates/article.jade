@@ -1,11 +1,11 @@
 extends ../../../components/fair_layout/templates/conditional
-include ./mixin
+include ../../articles/templates/mixin
 
 block head
-  include meta/article
+  include meta
 
 append locals
-  - assetPackage = 'articles'
+  - assetPackage = 'article'
   - bodyClass = bodyClass + ' ' + article.getBodyClass()
 
 block body
@@ -24,7 +24,7 @@ block body
       if article.get('section_ids').length
         if article.get('section_ids')[0] === sd.GALLERY_INSIGHTS_SECTION_ID
           .articles-insights-show
-            include gallery_insights_form
+            include ../../../components/email/templates/gallery_insights_form
         h1 More From #{section.get('title')}
         ul#articles-footer-list
           for sectionArticle in allSectionArticles.models

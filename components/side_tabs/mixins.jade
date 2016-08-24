@@ -1,0 +1,17 @@
+mixin nav(tabs, helper)
+  .side-tabs__nav
+    for tab, i in tabs
+      a.side-tabs__nav__link(
+        class='js-side-tabs-link'
+        data-id= tab
+        data-state= (i === 0 ? 'active' : 'inactive')
+      )
+        = helper(tab)
+
+mixin tab(tab, i)
+  .side-tab(
+    class='js-side-tabs-section'
+    data-id= tab
+    data-state= (i === 0 ? 'active' : 'inactive')
+  )
+    block
