@@ -12,7 +12,7 @@ module.exports =
       id
       href
       image {
-        cropped(width:400, height:300, version: ["wide", "large", "featured", "larger"]) {
+        cropped(width:400, height:266, version: ["wide", "large", "featured", "larger"]) {
           url
         }
       }
