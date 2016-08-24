@@ -43,7 +43,11 @@ module.exports = ->
 
     metaphysics(
       query: query
-      variables: key: "#{module.key}", id: "#{module.params?.id}"
+      variables:
+        key: "#{module.key}",
+        id: "#{module.params?.id}"
+        related_artist_id: "#{module.params?.related_artist_id}"
+        followed_artist_id: "#{module.params?.followed_artist_id}"
       req: { user: user }
     ).then ({ home_page: { artwork_module } }) ->
       module = artwork_module
