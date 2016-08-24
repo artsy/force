@@ -1,4 +1,5 @@
 Q = require 'bluebird-q'
+{ last } = require 'underscore'
 _s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'
@@ -26,9 +27,10 @@ aggregationParams = require './aggregations.coffee'
       return res.redirect 301, gene.href()
 
     # override mode if path is set
-    if _s.contains req.path, 'artworks'
+    path = req.path.split('/')
+    if last(path) is 'artworks'
       mode = 'artworks'
-    else if _s.contains req.path, 'artist'
+    else if last(path) is 'artist'
       mode = 'artist'
     else
       mode = gene.mode()
