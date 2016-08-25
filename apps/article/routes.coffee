@@ -17,6 +17,8 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
     success: (data) ->
       if req.params.slug isnt data.article.get('slug')
         return res.redirect "/article/#{data.article.get 'slug'}"
+      if data.partner
+        return res.redirect "/#{data.partner.get('default_profile_id')}/article/#{data.article.get('slug')}"
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published

@@ -8,6 +8,7 @@ request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
+Partner = require '../models/partner.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
@@ -82,6 +83,9 @@ module.exports = class Article extends Backbone.Model
           success: (articles) ->
             superArticle = articles?.models[0]
 
+      if @get('partner_channel_id')
+        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch()
+
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
         Q.allSettled(superArticleDefferreds)
@@ -104,6 +108,7 @@ module.exports = class Article extends Backbone.Model
               superSubArticleIds: superSubArticleIds
               section: section
               allSectionArticles: sectionArticles if section
+              partner: partner
             )
 
   isTopTier: ->
