@@ -1,32 +1,53 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/blank
 
 block head
   include meta/team_channel
 
 append locals
-  - bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white'
   - assetPackage = 'articles'
 
 block body
-  .team-channel-nav
-    .team-channel-header__artsy-logo
-      i.icon-logotype
-    .team-channel-header__links
-      for link in channel.get('links')
-        a(href=link.url)= link.text
+
+  //- Header
   .team-channel-header(style="background-image:url(#{channel.get('image_url')})")
-    .team-channel-header__name= channel.get('name')
-    .team-channel-header__tagline= channel.get('tagline')
+    .team-channel-header__overlay
+    .responsive-layout-container.team-channel-header__text-container
+      .team-channel-header__name= channel.get('name')
+      .team-channel-header__tagline= channel.get('tagline')
+
+  //- Static Navigation
+  .team-channel-nav
+    .responsive-layout-container
+      .team-channel-nav__artsy-logo-square
+        a(href='/')
+          i.icon-logo
+      .team-channel-nav__artsy-logo
+        a(href='/')
+          i.icon-logotype
+      .team-channel-nav__name= channel.get('name')
+      .team-channel-nav__tagline= channel.get('tagline')
+      .team-channel-nav__links
+        for link in channel.get('links')
+          if link.text.length > 0
+            a(href=link.url)= link.text
+        if channel.get('id') === sd.GALLERY_INSIGHTS_CHANNEL
+          a.team-channel-nav__apply(href="#{sd.APPLY_URL}") Apply
 
   .responsive-layout-container
+    //- Featured
     .team-channel-featured
-      .mgr-cells.js-mgr-cells
-      for article in featuredArticles
-        .mgr-cell.js-mgr-cell
-          include ../../../components/articles_grid/templates/figure
+      .team-channel-featured__header Featured
+      .mgr-cells.js-mgr-cells.team-channel-featured__articles
+        - width = 1000
+        for article in featuredArticles
+          .mgr-cell.js-mgr-cell.team-channel-featured__item
+            include ../../../components/article_figure/template
       - length = 6
       nav.mgr-navigation.js-mgr-navigation
         include ../../../components/merry_go_round/templates/horizontal_navigation
 
+    //- Grid
     .team-channel-grid
       //- Rendered on Client
+
+  include ../../../components/main_layout/footer/template

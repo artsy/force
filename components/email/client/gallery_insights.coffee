@@ -15,7 +15,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
       persist: true
       subHeadline: "Receive periodical insights from Artsy's Gallery Team"
     return if @ctaBarView.previouslyDismissed() or
-              (not @inGIArticlePage() and not @inGIVerticalPage())
+              (not @inGIArticlePage() and not @inGIVerticalPage() and not @inGIChannelPage())
     @renderCTA => @setupCTAWaypoints()
 
   inGIArticlePage: ->

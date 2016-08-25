@@ -1,15 +1,131 @@
 - header-height = 400px
+- nav-height = 92px
 
+.team-channel-featured, .team-channel-grid
+  max-width 1250px
+  margin auto
+
+// Header
 .team-channel-header
   width 100vw
   height header-height
   background-size cover
   background-repeat no-repeat
   background-position center
-  opacity .5
+  &__overlay
+    position absolute
+    width 100vw
+    height header-height
+    background-color black
+    opacity 0.5
+  &__text-container
+    height 100%
+    display flex
+    flex-direction column
+    justify-content center
+  &__name, &__tagline
+    color white
+    position relative
+  &__name
+    garamond-size('xxl-headline')
+    font-style italic
+    margin-bottom 10px
+  &__tagline
+    garamond-size('s-headline')
 
+// Nav
+.team-channel-nav
+  position absolute
+  width 100%
+  color white
+  top 0
+  margin-top 20px
+  display flex
+  justify-content space-between
+  z-index 10
+  .responsive-layout-container
+    width 100%
+  &__artsy-logo
+    display inline-block
+    a
+      text-decoration none
+      color white
+  &__links
+    float right
+    a
+      text-decoration none
+      color white
+      padding 10px
+      avant-garde-size('s-headline')
+    .team-channel-nav__apply
+      background-color white
+      color black
+      padding 8px 15px
+      border-radius 5%
+      margin-left 10px
+  &__tagline, &__name, &__artsy-logo-square
+    display none
+
+.team-channel-nav.is-sticky
+  margin-top 0px
+  position fixed
+  border-bottom 1px solid gray-lightest-color
+  background-color white
+  height nav-height
+  align-items center
+  .team-channel-nav
+    &__links
+      a
+        color black
+      .team-channel-nav__apply
+        background-color black
+        color white
+    &__tagline, &__name, &__artsy-logo-square
+      display inline-block
+    &__artsy-logo
+      display none
+    &__artsy-logo-square
+      position absolute
+      left 30px
+      a
+        text-decoration none
+    &__tagline
+      color black
+      garamond-size('l-caption')
+      margin-left 30px
+    &__name
+      font-style italic
+      color black
+      garamond-size('headline')
+      margin-left 30px
+
+// Featured Carousel
 .team-channel-featured
-  display block
+  &__header
+    margin 40px 0
+    garamond-size('headline')
+  .mgr-cells
+    white-space normal
+  .mgr-cell
+    width 50%
+    min-width 450px
+  .mgr-cell:nth-child(odd)
+    padding-right 20px
+    padding-left 0px
+  .mgr-cell:nth-child(even)
+    padding-left 20px
+    padding-right 0px
+  .article-figure-container
+    display inline
+  .article-figure-figcaption, .article-figure-img-container
+    width 100%
+    display block
+  .article-figure-figcaption
+    padding-left 0px
+    margin-top 30px
+  .article-figure-title
+    word-wrap break-word
 
+// Grid
 .team-channel-grid
-  max-width 1250px
+  margin-bottom 80px

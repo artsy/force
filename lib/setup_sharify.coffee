@@ -75,6 +75,7 @@ sharify.data = _.extend _.pick(config,
   'PERSONALIZED_HOMEPAGE_BUCKETS'
   'PC_ARTSY_CHANNEL'
   'PC_AUCTION_CHANNEL'
+  'GALLERY_INSIGHTS_CHANNEL'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"
