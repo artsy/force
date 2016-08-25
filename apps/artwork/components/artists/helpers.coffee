@@ -15,7 +15,7 @@ module.exports =
     has: (section) ->
       switch section
         when 'biography'
-          artist.biography?
+          artist.biography? || artist.bio
         when 'exhibition_highlights'
           artist.exhibition_highlights? && artist.exhibition_highlights.length > 15
         when 'articles'
@@ -29,5 +29,6 @@ module.exports =
         .has tab
 
   name: (section) ->
+    return "Exhibition History" if section is "exhibition_highlights"
     section.split '_'
       .join ' '
