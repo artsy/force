@@ -18,6 +18,7 @@ module.exports = class FollowButton extends Backbone.View
       @modelName,
       @href,
       @context_page,
+      @context_module,
       @hideSuggestions
     } = options
 
