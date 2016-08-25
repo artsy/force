@@ -9,5 +9,5 @@ if modules
         div(id="hpm-#{railId}-#{index}").abrv-container
           include ../../../components/artwork_brick_rail/templates/index
     //- if we are on the third or last rail, show artists_to_follow
-    if index == 3
+    if index == 3 && user && user.hasLabFeature('Artists to Follow')
       include ../components/artists_to_follow/templates/index

@@ -46,9 +46,10 @@ module.exports = class ArtistsToFollowView extends Backbone.View
       @carousel = initCarousel @$('.mgr-horizontal-nav'), groupCells: true
       @_setupFollowButtons()
 
-  _setupFollowButtons: ->
+  _setupFollowButtons: ($el = null) ->
     view = @
     following = new Following(null, kind: 'artist') if @user
+
     ids = @$('.follow-button').map ->
       id = ($el = $(this)).data 'id'
 
@@ -66,17 +67,19 @@ module.exports = class ArtistsToFollowView extends Backbone.View
     following?.syncFollows ids
 
   afterFollow: (el, model) =>
-    $cell = $(el).closest('.mgr-cell')
-    $cell.fadeOut 'slow', =>
-      @carousel.cells.flickity.remove $(el).closest('.mgr-cell')
-
-    @_appendSuggestions model.id
-
-  _appendSuggestions: (artist_id) ->
     metaphysics
       query: artistSuggestionQuery
-      variables: artist_id: artist_id
+      variables: artist_id: model.id
       req: { user: @user }
-    .then ({ home_page: { artist_module: { results } } }) =>
-      @results = results
-      @renderResults()
+    .then ({ me: { suggested_artists } }) =>
+      $cell = $(el).closest('.mgr-cell')
+      $cell.fadeOut 'slow', =>
+        @carousel.cells.flickity.remove $(el).closest('.mgr-cell')
+        artists = _.reject suggested_artists, (artist) =>
+          _.contains(@results, artist)
+        appended = @carousel.cells.flickity.append $(cellsTemplate results: artists)
+        @_setupFollowButtons()
+
+
+    @_appendSuggestions
+
