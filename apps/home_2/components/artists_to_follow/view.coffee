@@ -79,7 +79,3 @@ module.exports = class ArtistsToFollowView extends Backbone.View
           _.contains(@results, artist)
         appended = @carousel.cells.flickity.append $(cellsTemplate results: artists)
         @_setupFollowButtons()
-
-
-    @_appendSuggestions
-
