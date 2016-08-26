@@ -38,6 +38,17 @@ positionWelcomeHeroMethod = (req, res) ->
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
+  jsonLD = {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.artsy.net/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.artsy.net/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+
   Q
     .all [
       heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
@@ -67,6 +78,7 @@ positionWelcomeHeroMethod = (req, res) ->
         featuredShows: featuredShows
         viewHelpers: viewHelpers
         browseCategories: browseCategories
+        jsonLD: JSON.stringify jsonLD
 
     .catch next
 
