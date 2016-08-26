@@ -22,15 +22,15 @@ module.exports =
 
 metaOverrides = (model) ->
 
-  'Art Southampton':
+  'art-southampton-2016':
     title: 'Art Southampton 2016 | Artsy'
     description: "Browse works from 65 leading galleries as Southampton plays host to the art world during the summer season"
 
-  'Seattle Art Fair':
+  'seattle-art-fair-2016':
     title: 'Seattle Art Fair 2016 | Artsy'
     description: "Browse and collect works from this leading Pacific Northwest fair, featuring 84 galleries from around the world"
 
-  'CHART Art Fair':
+  'chart-art-fair-2016':
     title: 'CHART Art Fair 2016 | Artsy'
     description: "Discover the very best of contemporary Nordic art and design at the fourth edition of this fair."
 
