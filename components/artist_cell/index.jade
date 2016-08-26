@@ -17,12 +17,13 @@
         if artist.birthday
           = "b. " + artist.birthday
       .artist-cell-item__followers
-        - var total = artist.counts.artworks || 0
-        - var for_sale = artist.counts.for_sale_artworks || 0
-        = total + (total > 1 ? ' works' : ' work')
-        if total != for_sale
-          = ', ' + for_sale
-        |  for sale
+        if artist.counts
+          - var total = artist.counts.artworks || 0
+          - var for_sale = artist.counts.for_sale_artworks || 0
+          = total + (total > 1 ? ' works' : ' work')
+          if total != for_sale
+            = ', ' + for_sale
+          |  for sale
   a.artist-cell-item__follow-button.avant-garde-follow-button-black.follow-button.is-small(
     data-id= artist.id
   )
