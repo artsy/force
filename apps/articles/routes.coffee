@@ -47,6 +47,7 @@ setupEmailSubscriptions = (user, article, cb) ->
   res.redirect 301, req.url.replace 'magazine', 'articles'
 
 @section = (req, res, next) ->
+  console.log 'in the section'
   new Section(id: req.params.slug).fetch
     error: -> next()
     success: (section) ->
@@ -64,9 +65,9 @@ setupEmailSubscriptions = (user, article, cb) ->
           res.locals.sd.SECTION = section.toJSON()
           res.render 'section', section: section, articles: articles
 
-@teamChannel = (req, res, next) ->
+@teamChannel = (req, res, next) =>
   new Channel(id: req.params.slug).fetch
-    error: -> next()
+    error: => @section(req, res, next)
     success: (channel) ->
       return next() unless channel.isTeam()
       new Articles().fetch
