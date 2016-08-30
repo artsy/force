@@ -196,3 +196,26 @@ describe "Article", ->
     it 'returns multiple contributing authors', ->
       @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
       @article.contributingByline().should.equal 'Molly, Kana and Christina'
+
+  describe 'getParselySection', ->
+
+    it 'returns Editorial', ->
+      @article.set 'channel', new Backbone.Model name: 'Artsy Editorial'
+      @article.getParselySection().should.equal 'Editorial'
+
+    it 'returns channel name', ->
+      @article.set 'channel', new Backbone.Model name: 'Life at Artsy'
+      @article.getParselySection().should.equal 'Life at Artsy'
+
+    it 'returns Section', ->
+      @article.set 'section', new Backbone.Model title: '56th Venice Biennale'
+      @article.getParselySection().should.equal '56th Venice Biennale'
+
+    it 'returns Partner', ->
+      @article.set 'partner', new Backbone.Model
+      @article.getParselySection().should.equal 'Partner'
+
+    it 'returns Other', ->
+      @article.reset()
+      @article.getParselySection().should.equal 'Other'
+

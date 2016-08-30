@@ -9,6 +9,7 @@ Artwork = require '../models/artwork.coffee'
 Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
 Partner = require '../models/partner.coffee'
+Channel = require '../models/channel.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
 { stripTags } = require 'underscore.string'
@@ -85,6 +86,8 @@ module.exports = class Article extends Backbone.Model
 
       if @get('partner_channel_id')
         dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch()
+      else if @get('channel_id')
+        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch()
 
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
@@ -99,6 +102,8 @@ module.exports = class Article extends Backbone.Model
 
             relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
             @set('section', section) if section
+            @set('channel', channel) if channel
+            @set('partner', partner)
             options.success(
               article: this
               footerArticles: footerArticles
@@ -222,6 +227,19 @@ module.exports = class Article extends Backbone.Model
         success: (article) =>
           relatedArticles.add article
 
+  getParselySection: ->
+    if (name = @get('channel')?.get('name'))
+      if name is 'Artsy Editorial'
+        'Editorial'
+      else
+        name
+    else if @get('section')
+      @get('section').get('title')
+    else if @get('partner')
+      'Partner'
+    else
+      'Other'
+
   # article metadata tag for parse.ly
   toJSONLD: ->
     compactObject {
@@ -231,7 +249,7 @@ module.exports = class Article extends Backbone.Model
       "url": @href()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
-      "articleSection": if @get('section') then @get('section').get('title') else "Editorial"
+      "articleSection": @getParselySection()
       "creator": @getAuthorArray()
       "keywords": @get('tags')
     }
