@@ -73,9 +73,20 @@ moment = require 'moment'
 
 @channel =
   id: '55356a9deca560a0137aa4b7'
-  name: 'Artsy Editorial'
-  tagline: 'The coolest team'
-  slug: 'artsy-editorial'
+  name: 'Life at Artsy'
+  tagline: 'Office Culture at Artsy'
+  slug: 'life-at-artsy'
+  image_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  links: [
+    { text: 'Cool Link', url: 'http://artsy.net' }
+    { text: 'Another Link', url: 'http://artsy.net/about' }
+  ]
+  pinned_articles: [
+    { index: 1, id: '55356a9deca560a0137aa4b6' }
+    { index: 2, id: '55356a9deca560a0137aa4b8' }
+    { index: 3, id: '55356a9deca560a0137aa4b9' }
+    { index: 4, id: '55356a9deca560a0137aa4b0' }
+  ]
 
 @article =
   id: '54276766fd4f50996aeca2b8'

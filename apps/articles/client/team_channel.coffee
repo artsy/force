@@ -6,7 +6,7 @@ ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
 
-module.exports.TeamChannel = class TeamChannel extends Backbone.View
+module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
 
   initialize: ->
     @channel = new Channel sd.CHANNEL
@@ -39,5 +39,5 @@ module.exports.TeamChannel = class TeamChannel extends Backbone.View
     , { offset: -400 }
 
 module.exports.init = ->
-  new TeamChannel
+  new TeamChannelView
     el: $('body')

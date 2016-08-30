@@ -47,7 +47,6 @@ setupEmailSubscriptions = (user, article, cb) ->
   res.redirect 301, req.url.replace 'magazine', 'articles'
 
 @section = (req, res, next) ->
-  console.log 'in the section'
   new Section(id: req.params.slug).fetch
     error: -> next()
     success: (section) ->
