@@ -7,7 +7,7 @@ module.exports = (sd, { artwork }) ->
       _id: artwork._id
 
     share:
-      media: artwork.images[0].url
+      media: if artwork.images[0]?.url then artwork.images[0].url else null
       description: description artwork
 
     view_in_room:
