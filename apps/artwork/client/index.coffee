@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ CLIENT } = require('sharify').data
+{ CLIENT, CURRENT_USER } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 exec = require '../lib/exec.coffee'
@@ -145,7 +145,7 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
-    metaphysics query: query, variables: extend { id: CLIENT.id }, variables
+    metaphysics query: query, variables: extend({ id: CLIENT.id }, variables), req: user: CURRENT_USER
       .then (data) ->
         renderTemplates(data)
         exec init

@@ -59,7 +59,7 @@ bootstrap = ->
   require('./components/video/bootstrap') arguments...
 
 @index = (req, res, next) ->
-  send = method: 'post', query: query, variables: req.params
+  send = method: 'post', query: query, variables: req.params, req: req
 
   return if metaphysics.debug req, res, send
 
