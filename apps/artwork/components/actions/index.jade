@@ -4,7 +4,7 @@
     class='js-artwork-save'
   ): i.icon-heart
 
-  if artwork.is_shareable
+  if artwork.is_shareable && artwork.images[0] && artwork.images[0].url
     a.artwork-action.artwork-action--share.black-tooltip(
       data-message='Share'
       class='js-artwork-share analytics-artwork-share'
