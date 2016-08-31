@@ -74,7 +74,7 @@ describe "Article", ->
         data.article.get('title').should.equal 'Moo'
         done()
 
-    it 'fetches related articles for super articles', (done) ->
+    xit 'fetches related articles for super articles', (done) ->
       @article.set sections: []
 
       Backbone.sync
@@ -97,7 +97,7 @@ describe "Article", ->
         data.article.get('title').should.equal 'SuperArticle'
         done()
 
-    it 'fetches related articles for article in super article', (done) ->
+    xit 'fetches related articles for article in super article', (done) ->
       relatedArticle1 = _.extend {}, fixtures.article,
         id: 'id-1'
         title: 'RelatedArticle 1',
@@ -216,6 +216,5 @@ describe "Article", ->
       @article.getParselySection().should.equal 'Partner'
 
     it 'returns Other', ->
-      @article.reset()
+      @article.clear()
       @article.getParselySection().should.equal 'Other'
-

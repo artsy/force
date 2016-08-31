@@ -84,6 +84,7 @@ module.exports = class Article extends Backbone.Model
           success: (articles) ->
             superArticle = articles?.models[0]
 
+      # Partner Channel + Team Channels
       if @get('partner_channel_id')
         dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch()
       else if @get('channel_id')
@@ -103,7 +104,7 @@ module.exports = class Article extends Backbone.Model
             relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
             @set('section', section) if section
             @set('channel', channel) if channel
-            @set('partner', partner)
+            @set('partner', partner) if partner
             options.success(
               article: this
               footerArticles: footerArticles
