@@ -114,7 +114,7 @@ module.exports = class Article extends Backbone.Model
               superSubArticleIds: superSubArticleIds
               section: section
               allSectionArticles: sectionArticles if section
-              partner: partner
+              partner: partner if partner
             )
 
   isTopTier: ->
