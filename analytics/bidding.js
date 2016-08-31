@@ -212,6 +212,7 @@ if (pathSplit[1] == 'auctions') {
   )
 } else if (pathSplit[1] == 'auction' && pathSplit[3] == 'bid') {
   analyticsHooks.on('confirm:bid:form:success', function(data) {
+    price = data.max_bid_amount_cents ? data.max_bid_amount_cents / 100 : null;
     window.criteo_q.push(
       { event: "setAccount", account: sd.CRITEO_ACCOUNT_NUMBER },
       { event: "setSiteType", type: "d" },
@@ -221,7 +222,7 @@ if (pathSplit[1] == 'auctions') {
         item: [
           {
             id: sd.SALE_ARTWORK.artwork._id,
-            price: data.max_bid_amount_cents,
+            price: price,
             quantity: 1
           }
         ]
