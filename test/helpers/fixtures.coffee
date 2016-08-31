@@ -71,6 +71,12 @@ moment = require 'moment'
   thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
   featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
 
+@channel =
+  id: '55356a9deca560a0137aa4b7'
+  name: 'Artsy Editorial'
+  tagline: 'The coolest team'
+  slug: 'artsy-editorial'
+
 @article =
   id: '54276766fd4f50996aeca2b8'
   author_id: '4d8cd73191a5c50ce210002a'

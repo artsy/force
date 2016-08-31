@@ -33,41 +33,73 @@ describe "Article", ->
         done()
 
     it 'gets the slideshow artworks', (done) ->
+      slideshowArticle = _.extend {}, fixtures.article,
+        title: 'Moo'
+        channel_id: null
+        sections: [
+          {
+            type: 'slideshow'
+            items: [
+              {
+                type: 'artwork', id: 'foo'
+              }
+            ]
+          }
+        ]
+
       Backbone.sync
         .onCall 0
-        .yieldsTo 'success', _.extend {}, fixtures.article,
-          title: 'Moo', sections: [type: 'slideshow', items: [type: 'artwork', id: 'foo']]
+        .yieldsTo 'success', slideshowArticle
         .onCall 1
         .yieldsTo 'success', [fixtures.article]
         .onCall 2
+        .yieldsTo 'success', [fixtures.article]
+        .onCall 3
         .yieldsTo 'success', fabricate 'artwork', title: 'foobar'
+        .onCall 4
+        .yieldsTo 'success', [fixtures.article]
 
       @article.fetchWithRelated success: (data) ->
-        # This spec appears to be incorrect, slideshowArtworks has a length of 0:
-        # data.slideshowArtworks.first().get('title').should.equal 'foobar'
+        data.slideshowArtworks.first().get('title').should.equal 'foobar'
         done()
 
     it 'fetches section content if need be', (done) ->
+      sectionArticle = _.extend {}, fixtures.article,
+        title: 'Moo'
+        section_ids: ['foo']
+        sections: []
+        channel_id: null
+
       Backbone.sync
         .onCall 0
-        .yieldsTo 'success', _.extend {}, fixtures.article, title: 'Moo', section_ids: ['foo']
+        .yieldsTo 'success', sectionArticle
         .onCall 1
         .yieldsTo 'success', [fixtures.article]
         .onCall 2
         .yieldsTo 'success', [fixtures.article]
         .onCall 3
         .yieldsTo 'success', fixtures.section
+        .onCall 4
+        .yieldsTo 'success', [fixtures.articles]
+        .onCall 5
+        .yieldsTo 'success', [fixtures.articles]
 
       @article.fetchWithRelated success: (data) ->
-        # This spec appears to be incorrect, title is 'Vennice Biennalez'
-        # data.slideshowArtworks.first().get('title').should.equal 'foobar'
+        data.section.get('title').should.equal 'Vennice Biennalez'
         done()
 
     it 'works for those rare sectionless articles', (done) ->
+      sectionlessArticle = _.extend {}, fixtures.article,
+        title: 'Moo'
+        sections: []
+        channel_id: null
+
       Backbone.sync
         .onCall 0
-        .yieldsTo 'success', _.extend {}, fixtures.article, title: 'Moo', sections: []
+        .yieldsTo 'success', sectionlessArticle
         .onCall 1
+        .yieldsTo 'success', [fixtures.article]
+        .onCall 2
         .yieldsTo 'success', [fixtures.article]
 
       @article.fetchWithRelated success: (data) ->
@@ -75,22 +107,27 @@ describe "Article", ->
         done()
 
     it 'fetches related articles for super articles', (done) ->
-      @article.set sections: []
+      superArticle = _.extend {}, fixtures.article,
+        title: 'SuperArticle',
+        is_super_article: true
+        sections: []
+        channel_id: null
+        super_article:
+          related_articles: ['id-1']
+
+      relatedArticle = _.extend {}, fixtures.article,
+        title: 'RelatedArticle'
+        id: 'id-1'
 
       Backbone.sync
         .onCall 0
-        .yieldsTo 'success', _.extend {}, fixtures.article,
-          title: 'SuperArticle',
-          is_super_article: true
-          sections: []
-          super_article:
-            related_articles: ['id-1']
+        .yieldsTo 'success', superArticle
         .onCall 1
         .yieldsTo 'success', [fixtures.article]
         .onCall 2
         .yieldsTo 'success', [fixtures.article]
         .onCall 3
-        .yieldsTo 'success', _.extend {}, fixtures.article, title: 'RelatedArticle', id: 'id-1'
+        .yieldsTo 'success', relatedArticle
 
       @article.fetchWithRelated success: (data) ->
         data.relatedArticles.models[0].get('title').should.equal 'RelatedArticle'
@@ -111,6 +148,7 @@ describe "Article", ->
         title: 'SuperArticle',
         is_super_article: true
         sections: []
+        channel_id: null
         super_article:
           related_articles: ['id-1', 'id-2']
 
@@ -118,17 +156,18 @@ describe "Article", ->
         .onCall 0
         .yieldsTo 'success', superArticle
         .onCall 1
-        .yieldsTo 'success', relatedArticle1
+        .yieldsTo 'success', [fixtures.article]
         .onCall 2
-        .yieldsTo 'success', relatedArticle2
+        .yieldsTo 'success', [fixtures.article]
         .onCall 3
         .yieldsTo 'success', relatedArticle1
+        .onCall 4
+        .yieldsTo 'success', relatedArticle2
 
       @article.fetchWithRelated success: (data) ->
         data.superArticle.get('title').should.equal 'SuperArticle'
         data.relatedArticles.first().get('title').should.equal 'RelatedArticle 1'
-        # This spec appears to be incorrect
-        # data.relatedArticles.last().get('title').should.equal 'RelatedArticle 2'
+        data.relatedArticles.last().get('title').should.equal 'RelatedArticle 2'
         done()
 
   describe '#strip', ->
@@ -196,3 +235,25 @@ describe "Article", ->
     it 'returns multiple contributing authors', ->
       @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
       @article.contributingByline().should.equal 'Molly, Kana and Christina'
+
+  describe 'getParselySection', ->
+
+    it 'returns Editorial', ->
+      @article.set 'channel', new Backbone.Model name: 'Artsy Editorial'
+      @article.getParselySection().should.equal 'Editorial'
+
+    it 'returns channel name', ->
+      @article.set 'channel', new Backbone.Model name: 'Life at Artsy'
+      @article.getParselySection().should.equal 'Life at Artsy'
+
+    it 'returns Section', ->
+      @article.set 'section', new Backbone.Model title: '56th Venice Biennale'
+      @article.getParselySection().should.equal '56th Venice Biennale'
+
+    it 'returns Partner', ->
+      @article.set 'partner', new Backbone.Model
+      @article.getParselySection().should.equal 'Partner'
+
+    it 'returns Other', ->
+      @article.clear()
+      @article.getParselySection().should.equal 'Other'
