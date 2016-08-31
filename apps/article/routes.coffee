@@ -34,7 +34,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
 
         # Parsely Articles
-        Article.topParselyArticles @article.getParselySection(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        Article.topParselyArticles @article.getParselySection(), @article.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
           res.render 'article', _.extend data,
             embed: embed

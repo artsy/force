@@ -83,3 +83,30 @@ describe 'Articles routes', ->
       routes.section @req, @res, @next
       Backbone.sync.args[0][2].error()
       @next.called.should.be.ok()
+
+  describe '#teamChannel', ->
+
+    it 'renders the channel with its articles', ->
+      channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'team'
+      @req.params.slug = 'foo'
+      routes.teamChannel @req, @res, @next
+      Backbone.sync.args[0][2].success channel
+      Backbone.sync.args[1][2].data.channel_id.should.equal channel.id
+      Backbone.sync.args[1][2].success fixtures.articles
+      @res.render.args[0][0].should.equal 'team_channel'
+      @res.render.args[0][1].channel.get('name').should.equal channel.name
+
+    it 'nexts if channel is not a team channel', ->
+      channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'editorial'
+      @req.params.slug = 'foo'
+      routes.teamChannel @req, @res, @next
+      Backbone.sync.args[0][2].success channel
+      @next.called.should.be.ok()
+
+    it 'falls back to checking for a section if channel is not found', ->
+      @req.params.slug = 'foo'
+      routes.teamChannel @req, @res, @next
+      routes.section = sinon.stub()
+      Backbone.sync.args[0][2].error()
+      routes.section.called.should.be.ok()
+      routes.section.args[0][0].params.slug.should.equal 'foo'

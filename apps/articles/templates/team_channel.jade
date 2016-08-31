@@ -38,8 +38,8 @@ block body
     .team-channel-featured
       .team-channel-featured__header Featured
       .mgr-cells.js-mgr-cells.team-channel-featured__articles
-        - width = 1000
-        for article in featuredArticles
+        - width = 800
+        for article in pinnedArticles.models
           .mgr-cell.js-mgr-cell.team-channel-featured__item
             include ../../../components/article_figure/template
       - length = 6

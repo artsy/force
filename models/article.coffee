@@ -174,9 +174,9 @@ module.exports = class Article extends Backbone.Model
 
     bodyClass
 
-  @topParselyArticles: (section, key, secret, cb) ->
+  @topParselyArticles: (section, articleSlug, key, secret, cb) ->
     request
-      .get('https://api.parsely.com/v2/analytics/posts')
+      .get("https://api.parsely.com/v2/analytics/section/#{section}/detail")
       .query
         apikey: key
         secret: secret
@@ -185,8 +185,9 @@ module.exports = class Article extends Backbone.Model
         sort: '_hits'
       .end (err, response) =>
         return cb [] if err
-        posts = _.where response.body.data, section: section
-        posts = _.reject posts, (post) => post.url.indexOf(@href()) > 0
+        posts = response.body.data
+        if articleSlug
+          posts = _.reject posts, (post) => post.url.indexOf(articleSlug) > 0
         return cb posts
 
   prepForInstant: ->

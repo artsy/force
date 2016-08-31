@@ -18,7 +18,7 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
 
   renderGrid: ->
     $el = $('.team-channel-grid')
-    gridView = new ArticlesGridView
+    @gridView = new ArticlesGridView
       el: $el
       collection: @gridArticles
       header: 'Latest Articles'

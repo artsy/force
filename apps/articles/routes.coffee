@@ -1,4 +1,4 @@
-_ = require 'underscore'
+{ sortBy, pluck, reject, map } = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
@@ -69,18 +69,22 @@ setupEmailSubscriptions = (user, article, cb) ->
     error: => @section(req, res, next)
     success: (channel) ->
       return next() unless channel.isTeam()
-      new Articles().fetch
-        data:
-          published: true
-          limit: 12
-          sort: '-published_at'
-          channel_id: channel.get('id')
-        error: res.backboneError
-        success: (articles) ->
-          featured = articles.first(6)
-          res.locals.sd.FEATURED_ARTICLES = featured
-          res.locals.sd.CHANNEL = channel.toJSON()
-          res.render 'team_channel', channel: channel, featuredArticles: featured
+
+      Article.topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        (pinnedArticles = new Articles).fetch
+          data:
+            published: true
+            limit: 6
+            sort: '-published_at'
+            ids: pluck(sortBy(channel.get('pinned_articles'), 'index'), 'id')
+          error: res.backboneError
+          success: (pinnedArticles) ->
+            res.locals.sd.CHANNEL = channel.toJSON()
+            console.log pluck parselyArticles, 'link'
+            articleUrls = pinnedArticles.map (article) -> article.href()
+            parselyArticles = reject parselyArticles, (post) -> post.link in articleUrls
+            console.log pluck parselyArticles, 'link'
+            res.render 'team_channel', channel: channel, pinnedArticles: pinnedArticles, parselyArticles: parselyArticles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->

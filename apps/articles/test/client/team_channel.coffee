@@ -7,6 +7,7 @@ Backbone = require 'backbone'
 fixtures = require '../../../../test/helpers/fixtures'
 { fabricate } = require 'antigravity'
 Articles = require '../../../../collections/articles.coffee'
+Article = require '../../../../models/article.coffee'
 Channel = require '../../../../models/channel.coffee'
 sd = require('sharify').data
 { resize, crop } = require '../../../../components/resizer'
@@ -22,54 +23,43 @@ describe 'TeamChannelView', ->
         sd: _.extend sd, { GALLERY_INSIGHTS_CHANNEL: '55356a9deca560a0137aa4b7' }
         resize: resize
         crop: crop
-        # moment: moment
         channel: @channel
-        featuredArticles: new Articles [fabricate 'article', fabricate 'article']
+        featuredArticles: [new Article fabricate 'article']
         asset: ->
       }
       $.fn.waypoint = (@waypoint = sinon.stub())
       sinon.stub Backbone, 'sync'
       { @TeamChannelView } = mod = rewire '../../client/team_channel'
-      # mod.__set__ 'ArticlesGridView', sinon.stub()
       mod.__set__ 'initCarousel', sinon.stub()
-      done()
+      mod.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
+      benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
+        @view = new @TeamChannelView
+          el: $('body')
+        done()
 
   after ->
     benv.teardown()
     Backbone.sync.restore()
 
+  describe 'initialize', ->
+    it 'renders the name and tagline', ->
+      $('body').html().should.containEql 'Life at Artsy'
+      $('body').html().should.containEql 'Office Culture at Artsy'
+
   describe '#renderGrid', ->
 
-    before (done) ->
-      benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
-        @view = new @TeamChannelView
-          el: $('body')
-        done()
-
-    it 'sets the params for the grid view', ->
-      Backbone.sync.args[0][2].success [fabricate 'article']
-      # console.log $(@view.el).html()
-      console.log $('.team-channel-grid').html()
+    it 'adds articles to the grid view', ->
+      @ArticlesGridView.called.should.be.true()
+      @ArticlesGridView.args[0][0].header.should.containEql 'Latest Articles'
 
   describe '#renderFeatured', ->
 
-    before (done) ->
-      benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
-        @view = new @TeamChannelView
-          el: $('body')
-        done()
-
     it 'renders featuredArticles and initializes carousel', ->
-      $('.team-channel-featured__item').length.should.equal 2
+      $('.team-channel-featured__item figure').length.should.equal 1
+      $('.team-channel-featured__item').html().should.containEql 'On The Heels'
 
   describe '#setupStickyNav', ->
 
-    before (done) ->
-      benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
-        @view = new @TeamChannelView
-          el: $('body')
-        done()
-
     it 'adds a waypoint', ->
       @waypoint.called.should.be.true()
-      console.log @waypoint.args
+      @waypoint.args[0][1].offset.should.equal -400
