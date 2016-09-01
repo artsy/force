@@ -200,3 +200,19 @@ moment = require 'moment'
   display_model: 'artwork'
   location: '/artist/maya-hayuk-untitled'
   about: undefined
+
+@parselyArticle =
+  _hits: 84,
+  author: "Gray Holubar",
+  authors: [
+    "Gray Holubar"
+  ],
+  image_url: "http://artsy-media-uploads.s3.amazonaws.com/YBYl5pkWUiTU5kxQjyBMkA%2Fmg.jpg",
+  link: "https://www.artsy.net/article/gray-holubar-how-to-get-an-internship-at-artsy-part-i",
+  metadata: "",
+  pub_date: "2015-12-14T21:32:00",
+  section: "Life at Artsy",
+  tags: [],
+  thumb_url_medium: "https://images.parsely.com/9aLe2Lkm2F_QIIUBEZJvrzSyGc8=/85x85/smart/http%3A//artsy-media-uploads.s3.amazonaws.com/YBYl5pkWUiTU5kxQjyBMkA%252Fmg.jpg",
+  title: "How to Get an Internship at Artsy—Part I",
+  url: "https://www.artsy.net/article/gray-holubar-how-to-get-an-internship-at-artsy-part-i"

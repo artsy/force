@@ -15,7 +15,7 @@ block body
       .team-channel-header__name= channel.get('name')
       .team-channel-header__tagline= channel.get('tagline')
 
-  //- Static Navigation
+  //- Flexible Navigation
   .team-channel-nav
     .responsive-layout-container
       .team-channel-nav__artsy-logo-square
@@ -28,7 +28,7 @@ block body
       .team-channel-nav__tagline= channel.get('tagline')
       .team-channel-nav__links
         for link in channel.get('links')
-          if link.text.length > 0
+          if link.text && link.text.length > 0
             a(href=link.url)= link.text
         if channel.get('id') === sd.GALLERY_INSIGHTS_CHANNEL
           a.team-channel-nav__apply(href="#{sd.APPLY_URL}") Apply

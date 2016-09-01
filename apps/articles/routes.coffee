@@ -70,9 +70,8 @@ setupEmailSubscriptions = (user, article, cb) ->
     error: => @section(req, res, next)
     success: (channel) ->
       return next() unless channel.isTeam()
-
       topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
-        (pinnedArticles = new Articles).fetch
+        new Articles().fetch
           data:
             published: true
             limit: 6
@@ -80,18 +79,19 @@ setupEmailSubscriptions = (user, article, cb) ->
             ids: pluck(sortBy(channel.get('pinned_articles'), 'index'), 'id')
           error: res.backboneError
           success: (pinnedArticles) ->
-            res.locals.sd.CHANNEL = channel.toJSON()
-            articleUrls = pinnedArticles.map (article) -> article.get('slug')
+            pinnedArticles.reset() if channel.get('pinned_articles').length is 0
+            pinnedSlugs = pinnedArticles.map (article) -> article.get('slug')
             parselyArticles = reject parselyArticles, (post) ->
               slug = last post.link.split('/')
-              slug in articleUrls
-
+              slug in pinnedSlugs
             numRemaining = 6 - pinnedArticles.size()
-            if numRemaining > 0
-              parselyArticles = first(parselyArticles, numRemaining)
-            else
-              parselyArticles = []
-            res.render 'team_channel', channel: channel, pinnedArticles: pinnedArticles, parselyArticles: parselyArticles
+            parselyArticles = first(parselyArticles, numRemaining)
+
+            res.locals.sd.CHANNEL = channel.toJSON()
+            res.render 'team_channel',
+              channel: channel
+              pinnedArticles: pinnedArticles
+              parselyArticles: parselyArticles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->

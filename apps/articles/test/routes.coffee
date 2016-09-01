@@ -7,6 +7,7 @@ Articles = require '../../../collections/articles'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+{ fabricate } = require 'antigravity'
 
 describe 'Articles routes', ->
 
@@ -15,7 +16,7 @@ describe 'Articles routes', ->
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
-    routes.__set__ 'topParselyArticles', sinon.stub().yields []
+    routes.__set__ 'topParselyArticles', sinon.stub().yields [fixtures.parselyArticle, fixtures.parselyArticle, fixtures.parselyArticle]
 
   afterEach ->
     Backbone.sync.restore()
@@ -77,7 +78,7 @@ describe 'Articles routes', ->
       routes.section @req, @res, @next
       Backbone.sync.args[0][2].success section
       Backbone.sync.args[1][2].data.section_id.should.equal section.id
-      Backbone.sync.args[1][2].success fixtures.articles
+      Backbone.sync.args[1][2].success fixtures.article
       @res.render.args[0][0].should.equal 'section'
       @res.render.args[0][1].section.get('title').should.equal section.title
 
@@ -94,7 +95,7 @@ describe 'Articles routes', ->
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
       Backbone.sync.args[1][2].data.ids.length.should.equal 4
-      Backbone.sync.args[1][2].success fixtures.articles
+      Backbone.sync.args[1][2].success fixtures.article
       @res.render.args[0][0].should.equal 'team_channel'
       @res.render.args[0][1].channel.get('name').should.equal channel.name
 
