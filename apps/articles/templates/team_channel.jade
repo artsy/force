@@ -39,9 +39,14 @@ block body
       .team-channel-featured__header Featured
       .mgr-cells.js-mgr-cells.team-channel-featured__articles
         - width = 800
+        //- Pinned Articles
         for article in pinnedArticles.models
           .mgr-cell.js-mgr-cell.team-channel-featured__item
             include ../../../components/article_figure/template
+        //- Parsely Articles
+        for article in parselyArticles
+          .mgr-cell.js-mgr-cell.team-channel-featured__item
+            include ../../../components/article_figure/parsely_figure
       - length = 6
       nav.mgr-navigation.js-mgr-navigation
         include ../../../components/merry_go_round/templates/horizontal_navigation

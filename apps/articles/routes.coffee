@@ -1,4 +1,4 @@
-{ sortBy, pluck, reject, map } = require 'underscore'
+{ sortBy, pluck, reject, map, last, first } = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
@@ -80,10 +80,16 @@ setupEmailSubscriptions = (user, article, cb) ->
           error: res.backboneError
           success: (pinnedArticles) ->
             res.locals.sd.CHANNEL = channel.toJSON()
-            console.log pluck parselyArticles, 'link'
-            articleUrls = pinnedArticles.map (article) -> article.href()
-            parselyArticles = reject parselyArticles, (post) -> post.link in articleUrls
-            console.log pluck parselyArticles, 'link'
+            articleUrls = pinnedArticles.map (article) -> article.get('slug')
+            parselyArticles = reject parselyArticles, (post) ->
+              slug = last post.link.split('/')
+              slug in articleUrls
+
+            numRemaining = 6 - pinnedArticles.size()
+            if numRemaining > 0
+              parselyArticles = first(parselyArticles, numRemaining)
+            else
+              parselyArticles = []
             res.render 'team_channel', channel: channel, pinnedArticles: pinnedArticles, parselyArticles: parselyArticles
 
 subscribedToEditorial = (email, cb) ->
