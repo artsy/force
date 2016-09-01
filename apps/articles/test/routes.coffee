@@ -14,6 +14,7 @@ describe 'Articles routes', ->
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
+    Article.topParselyArticles = sinon.stub().yields []
 
   afterEach ->
     Backbone.sync.restore()
@@ -91,7 +92,7 @@ describe 'Articles routes', ->
       @req.params.slug = 'foo'
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
-      Backbone.sync.args[1][2].data.channel_id.should.equal channel.id
+      Backbone.sync.args[1][2].data.ids.length.should.equal 4
       Backbone.sync.args[1][2].success fixtures.articles
       @res.render.args[0][0].should.equal 'team_channel'
       @res.render.args[0][1].channel.get('name').should.equal channel.name

@@ -27,14 +27,12 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
-
       # Email Subscriptions
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
-
         # Parsely Articles
-        Article.topParselyArticles @article.getParselySection(), @article.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        Article.topParselyArticles articleItem.getParselySection(), articleItem.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
           res.render 'article', _.extend data,
             embed: embed

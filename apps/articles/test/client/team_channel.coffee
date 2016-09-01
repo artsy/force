@@ -24,7 +24,8 @@ describe 'TeamChannelView', ->
         resize: resize
         crop: crop
         channel: @channel
-        featuredArticles: [new Article fabricate 'article']
+        parselyArticles: []
+        pinnedArticles: new Articles [new Article fabricate 'article']
         asset: ->
       }
       $.fn.waypoint = (@waypoint = sinon.stub())
