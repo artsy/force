@@ -4,7 +4,8 @@ moment = require 'moment'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 
 describe 'Articles routes', ->
@@ -14,7 +15,7 @@ describe 'Articles routes', ->
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
-    Article.topParselyArticles = sinon.stub().yields []
+    routes.__set__ 'topParselyArticles', sinon.stub().yields []
 
   afterEach ->
     Backbone.sync.restore()

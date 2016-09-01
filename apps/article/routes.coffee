@@ -8,6 +8,7 @@ request = require 'superagent'
 { SAILTHRU_KEY, SAILTHRU_SECRET, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ topParselyArticles } = require '../../components/util/parsely.coffee'
 
 @article = (req, res, next) ->
   articleItem = new Article id: req.params.slug
@@ -32,7 +33,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
         # Parsely Articles
-        Article.topParselyArticles articleItem.getParselySection(), articleItem.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        topParselyArticles articleItem.getParselySection(), articleItem.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
           res.render 'article', _.extend data,
             embed: embed

@@ -12,6 +12,7 @@ request = require 'superagent'
 { POST_TO_ARTICLE_SLUGS, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ topParselyArticles } = require '../../components/util/parsely.coffee'
 
 @articles = (req, res, next) ->
   Q.allSettled([
@@ -70,7 +71,7 @@ setupEmailSubscriptions = (user, article, cb) ->
     success: (channel) ->
       return next() unless channel.isTeam()
 
-      Article.topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+      topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
         (pinnedArticles = new Articles).fetch
           data:
             published: true
