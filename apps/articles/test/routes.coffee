@@ -7,7 +7,6 @@ Articles = require '../../../collections/articles'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
-{ fabricate } = require 'antigravity'
 
 describe 'Articles routes', ->
 
