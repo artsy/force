@@ -1,6 +1,7 @@
 if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
   - var layer = artwork.layer
   - var layers = helpers.related_artworks.filterLayers(artwork.layers)
+  - var relatedTab = artwork.related && artwork.related.length && user && user.hasLabFeature('Others also viewed')
 
   section.artwork-section.artwork-related-artworks( class='js-artwork-related-artworks' )
     header.artwork-related-artworks__header
@@ -16,6 +17,13 @@ if artwork.layer && artwork.layer.artworks && artwork.layer.artworks.length
             data-state= (i === 0 ? 'active' : 'inactive')
           )
             = layer.name
+
+        if relatedTab
+          a.artwork-tabs__nav__link(
+            class='js-artwork-tabs-link'
+            data-id='users-also-viewed'
+            data-state='inactive'
+          ) Users also viewed
 
       .side-tabs__content
         .artwork-tab(

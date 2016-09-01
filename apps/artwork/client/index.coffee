@@ -2,6 +2,7 @@
 { CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
@@ -135,6 +136,7 @@ module.exports =
       $(".js-artwork-#{key}")
         .html template extend data,
           helpers: helpers
+          user: CurrentUser.orNull()
 
   init: ->
     setCookie(CLIENT._id)

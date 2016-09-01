@@ -4,7 +4,7 @@ ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee
 helpers = require './helpers.coffee'
 template = -> require('./templates/masonry.jade') arguments...
 
-query = """
+layerQuery = """
   query artwork($id: String!, $artwork_id: String!) {
     artwork(id: $artwork_id) {
       layer(id: $id) {
@@ -14,6 +14,17 @@ query = """
         artworks {
           ... artwork_brick
         }
+      }
+    }
+  }
+  #{require '../../../../components/artwork_brick/query.coffee'}
+"""
+
+relatedQuery = """
+  query artwork($artwork_id: String!) {
+    artwork(id: $artwork_id) {
+      related {
+        ... artwork_brick
       }
     }
   }
@@ -33,7 +44,6 @@ module.exports = class ArtworkRelatedArtworksView extends Backbone.View
 
   activate: (e) ->
     e.preventDefault()
-
     @links()
       .attr 'data-state', 'inactive'
 
@@ -41,11 +51,20 @@ module.exports = class ArtworkRelatedArtworksView extends Backbone.View
       .attr 'data-state', 'active'
       .data()
 
+    relatedTab = id is 'users-also-viewed'
+
     @sections()
       .attr 'data-loading', true
 
+    query = if relatedTab then relatedQuery else layerQuery
+
     metaphysics query: query, variables: id: id, artwork_id: @id
       .then ({ artwork }) =>
+        if relatedTab
+          artwork.layer =
+            id: 'related-artworks'
+            artworks: artwork.related
+
         @sections()
           .attr 'data-loading', false
           .html template

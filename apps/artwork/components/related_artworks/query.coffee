@@ -12,5 +12,8 @@ module.exports = """
         ... artwork_brick
       }
     }
+    related(size: 1) {
+      _id
+    }
   }
 """
