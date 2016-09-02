@@ -1,0 +1,19 @@
+@require '../../../../components/merry_go_round'
+@require '../../../../components/artist_cell'
+
+.artwork-artist-related-rail
+  padding-top 15px
+  margin 10px 0 60px 0
+  border-top 1px solid gray-lighter-color
+  mgr-n-up(4, 30px, (3/4), false)
+
+  &__header
+    garamond-size('headline', true)
+    position relative
+    margin-bottom 30px
+
+  .hoverable-image-link
+    width 100%
+
+  .artwork-artist-rail-cell
+    mgr-n-up(4, 30px, (3/4), false)
