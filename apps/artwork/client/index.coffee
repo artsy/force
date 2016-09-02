@@ -27,7 +27,6 @@ sharedInit = [
   require '../components/metadata/index.coffee'
   require '../components/doge/index.coffee'
   require '../components/skrillex/index.coffee'
-  # require '../components/related_artists/index.coffee'
 ]
 
 module.exports =
