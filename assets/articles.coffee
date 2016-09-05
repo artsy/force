@@ -6,3 +6,5 @@ $ ->
     require('../apps/articles/client/magazine.coffee').init()
   else if location.pathname is '/' + sd.SECTION?.slug
     require('../apps/articles/client/section.coffee').init()
+  else if location.pathname is '/' + sd.CHANNEL?.slug
+    require('../apps/articles/client/team_channel.coffee').init()

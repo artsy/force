@@ -8,6 +8,7 @@ request = require 'superagent'
 { SAILTHRU_KEY, SAILTHRU_SECRET, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ topParselyArticles } = require '../../components/util/parsely.coffee'
 
 @article = (req, res, next) ->
   articleItem = new Article id: req.params.slug
@@ -27,14 +28,12 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
-
       # Email Subscriptions
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, data.article, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
-
         # Parsely Articles
-        articleItem.topParselyArticles data.article, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        topParselyArticles articleItem.getParselySection(), articleItem.href(), PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
           res.locals.sd.PARSELY_ARTICLES = parselyArticles
           res.render 'article', _.extend data,
             embed: embed

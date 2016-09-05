@@ -1,16 +1,18 @@
-_ = require 'underscore'
+{ sortBy, pluck, reject, map, last, first } = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
 Sections = require '../../collections/sections'
+Channel = require '../../models/channel'
 embed = require 'particle'
 request = require 'superagent'
 { crop } = require '../../components/resizer'
 { POST_TO_ARTICLE_SLUGS, SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ topParselyArticles } = require '../../components/util/parsely.coffee'
 
 @articles = (req, res, next) ->
   Q.allSettled([
@@ -62,6 +64,34 @@ setupEmailSubscriptions = (user, article, cb) ->
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
           res.render 'section', section: section, articles: articles
+
+@teamChannel = (req, res, next) =>
+  new Channel(id: req.params.slug).fetch
+    error: => @section(req, res, next)
+    success: (channel) ->
+      return next() unless channel.isTeam()
+      topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->
+        new Articles().fetch
+          data:
+            published: true
+            limit: 6
+            sort: '-published_at'
+            ids: pluck(sortBy(channel.get('pinned_articles'), 'index'), 'id')
+          error: res.backboneError
+          success: (pinnedArticles) ->
+            pinnedArticles.reset() if channel.get('pinned_articles').length is 0
+            pinnedSlugs = pinnedArticles.map (article) -> article.get('slug')
+            parselyArticles = reject parselyArticles, (post) ->
+              slug = last post.link.split('/')
+              slug in pinnedSlugs
+            numRemaining = 6 - pinnedArticles.size()
+            parselyArticles = first(parselyArticles, numRemaining)
+
+            res.locals.sd.CHANNEL = channel.toJSON()
+            res.render 'team_channel',
+              channel: channel
+              pinnedArticles: pinnedArticles
+              parselyArticles: parselyArticles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->

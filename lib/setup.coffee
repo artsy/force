@@ -200,11 +200,11 @@ module.exports = (app) ->
   app.use require "../apps/rss"
   app.use require "../apps/mailchimp_subscribe"
   app.use require '../apps/dev'
+  app.use require "../apps/article"
 
   # Non-profile vanity url apps
   app.use require "../apps/galleries_institutions"
   app.use require "../apps/articles"
-  app.use require "../apps/article"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"
 

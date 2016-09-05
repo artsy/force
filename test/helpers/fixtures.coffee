@@ -73,9 +73,20 @@ moment = require 'moment'
 
 @channel =
   id: '55356a9deca560a0137aa4b7'
-  name: 'Artsy Editorial'
-  tagline: 'The coolest team'
-  slug: 'artsy-editorial'
+  name: 'Life at Artsy'
+  tagline: 'Office Culture at Artsy'
+  slug: 'life-at-artsy'
+  image_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  links: [
+    { text: 'Cool Link', url: 'http://artsy.net' }
+    { text: 'Another Link', url: 'http://artsy.net/about' }
+  ]
+  pinned_articles: [
+    { index: 1, id: '55356a9deca560a0137aa4b6' }
+    { index: 2, id: '55356a9deca560a0137aa4b8' }
+    { index: 3, id: '55356a9deca560a0137aa4b9' }
+    { index: 4, id: '55356a9deca560a0137aa4b0' }
+  ]
 
 @article =
   id: '54276766fd4f50996aeca2b8'
@@ -189,3 +200,19 @@ moment = require 'moment'
   display_model: 'artwork'
   location: '/artist/maya-hayuk-untitled'
   about: undefined
+
+@parselyArticle =
+  _hits: 84,
+  author: "Gray Holubar",
+  authors: [
+    "Gray Holubar"
+  ],
+  image_url: "http://artsy-media-uploads.s3.amazonaws.com/YBYl5pkWUiTU5kxQjyBMkA%2Fmg.jpg",
+  link: "https://www.artsy.net/article/gray-holubar-how-to-get-an-internship-at-artsy-part-i",
+  metadata: "",
+  pub_date: "2015-12-14T21:32:00",
+  section: "Life at Artsy",
+  tags: [],
+  thumb_url_medium: "https://images.parsely.com/9aLe2Lkm2F_QIIUBEZJvrzSyGc8=/85x85/smart/http%3A//artsy-media-uploads.s3.amazonaws.com/YBYl5pkWUiTU5kxQjyBMkA%252Fmg.jpg",
+  title: "How to Get an Internship at Artsy—Part I",
+  url: "https://www.artsy.net/article/gray-holubar-how-to-get-an-internship-at-artsy-part-i"
