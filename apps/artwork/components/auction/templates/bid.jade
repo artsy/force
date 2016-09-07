@@ -1,4 +1,4 @@
-- myLastMaxBid = me && me.bidder_status && me.bidder_status.most_recent_bid.max_bid.cents
+- myLastMaxBid = me && me.lot_standing && me.lot_standing.most_recent_bid.max_bid.cents
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 
@@ -13,10 +13,10 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
 
     if user
       .artwork-auction__bid-form__max-bid
-        if me && me.bidder_status.is_highest_bidder
+        if me && me.lot_standing.is_highest_bidder
           .artwork-auction__bid-form__max-bid-label.is_winning
             | You're the highest bidder
-        else if me && !me.bidder_status.is_highest_bidder
+        else if me && !me.lot_standing.is_highest_bidder
           .artwork-auction__bid-form__max-bid-label.is_losing
             | You've been outbid, increase your bid
         else

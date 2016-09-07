@@ -33,10 +33,10 @@ describe 'My Active Bids template', ->
 
   it 'renders highest bid if the highest_bid on the sale artwork and \
       bidder positon match', ->
-    @locals.myActiveBids[0].is_winning = true
+    @locals.myActiveBids[0].is_highest_bidder = true
     template(@locals).should.containEql 'Highest Bid'
 
   it 'renders losing if the highest_bid on the sale artwork and \
       bidder positon do not match', ->
-    @locals.myActiveBids[0].is_winning = false
+    @locals.myActiveBids[0].is_highest_bidder = false
     template(@locals).should.containEql 'Outbid'

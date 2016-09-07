@@ -1,9 +1,11 @@
 module.exports = """
-  query my_active_bids($current: Boolean!, $sale_id: String) {
+  query my_active_bids($live: Boolean!, $sale_id: String) {
     me {
-      bidder_positions(current: $current, sale_id: $sale_id) {
-        id
-        is_winning
+      lot_standings(live: $live, sale_id: $sale_id) {
+        active_bid {
+          id
+        }
+        is_highest_bidder
         sale_artwork {
           id
           lot_number
@@ -17,6 +19,7 @@ module.exports = """
           artwork {
             href
             title
+            date
             image {
               url(version: "square")
             }

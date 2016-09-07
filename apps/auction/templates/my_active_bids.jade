@@ -13,13 +13,13 @@ if myActiveBids && myActiveBids.length
                 h3= bid.sale_artwork.artwork.artist.name
                 .auction-mab-title
                   em= bid.sale_artwork.artwork.title
-                  | ,
+                  | ,&nbsp;
                   = bid.sale_artwork.artwork.date
           td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
           td.auction-mab-current-bid
             strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
           td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-          if bid.is_winning
+          if bid.is_highest_bidder
             td.auction-mab-warning.is-winning: p Highest Bid
           else
             td.auction-mab-warning: p Outbid
