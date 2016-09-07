@@ -18,11 +18,9 @@
         )
       .hhu-subheading
         != heroUnit.mdToHtml('description')
-
-      if heroUnit.has('link_text')
-        .avant-garde-button(
-          onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
-          onMouseOut="this.style.color=null"
-        )= heroUnit.get('link_text')
+      .avant-garde-button(
+        onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
+        onMouseOut="this.style.color=null"
+      )= heroUnit.get('link_text')
 
     .hhu-credit= heroUnit.get('credit_line')

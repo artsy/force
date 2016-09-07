@@ -3,12 +3,15 @@ Q = require 'bluebird-q'
 { parse } = require 'url'
 Backbone = require 'backbone'
 sd = require('sharify').data
-HeroUnits = require '../../collections/hero_units'
 Items = require '../../collections/items'
+Articles = require '../../collections/articles'
+HeroUnits = require '../../collections/hero_units'
 { client } = require '../../lib/cache'
-welcomeHero = require './heros/welcome'
-fallbackHero = require './heros/fallback'
-FilterArtworks = require '../../collections/filter_artworks'
+metaphysics = require '../../lib/metaphysics.coffee'
+viewHelpers = require './view_helpers.coffee'
+welcomeHero = require './welcome'
+browseCategories = require './browse_categories.coffee'
+query = require './queries/initial'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or
@@ -23,25 +26,17 @@ positionWelcomeHeroMethod = (req, res) ->
   method
 
 @index = (req, res, next) ->
-  activeBuckets = res.locals.sd.PERSONALIZED_HOMEPAGE_BUCKETS?.split(',')
-  outcome = res.locals.sd.PERSONALIZED_HOMEPAGE
-
-  return next() if _.contains activeBuckets, outcome
+  return if metaphysics.debug req, res, { method: 'post', query: query }
 
   heroUnits = new HeroUnits
+  timeToCacheInSeconds = 300 # 5 Minutes
 
   # homepage:featured-sections
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
-  # homepage:explore
-  exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
-  # homepage:featured-artists
-  featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
   # homepage:featured-links
-  featuredArticles = new Items [], id: '5172bbb97695afc60a000001', item_type: 'FeaturedLink'
+  featuredArticles = new Articles
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
-
-  timeToCacheInSeconds = 300 # 5 Minutes
 
   jsonLD = {
     "@context": "http://schema.org",
@@ -54,29 +49,38 @@ positionWelcomeHeroMethod = (req, res) ->
     }
   }
 
-  Q.allSettled _.compact [
-    heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    featuredLinks.fetch(cache: true)
-    exploreSections.fetch(cache: true) unless req.user?
-    featuredArtists.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-  ]
-    .then ->
-      if req.user?
-        heroUnits.push fallbackHero if heroUnits.length is 0
-      else
-        heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero)
+  Q
+    .all [
+      heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
+      metaphysics query: query, req: req
+      featuredLinks.fetch cache: true
+      featuredArticles.fetch
+        cache: true
+        cacheTime: timeToCacheInSeconds
+        data:
+          published: true
+          featured: true
+          sort: '-published_at'
+      featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
+    ]
+
+    .then ([x, { home_page }]) ->
+      heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+      res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
+
       res.render 'index',
         heroUnits: heroUnits
+        modules: home_page.artwork_modules
         featuredLinks: featuredLinks
-        exploreSections: exploreSections
-        featuredArtists: featuredArtists
         featuredArticles: featuredArticles
         featuredShows: featuredShows
+        viewHelpers: viewHelpers
+        browseCategories: browseCategories
         jsonLD: JSON.stringify jsonLD
+
+    .catch next
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"

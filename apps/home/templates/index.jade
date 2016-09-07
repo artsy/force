@@ -14,53 +14,19 @@ block body
   include hero_units
   #home-foreground
     #home-hero-units-controls( data-length= heroUnits.length )
-      button#home-hero-units-left-arrow.icon-chevron-left
       ul#home-hero-unit-dots
         for x, i in heroUnits.models
           li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
-      button#home-hero-units-right-arrow.icon-chevron-right
 
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
-        if exploreSections.length
-          #home-explore-section( class='js-homepage-featured-links', data-context='explore sections' )
-            include explore_sections
+        include featured_links
+        if !user
+          include browse
+    include rails
+    #home-layout-container.responsive-layout-container
+      .main-layout-container: #home-body
+        include featured_shows
+        include featured_articles
 
-        ul#home-top-featured-links( class='js-homepage-featured-links', data-context='under banner' )
-          include featured_links
-
-        #home-top-rail-section(
-          class='js-homepage-featured-links',
-          data-context=(user ? 'works by artists you follow' : 'featured artworks for sale')
-        )
-          .loading-spinner
-          //- Rendered client-side
-
-        #home-featured-shows-section( class='js-homepage-featured-links', data-context='featured shows' )
-          h2.home-featured-header Featured Shows
-            .home-browse-all-right
-              a( href='/shows' )
-                | View All
-          ul#home-featured-shows.home-featured-list
-            - shows = featuredShows.take(8)
-            - displayLocation = true
-            include featured_shows
-
-        #home-featured-articles-section( class='js-homepage-featured-links', data-context='featured articles' )
-          h2.home-featured-header Featured Articles
-            .home-browse-all-right
-              a( href='/articles' )
-                | View All
-          ul#home-featured-articles.home-featured-list
-            - articleLinks = featuredArticles.take(7)
-            include featured_articles
-
-        #home-featured-artists-section( class='js-homepage-featured-links', data-context='featured artists' )
-          h2.home-featured-header Featured Artists
-            .home-browse-all-right
-              a( href='/artists' )
-                | View All
-          ul#home-featured-artists.grid-4-up.home-featured-list
-            - artistLinks = featuredArtists.take(4)
-            include featured_artists
   include ../../../components/main_layout/templates/json_ld
