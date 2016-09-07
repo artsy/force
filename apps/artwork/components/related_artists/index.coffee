@@ -6,7 +6,7 @@ initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr
 CurrentUser = require '../../../../models/current_user.coffee'
 artistsTemplate = -> require('./artists.jade') arguments...
 
-setupFollowButtons = ({ $el, items, kind }) =>
+setupFollowButtons = ({ $el, relatedArtists, kind }) =>
   following = new Following(null, kind: kind) if CurrentUser.orNull()
   ids = $el.find('.follow-button').map ->
 
@@ -18,21 +18,20 @@ setupFollowButtons = ({ $el, items, kind }) =>
       model: new Backbone.Model id: id
       modelName: kind
       el: $el
-      href: _.findWhere(items, id:id).href
+      href: _.findWhere(relatedArtists, id:id).href
     id
 
   following?.syncFollows ids
 
-render = ({ items, showMore, baseHref}) ->
-  viewAllUrl = baseHref + '/related-artists'
-  artistsTemplate { items, showMore, viewAllUrl }
+render = ({ relatedArtists, showMore, baseHref}) ->
+  viewAllUrl = sd.CLIENT.artists[0].href + '/related-artists'
+  artistsTemplate { relatedArtists, showMore, viewAllUrl }
 
 module.exports = ->
-  baseHref = sd.CLIENT.artists[0].href
-  items = sd.CLIENT.artists[0].artists
-  showMore = items.length > 15
+  relatedArtists = sd.CLIENT.artists[0].artists
+  showMore = relatedArtists.length > 15
   $el = $('.js-artwork-artist-related-rail__content')
 
-  $el.find('.js-mgr-cells').html render({ items, showMore, baseHref })
+  $el.find('.js-mgr-cells').html render({ relatedArtists, showMore })
   _.defer ->
-    initCarousel $el, { advanceBy: 4 }, setupFollowButtons({$el: $el, items: items, kind: 'artist'})
+    initCarousel $el, { advanceBy: 4 }, setupFollowButtons({$el: $el, relatedArtists: relatedArtists, kind: 'artist'})

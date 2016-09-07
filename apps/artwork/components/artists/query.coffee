@@ -30,7 +30,7 @@ module.exports = """
           name
         }
       }
-      artists {
+      artists(size: 16) {
         ... artistCell
       }
     }
