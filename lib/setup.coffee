@@ -159,7 +159,6 @@ module.exports = (app) ->
 
   # Apps with hardcoded routes or "RESTful" routes
   app.use require "../apps/home"
-  app.use require "../apps/home_2"
   app.use require "../apps/toolkit"
   app.use require "../apps/apply"
   app.use require "../apps/auctions"

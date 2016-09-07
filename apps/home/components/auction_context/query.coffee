@@ -5,6 +5,6 @@ module.exports = """
     description
     start_at(format: "MMM D")
     end_at(format: "MMM D")
-    closes: end_at(format: "MMM D [at] ha")
+    closes: end_at(format: "MMM D [at] ha", convert_to_utc: false)
   }
 """
