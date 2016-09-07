@@ -1,0 +1,21 @@
+each artist in relatedArtists
+  .mgr-cell.js-mgr-cell.artwork-artist-rail-cell
+    include ../../../../components/artist_cell/index
+
+if showMore
+  include ../../../../components/merry_go_round/templates/view_all_rail_cell
+
+else
+  //- if there are not enough shows to fill the carousel, the cells may
+  //- not paginate evenly when divided into pages of 4. add some blank
+  //- cells to the last page if cells are not already divisible by 4.
+
+  - var cellsPerPage = 4
+  - var cellsRemainder = relatedArtists.length % cellsPerPage
+  - var blankCellsNeeded = (cellsPerPage - cellsRemainder) % 4
+
+  - var i = 0
+  while i < blankCellsNeeded
+    //- empty cell
+    .mgr-cell.js-mgr-cell.artwork-artist-rail-cell
+    - i++

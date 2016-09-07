@@ -56,6 +56,7 @@ module.exports =
           require '../components/auction_artworks/index.coffee' unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
+          require '../components/related_artists/index.coffee'
         ]
 
     else if context.__typename is 'ArtworkContextFair'
@@ -79,6 +80,7 @@ module.exports =
           require '../components/partner/index.coffee'
           require '../components/artist_artworks/index.coffee'
           require '../components/related_artworks/index.coffee'
+          require '../components/related_artists/index.coffee'
         ]
 
     else if context.__typename is 'ArtworkContextPartnerShow'
@@ -106,6 +108,7 @@ module.exports =
           require '../components/artist_artworks/index.coffee'
           require '../components/partner_artworks/index.coffee'
           require '../components/related_artworks/index.coffee'
+          require '../components/related_artists/index.coffee'
         ]
 
     else
@@ -129,10 +132,11 @@ module.exports =
           require '../components/artist_artworks/index.coffee'
           require '../components/partner_artworks/index.coffee'
           require '../components/related_artworks/index.coffee'
+          require '../components/related_artists/index.coffee'
         ]
 
   renderTemplates: renderTemplates = (data) ->
-    for key, template of { fold, footer }
+    for key, template of { fold: fold, footer: footer }
       $(".js-artwork-#{key}")
         .html template extend data,
           helpers: helpers

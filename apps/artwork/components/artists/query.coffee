@@ -30,6 +30,10 @@ module.exports = """
           name
         }
       }
+      artists(size: 16) {
+        ... artistCell
+      }
     }
   }
+  #{require '../../../../components/artist_cell/query.coffee'}
 """
