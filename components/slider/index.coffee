@@ -1,8 +1,8 @@
-{ map } = require 'underscore'
+{ map, extend } = require 'underscore'
 slider = require 'nouislider'
 template = -> require('./index.jade') arguments...
 
-module.exports = ({ $container, start, min, max, name, step, append = "", formatter = (val) -> val }) ->
+module.exports = ({ $container, start, min, max, name, step, append = "", range, formatter = (val) -> val }) ->
   return unless $container
   $container.html template name: name
 
@@ -11,13 +11,19 @@ module.exports = ({ $container, start, min, max, name, step, append = "", format
 
   return unless el
 
-  sliderInstance = slider.create el,
-    start: start || [min, max]
-    connect: true
-    step: step
-    range:
-      min: min
-      max: max
+  defaultOpts = connect: true, start: start || [min, max]
+
+  if range
+    sliderInstance = slider.create el,
+      extend defaultOpts,
+        range: range
+  else
+    sliderInstance = slider.create el,
+      extend defaultOpts,
+        step: step
+        range:
+          min: min
+          max: max
 
   sliderInstance.on 'update', (values, handle) ->
     formattedValues = map values, formatter

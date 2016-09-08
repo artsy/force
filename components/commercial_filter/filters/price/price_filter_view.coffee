@@ -35,7 +35,12 @@ module.exports = class PriceFilterView extends Backbone.View
       min: @min
       max: @max
       start: range
-      step: 100
+      range: {
+        min: [@min, 100]
+        '20%': [10000, 500]
+        '50%': [25000, 1000]
+        max: [@max]
+      }
       formatter: (val, index) ->
         if index is 0
           "#{formatMoney(val, { precision: 0 })}"
