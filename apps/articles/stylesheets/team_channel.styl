@@ -129,6 +129,47 @@
   .article-figure-title
     word-wrap break-word
 
+@media (max-width: 900px)
+  .team-channel-featured
+    .mgr-cell
+      width 100%
+  .team-channel-nav
+    &__links
+      display none
+    &__hamburger
+      float right
+      &-icon
+        vertical-align middle
+        position relative
+        font-style normal
+        color white
+        text-align left
+        text-indent -9999px
+        direction ltr
+        width 20px
+        height 4px
+        box-shadow inset 0 0 0 7px,0 -7px,0 7px
+        margin 16px 7px
+  .team-channel-nav.is-sticky
+    .team-channel-nav
+      &__hamburger-icon
+        color black
+      &__tagline
+        display none
+  .team-channel-nav.is-open
+    .team-channel-nav
+      &__links
+        position absolute
+        top 0
+        left 0
+        width 100%
+        display block
+        background-color black
+        a
+          color white
+          display block
+          margin-left 30px
+
 // Grid
 .team-channel-grid
   margin-bottom 80px
