@@ -12,7 +12,7 @@ module.exports = class BidHistoryView extends Backbone.View
   fetch: ->
     metaphysics
       query: query
-      variables: current: false
+      variables: live: false
       req: user: @user
 
     .then ({ @me }) =>
@@ -21,5 +21,5 @@ module.exports = class BidHistoryView extends Backbone.View
   render: ->
     @$el.html template
       button: false
-      myActiveBids: @me.bidder_positions
+      myActiveBids: @me.lot_standings
     this

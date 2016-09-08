@@ -22,10 +22,10 @@ module.exports = class MyActiveBids extends Backbone.View
   fetch: ->
     metaphysics(
       query: query
-      variables: current: true, sale_id: @saleId
+      variables: live: true, sale_id: @saleId
       req: user: @user
     ).then (data) =>
-      @bidderPositions = data.me.bidder_positions
+      @bidderPositions = data.me.lot_standings
 
   render: =>
     @$el.html @template myActiveBids: @bidderPositions
