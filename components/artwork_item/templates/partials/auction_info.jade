@@ -18,7 +18,7 @@ if displayBuyNowPrice || displayBidStatus
         .artwork-item-auction-bid-status
           | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
           if saleArtwork.get('bidder_positions_count') >= 1
-            | &nbsp;(#{saleArtwork.bidCount()})
+            | &nbsp;#{saleArtwork.formatBidCount()}
 
       if displayBuyNowPrice
         .artwork-item-buy-now-price

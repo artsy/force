@@ -43,7 +43,7 @@
                   | Sold
               else
                 .aabs-label
-                  | <strong>#{saleArtwork.bidLabel()}</strong> (#{saleArtwork.bidCount()})
+                  | <strong>#{saleArtwork.bidLabel()}</strong> #{saleArtwork.formatBidCount()}
                 .aabs-price
                   = saleArtwork.currentBid()
 

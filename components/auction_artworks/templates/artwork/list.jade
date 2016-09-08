@@ -48,7 +48,7 @@
                 = artwork.saleMessage() || 'Unavailable'
 
     .ala-bid-count: a( href= href )
-      | (#{saleArtwork.bidCount()})
+      | #{saleArtwork.formatBidCount()}
   else
     .ala-estimate
       if saleArtwork.estimate()
