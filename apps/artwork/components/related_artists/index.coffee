@@ -31,6 +31,7 @@ module.exports = ->
   relatedArtists = sd.CLIENT.artists[0].artists
   showMore = relatedArtists.length > 15
   $el = $('.js-artwork-artist-related-rail__content')
+  relatedArtists = _.take(relatedArtists, 15)
 
   $el.find('.js-mgr-cells').html render({ relatedArtists, showMore })
   _.defer ->
