@@ -12,6 +12,8 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     'click .js-team-channel-toggle-hamburger' : 'toggleHamburgerNav'
 
   initialize: ->
+    @$body = $('body')
+    @$absLinks = $('.team-channel-nav__abs-links')
     @channel = new Channel sd.CHANNEL
     @gridArticles = new Articles
     @gridArticles.url = "#{@gridArticles.url}/?&published=true&limit=12&sort=-published_at&channel_id=#{@channel.get('id')}"
@@ -33,30 +35,37 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     @carousel = initCarousel $el,
       advanceBy: 2
       wrapAround: true
+    @windowResized()
 
   setupStickyNav: ->
-    $('.team-channel-header').waypoint (direction) ->
+    $('.team-channel-header').waypoint (direction) =>
       if direction is 'down'
-        $('.team-channel-nav').addClass 'is-sticky'
+        @$body.addClass 'is-sticky'
       else
-        $('.team-channel-nav').removeClass 'is-sticky'
+        @$body.removeClass 'is-sticky'
     , { offset: -400 }
 
-  windowResized: ->
+  windowResized: =>
     # Advance by 1 for smaller screens
     if window.matchMedia('(max-width: 900px)').matches
+      @$body.addClass 'is-small'
       @carousel.navigation.advanceBy = 1
-      $('.team-channel-nav').addClass 'is-small'
     else
-      $('.team-channel-nav').removeClass 'is-small'
+      @$body.removeClass 'is-small'
       @carousel.navigation.advanceBy = 2
 
   toggleHamburgerNav: ->
-    if $('.team-channel-nav').hasClass 'is-open'
-      $('.team-channel-nav').removeClass 'is-open'
-      @$body.css 'transform', "translate3d(0, #{@height}px, 0)"
+    if @$body.hasClass 'is-open'
+      # if @$body.hasClass 'is-sticky'
+      #   $('.team-channel-nav').css 'margin-top', 0
+      @$body.removeClass 'is-open'
+      $('.team-channel-body').css 'transform', "translate3d(0, 0, 0)"
     else
-      $('.team-channel-nav').addClass 'is-open'
+      height = $('.team-channel-nav__abs-links a').length * 50
+      # if @$body.hasClass 'is-sticky'
+      #   $('.team-channel-nav').css 'margin-top', height
+      $('body').addClass 'is-open'
+      $('.team-channel-body').css 'transform', "translate3d(0, #{height}px, 0)"
 
 module.exports.init = ->
   new TeamChannelView
