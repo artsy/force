@@ -20,7 +20,7 @@ module.exports = class AuctionArtworkBrickView extends Backbone.View
         width: '500px',
         mode: 'register'
         copy: 'Sign up to bid'
-        destination: $(e.currentTarget).attr 'href'
+        redirectTo: $(e.currentTarget).attr 'href'
 
     else
       # Passes through to `href`

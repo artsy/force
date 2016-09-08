@@ -1,5 +1,4 @@
 { MEDIUM, CURRENT_USER } = require('sharify').data
-AuthModalView = require '../../../components/auth_modal/view.coffee'
 CTABarView = require '../../../components/cta_bar/view.coffee'
 
 module.exports = (artist) ->
