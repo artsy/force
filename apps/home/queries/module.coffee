@@ -1,5 +1,5 @@
 module.exports = """
-  query($key: String, $id: String, $related_artist_id: String, $followed_artist_id: String) {
+  query($key: String, $id: String, $related_artist_id: String, $followed_artist_id: String, $timezone: String) {
     home_page {
       artwork_module(key: $key, id: $id, related_artist_id: $related_artist_id, followed_artist_id: $followed_artist_id) {
         title
