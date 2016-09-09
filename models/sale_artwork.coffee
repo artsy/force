@@ -52,17 +52,23 @@ module.exports = class SaleArtwork extends Backbone.Model
     if @get('highest_bid_amount_cents') then 'Current Bid' else 'Starting Bid'
 
   bidCount: ->
-    n = @get('bidder_positions_count') or 0
-    n = 0 unless @get('highest_bid_amount_cents')
-    count = "#{n} bid"
-    count += if n is 1 then '' else 's'
+    count = @get('bidder_positions_count') or 0
+    count = 0 unless @get('highest_bid_amount_cents')
     count
+
+  bidCountLabel: ->
+    count = @bidCount()
+    bids = "#{count} bid"
+    bids += if count is 1 then '' else 's'
+
+  formatBidCount: ->
+    if @bidCount() is 0 then '' else "(#{@bidCountLabel()})"
 
   reserveLabel: ->
     @reserveFormat[@get 'reserve_status']
 
   formatBidsAndReserve: ->
-    bid = if (@get('bidder_positions_count') is 0) then '' else @bidCount()
+    bid = if @bidCount() is 0 then '' else @bidCountLabel()
     reserve = @reserveLabel() unless @get('reserve_status') is 'no_reserve'
     reserve = "This work has a reserve" if reserve? and not bid
     bidAndReserve = _.compact([bid, reserve]).join(', ')

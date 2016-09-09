@@ -46,32 +46,48 @@ describe 'SaleArtwork', ->
       @saleArtwork.unset 'display_low_estimate_dollars'
       @saleArtwork.estimate().should.equal '$600'
 
-  describe '#bidCount', ->
+  describe '#bidCountLabel', ->
 
     it 'returns bid count in singular form if 1', ->
       @saleArtwork.set bidder_positions_count: 1
       @saleArtwork.set highest_bid_amount_cents: 100
-      @saleArtwork.bidCount().should.equal '1 bid'
+      @saleArtwork.bidCountLabel().should.equal '1 bid'
 
     it 'returns bid count in plural form if greater than 1', ->
       @saleArtwork.set bidder_positions_count: 6
       @saleArtwork.set highest_bid_amount_cents: 100
-      @saleArtwork.bidCount().should.equal '6 bids'
+      @saleArtwork.bidCountLabel().should.equal '6 bids'
 
     it 'returns 0 if the highest_bid_amount_cents is not set (i.e. all bids were cancelled)', ->
       @saleArtwork.set bidder_positions_count: 6
       @saleArtwork.unset 'highest_bid_amount_cents'
-      @saleArtwork.bidCount().should.equal '0 bids'
+      @saleArtwork.bidCountLabel().should.equal '0 bids'
 
     it 'returns a 0 bids string if attribute not present', ->
       @saleArtwork.unset 'bidder_positions_count'
-      @saleArtwork.bidCount().should.equal '0 bids'
+      @saleArtwork.bidCountLabel().should.equal '0 bids'
 
     # Pending this until someone tells me why it shouldn't be
     # it 'returns a blank string if highest_bid_amount_cents null', ->
     #   @saleArtwork.set bidder_positions_count: 6
     #   @saleArtwork.unset 'highest_bid_amount_cents'
     #   @saleArtwork.bidCount().should.equal ''
+
+  describe '#formatBidCount', ->
+
+    it 'returns an empty string if there are no bids because of no highest_bid_amount_cents', ->
+      @saleArtwork.set bidder_positions_count: 6
+      @saleArtwork.unset 'highest_bid_amount_cents'
+      @saleArtwork.formatBidCount().should.equal ''
+
+    it 'returns an empty string if there are no bids', ->
+      @saleArtwork.unset 'bidder_positions_count'
+      @saleArtwork.formatBidCount().should.equal ''
+
+    it 'returns the original count in parentheses if it exists', ->
+      @saleArtwork.set bidder_positions_count: 6
+      @saleArtwork.set highest_bid_amount_cents: 100
+      @saleArtwork.formatBidCount().should.equal '(6 bids)'
 
   describe '#formatBidsAndReserve', ->
     describe 'with no bids', ->
