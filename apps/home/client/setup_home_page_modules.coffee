@@ -1,4 +1,6 @@
 { each } = require 'underscore'
+moment = require 'moment'
+tz = require 'moment-timezone'
 { USER_HOME_PAGE } = require('sharify').data
 User = require '../../../models/user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
@@ -48,6 +50,7 @@ module.exports = ->
         id: "#{module.params?.id}"
         related_artist_id: "#{module.params?.related_artist_id}"
         followed_artist_id: "#{module.params?.followed_artist_id}"
+        timezone: moment.tz.guess()
       req: { user: user }
     ).then ({ home_page: { artwork_module } }) ->
       module = artwork_module
