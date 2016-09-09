@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 { numberFormat } = require 'underscore.string'
 TypeaheadView = require '../../../../components/typeahead/view.coffee'
 { GEOCODED_CITIES } = require('sharify').data
+characterMap = require './character_map.coffee'
 template = -> require('./index.jade') arguments...
 searchItemTemplate = -> require('./search_item.jade') arguments...
 emptyTemplate = -> require('./empty.jade') arguments...
@@ -26,11 +27,20 @@ module.exports = class LocationFilterView extends Backbone.View
   bloodHound: ->
     cities = _.pluck GEOCODED_CITIES, 'name'
     @hound = new Bloodhound
-      datumTokenizer: Bloodhound.tokenizers.whitespace,
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      local: cities
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: @queryTokenizer,
+      local: _.map(cities, (city) => { value: @translate(city), display: city })
     @hound.initialize()
     @hound
+
+  queryTokenizer: (q) =>
+    Bloodhound.tokenizers.whitespace(@translate(q))
+
+  translate: (city) ->
+    _.each(characterMap, (unAccented, withAccent) ->
+      city = city.replace(new RegExp(withAccent, 'gi'), unAccented)
+    )
+    city
 
   setupTypeahead: ->
     $input = @$('input#cf-location-search-bar-input')
