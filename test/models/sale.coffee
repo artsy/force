@@ -295,3 +295,15 @@ describe 'Sale', ->
           end_at: time.add(2, 'days')
         @sale.upcomingLabel().should
           .equal "Auction opens #{time.format 'MMM D h:mm:ssA'} EST"
+
+    describe '#sortableDate', ->
+      it 'returns the live_start_at if it exists', ->
+        @sale.set
+          end_at: moment().add 2, 'days'
+          live_start_at: moment().add 1, 'days'
+        @sale.sortableDate().should.eql @sale.get('live_start_at')
+
+      it 'returns the end_at if no live_start_at exists', ->
+        @sale.set
+          end_at: moment().add 2, 'days'
+        @sale.sortableDate().should.eql @sale.get('end_at')
