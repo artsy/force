@@ -27,11 +27,12 @@ describe 'LoggedOutUser', ->
     describe '#login', ->
       it 'logs the user in', ->
         LoggedOutUser.__set__ 'sd', AP: loginPagePath: '/users/sign_in'
+        LoggedOutUser.__set__ 'APP_URL', 'artsy.net'
         user = new LoggedOutUser email: 'foo@bar.com', password: 'foobar'
         user.isLoggedIn().should.be.false()
         user.login()
         Backbone.sync.args[0][0].should.equal 'create'
-        Backbone.sync.args[0][2].url.should.equal '/users/sign_in'
+        Backbone.sync.args[0][2].url.should.equal 'artsy.net/users/sign_in'
         Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com', password: 'foobar'
         _.include(_.keys(Backbone.sync.args[0][1].attributes), '_csrf').should.be.true()
         user.isLoggedIn().should.be.true()
