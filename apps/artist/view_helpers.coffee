@@ -12,7 +12,7 @@ module.exports =
   showHelpers: showHelpers
 
   nShowsByDate: (shows, n) ->
-    _.sortBy(_.take(shows, n), 'end_at').reverse()
+    _.sortBy(_.take(shows, n), 'start_at').reverse()
 
   pageTitle: (artist) ->
     artist = new Artist
