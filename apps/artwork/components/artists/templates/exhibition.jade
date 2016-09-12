@@ -10,19 +10,19 @@ mixin showItem(show, trailingText)
 if shows.solo && shows.solo.length
   .artwork-artist-header-cell-section
     h2 Solo Shows on Artsy
-    for show in shows.solo
+    for show in helpers.artists.sortExhibitions(shows.solo)
       +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
 
 if shows.group && shows.group.length
   .artwork-artist-header-cell-section
     h2 Group Shows on Artsy
-    for show in shows.group
+    for show in helpers.artists.sortExhibitions(shows.group)
       +showItem(show, helpers.artists.showHelpers.partnerNameAndLocation(show))
 
 if shows.fair && shows.fair.length
   .artwork-artist-header-cell-section
     h2 Fair History on Artsy
-    for show in shows.fair
+    for show in helpers.artists.sortExhibitions(shows.fair)
       +showItem(show, helpers.artists.showHelpers.showOrFairLocation(show))
 
 if artist.exhibition_highlights.length > 15
