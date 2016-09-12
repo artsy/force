@@ -22,10 +22,17 @@ module.exports = class PaginatorView extends Backbone.View
 
   totalPages: ->
     calculated = Math.ceil(@filter.get('total') / @params.get('size'))
-    total = Math.min calculated, @maxPage
+    Math.min calculated, @maxPage
+
+  adjustedTotal: ->
+    Math.max @totalPages(), 2
 
   render: ->
     @$el.html template
       current: parseInt @params.get('page')
-      total: @totalPages()
+      total: @adjustedTotal()
       pagesInterval: @pagesInterval
+    @_postRender()
+
+  _postRender: ->
+    @$('.bordered-pagination').addClass('bordered-pagination__hide-next') if @totalPages() is 1
