@@ -2,17 +2,12 @@ footer#main-layout-footer
   #recently-viewed-artworks
   .responsive-layout-container
     .mlf-upper: .main-layout-container
-      .mlf-upper-column-aside
-        h4 Want help collecting on Artsy?
-        a.mlf-specialist( href='mailto:inquiries@artsy.net' ) Contact an Artsy specialist
-        h4 General questions & feedback?
-        a( href='/contact' ) Contact Artsy
-        a.mlf-feedback( href='#' ) Send us feedback
       .mlf-upper-column
         h4 Collecting
-        a( href='/about/collecting' ) Collecting on Artsy
-        a( href='/feature/collect-with-artsy' ) Collecting Resources
-        a( href='/auction-info' ) About Artsy Auctions
+        a.mlf-collector-faq( href='/#' ) Buying from Galleries FAQ
+        a.mlf-auction-faq( href='/#' ) Buying from Auctions FAQ
+        a( href='/consign' ) Consign with Artsy
+        a( href='/professional-buyer' ) Artsy for Professional Buyers
       .mlf-upper-column
         h4 Education
         a( href='/artsy-education' ) Education
@@ -22,14 +17,17 @@ footer#main-layout-footer
         a( href='/about' ) About
         a( href='/about/jobs' ) Jobs
         a( href='http://artsy.github.com/open-source/', target='_blank' ) Open Source
-        a( href='/galleries' ) Galleries A–Z
-        a( href='/institutions' ) Museums A–Z
-      .mlf-upper-column
-        h4 Partnering & Press
-        a( href='/gallery-partnerships' ) Artsy for Galleries
-        a( href='/institution-partnerships' ) Artsy for Institutions
-        a( href='/auction-partnerships' ) Artsy for Auctions
         a( href='/about/press' ) Press
+      .mlf-upper-column
+        h4 Partnering with Artsy
+        a( href='/gallery-partnerships' ) Artsy for Galleries
+        a( href='/institution-partnerships' ) Artsy for Museums
+        a( href='/auction-partnerships' ) Artsy for Auctions
+      .mlf-upper-column-aside
+        div
+          h4 General questions & feedback?
+          a( href='/contact' ) Contact Artsy
+          a.mlf-feedback( href='#' ) Send us feedback
 
     .mlf-lower: .main-layout-container
       nav#main-layout-footer-internal
@@ -41,5 +39,7 @@ footer#main-layout-footer
           a( href='/security' ) Security
       nav#main-layout-footer-external
         a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
-        a.mlf-social.icon-facebook( href='http://www.facebook.com/artsy', target='_blank')
-        a.mlf-social.icon-tumblr( href='http://artsy.tumblr.com', target='_blank')
+        a.mlf-social.icon-facebook-f( href='http://www.facebook.com/artsy', target='_blank')
+        a.mlf-social.icon-snapchat( href="http://snapchat.com/add/artsy.net" target='_blank')
+          include ../public/icons/snapchat.svg
+        a.mlf-social.icon-instagram( href='http://www.instagram.com/artsy', target='_blank')
