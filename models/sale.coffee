@@ -135,6 +135,9 @@ module.exports = class Sale extends Backbone.Model
   isAuctionPromoInquirable: ->
     @isAuctionPromo() and @isPreview()
 
+  sortableDate: ->
+    if @get('live_start_at')? then @get('live_start_at') else @get('end_at')
+
   # Between 24 hours left and 10 seconds remaining
   isClosingSoon: (offset = 0) ->
     end = @date('end_at').add offset, 'milliseconds'

@@ -52,3 +52,14 @@ gutter-unit = 60px
   &__more-button
     max-width 1250px
     margin auto
+
+.body-responsive
+  @media (max-width: 1130px)
+    .articles-grid
+      &__articles
+        grid-2-up(40px, 60px)
+  @media (max-width: 800px)
+    .articles-grid
+      &__articles
+        .grid-item
+          width 100%

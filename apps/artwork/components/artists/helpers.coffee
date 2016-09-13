@@ -1,8 +1,9 @@
-{ groupBy } = require 'underscore'
+{ groupBy, sortBy } = require 'underscore'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 
 module.exports =
   groupBy: groupBy
+  sortBy: sortBy
   showHelpers: showHelpers
 
   tabs: tabs = [
@@ -10,6 +11,9 @@ module.exports =
     'exhibition_highlights',
     'articles'
   ]
+
+  sortExhibitions: (shows) ->
+    sortBy(shows, 'start_at').reverse()
 
   sections: sections = (artist) ->
     has: (section) ->

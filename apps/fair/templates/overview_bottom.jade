@@ -56,18 +56,20 @@ mixin 4editorial()
               .section-subheading= item.get('subtitle')
 
 if combinedItems.length >= 4
-  case eSet && eSet.get('items').length
-    when 4
+  if eSet
+    if eSet.get('items').length >= 4
       +4editorial()
-    when 3
-      +3up(eSet.get('items').models)
-      hr
-    when 2
-      +2up(eSet.get('items').models)
-      hr
-    when 1
-      +1up(eSet.get('items').first())
-      hr
+    else
+      case eSet.get('items').length
+        when 3
+          +3up(eSet.get('items').models)
+          hr
+        when 2
+          +2up(eSet.get('items').models)
+          hr
+        when 1
+          +1up(eSet.get('items').first())
+          hr
   .fair-overview-curator
     if primarySets.where({ key: 'curator' }).length > 0
       h2.overview-section-heading-small Art world insiders share their selections

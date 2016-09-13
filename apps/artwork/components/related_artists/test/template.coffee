@@ -33,4 +33,12 @@ describe 'Related artists templates', ->
   it 'displays correct href for view all link', ->
     @$('.artwork-artist-related-rail__header a').attr('href').should.equal '/artist/dustin-yellin/related-artists'
 
-
+  it 'works without any artists', ->
+    html = render('index')(
+      sd: {
+        CLIENT: { artists: {} }
+      }
+      asset: (->)
+    )
+    @$ = cheerio.load(html)
+    @$.html().should.equal ''
