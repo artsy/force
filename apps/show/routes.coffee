@@ -18,6 +18,10 @@ query = """
       description
       status
       href
+      counts {
+        artworks
+        eligible_artworks
+      }
       events {
         description
         title
@@ -30,6 +34,7 @@ query = """
         _id
         href
         name
+        type
         is_linkable
         default_profile_id
       }
@@ -45,6 +50,19 @@ query = """
         href
         start_at
         end_at
+        location {
+          coordinates {
+            lat
+            lng
+          }
+          display
+          city
+          state
+          postal_code
+          country
+          address
+          address_2
+        }
       }
       location {
         coordinates {
@@ -99,7 +117,8 @@ query = """
         }
       }
       meta_image {
-        meta_image_url: url(version: "large")
+        meta_image_url: url(version: "larger")
+        meta_thumb_url: url(version: "medium")
       }
       install_shots: images(default: false) {
         carousel_dimension: resized(height: 300, version: "large") {
@@ -120,6 +139,7 @@ query = """
   metaphysics send
     .then (data) ->
       res.locals.sd.PARTNER_SHOW = data.partner_show # bootstrap
+      res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.PARTNER_SHOW?
       res.locals.ViewHelpers = ViewHelpers
       res.locals.DateHelpers = DateHelpers
       res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
