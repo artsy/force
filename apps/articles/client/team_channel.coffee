@@ -58,7 +58,8 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
       @$body.removeClass 'is-open'
       $('.team-channel-body').css 'transform', "translate3d(0, 0, 0)"
     else
-      height = $('.team-channel-nav__links a').length * 50
+      withHeader = if $('body.is-sticky').length > 0 then 0 else 92
+      height = $('.team-channel-nav__links a').length * 50 + withHeader
       @$body.addClass 'is-open'
       $('.team-channel-body').css 'transform', "translate3d(0, #{height}px, 0)"
 
