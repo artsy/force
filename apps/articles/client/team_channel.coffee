@@ -13,7 +13,6 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
 
   initialize: ->
     @$body = $('body')
-    @$absLinks = $('.team-channel-nav__abs-links')
     @channel = new Channel sd.CHANNEL
     @gridArticles = new Articles
     @gridArticles.url = "#{@gridArticles.url}/?&published=true&limit=12&sort=-published_at&channel_id=#{@channel.get('id')}"
@@ -56,15 +55,11 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
 
   toggleHamburgerNav: ->
     if @$body.hasClass 'is-open'
-      # if @$body.hasClass 'is-sticky'
-      #   $('.team-channel-nav').css 'margin-top', 0
       @$body.removeClass 'is-open'
       $('.team-channel-body').css 'transform', "translate3d(0, 0, 0)"
     else
-      height = $('.team-channel-nav__abs-links a').length * 50
-      # if @$body.hasClass 'is-sticky'
-      #   $('.team-channel-nav').css 'margin-top', height
-      $('body').addClass 'is-open'
+      height = $('.team-channel-nav__links a').length * 50
+      @$body.addClass 'is-open'
       $('.team-channel-body').css 'transform', "translate3d(0, #{height}px, 0)"
 
 module.exports.init = ->

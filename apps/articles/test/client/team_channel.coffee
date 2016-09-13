@@ -75,28 +75,28 @@ describe 'TeamChannelView', ->
       @view.windowResized()
       @view.carousel.navigation.advanceBy.should.equal 1
 
-    it 'adds an is-small class to the nav', ->
+    it 'adds an is-small class to the body', ->
       window.matchMedia = sinon.stub().returns { matches: true }
       @view.windowResized()
-      $('.team-channel-nav').hasClass('is-small').should.be.true()
+      $('body').hasClass('is-small').should.be.true()
 
     it 'sets the advanceBy in carousel to 2 if large screen', ->
       window.matchMedia = sinon.stub().returns { matches: false }
       @view.windowResized()
       @view.carousel.navigation.advanceBy.should.equal 2
 
-    it 'removes the is-small class from the nav', ->
+    it 'removes the is-small class from the body', ->
       window.matchMedia = sinon.stub().returns { matches: false }
       @view.windowResized()
-      $('.team-channel-nav').hasClass('is-small').should.be.false()
+      $('body').hasClass('is-small').should.be.false()
 
   describe '#toggleHamburgerNav', ->
 
     it 'toggles the hamburger on if it is closed', ->
       @view.toggleHamburgerNav()
-      $('.team-channel-nav').hasClass('is-open').should.be.true()
+      $('body').hasClass('is-open').should.be.true()
 
     it 'toggles the hamburger off if it is open', ->
-      $('.team-channel-nav').addClass('is-open')
+      $('body').addClass('is-open')
       @view.toggleHamburgerNav()
-      $('.team-channel-nav').hasClass('is-open').should.be.false()
+      $('body').hasClass('is-open').should.be.false()
