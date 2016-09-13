@@ -5,15 +5,10 @@ block head
 
 append locals
   - assetPackage = 'articles'
+  - bodyClass = bodyClass + ' body-responsive'
+
 
 block body
-
-  //- Header
-  .team-channel-header(style="background-image:url(#{channel.get('image_url')})")
-    .team-channel-header__overlay
-    .responsive-layout-container.team-channel-header__text-container
-      .team-channel-header__name= channel.get('name')
-      .team-channel-header__tagline= channel.get('tagline')
 
   //- Flexible Navigation
   .team-channel-nav
@@ -32,27 +27,39 @@ block body
             a(href=link.url)= link.text
         if channel.get('id') === sd.GALLERY_INSIGHTS_CHANNEL
           a.team-channel-nav__apply(href="#{sd.APPLY_URL}") Apply
+      a.team-channel-nav__hamburger.js-team-channel-toggle-hamburger
+        .team-channel-nav__hamburger-icon
 
-  .responsive-layout-container
-    //- Featured
-    .team-channel-featured
-      .team-channel-featured__header Featured
-      .mgr-cells.js-mgr-cells.team-channel-featured__articles
-        - width = 800
-        //- Pinned Articles
-        for article in pinnedArticles.models
-          .mgr-cell.js-mgr-cell.team-channel-featured__item
-            include ../../../components/article_figure/template
-        //- Parsely Articles
-        for article in parselyArticles
-          .mgr-cell.js-mgr-cell.team-channel-featured__item
-            include ../../../components/article_figure/parsely_figure
-      - length = 6
-      nav.mgr-navigation.js-mgr-navigation
-        include ../../../components/merry_go_round/templates/horizontal_navigation
+  .team-channel-body
+    //- Header
+    .team-channel-header(style="background-image:url(#{channel.get('image_url')})")
+      .team-channel-header__overlay
+      .responsive-layout-container.team-channel-header__text-container
+        .team-channel-header__name= channel.get('name')
+        .team-channel-header__tagline= channel.get('tagline')
 
-    //- Grid
-    .team-channel-grid
-      //- Rendered on Client
+
+    .responsive-layout-container
+      //- Featured
+      if pinnedArticles.length + parselyArticles.length > 0
+        .team-channel-featured
+          .team-channel-featured__header Featured
+          .mgr-cells.js-mgr-cells.team-channel-featured__articles
+            - width = 800
+            //- Pinned Articles
+            for article in pinnedArticles.models
+              .mgr-cell.js-mgr-cell.team-channel-featured__item
+                include ../../../components/article_figure/template
+            //- Parsely Articles
+            for article in parselyArticles
+              .mgr-cell.js-mgr-cell.team-channel-featured__item
+                include ../../../components/article_figure/parsely_figure
+          - length = 6
+          nav.mgr-navigation.js-mgr-navigation
+            include ../../../components/merry_go_round/templates/horizontal_navigation
+
+      //- Grid
+      .team-channel-grid
+        //- Rendered on Client
 
   include ../../../components/main_layout/footer/template

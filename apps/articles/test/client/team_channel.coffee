@@ -18,6 +18,8 @@ describe 'TeamChannelView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      window.resize = ->
+      window.matchMedia = sinon.stub().returns { matches: true }
       @channel = new Channel fixtures.channel
       @options = {
         sd: _.extend sd, { GALLERY_INSIGHTS_CHANNEL: '55356a9deca560a0137aa4b7' }
@@ -31,7 +33,8 @@ describe 'TeamChannelView', ->
       $.fn.waypoint = (@waypoint = sinon.stub())
       sinon.stub Backbone, 'sync'
       { @TeamChannelView } = mod = rewire '../../client/team_channel'
-      mod.__set__ 'initCarousel', sinon.stub()
+      @carousel = { navigation: {} }
+      mod.__set__ 'initCarousel', sinon.stub().returns @carousel
       mod.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
         @view = new @TeamChannelView
@@ -64,3 +67,36 @@ describe 'TeamChannelView', ->
     it 'adds a waypoint', ->
       @waypoint.called.should.be.true()
       @waypoint.args[0][1].offset.should.equal -400
+
+  describe '#windowResized', ->
+
+    it 'sets the advanceBy in carousel to 1 if small screen', ->
+      window.matchMedia = sinon.stub().returns { matches: true }
+      @view.windowResized()
+      @view.carousel.navigation.advanceBy.should.equal 1
+
+    it 'adds an is-small class to the body', ->
+      window.matchMedia = sinon.stub().returns { matches: true }
+      @view.windowResized()
+      $('body').hasClass('is-small').should.be.true()
+
+    it 'sets the advanceBy in carousel to 2 if large screen', ->
+      window.matchMedia = sinon.stub().returns { matches: false }
+      @view.windowResized()
+      @view.carousel.navigation.advanceBy.should.equal 2
+
+    it 'removes the is-small class from the body', ->
+      window.matchMedia = sinon.stub().returns { matches: false }
+      @view.windowResized()
+      $('body').hasClass('is-small').should.be.false()
+
+  describe '#toggleHamburgerNav', ->
+
+    it 'toggles the hamburger on if it is closed', ->
+      @view.toggleHamburgerNav()
+      $('body').hasClass('is-open').should.be.true()
+
+    it 'toggles the hamburger off if it is open', ->
+      $('body').addClass('is-open')
+      @view.toggleHamburgerNav()
+      $('body').hasClass('is-open').should.be.false()
