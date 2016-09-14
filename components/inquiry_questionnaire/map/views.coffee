@@ -21,6 +21,10 @@ module.exports =
 
   inquiry: require '../views/inquiry.coffee'
 
+  test_inquiry: require '../views/test_inquiry.coffee'
+
   account: require '../views/account.coffee'
+
+  test_account: require '../views/test_account.coffee'
 
   done: require '../views/done.coffee'

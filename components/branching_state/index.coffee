@@ -46,6 +46,7 @@ module.exports = class State extends Backbone.Model
     @set('position', @get('position') + 1) unless @isEnd()
     current = @current()
     @trigger 'next', current
+    console.log 'go to next state', current
     current
 
   total: ->
