@@ -19,8 +19,6 @@ module.exports = class Account extends StepView
     'click .js-iq-save-skip': 'next'
 
   initialize: ({ @user, @inquiry, @artwork, @state }) ->
-    console.log 'we are here', @state
-
     @active = new Backbone.Model mode: 'auth'
 
     @listenTo @active, 'change:mode', @render

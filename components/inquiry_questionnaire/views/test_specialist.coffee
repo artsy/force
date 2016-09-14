@@ -17,7 +17,6 @@ module.exports = class Specialist extends StepView
     'click button': 'serialize'
 
   initialize: ->
-    console.log 'we here'
     @representatives = new Representatives
     super
 
