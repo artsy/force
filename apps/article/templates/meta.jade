@@ -13,6 +13,8 @@ meta( property='twitter:url', content=(sd.APP_URL + '/article/' + article.get('s
 meta( property="twitter:card", content="summary_large_image" )
 meta( name='cre', content='Artsy' )
 meta( property='fb:app_id', content=sd.FACEBOOK_ID )
+if article.get('description')
+  meta( property='description', content= article.get('description'))
 if article.get('keywords') && article.get('keywords').length
   meta( property="news_keywords", content=(article.get('keywords')).join(', ') )
   meta( name="keywords", content=(article.get('keywords')).join(', ') )
