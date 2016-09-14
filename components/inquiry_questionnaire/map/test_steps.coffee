@@ -19,15 +19,27 @@ module.exports = [
             'how_can_we_help'
             {
               help_by:
-                price: ['specialist']
+                price: [
+                  'test_specialist'
+                  { is_logged_out: true: ['test_account'] }
+                ]
                 purchase: [
                   { has_basic_info: false: ['basic_info'] }
                   'test_inquiry'
                   { is_logged_out: true: ['test_account'] }
                 ]
-                student_research_question: ['specialist']
-                journalist_question: ['inquiry']
-                other_question: ['specialist']
+                student_research_question: [
+                  'test_specialist'
+                  { is_logged_out: true: ['test_account'] }
+                ]
+                journalist_question: [
+                  'test_inquiry'
+                  { is_logged_out: true: ['test_account'] }
+                ]
+                other_question: [
+                  'test_specialist'
+                  { is_logged_out: true: ['test_account'] }
+                ]
             }
           ]
       }

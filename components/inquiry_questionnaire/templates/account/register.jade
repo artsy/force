@@ -1,5 +1,10 @@
+if inquiry.get('contact_gallery')
+  - var messageName = artwork.related().partner.displayType().toLowerCase()
+else
+  - var messageName = "Artsy"
+
 .iq-header
-  | Send message to #{artwork.related().partner.displayType().toLowerCase()}
+  | Send message to #{messageName}
 
 h1.iq-headline.iq-headline--centered
   #auth-header-logo.icon-logotype

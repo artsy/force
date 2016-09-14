@@ -19,6 +19,8 @@ module.exports =
 
   specialist: require '../views/specialist.coffee'
 
+  test_specialist: require '../views/test_specialist.coffee'
+
   inquiry: require '../views/inquiry.coffee'
 
   test_inquiry: require '../views/test_inquiry.coffee'
