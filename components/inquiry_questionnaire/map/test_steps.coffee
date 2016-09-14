@@ -12,7 +12,8 @@ module.exports = [
             { has_seen_auction_houses_you_work_with: false: ['auction_houses_you_work_with'] }
             { has_seen_fairs_you_attend: false: ['fairs_you_attend'] }
             { has_seen_institutional_affiliations: false: ['institutional_affiliations'] }
-            'inquiry'
+            'test_inquiry'
+            { is_logged_out: true: ['test_account'] }
           ]
           false: [
             'how_can_we_help'
@@ -21,7 +22,8 @@ module.exports = [
                 price: ['specialist']
                 purchase: [
                   { has_basic_info: false: ['basic_info'] }
-                  'inquiry'
+                  'test_inquiry'
+                  { is_logged_out: true: ['test_account'] }
                 ]
                 student_research_question: ['specialist']
                 journalist_question: ['inquiry']
