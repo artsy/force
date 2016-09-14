@@ -87,6 +87,7 @@ setupEmailSubscriptions = (user, article, cb) ->
             numRemaining = 6 - pinnedArticles.size()
             parselyArticles = first(parselyArticles, numRemaining)
 
+            res.locals.sd.IS_RESPONSIVE = true
             res.locals.sd.CHANNEL = channel.toJSON()
             res.render 'team_channel',
               channel: channel
