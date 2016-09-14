@@ -6,6 +6,7 @@ ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
@@ -17,6 +18,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   events:
     'click .js-artwork-inquire-button': 'inquire'
     'click .js-artwork-acquire-button': 'acquire'
+    'click .collector-faq': 'openCollectorModal'
 
   initialize: ({ @data }) ->
     { artwork } = @data
@@ -76,6 +78,10 @@ module.exports = class ArtworkCommercialView extends Backbone.View
       @listenToOnce @inquiry, 'sync', =>
         @$('.js-artwork-inquiry-form')
           .html confirmation()
+
+  openCollectorModal: (e) ->
+    e.preventDefault()
+    openMultiPageModal 'collector-faqs'
 
   render: ->
     @$el.html template extend @data,

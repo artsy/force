@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 openFeedbackModal = require '../../feedback_modal/index.coffee'
+openMultiPageModal = require '../../multi_page_modal/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 { setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
 
@@ -8,6 +9,8 @@ module.exports = class FooterView extends Backbone.View
   events:
     'click .mlf-feedback': 'openFeedback'
     'click .mlf-specialist': 'openSpecialist'
+    'click .mlf-collector-faq': 'openCollectorModal'
+    'click .mlf-auction-faq': 'openAuctionModal'
 
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
@@ -28,3 +31,11 @@ module.exports = class FooterView extends Backbone.View
   openFeedback: (e) ->
     e.preventDefault()
     openFeedbackModal()
+
+  openCollectorModal: (e) ->
+    e.preventDefault()
+    openMultiPageModal 'collector-faqs'
+
+  openAuctionModal: (e) ->
+    e.preventDefault()
+    openMultiPageModal 'auction-faqs'
