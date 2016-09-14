@@ -28,3 +28,19 @@ if artwork.is_shareable && img
   meta( property='og:image:height' content= img.height )
 else
   meta( property='og:image', content= asset('/images/icon-152.png') )
+
+//- Sailthru tags for fair artwork image
+if artwork.fair && sd.INCLUDE_SAILTHRU
+  meta( name='artwork_type', content='fair' )
+  meta( name='artwork_date', content=artwork.date )
+  if artwork.artists && artwork.artists[0] && artwork.artists[0].name
+    meta( name='artist_name', content=artwork.artists[0].name )
+  meta( name='sailthru_fair_slug', content=artwork.fair.id )
+  meta( name='sailthru_fair_name', content=artwork.fair.name )
+  meta( name='sailthru_fair_page', content='artwork' )
+  if artwork.partner
+    meta( name='sailthru_gallery_partner', content=artwork.partner.name )
+  if artwork.image_rights
+    meta( name='sailthru_credits', content=artwork.image_rights )
+  if artwork.meta_image && artwork.meta_image && artwork.meta_image.resized && artwork.meta_image.resized
+    meta( name='image', content=artwork.meta_image.resized.url )
