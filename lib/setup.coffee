@@ -174,6 +174,7 @@ module.exports = (app) ->
   app.use require "../apps/about"
   app.use require "../apps/collect"
   app.use require "../apps/categories"
+  app.use require "../apps/categories2"
   app.use require "../apps/consignments"
   app.use require "../apps/contact"
   app.use require "../apps/how_auctions_work"
