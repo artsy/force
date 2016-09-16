@@ -3,7 +3,6 @@ masonry = require '../../../../components/artwork_masonry/index.coffee'
 
 reduceArray = (artworks, rows) ->
   elements = artworks.splice(0,3)
-
   rows.push(elements)
 
   if artworks.length > 0
