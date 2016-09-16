@@ -43,8 +43,17 @@ if(location.pathname.match('/article/')){
     var articleId = $(this).closest('.article-container').data('id');
     analytics.track('Clicked article impression', {
       article_id: articleId,
-      destination_path: $(this)[0].href,
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
       impression_type: 'article_callout',
+      context_type: 'article_fixed'
+    });
+
+  }).on('click', '.article-related-widget a', function(){
+    var articleId = $(this).parent().parent().parent().data('id');
+    analytics.track('Clicked article impression', {
+      article_id: articleId,
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      impression_type: 'article_related',
       context_type: 'article_fixed'
     });
 
