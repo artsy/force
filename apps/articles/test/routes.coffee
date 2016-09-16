@@ -112,12 +112,3 @@ describe 'Articles routes', ->
       Backbone.sync.args[0][2].error()
       routes.section.called.should.be.ok()
       routes.section.args[0][0].params.slug.should.equal 'foo'
-
-    it 'marks the page as responsive', ->
-      channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'team'
-      @req.params.slug = 'foo'
-      routes.teamChannel @req, @res, @next
-      Backbone.sync.args[0][2].success channel
-      Backbone.sync.args[1][2].data.ids.length.should.equal 4
-      Backbone.sync.args[1][2].success fixtures.article
-      @res.locals.sd.IS_RESPONSIVE.should.be.true()
