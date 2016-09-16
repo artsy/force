@@ -6,6 +6,10 @@
   &__image
     background-color gray-color
     position relative
+  &__image.auction__image
+    background-color rgba(255,255,255,0.125);
+    width 100%
+    padding-bottom 100% !important
 
     &__img
       position absolute
@@ -17,6 +21,13 @@
       // of gray to peek out of the bottom of the image, outline in
       // white to compensate
       outline 1px solid white
+    // &__img.auction__image__img
+    //   height 100%
+    //   width 100%
+    //   background-size contain
+    //   background-repeat no-repeat
+    //   background-position center
+    //   position absolute
 
     &__save
       position absolute
@@ -27,3 +38,23 @@
       .artwork-brick__image__save
       .artwork-brick__image__save > .artwork-save
         display block
+
+    &:hover
+      .auction-artwork-save > .artwork-save
+        display: block;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+
+.artwork-brick__image__img.auction__image__img
+  height 100%
+  width 100%
+  background-size contain
+  background-repeat no-repeat
+  background-position center
+  position absolute
+
+.artwork-brick.artwork-brick--auction.js-artwork-brick
+  width 30%
+  height 100%
+  margin-right 20px
