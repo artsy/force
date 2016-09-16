@@ -39,8 +39,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
             }
           }
         }else if(classList.contains('article-es-form')){
-          var article = $(this).parent().parent().parent().parent();
-          if( article.hasClass('gradient-blurb') && article.hasClass('is-expanded') ){
+          if( $(this).parents('.is-expanded') ){
             return {
               impression_type: 'newsletter_signup',
               context_type: 'article_fixed',
@@ -52,7 +51,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
 
         // Social
         }else if(classList.contains('article-social')){
-          var article = $(this).parent().parent();
+          var article = $(this).parents('.article-content')
           if( (article.hasClass('gradient-blurb') && article.hasClass('is-expanded')) || !article.hasClass('gradient-blurb') ){
             return {
               article_id: articleId,
@@ -64,7 +63,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
           }
 
         }else if(classList.contains('article-share-fixed-fullscreen')){
-          var article = $(this).data('id');
+          var articleId = $(this).data('id');
            return {
             article_id: articleId,
             destination_path: null,
@@ -111,7 +110,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
 
         // Related Article
         }else if(classList.contains('article-related-widget')){
-          var related = $(this).children('ul').children().children('a')
+          var related = $(this).find('a')
           return {
             article_id: articleId,
             destination_path: null,
@@ -122,7 +121,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
 
         // Artist Follow
         }else if(classList.contains('artist-follow')){
-          var article = $(this).parent().parent().parent().parent();
+          var article = $(this).parents('.article-content')
           if( (article.hasClass('gradient-blurb') && article.hasClass('is-expanded')) || !article.hasClass('gradient-blurb') ){
             if($(this).parent('.image-set-modal__container').length > 0){
               return {
@@ -170,8 +169,16 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
   };
 
   var trackImpressions = function() {
-    // Find signups, cta, share buttons, artist follow, toc, and image sets
-    var items = $('.articles-es-cta__form, .article-es-form, .article-social, .article-share-fixed-fullscreen, .article-section-image-set, .article-section-toc, .article-sa-sticky-header.visible, .article-sa-related, .artist-follow, .article-section-callout, .article-related-widget');
+    var itemSelectors = '.articles-es-cta__form, .article-es-form,' +
+                        '.article-social, .article-share-fixed-fullscreen,' +
+                        '.article-section-image-set' +
+                        '.article-section-toc, .article-sa-sticky-header.visible,' +
+                        '.article-sa-related,' +
+                        '.artist-follow,' +
+                        '.article-section-callout,' +
+                        '.article-related-widget'
+
+    var items = $(itemSelectors);
     var visibleItems = findVisibleItems(items);
     if (visibleItems.length > 0) {
       visibleItems.map(function(item){
