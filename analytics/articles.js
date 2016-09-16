@@ -49,7 +49,7 @@ if(location.pathname.match('/article/')){
     });
 
   }).on('click', '.article-related-widget a', function(){
-    var articleId = $(this).parent().parent().parent().data('id');
+    var articleId = $(this).closest('.article-related-widget').data('id');
     analytics.track('Clicked article impression', {
       article_id: articleId,
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),

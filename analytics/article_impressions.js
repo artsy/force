@@ -51,7 +51,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
 
         // Social
         }else if(classList.contains('article-social')){
-          var article = $(this).parents('.article-content')
+          var article = $(this).closest('.article-content')
           if( (article.hasClass('gradient-blurb') && article.hasClass('is-expanded')) || !article.hasClass('gradient-blurb') ){
             return {
               article_id: articleId,
@@ -121,7 +121,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
 
         // Artist Follow
         }else if(classList.contains('artist-follow')){
-          var article = $(this).parents('.article-content')
+          var article = $(this).closest('.article-content')
           if( (article.hasClass('gradient-blurb') && article.hasClass('is-expanded')) || !article.hasClass('gradient-blurb') ){
             if($(this).parent('.image-set-modal__container').length > 0){
               return {
