@@ -22,5 +22,5 @@ module.exports =
     outcomes:
       default: 5
       force_login: 5
-    edge: 'forced_login_inquiry'
+    edge: 'force_login'
     dimension: 'dimension15'

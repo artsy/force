@@ -1,10 +1,13 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user.coffee'
+User = require '../../models/user.coffee'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
@@ -28,8 +31,9 @@ module.exports = class ContactView extends ModalView
 
   events: -> _.extend super,
     'submit form': 'submit'
-    'click #contact-submit': 'submit'
-    'mouseenter #contact-submit': 'logHover'
+    'click #contact-submit' : 'onSubmit'
+    'click .contact-nevermind' : 'close'
+    'mouseenter #contact-submit' : 'logHover'
 
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
@@ -57,10 +61,12 @@ module.exports = class ContactView extends ModalView
     @renderTemplates()
 
   renderTemplates: ->
+    # Hiding the close button here for now to account for new styling
+    @$('.modal-close').hide()
     @$('#contact-header').html @headerTemplate(@templateData)
     @$('#contact-form').html @formTemplate(@templateData)
 
-  submit: (e) ->
+  onSubmit: (e) ->
     return unless @validateForm()
     return if @formIsSubmitting()
 
@@ -74,17 +80,39 @@ module.exports = class ContactView extends ModalView
     # Set the data but don't persist it yet
     @model.set @serializeForm()
 
+    console.log 'sd.FORCE_INQUIRY_LOGIN ', sd.FORCED_LOGIN_INQUIRY
+    console.log '@user', @user
+
+    if sd.FORCED_LOGIN_INQUIRY is 'force_login' and !@user
+      @openInquiryQuestionnaire()
+    else
+      console.log 'SENT'
+      # @submit()
+
+  openInquiryQuestionnaire: ->
+    console.log 'openInquiryQuestionnaire'
+    @close()
+    user = User.instantiate _.pick @model, 'name', 'email'
+
+    user.prepareForInquiry()
+      .then =>
+        @modal = openInquiryQuestionnaireFor
+          inquiry: @model
+          user: user
+          bypass: 'test_account'
+          artwork: new Backbone.Model
+
+  submit: ->
     @model.save null,
       success: =>
         @close =>
           new FlashMessage message: @options.successMessage
+          analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
       error: (model, xhr, options) =>
         @reenableForm()
         @$errors.text @errorMessage(xhr)
         @$submit.attr 'data-state', 'error'
         @updatePosition()
-
-    analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
 
   focusTextareaAfterCopy: =>
     return unless @autofocus()

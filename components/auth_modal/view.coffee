@@ -32,7 +32,7 @@ module.exports = class AuthModalView extends ModalView
   initialize: (options) ->
     return if isEigen.checkWith options
 
-    { @destination } = options
+    { @destination, @successCallback } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
     @preInitialize options
 
@@ -129,7 +129,9 @@ module.exports = class AuthModalView extends ModalView
           mediator.trigger 'auth:change:mode', 'reset'
 
       @undelegateEvents()
+
       @$('form').submit()
+
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'
