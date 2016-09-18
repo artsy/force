@@ -1,14 +1,14 @@
 if artwork.is_in_auction
   if artwork.is_biddable
     .artwork-metadata-stub__contact.artwork-metadata-stub__line.artwork-metadata-stub__bid-now
-      a.avant-garde-button.is-small(href= artwork.href)
+      a(href= artwork.href)
         | Bid now
   else
     .artwork-metadata-stub__contact.artwork-metadata-stub__line
       | Auction closed
 else if artwork.is_inquireable
   .artwork-metadata-stub__contact.artwork-metadata-stub__line
-    a.avant-garde-button.is-small(
+    a(
       class='analytics-artwork-contact-seller'
       href= artwork.href
       data-artwork_id= artwork._id
