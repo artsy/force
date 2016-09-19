@@ -22,8 +22,10 @@
     background-color white
     border 1px solid gray-lighter-color
     padding 30px
+    visibility hidden
     &[data-state='in']
       bottom 40px
+      visibility visible
   &[data-state='in']
     transform translateY(0%)
     > *
@@ -113,7 +115,7 @@
 .cta-bar-form-editorial
   width 100%
   > button
-    padding 10px
+    padding 0px
     height 30px
     width 90px
     border-radius 2px
