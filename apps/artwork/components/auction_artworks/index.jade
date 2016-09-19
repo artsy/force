@@ -9,10 +9,9 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
       a.artwork-artist-artworks__header__jump( href= auction.href )
         | View All
 
-    - var rows = helpers.auction_artworks.auctionArtworkRows(auction.artworks)
-
-    .auction-artwork-brick
-      for row, i in rows
-        .auction-artwork-brick__row
-          for artwork in row
+    - var columns = helpers.auction_artworks.masonry(auction.artworks)
+    .artwork-masonry
+      for column, i in columns
+        .artwork-masonry__column
+          for artwork in column
             include ../../../../components/auction_artwork_brick/index

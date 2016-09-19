@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ slugify } = require 'underscore.string'
 moment = require 'moment'
 DateHelpers = require '../../../components/util/date_helpers.coffee'
 { compactObject } = require '../../../models/mixins/compact_object.coffee'
@@ -239,6 +240,12 @@ module.exports =
       ]).join(' ')
     ]).join(', ')
 
+  fairOrShowLocation: (show) ->
+    if show.fair?
+      show.fair.location
+    else
+      show.location
+
   runningDates: (show) ->
     DateHelpers.timespanInWords show.start_at, show.end_at
 
@@ -269,3 +276,19 @@ module.exports =
       artistText
       info
     ]).join(' ')
+
+  bestAddress: (location) ->
+    location.display or @displayAddress(location)
+
+  sailthruShowType: (show) ->
+    if show.fair then 'fair-booth' else 'partner-show'
+
+  sailthruTags: (show) ->
+    location = @fairOrShowLocation(show)
+    artists = _.pluck(show.artists, 'id')
+    _.compact artists.concat([
+      show.partner?.id
+      slugify "#{show.partner?.type} Show"
+      slugify location?.city
+      slugify location?.country
+    ])

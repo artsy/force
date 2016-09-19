@@ -5,8 +5,8 @@
 #
 
 {
-  API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
+  API_URL, APP_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
+  SESSION_COOKIE_MAX_AGE, MICROGRAVITY_URL, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
   SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST,
   LOGGER_FORMAT
 } = config = require "../config"
@@ -16,7 +16,8 @@ express = require "express"
 Backbone = require "backbone"
 sharify = require "sharify"
 http = require 'http'
-path = require "path"
+path = require 'path'
+cors = require 'cors'
 artsyPassport = require 'artsy-passport'
 artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
@@ -154,6 +155,10 @@ module.exports = (app) ->
   app.use logger LOGGER_FORMAT
   app.use unsupportedBrowserCheck
   app.use splitTestMiddleware
+  # We want the user to be able to log-in to force via the microgravity subdomain
+  # the initial use case being the professional buyer application
+  # (this is specific to responsive pages that require log-in)
+  app.use cors origin: [APP_URL, MICROGRAVITY_URL]
 
   # Mount apps
 
@@ -169,6 +174,7 @@ module.exports = (app) ->
   app.use require "../apps/about"
   app.use require "../apps/collect"
   app.use require "../apps/categories"
+  app.use require "../apps/categories2"
   app.use require "../apps/consignments"
   app.use require "../apps/contact"
   app.use require "../apps/how_auctions_work"

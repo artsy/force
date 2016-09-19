@@ -32,6 +32,7 @@
     "connect-timeout": "^1.7.0",
     "cookie-parser": "^1.4.0",
     "cookie-session": "^1.2.0",
+    "cors": "^2.8.1",
     "diacritics": "^1.2.2",
     "dompurify": "^0.7.1",
     "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",

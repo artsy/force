@@ -83,11 +83,11 @@ module.exports = class ArticleView extends Backbone.View
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
       .each (i, img) ->
-        newWidth = ((img.width * window.innerHeight * 0.7) / img.height)
+        newWidth = ((img.width * window.innerHeight * 0.9) / img.height)
         if newWidth < 580
           $(img).css('max-width', 580)
         else
-          $(img).css('max-height', window.innerHeight * 0.7 )
+          $(img).css('max-height', window.innerHeight * 0.9 )
     @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
