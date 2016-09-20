@@ -1,4 +1,12 @@
 module.exports = [{
+  slice: 'PERIOD'
+  label: 'Time Period'
+  param: 'period'
+}, {
+  slice: 'MEDIUM'
+  label: 'Medium'
+  param: 'medium'
+}, {
   slice: 'GALLERY'
   label: 'Gallery'
   param: 'gallery'
@@ -6,12 +14,4 @@ module.exports = [{
   slice: 'INSTITUTION'
   label: 'Institution'
   param: 'institution'
-}, {
-  slice: 'MEDIUM'
-  label: 'Medium'
-  param: 'medium'
-}, {
-  slice: 'PERIOD'
-  label: 'Time Period'
-  param: 'period'
 }]

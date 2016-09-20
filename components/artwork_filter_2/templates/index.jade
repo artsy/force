@@ -11,4 +11,7 @@
       #artwork-section__sorts-dropdown
         //- Rendered separately
 
-    #artwork-section__columns
+    #artwork-section__results-container
+      #artwork-section__columns
+        - columns = [[], [], []]
+        include ../../artwork_masonry/index

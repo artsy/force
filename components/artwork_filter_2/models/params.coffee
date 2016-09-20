@@ -6,10 +6,6 @@ module.exports = class Params extends Backbone.Model
 
   defaults:
     sort: '-partner_updated_at'
-    size: 9
-    page: 1
-
-  whitelisted: ['partner', 'gallery', 'medium', 'period', 'sort', 'for_sale']
 
   mappedParams:
     gallery: 'partner_id'
@@ -17,6 +13,7 @@ module.exports = class Params extends Backbone.Model
 
   initialize: ->
     @aggregationParamKeys = _.pluck(aggregationsMap, 'param')
+    @whitelisted = @aggregationParamKeys.concat ['sort', 'for_sale']
 
   mapped: ->
     params = _.clone @attributes
@@ -37,7 +34,7 @@ module.exports = class Params extends Backbone.Model
     @pick @aggregationParamKeys
 
   currentParams: ->
-    @pick @aggregationParamKeys.append ['for_sale', 'sort']
+    @pick @whitelisted
 
   # Of the mutually exclusive filter params with aggregations
   currentFilterParam: ->

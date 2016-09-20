@@ -1,26 +1,27 @@
-.artwork-filter-criteria__for-sale.artsy-checkbox
+.artwork-filter-criteria__for-sale.artsy-checkbox(
+  class=(forSaleTotal ? undefined : 'is-disabled')
+)
   .artsy-checkbox--checkbox
     input(
       type='checkbox', name='for_sale', id='for_sale',
       checked=(forSale ? 'checked' : undefined)
-      class=(forSaleTotal ? undefined : 'is-disabled' )
+      disabled=(forSaleTotal > 0 ? undefined : 'disabled')
       class= 'js-artwork-filter-toggle'
     )
     label( for='for_sale' )
   label.artsy-checkbox--label.artwork-filter-label(
     for='for_sale'
-    class=(forSaleTotal ? undefined : 'is-disabled' )
   )
     | Only For Sale
     span.artwork-filter-count (#{forSaleTotal})
 
-for mapped in aggregationsMap
-  section
-    h3= mapped.label
-    ul
-      if aggregations
-        - var aggregation = aggregations[mapped.slice]
-        if aggregation
+if aggregations
+  for mapped in aggregationsMap
+    - var aggregation = aggregations[mapped.slice]
+    if aggregation && aggregation.length
+      section
+        h3= mapped.label
+        ul
           - var param = mapped.param
           for item in aggregation
             - var isActive = params.get(param) == item.id
