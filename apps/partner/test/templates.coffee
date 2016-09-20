@@ -55,24 +55,41 @@ describe 'Partner header', ->
       )
       @template.should.not.containEql '<meta name="fragment" content="!">'
 
-    it 'has a follower count if there are followers', ->
-      @profile.set follows_count: 2222
-      @template = render('index')(
-        profile: @profile
-        tab: 'overview'
-        sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
-        asset: (->)
-        params: id: 'pace-gallery'
-      )
-      @template.should.containEql 'class="partner-followers">2,222 Followers'
+    describe 'followers', ->
+      describe 'galleries', ->
+        it 'does not display follower count', ->
+          @profile.set owner_type: 'PartnerGallery', follows_count: 999
+          @template = render('index')(
+            profile: @profile
+            tab: 'overview'
+            sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+            asset: (->)
+            params: id: 'pace-gallery'
+          )
+          @template.should.not.containEql 'partner-followers'
 
-    it 'does not display the follower count if there are no followers', ->
-      @profile.set follows_count: 0
-      @template = render('index')(
-        profile: @profile
-        tab: 'overview'
-        sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
-        asset: (->)
-        params: id: 'pace-gallery'
-      )
-      @template.should.not.containEql 'partner-followers'
+      describe 'institutions', ->
+        beforeEach ->
+          @profile = new Profile fabricate 'profile', owner_type: 'PartnerInstitution'
+
+        it 'has a follower count if there are followers', ->
+          @profile.set follows_count: 2222
+          @template = render('index')(
+            profile: @profile
+            tab: 'overview'
+            sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/philadelphia-museum-of-art'
+            asset: (->)
+            params: id: 'philadelphia-museum-of-art'
+          )
+          @template.should.containEql 'class="partner-followers">2,222 Followers'
+
+        it 'does not display the follower count if there are no followers', ->
+          @profile.set follows_count: 0
+          @template = render('index')(
+            profile: @profile
+            tab: 'overview'
+            sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/philadelphia-museum-of-art'
+            asset: (->)
+            params: id: 'philadelphia-museum-of-art'
+          )
+          @template.should.not.containEql 'partner-followers'

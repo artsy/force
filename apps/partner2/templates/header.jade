@@ -5,7 +5,7 @@ header.partner-header
       .partner-locations
       .partner-actions
         button.avant-garde-follow-button-black.follow-button.is-small
-        if profile.get('follows_count')
+        if profile.isInstitution() && profile.get('follows_count')
           .partner-followers
             = profile.formatFollowText()
     a.profile-badge.partner-icon( href=profile.href() )
