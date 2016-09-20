@@ -11,7 +11,7 @@ header.partner-header
       p.partner-bio= profile.get('bio')
       .partner-actions
         button.avant-garde-follow-button-black.follow-button
-        if profile.get('follows_count')
+        if profile.isInstitution() && profile.get('follows_count')
           .partner-followers
             = profile.formatFollowText()
   .partner-nav
