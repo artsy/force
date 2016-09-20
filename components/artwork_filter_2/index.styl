@@ -1,7 +1,8 @@
 @require '../stylus_lib'
+@require '../artwork_masonry'
 
 small-avant-garde-size = 11px
-sidebar-width = 26%
+sidebar-width = 25%
 
 // Flex container
 
@@ -10,17 +11,16 @@ sidebar-width = 26%
   display flex
   flex-direction row
   clearfix()
-  &__left
-  // &__right .artwork-section__artworks
-    transition opacity 0.25s
-    &[data-state='loading']
-      opacity 0.5
+  &[data-state='loading']
+    .artwork-filter-criteria
+    #artwork-section__sorts-dropdown
+    #artwork-section__results-container
       pointer-events none
+    #artwork-section__results-container
+      opacity 0.5
 
   &__left
-    max-width 26%
-    flex-basis sidebar-width
-    padding-right 40px
+    width 25%
     section
       margin 20px 0
     h2
@@ -34,24 +34,7 @@ sidebar-width = 26%
       font-size small-avant-garde-size
 
   &__right
-    flex-basis (100% - sidebar-width)
-    // .artwork-columns
-    //   margin-bottom 40px
-
-
-// .link-and-spinner
-//   &[data-state='loading']
-//     #artwork-see-more
-//       display none
-//     .loading-spinner
-//       display block
-
-//   &[data-state='loaded']
-//     #artwork-see-more
-//       display block
-//       margin 20px auto
-//     .loading-spinner
-//       display none
+    width 75%
 
 // Filter Section
 .artwork-filter-criteria
@@ -61,6 +44,12 @@ sidebar-width = 26%
     line-height 1.6
   &__for-sale
     margin 0
+    &.is-disabled
+      cursor arrow
+      pointer-events none
+      .artwork-filter-label
+        color gray-dark-color
+
   &__criterion
     font-size 18px
     text-decoration none
@@ -86,14 +75,26 @@ sidebar-width = 26%
     margin-left 0.25em
     color gray-darker-color
 
-// Header
-#artwork-section__header
-  display flex
-  justify-content: space-between
-  margin-bottom 20px
-  align-items center
-  h2
-    flex-grow 1
+#artwork-section
+  // Results Header
+  &__header
+    display flex
+    justify-content: space-between
+    margin-bottom 20px
+    align-items center
+    h2
+      flex-grow 1
+
+  // Results Loading State
+  &__results-container
+    &[data-state='loading']
+      .loading-spinner
+        display block
+
+    &[data-state='loaded']
+      .loading-spinner
+        display none
+
 .artwork-filter-sort-count-pulldown
   margin-right 9px
 .artwork-filter-view-mode

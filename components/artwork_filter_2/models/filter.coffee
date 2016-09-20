@@ -2,26 +2,36 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 query = require '../queries/filter_artworks.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
-Artworks = require '../../../collections/artworks.coffee'
 
 module.exports = class ArtworkFilter extends Backbone.Model
 
-  initialize: ({ @params, @artistID }) ->
+  initialize: ({ @params, @artist_id }) ->
+    @page = 1
+    @size = 9
+    @artworks = []
     throw new Error 'Requires a params model' unless @params?
-    @artworks = new Artworks
-    @listenToOnce @params, 'firstSet', @fetchFromBeginning
+
+    @params.once 'firstSet', => @fetch true
+
     _.each @params.whitelisted, (param) =>
-      @listenTo @params, "change:#{param}", @fetchFromBeginning
+      @params.on "change:#{param}", => @fetch true
 
-  fetchFromBeginning: ->
-    @params.set page: 1
-    @fetch().then (artworks) =>
-      @artworks.reset artworks
+  fetch: (reset) ->
+    return if @get 'isLoading' or (@allFetched() and not reset)
 
-  fetch: ->
-    @set state: 'loading'
-    variables = _.extend artist_id: @artistID, @params.mapped()
-    metaphysics({ query, variables }).then ({ filter_artworks }) ->
-      @set state: 'loaded'
-      @total = filter_artworks.total
-      filter_artworks.hits
+    @page = 1 if reset
+    variables = _.extend { @artist_id, @size, @page }, @params.mapped()
+    @set isLoading: true
+    metaphysics({ query, variables }).then ({ filter_artworks }) =>
+      fetchedArtworks = filter_artworks.hits
+      @set isLoading: false
+      @page++
+      if reset
+        @artworks = fetchedArtworks
+        @total = filter_artworks.total
+      else
+        @artworks.concat fetchedArtworks
+      @trigger 'fetched', { artworks: fetchedArtworks, reset: reset }
+
+  allFetched: ->
+    @artworks.length >= @total
