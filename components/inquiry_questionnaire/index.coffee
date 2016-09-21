@@ -8,7 +8,7 @@ analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
 { steps, decisions, views } = require './map.coffee'
 
-module.exports = ({ user, artwork, inquiry, bypass }) ->
+module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
   { collectorProfile } = user.related()
   { userInterests } = collectorProfile.related()
 
@@ -16,9 +16,13 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
 
   # Allow us to trigger individual steps for debugging
   # by passing the named step as a `bypass` option
-  steps = [bypass] if bypass
+  steps = bypass if bypass
 
-  state = new State steps: steps, decisions: decisions
+  state = new State _.extend {
+    steps,
+    decisions
+  }, state_attrs
+
   logger = new Logger 'inquiry-questionnaire-log'
   trail = new Trail
 
@@ -69,13 +73,17 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
 
     # End of complete flow
     .on 'done', ->
-      # Send the inquiry immediately
-      inquiry.send {},
-        success: ->
-          modal.close()
-        error: (model, response, options) ->
-          modal.close ->
-            openErrorFlash response
+
+      if inquiry.send?
+        # Send the inquiry immediately
+        inquiry.send {},
+          success: ->
+            modal.close()
+          error: (model, response, options) ->
+            modal.close ->
+              openErrorFlash response
+      else
+        modal.close()
 
   # Prepare the user and open the modal
   modal.load (open) ->
@@ -86,6 +94,6 @@ module.exports = ({ user, artwork, inquiry, bypass }) ->
       .catch (e) ->
         modal.close ->
           openErrorFlash e
-        console.error e
+        console.error e, e.stack
 
   modal

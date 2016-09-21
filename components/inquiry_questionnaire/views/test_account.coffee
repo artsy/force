@@ -52,10 +52,8 @@ module.exports = class Account extends StepView
           success: =>
             @state.get('inquiry').save {},
               success: =>
-                console.log 'we saved the inquiry', @
                 @next()
               error: =>
-                console.log 'we errored saving the inquiry', @
                 @next()
 
   forgot: (active, mode) ->
