@@ -18,3 +18,5 @@ try
 app.get '/:subject(auction|institution|gallery)-partnerships', routes.index
 app.get '/:subject(auction|institution|gallery)-partnerships/*', routes.index # scroll routes
 
+# Randomly redirect this link for a marketing A/B testing
+app.get '/partnership-opportunities', routes.mktoABTest
