@@ -27,7 +27,7 @@ module.exports = class ContactView extends ModalView
     url: "#{sd.API_URL}/api/v1/feedback"
 
   events: -> _.extend super,
-    'submit form': 'submit'
+    'submit form': 'onSubmit'
     'click #contact-submit' : 'onSubmit'
     'click .contact-nevermind' : 'close'
     'mouseenter #contact-submit' : 'logHover'

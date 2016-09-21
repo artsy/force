@@ -47,7 +47,9 @@ describe 'ContactPartnerView', ->
         _.last(Backbone.sync.args)[1].url.should.containEql 'api/v1/me/artwork_inquiry_request'
 
       it 'sends the correct fields', ->
+        console.log 'Backbone.sync.args', Backbone.sync.args
         keys = _.keys(_.last(Backbone.sync.args)[1].attributes)
+
         for field in ['artwork', 'contact_gallery', 'session_id', 'name', 'email', 'message']
           keys.should.containEql field
 

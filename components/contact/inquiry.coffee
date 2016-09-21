@@ -48,8 +48,10 @@ module.exports = class InquiryView extends ContactView
     super
 
     analyticsHooks.trigger 'inquiry:sync', artwork: @artwork, inquiry: @model
+
     contactGallery = if @partner.get('directly_contactable') and \
       @sales.findWhere(is_auction: true)? then yes else no
+
     @model.set
       artwork: @artwork.id
       contact_gallery: contactGallery

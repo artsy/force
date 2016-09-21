@@ -10,10 +10,13 @@ describe 'ShowInquiryModal', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        sd: {}
       Backbone.$ = $
       @ShowInquiryView = benv.require resolve __dirname, '../show_inquiry_modal'
       @ContactView = @ShowInquiryView.__get__ 'ContactView'
+      sinon.stub @ContactView::, 'onSubmit'
       sinon.stub @ContactView::, 'submit'
       sinon.stub @ShowInquiryView::, 'initialize'
       @view = new @ShowInquiryView
@@ -27,13 +30,14 @@ describe 'ShowInquiryModal', ->
   afterEach ->
     benv.teardown()
     @ContactView::submit.restore()
+    @ContactView::onSubmit.restore()
     @ShowInquiryView::initialize.restore()
 
   describe '#submit', ->
 
     it 'submits an inquiry about the show', ->
       @view.show.set id: 'foo-gallery-show'
-      @view.submit { preventDefault: -> }
+      @view.onSubmit { preventDefault: -> }
       @view.model.toJSON().inquireable_id.should.equal 'foo-gallery-show'
       @view.model.toJSON().inquireable_type.should.equal 'partner_show'
       @view.model.toJSON().contact_gallery.should.equal true
