@@ -53,3 +53,8 @@ getJSON = (subject, callback) ->
   client.putBuffer buffer, contentPath, headers, (err, r) ->
     return next err if err
     res.send 200, { msg: "success" }
+
+@mktoABTest = (req, res) ->
+  a = '/gallery-partnerships?utm_medium=email&utm_source=marketo&utm_campaign=seo-for-galleries&utm_content=partnerships-a'
+  b = 'http://pages.artsy.net/gallery-partnerships.html?utm_medium=email&utm_source=marketo&utm_campaign=seo-for-galleries&utm_content=partnerships-b'
+  res.redirect if Boolean(_.random 1) then a else b
