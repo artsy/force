@@ -20,7 +20,7 @@ module.exports =
   forced_login_inquiry:
     key: 'forced_login_inquiry'
     outcomes:
-      default: 5
-      force_login: 5
+      default: 10
+      force_login: 0
     edge: 'force_login'
     dimension: 'dimension15'
