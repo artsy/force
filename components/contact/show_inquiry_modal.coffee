@@ -2,11 +2,19 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
+User = require '../../models/user.coffee'
 { modelNameAndIdToLabel } = require '../../analytics/helpers.js'
 Partner = require '../../models/partner.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
+
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
+
+class ProxyArtwork extends Backbone.Model
+  initialize: ({ @partner }) -> # assign partner
+  related: -> partner: @partner
+
 module.exports = class ShowInquiryModal extends ContactView
 
   headerTemplate: (locals) =>
@@ -41,12 +49,37 @@ module.exports = class ShowInquiryModal extends ContactView
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
-  submit: (e) ->
+  onSubmit: (e) ->
+    super
+
     analyticsHooks.trigger 'inquiry:show',
       label: modelNameAndIdToLabel 'show', @show.get('id')
+
     @model.set
       inquireable_id: @show.get('id')
       inquireable_type: 'partner_show'
       contact_gallery: true
       session_id: SESSION_ID
-    super
+
+    if sd.FORCED_LOGIN_INQUIRY is 'force_login' and !@user
+      @openInquiryQuestionnaire()
+    else
+      @submit()
+
+  openInquiryQuestionnaire: ->
+    user = User.instantiate _.pick @model.attributes, 'name', 'email'
+
+    fakeArtwork = new ProxyArtwork partner: @partner
+
+    user.prepareForInquiry()
+      .then =>
+        @close()
+        @modal = openInquiryQuestionnaireFor
+          inquiry: @model
+          user: user
+          bypass: ['test_account', 'done']
+          artwork: fakeArtwork
+          state_attrs: inquiry: @model
+
+
+

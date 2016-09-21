@@ -6,9 +6,6 @@ ModalView = require '../modal/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-User = require '../../models/user.coffee'
-openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 
@@ -77,30 +74,7 @@ module.exports = class ContactView extends ModalView
 
     @$submit.attr 'data-state', 'loading'
 
-    # Set the data but don't persist it yet
     @model.set @serializeForm()
-
-    console.log 'sd.FORCE_INQUIRY_LOGIN ', sd.FORCED_LOGIN_INQUIRY
-    console.log '@user', @user
-
-    if sd.FORCED_LOGIN_INQUIRY is 'force_login' and !@user
-      @openInquiryQuestionnaire()
-    else
-      console.log 'SENT'
-      # @submit()
-
-  openInquiryQuestionnaire: ->
-    console.log 'openInquiryQuestionnaire'
-    @close()
-    user = User.instantiate _.pick @model, 'name', 'email'
-
-    user.prepareForInquiry()
-      .then =>
-        @modal = openInquiryQuestionnaireFor
-          inquiry: @model
-          user: user
-          bypass: 'test_account'
-          artwork: new Backbone.Model
 
   submit: ->
     @model.save null,
