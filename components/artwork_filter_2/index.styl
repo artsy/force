@@ -1,5 +1,6 @@
 @require '../stylus_lib'
 @require '../artwork_masonry'
+@require './stylesheets/filter'
 
 small-avant-garde-size = 11px
 sidebar-width = 25%
@@ -12,70 +13,24 @@ sidebar-width = 25%
   flex-direction row
   clearfix()
   &[data-state='loading']
-    .artwork-filter-criteria
-    #artwork-section__sorts-dropdown
-    #artwork-section__results-container
-      pointer-events none
-    #artwork-section__results-container
+    pointer-events none
+    #artwork-filter-right__results-container
       opacity 0.5
+    .loading-spinner
+      display block
 
-  &__left
-    width 25%
-    section
-      margin 20px 0
-    h2
-    h3
-      margin 5px 0
-    h2
-      garamond-size('headline')
-      margin-bottom 20px
-    h3
-      avant-garde()
-      font-size small-avant-garde-size
+  &[data-state='loaded']
+    #artwork-filter-right__results-container
+      opacity 1
+    .loading-spinner
+      display none
 
-  &__right
-    width 75%
+#artwork-filter-left
+  width 25%
 
-// Filter Section
-.artwork-filter-criteria
-  &__for-sale
-  &__criterion
-    display flex
-    line-height 1.6
-  &__for-sale
-    margin 0
-    &.is-disabled
-      cursor arrow
-      pointer-events none
-      .artwork-filter-label
-        color gray-dark-color
+#artwork-filter-right
+  width 75%
 
-  &__criterion
-    font-size 18px
-    text-decoration none
-    transition color 0.25s
-    .artwork-filter-select
-      text-decoration none
-    .artwork-filter-remove
-      margin-left 0.25em
-      color purple-color
-      text-decoration underline
-    &:hover .artwork-filter-select
-      color gray-darker-color
-    &.is-active .artwork-filter-select
-      color purple-color
-    &.is-disabled .artwork-filter-select
-      cursor arrow
-      pointer-events none
-      color gray-dark-color
-
-  .artwork-filter-label
-    overflow ellipsis
-  .artwork-filter-count
-    margin-left 0.25em
-    color gray-darker-color
-
-#artwork-section
   // Results Header
   &__header
     display flex
@@ -87,13 +42,7 @@ sidebar-width = 25%
 
   // Results Loading State
   &__results-container
-    &[data-state='loading']
-      .loading-spinner
-        display block
-
-    &[data-state='loaded']
-      .loading-spinner
-        display none
+    transition opacity 0.25s
 
 .artwork-filter-sort-count-pulldown
   margin-right 9px

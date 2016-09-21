@@ -6,7 +6,6 @@ module.exports = (artworks, heights = [0, 0, 0]) ->
   ]
 
   valid = ({ image }) ->
-    debugger
     image.thumb.height?
 
   artworks.map (artwork) ->
@@ -14,5 +13,7 @@ module.exports = (artworks, heights = [0, 0, 0]) ->
       i = heights.indexOf min heights
       heights[i] += artwork.image.thumb.height
       columns[i].push artwork
+    else
+      console.log artwork.id, artwork.image
 
   { columns, heights }

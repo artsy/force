@@ -1,17 +1,20 @@
 #artwork-filter
-  #artwork-filter__left
+  #artwork-filter-left
     h2 Works
-    #artwork-filter__selection.artwork-filter-criteria
+    .artwork-filter-criteria
       //- Rendered separately
 
-  #artwork-filter__right
-    #artwork-section__header
+  #artwork-filter-right
+    #artwork-filter-right__header
       #artwork-section__totals
         //- Rendered separately
-      #artwork-section__sorts-dropdown
+      #artwork-filter-right__sorts-dropdown
         //- Rendered separately
 
-    #artwork-section__results-container
-      #artwork-section__columns
+    #artwork-filter-right__results-container
+      #artwork-filter-right__columns
         - columns = [[], [], []]
         include ../../artwork_masonry/index
+      .link-and-spinner
+        .artwork-spinner-container
+          .loading-spinner

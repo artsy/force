@@ -17,21 +17,36 @@ module.exports = class ArtworkFilter extends Backbone.Model
       @params.on "change:#{param}", => @fetch true
 
   fetch: (reset) ->
-    return if @get 'isLoading' or (@allFetched() and not reset)
+    console.log 'fetch, reset: ', reset
+    return if @get 'isLoading'
 
-    @page = 1 if reset
+    if reset
+      console.log 'reset'
+      @set allFetched: false
+      @page = 1
+    else
+      return if @get 'allFetched'
+
     variables = _.extend { @artist_id, @size, @page }, @params.mapped()
+    send = { query, variables }
     @set isLoading: true
-    metaphysics({ query, variables }).then ({ filter_artworks }) =>
-      fetchedArtworks = filter_artworks.hits
-      @set isLoading: false
-      @page++
-      if reset
-        @artworks = fetchedArtworks
-        @total = filter_artworks.total
-      else
-        @artworks.concat fetchedArtworks
-      @trigger 'fetched', { artworks: fetchedArtworks, reset: reset }
+    metaphysics send
+      .then ({ filter_artworks }) =>
+        console.log filter_artworks.hits.length
+        fetchedArtworks = filter_artworks.hits
+        @set isLoading: false
+        @page++
+        if reset
+          @artworks = fetchedArtworks
+          @total = filter_artworks.total
+        else
+          debugger
+          @artworks = @artworks.concat fetchedArtworks
 
-  allFetched: ->
-    @artworks.length >= @total
+        console.log @artworks.length, @total
+        @set allFetched: true if @artworks.length >= @total or fetchedArtworks.length is 0
+        @trigger 'fetched', { artworks: fetchedArtworks, reset: reset }
+
+      .catch (err) =>
+        console.log err
+        @set isLoading: false
