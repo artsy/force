@@ -65,12 +65,10 @@ module.exports = class Article extends Backbone.Model
             data: access_token: options.accessToken
             success: (artwork) ->
               slideshowArtworks.add(artwork)
+
       # Get related section content if a part of one
       if @get('section_ids')?.length
         dfds.push (section = new Section(id: @get('section_ids')[0])).fetch()
-        dfds.push (sectionArticles = new Articles).fetch(
-          data: section_id: @get('section_ids')[0], published: true, limit: 50
-        )
 
       # Check if the article is a super article
       if @get('is_super_article')
@@ -113,7 +111,6 @@ module.exports = class Article extends Backbone.Model
               relatedArticles: relatedArticles
               superSubArticleIds: superSubArticleIds
               section: section
-              allSectionArticles: sectionArticles if section
               partner: partner if partner
             )
 
