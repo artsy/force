@@ -10,7 +10,7 @@ describe 'ArtworkCommercialView', ->
       benv.expose
         $: benv.require 'jquery'
         sd:
-          FORCE_INQUIRY_LOGIN: 'default'
+          FORCED_LOGIN_INQUIRY: 'default'
       Backbone.$ = $
       done()
 
