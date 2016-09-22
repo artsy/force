@@ -48,7 +48,7 @@ form.iq-form.stacked-form
           type='checkbox'
           id='share_follows'
           name='share_follows'
-          checked= user.get('share_follows')
+          checked=(user.has('share_follows') ? user.get('share_follows') : true)
         )
         label( for='share_follows' )
       label.artsy-checkbox--label( for='share_follows' )
