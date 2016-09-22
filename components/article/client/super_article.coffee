@@ -41,5 +41,5 @@ module.exports = class SuperArticleView extends Backbone.View
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         $stickyHeader.addClass 'visible'
-      else
+      else unless $stickyHeader.hasClass('no-transition')
         $stickyHeader.removeClass 'visible'
