@@ -45,7 +45,6 @@ module.exports = class ArtworkMasonryView extends Backbone.View
     this
 
   appendArtworks: (artworks) ->
-    console.log template, columnTemplate
     @artworks.concat artworks
     { columns, @heights } = masonry artworks, @heights
     _.each columns, (column, i) =>

@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+Sticky = require '../../sticky/index.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
 template = -> require('../templates/filters.jade') arguments...
 
@@ -9,10 +10,15 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     'click .js-artwork-filter-toggle' : 'toggleBool'
     'click .js-artwork-filter-remove': 'filterDeselected'
 
-  initialize: ({ @params, @counts }) ->
-    @listenToOnce @counts, 'change', @render
-    @listenTo @params, 'change:for_sale', @render
-    _.each @params.aggregationParamKeys, (param) =>
+  initialize: ({ @params, @counts, stickyOffset = 0 }) ->
+    @sticky = new Sticky
+    @sticky.headerHeight = stickyOffset
+
+    @listenToOnce @counts, 'change', =>
+      @render()
+      @sticky.add @$el
+
+    _.each @params.aggregationParamKeys.concat(['for_sale']), (param) =>
       @listenTo @params, "change:#{param}", @render
 
   render: ->

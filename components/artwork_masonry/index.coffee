@@ -14,6 +14,5 @@ module.exports = (artworks, heights = [0, 0, 0]) ->
       heights[i] += artwork.image.thumb.height
       columns[i].push artwork
     else
-      console.log artwork.id, artwork.image
 
   { columns, heights }
