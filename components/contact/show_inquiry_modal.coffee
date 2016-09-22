@@ -51,6 +51,7 @@ module.exports = class ShowInquiryModal extends ContactView
 
   onSubmit: (e) ->
     super
+    return false unless @validateForm()
 
     analyticsHooks.trigger 'inquiry:show',
       label: modelNameAndIdToLabel 'show', @show.get('id')
