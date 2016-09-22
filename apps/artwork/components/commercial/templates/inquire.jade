@@ -7,7 +7,7 @@ if artwork.is_inquireable
     .form-errors.js-form-errors
       //- Rendered client-side
 
-    if sd.FORCE_INQUIRY_LOGIN == 'forced_login' || !artwork.partner.is_pre_qualify
+    if sd.FORCE_INQUIRY_LOGIN == 'force_login' || !artwork.partner.is_pre_qualify
 
       if user && user.isWithAnonymousSession()
         input( type='hidden', name='anonymous_session_id', value= user.id )
