@@ -9,6 +9,8 @@ hasSeen = require '../../has_seen/index.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
+  initialize: ({ @modal }) -> #
+
   template: (data) ->
     template _.extend data,
       fair: @artwork.related().fairs.first()
@@ -61,6 +63,7 @@ module.exports = class Inquiry extends StepView
             .related().userFairActions.invoke 'save'
         )
       .then =>
+        @modal.dialog 'slide-out'
         @next()
       , (e) ->
         form.error null, e
