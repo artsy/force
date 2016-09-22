@@ -69,7 +69,7 @@ describe 'Inquiry', ->
           fabricate 'sale', is_auction: true]
         @view.partner = new Backbone.Model(
           fabricate 'partner', directly_contactable: true)
-        @view.submit()
+        @view.onSubmit()
         @view.model.get('contact_gallery').should.be.ok()
 
       it 'does not sends inquiries to artsy if the work is in an auction and ' +
@@ -78,7 +78,7 @@ describe 'Inquiry', ->
           fabricate 'sale', is_auction: true]
         @view.partner = new Backbone.Model(
           fabricate 'partner', directly_contactable: false)
-        @view.submit()
+        @view.onSubmit()
         @view.model.get('contact_gallery').should.not.be.ok()
 
     describe 'Logged in', ->

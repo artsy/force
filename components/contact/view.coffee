@@ -1,11 +1,11 @@
 _ = require 'underscore'
+Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 
@@ -27,9 +27,10 @@ module.exports = class ContactView extends ModalView
     url: "#{sd.API_URL}/api/v1/feedback"
 
   events: -> _.extend super,
-    'submit form': 'submit'
-    'click #contact-submit': 'submit'
-    'mouseenter #contact-submit': 'logHover'
+    'submit form': 'onSubmit'
+    'click #contact-submit' : 'onSubmit'
+    'click .contact-nevermind' : 'close'
+    'mouseenter #contact-submit' : 'logHover'
 
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
@@ -57,10 +58,12 @@ module.exports = class ContactView extends ModalView
     @renderTemplates()
 
   renderTemplates: ->
+    # Hiding the close button here for now to account for new styling
+    @$('.modal-close').hide()
     @$('#contact-header').html @headerTemplate(@templateData)
     @$('#contact-form').html @formTemplate(@templateData)
 
-  submit: (e) ->
+  onSubmit: (e) ->
     return unless @validateForm()
     return if @formIsSubmitting()
 
@@ -71,20 +74,19 @@ module.exports = class ContactView extends ModalView
 
     @$submit.attr 'data-state', 'loading'
 
-    # Set the data but don't persist it yet
     @model.set @serializeForm()
 
+  submit: ->
     @model.save null,
       success: =>
         @close =>
           new FlashMessage message: @options.successMessage
+          analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
       error: (model, xhr, options) =>
         @reenableForm()
         @$errors.text @errorMessage(xhr)
         @$submit.attr 'data-state', 'error'
         @updatePosition()
-
-    analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
 
   focusTextareaAfterCopy: =>
     return unless @autofocus()

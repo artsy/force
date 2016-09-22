@@ -48,6 +48,7 @@ describe 'ContactPartnerView', ->
 
       it 'sends the correct fields', ->
         keys = _.keys(_.last(Backbone.sync.args)[1].attributes)
+
         for field in ['artwork', 'contact_gallery', 'session_id', 'name', 'email', 'message']
           keys.should.containEql field
 

@@ -63,6 +63,8 @@ module.exports = class ConfirmInquiryView extends ContactView
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
+  onSubmit: (e) -> @submit(e)
+
   submit: (e) =>
     return unless @validateForm()
     return if @formIsSubmitting()
