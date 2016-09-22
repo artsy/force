@@ -7,6 +7,8 @@ Genes = require '../../collections/genes'
   Q.all([
     genes.fetchUntilEndInParallel(cache: true, data: published: true, sort: 'name')
   ]).done ->
+    geneFamilies = genes.groupByFamily()
 
     res.render 'index', 
       genes: genes
+      geneFamilies: geneFamilies
