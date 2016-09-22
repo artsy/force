@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+qs = require 'querystring'
 aggregationsMap = require '../aggregations_map.coffee'
 
 module.exports = class Params extends Backbone.Model
@@ -33,8 +34,9 @@ module.exports = class Params extends Backbone.Model
   aggregationParams: ->
     @pick @aggregationParamKeys
 
-  currentParams: ->
-    @pick @whitelisted
+  currentParamsQueryString: ->
+    # Exclude attributes that are not explicitly set
+    qs.stringify _.pick @attributes, @whitelisted
 
   # Of the mutually exclusive filter params with aggregations
   currentFilterParam: ->

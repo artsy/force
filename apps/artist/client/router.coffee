@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 OverviewView = require './views/overview.coffee'
 WorksView = require './views/works.coffee'
+ArtworkFilterView = require '../../../components/artwork_filter_2/view.coffee'
 CVView = require './views/cv.coffee'
 ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
@@ -40,6 +41,7 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   setupUser: ->
     @user?.initializeDefaultArtworkCollection()
+    @useNewArtworkFilter = @user?.hasLabFeature('Refactored Artwork Filter')
 
   setupJump: ->
     @jump = new JumpView threshold: $(window).height(), direction: 'bottom'
@@ -70,7 +72,14 @@ module.exports = class ArtistRouter extends Backbone.Router
     @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   works: ->
-    @view = new WorksView @options
+    if @useNewArtworkFilter
+      @view = new ArtworkFilterView
+        el: @options.el
+        artistID: @model.get('id')
+        topOffset: $('.artist-sticky-header-container').height()
+    else
+      @view = new WorksView @options
+
     $('body').append @jump.$el
 
   shows: ->

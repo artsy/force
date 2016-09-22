@@ -19,9 +19,11 @@ block body
         include ../components/carousel/index
       #artist-page-header: include ./header
       #artist-page-content.artist-page-content
+        - var statuses = artist.statuses
         unless tab
-          - var statuses = artist.statuses
           include ./sections/overview
+        if tab == 'works' && statuses.artworks
+          include ./sections/works
 
   if jsonLD
     include ../../../components/main_layout/templates/json_ld
