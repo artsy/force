@@ -23,6 +23,8 @@ module.exports = class Gene extends Backbone.Model
 
   displayName: -> @get('display_name') or @get('name') 
 
+  familyName: -> @related().family.get('name')
+
   alphaSortKey: -> @get('id')
 
   toPageTitle: ->
