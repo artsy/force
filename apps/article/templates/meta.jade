@@ -17,6 +17,7 @@ meta( property='fb:app_id', content=sd.FACEBOOK_ID )
 if article.get('description')
   meta( property='description', content= article.get('description'))
   meta( name='twitter:description' content= article.get('description'))
+  meta( name='og:description' content=article.get('description'))
 if article.get('keywords') && article.get('keywords').length
   meta( property="news_keywords", content=(article.get('keywords')).join(', ') )
   meta( name="keywords", content=(article.get('keywords')).join(', ') )
