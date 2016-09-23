@@ -66,7 +66,7 @@ module.exports = class ArticleView extends Backbone.View
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
       new FullscreenView el: @$el, article: @article, header: $header
-    if sd.RELATED_ARTICLES?.length > 0
+    if sd.SUPER_SUB_ARTICLES?.length > 0
       new SuperArticleView el: @$el, article: @article
 
     # Utility
@@ -258,7 +258,7 @@ module.exports = class ArticleView extends Backbone.View
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
-    if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1 and not @lushSignup
+    if sd.SCROLL_ARTICLE is 'infinite' and sd.SUPER_SUB_ARTICLES?.length < 1 and not @lushSignup
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data: _.extend _.clone DATA,

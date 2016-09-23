@@ -1,5 +1,4 @@
 extends ../../../components/fair_layout/templates/conditional
-include ../../articles/templates/mixin
 
 block head
   include meta
@@ -18,25 +17,7 @@ block body
     if sd.SCROLL_ARTICLE === "infinite"
       #article-loading: .loading-spinner
 
-  //- if sd.SCROLL_ARTICLE === "static" && !superArticle
-    //- Article footer content
-  section#articles-footer
-      //- Rendered on the client
-
-      //- if article.get('section_ids').length
-      //-   if article.get('section_ids')[0] === sd.GALLERY_INSIGHTS_SECTION_ID
-      //-     .articles-insights-show
-      //-       include ../../../components/email/templates/gallery_insights_form
-      //-   ul#articles-footer-list
-
-      //-     //- for sectionArticle in allSectionArticles.models
-      //-     //-   unless article.id === sectionArticle.get('id')
-      //-     //-     +article-figure(sectionArticle, 440, false, false)
-      //- else
-      //-   h1 What to Read Next
-      //-   ul#articles-footer-list
-      //-     for footerArticle in footerArticles.models
-      //-       unless article.id === footerArticle.get('id')
-      //-         +article-figure(footerArticle, 440, false, false)
+  section#articles-footer.main-layout-container
+    //- Rendered on client
 
   include ../../../components/main_layout/templates/json_ld

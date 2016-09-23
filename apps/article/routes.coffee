@@ -23,8 +23,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.INCLUDE_SAILTHRU = res.locals.sd.ARTICLE && res.locals.sd.ARTICLE.published
-      res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
-      res.locals.sd.RELATED_ARTICLES = data.relatedArticles?.toJSON()
+      res.locals.sd.SUPER_SUB_ARTICLES = data.superSubArticles?.toJSON()
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
@@ -51,7 +50,7 @@ setupEmailSubscriptions = (user, article, cb) ->
 
 getArticleScrollType = (data) ->
   # Only Artsy Editorial and non super/subsuper articles can have an infinite scroll
-  if data.relatedArticles?.length or data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL
+  if data.superSubArticles?.length or data.article.get('channel_id') isnt sd.ARTSY_EDITORIAL_CHANNEL
     'static'
   else
     'infinite'

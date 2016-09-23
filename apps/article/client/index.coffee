@@ -6,6 +6,7 @@ Articles = require '../../../collections/articles.coffee'
 ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require '../../../components/email/client/gallery_insights.coffee'
 EditorialSignupView = require '../../../components/email/client/editorial_signup.coffee'
+ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 Sale = require '../../../models/sale.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
@@ -35,7 +36,11 @@ module.exports = class ArticleIndexView extends Backbone.View
       waypointUrls: true
       lushSignup: true
 
-    @setupInfiniteScroll() if sd.SCROLL_ARTICLE is 'infinite'
+    if sd.SCROLL_ARTICLE is 'infinite'
+      @setupInfiniteScroll()
+    else if not sd.SUPER_SUB_ARTICLES.length
+      @setupFooterArticles()
+
     @setupPromotedContent() if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
       @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
 
@@ -112,6 +117,34 @@ module.exports = class ArticleIndexView extends Backbone.View
             name: sale.get('name')
             href: sale.href()
             type: 'Auction'
+
+  setupFooterArticles: ->
+    data =
+      published: true
+      sort: '-published_at'
+      limit: 13
+    if @article.get('channel_id')
+      _.extend data,
+        channel_id: @article.get('channel_id')
+    else
+      _.extend data,
+        featured: true
+        channel_id: sd.ARTSY_EDITORIAL_CHANNEL
+    @collection = new Articles
+    new ArticlesGridView
+      el: $('#articles-footer')
+      hideMore: true
+      article: @article
+      header: "More from #{@article.get('channel')?.name or 'Artsy'}"
+      collection: @collection
+    @collection.fetch
+      data: data
+
+        # $('#articles-footer').append footerTemplate
+        #   articles: articles
+        #   name: @article.get('channel')?.name
+        #   galleryInsights: @article.get('channel_id') is sd.GALLERY_INSIGHTS_CHANNEL
+        #   currentArticle: @article.get('id')
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')
