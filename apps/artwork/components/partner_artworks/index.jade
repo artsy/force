@@ -8,7 +8,7 @@ if artwork.partner && artwork.partner.artworks && artwork.partner.artworks.lengt
         href='#{artwork.partner.href}/works'
       ) View All
 
-    - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks)
+    - var columns = helpers.partner_artworks.masonry(artwork.partner.artworks).columns
 
     include ../../../../components/artwork_masonry/index
 
