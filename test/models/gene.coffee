@@ -42,7 +42,7 @@ describe "Gene", ->
       Backbone.sync.args[0][2].success { total: 100 }
 
   describe '#familyName', ->
-  
+
     it 'returns the name of the related GeneFamily', ->
       @gene = new Gene fabricate 'gene', family: { name: 'Materials' }
       @gene.familyName().should.equal 'Materials'
