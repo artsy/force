@@ -1,5 +1,3 @@
-sinon = require 'sinon'
-Backbone = require 'backbone'
 Gene = require '../../models/gene'
 Genes = require '../../collections/genes'
 { fabricate } = require 'antigravity'
@@ -8,16 +6,12 @@ _ = require 'underscore'
 describe 'Genes', ->
 
   beforeEach ->
-    sinon.stub Backbone, 'sync'
 
     @brown = new Gene fabricate 'gene', family: { id: 'colors', name: 'Colors' }, id: 'brown', name: 'Brown'
     @purple = new Gene fabricate 'gene', family: { id: 'colors', name: 'Colors' }, id: 'purple', name: 'Purple'
     @green = new Gene fabricate 'gene', family: { id: 'colors', name: 'Colors' }, id: 'green', name: 'Green'
     @round = new Gene fabricate 'gene', family: { id: 'shapes', name: 'Shapes' }, id: 'round', name: 'Round'
     @squiggly = new Gene fabricate 'gene', family: { id: 'shapes', name: 'Shapes' }, id: 'squiggly', name: 'Squiggly'
-
-  afterEach ->
-    Backbone.sync.restore()
 
   describe '#groupByFamily', ->
 
