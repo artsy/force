@@ -9,5 +9,5 @@ if artwork.show && artwork.show.artworks.length
       a.artwork-artist-artworks__header__jump( href= show.href )
         | View All
 
-    - var columns = helpers.show_artworks.masonry(show.artworks)
+    - var columns = helpers.show_artworks.masonry(show.artworks).columns
     include ../../../../components/artwork_masonry/index

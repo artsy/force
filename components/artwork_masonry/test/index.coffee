@@ -9,7 +9,7 @@ sumHeights = (columns) ->
 
 describe 'masonry', ->
   before ->
-    @columns = masonry artworks
+    { @columns } = masonry artworks
 
   it 'lays out the artworks into 3 columns', ->
     @columns.should.have.lengthOf 3
@@ -22,7 +22,7 @@ describe 'masonry', ->
       .should.eql [308, 486, 511]
 
   it 'deals with images that dont have a processed geometry by excluding them', ->
-    columns = masonry artworks.concat [{ image: thumb: height: null }]
+    { columns } = masonry artworks.concat [{ image: thumb: height: null }]
 
     columns.map (column) -> column.length
       .should.eql [1, 2, 3]
