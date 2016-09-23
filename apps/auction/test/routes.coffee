@@ -80,10 +80,11 @@ describe '/auction routes', ->
 
   describe 'with logged in user', ->
     beforeEach (done) ->
+      Backbone.sync.returns Promise.resolve(fabricate 'bidder')
       @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
       routes.index @req, @res, @next
       _.defer => _.defer =>
-        @userReqs = _.last Backbone.sync.args, 2
+        @userReqs = _.last Backbone.sync.args, 1
         done()
 
     it 'fetches the bidder positions', ->
