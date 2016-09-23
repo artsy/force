@@ -22,8 +22,12 @@ block body
         | It maps the characteristics (we call them &ldquo;genes&rdquo;) that connect artists, artworks, architecture, and design objects across history.
         | There are currently over 1,000 characteristics in The Art Genome Project, including art historical movements, subject matter, and formal qualities.
 
-      .wip
-          ul
-            each g in genes.models
-              li
-                = g.get('name')
+      .categories-list
+          each family in geneFamilies
+            .categories-list__family
+              .categories-list__family__name
+                = family.name
+              .categories-list__family__genes
+                each gene in family.genes
+                  .categories-list__family__genes__gene
+                    a( href = gene.href() )= gene.get('name')

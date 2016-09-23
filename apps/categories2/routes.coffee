@@ -9,6 +9,6 @@ Genes = require '../../collections/genes'
   ]).done ->
     geneFamilies = genes.groupByFamily()
 
-    res.render 'index', 
+    res.render 'index',
       genes: genes
       geneFamilies: geneFamilies

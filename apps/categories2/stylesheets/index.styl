@@ -14,8 +14,30 @@
   vertical-align top
 
 .categories-page__header
-  font-size 50px
+  garamond-size('xl-headline')
 
 .categories-page__blurb
   garamond-size('s-headline')
   margin 35px 0
+
+.categories-list
+  display block
+
+.categories-list__family
+  display block
+
+.categories-list__family__name
+  garamond-size('l-headline')
+  margin 1em 0 0.5em 0
+
+.categories-list__family__genes
+  display block
+
+.categories-list__family__genes__gene
+  garamond-size('l-body')
+  a
+    text-decoration none
+    transition color 0.125s
+    color black
+    &:hover
+      color purple-color
