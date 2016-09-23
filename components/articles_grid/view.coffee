@@ -19,7 +19,7 @@ module.exports = class ArticlesGridView extends Backbone.View
       # For GPP, don't render empty state if there are no articles
       return if @partner and @collection.length is 0
       @$el.html template(articles: @collection, hideMore: @hideMore?, header: @header)
-
+      # console.log 'hereee....'
     @listenTo @collection, 'sync', @render
 
   more: (e) ->

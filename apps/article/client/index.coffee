@@ -38,7 +38,7 @@ module.exports = class ArticleIndexView extends Backbone.View
 
     if sd.SCROLL_ARTICLE is 'infinite'
       @setupInfiniteScroll()
-    else if not sd.SUPER_SUB_ARTICLES.length
+    else unless sd.SUPER_SUB_ARTICLES.length
       @setupFooterArticles()
 
     @setupPromotedContent() if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
@@ -122,29 +122,20 @@ module.exports = class ArticleIndexView extends Backbone.View
     data =
       published: true
       sort: '-published_at'
-      limit: 13
+      limit: 12
     if @article.get('channel_id')
-      _.extend data,
-        channel_id: @article.get('channel_id')
+      data.channel_id = @article.get('channel_id')
     else
-      _.extend data,
-        featured: true
-        channel_id: sd.ARTSY_EDITORIAL_CHANNEL
+      data.featured = true
+      data.channel_id = sd.ARTSY_EDITORIAL_CHANNEL
     @collection = new Articles
     new ArticlesGridView
       el: $('#articles-footer')
       hideMore: true
-      article: @article
       header: "More from #{@article.get('channel')?.name or 'Artsy'}"
       collection: @collection
     @collection.fetch
       data: data
-
-        # $('#articles-footer').append footerTemplate
-        #   articles: articles
-        #   name: @article.get('channel')?.name
-        #   galleryInsights: @article.get('channel_id') is sd.GALLERY_INSIGHTS_CHANNEL
-        #   currentArticle: @article.get('id')
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')

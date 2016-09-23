@@ -27,8 +27,8 @@ describe "Article", ->
         .yieldsTo 'success', [fixtures.article]
         .onCall 2
         .yieldsTo 'success', [fixtures.article]
-
       @article.fetchWithRelated success: (data) ->
+        console.log Backbone.sync.args
         data.article.get('title').should.equal 'Moo'
         done()
 

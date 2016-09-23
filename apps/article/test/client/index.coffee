@@ -28,19 +28,24 @@ describe 'ArticleIndexView', ->
           }
         ]
       @options = {
-        sd: _.extend sd, { PC_ARTSY_CHANNEL: '5086df098523e60002000013', PC_AUCTION_CHANNEL: '5086df098523e60002000012', ARTICLE: @model.attributes }
+        sd: _.extend sd, {
+          PC_ARTSY_CHANNEL: '5086df098523e60002000013'
+          PC_AUCTION_CHANNEL: '5086df098523e60002000012'
+          ARTICLE: @model.attributes
+          SUPER_SUB_ARTICLES: []
+        }
         resize: resize
         crop: crop
         article: @model
         moment: moment
         asset: ->
-        footerArticles: new Backbone.Collection
       }
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
       sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
+      @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       done()
 
   after ->
@@ -56,8 +61,10 @@ describe 'ArticleIndexView', ->
           el: $('body')
         done()
 
-    it 'renders the template with footer', ->
-      $('#articles-footer').text().should.containEql 'What to Read Next'
+    it 'calls renders a grid view with appropriate arguments', ->
+      @ArticlesGridView.args[0][0].header.should.equal 'More from Artsy'
+      @ArticlesGridView.args[0][0].hideMore.should.be.true()
+      @ArticlesGridView.args[0][0].el.selector.should.equal '#articles-footer'
 
     it 'does not display promoted content banner for non-promoted', ->
       $('.articles-promoted').length.should.equal 0
@@ -66,6 +73,7 @@ describe 'ArticleIndexView', ->
 
     before (done) ->
       @options.sd.SCROLL_ARTICLE = 'infinite'
+      @ArticlesGridView.reset()
       benv.render resolve(__dirname, '../../templates/article.jade'), _.extend(@options, {
         sd: sd
       }), =>
@@ -94,6 +102,9 @@ describe 'ArticleIndexView', ->
     it 'does not display promoted content banner for non-promoted', ->
       $('.articles-promoted').length.should.equal 0
 
+    it 'does not try to render a grid view', ->
+      @ArticlesGridView.called.should.be.false()
+
   describe 'promoted content gallery', ->
 
     before (done) ->
@@ -104,8 +115,8 @@ describe 'ArticleIndexView', ->
         done()
 
     it 'displays promoted content banner for partner', ->
-      Backbone.sync.args[2][2].success fabricate 'partner'
-      Backbone.sync.args[3][2].success fabricate 'partner_profile'
+      Backbone.sync.args[3][2].success fabricate 'partner'
+      Backbone.sync.args[4][2].success fabricate 'partner_profile'
       $('.articles-promoted__img').attr('src').should.equal '/images/missing_image.png'
       $('.articles-promoted__name').text().should.equal 'Gagosian Gallery'
       $('.articles-promoted__explore').text().should.equal 'Explore Institution'
@@ -122,7 +133,7 @@ describe 'ArticleIndexView', ->
         done()
 
     it 'displays promoted content banner for auction', ->
-      Backbone.sync.args[4][2].success fabricate 'sale'
+      Backbone.sync.args[5][2].success fabricate 'sale'
       $('.articles-promoted__img').attr('src').should.equal 'https://i.embed.ly/1/display/crop?url=%2Fimages%2Fmissing_image.png&width=250&height=165&quality=95'
       $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
       $('.articles-promoted__explore').text().should.equal 'Explore Auction'
