@@ -6,7 +6,6 @@ moment = require 'moment'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
-Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
 Partner = require '../models/partner.coffee'
 Channel = require '../models/channel.coffee'
