@@ -25,5 +25,5 @@
 
   .article-sa-footer-right
     .article-sa-related
-      for relatedArticle in relatedArticles.models
-        a( href=relatedArticle.href() )= relatedArticle.get('thumbnail_title')
+      for subArticle in superSubArticles.models
+        a( href=subArticle.href() )= subArticle.get('thumbnail_title')
