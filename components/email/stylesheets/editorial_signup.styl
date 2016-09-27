@@ -115,5 +115,41 @@
     position absolute
     background-image linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)
 
+.articles-es-cta--banner
+  @extend .articles-es-cta
+  display none
+  background-color #F8F8F8
+  height inherit
+  color black
+  margin-top 53px
+  transition all 0.3s ease-out
+  .cta-bar-defer a
+    position absolute
+    right 25px
+    top 20px
+    font-size 12px
+    border none
+    font-weight 900
+    color gray-dark-color
+  &__container
+    width 800px
+    padding-left 0
+    display flex
+    justify-content center
+    align-items flex-end
+    margin auto
+  &__left
+    width 550px
+    padding 50px 0
+  &__form > input
+    width 390px
+    border 1px solid gray-lighter-color
+  &__right
+    padding-top 20px
+    .img
+      width 190px
+      height 280px
+      background-color gray
+
 #js--mail-hint, .js-suggestion a
   color white

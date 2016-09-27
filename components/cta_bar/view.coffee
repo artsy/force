@@ -37,7 +37,7 @@ module.exports = class CTABarView extends Backbone.View
 
   logDimissal: ->
     if @persist
-      if @name is 'editorial-signup'
+      if @name is 'editorial-signup-dismissed'
         Cookies.set @name, 1, expires: 864000
       else
         Cookies.set @name, 1, expires: 31536000
