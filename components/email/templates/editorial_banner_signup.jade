@@ -1,0 +1,34 @@
+if mode === 'editorial-signup-banner-a'
+  .articles-es-cta--banner.a
+    .cta-bar-defer
+      a.icon-close( href='#' )
+    .articles-es-cta--banner__container
+      .articles-es-cta--banner__left
+        .articles-es-cta--banner__header
+          h3 The Daily Editorial Newsletter
+          h2 The latest art-world news
+            br
+            |and stories in your inbox
+        .articles-es-cta--banner__form
+          #js--mail-hint
+          input.bordered-input( id ="articles-es-cta--banner__form-input" placeholder='Enter your email address', type='email', name='email', required value="#{email}")
+          button.avant-garde-button-dark.js-article-es(data-type='ab-test') Subscribe
+      .articles-es-cta--banner__right
+        .img
+if mode === 'editorial-signup-banner'
+  .articles-es-cta--banner.b
+    .cta-bar-defer
+      a.icon-close( href='#' )
+    .articles-es-cta--banner__container
+      .articles-es-cta--banner__left
+        .articles-es-cta--banner__header
+          h3 The OTHER BANNER Editorial Newsletter
+          h2 The latest art-world news
+            br
+            |and stories in your inbox
+        .articles-es-cta--banner__form
+          #js--mail-hint
+          input.bordered-input( id ="articles-es-cta--banner__form-input" placeholder='Enter your email address', type='email', name='email', required value="#{email}")
+          button.avant-garde-button-dark.js-article-es(data-type='ab-test') Subscribe
+      .articles-es-cta--banner__right
+        .img

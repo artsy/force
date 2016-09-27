@@ -4,6 +4,7 @@ CTABarView = require '../../cta_bar/view.coffee'
 Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 editorialSignupTemplate = -> require('../templates/editorial_signup.jade') arguments...
+editorialBannerSignupTemplate = -> require('../templates/editorial_banner_signup.jade') arguments...
 editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jade') arguments...
 Cycle = require '../../cycle/index.coffee'
 { crop } = require '../../resizer/index.coffee'
@@ -16,6 +17,7 @@ module.exports = class EditorialSignupView extends Backbone.View
   events: ->
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
+    'click .cta-bar-defer': 'close'
 
   initialize: ->
     @setupAEArticlePage() if @inAEArticlePage()
@@ -49,10 +51,15 @@ module.exports = class EditorialSignupView extends Backbone.View
   setupAEArticlePage: ->
     @ctaBarView = new CTABarView
       mode: 'editorial-signup'
-      name: 'editorial-signup'
+      name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
+    @$('#main-layout-container').prepend editorialBannerSignupTemplate
+    # @$('#modal-container').append editorialBannerSignupATemplate
+      email: sd.CURRENT_USER?.email or ''
+      mode: 'editorial-signup-banner-b'
+      name: 'editorial-signup-dismissed'
+    if not @ctaBarView.previouslyDismissed() #and sd.MEDIUM in ['social', 'search']
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
@@ -63,6 +70,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
+    setTimeout((=> @$('.articles-es-cta--banner').slideDown(500) ), 2000)
 
   cycleImages: =>
     cycle = new Cycle
@@ -131,6 +139,11 @@ module.exports = class EditorialSignupView extends Backbone.View
       'article_fixed'
     else
       'article_popup'
+
+  close: (e) ->
+    e?.preventDefault()
+    @onDismiss()
+    @$('.articles-es-cta--banner').slideUp(500)
 
   onDismiss: ->
     analyticsHooks.trigger('dismiss:editorial-signup')
