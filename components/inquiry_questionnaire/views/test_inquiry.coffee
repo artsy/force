@@ -9,6 +9,10 @@ hasSeen = require '../../has_seen/index.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
+
+  initialize: ({ @user, @inquiry, @artwork, @state, @trail, @modal }) ->
+    super
+
   template: (data) ->
     template _.extend data,
       fair: @artwork.related().fairs.first()
