@@ -16,7 +16,7 @@ module.exports = class ArtworkMasonryView extends Backbone.View
 
   postRender: (artworks) ->
     artworks ?= @artworks
-    @subViews = artworks.map ({ id }) =>
+    @subViews.push artworks.map ({ id }) =>
       $el = @$(".js-artwork-brick[data-id='#{id}']")
 
       view = new BrickView[$el.data('type') or 'artwork']
@@ -33,7 +33,7 @@ module.exports = class ArtworkMasonryView extends Backbone.View
       .check @artworks.map ({ id }) -> id
 
   reset: (artworks) ->
-    invoke @subViews, 'remove'
+    _.invoke @subViews, 'remove'
     @artworks = artworks
     this
 
@@ -41,6 +41,8 @@ module.exports = class ArtworkMasonryView extends Backbone.View
     { columns, @heights } = masonry @artworks
     @$el.html template
       columns: columns
+
+    @$columns = @$(".artwork-masonry__column")
     @postRender()
     this
 
@@ -48,8 +50,9 @@ module.exports = class ArtworkMasonryView extends Backbone.View
     @artworks.concat artworks
     { columns, @heights } = masonry artworks, @heights
     _.each columns, (column, i) =>
-      $(@$(".artwork-masonry__column")[i]).append columnTemplate { column }
+      $(@$columns[i]).append columnTemplate { column }
     @postRender artworks
 
   remove: ->
     invoke @subViews, 'remove'
+    super

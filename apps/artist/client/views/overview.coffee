@@ -92,12 +92,12 @@ module.exports = class OverviewView extends Backbone.View
     # Main section
 
     if @useNewArtworkFilter
-      { @sticky} = (new ArtworkFilterView
+      { @sticky } = @filterView = (new ArtworkFilterView
         el: @$('#artwork-section')
         artistID: @model.get('id')
         topOffset: $('.artist-sticky-header-container').height()
       ).render()
-      mediator.once 'infinite:scroll:end', =>
+      @listenToOnce mediator, 'infinite:scroll:end', =>
         @$('.artist-related-rail').addClass('is-fade-in')
     else
       { filterView, @sticky } = initWorksSection
@@ -105,7 +105,7 @@ module.exports = class OverviewView extends Backbone.View
         model: @model
         allLoaded: =>
           @$('.artist-related-rail').addClass('is-fade-in')
-      @subViews.push filterView
+    @subViews.push filterView
 
   setupRelatedGenes: ->
 
@@ -143,5 +143,5 @@ module.exports = class OverviewView extends Backbone.View
     this
 
   remove: ->
-    mediator.off 'infinite:scroll:end'
     _.invoke @subViews, 'remove'
+    super

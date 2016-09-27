@@ -2,35 +2,18 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 metaphysics = require '../../../lib/metaphysics.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
-query = """
-  query filterArtworks($artist_id: String! $aggregations: [ArtworkAggregation]!) {
-    all: filter_artworks(artist_id:$artist_id, aggregations: $aggregations){
-      ... aggregations
-    }
-    for_sale: filter_artworks(artist_id:$artist_id, for_sale:true, aggregations: $aggregations){
-      ... aggregations
-    }
-  }
-
-  fragment aggregations on FilterArtworks {
-    total
-    aggregations {
-      slice
-      counts {
-        id
-        name
-        count
-      }
-    }
-  }
-"""
+query = require '../queries/counts.coffee'
 
 module.exports = class Counts extends Backbone.Model
-  initialize: ({ params }) ->
-    @listenToOnce params, 'firstSet', @fetch
+  initialize: ({ @params }) ->
+    @listenToOnce @params, 'firstSet', @fetch
+    _.each @params.filterParamKeys, (param) =>
+      @listenTo @params, "change:#{param}", @setCurrentCounts
 
   aggregations: ['TOTAL', 'GALLERY', 'INSTITUTION', 'PERIOD', 'MEDIUM']
 
+  # Structures the total counts and aggregations from metaphysics,
+  # for both `for_sale` and for all artworks, for easier re-rendering
   mapData: ({ all, for_sale }) ->
     totals =
       for_sale: for_sale.total
@@ -46,23 +29,27 @@ module.exports = class Counts extends Backbone.Model
           _.extend {}, count, count: 0
       memo
     , { for_sale: {}, all: {} }
-    { totals, aggregations }
+    @totals = totals
+    @aggregations = aggregations
 
   fetch: (artist_id) =>
     metaphysics
       query: query
       variables: { artist_id, @aggregations }
     .then (data) =>
-      @set @mapData(data)
+      @mapData(data)
+      @setCurrentCounts()
 
-  getTotal: (forSale, params) ->
-    key = if forSale then 'for_sale' else 'all'
-    paramKey = params.currentFilterParam()
-    return @get('totals')?[key] if not paramKey?
-    slice = _.find(aggregationsMap, param: paramKey).slice
-    _.find(@get('aggregations')[key][slice], id: params.get(paramKey)).count
+  count: (forSale) ->
+    forSaleKey = if forSale then 'for_sale' else 'all'
+    paramKey = _.keys(@params.pick @params.filterParamKeys)[0]
+    return @totals?[forSaleKey] if not paramKey?
+    slice = _.find(aggregationsMap, param: paramKey)['slice']
+    _.find(@aggregations[forSaleKey][slice], id: @params.get(paramKey)).count
 
-  allTotal: (params) -> @getTotal false, params
+  setCurrentCounts: ->
+    @set
+      all: @count false
+      for_sale: @count true
 
-  forSaleTotal: (params) -> @getTotal true, params
 

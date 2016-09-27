@@ -28,7 +28,11 @@ module.exports = class ArtworkFilter extends Backbone.Model
     else
       return if @get 'allFetched'
 
-    variables = _.extend { @artist_id, @size, @page }, @params.mapped()
+    variables = _.extend(
+      { @artist_id, @size, @page },
+      @params.defaultParams,
+      @params.mapped()
+    )
     send = { query, variables }
     @set isLoading: true
     metaphysics send

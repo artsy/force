@@ -1,7 +1,7 @@
 module.exports =
   """
   query filterArtworks(
-    $artist_id: String!
+    $artist_id: String!,
     $page: Int,
     $size: Int,
     $for_sale: Boolean,

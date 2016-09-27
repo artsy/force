@@ -17,14 +17,14 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     @listenToOnce @counts, 'change', =>
       @render()
       @sticky.add @$el
+      @listenTo @counts, 'change', @render
 
-    _.each @params.aggregationParamKeys.concat(['for_sale']), (param) =>
-      @listenTo @params, "change:#{param}", @render
+    @listenTo @params, "change:for_sale", @render
 
   render: ->
-    forSaleTotal = @counts.forSaleTotal @params
-    key = if (forSale = @params.get('for_sale')?) then 'for_sale' else 'all'
-    aggregations = @counts.get('aggregations')?[key]
+    forSaleTotal = @counts.get 'for_sale'
+    key = if forSale = @params.get 'for_sale' then 'for_sale' else 'all'
+    aggregations = @counts.aggregations?[key]
 
     @$el.html template { aggregationsMap, forSaleTotal, aggregations, forSale, @counts, @params }
 

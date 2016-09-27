@@ -12,6 +12,8 @@ qs = require 'querystring'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkFilterView extends Backbone.View
+  subviews: []
+
   initialize: ({ @artistID, @topOffset = 0 }) ->
     @siteHeaderHeight = $('#main-layout-header').outerHeight(true)
     @path = window.location.pathname
@@ -34,9 +36,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
       el: @$('.artwork-filter-criteria'),
       stickyOffset: @siteHeaderHeight + @topOffset,
       { counts, @params }
-    new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
-    new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
-    @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
+    @subviews.push new CountView _.extend el: @$('#artwork-filter-right__totals'), { counts, @params }
+    @subviews.push new SortsView _.extend el: @$('#artwork-filter-right__sorts-dropdown'), { @params }
+    @subviews.push @masonry = new MasonryView el: @$('#artwork-filter-right__columns')
     @params.trigger 'firstSet', @artistID
 
   render: ->
@@ -73,8 +75,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     else
       @masonry.appendArtworks artworks
 
-    # It is possible to scroll farther than one page's worth of of artworks beyond the fold.
-    # After appending or replacing artworks, check height and fetch to fill to the fold.
+    # It is possible to scroll farther than one page's worth of of artworks
+    # beyond the fold. After appending or replacing artworks, check height
+    # and fetch to fill to the fold.
     _.defer => @infiniteScroll()
 
   allFetchedChanged: (filter, allFetched) =>
@@ -91,5 +94,5 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   remove: ->
     $(window).off 'scroll.artwork-filter'
-
-
+    _.invoke @subviews, 'remove'
+    super

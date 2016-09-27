@@ -1,17 +1,19 @@
 module.exports = [{
-  slice: 'PERIOD'
-  label: 'Time Period'
-  param: 'period'
+  slice:    'MEDIUM'
+  label:    'Medium'
+  param:    'medium'
 }, {
-  slice: 'MEDIUM'
-  label: 'Medium'
-  param: 'medium'
+  slice:    'PERIOD'
+  label:    'Time Period'
+  param:    'period'
 }, {
-  slice: 'GALLERY'
-  label: 'Gallery'
-  param: 'gallery'
+  slice:    'GALLERY'
+  label:    'Gallery'
+  param:    'gallery'
+  apiParam: 'partner_id'
 }, {
-  slice: 'INSTITUTION'
-  label: 'Institution'
-  param: 'institution'
+  slice:    'INSTITUTION'
+  label:    'Institution'
+  param:    'institution'
+  apiParam: 'partner_id'
 }]

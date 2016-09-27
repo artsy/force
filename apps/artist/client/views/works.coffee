@@ -6,7 +6,7 @@ template = -> require('../../templates/sections/works.jade') arguments...
 module.exports = class WorksView extends Backbone.View
   subViews: []
 
-  initialize: ({ @user, @statuses, @artist }) -> #
+  initialize: ({ @user, @statuses }) -> #
 
   postRender: ->
     { filterView } = initWorksSection
@@ -20,4 +20,5 @@ module.exports = class WorksView extends Backbone.View
     this
 
   remove: ->
-      _.invoke @subViews, 'remove'
+    _.invoke @subViews, 'remove'
+    super
