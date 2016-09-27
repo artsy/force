@@ -3,13 +3,11 @@ _ = require 'underscore'
 Articles = require '../../../collections/articles.coffee'
 Channel = require '../../../models/channel.coffee'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
+TeamChannelNavView = require '../../../components/channel_nav/view.coffee'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
 
 module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
-
-  events: ->
-    'click .js-team-channel-toggle-hamburger' : 'toggleHamburgerNav'
 
   initialize: ->
     @$body = $('body')
@@ -18,8 +16,12 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     @gridArticles.url = "#{@gridArticles.url}/?&published=true&limit=12&sort=-published_at&channel_id=#{@channel.get('id')}"
     @renderGrid()
     @renderFeatured()
-    @setupStickyNav()
-    $(window).resize @windowResized
+    @nav = new TeamChannelNavView
+      channel: @channel
+      $waypointEl: $('.team-channel-header')
+      $content: $('.team-channel-body')
+      offset: -400
+    $(window).on('resize', _.throttle(@windowResized, 200));
 
   renderGrid: ->
     $el = $('.team-channel-grid')
@@ -36,32 +38,14 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
       wrapAround: true
     @windowResized()
 
-  setupStickyNav: ->
-    $('.team-channel-header').waypoint (direction) =>
-      if direction is 'down'
-        @$body.addClass 'is-sticky'
-      else
-        @$body.removeClass 'is-sticky'
-    , { offset: -400 }
-
   windowResized: =>
     # Advance by 1 for smaller screens
     if window.matchMedia('(max-width: 900px)').matches
-      @$body.addClass 'is-small'
+      # @$body.addClass 'is-small'
       @carousel.navigation.advanceBy = 1
     else
-      @$body.removeClass 'is-small'
+      # @$body.removeClass 'is-small'
       @carousel.navigation.advanceBy = 2
-
-  toggleHamburgerNav: ->
-    if @$body.hasClass 'is-open'
-      @$body.removeClass 'is-open'
-      $('.team-channel-body').css 'transform', "translate3d(0, 0, 0)"
-    else
-      withHeader = if $('body.is-sticky').length > 0 then 0 else 92
-      height = $('.team-channel-nav__links a').length * 50 + withHeader
-      @$body.addClass 'is-open'
-      $('.team-channel-body').css 'transform', "translate3d(0, #{height}px, 0)"
 
 module.exports.init = ->
   new TeamChannelView

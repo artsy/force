@@ -10,26 +10,7 @@ append locals
 
 block body
 
-  //- Flexible Navigation
-  .team-channel-nav
-    .responsive-layout-container
-      .team-channel-nav__container
-        .team-channel-nav__artsy-logo-square
-          a(href='/')
-            i.icon-logo
-        .team-channel-nav__artsy-logo
-          a(href='/')
-            i.icon-logotype
-        .team-channel-nav__name= channel.get('name')
-        .team-channel-nav__tagline= channel.get('tagline')
-        .team-channel-nav__links
-          for link in channel.get('links')
-            if link.text && link.text.length > 0
-              a(href=link.url)= link.text
-          if channel.get('id') === sd.GALLERY_INSIGHTS_CHANNEL
-            a.team-channel-nav__apply(href="#{sd.APPLY_URL}") Apply
-        a.team-channel-nav__hamburger.js-team-channel-toggle-hamburger
-          .team-channel-nav__hamburger-icon
+  include ../../../components/channel_nav/index
 
   .team-channel-body
     //- Header
@@ -39,7 +20,6 @@ block body
         .team-channel-header__text-container
           .team-channel-header__name= channel.get('name')
           .team-channel-header__tagline= channel.get('tagline')
-
 
     .responsive-layout-container
       //- Featured

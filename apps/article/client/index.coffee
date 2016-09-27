@@ -7,6 +7,8 @@ ArticleView = require '../../../components/article/client/view.coffee'
 GalleryInsightsView = require '../../../components/email/client/gallery_insights.coffee'
 EditorialSignupView = require '../../../components/email/client/editorial_signup.coffee'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
+TeamChannelNavView = require '../../../components/channel_nav/view.coffee'
+Channel = require '../../../models/channel.coffee'
 Sale = require '../../../models/sale.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
@@ -29,6 +31,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       limit: 5
 
     # Main Article
+    @channel = new Channel sd.ARTICLE_CHANNEL
     @article = new Article sd.ARTICLE
     new ArticleView
       el: $('body')
@@ -36,13 +39,21 @@ module.exports = class ArticleIndexView extends Backbone.View
       waypointUrls: true
       lushSignup: true
 
+    # Setup
     if sd.SCROLL_ARTICLE is 'infinite'
       @setupInfiniteScroll()
     else unless sd.SUPER_SUB_ARTICLES.length
       @setupFooterArticles()
-
-    @setupPromotedContent() if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
+    if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL or
       @article.get('channel_id') is sd.PC_AUCTION_CHANNEL
+        @setupPromotedContent()
+    @setupTeamChannel() if @channel.isTeam()
+
+  setupTeamChannel: ->
+    @nav = new TeamChannelNavView
+      channel: @channel
+      $content: $('.article-content')
+      offset: 0
 
   setupInfiniteScroll: ->
     @displayedArticles = [@article.get('slug')]

@@ -8,6 +8,12 @@ append locals
   - bodyClass = bodyClass + ' ' + article.getBodyClass()
 
 block body
+
+  //- Include channel nav to articles in a team channel
+  if sd.ARTICLE_CHANNEL.isTeam()
+    - var channel = sd.ARTICLE_CHANNEL
+    include ../../../components/channel_nav/index
+
   #articles-show
 
     //- Article body
