@@ -11,6 +11,11 @@ if superArticle
   if article.get('hero_section') && article.get('hero_section').type === 'fullscreen'
     +fullscreen(article)
 
+  //- Article Share Fixed Nav
+  if !hideShare
+    .article-share-fixed(data-id=article.get('id'))
+      +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
+
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
 
     .main-layout-container.first
@@ -21,11 +26,6 @@ if superArticle
       if article.get('hero_section') && article.get('hero_section').type === 'image'
         .article-large-format-image
           +image(article.get('hero_section'))
-
-    //- Article Share Fixed Nav
-    if !hideShare
-      .article-share-fixed(data-id=article.get('id'))
-        +share-fixed((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), article.fullHref())
 
     .main-layout-container
       h1.large-garamond-header= article.get('title')
