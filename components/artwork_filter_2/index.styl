@@ -1,0 +1,70 @@
+@require '../stylus_lib'
+@require '../artwork_masonry'
+@require './stylesheets/filter'
+
+small-avant-garde-size = 11px
+sidebar-width = 25%
+
+// Flex container
+
+#artwork-filter-2
+  min-height 500px
+  display flex
+  flex-direction row
+  clearfix()
+  &[data-state='loading']
+    pointer-events none
+    #artwork-filter-right__results-container
+      opacity 0.5
+    .loading-spinner
+      display block
+
+  &[data-state='loaded']
+    #artwork-filter-right__results-container
+      opacity 1
+    .loading-spinner
+      display none
+
+  #artwork-filter-left
+    width 25%
+
+  #artwork-filter-right
+    width 75%
+
+    // Results Header
+    &__header
+      display flex
+      justify-content: space-between
+      margin-bottom 20px
+      align-items center
+      h2
+        flex-grow 1
+
+    // Results Loading State
+    &__results-container
+      transition opacity .25s
+
+  .artwork-filter-sort-count-pulldown
+    margin-right 9px
+  .artwork-filter-view-mode
+    margin-left 9px
+    border 2px solid gray-lighter-color
+    height 40px
+    overflow hidden
+  .artwork-filter-view-mode__toggle:first-child
+    border-right 2px solid gray-lighter-color
+  .artwork-filter-view-mode__toggle
+    display inline-block
+    text-align center
+    padding 2px 2px
+    cursor pointer
+    fill gray-lighter-color
+    overflow hidden
+    svg
+      width 32px
+      display inline-block
+    &.is-active svg, &:hover svg
+      fill black
+
+  .artwork-spinner-container
+    position relative
