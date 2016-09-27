@@ -9,7 +9,9 @@ hasSeen = require '../../has_seen/index.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
-  initialize: ({ @modal }) -> #
+
+  initialize: ({ @user, @inquiry, @artwork, @state, @trail, @modal }) ->
+    super
 
   template: (data) ->
     template _.extend data,
@@ -54,6 +56,7 @@ module.exports = class Inquiry extends StepView
       @inquiry.set _.extend { contact_gallery: true }, data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()
+      Q.promise (resolve) -> _.delay resolve, 1000
     ]
       .then =>
         @state.set 'inquiry', @inquiry
@@ -63,7 +66,6 @@ module.exports = class Inquiry extends StepView
             .related().userFairActions.invoke 'save'
         )
       .then =>
-        @modal.dialog 'slide-out'
-        @next()
+        @modal.dialog 'bounce-out', => @next()
       , (e) ->
         form.error null, e

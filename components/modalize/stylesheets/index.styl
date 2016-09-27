@@ -75,7 +75,8 @@
 // Dialog transitions
 // ------------------
 .modalize-dialog
-  transition opacity 0.25s, transform 0.5s
+  transition opacity 0.25s, transform 500ms
+  transition-timing-function cubic-bezier(0, 0, 1, 1)
 
   // Fade in/out
   // Transition duration: 250ms
@@ -96,3 +97,14 @@
   &.is-slide-in
     transform translateY(0)
     opacity 1
+
+  // Bounce in/out
+  // Transition duration: 500ms
+  &[data-state='bounce-out']
+  &.is-slide-out
+    transition transform 50ms
+    transform scale(1.04, 1.04)
+  &[data-state='bounce-in']
+  &.is-slide-in
+    transition transform 50ms
+    transform scale(1, 1)
