@@ -144,12 +144,18 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
             }
           }
         }else if(classList.contains('article-section-callout')){
+          if($(this)[0].href){
+            var destination_path = $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
+          }else{
+            // Don't track callout quotes
+            return
+          }
           return {
             article_id: articleId,
-            destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+            destination_path: destination_path,
             impression_type: 'article_callout',
             context_type: 'article_fixed',
-            id: 'article_callout:' + articleId + ':' + $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
+            id: 'article_callout:' + articleId + ':' + destination_path
           }
         }else{
           return {}

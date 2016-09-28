@@ -11,7 +11,7 @@ block body
 
   //- Render channel nav if article is in a team channel
   - var showClass = ''
-  if sd.ARTICLE_CHANNEL && sd.ARTICLE_CHANNEL.type === 'team'
+  if sd.ARTICLE_CHANNEL && sd.ARTICLE_CHANNEL.isTeam()
     - showClass = 'is-team-channel'
     - var channel = sd.ARTICLE_CHANNEL
     include ../../../components/channel_nav/index
