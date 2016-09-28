@@ -121,7 +121,7 @@
   height 0
   color black
   transition all .75s ease-out
-  &.b
+  &.modal
     opacity 0
     background-color rgba(0,0,0,.5)
     position fixed
@@ -134,22 +134,22 @@
     display flex
     justify-content center
     align-items center
-  &[data-state=in]
+  &.modal[data-state=in]
     z-index 1000
     .articles-es-cta--banner__container
       background-color white
       position relative
       width 740px
-      height 315px
+      height 335px
       .cta-bar-defer a
         top 15px
         right 20px
         color gray-color
     .articles-es-cta--banner__left
-      width 470px
+      width 460px
       padding 60px 0
       input
-        width 375px
+        width 370px
   .cta-bar-defer a
     position absolute
     right 25px
@@ -183,10 +183,7 @@
   &__right
     padding-top 20px
     .img
-      width 180px
       height 280px
-      background-color gray
-      border-radius 15px 15px 0 0
 
 #js--mail-hint, .js-suggestion a
   color white

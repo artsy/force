@@ -17,7 +17,7 @@ header_design:
 
 `key` name of your test
 
-`outcomes` a hash of your outcomes. Point values must add up to one (you can also use fractions here).
+`outcomes` a hash of your outcomes. Point values must add up to ten (you can also use fractions here).
 
 `edge` is the feature that you want logged in admins to always have.
 

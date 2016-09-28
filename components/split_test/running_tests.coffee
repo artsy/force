@@ -24,3 +24,10 @@ module.exports =
       force_login: 0
     edge: 'force_login'
     dimension: 'dimension15'
+
+  editorial_cta_banner:
+    key: 'editorial_cta_banner'
+    outcomes:
+      banner: 5
+      modal: 5
+    dimension: 'dimension16'
