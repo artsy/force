@@ -150,7 +150,8 @@ module.exports = class Article extends Backbone.Model
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
       if @get('is_super_article')
         bodyClass += ' body-no-header'
-
+    if @get('channel')?.isTeam()
+      bodyClass += ' body-no-header is-sticky'
     bodyClass
 
   prepForInstant: ->

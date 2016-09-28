@@ -17,10 +17,10 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     @renderGrid()
     @renderFeatured()
     @nav = new TeamChannelNavView
-      channel: @channel
       $waypointEl: $('.team-channel-header')
       $content: $('.team-channel-body')
       offset: -400
+      el: $('body')
     $(window).on('resize', _.throttle(@windowResized, 200));
 
   renderGrid: ->
@@ -41,10 +41,8 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
   windowResized: =>
     # Advance by 1 for smaller screens
     if window.matchMedia('(max-width: 900px)').matches
-      # @$body.addClass 'is-small'
       @carousel.navigation.advanceBy = 1
     else
-      # @$body.removeClass 'is-small'
       @carousel.navigation.advanceBy = 2
 
 module.exports.init = ->

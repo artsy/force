@@ -39,7 +39,6 @@ module.exports = class ArticleIndexView extends Backbone.View
       waypointUrls: true
       lushSignup: true
 
-    # Setup
     if sd.SCROLL_ARTICLE is 'infinite'
       @setupInfiniteScroll()
     else unless sd.SUPER_SUB_ARTICLES.length
@@ -51,7 +50,7 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   setupTeamChannel: ->
     @nav = new TeamChannelNavView
-      channel: @channel
+      el: $('body')
       $content: $('.article-content')
       offset: 0
 
