@@ -143,13 +143,8 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
               }
             }
           }
-        }else if(classList.contains('article-section-callout')){
-          if($(this)[0].href){
-            var destination_path = $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
-          }else{
-            // Don't track callout quotes
-            return
-          }
+        }else if(classList.contains('article-section-callout') && $(this)[0].href){
+          var destination_path = $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
           return {
             article_id: articleId,
             destination_path: destination_path,
@@ -158,7 +153,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
             id: 'article_callout:' + articleId + ':' + destination_path
           }
         }else{
-          return {}
+          return
         }
       }).toArray();
 
