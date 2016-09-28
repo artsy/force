@@ -110,6 +110,7 @@ module.exports =
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
   LOGGER_FORMAT: 'combined'
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
+  EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

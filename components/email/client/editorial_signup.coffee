@@ -11,6 +11,7 @@ Cycle = require '../../cycle/index.coffee'
 mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
+splitTest = require '../../split_test/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
@@ -57,8 +58,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     if not @ctaBarView.previouslyDismissed()
       if sd.MEDIUM in ['social', 'search']
         mediator.on 'auction-reminders:none', @setupCTAWaypoints
-      else
-        @showEditorialBanner()
+      else @showEditorialBanner()
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -86,19 +86,20 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb null
 
   showEditorialBanner: ->
-    if Math.random() >= 0.5
+    @test = splitTest('editorial_cta_banner')
+    if @test.outcome() is 'banner'
       @$('#main-layout-container').css('margin-top', '53px').prepend editorialBannerSignupTemplate
-        mode: 'editorial-signup-banner-a'
+        mode: @test.outcome()
         email: sd.CURRENT_USER?.email or ''
       setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
     else
       @$('#modal-container').append editorialBannerSignupTemplate
-        mode: 'editorial-signup-banner-b'
+        mode: @test.outcome()
         email: sd.CURRENT_USER?.email or ''
       @$('#articles-show').waypoint (direction) =>
         if direction is 'down'
           setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1) ), 100)
-    analyticsHooks.trigger('view:editorial-signup')
+    analyticsHooks.trigger('view:editorial-signup', type: @test.outcome())
 
   hideEditorialBanner: (e) ->
     e?.preventDefault()
@@ -147,17 +148,17 @@ module.exports = class EditorialSignupView extends Backbone.View
         @$('.articles-es-cta__container').fadeOut =>
           @$('.articles-es-cta__social').fadeIn()
         setTimeout((=> @ctaBarView.close()), 2000)
-
-        # Banner A
+        # CTA Banner
         @$('.articles-es-cta--banner.a').height(0)
         @$('.articles-es-cta--banner.a').css('opacity', 0).attr('data-state', 'out')
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
+    type = @test.outcome() if type is 'cta-banner'
     if @inAEMagazinePage()
       'magazine_fixed'
-    else if type in ['inline', 'lush']
+    else if type in ['inline', 'lush', 'banner']
       'article_fixed'
     else
       'article_popup'
