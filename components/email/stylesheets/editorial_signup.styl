@@ -5,7 +5,7 @@
   align-items center
   flex-direction column
   height 380px
-  width 100vw
+  width 100%
   background-color black
   color white
   &[data-signup=false]
@@ -117,12 +117,39 @@
 
 .articles-es-cta--banner
   @extend .articles-es-cta
-  display none
   background-color #F8F8F8
-  height inherit
+  height 0
   color black
-  margin-top 53px
-  transition all 0.3s ease-out
+  transition all .75s ease-out
+  &.b
+    opacity 0
+    background-color rgba(0,0,0,.5)
+    position fixed
+    top 0
+    left 0
+    bottom 0
+    right 0
+    margin 0
+    height 100%
+    display flex
+    justify-content center
+    align-items center
+  &[data-state=in]
+    z-index 1000
+    .articles-es-cta--banner__container
+      background-color white
+      position relative
+      width 740px
+      height 315px
+      .cta-bar-defer a
+        top 15px
+        right 20px
+        color gray-color
+    .articles-es-cta--banner__left
+      width 470px
+      padding 60px 0
+      input
+        width 375px
   .cta-bar-defer a
     position absolute
     right 25px
@@ -131,6 +158,15 @@
     border none
     font-weight 900
     color gray-dark-color
+    opacity 0
+    display none
+    float right
+    transition all 2s
+  &[data-state=in]
+    .cta-bar-defer a
+      opacity 1
+      display block
+      transition all 2s
   &__container
     width 800px
     padding-left 0
@@ -147,9 +183,10 @@
   &__right
     padding-top 20px
     .img
-      width 190px
+      width 180px
       height 280px
       background-color gray
+      border-radius 15px 15px 0 0
 
 #js--mail-hint, .js-suggestion a
   color white
