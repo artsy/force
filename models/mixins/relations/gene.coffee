@@ -1,4 +1,5 @@
 { API_URL } = require('sharify').data
+Backbone = require 'backbone'
 
 module.exports =
   related: ->
@@ -13,6 +14,9 @@ module.exports =
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
 
+    family = new Backbone.Model @get('family')
+
     @__related__ =
       artists: artists
       artworks: artworks
+      family: family

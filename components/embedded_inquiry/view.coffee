@@ -35,6 +35,7 @@ module.exports = class EmbeddedInquiryView extends Backbone.View
 
     { attending } = data = form.serializer.data()
 
+    @user.related().account.clear()
     @user.set _.pick data, 'name', 'email'
     @inquiry.set _.extend { notification_delay: @delayBy }, data
 

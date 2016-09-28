@@ -25,7 +25,7 @@ module.exports = class Modalize extends Backbone.View
 
   dialog: (state, callback = $.noop) ->
     duration = {
-      slide: 500, fade: 250
+      slide: 500, fade: 250, bounce: 500
     }[state.replace /-in|-out$/, '']
 
     @$dialog
