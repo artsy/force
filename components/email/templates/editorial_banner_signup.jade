@@ -1,5 +1,5 @@
 if mode === 'editorial-signup-banner-a'
-  .articles-es-cta--banner.a
+  .articles-es-cta--banner.a(data-state='')
     .cta-bar-defer
       a.icon-close( href='#' )
     .articles-es-cta--banner__container
@@ -15,14 +15,14 @@ if mode === 'editorial-signup-banner-a'
           button.avant-garde-button-dark.js-article-es(data-type='ab-test') Subscribe
       .articles-es-cta--banner__right
         .img
-if mode === 'editorial-signup-banner'
+if mode === 'editorial-signup-banner-b'
   .articles-es-cta--banner.b
-    .cta-bar-defer
-      a.icon-close( href='#' )
     .articles-es-cta--banner__container
+      .cta-bar-defer
+        a.icon-close( href='#' )
       .articles-es-cta--banner__left
         .articles-es-cta--banner__header
-          h3 The OTHER BANNER Editorial Newsletter
+          h3 The Daily Editorial Newsletter
           h2 The latest art-world news
             br
             |and stories in your inbox

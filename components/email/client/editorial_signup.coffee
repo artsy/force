@@ -17,7 +17,7 @@ module.exports = class EditorialSignupView extends Backbone.View
   events: ->
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
-    'click .cta-bar-defer': 'close'
+    'click .cta-bar-defer': 'hideEditorialBanner'
 
   initialize: ->
     @setupAEArticlePage() if @inAEArticlePage()
@@ -54,13 +54,11 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    @$('#main-layout-container').prepend editorialBannerSignupTemplate
-    # @$('#modal-container').append editorialBannerSignupATemplate
-      email: sd.CURRENT_USER?.email or ''
-      mode: 'editorial-signup-banner-b'
-      name: 'editorial-signup-dismissed'
-    if not @ctaBarView.previouslyDismissed() #and sd.MEDIUM in ['social', 'search']
-      mediator.on 'auction-reminders:none', @setupCTAWaypoints
+    if not @ctaBarView.previouslyDismissed()
+      if sd.MEDIUM in ['social', 'search']
+        mediator.on 'auction-reminders:none', @setupCTAWaypoints
+      else
+        @showEditorialBanner()
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -70,7 +68,6 @@ module.exports = class EditorialSignupView extends Backbone.View
         isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
-    setTimeout((=> @$('.articles-es-cta--banner').slideDown(500) ), 2000)
 
   cycleImages: =>
     cycle = new Cycle
@@ -87,6 +84,28 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb results.images
       error: ->
         cb null
+
+  showEditorialBanner: ->
+    if Math.random() >= 0.5
+      @$('#main-layout-container').css('margin-top', '53px').prepend editorialBannerSignupTemplate
+        mode: 'editorial-signup-banner-a'
+        email: sd.CURRENT_USER?.email or ''
+      setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
+    else
+      @$('#modal-container').append editorialBannerSignupTemplate
+        mode: 'editorial-signup-banner-b'
+        email: sd.CURRENT_USER?.email or ''
+      @$('#articles-show').waypoint (direction) =>
+        if direction is 'down'
+          setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1) ), 100)
+    analyticsHooks.trigger('view:editorial-signup')
+
+  hideEditorialBanner: (e) ->
+    e?.preventDefault()
+    banner = @$(e.target).closest('.articles-es-cta--banner')
+    @onDismiss()
+    banner.height(0) if banner.hasClass('a')
+    banner.css('opacity', 0).attr('data-state', 'out')
 
   setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
@@ -129,6 +148,9 @@ module.exports = class EditorialSignupView extends Backbone.View
           @$('.articles-es-cta__social').fadeIn()
         setTimeout((=> @ctaBarView.close()), 2000)
 
+        # Banner A
+        @$('.articles-es-cta--banner.a').height(0)
+        @$('.articles-es-cta--banner.a').css('opacity', 0).attr('data-state', 'out')
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
@@ -140,10 +162,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     else
       'article_popup'
 
-  close: (e) ->
-    e?.preventDefault()
-    @onDismiss()
-    @$('.articles-es-cta--banner').slideUp(500)
-
   onDismiss: ->
+    @ctaBarView.logDimissal()
     analyticsHooks.trigger('dismiss:editorial-signup')
