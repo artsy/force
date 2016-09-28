@@ -75,6 +75,8 @@ describe 'ArticleIndexView', ->
       $('.articles-promoted').length.should.equal 0
 
     it 'sets up the TeamChannelNavView', ->
+      @view.channel = @channel
+      @view.setupTeamChannel()
       @TeamChannelNavView.args[0][0].$content.selector.should.containEql '.article-content'
       @TeamChannelNavView.args[0][0].offset.should.equal 0
 
