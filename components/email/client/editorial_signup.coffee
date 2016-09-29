@@ -18,8 +18,8 @@ module.exports = class EditorialSignupView extends Backbone.View
   events: ->
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
-    'click .modal-bg': 'hideEditorialBanner'
-    'click .cta-bar-defer': 'hideEditorialBanner'
+    'click .modal-bg': 'hideEditorialCTA'
+    'click .cta-bar-defer': 'hideEditorialCTA'
 
   initialize: ->
     @setupAEArticlePage() if @inAEArticlePage()
@@ -56,8 +56,8 @@ module.exports = class EditorialSignupView extends Backbone.View
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    if not @ctaBarView.previouslyDismissed()
-      @showEditorialBanner()
+    if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
+      @showEditorialCTA()
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -84,7 +84,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       error: ->
         cb null
 
-  showEditorialBanner: ->
+  showEditorialCTA: ->
     @test = splitTest('editorial_cta_banner')
     if @test.outcome() is 'banner'
       @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
@@ -102,13 +102,13 @@ module.exports = class EditorialSignupView extends Backbone.View
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
     analyticsHooks.trigger('view:editorial-signup', type: @test.outcome())
 
-  hideEditorialBanner: (e) ->
+  hideEditorialCTA: (e) ->
     e?.preventDefault()
-    banner = @$(e.target).closest('.articles-es-cta--banner')
+    cta = @$(e.target).closest('.articles-es-cta--banner')
     @onDismiss()
-    banner.height(0) if banner.hasClass('banner')
-    banner.css('opacity', 0)
-    setTimeout((=> banner.attr('data-state', 'out')), 2000)
+    cta.height(0) if cta.hasClass('banner')
+    cta.css('opacity', 0)
+    setTimeout((=> cta.attr('data-state', 'out')), 2000)
 
   setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
