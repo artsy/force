@@ -120,10 +120,12 @@
   background-color #F8F8F8
   height 0
   color black
-  transition all .75s ease-out
+  margin-bottom -53px
+  margin-top 53px
+  transition all 1s ease-out
   &.modal
     opacity 0
-    background-color rgba(0,0,0,.5)
+    background none transparent
     position fixed
     top 0
     left 0
@@ -134,8 +136,15 @@
     display flex
     justify-content center
     align-items center
-  &.modal[data-state=in]
     z-index 1000
+    .modal-bg
+      background-color rgba(0,0,0,.5)
+      position fixed
+      top 0
+      left 0
+      bottom 0
+      right 0
+  &.modal[data-state=in]
     .articles-es-cta--banner__container
       background-color white
       position relative
@@ -159,14 +168,11 @@
     font-weight 900
     color gray-dark-color
     opacity 0
-    display none
     float right
     transition all 2s
   &[data-state=in]
     .cta-bar-defer a
       opacity 1
-      display block
-      transition all 2s
   &__container
     width 800px
     padding-left 0
