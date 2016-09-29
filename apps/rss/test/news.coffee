@@ -19,7 +19,7 @@ describe '/rss', ->
 
     it 'renders articles', ->
       articles = new Articles [
-        new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString(), contributing_authors: []),
+        new Article(thumbnail_title: 'Hello', published_at: new Date().toISOString(), contributing_authors: [], description: 'A piece about the Whitney.'),
         new Article(thumbnail_title: 'World', published_at: new Date().toISOString(), contributing_authors: [])
       ]
       rendered = newsTemplate(sd: sd, articles: articles, moment: moment)
@@ -28,6 +28,7 @@ describe '/rss', ->
       rendered.should.containEql '<description>Featured Artsy articles.</description>'
       rendered.should.containEql '<item><title>Hello</title>'
       rendered.should.containEql '<item><title>World</title>'
+      rendered.should.containEql '<description>A piece about the Whitney.</description>'
 
   describe 'article', ->
 

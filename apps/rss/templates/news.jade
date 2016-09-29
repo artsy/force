@@ -12,8 +12,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
       item
         title= article.get('thumbnail_title')
         link #{sd.APP_URL}/article/#{article.get('slug')}
-        if article.get('description')
-          description= article.get('description')
+        description= article.get('description')
         content:encoded
           | <![CDATA[
           include article
