@@ -91,3 +91,10 @@ describe '/instant_articles', ->
       article = new Article fabricate 'article'
       rendered = iaTemplate(sd: sd, article: article)
       rendered.should.containEql 'link.artsy.net/join/sign-up-editorial-facebook'
+
+    it 'renders the description', ->
+      articles = new Articles [
+        new Article _.extend fabricate 'article', description: 'A piece about the Whitney.'
+      ]
+      rendered = iasTemplate(sd: sd, articles: articles)
+      rendered.should.containEql '<description>A piece about the Whitney.</description>'
