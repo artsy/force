@@ -16,7 +16,8 @@ render = (templateName) ->
   )
 
 renderArtwork = (artworkOptions = {}, sdOptions = {}) ->
-  artwork = _.extend(inquireableArtwork.data.artwork, artworkOptions)
+  artwork = _.clone inquireableArtwork.data.artwork
+  _.extend artwork, artworkOptions
   sd = _.extend { CLIENT: artwork: artwork }, sdOptions
 
   html = render('index')(
