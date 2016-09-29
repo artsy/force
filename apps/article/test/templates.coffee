@@ -69,12 +69,12 @@ describe 'article template', ->
         title: 'Title page'
         sections: []
         contributing_authors: []
+      channel: new Channel type: 'team', links: [], name: 'Editorial'
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
       sd:
         SCROLL_ARTICLE: 'static'
-        ARTICLE_CHANNEL: new Channel type: 'team', links: [], name: 'Editorial'
       asset: ->
     html.should.containEql 'is-team-channel'
     html.should.containEql 'team-channel-nav'

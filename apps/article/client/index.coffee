@@ -142,7 +142,7 @@ module.exports = class ArticleIndexView extends Backbone.View
     new ArticlesGridView
       el: $('#articles-footer')
       hideMore: true
-      header: "More from #{@article.get('channel')?.name or 'Artsy'}"
+      header: "More from #{@channel.get('name') or 'Artsy'}"
       collection: @collection
     @collection.fetch
       data: data
