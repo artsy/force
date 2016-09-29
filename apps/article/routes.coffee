@@ -26,6 +26,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       res.locals.sd.SUPER_SUB_ARTICLES = data.superSubArticles?.toJSON()
       res.locals.sd.SUPER_SUB_ARTICLE_IDS = data.superSubArticleIds
       res.locals.sd.SCROLL_ARTICLE = getArticleScrollType(data)
+      res.locals.sd.ARTICLE_CHANNEL = data.channel?.toJSON()
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLD())
       # Email Subscriptions
       user = res.locals.sd.CURRENT_USER

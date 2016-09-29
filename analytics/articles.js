@@ -41,12 +41,15 @@ if(location.pathname.match('/article/')){
 
   }).on('click', '.article-section-callout', function(){
     var articleId = $(this).closest('.article-container').data('id');
-    analytics.track('Clicked article impression', {
-      article_id: articleId,
-      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
-      impression_type: 'article_callout',
-      context_type: 'article_fixed'
-    });
+    // Only track callouts that are links
+    if($(this)[0].href){
+      analytics.track('Clicked article impression', {
+        article_id: articleId,
+        destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+        impression_type: 'article_callout',
+        context_type: 'article_fixed'
+      });
+    }
 
   }).on('click', '.article-related-widget a', function(){
     var articleId = $(this).closest('.article-related-widget').data('id');
