@@ -12,6 +12,7 @@ rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom' xml:base='#{sd.APP_U
       item
         title= article.get('title')
         link= article.fullHref()
+        description= article.get('description')
         content:encoded
           | <![CDATA[
           include instant_article.jade
