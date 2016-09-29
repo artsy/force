@@ -31,7 +31,7 @@ module.exports = class Sticky
       @headerHeight = $mainHeader.height()
     else
       # Support super articles with fullscreen header (where mainHeader is hidden)
-      @headerHeight = $('.article-sa-sticky-header').height()
+      @headerHeight = $('.article-sa-sticky-header, .team-channel-nav').height()
 
     @headerHeight
 

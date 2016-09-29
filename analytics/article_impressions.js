@@ -143,16 +143,17 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
               }
             }
           }
-        }else if(classList.contains('article-section-callout')){
+        }else if(classList.contains('article-section-callout') && $(this)[0].href){
+          var destinationPath = $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
           return {
             article_id: articleId,
-            destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+            destination_path: destinationPath,
             impression_type: 'article_callout',
             context_type: 'article_fixed',
-            id: 'article_callout:' + articleId + ':' + $(this)[0].href.replace(/^.*\/\/[^\/]+/, '')
+            id: 'article_callout:' + articleId + ':' + destinationPath
           }
         }else{
-          return {}
+          return
         }
       }).toArray();
 

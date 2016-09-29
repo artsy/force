@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 fixtures = require '../../../../test/helpers/fixtures'
 { fabricate } = require 'antigravity'
 Article = require '../../../../models/article.coffee'
+Channel = require '../../../../models/channel.coffee'
 Articles = require '../../../../collections/articles.coffee'
 { crop, resize } = require '../../../../components/resizer'
 sd = require('sharify').data
@@ -27,12 +28,15 @@ describe 'ArticleIndexView', ->
             artworks: []
           }
         ]
+      @channel = new Channel _.extend fixtures.channel,
+        type: 'team'
       @options = {
         sd: _.extend sd, {
           PC_ARTSY_CHANNEL: '5086df098523e60002000013'
           PC_AUCTION_CHANNEL: '5086df098523e60002000012'
           ARTICLE: @model.attributes
           SUPER_SUB_ARTICLES: []
+          ARTICLE_CHANNEL: @channel
         }
         resize: resize
         crop: crop
@@ -46,6 +50,7 @@ describe 'ArticleIndexView', ->
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
+      @ArticleIndexView.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
       done()
 
   after ->
@@ -68,6 +73,12 @@ describe 'ArticleIndexView', ->
 
     it 'does not display promoted content banner for non-promoted', ->
       $('.articles-promoted').length.should.equal 0
+
+    it 'sets up the TeamChannelNavView', ->
+      @view.channel = @channel
+      @view.setupTeamChannel()
+      @TeamChannelNavView.args[0][0].$content.selector.should.containEql '.article-content'
+      @TeamChannelNavView.args[0][0].offset.should.equal 0
 
   describe '#initialize infinite scroll articles', ->
 

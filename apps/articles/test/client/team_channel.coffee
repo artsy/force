@@ -36,6 +36,7 @@ describe 'TeamChannelView', ->
       @carousel = { navigation: {} }
       mod.__set__ 'initCarousel', sinon.stub().returns @carousel
       mod.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
+      mod.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
       benv.render resolve(__dirname, '../../templates/team_channel.jade'), @options, =>
         @view = new @TeamChannelView
           el: $('body')
@@ -50,6 +51,11 @@ describe 'TeamChannelView', ->
       $('body').html().should.containEql 'Life at Artsy'
       $('body').html().should.containEql 'Office Culture at Artsy'
 
+    it 'sets up the TeamChannelNavView', ->
+      @TeamChannelNavView.args[0][0].offset.should.equal -400
+      @TeamChannelNavView.args[0][0].$waypointEl.selector.should.equal '.team-channel-header'
+      @TeamChannelNavView.args[0][0].$content.selector.should.equal '.team-channel-body'
+
   describe '#renderGrid', ->
 
     it 'adds articles to the grid view', ->
@@ -62,12 +68,6 @@ describe 'TeamChannelView', ->
       $('.team-channel-featured__item figure').length.should.equal 1
       $('.team-channel-featured__item').html().should.containEql 'On The Heels'
 
-  describe '#setupStickyNav', ->
-
-    it 'adds a waypoint', ->
-      @waypoint.called.should.be.true()
-      @waypoint.args[0][1].offset.should.equal -400
-
   describe '#windowResized', ->
 
     it 'sets the advanceBy in carousel to 1 if small screen', ->
@@ -75,28 +75,7 @@ describe 'TeamChannelView', ->
       @view.windowResized()
       @view.carousel.navigation.advanceBy.should.equal 1
 
-    it 'adds an is-small class to the body', ->
-      window.matchMedia = sinon.stub().returns { matches: true }
-      @view.windowResized()
-      $('body').hasClass('is-small').should.be.true()
-
     it 'sets the advanceBy in carousel to 2 if large screen', ->
       window.matchMedia = sinon.stub().returns { matches: false }
       @view.windowResized()
       @view.carousel.navigation.advanceBy.should.equal 2
-
-    it 'removes the is-small class from the body', ->
-      window.matchMedia = sinon.stub().returns { matches: false }
-      @view.windowResized()
-      $('body').hasClass('is-small').should.be.false()
-
-  describe '#toggleHamburgerNav', ->
-
-    it 'toggles the hamburger on if it is closed', ->
-      @view.toggleHamburgerNav()
-      $('body').hasClass('is-open').should.be.true()
-
-    it 'toggles the hamburger off if it is open', ->
-      $('body').addClass('is-open')
-      @view.toggleHamburgerNav()
-      $('body').hasClass('is-open').should.be.false()
