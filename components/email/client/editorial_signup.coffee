@@ -90,11 +90,13 @@ module.exports = class EditorialSignupView extends Backbone.View
       @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
         mode: @test.outcome()
         email: sd.CURRENT_USER?.email or ''
+        image: sd.EDITORIAL_CTA_BANNER_IMG
       setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
     else if @test.outcome() is 'modal'
       @$('#modal-container').append editorialCTABannerTemplate
         mode: @test.outcome()
         email: sd.CURRENT_USER?.email or ''
+        image: sd.EDITORIAL_CTA_BANNER_IMG
       @$('#articles-show').waypoint (direction) =>
         if direction is 'down'
           setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)

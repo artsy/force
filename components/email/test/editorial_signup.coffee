@@ -14,8 +14,8 @@ describe 'EditorialSignupView', ->
       $.fn.waypoint = sinon.stub()
       sinon.stub($, 'ajax')
       Backbone.$ = $
-      $el = $('<div><div class="article-es-header"></div></div>')
-      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate']
+      $el = $('<div><div id="modal-container"></div><div id="main-layout-container"></div><div class="article-es-header"><div class="article-es-header"></div></div>')
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate', 'editorialCTABannerTemplate']
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView', 'splitTest']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
@@ -23,7 +23,6 @@ describe 'EditorialSignupView', ->
       @splitTest.returns(outcome)
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
-      @showEditorialCTA = sinon.spy @EditorialSignupView::, 'showEditorialCTA'
       @inAEArticlePage = sinon.spy @EditorialSignupView::, 'inAEArticlePage'
       sinon.stub @EditorialSignupView::, 'cycleImages'
       @view = new @EditorialSignupView el: $el
@@ -58,23 +57,45 @@ describe 'EditorialSignupView', ->
 
   describe '#showEditorialCTA', ->
 
-    it 'is hidden if an auction reminder is visible', ->
+    it 'old modal is hidden if an auction reminder is visible', ->
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: channel_id: '123'
         ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
       @view.initialize()
       _.defer ->
-        @showEditorialCTA.called.should.not.be.ok()
+        @view.showEditorialCTA.called.should.not.be.ok()
 
-    it 'is displayed if there arent any auction reminders', ->
+    it 'old modal is displayed if there arent any auction reminders', ->
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: channel_id: '123'
         ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
       @view.initialize()
       mediator.trigger 'auction-reminders:none'
-      @showEditorialCTA.called.should.be.ok()
+      _.defer ->
+        @view.showEditorialCTA.called.should.be.ok()
+
+    it 'displays modal when test outcome is modal', ->
+      @splitTest.returns({ outcome: sinon.stub().returns('modal') })
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
+        SUBSCRIBED_TO_EDITORIAL: false
+        EDITORIAL_CTA_BANNER_IMG: 'img.jpg'
+      @view.initialize()
+      _.defer ->
+        @view.$el.children('.articles-es-cta--banner').hasClass('modal').should.be.true()
+
+    it 'displays banner when test outcome is banner', ->
+      @splitTest.returns({ outcome: sinon.stub().returns('banner') })
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '123'
+        ARTSY_EDITORIAL_CHANNEL: '123'
+        SUBSCRIBED_TO_EDITORIAL: false
+        EDITORIAL_CTA_BANNER_IMG: 'img.jpg'
+      @view.initialize()
+      @view.$el.children('.articles-es-cta--banner').hasClass('banner').should.be.true()
 
   describe '#onSubscribe', ->
 
