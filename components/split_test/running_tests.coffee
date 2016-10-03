@@ -20,7 +20,15 @@ module.exports =
   forced_login_inquiry:
     key: 'forced_login_inquiry'
     outcomes:
-      default: 10
+      default: 100
       force_login: 0
     edge: 'force_login'
     dimension: 'dimension15'
+
+  editorial_cta_banner:
+    key: 'editorial_cta_banner'
+    outcomes:
+      old_modal: 34
+      banner: 33
+      modal: 33
+    dimension: 'dimension16'

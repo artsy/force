@@ -4,18 +4,22 @@ CTABarView = require '../../cta_bar/view.coffee'
 Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 editorialSignupTemplate = -> require('../templates/editorial_signup.jade') arguments...
+editorialCTABannerTemplate = -> require('../templates/editorial_cta_banner.jade') arguments...
 editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jade') arguments...
 Cycle = require '../../cycle/index.coffee'
 { crop } = require '../../resizer/index.coffee'
 mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
+splitTest = require '../../split_test/index.coffee'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
   events: ->
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
+    'click .modal-bg': 'hideEditorialCTA'
+    'click .cta-bar-defer': 'hideEditorialCTA'
 
   initialize: ->
     @setupAEArticlePage() if @inAEArticlePage()
@@ -49,11 +53,11 @@ module.exports = class EditorialSignupView extends Backbone.View
   setupAEArticlePage: ->
     @ctaBarView = new CTABarView
       mode: 'editorial-signup'
-      name: 'editorial-signup'
+      name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
-    if not @ctaBarView.previouslyDismissed() and sd.MEDIUM in ['social', 'search']
-      mediator.on 'auction-reminders:none', @setupCTAWaypoints
+    if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
+      @showEditorialCTA()
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -79,6 +83,35 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb results.images
       error: ->
         cb null
+
+  showEditorialCTA: ->
+    @test = splitTest('editorial_cta_banner')
+    outcome = @test.outcome()
+    if outcome is 'banner'
+      @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
+        mode: outcome
+        email: sd.CURRENT_USER?.email or ''
+        image: sd.EDITORIAL_CTA_BANNER_IMG
+      setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
+    else if outcome is 'modal'
+      @$('#modal-container').append editorialCTABannerTemplate
+        mode: outcome
+        email: sd.CURRENT_USER?.email or ''
+        image: sd.EDITORIAL_CTA_BANNER_IMG
+      @$('#articles-show').waypoint (direction) =>
+        if direction is 'down'
+          setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)
+    else if outcome is 'old_modal'
+      mediator.on 'auction-reminders:none', @setupCTAWaypoints
+    analyticsHooks.trigger('view:editorial-signup', type: outcome )
+
+  hideEditorialCTA: (e) ->
+    e?.preventDefault()
+    cta = @$(e.target).closest('.articles-es-cta--banner')
+    @onDismiss()
+    cta.height(0) if cta.hasClass('banner')
+    cta.css('opacity', 0)
+    setTimeout((=> cta.attr('data-state', 'out')), 2000)
 
   setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
@@ -120,17 +153,20 @@ module.exports = class EditorialSignupView extends Backbone.View
         @$('.articles-es-cta__container').fadeOut =>
           @$('.articles-es-cta__social').fadeIn()
         setTimeout((=> @ctaBarView.close()), 2000)
-
+        # CTA Banner
+        @$('.articles-es-cta--banner.banner').height(0)
+        @$('.articles-es-cta--banner').css('opacity', 0).attr('data-state', 'out')
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
     if @inAEMagazinePage()
       'magazine_fixed'
-    else if type in ['inline', 'lush']
+    else if type in ['inline', 'lush', 'banner']
       'article_fixed'
     else
       'article_popup'
 
   onDismiss: ->
+    @ctaBarView.logDimissal()
     analyticsHooks.trigger('dismiss:editorial-signup')

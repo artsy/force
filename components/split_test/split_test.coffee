@@ -5,7 +5,7 @@ IS_TEST_ENV = require '../../lib/is_test_env.coffee'
 
 module.exports = class SplitTest
   constructor: ({ @key, @outcomes, @edge, @dimension }) ->
-    return throw new Error('Your probability values for outcomes must add up to 10') if @sum() isnt 10
+    return throw new Error('Your probability values for outcomes must add up to 100') if @sum() isnt 100
 
   _key: ->
     "split_test--#{@key}"
