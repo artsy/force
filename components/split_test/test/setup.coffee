@@ -7,17 +7,17 @@ describe 'setup', ->
     @setup.__set__ 'runningTests',
       header_design:
         key: 'header_design'
-        outcomes: old: 0, new: 10
+        outcomes: old: 0, new: 100
         edge: 'old'
 
       some_other_test:
         key: 'some_other_test'
-        outcomes: old: 10, new: 0
+        outcomes: old: 100, new: 0
         edge: 'new'
 
       local_test:
         key: 'local_test'
-        outcomes: old: 10, new: 0
+        outcomes: old: 100, new: 0
         scope: 'local'
 
   beforeEach ->
