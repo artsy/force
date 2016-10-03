@@ -86,23 +86,24 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   showEditorialCTA: ->
     @test = splitTest('editorial_cta_banner')
-    if @test.outcome() is 'banner'
+    outcome = @test.outcome()
+    if outcome is 'banner'
       @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
-        mode: @test.outcome()
+        mode: outcome
         email: sd.CURRENT_USER?.email or ''
         image: sd.EDITORIAL_CTA_BANNER_IMG
       setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
-    else if @test.outcome() is 'modal'
+    else if outcome is 'modal'
       @$('#modal-container').append editorialCTABannerTemplate
-        mode: @test.outcome()
+        mode: outcome
         email: sd.CURRENT_USER?.email or ''
         image: sd.EDITORIAL_CTA_BANNER_IMG
       @$('#articles-show').waypoint (direction) =>
         if direction is 'down'
           setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)
-    else if @test.outcome() is 'old_modal'
+    else if outcome is 'old_modal'
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
-    analyticsHooks.trigger('view:editorial-signup', type: @test.outcome())
+    analyticsHooks.trigger('view:editorial-signup', type: outcome )
 
   hideEditorialCTA: (e) ->
     e?.preventDefault()
