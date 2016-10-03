@@ -5,8 +5,8 @@ runningTests =
   header_design:
     key: 'header_design'
     outcomes:
-      old: 8
-      new: 2
+      old: 80
+      new: 20
     edge: 'new'
 
 describe 'SplitTest', ->
@@ -20,20 +20,20 @@ describe 'SplitTest', ->
     @setStub.restore()
     benv.teardown()
 
-  it 'requires probabilities to add up to 1.0', ->
-    (=> new @SplitTest key: 'foobar', outcomes: foo: 5, bar: 4)
-      .should.throw 'Your probability values for outcomes must add up to 10'
-    (=> new @SplitTest key: 'foobar', outcomes: foo: 5, bar: 5)
-      .should.not.throw 'Your probability values for outcomes must add up to 10'
+  it 'requires probabilities to add up to 100', ->
+    (=> new @SplitTest key: 'foobar', outcomes: foo: 50, bar: 40)
+      .should.throw 'Your probability values for outcomes must add up to 100'
+    (=> new @SplitTest key: 'foobar', outcomes: foo: 50, bar: 50)
+      .should.not.throw 'Your probability values for outcomes must add up to 100'
 
   describe '#_key', ->
     it 'sets a key for the test which is used for the cookie and as an analytics property', ->
-      test = new @SplitTest key: 'foobar', outcomes: foo: 0, bar: 10
+      test = new @SplitTest key: 'foobar', outcomes: foo: 0, bar: 100
       test._key().should.equal 'split_test--foobar'
 
   describe '#cssClass', ->
     it 'returns a string that is usable as a CSS class', ->
-      test = new @SplitTest key: 'foobar', outcomes: foo: 0, bar: 10
+      test = new @SplitTest key: 'foobar', outcomes: foo: 0, bar: 100
       test.outcome().should.equal 'bar'
       test.cssClass().should.equal 'is-splittest-foobar--bar'
 
@@ -45,6 +45,6 @@ describe 'SplitTest', ->
       @adminStub.restore()
 
     it 'presents the admin with edge functionality', ->
-      adminTest = new @SplitTest key: 'foobar', edge: 'baz', outcomes: baz: 0, qux: 10
+      adminTest = new @SplitTest key: 'foobar', edge: 'baz', outcomes: baz: 0, qux: 100
       adminTest.admin().should.be.true()
       adminTest.outcome().should.equal 'baz'
