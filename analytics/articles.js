@@ -56,7 +56,7 @@ if(location.pathname.match('/article/')){
     analytics.track('Clicked article impression', {
       article_id: articleId,
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
-      impression_type: 'article_related',
+      impression_type: 'related_article',
       context_type: 'article_fixed'
     });
 

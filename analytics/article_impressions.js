@@ -87,24 +87,24 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
           return {
             article_id: articleId,
             destination_path: null,
-            impression_type: 'article_fixed',
-            context_type: 'toc',
+            impression_type: 'toc',
+            context_type: 'article_fixed',
             id: 'toc:' + articleId
           }
         }else if(classList.contains('article-sa-related')){
           return {
             article_id: articleId,
             destination_path: null,
-            impression_type: 'article_fixed',
-            context_type: 'toc',
+            impression_type: 'toc',
+            context_type: 'article_fixed',
             id: 'toc:' + articleId
           }
         }else if(classList.contains('visible')){
           return {
             article_id: articleId,
             destination_path: null,
-            impression_type: 'article_fixed',
-            context_type: 'toc',
+            impression_type: 'toc',
+            context_type: 'article_fixed',
             id: 'toc:' + articleId
           }
 
