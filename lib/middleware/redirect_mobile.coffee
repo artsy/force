@@ -36,6 +36,6 @@ router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
 router.get '/consign', isResponsive
 router.get '/professional-buyer*', isResponsive
-router.get '/life-at-artsy|/artsy-education|/gallery-insights', isResponsive
+router.get '/life-at-artsy|/artsy-education|/gallery-insights|/artsy-partner-updates', isResponsive
 router.use redirect
 module.exports = router
