@@ -33,7 +33,7 @@ module.exports = class ArtworkMasonryView extends Backbone.View
       .check @artworks.map ({ id }) -> id
 
   reset: (artworks) ->
-    _.invoke @subViews, 'remove'
+    invoke @subViews, 'remove'
     @artworks = artworks
     this
 
