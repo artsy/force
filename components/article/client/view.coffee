@@ -38,6 +38,7 @@ module.exports = class ArticleView extends Backbone.View
     'click .article-video-play-button': 'playVideo'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
     'click .article-section-toc-link a': 'jumpSmooth'
+    'click .mktoButton' : 'getButton'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -58,11 +59,11 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @setupFollowButtons()
     @setupImageSets()
+    @setupMarketoStyles() if @article.attributes.channel.type is "team"
 
     # Resizing
     @sizeVideo()
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
-
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
       new FullscreenView el: @$el, article: @article, header: $header
@@ -168,6 +169,10 @@ module.exports = class ArticleView extends Backbone.View
       dimensions: width: '100vw', height: '100vh'
     @modal.open()
 
+  getButton: (e) ->
+    console.log e.target
+    # debugger
+
   jumpSmooth: (e) ->
     e.preventDefault()
     name = $(e.currentTarget).attr('href').substring(1)
@@ -255,6 +260,11 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
     $(@$el).waypoint (direction) =>
       @fadeInShare() if direction is 'down'
+
+  setupMarketoStyles: ->
+    @fadeInStyles = _.once -> @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
+    $(@$el).waypoint (direction) =>
+      @fadeInStyles() if direction is 'down'
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)

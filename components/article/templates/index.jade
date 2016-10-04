@@ -84,8 +84,11 @@ if superArticle
           +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
     if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('featured') === true && !hideSubscribe && !lushSignup
-      .main-layout-container.article-es
+      .main-layout-container.article-es.article-subscribe__es
         include ./editorial_signup.jade
+    if channel && channel.isTeam()
+      .main-layout-container.article-gi.article-subscribe__gi
+        include ./gi_signup.jade
 
   .main-layout-container
     if superArticle

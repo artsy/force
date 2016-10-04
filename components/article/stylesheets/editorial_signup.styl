@@ -1,42 +1,76 @@
-.article-es
-  width 570px
-  padding 60px 0px 30px 0px
-  border-top 1px solid gray-lighter-color
-
 .articles-insights-show
   display none
   width 100%
   padding 60px 0
 
-.article-es-container
+.article-subscribe-container
   display block
   position relative
   height 160px
 
-.article-es-form
-  display flex
-  margin-top 30px
-  input
-    width 380px
-    display inline
-    margin-right 20px
-  button
-    avant-garde-size('body')
-    display inline
-    width 170px
-    height 50px
-
-.article-es-mainheader
+.article-subscribe-mainheader
   garamond-size('headline')
 
-.article-es-subheader
+.article-subscribe-subheader
   garamond-size('l-body')
   margin-top 10px
 
-.article-es-thanks
+.article-subscribe-thanks
   position absolute
   display none
 
-.article-es-header
+.article-subscribe-header
   position absolute
   width 100%
+
+.article-subscribe
+  &__es
+    width 570px
+    padding 60px 0px 30px 0px
+    border-top 1px solid gray-lighter-color
+    .article-subscribe-form
+      display flex
+      margin-top 30px
+      input
+        width 380px
+        display inline
+        margin-right 20px
+      button
+        avant-garde-size('body')
+        display inline
+        width 170px
+        height 50px
+  &__gi
+    border 1px solid gray-lighter-color
+    padding 60px 0 30px 0
+    text-align center
+
+    .article-subscribe-mainheader
+      avant-garde-size('m-headline')
+
+    .articles-insights-marketo-form
+      width 450px
+      position relative
+      margin 30px auto
+      label
+        display none
+      .mktoFieldWrap
+        min-width 100%
+        float none
+        input
+          width 100%
+          margin-right 0
+          padding 15px 10px !important
+          border-width 1px
+          font-size 20px !important
+      .mktoButtonWrap button
+        border-radius 5%
+        width inherit
+        position absolute
+        right 10px
+        top 10px
+        height 32px
+        width 90px
+        avant-garde-size('s-headline')
+      .mktoButtonWrap button::after
+        top 10px
