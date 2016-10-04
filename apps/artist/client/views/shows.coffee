@@ -43,3 +43,4 @@ module.exports = class ShowsView extends Backbone.View
 
   remove: ->
     _.invoke @subViews, 'remove'
+    super

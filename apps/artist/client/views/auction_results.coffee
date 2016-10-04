@@ -56,3 +56,4 @@ module.exports = class ArtistAuctionResultsView extends Backbone.View
 
   remove: ->
     _.invoke @subViews, 'remove'
+    super

@@ -6,15 +6,17 @@ BrickView =
   artwork: require '../artwork_brick/view.coffee'
   auction_artwork: require '../auction_artwork_brick/view.coffee'
 template = -> require('./index.jade') arguments...
+columnTemplate = -> require('./column.jade') arguments...
 
 module.exports = class ArtworkMasonryView extends Backbone.View
   subViews: []
 
-  initialize: ({ @artworks, @context_page, @context_module }) ->
+  initialize: ({ @artworks = [], @context_page, @context_module }) ->
     @user = User.instantiate()
 
-  postRender: ->
-    @subViews = @artworks.map ({ id }) =>
+  postRender: (artworks) ->
+    artworks ?= @artworks
+    @subViews.push artworks.map ({ id }) =>
       $el = @$(".js-artwork-brick[data-id='#{id}']")
 
       view = new BrickView[$el.data('type') or 'artwork']
@@ -36,10 +38,21 @@ module.exports = class ArtworkMasonryView extends Backbone.View
     this
 
   render: ->
+    { columns, @heights } = masonry @artworks
     @$el.html template
-      columns: masonry @artworks
+      columns: columns
+
+    @$columns = @$(".artwork-masonry__column")
     @postRender()
     this
 
+  appendArtworks: (artworks) ->
+    @artworks.concat artworks
+    { columns, @heights } = masonry artworks, @heights
+    _.each columns, (column, i) =>
+      $(@$columns[i]).append columnTemplate { column }
+    @postRender artworks
+
   remove: ->
     invoke @subViews, 'remove'
+    super
