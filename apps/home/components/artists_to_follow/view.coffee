@@ -48,23 +48,25 @@ module.exports = class ArtistsToFollowView extends Backbone.View
 
   _setupFollowButtons: ($el = null) ->
     view = @
-    following = new Following(null, kind: 'artist') if @user
+    $el ?= @$el
+    @following = new Following(null, kind: 'artist') if @user and not @following?
 
-    ids = @$('.follow-button').map ->
-      id = ($el = $(this)).data 'id'
+    ids = $el.find('.follow-button').map ->
+      view._addFollowButton $(this).data('id'), $(this)
 
-      new FollowButton
-        context_page: "Home page"
-        context_module: "Artists to Follow rail"
-        following: following
-        model: new Backbone.Model id: id
-        modelName: 'artist'
-        hideSuggestions: true
-        el: $el
-        href: _.findWhere(view.results, id: id)?.href
-      id
+    @following?.syncFollows ids
 
-    following?.syncFollows ids
+  _addFollowButton: (id, $el) ->
+    new FollowButton
+      context_page: "Home page"
+      context_module: "Artists to Follow rail"
+      following: @following
+      model: new Backbone.Model id: id
+      modelName: 'artist'
+      hideSuggestions: true
+      el: $el
+      href: _.findWhere(@results, id: id)?.href
+    id
 
   afterFollow: (el, model) =>
     metaphysics
@@ -77,5 +79,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
         @carousel.cells.flickity.remove $(el).closest('.mgr-cell')
         artists = _.reject suggested_artists, (artist) =>
           _.contains(@results, artist)
-        appended = @carousel.cells.flickity.append $(cellsTemplate results: artists)
-        @_setupFollowButtons()
+        html = $(cellsTemplate results: artists)
+        @_setupFollowButtons html
+        appended = @carousel.cells.flickity.append html
+
