@@ -31,6 +31,7 @@ module.exports = class Article extends Backbone.Model
       @fetch(
         error: options.error
         headers: 'X-Access-Token': options.accessToken or ''
+        cache: true
       )
       superArticles.fetch(
         error: options.error
@@ -64,14 +65,15 @@ module.exports = class Article extends Backbone.Model
           data:
             super_article_for: @get('id')
             published: true
+            cache: true
           success: (articles) ->
             superArticle = articles?.models[0]
 
       # Partner Channel + Team Channels
       if @get('partner_channel_id')
-        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch()
+        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch(data: cache: true)
       else if @get('channel_id')
-        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch()
+        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(data: cache: true)
 
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles) else []
@@ -189,6 +191,7 @@ module.exports = class Article extends Backbone.Model
   fetchSuperSubArticles: (superSubArticles) ->
     for id in @get('super_article').related_articles
       new Article(id: id).fetch
+        cache: true
         success: (article) =>
           superSubArticles.add article
 
