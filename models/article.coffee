@@ -62,18 +62,18 @@ module.exports = class Article extends Backbone.Model
       else
          # Check if the article is IN a super article
         dfds.push new Articles().fetch
+          cache: true
           data:
             super_article_for: @get('id')
             published: true
-            cache: true
           success: (articles) ->
             superArticle = articles?.models[0]
 
       # Partner Channel + Team Channels
       if @get('partner_channel_id')
-        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch(data: cache: true)
+        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch(cache: true)
       else if @get('channel_id')
-        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(data: cache: true)
+        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(cache: true)
 
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles) else []
