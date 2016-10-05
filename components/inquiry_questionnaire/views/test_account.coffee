@@ -47,6 +47,7 @@ module.exports = class Account extends StepView
     @user.set form.data()
     @user[@mode()] # `login` or `signup`
       error: form.error.bind form
+      trigger_login: false
       success: (model, { user }) =>
         @user.repossess user.id,
           error: form.error.bind form
