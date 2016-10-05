@@ -44,7 +44,7 @@ module.exports = class LoggedOutUser extends User
         url: "#{APP_URL}#{sd.AP?.loginPagePath}"
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
-          @trigger 'login'
+          @trigger('login') unless options.trigger_login is false
           @unset 'password' # Avoid 403 error on subsequent saves
           $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
             'X-ACCESS-TOKEN': response.user.accessToken
@@ -57,7 +57,7 @@ module.exports = class LoggedOutUser extends User
         success: =>
           @__isRecentlyRegistered__ = true
           @trigger 'signup'
-          @login(_.pick options, 'success', 'error')
+          @login(_.pick options, 'success', 'error', 'trigger_login')
 
   register: @::signup
 
