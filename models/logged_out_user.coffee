@@ -43,21 +43,23 @@ module.exports = class LoggedOutUser extends User
       .save @pick('email', 'password', '_csrf'), _.extend {}, options,
         url: "#{APP_URL}#{sd.AP?.loginPagePath}"
         success: _.wrap options.success, (success, model, response, options) =>
+          console.log 'login options', options
           @__isLoggedIn__ = true
-          @trigger 'login'
+          @trigger('login') unless options.trigger_login is false
           @unset 'password' # Avoid 403 error on subsequent saves
           $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
             'X-ACCESS-TOKEN': response.user.accessToken
           success? model, response, options
 
   signup: (options = {}) ->
+    console.log 'signup options', options
     new Backbone.Model()
       .save @pick('name', 'email', 'password'), _.extend {}, options,
         url: "#{API_URL}/api/v1/user"
         success: =>
           @__isRecentlyRegistered__ = true
           @trigger 'signup'
-          @login(_.pick options, 'success', 'error')
+          @login(_.pick options, 'success', 'error', 'trigger_login')
 
   register: @::signup
 
