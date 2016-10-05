@@ -111,8 +111,10 @@ module.exports = class EditorialSignupView extends Backbone.View
     @onDismiss()
     cta.height(0) if cta.hasClass('banner')
     cta.css('opacity', 0)
-    cta.hide() if cta.hasClass('modal')
-    setTimeout((=> cta.attr('data-state', 'out')), 2000)
+    setTimeout((=>
+      cta.attr('data-state', 'out')
+      cta.hide() if cta.hasClass('modal')
+      ), 2000)
 
   setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
