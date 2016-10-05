@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
+splitTest = require '../split_test/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 User = require '../../models/user.coffee'
 { modelNameAndIdToLabel } = require '../../analytics/helpers.js'
@@ -33,6 +34,9 @@ module.exports = class ShowInquiryModal extends ContactView
 
   initialize: (options) ->
     { @show } = options
+
+    splitTest('forced_login_inquiry').view()
+
     @partner = new Partner @show.get('partner')
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
