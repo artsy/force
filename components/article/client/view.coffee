@@ -38,7 +38,6 @@ module.exports = class ArticleView extends Backbone.View
     'click .article-video-play-button': 'playVideo'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
     'click .article-section-toc-link a': 'jumpSmooth'
-    'click .mktoButton' : 'getButton'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -168,10 +167,6 @@ module.exports = class ArticleView extends Backbone.View
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
     @modal.open()
-
-  getButton: (e) ->
-    console.log e.target
-    # debugger
 
   jumpSmooth: (e) ->
     e.preventDefault()
