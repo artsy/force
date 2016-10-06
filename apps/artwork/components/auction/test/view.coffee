@@ -113,11 +113,11 @@ describe 'auction', ->
           .should.have.lengthOf 0
 
     describe 'reserve not met', ->
-      it 'gives a reserve error message', ->
+      it 'gives a reserve not met bid message', ->
         data = Object.assign({}, @data)
         data.accounting = accounting
         data.artwork.sale_artwork.reserve_message = 'Reserve not met'
-        # just user + me this in to meet the template conditions
+        # just shoving user + me into data to meet the template conditions for rendering 
         data.user = true
         data.me =
           lot_standing:
@@ -128,7 +128,7 @@ describe 'auction', ->
         view = new @ArtworkAuctionView data: data
         view.render()
         view.$('.is_losing').text()
-          .should.equal 'foo'
+          .should.equal 'Reserve not met, increase your bid'
 
     describe 'preview auction', ->
       it 'renders correctly', ->
