@@ -1,7 +1,7 @@
 - myLastMaxBid = me && me.lot_standing && me.lot_standing.most_recent_bid.max_bid.cents
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
-- console.log(sale_artwork)
+// - console.log(sale_artwork)
 
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
@@ -11,7 +11,6 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
   )
     .artwork-auction__bid-form__errors.form-errors( class='js-form-errors' )
       //- Rendered client-side
-
     if user
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing.is_highest_bidder
