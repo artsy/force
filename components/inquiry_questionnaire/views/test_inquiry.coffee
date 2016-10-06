@@ -66,6 +66,9 @@ module.exports = class Inquiry extends StepView
             .related().userFairActions.invoke 'save'
         )
       .then =>
-        @modal.dialog 'bounce-out', => @next()
+        if @modal?
+          @modal.dialog 'bounce-out', => @next()
+        else
+          @next()
       , (e) ->
         form.error null, e
