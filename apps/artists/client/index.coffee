@@ -8,6 +8,7 @@ module.exports.init = ->
     following = new Following(null, kind: 'artist')
 
   setupFollowButtons = ($buttons, message, collection) ->
+    debugger
     $buttons.map(->
       id = ($el = $(this)).data 'id'
       new FollowButton

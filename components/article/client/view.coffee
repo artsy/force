@@ -58,7 +58,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @setupFollowButtons()
     @setupImageSets()
-    @setupMarketoStyles() if @article.attributes.channel and @article.attributes.channel.type is "team"
+    @setupMarketoStyles() if @article.attributes.channel?.type is "team"
 
     # Resizing
     @sizeVideo()
@@ -256,10 +256,10 @@ module.exports = class ArticleView extends Backbone.View
     $(@$el).waypoint (direction) =>
       @fadeInShare() if direction is 'down'
 
-  setupMarketoStyles: ->
-    @fadeInStyles = _.once -> @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
+  setupMarketoStyles: =>
     $(@$el).waypoint (direction) =>
-      @fadeInStyles() if direction is 'down'
+      if direction is 'down'
+        @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
