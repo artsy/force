@@ -58,7 +58,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @setupFollowButtons()
     @setupImageSets()
-    @setupMarketoStyles() if @article.attributes.channel.type and @article.attributes.channel.type is "team"
+    @setupMarketoStyles() if @article.attributes.channel and @article.attributes.channel.type is "team"
 
     # Resizing
     @sizeVideo()
