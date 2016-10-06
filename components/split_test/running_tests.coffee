@@ -15,13 +15,11 @@
 # module.exports = {}
 
 module.exports =
-  # Set up so we can slowly activate new_homepage_buckets
-  # as we are comfortable with the load and performance
   forced_login_inquiry:
     key: 'forced_login_inquiry'
     outcomes:
-      default: 100
-      force_login: 0
+      default: 50
+      force_login: 50
     edge: 'force_login'
     dimension: 'dimension15'
 

@@ -58,11 +58,11 @@ module.exports = class ArticleView extends Backbone.View
     @setupStickyShare()
     @setupFollowButtons()
     @setupImageSets()
+    @setupMarketoStyles() if @article.attributes.channel?.type is "team"
 
     # Resizing
     @sizeVideo()
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
-
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
       new FullscreenView el: @$el, article: @article, header: $header
@@ -255,6 +255,11 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
     $(@$el).waypoint (direction) =>
       @fadeInShare() if direction is 'down'
+
+  setupMarketoStyles: =>
+    $(@$el).waypoint (direction) =>
+      if direction is 'down'
+        @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
