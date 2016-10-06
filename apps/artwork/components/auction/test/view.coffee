@@ -117,7 +117,7 @@ describe 'auction', ->
         data = Object.assign({}, @data)
         data.accounting = accounting
         data.artwork.sale_artwork.reserve_message = 'Reserve not met'
-        # just shoving user + me into data to meet the template conditions for rendering 
+        # just shoving user + me into data to meet the template conditions for the .is_losing element to render 
         data.user = true
         data.me =
           lot_standing:
