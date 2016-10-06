@@ -11,7 +11,7 @@ module.exports = """
       start_at
       end_at
     }
-    show: partner_shows(size:2, at_a_fair: false, status:"running", sort:end_at_asc, top_tier: true) {
+    show: shows(size:2, at_a_fair: false, status:"running", sort:end_at_asc, top_tier: true) {
       ... relatedShow
       cover_image {
         cropped(width: 60, height: 60) {
