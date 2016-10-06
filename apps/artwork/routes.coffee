@@ -1,6 +1,7 @@
 { extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
-
+Artwork = require '../../models/artwork'
+request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 
 query = """
@@ -90,3 +91,14 @@ bootstrap = ->
       res.redirect "/order/#{order.id}/resume?token=#{order.get 'token'}"
 
     .catch next
+
+@download = (req, res, next) ->
+  artwork = new Artwork id: req.params.id
+  artwork.fetch cache: true, success: ->
+    if artwork.isDownloadable(req.user)
+      imageRequest = request.get(artwork.downloadableUrl req.user)
+      imageRequest.set('X-ACCESS-TOKEN': req.user.get('accessToken')) if req.user
+      req.pipe(imageRequest).pipe res
+    else
+      res.status 403
+      next new Error 'Not authorized to download this image'
