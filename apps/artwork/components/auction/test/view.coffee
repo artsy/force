@@ -20,7 +20,7 @@ describe 'auction', ->
       require.resolve('../view.coffee'),
       ['template']
     )
-    @view = new @ArtworkAuctionView data:
+    @data =
       artwork:
         id: 'peter-alexander-wedge-with-puff'
         is_in_auction: true
@@ -44,6 +44,7 @@ describe 'auction', ->
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
+    @view = new @ArtworkAuctionView data: @data
 
   describe '#parseBid', ->
     it 'Handles prices with cents', ->
@@ -110,6 +111,25 @@ describe 'auction', ->
 
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
+
+    describe 'reserve not met', ->
+      it 'gives a reserve not met bid message', ->
+        data = Object.assign({}, @data)
+        data.accounting = accounting
+        data.artwork.sale_artwork.reserve_message = 'Reserve not met'
+        # just shoving user + me into data to meet the template conditions
+        # to make .is-losing message render
+        data.user = true
+        data.me =
+          lot_standing:
+            is_highest_bidder: false
+            most_recent_bid:
+              max_bid:
+                cents: 5500000
+        view = new @ArtworkAuctionView data: data
+        view.render()
+        view.$('.is_losing').text()
+          .should.equal 'Reserve not met, increase your bid'
 
     describe 'preview auction', ->
       it 'renders correctly', ->
