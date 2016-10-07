@@ -11,7 +11,12 @@ module.exports = """
         start_at
         href
         partner {
-          name
+          ... on ExternalPartner {
+            name
+          }
+          ... on Partner {
+            name
+          }
         }
         location {
           city
