@@ -14,6 +14,7 @@ module.exports =
   showOrFairLocation: (show) ->
     location = show.fair?.location?.city
     location ?= show.location?.city
+    location ?= show.city
 
   date: (field) ->
     moment(new Date field)
