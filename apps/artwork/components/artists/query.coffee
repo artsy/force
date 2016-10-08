@@ -18,10 +18,7 @@ module.exports = """
             name
           }
         }
-        location {
-          city
-          country
-        }
+        city
       }
       articles {
         thumbnail_image {
