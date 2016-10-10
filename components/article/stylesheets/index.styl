@@ -29,7 +29,9 @@ body.body-article
   line-height 48px
   text-align center
   margin-bottom gutter-size
-
+  @media screen and (max-width 400px)
+    text-align left
+    garamond-size('headline')
 .article-container
   position relative
 
@@ -38,7 +40,8 @@ body.body-article
 
 .article-author, .article-date, .article-contributing-author
   text-align center
-
+  @media screen and (max-width 400px)
+    text-align left
 .article-lead-paragraph
   margin 0 auto gutter-size auto
 
@@ -169,6 +172,9 @@ body.body-article
     margin-top 10px
     color gray-dark-color
     text-align left
+    @media screen and (max-width 400px)
+      font-size 13px
+      line-height 15px
     a
       color gray-dark-color
 .article-section-artworks
@@ -259,6 +265,8 @@ body.body-article
 .responsive-layout-container.article-section-container
   margin-top 45px
   margin-bottom 45px
+  @media screen and (max-width 400px)
+    margin 20px
 .responsive-layout-container.article-section-container&[data-section-type="image"]
   @media screen and (max-width 1250px)
     margin 45px 75px
