@@ -426,40 +426,34 @@ body.body-article
   i
     vertical-align middle
 
-.article-section-callout
-  float right
-  margin 6px 74px 20px 20px
-  padding 20px 0px
-  border-top 1px solid gray-lighter-color
-  border-bottom 1px solid gray-lighter-color
-  width 415px
-  img, .article-section-callout-text
-    display inline-block
-    vertical-align middle
-  .article-section-callout-title
-    garamond-size('l-body')
-  .article-section-callout-link
+.article-section-callout-container
+  max-width 580px
+  margin 0 auto
+  .related-title
     avant-garde-size('body')
-    text-decoration none
-    margin-top 5px
-  img
-    max-width 180px
-    margin-right 20px
-  .article-section-callout-text
-    max-width 215px
-    &.article-section-callout-no-image
-      max-width 100%
-      padding 10px 0px
-    &.article-section-callout-pullquote
-      max-width 100%
-      padding 10px 0px
-      .article-section-callout-title
-        font-size 30px
+  a.article-section-callout
+    display block
+    border 1px solid gray-lighter-color
+    transition border-color 0.3s
+    padding 15px
+    margin-top 10px
+    img, .article-section-callout
+      display inline-block
+      vertical-align middle
+    img
+      max-width 120px
+      margin-right 20px
+    .article-section-callout
+      garamond-size('l-body')
+    &:hover
+      border-color gray-dark-color
 
-a.article-section-callout
-  transition border-color 0.3s
-  &:hover
-    border-color gray-dark-color
+.article-section-callout-pullquote
+  margin 20px auto
+  padding 15px 0px
+  max-width 750px
+  .article-section-callout-title
+    garamond-size('headline')
 
 .article-section-top-stories
   float right
