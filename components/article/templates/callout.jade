@@ -13,7 +13,7 @@ mixin callout-content(calloutArticle, section)
     if calloutArticle
       .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
     else if section.text
-      .article-section-callout-text= section.text
+      .article-section-callout-title= section.text
 
 if calloutArticle
   a.article-section-callout( href=(calloutArticle ? calloutArticle.href() : '') )
