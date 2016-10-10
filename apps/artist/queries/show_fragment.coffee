@@ -9,9 +9,7 @@ module.exports =
         name
       }
     }
-    location {
-      city
-    }
+    city
     href
     fair {
       id
