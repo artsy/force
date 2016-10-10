@@ -45,6 +45,10 @@ body.body-fullscreen-article
   .article-fullscreen-text-overlay
     position relative
     z-index 1
+    @media screen and (max-width 900px)
+      margin 0 30px
+      > h1
+        max-width 100%
   .article-date
     color gray-lighter-color
   .article-author-date
