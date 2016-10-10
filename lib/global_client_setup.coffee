@@ -96,6 +96,8 @@ disableRightClick = ->
   $(document).on 'contextmenu', (e) ->
     # Grenade for selecting any images with the name 'artwork' in their,
     # or their parent's, class
-    disable = $(e.target).is('[class*=artwork]') or
-              $(e.target).parent().is('[class*=artwork]')
+    $target = $(e.target)
+    return unless $target.is('img')
+    disable = $target.is('[class*=artwork]') or
+              $target.parent().is('[class*=artwork]')
     return false if disable
