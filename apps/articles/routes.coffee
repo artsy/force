@@ -15,26 +15,23 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 { topParselyArticles } = require '../../components/util/parsely.coffee'
 
 @articles = (req, res, next) ->
-  Q.allSettled([
-    (sections = new Sections).fetch(data: featured: true)
-    (articles = new Articles).fetch(
-      data:
-        published: true
-        limit: 50
-        sort: '-published_at'
-        featured: true
-    )
-    if res.locals.sd.CURRENT_USER?.email?
-      subscribedToEditorial res.locals.sd.CURRENT_USER.email, (err, subscribed) ->
-        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-  ]).catch(next).then =>
-    res.locals.sd.ARTICLES = articles.toJSON()
-    res.locals.sd.ARTICLES_COUNT = articles.count
-    section = sections.running()?[0]
-    res.render 'articles',
-      section: section
-      articles: articles
-      crop: crop
+  new Articles().fetch
+    cache: true
+    data:
+      published: true
+      limit: 50
+      sort: '-published_at'
+      featured: true
+    error: res.backboneError
+    success: (articles) =>
+      if res.locals.sd.CURRENT_USER?.email?
+        subscribedToEditorial res.locals.sd.CURRENT_USER.email, (err, subscribed) ->
+          res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
+      res.locals.sd.ARTICLES = articles.toJSON()
+      res.locals.sd.ARTICLES_COUNT = articles.count
+      res.render 'articles',
+        articles: articles
+        crop: crop
 
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ editorial: false }) unless user?.email
