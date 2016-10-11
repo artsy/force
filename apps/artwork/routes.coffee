@@ -95,8 +95,8 @@ bootstrap = ->
 @download = (req, res, next) ->
   artwork = new Artwork id: req.params.id
   artwork.fetch cache: true, success: ->
-    if artwork.isDownloadable(req.user)
-      imageRequest = request.get(artwork.downloadableUrl req.user)
+    if artwork.isDownloadable(req.user) and url = artwork.downloadableUrl(req.user)
+      imageRequest = request.get url
       imageRequest.set('X-ACCESS-TOKEN': req.user.get('accessToken')) if req.user
       req.pipe(imageRequest).pipe res
     else

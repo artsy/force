@@ -45,6 +45,19 @@ describe 'Artwork routes', ->
           routes.download @req, @res, @next
           request.get.called.should.be.true()
 
+        it 'gracefully handles an artwork with bad image data', ->
+          Backbone.sync.restore()
+          sinon.stub(Backbone, 'sync')
+            .yieldsTo 'success', fabricate 'artwork', images: [
+              downloadable: true
+              image_url: ''
+              image_versions: ['larger']
+              image_urls: { larger: '' }
+            ]
+          routes.download @req, @res, @next
+          request.get.called.should.not.be.ok()
+          @res.status.args[0][0].should.equal 403
+
       describe 'when the image is not downloadable', ->
         beforeEach ->
           Backbone.sync.restore()
