@@ -205,6 +205,12 @@ body.body-article
   max-width (overflow-width + gutter-size)
   margin 0 auto
   text-align center
+  @media screen and (max-width 1250px)
+    width "calc(100% - %s)" % (150px)
+    margin 0 75px
+    @media screen and (max-width 900px)
+      width 100%
+      margin 0
   &.is-loading
     [data-id]
       opacity 0
@@ -217,6 +223,18 @@ body.body-article
     display inline-block
     vertical-align top
     padding 0
+    @media screen and (max-width 400px)
+      min-width 100%
+      margin 0
+      width 100% !important
+      &:first-child
+        margin-bottom 20px
+  [data-layout="2"]
+    [data-id]
+      @media screen and (max-width 1250px)
+        width "calc(50% - %s)" % (15px) !important
+        .artwork-item-image-container
+          height auto !important
   li
     margin-right 30px
     &:last-child
@@ -230,6 +248,8 @@ body.body-article
     padding-bottom 0 !important
   .artwork-item-caption
     overflow ellipsis
+    @media screen and (max-width 900px)
+      margin 10px 20px
   .overlay-container
     display none
 
@@ -269,7 +289,8 @@ body.body-article
   margin-bottom 45px
   @media screen and (max-width 400px)
     margin 20px
-.responsive-layout-container.article-section-container&[data-section-type="image"]
+.responsive-layout-container.article-section-container&[data-section-type="image"],
+.responsive-layout-container&[data-section-type="hero"]
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
@@ -305,6 +326,8 @@ body.body-article
       width 100%
       z-index 1
       position relative
+      @media screen and (max-width 1250px)
+          margin 45px 0
       &[data-section-type="embed"]
         background black
         width 100%
