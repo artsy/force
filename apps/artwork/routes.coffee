@@ -3,6 +3,7 @@ metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
+{ parse } = require 'url'
 
 query = """
   query artwork($id: String!) {
@@ -95,8 +96,9 @@ bootstrap = ->
 @download = (req, res, next) ->
   artwork = new Artwork id: req.params.id
   artwork.fetch cache: true, success: ->
-    if artwork.isDownloadable(req.user)
-      imageRequest = request.get(artwork.downloadableUrl req.user)
+    url = artwork.downloadableUrl(req.user)
+    if artwork.isDownloadable(req.user) and parse(url).host?
+      imageRequest = request.get url
       imageRequest.set('X-ACCESS-TOKEN': req.user.get('accessToken')) if req.user
       req.pipe(imageRequest).pipe res
     else
