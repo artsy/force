@@ -45,7 +45,7 @@ module.exports = class Artwork extends Backbone.Model
   #
   # return {Boolean}
   isDownloadable: (user) ->
-    @defaultImage().get('downloadable') or !!user?.isAdmin()
+    @defaultImage().isDownloadable(user)
 
   downloadableFilename: ->
     _s.slugify(@toOneLine()) + '.jpg'
