@@ -14,13 +14,10 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
       //- Rendered client-side
     if user
       .artwork-auction__bid-form__max-bid
-        //- user is participating in the auction
         if me && me.lot_standing
-          //- winning everything
           if me && me.lot_standing.is_highest_bidder
             .artwork-auction__bid-form__max-bid-label.is_winning
               | Highest Bidder
-          //- winning vs humans, reserve not met
           else if leadingBidder && reserveNotMet
             .artwork-auction__bid-form__max-bid-label.is_winning_reserve_not_met
               | Highest bidder, Reserve not met
