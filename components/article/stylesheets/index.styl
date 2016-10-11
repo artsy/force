@@ -82,7 +82,7 @@ body.body-article
 .article-lead-paragraph, .article-section-text
   font-size 20px
   line-height 27px
-  @media screen and (min-width 600px)
+  @media screen and (min-width 620px)
     width body-width
   a:not(.is-jump-link):not(.artist-follow)
     text-decoration none
@@ -253,10 +253,20 @@ body.body-article
   .overlay-container
     display none
 
-.article-section-embed[data-layout="overflow"]
-  width overflow-width
-  .article-embed-container
-    width 1060px
+.responsive-layout-container[data-layout="overflow"]
+  @media screen and (max-width 900px)
+    margin 40px 0
+  .article-section-embed[data-layout="overflow"]
+    width overflow-width
+    @media screen and (max-width 1250px)
+      width "calc(100% - %s)" % (150px)
+      @media screen and (max-width 900px)
+        width 100%
+        margin 40px 0
+    .article-embed-container
+      width 1060px
+      @media screen and (max-width 1250px)
+        width 100%
 
 .article-section-embed[data-layout="column_width"]
   width column-width
@@ -290,7 +300,7 @@ body.body-article
   @media screen and (max-width 400px)
     margin 20px
 .responsive-layout-container.article-section-container&[data-section-type="image"],
-.responsive-layout-container&[data-section-type="hero"]
+.main-layout-container&[data-section-type="hero"]
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
