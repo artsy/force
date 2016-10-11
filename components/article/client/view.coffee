@@ -62,6 +62,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
+    $(window).on('resize', _.debounce @refreshArtworksSize, 100)
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
@@ -108,6 +109,12 @@ module.exports = class ArticleView extends Backbone.View
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
+
+  refreshArtworksSize: =>
+    $("[data-layout='overflow_fillwidth'] li").width('auto')
+    $("[data-layout='overflow_fillwidth']").each (i, images) =>
+      # debugger
+      @fillwidth images
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -184,7 +191,7 @@ module.exports = class ArticleView extends Backbone.View
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
-  fillwidth: (el, cb) ->
+  fillwidth: (el, cb=->) ->
     if @$(el).length < 1 or $(window).width() < 700
       @$(el).parent().removeClass('is-loading')
       return cb()

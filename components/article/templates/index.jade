@@ -13,7 +13,7 @@ if superArticle
 
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
 
-    .responsive-layout-container.first(data-section-type='hero')
+    .main-layout-container.first(data-section-type='hero')
       //- Article lead content
       if article.get('hero_section') && article.get('hero_section').type === 'video'
         .article-large-format-video-container
