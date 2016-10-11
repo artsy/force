@@ -27,6 +27,19 @@ module.exports = class Inquiry extends StepView
   nudged: ->
     hasSeen 'inquiry-nudge'
 
+  maybeSaveInquiry: (data) ->
+    promise = Q.defer()
+
+    attributes = _.extend { contact_gallery: true }, data
+
+    if @user.isLoggedOut()
+      @inquiry.set attributes
+      promise.resolve(true)
+    else
+      @inquiry.save attributes, success: -> promise.resolve(true)
+
+    promise
+
   serialize: (e) ->
     e.preventDefault()
 
@@ -53,7 +66,7 @@ module.exports = class Inquiry extends StepView
         .related().userFairActions.attendFair @artwork.related().fairs.first()
 
     @__serialize__ = Q.allSettled [
-      @inquiry.set _.extend { contact_gallery: true }, data
+      @maybeSaveInquiry data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()
       Q.promise (resolve) -> _.delay resolve, 1000
