@@ -240,8 +240,10 @@ body.body-article
 
 .article-section-embed[data-layout="column_width"]
   width column-width
+  max-width 100%
   .article-embed-container
     width 540px
+    max-width 100%
 
 .article-section-embed
   margin auto
@@ -307,6 +309,8 @@ body.body-article
         background black
         width 100%
         max-width 100000px !important
+        @media screen and (max-width 900px)
+          margin 45px 0
         .article-embed-container
           width 100%
           margin auto
@@ -315,8 +319,7 @@ body.body-article
         iframe
           max-width 100%
         @media screen and (max-width 1250px)
-          margin-right 0
-          margin-left 0
+          margin 45px 0
         .article-section-video
           width 100%
           padding 40px 75px
