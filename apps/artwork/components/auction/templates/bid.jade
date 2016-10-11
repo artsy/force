@@ -2,7 +2,6 @@
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 // - console.log(sale_artwork)
-
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
     method='GET'
@@ -20,11 +19,11 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
           if sale_artwork.reserve_message === 'Reserve not met'
             .artwork-auction__bid-form__max-bid-label.is_winning_reserve_not_met
               | Highest bidder, Reserve not met
-          else
+          else 
             .artwork-auction__bid-form__max-bid-label.is_losing
               | You've been outbid
           .artwork-auction__bid-status__count
-              | Increase your max bid to win the lot
+            | Increase your max bid to win the lot
         else
           .artwork-auction__bid-form__max-bid-label Set your max bid
         span.help-tooltip(
