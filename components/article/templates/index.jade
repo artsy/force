@@ -13,7 +13,7 @@ if superArticle
 
   .article-content( class=(article.get('hero_section') && article.get('hero_section').type === 'fullscreen' ? 'article-fullscreen-content' : '') )
 
-    .main-layout-container.first
+    .responsive-layout-container.first(data-section-type='hero')
       //- Article lead content
       if article.get('hero_section') && article.get('hero_section').type === 'video'
         .article-large-format-video-container
@@ -47,7 +47,7 @@ if superArticle
             .article-section-text!= section.body
           when 'artworks'
             .article-section-artworks( data-layout=section.layout )
-              ul
+              ul( data-artworks-count=section.artworks.length)
                 for artwork in section.artworks
                   +artwork(artwork)
           when 'image'
@@ -83,7 +83,7 @@ if superArticle
           +share((article.get('share_description') || article.get('thumbnail_title')), article.get('thumbnail_image'), (sd.APP_URL + '/article/' + article.get('slug')))
 
     if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('featured') === true && !hideSubscribe && !lushSignup
-      .responsive-layout-container.article-es.article-subscribe__es
+      .main-layout-container.article-es.article-subscribe__es
         include ./editorial_signup.jade
     if channel && channel.id === sd.GALLERY_INSIGHTS_CHANNEL
       .responsive-layout-container.article-gi.article-subscribe__gi
