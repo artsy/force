@@ -229,18 +229,20 @@ body.body-article
       width 100% !important
       &:first-child
         margin-bottom 20px
-  [data-layout="2"]
-    [data-id]
-      @media screen and (max-width 1250px)
-        width "calc(50% - %s)" % (15px) !important
-        .artwork-item-image-container
-          height auto !important
+  ul
+    transition opacity 1s
+    &.is-loading
+      opacity 0
+      overflow hidden
+      height artwork-height
+      transition opacity .25s
   li
     margin-right 30px
+    // transition opacity 1s
     &:last-child
       margin-right 0
   .artwork-item-image-container
-    height auto
+    height auto !important
     img
       height auto
       position relative
