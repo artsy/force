@@ -109,6 +109,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
           me {
             lot_standing(artwork_id: $id, sale_id: $sale_id) {
               is_highest_bidder
+              is_leading_bidder
               most_recent_bid {
                 max_bid {
                   cents

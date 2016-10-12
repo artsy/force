@@ -131,7 +131,9 @@ describe 'auction', ->
             view = new @ArtworkAuctionView data: @data
             view.render()
             view.$('.is_winning').text()
-              .should.equal 'u r winning'
+              .should.equal 'Highest Bidder'
+            view.$('.artwork-auction__bid-status__upsell').length.should.equal 0
+
         describe 'leading bidder & reserve not met - reserve message', ->
           it 'gives a reserve not met bid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
@@ -145,7 +147,9 @@ describe 'auction', ->
             view = new @ArtworkAuctionView data: @data
             view.render()
             view.$('.is_winning_reserve_not_met').text()
-              .should.equal 'Reserve not met, increase your bid'
+              .should.equal 'Highest bidder, Reserve not met'
+            view.$('.artwork-auction__bid-status__upsell').text()
+              .should.equal 'Increase your max bid to win the lot'
 
         describe 'not leading bidder & reserve not met - outbid message', ->
           it 'gives a reserve not met bid message', ->
@@ -160,7 +164,9 @@ describe 'auction', ->
             view = new @ArtworkAuctionView data: @data
             view.render()
             view.$('.is_losing').text()
-              .should.equal 'Outbiddd'
+              .should.equal 'Outbid'
+            view.$('.artwork-auction__bid-status__upsell').text()
+              .should.equal 'Increase your max bid to win the lot'
 
         describe 'not leading bidder & reserve met- outbid message', ->
           it 'gives a reserve not met bid message', ->
@@ -175,7 +181,9 @@ describe 'auction', ->
             view = new @ArtworkAuctionView data: @data
             view.render()
             view.$('.is_losing').text()
-              .should.equal 'Outbiddd'
+              .should.equal 'Outbid'
+            view.$('.artwork-auction__bid-status__upsell').text()
+              .should.equal 'Increase your max bid to win the lot'
 
     describe 'preview auction', ->
       it 'renders correctly', ->
