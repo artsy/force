@@ -104,6 +104,7 @@ module.exports = class ArticleView extends Backbone.View
         " li[data-id=#{section.artworks[0].id}]").parent()
       if $el.children().length == 1
         $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+        $el.addClass('single')
       else
         Q.nfcall @fillwidth, $el
     ).done =>
@@ -111,12 +112,19 @@ module.exports = class ArticleView extends Backbone.View
       @maybeFinishedLoading()
 
   refreshArtworksSize: =>
-    parent = $("[data-layout='overflow_fillwidth'] ul")
-    $(parent).height(parent.height()).fadeTo 'fast', 0, () =>
-      $("[data-layout='overflow_fillwidth'] li").width('auto')
-      $("[data-layout='overflow_fillwidth']").each (i, images) =>
-        @fillwidth images
-    setTimeout (=> $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)), 300
+    testing: =>
+      console.log 'at callback'
+      $("[data-layout='overflow_fillwidth'] ul").css('opacity', 1)
+
+    $("[data-layout='overflow_fillwidth']").each (i, images) =>
+      if $(images).find('li').length > 1
+        fixHeight = $(images).height()
+        $(images).find('ul').css({'max-height':fixHeight, 'overflow':'hidden'}).fadeTo 'fast', 0, () =>
+          $(images).find('li').width('auto')
+          @fillwidth images @testing
+          # $(images).find('ul').css('opacity', 1)
+    # setTimeout (=> $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)), 300
+      # $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -194,6 +202,7 @@ module.exports = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el, cb=->) ->
+    debugger
     if @$(el).length < 1 or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
@@ -208,6 +217,7 @@ module.exports = class ArticleView extends Backbone.View
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Remove loading state
         $list.parent().removeClass('is-loading')
+        debugger
         cb()
 
   checkEditable: ->
