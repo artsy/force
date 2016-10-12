@@ -111,10 +111,12 @@ module.exports = class ArticleView extends Backbone.View
       @maybeFinishedLoading()
 
   refreshArtworksSize: =>
-    $("[data-layout='overflow_fillwidth'] li").width('auto')
-    $("[data-layout='overflow_fillwidth']").each (i, images) =>
-      # debugger
-      @fillwidth images
+    parent = $("[data-layout='overflow_fillwidth'] ul")
+    $(parent).height(parent.height()).fadeTo 'fast', 0, () =>
+      $("[data-layout='overflow_fillwidth'] li").width('auto')
+      $("[data-layout='overflow_fillwidth']").each (i, images) =>
+        @fillwidth images
+    setTimeout (=> $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)), 300
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -192,7 +194,7 @@ module.exports = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el, cb=->) ->
-    if @$(el).length < 1 or $(window).width() < 700
+    if @$(el).length < 1 or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)

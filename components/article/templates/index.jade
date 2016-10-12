@@ -47,7 +47,7 @@ if superArticle
             .article-section-text!= section.body
           when 'artworks'
             .article-section-artworks( data-layout=section.layout )
-              ul( data-artworks-count=section.artworks.length)
+              ul
                 for artwork in section.artworks
                   +artwork(artwork)
           when 'image'
