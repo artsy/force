@@ -39,11 +39,22 @@ describe 'Artwork routes', ->
         beforeEach ->
           Backbone.sync.restore()
           sinon.stub(Backbone, 'sync')
-            .yieldsTo 'success', fabricate('artwork', images: [downloadable: true])
+            .yieldsTo 'success', fabricate('artwork', images: [downloadable: true, image_versions: ['larger'], image_url: '/blah/:version.jpg'])
 
         it 'downloads the artwork', ->
           routes.download @req, @res, @next
           request.get.called.should.be.true()
+
+      describe 'when the image is missing urls/versions', ->
+        beforeEach ->
+          Backbone.sync.restore()
+          sinon.stub(Backbone, 'sync')
+            .yieldsTo 'success', fabricate('artwork', images: [downloadable: true])
+
+        it 'nexts with a 403', ->
+          routes.download @req, @res, @next
+          @next.called.should.be.true()
+          @res.status.args[0][0].should.equal 403
 
       describe 'when the image is not downloadable', ->
         beforeEach ->

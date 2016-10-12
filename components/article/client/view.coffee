@@ -102,7 +102,8 @@ module.exports = class ArticleView extends Backbone.View
     Q.all( _.map artworkSections, (section) =>
       $el = @$("[data-layout=overflow_fillwidth]" +
         " li[data-id=#{section.artworks[0].id}]").parent()
-      Q.nfcall @fillwidth, $el
+      if $el.children().length > 1
+        Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
@@ -198,7 +199,7 @@ module.exports = class ArticleView extends Backbone.View
     $list.fillwidthLite
       gutterSize: 30
       apply: (img) ->
-        img.$el.closest('li').width(img.width)
+        img.$el.closest('li').addClass('fillwidth').width(img.width)
       done: (imgs) ->
         # Make sure the captions line up in case rounding off skewed things
         tallest = _.max _.map imgs, (img) -> img.height

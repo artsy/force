@@ -21,11 +21,13 @@ if aggregations
   for mapped in aggregationsMap
     - var aggregation = aggregations[mapped.slice]
     if aggregation && aggregation.length
+      - var param = mapped.param
+      - var isTruncated = truncate[param] && (aggregation.length > truncate[param])
+      - var items = isTruncated ? aggregation.slice(0, truncate[param]) : aggregation
       section
         h3= mapped.label
         ul
-          - var param = mapped.param
-          for item in aggregation
+          for item in items
             - var isActive = params.get(param) == item.id
             li.artwork-filter-criteria__criterion(
               class=(isActive ? 'is-active' : 'is-inactive')
@@ -46,3 +48,8 @@ if aggregations
                   data-key= param
                   class= 'js-artwork-filter-remove'
                 ) Clear
+        if isTruncated
+          a.artwork-filter-criteria__view-all(
+            data-key= param
+            class= 'js-artwork-filter-view-all'
+          ) See All
