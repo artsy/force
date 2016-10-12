@@ -14,6 +14,7 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
     # Render the template once when the params are first set.
     # Afterwards, the superclass handles changes in the selection.
     @listenToOnce @params, 'firstSet', @render
+    super
 
   render: ->
     sort = @params.get('sort')
@@ -22,8 +23,19 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
     @$el.html template { currentSort, sorts }
 
   select: (e) ->
-    super
     e.preventDefault()
-    key = ($el = $(e.target)).data('key')
+
+    $el = $(e.currentTarget)
+    $el.addClass('bordered-pulldown-active')
+    @$('.bordered-pulldown-text').text $el.text()
+    ($pulldown = @$('.bordered-pulldown-options')).hide()
+    @$el.one 'mouseout', =>
+      @$('.bordered-pulldown-options').css display: ''
+
+    key = $el.data('key')
     value = $el.data('value')
     @params.updateWith key, value
+
+  remove: ->
+    @$el.off 'mouseout'
+    super
