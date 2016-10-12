@@ -35,6 +35,7 @@ describe 'auction', ->
           is_with_buyers_premium: true
         sale_artwork:
           id: 'peter-alexander-wedge-with-puff'
+          reserve_status: 'reserve_met'
           reserve_message: 'Reserve met'
           estimate: '$7,000–$9,000'
           current_bid: amount: '$55,000'
@@ -111,25 +112,70 @@ describe 'auction', ->
 
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
+      describe 'post-bid messages', ->
+        beforeEach ->
+          @data = Object.assign(@data, {
+            user: 'existy',
+            accounting: accounting
+          })
+        describe 'leading bidder & reserve met - winning message', ->
+          it 'gives a reserve not met bid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: true
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.is_winning').text()
+              .should.equal 'u r winning'
+        describe 'leading bidder & reserve not met - reserve message', ->
+          it 'gives a reserve not met bid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: true
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.is_winning_reserve_not_met').text()
+              .should.equal 'Reserve not met, increase your bid'
 
-    describe 'reserve not met', ->
-      it 'gives a reserve not met bid message', ->
-        data = Object.assign({}, @data)
-        data.accounting = accounting
-        data.artwork.sale_artwork.reserve_message = 'Reserve not met'
-        # just shoving user + me into data to meet the template conditions
-        # to make .is-losing message render
-        data.user = true
-        data.me =
-          lot_standing:
-            is_highest_bidder: false
-            most_recent_bid:
-              max_bid:
-                cents: 5500000
-        view = new @ArtworkAuctionView data: data
-        view.render()
-        view.$('.is_losing').text()
-          .should.equal 'Reserve not met, increase your bid'
+        describe 'not leading bidder & reserve not met - outbid message', ->
+          it 'gives a reserve not met bid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: false
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.is_losing').text()
+              .should.equal 'Outbiddd'
+
+        describe 'not leading bidder & reserve met- outbid message', ->
+          it 'gives a reserve not met bid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: false
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.is_losing').text()
+              .should.equal 'Outbiddd'
 
     describe 'preview auction', ->
       it 'renders correctly', ->
