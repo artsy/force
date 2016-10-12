@@ -234,6 +234,8 @@ body.body-article
       opacity 0
       overflow hidden
       height artwork-height
+    &.single li
+      width 100%
   li
     margin-right 30px
     &:last-child
@@ -241,17 +243,20 @@ body.body-article
   .artwork-item-image-container
     height auto !important
     img
-      max-height 90vh
-      width auto
       position relative
-  .fillwidth img
-      height auto
-      width 100%
+  .fillwidth img, .single img
+    height auto
+    width 100%
+  .portrait img
+    max-height 90vh
+    width auto
   .artwork-item-image
     padding-bottom 0 !important
   .artwork-item-caption
     overflow ellipsis
     @media screen and (max-width 900px)
+      margin 10px 30px
+    @media screen and (max-width 400px)
       margin 10px 20px
   .overlay-container
     display none
