@@ -16,8 +16,6 @@ item-margin-bottom = 16px
   &.my-active-bids-winning
     .my-active-bids-warning
       color new-green-color
-      &::after
-        content "\25B2" // ▲ character
     .my-active-bids-bid-button
       background transparent
       color black
@@ -42,12 +40,8 @@ item-margin-bottom = 16px
   right 0
   color new-red-color
   padding-right 17px
-  &::after
-    content "\25BC" // ▼ character
-    position absolute
-    right 0
-    top 0
-    font-size 12px
+  &.reserve-not-met
+    color new-yellow-color
 
 .my-active-bids-bid-button
   small-avant-garde()
