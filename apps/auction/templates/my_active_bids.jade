@@ -4,7 +4,10 @@ if myActiveBids && myActiveBids.length
   table
     tbody
       for bid in myActiveBids
+        //- defend against empty bids
         if bid.sale_artwork
+          - leadingBidder = bid.is_leading_bidder
+          - reserveMet = bid.sale_artwork.reserve_status !== 'reserve_not_met'
           tr
             td.auction-mab-artist-artwork-container
               a(
@@ -21,10 +24,22 @@ if myActiveBids && myActiveBids.length
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-            if bid.is_highest_bidder
-              td.auction-mab-warning.is-winning: p Highest Bid
+            if leadingBidder && reserveMet
+              td.auction-mab-warning.is-winning
+                p Highest Bid
+                  i.icon-bid-arrow.down
+                    include ../../../components/main_layout/public/icons/bid-status-arrow.svg
             else
-              td.auction-mab-warning: p Outbid
+              if leadingBidder && !reserveMet
+                td.auction-mab-warning.is-winning-reserve-not-met
+                  p Reserve not met
+                    i.icon-bid-arrow.down
+                      include ../../../components/main_layout/public/icons/bid-status-arrow.svg
+              else
+                td.auction-mab-warning.is-losing
+                  p Outbid
+                    i.icon-bid-arrow.up
+                      include ../../../components/main_layout/public/icons/bid-status-arrow.svg
             td
               a.avant-garde-button-black.auction-mab-bid-button(
                 href=bid.sale_artwork.artwork.href

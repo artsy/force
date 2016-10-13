@@ -38,20 +38,18 @@
 .auction-mab-warning
   &.is-winning p
     color new-green-color
-    &::after
-      content "\25B2" // ▲ character
+  &.is-winning-reserve-not-met p
+    color new-yellow-color
+  &.is-losing p
+    color new-red-color
   p
     color new-red-color
     position relative
     padding-right 20px
     display inline-block
     avant-garde-size('m-headline')
-    &::after
-      content "\25BC" // ▼ character
-      position absolute
-      right 0
-      top 2px
-      font-size 12px
+    & i.icon-bid-arrow svg
+      height 10px
 
 .auction-mab-artist-artwork
 .auction-mab-img
