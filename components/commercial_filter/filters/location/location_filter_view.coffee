@@ -55,9 +55,11 @@ module.exports = class LocationFilterView extends Backbone.View
     $input.on 'typeahead:selected', @onDropdownSelection
 
   onDropdownSelection: (e, selectedLocation) =>
-    if selectedLocation and !_.contains(@params.get('partner_cities'), selectedLocation) 
-      partner_cities = @params.get('partner_cities').concat selectedLocation
-      @additionalLocations.push selectedLocation
+    if selectedLocation?.display?
+      selectedCity = selectedLocation.display
+      return if _.contains(@params.get('partner_cities'), selectedCity) 
+      partner_cities = @params.get('partner_cities').concat selectedCity
+      @additionalLocations.push selectedCity
       @params.set { partner_cities: partner_cities, aggregation_partner_cities: @additionalLocations }
 
   allLocations: ->
