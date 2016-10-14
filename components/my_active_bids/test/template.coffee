@@ -46,6 +46,7 @@ describe 'My Active Bids template', ->
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
     html = template(@locals)
     html.should.containEql 'Highest Bid'
+    html.should.not.containEql 'my-active-bids-winning'
     html.should.containEql 'is-winning-reserve-not-met'
 
   it 'renders losing if not leading bidder & reserve not met', ->
