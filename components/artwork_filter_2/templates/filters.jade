@@ -19,9 +19,9 @@ h2 Works
 
 if aggregations
   for mapped in aggregationsMap
-    - var aggregation = aggregations[mapped.slice]
+    - var param = mapped.param
+    - var aggregation = aggregations[param]
     if aggregation && aggregation.length
-      - var param = mapped.param
       - var isTruncated = truncate[param] && (aggregation.length > truncate[param])
       - var items = isTruncated ? aggregation.slice(0, truncate[param]) : aggregation
       section

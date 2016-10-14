@@ -14,23 +14,45 @@ module.exports = class Counts extends Backbone.Model
 
   # Structures the total counts and aggregations from metaphysics,
   # for both `for_sale` and for all artworks, for easier re-rendering
+  #
+  # ie:
+  #
+  # @totals =
+  #   for_sale: 9
+  #   all: 16
+  #
+  # @aggregations =
+  #   for_sale:
+  #     medium: [{
+  #       { id: 'painting'
+  #         count: 2
+  #         name: 'Painting'
+  #       }]
+  #     ...
+  #   all:
+  #     medium: [{
+  #       id: 'painting'
+  #       count: 7
+  #       name: 'Painting'
+  #     }]
+  #     ...
+
   mapData: ({ all, for_sale }) ->
-    totals =
+    @totals =
       for_sale: for_sale.total
       all: all.total
 
-    aggregations = _.reduce all.aggregations, (memo, { slice, counts }) ->
-      memo.all[slice] = counts
+    @aggregations = _.reduce all.aggregations, (memo, { slice, counts }) ->
+      paramKey = _.find(aggregationsMap, slice: slice)['param']
+      memo.all[paramKey] = counts
       forSaleCounts = _.find(for_sale.aggregations, { slice }).counts
-      memo.for_sale[slice] = _.map counts, (count) ->
+      memo.for_sale[paramKey] = _.map counts, (count) ->
         if (forSaleCount = _.find(forSaleCounts, id: count.id))
           forSaleCount
         else
           _.extend {}, count, count: 0
       memo
     , { for_sale: {}, all: {} }
-    @totals = totals
-    @aggregations = aggregations
 
   fetch: (artist_id) =>
     metaphysics
@@ -44,12 +66,23 @@ module.exports = class Counts extends Backbone.Model
     forSaleKey = if forSale then 'for_sale' else 'all'
     paramKey = _.keys(@params.pick @params.filterParamKeys)[0]
     return @totals?[forSaleKey] if not paramKey?
-    slice = _.find(aggregationsMap, param: paramKey)['slice']
-    _.find(@aggregations[forSaleKey][slice], id: @params.get(paramKey)).count
+    _.find(@aggregations[forSaleKey][paramKey], id: @params.get(paramKey)).count
 
   setCurrentCounts: ->
+    # Set attributes representing for sale and not for sale artworks
+    # meeting the current params selection
+    #
+    # ie:
+    #
+    # @params
+    # > medium: 'painting'
+    #
+    # @set
+    #   for_sale: 2
+    #   all: 7
+
     @set
-      all: @count false
       for_sale: @count true
+      all: @count false
 
 
