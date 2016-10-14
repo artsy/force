@@ -13,16 +13,17 @@ if myActiveBids && myActiveBids.length
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
           if leadingBidder && reserveMet
             p.my-active-bids-warning Highest Bid
-              i.icon-bid-arrow.down
+              i.icon-bid-arrow.up
                 include ../main_layout/public/icons/bid-status-arrow.svg
           else
             if leadingBidder && !reserveMet
-              p.my-active-bids-warning.reserve-not-met Highest Bid
-                i.icon-bid-arrow.down
+              .my-active-bids-warning.reserve-not-met Highest Bid
+                i.icon-bid-arrow.up
                   include ../main_layout/public/icons/bid-status-arrow.svg
             else
-              p.my-active-bids-warning Outbid
-                i.icon-bid-arrow.up
+              .my-active-bids-warning
+                p Outbid
+                i.icon-bid-arrow.down
                   include ../main_layout/public/icons/bid-status-arrow.svg
           a.avant-garde-button-black.my-active-bids-bid-button(
             href=bid.sale_artwork.artwork.href
