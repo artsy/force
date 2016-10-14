@@ -217,8 +217,12 @@ body.body-article
   .artwork-item-image-container
     height auto
     img
-      height auto
+      max-height 90vh
+      width auto
       position relative
+  .fillwidth img
+      height auto
+      width 100%
   .artwork-item-image
     padding-bottom 0 !important
   .artwork-item-caption
@@ -454,7 +458,8 @@ body.body-article
   padding 15px 0px
   max-width 750px
   .article-section-callout-title
-    garamond-size('headline')
+    garamond-size('l-headline')
+    text-align center
 
 .article-section-top-stories
   float right
