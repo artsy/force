@@ -62,7 +62,10 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
+    # $(window).resize @refreshArtworksSize
     $(window).on('resize', _.debounce @refreshArtworksSize, 100)
+
+    $(window).on('resize', _.debounce @refreshImageSetSize, 100)
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
@@ -110,21 +113,6 @@ module.exports = class ArticleView extends Backbone.View
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
-
-  refreshArtworksSize: =>
-    testing: =>
-      console.log 'at callback'
-      $("[data-layout='overflow_fillwidth'] ul").css('opacity', 1)
-
-    $("[data-layout='overflow_fillwidth']").each (i, images) =>
-      if $(images).find('li').length > 1
-        fixHeight = $(images).height()
-        $(images).find('ul').css({'max-height':fixHeight, 'overflow':'hidden'}).fadeTo 'fast', 0, () =>
-          $(images).find('li').width('auto')
-          @fillwidth images @testing
-          # $(images).find('ul').css('opacity', 1)
-    # setTimeout (=> $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)), 300
-      # $("[data-layout='overflow_fillwidth'] ul").height('auto').fadeTo('fast', 1)
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -202,13 +190,13 @@ module.exports = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el, cb=->) ->
-    debugger
     if @$(el).length < 1 or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)
     $list.fillwidthLite
       gutterSize: 30
+      targetHeight: $(window).height() * .9
       apply: (img) ->
         img.$el.closest('li').width(img.width)
       done: (imgs) ->
@@ -216,9 +204,20 @@ module.exports = class ArticleView extends Backbone.View
         tallest = _.max _.map imgs, (img) -> img.height
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Remove loading state
+        $($list).css({'display':'flex', 'justify-content':'space-between'})
         $list.parent().removeClass('is-loading')
-        debugger
         cb()
+
+  refreshArtworksSize: =>
+    if $(window).width() < 1350 and $(window).width() > 400
+      $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
+        if $(imgs).children().length > 1
+          @parentWidth = $(imgs).width()
+          @fillwidth imgs
+
+  refreshImageSetSize: =>
+    if $('#articles-body-container').width() < 650
+      console.log 'refreshImageSetSize'
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -276,7 +275,7 @@ module.exports = class ArticleView extends Backbone.View
     @fadeInShare = _.once -> @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeTo(250, 1)
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
     $(@$el).waypoint (direction) =>
-      @fadeInShare() if direction is 'down'
+      @fadeInShare() if direction is 'down' and $(window).width() > 900
 
   setupMarketoStyles: =>
     $(@$el).waypoint (direction) =>

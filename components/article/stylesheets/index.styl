@@ -160,6 +160,19 @@ body.body-article
       margin-top 8px
     &:hover
       color white
+  @media screen and (max-width 900px)
+    width 100vw
+    position fixed
+    bottom 0
+    left 0
+    margin 0
+    padding 0
+    z-index 1000
+    display flex
+    .article-social__header
+      display none
+    .share-item
+      width 33.333%
 
 .article-section-image
   max-width overflow-width
@@ -239,6 +252,7 @@ body.body-article
     &.single.portrait li
       width auto
   li
+    transition all .5s
     margin-right 30px
     &:last-child
       margin-right 0
@@ -487,6 +501,8 @@ body.body-article
   max-width 54px
   z-index 10
   float left
+  @media screen and (max-width 900px)
+    display none !important
   a
     background-color white
     text-decoration none
