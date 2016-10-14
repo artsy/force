@@ -12,12 +12,14 @@ if myActiveBids && myActiveBids.length
               strong= bid.sale_artwork.artwork.artist.name
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
           if leadingBidder && reserveMet
-            p.my-active-bids-warning Highest Bid
+            .my-active-bids-warning
+              p Highest Bid
               i.icon-bid-arrow.up
                 include ../main_layout/public/icons/bid-status-arrow.svg
           else
             if leadingBidder && !reserveMet
-              .my-active-bids-warning.reserve-not-met Highest Bid
+              .my-active-bids-warning.reserve-not-met
+                p Highest Bid
                 i.icon-bid-arrow.up
                   include ../main_layout/public/icons/bid-status-arrow.svg
             else

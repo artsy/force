@@ -27,18 +27,18 @@ if myActiveBids && myActiveBids.length
             if leadingBidder && reserveMet
               td.auction-mab-warning.is-winning
                 p Highest Bid
-                  i.icon-bid-arrow.down
+                  i.icon-bid-arrow.up
                     include ../../../components/main_layout/public/icons/bid-status-arrow.svg
             else
               if leadingBidder && !reserveMet
                 td.auction-mab-warning.is-winning-reserve-not-met
                   p Reserve not met
-                    i.icon-bid-arrow.down
+                    i.icon-bid-arrow.up
                       include ../../../components/main_layout/public/icons/bid-status-arrow.svg
               else
                 td.auction-mab-warning.is-losing
                   p Outbid
-                    i.icon-bid-arrow.up
+                    i.icon-bid-arrow.down
                       include ../../../components/main_layout/public/icons/bid-status-arrow.svg
             td
               a.avant-garde-button-black.auction-mab-bid-button(
