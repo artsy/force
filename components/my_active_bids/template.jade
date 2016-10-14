@@ -18,12 +18,12 @@ if myActiveBids && myActiveBids.length
                 include ../main_layout/public/icons/bid-status-arrow.svg
           else
             if leadingBidder && !reserveMet
-              .my-active-bids-warning.reserve-not-met
+              .my-active-bids-warning.is-winning-reserve-not-met
                 p Highest Bid
                 i.icon-bid-arrow.up
                   include ../main_layout/public/icons/bid-status-arrow.svg
             else
-              .my-active-bids-warning
+              .my-active-bids-warning.is-losing
                 p Outbid
                 i.icon-bid-arrow.down
                   include ../main_layout/public/icons/bid-status-arrow.svg

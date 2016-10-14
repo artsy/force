@@ -31,12 +31,35 @@ describe 'My Active Bids template', ->
       myActiveBids: fixture()
       accounting: formatMoney: (s) -> s
 
-  it 'renders highest bid if the highest_bid on the sale artwork and \
+  it 'renders highest bid if user is leading bidder and reserve met\
       bidder positon match', ->
-    @locals.myActiveBids[0].is_highest_bidder = true
-    template(@locals).should.containEql 'Highest Bid'
+    @locals.myActiveBids[0].is_leading_bidder = true
+    @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_met'
+    html = template(@locals)
+    html.should.containEql 'Highest Bid'
+    html.should.containEql 'my-active-bids-winning'
+    html.should.not.containEql 'is-winning-reserve-not-met'
 
-  it 'renders losing if the highest_bid on the sale artwork and \
+  it 'renders highest bid if leading bidder and reserve not met \
       bidder positon do not match', ->
-    @locals.myActiveBids[0].is_highest_bidder = false
-    template(@locals).should.containEql 'Outbid'
+    @locals.myActiveBids[0].is_leading_bidder = true
+    @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
+    html = template(@locals)
+    html.should.containEql 'Highest Bid'
+    html.should.containEql 'is-winning-reserve-not-met'
+
+  it 'renders losing if not leading bidder & reserve not met', ->
+    @locals.myActiveBids[0].is_leading_bidder = false
+    @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
+    html = template(@locals)
+    html.should.containEql 'Outbid'
+    html.should.containEql 'is-losing'
+    html.should.not.containEql 'my-active-bids-winning'
+
+  it 'renders losing if not leading bidder & reserve is met', ->
+    @locals.myActiveBids[0].is_leading_bidder = false
+    @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_met'
+    html = template(@locals)
+    html.should.containEql 'Outbid'
+    html.should.containEql 'is-losing'
+    html.should.not.containEql 'my-active-bids-winning'
