@@ -5,7 +5,6 @@ module.exports = """
         active_bid {
           id
         }
-        is_highest_bidder
         is_leading_bidder
         sale_artwork {
           id
