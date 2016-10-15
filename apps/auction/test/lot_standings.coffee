@@ -1,8 +1,7 @@
+# 2 losing bids
 module.exports = [
   {
-    "active_bid": {
-      "id": "580129238b3b81089c00000f"
-    },
+    "active_bid": null,
     "is_leading_bidder": false,
     "sale_artwork": {
       "id": "imhuge-brillo-condensed-soap",
