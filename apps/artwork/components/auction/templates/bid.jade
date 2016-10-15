@@ -3,10 +3,6 @@
 - firstIncr = increments[0]
 - leadingBidder = me && me.lot_standing && !! me.lot_standing.is_leading_bidder
 - reserveMet = sale_artwork.reserve_status !== 'reserve_not_met'
-//- console.log('reserveMet: ', reserveMet)
-//- console.log('me: ', me)
-//- console.log('leadingBidder: ', leadingBidder)
-//- console.log("sale artwork", sale_artwork)
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
     method='GET'
