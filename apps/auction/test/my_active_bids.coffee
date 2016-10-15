@@ -2,7 +2,7 @@ benv = require 'benv'
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = require('jade').compileFile(require.resolve '../templates/my_active_bids.jade')
-bidderPositions = require './lot_standings.js'
+bidderPositions = require './lot_standings'
 
 describe 'my active bids auction page template', ->
   before (done) ->
@@ -44,8 +44,8 @@ describe 'my active bids auction page template', ->
         @view.$('.is-winning-reserve-not-met').should.have.lengthOf 1
         @view.$('.is-winning-reserve-not-met').text()
           .should.containEql('Reserve not met')
-      describe 'not leading bidder - outbid message', ->
-      it 'gives a reserve not met bid message', ->
+    describe 'not leading bidder - outbid message', ->
+      it 'gives an outbid bid message', ->
         @data[0].is_leading_bidder = false
         @data[0].sale_artwork.reserve_status = 'reserve_not_met'
         @data[1].is_leading_bidder = false
@@ -58,4 +58,4 @@ describe 'my active bids auction page template', ->
         @view.$('.is-losing').text().should.containEql('Outbid')
         # This doesn't work ... :/
         # _.each(@view.$('.is-losing'), (el) -> 
-        #   el.text().should.containEql('Outbyid'))
+        #   el.text().should.containEql('Outbid'))
