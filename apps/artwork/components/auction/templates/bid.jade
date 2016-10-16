@@ -2,7 +2,7 @@
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
 - leadingBidder = me && me.lot_standing && !! me.lot_standing.is_leading_bidder
-- reserveMet = sale_artwork.reserve_status !== 'reserve_not_met'
+- reserveNotMet = sale_artwork.reserve_status === 'reserve_not_met'
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
     method='GET'
@@ -14,13 +14,13 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
     if user
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing
-          if leadingBidder && reserveMet
+          if leadingBidder && !reserveNotMet
             .artwork-auction__bid-form__max-bid-label.is-winning
               | Highest Bidder
               i.icon-bid-arrow.up
                   include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
           else
-            if leadingBidder && !reserveMet
+            if leadingBidder && reserveNotMet
               .artwork-auction__bid-form__max-bid-label.is-winning-reserve-not-met
                 | Highest bidder, Reserve not met
                 i.icon-bid-arrow.up

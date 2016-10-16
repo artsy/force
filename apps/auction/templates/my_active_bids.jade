@@ -6,7 +6,7 @@ if myActiveBids && myActiveBids.length
         //- defend against empty bids
         if bid.sale_artwork
           - leadingBidder = bid.is_leading_bidder
-          - reserveMet = bid.sale_artwork.reserve_status !== 'reserve_not_met'
+          - reserveNotMet = bid.sale_artwork.reserve_status === 'reserve_not_met'
           tr
             td.auction-mab-artist-artwork-container
               a(
@@ -23,13 +23,13 @@ if myActiveBids && myActiveBids.length
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-            if leadingBidder && reserveMet
+            if leadingBidder && !reserveNotMet
               td.auction-mab-warning.is-winning
                 p Highest Bid
                   i.icon-bid-arrow.up
                     include ../../../components/main_layout/public/icons/bid-status-arrow.svg
             else
-              if leadingBidder && !reserveMet
+              if leadingBidder && reserveNotMet
                 td.auction-mab-warning.is-winning-reserve-not-met
                   p Reserve not met
                     i.icon-bid-arrow.up
