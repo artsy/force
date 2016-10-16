@@ -15,18 +15,18 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing
           if leadingBidder && reserveMet
-            .artwork-auction__bid-form__max-bid-label.is_winning
+            .artwork-auction__bid-form__max-bid-label.is-winning
               | Highest Bidder
               i.icon-bid-arrow.up
                   include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
           else
             if leadingBidder && !reserveMet
-              .artwork-auction__bid-form__max-bid-label.is_winning_reserve_not_met
+              .artwork-auction__bid-form__max-bid-label.is-winning-reserve-not-met
                 | Highest bidder, Reserve not met
                 i.icon-bid-arrow.up
                   include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
             else
-              .artwork-auction__bid-form__max-bid-label.is_losing
+              .artwork-auction__bid-form__max-bid-label.is-losing
                 | Outbid
                 i.icon-bid-arrow.down
                   include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg

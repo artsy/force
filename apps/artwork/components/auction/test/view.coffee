@@ -130,7 +130,7 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is_winning').text()
+            view.$('.is-winning').text()
               .should.containEql 'Highest Bidder'
             view.$('.artwork-auction__bid-status__upsell').length.should.equal 0
 
@@ -146,7 +146,7 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is_winning_reserve_not_met').text()
+            view.$('.is-winning-reserve-not-met').text()
               .should.containEql 'Highest bidder, Reserve not met'
             view.$('.artwork-auction__bid-status__upsell').text()
               .should.equal 'Increase your max bid to win the lot'
@@ -163,7 +163,7 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is_losing').text()
+            view.$('.is-losing').text()
               .should.containEql 'Outbid'
             view.$('.artwork-auction__bid-status__upsell').text()
               .should.equal 'Increase your max bid to win the lot'
@@ -180,7 +180,7 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is_losing').text()
+            view.$('.is-losing').text()
               .should.containEql 'Outbid'
             view.$('.artwork-auction__bid-status__upsell').text()
               .should.equal 'Increase your max bid to win the lot'
