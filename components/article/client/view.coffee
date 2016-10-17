@@ -62,9 +62,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
-    # $(window).resize @refreshArtworksSize
-    $(window).on('resize', _.debounce @refreshArtworksSize, 100)
-
+    $(window).on('resize', @refreshWindowSize)
     $(window).on('resize', _.debounce @refreshImageSetSize, 100)
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
@@ -151,7 +149,12 @@ module.exports = class ArticleView extends Backbone.View
     $container = $('.article-section-container[data-section-type="image_set"]')
     $($container).each (i, value) ->
       imagesLoaded $(value), =>
-        allowedPixels = 580.0 - 120 # min-width + margins
+        if $('#articles-body-container').width() > 650
+          console.log 'fullsize'
+          allowedPixels = 580.0 - 120 # min-width + margins
+        else
+          console.log 'responsive'
+          allowedPixels = ($(window).width() - 60) - 120
         totalPixels = 0.0
         $(value).find('img').each (i, img) ->
           _.defer ->
@@ -190,7 +193,7 @@ module.exports = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el, cb=->) ->
-    if @$(el).length < 1 or $(window).width() < 400
+    if @$(el).length < 1 # or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)
@@ -208,16 +211,18 @@ module.exports = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
         cb()
 
-  refreshArtworksSize: =>
-    if $(window).width() < 1350 and $(window).width() > 400
-      $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
-        if $(imgs).children().length > 1
-          @parentWidth = $(imgs).width()
-          @fillwidth imgs
+  refreshWindowSize: =>
+    # if $(window).width() < 1350 and $(window).width() > 400
+    $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
+      if $(imgs).children().length > 1
+        @parentWidth = $(imgs).width()
+        @fillwidth imgs
 
   refreshImageSetSize: =>
-    if $('#articles-body-container').width() < 650
-      console.log 'refreshImageSetSize'
+    # console.log 'here'
+    @setupImageSets()
+    if $(window).width() < 1250
+      @sizeVideo()
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -240,7 +245,7 @@ module.exports = class ArticleView extends Backbone.View
     $iframe.replaceWith $newIframe
     $cover.remove()
 
-  sizeVideo: ->
+  sizeVideo: =>
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
     calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) ->
@@ -248,6 +253,7 @@ module.exports = class ArticleView extends Backbone.View
       { width: srcWidth*ratio, height: srcHeight*ratio }
 
     resizeVideo = ->
+      console.log 'resizeVideo'
       newHeight = $(window).height() - 100
 
       $videos.each ->
@@ -257,7 +263,7 @@ module.exports = class ArticleView extends Backbone.View
         c_height = $parent.outerHeight()
         maxHeight = if (newHeight < c_height) then newHeight else (c_width * .5625)
         { width, height } = calculateAspectRatioFit $el.width(), $el.height(), $parent.outerWidth(), maxHeight
-
+        $($parent).height(maxHeight)
         left = Math.max(0, ((c_width - width) / 2)) + "px"
         top = Math.max(0, ((c_height - height) / 2)) + "px"
 
