@@ -1,0 +1,22 @@
+mixin bidStatus(lotStanding, saleArtwork)
+  - leadingBidder = lotStanding.is_leading_bidder
+  - reserveNotMet = saleArtwork.reserve_status === 'reserve_not_met'
+  .bid-status
+    if leadingBidder && !reserveNotMet
+      .bid-status__is-winning
+        p Highest Bid
+          i.bid-status__arrow-up
+            include ../main_layout/public/icons/bid-status-arrow.svg
+    else
+      if leadingBidder && reserveNotMet
+        .bid-status__is-winning-reserve-not-met
+          p Reserve not met
+            i.bid-status__arrow-up
+              include ../main_layout/public/icons/bid-status-arrow.svg
+      else
+        .bid-status__is-losing
+          p Outbid
+            i.bid-status__arrow-down
+              include ../main_layout/public/icons/bid-status-arrow.svg
+      .bid-status__increase-bid
+        | Increase your max bid to win the lot

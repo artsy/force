@@ -1,8 +1,7 @@
+include ../../../../../components/bid_status/index
 - myLastMaxBid = me && me.lot_standing && me.lot_standing.most_recent_bid.max_bid.cents
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
 - firstIncr = increments[0]
-- leadingBidder = me && me.lot_standing && !! me.lot_standing.is_leading_bidder
-- reserveNotMet = sale_artwork.reserve_status === 'reserve_not_met'
 if auction.is_open && !artwork.is_sold && !auction.is_live_open
   form.artwork-auction__bid-form(
     method='GET'
@@ -14,24 +13,8 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
     if user
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing
-          if leadingBidder && !reserveNotMet
-            .artwork-auction__bid-form__max-bid-label.is-winning
-              | Highest Bidder
-              i.icon-bid-arrow.up
-                  include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
-          else
-            if leadingBidder && reserveNotMet
-              .artwork-auction__bid-form__max-bid-label.is-winning-reserve-not-met
-                | Highest bidder, Reserve not met
-                i.icon-bid-arrow.up
-                  include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
-            else
-              .artwork-auction__bid-form__max-bid-label.is-losing
-                | Outbid
-                i.icon-bid-arrow.down
-                  include ../../../../../components/main_layout/public/icons/bid-status-arrow.svg
-            .artwork-auction__bid-status__upsell
-              | Increase your max bid to win the lot
+          +bidStatus(me.lot_standing, sale_artwork)
+            
         else
           .artwork-auction__bid-form__max-bid-label Set your max bid
         span.help-tooltip(

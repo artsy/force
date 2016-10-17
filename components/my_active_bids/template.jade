@@ -1,3 +1,4 @@
+include ../bid_status/index
 if myActiveBids && myActiveBids.length
   ul
     for bid in myActiveBids
@@ -11,22 +12,7 @@ if myActiveBids && myActiveBids.length
               h4 Lot #{bid.sale_artwork.lot_number}
               strong= bid.sale_artwork.artwork.artist.name
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
-          if leadingBidder && !reserveNotMet
-            .my-active-bids-warning
-              p Highest Bid
-              i.icon-bid-arrow.up
-                include ../main_layout/public/icons/bid-status-arrow.svg
-          else
-            if leadingBidder && reserveNotMet
-              .my-active-bids-warning.is-winning-reserve-not-met
-                p Highest Bid
-                i.icon-bid-arrow.up
-                  include ../main_layout/public/icons/bid-status-arrow.svg
-            else
-              .my-active-bids-warning.is-losing
-                p Outbid
-                i.icon-bid-arrow.down
-                  include ../main_layout/public/icons/bid-status-arrow.svg
+          +bidStatus(bid, bid.sale_artwork)
           a.avant-garde-button-black.my-active-bids-bid-button(
             href=bid.sale_artwork.artwork.href
           ) Bid
