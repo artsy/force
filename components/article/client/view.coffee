@@ -103,7 +103,6 @@ module.exports = class ArticleView extends Backbone.View
         " li[data-id=#{section.artworks[0].id}]").parent()
       if $el.children().length == 1
         $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
-        $el.addClass('single')
       else
         Q.nfcall @fillwidth, $el
     ).done =>
