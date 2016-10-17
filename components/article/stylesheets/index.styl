@@ -215,14 +215,15 @@ body.body-article
     &:last-child
       margin-right 0
   .artwork-item-image-container
-    height auto
+    height auto !important
     img
-      max-height 90vh
-      width auto
       position relative
-  .fillwidth img
       height auto
       width 100%
+  .portrait img
+    max-height 90vh
+    width auto
+    max-width 100vw
   .artwork-item-image
     padding-bottom 0 !important
   .artwork-item-caption
