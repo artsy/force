@@ -118,8 +118,8 @@ describe 'auction', ->
             user: 'existy',
             accounting: accounting
           })
-        describe 'leading bidder & reserve met - winning message', ->
-          it 'gives a reserve not met bid message', ->
+        describe 'leading bidder & reserve met', ->
+          it 'gives a winning message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
             @data.me = {
               lot_standing:
@@ -134,8 +134,8 @@ describe 'auction', ->
               .should.containEql 'Highest Bidder'
             view.$('.artwork-auction__bid-status__upsell').length.should.equal 0
 
-        describe 'leading bidder & reserve not met - reserve message', ->
-          it 'gives a reserve not met bid message', ->
+        describe 'leading bidder & reserve not met', ->
+          it 'gives a reserve not met message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
             @data.me = {
               lot_standing:
@@ -151,8 +151,8 @@ describe 'auction', ->
             view.$('.artwork-auction__bid-status__upsell').text()
               .should.equal 'Increase your max bid to win the lot'
 
-        describe 'not leading bidder & reserve not met - outbid message', ->
-          it 'gives a reserve not met bid message', ->
+        describe 'not leading bidder & reserve not met', ->
+          it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
             @data.me = {
               lot_standing:
@@ -168,8 +168,8 @@ describe 'auction', ->
             view.$('.artwork-auction__bid-status__upsell').text()
               .should.equal 'Increase your max bid to win the lot'
 
-        describe 'not leading bidder & reserve met- outbid message', ->
-          it 'gives a reserve not met bid message', ->
+        describe 'not leading bidder & reserve met', ->
+          it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
             @data.me = {
               lot_standing:
