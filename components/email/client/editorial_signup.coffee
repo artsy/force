@@ -49,6 +49,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
+    @showEditorialCTA 'modal'
 
   setupAEArticlePage: ->
     @ctaBarView = new CTABarView
@@ -57,7 +58,7 @@ module.exports = class EditorialSignupView extends Backbone.View
       persist: true
       email: sd.CURRENT_USER?.email or ''
     if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
-      @showEditorialCTA()
+      @showEditorialCTA splitTest('editorial_cta_banner').outcome()
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -84,27 +85,25 @@ module.exports = class EditorialSignupView extends Backbone.View
       error: ->
         cb null
 
-  showEditorialCTA: ->
-    @test = splitTest('editorial_cta_banner')
-    @outcome = @test.outcome()
-    if @outcome is 'modal' or $('body').hasClass('body-transparent-header')
-      @outcome = 'modal'
+  showEditorialCTA: (outcome) ->
+    if outcome is 'modal' or $('body').hasClass('body-transparent-header')
       @$('#modal-container').append editorialCTABannerTemplate
-        mode: @outcome
+        mode: outcome
         email: sd.CURRENT_USER?.email or ''
         image: sd.EDITORIAL_CTA_BANNER_IMG
-      @$('#articles-show').waypoint (direction) =>
+      @$('#articles-show, .articles-articles-page').waypoint (direction) =>
         if direction is 'down'
           setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)
-    else if @outcome is 'banner'
+      analyticsHooks.trigger('view:editorial-signup', type: outcome )
+    else if outcome is 'banner'
       @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
-        mode: @outcome
+        mode: outcome
         email: sd.CURRENT_USER?.email or ''
         image: sd.EDITORIAL_CTA_BANNER_IMG
       setTimeout((=> @$('.articles-es-cta--banner').height(315).attr('data-state', 'in') ), 1000)
-    else if @outcome is 'old_modal'
+      analyticsHooks.trigger('view:editorial-signup', type: outcome )
+    else if outcome is 'old_modal'
       mediator.on 'auction-reminders:none', @setupCTAWaypoints
-    analyticsHooks.trigger('view:editorial-signup', type: @outcome )
 
   hideEditorialCTA: (e) ->
     e?.preventDefault()
@@ -121,15 +120,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     @$el.append @ctaBarView.render().$el
     @$('#articles-show').waypoint (direction) =>
       setTimeout((=> @ctaBarView.transitionIn()), 2000) if direction is 'down'
-      analyticsHooks.trigger('view:editorial-signup')
-    @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
-      @ctaBarView.transitionOut() if direction is 'down'
-      @ctaBarView.transitionIn() if direction is 'up'
-    , { offset: '90%' }
-    @$(".article-container[data-id=#{sd.ARTICLE?.id}] .article-social").waypoint (direction) =>
-      @ctaBarView.transitionOut() if direction is 'up'
-      @ctaBarView.transitionIn() if direction is 'down'
-    , { offset: '-10%' }
+      analyticsHooks.trigger('view:editorial-signup', type: 'old_modal')
 
   # Subscribe controls
   onSubscribe: (e) ->
@@ -156,7 +147,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         # Lush Signup
         @$('.articles-es-cta__container').fadeOut =>
           @$('.articles-es-cta__social').fadeIn()
-        setTimeout((=> @ctaBarView.close()), 2000)
+        @ctaBarView.close()
         # CTA Banner
         @$('.articles-es-cta--banner.banner').height(0)
         @$('.articles-es-cta--banner').css('opacity', 0).attr('data-state', 'out')
@@ -173,4 +164,4 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   onDismiss: ->
     @ctaBarView.logDimissal()
-    analyticsHooks.trigger('dismiss:editorial-signup', type: @outcome)
+    analyticsHooks.trigger('dismiss:editorial-signup', type: splitTest('editorial_cta_banner').outcome())
