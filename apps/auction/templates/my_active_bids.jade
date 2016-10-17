@@ -22,7 +22,7 @@ if myActiveBids && myActiveBids.length
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-            td.bid-status
+            td.bid-status-cell
               +bidStatus(bid, bid.sale_artwork)
             td
               a.avant-garde-button-black.auction-mab-bid-button(
