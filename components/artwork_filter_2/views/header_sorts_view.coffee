@@ -2,11 +2,6 @@ _ = require 'underscore'
 BorderedPulldown = require '../../bordered_pulldown/view.coffee'
 template = -> require('../templates/header_sorts_view.jade') arguments...
 
-sorts =
-  '-partner_updated_at': 'Recently Updated'
-  '-published_at': 'Recently Added'
-  '-year': 'Artwork Year (desc.)'
-  'year': 'Artwork Year (asc.)'
 
 module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
 
@@ -16,11 +11,18 @@ module.exports = class ArtworkFiltersSortsView extends BorderedPulldown
     @listenToOnce @params, 'firstSet', @render
     super
 
+  sorts:
+    '-partner_updated_at': 'Recently Updated'
+    '-published_at': 'Recently Added'
+    '-year': 'Artwork Year (desc.)'
+    'year': 'Artwork Year (asc.)'
+
   render: ->
     sort = @params.get('sort')
     sort ?= @params.defaultParams['sort']
-    currentSort = sorts[sort]
-    @$el.html template { currentSort, sorts }
+    currentSort = @sorts[sort]
+    @$el.html template { currentSort, @sorts }
+    this
 
   select: (e) ->
     e.preventDefault()

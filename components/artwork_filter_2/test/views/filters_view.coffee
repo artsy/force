@@ -21,7 +21,7 @@ describe 'FiltersView', ->
   beforeEach ->
     @view = new @FiltersView
       params: new Backbone.Model
-      counts: counts = new Backbone.Model
+      counts: new Backbone.Model
 
   it 'renders the template', ->
     @view.counts.aggregations = mappedAggregations

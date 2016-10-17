@@ -10,8 +10,11 @@ module.exports = class ArtworkFilterCountView extends Backbone.View
     @listenTo @params, 'change:for_sale', @render
 
   render: ->
-    forSaleCount = @counts.get 'for_sale'
-    unless @params.get('for_sale')
-      allCount = @counts.get 'all'
+    options = forSaleCount: @counts.get 'for_sale'
+    all = @counts.get 'all'
 
-    @$el.html template { forSaleCount, allCount }
+    unless (@params.get('for_sale')? or all == options.forSaleCount)
+      options.allCount = all
+
+    @$el.html template options
+    this

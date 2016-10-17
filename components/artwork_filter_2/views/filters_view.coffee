@@ -41,6 +41,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       @params,
       @truncate
     }
+    this
 
   toggleBool: (e) ->
     e.preventDefault()
