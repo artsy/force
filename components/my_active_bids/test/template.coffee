@@ -1,4 +1,5 @@
 template = require('jade').compileFile(require.resolve '../template.jade')
+cheerio = require 'cheerio'
 fixture = -> [
   {
     "id": "56ba482e8b3b8167d7000000",
@@ -35,32 +36,28 @@ describe 'My Active Bids template', ->
       bidder positon match', ->
     @locals.myActiveBids[0].is_leading_bidder = true
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_met'
-    html = template(@locals)
-    html.should.containEql 'Highest Bid'
-    html.should.containEql 'my-active-bids-winning'
-    html.should.not.containEql 'is-winning-reserve-not-met'
+    $ = cheerio.load(template(@locals))
+    $('.bid-status').text().should.containEql 'Highest Bid'
+    $('.bid-status__is-winning').length.should.equal 1
 
   it 'renders highest bid if leading bidder and reserve not met \
       bidder positon do not match', ->
     @locals.myActiveBids[0].is_leading_bidder = true
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
-    html = template(@locals)
-    html.should.containEql 'Highest Bid'
-    html.should.containEql 'is-winning-reserve-not-met'
-    html.should.not.containEql 'my-active-bids-winning'
+    $ = cheerio.load(template(@locals))
+    $('.bid-status').text().should.containEql 'Highest Bid'
+    $('.bid-status__is-winning-reserve-not-met').length.should.equal 1
 
   it 'renders losing if not leading bidder & reserve not met', ->
     @locals.myActiveBids[0].is_leading_bidder = false
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
-    html = template(@locals)
-    html.should.containEql 'Outbid'
-    html.should.containEql 'is-losing'
-    html.should.not.containEql 'my-active-bids-winning'
+    $ = cheerio.load(template(@locals))
+    $('.bid-status').text().should.containEql 'Outbid'
+    $('.bid-status__is-losing').length.should.equal 1
 
   it 'renders losing if not leading bidder & reserve is met', ->
     @locals.myActiveBids[0].is_leading_bidder = false
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_met'
-    html = template(@locals)
-    html.should.containEql 'Outbid'
-    html.should.containEql 'is-losing'
-    html.should.not.containEql 'my-active-bids-winning'
+    $ = cheerio.load(template(@locals))
+    $('.bid-status').text().should.containEql 'Outbid'
+    $('.bid-status__is-losing').length.should.equal 1
