@@ -75,6 +75,7 @@ describe 'Home routes', ->
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
             @res.render.args[0][1].heroUnits.first().get 'description'
               .should.equal 'My hero'
 
