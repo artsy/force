@@ -4,7 +4,6 @@ if myActiveBids && myActiveBids.length
   table
     tbody
       for bid in myActiveBids
-        //- defend against empty bids
         if bid.sale_artwork
           tr
             td.auction-mab-artist-artwork-container
