@@ -10,7 +10,6 @@ mixin bidStatus(lotStanding, saleArtwork, args)
         p= winningMessage
           i.bid-status__arrow-up
             include ./public/icons/bid-status-arrow.svg
-
     else
       if leadingBidder && reserveNotMet
         .bid-status__is-winning-reserve-not-met
