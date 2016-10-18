@@ -75,6 +75,10 @@ maybeFetchHomepageRails = (req)->
     .then ([x, { home_page }]) ->
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
+      # always show followed artist rail,
+      # if we dont get results we will replace with artists TO follow
+      home_page.artwork_modules.unshift { key: 'followed_artists' }
+
       res.locals.sd.HERO_UNITS = heroUnits.toJSON()
       res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
 
