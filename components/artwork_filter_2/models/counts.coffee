@@ -37,6 +37,14 @@ module.exports = class Counts extends Backbone.Model
   #     }]
   #     ...
 
+  fetch: (artist_id) =>
+    metaphysics
+      query: query
+      variables: { artist_id, @aggregations }
+    .then (data) =>
+      @mapData data
+      @setCurrentCounts()
+
   mapData: ({ all, for_sale }) ->
     @totals =
       for_sale: for_sale.total
@@ -54,20 +62,6 @@ module.exports = class Counts extends Backbone.Model
       memo
     , { for_sale: {}, all: {} }
 
-  fetch: (artist_id) =>
-    metaphysics
-      query: query
-      variables: { artist_id, @aggregations }
-    .then (data) =>
-      @mapData(data)
-      @setCurrentCounts()
-
-  count: (forSale) ->
-    forSaleKey = if forSale then 'for_sale' else 'all'
-    paramKey = _.keys(@params.pick @params.filterParamKeys)[0]
-    return @totals?[forSaleKey] if not paramKey?
-    _.find(@aggregations[forSaleKey][paramKey], id: @params.get(paramKey)).count
-
   setCurrentCounts: ->
     # Set attributes representing for sale and not for sale artworks
     # meeting the current params selection
@@ -81,8 +75,14 @@ module.exports = class Counts extends Backbone.Model
     #   for_sale: 2
     #   all: 7
 
-    @set
-      for_sale: @count true
-      all: @count false
+    paramValue = undefined
+    paramKey = _.find @params.filterParamKeys, (key) =>
+      paramValue = @params.get key
+      paramValue?
 
-
+    if paramKey?
+      @set
+        for_sale: _.find(@aggregations.for_sale[paramKey], id: paramValue).count
+        all: _.find(@aggregations.all[paramKey], id: paramValue).count
+    else
+      @set @totals

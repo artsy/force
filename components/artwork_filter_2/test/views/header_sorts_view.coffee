@@ -62,4 +62,3 @@ describe 'HeaderCountsView', ->
       $(e.currentTarget).hasClass('bordered-pulldown-active').should.be.true()
       @view.$('.bordered-pulldown-text').text().should.eql 'Foo Bar'
       @view.params.updateWith.calledWith('foo', 'bar').should.be.ok()
-

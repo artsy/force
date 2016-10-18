@@ -1,0 +1,156 @@
+{
+  "all": {
+    "total": 26,
+    "aggregations": [
+      {
+        "slice": "INSTITUTION",
+        "counts": [
+          {
+            "id": "depart-foundation",
+            "name": "Depart Foundation",
+            "count": 6
+          },
+          {
+            "id": "malba",
+            "name": "MALBA",
+            "count": 1
+          },
+          {
+            "id": "rhizome-artbase",
+            "name": "Rhizome ArtBase",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "slice": "PERIOD",
+        "counts": [
+          {
+            "id": "2010",
+            "name": "2010",
+            "count": 23
+          },
+          {
+            "id": "2000",
+            "name": "2000",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "slice": "MEDIUM",
+        "counts": [
+          {
+            "id": "film-slash-video",
+            "name": "Film/Video",
+            "count": 15
+          },
+          {
+            "id": "painting",
+            "name": "Painting",
+            "count": 7
+          },
+          {
+            "id": "performance-art",
+            "name": "Performance Art",
+            "count": 1
+          },
+          {
+            "id": "sculpture",
+            "name": "Sculpture",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "slice": "GALLERY",
+        "counts": [
+          {
+            "id": "foxy-production",
+            "name": "Foxy Production",
+            "count": 8
+          },
+          {
+            "id": "anat-ebgi",
+            "name": "Anat Ebgi",
+            "count": 4
+          },
+          {
+            "id": "steve-turner",
+            "name": "Steve Turner",
+            "count": 1
+          },
+          {
+            "id": "bitforms-gallery",
+            "name": "bitforms gallery",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "for_sale": {
+    "total": 6,
+    "aggregations": [
+      {
+        "slice": "INSTITUTION",
+        "counts": []
+      },
+      {
+        "slice": "PERIOD",
+        "counts": [
+          {
+            "id": "2010",
+            "name": "2010",
+            "count": 5
+          },
+          {
+            "id": "2000",
+            "name": "2000",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "slice": "MEDIUM",
+        "counts": [
+          {
+            "id": "film-slash-video",
+            "name": "Film/Video",
+            "count": 4
+          },
+          {
+            "id": "painting",
+            "name": "Painting",
+            "count": 1
+          },
+          {
+            "id": "sculpture",
+            "name": "Sculpture",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "slice": "GALLERY",
+        "counts": [
+          {
+            "id": "foxy-production",
+            "name": "Foxy Production",
+            "count": 4
+          },
+          {
+            "id": "steve-turner",
+            "name": "Steve Turner",
+            "count": 1
+          },
+          {
+            "id": "bitforms-gallery",
+            "name": "bitforms gallery",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  }
+}

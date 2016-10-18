@@ -51,7 +51,13 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @updateUrl()
 
   updateUrl: ->
-    Backbone.history.navigate "#{@path}?#{@params.currentParamsQueryString()}",
+    query = @params.currentParamsQueryString()
+    url = _.compact([
+      @path
+      '?' if query
+      query
+    ]).join('')
+    Backbone.history.navigate url,
       trigger: false
       replace: true
 

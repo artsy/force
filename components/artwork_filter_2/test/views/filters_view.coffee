@@ -30,7 +30,7 @@ describe 'FiltersView', ->
     @view.render()
     @view.$el.html().should.containEql '<h2>Works</h2>'
     @view.$el.find('.artsy-checkbox').length.should.eql 1
-    @view.$el.find('ul').length.should.eql 2
+    @view.$el.find('ul').length.should.eql 4
 
   it 'toggleBool', ->
     @view.render = sinon.stub()
@@ -79,6 +79,3 @@ describe 'FiltersView', ->
       done()
     @view.seeAllClicked e
     (@view.truncate.a == undefined).should.be.true()
-
-
-
