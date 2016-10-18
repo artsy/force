@@ -13,7 +13,7 @@ if auction.is_open && !artwork.is_sold && !auction.is_live_open
     if user
       .artwork-auction__bid-form__max-bid
         if me && me.lot_standing
-          +bidStatus(me.lot_standing, sale_artwork, {reserveMessage: 'Highest Bid, Reserve not met'})
+          +bidStatus(me.lot_standing, sale_artwork, {reserveMessage: 'Highest Bidder, Reserve not met'})
             
         else
           .artwork-auction__bid-form__max-bid-label Set your max bid

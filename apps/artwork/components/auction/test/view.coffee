@@ -130,9 +130,9 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is-winning').text()
+            view.$('.bid-status').text()
               .should.containEql 'Highest Bidder'
-            view.$('.artwork-auction__bid-status__upsell').length.should.equal 0
+            view.$('.bid-status__is-winning').length.should.equal 1
 
         describe 'leading bidder & reserve not met', ->
           it 'gives a reserve not met message', ->
@@ -146,9 +146,9 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is-winning-reserve-not-met').text()
+            view.$('.bid-status').text()
               .should.containEql 'Highest bidder, Reserve not met'
-            view.$('.artwork-auction__bid-status__upsell').text()
+            view.$('.bid-status__increase-bid').text()
               .should.equal 'Increase your max bid to win the lot'
 
         describe 'not leading bidder & reserve not met', ->
@@ -163,9 +163,9 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is-losing').text()
+            view.$('.bid-status').text()
               .should.containEql 'Outbid'
-            view.$('.artwork-auction__bid-status__upsell').text()
+            view.$('.bid-status__increase-bid').text()
               .should.equal 'Increase your max bid to win the lot'
 
         describe 'not leading bidder & reserve met', ->
@@ -180,9 +180,9 @@ describe 'auction', ->
             }
             view = new @ArtworkAuctionView data: @data
             view.render()
-            view.$('.is-losing').text()
+            view.$('.bid-status').text()
               .should.containEql 'Outbid'
-            view.$('.artwork-auction__bid-status__upsell').text()
+            view.$('.bid-status__increase-bid').text()
               .should.equal 'Increase your max bid to win the lot'
 
     describe 'preview auction', ->
