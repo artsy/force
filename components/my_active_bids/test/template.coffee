@@ -33,7 +33,7 @@ describe 'My Active Bids template', ->
       accounting: formatMoney: (s) -> s
 
   it 'renders highest bid if user is leading bidder and reserve met\
-      bidder positon match', ->
+      bidder position match', ->
     @locals.myActiveBids[0].is_leading_bidder = true
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_met'
     $ = cheerio.load(template(@locals))
@@ -41,7 +41,7 @@ describe 'My Active Bids template', ->
     $('.bid-status__is-winning').length.should.equal 1
 
   it 'renders highest bid if leading bidder and reserve not met \
-      bidder positon do not match', ->
+      bidder position do not match', ->
     @locals.myActiveBids[0].is_leading_bidder = true
     @locals.myActiveBids[0].sale_artwork.reserve_status = 'reserve_not_met'
     $ = cheerio.load(template(@locals))

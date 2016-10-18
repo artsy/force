@@ -1,11 +1,13 @@
 mixin bidStatus(lotStanding, saleArtwork, args)
+  - winningMessage = args && args.winningMessage || 'Highest Bid'
   - reserveMessage = args && args.reserveMessage || 'Highest Bid'
+  - losingMessage = args && args.losingMessage || 'Outbid'
   - leadingBidder = lotStanding.is_leading_bidder
   - reserveNotMet = saleArtwork.reserve_status === 'reserve_not_met'
   .bid-status
     if leadingBidder && !reserveNotMet
       .bid-status__is-winning
-        p Highest Bid
+        p= winningMessage
           i.bid-status__arrow-up
             include ../main_layout/public/icons/bid-status-arrow.svg
     else
@@ -16,7 +18,7 @@ mixin bidStatus(lotStanding, saleArtwork, args)
               include ../main_layout/public/icons/bid-status-arrow.svg
       else
         .bid-status__is-losing
-          p Outbid
+          p= losingMessage
             i.bid-status__arrow-down
               include ../main_layout/public/icons/bid-status-arrow.svg
       .bid-status__increase-bid
