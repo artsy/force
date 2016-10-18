@@ -225,7 +225,6 @@ module.exports = class ArticleView extends Backbone.View
       if $(imgs).children().length > 1
         @parentWidth = $(imgs).width()
         @fillwidth imgs
-    @sizeVideo()
 
   refreshImageSetSize: =>
     @setupImageSets()
@@ -290,17 +289,24 @@ module.exports = class ArticleView extends Backbone.View
 
   setupMobileShare: (article) =>
     $(".article-container[data-id=#{article.id}]").waypoint (direction) ->
-      if direction is 'down' and $(window).width() < 900
-        $(this).find('.article-social').addClass('sticky')
-      if direction is 'up'
-        $(this).find('.article-social').removeClass('sticky')
-    , { offset: 'bottom-in-view' }
-
-    $(".article-container[data-id=#{article.id}]").waypoint () ->
       if $(window).width() < 900
-        $('.article-social').removeClass('fixed')
-        $(this).find('.article-social').toggleClass('fixed')
-    , { offset: 0 }
+        if direction is 'down'
+          $(this).find('.article-social').addClass('fixed').fadeIn(250)
+        else
+          $(this).find('.article-social').removeClass('fixed').fadeOut(250)
+      else
+        $('.article-social').show()
+    , { offset: 450 }
+
+    $(".article-container[data-id=#{article.id}]").waypoint (direction) ->
+      if $(window).width() < 900
+        if direction is 'down'
+          $(this).find('.article-social').fadeOut(250)
+        if direction is 'up'
+          $(this).find('.article-social').addClass('fixed').fadeIn(250)
+      else
+        $('.article-social').show()
+    , { offset: 'bottom-in-view' }
 
   setupMarketoStyles: =>
     $(@$el).waypoint (direction) =>
