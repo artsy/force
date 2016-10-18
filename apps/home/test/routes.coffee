@@ -89,13 +89,13 @@ describe 'Home routes', ->
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/'
 
-    it 'redirects logged in users to redirect location', ->
+    it 'redirects logged in users (with a redirect_uri query param) to redirect location', ->
       @req.query['redirect_uri'] = '/awesome-fair'
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/awesome-fair'
 
-    it 'redirects logged in users to redirect location', ->
+    it 'redirects logged in users (with redirect-to in the POST params) to redirect location', ->
       @req.body['redirect-to'] = '/awesome-fair'
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
