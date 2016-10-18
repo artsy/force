@@ -161,18 +161,27 @@ body.body-article
     &:hover
       color white
   @media screen and (max-width 900px)
-    width 100vw
-    position fixed
-    bottom 0
-    left 0
-    margin 0
-    padding 0
-    z-index 1000
-    display flex
-    .article-social__header
-      display none
-    .share-item
-      width 33.333%
+    opacity 0
+    transition opacity .5s
+    &.fixed
+      opacity 1
+      width 100vw
+      position fixed
+      bottom 0
+      left 0
+      margin 0
+      padding 0
+      z-index 1000
+      display flex
+      .article-social__header
+        display none
+      .share-item
+        width 33.333%
+      &.sticky
+        position absolute
+.gradient-blurb .sticky
+  opacity 0
+  z-index -1
 
 .article-section-image
   max-width overflow-width
@@ -377,8 +386,8 @@ body.body-article
         max-width 100vw
         iframe
           max-width 100%
-          @media screen and (max-width 900px)
-            width 100% !important
+          width 100% !important
+          height 100% !important
         @media screen and (max-width 1250px)
           margin 45px 0
         .article-section-video
