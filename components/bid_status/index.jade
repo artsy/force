@@ -9,17 +9,18 @@ mixin bidStatus(lotStanding, saleArtwork, args)
       .bid-status__is-winning
         p= winningMessage
           i.bid-status__arrow-up
-            include ../main_layout/public/icons/bid-status-arrow.svg
+            include ./public/icons/bid-status-arrow.svg
+
     else
       if leadingBidder && reserveNotMet
         .bid-status__is-winning-reserve-not-met
           p= reserveMessage
             i.bid-status__arrow-up
-              include ../main_layout/public/icons/bid-status-arrow.svg
+              include ./public/icons/bid-status-arrow.svg
       else
         .bid-status__is-losing
           p= losingMessage
             i.bid-status__arrow-down
-              include ../main_layout/public/icons/bid-status-arrow.svg
+              include ./public/icons/bid-status-arrow.svg
       .bid-status__increase-bid
         | Increase your max bid to win the lot
