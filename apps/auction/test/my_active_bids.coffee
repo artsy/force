@@ -28,9 +28,9 @@ describe 'my active bids auction page template', ->
         @view.bidderPositions = @data
 
         @view.render()
-        @view.$('.auction-mab-warning').should.have.lengthOf 2
-        @view.$('.is-winning').should.have.lengthOf 1
-        @view.$('.is-winning').text()
+        @view.$('.bid-status').should.have.lengthOf 2
+        @view.$('.bid-status__is-winning').should.have.lengthOf 1
+        @view.$('.bid-status').text()
           .should.containEql('Highest Bid')
 
     describe 'leading bidder & reserve not met', ->
@@ -40,10 +40,10 @@ describe 'my active bids auction page template', ->
         @view.bidderPositions = @data
 
         @view.render()
-        @view.$('.auction-mab-warning').should.have.lengthOf 2
-        @view.$('.is-winning-reserve-not-met').should.have.lengthOf 1
-        @view.$('.is-winning-reserve-not-met').text()
-          .should.containEql('Reserve not met')
+        @view.$('.bid-status').should.have.lengthOf 2
+        @view.$('.bid-status__is-winning-reserve-not-met').should.have.lengthOf 1
+        @view.$('.bid-status__is-winning-reserve-not-met').text()
+          .should.containEql('Highest Bid')
     describe 'not leading bidder', ->
       it 'gives an outbid message', ->
         @data[0].is_leading_bidder = false
@@ -53,9 +53,9 @@ describe 'my active bids auction page template', ->
         @view.bidderPositions = @data
 
         @view.render()
-        @view.$('.auction-mab-warning').should.have.lengthOf 2
-        @view.$('.is-losing').should.have.lengthOf 2
-        @view.$('.is-losing').text().should.containEql('Outbid')
+        @view.$('.bid-status').should.have.lengthOf 2
+        @view.$('.bid-status__is-losing').should.have.lengthOf 2
+        @view.$('.bid-status__is-losing').text().should.containEql('Outbid')
         # This doesn't work ... :/
         # _.each(@view.$('.is-losing'), (el) -> 
         #   el.text().should.containEql('Outbid'))
