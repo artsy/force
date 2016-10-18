@@ -56,6 +56,7 @@ module.exports = class ArticleView extends Backbone.View
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
+    @setupMobileShare(@article)
     @setupFollowButtons()
     @setupImageSets()
     @setupMarketoStyles() if @article.attributes.channel?.type is "team"
@@ -193,36 +194,41 @@ module.exports = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el, cb=->) ->
-    if @$(el).length < 1 # or $(window).width() < 400
+    if @$(el).length < 1 or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)
+    if $(window).height() > 700
+      newHeight = $(window).height() * .8
     $list.fillwidthLite
       gutterSize: 30
-      targetHeight: $(window).height() * .9
+      targetHeight: newHeight || 600
       apply: (img) ->
         img.$el.closest('li').width(img.width)
       done: (imgs) ->
         # Make sure the captions line up in case rounding off skewed things
         tallest = _.max _.map imgs, (img) -> img.height
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
+        # Account for screens that are both wide & short
+        listWidth = _.map imgs, (img) -> img.width
+        parentWidth = _.reduce(listWidth, (a, b) ->
+                return a + b
+              , 0) + (($($list).children().length - 1) * 30)
+        if $($list).width() > parentWidth
+          $($list).css({'display':'flex', 'justify-content':'center'})
         # Remove loading state
-        $($list).css({'display':'flex', 'justify-content':'space-between'})
         $list.parent().removeClass('is-loading')
         cb()
 
   refreshWindowSize: =>
-    # if $(window).width() < 1350 and $(window).width() > 400
     $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
       if $(imgs).children().length > 1
         @parentWidth = $(imgs).width()
         @fillwidth imgs
+    @sizeVideo()
 
   refreshImageSetSize: =>
-    # console.log 'here'
     @setupImageSets()
-    if $(window).width() < 1250
-      @sizeVideo()
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -253,7 +259,6 @@ module.exports = class ArticleView extends Backbone.View
       { width: srcWidth*ratio, height: srcHeight*ratio }
 
     resizeVideo = ->
-      console.log 'resizeVideo'
       newHeight = $(window).height() - 100
 
       $videos.each ->
@@ -282,6 +287,20 @@ module.exports = class ArticleView extends Backbone.View
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
     $(@$el).waypoint (direction) =>
       @fadeInShare() if direction is 'down' and $(window).width() > 900
+
+  setupMobileShare: (article) =>
+    $(".article-container[data-id=#{article.id}]").waypoint (direction) ->
+      if direction is 'down' and $(window).width() < 900
+        $(this).find('.article-social').addClass('sticky')
+      if direction is 'up'
+        $(this).find('.article-social').removeClass('sticky')
+    , { offset: 'bottom-in-view' }
+
+    $(".article-container[data-id=#{article.id}]").waypoint () ->
+      if $(window).width() < 900
+        $('.article-social').removeClass('fixed')
+        $(this).find('.article-social').toggleClass('fixed')
+    , { offset: 0 }
 
   setupMarketoStyles: =>
     $(@$el).waypoint (direction) =>
@@ -329,9 +348,11 @@ module.exports = class ArticleView extends Backbone.View
             afterApply: =>
               @sticky.rebuild()
               @setupWaypointUrls() if @waypointUrls
+              @setupMobileShare(@article)
             onClick: =>
               @sticky.rebuild()
               $.waypoints 'refresh'
+              @setupMobileShare(@article)
               analyticsHooks.trigger 'readmore', {urlref: @previousHref || ''}
           break
 
