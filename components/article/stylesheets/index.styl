@@ -21,6 +21,9 @@ body.body-article
     margin-left 0px
     margin-right 0px
     max-width 100vw
+    .jump-to-top
+      @media screen and (max-width 900px)
+        display none
 
 .article-container h1
   max-width 900px
@@ -606,8 +609,10 @@ body.body-article
   .gradient-blurb-read-more-container
     width 100%
     height 32px
+    z-index 2
     .gradient-blurb-read-more
       padding 8px 29px
+      z-index 1
       avant-garde-size(s-headline)
       position absolute
       left 50%
