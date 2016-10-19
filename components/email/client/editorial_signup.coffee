@@ -88,13 +88,13 @@ module.exports = class EditorialSignupView extends Backbone.View
   showEditorialCTA: (outcome) ->
     if outcome is 'modal' or $('body').hasClass('body-transparent-header')
       @$('#modal-container').append editorialCTABannerTemplate
-        mode: outcome
+        mode: 'modal'
         email: sd.CURRENT_USER?.email or ''
         image: sd.EDITORIAL_CTA_BANNER_IMG
       @$('#articles-show, .articles-articles-page').waypoint (direction) =>
         if direction is 'down'
           setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)
-      analyticsHooks.trigger('view:editorial-signup', type: outcome )
+      analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
     else if outcome is 'banner'
       @$('#main-layout-container').css('margin-top', '53px').before editorialCTABannerTemplate
         mode: outcome
