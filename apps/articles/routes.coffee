@@ -24,22 +24,19 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
       featured: true
     error: res.backboneError
     success: (articles) =>
-      if res.locals.sd.CURRENT_USER?.email?
-        subscribedToEditorial res.locals.sd.CURRENT_USER.email, (err, subscribed) ->
-          res.locals.sd.SUBSCRIBED_TO_EDITORIAL = subscribed
-      res.locals.sd.ARTICLES = articles.toJSON()
-      res.locals.sd.ARTICLES_COUNT = articles.count
-      res.render 'articles',
-        articles: articles
-        crop: crop
+      user = res.locals.sd.CURRENT_USER
+      setupEmailSubscriptions user, (results) ->
+        res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
+        res.locals.sd.ARTICLES = articles.toJSON()
+        res.locals.sd.ARTICLES_COUNT = articles.count
+        res.render 'articles',
+          articles: articles
+          crop: crop
 
-setupEmailSubscriptions = (user, article, cb) ->
+setupEmailSubscriptions = (user, cb) ->
   return cb({ editorial: false }) unless user?.email
-  if article.get('channel_id') is sd.ARTSY_EDITORIAL_CHANNEL
-    subscribedToEditorial user.email, (err, isSubscribed) ->
-      cb { editorial: isSubscribed }
-  else
-    cb { editorial: false }
+  subscribedToEditorial user.email, (err, isSubscribed) ->
+    cb { editorial: isSubscribed }
 
 @redirectMagazine = (req, res, next) ->
   res.redirect 301, req.url.replace 'magazine', 'articles'

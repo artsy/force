@@ -49,7 +49,8 @@ module.exports = class EditorialSignupView extends Backbone.View
         isSignup: @eligibleToSignUp()
       mailcheck.run '#articles-es-cta__form-input', '#js--mail-hint', false
       @cycleImages() if images
-    @showEditorialCTA 'modal'
+    if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
+      @showEditorialCTA 'modal'
 
   setupAEArticlePage: ->
     @ctaBarView = new CTABarView

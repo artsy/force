@@ -53,8 +53,20 @@ describe 'EditorialSignupView', ->
       $(@view.el).html().should.containEql 'articles-es-cta'
 
     it 'opens a signup modal', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: null
+        SUBSCRIBED_TO_EDITORIAL: false
+        CURRENT_PATH: '/articles'
       @view.setupAEMagazinePage()
       $(@view.el).find('#modal-container').html().should.containEql 'articles-es-cta--banner modal'
+
+    it 'doesnt show a modal for subscribed user', ->
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: null
+        SUBSCRIBED_TO_EDITORIAL: true
+        CURRENT_PATH: '/articles'
+      @view.setupAEMagazinePage()
+      $(@view.el).find('#modal-container').html().should.not.containEql 'articles-es-cta--banner modal'
 
   describe '#eligibleToSignUp', ->
 
