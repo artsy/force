@@ -90,5 +90,5 @@ module.exports =
     upcomingFairs: _.chain(fairs)
       .filter((fair) => @isUpcoming(fair))
       .sortBy((fair) -> Date.parse(fair.start_at))
-      .take(10)
+      .take(25)
       .value()

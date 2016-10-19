@@ -1,11 +1,13 @@
 benv = require 'benv'
 sinon = require 'sinon'
-teleport = require '../../client/teleport.coffee'
+rewire = require 'rewire'
+teleport = rewire '../../client/teleport.coffee'
 
 describe 'teleport', ->
   beforeEach (done) ->
     benv.setup =>
-
+      benv.expose({ Event: window.Event })
+      teleport.__set__ 'sd', { EIGEN: true }
       done()
 
   afterEach ->

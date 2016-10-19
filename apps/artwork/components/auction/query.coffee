@@ -19,6 +19,7 @@ module.exports = """
     }
     sale_artwork {
       id
+      reserve_status
       reserve_message
       estimate
       is_biddable

@@ -85,7 +85,7 @@ if superArticle
     if !sd.SUBSCRIBED_TO_EDITORIAL && article.get('featured') === true && !hideSubscribe && !lushSignup
       .main-layout-container.article-es.article-subscribe__es
         include ./editorial_signup.jade
-    if channel && channel.isTeam()
+    if channel && channel.id === sd.GALLERY_INSIGHTS_CHANNEL
       .responsive-layout-container.article-gi.article-subscribe__gi
         include ./gi_signup.jade
 

@@ -25,6 +25,14 @@ positionWelcomeHeroMethod = (req, res) ->
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
   method
 
+maybeFetchHomepageRails = (req)->
+  deferred = Q.defer()
+  metaphysics(query: query, req: req)
+    .then (data) -> deferred.resolve data
+    .catch -> deferred.resolve home_page: { artwork_modules: [] }
+
+  deferred.promise
+
 @index = (req, res, next) ->
   return if metaphysics.debug req, res, { method: 'post', query: query }
 
@@ -52,7 +60,7 @@ positionWelcomeHeroMethod = (req, res) ->
   Q
     .all [
       heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
-      metaphysics query: query, req: req
+      maybeFetchHomepageRails req
       featuredLinks.fetch cache: true
       featuredArticles.fetch
         cache: true
@@ -66,6 +74,11 @@ positionWelcomeHeroMethod = (req, res) ->
 
     .then ([x, { home_page }]) ->
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+
+      # always show followed artist rail for logged in users,
+      # if we dont get results we will replace with artists TO follow
+      if req.user and not _.findWhere home_page.artwork_modules, { key: 'followed_artists' }
+        home_page.artwork_modules.unshift { key: 'followed_artists' }
 
       res.locals.sd.HERO_UNITS = heroUnits.toJSON()
       res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
