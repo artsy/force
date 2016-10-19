@@ -71,7 +71,10 @@ body.body-article
     box-sizing border-box
     @media screen and (max-width 600px)
       width 50%
-      padding 10px !important
+      padding 0 20px 5px 0 !important
+      &:nth-child(2n)
+        padding-right 0 !important
+
   .article-section-toc-link:nth-child(3n + 4), .article-section-toc-link:first-child
     padding-left 0px
   .article-section-toc-link:nth-child(3n + 3)
@@ -97,13 +100,19 @@ body.body-article
     cursor pointer
     garamond-size('l-body')
     margin-left 10px
+    @media screen and (max-width 400px)
+      garamond-size('s-body')
   p
     margin-bottom 1em
     &:last-child
       margin-bottom 0
+    @media screen and (max-width 400px)
+      margin-top 1em
   h2
     font-size 28px
     line-height 1.2em
+    @media screen and (max-width 400px)
+      font-size 24px
   h3
     avant-garde()
     font-size 13px
@@ -401,9 +410,6 @@ body.body-article
             margin auto
             @media screen and (max-width 1250px)
               width 100%
-  .article-section-image-set
-    @media screen and (max-width 650px)
-      width 100%
 
 .article-carousel
   img

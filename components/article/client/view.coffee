@@ -63,8 +63,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
-    $(window).on('resize', @refreshWindowSize)
-    $(window).on('resize', _.debounce @refreshImageSetSize, 100)
+    $(window).on('resize', _.debounce @refreshWindowSize, 100)
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
@@ -150,12 +149,7 @@ module.exports = class ArticleView extends Backbone.View
     $container = $('.article-section-container[data-section-type="image_set"]')
     $($container).each (i, value) ->
       imagesLoaded $(value), =>
-        if $('#articles-body-container').width() > 650
-          console.log 'fullsize'
-          allowedPixels = 580.0 - 120 # min-width + margins
-        else
-          console.log 'responsive'
-          allowedPixels = ($(window).width() - 60) - 120
+        allowedPixels = 580.0 - 120 # min-width + margins
         totalPixels = 0.0
         $(value).find('img').each (i, img) ->
           _.defer ->
@@ -225,9 +219,6 @@ module.exports = class ArticleView extends Backbone.View
       if $(imgs).children().length > 1
         @parentWidth = $(imgs).width()
         @fillwidth imgs
-
-  refreshImageSetSize: =>
-    @setupImageSets()
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
