@@ -1,4 +1,5 @@
 include ../../../components/bid_status/index
+
 if myActiveBids && myActiveBids.length
   h2 Your Active Bids
   table
@@ -21,9 +22,15 @@ if myActiveBids && myActiveBids.length
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-            td.bid-status-cell
-              +bidStatus(bid, bid.sale_artwork)
-            td
-              a.avant-garde-button-black.auction-mab-bid-button(
-                href=bid.sale_artwork.artwork.href
-              ) Bid
+            if ViewHelpers.mpLiveSaleIsOpen(bid.sale_artwork.sale)
+              td
+                a.avant-garde-button-black.auction-mab-bid-live-button(
+                    href=ViewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id)
+                  ) Bid Live
+            else
+              td.bid-status-cell
+                +bidStatus(bid, bid.sale_artwork)
+              td
+                a.avant-garde-button-black.auction-mab-bid-button(
+                  href=bid.sale_artwork.artwork.href
+                ) Bid
