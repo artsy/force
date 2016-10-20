@@ -246,6 +246,14 @@ break-word()
   -webkit-hyphens auto
   hyphens auto
 
+//http://stackoverflow.com/questions/20233416/prevent-text-to-line-break-if-overflow
+
+ellipsis()
+  width 100%
+  text-overflow ellipsis
+  overflow hidden
+  white-space nowrap
+
 blur(radius)
   vendor('filter', 'blur(%s)' % radius, only: webkit moz ms official)
   if support-for-ie
