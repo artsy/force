@@ -80,7 +80,7 @@ mixin toc(section)
 
 mixin imageSet(section)
   .article-section-image-set__images
-    for item, i in section.images.slice(0,4)
+    for item, i in section.images.slice(0,3)
       .article-section-image-set__image-container.hoverable-image-link( data-index=i )
         - var image = resize( (item.image || item.url || ''), {height: 150} )
         img.hoverable-image(src=image)

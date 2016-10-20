@@ -3,13 +3,23 @@
   width 580px
   display block
   cursor pointer
+  max-width 100%
   &__images
     float left
     height 150px
+    display flex
+    justify-content space-between
+    @media screen and (max-width 620px)
+      float none
+      height inherit
+      margin-bottom 5px
   &__image-container
-    height 150px
     margin-right 10px
+    height 150px
     display none
+    @media screen and (max-width 620px)
+      display block
+      margin 0
   &__remaining
     avant-garde-size('s-headline')
     height 150px

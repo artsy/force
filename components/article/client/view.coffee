@@ -59,6 +59,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupMobileShare(@article)
     @setupFollowButtons()
     @setupImageSets()
+    @resetImageSetPreview() if $(window).width() < 620
     @setupMarketoStyles() if @article.attributes.channel?.type is "team"
 
     # Resizing
@@ -214,11 +215,37 @@ module.exports = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
         cb()
 
+  imagesFillContainer: (imgs, $container, gutter) =>
+    getWidth = _.map imgs, (img) -> img.width
+    imgsWidth = _.reduce(getWidth, (a, b) ->
+                return a + b
+              , 0) + (($($container).children().length - 1) * gutter)
+    return false if $container.width() - 5 > imgsWidth
+
+
   refreshWindowSize: =>
     $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
       if $(imgs).children().length > 1
         @parentWidth = $(imgs).width()
         @fillwidth imgs
+    @resetImageSetPreview()
+
+  resetImageSetPreview: () =>
+    $('.article-section-image-set__images').each (i, container) =>
+      $(container).each (i, imgs) =>
+        $(imgs).fillwidthLite
+          gutterSize: 5
+          targetHeight: 150
+          apply: (img) ->
+            img.$el.parent().width(img.width).height(img.height)
+          done: (imgs) =>
+            $container = imgs[0].$el.closest('.article-section-image-set__images')
+            if !@imagesFillContainer(imgs, $container, 5)
+              $container.fillwidthLite
+                gutterSize: 5
+                targetHeight: 220
+                apply: (img) ->
+                  img.$el.parent().width(img.width).height(img.height)
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
