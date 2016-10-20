@@ -17,6 +17,10 @@ module.exports = """
           highest_bid {
             display
           }
+          sale {
+            live_start_at
+            end_at
+          }
           artwork {
             href
             title

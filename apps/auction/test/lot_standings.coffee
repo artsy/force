@@ -14,6 +14,10 @@ module.exports = [
       "highest_bid": {
         "display": "$750"
       },
+      "sale": {
+        "end_at": "2016-10-31T04:28:00+00:00",
+        "live_start_at": null
+      },
       "artwork": {
         "href": "/artwork/imhuge-brillo-condensed-soap",
         "title": "Brillo Condensed Soap",
@@ -40,6 +44,10 @@ module.exports = [
       "sale_id": "juliens-auctions-street-and-contemporary-art-day-sale",
       "highest_bid": {
         "display": "$1,500"
+      },
+      "sale": {
+        "end_at": "2016-10-31T04:28:00+00:00",
+        "live_start_at": null
       },
       "artwork": {
         "href": "/artwork/mr-brainwash-tomato-spray-25",
