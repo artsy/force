@@ -49,6 +49,7 @@ module.exports = class ArticleView extends Backbone.View
     @sticky = new Sticky
     @jump = new JumpView
     @previousHref = options.previousHref
+    @windowWidth = $(window).width()
 
     # Render sections
     @renderSlideshow()
@@ -59,7 +60,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupMobileShare(@article)
     @setupFollowButtons()
     @setupImageSets()
-    @resetImageSetPreview() if $(window).width() < 620
+    # @resetImageSetPreview() if $(window).width() < 620
     @setupMarketoStyles() if @article.attributes.channel?.type is "team"
 
     # Resizing
@@ -180,15 +181,15 @@ module.exports = class ArticleView extends Backbone.View
     name = $(e.currentTarget).attr('href').substring(1)
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
-  getWidth: (section) ->
-    if section.layout is 'overflow' then 1060 else 500
+  # getWidth: (section) ->
+  #   if section.layout is 'overflow' then 1060 else 500
 
   breakCaptions: ->
     @$('.article-section-image').each ->
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
-  fillwidth: (el, cb=->) ->
+  fillwidth: (el, cb=->) =>
     if @$(el).length < 1 or $(window).width() < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
@@ -200,28 +201,24 @@ module.exports = class ArticleView extends Backbone.View
       targetHeight: newHeight || 600
       apply: (img) ->
         img.$el.closest('li').width(img.width)
-      done: (imgs) ->
+      done: (imgs) =>
         # Make sure the captions line up in case rounding off skewed things
         tallest = _.max _.map imgs, (img) -> img.height
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
         # Account for screens that are both wide & short
-        listWidth = _.map imgs, (img) -> img.width
-        parentWidth = _.reduce(listWidth, (a, b) ->
-                return a + b
-              , 0) + (($($list).children().length - 1) * 30)
-        if $($list).width() > parentWidth
-          $($list).css({'display':'flex', 'justify-content':'center'})
+        if !@imgsFillContainer(imgs, $list, 30).isFilled
+          $list.css({'display':'flex', 'justify-content':'center'})
         # Remove loading state
         $list.parent().removeClass('is-loading')
         cb()
 
-  imagesFillContainer: (imgs, $container, gutter) =>
+  imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
                 return a + b
-              , 0) + (($($container).children().length - 1) * gutter)
-    return false if $container.width() - 5 > imgsWidth
-
+              , 0) + (($container.children().length - 1) * gutter)
+    isFilled = $container.width() - 15 > imgsWidth
+    return {imgsWidth: imgsWidth, isFilled: isFilled}
 
   refreshWindowSize: =>
     $("[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
@@ -230,22 +227,22 @@ module.exports = class ArticleView extends Backbone.View
         @fillwidth imgs
     @resetImageSetPreview()
 
-  resetImageSetPreview: () =>
+  resetImageSetPreview: =>
     $('.article-section-image-set__images').each (i, container) =>
       $(container).each (i, imgs) =>
-        $(imgs).fillwidthLite
-          gutterSize: 5
-          targetHeight: 150
-          apply: (img) ->
-            img.$el.parent().width(img.width).height(img.height)
-          done: (imgs) =>
-            $container = imgs[0].$el.closest('.article-section-image-set__images')
-            if !@imagesFillContainer(imgs, $container, 5)
-              $container.fillwidthLite
-                gutterSize: 5
-                targetHeight: 220
-                apply: (img) ->
-                  img.$el.parent().width(img.width).height(img.height)
+        if $(window).width() < 620
+          targetHeight = 225
+          $(imgs).fillwidthLite
+            gutterSize: 5
+            targetHeight: targetHeight
+            apply: (img) ->
+              img.$el.parent().width(img.width).height(img.height)
+            done: (imgs) =>
+              $container = imgs[0].$el.closest('.article-section-image-set__images')
+              imgsWidth = @imgsFillContainer(imgs, $container, 5).imgsWidth
+        else
+          $(imgs).children().each (i, img)->
+            $(img).css({'width':'auto', 'height':'150px'})
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
