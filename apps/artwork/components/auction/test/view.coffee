@@ -20,7 +20,7 @@ describe 'auction', ->
       require.resolve('../view.coffee'),
       ['template']
     )
-    @view = new @ArtworkAuctionView data:
+    @data =
       artwork:
         id: 'peter-alexander-wedge-with-puff'
         is_in_auction: true
@@ -35,6 +35,7 @@ describe 'auction', ->
           is_with_buyers_premium: true
         sale_artwork:
           id: 'peter-alexander-wedge-with-puff'
+          reserve_status: 'reserve_met'
           reserve_message: 'Reserve met'
           estimate: '$7,000–$9,000'
           current_bid: amount: '$55,000'
@@ -44,6 +45,7 @@ describe 'auction', ->
           minimum_next_bid:
             amount: '$60,000'
             cents: 6000000
+    @view = new @ArtworkAuctionView data: @data
 
   describe '#parseBid', ->
     it 'Handles prices with cents', ->
@@ -110,6 +112,78 @@ describe 'auction', ->
 
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
+      describe 'post-bid messages', ->
+        beforeEach ->
+          @data = Object.assign(@data, {
+            user: 'existy',
+            accounting: accounting
+          })
+        describe 'leading bidder & reserve met', ->
+          it 'gives a winning message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: true
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.bid-status').text()
+              .should.containEql 'Highest Bidder'
+            view.$('.bid-status__is-winning').length.should.equal 1
+
+        describe 'leading bidder & reserve not met', ->
+          it 'gives a reserve not met message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: true
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.bid-status').text()
+              .should.containEql 'Highest bidder, Reserve not met'
+            view.$('.bid-status__increase-bid').text()
+              .should.equal 'Increase your max bid to win the lot'
+
+        describe 'not leading bidder & reserve not met', ->
+          it 'gives an outbid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: false
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.bid-status').text()
+              .should.containEql 'Outbid'
+            view.$('.bid-status__increase-bid').text()
+              .should.equal 'Increase your max bid to win the lot'
+
+        describe 'not leading bidder & reserve met', ->
+          it 'gives an outbid message', ->
+            @data.artwork.sale_artwork.reserve_status = 'reserve_met'
+            @data.me = {
+              lot_standing:
+                is_leading_bidder: false
+                most_recent_bid:
+                  max_bid:
+                    cents: 5500000
+            }
+            view = new @ArtworkAuctionView data: @data
+            view.render()
+            view.$('.bid-status').text()
+              .should.containEql 'Outbid'
+            view.$('.bid-status__increase-bid').text()
+              .should.equal 'Increase your max bid to win the lot'
 
     describe 'preview auction', ->
       it 'renders correctly', ->

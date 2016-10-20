@@ -4,11 +4,11 @@ sd = require('sharify').data
 # like it when you set window.location
 
 module.exports = (location) ->
+  return window.location = location unless sd.EIGEN
   a = document.createElement 'a'
   a.setAttribute 'href', location
 
-  dispatch = document.createEvent 'HTMLEvents'
-  dispatch.initEvent 'click', true, true
+  dispatch = new Event 'click', { 'bubbles': true, 'cancelable': true }
 
   {
     event: dispatch

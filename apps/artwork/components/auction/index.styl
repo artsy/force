@@ -11,6 +11,12 @@
   &__help
     block-margins(distance(gutter / 2, 'garamond-s-body'))
 
+  .bid-status
+    p
+      font-size 11px
+    &__increase-bid
+      display: block
+
   &__bid-status
     position relative
     serif('l-caption')
@@ -48,13 +54,6 @@
         position absolute
         right 0
         top 0
-
-    &__max-bid-label
-      sans('s-headline')
-      &.is_winning
-        color new-green-color
-      &.is_losing
-        color new-red-color
 
     &__select
       width 100%

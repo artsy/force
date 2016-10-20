@@ -14,10 +14,21 @@
       font-size small-avant-garde-size
     section
       margin 20px 0
+
+    &__for-sale
+    &__criterion
+    &__view-all
+      line-height 1.6
+      text-decoration none
+
     &__for-sale
     &__criterion
       display flex
-      line-height 1.6
+
+    &__criterion
+    &__view-all
+      font-size 18px
+
     &__for-sale
       margin 0
       &.is-disabled
@@ -44,6 +55,10 @@
         cursor arrow
         pointer-events none
         color gray-dark-color
+
+    &__view-all
+      display block
+      faux-underline(black)
 
     .artwork-filter-label
       overflow ellipsis

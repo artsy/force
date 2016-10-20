@@ -101,7 +101,10 @@ module.exports = class ArticleView extends Backbone.View
     Q.all( _.map artworkSections, (section) =>
       $el = @$("[data-layout=overflow_fillwidth]" +
         " li[data-id=#{section.artworks[0].id}]").parent()
-      Q.nfcall @fillwidth, $el
+      if $el.children().length == 1
+        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+      else
+        Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()

@@ -10,13 +10,13 @@ ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coff
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
 setupFollowButton = require '../components/follow_button/index.coffee'
-iconicArtistsTemplate = -> require('../components/iconic_artists_context/templates/index.jade') arguments...
+popularArtistsTemplate = -> require('../components/popular_artists_context/templates/index.jade') arguments...
 auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
 fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
 
 contexts =
-  iconic_artists: (module) ->
-    iconicArtistsTemplate artists: module.context.artists
+  popular_artists: (module) ->
+    popularArtistsTemplate artists: module.context.artists
   live_auctions: (module) ->
     auctionTemplate auction: module.context
   current_fairs: (module) ->
