@@ -14,49 +14,109 @@ render = ->
   )
 
 describe 'Artist Module template', ->
-  beforeEach ->
-    @artwork = fabricate('artwork', {
-      artists: [
-        fabricate('artist', {
-          name: 'K Dot'
-          biography_blurb: {
-            text: "He is from Compton",
-            credit: 'Submitted by Catty Gallery'
-          }
-          bio: "We do not know"
-          exhibition_highlights: [
-            fabricate('show'),
-            fabricate('show'),
-            fabricate('show')
-          ]
-          articles: [
-            {
-              thumbnail_image: { cropped: { url: 'image.jpg' } }
-              title: "Jeff Koons’ Gazing Balls Glimmer at Art Basel"
-              author: {
-                name: 'Artsy Editorial'
-              }
+  describe 'when the artworks partner matches the featured partner', ->
+    beforeEach ->
+      @artwork = fabricate('artwork', {
+        partner: {
+          id: 'catty-partner'
+        }
+        artists: [
+          fabricate('artist', {
+            name: 'K Dot'
+            blurb: 'This is the Artsy blurb'
+            biography_blurb: {
+              text: "He is from Compton",
+              credit: 'Submitted by Catty Gallery'
+              partner_id: 'catty-partner'
             }
-          ]
-        })
-      ]
-    })
+            bio: "We do not know"
+            exhibition_highlights: [
+              fabricate('show'),
+              fabricate('show'),
+              fabricate('show')
+            ]
+            articles: [
+              {
+                thumbnail_image: { cropped: { url: 'image.jpg' } }
+                title: "Jeff Koons’ Gazing Balls Glimmer at Art Basel"
+                author: {
+                  name: 'Artsy Editorial'
+                }
+              }
+            ]
+          })
+        ]
+      })
 
-    @html = render()(
-      artwork: @artwork
-      helpers: {
-        artists:
-          build: sinon.stub().returns ['biography', 'exhibition highlights', 'articles']
-          name: sinon.stub()
-          groupBy: _.groupBy
-      }
-      asset: (->)
-    )
+      @html = render()(
+        artwork: @artwork
+        helpers: {
+          artists:
+            build: sinon.stub().returns ['biography', 'exhibition highlights', 'articles']
+            name: sinon.stub()
+            groupBy: _.groupBy
+        }
+        asset: (->)
+      )
 
-    @$ = cheerio.load(@html)
+      @$ = cheerio.load(@html)
 
-  it 'should display biography', ->
-    @$('.side-tabs__nav').find('a[data-id=biography]').attr('data-id').should.equal 'biography'
-    @$('.artwork-artist__content__biography__text').html().should.containEql "He is from Compton"
-    @$('.artwork-artist__content__biography__credit').html().should.containEql "Submitted by Catty Gallery"
-    @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
+    it 'should display the featured biography and credit', ->
+      @$('.side-tabs__nav').find('a[data-id=biography]').attr('data-id').should.equal 'biography'
+      @$('.artwork-artist__content__biography__text').html().should.containEql "He is from Compton"
+      @$('.artwork-artist__content__biography__credit').html().should.containEql "Submitted by Catty Gallery"
+      @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
+
+  describe 'when the artworks partner does not match the featured partner', ->
+    beforeEach ->
+      @artwork = fabricate('artwork', {
+        partner: {
+          id: 'catty-partner'
+        }
+        artists: [
+          fabricate('artist', {
+            name: 'K Dot'
+            blurb: 'This is the Artsy blurb'
+            biography_blurb: {
+              text: "He is from Compton",
+              credit: 'Submitted by Catty Gallery'
+              partner_id: 'some-other-partner'
+            }
+            bio: "We do not know"
+            exhibition_highlights: [
+              fabricate('show'),
+              fabricate('show'),
+              fabricate('show')
+            ]
+            articles: [
+              {
+                thumbnail_image: { cropped: { url: 'image.jpg' } }
+                title: "Jeff Koons’ Gazing Balls Glimmer at Art Basel"
+                author: {
+                  name: 'Artsy Editorial'
+                }
+              }
+            ]
+          })
+        ]
+      })
+
+      @html = render()(
+        artwork: @artwork
+        helpers: {
+          artists:
+            build: sinon.stub().returns ['biography', 'exhibition highlights', 'articles']
+            name: sinon.stub()
+            groupBy: _.groupBy
+        }
+        asset: (->)
+      )
+
+      @$ = cheerio.load(@html)
+
+    it 'should display the featured biography and credit', ->
+      @$('.side-tabs__nav').find('a[data-id=biography]').attr('data-id').should.equal 'biography'
+      @$('.artwork-artist__content__biography__text').html().should.containEql "This is the Artsy blurb"
+      @$('.artwork-artist__content__biography__credit').length.should.equal 0
+      @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
+
