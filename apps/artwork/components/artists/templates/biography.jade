@@ -1,6 +1,12 @@
 .artwork-artist__content__biography
-  if artist.biography
-    != artist.biography
+  
+  //- Can be Artsy or partner bio. Presence of 'credit' indicates partner.
+  if artist.biography_blurb
+    .artwork-artist__content__biography__text
+      != artist.biography_blurb.text
+    if artist.biography_blurb.credit
+      .artwork-artist__content__biography__credit
+        &mdash; #{artist.biography_blurb.credit}
 
   .artwork-artist__content__short-bio
     p= artist.bio.replace('born', 'b.')

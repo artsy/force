@@ -15,13 +15,18 @@
     serif('headline')
     margin 0 0 distance(gutter) 0
   &__content
-    &__biography
+    &__short-bio
+      margin-top 30px
       margin-bottom 30px
-      serif('s-body')
-      a
-        fine-faux-underline()
-      > p
-        margin-bottom 30px
+    &__biography
+      &__text
+        serif('s-body')
+        a
+          fine-faux-underline()
+        > p
+          margin-bottom 30px
+      &__credit
+        font-style italic
     &__exhibition-highlights
       &__item
         display flex

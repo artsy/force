@@ -4,7 +4,10 @@ module.exports = """
       bio
       name
       href
-      biography: blurb(format: HTML)
+      biography_blurb(format: HTML) {
+        text
+        credit
+      }
       exhibition_highlights(size: 20) {
         kind
         name

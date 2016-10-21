@@ -6,7 +6,10 @@ module.exports.artistsWithoutExhibitions =
       bio: 'American, born 1975, Los Angeles, California, based in New York, New York',
       name: 'Dustin Yellin',
       href: '/artist/dustin-yellin',
-      biography: 'Dustin Yellin is as known for his image-rich sculptures as he is for his entrepreneurship'
+      biography_blurb: {
+        text: 'Dustin Yellin is as known for his image-rich sculptures as he is for his entrepreneurship',
+        credit: 'Submitted by Catty Gallery'
+      }
       exhibition_highlights: null
       articles: [
         {
@@ -49,7 +52,10 @@ module.exports.artistsWithExhibitions =
       bio: 'American, born 1975, Los Angeles, California, based in New York, New York',
       name: 'Dustin Yellin',
       href: '/artist/dustin-yellin',
-      biography: 'Dustin Yellin is as known for his image-rich sculptures as he is for his entrepreneurship'
+      biography_blurb: {
+        text: 'Dustin Yellin is as known for his image-rich sculptures as he is for his entrepreneurship',
+        credit: 'Submitted by Catty Gallery'
+      }
       exhibition_highlights: [
         {
           kind: 'group',

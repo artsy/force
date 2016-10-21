@@ -19,7 +19,10 @@ describe 'Artist Module template', ->
       artists: [
         fabricate('artist', {
           name: 'K Dot'
-          biography: "He is from Compton"
+          biography_blurb: {
+            text: "He is from Compton",
+            credit: 'Submitted by Catty Gallery'
+          }
           bio: "We do not know"
           exhibition_highlights: [
             fabricate('show'),
@@ -54,5 +57,6 @@ describe 'Artist Module template', ->
 
   it 'should display biography', ->
     @$('.side-tabs__nav').find('a[data-id=biography]').attr('data-id').should.equal 'biography'
-    @$('.artwork-artist__content__biography').html().should.containEql "He is from Compton"
+    @$('.artwork-artist__content__biography__text').html().should.containEql "He is from Compton"
+    @$('.artwork-artist__content__biography__credit').html().should.containEql "Submitted by Catty Gallery"
     @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
