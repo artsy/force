@@ -14,9 +14,6 @@ mixin rail(title, viewAllUrl, section)
   .evenly-bisected-header
     - var artistMeta = viewHelpers.artistMeta(artist)
 
-    //- Temporarily suppress partner-submitted bios until they are
-    //- improved.
-    - var hasArtsyBlurb = viewHelpers.hasArtsyBlurb(artist)
     - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
     - var hasShows = statuses.shows
 
@@ -24,10 +21,12 @@ mixin rail(title, viewAllUrl, section)
       if hasMeta
         .artist-blurb.bisected-header-cell-section
           h2 Biography
-          if hasArtsyBlurb
+          if artist.biography_blurb && artist.biography_blurb.text
             .blurb!= artist.biography_blurb.text
-          if hasArtsyBlurb && artistMeta.length
-            br
+            if artist.biography_blurb.credit
+              .artist-blurb__credit &mdash; #{artist.biography_blurb.credit}
+            if artistMeta.length
+              br
           if artistMeta.length
             .artist-meta-detail!= artistMeta
 
