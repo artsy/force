@@ -42,7 +42,11 @@ module.exports = class OverviewView extends Backbone.View
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onExpand: => @sticky.rebuild()
+      onExpand: =>
+        if @useNewArtworkFilter
+          @filterView.sticky.rebuild()
+        else
+          @sticky.rebuild()
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
@@ -92,7 +96,7 @@ module.exports = class OverviewView extends Backbone.View
     # Main section
 
     if @useNewArtworkFilter
-      { @sticky } = @filterView = (new ArtworkFilterView
+      @filterView = (new ArtworkFilterView
         el: @$('#artwork-section')
         artistID: @model.get('id')
         topOffset: $('.artist-sticky-header-container').height()
