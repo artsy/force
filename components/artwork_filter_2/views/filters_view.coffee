@@ -41,8 +41,10 @@ module.exports = class ArtworkFiltersView extends Backbone.View
       @params,
       @truncate
     }
+    this
 
   toggleBool: (e) ->
+    e.preventDefault()
     key = ($el = $(e.target)).prop('name')
     value = $el.prop('checked')
     if value
@@ -62,6 +64,7 @@ module.exports = class ArtworkFiltersView extends Backbone.View
     @params.unset key
 
   seeAllClicked: (e) =>
+    e.preventDefault()
     key = ($el = $(e.target)).data('key')
     delete @truncate[key]
     @trigger 'filterExpanded'
