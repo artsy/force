@@ -49,27 +49,6 @@ describe 'ArticleView', ->
                   type: 'image',
                   url: 'https://image.png',
                   caption: 'Trademarked',
-                },
-                {
-                  type: 'image',
-                  url: 'https://image.png',
-                  caption: 'Trademarked',
-                },
-                {
-                  type: 'artwork',
-                  id: '123',
-                  slug: 'andy-warhol',
-                  title: 'The Piece',
-                  date: '2015-04-01',
-                  image: 'http://image.png',
-                  partner: {
-                    name: "FoodOrg",
-                    slug: "foodorg"
-                  },
-                  artist: {
-                    name: "Bob Burrito",
-                    slug: "bob-burrito"
-                  }
                 }
               ]
             },
