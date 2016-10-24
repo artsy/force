@@ -212,6 +212,7 @@ module.exports = (app) ->
   app.use require "../apps/articles"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"
+  app.use require "../apps/editorial_features"
 
   # Apps that need to fetch a profile
   app.use require "../apps/profile"
