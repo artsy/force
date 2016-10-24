@@ -210,13 +210,10 @@ describe 'ArticleView', ->
 
     it 'on small screens, resets image sizes for imageset previews', ->
       @view.windowWidth = 600
-      @imgsFillContainer.callCount.should.be.above 0
+      @imgsFillContainer.callCount.should.be.above 1
 
   describe '#imgsFillContainer', ->
-    it 'adds css if images are narrower than their container', ->
-      # console.log @view.$('.article-section-artworks ul').css('justify-content')
-      # $.fn.fillwidthLite = sinon.stub().yieldsTo('done', @view.$('.article-section-artworks li'))
-      imgsFillContainer = @view.imgsFillContainer(@view.$('.article-section-artworks li img'), @view.$('.article-section-artworks ul'), 5)
-      console.log @view.$('.article-section-artworks').html()
-      # console.log imgsFillContainer.imgsWidth
-      # @view.imgsFillContainer.imgsWidth.should.equal 5
+    it 'returns true if images are narrower than their container', ->
+      container = @view.$('.article-section-artworks ul').width(1400)
+      imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
+      imgsFillContainer.isFilled.should.equal true

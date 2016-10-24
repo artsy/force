@@ -210,7 +210,6 @@ module.exports = class ArticleView extends Backbone.View
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
     isFilled = $container.width() - 15 > imgsWidth
-    console.log imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
 
   refreshWindowSize: =>
