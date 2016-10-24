@@ -29,7 +29,9 @@ describe 'ArticleView', ->
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
       @ArticleView.__set__ 'CurrentUser', fabricate 'user'
-      @fillwidth = sinon.spy(@ArticleView::fillwidth)
+      @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
+      @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
+      @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
@@ -40,6 +42,16 @@ describe 'ArticleView', ->
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
             { type: 'text', body: '<p><a class="is-follow-link">Damon Zucconi</a><a class="artist-follow" data-id="damon-zucconi"></a></p>' }
+            {
+              type: "image_set",
+              images: [
+                {
+                  type: 'image',
+                  url: 'https://image.png',
+                  caption: 'Trademarked',
+                }
+              ]
+            },
             {
               type: 'artworks',
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
@@ -112,6 +124,7 @@ describe 'ArticleView', ->
     @view = new @ArticleView
     @view.setElement $('body')
     @view.article = @article
+    @view.windowWidth = 1250
 
   afterEach ->
     Backbone.sync.restore()
@@ -157,3 +170,29 @@ describe 'ArticleView', ->
     it 'sets the list of artists in an article with ids', ->
       @view.setupFollowButtons()
       @view.artists[0].id.should.equal 'damon-zucconi'
+
+
+  describe '#refreshWindowSize', ->
+
+    it 'resets image sizes for imageset previews', ->
+      @view.refreshWindowSize()
+      @resetImageSetPreview.callCount.should.equal 1
+
+    it 'calls fillwidth on artworks', ->
+      @view.refreshWindowSize()
+      @fillwidth.callCount.should.be.above 1
+
+  describe '#resetImageSetPreview', ->
+
+    it 'on large screens, images are full height', ->
+      @view.$('.article-section-image-set__image-container').height().should.equal 150
+
+    it 'on small screens, resets image sizes for imageset previews', ->
+      @view.windowWidth = 600
+      @imgsFillContainer.callCount.should.be.above 1
+
+  describe '#imgsFillContainer', ->
+    it 'returns true if images are narrower than their container', ->
+      container = @view.$('.article-section-artworks ul').width(1400)
+      imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
+      imgsFillContainer.isFilled.should.equal true

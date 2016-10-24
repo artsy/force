@@ -20,7 +20,10 @@ body.body-article
   #main-layout-container
     margin-left 0px
     margin-right 0px
-    max-width 100%
+    max-width 100vw
+    .jump-to-top
+      @media screen and (max-width 900px)
+        display none
 
 .article-container h1
   max-width 900px
@@ -29,7 +32,9 @@ body.body-article
   line-height 48px
   text-align center
   margin-bottom gutter-size
-
+  @media screen and (max-width 400px)
+    text-align left
+    garamond-size('headline')
 .article-container
   position relative
 
@@ -38,7 +43,8 @@ body.body-article
 
 .article-author, .article-date, .article-contributing-author
   text-align center
-
+  @media screen and (max-width 400px)
+    text-align left
 .article-lead-paragraph
   margin 0 auto gutter-size auto
 
@@ -66,6 +72,12 @@ body.body-article
     float left
     min-width 140px
     box-sizing border-box
+    @media screen and (max-width 600px)
+      width 50%
+      padding 0 20px 5px 0 !important
+      &:nth-child(2n)
+        padding-right 0 !important
+
   .article-section-toc-link:nth-child(3n + 4), .article-section-toc-link:first-child
     padding-left 0px
   .article-section-toc-link:nth-child(3n + 3)
@@ -79,7 +91,8 @@ body.body-article
 .article-lead-paragraph, .article-section-text
   font-size 20px
   line-height 27px
-  width body-width
+  @media screen and (min-width 620px)
+    width body-width
   a:not(.is-jump-link):not(.artist-follow)
     text-decoration none
     fine-faux-underline()
@@ -90,13 +103,19 @@ body.body-article
     cursor pointer
     garamond-size('l-body')
     margin-left 10px
+    @media screen and (max-width 400px)
+      garamond-size('s-body')
   p
     margin-bottom 1em
     &:last-child
       margin-bottom 0
+    @media screen and (max-width 400px)
+      margin-top 1em
   h2
     font-size 28px
     line-height 1.2em
+    @media screen and (max-width 400px)
+      garamond-size('s-headline')
   h3
     avant-garde()
     font-size 13px
@@ -156,6 +175,21 @@ body.body-article
       margin-top 8px
     &:hover
       color white
+  @media screen and (max-width 900px)
+    &.fixed
+      width 100vw
+      position fixed
+      bottom 0
+      left 0
+      margin 0
+      padding 0
+      z-index 1000
+      display flex
+      height 50px
+      .article-social__header
+        display none
+      .share-item
+        width 33.333%
 
 .article-section-image
   max-width overflow-width
@@ -168,6 +202,9 @@ body.body-article
     margin-top 10px
     color gray-dark-color
     text-align left
+    @media screen and (max-width 400px)
+      font-size 13px
+      line-height 15px
     a
       color gray-dark-color
 .article-section-artworks
@@ -198,6 +235,12 @@ body.body-article
   max-width (overflow-width + gutter-size)
   margin 0 auto
   text-align center
+  @media screen and (max-width 1250px)
+    width calc(100% \- 150px)
+    margin 0 75px
+    @media screen and (max-width 900px)
+      width 100%
+      margin 0
   &.is-loading
     [data-id]
       opacity 0
@@ -210,7 +253,25 @@ body.body-article
     display inline-block
     vertical-align top
     padding 0
+    @media screen and (max-width 400px)
+      min-width 100%
+      margin 0
+      width 100% !important
+      &:first-child
+        margin-bottom 20px
+  ul
+    &.is-loading
+      opacity 0
+      overflow hidden
+      height artwork-height
+    @media screen and (max-width 400px)
+      display block !important
+    &.single li
+      width 100%
+    &.single.portrait li
+      width auto
   li
+    transition all .5s
     margin-right 30px
     &:last-child
       margin-right 0
@@ -228,18 +289,34 @@ body.body-article
     padding-bottom 0 !important
   .artwork-item-caption
     overflow ellipsis
+    @media screen and (max-width 900px)
+      margin 10px 30px
+    @media screen and (max-width 400px)
+      margin 10px 20px
   .overlay-container
     display none
 
-.article-section-embed[data-layout="overflow"]
-  width overflow-width
-  .article-embed-container
-    width 1060px
+.responsive-layout-container[data-layout="overflow"]
+  @media screen and (max-width 900px)
+    margin 40px 0
+  .article-section-embed[data-layout="overflow"]
+    width overflow-width
+    @media screen and (max-width 1250px)
+      width calc(100% \- 150px)
+      @media screen and (max-width 900px)
+        width 100%
+        margin 40px 0
+    .article-embed-container
+      width 1060px
+      @media screen and (max-width 1250px)
+        width 100%
 
 .article-section-embed[data-layout="column_width"]
   width column-width
+  max-width 100%
   .article-embed-container
     width 540px
+    max-width 100%
 
 .article-section-embed
   margin auto
@@ -259,6 +336,25 @@ body.body-article
     width body-width
     height (9 / 16 * body-width)
 
+
+.responsive-layout-container.article-section-container
+  margin-top 45px
+  margin-bottom 45px
+  @media screen and (max-width 400px)
+    margin 20px
+.responsive-layout-container.article-section-container&[data-section-type="image"],
+.main-layout-container&[data-section-type="hero"]
+  @media screen and (max-width 1250px)
+    margin 45px 75px
+    position relative
+    figure
+      width 100%
+      figcaption
+        margin 10px 20px
+  @media screen and (max-width 900px)
+    margin 45px 0
+    max-width 100%
+
 #articles-show
   .main-layout-container
     @media screen and (min-width 900px)
@@ -274,7 +370,9 @@ body.body-article
 
 .article-section-container
   margin (gutter-size * 1.5) auto
-  &.main-layout-container
+  &.responsive-layout-container
+    &[data-section-type="callout"]
+      max-width 1250px
     &[data-section-type="artworks"]
       .artwork-item-sale-price, .artwork-item-contact-seller
         display none
@@ -282,19 +380,30 @@ body.body-article
       width 100%
       z-index 1
       position relative
+      @media screen and (max-width 1250px)
+          margin 45px 0
       &[data-section-type="embed"]
         background black
         width 100%
         max-width 100000px !important
+        @media screen and (max-width 900px)
+          margin 45px 0
         .article-embed-container
           width 100%
           margin auto
       &[data-section-type="video"]
-        max-width 100000px !important
+        max-width 100vw
+        iframe
+          max-width 100%
+          width 100%
+          height 100%
+        @media screen and (max-width 1250px)
+          margin 45px 0
         .article-section-video
           width 100%
-          padding-top 40px
-          padding-bottom 40px
+          padding 40px 75px
+          @media screen and (max-width 900px)
+            padding 40px 0
           &.article-video-background-black
             width 100%
             background black
@@ -302,6 +411,8 @@ body.body-article
             width body-width + 200
             position relative
             margin auto
+            @media screen and (max-width 1250px)
+              width 100%
 
 .article-carousel
   img
@@ -309,15 +420,10 @@ body.body-article
 
 .article-large-format-video-container .article-video
   position relative
-  padding-bottom 56.25% /* 16:9 */
-  height 0
   max-width 1250px
   margin-bottom 50px
 
   iframe
-    position absolute
-    top 0
-    left 0
     width 100%
     height 100%
     max-width 100%
@@ -412,6 +518,8 @@ body.body-article
   max-width 54px
   z-index 10
   float left
+  @media screen and (max-width 900px)
+    display none !important
   a
     background-color white
     text-decoration none
@@ -450,7 +558,7 @@ body.body-article
       margin-right 20px
     .article-section-callout
       garamond-size('l-body')
-      width "calc(100% - %s)" % (140px)
+      width calc(100% \- 140px)
     &:hover
       border-color gray-dark-color
 
@@ -497,8 +605,10 @@ body.body-article
   .gradient-blurb-read-more-container
     width 100%
     height 32px
+    z-index 2
     .gradient-blurb-read-more
       padding 8px 29px
+      z-index 1
       avant-garde-size(s-headline)
       position absolute
       left 50%

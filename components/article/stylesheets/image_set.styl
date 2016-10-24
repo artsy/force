@@ -3,13 +3,23 @@
   width 580px
   display block
   cursor pointer
+  max-width 100%
   &__images
     float left
-    height 150px
+    display flex
+    justify-content space-between
+    @media screen and (max-width 620px)
+      float none
+      height inherit
+      margin-bottom 10px
   &__image-container
-    height 150px
     margin-right 10px
+    height 150px
     display none
+    transition all .5s
+    @media screen and (max-width 620px)
+      display block
+      margin 0
   &__remaining
     avant-garde-size('s-headline')
     height 150px
@@ -20,6 +30,11 @@
     min-width 80px
     width auto
     overflow hidden
+    @media screen and (max-width 620px)
+      display flex
+      justify-content center
+      align-items center
+      height 100px
     &:hover
       transition 0.25s background-color
       background-color gray-lightest-color
@@ -28,6 +43,8 @@
     position relative
     text-align center
     margin 30px auto 20px auto
+    @media screen and (max-width 620px)
+      margin 10px
     svg
       width 32px
   &__icon
