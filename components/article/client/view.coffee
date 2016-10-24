@@ -66,7 +66,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
-    $(window).on('resize', _.debounce @refreshWindowSize, 100)
+    $(window).resize(_.debounce(@refreshWindowSize, 100))
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
@@ -210,6 +210,7 @@ module.exports = class ArticleView extends Backbone.View
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
     isFilled = $container.width() - 15 > imgsWidth
+    console.log imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
 
   refreshWindowSize: =>
