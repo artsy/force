@@ -20,7 +20,9 @@ block body
           .artwork__main__overview__fold( class='js-artwork-fold' )
             include ../client/fold
 
-        .artwork__main__metadata
+        .artwork__main__metadata(
+          class= purchase_flow ? 'purchase-flow' : ''
+        )
           include ../components/metadata/index
           include ../components/commercial/index
           include ../components/auction/index
