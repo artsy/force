@@ -85,24 +85,32 @@ if(location.pathname.match('/article/')){
     }
   });
 
-  analyticsHooks.on('view:editorial-signup', function() {
+  analyticsHooks.on('view:editorial-signup', function(options) {
+    if (options.type != 'banner') {
+      var context = 'article_popup'
+    } else {
+      var context = 'article_fixed'
+    }
     analytics.track('Article impression', {
       article_id: null,
       destination_path: null,
       impression_type: 'newsletter_signup',
-      context_type: 'article_popup'
+      context_type: context,
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.type,
     }, { integrations: { 'Mixpanel': false } } );
   });
 }
 
 // Applies to both /article/* and /articles
 if(location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights')){
-
   analyticsHooks.on('submit:editorial-signup', function(options){
     analytics.track('Sign up for editorial email', {
       article_id: $(this).closest('.article-container').data('id'),
       context_type: options.type,
-      user_email: options.email
+      user_email: options.email,
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.variation_id
     });
   });
 
@@ -114,8 +122,17 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles') 
     });
   });
 
-  analyticsHooks.on('dismiss:editorial-signup', function(){
-    analytics.track('Dismiss editorial signup', { context: 'article cta-popup'});
+  analyticsHooks.on('dismiss:editorial-signup', function(options){
+    if (options.type != 'banner') {
+      var context = 'article_popup'
+    } else {
+      var context = 'article_fixed'
+    }
+    analytics.track('Dismiss editorial signup', {
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.type,
+      context_type: context
+    });
   });
 
 }
