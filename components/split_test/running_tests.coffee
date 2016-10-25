@@ -22,3 +22,10 @@ module.exports =
       banner: 33
       modal: 33
     dimension: 'dimension16'
+
+  purchase_flow:
+    key: 'purchase_flow'
+    edge: 'purchase'
+    outcomes:
+      default: 50
+      purchase: 50
