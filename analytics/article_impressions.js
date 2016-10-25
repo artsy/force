@@ -172,7 +172,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles'))
   var trackImpressions = function() {
     var itemSelectors = '.articles-es-cta__form, .article-es-form,' +
                         '.article-social, .article-share-fixed-fullscreen,' +
-                        '.article-section-image-set' +
+                        '.article-section-image-set,' +
                         '.article-section-toc, .article-sa-sticky-header.visible,' +
                         '.article-sa-related,' +
                         '.artist-follow,' +
