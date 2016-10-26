@@ -7,7 +7,7 @@
     &__form
       margin 25px 0 20px 0
       padding 25px 0
-      border-top 2px solid gray-lighter-color
+      border-top 2px solid gray-lightest-color
       border-bottom @border-top
 
     &__limited-partner-message
@@ -27,19 +27,23 @@
 
     &__sale-message-right, &__shipping-right
       float right
+      garamond-size(s-body)
+
+    &__sale-message-right
+      font-weight bold
+
+    &__shipping-right
+      color gray-darker-color
 
     &__inquiry-buttons
       margin 15px 0 17px 0
       > button
-        width 100%
         margin-top 10px
         &:first-child
           margin-top 0
 
-  // .artwork-inquiry-form
-  // .artwork-acquire-form
-
 .artwork-commercial
+  clearfix()
   &__form
     padding (gutter / 2) 0
     serif('s-body')
