@@ -3,10 +3,14 @@ if artwork.sale_message
     .artwork-commercial__sale-message-left
       | Price
     .artwork-commercial__sale-message-right
-      = artwork.sale_message
+      = artwork.price
 
 .artwork-commercial__shipping
   .artwork-commercial__shipping-left
     | Shipping
   .artwork-commercial__shipping-right
     | Quoted by seller
+    span.help-tooltip(
+      data-anchor='top-right'
+      data-message='After submitting a purchase request, the gallery will provide the final quote within 2-3 business days. We ask that you complete your purchase within 72 hours after receiving the information.'
+    )

@@ -42,10 +42,11 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     analyticsHooks
       .trigger 'order:item-added', "Artwork:#{order.get 'artwork_id'}"
 
+  purchase: (e) ->
+    e.preventDefault()
 
-  # The same as inquire, triggers the inquiry modal. Used in the test group
-  # of the Purchase flow. Does not include pre-filled form in the side bar,
-  # only a button to invoke the modal.
+  # Used in the test group of the Purchase flow. Invokes inquiry
+  # modal when there is no pre-filled form in the side bar.
   contactGallery: (e) ->
     e.preventDefault()
 

@@ -18,7 +18,7 @@ module.exports = ->
     data: COMMERCIAL
 
   sticky = new Sticky
-  # sticky.add $el if shouldStick()
+  sticky.add $el if shouldStick()
 
   initPartnerStub $el
     .click ->
