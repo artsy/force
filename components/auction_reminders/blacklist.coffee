@@ -1,5 +1,5 @@
 blacklist = require '../../lib/blacklist.coffee'
-sd = require('sharify').data
+{ TEAM_BLOGS } = require('sharify').data
 
 module.exports =
   patterns: [
@@ -11,7 +11,7 @@ module.exports =
     '^/inquiry/.*'
     '^/jobs'
     '^/job/.*'
-    sd.TEAM_BLOGS
+    TEAM_BLOGS or '^/test'
   ]
 
   check: ->
