@@ -1,41 +1,134 @@
+::-webkit-scrollbar
+   display none
+
 body
-  background-color gold
+  background-color black
   color white
   garamond-size('l-headline')
 
-.container
-	padding 0 20px
-
-.header
-	height 75px
-	border-bottom 2px solid white
-	display flex
-	justify-content space-between
-	align-items center
-	img
-		height 30px
-	a
+  video
+  	position fixed
+  	top 49.9%
+  	left 50%
+  	min-height 101vh
+  	min-width 100vw
+  	transform translate(-50%, -50%)
+	.header
+		position fixed
+		top 0
+		left 0
+		right 0
+		margin 0 24px
+		height 75px
+		border-bottom 1px solid white
 		display flex
-.planet-art > span
-	font-size 13px
-  text-decoration none
-  line-height 15px
-.main-title
-	font-size 120px
-	font-weight 600
-	display flex
-	justify-content space-between
-	height 90vh
-	align-items center
+		justify-content space-between
+		align-items center
+		img.logo
+			height 30px
+		img.planet-art
+			height 25px
+			display inline-block
+		a
+			color white
+			text-decoration none
+			font-size 14px
+			font-weight 600
+			span
+				display inline-block
+				line-height 15px
+				margin-right 12px
 
-.test-box
-	display flex
-	justify-content space-between
-	.left
-		height 2px
-		background-color gray
-		width 70%
-	.right
-		height 2px
-		background-color gray
-		width 27%
+	.main-title
+		font-size 120px
+		font-weight 500
+		display flex
+		justify-content space-between
+		align-items center
+		width 100%
+		.inner
+			width 100%
+			bottom 0
+			align-items center
+
+	h2
+		font-size 70px
+
+	[data-id='0']
+		.left
+			width 100%
+	[data-id='1']
+		.left
+			width 70%
+		.right
+			width 27%
+	[data-id='2']
+		.left
+			width 45%
+		.right
+			width 52%
+	[data-id='3']
+		.left
+			width 62%
+		.right
+			width 35%
+	[data-id='4']
+		.left
+			width 17%
+		.right
+			width 80%
+	[data-id='5']
+		.left
+			width 55%
+		.right
+			width 42%
+	[data-id='6']
+		.left
+			width 40%
+		.right
+			width 57%
+	[data-id='7']
+		.left
+			width 55%
+		.right
+			width 42%
+	.last
+		border-bottom 1px solid white
+.nav
+  position relative
+  top 95px
+  height calc(100vh \- 95px)
+  overflow hidden
+  width 100%
+  section
+  	width 100%
+  header
+  	height 20px
+  	width 100%
+  	display flex
+  	justify-content space-between
+  	padding 0 24px
+  	.left, .right
+		  border-top 1px solid
+  article
+  	min-height calc(100vh \- 135px)
+  	position relative
+  	.inner
+	  	display flex
+	  	justify-content space-between
+	  	padding 0 24px
+	  	width 100%
+	  	position absolute
+	  	top 0
+	  	overflow hidden
+	  	.spacer
+	  		border-top 1px solid
+  			padding-bottom 30px
+.scroller
+  height 100%
+  overflow auto
+  
+.page-content
+	color black
+	background-color white
+
