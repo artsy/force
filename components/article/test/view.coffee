@@ -94,7 +94,8 @@ describe 'ArticleView', ->
               type: 'embed',
               layout: 'overflow',
               url: 'http://files.artsy.net/data.pdf',
-              height: ''
+              height: '600'
+              mobile_height: '1100'
             }
             {
               type: 'callout',
@@ -181,6 +182,16 @@ describe 'ArticleView', ->
     it 'calls fillwidth on artworks', ->
       @view.refreshWindowSize()
       @fillwidth.callCount.should.be.above 1
+
+  describe '#embedMobileHeight', ->
+
+    it 'sets iframe height to desktop height on large screens', ->
+      @view.$el.find('iframe').height().should.equal 600
+
+    it 'sets iframe height to mobile height on small screens', ->
+      @view.windowWidth = 400
+      @view.embedMobileHeight()
+      @view.$el.find('iframe').height().should.equal 1100
 
   describe '#resetImageSetPreview', ->
 

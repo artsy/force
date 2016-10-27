@@ -66,6 +66,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Resizing
     @sizeVideo()
+    @embedMobileHeight()
     $(window).resize(_.debounce(@refreshWindowSize, 100))
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
     # FS and Super Article setup
@@ -113,6 +114,15 @@ module.exports = class ArticleView extends Backbone.View
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
+
+  embedMobileHeight: =>
+    $('.article-section-container[data-section-type=embed]').each (i, embed) =>
+      mHeight = $(embed).find('iframe').data('m-height')
+      dHeight = $(embed).find('iframe').data('d-height')
+      if @windowWidth < 550
+        $(embed).find('iframe').height(mHeight)
+      else
+        $(embed).find('iframe').height(dHeight)
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -216,6 +226,7 @@ module.exports = class ArticleView extends Backbone.View
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
     @resetImageSetPreview()
+    @embedMobileHeight()
     #Reset Artworks size
     $(".article-section-artworks ul").each (i, imgs) =>
       if $(imgs).children().length > 1
