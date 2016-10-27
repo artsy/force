@@ -77,25 +77,9 @@ describe 'RSS', ->
       Backbone.sync
         .onCall 0
         .returns Q.resolve()
-        .yieldsTo 'success', @section
-
-      Backbone.sync
-        .onCall 1
-        .returns Q.resolve()
         .yieldsTo 'success', @articles
-
-    it 'fetches section and articles', ->
-      routes.partnerUpdates @req, @res
-        .then =>
-          Backbone.sync.args.should.have.lengthOf 2
-          Backbone.sync.args[1][2].data.should.eql
-            section_id: @section.id
-            published: true
-            sort: '-published_at'
-            limit: 100
 
     it 'renders articles', ->
       routes.partnerUpdates @req, @res
-        .then =>
-          @res.render.args[0][0].should.equal 'partner_updates'
-          @res.render.args[0][1].articles.should.have.lengthOf 2
+      @res.render.args[0][0].should.equal 'partner_updates'
+      @res.render.args[0][1].articles.should.have.lengthOf 2

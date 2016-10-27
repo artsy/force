@@ -34,15 +34,13 @@ PAGE_SIZE_FACEBOOK = 50
         pretty: true
 
 @partnerUpdates = (req, res, next) ->
-  articles = new Articles
-
-  articles.fetch
+  new Articles().fetch
     data:
       channel_id: sd.ARTSY_PARTNER_UPDATES_CHANNEL
       published: true
       sort: '-published_at'
       limit: PAGE_SIZE
-  .then ->
-    res.set('Content-Type', 'application/rss+xml')
-    res.render('partner_updates', articles: articles, pretty: true)
-  .catch res.backboneError
+    error: -> res.backboneError
+    success: (articles) ->
+      res.set('Content-Type', 'application/rss+xml')
+      res.render('partner_updates', articles: articles, pretty: true)
