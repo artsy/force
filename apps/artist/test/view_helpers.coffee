@@ -88,14 +88,3 @@ describe 'ArtistViewHelpers', ->
   it 'formatAuctionDetail', ->
     end = moment.utc('2016-12-05T12:00:00+00:00')
     helpers.formatAuctionDetail(end).should.eql 'Auction Closes Dec 5 at 12 PM'
-
-  describe '#auctionResultsPageTitle', ->
-
-    it 'control auction results title should return default message', ->
-      artist =
-        id: 'jeff-koons'
-        name: 'Jeff Koons'
-        counts:
-          artworks: 200
-
-      helpers.auctionResultsPageTitle(artist).should.eql 'Auction Results for Jeff Koons on Artsy'
