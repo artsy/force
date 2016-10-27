@@ -6,8 +6,8 @@ To start a test, add your configuration to the `running_tests.coffee` file:
 header_design:
   key: 'header_design'
   outcomes:
-    old: 8
-    new: 2
+    old: 80
+    new: 20
   edge: 'new' # Optional
   dimension: 'dimension1' # Optional
   scope: 'local' # Optional
@@ -17,7 +17,7 @@ header_design:
 
 `key` name of your test
 
-`outcomes` a hash of your outcomes. Point values must add up to one (you can also use fractions here).
+`outcomes` a hash of your outcomes. Point values must add up to one hundred.
 
 `edge` is the feature that you want logged in admins to always have.
 

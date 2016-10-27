@@ -52,7 +52,9 @@ module.exports = class ContactPartnerView extends ContactView
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
-  submit: ->
+  onSubmit: ->
+    super
+
     @model.set
       artwork: @artwork.id
       contact_gallery: true
@@ -61,7 +63,7 @@ module.exports = class ContactPartnerView extends ContactView
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
 
-    super
+    @submit()
 
     analyticsHooks.trigger 'inquiry:sent',
       label: modelNameAndIdToLabel('artwork', @artwork.get('id'))

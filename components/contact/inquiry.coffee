@@ -44,10 +44,14 @@ module.exports = class InquiryView extends ContactView
   postRender: ->
     @isLoading()
 
-  submit: ->
+  onSubmit: ->
+    super
+
     analyticsHooks.trigger 'inquiry:sync', artwork: @artwork, inquiry: @model
+
     contactGallery = if @partner.get('directly_contactable') and \
       @sales.findWhere(is_auction: true)? then yes else no
+
     @model.set
       artwork: @artwork.id
       contact_gallery: contactGallery
@@ -55,4 +59,6 @@ module.exports = class InquiryView extends ContactView
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
-    super
+
+    @submit()
+

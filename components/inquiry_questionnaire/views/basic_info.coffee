@@ -17,7 +17,10 @@ module.exports = class BasicInfo extends StepView
 
     form.state 'loading'
 
-    @user.save form.data(),
+    @user.set form.data()
+    @user.unset('location') unless @user.has('location')
+
+    @user.save null,
       success: => @next()
       error: form.error.bind form
 

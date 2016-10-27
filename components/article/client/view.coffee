@@ -49,6 +49,8 @@ module.exports = class ArticleView extends Backbone.View
     @sticky = new Sticky
     @jump = new JumpView
     @previousHref = options.previousHref
+    @windowWidth = $(window).width()
+    @windowHeight = $(window).height()
 
     # Render sections
     @renderSlideshow()
@@ -56,17 +58,21 @@ module.exports = class ArticleView extends Backbone.View
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
+    @setupMobileShare()
     @setupFollowButtons()
     @setupImageSets()
+    if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
+      @setupMarketoStyles()
 
     # Resizing
     @sizeVideo()
+    @embedMobileHeight()
+    $(window).resize(_.debounce(@refreshWindowSize, 100))
     @$('.article-section-container a:not(.artist-follow, .is-jump-link)').attr('target', '_blank')
-
     # FS and Super Article setup
     if ($header = @$('.article-fullscreen')).length
       new FullscreenView el: @$el, article: @article, header: $header
-    if sd.RELATED_ARTICLES?.length > 0
+    if sd.SUPER_SUB_ARTICLES?.length > 0
       new SuperArticleView el: @$el, article: @article
 
     # Utility
@@ -76,18 +82,17 @@ module.exports = class ArticleView extends Backbone.View
     if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
     else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
-      @breakCaptions()
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
       .each (i, img) ->
-        newWidth = ((img.width * window.innerHeight * 0.7) / img.height)
+        newWidth = ((img.width * window.innerHeight * 0.9) / img.height)
         if newWidth < 580
           $(img).css('max-width', 580)
         else
-          $(img).css('max-height', window.innerHeight * 0.7 )
+          $(img).css('max-height', window.innerHeight * 0.9 )
     @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
@@ -101,10 +106,23 @@ module.exports = class ArticleView extends Backbone.View
     Q.all( _.map artworkSections, (section) =>
       $el = @$("[data-layout=overflow_fillwidth]" +
         " li[data-id=#{section.artworks[0].id}]").parent()
-      Q.nfcall @fillwidth, $el
+      if $el.children().length == 1
+        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+        $el.addClass('single')
+      else
+        Q.nfcall @fillwidth, $el
     ).done =>
       @loadedArtworks = true
       @maybeFinishedLoading()
+
+  embedMobileHeight: =>
+    $('.article-section-container[data-section-type=embed]').each (i, embed) =>
+      mHeight = $(embed).find('iframe').data('m-height')
+      dHeight = $(embed).find('iframe').data('d-height')
+      if @windowWidth < 550
+        $(embed).find('iframe').height(mHeight)
+      else
+        $(embed).find('iframe').height(dHeight)
 
   renderCalloutSections: =>
     Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
@@ -173,30 +191,64 @@ module.exports = class ArticleView extends Backbone.View
     name = $(e.currentTarget).attr('href').substring(1)
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
-  getWidth: (section) ->
-    if section.layout is 'overflow' then 1060 else 500
-
-  breakCaptions: ->
-    @$('.article-section-image').each ->
-      imagesLoaded $(this), =>
-        $(this).width $(this).children('img').width()
-
-  fillwidth: (el, cb) ->
-    if @$(el).length < 1 or $(window).width() < 700
+  fillwidth: (el, cb) =>
+    if @$(el).length < 1 or @windowWidth < 400
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)
+    if @windowHeight > 700
+      newHeight = @windowHeight * .8
     $list.fillwidthLite
       gutterSize: 30
+      targetHeight: newHeight || 600
       apply: (img) ->
         img.$el.closest('li').width(img.width)
-      done: (imgs) ->
+      done: (imgs) =>
         # Make sure the captions line up in case rounding off skewed things
         tallest = _.max _.map imgs, (img) -> img.height
         $list.find('.artwork-item-image-container').each -> $(this).height tallest
+        # Account for screens that are both wide & short
+        if !@imgsFillContainer(imgs, $list, 30).isFilled
+          $list.css({'display':'flex', 'justify-content':'center'})
         # Remove loading state
         $list.parent().removeClass('is-loading')
         cb()
+
+  imgsFillContainer: (imgs, $container, gutter) =>
+    getWidth = _.map imgs, (img) -> img.width
+    imgsWidth = _.reduce(getWidth, (a, b) ->
+                return a + b
+              , 0) + (($container.children().length - 1) * gutter)
+    isFilled = $container.width() - 15 > imgsWidth
+    return {imgsWidth: imgsWidth, isFilled: isFilled}
+
+  refreshWindowSize: =>
+    @windowWidth = $(window).width()
+    @windowHeight = $(window).height()
+    @resetImageSetPreview()
+    @embedMobileHeight()
+    #Reset Artworks size
+    $(".article-section-artworks ul").each (i, imgs) =>
+      if $(imgs).children().length > 1
+        @parentWidth = $(imgs).width()
+        @fillwidth imgs, ->
+
+  resetImageSetPreview: =>
+    $('.article-section-image-set__images').each (i, container) =>
+      $(container).each (i, imgs) =>
+        if @windowWidth < 620
+          targetHeight = 225
+          $(imgs).fillwidthLite
+            gutterSize: 5
+            targetHeight: targetHeight
+            apply: (img) ->
+              img.$el.parent().width(img.width).height(img.height)
+            done: (imgs) =>
+              $container = imgs[0].$el.closest('.article-section-image-set__images')
+              imgsWidth = @imgsFillContainer(imgs, $container, 5).imgsWidth
+        else
+          $(imgs).children().each (i, img)->
+            $(img).css({'width':'auto', 'height':'150px'})
 
   checkEditable: ->
     if (@user?.get('has_partner_access') and
@@ -219,7 +271,7 @@ module.exports = class ArticleView extends Backbone.View
     $iframe.replaceWith $newIframe
     $cover.remove()
 
-  sizeVideo: ->
+  sizeVideo: =>
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
     calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) ->
@@ -227,25 +279,14 @@ module.exports = class ArticleView extends Backbone.View
       { width: srcWidth*ratio, height: srcHeight*ratio }
 
     resizeVideo = ->
-      newHeight = $(window).height() - 100
-
+      newHeight = @windowheight - 100
       $videos.each ->
         $el = $(this)
         $parent = $el.parent()
         c_width = $parent.outerWidth()
         c_height = $parent.outerHeight()
         maxHeight = if (newHeight < c_height) then newHeight else (c_width * .5625)
-        { width, height } = calculateAspectRatioFit $el.width(), $el.height(), $parent.outerWidth(), maxHeight
-
-        left = Math.max(0, ((c_width - width) / 2)) + "px"
-        top = Math.max(0, ((c_height - height) / 2)) + "px"
-
-        $el
-          .height(height)
-          .width(width)
-          .css
-            left: left
-            top: top
+        $($parent).height(maxHeight)
 
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
@@ -254,11 +295,37 @@ module.exports = class ArticleView extends Backbone.View
     @fadeInShare = _.once -> @$(".article-share-fixed[data-id=#{@article.get('id')}]").fadeTo(250, 1)
     @sticky.add @$(".article-share-fixed[data-id=#{@article.get('id')}]")
     $(@$el).waypoint (direction) =>
-      @fadeInShare() if direction is 'down'
+      @fadeInShare() if direction is 'down' and @windowWidth > 900
+
+  setupMobileShare: ->
+    $(".article-container[data-id=#{@article.id}]").waypoint (direction) =>
+      if @windowWidth < 900
+        if direction is 'down'
+          $(this.$el).find('.article-social').addClass('fixed').fadeIn(250)
+        else
+          $(this.$el).find('.article-social').removeClass('fixed').fadeOut(250)
+      else
+        $('.article-social').show()
+    , { offset: 450 }
+
+    $(".article-container[data-id=#{@article.id}]").waypoint (direction) =>
+      if @windowWidth < 900
+        if direction is 'down'
+          $(this.$el).find('.article-social').fadeOut(250)
+        if direction is 'up'
+          $(this.$el).find('.article-social').addClass('fixed').fadeIn(250)
+      else
+        $('.article-social').show()
+    , { offset: 'bottom-in-view' }
+
+  setupMarketoStyles: =>
+    $(@$el).waypoint (direction) =>
+      if direction is 'down'
+        @$('.mktoFieldWrap input').attr('placeholder', 'Enter your email address')
 
   setupFooterArticles: =>
     # Do not render footer articles if the article has related articles (is/is in a super article)
-    if sd.SCROLL_ARTICLE is 'infinite' and sd.RELATED_ARTICLES?.length < 1 and not @lushSignup
+    if sd.SCROLL_ARTICLE is 'infinite' and sd.SUPER_SUB_ARTICLES?.length < 1 and not @lushSignup
       Q.allSettled([
         (tagRelated = new Articles).fetch
           data: _.extend _.clone DATA,
@@ -297,9 +364,11 @@ module.exports = class ArticleView extends Backbone.View
             afterApply: =>
               @sticky.rebuild()
               @setupWaypointUrls() if @waypointUrls
+              @setupMobileShare()
             onClick: =>
               @sticky.rebuild()
               $.waypoints 'refresh'
+              @setupMobileShare()
               analyticsHooks.trigger 'readmore', {urlref: @previousHref || ''}
           break
 

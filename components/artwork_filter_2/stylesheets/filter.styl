@@ -1,0 +1,67 @@
+// Filter Section
+
+// Scope whlie both the old and new component exist.
+#artwork-filter-2
+  .artwork-filter-criteria
+    h2
+    h3
+      margin 5px 0
+    h2
+      garamond-size('headline')
+      margin-bottom 20px
+    h3
+      avant-garde()
+      font-size small-avant-garde-size
+    section
+      margin 20px 0
+
+    &__for-sale
+    &__criterion
+    &__view-all
+      line-height 1.6
+      text-decoration none
+
+    &__for-sale
+    &__criterion
+      display flex
+
+    &__criterion
+    &__view-all
+      font-size 18px
+
+    &__for-sale
+      margin 0
+      &.is-disabled
+        cursor arrow
+        pointer-events none
+        .artwork-filter-label
+          color gray-dark-color
+
+    &__criterion
+      font-size 18px
+      text-decoration none
+      transition color 0.25s
+      .artwork-filter-select
+        text-decoration none
+      .artwork-filter-remove
+        margin-left 0.25em
+        color purple-color
+        text-decoration underline
+      &:hover .artwork-filter-select
+        color gray-darker-color
+      &.is-active .artwork-filter-select
+        color purple-color
+      &.is-disabled .artwork-filter-select
+        cursor arrow
+        pointer-events none
+        color gray-dark-color
+
+    &__view-all
+      display block
+      faux-underline(black)
+
+    .artwork-filter-label
+      overflow ellipsis
+    .artwork-filter-count
+      margin-left 0.25em
+      color gray-darker-color

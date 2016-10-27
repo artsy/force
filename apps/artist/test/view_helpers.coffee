@@ -99,21 +99,3 @@ describe 'ArtistViewHelpers', ->
           artworks: 200
 
       helpers.auctionResultsPageTitle(artist).should.eql 'Auction Results for Jeff Koons on Artsy'
-
-    it 'instant auction results title should return default message', ->
-      artist =
-        id: 'banksy'
-        name: 'banksy'
-        counts:
-          artworks: 120
-
-      helpers.auctionResultsPageTitle(artist).should.eql 'Instant banksy Auction Results | Artsy'
-
-    it 'free auction results title should return default message', ->
-      artist =
-        id: 'jean-michel-basquiat'
-        name: 'Jean Michel Basquiat'
-        counts:
-          artworks: 120
-
-      helpers.auctionResultsPageTitle(artist).should.eql 'Free Jean Michel Basquiat Auction Results | Artsy'

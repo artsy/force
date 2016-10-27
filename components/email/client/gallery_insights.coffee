@@ -19,7 +19,7 @@ module.exports = class GalleryInsightsView extends Backbone.View
     @renderCTA => @setupCTAWaypoints()
 
   inGIArticlePage: ->
-    sd.GALLERY_INSIGHTS_SECTION_ID in (sd.ARTICLE?.section_ids or [])
+    sd.GALLERY_INSIGHTS_CHANNEL is sd.ARTICLE?.channel_id
 
   inGIVerticalPage: ->
     sd.SECTION?.id is sd.GALLERY_INSIGHTS_SECTION_ID

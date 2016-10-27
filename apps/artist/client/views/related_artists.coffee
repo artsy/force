@@ -74,3 +74,4 @@ module.exports = class RelatedArtistsView extends Backbone.View
 
   remove: ->
     _.invoke @subViews, 'remove'
+    super

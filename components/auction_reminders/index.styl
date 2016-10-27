@@ -13,11 +13,9 @@ reminder-height = 120px
   position relative
   display flex
   width reminder-width
-  height reminder-height
+  min-height reminder-height
   block-margins(15px)
-  padding 15px 90px 15px 15px
-  align-items center
-  justify-content space-between
+  padding 15px 66px 15px 15px
   background-color white
   border 1px solid gray-lighter-color
   text-decoration none
@@ -32,9 +30,11 @@ reminder-height = 120px
     transform translateY(reminder-height / 2)
 
 .auction-reminder-image
-  min-width:90px
+  min-width 90px
 
 .auction-reminder-metadata
+  overflow-wrap break-word
+  width 185px
   margin 0 20px
   > h4
     avant-garde-size('s-headline')

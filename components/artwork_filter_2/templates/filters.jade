@@ -1,0 +1,55 @@
+h2 Works
+
+.artwork-filter-criteria__for-sale.artsy-checkbox(
+  class=(forSaleTotal ? undefined : 'is-disabled')
+)
+  .artsy-checkbox--checkbox
+    input(
+      type='checkbox', name='for_sale', id='for_sale',
+      checked=(forSale ? 'checked' : undefined)
+      disabled=(forSaleTotal > 0 ? undefined : 'disabled')
+      class= 'js-artwork-filter-toggle'
+    )
+    label( for='for_sale' )
+  label.artsy-checkbox--label.artwork-filter-label(
+    for='for_sale'
+  )
+    | Only For Sale
+    span.artwork-filter-count (#{forSaleTotal})
+
+if aggregations
+  for mapped in aggregationsMap
+    - var param = mapped.param
+    - var aggregation = aggregations[param]
+    if aggregation && aggregation.length
+      - var isTruncated = truncate[param] && (aggregation.length > truncate[param])
+      - var items = isTruncated ? aggregation.slice(0, truncate[param]) : aggregation
+      section
+        h3= mapped.label
+        ul
+          for item in items
+            - var isActive = params.get(param) == item.id
+            li.artwork-filter-criteria__criterion(
+              class=(isActive ? 'is-active' : 'is-inactive')
+              class=(item.count ? undefined : 'is-disabled' )
+            )
+              a.artwork-filter-select.artwork-filter-label(
+                class= 'js-artwork-filter-select'
+                data-value!= item.id
+                data-key= param
+              )= item.name
+              a.artwork-filter-select.artwork-filter-count(
+                class= 'js-artwork-filter-select'
+                data-value!= item.id
+                data-key= param
+              ) (#{item.count})
+              if isActive
+                a.artwork-filter-remove(
+                  data-key= param
+                  class= 'js-artwork-filter-remove'
+                ) Clear
+        if isTruncated
+          a.artwork-filter-criteria__view-all(
+            data-key= param
+            class= 'js-artwork-filter-view-all'
+          ) See All

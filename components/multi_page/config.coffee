@@ -18,8 +18,10 @@ module.exports =
       Need more immediate assistance? Please [contact us](mailto:support@artsy.net)
     '
     pages:
+      'Buying on Artsy': 'collector-faqs-buying-on-artsy'
+      'Exploring Artsy': 'collector-faqs-exploring-artsy'
       'Selling On Artsy': 'collector-faqs-selling-on-artsy'
-      'Buying on Artsy': 'collector-faqs-other-requests'
+
   'artist-faqs':
     title: 'Artist FAQs'
     description: '

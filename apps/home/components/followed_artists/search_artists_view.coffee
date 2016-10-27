@@ -3,6 +3,7 @@
 { API_URL } = require('sharify').data
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 Artist = require '../../../../models/artist.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Match = require '../../../../collections/match.coffee'
@@ -84,6 +85,11 @@ module.exports = class SearchArtistsView extends Backbone.View
     id = $suggestion.data('artist-id')
     @following.follow(id) if @user
     $suggestion.find('.typeahead-suggestion-follow').attr 'data-state', 'following'
+    analyticsHooks.trigger 'followable:followed',  {
+      modelName: @match.kind
+      entity_slug: id
+      context_module: 'Homepage followed artists'
+    }
     $suggestion.addClass 'tt-suggestion-inner__selected'
     @$('input').select()
     @findReplacementAndWait(id).then ([ artists ]) =>

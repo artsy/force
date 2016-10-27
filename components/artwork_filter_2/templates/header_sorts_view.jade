@@ -1,0 +1,9 @@
+include ../../bordered_pulldown/mixin
+
++bordered-pulldown(currentSort, 'Sort by:')
+  for label, value in sorts
+    a(
+      data-value= value
+      data-key= 'sort'
+      href= '#'
+    )= label

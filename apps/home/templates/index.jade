@@ -2,8 +2,6 @@ extends ../../../components/main_layout/templates/index
 
 block head
   include meta
-  if sd.INCLUDE_ESCAPED_FRAGMENT
-    meta( name="fragment", content="!" )
 
 append locals
   - assetPackage = 'home'

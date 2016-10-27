@@ -86,3 +86,15 @@ describe '/instant_articles', ->
       rendered.should.containEql '<figcaption><p>Sterling Ruby, Los Angeles, 2013. Photo by CG Watkins. Courtesy Sterling Ruby Studio and Gagosian Gallery</p></figcaption>'
       rendered.should.containEql '<p>Installation view of&nbsp;“The Los Angeles Project” at Ullens Center for Contemporary Art, Beijing. Courtesy UCCA</p>'
       rendered.should.containEql '<a href="https://artsy.net/ucca">'
+
+    it 'renders a signup embed for every article', ->
+      article = new Article fabricate 'article'
+      rendered = iaTemplate(sd: sd, article: article)
+      rendered.should.containEql 'link.artsy.net/join/sign-up-editorial-facebook'
+
+    it 'renders the description', ->
+      articles = new Articles [
+        new Article _.extend fabricate 'article', description: 'A piece about the Whitney.'
+      ]
+      rendered = iasTemplate(sd: sd, articles: articles)
+      rendered.should.containEql '<description>A piece about the Whitney.</description>'

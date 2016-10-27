@@ -55,3 +55,7 @@ mixin artworkCaption(artwork)
 mixin embed(section)
   figure.op-interactive
     iframe(class='no-margin' src=section.url height="#{section.mobile_height || section.height }")
+
+mixin editorialSignup
+  figure.op-interactive
+    iframe(class='no-margin' src='http://link.artsy.net/join/sign-up-editorial-facebook' height="250")

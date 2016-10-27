@@ -5,16 +5,21 @@ module.exports = """
         active_bid {
           id
         }
-        is_highest_bidder
+        is_leading_bidder
         sale_artwork {
           id
           lot_number
+          reserve_status
           counts {
             bidder_positions
           }
           sale_id
           highest_bid {
             display
+          }
+          sale {
+            live_start_at
+            end_at
           }
           artwork {
             href

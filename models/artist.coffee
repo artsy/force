@@ -7,8 +7,6 @@ Artworks = require '../collections/artworks.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL, API_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
-instantSlugs = require './mixins/auction_title_instant_slugs.coffee'
-freeSlugs = require './mixins/auction_title_free_slugs.coffee'
 Relations = require './mixins/relations/artist.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
@@ -81,10 +79,6 @@ module.exports = class Artist extends Backbone.Model
       "Browse the best of #{@displayName()}, including artwork for sale, #{@genderPronoun()} latest shows & events, biography, and exclusive #{@displayName()} articles."
 
   toAuctionResultsPageTitle: ->
-    modifier = "Instant" if instantSlugs.indexOf(@get('id')) > -1
-    modifier = "Free" if freeSlugs.indexOf(@get('id')) > -1
-    if modifier
-      return "#{modifier} #{@metaName()} Auction Results | Artsy"
     "Auction Results for #{@metaName()} on Artsy"
 
   toAuctionResultsPageDescription: ->

@@ -7,7 +7,10 @@ ArtworkCommercialView = benv.requireWithJadeify require.resolve('../view.coffee'
 describe 'ArtworkCommercialView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        sd:
+          FORCED_LOGIN_INQUIRY: 'default'
       Backbone.$ = $
       done()
 

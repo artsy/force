@@ -7,6 +7,7 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
+ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
 initWorksSection = require '../../components/works_section/index.coffee'
 FollowButton = require '../../../../components/follow_button/view.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
@@ -24,6 +25,7 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
+    @useNewArtworkFilter = @user?.hasLabFeature('Refactored Artwork Filter')
 
   fetchRelated: ->
     metaphysics
@@ -40,7 +42,11 @@ module.exports = class OverviewView extends Backbone.View
       limit: 170,
       label: 'Read More',
       heightBreakOffset: 20
-      onExpand: => @sticky.rebuild()
+      onExpand: =>
+        if @useNewArtworkFilter
+          @filterView.sticky.rebuild()
+        else
+          @sticky.rebuild()
     _.defer =>
       @$('.artist-blurb').addClass('is-fade-in')
       @$('.artist-exhibition-highlights').addClass 'is-fade-in'
@@ -88,19 +94,29 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupRelatedGenes()
     # Main section
-    { @filterView, @sticky } = initWorksSection
-      el: @$('#artwork-section')
-      model: @model
-      allLoaded: =>
+
+    if @useNewArtworkFilter
+      @filterView = (new ArtworkFilterView
+        el: @$('#artwork-section')
+        artistID: @model.get('id')
+        topOffset: $('.artist-sticky-header-container').height()
+      ).render()
+      @listenToOnce mediator, 'infinite:scroll:end', =>
         @$('.artist-related-rail').addClass('is-fade-in')
-    @subViews.push @filterView
+    else
+      { filterView, @sticky } = initWorksSection
+        el: @$('#artwork-section')
+        model: @model
+        allLoaded: =>
+          @$('.artist-related-rail').addClass('is-fade-in')
+    @subViews.push filterView
 
   setupRelatedGenes: ->
 
     subView = new RelatedGenesView
       id: @model.id
 
-    subView.collection.on 'sync', =>
+    @listenTo subView.collection, 'sync', =>
       artist = @model.toJSON()
       hasGenes = subView.collection.length
       hasShows = @statuses.shows
@@ -131,5 +147,5 @@ module.exports = class OverviewView extends Backbone.View
     this
 
   remove: ->
-    @filterView.artworks.off 'sync'
     _.invoke @subViews, 'remove'
+    super

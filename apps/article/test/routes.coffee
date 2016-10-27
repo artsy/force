@@ -39,13 +39,10 @@ describe 'Article routes', ->
       routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
         article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
-        footerArticles: new Articles([_.extend fixtures.article, title: 'Bar'])
         superArticles: new Articles([_.extend fixtures.article, title: 'Super'])
       )
       @res.render.args[0][0].should.equal 'article'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
-      @res.render.args[0][1].footerArticles.first().get('title')
-        .should.equal 'Bar'
       @res.render.args[0][1].superArticles.first().get('title')
         .should.equal 'Super'
 

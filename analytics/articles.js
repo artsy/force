@@ -41,10 +41,22 @@ if(location.pathname.match('/article/')){
 
   }).on('click', '.article-section-callout', function(){
     var articleId = $(this).closest('.article-container').data('id');
+    // Only track callouts that are links
+    if($(this)[0].href){
+      analytics.track('Clicked article impression', {
+        article_id: articleId,
+        destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+        impression_type: 'article_callout',
+        context_type: 'article_fixed'
+      });
+    }
+
+  }).on('click', '.article-related-widget a', function(){
+    var articleId = $(this).closest('.article-related-widget').data('id');
     analytics.track('Clicked article impression', {
       article_id: articleId,
-      destination_path: $(this)[0].href,
-      impression_type: 'article_callout',
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      impression_type: 'related_article',
       context_type: 'article_fixed'
     });
 
@@ -73,24 +85,32 @@ if(location.pathname.match('/article/')){
     }
   });
 
-  analyticsHooks.on('view:editorial-signup', function() {
+  analyticsHooks.on('view:editorial-signup', function(options) {
+    if (options.type != 'banner') {
+      var context = 'article_popup'
+    } else {
+      var context = 'article_fixed'
+    }
     analytics.track('Article impression', {
       article_id: null,
       destination_path: null,
       impression_type: 'newsletter_signup',
-      context_type: 'article_popup'
+      context_type: context,
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.type,
     }, { integrations: { 'Mixpanel': false } } );
   });
 }
 
 // Applies to both /article/* and /articles
 if(location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights')){
-
   analyticsHooks.on('submit:editorial-signup', function(options){
     analytics.track('Sign up for editorial email', {
       article_id: $(this).closest('.article-container').data('id'),
       context_type: options.type,
-      user_email: options.email
+      user_email: options.email,
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.variation_id
     });
   });
 
@@ -102,8 +122,17 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles') 
     });
   });
 
-  analyticsHooks.on('dismiss:editorial-signup', function(){
-    analytics.track('Dismiss editorial signup', { context: 'article cta-popup'});
+  analyticsHooks.on('dismiss:editorial-signup', function(options){
+    if (options.type != 'banner') {
+      var context = 'article_popup'
+    } else {
+      var context = 'article_fixed'
+    }
+    analytics.track('Dismiss editorial signup', {
+      experiment_id: 'editorial-cta-banner',
+      variation_id: options.type,
+      context_type: context
+    });
   });
 
 }

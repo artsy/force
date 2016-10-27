@@ -15,20 +15,18 @@
 # module.exports = {}
 
 module.exports =
-  # Set up so we can slowly activate new_homepage_buckets
-  # as we are comfortable with the load and performance
-  personalized_homepage:
-    key: 'personalized_homepage'
+  forced_login_inquiry:
+    key: 'forced_login_inquiry'
     outcomes:
-      new_homepage_1: 1
-      new_homepage_2: 1
-      new_homepage_3: 1
-      new_homepage_4: 1
-      new_homepage_5: 1
-      old_homepage_1: 1
-      old_homepage_2: 1
-      old_homepage_3: 1
-      old_homepage_4: 1
-      old_homepage_5: 1
-    edge: 'new_homepage_1'
-    dimension: 'dimension14'
+      default: 50
+      force_login: 50
+    edge: 'force_login'
+    dimension: 'dimension15'
+
+  editorial_cta_banner:
+    key: 'editorial_cta_banner'
+    outcomes:
+      old_modal: 34
+      banner: 33
+      modal: 33
+    dimension: 'dimension16'

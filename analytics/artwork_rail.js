@@ -17,7 +17,7 @@
   });
 
   $document.on('click', '.arv-carousel-arrow-prev', function(e){
-    analytics.track('Clicked next on artwork rail carousel', { rail: railId(e) });
+    analytics.track('Clicked previous on artwork rail carousel', { rail: railId(e) });
   });
 
   $document.on('click', '.arv-fillwidth-row a', function(e){

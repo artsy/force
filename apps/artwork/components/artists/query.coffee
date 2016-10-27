@@ -4,19 +4,26 @@ module.exports = """
       bio
       name
       href
-      biography: blurb(format: HTML)
+      blurb(format: HTML)
+      biography_blurb(format: HTML, partner_bio: true) {
+        text
+        credit
+        partner_id
+      }
       exhibition_highlights(size: 20) {
         kind
         name
         start_at
         href
         partner {
-          name
+          ... on ExternalPartner {
+            name
+          }
+          ... on Partner {
+            name
+          }
         }
-        location {
-          city
-          country
-        }
+        city
       }
       articles {
         thumbnail_image {

@@ -29,10 +29,9 @@ setupUser = (user, auction) ->
           user.set 'registered_to_bid', boolean
         error: ->
           user.set 'registered_to_bid', false
+      ).then( ([ bidder ]) ->
+        user.set 'qualified_for_bidding', bidder?.qualified_for_bidding
       )
-      user.fetchBidderForAuction auction,
-        success: (bidder) =>
-          user.set 'qualified_for_bidding', bidder?.get 'qualified_for_bidding'
     ]
   else
     Q.resolve()

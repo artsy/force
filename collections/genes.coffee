@@ -13,3 +13,12 @@ module.exports = class Genes extends Backbone.Collection
   model: Gene
 
   url: "#{sd.API_URL}/api/v1/genes"
+
+  groupByFamily: ->
+    grouped = @groupBy (g) -> g.familyName()
+    for familyName, genes of grouped
+      {
+        name: familyName
+        genes: _.sortBy genes, (g) -> g.get('name')
+      }
+

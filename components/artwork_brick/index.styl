@@ -6,6 +6,7 @@
   &__image
     background-color gray-color
     position relative
+    width 100%
 
     &__img
       position absolute
@@ -13,9 +14,6 @@
       left 0
       width 100%
       vertical-align bottom
-      // Rounding errors in placeholder calculation *may* cause 1px
-      // of gray to peek out of the bottom of the image, outline in
-      // white to compensate
       outline 1px solid white
 
     &__save
@@ -26,4 +24,25 @@
     &:hover
       .artwork-brick__image__save
       .artwork-brick__image__save > .artwork-save
-        display block
+      .auction-artwork-save > .artwork-save
+        display: block
+        position: absolute
+        right: 5px
+        bottom: 5px
+
+    &.auction__image
+      padding-bottom 100%
+      background-color rgba(255,255,255, 0.125)
+
+.artwork-brick__image__img.auction__image__img
+  height 100%
+  width 100%
+  background-size contain
+  background-repeat no-repeat
+  background-position center
+  position absolute
+
+.artwork-brick.artwork-brick--auction.js-artwork-brick
+  width 30%
+  height 100%
+  margin-right 20px

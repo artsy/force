@@ -31,7 +31,7 @@ module.exports.init = ->
   new HomeView el: $('body')
 
   setupHomePageModules()
-  setupArtistsToFollow(user) if user?.hasLabFeature('Artists to Follow')
+  setupArtistsToFollow user
   maybeShowBubble user
 
 

@@ -1,6 +1,6 @@
-{ min, reduce } = require 'underscore'
+{ min, each } = require 'underscore'
 
-module.exports = (artworks) ->
+module.exports = (artworks, heights = [0, 0, 0]) ->
   columns = [
     [], [], []
   ]
@@ -8,17 +8,11 @@ module.exports = (artworks) ->
   valid = ({ image }) ->
     image.thumb.height?
 
-  calculate = (column) ->
-    reduce column, (memo, { image }) ->
-      memo + image.thumb.height
-    , 0
-
-  choose = (image) ->
-    min columns, calculate
-
   artworks.map (artwork) ->
     if valid artwork
-      choose artwork.image
-        .push artwork
+      i = heights.indexOf min heights
+      heights[i] += artwork.image.thumb.height
+      columns[i].push artwork
+    else
 
-  columns
+  { columns, heights }

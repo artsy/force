@@ -9,19 +9,4 @@ append locals
   - bodyClass = bodyClass + ' body-articles'
 
 block body
-  if section
-    header.articles-section-notice-header.main-layout-container
-      a.articles-section-notice-header-thumbnail( href=section.get('slug') )
-        img( src=section.get('thumbnail_url') )
-        .articles-section-notice-header-thumbnail-text
-          h3 Featured Coverage
-          h4= section.get('title')
-      if section.get('partner_logo_url')
-        .articles-section-notice-header-partner-logo
-          p In partnership with
-          a( href=section.get('partner_website_url') target='_blank' )
-            img( src= section.get('partner_logo_url') )
-      .articles-section-notice-header-explore
-        a( href=section.get('slug') ) Explore
-        .icon-chevron-small-right
   include full_feed

@@ -6,7 +6,6 @@ moment = require 'moment'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
-Section = require '../models/section.coffee'
 Artworks = require '../collections/artworks.coffee'
 Partner = require '../models/partner.coffee'
 Channel = require '../models/channel.coffee'
@@ -27,21 +26,12 @@ module.exports = class Article extends Backbone.Model
   fetchWithRelated: (options = {}) ->
     # Deferred require
     Articles = require '../collections/articles.coffee'
-    footerArticles = new Articles
     superArticles = new Articles
     Q.allSettled([
       @fetch(
         error: options.error
         headers: 'X-Access-Token': options.accessToken or ''
-      )
-      footerArticles.fetch(
-        error: options.error
         cache: true
-        data:
-          channel_id: ARTSY_EDITORIAL_CHANNEL
-          featured: true
-          published: true
-          sort: '-published_at'
       )
       superArticles.fetch(
         error: options.error
@@ -53,7 +43,7 @@ module.exports = class Article extends Backbone.Model
     ]).then =>
       slideshowArtworks = new Artworks
       superArticle = null
-      relatedArticles = new Articles
+      superSubArticles = new Articles
       dfds = []
 
       # Get slideshow artworks to render server-side carousel
@@ -65,12 +55,6 @@ module.exports = class Article extends Backbone.Model
             data: access_token: options.accessToken
             success: (artwork) ->
               slideshowArtworks.add(artwork)
-      # Get related section content if a part of one
-      if @get('section_ids')?.length
-        dfds.push (section = new Section(id: @get('section_ids')[0])).fetch()
-        dfds.push (sectionArticles = new Articles).fetch(
-          data: section_id: @get('section_ids')[0], published: true, limit: 50
-        )
 
       # Check if the article is a super article
       if @get('is_super_article')
@@ -78,6 +62,7 @@ module.exports = class Article extends Backbone.Model
       else
          # Check if the article is IN a super article
         dfds.push new Articles().fetch
+          cache: true
           data:
             super_article_for: @get('id')
             published: true
@@ -86,12 +71,12 @@ module.exports = class Article extends Backbone.Model
 
       # Partner Channel + Team Channels
       if @get('partner_channel_id')
-        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch()
+        dfds.push (partner = new Partner(id: @get('partner_channel_id'))).fetch(cache: true)
       else if @get('channel_id')
-        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch()
+        dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(cache: true)
 
       Q.allSettled(dfds).then =>
-        superArticleDefferreds = if superArticle then superArticle.fetchRelatedArticles(relatedArticles) else []
+        superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles) else []
         Q.allSettled(superArticleDefferreds)
           .then =>
 
@@ -101,20 +86,17 @@ module.exports = class Article extends Backbone.Model
               for article in superArticles.models
                 superSubArticleIds = superSubArticleIds.concat(article.get('super_article')?.related_articles)
 
-            relatedArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and relatedArticles?.length
-            @set('section', section) if section
+            superSubArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and superSubArticles?.length
             @set('channel', channel) if channel
             @set('partner', partner) if partner
             options.success(
               article: this
-              footerArticles: footerArticles
               slideshowArtworks: slideshowArtworks
               superArticle: superArticle
-              relatedArticles: relatedArticles
+              superSubArticles: superSubArticles
               superSubArticleIds: superSubArticleIds
-              section: section
-              allSectionArticles: sectionArticles if section
               partner: partner if partner
+              channel: channel if channel
             )
 
   isTopTier: ->
@@ -171,7 +153,8 @@ module.exports = class Article extends Backbone.Model
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
       if @get('is_super_article')
         bodyClass += ' body-no-header'
-
+    if @get('channel')?.isTeam()
+      bodyClass += ' body-no-header is-sticky'
     bodyClass
 
   prepForInstant: ->
@@ -205,13 +188,12 @@ module.exports = class Article extends Backbone.Model
         section
     @set 'sections', sections
 
-  #
-  # Super Article helpers
-  fetchRelatedArticles: (relatedArticles) ->
+  fetchSuperSubArticles: (superSubArticles) ->
     for id in @get('super_article').related_articles
       new Article(id: id).fetch
+        cache: true
         success: (article) =>
-          relatedArticles.add article
+          superSubArticles.add article
 
   getParselySection: ->
     if (name = @get('channel')?.get('name'))

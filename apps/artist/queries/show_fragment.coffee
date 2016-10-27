@@ -1,12 +1,15 @@
 module.exports =
   """
-  fragment relatedShow on PartnerShow {
+  fragment relatedShow on Show {
     partner {
-      name
+      ... on ExternalPartner {
+        name
+      }
+      ... on Partner {
+        name
+      }
     }
-    location {
-      city
-    }
+    city
     href
     fair {
       id

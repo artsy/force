@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 
-describe 'ArticleIndexView', ->
+describe 'GalleryInsightsView', ->
 
   before (done) ->
     benv.setup =>
@@ -30,6 +30,7 @@ describe 'ArticleIndexView', ->
     it 'only sets up waypoints for vertical page if in vertical page', ->
       @GalleryInsightsView.__set__ 'sd',
         GALLERY_INSIGHTS_SECTION_ID: 'foo'
+        GALLERY_INSIGHTS_CHANNEL: 'foo'
         ARTICLE: null
         SECTION: { id: 'foo' }
       @view.setupCTAWaypoints()

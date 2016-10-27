@@ -1,3 +1,5 @@
+if calloutArticle
+  .related-title Related Article
 mixin callout-content(calloutArticle, section)
   if !section.hide_image
     if calloutArticle
@@ -5,12 +7,11 @@ mixin callout-content(calloutArticle, section)
     else if section.thumbnail_url
       img( src=section.thumbnail_url )
 
-  .article-section-callout-text(
+  .article-section-callout(
     class=("#{section.hide_image ? 'article-section-callout-no-image' : ''} #{!calloutArticle ? 'article-section-callout-pullquote' : ''}")
   )
     if calloutArticle
       .article-section-callout-title= section.text ? section.text : calloutArticle.get('thumbnail_title')
-      .article-section-callout-link Read full article
     else if section.text
       .article-section-callout-title= section.text
 
