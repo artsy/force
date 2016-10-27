@@ -60,6 +60,7 @@ bootstrap = ->
   require('./components/video/bootstrap') arguments...
 
 @index = (req, res, next) ->
+  res.locals.sd.INCLUDE_SAILTHRU = req.query?.microsite is '1'
   send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
