@@ -71,21 +71,13 @@ module.exports = class OverviewView extends Backbone.View
     return if not @statuses.shows
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
     # If there are more than 15 shows, take ten and show a 'see more' link
-    # If there are less than 15 shows, show them all.
+    # If there are less than 15 shows, show them all, grouped by kind of show.
     showMore = counts.shows > 15
     if showMore
       highlights = viewHelpers.nShowsByDate(shows, 10)
     else
-      solo = []
-      group = []
-      fair = []
-      shows = _.each viewHelpers.nShowsByDate(shows, 15), (show) ->
-        if show.fair
-          fair.push show
-        else if show.artists.length > 1
-          group.push show
-        else
-          solo.push show
+      { solo, group, fair } = _.groupBy(viewHelpers.nShowsByDate(shows, 15), 'kind')
+
     shows = { highlights, solo, group, fair }
     options = { @model, @statuses, shows, viewHelpers }
     $el.html showHighlightsTemplate options

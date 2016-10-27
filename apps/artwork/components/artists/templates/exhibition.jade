@@ -2,7 +2,10 @@ mixin showItem(show, trailingText)
   .artwork-artist__content__exhibition-highlights__item
     .artwork-artist__content__exhibition-highlights__item__date= helpers.artists.showHelpers.date(show.start_at).year()
     .artwork-artist__exhibition-highlights__item__text
-      a(href= show.href)= show.name
+      if show.href
+        a(href= show.href)= show.name
+      else
+        = show.name
       if trailingText
         | #{!!show.name ? ', ' : ''}#{trailingText}
 
