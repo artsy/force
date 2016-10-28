@@ -13,6 +13,7 @@ body
   	min-height 101vh
   	min-width 100vw
   	transform translate(-50%, -50%)
+  	z-index -1
 	.header
 		position fixed
 		top 0
@@ -24,6 +25,9 @@ body
 		display flex
 		justify-content space-between
 		align-items center
+		&.solid
+			background-color rgba(0,0,0,.3)
+			color black
 		img.logo
 			height 30px
 		img.planet-art
@@ -53,6 +57,43 @@ body
 
 	h2
 		font-size 70px
+
+.scroller
+  height 100%
+  overflow auto
+
+.nav
+  position relative
+  top 95px
+  height calc(100vh \- 95px)
+  overflow hidden
+  width 100%
+  section
+  	width 100%
+  header
+  	height 20px
+  	width 100%
+  	display flex
+  	justify-content space-between
+  	padding 0 24px
+  	.left, .right
+		  border-top 1px solid
+  article
+  	min-height calc(100vh \- 135px)
+  	position relative
+  	.inner
+	  	display flex
+	  	justify-content space-between
+	  	padding 0 24px
+	  	width 100%
+	  	position absolute
+	  	top 0
+	  	overflow hidden
+	  	.left, .right
+	  		border-bottom 1px solid
+	  	.spacer
+	  		border-top 1px solid
+  			padding-bottom 30px
 
 	[data-id='0']
 		.left
@@ -94,41 +135,45 @@ body
 			width 42%
 	.last
 		border-bottom 1px solid white
-.nav
-  position relative
-  top 95px
-  height calc(100vh \- 95px)
-  overflow hidden
-  width 100%
-  section
-  	width 100%
-  header
-  	height 20px
-  	width 100%
-  	display flex
-  	justify-content space-between
-  	padding 0 24px
-  	.left, .right
-		  border-top 1px solid
-  article
-  	min-height calc(100vh \- 135px)
-  	position relative
-  	.inner
-	  	display flex
-	  	justify-content space-between
-	  	padding 0 24px
-	  	width 100%
-	  	position absolute
-	  	top 0
-	  	overflow hidden
-	  	.spacer
-	  		border-top 1px solid
-  			padding-bottom 30px
-.scroller
-  height 100%
-  overflow auto
-  
+
+.hidden
+	background-color rgba(255,255,255,.3)
+
 .page-content
+	padding 24px
+	margin-top 95px
+	min-height 100vh
 	color black
 	background-color white
-
+	width 100vw
+	section
+		max-width 1024px
+		width 100%
+		margin 0 auto
+		padding-top 72px
+		.cover-image
+			border-top 2px solid gray-lightest-color
+			border-bottom 2px solid gray-lightest-color
+			padding 30px 0
+			margin-bottom 10px
+			display flex
+			justify-content space-between
+			img
+				width 100%
+				height auto
+			.left
+				width 27%
+				border-top 2px solid gray-lightest-color
+				border-bottom 2px solid gray-lightest-color
+			.right
+				width 70%
+				padding 30px 0
+				border-top 2px solid gray-lightest-color
+				border-bottom 2px solid gray-lightest-color
+		.title
+			display flex
+			justify-content space-between
+			border-bottom 2px solid gray-lightest-color
+			padding-bottom 150px
+			.chapter
+				color gray-color

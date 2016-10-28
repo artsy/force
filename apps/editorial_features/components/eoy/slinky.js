@@ -43,24 +43,15 @@
 
 
           if (position) {
-            console.log(position + " " + header[position] + ' in position')
             // Don’t do anything if the header is already positioned properly.
             if (header.position != position) {
-            //   var visible
-            //   if (position == 'top') { 
-            //     visible = 'hidden' 
-            //   } else {
-            //     visible = ''
-            //   }
               header.$parent
                 .css('paddingTop', header.height);
-                // .addClass(visible);
               header.$
                 .css('position', 'absolute')
                 .css(position, header[position])
                 .css(position == 'top' ? 'bottom' : 'top', '');
               header.position = position;
-              // header.siblings().css('position':'absolute', 'top':'0')
             }
           }
           else {
@@ -90,7 +81,6 @@
         // from the top or bottom of the scroller.
         headers.forEach(function (header, i) {
           header.top = i > 0 ? (headers[i - 1].top + headers[i - 1].height) : 0;
-          debugger
           i = headers.length - i - 1;
           headers[i].bottom = i < headers.length - 1 ? (headers[i + 1].bottom + headers[i + 1].height) : 0;
         });
