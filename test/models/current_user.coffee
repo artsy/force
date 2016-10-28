@@ -128,6 +128,12 @@ describe 'CurrentUser', ->
         { id: '2', uid: '987654321', provider: 'facebook' }
       ]
 
+    describe 'relation', ->
+      it 'should inject initial authentications', ->
+        user = new CurrentUser authentications: @authentications
+        user.isLinkedTo('twitter').should.be.true()
+        user.isLinkedTo('facebook').should.be.true()
+
     describe '#isLinkedTo', ->
       it 'determines if an account is linked to an app provider', ->
         @user.isLinkedTo 'twitter'
