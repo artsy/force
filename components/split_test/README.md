@@ -74,8 +74,14 @@ For forcing the test `header_design` to have the outcome `old`:
 http://www.artsy.net?split_test[header_design]=old
 
 ## Tracking experiments
+
 ```coffeescript
 # On the client
 splitTest = require '../../../components/split_test/index.coffee'
 test = splitTest('header_design').view()
 ```
+
+## Confirm tracking data is received
+
+Tests should deliver data to Looker ~ 2 hours after going into production. To confirm that data is being received, look for the test's 'experiment_id' at:
+https://artsy.looker.com/sql/cgkgxbnzmf26cw
