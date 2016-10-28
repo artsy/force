@@ -28,11 +28,10 @@ body.body-article
 .article-container h1
   max-width 900px
   margin auto
-  font-size 40px
-  line-height 48px
+  garamond-size('l-headline')
   text-align center
   margin-bottom gutter-size
-  @media screen and (max-width 400px)
+  @media screen and (max-width 550px)
     text-align left
     garamond-size('headline')
 .article-container
@@ -43,7 +42,7 @@ body.body-article
 
 .article-author, .article-date, .article-contributing-author
   text-align center
-  @media screen and (max-width 400px)
+  @media screen and (max-width 550px)
     text-align left
 .article-lead-paragraph
   margin 0 auto gutter-size auto
@@ -103,18 +102,18 @@ body.body-article
     cursor pointer
     garamond-size('l-body')
     margin-left 10px
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
       garamond-size('s-body')
   p
     margin-bottom 1em
     &:last-child
       margin-bottom 0
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
       margin-top 1em
   h2
     font-size 28px
     line-height 1.2em
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
       garamond-size('s-headline')
   h3
     avant-garde()
@@ -195,6 +194,7 @@ body.body-article
   max-width overflow-width
   margin auto
   img
+    width 100%
     max-width 100%
     display block
     margin auto
@@ -221,6 +221,7 @@ body.body-article
 .article-section-artworks[data-layout="column_width"]
   width body-width
   margin auto
+  max-width 100%
   .loading-spinner
     display none
   .artwork-item-image
@@ -344,6 +345,8 @@ body.body-article
     margin 20px
 .responsive-layout-container.article-section-container&[data-section-type="image"],
 .main-layout-container&[data-section-type="hero"]
+  figure.portrait
+    max-width 580px
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
