@@ -21,7 +21,7 @@ module.exports =
       options.data = @pick('email')
       fetch.call account, options
 
-    authentications = new Backbone.Collection
+    authentications = new Backbone.Collection @get 'authentications'
     authentications.url = "#{API_URL}/api/v1/me/authentications"
 
     creditCards = new CreditCards
