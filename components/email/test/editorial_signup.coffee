@@ -30,7 +30,7 @@ describe 'EditorialSignupView', ->
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView', 'splitTest']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
-      outcome = { outcome: sinon.stub().returns('old_modal') }
+      outcome = { outcome: sinon.stub().returns('old_modal'), view: sinon.stub() }
       @splitTest.returns(outcome)
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
@@ -113,7 +113,7 @@ describe 'EditorialSignupView', ->
         done()
 
     it 'displays modal when test outcome is modal', ->
-      @splitTest.returns({ outcome: sinon.stub().returns('modal') })
+      @splitTest.returns({ outcome: sinon.stub().returns('modal'), view: sinon.stub() })
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: channel_id: '123'
         ARTSY_EDITORIAL_CHANNEL: '123'
@@ -123,7 +123,7 @@ describe 'EditorialSignupView', ->
       @view.$el.find('.articles-es-cta--banner').hasClass('modal').should.be.true()
 
     it 'displays banner when test outcome is banner', ->
-      @splitTest.returns({ outcome: sinon.stub().returns('banner') })
+      @splitTest.returns({ outcome: sinon.stub().returns('banner'), view: sinon.stub() })
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: channel_id: '123'
         ARTSY_EDITORIAL_CHANNEL: '123'
