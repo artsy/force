@@ -89,8 +89,8 @@ if(location.pathname.match('/article/')){
     analytics.track('Article impression', {
       article_id: null,
       destination_path: null,
-      impression_type: options.type,
-      context_type: context,
+      impression_type: 'newsletter_signup',
+      context_type: options.type,
     }, { integrations: { 'Mixpanel': false } } );
   });
 }
