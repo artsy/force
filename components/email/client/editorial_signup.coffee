@@ -88,6 +88,9 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb null
 
   showEditorialCTA: (outcome) ->
+    #Fire analytics event for A/B split test
+    splitTest('editorial_cta_banner').view()
+
     if outcome is 'modal' or $('body').hasClass('body-transparent-header')
       @$('#modal-container').append editorialCTABannerTemplate
         mode: 'modal'
