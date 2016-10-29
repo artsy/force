@@ -35,7 +35,8 @@ module.exports =
 
   'consignment-faqs':
     title: 'Consignment FAQs'
-    description: 'IS THIS FOR USERS ONLY? The world of art consignment can be overwhelming for collectors to enter. Artsy wants to make listing  art for sale easy and effective. We partner with premier  auction houses to turn selling art into a stress-free process--you can get started consigning art on Artsy in just three steps, and our team of art auction specialists is here to help you along the way. For answers to a few basic questions about how to buy and sell art on Artsy, see below.'
+    description: ''
     pages:
-      'Partner FAQs': 'consignment-faqs-partner-faqs'
-      'User FAQs': 'consignment-faqs-user-faqs'
+      'Overview': 'consignments-faq-overview'
+      'Fees & Estimates': 'consignments-faq-fees-and-estimates'
+      'Consignment Agreement': 'consignments-faq-consignment-agreement'
