@@ -60,7 +60,6 @@ test:
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find apps/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find apps/*/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
-	$(BIN)/mocha --compilers coffee:coffee-script/register,js:babel-core/register $(shell find apps/auction2/test -name '*.js')
 
 # Run tests sans-asset compilation
 test-l:
@@ -69,7 +68,6 @@ test-l:
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find apps/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find apps/*/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
-	$(BIN)/mocha --compilers coffee:coffee-script/register,js:babel-core/register $(shell find apps/auction2/test -name '*.js')
 
 # Start the integration server for debugging
 test-s:
