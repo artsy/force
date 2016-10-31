@@ -12,6 +12,7 @@ mailcheck = require '../../mailcheck/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 FlashMessage = require '../../flash/index.coffee'
 splitTest = require '../../split_test/index.coffee'
+qs = require 'querystring'
 
 module.exports = class EditorialSignupView extends Backbone.View
 
@@ -26,7 +27,9 @@ module.exports = class EditorialSignupView extends Backbone.View
     @setupAEMagazinePage() if @inAEMagazinePage()
 
   eligibleToSignUp: ->
-    (@inAEArticlePage() or @inAEMagazinePage()) and not sd.SUBSCRIBED_TO_EDITORIAL
+    (@inAEArticlePage() or @inAEMagazinePage()) and
+    not sd.SUBSCRIBED_TO_EDITORIAL and
+    qs.parse(location.search.replace(/^\?/, '')).utm_source isnt 'sailthru'
 
   inAEArticlePage: ->
     sd.ARTICLE? and
