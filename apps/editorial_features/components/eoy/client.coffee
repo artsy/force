@@ -5,23 +5,40 @@ slinky = require './slinky.js'
 module.exports.EoyView = class EoyView extends Backbone.View
 
   initialize: ->
-    console.log 'init eoy'
+    #set container to be scrollable height of all sections expanded
+    @heroHeight = $('section').length * $(window).height()
+    $content = $('.content').height(@heroHeight)
+    @flattenedHeight = $('section').length * 20
+    @activeHeight = $(window).height() - 95 - @flattenedHeight
+    $('section').first().height(@activeHeight)
     @sayHi()
 
   sayHi: =>
     $content = $('.content')
-    $content.scroll () =>
-      debugger
-      $content.find('section.active').animate({height: 0}).toggleClass('active')
-      debugger
-    $('article .inner').waypoint (direction) =>
-      if direction is 'down'
-        console.log 'section down scroll'
-        $(this).closest('section').addClass('active')
-      if direction is 'up'
-        console.log 'section up scroll'
-        $(this).closest('section').removeClass('active')
-    , { offset: 'bottom-in-view' }
+    $(window).scroll () =>
+      diff = $(window).scrollTop()
+      active_id = $content.find('section').first().attr('data-section')
+      active_next = parseInt(active_id) + 1
+      active_height = $content.find('[data-section="' + active_id + '"]').height()
+      if diff < @activeHeight
+        $content.find('[data-section="' + active_id + '"]').height(@activeHeight - diff)
+        $content.find('[data-section="' + active_next + '"]').height(diff)
+      # else
+      #   debugger
+      # position = $content.scrollTop()
+      # diff = active_height - position
+      # console.log diff
+      # $content.find('section.active').attr('data-id', active_id).animate({height: diff})
+      # $content.find('section').data('id', 1).animate({height: active_height}).toggleClass('active')
+      # debugger
+    # $('article .inner').waypoint (direction) =>
+    #   if direction is 'down'
+    #     console.log 'section down scroll'
+    #     $(this).closest('section').addClass('active')
+    #   if direction is 'up'
+    #     console.log 'section up scroll'
+    #     $(this).closest('section').removeClass('active')
+    # , { offset: 'bottom-in-view' }
     # $('.nav').on('scroll', @doScroll() )
     # $('.nav').slinky()
     # $('.nav').waypoint (direction) =>
