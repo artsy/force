@@ -37,5 +37,6 @@ module.exports =
     title: 'Consignment FAQs'
     description: ''
     pages:
-      'Partner FAQs': 'artsy-consignments-partner-faq'
-      'User FAQs': 'artsy-consignments-user-faq'
+      'Overview': 'consignments-faq-overview'
+      'Fees & Estimates': 'consignments-faq-fees-and-estimates'
+      'Consignment Agreement': 'consignments-faq-consignment-agreement'
