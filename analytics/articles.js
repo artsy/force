@@ -115,7 +115,7 @@ if(location.pathname.match('/article/') || location.pathname.match('/articles') 
 
   analyticsHooks.on('dismiss:editorial-signup', function(options){
     analytics.track('Dismiss editorial signup', {
-      context_type: context
+      context_type: options.type
     });
   });
 

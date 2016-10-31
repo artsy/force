@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 mediator = require '../../../lib/mediator.coffee'
 { stubChildClasses } = require '../../../test/helpers/stubs'
+qs = require 'querystring'
 
 describe 'EditorialSignupView', ->
 
@@ -89,6 +90,14 @@ describe 'EditorialSignupView', ->
         ARTICLE: channel_id: '333'
         ARTSY_EDITORIAL_CHANNEL: '123'
         SUBSCRIBED_TO_EDITORIAL: false
+      @view.eligibleToSignUp().should.not.be.ok()
+
+    it 'checks if the utm_source is sailthru', ->
+      @EditorialSignupView.__set__ 'qs', parse: sinon.stub().returns utm_source: 'sailthru'
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '333'
+        SUBSCRIBED_TO_EDITORIAL: false
+        ARTSY_EDITORIAL_CHANNEL: '333'
       @view.eligibleToSignUp().should.not.be.ok()
 
   describe '#showEditorialCTA', ->
