@@ -53,13 +53,14 @@ module.exports = class EditorialSignupView extends Backbone.View
       @showEditorialCTA 'modal'
 
   setupAEArticlePage: ->
+    @outcome = splitTest('editorial_cta_banner').outcome()
     @ctaBarView = new CTABarView
       mode: 'editorial-signup'
       name: 'editorial-signup-dismissed'
       persist: true
       email: sd.CURRENT_USER?.email or ''
     if not @ctaBarView.previouslyDismissed() and @eligibleToSignUp()
-      @showEditorialCTA splitTest('editorial_cta_banner').outcome()
+      @showEditorialCTA @outcome
     @fetchSignupImages (images) =>
       @$('.article-content').append editorialSignupLushTemplate
         email: sd.CURRENT_USER?.email or ''
@@ -87,6 +88,9 @@ module.exports = class EditorialSignupView extends Backbone.View
         cb null
 
   showEditorialCTA: (outcome) ->
+    #Fire analytics event for A/B split test
+    splitTest('editorial_cta_banner').view()
+
     if outcome is 'modal' or $('body').hasClass('body-transparent-header')
       @$('#modal-container').append editorialCTABannerTemplate
         mode: 'modal'
@@ -152,7 +156,7 @@ module.exports = class EditorialSignupView extends Backbone.View
         # CTA Banner
         @$('.articles-es-cta--banner.banner').height(0)
         @$('.articles-es-cta--banner').css('opacity', 0).attr('data-state', 'out')
-        analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
+        analyticsHooks.trigger('submit:editorial-signup', variation_id: @outcome, type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
     type = $(e.currentTarget).data('type')
@@ -165,4 +169,4 @@ module.exports = class EditorialSignupView extends Backbone.View
 
   onDismiss: ->
     @ctaBarView.logDimissal()
-    analyticsHooks.trigger('dismiss:editorial-signup', type: splitTest('editorial_cta_banner').outcome())
+    analyticsHooks.trigger('dismiss:editorial-signup', type: @outcome)

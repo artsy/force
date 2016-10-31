@@ -1,6 +1,7 @@
 module.exports =
   """
   fragment relatedShow on Show {
+    kind
     partner {
       ... on ExternalPartner {
         name

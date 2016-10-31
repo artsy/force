@@ -14,7 +14,7 @@ Meta
 * __Production:__ [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
 * __Staging:__ [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
 * __Github:__ [https://github.com/artsy/force](https://github.com/artsy/force)
-* __CI:__ [Semaphore](https://semaphoreapp.com/artsy/force); merged PRs to artsy/force#master are automatically deployed to staging; production is manually deployed from semaphore
+* __CI:__ [Semaphore](https://semaphoreci.com/artsy-it/force); merged PRs to artsy/force#master are automatically deployed to staging; production is manually deployed from semaphore
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
 
 [![Build Status](https://semaphoreci.com/api/v1/artsy-it/force/branches/master/badge.svg)](https://semaphoreci.com/artsy-it/force)
