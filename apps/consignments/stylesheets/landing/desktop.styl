@@ -140,17 +140,17 @@
   color gray-color
   font-style italic
 
-mpv-height = 544px
+// mpv height based on 1024 x 768 viewport
+mpv-height = 690px
 .faq-multi-page
   min-height mpv-height
   border-top 1px solid gray-lighter-color
+  .mpv-page
+    height 670px
   .js-multi-page-embed
+    width 90%
+    margin auto
+    padding 20px 0
+    @media screen and (max-width: smallBreakpoint)
       width 90%
-      margin auto
-      padding 20px 0
-      // @media screen and (max-width: smallBreakpoint)
-      //   width 90%
-      // .mpv-page-content
-        // height 512px
-        // overflow-y scroll
 
