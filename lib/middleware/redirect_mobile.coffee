@@ -2,7 +2,7 @@
 # Detects a mobile browser by user agent and redirects it to Microgravity
 #
 
-{ MOBILE_URL } = require '../../config'
+{ MOBILE_URL, TEAM_BLOGS } = require '../../config'
 express = require 'express'
 router = express.Router()
 
@@ -36,6 +36,6 @@ router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
 router.get '/consign', isResponsive
 router.get '/professional-buyer*', isResponsive
-router.get '/^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/artsy-partner-updates$', isResponsive
+router.get TEAM_BLOGS, isResponsive
 router.use redirect
 module.exports = router

@@ -91,6 +91,14 @@ describe 'EditorialSignupView', ->
         SUBSCRIBED_TO_EDITORIAL: false
       @view.eligibleToSignUp().should.not.be.ok()
 
+    it 'checks if the utm_source is sailthru', ->
+      @EditorialSignupView.__set__ 'qs', parse: sinon.stub().returns utm_source: 'sailthru'
+      @EditorialSignupView.__set__ 'sd',
+        ARTICLE: channel_id: '333'
+        SUBSCRIBED_TO_EDITORIAL: false
+        ARTSY_EDITORIAL_CHANNEL: '333'
+      @view.eligibleToSignUp().should.not.be.ok()
+
   describe '#showEditorialCTA', ->
 
     it 'old modal is hidden if an auction reminder is visible', ->
