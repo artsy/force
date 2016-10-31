@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 mediator = require '../../../lib/mediator.coffee'
 { stubChildClasses } = require '../../../test/helpers/stubs'
-qs = require 'querystring'
 
 describe 'EditorialSignupView', ->
 
