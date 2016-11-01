@@ -20,9 +20,10 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     purchase_flow = PURCHASE_FLOW is 'purchase'
     inquireAction = if purchase_flow then 'contactGallery' else 'inquire'
     return {
-      'click .js-artwork-inquire-button' : inquireAction
-      'click .js-artwork-acquire-button' : 'acquire'
-      'click .collector-faq'             : 'openCollectorModal'
+      'click .js-artwork-purchase-button' : 'purchase'
+      'click .js-artwork-inquire-button'  : inquireAction
+      'click .js-artwork-acquire-button'  : 'acquire'
+      'click .collector-faq'              : 'openCollectorModal'
     }
 
   initialize: ({ @data }) ->
@@ -44,6 +45,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
   purchase: (e) ->
     e.preventDefault()
+    location.assign "#{@artwork.href()}/checkout"
 
   # Used in the test group of the Purchase flow. Invokes inquiry
   # modal when there is no pre-filled form in the side bar.
@@ -62,7 +64,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
       # Success
       @listenToOnce @inquiry, 'sync', =>
-        @$('.js-artwork-inquire-button')
+        @$('.artwork-commercial__inquiry-buttons')
           .html confirmation()
 
   inquire: (e) ->

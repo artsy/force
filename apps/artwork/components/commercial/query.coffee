@@ -6,7 +6,6 @@ module.exports = """
     is_inquireable
     is_in_auction
     sale_message
-    price
     artists {
       name
       is_consignable

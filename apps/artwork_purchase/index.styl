@@ -1,0 +1,85 @@
+@require '../../components/stylus_lib'
+
+a#purchase-page-header-title
+  avant-garde-size('body')
+  text-decoration none
+  padding 20px 0 20px 17px
+.artwork-purchase
+  &__section
+    margin-top 50px
+
+#purchase-page
+  margin-bottom 165px
+  h1
+    white-space nowrap
+    garamond-size('headline')
+  .artwork-purchase
+    &__how-it-works
+      padding-bottom 50px
+      border-bottom 1px solid gray-lightest-color
+      display flex
+      > *
+        &:first-child
+          padding-left 0
+        &:last-child
+          padding-right 0
+        padding 0 30px
+    &__how-item
+      flex-basis 40%
+      &:last-child
+        border-left 1px solid gray-lightest-color
+      &__explanation
+        garamond-size('l-body')
+    &__split-body
+      clearfix()
+    &__form
+      width calc('60% - 40px')
+      float left
+      label
+        margin 22px 0 16px 0
+        avant-garde-size('s-headline')
+        display block
+      .bordered-input
+        width: 100%
+    &__input-full-width
+        width 100%
+    &__input-half-width
+        width calc('50% - 5px')
+    &__address-inputs
+      display flex
+      flex-wrap wrap
+      justify-content space-between
+    &__message
+      &__blurb
+        garamond-size(s-body)
+        color gray-darker-color
+        margin-bottom 25px
+      textarea
+        height 145px
+
+  .ap-summary
+    float right
+    width calc('40% - 40px')
+    border 2px solid gray-lightest-color
+    &__row
+      // margin 30px
+      garamond-size('l-body')
+      clearfix()
+      &:not(.ap-summary-price) .ap-summary__right
+        color gray-darker-color
+    &__split, &__section
+      &:not(:last-child)
+        border-bottom 1px solid gray-lightest-color
+    &__section
+      margin 25px 30px
+    &__row
+      margin 20px 0
+    &__left
+      float left
+    &__right
+      float right
+    .ap-summary-cancel-message
+      garamond-size 'l-caption'
+      color gray-darker-color
+      margin-top 15px
+
