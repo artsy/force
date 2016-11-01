@@ -121,6 +121,7 @@
     "should": "^7.1.0",
     "sinon": "^1.17.1",
     "sqwish": "^0.2.2",
+    "stickyfill": "^1.1.1",
     "stylus": "^0.52.4",
     "supertest": "^1.1.0",
     "typeahead.js": "0.10.x",
