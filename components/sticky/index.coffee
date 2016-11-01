@@ -1,5 +1,6 @@
 _ = require 'underscore'
 { isTouchDevice } = require '../util/device.coffee'
+Stickyfill = require('stickyfill')()
 
 module.exports = class Sticky
   constructor: ->
@@ -8,9 +9,6 @@ module.exports = class Sticky
 
     @$window.resize _.debounce(_.bind(@rebuild, this), 250)
     @$document.on 'ajaxStop', => _.defer => @rebuild()
-
-    return if Stickyfill?
-    require './vendor/stickyfill.js'
 
   add: ($el) ->
     _.defer =>
