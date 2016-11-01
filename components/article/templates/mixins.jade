@@ -43,6 +43,7 @@ mixin fullscreen(article)
       .main-layout-container.article-sa-fullscreen-logos
         .article-sa-primary-logos
           a( href="/" ).article-sa-artsy-logo.icon-logotype
+          .article-sa-plus.icon-close
           .article-sa-primary-logo
             if article.get('super_article').partner_logo && article.get('super_article').partner_logo_link
               a( href=article.get('super_article').partner_logo_link )

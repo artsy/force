@@ -1,16 +1,29 @@
 @require '../../stylus_lib'
 
 .article-sa-footer
+  max-width 1250px
+  margin auto
   margin-bottom 100px
   display flex
   .article-sa-title
-    font-size 50px
+    garamond-size('xl-headline')
     display block
+    font-style normal
 
 .article-sa-footer-left, .article-sa-footer-right
+  border-top 1px solid gray-lighter-color
   flex 1
-  width 50%
   min-height 300px
+
+.article-sa-footer-left
+  width 60%
+  margin-right 30px
+  padding 60px 0 30px 0
+  border-bottom 1px solid gray-lighter-color
+
+.article-sa-footer-right
+  width 40%
+  margin-left 30px
 
 .article-sa-title
   font-size 72px
@@ -24,29 +37,37 @@
   display inline-block
   vertical-align middle
 
+.article-sa-primary-logos
+  display flex
+  align-items center
+
 .article-sa-logos
   position absolute
-  bottom 0px
+  bottom 30px
+  &__container
+    display flex
+    align-items center
+  &__presented
+    avant-garde-size('s-headline')
+    text-transform none
+    margin-bottom 10px
 
-.article-sa-primary-logo
-  display inline-block
+.article-sa-primary-logo, .article-sa-secondary-logo
   vertical-align top
   img
     height 32px
 
-.article-sa-secondary-logo-text
-  avant-garde-size('body')
-  display inline-block
-  vertical-align top
-  margin-right 10px
-  margin-top 2px
+.article-sa-plus
+  transform rotate(45deg)
+  margin 10px
+  font-size 17px
+  font-smoothing antialiased
 
-.article-sa-secondary-logo
-  margin-top 20px
-  img
-    display inline-block
-    vertical-align top
-    max-height 20px
+.article-fullscreen
+  .article-sa-plus
+    color white
+    margin 20px
+    font-size 20px
 
 .article-sa-cta-container
   margin-top 20px
@@ -57,30 +78,29 @@
 
 .article-sa-footer-blurb
   margin-top 20px
+.article-sa-cta-container, .article-sa-footer-blurb
+  garamond-size('l-body')
 
 .article-sa-related
   width 100%
-  margin-left auto
-  max-width 410px
-  a
-    border-bottom 1px solid
-    font-size 22px
-    line-height 110%
-    padding 18px 13px
-    text-align center
-    display block
-    text-decoration none
-    transition background-color 0.3s
-    &:first-child
-      border-top: 1px solid
-    &:hover
-      color white
-      background black
+  display flex
+  align-items center
+  padding 20px
+  border-bottom 1px solid gray-lighter-color
+  text-decoration none
+  transition background-color 0.3s
+  &:hover
+    background #f8
+  img
+    width 100px
+    height 66px
+  &__title
+    garamond-size('l-body')
+    margin-left 20px
 
 // Sticky header
 .article-sa-sticky-header
   position fixed
-  border-bottom 1px solid gray-lighter-color
   top 0px
   left 0px
   width 100%
@@ -88,7 +108,7 @@
   background white
   opacity 0
   transition all 400ms
-  min-height 75px
+  min-height 80px
   pointer-events none
   &.no-transition
     transition all 0ms
@@ -99,7 +119,9 @@
 
 .article-sa-sticky-left, .article-sa-sticky-right
   position absolute
-  top 20px
+  display flex
+  align-items center
+  top 24px
 
 .article-sa-sticky-left
   left 20px
@@ -110,36 +132,37 @@
   .article-sticky-back
     text-decoration none
 
-.article-sa-cta-sticky
-  position absolute
-  bottom 20px
-  left 20px
-  opacity 0
-  transition opacity 0.3s
-  transition-delay 0s
-  pointer-events none
-
 .article-sa-sticky-center
   text-align center
   margin-top 25px
   .article-sa-sticky-title
-    avant-garde-size('l-headline')
-    font-size 15px
+    garamond-size('s-headline')
     cursor pointer
     transition all 300ms
     text-decoration none
     &:hover
       color purple-color
 
-  .article-sa-related-container
+  .article-sa-sticky-related-container
+    border-top 1px solid gray-lighter-color
     max-height 0px
     transition max-height 300ms
     overflow hidden
-    &.visible
-      .article-sa-cta-sticky
-        opacity 1
-        transition-delay 0.3s
-        pointer-events auto
+    margin-top 25px
+    .mgr-cells
+      display flex
 
   .article-sa-related
-    margin 25px auto
+    width 25%
+    border-bottom none
+    padding 20px
+
+.article-sa-sticky
+  &__presented
+    garamond-size('m-caption')
+    display inline-block
+
+.article-sa-sticky-header
+  @media screen and (max-width: 550px)
+    .article-sa-sticky-center
+      display none

@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports = class SuperArticleView extends Backbone.View
 
@@ -9,13 +10,15 @@ module.exports = class SuperArticleView extends Backbone.View
     @duration = 500
     @renderSuperArticle()
     @setupWaypoints()
+    @navCarousel()
 
   renderSuperArticle: ->
-    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
+    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-sticky-related-container')
 
     @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
       return if @$superArticleNavToc.hasClass('visible')
-      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 50
+      height = @$superArticleNavToc.find('.article-sa-sticky-related-container').height() + @$('.article-sa-sticky-center').height() + 50
+      debugger
       @$superArticleNavToc.css 'max-height', "#{height}px"
       @$superArticleNavToc.addClass 'visible'
 
@@ -43,3 +46,9 @@ module.exports = class SuperArticleView extends Backbone.View
         $stickyHeader.addClass 'visible'
       else unless $stickyHeader.hasClass('no-transition')
         $stickyHeader.removeClass 'visible'
+
+  navCarousel: ->
+    initCarousel @$('.article-sa-sticky-related-container'),
+      imagesLoaded: true
+      wrapAround: true
+      groupCells: true
