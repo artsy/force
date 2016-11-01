@@ -60,6 +60,17 @@
     border-right 1px solid gray-lighter-color
     &:last-child
       border 0
+    @media screen and (max-width 900px)
+      &.grid-item
+        width 100%
+        border-right 0
+        border-bottom 1px solid gray-lighter-color
+        padding 20px 0
+        &:first-child
+          padding-top 0
+        &:last-child
+          border 0
+          padding-bottom 0
     img
       width 70px
       height 70px
@@ -68,8 +79,12 @@
       font-size 20px
       line-height 1.2em
       width calc(100% \- 90px)
+      @media screen and (max-width 550px)
+        garamond-size('l-caption')
     img, p
       display inline-block
       vertical-align middle
   &.article-related-widget
     margin-bottom 100px
+    @media screen and (max-width 550px)
+      margin-bottom 50px
