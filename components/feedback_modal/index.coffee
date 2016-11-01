@@ -17,6 +17,7 @@ module.exports = ->
           collector: ['collector']
           press: ['press']
           feedback: ['feedback']
+          auction: ['auction']
       }
     ]
 
@@ -44,6 +45,10 @@ module.exports = ->
       when 'feedback'
         modal.close ->
           openFeedback()
+
+      when 'auction'
+        modal.close ->
+          openMultiPageModal 'auction-faqs'
 
   modal.open()
   modal
