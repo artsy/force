@@ -10,15 +10,14 @@ query = """
     artwork(id: $id) {
       id
       _id
-      cultural_maker
+      title
+      date
       sale_message
       href
-      artists{
-        name
-      }
       partner{
         name
       }
+      artist_names
       image{
         cropped(width:58, height:58){
           url
@@ -34,6 +33,8 @@ query = """
 
   return if metaphysics.debug req, res, send
   purchase_flow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  return res.redirect "/artwork/#{req.params.id}" if not purchase_flow
+
   metaphysics send
     .then (data) ->
       res.locals.sd.ARTWORK = data.artwork
@@ -42,4 +43,6 @@ query = """
     .catch next
 
 @thankYou = (req, res, next) ->
+  purchase_flow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  return res.redirect "/artwork/#{req.params.id}" if not purchase_flow
   res.redirect "/artwork/#{req.params.id}/checkout"
