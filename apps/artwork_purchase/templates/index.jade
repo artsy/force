@@ -23,8 +23,9 @@ block body
           .artwork-purchase__how-item__explanation
             | You will review the quote and complete payment
 
-      .artwork-purchase__split-body
-        form.artwork-purchase__form
+
+      form.artwork-purchase__form.js-ap-form
+        .artwork-purchase__inputs
           .artwork-purchase__section
             .artwork-purchase__shipping
               h1 Shipping Address
@@ -39,6 +40,5 @@ block body
               .artwork-purchase__input-full-width
                   textarea.bordered-input( name='message', type='text', id='artwork-purchase-message')
 
-
         .artwork-purchase__section
-          include ./summary
+            include ./summary
