@@ -62,7 +62,7 @@ module.exports =
     form = @serializeInputs $form
     _.extend form, booleans
 
-  # Checks for required fileds then sets the data-state to error
+  # Checks for required fields then sets the data-state to error
   # if they are empty
   #
   # @param {$Object} $form
