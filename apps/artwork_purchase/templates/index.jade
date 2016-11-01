@@ -1,0 +1,44 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+append locals
+  - assetPackage = 'artwork_purchase'
+
+block minimal-nav-header
+  a#purchase-page-header-title(
+    href= artwork.href
+  )
+    | Back To Artwork
+
+block body
+  .responsive-layout-container
+    #purchase-page.artwork-purchase
+      .artwork-purchase__how-it-works.artwork-purchase__section
+        h1 How it works
+        .artwork-purchase__how-confirm.artwork-purchase__how-item
+          .artwork-purchase__how-item__image
+          .artwork-purchase__how-item__explanation
+            | #{artwork.partner.name} will confirm availability and provide the final quote
+        .artwork-purchase__how-complete.artwork-purchase__how-item
+          .artwork-purchase__how-item__image
+          .artwork-purchase__how-item__explanation
+            | You will review the quote and complete payment
+
+      .artwork-purchase__split-body
+        form.artwork-purchase__form
+          .artwork-purchase__section
+            .artwork-purchase__shipping
+              h1 Shipping Address
+              .artwork-purchase__address-inputs
+                include ./address_form
+
+          .artwork-purchase__section
+            .artwork-purchase__message
+              h1 Message to #{artwork.partner.name}
+              .artwork-purchase__message__blurb
+                | Tell the gallery about your collecting intersts and why you like this artwork—this helps develop a friendly reltionship. Ask clarifying questions about the work and shipping logistics.
+              .artwork-purchase__input-full-width
+                  textarea.bordered-input( name='message', type='text', id='artwork-purchase-message')
+
+
+        .artwork-purchase__section
+          include ./summary

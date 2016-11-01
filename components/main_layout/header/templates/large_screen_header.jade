@@ -1,6 +1,8 @@
 nav.mlh-navbar
   a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
   #main-layout-header-left.mlh-navbar-cell
+    #main-layout-header-minimal-title
+      block minimal-nav-header
     include ../../../search_bar/templates/index
   #main-layout-header-center.mlh-navbar-cell
     a.mlh-top-nav-link( data-priority='1' href='/artists', class= activeClass('/artists') ) Artists
