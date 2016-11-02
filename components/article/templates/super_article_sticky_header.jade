@@ -11,6 +11,7 @@
             a.article-sa-related( href=subArticle.href() )
               img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
               .article-sa-related__title= subArticle.get('thumbnail_title')
+      include ../../merry_go_round/templates/horizontal_navigation
 
   .article-sa-sticky-right
     .article-sa-sticky__presented

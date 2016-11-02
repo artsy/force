@@ -5,6 +5,7 @@
   margin auto
   margin-bottom 100px
   display flex
+  flex-direction row
   .article-sa-title
     garamond-size('xl-headline')
     display block
@@ -12,17 +13,16 @@
 
 .article-sa-footer-left, .article-sa-footer-right
   border-top 1px solid gray-lighter-color
-  flex 1
   min-height 300px
 
 .article-sa-footer-left
-  width 60%
+  width 55%
   margin-right 30px
   padding 60px 0 30px 0
   border-bottom 1px solid gray-lighter-color
 
 .article-sa-footer-right
-  width 40%
+  width 45%
   margin-left 30px
 
 .article-sa-title
@@ -85,8 +85,7 @@
   width 100%
   display flex
   align-items center
-  flex-wrap wrap
-  position relative
+  justify-content flex-start
   padding 20px
   border-bottom 1px solid gray-lighter-color
   text-decoration none
@@ -99,6 +98,26 @@
   &__title
     garamond-size('l-body')
     margin-left 20px
+
+.article-sa-footer
+  @media screen and (max-width: 900px)
+    flex-direction column-reverse
+    .article-sa-footer-left, .article-sa-footer-right
+      width 100%
+      margin 0px
+    .article-sa-cta-container
+      margin-bottom 180px
+  @media screen and (max-width: 550px)
+    .article-sa-footer-left
+      padding-top 30px
+      .article-sa-title
+        garamond-size('headline')
+      .article-sa-footer-blurb, .article-sa-cta
+        garamond-size('s-body')
+    .article-sa-related
+      padding-left 0px
+      &__title
+        garamond-size('s-body')
 
 // Sticky header
 .article-sa-sticky-header
@@ -150,15 +169,18 @@
     border-bottom 1px solid gray-lighter-color
     max-height 0px
     transition max-height 300ms
-    overflow hidden
     margin-top 25px
+    overflow hidden
     .mgr-cell
       width 25%
+      margin-right 0px
 
   .article-sa-related
     border-right 1px solid gray-lighter-color
     border-bottom none
-    padding 20px
+    &__title
+      white-space normal
+      text-align left
 
 .article-sa-sticky
   &__presented

@@ -17,7 +17,7 @@ module.exports = class SuperArticleView extends Backbone.View
 
     @$('.article-sa-sticky-header').hover =>
       return if @$superArticleNavToc.hasClass('visible')
-      height = @$superArticleNavToc.find('.article-sa-sticky-related-container').height() + @$('.article-sa-sticky-center').height() + 50
+      height = @$superArticleNavToc.find('.article-sa-sticky-related-container .mgr-cells').height() + @$('.article-sa-sticky-center').height() + 50
       @$superArticleNavToc.css 'max-height', "#{height}px"
       @$superArticleNavToc.addClass 'visible'
 
