@@ -10,10 +10,7 @@ MyBidderPositions = require '../../collections/bidder_positions.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 
 # Attach the view to the dom and unhide it
-# NOTE: _.defer is an attempt to make the css reveal animations appear smoothly.
-# I'm not sure if it is working consistently.
-# @return {Q.Promise} that resolves after calculating offset time (for reminder
-# time display)
+# @return {Q.Promise} that resolves after calculating offset time (for reminder time display)
 attach = (view) ->
   view.preRender()
   .then (view) ->
@@ -61,7 +58,6 @@ attachReminder = (auction) ->
         expires: secondsLeft
     if view.dismisser.dismissed() then view else attach view
 
-# Starting to think this should be exporting an entire class...
 module.exports = ->
   user = CurrentUser.orNull()
   blacklisted = blacklist.check()
