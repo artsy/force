@@ -1,0 +1,11 @@
+extends ../../../components/main_layout/templates/index
+
+append locals
+  - assetPackage = 'auction2'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .auction2-page
+    include banner
+    .main-layout-container.responsive-layout-container
+      include header

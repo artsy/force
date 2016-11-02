@@ -84,7 +84,7 @@ module.exports = (app) ->
       dest: path.resolve(__dirname, "../public")
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
-      transforms: [require("jadeify"), require('caching-coffeeify')]
+      transforms: [require("jadeify"), require('caching-coffeeify'), require('babelify')]
       insertGlobals: true
   if "test" is NODE_ENV
     app.use (req, res, next) ->
@@ -221,6 +221,7 @@ module.exports = (app) ->
   app.use require "../apps/fair_info"
   app.use require "../apps/fair_organizer"
   app.use require "../apps/auction"
+  app.use require "../apps/auction2"
   app.use require "../apps/auction_support"
   app.use require "../apps/feature"
 

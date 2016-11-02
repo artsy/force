@@ -41,11 +41,12 @@ setupEmailSubscriptions = (user, cb) ->
 @redirectMagazine = (req, res, next) ->
   res.redirect 301, req.url.replace 'magazine', 'articles'
 
+# Deprecated - only must-have is VB2015 and will eventually be removed
 @section = (req, res, next) ->
-  new Section(id: req.params.slug).fetch
+  new Section(id: 'venice-biennale-2015').fetch
+    cache: true
     error: -> next()
     success: (section) ->
-      return next() unless req.params.slug is section.get('slug')
       new Articles().fetch
         data:
           published: true
@@ -60,8 +61,9 @@ setupEmailSubscriptions = (user, cb) ->
           res.render 'section', section: section, articles: articles
 
 @teamChannel = (req, res, next) =>
-  new Channel(id: req.params.slug).fetch
-    error: => @section(req, res, next)
+  slug = last req.url.split('/')
+  new Channel(id: slug).fetch
+    error: => res.backboneError
     success: (channel) ->
       return next() unless channel.isTeam()
       topParselyArticles channel.get('name'), null, PARSELY_KEY, PARSELY_SECRET, (parselyArticles) ->

@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=5.11.1",
-    "npm": "3.8.x"
+    "node": "6.x.x",
+    "npm": "4.x.x"
   },
   "scripts": {
     "start": "make s",
     "test": "make test"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-3"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
   },
   "dependencies": {
     "accounting": "^0.4.1",
@@ -20,6 +29,13 @@
     "artsy-passport": "^1.1.2",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^1.4.2",
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "babel-eslint": "^7.0.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "babelify": "^7.3.0",
     "backbone": "^1.2.3",
     "backbone-super-sync": "^1.1.1",
     "backbone.paginator": "git://github.com/artsy/backbone.paginator.git",
@@ -38,6 +54,7 @@
     "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",
     "express": "^4.13.3",
     "express-ipfilter": "0.0.25",
+    "ezel-assets": "^1.0.3",
     "forever": "^0.15.1",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "geolib": "^2.0.18",
@@ -104,6 +121,7 @@
     "should": "^7.1.0",
     "sinon": "^1.17.1",
     "sqwish": "^0.2.2",
+    "stickyfill": "^1.1.1",
     "stylus": "^0.52.4",
     "supertest": "^1.1.0",
     "typeahead.js": "0.10.x",

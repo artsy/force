@@ -346,14 +346,27 @@ describe 'Sale', ->
 
     describe '#upcomingLabel', ->
 
-      it 'renders the correct opening label', ->
-        time = moment().add(2, 'days').utcOffset(-4)
+      it 'renders the correct opening label when EDT', ->
+        time = moment('2016-11-02 12:00:00').utc()
         @sale.isPreviewState = -> true
         @sale.set
           start_at: time
           end_at: time.add(2, 'days')
         @sale.upcomingLabel().should
-          .equal "Auction opens #{time.format 'MMM D h:mm:ssA'} EST"
+          .containEql 'Auction opens Nov 4'
+        @sale.upcomingLabel().should
+          .containEql 'EDT'
+
+      it 'renders the correct opening label when EST', ->
+        time = moment('2016-1-02 12:00:00').utc()
+        @sale.isPreviewState = -> true
+        @sale.set
+          start_at: time
+          end_at: time.add(2, 'days')
+        @sale.upcomingLabel().should
+          .containEql 'Auction opens Jan 4'
+        @sale.upcomingLabel().should
+          .containEql 'EST'
 
     describe '#sortableDate', ->
       it 'returns the live_start_at if it exists', ->

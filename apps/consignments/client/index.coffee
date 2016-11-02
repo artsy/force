@@ -2,6 +2,7 @@
 Artworks = require '../../../collections/artworks.coffee'
 TypeaheadView = require '../../../components/typeahead/view.coffee'
 ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
+multiPageView = require '../../../components/multi_page/index.coffee'
 
 # Overwrite 'Sorry, <term> not found' message
 TypeaheadView::templates.empty = ->
@@ -39,3 +40,9 @@ module.exports = ->
   # Handle taps on 'In Demand' artist thumbs
   $('.js-in-demand-submit').click ->
     $(this).closest('form').submit()
+
+  # Render the FAQ
+  view = multiPageView 'consignment-faqs'
+  view.collection.invoke 'fetch'
+  ($faq = $('.js-multi-page-embed'))
+    .html view.render().$el

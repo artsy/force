@@ -32,3 +32,11 @@ module.exports =
       'How Artsy Works': 'artist-faqs-how-artsy-works'
       'Listing Artworks': 'artist-faqs-listing-artworks'
       'Other Requests': 'artist-faqs-other-requests'
+
+  'consignment-faqs':
+    title: 'Consignment FAQs'
+    description: ''
+    pages:
+      'Overview': 'consignments-faq-overview'
+      'Fees & Estimates': 'consignments-faq-fees-and-estimates'
+      'Consignment Agreement': 'consignments-faq-consignment-agreement'

@@ -45,7 +45,6 @@ describe 'Articles routes', ->
 
     it 'renders the section with its articles', ->
       section = _.extend _.clone(fixtures.section), slug: 'foo'
-      @req.params.slug = 'foo'
       routes.section @req, @res, @next
       Backbone.sync.args[0][2].success section
       Backbone.sync.args[1][2].data.section_id.should.equal section.id
@@ -62,7 +61,7 @@ describe 'Articles routes', ->
 
     it 'renders the channel with its articles', ->
       channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'team'
-      @req.params.slug = 'foo'
+      @req.url = 'foo'
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
       Backbone.sync.args[1][2].data.ids.length.should.equal 4
@@ -72,15 +71,7 @@ describe 'Articles routes', ->
 
     it 'nexts if channel is not a team channel', ->
       channel = _.extend _.clone(fixtures.channel), slug: 'foo', type: 'editorial'
-      @req.params.slug = 'foo'
+      @req.url = 'foo'
       routes.teamChannel @req, @res, @next
       Backbone.sync.args[0][2].success channel
       @next.called.should.be.ok()
-
-    it 'falls back to checking for a section if channel is not found', ->
-      @req.params.slug = 'foo'
-      routes.teamChannel @req, @res, @next
-      routes.section = sinon.stub()
-      Backbone.sync.args[0][2].error()
-      routes.section.called.should.be.ok()
-      routes.section.args[0][0].params.slug.should.equal 'foo'
