@@ -1,6 +1,7 @@
 _ = require 'underscore'
 { API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
 moment = require 'moment'
+tz = require 'moment-timezone'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
 
@@ -163,12 +164,12 @@ module.exports = class Sale extends Backbone.Model
     event
 
   upcomingLabel: ->
-    est = (attr) => moment.utc(@get attr).utcOffset(-4).format 'MMM D h:mm:ssA'
+    zone = (attr) => moment(@get attr).tz('America/New_York').format 'MMM D h:mm:ssA z'
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
-      "Live bidding begins #{est 'live_start_at'} EST"
+      "Live bidding begins #{zone 'live_start_at'}"
     else if @isPreviewState()
-      "Auction opens #{est 'start_at'} EST"
+      "Auction opens #{zone 'start_at'}"
     else
-      "Bidding closes #{est 'end_at'} EST"
+      "Bidding closes #{zone 'end_at'}"
