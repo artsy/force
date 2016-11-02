@@ -1,40 +1,55 @@
-video.feature-background
-  position fixed
-  top 49.9%
-  left 50%
-  min-height 101vh
-  min-width 100vw
-  transform translate(-50%, -50%)
-  z-index -1
-
-.feature-menu
-  position fixed
-  top 0
-  left 0
-  right 0
-  margin 0 24px
-  height 75px
-  border-bottom 1px solid white
+border-gray = 2px solid gray-lightest-color
+flex-display(justify = space-between)
   display flex
-  justify-content space-between
-  align-items center
-  img.logo
-    height 30px
-  img.planet-art
-    height 25px
-    display inline-block
-  a
-    color white
-    text-decoration none
-    font-size 14px
-    font-weight 600
-    span
+  justify-content justify
+
+.eoy-feature
+  &__background
+    position fixed
+    top 49.9%
+    left 50%
+    min-height 101vh
+    min-width 100vw
+    transform translate(-50%, -50%)
+    z-index -1
+
+  &__menu
+    position fixed
+    top 0
+    left 0
+    right 0
+    margin 0 24px
+    height 75px
+    border-bottom 1px solid white
+    flex-display()
+    align-items center
+    img.logo
+      height 30px
+    img.planet-art
+      height 25px
       display inline-block
-      line-height 15px
-      margin-right 12px
-h2
-  garamond-size('xxl-headline')
-  line-height 1.33em
+    a
+      color white
+      text-decoration none
+      font-size 14px
+      font-weight 600
+      span
+        display inline-block
+        line-height 15px
+        margin-right 12px
+
+    &.overlay
+      z-index 100
+      border-bottom border-gray
+      background-color white
+      transition all .75s ease-in
+      a
+        color black
+      img
+        filter invert(100%)
+  h2
+    garamond-size('xxl-headline')
+    line-height 1.33em
 
 .scroller
   color white
@@ -42,10 +57,13 @@ h2
   padding 0 24px
   position fixed
   top 95px
+  display none
+  transition top .25s
+.scroller__items
+  transition height .5s
   header, footer
     width 100%
-    display flex
-    justify-content space-between
+    flex-display()
     .left, .right
       border-top 1px solid
   article
@@ -53,117 +71,120 @@ h2
     overflow hidden
     height 100%
     .inner
-      display flex
-      justify-content space-between
+      flex-display()
       width 100%
       height 100%
       overflow hidden
       .slinky
-        display flex
-        justify-content space-between
+        flex-display()
         flex-direction column
         .spacer
           border-top 1px solid
           &:first-child, &:last-child
             border none
+  section
+    margin 0 auto
+    padding-bottom 20px
+    height 0
+    transition padding .5s
+    &[data-state='closed']
+      max-height 0
+      footer
+        display none
+    &[data-section='0']
+      .left
+        width 100%
+      article
+        font-size 120px
+        font-weight 500
+        width 100%
+        .inner .left
+          flex-display()
+          align-items center
+          position absolute
+          bottom 0
+          top 0
+    &[data-section='1']
+      .left
+        width 70%
+      .right
+        width 27%
+    &[data-section='2']
+      .left
+        width 45%
+      .right
+        width 52%
+    &[data-section='3']
+      .left
+        width 62%
+      .right
+        width 35%
+    &[data-section='4']
+      .left
+        width 17%
+      .right
+        width 80%
+    &[data-section='5']
+      .left
+        width 55%
+      .right
+        width 42%
+    &[data-section='6']
+      .left
+        width 40%
+      .right
+        width 57%
+    &[data-section='7']
+      .left
+        width 55%
+      .right
+        width 42%
+      footer .left
+        visibility hidden
 
-section
-  margin 0 auto
-  padding-bottom 20px
-  height 0
-  transition padding .5s
-  &[data-state='closed']
-    max-height 0
-    footer
-      display none
-  &[data-section='0']
-    .left
-      width 100%
-    article
-      font-size 120px
-      font-weight 500
-      width 100%
-      .inner .left
-        display flex
-        justify-content space-between
-        align-items center
-        position absolute
-        bottom 0
-        top 0
-  &[data-section='1']
-    .left
-      width 70%
-    .right
-      width 27%
-  &[data-section='2']
-    .left
-      width 45%
-    .right
-      width 52%
-  &[data-section='3']
-    .left
-      width 62%
-    .right
-      width 35%
-  &[data-section='4']
-    .left
-      width 17%
-    .right
-      width 80%
-  &[data-section='5']
-    .left
-      width 55%
-    .right
-      width 42%
-  &[data-section='6']
-    .left
-      width 40%
-    .right
-      width 57%
-  &[data-section='7']
-    .left
-      width 55%
-    .right
-      width 42%
-
-.page-content
+.article-body
   padding 24px
   margin-left -24px
-  min-height 100vh
   color black
   background-color white
   width 100vw
+  height 100vh
+  overflow hidden
   section
     max-width 1024px
     width 100%
     margin 0 auto
     padding-top 72px
-    .cover-image
-      border-top 2px solid gray-lightest-color
-      border-bottom 2px solid gray-lightest-color
+  &__cover-image
+    border-top border-gray
+    border-bottom border-gray
+    padding 30px 0
+    margin-bottom 10px
+    flex-display()
+    img
+      width 100%
+      height auto
+    .left
+      width 27%
+      border-top border-gray
+      border-bottom border-gray
+    .right
+      width 70%
       padding 30px 0
-      margin-bottom 10px
-      display flex
-      justify-content space-between
-      img
-        width 100%
-        height auto
-      .left
-        width 27%
-        border-top 2px solid gray-lightest-color
-        border-bottom 2px solid gray-lightest-color
-      .right
-        width 70%
-        padding 30px 0
-        border-top 2px solid gray-lightest-color
-        border-bottom 2px solid gray-lightest-color
-    .title
-      display flex
-      justify-content space-between
-      border-bottom 2px solid gray-lightest-color
-      padding-bottom 150px
-      .chapter
-        color gray-color
+      border-top border-gray
+      border-bottom border-gray
+  &__title
+    flex-display()
+    border-bottom border-gray
+    padding-bottom 150px
+    .chapter
+      color gray-color
+  &__text
+    max-width 750px
+    margin-top 70px
+    p
+      garamond-size('headline')
+      margin-bottom 40px
 
 #recently-viewed-artworks
   display none
