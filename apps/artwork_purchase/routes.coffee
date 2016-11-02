@@ -4,12 +4,14 @@ Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 splitTest = require '../../components/split_test/index.coffee'
-
+{ isEligible } = require './helpers.coffee'
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
       id
       _id
+      is_acquireable
+      is_inquireable
       title
       date
       sale_message
@@ -28,21 +30,22 @@ query = """
 
 """
 
+
 @index = (req, res, next) ->
   send = query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
-  purchase_flow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  return res.redirect "/artwork/#{req.params.id}" if not purchase_flow
-
+  purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   metaphysics send
-    .then (data) ->
-      res.locals.sd.ARTWORK = data.artwork
-      res.render 'index', data
+    .then ({ artwork }) ->
+      return res.redirect "/artwork/#{req.params.id}" if not isEligible artwork
+      res.locals.sd.ARTWORK = artwork
+      res.render 'index', { artwork }
 
     .catch next
 
 @thankYou = (req, res, next) ->
-  purchase_flow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  return res.redirect "/artwork/#{req.params.id}" if not purchase_flow
+  purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   res.redirect "/artwork/#{req.params.id}/checkout"

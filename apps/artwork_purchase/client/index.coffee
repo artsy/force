@@ -4,13 +4,13 @@ _ = require 'underscore'
 Form = require '../../../components/mixins/form.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-formatMessage = require './format_message.coffee'
+{ formatMessage } = require '../helpers.coffee'
+successTemplate = ->require('../templates/success.jade') arguments...
 
 class PurchaseForm extends Backbone.View
   _.extend @prototype, Form
 
   initialize: ({ @artwork, @user }) ->
-    console.log @artwork, @user
     @inquiry = new ArtworkInquiry
 
   events:
@@ -19,7 +19,6 @@ class PurchaseForm extends Backbone.View
 
   onSubmit: (e) ->
     e.preventDefault()
-    $(e.target).blur()
     return unless @validateForm()
     return if @formIsSubmitting()
 
@@ -30,16 +29,29 @@ class PurchaseForm extends Backbone.View
     @inquiry.set {
       name,
       message,
-      artwork: @artwork.id
-      contact_gallery: true
+      artwork: @artwork.id,
+      contact_gallery: true,
+      inquiry_url: window.location.href,
+      user: @user
     }
-    console.log @inquiry, message
-    debugger
+
+    @inquiry.save null,
+      success: =>
+        @showSuccess()
+      error: (model, response, options) =>
+        @reenableForm()
+        @$('.js-ap-form-errors').html @errorMessage(response)
+
+  showSuccess: ->
+    Backbone.history.navigate @artwork.href + '/thank-you', replace: true
+    $('.body-header-fixed').removeClass 'minimal-header'
+    @$el.html successTemplate { @artwork }
 
 class ThankYouView extends Backbone.View
 
 module.exports.init = ->
   user = CurrentUser.orNull()
   artwork = ARTWORK
+  Backbone.history.start pushState: true
   new PurchaseForm { user, artwork, el: $('#purchase-page') }
   new ThankYouView { user, artwork, el: $('#purchase-page') }
