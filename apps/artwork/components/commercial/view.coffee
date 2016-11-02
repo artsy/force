@@ -9,6 +9,7 @@ PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
+{ isEligible } = require '../../../artwork_purchase/helpers.coffee'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 
@@ -16,18 +17,18 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   tagName: 'form'
   className: 'artwork-commercial'
 
-  events: ->
-    purchase_flow = PURCHASE_FLOW is 'purchase'
-    inquireAction = if purchase_flow then 'contactGallery' else 'inquire'
-    return {
-      'click .js-artwork-purchase-button' : 'purchase'
-      'click .js-artwork-inquire-button'  : inquireAction
-      'click .js-artwork-acquire-button'  : 'acquire'
-      'click .collector-faq'              : 'openCollectorModal'
-    }
+  events:
+    'click .js-artwork-purchase-button' : 'purchase'
+    'click .js-artwork-inquire-button'  : 'inquire'
+    'click .js-artwork-acquire-button'  : 'acquire'
+    'click .collector-faq'              : 'openCollectorModal'
 
   initialize: ({ @data }) ->
     { artwork } = @data
+
+    if isEligible artwork
+      splitTest('purchase_flow').view()
+      @usePurchaseFlow = PURCHASE_FLOW is 'purchase'
 
     @artwork = new Artwork artwork
 
@@ -68,6 +69,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           .html confirmation()
 
   inquire: (e) ->
+    return @contactGallery() if @usePurchaseFlow
     e.preventDefault()
 
     @inquiry = new ArtworkInquiry notification_delay: 600
