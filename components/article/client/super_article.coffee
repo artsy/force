@@ -13,12 +13,11 @@ module.exports = class SuperArticleView extends Backbone.View
     @navCarousel()
 
   renderSuperArticle: ->
-    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-sticky-related-container')
+    @$superArticleNavToc = @$('.article-sa-sticky-related-container')
 
-    @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
+    @$('.article-sa-sticky-header').hover =>
       return if @$superArticleNavToc.hasClass('visible')
       height = @$superArticleNavToc.find('.article-sa-sticky-related-container').height() + @$('.article-sa-sticky-center').height() + 50
-      debugger
       @$superArticleNavToc.css 'max-height', "#{height}px"
       @$superArticleNavToc.addClass 'visible'
 

@@ -85,6 +85,8 @@
   width 100%
   display flex
   align-items center
+  flex-wrap wrap
+  position relative
   padding 20px
   border-bottom 1px solid gray-lighter-color
   text-decoration none
@@ -145,15 +147,16 @@
 
   .article-sa-sticky-related-container
     border-top 1px solid gray-lighter-color
+    border-bottom 1px solid gray-lighter-color
     max-height 0px
     transition max-height 300ms
     overflow hidden
     margin-top 25px
-    .mgr-cells
-      display flex
+    .mgr-cell
+      width 25%
 
   .article-sa-related
-    width 25%
+    border-right 1px solid gray-lighter-color
     border-bottom none
     padding 20px
 
