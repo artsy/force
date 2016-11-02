@@ -30,6 +30,18 @@ describe 'AuctionReminders', ->
       is_auction: true
       end_at: moment().subtract(1, 'day').format()
 
+    auctionLiveOpenSoon = fabricate 'sale',
+      id: 'live-soon'
+      is_auction: true
+      end_at: moment().add(3, 'hours').format()
+      live_start_at: moment().add(9, 'minutes').format()
+    
+    auctionLiveOpenNow = fabricate 'sale',
+      id: 'live-open'
+      is_auction: true
+      end_at: moment().add(1, 'hours').format()
+      live_start_at: moment().subtract(1, 'hours').format()
+
     auctionClosingSoonAsWell = fabricate 'sale',
       id: 'closing-soon-as-well'
       is_auction: true
@@ -41,6 +53,8 @@ describe 'AuctionReminders', ->
       auctionNotClosingSoon
       auctionAlreadyOver
       auctionClosingSoonAsWell
+      auctionLiveOpenNow
+      auctionLiveOpenSoon
     ]
 
   afterEach ->
@@ -89,11 +103,13 @@ describe 'AuctionReminders', ->
     it 'filters the data', (done) ->
       @reminders.fetch()
         .then (response) ->
-          response.should.have.lengthOf 2
+          response.should.have.lengthOf 4
           _.pluck response, 'id'
             .should.eql [
               'closing-soon'
               'closing-soon-as-well'
+              'live-open'
+              'live-soon'
             ]
 
           keys = _.keys(_.first response)
