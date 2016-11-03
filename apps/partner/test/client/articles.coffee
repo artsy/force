@@ -19,7 +19,7 @@ describe 'ArticlesAdapter', ->
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       @ArticlesAdapter = benv.requireWithJadeify(
-        (resolve __dirname, '../../client/articles'), ['articleTemplate']
+        (resolve __dirname, '../../client/articles'), ['articleTemplate', 'jsonldTemplate']
       )
       @ArticlesGridView = benv.requireWithJadeify(
         (resolve __dirname, '../../../../components/articles_grid/view'), ['template', 'button', 'figure', 'empty']
@@ -135,3 +135,9 @@ describe 'ArticlesAdapter', ->
       @view.collection.trigger 'sync'
       @view.el.html().should.containEql 'More From Gagosian Gallery'
       @view.el.html().should.not.containEql 'articles-grid__more-button'
+
+    it 'renders the json-ld', ->
+      Backbone.sync.args[0][2].success fixtures.article
+      html = @view.el.html()
+      html.should.containEql 'json-ld'
+      html.should.containEql 'Other'
