@@ -1,4 +1,4 @@
-module.exports = 
+module.exports =
   excludeList: [
     /\/article/     # any /article page
     '/gallery-partnerships'
@@ -12,5 +12,6 @@ module.exports =
     '/contact'
     '/consign'
     '/professional-buyer'
+    '/eoy-2016'
     /\/feature/     # any /feature page
   ]
