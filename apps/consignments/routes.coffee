@@ -12,6 +12,7 @@ landing = new JSONPage name: 'consignments/landing'
 
   landing.get()
     .then (data) ->
+      console.log data
       { recently_sold, in_demand } = landing.data.sections
 
       recentlySold.id = recently_sold.set.id
