@@ -22,21 +22,23 @@ describe 'AuctionReminderView', ->
       name: 'My Auction'
       image_versions: ['large']
       image_url: '/:version.jpg'
-
+      is_auction: true
+    sinon.stub(@auction, 'reminderStatus').returns('closing_soon')
+    
     @view = new AuctionReminderView
       model: @auction
       dismisser:
         dismiss: @dismiss = sinon.stub()
+    sinon.stub(@view, 'getOffsetTimesPromise').returns(@view)
 
-    @view.render()
-
-  describe '#render', ->
+  describe '#preRender', ->
     it 'renders the template', ->
-      @view.$('h3').text()
-        .should.equal 'My Auction'
+      @view.preRender().then (view)->
+        view.$('h3').text()
+          .should.equal 'My Auction'
 
-      @view.$('img').attr('src')
-        .should.containEql '/crop?url=%2Flarge.jpg&width=90&height=90&quality=95'
+        view.$('img').attr('src')
+          .should.containEql '/crop?url=%2Flarge.jpg&width=80&height=60&quality=95'
 
   describe '#click', ->
     beforeEach ->
@@ -57,10 +59,12 @@ describe 'AuctionReminderView', ->
 
     describe 'click the close button', ->
       it 'dismisses; closes', ->
-        @dismiss.called.should.be.false()
-        @view.close.called.should.be.false()
+        @view.preRender().then (view)->
 
-        @view.$('.js-dismiss').click()
+          view.dismisser.dismiss.called.should.be.false()
+          view.close.called.should.be.false()
 
-        @dismiss.called.should.be.true()
-        @view.close.called.should.be.true()
+          view.$('.js-dismiss').click()
+
+          view.dismisser.dismiss.called.should.be.true()
+          view.close.called.should.be.true()

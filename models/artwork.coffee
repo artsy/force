@@ -56,13 +56,6 @@ module.exports = class Artwork extends Backbone.Model
     else
       @defaultImageUrl 'larger'
 
-  # Are there comparable artworks;
-  # such that we can display a link to auction results
-  #
-  # return {Boolean}
-  isComparable: ->
-    (@get('comparables_count') > 0) and (@get('category') isnt 'Architecture')
-
   # Can we display a price?
   #
   # return {Boolean}
@@ -268,14 +261,6 @@ module.exports = class Artwork extends Backbone.Model
       @toTitleWithDate()
     ]).join(" ")
 
-  toAuctionResultsPageTitle: ->
-    _.compact([
-      (if @related().artist.get('name') then "#{@related().artist.get('name')}#{if @get('title') then ',' else ''}" else undefined)
-      @toTitleWithDate()
-      (if @related().artist.get('name') or @get('title') then "| Related Auction Results" else "Related Auction Results")
-      "| Artsy"
-    ]).join(" ")
-
   titleByArtist: ->
     _.compact([
       @getTitle()
@@ -295,10 +280,6 @@ module.exports = class Artwork extends Backbone.Model
       @get('medium')
       @dimensions()
     ]).join(", ")
-
-  # for meta descriptions
-  toAuctionResultsPageDescription: ->
-    "Related auction results for #{@toPageDescription()}"
 
   saleMessage: ->
     return if @get('sale_message') is 'Contact For Price'
