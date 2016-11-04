@@ -39,6 +39,7 @@
     "backbone": "^1.2.3",
     "backbone-super-sync": "^1.1.1",
     "backbone.paginator": "git://github.com/artsy/backbone.paginator.git",
+    "background-check": "git://github.com/kennethcachia/background-check",
     "bluebird": "^2.10.2",
     "bluebird-q": "^1.0.3",
     "body-parser": "^1.14.1",
