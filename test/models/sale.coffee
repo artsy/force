@@ -20,14 +20,14 @@ describe 'Sale', ->
       @liveOpenSale = new Sale fabricate 'sale',
         end_at: moment().add(1, 'hours').format()
         live_start_at: moment().subtract(1, 'hours').format()
-        auction_state: 'live'
+        auction_state: 'open'
       @liveSoonSale = new Sale fabricate 'sale',
         end_at: moment().add(13, 'hours').format()
         live_start_at: moment().add(8, 'minutes').format()
-        auction_state: 'live'
+        auction_state: 'open'
       @closingSoonSale = new Sale fabricate 'sale',
         end_at: moment().add(12, 'hours')
-        auction_state: 'live'
+        auction_state: 'open'
       @closedSale = new Sale fabricate 'sale',
         end_at: moment().subtract(1, 'day').format()
         auction_state: 'closed'
@@ -96,7 +96,7 @@ describe 'Sale', ->
         sale = new Sale fabricate 'sale',
           end_at: moment().add(1, 'hours').format()
           live_start_at: moment().add(30, 'minutes').format()
-          auction_state: 'live'
+          auction_state: 'open'
         sale.isLiveOpen().should.be.false()
       it 'returns false if sale has a live property of false', ->
         sale = new Sale fabricate 'sale',
@@ -231,7 +231,7 @@ describe 'Sale', ->
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
 
       it 'shows Enter Live Auction if live auction has opened', ->
-        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format(), auction_state: 'live'
+        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format(), auction_state: 'open'
         @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
         @user.set 'registered_to_bid', true
         @user.set 'qualified_for_bidding', true
