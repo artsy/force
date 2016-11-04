@@ -1,4 +1,4 @@
-{ BackgroundCheck } = require '../../lib/vendor/jquery.background-check.js'
+{ BackgroundCheck } = require('background-check/background-check.js')
 
 module.exports = ({ targets, backgroundClass, imageUrl }) ->
 
@@ -32,4 +32,3 @@ module.exports = ({ targets, backgroundClass, imageUrl }) ->
         light: 'is-light'
         dark: 'is-dark'
         complex: 'is-complex'
-
