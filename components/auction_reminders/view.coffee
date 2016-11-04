@@ -1,7 +1,7 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
+Q = require 'bluebird-q'
+moment = require 'moment'
 Backbone = require 'backbone'
-ClockView = require '../clock/view.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class AuctionReminderView extends Backbone.View
@@ -22,29 +22,43 @@ module.exports = class AuctionReminderView extends Backbone.View
       e.preventDefault()
       return @close()
 
-  postRender: ->
-    @clock = new ClockView
-      el: @$('.js-auction-reminder-clock')
-      model: @model
-      modelName: 'Auction'
-      stateCallback: =>
-        @close()
+  getOffsetTimesPromise: ->
+    Q.promise (resolve, reject, notify) =>
+      @model.calculateOffsetTimes
+        success: =>
+          switch @model.reminderStatus()
+            when 'live_open_soon'
+              startMoment = @model.get('offsetLiveStartAtMoment')
+              # only show minutes if auction doesn't start on the hour
+              # & show add 'tomorrow' if auction starts tomorrow
+              formatStr = if startMoment.minutes() == 0 then 'hA' else 'h:mmA'
+              formattedTime = startMoment.format(formatStr)
+              time = if startMoment.isSame(moment(), 'day') then formattedTime else "#{formattedTime} Tomorrow"
+              @$el.find('.time-msg').html("Auction begins at #{time}")
+            when 'closing_soon'
+              endMoment = @model.get('offsetEndAtMoment')
+              time = endMoment.fromNow()
+              @$el.find('.time-msg').html("Auction ends #{time}")
+          resolve(this)
 
-    @clock.start =>
-      @$el.attr 'data-state', 'open'
 
-  render: ->
-    @$el.html template
-      auction: @model
-      _s: _s
-    @postRender()
+  preRender: ->
+    Q.fcall =>
+      @$el.html template
+        auction: @model
+      if @model.reminderStatus() == 'live_open' #bc then we don't need times
+        this
+      else
+        @getOffsetTimesPromise()
+
+  unhide: ->
+    @$el.attr 'data-state', 'open'
     this
 
   close: (callback = $.noop) ->
     @$el
       .attr 'data-state', 'closed'
       .one $.support.transition.end, =>
-        @clock.remove()
         @remove()
         @trigger 'closed'
         callback()

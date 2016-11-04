@@ -1,6 +1,7 @@
 _ = require 'underscore'
 { API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
 moment = require 'moment'
+tz = require 'moment-timezone'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
 
@@ -116,6 +117,10 @@ module.exports = class Sale extends Backbone.Model
   isRegistrationEnded: ->
     @isAuction() and moment().isAfter(@get 'registration_ends_at')
 
+  isLiveAuction: ->
+    @get('live_start_at') and moment(@get('live_start_at')).isBefore(moment(@get('end_at')))
+
+  # Is there a way to manually end/close out a live sale besides looking at end_at?
   isLiveOpen: ->
     moment().isBefore(@get 'end_at') and moment().isAfter(@get 'live_start_at')
 
@@ -138,14 +143,27 @@ module.exports = class Sale extends Backbone.Model
   sortableDate: ->
     if @get('live_start_at')? then @get('live_start_at') else @get('end_at')
 
+  # if a reminder is in order, return relevant data. else undefined.
+  reminderStatus: ->
+    return 'closing_soon' if @isClosingSoon()
+    return 'live_open' if @isLiveOpen()
+    return 'live_open_soon' if @isLiveOpenSoon()
+
   # Between 24 hours left and 10 seconds remaining
   isClosingSoon: (offset = 0) ->
+    return false if @isLiveAuction()
     end = @date('end_at').add offset, 'milliseconds'
 
     twentyFourHours = end.clone().subtract 24, 'hours'
     tenSeconds = end.clone().subtract 10, 'seconds'
 
     moment().isBetween twentyFourHours, tenSeconds
+
+  isLiveOpenSoon: (offset = 0) ->
+    return false unless @isLiveAuction()
+    startAt = @date('live_start_at').add offset, 'milliseconds'
+    twentyFourHours = startAt.clone().subtract 10, 'minutes'
+    moment().isBetween twentyFourHours, startAt
 
   isWithHeaderImage: ->
     @get('image_versions')?.length > 0
@@ -163,12 +181,12 @@ module.exports = class Sale extends Backbone.Model
     event
 
   upcomingLabel: ->
-    est = (attr) => moment.utc(@get attr).utcOffset(-4).format 'MMM D h:mm:ssA'
+    zone = (attr) => moment(@get attr).tz('America/New_York').format 'MMM D h:mm:ssA z'
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
-      "Live bidding begins #{est 'live_start_at'} EST"
+      "Live bidding begins #{zone 'live_start_at'}"
     else if @isPreviewState()
-      "Auction opens #{est 'start_at'} EST"
+      "Auction opens #{zone 'start_at'}"
     else
-      "Bidding closes #{est 'end_at'} EST"
+      "Bidding closes #{zone 'end_at'}"

@@ -6,6 +6,7 @@ express = require 'express'
 routes = require './routes'
 { resize, crop } = require '../../components/resizer'
 { toSentence } = require 'underscore.string'
+sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
@@ -18,5 +19,6 @@ app.locals.toSentence = toSentence
 app.get '/posts', routes.redirectMagazine
 app.get '/magazine', routes.redirectMagazine
 app.get '/articles', routes.articles
-app.get '/:slug', routes.teamChannel
+app.get sd.TEAM_BLOGS, routes.teamChannel
+app.get '/venice-biennale-2015', routes.section
 app.post '/editorial-signup/form', routes.editorialForm
