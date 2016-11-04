@@ -122,7 +122,7 @@ module.exports = class Sale extends Backbone.Model
 
   # Is there a way to manually end/close out a live sale besides looking at end_at?
   isLiveOpen: ->
-    moment().isBefore(@get 'end_at') and moment().isAfter(@get 'live_start_at')
+    @get('live') != false and moment().isAfter(@get 'live_start_at')
 
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'

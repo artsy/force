@@ -94,6 +94,13 @@ describe 'Sale', ->
         sale = new Sale fabricate 'sale',
           end_at: moment().add(1, 'hours').format()
         sale.isLiveOpen().should.be.false()
+      it 'returns false if sale has a live property of false', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(10, 'hours').format()
+          live_start_at: moment().subtract(30, 'minutes').format()
+          live: false
+        sale.isLiveOpen().should.be.false()
+
 
     describe '#isRegistrationEnded', ->
       it 'returns false if there is no registration_ends_at', ->
