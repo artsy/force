@@ -69,7 +69,7 @@ bootstrap = ->
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params
-      res.locals.sd.INCLUDE_SAILTHRU = data.artwork.fair?
+      res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.render 'index', data
 
     .catch next
