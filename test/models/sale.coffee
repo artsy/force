@@ -20,11 +20,21 @@ describe 'Sale', ->
       @liveOpenSale = new Sale fabricate 'sale',
         end_at: moment().add(1, 'hours').format()
         live_start_at: moment().subtract(1, 'hours').format()
+        live: true
       @liveSoonSale = new Sale fabricate 'sale',
         end_at: moment().add(13, 'hours').format()
         live_start_at: moment().add(8, 'minutes').format()
-      @closingSoonSale = new Sale fabricate 'sale', end_at: moment().add(12, 'hours')
-      @closedSale = new Sale fabricate 'sale', end_at: moment().subtract(1, 'day').format()
+        live: true
+      @closingSoonSale = new Sale fabricate 'sale',
+        end_at: moment().add(12, 'hours')
+        live: true
+      @closedSale = new Sale fabricate 'sale',
+        end_at: moment().subtract(1, 'day').format()
+        live: false
+      @liveClosedSale = new Sale fabricate 'sale',
+        end_at: moment().add(1, 'day').format()
+        live_start_at: moment().subtract(1, 'hours').format()
+        live: false
 
     describe '#reminderStatus', ->
       it 'returns a string for a valid reminder state', ->
@@ -81,24 +91,22 @@ describe 'Sale', ->
 
     describe '#isLiveOpen', ->
       it 'returns true if sale is currently open for live bidding', ->
-        sale = new Sale fabricate 'sale',
-          end_at: moment().add(1, 'hours').format()
-          live_start_at: moment().subtract(1, 'hours').format()
-        sale.isLiveOpen().should.be.true()
-      it 'returns false if sale is not open for live bidding', ->
+        @liveOpenSale.isLiveOpen().should.be.true()
+      it 'returns false if it is not live_start_at time yet', ->
         sale = new Sale fabricate 'sale',
           end_at: moment().add(1, 'hours').format()
           live_start_at: moment().add(30, 'minutes').format()
-        sale.isLiveOpen().should.be.false()
-      it 'returns false if sale is not a live auction', ->
-        sale = new Sale fabricate 'sale',
-          end_at: moment().add(1, 'hours').format()
+          live: true
         sale.isLiveOpen().should.be.false()
       it 'returns false if sale has a live property of false', ->
         sale = new Sale fabricate 'sale',
           end_at: moment().add(10, 'hours').format()
           live_start_at: moment().subtract(30, 'minutes').format()
           live: false
+        sale.isLiveOpen().should.be.false()
+      it 'returns false if sale is not a live auction', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(1, 'hours').format()
         sale.isLiveOpen().should.be.false()
 
 
@@ -223,7 +231,7 @@ describe 'Sale', ->
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
 
       it 'shows Enter Live Auction if live auction has opened', ->
-        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format()
+        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format(), live: true
         @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
         @user.set 'registered_to_bid', true
         @user.set 'qualified_for_bidding', true
