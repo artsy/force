@@ -17,34 +17,40 @@ describe 'AuctionReminders', ->
     auctionClosingSoon = fabricate 'sale',
       id: 'closing-soon'
       is_auction: true
+      auction_state: 'live'
       some_key_we_dont_want: true
       end_at: moment().add(1, 'hour').format()
 
     auctionNotClosingSoon = fabricate 'sale',
       id: 'not-closing-soon'
       is_auction: true
+      auction_state: 'live'
       end_at: moment().add(10, 'days').format()
 
     auctionAlreadyOver = fabricate 'sale',
       id: 'already-over'
       is_auction: true
+      auction_state: 'closed'
       end_at: moment().subtract(1, 'day').format()
 
     auctionLiveOpenSoon = fabricate 'sale',
       id: 'live-soon'
       is_auction: true
+      auction_state: 'live'
       end_at: moment().add(3, 'hours').format()
       live_start_at: moment().add(9, 'minutes').format()
     
     auctionLiveOpenNow = fabricate 'sale',
       id: 'live-open'
       is_auction: true
+      auction_state: 'live'
       end_at: moment().add(1, 'hours').format()
       live_start_at: moment().subtract(1, 'hours').format()
 
     auctionClosingSoonAsWell = fabricate 'sale',
       id: 'closing-soon-as-well'
       is_auction: true
+      auction_state: 'live'
       some_key_we_dont_want: true
       end_at: moment().add(12, 'hours').format()
 

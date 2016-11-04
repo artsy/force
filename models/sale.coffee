@@ -121,7 +121,7 @@ module.exports = class Sale extends Backbone.Model
     @get('live_start_at') and moment(@get('live_start_at')).isBefore(moment(@get('end_at')))
 
   isLiveOpen: ->
-    !!@get('live') and moment().isAfter(@get 'live_start_at')
+    @get('auction_state') == 'live' and moment().isAfter(@get 'live_start_at')
 
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'
