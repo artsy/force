@@ -110,7 +110,7 @@
     "jquery-fillwidth-lite": "^1.0.8",
     "jquery-on-infinite-scroll": "^1.0.1",
     "jquery-ui": "^1.12.1",
-    "jquery.background-check": "git://github.com/kennethcachia/background-check",
+    "background-check": "git://github.com/kennethcachia/background-check",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "jquery.fillwidth": "^0.1.7",
     "jquery.iframe-transport": "^1.0.0",
