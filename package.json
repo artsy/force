@@ -39,7 +39,6 @@
     "backbone": "^1.2.3",
     "backbone-super-sync": "^1.1.1",
     "backbone.paginator": "git://github.com/artsy/backbone.paginator.git",
-    "background-check": "git://github.com/kennethcachia/background-check",
     "bluebird": "^2.10.2",
     "bluebird-q": "^1.0.3",
     "body-parser": "^1.14.1",
@@ -94,6 +93,7 @@
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
     "benv": "^3.0.0",
+    "blueimp-file-upload": "^9.14.0",
     "browserify": "^11.2.0",
     "browserify-dev-middleware": "^0.1.2",
     "caching-coffeeify": "^0.5.1",
@@ -109,9 +109,13 @@
     "jquery": "2.1.4",
     "jquery-fillwidth-lite": "^1.0.8",
     "jquery-on-infinite-scroll": "^1.0.1",
+    "jquery-ui": "^1.12.1",
+    "jquery.background-check": "git://github.com/kennethcachia/background-check",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "jquery.fillwidth": "^0.1.7",
+    "jquery.iframe-transport": "^1.0.0",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
+    "hulk": "git://github.com/craigspaeth/hulk.git",
     "konami-js": "0.0.2",
     "mailcheck": "^1.1.1",
     "mocha": "^2.3.3",
@@ -128,6 +132,7 @@
     "typeahead.js": "0.10.x",
     "uglifyify": "^3.0.1",
     "validator": "^4.1.0",
+    "waypoints": "^4.0.1",
     "zombie": "^4.1.0"
   }
 }
