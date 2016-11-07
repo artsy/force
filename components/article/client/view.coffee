@@ -227,6 +227,7 @@ module.exports = class ArticleView extends Backbone.View
     @windowHeight = $(window).height()
     @resetImageSetPreview()
     @embedMobileHeight()
+    @addReadMore() if @gradient
     #Reset Artworks size
     $(".article-section-artworks ul").each (i, imgs) =>
       if $(imgs).children().length > 1
