@@ -4,6 +4,7 @@ CTABarView = require '../../cta_bar/view.coffee'
 Backbone = require 'backbone'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 marketoForm = -> require('../templates/marketo_form.jade') arguments...
+qs = require 'querystring'
 
 module.exports = class GalleryInsightsView extends Backbone.View
 
@@ -15,7 +16,9 @@ module.exports = class GalleryInsightsView extends Backbone.View
       persist: true
       subHeadline: "Receive periodical insights from Artsy's Gallery Team"
     return if @ctaBarView.previouslyDismissed() or
-              (not @inGIArticlePage() and not @inGIVerticalPage())
+              (not @inGIArticlePage() and not @inGIVerticalPage()) or
+              qs.parse(location.search.replace(/^\?/, '')).utm_source is 'marketo'
+
     @renderCTA => @setupCTAWaypoints()
 
   inGIArticlePage: ->

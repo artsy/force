@@ -90,8 +90,6 @@
     avant-garde()
     avant-garde-size('s-headline')
     color black
-  & + .cta-bar-defer
-    display none
   .mktoButtonRow
     display block !important
 
@@ -113,5 +111,8 @@
   .cta-bar-header
     min-width 390px !important
   & + .cta-bar-defer
-    position relative
-    top 20px !important
+    position absolute
+    top 20px
+    right 20px
+    a
+      border-bottom none

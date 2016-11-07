@@ -8,6 +8,8 @@ sd = require('sharify').data
 { resize } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
 moment = require 'moment'
+jsonldTemplate = -> require('../../../components/main_layout/templates/json_ld.jade') arguments...
+{ stringifyJSONForWeb } = require '../../../components/util/json.coffee'
 
 module.exports = class ArticlesAdapter
   constructor: ({ @profile, @partner, @cache, @el }) ->
@@ -40,6 +42,8 @@ module.exports = class ArticlesAdapter
           embed: embed
           moment: moment
         @el.append("<div class='article-footer'></div>")
+        @el.append jsonldTemplate
+          jsonLD: stringifyJSONForWeb article.toJSONLD()
         new ArticleView
           el: @el
           article: article

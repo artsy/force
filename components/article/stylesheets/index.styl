@@ -548,11 +548,18 @@ body.body-article
   .related-title
     avant-garde-size('body')
   a.article-section-callout
-    display block
+    display flex
+    align-items center
+    text-decoration none
     border 1px solid gray-lighter-color
     transition border-color 0.3s
     padding 15px
     margin-top 10px
+    &.no-image
+      border none
+      padding 0
+      .article-section-callout-title
+        garamond-size('s-headline')
     img, .article-section-callout
       display inline-block
       vertical-align middle
@@ -561,7 +568,6 @@ body.body-article
       margin-right 20px
     .article-section-callout
       garamond-size('l-body')
-      width calc(100% \- 140px)
     &:hover
       border-color gray-dark-color
 
