@@ -181,7 +181,6 @@ describe '#redirectLive', ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
-      auction_state: 'open'
       live_start_at: null
       end_at: moment().endOf('day')
     routes.redirectLive @req, @res, @next
