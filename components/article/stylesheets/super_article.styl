@@ -64,10 +64,16 @@
   font-smoothing antialiased
 
 .article-fullscreen
+  .article-sa-plus-container
+    margin-left 20px
+  .article-sa-plus, .article-sa-primary-logo
+    display inline-block
   .article-sa-plus
     color white
-    margin 20px
     font-size 20px
+    margin 0px
+  .article-sa-primary-logo
+    margin-left 20px
 
 .article-sa-cta-container
   margin-top 20px
@@ -99,26 +105,6 @@
     garamond-size('l-body')
     margin-left 20px
 
-.article-sa-footer
-  @media screen and (max-width: 900px)
-    flex-direction column-reverse
-    .article-sa-footer-left, .article-sa-footer-right
-      width 100%
-      margin 0px
-    .article-sa-cta-container
-      margin-bottom 180px
-  @media screen and (max-width: 550px)
-    .article-sa-footer-left
-      padding-top 30px
-      .article-sa-title
-        garamond-size('headline')
-      .article-sa-footer-blurb, .article-sa-cta
-        garamond-size('s-body')
-    .article-sa-related
-      padding-left 0px
-      &__title
-        garamond-size('s-body')
-
 // Sticky header
 .article-sa-sticky-header
   position fixed
@@ -137,6 +123,12 @@
     pointer-events all
     opacity 1
     transition all 200ms
+  .article-sa-plus
+    font-size 15px
+    display none
+
+.article-content
+  transition all 300ms
 
 .article-sa-sticky-left, .article-sa-sticky-right
   position absolute
@@ -149,7 +141,7 @@
 
 .article-sa-sticky-right
   right 20px
-  top 23px
+  top 25px
   .article-sticky-back
     text-decoration none
 
@@ -164,18 +156,37 @@
     &:hover
       color purple-color
 
-  .article-sa-sticky-related-container
-    border-top 1px solid gray-lighter-color
+.article-sa-sticky-related-container
+  border-top 1px solid gray-lighter-color
+  max-height 0px
+  transition max-height 300ms
+  margin-top 25px
+  overflow hidden
+  &.visible
     border-bottom 1px solid gray-lighter-color
-    max-height 0px
-    transition max-height 300ms
-    margin-top 25px
-    overflow hidden
-    .mgr-cell
-      width 25%
-      margin-right 0px
+    border-left 1px solid gray-lighter-color
+  .mgr-cells
+    margin 0 25px
+  .mgr-cell
+    width 400px
+    margin-right 0px
+  .mgr-navigation
+    opacity 1
+    .mgr-arrow-icon
+      font-size 12px
+      padding 5px
+    .mgr-arrow-left, .mgr-arrow-right
+      width 25px
+      &:hover
+        background-color #f8
+    .mgr-arrow-left
+      left 0px
+    .mgr-arrow-right
+      left unset
+      right 0px
 
   .article-sa-related
+    height 100%
     border-right 1px solid gray-lighter-color
     border-bottom none
     &__title
@@ -187,7 +198,67 @@
     garamond-size('m-caption')
     display inline-block
 
+// Mobile
+.article-sa-footer
+  @media screen and (max-width: 900px)
+    flex-direction column-reverse
+    .article-sa-footer-left, .article-sa-footer-right
+      width 100%
+      margin 0px
+    .article-sa-footer-left
+      border-top none
+    .article-sa-cta-container
+      margin-bottom 180px
+  @media screen and (max-width: 550px)
+    .article-sa-footer-left
+      padding-top 30px
+      .article-sa-title
+        garamond-size('headline')
+      .article-sa-footer-blurb, .article-sa-cta
+        garamond-size('s-body')
+    .article-sa-related
+      padding-left 0px
+      &__title
+        garamond-size('s-body')
+
 .article-sa-sticky-header
   @media screen and (max-width: 550px)
-    .article-sa-sticky-center
+    .article-sa-related__title
+      garamond-size('s-body')
+  @media screen and (max-width: 900px)
+    .article-sa-plus
+      display inline-block
+      margin 0px
+    .article-sa-sticky__presented
       display none
+    .article-sa-sticky-title
+      visibility hidden
+    .article-sa-sticky-right
+      left 130px
+      right unset
+    .article-sa-sticky-related-container
+      .mgr-navigation
+        display none
+      .mgr-cells
+        margin 0px
+      .mgr-cell
+        width 100%
+        display block
+    .article-sa-primary-logo
+      margin-left 10px
+    .article-sa-sticky-hamburger
+      position absolute
+      top 25px
+      right 25px
+      &-icon
+        vertical-align middle
+        position relative
+        font-style normal
+        color black
+        text-align left
+        text-indent -9999px
+        direction ltr
+        width 20px
+        height 4px
+        box-shadow inset 0 0 0 7px,0 -7px,0 7px
+        margin 16px 7px
