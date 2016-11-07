@@ -125,7 +125,6 @@ setupUser = (user, auction) ->
     error: res.backboneError
     success: ->
       liveUrl = "#{PREDICTION_URL}/#{auction.get('id')}/login"
-      console.log auction.get('some_property'), auction.get('auction_state'), auction.get('live_start_at')?.format()
       if auction.isLiveOpen()
         req.user.fetchBidderForAuction auction,
           error: res.backboneError
