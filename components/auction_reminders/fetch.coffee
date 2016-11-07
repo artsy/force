@@ -18,6 +18,7 @@ module.exports = class AuctionReminders
     'is_auction'
     'image_versions'
     'image_url'
+    'auction_state'
   ]
 
   constructor: ->
