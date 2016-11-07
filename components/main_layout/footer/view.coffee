@@ -11,6 +11,8 @@ module.exports = class FooterView extends Backbone.View
     'click .mlf-specialist': 'openSpecialist'
     'click .mlf-collector-faq': 'openCollectorModal'
     'click .mlf-auction-faq': 'openAuctionModal'
+    'click .mlf-login': 'login'
+    'click .mlf-signup': 'signup'
 
   initialize: ->
     @listenTo mediator, 'infinite:scroll:start', @hide
@@ -39,3 +41,11 @@ module.exports = class FooterView extends Backbone.View
   openAuctionModal: (e) ->
     e.preventDefault()
     openMultiPageModal 'auction-faqs'
+
+  signup: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:auth', mode: 'signup'
+
+  login: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:auth', mode: 'login'
