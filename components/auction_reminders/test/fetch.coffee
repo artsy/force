@@ -18,7 +18,6 @@ describe 'AuctionReminders', ->
       id: 'closing-soon'
       is_auction: true
       auction_state: 'open'
-      some_key_we_dont_want: true
       end_at: moment().add(1, 'hour').format()
 
     auctionNotClosingSoon = fabricate 'sale',
@@ -51,7 +50,6 @@ describe 'AuctionReminders', ->
       id: 'closing-soon-as-well'
       is_auction: true
       auction_state: 'open'
-      some_key_we_dont_want: true
       end_at: moment().add(12, 'hours').format()
 
     @reminders.auctions.reset [
