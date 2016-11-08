@@ -30,7 +30,7 @@ else
   meta( property='og:image', content= asset('/images/icon-152.png') )
 
 //- Sailthru tags for fair artwork image
-if artwork.fair && sd.INCLUDE_SAILTHRU
+if sd.INCLUDE_SAILTHRU
   meta( name='artwork_type', content='fair' )
   meta( name='artwork_date', content=artwork.date )
   if artwork.artists && artwork.artists[0] && artwork.artists[0].name
