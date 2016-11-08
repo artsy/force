@@ -10,15 +10,16 @@
         a.article-sa-cta.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
 
     .article-sa-logos
-      .article-sa-logos__presented Presented in Partnership with
+      if superArticle.get('super_article').partner_logo
+        .article-sa-logos__presented Presented in Partnership with
       .article-sa-logos__container
         .article-sa-primary-logo
           if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
             a( href=superArticle.get('super_article').partner_logo_link )
               img( src=superArticle.get('super_article').partner_logo )
-        .article-sa-plus.icon-close
-        .article-sa-secondary-logo
-          if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
+        if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
+          .article-sa-plus.icon-close
+          .article-sa-secondary-logo
             a( href=superArticle.get('super_article').secondary_logo_link )
               img( src=superArticle.get('super_article').secondary_partner_logo )
 

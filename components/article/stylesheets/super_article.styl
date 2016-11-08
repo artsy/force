@@ -127,8 +127,11 @@
     font-size 15px
     display none
 
+.article-sa-sticky-close-icon
+  display none
+
 .article-content
-  transition all 300ms
+  transition all 200ms
 
 .article-sa-sticky-left, .article-sa-sticky-right
   position absolute
@@ -151,15 +154,15 @@
   .article-sa-sticky-title
     garamond-size('s-headline')
     cursor pointer
-    transition all 300ms
+    transition all 200ms
     text-decoration none
     &:hover
       color purple-color
 
 .article-sa-sticky-related-container
   border-top 1px solid gray-lighter-color
-  max-height 0px
-  transition max-height 300ms
+  height 0px
+  transition height 200ms
   margin-top 25px
   overflow hidden
   &.visible
@@ -174,7 +177,7 @@
     opacity 1
     .mgr-arrow-icon
       font-size 12px
-      padding 5px
+      padding 6px
     .mgr-arrow-left, .mgr-arrow-right
       width 25px
       &:hover
@@ -184,14 +187,16 @@
     .mgr-arrow-right
       left unset
       right 0px
+      border-left 1px solid gray-lighter-color
 
   .article-sa-related
     height 100%
     border-right 1px solid gray-lighter-color
-    border-bottom none
     &__title
       white-space normal
       text-align left
+    &__magazine-link
+      display none
 
 .article-sa-sticky
   &__presented
@@ -237,6 +242,7 @@
       left 130px
       right unset
     .article-sa-sticky-related-container
+      overflow scroll
       .mgr-navigation
         display none
       .mgr-cells
@@ -244,6 +250,7 @@
       .mgr-cell
         width 100%
         display block
+        padding 0 25px
     .article-sa-primary-logo
       margin-left 10px
     .article-sa-sticky-hamburger
@@ -262,3 +269,28 @@
         height 4px
         box-shadow inset 0 0 0 7px,0 -7px,0 7px
         margin 16px 7px
+    .article-sa-related
+      border-right 0px
+      padding 20px 0
+      &__magazine-link
+        display flex
+        text-decoration none
+        margin 25px 0 0 25px
+        .icon-chevron-left
+          font-size 12px
+          line-height 18px
+          font-weight bold
+      &__magazine-text
+        avant-garde-size('body')
+        margin-left 5px
+
+body.is-open
+  overflow hidden
+  .article-sa-sticky-hamburger-icon
+    display none
+  .article-sa-sticky-close-icon
+    display block
+    position absolute
+    top 2px
+    right 6px
+    font-size 22px

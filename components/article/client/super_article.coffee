@@ -13,8 +13,8 @@ module.exports = class SuperArticleView extends Backbone.View
     @$window = $(window)
     @$body = $('body')
     @$content = $('.article-content')
-    @$superArticleNavToc = @$('.article-sa-sticky-related-container')
-    @$stickyHeader = @$('.article-sa-sticky-header')
+    @$superArticleNavToc = $('.article-sa-sticky-related-container')
+    @$stickyHeader = $('.article-sa-sticky-header')
     @duration = 500
 
     @setupSuperArticle()
@@ -33,26 +33,34 @@ module.exports = class SuperArticleView extends Backbone.View
     @$('footer').hide()
 
   onScroll: ->
-    if @$superArticleNavToc.hasClass('visible')
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
+    @hideNav() if @$superArticleNavToc.hasClass('visible')
 
-  setStickyNav: ->
+  hideNav: ->
+    @$superArticleNavToc.css 'height', '0px'
+    @$superArticleNavToc.removeClass('visible')
+
+  setStickyNav: =>
     @$stickyHeader.hover =>
       return if window.matchMedia('(max-width: 900px)').matches
       return if @$superArticleNavToc.hasClass('visible')
-      @$superArticleNavToc.css 'max-height', 500
+      height = @$('.article-sa-related').outerHeight()
+      @$superArticleNavToc.css 'height', height
       @$superArticleNavToc.addClass 'visible'
     , =>
       return if window.matchMedia('(max-width: 900px)').matches
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
+      @hideNav()
 
-    return if window.matchMedia('(max-width: 900px)').matches
-    initCarousel @$('.article-sa-sticky-related-container'),
-      imagesLoaded: true
-      wrapAround: true
-      advanceBy: 1
+    if window.matchMedia('(max-width: 900px)').matches
+      @carousel?.navigation.flickity.destroy()
+    else
+      @$body.removeClass 'is-open'
+      initCarousel @$('.article-sa-sticky-related-container'),
+        imagesLoaded: true
+        wrapAround: true
+        advanceBy: 1
+      , (carousel) =>
+        # Wait for the callback to set carousel
+        @carousel = carousel
 
   setWaypoints: ->
     return unless @$stickyHeader.length
@@ -67,12 +75,7 @@ module.exports = class SuperArticleView extends Backbone.View
   toggleHamburgerNav: ->
     if @$body.hasClass 'is-open'
       @$body.removeClass 'is-open'
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$content.css 'transform', "translate3d(0, 0, 0)"
+      @$superArticleNavToc.css 'height', '0px'
     else
-      $related = @$superArticleNavToc.find('.article-sa-related')
-      height = $related.height() * $related.length
-      console.log height
-      @$superArticleNavToc.css 'max-height', height
+      @$superArticleNavToc.css 'height', '100vh'
       @$body.addClass 'is-open'
-      @$content.css 'transform', "translate3d(0, #{height}px, 0)"
