@@ -20,7 +20,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   getScrollZones: =>
     @scrollZones = []
-    for i in [0..$('section').length + 1]
+    for i in [0..$('section').length]
       @scrollZones.push( (i + 1) * @activeHeight )
     return @scrollZones
 
@@ -33,12 +33,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return closest
 
   setupSliderHeight: =>
-    #height of all sections collapsed
-    @flattenedHeight = $('section').length * 20
     #height of one section open
-    @activeHeight = $(window).height() - 75 - @flattenedHeight
+    @activeHeight = $(window).height() - 75 - 20
     #bottom scroll border of slinky content
-    @openHeight = (($('section').length + 1 ) * @activeHeight) + @flattenedHeight + 75
+    @openHeight = (($('section').length - 1) * @activeHeight) - 75
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller_items section').first().find('.inner .left').height(@activeHeight)
 
@@ -68,15 +66,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
         $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
 
   revealBody: (scrollTop) =>
-    if scrollTop >= (@openHeight - @activeHeight - @flattenedHeight - 75)
+    if scrollTop >= (@openHeight - @activeHeight - 75)
       $('.eoy-feature__menu').addClass('overlay')
-      $('.scroller .scroller__items').slideUp('fast')
-      $('.scroller').css({'top':'0'})
+      # $('.scroller .scroller__items').slideUp('fast')
+      # $('.scroller').css({'top':'0'})
       $('.article-body').css('overflow':'auto')
     else
       $('.eoy-feature__menu').removeClass('overlay')
-      $('.scroller').css({'top':'95px'})
-      $('.scroller .scroller__items').slideDown('slow')
+      # $('.scroller').css({'top':'75px'})
+      # $('.scroller .scroller__items').slideDown('slow')
       $('.article-body').css('overflow':'hidden')
 
 module.exports.init = ->
