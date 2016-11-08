@@ -48,6 +48,30 @@ describe 'SuperArticleView', ->
   afterEach ->
     benv.teardown()
 
+  describe 'on mobile screen', ->
+
+    beforeEach ->
+      window.matchMedia = sinon.stub().returns { matches: true }
+      sinon.stub Backbone, 'sync'
+      @view = new @ArticleView
+        article: @article
+      @view.setElement $('body')
+      @view.article = @article
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'sets defaults and caches selectors', ->
+      @view.$content.selector.should.equal '.article-content'
+
+    it '#setupSuperArticle', ->
+      @initCarousel.called.should.not.be.ok()
+      @view.$superArticleNavToc.html().should.containEql 'Back to the Magazine Homepage'
+
+    it '#toggleHamburgerNav', ->
+      @view.toggleHamburgerNav()
+      @view.$body.hasClass('is-open').should.be.true()
+
   describe 'on wide screen', ->
 
     beforeEach ->
@@ -62,7 +86,6 @@ describe 'SuperArticleView', ->
       Backbone.sync.restore()
 
     it 'sets defaults and caches selectors', ->
-      @view.duration.should.equal 500
       @view.$content.selector.should.equal '.article-content'
 
     it '#setupSuperArticle', ->
@@ -84,30 +107,3 @@ describe 'SuperArticleView', ->
     it '#setWaypoints', ->
       $.fn.waypoint.args[0][0]('down')
       @view.$stickyHeader.hasClass('visible').should.be.true()
-
-  describe 'on mobile screen', ->
-
-    beforeEach ->
-      window.matchMedia = sinon.stub().returns { matches: true }
-      sinon.stub Backbone, 'sync'
-      @view = new @ArticleView
-        article: @article
-      @view.setElement $('body')
-      @view.article = @article
-
-    afterEach ->
-      Backbone.sync.restore()
-
-    it 'sets defaults and caches selectors', ->
-      @view.duration.should.equal 500
-      @view.$content.selector.should.equal '.article-content'
-
-    it '#setupSuperArticle', ->
-      @initCarousel.called.should.not.be.ok()
-      @view.$superArticleNavToc.html().should.containEql 'Back to the Magazine Homepage'
-
-    it '#toggleHamburgerNav', (done) ->
-      @view.toggleHamburgerNav()
-      _.defer =>
-        @view.$body.hasClass('is-open').should.be.true()
-        done()

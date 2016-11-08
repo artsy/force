@@ -189,7 +189,7 @@
       border-left 1px solid gray-lighter-color
 
   .article-sa-related
-    height 100%
+    border-bottom none
     border-right 1px solid gray-lighter-color
     &__title
       white-space normal
@@ -237,6 +237,9 @@
       display none
     .article-sa-sticky-title
       visibility hidden
+      overflow hidden
+      white-space nowrap
+      text-overflow ellipsis
     .article-sa-sticky-right
       left 130px
       right unset
@@ -283,7 +286,7 @@
         avant-garde-size('body')
         margin-left 5px
 
-body.is-open
+body.body-fullscreen-article.is-open
   overflow hidden
   .article-sa-sticky-hamburger-icon
     display none

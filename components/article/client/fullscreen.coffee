@@ -11,13 +11,10 @@ module.exports = class FullscreenView extends Backbone.View
     @$window = $(window)
     @setupArticleWaypoints()
     @initFullscreenHeader(header)
+    @duration = 500
 
   initFullscreenHeader: ($header) ->
     @centerFullscreenHeader $header
-
-    $superArticleArrow = @$('.article-fullscreen-down-arrow')
-    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
-    $superArticleArrow.show()
 
     @$window.on 'resize', _.debounce (=> @centerFullscreenHeader($header)), 100
 
@@ -25,6 +22,10 @@ module.exports = class FullscreenView extends Backbone.View
     $header.find('.main-layout-container').addClass 'visible'
 
   centerFullscreenHeader: ($header) ->
+
+    $superArticleArrow = @$('.article-fullscreen-down-arrow')
+    $superArticleArrow.css 'top': @$('.article-fullscreen').height() - 100
+    $superArticleArrow.show()
     # Center header
     $container = $header.find('.article-fullscreen-text-overlay')
     maxHeight = @$window.height()

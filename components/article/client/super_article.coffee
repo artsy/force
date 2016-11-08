@@ -15,7 +15,6 @@ module.exports = class SuperArticleView extends Backbone.View
     @$content = $('.article-content')
     @$superArticleNavToc = $('.article-sa-sticky-related-container')
     @$stickyHeader = $('.article-sa-sticky-header')
-    @duration = 500
 
     @setupSuperArticle()
 
@@ -38,15 +37,17 @@ module.exports = class SuperArticleView extends Backbone.View
   hideNav: ->
     @$superArticleNavToc.css 'height', '0px'
     @$superArticleNavToc.removeClass('visible')
+    @$body.removeClass 'is-open'
 
   setStickyNav: =>
     if window.matchMedia('(max-width: 900px)').matches
       @carousel?.navigation.flickity.destroy()
       @$stickyHeader.unbind 'mouseenter mouseleave'
+      @hideNav()
     else
       @$stickyHeader.hover =>
         return if @$superArticleNavToc.hasClass('visible')
-        height = @$('.article-sa-related').outerHeight()
+        height = @$('.article-sa-sticky-related-container .mgr-cells').outerHeight()
         @$superArticleNavToc.css 'height', height
         @$superArticleNavToc.addClass 'visible'
       , =>
@@ -57,6 +58,7 @@ module.exports = class SuperArticleView extends Backbone.View
         imagesLoaded: true
         wrapAround: true
         advanceBy: 1
+        cellAlign: 'left'
       , (carousel) =>
         # Wait for the callback to set carousel
         @carousel = carousel
@@ -73,8 +75,7 @@ module.exports = class SuperArticleView extends Backbone.View
 
   toggleHamburgerNav: ->
     if @$body.hasClass 'is-open'
-      @$body.removeClass 'is-open'
-      @$superArticleNavToc.css 'height', '0px'
+      @hideNav()
     else
       @$superArticleNavToc.css 'height', '100vh'
       @$body.addClass 'is-open'

@@ -16,8 +16,8 @@
         i.icon-chevron-left
         .article-sa-related__magazine-text Back to the Magazine Homepage
 
-  if superArticle.get('super_article').partner_logo
-    .article-sa-sticky-right
+  .article-sa-sticky-right
+    if superArticle.get('super_article').partner_logo
       .article-sa-sticky__presented
         |  Presented in
         br
@@ -27,6 +27,6 @@
         if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
           a( href=superArticle.get('super_article').partner_logo_link )
             img( src=superArticle.get('super_article').partner_logo )
-    .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
-      .article-sa-sticky-hamburger-icon
-      i.article-sa-sticky-close-icon.icon-close
+  .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
+    .article-sa-sticky-hamburger-icon
+    i.article-sa-sticky-close-icon.icon-close

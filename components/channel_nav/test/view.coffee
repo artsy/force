@@ -7,7 +7,7 @@ sd = require('sharify').data
 
 describe 'TeamChannelView', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
@@ -20,7 +20,7 @@ describe 'TeamChannelView', ->
         offset: -400
       done()
 
-  after ->
+  afterEach ->
     benv.teardown()
 
   describe '#setupStickyNav', ->
