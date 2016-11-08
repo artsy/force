@@ -40,19 +40,18 @@ module.exports = class SuperArticleView extends Backbone.View
     @$superArticleNavToc.removeClass('visible')
 
   setStickyNav: =>
-    @$stickyHeader.hover =>
-      return if window.matchMedia('(max-width: 900px)').matches
-      return if @$superArticleNavToc.hasClass('visible')
-      height = @$('.article-sa-related').outerHeight()
-      @$superArticleNavToc.css 'height', height
-      @$superArticleNavToc.addClass 'visible'
-    , =>
-      return if window.matchMedia('(max-width: 900px)').matches
-      @hideNav()
-
     if window.matchMedia('(max-width: 900px)').matches
       @carousel?.navigation.flickity.destroy()
+      @$stickyHeader.unbind 'mouseenter mouseleave'
     else
+      @$stickyHeader.hover =>
+        return if @$superArticleNavToc.hasClass('visible')
+        height = @$('.article-sa-related').outerHeight()
+        @$superArticleNavToc.css 'height', height
+        @$superArticleNavToc.addClass 'visible'
+      , =>
+        @hideNav()
+
       @$body.removeClass 'is-open'
       initCarousel @$('.article-sa-sticky-related-container'),
         imagesLoaded: true
