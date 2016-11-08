@@ -1,5 +1,13 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+sd = require('sharify').data
+Curation = require '../../models/curation.coffee'
 
 @eoy = (req, res, next) ->
-	res.render '../components/eoy/index'
+	console.log sd.EOY_2016
+	new Curation(id: sd.EOY_2016).fetch
+		error: res.backboneError
+		success: (curation) ->
+			res.locals.sd.CURATION = curation
+			res.render '../components/eoy/index',
+				curation: curation
