@@ -74,7 +74,7 @@ border-bottom(width = 1px, color = white)
     height 100%
     .item
       max-height calc(100% \- 40px)
-      flex-display(center)
+      flex-display(center, center)
       overflow hidden
   article
     position relative
@@ -115,7 +115,6 @@ border-bottom(width = 1px, color = white)
     &[data-section='1']
       .inner
         border-top 1px solid
-        margin-top 20px
         .left
           width grid-1
           height 100%
@@ -123,7 +122,6 @@ border-bottom(width = 1px, color = white)
         .right
           flex 1
           border-right 1px solid
-          border-bottom()
     &[data-section='2']
       .inner
         border-top 1px solid

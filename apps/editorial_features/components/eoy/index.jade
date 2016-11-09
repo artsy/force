@@ -2,6 +2,7 @@ extends ../../../../components/main_layout/templates/blank.jade
 
 append locals
   - assetPackage = 'editorial_features'
+  - sections = curation.get('sections')
 
 block body
   .eoy-feature
@@ -22,18 +23,19 @@ block body
             article.main-title
               .inner
                 .top
-                  h1 The Year In Art
+                  .item
+                    h1 The Year In Art
                 .spacer
                 .bottom
-                  h1 2016
-                  //- h1=curation.get('name')
+                  .item
+                    h1 2016
           section(data-section='1')
             article
               .inner
                 .left
                 .right
                   .item
-                    h2 The Artist Becomes Political
+                    h2=sections[0].headline
           section(data-section='2')
             article
               .inner
@@ -42,13 +44,13 @@ block body
                   .col
                 .right
                   .item
-                    h2 Christo's Italian Lake
+                    h2=sections[1].headline
           section(data-section='3')
             article
               .inner
                 .left
                   .item
-                    h2 The Market In Decline
+                    h2=sections[2].headline
                 .right
                   .col
                   .col
@@ -59,13 +61,13 @@ block body
                   .col
                 .right
                   .item
-                    h2 Race Relations in the Art World
+                    h2=sections[3].headline
           section(data-section='5')
             article
               .inner
                 .left
                   .item
-                    h2 Female Artists Finally Get Their Due
+                    h2=sections[4].headline
                 .right
           section(data-section='6')
             article
@@ -75,7 +77,7 @@ block body
                   .col
                 .right
                   .item
-                    h2 A New Tate Modern
+                    h2=sections[5].headline
           section(data-section='7')
             article
               .inner
@@ -83,7 +85,7 @@ block body
                   .col
                 .right
                   .item
-                    h2 A Virtual Reality Future
+                    h2=sections[6].headline
           section(data-section='8').last
             article
               .inner
@@ -91,13 +93,13 @@ block body
                   .col
                 .right
                   .item
-                    h2 Artists Fight Plagarism
+                    h2=sections[7].headline
           section(data-section='9').last
             article
               .inner
                 .left
                   .item
-                    h2 Title TK
+                    h2=sections[8].headline
                 .right
                   .col
           section(data-section='10').last
@@ -107,20 +109,20 @@ block body
                   .col
                 .right
                   .item
-                    h2 Title TK
-  .article-body
-    section(data-section='1')
-      header
-        .article-body__cover-image
-          .left
-          .right
-            img(src='https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F-AdsPRKJHjeVBYXBron4Cg%252FJuntaeTeeJayHwang%2B6%2BLick%2Byour%2BCohorts.jpg&width=720&quality=95')
-        .article-body__title
-          h2 The Artist Becomes Political
-          h2.chapter 01
-      article
-        .article-body__text
-          p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum.
+                    h2=sections[9].headline
+    .article-body
+      section(data-section='1')
+        header
+          .article-body__cover-image
+            .left
+            .right
+              img(src='https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F-AdsPRKJHjeVBYXBron4Cg%252FJuntaeTeeJayHwang%2B6%2BLick%2Byour%2BCohorts.jpg&width=720&quality=95')
+          .article-body__title
+            h2 The Artist Becomes Political
+            h2.chapter 01
+        article
+          .article-body__text
+            p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum.
 
-          p Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus.
+            p Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus.
     #recently-viewed-artworks

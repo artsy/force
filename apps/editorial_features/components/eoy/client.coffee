@@ -7,7 +7,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.scroller__items section').attr('data-state', 'closed')
     @setupSliderHeight()
     @getScrollZones()
-    @buildSlinkyBg()
+    # @buildSlinkyBg()
     @doSlider()
     @watchWindow()
     $('.scroller').fadeIn(500)
@@ -20,7 +20,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   getScrollZones: =>
     @scrollZones = []
-    for i in [0..$('section').length]
+    @scrollZones.push @firstHeight
+    for i in [1..$('.scroller__items section').length]
       @scrollZones.push( (i + 1) * @activeHeight )
     return @scrollZones
 
@@ -34,17 +35,23 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setupSliderHeight: =>
     #height of one section open
-    @activeHeight = $(window).height() - 75 - 20
+    @firstHeight = $(window).height() - 75 - 20
+    @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
     #bottom scroll border of slinky content
-    @openHeight = (($('section').length - 1) * @activeHeight) - 75
+    @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) - 75 + @firstHeight
     $('.eoy-feature__content').height(@openHeight)
-    $('.scroller_items section').first().find('.inner .left').height(@activeHeight)
+    $('.scroller__items section').first().height(@firstHeight)
+    # debugger
+    # $('.scroller__items section[data-section!="0"]').waypoint (direction) ->
+    #   if direction is 'down'
+    #     debugger
+    # , { offset: 'bottom-in-view' }
 
-  buildSlinkyBg: =>
-    elementCount = Math.round(@activeHeight / 30)
-    _(elementCount).times () =>
-      $('.slinky').each (i, slinky) =>
-        $(slinky).append('<div class="spacer" />')
+  # buildSlinkyBg: =>
+  #   elementCount = Math.round(@activeHeight / 30)
+  #   _(elementCount).times () =>
+  #     $('.slinky').each (i, slinky) =>
+  #       $(slinky).append('<div class="spacer" />')
 
   doSlider: =>
     scrollTop = $(window).scrollTop()
@@ -52,30 +59,35 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @revealBody(scrollTop)
     if scrollTop == 0
       $('.scroller__items section[data-section!="' + active + '"]').attr('data-state', 'closed')
-      $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight)
-    else
-      if active != 0
-        diff = scrollTop - @activeHeight * active
-        $('.scroller__items section[data-section="' + (active - 1) + '"]').attr('data-state', 'closed')
-        $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
-        $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight - diff)
-        $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(diff)
-      else
-        $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight - scrollTop)
-        $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(scrollTop)
-        $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
+      $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@firstHeight)
+    # else
+    #   if active != 0
+    #     # debugger
+    #     diff = scrollTop - @activeHeight * active
+    #     $('.scroller__items section[data-section="' + (active - 1) + '"]').attr('data-state', 'closed')
+    #     $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
+    #     $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight - diff)
+    #     $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(diff)
+    #   else
+    #     # debugger
+    #     $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@firstHeight - scrollTop)
+    #     if scrollTop < @activeHeight
+    #       $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(scrollTop)
+    #     else
+    #       debugger
+    #       $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
 
   revealBody: (scrollTop) =>
-    if scrollTop >= (@openHeight - @activeHeight - 75)
-      $('.eoy-feature__menu').addClass('overlay')
-      # $('.scroller .scroller__items').slideUp('fast')
-      # $('.scroller').css({'top':'0'})
-      $('.article-body').css('overflow':'auto')
-    else
-      $('.eoy-feature__menu').removeClass('overlay')
-      # $('.scroller').css({'top':'75px'})
-      # $('.scroller .scroller__items').slideDown('slow')
-      $('.article-body').css('overflow':'hidden')
+    # if scrollTop >= (@openHeight - @activeHeight - 75)
+    #   $('.eoy-feature__menu').addClass('overlay')
+    #   # $('.scroller .scroller__items').slideUp('fast')
+    #   # $('.scroller').css({'top':'0'})
+    #   $('.article-body').css('overflow':'auto')
+    # else
+    #   $('.eoy-feature__menu').removeClass('overlay')
+    #   # $('.scroller').css({'top':'75px'})
+    #   # $('.scroller .scroller__items').slideDown('slow')
+    #   $('.article-body').css('overflow':'hidden')
 
 module.exports.init = ->
   new EoyView
