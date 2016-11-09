@@ -6,9 +6,7 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 # Bottom sections
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
-ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
-initWorksSection = require '../../components/works_section/index.coffee'
 FollowButton = require '../../../../components/follow_button/view.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
 viewHelpers = require '../../view_helpers.coffee'
@@ -25,7 +23,6 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user, @statuses }) ->
     @listenTo this, 'artist:overview:sync', @renderRelated
-    @useNewArtworkFilter = @user?.hasLabFeature('Refactored Artwork Filter')
 
   fetchRelated: ->
     metaphysics
@@ -87,21 +84,16 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedGenes()
     # Main section
 
-    if @useNewArtworkFilter
-      @filterView = (new ArtworkFilterView
-        el: @$('#artwork-section')
-        artistID: @model.get('id')
-        topOffset: $('.artist-sticky-header-container').height()
-      ).render()
-      @listenToOnce mediator, 'infinite:scroll:end', =>
-        @$('.artist-related-rail').addClass('is-fade-in')
-    else
-      { filterView, @sticky } = initWorksSection
-        el: @$('#artwork-section')
-        model: @model
-        allLoaded: =>
-          @$('.artist-related-rail').addClass('is-fade-in')
-    @subViews.push filterView
+    @filterView = (new ArtworkFilterView
+      el: @$('#artwork-section')
+      artistID: @model.get('id')
+      topOffset: $('.artist-sticky-header-container').height()
+    ).render()
+
+    @listenToOnce mediator, 'infinite:scroll:end', =>
+      @$('.artist-related-rail').addClass('is-fade-in')
+
+    @subViews.push @filterView
 
   setupRelatedGenes: ->
 

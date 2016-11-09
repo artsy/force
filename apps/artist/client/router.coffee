@@ -5,7 +5,6 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 OverviewView = require './views/overview.coffee'
-WorksView = require './views/works.coffee'
 ArtworkFilterView = require '../../../components/artwork_filter_2/view.coffee'
 CVView = require './views/cv.coffee'
 ShowsView = require './views/shows.coffee'
@@ -72,13 +71,10 @@ module.exports = class ArtistRouter extends Backbone.Router
     @model.related().artworks.fetch(data: { size: 20, sort:'-partner_updated_at' })
 
   works: ->
-    if @useNewArtworkFilter
-      @view = new ArtworkFilterView
-        el: @options.el
-        artistID: @model.get('id')
-        topOffset: $('.artist-sticky-header-container').height()
-    else
-      @view = new WorksView @options
+    @view = new ArtworkFilterView
+      el: @options.el
+      artistID: @model.get('id')
+      topOffset: $('.artist-sticky-header-container').height()
 
     $('body').append @jump.$el
 
