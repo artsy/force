@@ -1,7 +1,5 @@
 if (location.pathname.match('/gallery-partnerships')) {
 
-  analytics.page('Gallery Partnerships');
-
   $('.partnerships-nav-link.internal').click(function(e){
     var section = $(e.currentTarget).attr('data-section')
     analytics.track('Clicked nav link on gallery partnerships',
