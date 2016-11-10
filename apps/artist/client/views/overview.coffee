@@ -60,8 +60,10 @@ module.exports = class OverviewView extends Backbone.View
     @$('.artist-related-rail').map ->
       section = ($el = $(this)).data('id')
       items = artist[section]
+      items = _.where(items, { is_reference: false }) if section is 'shows'
       count = artist.counts[section]
       return if not items
+
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
   renderExhibitionHighlights: ({shows, counts}) ->
