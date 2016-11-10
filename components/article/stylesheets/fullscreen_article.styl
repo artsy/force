@@ -45,35 +45,25 @@ body.body-fullscreen-article
   .article-fullscreen-text-overlay
     position relative
     z-index 1
-    @media screen and (max-width 900px)
-      margin 0 30px
-      h1.article-fullscreen-title
-        max-width 100%
-    @media screen and (max-width 400px)
-      h1.article-fullscreen-title
-        font-size 43px
-        text-align left
   .article-date
     color gray-lighter-color
   .article-author-date
     margin-bottom 20px
-  .article-sa-artsy-logo
-    color white
-    width 148px
-    max-height 50px
-    display inline-block
-    vertical-align top
-    font-size 50px
 
-  .article-sa-primary-logo
-    img
-      height 50px
-      margin-top -10px
-
+  // Logos
   .article-sa-primary-logos
     position absolute
     z-index 1
     top 80px
+    .article-sa-plus
+      margin-top 10px
+  .article-sa-artsy-logo
+    color white
+    width 148px
+    font-size 50px
+    backface-visibility hidden
+  .article-sa-primary-logo img
+    height 50px
 
 .article-fullscreen-down-arrow
   position absolute
@@ -111,36 +101,59 @@ body.body-fullscreen-article
   opacity 0.17
   min-height 500px
   z-index 1
+
 .article-fullscreen-text-overlay
   color white
+
 .article-fullscreen-video-player, .article-fullscreen-image
   object-fit cover
   z-index 0
+
 .article-container h1.article-fullscreen-title
   font-size 72px
   font-style italic
   line-height 110%
-  width 750px
   text-align center
-  @media screen and (min-width 1100px)
-    width 900px
+
 .article-fullscreen.article-sa-fullscreen
   h1
     margin-bottom 60px
     text-align left
   .main-layout-container
     margin-top 0px
+
 .article-fullscreen-intro.article-lead-paragraph
   font-size 22px
   line-height 120%
-  width 750px
   margin-bottom 0px
-  @media screen and (min-width 1100px)
-    width 900px
-  @media screen and (min-width 1500px)
-    font-size 25px
 
-.article-sa-fullscreen-logos
-  width 750px
+.article-fullscreen
+  @media screen and (max-width 550px)
+    h1.article-fullscreen-title
+      font-size 43px
+      text-align left
+    .article-sa-artsy-logo
+      font-size 32px
+      width 95px
+    .article-sa-primary-logo img
+      height 32px
+      margin-top 0px
+  @media screen and (max-width 900px)
+    h1.article-fullscreen-title
+      max-width 100%
+    .article-fullscreen-text-overlay
+      margin 0 30px
+    .article-sa-primary-logos
+      margin-left 30px
+    .article-share-fixed-fullscreen
+      display none
   @media screen and (min-width 1100px)
-    width 900px
+    .article-fullscreen-intro.article-lead-paragraph, .article-sa-fullscreen-logos
+      width 900px
+    .article-sa-primary-logos
+      margin-left auto
+    .article-container h1.article-fullscreen-title
+      width 900px
+  @media screen and (min-width 1500px)
+    .article-fullscreen-intro.article-lead-paragraph
+      font-size 25px
