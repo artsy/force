@@ -52,7 +52,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
 
   inquire: (e) ->
     e.preventDefault()
-    inquire AUCTION.artwork_id
+    inquire AUCTION.artwork_id, false
 
   acquire: (e) ->
     e.preventDefault()

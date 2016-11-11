@@ -4,9 +4,9 @@
 form.scontact-form.stacked-form.js-inquiry-form
   .scontact-errors.js-form-errors
     //- Rendered separately
-
   .stacked-form-cell
     input( type='hidden', name='artwork', value= artwork.id )
+    input( type='hidden', name='contact_gallery', value="#{contactGallery}" )
 
     .scontact-artwork-details
       img( src=artwork.defaultImageUrl() )

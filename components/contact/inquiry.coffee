@@ -22,7 +22,7 @@ module.exports = class InquiryView extends ContactView
     formTemplate _.extend locals,
       artwork: @artwork
       user: @user
-      contactGallery: false
+      contactGallery: @model.contact_gallery
 
   defaults: -> _.extend super,
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
@@ -48,10 +48,8 @@ module.exports = class InquiryView extends ContactView
     super
 
     analyticsHooks.trigger 'inquiry:sync', artwork: @artwork, inquiry: @model
-
     contactGallery = if @partner.get('directly_contactable') and \
       @sales.findWhere(is_auction: true)? then yes else no
-
     @model.set
       artwork: @artwork.id
       contact_gallery: contactGallery

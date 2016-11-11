@@ -17,6 +17,7 @@ module.exports = class Inquiry extends StepView
     template _.extend data,
       fair: @artwork.related().fairs.first()
       message: @inquiry.get('message') or @defaultMessage()
+      contactGallery: @inquiry.get('contact_gallery')
 
   __events__:
     'click button': 'serialize'
@@ -29,7 +30,6 @@ module.exports = class Inquiry extends StepView
 
   maybeSaveInquiry: (data) ->
     promise = Q.defer()
-
     attributes = _.extend { contact_gallery: true }, data
 
     if @user.isLoggedOut()

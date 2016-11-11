@@ -86,7 +86,7 @@ describe 'Inquiry', setup ->
       @view.__serialize__.then =>
         # Sets up the inquiry
         @inquiry.get('message').should.equal 'I wish to buy the foo bar'
-        @inquiry.get('contact_gallery').should.be.true()
+        @inquiry.get('contact_gallery').should.equal 'true'
         @inquiry.get('artwork').should.equal @artwork.id
 
         # Sets up the user
@@ -127,6 +127,30 @@ describe 'Inquiry', setup ->
       Backbone.sync.callCount.should.equal 3
 
       @view.nudged.restore()
+
+  describe 'in ask specialist context', ->
+    beforeEach ->
+      @state.set 'steps', ['inquiry', 'after_inquiry']
+      @inquiry.contact_gallery = false
+      @view = new Inquiry
+        user: @currentUser
+        artwork: @artwork
+        inquiry: @inquiry
+        state: @state
+
+      @view.render()
+
+    it 'sets up the inquiry and properly sets contact gallery', ->
+      @view.$('input[name="name"]').val 'Foo Bar'
+      @view.$('input[name="email"]').val 'foo@bar.com'
+      @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
+      @view.$('button').click()
+
+      @view.__serialize__.then =>
+        # Sets up the inquiry
+        @inquiry.get('message').should.equal 'I wish to buy the foo bar'
+        @inquiry.get('contact_gallery').should.equal 'true'
+        @inquiry.get('artwork').should.equal @artwork.id
 
   describe 'in a fair context', ->
     beforeEach ->

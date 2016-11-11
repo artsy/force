@@ -85,6 +85,7 @@ describe 'ArtworkCommercialView', ->
             session_id: undefined,
             referring_url: undefined,
             landing_url: undefined,
+            contact_gallery: true,
             artwork: 'lynn-hershman-leeson-wrapped',
             name: 'Damon',
             email: 'damon@artsy',

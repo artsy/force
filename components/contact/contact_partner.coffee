@@ -21,6 +21,7 @@ module.exports = class ContactPartnerView extends ContactView
       artwork: @artwork
       partner: @partner
       user: @user
+      contactGallery: @model.get('contact_gallery')
 
   formTemplate: (locals) =>
     formTemplate _.extend locals,
