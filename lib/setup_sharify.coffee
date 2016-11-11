@@ -79,6 +79,7 @@ sharify.data = _.extend _.pick(config,
   'EDITORIAL_CTA_BANNER_IMG'
   'ARTSY_PARTNER_UPDATES_CHANNEL'
   'TEAM_BLOGS'
+  'EOY_2016'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"
