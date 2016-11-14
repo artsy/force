@@ -13,25 +13,29 @@ request = require 'superagent'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { topParselyArticles } = require '../../components/util/parsely.coffee'
+positronql = require '../../lib/positronql.coffee'
+query = require './queries/editorial_articles.coffee'
 
 @articles = (req, res, next) ->
-  new Articles().fetch
-    cache: true
-    data:
-      published: true
-      limit: 50
-      sort: '-published_at'
-      featured: true
-    error: res.backboneError
-    success: (articles) =>
+  send =
+    query: query,
+    variables:
+      id: req.params.id
+
+  return if positronql.debug req, res, send
+
+  positronql send
+    .then (result) ->
+      articles = new Articles result.articles
       user = res.locals.sd.CURRENT_USER
       setupEmailSubscriptions user, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
         res.locals.sd.ARTICLES = articles.toJSON()
-        res.locals.sd.ARTICLES_COUNT = articles.count
         res.render 'articles',
           articles: articles
           crop: crop
+
+    .catch (err) -> next(err if NODE_ENV is 'development')
 
 setupEmailSubscriptions = (user, cb) ->
   return cb({ editorial: false }) unless user?.email
