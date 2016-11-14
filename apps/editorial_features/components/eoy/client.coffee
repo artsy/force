@@ -10,7 +10,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @getScrollZones()
     @trackDirection()
     @watchWindow()
-    $('.scroller').fadeIn(500)
+    @bodyInView()
 
   watchWindow: =>
     $(window).scroll () =>
@@ -38,12 +38,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@firstHeight)
-    else if scrollTop > @windowHeight
+    #else if scrollTop > @windowHeight
       #downscrolling
-      @doSlider(scrollTop)
-    else
-    #upscrolling
-      @doSlider(scrollTop)
+    #else
+      #upscrolling
+    @doSlider(scrollTop)
     @windowHeight = scrollTop
 
   setupSliderHeight: =>
@@ -52,10 +51,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
     #height of one section open
     @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
     #bottom scroll border of header content
-    @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) - 20 - 75 + @firstHeight
+    @openHeight = @getScrollZones()[10] + 75
+    # @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) + @firstHeight + 75 + 20
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@firstHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
+    $('.scroller').fadeIn(500)
+    $('.article-body').fadeIn(500)
 
   doSlider: (scrollTop) =>
     active = @closestSection(scrollTop)
@@ -79,6 +81,17 @@ module.exports.EoyView = class EoyView extends Backbone.View
       else
         $primarySection.next().height(@firstHeight - diff)
         $primarySection.next().next().attr('data-state', 'closed')
+      if active >= 9
+        if this.getScrollZones()[9] < scrollTop
+          $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed')
+          $('.scroller__items section[data-section="10"]').height(active - scrollTop)
+
+  bodyInView: =>
+    $('.article-body').waypoint (direction) ->
+      if direction is 'up'
+        $('.eoy-feature__menu').removeClass('overlay')
+      if direction is 'down'
+        $('.eoy-feature__menu').addClass('overlay')
 
 module.exports.init = ->
   new EoyView
