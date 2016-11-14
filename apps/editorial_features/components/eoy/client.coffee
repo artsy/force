@@ -4,20 +4,17 @@ Backbone = require 'backbone'
 module.exports.EoyView = class EoyView extends Backbone.View
 
   initialize: ->
-    $(window).scrollTop(0)
     $('.scroller__items section').attr('data-state', 'closed')
     @windowHeight = $(window).scrollTop()
     @setupSliderHeight()
     @getScrollZones()
     @trackDirection()
     @watchWindow()
-    $('.eoy-feature__content').animate({scrollTop: 0}, 10)
     $('.scroller').fadeIn(500)
 
   watchWindow: =>
     $(window).scroll () =>
-      # _.debounce @doSlider(), 200
-      _.debounce @trackDirection(), 200
+      _.debounce @trackDirection(), 50
     $(window).resize () =>
       @setupSliderHeight()
 
@@ -42,11 +39,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@firstHeight)
     else if scrollTop > @windowHeight
-        _.debounce @slideDown(scrollTop), 200
-        console.log 'goin down'
+      #downscrolling
+      @doSlider(scrollTop)
     else
-        _.debounce @slideUp(scrollTop), 200
-        console.log 'goin up'
+    #upscrolling
+      @doSlider(scrollTop)
     @windowHeight = scrollTop
 
   setupSliderHeight: =>
@@ -60,55 +57,28 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.scroller__items section').first().height(@firstHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
 
-  slideDown: (scrollTop) =>
+  doSlider: (scrollTop) =>
     active = @closestSection(scrollTop)
-    $primarySection = $('.scroller__items section[data-section="' + active + '"]')
+    $primarySection = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
     nextHeight = @firstHeight - $primarySection.height() - @activeHeight
+    diff = @getScrollZones()[active] - scrollTop
     if active < 1
-      $('.scroller__items section').first().attr('data-state', 'open')
-      $primarySection.height(@firstHeight - scrollTop)
+      $primarySection.height(diff)
       if scrollTop < @activeHeight
         $primarySection.next().attr('data-state', 'open').height(scrollTop)
+        $primarySection.next().next().attr('data-state', 'closed')
       else
+        $primarySection.next().attr('data-state', 'open').height(@activeHeight)
         $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
     else
-      diff = @getScrollZones()[active] - scrollTop
       $primarySection.prev().attr('data-state', 'closed')
       $primarySection.height(diff)
-      if $primarySection.next().height() < @activeHeight
-        $primarySection.next().attr('data-state', 'open').height(@firstHeight - $primarySection.height())
-      else
+      if diff + @activeHeight < @firstHeight
+        $primarySection.next().attr('data-state', 'open').height(@activeHeight)
         $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
-
-  slideUp: (scrollTop) =>
-    active = @closestSection(scrollTop)
-    $primarySection = $('.scroller__items section[data-section="' + active + '"]')
-    nextHeight = @firstHeight - $primarySection.height() - @activeHeight
-    if active < 1
-      $('.scroller__items section').first().attr('data-state', 'open')
-      $primarySection.height(@firstHeight - scrollTop)
-      if scrollTop < @activeHeight
-        $primarySection.next().attr('data-state', 'open').height(scrollTop)
       else
-        $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
-    else
-      diff = @getScrollZones()[active] - scrollTop
-      $primarySection.height(diff)
-      if $primarySection.next().next().attr('data-state', 'open')
-        $primarySection.next().next().height(nextHeight)
-      if $primarySection.height() < @activeHeight
-        $primarySection.height(@firstHeight - $primarySection.height() - nextHeight)
-      # else
-        # debugger
-        # $primarySection.prev().attr('data-state', 'open').height(nextHeight)
-      # $primarySection.next().attr('data-state', 'closed')
-      # if $primarySection.prev().height() < @activeHeight
-      #   debugger
-      #   $primarySection.prev().attr('data-state', 'open').height(@firstHeight - $primarySection.height())
-      # else
-      #   debugger
-      #   $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
-
+        $primarySection.next().height(@firstHeight - diff)
+        $primarySection.next().next().attr('data-state', 'closed')
 
 module.exports.init = ->
   new EoyView
