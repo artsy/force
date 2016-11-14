@@ -2,12 +2,11 @@ border-gray = 2px solid gray-lightest-color
 grid-1 = 15vw
 grid-2 = 30vw
 grid-3 = 50%
+grid-4 = 60vw
 flex-display(justify = space-between, align = center)
   display flex
   justify-content justify
   align-items align
-border-bottom(width = 1px, color = white)
-  border-bottom width solid color
 
 .eoy-feature
   &__background
@@ -25,7 +24,8 @@ border-bottom(width = 1px, color = white)
     right 0
     margin 0 40px
     height 75px
-    border-bottom()
+    border-bottom 1px solid white
+    z-index -1
     flex-display()
     align-items center
     img.logo
@@ -45,7 +45,7 @@ border-bottom(width = 1px, color = white)
 
     &.overlay
       z-index 100
-      border-bottom border(2px, solid gray-lightest-color)
+      border-bottom 1px solid
       background-color white
       transition all .25s ease-in
       a
@@ -65,7 +65,7 @@ border-bottom(width = 1px, color = white)
   bottom 20px
   display none
   overflow hidden
-  border-bottom()
+  border-bottom 1px solid
   z-index -1
 .scroller__items
   transition height .5s
@@ -164,7 +164,7 @@ border-bottom(width = 1px, color = white)
     &[data-section='5']
       .inner
         border-top 1px solid
-        border-bottom()
+        border-bottom 1px solid
         .left
           flex 1
           border-left 1px solid
@@ -181,12 +181,12 @@ border-bottom(width = 1px, color = white)
             width calc(grid-1 \- 1px)
           &:nth-child(2)
             width calc(grid-2 \- 1px)
-            border-bottom()
+            border-bottom 1px solid
       .right
         flex 1
         border-left 1px solid
         border-right 1px solid
-        border-bottom()
+        border-bottom 1px solid
     &[data-section='7']
       .left
         border-top 1px solid
@@ -227,26 +227,48 @@ border-bottom(width = 1px, color = white)
         border-top 1px solid
         border-right 1px solid
         border-left 1px solid
+        justify-content flex-start
+        .col:first-child
+          width grid-2
+          border-right 1px solid
+          height 100%
       .right
         flex 1
         border-top 1px solid
         border-right 1px solid
 .article-body
   display none
-  padding 24px
+  padding 0 40px
   color black
   background-color white
   width 100vw
   min-height 100vh
   overflow hidden
-  section
-    max-width 1024px
-    width 100%
-    margin 0 auto
-    padding-top 72px
-  &__cover-image
-    border-top border-gray
-    border-bottom border-gray
+  &__intro
+    &-header
+      width calc(grid-2 \+ 1px)
+      height 30vh
+      border-right 1px solid
+      margin-bottom 20px
+      z-index 1000
+    &-inner
+      width grid-4
+      margin 0 auto
+      border-top 1px solid
+      border-bottom 1px solid
+      padding 80px 20px
+      h3
+        garamond-size('headline')
+        line-height 45px
+        max-width 75%
+  &--section__title
+    height 70vh
+    flex-display(flex-end, flex-end)
+    h2
+      margin-bottom 100px
+  &--section__cover-image
+    border-top 1px solid
+    border-bottom 1px solid
     padding 30px 0
     margin-bottom 10px
     flex-display()
@@ -262,18 +284,21 @@ border-bottom(width = 1px, color = white)
       padding 30px 0
       border-top border-gray
       border-bottom border-gray
-  &__title
-    flex-display()
-    border-bottom border-gray
-    padding-bottom 150px
-    .chapter
-      color gray-color
-  &__text
+  &--section__text
     max-width 750px
     margin-top 70px
     p
       garamond-size('headline')
       margin-bottom 40px
+  &--section[data-section='1']
+    width calc(85vw \- 80px)
+    // &__cover-image
+    //   border-left 1px solid
+    //   display flex
+    //   height 100%
+    //   flex-direction column
+    //   align-items flex-end
+    //   width 100%
 
 #recently-viewed-artworks
   display none
