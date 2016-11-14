@@ -22,7 +22,7 @@ module.exports = class InquiryView extends ContactView
     formTemplate _.extend locals,
       artwork: @artwork
       user: @user
-      contactGallery: @model.contact_gallery
+      contactGallery: @model.get('contact_gallery')
 
   defaults: -> _.extend super,
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
