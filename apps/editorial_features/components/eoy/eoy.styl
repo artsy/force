@@ -279,7 +279,9 @@ flex-display(justify = space-between, align = center)
       width 100%
     img
       height auto
-      width 75%
+      width auto
+      max-width 75%
+      max-height 600px
   .caption
     margin-top 15px
     garamond-size('s-body')
@@ -385,18 +387,30 @@ flex-display(justify = space-between, align = center)
           border-left 1px solid
           padding-left 20px
           garamond-size('l-headline')
+
 [data-section='3']
   .article-body--section
     margin-left auto
     margin-right 0
     &__title
-      border-bottom 1px solid
-      margin-left 20px
+      height auto
+      border-left 1px solid
+      margin-top calc(70vh \- 270px)
+      h2
+        width 100%
+        margin-top 100px
+        margin-left 20px
+        border-bottom 1px solid
+        margin-bottom 0
+        padding-bottom 100px
+        padding-left calc(\(100vw \- 80px\) \/ 6)
     &__cover-image
       border-top 0
       border-bottom 0
       border-left 1px solid
       padding-bottom 0
+      margin-bottom 0
+      padding-right 20px
       .image
         margin-left 20px
         border-bottom 1px solid
@@ -404,5 +418,97 @@ flex-display(justify = space-between, align = center)
         display flex
         align-items flex-end
         flex-direction column
+        video
+          max-width 75%
+    &__text
+      border-right 1px solid
+    &__sub-text
+      margin-top 20px
+      padding-top 20px
+      border-top 1px solid
+      display flex
+      .image
+        width 50%
+        border-bottom 1px solid
+        padding 70px 0 70px 20px
+        video
+          max-width 75%
+      .callout
+        width 50%
+        border-bottom 1px solid
+        flex-display(center, center)
+      .spacer
+        border-right 1px solid
+        margin-right 20px
+        padding-right 20px
+
+[data-section='4']
+  .article-body--section
+    margin 0 auto
+    &__title
+      h2
+        margin-right 20px
+    &__cover-image
+      .image
+        border-right 1px solid
+    article
+      position relative
+    &__text
+      display flex
+      justify-content flex-end
+      border-bottom 1px solid
+    &__sub-text
+      border-bottom 1px solid
+      .spacer
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 15%
+        top 10px
+        bottom 20px
+        background black
+        width 21px
+      .image
+        padding-left calc(15% \+ 100px)
+        display flex
+        flex-direction column
+        align-items flex-end
+        padding-top 70px
+        padding-bottom 70px
+        img
+          max-height 600px
+      .callout
+        display none
+
+[data-section='5']
+  .article-body--section
+    &__title
+      h2
+        border-right 1px solid
+        margin-bottom 0
+        padding-bottom 100px
+        padding-top 100px
+        padding-right 20px
+        width 100%
+        text-align center
+    &__cover-image
+      border-bottom none
+      border-top none
+      padding-bottom 0
+      margin-bottom 0
+      border-right 1px solid
+      .image
+        border-top 1px solid
+        border-bottom 1px solid
+        width calc(100% \- 20px)
+        padding 50px 20px
+    &__text
+      border-right 1px solid
+      margin-bottom 20px
+    &__sub-text
+      border-top 1px solid
+      padding 70px 20px
+      display flex
+
 #recently-viewed-artworks
   display none
