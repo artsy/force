@@ -3,7 +3,7 @@ globalClientSetup = require '../../../lib/global_client_setup.coffee'
 FooterView = require '../../main_layout/footer/view.coffee'
 lightDetector = require '../../light_detector/index.coffee'
 FairNavView = require './nav.coffee'
-MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
+MarketingSignupModal = require '../../marketing_signup_modal/index.coffee'
 
 module.exports = (options) =>
   globalClientSetup()
