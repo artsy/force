@@ -46,7 +46,7 @@ module.exports = class SearchResult extends Backbone.Model
     text.replace new RegExp("(#{term})", 'ig'), '<span class="is-highlighted">$1</span>'
 
   imageUrl: ->
-    "#{sd.APP_URL}/search/image/#{@get('model')}/#{@get('id')}"
+    @get('image_url')
 
   updateForFair: (fair) ->
     if @get('display_model') == 'Show'
