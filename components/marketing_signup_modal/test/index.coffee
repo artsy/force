@@ -15,11 +15,13 @@ describe 'MarketingSignupModal', ->
       @MarketingSignupModal.__set__ 'sd', @sd =
         APP_URL: 'http://artsy.net'
         CURRENT_USER: null
+        MARKETING_SIGNUP_MODAL_PATHS: '/foo,/bar'
         AP: {}
       benv.expose sd: @sd
       @MarketingSignupModal.__set__ 'modalize', @modalize = sinon.stub()
       @modalize.returns @modal = view: new Backbone.View
       @modal.open = sinon.stub()
+      @MarketingSignupModal.__set__ 'location', @location = pathname: '/foo'
       @MarketingSignupModal.__set__ 'document', @document = referrer: 'google.com'
       @MarketingSignupModal.__set__ 'setTimeout', @setTimeout = sinon.stub()
       @setTimeout.callsArg 0
@@ -42,6 +44,11 @@ describe 'MarketingSignupModal', ->
 
     it 'doesnt open if from inside artsy and logged out', ->
       @document.referrer = 'artsy.net'
+      @view.maybeOpen()
+      @view.modal.open.called.should.not.be.ok()
+
+    it 'doesnt open if from a blacklisted path', ->
+      @location.pathname = '/baz'
       @view.maybeOpen()
       @view.modal.open.called.should.not.be.ok()
 

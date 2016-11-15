@@ -9,7 +9,6 @@ AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 setupClocks = require './clocks.coffee'
 EmailRegistrationView = require './email_registration.coffee'
-attachCTA = require './cta.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 AddToCalendar = require '../../../components/add_to_calendar/index.coffee'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
@@ -30,12 +29,6 @@ module.exports.init = ->
     model: auction
     collection: artworks
     user: user
-
-  new EmailRegistrationView(
-    el: $('.auction-registration-preview')
-    auction: auction
-  ) unless user
-  attachCTA auction, user
 
   new MyActiveBids(
     user: user

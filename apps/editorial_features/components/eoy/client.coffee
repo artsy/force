@@ -5,23 +5,24 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
+    @windowHeight = $(window).scrollTop()
     @setupSliderHeight()
     @getScrollZones()
-    @buildSlinkyBg()
-    @doSlider()
+    @trackDirection()
     @watchWindow()
-    $('.scroller').fadeIn(500)
+    @bodyInView()
 
   watchWindow: =>
     $(window).scroll () =>
-      @doSlider()
+      _.debounce @trackDirection(), 50
     $(window).resize () =>
       @setupSliderHeight()
 
   getScrollZones: =>
     @scrollZones = []
-    for i in [0..$('section').length + 1]
-      @scrollZones.push( (i + 1) * @activeHeight )
+    @scrollZones.push @firstHeight
+    for i in [1..($('.scroller__items section').length - 1)]
+      @scrollZones.push( (i * @activeHeight) + @firstHeight )
     return @scrollZones
 
   closestSection: (scrollTop) =>
@@ -32,52 +33,65 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
-  setupSliderHeight: =>
-    #height of all sections collapsed
-    @flattenedHeight = $('section').length * 20
-    #height of one section open
-    @activeHeight = $(window).height() - 75 - @flattenedHeight
-    #bottom scroll border of slinky content
-    @openHeight = (($('section').length + 1 ) * @activeHeight) + @flattenedHeight + 75
-    $('.eoy-feature__content').height(@openHeight)
-    $('.scroller_items section').first().find('.inner .left').height(@activeHeight)
-
-  buildSlinkyBg: =>
-    elementCount = Math.round(@activeHeight / 30)
-    _(elementCount).times () =>
-      $('.slinky').each (i, slinky) =>
-        $(slinky).append('<div class="spacer" />')
-
-  doSlider: =>
+  trackDirection: =>
     scrollTop = $(window).scrollTop()
-    active = @closestSection(scrollTop)
-    @revealBody(scrollTop)
     if scrollTop == 0
-      $('.scroller__items section[data-section!="' + active + '"]').attr('data-state', 'closed')
-      $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight)
-    else
-      if active != 0
-        diff = scrollTop - @activeHeight * active
-        $('.scroller__items section[data-section="' + (active - 1) + '"]').attr('data-state', 'closed')
-        $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
-        $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight - diff)
-        $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(diff)
-      else
-        $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open').height(@activeHeight - scrollTop)
-        $('.scroller__items section[data-section="' + (active + 1) + '"]').attr('data-state', 'open').height(scrollTop)
-        $('.scroller__items section[data-section="' + (active + 2) + '"]').attr('data-state', 'closed')
+      $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
+      $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@firstHeight)
+    #else if scrollTop > @windowHeight
+      #downscrolling
+    #else
+      #upscrolling
+    @doSlider(scrollTop)
+    @windowHeight = scrollTop
 
-  revealBody: (scrollTop) =>
-    if scrollTop >= (@openHeight - @activeHeight - @flattenedHeight - 75)
-      $('.eoy-feature__menu').addClass('overlay')
-      $('.scroller .scroller__items').slideUp('fast')
-      $('.scroller').css({'top':'0'})
-      $('.article-body').css('overflow':'auto')
+  setupSliderHeight: =>
+    #height of bounding box / title section
+    @firstHeight = $(window).height() - 75 - 20
+    #height of one section open
+    @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
+    #bottom scroll border of header content
+    @openHeight = @getScrollZones()[10] + 75
+    # @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) + @firstHeight + 75 + 20
+    $('.eoy-feature__content').height(@openHeight)
+    $('.scroller__items section').first().height(@firstHeight)
+    $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
+    $('.scroller').fadeIn(500)
+    $('.article-body').fadeIn(500)
+
+  doSlider: (scrollTop) =>
+    active = @closestSection(scrollTop)
+    $primarySection = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
+    nextHeight = @firstHeight - $primarySection.height() - @activeHeight
+    diff = @getScrollZones()[active] - scrollTop
+    if active < 1
+      $primarySection.height(diff)
+      if scrollTop < @activeHeight
+        $primarySection.next().attr('data-state', 'open').height(scrollTop)
+        $primarySection.next().next().attr('data-state', 'closed')
+      else
+        $primarySection.next().attr('data-state', 'open').height(@activeHeight)
+        $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
     else
-      $('.eoy-feature__menu').removeClass('overlay')
-      $('.scroller').css({'top':'95px'})
-      $('.scroller .scroller__items').slideDown('slow')
-      $('.article-body').css('overflow':'hidden')
+      $primarySection.prev().attr('data-state', 'closed')
+      $primarySection.height(diff)
+      if diff + @activeHeight < @firstHeight
+        $primarySection.next().attr('data-state', 'open').height(@activeHeight)
+        $primarySection.next().next().attr('data-state', 'open').height(nextHeight)
+      else
+        $primarySection.next().height(@firstHeight - diff)
+        $primarySection.next().next().attr('data-state', 'closed')
+      if active >= 9
+        if this.getScrollZones()[9] < scrollTop
+          $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed')
+          $('.scroller__items section[data-section="10"]').height(active - scrollTop)
+
+  bodyInView: =>
+    $('.article-body').waypoint (direction) ->
+      if direction is 'up'
+        $('.eoy-feature__menu').removeClass('overlay')
+      if direction is 'down'
+        $('.eoy-feature__menu').addClass('overlay')
 
 module.exports.init = ->
   new EoyView

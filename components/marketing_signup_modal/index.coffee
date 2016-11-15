@@ -47,6 +47,11 @@ module.exports = class MarketingSignupModal extends Backbone.View
   maybeOpen: ->
     host = url.parse(sd.APP_URL).host
     ref = document.referrer
-    fromOutsideArtsy = Boolean ref and not host.match(ref)?
+    paths = sd.MARKETING_SIGNUP_MODAL_PATHS.split(',')
+
     loggedOut = not sd.CURRENT_USER?
-    setTimeout (=> @modal.open()), 3000 if loggedOut and fromOutsideArtsy
+    fromOutsideArtsy = Boolean ref and not host.match(ref)?
+    inWhitelistedPath = location.pathname in paths
+
+    if loggedOut and inWhitelistedPath and fromOutsideArtsy
+      setTimeout (=> @modal.open()), 3000

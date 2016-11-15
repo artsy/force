@@ -86,6 +86,3 @@ module.exports.init = ->
           "&profile_id=#{profile.id}" +
           "&fair_id=#{fair.id}" +
           "&fair_name=#{fair.get('name')}"
-
-  # Add marketing signup CTA modal
-  new MarketingSignupModal
