@@ -5,7 +5,7 @@ sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
-{ crop, fill } = require '../../../components/resizer/index.coffee'
+{ crop } = require '../../../components/resizer/index.coffee'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...
