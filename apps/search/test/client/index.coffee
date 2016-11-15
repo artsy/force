@@ -35,6 +35,6 @@ describe 'SearchResultsView', ->
 
     Backbone.sync.args[1][2].success(fabricate 'artwork', id: 'maya-hayuk-untitled')
 
-    @view.$el.html().should.containEql("/local/additional_images/4e7cb83e1c80dd00010038e2/1/small.jpg")
+    @view.$el.html().should.containEql("https://i.embed.ly/1/display/crop?url=%2Flocal%2Fadditional_images%2F4e7cb83e1c80dd00010038e2%2F1%2Fsmall.jpg")
 
 

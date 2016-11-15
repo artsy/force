@@ -33,6 +33,7 @@ module.exports = class GooogleSearchResult extends Backbone.Model
   imageUrl: ->
     return null if @get('display_model') is 'artist'
     return "" if @get('display_model') is 'artwork'
+
     src = @get('pagemap')?.cse_thumbnail?[0].src or @get('pagemap')?.cse_image?[0].src
     if @get('display_model') is 'Gallery'
       fill src, width: 70, height: 70, color: 'fff'
