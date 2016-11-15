@@ -35,7 +35,7 @@ module.exports = class Specialist extends StepView
     form.state 'loading'
 
     @__serialize__ = Q.all [
-      @inquiry.save _.extend { contact_gallery: false }, form.data()
+      @inquiry.save _.extend form.data(), { contact_gallery: false }
       @user.save @inquiry.pick('name', 'email')
     ]
       .then =>

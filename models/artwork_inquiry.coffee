@@ -10,6 +10,7 @@ module.exports = class ArtworkInquiry extends Backbone.Model
     session_id: SESSION_ID
     referring_url: Cookies.get('force-referrer')
     landing_url: Cookies.get('force-session-start')
+    contact_gallery: true
 
   send: (attributes, options = {}) ->
     @save attributes, _.extend options,

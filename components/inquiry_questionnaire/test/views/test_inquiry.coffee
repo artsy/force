@@ -83,7 +83,7 @@ describe 'Inquiry', setup ->
       @view.__serialize__.then =>
         # Sets up the inquiry
         @inquiry.get('message').should.equal 'I wish to buy the foo bar'
-        @inquiry.get('contact_gallery').should.be.true()
+        @inquiry.get('contact_gallery').should.equal 'true'
         @inquiry.get('artwork').should.equal @artwork.id
 
         # Sets up the user
@@ -126,7 +126,7 @@ describe 'Inquiry', setup ->
       @view.__serialize__.then =>
         # Sets up the inquiry
         @inquiry.get('message').should.equal 'I wish to buy the foo bar'
-        @inquiry.get('contact_gallery').should.be.true()
+        @inquiry.get('contact_gallery').should.equal 'true'
         @inquiry.get('artwork').should.equal @artwork.id
 
         # Sets up the user

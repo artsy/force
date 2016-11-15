@@ -13,6 +13,7 @@ module.exports = class Inquiry extends StepView
     template _.extend data,
       fair: @artwork.related().fairs.first()
       message: @inquiry.get('message') or @defaultMessage()
+      contactGallery: @inquiry.get('contact_gallery')
 
   __events__:
     'click button': 'serialize'
@@ -49,7 +50,7 @@ module.exports = class Inquiry extends StepView
         .related().userFairActions.attendFair @artwork.related().fairs.first()
 
     @__serialize__ = Q.allSettled [
-      @inquiry.save _.extend { contact_gallery: true }, data
+      @inquiry.save _.extend { contact_gallery: @inquiry.get('contact_gallery') }, data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()
     ]
