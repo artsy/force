@@ -1,0 +1,90 @@
+divider-height = 40px
+
+.marketing-signup-modal
+  text-align center
+  display flex
+  align-items stretch
+
+  &-left
+    background-size cover
+    background-position center center
+
+  &-left, &-right
+    width 50%
+    img
+      width 100%
+
+  &-right
+    padding 30px
+
+  &-h1
+    garamond-size('headline')
+    margin 10px 0 20px 0
+
+  &-h2
+    margin-bottom 20px
+
+  &-divider
+    width 100%
+    height divider-height
+    position relative
+    color transparent
+    &:before
+      content '.'
+      color transparent
+      border-top 1px solid gray-lighter-color
+      position absolute
+      width 100%
+      left 0
+      top (divider-height / 2)
+    &:after
+      content 'or'
+      avant-garde()
+      avant-garde-size('s-headline')
+      color gray-darker-color
+      text-align center
+      background white
+      position absolute
+      width 60px
+      height divider-height
+      line-height divider-height
+      left calc(50% \- 35px)
+      top 0
+      z-index 1
+
+  &-small
+    display block
+    margin 10px 0 20px 0
+    color gray-darker-color
+    garamond-size('l-caption')
+
+  &-have-account
+    color gray-darker-color
+
+  &-container .icon-close
+    font-size 18px
+    top -10px
+    right @top
+    position relative
+
+  &-fb
+    background #3A4C95
+
+  &-copy a
+    color gray-dark-color
+
+  &-error
+    color red-color
+    padding-top 7px
+    display none
+
+  .bordered-input
+    width 100%
+    margin-bottom 10px
+
+  .avant-garde-button-black
+    width 100%
+
+  .icon-close
+    font-size 18px
+
