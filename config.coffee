@@ -113,6 +113,9 @@ module.exports =
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ARTSY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/artsy-partner-updates$'
+  MARKETING_SIGNUP_MODAL_H1: 'Sign up'
+  MARKETING_SIGNUP_MODAL_H2: 'For early access'
+  MARKETING_SIGNUP_MODAL_IMG: 'http://placekitten.com/700/1000'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
