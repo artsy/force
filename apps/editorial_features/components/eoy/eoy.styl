@@ -244,6 +244,8 @@ flex-display(justify = space-between, align = center)
   width 100vw
   min-height 100vh
   overflow hidden
+  &--section
+    width calc(85vw \- 80px)
   &__intro
     &-header
       width calc(grid-2 \+ 1px)
@@ -269,36 +271,138 @@ flex-display(justify = space-between, align = center)
   &--section__cover-image
     border-top 1px solid
     border-bottom 1px solid
-    padding 30px 0
+    padding 20px 0
     margin-bottom 10px
+    width 100%
     flex-display()
-    img
+    .image
       width 100%
+    img
       height auto
-    .left
-      width 27%
-      border-top border-gray
-      border-bottom border-gray
-    .right
-      width 70%
-      padding 30px 0
-      border-top border-gray
-      border-bottom border-gray
+      width 75%
+  .caption
+    margin-top 15px
+    garamond-size('s-body')
+    color gray-color
+  .callout
+    garamond-size('headline')
   &--section__text
-    max-width 750px
-    margin-top 70px
+    padding 70px 20px
     p
-      garamond-size('headline')
-      margin-bottom 40px
-  &--section[data-section='1']
-    width calc(85vw \- 80px)
-    // &__cover-image
-    //   border-left 1px solid
-    //   display flex
-    //   height 100%
-    //   flex-direction column
-    //   align-items flex-end
-    //   width 100%
+      garamond-size('s-headline')
+      padding-bottom 40px
+      max-width 750px
 
+[data-section='1']
+  .article-body--section
+    &__title
+      width calc( \(\(100vw \- 80px\) \/ 6\) \* 4)
+      justify-content flex-end
+    &__cover-image
+      justify-content flex-end
+      .image
+        border-left 1px solid
+        padding 40px 20px
+        display flex
+        flex-direction column
+        align-items flex-end
+    article
+      display flex
+      flex-direction column-reverse
+      border-right 1px solid
+      margin 20px 0
+    &__text
+      border-top 1px solid
+      margin-top 20px
+      margin-right 20px
+      border-bottom 1px solid
+      p
+        max-width 750px
+        margin 0 auto
+    &__sub-text
+      flex-display(space-between, center)
+      .image
+        width calc( \(\(100vw \- 80px\) \/ 6\) \* 3)
+        border-right 1px solid
+        padding 50px 0
+        img
+          width 100%
+          padding-left 20px
+          padding-right 70px
+      .callout
+        width calc( \(\(100vw \- 80px\) \/ 6\) \* 2)
+        text-align center
+
+[data-section='2']
+  .article-body--section
+    margin 0 auto
+    &__title
+      h2
+        border-right 1px solid
+        margin 0
+        padding 150px 20px 150px
+        width 100%
+    &__cover-image
+      border-right 1px solid
+      border-top 0
+      border-bottom 0
+      padding 0
+      .image
+        border-top 1px solid
+        border-bottom 1px solid
+        margin-right 20px
+        padding 70px 0 70px 20px
+    &__text
+      border-left 1px solid
+      margin 20px 0
+      p
+        margin-right 0
+        margin-left auto
+    &__sub-text
+      display flex
+      border-top 1px solid
+      padding 20px 0
+      .image
+        width 50%
+        order 3
+        margin-left 20px
+        padding 70px 0
+        border-bottom 1px solid
+        img, .caption
+          max-width 75%
+          margin-left auto
+          margin-right 0
+      .spacer
+        order 2
+        border-right 1px solid
+      .callout
+        flex-display()
+        width 50%
+        margin-right 20px
+        order 1
+        border-bottom 1px solid
+        p
+          border-left 1px solid
+          padding-left 20px
+          garamond-size('l-headline')
+[data-section='3']
+  .article-body--section
+    margin-left auto
+    margin-right 0
+    &__title
+      border-bottom 1px solid
+      margin-left 20px
+    &__cover-image
+      border-top 0
+      border-bottom 0
+      border-left 1px solid
+      padding-bottom 0
+      .image
+        margin-left 20px
+        border-bottom 1px solid
+        padding 70px 0
+        display flex
+        align-items flex-end
+        flex-direction column
 #recently-viewed-artworks
   display none

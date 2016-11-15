@@ -119,16 +119,31 @@ block body
           h3 Article Intro statement: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor.
       .article-body__content
       for section, i in curation.get('sections')
-        section.article-body--section(data-section='#{i + 1}')
-          header
-            .article-body--section__title
-              h2=section.headline
-            .article-body--section__cover-image
-              .image
-                img(src=section.image)
-                .caption=section.caption
-          article
-            .article-body--section__text= section.body
-            .callout=section.callout
+        section(data-section='#{i + 1}')
+          .article-body--section
+            header
+              .article-body--section__title
+                h2=section.headline
+              .article-body--section__cover-image
+                .image
+                  if section.image.indexOf('mp4') > -1
+                    video
+                      source(src=section.image)
+                  else
+                    img(src=section.image width='800')
+                  .caption=section.caption
+            article
+              .article-body--section__text!= markdown(section.body)
+              .article-body--section__sub-text
+                .image
+                  if section.image.indexOf('mp4') > -1
+                      video
+                        source(src=section.image)
+                    else
+                      img(src=section.image width='800')
+                  .caption=section.caption
+                .spacer
+                .callout
+                  p=section.callout
 
     #recently-viewed-artworks
