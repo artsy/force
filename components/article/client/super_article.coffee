@@ -66,7 +66,7 @@ module.exports = class SuperArticleView extends Backbone.View
   setWaypoints: ->
     return unless @$stickyHeader.length
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first, .article-body'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
         @$stickyHeader.addClass 'visible'

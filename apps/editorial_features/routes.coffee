@@ -8,14 +8,14 @@ Q = require 'bluebird-q'
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
-  @article = new Article(id: '582b62870398790011ecd40f')
+  @article = new Article(id: sd.EOY_2016_ARTICLE)
   Q.all([
   	@curation.fetch()
     @article.fetch()
   ]).then (result) =>
     @superSubArticles = new Articles()
 
-    Q.allSettled(
+    Q.all(
       @article.fetchSuperSubArticles(@superSubArticles)
     ).then ->
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
