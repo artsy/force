@@ -1,4 +1,5 @@
 module.exports = [
+  { is_auction: true: ['specialist'] }
   { is_logged_out_but_has_account: true: ['account'] }
   pre_qualify: {
     true: [
