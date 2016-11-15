@@ -74,6 +74,16 @@ describe 'map', ->
           @state.next().should.equal 'done'
           @state.isEnd().should.be.true()
 
+    describe 'the partner belongs to an auction', ->
+      beforeEach ->
+        @artwork.related().partner.set 'type', 'Auction'
+
+      describe 'starts with a specialist inquiry', ->
+        it 'and ends after the specialist step', ->
+          @state.current().should.equal 'specialist'
+          @state.next().should.equal 'done'
+          @state.isEnd().should.be.true()
+
     describe 'A user that has previously seen some steps', ->
       beforeEach ->
         @logger.log 'artists_in_collection'
