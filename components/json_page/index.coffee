@@ -30,13 +30,13 @@ module.exports = class JSONPage
         .end (err, res) =>
           if res?.ok
             try
-              @data = JSON.parse res.text
+              @data = JSON.parse res?.text
               resolve @data
               callback? null, @data
             catch e
               error e
           else
-            error res.error
+            error res?.error
 
   set: (data, callback) ->
     buffer = new Buffer JSON.stringify(data)
