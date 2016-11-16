@@ -1,5 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+SuperArticleView = require '../../../../components/article/client/super_article.coffee'
+Article = require '../../../../models/article.coffee'
+sd = require('sharify').data
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
@@ -11,6 +14,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @trackDirection()
     @watchWindow()
     @bodyInView()
+    @article = new Article sd.SUPER_ARTICLE
+    new SuperArticleView el: $('body'), article: @article
 
   watchWindow: =>
     $(window).scroll () =>

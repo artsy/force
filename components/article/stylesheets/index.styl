@@ -87,7 +87,7 @@ body.body-article
     &:hover
       color purple-color
 
-.article-lead-paragraph, .article-section-text
+.article-lead-paragraph:not(.article-fullscreen-intro), .article-section-text
   font-size 20px
   line-height 27px
   @media screen and (min-width 620px)
@@ -625,6 +625,11 @@ body.body-article
       transform translate(-50%, -50%)
       background-color white
       border 1px solid gray-lighter-color
+      @media screen and (max-width 600px)
+        border none
+        avant-garde-size('m-headline')
+        text-decoration underline
+        line-height 1.5em
 
     &::before
       content ''
@@ -635,3 +640,5 @@ body.body-article
       border-bottom 2px dotted gray-lighter-color
       max-width column-width
       margin auto
+      @media screen and (max-width 600px)
+        border none

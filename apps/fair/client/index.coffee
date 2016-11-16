@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+MarketingSignupModal = require '../../../components/marketing_signup_modal/index.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
-# FairInfoView = require './info.coffee'
 FairArticlesView = require './articles.coffee'
 FairSearchView = require './search.coffee'
 ForYouView = require './for_you.coffee'
@@ -17,7 +17,6 @@ scrollFrame = require 'scroll-frame'
 module.exports.FairView = class FairView extends Backbone.View
 
   sectionHash:
-    # info: FairInfoView
     posts: FairArticlesView
     search: FairSearchView
     browse: FairBrowseRouter

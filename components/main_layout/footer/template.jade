@@ -1,6 +1,7 @@
 footer#main-layout-footer
   #recently-viewed-artworks
-  .responsive-layout-container
+  include mobile_footer_menu
+  .responsive-layout-container: .mlf.mlf__fullwidth
     .mlf-upper: .main-layout-container
       .mlf-upper-column
         h4 Collecting
@@ -28,7 +29,6 @@ footer#main-layout-footer
           h4 General questions & feedback?
           a( href='/contact' ) Contact Artsy
           a.mlf-feedback( href='#' ) Send us feedback
-
     .mlf-lower: .main-layout-container
       nav#main-layout-footer-internal
         a#main-layout-footer-logo.icon-logo( href='/' )

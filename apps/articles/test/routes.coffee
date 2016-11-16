@@ -7,12 +7,18 @@ Articles = require '../../../collections/articles'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+articlesJSON = require './fixtures.coffee'
+Q = require 'bluebird-q'
 
 describe 'Articles routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: {} }
+    routes.__set__ 'positronql', @positronql = sinon.stub()
+    @positronql.debug = sinon.stub()
+    @positronql.returns Q.resolve articles: articlesJSON
+
+    @req = { params: {}, query: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'topParselyArticles', sinon.stub().yields [fixtures.parselyArticle, fixtures.parselyArticle, fixtures.parselyArticle]
@@ -22,24 +28,15 @@ describe 'Articles routes', ->
 
   describe '#articles', ->
     it 'fetches published articles', ->
-      Backbone.sync
-        .onCall 0
-        .yieldsTo 'success', results: [
-          { tier: 1, id: 'a' }
-          { tier: 1, id: 'b' }
-          { tier: 1, id: 'c' }
-          { tier: 1, id: 'd' }
-          { tier: 2, id: 'e' }
-          { tier: 2, id: 'f' }
-          { tier: 1, id: 'g' }
-          { tier: 2, id: 'h' }
-        ]
-      routes.articles @req, @res, @next
-      @res.render.args[0][1].articles.should.have.lengthOf 8
+      routes.articles @req, @res
+        .then =>
+          @res.render.args[0][0].should.equal 'articles'
+          @res.render.args[0][1].articles.should.have.lengthOf 5
 
     it 'requests less than 100 pages!', ->
-      routes.articles @req, @res, @next
-      Backbone.sync.args[0][2].data.limit.should.be.below 100
+      routes.articles @req, @res
+        .then =>
+          @positronql.args[0][0].query.should.containEql 'limit: 50'
 
   describe '#section', ->
 
