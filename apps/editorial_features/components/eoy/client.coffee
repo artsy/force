@@ -24,11 +24,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupSliderHeight()
 
   getScrollZones: =>
-    @scrollZones = []
-    @scrollZones.push @firstHeight
+    scrollZones = []
+    scrollZones.push @firstHeight
     for i in [1..($('.scroller__items section').length - 1)]
-      @scrollZones.push( (i * @activeHeight) + @firstHeight )
-    return @scrollZones
+      scrollZones.push( (i * @activeHeight) + @firstHeight )
+    return scrollZones
 
   closestSection: (scrollTop) =>
     scrollZones = @getScrollZones()

@@ -121,33 +121,42 @@ block body
         .article-body__intro-inner
           h3 Article Intro statement: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor.
       .article-body__content
-      for section, i in curation.get('sections')
-        section(data-section='#{i + 1}')
-          .article-body--section
-            header
-              .article-body--section__title
-                h2=section.headline
-              .article-body--section__cover-image
-                .image
-                  if section.image.indexOf('mp4') > -1
-                    video
-                      source(src=section.image)
-                  else
-                    img(src=section.image width='800')
-                  .caption=section.caption
-            article
-              .article-body--section__text!= markdown(section.body)
-              .article-body--section__sub-text
-                .image
-                  if section.image.indexOf('mp4') > -1
+        for section, i in curation.get('sections')
+          section(data-section='#{i + 1}')
+            .article-body--section
+              header
+                .article-body--section__title
+                  h2=section.headline
+                .article-body--section__cover-image
+                  .image
+                    if section.image.indexOf('mp4') > -1
                       video
                         source(src=section.image)
                     else
                       img(src=section.image width='800')
-                  .caption=section.caption
-                .spacer
-                .callout
-                  p=section.callout
+                    .caption!= markdown(section.caption)
+              article
+                .article-body--section__text!= markdown(section.body)
+                .article-body--section__sub-text
+                  .image
+                    if section.image.indexOf('mp4') > -1
+                      video
+                        source(src=section.image)
+                    else
+                      img(src=section.image width='800')
+                      .caption!= markdown(section.caption)
+                  .spacer
+                  .callout
+                    if i != 5
+                      p=section.callout
+                    else
+                      img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg')
+                      .caption This image and its caption are manually edited.
+              if i == 0
+                .article-body--section__sub-image
+                  img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg')
+                  .caption This image and its caption are manually edited.
+                  .spacer
 
       include ../../../../components/article/templates/super_article_footer.jade
     #recently-viewed-artworks

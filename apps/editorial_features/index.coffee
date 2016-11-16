@@ -5,7 +5,7 @@ markdown = require '../../components/util/markdown'
 { crop } = require '../../components/resizer/index'
 
 app = module.exports = express()
-app.set 'views', "#{__dirname}/templates"
+app.set 'views', "#{__dirname}"
 app.set 'view engine', 'jade'
 app.locals.markdown = markdown
 app.locals.crop = crop
