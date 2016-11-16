@@ -5,8 +5,7 @@ hasSeenThisSession = (steps...) -> ({ logger }) -> logger.hasLoggedThisSession s
 
 decisions =
   is_auction: ({ artwork }) ->
-    artwork.related()
-      .partner.get('type') is "Auction"
+    artwork.get('is_in_auction') is true
 
   pre_qualify: ({ artwork }) ->
     artwork.related()
