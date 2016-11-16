@@ -76,7 +76,7 @@ describe 'map', ->
 
     describe 'the partner belongs to an auction', ->
       beforeEach ->
-        @artwork.related().partner.set 'type', 'Auction'
+        @artwork.set 'is_in_auction', true
 
       describe 'starts with a specialist inquiry', ->
         it 'and ends after the specialist step', ->
