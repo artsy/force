@@ -5,6 +5,9 @@ append locals
   - sections = curation.get('sections')
 
 block body
+  - var superArticle = article
+  include ../../../../components/article/templates/super_article_sticky_header.jade
+
   .eoy-feature
     video(class='video' autoplay='autoplay' loop='loop' muted='').eoy-feature__background
       source(src='https://artsy-vanity-files-production.s3.amazonaws.com/videos/year-end-six.mp4' type='video/mp4')
@@ -146,4 +149,5 @@ block body
                 .callout
                   p=section.callout
 
+      include ../../../../components/article/templates/super_article_footer.jade
     #recently-viewed-artworks
