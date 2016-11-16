@@ -9,6 +9,7 @@ Q = require 'bluebird-q'
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
   @article = new Article(id: sd.EOY_2016_ARTICLE)
+
   Q.all([
   	@curation.fetch()
     @article.fetch()
@@ -17,9 +18,9 @@ Q = require 'bluebird-q'
 
     Q.all(
       @article.fetchSuperSubArticles(@superSubArticles)
-    ).then ->
+    ).then =>
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
-      res.render '../components/eoy/index',
-  			curation: @curation
-        article: @article
+      res.render 'components/eoy/index',
+        curation: @curation,
+        article: @article,
         superSubArticles: @superSubArticles
