@@ -62,6 +62,20 @@ describe 'JSONPage', ->
           .catch (err) ->
             err.message.should.equal 'cannot GET /json/wrong.json (403)'
 
+    describe 'unsuccessful, without a response', ->
+      beforeEach ->
+        sinon.stub(request, 'get')
+          .returns end: (cb) ->
+            cb response: 'cannot GET /json/wrong.json (403)'
+
+      afterEach ->
+        request.get.restore()
+
+      it 'calls back with the error', (done) ->
+        @page.get (err, data) ->
+          err.message.should.equal 'cannot GET /json/wrong.json (403)'
+          done()
+
   describe '#set', ->
     beforeEach ->
       sinon.stub(JSONPage::, 'client')
