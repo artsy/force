@@ -36,7 +36,7 @@ module.exports = class JSONPage
             catch e
               error e
           else
-            error res?.error
+            error res?.error or err.response
 
   set: (data, callback) ->
     buffer = new Buffer JSON.stringify(data)
