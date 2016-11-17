@@ -53,7 +53,7 @@ flex-display(justify = space-between, align = center)
   width calc(100% \- 80px)
   margin 0 40px
   position fixed
-  top 75px
+  top 74px
   bottom 20px
   display none
   overflow hidden
@@ -68,6 +68,9 @@ flex-display(justify = space-between, align = center)
       max-height calc(100% \- 40px)
       flex-display(center, center)
       overflow hidden
+      width 100%
+      text-align center
+      height 100%
   article
     position relative
     overflow hidden
@@ -77,6 +80,8 @@ flex-display(justify = space-between, align = center)
       width 100%
       height 100%
       overflow hidden
+    .col
+      height 100%
   section
     margin 0 auto
     height 0
@@ -95,6 +100,8 @@ flex-display(justify = space-between, align = center)
           border-left 1px solid
           border-right 1px solid
           padding 20px
+          margin 20px 0
+          height calc(100% \- 40px)
           .spacer
             height 1px
             margin 20px
@@ -109,39 +116,65 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
         .left
           width grid-1
-          height 100%
+          height calc(100% \- 20px)
           border-right 1px solid
+          margin-top 20px
         .right
           flex 1
           border-right 1px solid
+          height calc(100% \- 40px)
+          margin 20px 0
+          .item
+            max-height 100%
     &[data-section='2']
-      .inner
-        border-top 1px solid
       .left
+        width calc(50vw \- 40px)
         .col
-          height 100%
-          border-left 1px solid
           &:first-child
-            width calc(grid-1 \- 1px)
-            border none
+            width calc(grid-1 \- 21px)
+            border-top 1px solid
+            margin-right 20px
+          &:nth-child(2)
+            border-left 1px solid
+            margin-bottom 40px
+          &:last-child
+            border-top 1px solid
+            width calc(35vw \- 60px)
+            margin-left 20px
       .right
-        width 50%
-        border-left 1px solid
-        border-right 1px solid
+        width calc(50vw \- 40px)
+        border-top 1px solid
+        justify-content space-between
+        .col
+          &:first-child
+            margin-top 40px
+            border-left 1px solid
+        .item
+          border-right 1px solid
     &[data-section='3']
       .left
-        width 50%
-        border-left 1px solid
+        width calc(50vw \-60px)
+        margin-right 20px
         border-top 1px solid
+        flex-direction row-reverse
+        .col
+          border-left 1px solid
+          height calc(100% \- 40px)
+          margin 20px 0
+      .col.spacer
+        border-right 1px solid
+        margin-bottom 40px
       .right
         flex-display()
         flex 1
         border-top 1px solid
+        margin-left 20px
         .col
-          height 100%
-          border-left 1px solid
           &:first-child
-            width calc(grid-1 \- 1px)
+            width calc(grid-1 \- 21px)
+            border-right 1px solid
+            height calc(100% \- 40px)
+            margin 20px 0
           &:nth-child(2)
             width calc(grid-2 \- 1px)
     &[data-section='4']
@@ -149,10 +182,16 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
       .left
         width calc(grid-2 \- 1px)
+        height calc(100% \- 40px)
+        margin 20px 0
         border-right 1px solid
       .right
         flex 1
         border-right 1px solid
+        margin 20px 0
+        height calc(100% \- 40px)
+        .item
+          max-height 100%
     &[data-section='5']
       .inner
         border-top 1px solid
@@ -160,74 +199,107 @@ flex-display(justify = space-between, align = center)
         .left
           flex 1
           border-left 1px solid
+          border-right 1px solid
+          height calc(100% \- 40px)
+          .item
+            max-height 100%
         .right
           width calc(grid-1 \- 1px)
-          border-right 1px solid
-          border-left 1px solid
     &[data-section='6']
       .left
         .col
-          height 100%
-          border-left 1px solid
           &:first-child
-            width calc(grid-1 \- 1px)
+            width calc(grid-1 \- 21px)
+            margin-right 20px
+            border-bottom 1px solid
           &:nth-child(2)
             width calc(grid-2 \- 1px)
-            border-bottom 1px solid
+            height calc(100% \- 20px)
+            margin-top 20px
+            border-left 1px solid
       .right
         flex 1
         border-left 1px solid
         border-right 1px solid
-        border-bottom 1px solid
+        height calc(100% \-40px)
+        margin 20px 0
+        .item
+          max-height 100%
     &[data-section='7']
       .left
-        border-top 1px solid
         .col
-          height 100%
+          height calc(100% \-20px)
           width calc(grid-1)
           border-right 1px solid
-          border-left 1px solid
+          margin-bottom 20px
       .right
         flex 1
-        height calc(100% \- 40px)
-        overflow hidden
-        border-right 1px solid
-    &[data-section='8']
-      .left
         border-top 1px solid
+        margin-left 20px
+        justify-content space-between
+        .item
+          width 100%
         .col
-          height 100%
-          width calc(grid-2)
           border-right 1px solid
+          margin 20px 0
+          height calc(100% \- 40px)
+    &[data-section='8']
+      border-top 1px solid
+      border-bottom 1px solid
+      .left
+        .col
+          width calc(grid-2)
       .right
         flex 1
-        border-top 1px solid
         border-right 1px solid
+        border-left 1px solid
+        margin 20px 0
+        height calc(100% \-40px)
+        .item
+          max-height 100%
     &[data-section='9']
       .left
         flex 1
-        border-top 1px solid
+        border-bottom 1px solid
+        margin-right 20px
+        justify-content space-between
+        .item
+          width 100%
+        .col
+          border-left 1px solid
+          height calc(100% \- 40px)
+          margin 20px 0
+      .col.spacer
         border-right 1px solid
-        border-left 1px solid
+        height calc(100% \- 20px)
+        margin-top 20px
       .right
-        width grid-3
-        border-top 1px solid
-        border-right 1px solid
+        width calc(50% \- 20px)
+        border-bottom 1px solid
+        margin-left 20px
     &[data-section='10']
       .left
         width grid-3
-        border-top 1px solid
-        border-right 1px solid
-        border-left 1px solid
         justify-content flex-start
         .col:first-child
           width grid-2
           border-right 1px solid
-          height 100%
+          height calc(100% \- 20px)
+          margin-top 20px
       .right
         flex 1
-        border-top 1px solid
         border-right 1px solid
+        border-left 1px solid
+        margin 20px 0
+        height calc(100% \- 40px)
+        .item
+          max-height 100%
+
+
+
+
+
+
 
 .article-body
   display none
@@ -268,8 +340,6 @@ flex-display(justify = space-between, align = center)
   &--section__cover-image
     border-top 1px solid
     border-bottom 1px solid
-    // padding 20px 0
-    // margin-bottom 0
     width 100%
     flex-display()
     .image
@@ -288,6 +358,8 @@ flex-display(justify = space-between, align = center)
     color gray-color
   .callout
     garamond-size('headline')
+  video
+    max-width 100%
   &--section__text
     padding 70px 20px
     p
@@ -304,7 +376,7 @@ flex-display(justify = space-between, align = center)
       justify-content flex-end
       .image
         border-left 1px solid
-        padding 40px 20px
+        padding 70px 20px
         display flex
         flex-direction column
         align-items flex-end
@@ -326,11 +398,7 @@ flex-display(justify = space-between, align = center)
       .image
         width calc( \(\(100vw \- 80px\) \/ 6\) \* 3)
         border-right 1px solid
-        padding 50px 0
-        img
-          width 100%
-          padding-left 20px
-          padding-right 70px
+        padding 60px 90px 60px 20px
       .callout
         width calc( \(\(100vw \- 80px\) \/ 6\) \* 2)
         text-align center
@@ -378,7 +446,7 @@ flex-display(justify = space-between, align = center)
         width 50%
         order 3
         margin-left 20px
-        padding 70px 20px 70px
+        padding 40px 20px 60px
         border-bottom 1px solid
         img, .caption
           max-width 75%
@@ -437,15 +505,18 @@ flex-display(justify = space-between, align = center)
       border-top 1px solid
       display flex
       .image
-        width calc(65% \- 20px)
+        width calc(60% \- 20px)
         border-bottom 1px solid
         padding 70px calc(20% \- 20px) 70px 20px
         img
           max-width 100%
+          max-height 700px
+          width auto
+          height auto
         // video
         //   max-width 75%
       .callout
-        width calc(35% \- 20px)
+        width calc(40% \- 20px)
         border-bottom 1px solid
         flex-display(center, center)
       .spacer

@@ -57,7 +57,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[10] + 75
-    # @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) + @firstHeight + 75 + 20
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@firstHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)

@@ -45,7 +45,9 @@ block body
                 .left
                   .col
                   .col
+                  .col
                 .right
+                  .col
                   .item
                     h2=sections[1].headline
           section(data-section='3')
@@ -54,6 +56,8 @@ block body
                 .left
                   .item
                     h2=sections[2].headline
+                  .col
+                .col.spacer
                 .right
                   .col
                   .col
@@ -89,6 +93,7 @@ block body
                 .right
                   .item
                     h2=sections[6].headline
+                  .col
           section(data-section='8').last
             article
               .inner
@@ -101,8 +106,10 @@ block body
             article
               .inner
                 .left
+                  .col
                   .item
                     h2=sections[8].headline
+                .col.spacer
                 .right
                   .col
           section(data-section='10').last
@@ -139,12 +146,12 @@ block body
                 .article-body--section__text!= markdown(section.body)
                 .article-body--section__sub-text
                   .image
-                    if section.image.indexOf('mp4') > -1
+                    if section.image_second.indexOf('mp4') > -1
                       video
-                        source(src=section.image)
+                        source(src=section.image_second)
                     else
-                      img(src=section.image width='800')
-                      .caption!= markdown(section.caption)
+                      img(src=section.image_second width='800')
+                    .caption!= markdown(section.caption_second)
                   .spacer
                   .callout
                     if i != 5
