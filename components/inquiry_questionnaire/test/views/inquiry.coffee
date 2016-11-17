@@ -62,6 +62,46 @@ describe 'Inquiry', setup ->
         @view.$('.scontact-from').text()
           .should.be.empty()
 
+  describe '#next (with user)', ->
+    beforeEach ->
+      @state.set 'steps', ['inquiry', 'after_inquiry']
+
+      @view = new Inquiry
+        user: @currentUser
+        artwork: @artwork
+        inquiry: @inquiry
+        state: @state
+
+      @view.render()
+
+    it 'sets up the inquiry and ensures the user has contact details', ->
+      @view.$('input[name="name"]').val 'Craig Spaeth'
+      @view.$('input[name="email"]').val 'craigspaeth@gmail.com'
+      @view.$('textarea[name="message"]').val 'I wish to buy the foo bar'
+      @view.$('button').click()
+
+      @view.__serialize__.then =>
+        # Sets up the inquiry
+        @inquiry.get('message').should.equal 'I wish to buy the foo bar'
+        @inquiry.get('contact_gallery').should.be.true()
+        @inquiry.get('artwork').should.equal @artwork.id
+
+        # Sets up the user
+        @currentUser.get('name').should.equal 'Craig Spaeth'
+        @currentUser.get('email').should.equal 'craigspaeth@gmail.com'
+
+        Backbone.sync.callCount.should.equal 3
+
+        Backbone.sync.args[0][1].url()
+          .should.containEql '/api/v1/me/artwork_inquiry_request'
+        Backbone.sync.args[1][1].url()
+          .should.containEql "/api/v1/me"
+        Backbone.sync.args[2][1].url
+          .should.containEql = '/api/v1/user'
+
+        # Next
+        @view.state.current().should.equal 'after_inquiry'
+
   describe '#next', ->
     beforeEach ->
       @state.set 'steps', ['inquiry', 'after_inquiry']
@@ -93,14 +133,12 @@ describe 'Inquiry', setup ->
         @loggedOutUser.get('name').should.equal 'Foo Bar'
         @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-        Backbone.sync.callCount.should.equal 3
+        Backbone.sync.callCount.should.equal 2
 
         Backbone.sync.args[0][1].url()
-          .should.containEql '/api/v1/me/artwork_inquiry_request'
-        Backbone.sync.args[1][1].url()
           .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
-        Backbone.sync.args[2][1].url
-          .should.containEql = '/api/v1/user'
+        Backbone.sync.args[1][1].url
+          .should.containEql '/api/v1/user'
 
         # Next
         @view.state.current().should.equal 'after_inquiry'
@@ -124,7 +162,7 @@ describe 'Inquiry', setup ->
       @view.$('button').text().should.equal 'Send Anyway?'
       @view.$('button').click()
 
-      Backbone.sync.callCount.should.equal 3
+      Backbone.sync.callCount.should.equal 2
 
       @view.nudged.restore()
 
@@ -158,9 +196,9 @@ describe 'Inquiry', setup ->
         @view.$('button').click()
 
         @view.__serialize__.then =>
-          Backbone.sync.callCount.should.equal 4
+          Backbone.sync.callCount.should.equal 3
 
-          Backbone.sync.args[3][1].url()
+          Backbone.sync.args[2][1].url()
             .should.containEql '/api/v1/me/user_fair_action'
 
           @view.state.current().should.equal 'after_inquiry'
@@ -183,6 +221,6 @@ describe 'Inquiry', setup ->
         @view.$('button').click()
 
         @view.__serialize__.then =>
-          Backbone.sync.callCount.should.equal 4
+          Backbone.sync.callCount.should.equal 3
 
           @view.state.current().should.equal 'after_inquiry'
