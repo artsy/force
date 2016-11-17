@@ -99,18 +99,22 @@ flex-display(justify = space-between, align = center)
           flex-direction column
           border-left 1px solid
           border-right 1px solid
-          padding 20px
           margin 20px 0
           height calc(100% \- 40px)
+          justify-content center
           .spacer
             height 1px
-            margin 20px
+            margin 0 20px
             border-top 1px solid
             width calc(100% \- 40px)
           .top, .bottom
-            height 50%
-            flex-display(center)
+            height calc(50% \- 20px)
+            flex-display(center, center)
             overflow hidden
+          .top
+            margin-bottom 20px
+          .bottom
+            margin-top 20px
     &[data-section='1']
       .inner
         border-top 1px solid
