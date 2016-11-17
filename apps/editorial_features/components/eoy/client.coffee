@@ -24,11 +24,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupSliderHeight()
 
   getScrollZones: =>
-    @scrollZones = []
-    @scrollZones.push @firstHeight
+    scrollZones = []
+    scrollZones.push @firstHeight
     for i in [1..($('.scroller__items section').length - 1)]
-      @scrollZones.push( (i * @activeHeight) + @firstHeight )
-    return @scrollZones
+      scrollZones.push( (i * @activeHeight) + @firstHeight )
+    return scrollZones
 
   closestSection: (scrollTop) =>
     scrollZones = @getScrollZones()
@@ -57,7 +57,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[10] + 75
-    # @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) + @firstHeight + 75 + 20
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@firstHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
