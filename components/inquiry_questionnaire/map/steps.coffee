@@ -1,8 +1,8 @@
 module.exports = [
   is_auction: {
     true: [
-      'test_specialist'
-      { is_logged_out: true: ['test_account'] }
+      'specialist'
+      { is_logged_out: true: ['account'] }
     ]
     false: [
       { is_logged_out_but_has_account: true: ['account'] }
@@ -18,41 +18,41 @@ module.exports = [
                 { has_seen_auction_houses_you_work_with: false: ['auction_houses_you_work_with'] }
                 { has_seen_fairs_you_attend: false: ['fairs_you_attend'] }
                 { has_seen_institutional_affiliations: false: ['institutional_affiliations'] }
-                'test_inquiry'
-                { is_logged_out: true: ['test_account'] }
+                'inquiry'
+                { is_logged_out: true: ['account'] }
               ]
               false: [
                 'how_can_we_help'
                 {
                   help_by:
                     price: [
-                      'test_specialist'
-                      { is_logged_out: true: ['test_account'] }
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
                     ]
                     purchase: [
                       { has_basic_info: false: ['basic_info'] }
-                      'test_inquiry'
-                      { is_logged_out: true: ['test_account'] }
+                      'inquiry'
+                      { is_logged_out: true: ['account'] }
                     ]
                     student_research_question: [
-                      'test_specialist'
-                      { is_logged_out: true: ['test_account'] }
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
                     ]
                     journalist_question: [
-                      'test_inquiry'
-                      { is_logged_out: true: ['test_account'] }
+                      'inquiry'
+                      { is_logged_out: true: ['account'] }
                     ]
                     other_question: [
-                      'test_specialist'
-                      { is_logged_out: true: ['test_account'] }
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
                     ]
                 }
               ]
           }
         ]
         false: [
-          'test_inquiry'
-          { is_logged_out: true: ['test_account'] }
+          'inquiry'
+          { is_logged_out: true: ['account'] }
           { has_completed_profile: false: ['confirmation'] }
           { has_seen_commercial_interest: false: ['commercial_interest'] }
           { has_basic_info: false: ['basic_info'] }
