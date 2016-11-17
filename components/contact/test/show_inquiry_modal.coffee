@@ -17,7 +17,7 @@ describe 'ShowInquiryModal', ->
       @ShowInquiryView = benv.require resolve __dirname, '../show_inquiry_modal'
       @ContactView = @ShowInquiryView.__get__ 'ContactView'
       sinon.stub @ContactView::, 'onSubmit'
-      sinon.stub @ContactView::, 'submit'
+      sinon.stub @ShowInquiryView::, 'openInquiryQuestionnaire'
       sinon.stub @ShowInquiryView::, 'initialize'
       @view = new @ShowInquiryView
       @view.show = new Backbone.Model fabricate 'show'
@@ -29,19 +29,19 @@ describe 'ShowInquiryModal', ->
 
   afterEach ->
     benv.teardown()
-    @ContactView::submit.restore()
+    @ShowInquiryView::openInquiryQuestionnaire.restore()
     @ContactView::onSubmit.restore()
     @ShowInquiryView::initialize.restore()
 
   describe '#submit', ->
 
-    it 'submits an inquiry about the show', ->
+    it 'opens the inquiry questionnaire an inquiry about the show', ->
       @view.show.set id: 'foo-gallery-show'
       @view.onSubmit { preventDefault: -> }
       @view.model.toJSON().inquireable_id.should.equal 'foo-gallery-show'
       @view.model.toJSON().inquireable_type.should.equal 'partner_show'
       @view.model.toJSON().contact_gallery.should.equal true
-      @ContactView::submit.called.should.be.ok()
+      @ShowInquiryView::openInquiryQuestionnaire.called.should.be.ok()
 
   describe '#renderLocation', ->
 

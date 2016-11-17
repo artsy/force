@@ -9,6 +9,10 @@ hasSeen = require '../../has_seen/index.coffee'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView
+
+  initialize: ({ @user, @inquiry, @artwork, @state, @trail, @modal }) ->
+    super
+
   template: (data) ->
     template _.extend data,
       fair: @artwork.related().fairs.first()
@@ -22,6 +26,19 @@ module.exports = class Inquiry extends StepView
 
   nudged: ->
     hasSeen 'inquiry-nudge'
+
+  maybeSaveInquiry: (data) ->
+    promise = Q.defer()
+
+    attributes = _.extend { contact_gallery: true }, data
+
+    if @user.isLoggedOut()
+      @inquiry.set attributes
+      promise.resolve(true)
+    else
+      @inquiry.save attributes, success: -> promise.resolve(true)
+
+    promise
 
   serialize: (e) ->
     e.preventDefault()
@@ -49,17 +66,22 @@ module.exports = class Inquiry extends StepView
         .related().userFairActions.attendFair @artwork.related().fairs.first()
 
     @__serialize__ = Q.allSettled [
-      @inquiry.save _.extend { contact_gallery: true }, data
+      @maybeSaveInquiry data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()
+      Q.promise (resolve) -> _.delay resolve, 1000
     ]
       .then =>
+        @state.set 'inquiry', @inquiry
         Q.allSettled(
           @user
             .related().collectorProfile
             .related().userFairActions.invoke 'save'
         )
       .then =>
-        @next()
+        if @modal?
+          @modal.dialog 'bounce-out', => @next()
+        else
+          @next()
       , (e) ->
         form.error null, e

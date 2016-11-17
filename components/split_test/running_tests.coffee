@@ -15,14 +15,6 @@
 # module.exports = {}
 
 module.exports =
-  forced_login_inquiry:
-    key: 'forced_login_inquiry'
-    outcomes:
-      default: 50
-      force_login: 50
-    edge: 'force_login'
-    dimension: 'dimension15'
-
   editorial_cta_banner:
     key: 'editorial_cta_banner'
     outcomes:

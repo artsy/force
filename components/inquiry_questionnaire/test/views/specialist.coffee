@@ -99,14 +99,14 @@ describe 'Specialist', setup ->
         @loggedOutUser.get('name').should.equal 'Foo Bar'
         @loggedOutUser.get('email').should.equal 'foo@bar.com'
 
-        Backbone.sync.callCount.should.equal 4
+        Backbone.sync.callCount.should.equal 3
 
         Backbone.sync.args[0][1].url
           .should.containEql '/api/v1/admins/available_representatives'
         Backbone.sync.args[1][1].url()
-          .should.containEql '/api/v1/me/artwork_inquiry_request'
-        Backbone.sync.args[2][1].url()
           .should.containEql "/api/v1/me/anonymous_session/#{@loggedOutUser.id}"
+        Backbone.sync.args[2][1].url()
+          .should.containEql "/api/v1/profile"
 
         # Next
         @view.state.current().should.equal 'after_specialist'

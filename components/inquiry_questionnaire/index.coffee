@@ -1,5 +1,4 @@
 _ = require 'underscore'
-splitTest = require '../split_test/index.coffee'
 modalize = require '../modalize/index.coffee'
 FlashMessage = require '../flash/index.coffee'
 State = require '../branching_state/index.coffee'
@@ -11,8 +10,6 @@ openErrorFlash = require './error.coffee'
 { steps, decisions, views } = require './map.coffee'
 
 module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
-  splitTest('forced_login_inquiry').view()
-
   { collectorProfile } = user.related()
   { userInterests } = collectorProfile.related()
 
