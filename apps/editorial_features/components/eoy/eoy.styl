@@ -80,6 +80,9 @@ flex-display(justify = space-between, align = center)
       width 100%
       height 100%
       overflow hidden
+      h2
+        padding 0 40px
+        width 100%
     .col
       height 100%
   section
@@ -283,7 +286,7 @@ flex-display(justify = space-between, align = center)
         margin-left 20px
     &[data-section='10']
       .left
-        width grid-3
+        width calc(grid-3 \- 1px)
         justify-content flex-start
         .col:first-child
           width grid-2
@@ -292,12 +295,14 @@ flex-display(justify = space-between, align = center)
           margin-top 20px
       .right
         flex 1
-        border-right 1px solid
-        border-left 1px solid
-        margin 20px 0
-        height calc(100% \- 40px)
+        margin-bottom 20px
+        height calc(100% \- 20px)
+        .col
+          border-right 1px solid
         .item
-          max-height 100%
+          max-height calc(100% \- 20px)
+          border-right 1px solid
+          margin-top 20px
 
 
 
@@ -356,6 +361,7 @@ flex-display(justify = space-between, align = center)
   &--section__sub-image
     img
       max-width 800px
+      width 100%
   .caption
     margin-top 15px
     garamond-size('s-body')
@@ -499,8 +505,6 @@ flex-display(justify = space-between, align = center)
         display flex
         align-items flex-end
         flex-direction column
-        // video
-        //   max-width 75%
     &__text
       border-right 1px solid
     &__sub-text
@@ -517,8 +521,6 @@ flex-display(justify = space-between, align = center)
           max-height 700px
           width auto
           height auto
-        // video
-        //   max-width 75%
       .callout
         width calc(40% \- 20px)
         border-bottom 1px solid
@@ -689,3 +691,15 @@ flex-display(justify = space-between, align = center)
 
 #recently-viewed-artworks
   display none
+
+@media screen and (max-width: 900px)
+  .item h1
+    font-size 72px
+  .item h2
+    font-size 50px
+
+@media screen and (max-width: 550px)
+  .item h1
+    font-size 50px
+  .item h2
+    font-size 25px
