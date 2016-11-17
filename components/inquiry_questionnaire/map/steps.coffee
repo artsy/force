@@ -1,6 +1,9 @@
 module.exports = [
   is_auction: {
-    true: ['specialist']
+    true: [
+      'specialist'
+      { is_logged_out: true: ['account'] }
+    ]
     false: [
       { is_logged_out_but_has_account: true: ['account'] }
       pre_qualify: {
@@ -16,26 +19,40 @@ module.exports = [
                 { has_seen_fairs_you_attend: false: ['fairs_you_attend'] }
                 { has_seen_institutional_affiliations: false: ['institutional_affiliations'] }
                 'inquiry'
+                { is_logged_out: true: ['account'] }
               ]
               false: [
                 'how_can_we_help'
                 {
                   help_by:
-                    price: ['specialist']
+                    price: [
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
+                    ]
                     purchase: [
                       { has_basic_info: false: ['basic_info'] }
                       'inquiry'
+                      { is_logged_out: true: ['account'] }
                     ]
-                    student_research_question: ['specialist']
-                    journalist_question: ['inquiry']
-                    other_question: ['specialist']
+                    student_research_question: [
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
+                    ]
+                    journalist_question: [
+                      'inquiry'
+                      { is_logged_out: true: ['account'] }
+                    ]
+                    other_question: [
+                      'specialist'
+                      { is_logged_out: true: ['account'] }
+                    ]
                 }
               ]
           }
         ]
         false: [
           'inquiry'
-          { is_logged_out_but_has_account: true: ['account'] }
+          { is_logged_out: true: ['account'] }
           { has_completed_profile: false: ['confirmation'] }
           { has_seen_commercial_interest: false: ['commercial_interest'] }
           { has_basic_info: false: ['basic_info'] }

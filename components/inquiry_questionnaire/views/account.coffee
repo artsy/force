@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 templates =
-  signup: -> require('../templates/account/signup.jade') arguments...
+  register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 
@@ -18,7 +18,8 @@ module.exports = class Account extends StepView
     'click .js-mode': 'change'
     'click .js-iq-save-skip': 'next'
 
-  initialize: ({ @user, @inquiry, @artwork, @state }) ->
+  initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
+    @modal?.dialog 'bounce-in'
     @active = new Backbone.Model mode: 'auth'
 
     @listenTo @active, 'change:mode', @render
@@ -31,7 +32,7 @@ module.exports = class Account extends StepView
 
   mode: ->
     if (mode = @active.get('mode')) is 'auth'
-      if @user.related().account.id then 'login' else 'signup'
+      if @user.related().account.id then 'login' else 'register'
     else
       mode
 
@@ -46,10 +47,16 @@ module.exports = class Account extends StepView
     @user.set form.data()
     @user[@mode()] # `login` or `signup`
       error: form.error.bind form
+      trigger_login: false
       success: (model, { user }) =>
         @user.repossess user.id,
           error: form.error.bind form
-          success: => @next()
+          success: =>
+            @state.get('inquiry').save {},
+              success: =>
+                @next()
+              error: =>
+                @next()
 
   forgot: (active, mode) ->
     return unless mode is 'forgot'

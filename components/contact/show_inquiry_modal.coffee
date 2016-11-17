@@ -65,10 +65,7 @@ module.exports = class ShowInquiryModal extends ContactView
       contact_gallery: true
       session_id: SESSION_ID
 
-    if sd.FORCED_LOGIN_INQUIRY is 'force_login' and !@user
-      @openInquiryQuestionnaire()
-    else
-      @submit()
+    @openInquiryQuestionnaire()
 
   openInquiryQuestionnaire: ->
     user = User.instantiate _.pick @model.attributes, 'name', 'email'
@@ -81,7 +78,7 @@ module.exports = class ShowInquiryModal extends ContactView
         @modal = openInquiryQuestionnaireFor
           inquiry: @model
           user: user
-          bypass: ['test_account', 'done']
+          bypass: ['account', 'done']
           artwork: fakeArtwork
           state_attrs: inquiry: @model
 
