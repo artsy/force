@@ -4,7 +4,7 @@ sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
-PartnerShow = require './partner_show'
+PartnerShow = require './partner_show.coffee'
 
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -16,6 +16,9 @@ module.exports = class SearchResult extends Backbone.Model
       display_model: @displayModel()
       location: @location()
       status: @status()
+
+    @set
+      about: @about()
 
     # Set value attribute for autocomplete usage
     @value = @display()
