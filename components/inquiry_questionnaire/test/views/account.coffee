@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 setup = require './setup'
 Account = benv.requireWithJadeify require.resolve('../../views/account'), [
   'templates.login'
-  'templates.signup'
+  'templates.register'
   'templates.forgot'
 ]
 
