@@ -1,0 +1,61 @@
+@require './super_article'
+@require './scroller'
+@require './body'
+
+flex-display(justify = space-between, align = center)
+  display flex
+  justify-content justify
+  align-items align
+
+.eoy-feature
+  &__background
+    position fixed
+    top 49.9%
+    left 50%
+    min-height 101vh
+    min-width 100vw
+    transform translate(-50%, -50%)
+    z-index -1
+  &__menu
+    position fixed
+    top 0
+    left 0
+    right 0
+    margin 0 40px
+    height 75px
+    border-bottom 1px solid white
+    z-index -1
+    flex-display()
+    align-items center
+    img.logo
+      height 30px
+    img.planet-art
+      height 25px
+      display inline-block
+    a
+      color white
+      text-decoration none
+      font-size 14px
+      font-weight 600
+      span
+        display inline-block
+        line-height 15px
+        margin-right 12px
+  h2
+    garamond-size('xxl-headline')
+    line-height 1.33em
+
+#recently-viewed-artworks
+  display none
+
+@media screen and (max-width: 900px)
+  .item h1
+    font-size 72px
+  .item h2
+    font-size 50px
+
+@media screen and (max-width: 550px)
+  .item h1
+    font-size 50px
+  .item h2
+    font-size 25px
