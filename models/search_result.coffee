@@ -107,8 +107,6 @@ module.exports = class SearchResult extends Backbone.Model
       artists = []
 
     show = new PartnerShow
-      partner:
-        name: @get('venue')
       name: @get('display')
       start_at: @get('start_at')
       end_at: @get('end_at')
@@ -118,6 +116,11 @@ module.exports = class SearchResult extends Backbone.Model
         address: @get('address')
       artists:
         artists
+
+    if @get('fair')
+      show.set fair: { name: @get('fair') }
+    else
+      show.set partner: { name: @get('venue') }
 
     show.toPageDescription()
 

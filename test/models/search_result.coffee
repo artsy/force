@@ -2,6 +2,7 @@ fabricate = require('antigravity').fabricate
 rewire = require 'rewire'
 SearchResult = rewire '../../models/search_result.coffee'
 Fair = require '../../models/fair.coffee'
+moment = require 'moment'
 
 describe 'SearchResult', ->
   describe '#initialize', ->
@@ -94,4 +95,45 @@ describe 'SearchResult', ->
       result = new SearchResult(show)
       result.about().should.equal 'Past show featuring works by Banksy at Foo Gallery New York, 401 Broadway Oct 4th – 9th 2015'
 
+    it 'constructs a show description for a fair booth', ->
+      show = fabricate('show',
+        model: 'partnershow'
+        display: 'Foo Exhibition'
+        start_at: new Date('10-5-2015').toISOString()
+        end_at: new Date('10-10-2015').toISOString()
+        venue: 'Foo Fair'
+        fair: 'Foo Fair'
+        city: 'New York')
+      result = new SearchResult(show)
+      result.about().should.equal 'Past fair booth at Foo Fair New York Oct 4th – 9th 2015'
 
+  describe '#status', ->
+    it 'correctly detects closed event status', ->
+      show = fabricate('show',
+        model: 'partnershow'
+        start_at: new Date('10-5-2015').toISOString()
+        end_at: new Date('10-10-2015').toISOString()
+      )
+
+      result = new SearchResult(show)
+      result.status().should.equal 'closed'
+
+    it 'correctly detects upcoming event status', ->
+      show = fabricate('show',
+        model: 'partnershow'
+        start_at: moment().add(2, 'days').format()
+        end_at: moment().add(8, 'days').format()
+      )
+
+      result = new SearchResult(show)
+      result.status().should.equal 'upcoming'
+
+    it 'correctly detects running event status', ->
+      show = fabricate('show',
+        model: 'partnershow'
+        start_at: moment().subtract(2, 'days').format()
+        end_at: moment().add(2, 'days').format()
+      )
+
+      result = new SearchResult(show)
+      result.status().should.equal 'running'
