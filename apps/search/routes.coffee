@@ -28,12 +28,12 @@ imageUrl = require './components/image_url'
     res.locals.sd.page = page
     data.start = (page - 1) * 10
 
-  results = new GoogleSearchResults()
+  results = new GlobalSearchResults()
   results.fetch
     dataType: 'jsonp'
     data: data
     cache: true
-    cacheTime: 86400 # 1 day
+    cacheTime: 3600 # 1 hour
     success: (results, response) ->
       totalPages = Math.floor(response.queries?.nextPage?[0].totalResults / 10)
       # Google docs say they only supports 99 pages

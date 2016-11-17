@@ -44,15 +44,54 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
         model.highlightedDisplay('skull').should.equal '<span class="is-highlighted">Skull</span> by Andy Warhol'
 
-    describe '#updateForFair', ->
-      it 'cleans up data returned from fair search API', ->
-        fair = new Fair(fabricate 'fair')
-        modelA = new SearchResult(fabricate('show', model: 'partnershow'))
-        modelB = new SearchResult(fabricate('artist', model: 'artist'))
+  describe '#updateForFair', ->
+    it 'cleans up data returned from fair search API', ->
+      fair = new Fair(fabricate 'fair')
+      modelA = new SearchResult(fabricate('show', model: 'partnershow'))
+      modelB = new SearchResult(fabricate('artist', model: 'artist'))
 
-        modelA.updateForFair(fair)
-        modelB.updateForFair(fair)
+      modelA.updateForFair(fair)
+      modelB.updateForFair(fair)
 
-        modelA.get('display_model').should.equal 'Booth'
-        modelA.href().should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
-        modelB.href().should.containEql "/the-armory-show/browse/artist/pablo"
+      modelA.get('display_model').should.equal 'Booth'
+      modelA.href().should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
+      modelB.href().should.containEql "/the-armory-show/browse/artist/pablo"
+
+  describe '#formatArticleAbout', ->
+    it 'constructs about based on publish time and excerpt', ->
+      article = fabricate('article',
+        model: 'article',
+        display: 'Foo Article',
+        description: 'Lorem Ipsum.',
+        published_at: new Date("2-2-2014").toISOString())
+
+      result = new SearchResult(article)
+      result.displayModel().should.equal 'Article'
+      result.about().should.equal("Feb 2nd, 2014 ... Lorem Ipsum.")
+
+  describe '#formatEventAbout', ->
+    it 'constructs a human readable event description', ->
+      fair = fabricate('fair',
+        model: 'fair',
+        display: 'Foo Fair',
+        start_at: new Date('10-5-2015').toISOString(),
+        end_at: new Date('10-10-2015').toISOString(),
+        city: 'New York')
+      result = new SearchResult(fair)
+      result.about().should.equal 'Art fair running from Oct 5th to Oct 10th, 2015 in New York'
+
+  describe '#formatShowAbout', ->
+    it 'constructs a show description for a partner show with artists', ->
+      show = fabricate('show',
+        model: 'partnershow'
+        display: 'Foo Exhibition'
+        start_at: new Date('10-5-2015').toISOString()
+        end_at: new Date('10-10-2015').toISOString()
+        artist_names: ['Banksy']
+        address: '401 Broadway'
+        venue: 'Foo Gallery'
+        city: 'New York')
+      result = new SearchResult(show)
+      result.about().should.equal 'Past show featuring works by Banksy at Foo Gallery New York, 401 Broadway Oct 4th – 9th 2015'
+
+
