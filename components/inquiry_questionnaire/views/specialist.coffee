@@ -25,7 +25,6 @@ module.exports = class Specialist extends StepView
       .then => Q (@representative = @representatives.first())?.fetch()
       .finally => @done()
 
-
   serialize: (e) ->
     e.preventDefault()
 
@@ -35,10 +34,11 @@ module.exports = class Specialist extends StepView
     form.state 'loading'
 
     @__serialize__ = Q.all [
-      @inquiry.save _.extend { contact_gallery: false }, form.data()
+      @inquiry.set _.extend { contact_gallery: false }, form.data()
       @user.save @inquiry.pick('name', 'email')
     ]
       .then =>
+        @state.set 'inquiry', @inquiry
         @next()
       , (e) ->
         form.error null, e
