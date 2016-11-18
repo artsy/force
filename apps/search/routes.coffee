@@ -34,10 +34,9 @@ imageUrl = require './components/image_url'
     data: data
     cache: false
     cacheTime: 60 # 1 minute
-    success: (results, response) ->
-      totalPages = Math.floor(900 / 10)
+    success: (results, response, options) ->
+      totalPages = Math.floor(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
       totalPages = 99 if totalPages > 99
-
       models = results.moveMatchResultsToTop term
       res.locals.sd.RESULTS = results.toJSON()
       res.render 'template',
