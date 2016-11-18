@@ -6,6 +6,11 @@ sd = require('sharify').data
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
+  el: $('body')
+
+  events:
+    'click .video-controls': 'playVideo'
+
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
     @windowHeight = $(window).scrollTop()
@@ -109,9 +114,24 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   sectionsInView: =>
     for i in [1..$('.article-body--section').length]
-      $('.article-body section[data-section="' + i + '"').waypoint () ->
+      $('.article-body section[data-section="' + i + '"]').waypoint () ->
         $(this).find('.article-body--section').toggleClass('active')
       , {offset: '30%'}
+      # draw line down side of first article
+      $('.article-body section[data-section="1"] article').waypoint (direction) ->
+        if direction is 'down'
+          $(this).find('.spacer--article').addClass('active')
+      , {offset: '50%'}
+
+  playVideo: (e) =>
+    $(e.target).toggleClass('active')
+    video = $(e.target).prev()
+    if video[0].paused
+      video[0].play()
+    else
+      video[0].pause()
+    video[0].onended = () ->
+      $(e.target).removeClass('active')
 
 module.exports.init = ->
   new EoyView

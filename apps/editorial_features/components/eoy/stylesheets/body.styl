@@ -77,8 +77,10 @@ flex-display(justify = space-between, align = center)
     img
       height auto
       width 75%
-      max-width 850px
-      max-height 600px
+      max-width 100%
+  &--section__sub-text
+    .image
+      position relative
   &--section__sub-image
     img
       max-width 800px
@@ -89,14 +91,32 @@ flex-display(justify = space-between, align = center)
     color gray-color
   .callout
     garamond-size('headline')
-  video
-    max-width 100%
   &--section__text
     padding 70px 20px
     p
       garamond-size('s-headline')
       padding-bottom 40px
       max-width 750px
+
+  video
+    max-width 100%
+  .video-controls
+    position absolute
+    top 70px
+    left 20px
+    bottom 92px
+    background rgba(0,0,0,.1)
+    right 10%
+    margin-right 35px
+    &.active
+      opacity 0
+    .video-play-button
+      position absolute
+      border-top 20px solid transparent
+      border-bottom 20px solid transparent
+      border-left 30px solid white
+      left calc(50% \- 15px)
+      top calc(50% \- 15px)
 
 [data-section='1']
   .article-body--section
@@ -105,19 +125,46 @@ flex-display(justify = space-between, align = center)
       justify-content flex-end
     &__cover-image
       justify-content flex-end
+      position relative
+      .spacer
+        position absolute
+        border-right 1px solid
+        top 20px
+        left 0
+        bottom 0
+        height 0
+        transition all 4s
       .image
-        border-left 1px solid
-        padding 70px 20px
         display flex
         flex-direction column
         align-items flex-end
         margin 20px 0
+        transition all 1.5s
+        img
+          width 900px
+          max-width 900px
+          transition all 1.5s
+      .caption
+        margin-top -1.5em
+        opacity 0
+        transition all 3s
+    &.active
+      header .spacer
+        height calc(100% \- 40px)
+      .image
+        padding 70px 20px
+        img
+          width 850px
+      .caption
+        margin-top 15px
+        opacity 1
     article
       display flex
-      flex-direction column-reverse
-      border-right 1px solid
+      position relative
       margin-top 20px
+      flex-direction column
     &__text
+      order 2
       border-top 1px solid
       margin-top 20px
       margin-right 20px
@@ -126,24 +173,37 @@ flex-display(justify = space-between, align = center)
         max-width 750px
         margin 0 auto
     &__sub-text
+      order 1
       flex-display(space-between, center)
       .image
         width calc( \(\(100vw \- 80px\) \/ 6\) \* 3)
         border-right 1px solid
         padding 60px 90px 60px 20px
+        video
+          width 90%
+          padding-right 20px
       .callout
         width calc( \(\(100vw \- 80px\) \/ 6\) \* 2)
         text-align center
     &__sub-image
+      order 3
       padding 70px 20px
       position relative
-      border-right 1px solid
       .spacer
         border-bottom 1px solid
         position absolute
         bottom 0
         left 0
         right 20px
+    .spacer--article
+      border-right 1px solid
+      position absolute
+      right 0
+      top 0
+      height 0
+      transition all 7s
+      &.active
+        height 100%
 
 [data-section='2']
   .article-body--section
@@ -163,7 +223,13 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
         border-bottom 1px solid
         margin-right 20px
-        padding 70px 0 70px 20px
+        transition all 2s
+        img
+          transition all 2s
+    &.active .image
+      padding 70px 20px
+      img
+        width 850px
     &__text
       border-left 1px solid
       margin 20px 0
@@ -202,10 +268,21 @@ flex-display(justify = space-between, align = center)
   .article-body--section
     margin-left auto
     margin-right 0
+    header
+      position relative
+      .spacer--article
+        border-right 1px solid
+        position absolute
+        left 0
+        top 0
+        height 0
+        transition all 7s
+    &.active .spacer--article
+          height 100%
     &__title
       height auto
-      border-left 1px solid
-      margin-top calc(70vh \- 270px)
+      // border-left 1px solid
+      margin-top calc(60vh \- 270px)
       h2
         width 100%
         margin-top 100px
@@ -217,7 +294,6 @@ flex-display(justify = space-between, align = center)
     &__cover-image
       border-top 0
       border-bottom 0
-      border-left 1px solid
       margin-bottom 0
       padding 0 20px 0 0
       .image
