@@ -91,11 +91,27 @@ module.exports.EoyView = class EoyView extends Backbone.View
           $('.scroller__items section[data-section="10"]').height(active - scrollTop)
 
   bodyInView: =>
+    @introInView()
+    @sectionsInView()
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
-        $('.eoy-feature__menu').removeClass('overlay')
+        $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
-        $('.eoy-feature__menu').addClass('overlay')
+        $('.article-body__intro-inner').addClass('active')
+
+  introInView: =>
+    $('.article-body__intro').waypoint (direction) ->
+      if direction is 'up'
+        $('.article-body__intro-header').removeClass('active')
+      if direction is 'down'
+        $('.article-body__intro-header').addClass('active')
+    , {offset: '100%'}
+
+  sectionsInView: =>
+    for i in [1..$('.article-body--section').length]
+      $('.article-body section[data-section="' + i + '"').waypoint () ->
+        $(this).find('.article-body--section').toggleClass('active')
+      , {offset: '30%'}
 
 module.exports.init = ->
   new EoyView

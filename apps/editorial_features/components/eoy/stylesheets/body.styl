@@ -21,23 +21,47 @@ flex-display(justify = space-between, align = center)
   &--section
     width calc(85vw \- 80px)
     max-width 1250px
+    opacity 0
+    transition all 1s
+    &.active
+      opacity 1
   &__intro
     &-header
       width calc(grid-2 \+ 1px)
-      height 30vh
+      height 0
       border-right 1px solid
       margin-bottom 20px
       z-index 1000
+      transition all 1.25s ease-in
+      &.active
+        height 45vh
     &-inner
-      width grid-4
       margin 0 auto
-      border-top 1px solid
-      border-bottom 1px solid
-      padding 80px 20px
+      position relative
       h3
         garamond-size('headline')
         line-height 45px
-        max-width 75%
+        margin-left 15vw
+        padding 80px 20px
+        max-width 55vw
+        opacity 0
+        transition all 1.25s
+      .spacer
+        border-top 1px solid
+        width 0
+        position absolute
+        left calc(30vw \- 5px)
+        transition all .75s
+        &:first-child
+          top 0
+        &:last-child
+          bottom 0
+      &.active
+        h3
+          opacity 1
+        .spacer
+          width 65vw
+          left 15vw
   &--section__title
     height 70vh
     flex-display(flex-end, flex-end)
@@ -87,6 +111,7 @@ flex-display(justify = space-between, align = center)
         display flex
         flex-direction column
         align-items flex-end
+        margin 20px 0
     article
       display flex
       flex-direction column-reverse
