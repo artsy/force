@@ -26,6 +26,14 @@ for section, i in curation.get('sections')
                 source(src=section.image_second)
               .video-controls
                 .video-play-button
+            else if i == 3
+              - length = 1
+              .carousel.mgr-horizontal-nav
+                .mgr-cells.js-mgr-cells
+                  .mgr-cell.js-mgr-cell
+                    img(src=section.image_second width='800')
+                nav.mgr-navigation.js-mgr-navigation
+                  include ../../../../../components/merry_go_round/templates/horizontal_navigation
             else
               img(src=section.image_second width='800')
             .caption!= markdown(section.caption_second)

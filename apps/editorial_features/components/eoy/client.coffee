@@ -2,7 +2,11 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 SuperArticleView = require '../../../../components/article/client/super_article.coffee'
 Article = require '../../../../models/article.coffee'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
+
+
+# initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
@@ -19,6 +23,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @trackDirection()
     @watchWindow()
     @bodyInView()
+    @setupCarousel()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
@@ -132,6 +137,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
       video[0].pause()
     video[0].onended = () ->
       $(e.target).removeClass('active')
+
+  setupCarousel: ->
+    initCarousel $('.carousel'), imagesLoaded: true
 
 module.exports.init = ->
   new EoyView
