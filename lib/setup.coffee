@@ -49,7 +49,7 @@ hardcodedRedirects = require './routers/hardcoded_redirects'
 require './setup_sharify.coffee'
 CurrentUser = require '../models/current_user'
 downcase = require './middleware/downcase'
-ipfilter = require 'express-ipfilter'
+ipfilter = require('express-ipfilter').IpFilter
 
 module.exports = (app) ->
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')

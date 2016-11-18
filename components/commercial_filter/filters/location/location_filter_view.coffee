@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 TypeaheadView = require '../../../../components/typeahead/view.coffee'
 { GEOCODED_CITIES } = require('sharify').data
 characterMap = require './character_map.coffee'
+Bloodhound = require 'typeahead.js/dist/bloodhound'
 template = -> require('./index.jade') arguments...
 searchItemTemplate = -> require('./search_item.jade') arguments...
 emptyTemplate = -> require('./empty.jade') arguments...
@@ -57,7 +58,7 @@ module.exports = class LocationFilterView extends Backbone.View
   onDropdownSelection: (e, selectedLocation) =>
     if selectedLocation?.display?
       selectedCity = selectedLocation.display
-      return if _.contains(@params.get('partner_cities'), selectedCity) 
+      return if _.contains(@params.get('partner_cities'), selectedCity)
       partner_cities = @params.get('partner_cities').concat selectedCity
       @additionalLocations.push selectedCity
       @params.set { partner_cities: partner_cities, aggregation_partner_cities: @additionalLocations }
