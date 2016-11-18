@@ -24,8 +24,10 @@ module.exports = class SearchResult extends Backbone.Model
     @value = @display()
 
   display: ->
-    _s.trim(@get('display')) + " - View & Collect Works" if @get('display_model') is 'Artist'
-    _s.trim(@get('name') || @get('owner')?.name || @get('display'))
+    if @get('model') is 'artist'
+      _s.trim(@get('display')) + " - View & Collect Works"
+    else
+      _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
     _s.trim(_s.truncate(@get('display'), 75))
@@ -48,6 +50,8 @@ module.exports = class SearchResult extends Backbone.Model
         'show'
       else if @get('model') is 'profile' && @get('fair_id')
         'fair'
+      else if @get('model') is 'profile'
+        'gallery'
       else @get('model')
 
     _s.capitalize model
@@ -83,14 +87,6 @@ module.exports = class SearchResult extends Backbone.Model
             'running'
           else
             'upcoming'
-
-  formatTitle: (title) ->
-    _s.trim(
-      if @get('model') == 'artwork'
-        "#{title.split(' | ')[0]}, #{title.split(' | ')[1]}"
-      else
-        title?.split('|')[0]
-    )
 
   formatArticleAbout: ->
     if publishedTime = @get('published_at')

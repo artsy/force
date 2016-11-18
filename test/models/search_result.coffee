@@ -72,12 +72,13 @@ describe 'SearchResult', ->
 
   describe '#formatEventAbout', ->
     it 'constructs a human readable event description', ->
-      fair = fabricate('fair',
-        model: 'fair',
+      fair = fabricate('profile',
+        model: 'profile',
         display: 'Foo Fair',
         start_at: new Date('10-5-2015').toISOString(),
         end_at: new Date('10-10-2015').toISOString(),
-        city: 'New York')
+        city: 'New York',
+        fair_id: 'foo-fair')
       result = new SearchResult(fair)
       result.about().should.equal 'Art fair running from Oct 5th to Oct 10th, 2015 in New York'
 
@@ -102,7 +103,7 @@ describe 'SearchResult', ->
         start_at: new Date('10-5-2015').toISOString()
         end_at: new Date('10-10-2015').toISOString()
         venue: 'Foo Fair'
-        fair: 'Foo Fair'
+        fair_id: 'foo-fair'
         city: 'New York')
       result = new SearchResult(show)
       result.about().should.equal 'Past fair booth at Foo Fair New York Oct 4th – 9th 2015'
