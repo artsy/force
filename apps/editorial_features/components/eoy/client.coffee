@@ -5,9 +5,6 @@ Article = require '../../../../models/article.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
 
-
-# initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
-
 module.exports.EoyView = class EoyView extends Backbone.View
 
   el: $('body')
