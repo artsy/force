@@ -35,7 +35,7 @@ imageUrl = require './components/image_url'
     cache: false
     cacheTime: 60 # 1 minute
     success: (results, response) ->
-      totalPages = Math.floor(response.totalResults / 10)
+      totalPages = Math.floor(900 / 10)
       totalPages = 99 if totalPages > 99
 
       models = results.moveMatchResultsToTop term

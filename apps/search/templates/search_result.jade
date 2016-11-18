@@ -1,4 +1,4 @@
-a.search-result( href=result.href(), class=result.get('display_model'), data-id=result.get('id') )
+a.search-result( href=result.href(), class=_s.decapitalize(result.get('display_model')), data-id=result.get('id') )
   if result.imageUrl() != null
     .search-result-thumbnail
       .search-result-thumbnail-fallback
@@ -7,9 +7,9 @@ a.search-result( href=result.href(), class=result.get('display_model'), data-id=
     .search-result-no-thumbnail
   .search-result-info
     if result.get('display_model')
-      .search-result-kind= _s.humanize(result.get('display_model'))
+      .search-result-kind= _s.decapitalize(_s.humanize(result.get('display_model')))
     .search-result-title= result.get('display')
     if result.get('about')
       .search-result-about= result.get('about')
-    if result.get('display_model') == 'artist' || result.get('display_model') == 'category'
+    if result.get('display_model') == 'Artist' || result.get('display_model') == 'Category'
       .search-result-images

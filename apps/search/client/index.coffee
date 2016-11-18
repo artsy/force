@@ -17,11 +17,11 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
   initialize: (options) ->
     if options.results
       for result in options.results
-        if result.display_model is 'artist'
+        if result.display_model is 'Artist'
           @initializeArtistRow result
-        else if result.display_model is 'category'
+        else if result.display_model is 'Category'
           @initializeGeneRow result
-        else if result.display_model is 'artwork'
+        else if result.display_model is 'Artwork'
           @refreshRenderArtworks result
 
   initializeArtistRow: (result) ->
@@ -32,6 +32,7 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
         size: 7
         published: true
       success: (artworks) =>
+        console.log('ARTIST ROW ' + artworks.length)
         if artworks.length > 0
           @renderArtworks artworks, result.id
         else

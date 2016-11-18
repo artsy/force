@@ -24,6 +24,7 @@ module.exports = class SearchResult extends Backbone.Model
     @value = @display()
 
   display: ->
+    _s.trim(@get('display')) + " - View & Collect Works" if @get('display_model') is 'Artist'
     _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
@@ -45,15 +46,14 @@ module.exports = class SearchResult extends Backbone.Model
         'category'
       else if @get('model') is 'partnershow'
         'show'
+      else if @get('model') is 'profile' && @get('fair_id')
+        'fair'
       else @get('model')
 
     _s.capitalize model
 
-  highlightedDisplay: (term) ->
-    text = @get('display')
-    text.replace new RegExp("(#{term})", 'ig'), '<span class="is-highlighted">$1</span>'
-
   imageUrl: ->
+    return null if @get('display_model') is 'Artist'
     @get('image_url')
 
   updateForFair: (fair) ->
@@ -120,8 +120,8 @@ module.exports = class SearchResult extends Backbone.Model
       artists:
         artists
 
-    if @get('fair')
-      show.set fair: { name: @get('fair') }
+    if @get('fair_id')
+      show.set fair: { name: @get('venue') }
     else
       show.set partner: { name: @get('venue') }
 
