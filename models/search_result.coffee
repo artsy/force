@@ -1,8 +1,10 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
+moment = require 'moment'
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
+PartnerShow = require './partner_show.coffee'
 
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -13,21 +15,30 @@ module.exports = class SearchResult extends Backbone.Model
       image_url: @imageUrl()
       display_model: @displayModel()
       location: @location()
+      status: @status()
+
+    @set
+      about: @about()
 
     # Set value attribute for autocomplete usage
     @value = @display()
 
   display: ->
-    _s.trim(@get('name') || @get('owner')?.name || @get('display'))
+    if @get('model') is 'artist'
+      _s.trim(@get('display')) + " - View & Collect Works"
+    else
+      _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
     _s.trim(_s.truncate(@get('display'), 75))
 
   location: ->
-    if @get('model') is 'profile'
+    if @get('model') is 'profile' || @get('model') is 'fair'
       "/#{@get('id')}"
     else if @get('model') is 'partnershow'
       "/show/#{@get('id')}"
+    else if @get('model') is 'sale'
+      "/auction/#{@get('id')}"
     else
       "/#{@get('model')}/#{@get('id')}"
 
@@ -37,15 +48,14 @@ module.exports = class SearchResult extends Backbone.Model
         'category'
       else if @get('model') is 'partnershow'
         'show'
+      else if @get('model') is 'profile'
+        'gallery'
       else @get('model')
 
     _s.capitalize model
 
-  highlightedDisplay: (term) ->
-    text = @get('display')
-    text.replace new RegExp("(#{term})", 'ig'), '<span class="is-highlighted">$1</span>'
-
   imageUrl: ->
+    return null if @get('display_model') is 'Artist'
     @get('image_url')
 
   updateForFair: (fair) ->
@@ -53,6 +63,83 @@ module.exports = class SearchResult extends Backbone.Model
       @set display_model: 'Booth'
     else
       @set location: "#{fair.href()}/browse#{@get('location')}"
+
+  about: ->
+    if @get('display_model') == 'Article'
+      @formatArticleAbout()
+    else if @get('display_model') == 'Fair'
+      @formatEventAbout('Art fair')
+    else if @get('display_model') == 'Sale'
+      @formatEventAbout('Sale')
+    else if @get('display_model') in ['Show', 'Booth']
+      @formatShowAbout()
+    else if @get('display_model') in ['Artwork', 'Feature', 'Profile']
+      @get('description')
+    else undefined
+
+  status: ->
+    if @get('model') == 'partnershow'
+      if startTime = @get('start_at')
+        if endTime = @get('end_at')
+          if moment() > moment(endTime)
+            'closed'
+          else if moment() > moment(startTime)
+            'running'
+          else
+            'upcoming'
+
+  formatArticleAbout: ->
+    if publishedTime = @get('published_at')
+      formattedPublishedTime = moment(publishedTime).format("MMM Do, YYYY")
+
+    excerpt = @get('description')
+
+    if publishedTime and excerpt
+      "#{formattedPublishedTime} ... #{excerpt}"
+    else if publishedTime
+      formattedPublishedTime
+    else
+      excerpt
+
+  formatShowAbout: ->
+    if @get('artist_names')
+      artists = { name: artist } for artist in @get('artist_names')
+    else
+      artists = []
+
+    show = new PartnerShow
+      name: @get('display')
+      start_at: @get('start_at')
+      end_at: @get('end_at')
+      status: @get('status')
+      location:
+        city: @get('city')
+        address: @get('address')
+      artists:
+        artists
+
+    if @get('fair_id')
+      show.set fair: { name: @get('venue') }
+    else
+      show.set partner: { name: @get('venue') }
+
+    show.toPageDescription()
+
+  formatEventAbout: (title) ->
+    if startTime = @get('start_at')
+      formattedStartTime = moment(startTime).format("MMM Do")
+    if endTime = @get('end_at')
+      formattedEndTime = moment(endTime).format("MMM Do, YYYY")
+
+    location = @get('city')
+
+    if formattedStartTime and formattedEndTime
+      about = "#{title} running from #{formattedStartTime} to #{formattedEndTime}"
+      about += " in #{location}" if location
+    else
+      about = @get('description')
+
+    about
 
   href: ->
     @get('location')
