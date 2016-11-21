@@ -33,7 +33,7 @@ module.exports = class SearchResult extends Backbone.Model
     _s.trim(_s.truncate(@get('display'), 75))
 
   location: ->
-    if @get('model') is 'profile'
+    if @get('model') is 'profile' or 'fair'
       "/#{@get('id')}"
     else if @get('model') is 'partnershow'
       "/show/#{@get('id')}"
@@ -48,8 +48,6 @@ module.exports = class SearchResult extends Backbone.Model
         'category'
       else if @get('model') is 'partnershow'
         'show'
-      else if @get('model') is 'profile' && @get('fair_id')
-        'fair'
       else if @get('model') is 'profile'
         'gallery'
       else @get('model')
