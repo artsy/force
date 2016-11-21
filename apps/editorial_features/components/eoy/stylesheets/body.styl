@@ -26,6 +26,7 @@ flex-display(justify = space-between, align = center)
     &.active
       opacity 1
   &__intro
+    height 100vh
     &-header
       width calc(grid-2 \+ 1px)
       height 0
@@ -123,6 +124,7 @@ flex-display(justify = space-between, align = center)
     &__title
       width 85%
       justify-content flex-end
+      height 50vh
     &__cover-image
       justify-content flex-end
       position relative
@@ -281,7 +283,6 @@ flex-display(justify = space-between, align = center)
           height 100%
     &__title
       height auto
-      // border-left 1px solid
       margin-top calc(60vh \- 270px)
       h2
         width 100%
@@ -345,6 +346,10 @@ flex-display(justify = space-between, align = center)
       display flex
       justify-content flex-end
       border-bottom 1px solid
+      flex-direction column
+      padding-left calc(15vw \+ 40px)
+      padding-right 50px
+      align-items flex-end
     &__sub-text
       border-bottom 1px solid
       .spacer
@@ -365,9 +370,17 @@ flex-display(justify = space-between, align = center)
         padding-bottom 70px
         padding-right 40px
         img
-          max-height 600px
+          width 100%
+          height auto
       .callout
         display none
+  .carousel
+    .mgr-cell.js-mgr-cell
+      width 100%
+      height 100%
+      display flex
+      align-items center
+      min-height 600px
   .carousel.mgr-horizontal-nav
     width 100%
 

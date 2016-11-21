@@ -21,6 +21,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @watchWindow()
     @bodyInView()
     @setupCarousel()
+    console.log sd.SUPER_ARTICLE
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
@@ -118,11 +119,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for i in [1..$('.article-body--section').length]
       $('.article-body section[data-section="' + i + '"]').waypoint () ->
         $(this).find('.article-body--section').toggleClass('active')
-      , {offset: '30%'}
+      , {offset: '40%'}
       # draw line down side of first article
       $('.article-body section[data-section="1"] article').waypoint (direction) ->
-        if direction is 'down'
-          $(this).find('.spacer--article').addClass('active')
+        $(this).find('.spacer--article').addClass('active')
       , {offset: '50%'}
 
   playVideo: (e) =>
