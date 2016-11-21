@@ -116,10 +116,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
     , {offset: '100%'}
 
   sectionsInView: =>
-    for i in [1..$('.article-body--section').length]
+    for i in [2..$('.article-body--section').length]
       $('.article-body section[data-section="' + i + '"]').waypoint () ->
         $(this).find('.article-body--section').toggleClass('active')
-      , {offset: '40%'}
+      , {offset: '10%'}
+      $('.article-body section[data-section="1"]').waypoint () ->
+        $(this).find('.article-body--section').toggleClass('active')
+      , {offset: '50%'}
       # draw line down side of first article
       $('.article-body section[data-section="1"] article').waypoint (direction) ->
         $(this).find('.spacer--article').addClass('active')

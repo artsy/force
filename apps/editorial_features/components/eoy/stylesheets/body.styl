@@ -64,7 +64,7 @@ flex-display(justify = space-between, align = center)
           width 65vw
           left 15vw
   &--section__title
-    height 70vh
+    height 60vh
     flex-display(flex-end, flex-end)
     h2
       margin-bottom 100px
@@ -124,7 +124,7 @@ flex-display(justify = space-between, align = center)
     &__title
       width 85%
       justify-content flex-end
-      height 50vh
+      height 35vh
     &__cover-image
       justify-content flex-end
       position relative
@@ -141,11 +141,11 @@ flex-display(justify = space-between, align = center)
         flex-direction column
         align-items flex-end
         margin 20px 0
-        transition all 1.5s
+        transition all 1s
         img
           width 900px
           max-width 900px
-          transition all 1.5s
+          transition all 1s
       .caption
         margin-top -1.5em
         opacity 0
@@ -213,16 +213,36 @@ flex-display(justify = space-between, align = center)
     &__cover-image
       border-bottom 0
       border-top 0
-      border-right 1px solid
+      // border-right 1px solid
+      position relative
       .image
         margin-right 20px
-        border-top 1px solid
-        border-bottom 1px solid
-        padding 70px 0 70px 5px
+        // border-bottom 1px solid
+        transition all 1s
         img
           max-width 100%
           max-height 100%
-          width 85%
+          width 95%
+          transition all 1s
+      .spacer
+        left 0
+        right 20px
+        border-top 1px solid
+        position absolute
+        width 0
+        transition all 3s
+        margin-right 0
+        margin-left auto
+        &:first-child
+          top 0
+        &:nth-child(2)
+          bottom 0
+        &:nth-child(3)
+          right 0
+          width 1px
+          height 0
+          border-right 1px solid
+          align-self flex-end
     &__text
       border-right 1px solid
       p
@@ -246,6 +266,16 @@ flex-display(justify = space-between, align = center)
         margin-bottom 20px
       .callout
         display none
+    &.active
+      .image
+        padding 70px 0 70px 5px
+        img
+          width 85%
+      .spacer
+        width calc(100% \- 20px)
+        &:nth-child(3)
+          width 1px
+          height 100%
 
 [data-section='3']
   .article-body--section
@@ -258,7 +288,11 @@ flex-display(justify = space-between, align = center)
         padding 100px 20px
         width 100%
     &__cover-image
-      padding 70px 20px
+      padding 20px
+      transition all 1s
+      img
+        width 85%
+        transition all 1s
     article
       border-right 1px solid
       margin-top 20px
@@ -287,6 +321,11 @@ flex-display(justify = space-between, align = center)
         border-right 1px solid
         padding-left 20px
         margin-right 20px
+    &.active
+      .article-body--section__cover-image
+        padding 70px 20px
+        img
+          width 75%
 
 [data-section='4']
   .article-body--section
@@ -298,7 +337,9 @@ flex-display(justify = space-between, align = center)
       padding 20px 0
       .image
         border-right 1px solid
-        padding 50px 20px
+        transition all 1s
+        img
+          transition all 1s
     article
       position relative
     &__text
@@ -333,6 +374,11 @@ flex-display(justify = space-between, align = center)
           height auto
       .callout
         display none
+    &.active
+      .article-body--section__cover-image .image
+        padding 50px 20px
+        img
+          width 75%
   .carousel
     .mgr-cell.js-mgr-cell
       width 100%
@@ -361,13 +407,14 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
         border-bottom 1px solid
         margin-right 20px
-        transition all 2s
+        transition all 1s
+        padding 20px
         img
-          transition all 2s
+          transition all 1s
     &.active .image
       padding 70px 20px
       img
-        width 850px
+        width 75%
     &__text
       border-left 1px solid
       margin 20px 0
@@ -435,10 +482,14 @@ flex-display(justify = space-between, align = center)
       .image
         margin-left 20px
         border-bottom 1px solid
-        padding 70px 0
         display flex
         align-items flex-end
         flex-direction column
+        transition all 1s
+        padding 20px 0
+        img
+          width 80%
+          transition all 1s
     &__text
       border-right 1px solid
     &__sub-text
@@ -463,6 +514,11 @@ flex-display(justify = space-between, align = center)
         border-right 1px solid
         margin-right 20px
         padding-right 20px
+    &.active
+      .article-body--section__cover-image .image
+        padding 70px 0
+        img
+          width 75%
 
 [data-section='7']
   .article-body--section
@@ -487,7 +543,11 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
         border-bottom 1px solid
         width calc(100% \- 20px)
-        padding 50px 20px
+        padding 20px
+        transition all 1s
+        img
+          transition all 1s
+          width 80%
     &__text
       border-right 1px solid
       margin-bottom 20px
@@ -504,6 +564,11 @@ flex-display(justify = space-between, align = center)
           width 75%
       .callout
         display none
+    &.active
+      .article-body--section__cover-image .image
+        padding 50px 20px
+        img
+          width 75%
 
 [data-section='8']
   .article-body--section
