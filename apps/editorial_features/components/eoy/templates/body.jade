@@ -2,7 +2,7 @@ for section, i in curation.get('sections')
   section(data-section='#{i + 1}')
     .article-body--section
       header
-        if i != 5
+        if i != 2
           .spacer--article
         .article-body--section__title
           h2=section.headline
@@ -41,7 +41,7 @@ for section, i in curation.get('sections')
             .caption!= markdown(section.caption_second)
           .spacer
           .callout
-            if i != 5
+            if i != 2
               p=section.callout
             else
               img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg')

@@ -210,6 +210,142 @@ flex-display(justify = space-between, align = center)
 [data-section='2']
   .article-body--section
     margin 0 auto
+    &__cover-image
+      border-bottom 0
+      border-top 0
+      border-right 1px solid
+      .image
+        margin-right 20px
+        border-top 1px solid
+        border-bottom 1px solid
+        padding 70px 0 70px 5px
+        img
+          max-width 100%
+          max-height 100%
+          width 85%
+    &__text
+      border-right 1px solid
+      p
+        margin 0 auto
+    &__sub-text
+      border-top 1px solid
+      border-bottom 1px solid
+      margin-top 20px
+      padding-top 20px
+      display flex
+      flex-direction row-reverse
+      justify-content space-between
+      .image
+        padding 30px 20px 40px 0
+        width 60%
+        img
+          max-width 100%
+      .spacer
+        border-right 1px solid
+        width 20%
+        margin-bottom 20px
+      .callout
+        display none
+
+[data-section='3']
+  .article-body--section
+    margin-left auto
+    margin-right 0
+    &__title
+      h2
+        border-right 1px solid
+        margin-bottom 20px
+        padding 100px 20px
+        width 100%
+    &__cover-image
+      padding 70px 20px
+    article
+      border-right 1px solid
+      margin-top 20px
+      display flex
+      flex-direction column-reverse
+    &__text
+      border-bottom 1px solid
+      margin-bottom -20px
+      p
+        margin 0 auto
+    &__sub-text
+      display flex
+      border-bottom 1px solid
+      margin-right 20px
+      padding-left 20px
+      padding-bottom 20px
+      .image, .callout
+        width calc(grid-3 \- 20px)
+        padding 70px 20px
+        align-self center
+        img
+          width 100%
+        .caption
+          display none
+      .spacer
+        border-right 1px solid
+        padding-left 20px
+        margin-right 20px
+
+[data-section='4']
+  .article-body--section
+    margin 0 auto
+    &__title
+      h2
+        margin-right 20px
+    &__cover-image
+      padding 20px 0
+      .image
+        border-right 1px solid
+        padding 50px 20px
+    article
+      position relative
+    &__text
+      display flex
+      justify-content flex-end
+      border-bottom 1px solid
+      flex-direction column
+      padding-left calc(15vw \+ 40px)
+      padding-right 50px
+      align-items flex-end
+    &__sub-text
+      border-bottom 1px solid
+      .spacer
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 15%
+        top 20px
+        bottom 20px
+        background black
+        width 21px
+      .image
+        padding-left calc(20% \+ 100px)
+        display flex
+        flex-direction column
+        align-items flex-end
+        padding-top 70px
+        padding-bottom 70px
+        padding-right 40px
+        img
+          width 100%
+          height auto
+      .callout
+        display none
+  .carousel
+    .mgr-cell.js-mgr-cell
+      width 100%
+      height 100%
+      display flex
+      align-items center
+      min-height 600px
+  .carousel.mgr-horizontal-nav
+    width 100%
+
+[data-section='5']
+  .article-body--section
+    margin-left 0
     &__title
       h2
         border-right 1px solid
@@ -266,10 +402,9 @@ flex-display(justify = space-between, align = center)
           padding-left 20px
           garamond-size('l-headline')
 
-[data-section='3']
+[data-section='6']
   .article-body--section
-    margin-left auto
-    margin-right 0
+    margin 0 auto
     header
       position relative
       .spacer--article
@@ -329,63 +464,10 @@ flex-display(justify = space-between, align = center)
         margin-right 20px
         padding-right 20px
 
-[data-section='4']
+[data-section='7']
   .article-body--section
-    margin 0 auto
-    &__title
-      h2
-        margin-right 20px
-    &__cover-image
-      padding 20px 0
-      .image
-        border-right 1px solid
-        padding 50px 20px
-    article
-      position relative
-    &__text
-      display flex
-      justify-content flex-end
-      border-bottom 1px solid
-      flex-direction column
-      padding-left calc(15vw \+ 40px)
-      padding-right 50px
-      align-items flex-end
-    &__sub-text
-      border-bottom 1px solid
-      .spacer
-        border-right 10px solid white
-        border-left 10px solid white
-        position absolute
-        left 15%
-        top 20px
-        bottom 20px
-        background black
-        width 21px
-      .image
-        padding-left calc(20% \+ 100px)
-        display flex
-        flex-direction column
-        align-items flex-end
-        padding-top 70px
-        padding-bottom 70px
-        padding-right 40px
-        img
-          width 100%
-          height auto
-      .callout
-        display none
-  .carousel
-    .mgr-cell.js-mgr-cell
-      width 100%
-      height 100%
-      display flex
-      align-items center
-      min-height 600px
-  .carousel.mgr-horizontal-nav
-    width 100%
-
-[data-section='5']
-  .article-body--section
+    margin-right 0
+    margin-left auto
     &__title
       h2
         border-right 1px solid
@@ -422,86 +504,19 @@ flex-display(justify = space-between, align = center)
           width 75%
       .callout
         display none
-[data-section='6']
-  .article-body--section
-    margin-left auto
-    margin-right 0
-    &__title
-      h2
-        border-right 1px solid
-        margin-bottom 20px
-        padding 100px 20px
-        width 100%
-    &__cover-image
-      padding 70px 20px
-    article
-      border-right 1px solid
-      margin-top 20px
-      display flex
-      flex-direction column-reverse
-    &__text
-      border-bottom 1px solid
-      margin-bottom -20px
-      p
-        margin 0 auto
-    &__sub-text
-      display flex
-      border-bottom 1px solid
-      margin-right 20px
-      padding-left 20px
-      padding-bottom 20px
-      .image, .callout
-        width calc(grid-3 \- 20px)
-        padding 70px 20px
-        align-self center
-        img
-          width 100%
-        .caption
-          display none
-      .spacer
-        border-right 1px solid
-        padding-left 20px
-        margin-right 20px
 
-[data-section='7']
+[data-section='8']
   .article-body--section
     margin 0 auto
-    &__cover-image
-      border-bottom 0
-      border-top 0
-      border-right 1px solid
-      .image
-        margin-right 20px
-        border-top 1px solid
-        border-bottom 1px solid
-        padding 70px 0 70px 5px
-        img
-          max-width 100%
-          max-height 100%
-          width 85%
-    &__text
-      border-right 1px solid
-      p
-        margin 0 auto
-    &__sub-text
-      border-top 1px solid
-      border-bottom 1px solid
-      margin-top 20px
-      padding-top 20px
-      display flex
-      flex-direction row-reverse
-      justify-content space-between
-      .image
-        padding 30px 20px 40px 0
-        width 60%
-        img
-          max-width 100%
-      .spacer
-        border-right 1px solid
-        width 20%
-        margin-bottom 20px
-      .callout
-        display none
+
+[data-section='9']
+  .article-body--section
+    margin-left 0
+    margin-right auto
+
+[data-section='10']
+  .article-body--section
+    margin 0 auto
 
 @media screen and (max-width: 550px)
   .article-body
