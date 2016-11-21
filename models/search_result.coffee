@@ -71,9 +71,11 @@ module.exports = class SearchResult extends Backbone.Model
       @formatArticleAbout()
     else if @get('display_model') == 'Fair'
       @formatEventAbout('Art fair')
+    else if @get('display_model') == 'Sale'
+      @formatEventAbout('Sale')
     else if @get('display_model') == 'Show'
       @formatShowAbout()
-    else if @get('display_model') in ['Sale', 'Artwork', 'Feature', 'Profile']
+    else if @get('display_model') in ['Artwork', 'Feature', 'Profile']
       @get('description')
     else undefined
 
@@ -96,6 +98,8 @@ module.exports = class SearchResult extends Backbone.Model
 
     if publishedTime and excerpt
       "#{formattedPublishedTime} ... #{excerpt}"
+    else if publishedTime
+      formattedPublishedTime
     else
       excerpt
 
