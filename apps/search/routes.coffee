@@ -38,7 +38,7 @@ imageUrl = require './components/image_url'
     cache: true
     cacheTime: 60 # 1 minute
     success: (results, response, options) ->
-      totalPages = Math.floor(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
+      totalPages = Math.ceil(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
       totalPages = 99 if totalPages > 99
       models = results.moveMatchResultsToTop term
       res.locals.sd.RESULTS = results.toJSON()
