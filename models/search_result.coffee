@@ -24,10 +24,7 @@ module.exports = class SearchResult extends Backbone.Model
     @value = @display()
 
   display: ->
-    if @get('model') is 'artist'
-      _s.trim(@get('display')) + " - View & Collect Works"
-    else
-      _s.trim(@get('name') || @get('owner')?.name || @get('display'))
+    _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
     _s.trim(_s.truncate(@get('display'), 75))
@@ -58,6 +55,12 @@ module.exports = class SearchResult extends Backbone.Model
     return null if @get('display_model') is 'Artist'
     @get('image_url')
 
+  resultsPageTitle: ->
+    if @get('display_model') == 'Artist'
+      @get('display') + " - View & Collect Works"
+    else
+      @get('display')
+
   updateForFair: (fair) ->
     if @get('display_model') == 'Show'
       @set display_model: 'Booth'
@@ -73,7 +76,7 @@ module.exports = class SearchResult extends Backbone.Model
       @formatEventAbout('Sale')
     else if @get('display_model') in ['Show', 'Booth']
       @formatShowAbout()
-    else if @get('display_model') in ['Artwork', 'Feature', 'Profile']
+    else if @get('display_model') in ['Artwork', 'Feature', 'Gallery']
       @get('description')
     else undefined
 

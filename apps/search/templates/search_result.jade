@@ -8,7 +8,7 @@ a.search-result( href=result.href(), class=_s.decapitalize(result.get('display_m
   .search-result-info
     if result.get('display_model')
       .search-result-kind= _s.decapitalize(_s.humanize(result.get('display_model')))
-    .search-result-title= result.get('display')
+    .search-result-title= result.resultsPageTitle()
     if result.get('about')
       .search-result-about= result.get('about')
     if result.get('display_model') == 'Artist' || result.get('display_model') == 'Category'
