@@ -21,7 +21,10 @@ imageUrl = require './components/image_url'
   return res.redirect("/") unless req.query.q
 
   term = removeDiacritics req.query.q
+  indexes = ['Artwork', 'Artist', 'Article', 'Tag', 'Gene', 'Feature', 'Profile', 'PartnerShow', 'Sale']
   data = { term: term, size: 10 }
+  data['indexes[]'] = indexes
+
   res.locals.sd.term = term
   page = Number(req.query.page)
   if page && page > 1
