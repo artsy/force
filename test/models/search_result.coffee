@@ -102,6 +102,17 @@ describe 'SearchResult', ->
       result = new SearchResult(show)
       result.about().should.equal 'Past fair booth at Foo Fair New York Oct 5th – 10th 2015'
 
+    it 'uses a profile description', ->
+      profile = fabricate('profile',
+        model: 'profile',
+        id: 'foo-gallery',
+        display: 'Foo Gallery',
+        description: 'A description of foo gallery'
+      )
+
+      result = new SearchResult(profile)
+      result.about().should.equal 'A description of foo gallery'
+
   describe '#status', ->
     it 'correctly detects closed event status', ->
       show = fabricate('show',
