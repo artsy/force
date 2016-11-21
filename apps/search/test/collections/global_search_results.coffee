@@ -19,8 +19,8 @@ describe 'GlobalSearchResults', ->
   describe '#moveMatchResultsToTop', ->
     it 'moves matching results to the top', ->
       results = new GlobalSearchResults [
-        { display: 'bar bar', model: 'artist' }
-        { display: 'foo bar', model: 'artist' }
+        { display: 'bar bar', model: 'fair' }
+        { display: 'foo bar', model: 'fair' }
       ]
       results.first().get('display').should.equal 'bar bar'
       results.moveMatchResultsToTop 'foo bar'

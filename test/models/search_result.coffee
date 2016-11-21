@@ -40,11 +40,6 @@ describe 'SearchResult', ->
         model = new SearchResult(model: 'article')
         model.get('display_model').should.equal 'Article'
 
-    describe '#highlightedDisplay', ->
-      it 'highlights the search term in the display attribute and spits back some HTML', ->
-        model = new SearchResult(fabricate('artwork', model: 'artwork'))
-        model.highlightedDisplay('skull').should.equal '<span class="is-highlighted">Skull</span> by Andy Warhol'
-
   describe '#updateForFair', ->
     it 'cleans up data returned from fair search API', ->
       fair = new Fair(fabricate 'fair')
@@ -72,13 +67,12 @@ describe 'SearchResult', ->
 
   describe '#formatEventAbout', ->
     it 'constructs a human readable event description', ->
-      fair = fabricate('profile',
-        model: 'profile',
+      fair = fabricate('fair',
+        model: 'fair',
         display: 'Foo Fair',
         start_at: new Date('10-5-2015').toISOString(),
         end_at: new Date('10-10-2015').toISOString(),
-        city: 'New York',
-        fair_id: 'foo-fair')
+        city: 'New York')
       result = new SearchResult(fair)
       result.about().should.equal 'Art fair running from Oct 5th to Oct 10th, 2015 in New York'
 
@@ -87,26 +81,26 @@ describe 'SearchResult', ->
       show = fabricate('show',
         model: 'partnershow'
         display: 'Foo Exhibition'
-        start_at: new Date('10-5-2015').toISOString()
-        end_at: new Date('10-10-2015').toISOString()
+        start_at: new Date('10-5-2015 12:00:00').toISOString()
+        end_at: new Date('10-10-2015 12:00:00').toISOString()
         artist_names: ['Banksy']
         address: '401 Broadway'
         venue: 'Foo Gallery'
         city: 'New York')
       result = new SearchResult(show)
-      result.about().should.equal 'Past show featuring works by Banksy at Foo Gallery New York, 401 Broadway Oct 4th – 9th 2015'
+      result.about().should.equal 'Past show featuring works by Banksy at Foo Gallery New York, 401 Broadway Oct 5th – 10th 2015'
 
     it 'constructs a show description for a fair booth', ->
       show = fabricate('show',
         model: 'partnershow'
         display: 'Foo Exhibition'
-        start_at: new Date('10-5-2015').toISOString()
-        end_at: new Date('10-10-2015').toISOString()
+        start_at: new Date('10-5-2015 12:00:00').toISOString()
+        end_at: new Date('10-10-2015 12:00:00').toISOString()
         venue: 'Foo Fair'
         fair_id: 'foo-fair'
         city: 'New York')
       result = new SearchResult(show)
-      result.about().should.equal 'Past fair booth at Foo Fair New York Oct 4th – 9th 2015'
+      result.about().should.equal 'Past fair booth at Foo Fair New York Oct 5th – 10th 2015'
 
   describe '#status', ->
     it 'correctly detects closed event status', ->

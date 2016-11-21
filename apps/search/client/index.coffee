@@ -32,7 +32,6 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
         size: 7
         published: true
       success: (artworks) =>
-        console.log('ARTIST ROW ' + artworks.length)
         if artworks.length > 0
           @renderArtworks artworks, result.id
         else

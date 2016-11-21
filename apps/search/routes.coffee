@@ -35,7 +35,7 @@ imageUrl = require './components/image_url'
   results.fetch
     dataType: 'jsonp'
     data: data
-    cache: false
+    cache: true
     cacheTime: 60 # 1 minute
     success: (results, response, options) ->
       totalPages = Math.floor(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
