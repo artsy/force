@@ -71,7 +71,7 @@ module.exports = class SearchResult extends Backbone.Model
       @formatEventAbout('Art fair')
     else if @get('display_model') == 'Sale'
       @formatEventAbout('Sale')
-    else if @get('display_model') == 'Show'
+    else if @get('display_model') == 'Show' || @get('display_model') == 'Booth'
       @formatShowAbout()
     else if @get('display_model') in ['Artwork', 'Feature', 'Profile']
       @get('description')

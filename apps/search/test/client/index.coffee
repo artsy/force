@@ -4,7 +4,7 @@ fixture = require '../../../../test/helpers/fixtures.coffee'
 { fabricate } = require 'antigravity'
 sinon = require 'sinon'
 path = require 'path'
-SearchResult = require '../../models/google_search_result.coffee'
+SearchResult = require '../../../../models/search_result.coffee'
 _s = require 'underscore.string'
 
 describe 'SearchResultsView', ->
