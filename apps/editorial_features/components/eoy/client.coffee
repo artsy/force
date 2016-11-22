@@ -125,8 +125,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
       , {offset: '50%'}
       # draw line down side of first article
       $('.article-body section[data-section="1"] article').waypoint (direction) ->
-        $(this).find('.spacer--article').addClass('active')
+        $(this).find('.spacer--article').toggleClass('active')
       , {offset: '50%'}
+      # draw line through center of fourth article
+      $('.article-body section[data-section="4"] article').waypoint (direction) ->
+        $(this).find('.article-body--section__sub-text .spacer').toggleClass('active')
+      , {offset: '60%'}
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
