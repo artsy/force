@@ -7,7 +7,7 @@
 {
   API_URL, APP_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE, MICROGRAVITY_URL, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST,
+  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST, MOBILE_URL,
   LOGGER_FORMAT
 } = config = require "../config"
 { parse, format } = require 'url'
@@ -158,7 +158,7 @@ module.exports = (app) ->
   # We want the user to be able to log-in to force via the microgravity subdomain
   # the initial use case being the professional buyer application
   # (this is specific to responsive pages that require log-in)
-  app.use cors origin: [APP_URL, MICROGRAVITY_URL]
+  app.use cors origin: [APP_URL, MOBILE_URL]
 
   # Mount apps
 
