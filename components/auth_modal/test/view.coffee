@@ -2,10 +2,10 @@ _ = require 'underscore'
 sd = require('sharify').data
 benv = require 'benv'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator'
-LoggedOutUser = require '../../../models/logged_out_user'
-rewire = require 'rewire'
+LoggedOutUser = rewire '../../../models/logged_out_user'
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
@@ -26,6 +26,7 @@ describe 'AuthModalView', ->
       @AuthModalView.__set__ 'Cookies',
         set: sinon.stub()
         get: sinon.stub()
+      LoggedOutUser.__set__ 'sd', AP: {}
       sinon.stub @AuthModalView::, 'initialize'
       done()
 

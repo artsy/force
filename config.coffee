@@ -117,7 +117,7 @@ module.exports =
   MARKETING_SIGNUP_MODAL_HEADER: 'Sign up'
   MARKETING_SIGNUP_MODAL_COPY: 'For early access'
   MARKETING_SIGNUP_MODAL_IMG: 'http://placekitten.com/700/1000'
-  MARKETING_SIGNUP_MODAL_PATHS: '/miami-beach,/feature/miami*'
+  MARKETING_SIGNUP_MODAL_SLUG: 'miami'
   EOY_2016_ARTICLE: null
 
 # Override any values with env variables if they exist.
