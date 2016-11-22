@@ -20,6 +20,7 @@ path = require 'path'
 cors = require 'cors'
 artsyPassport = require 'artsy-passport'
 artsyEigenWebAssociation = require 'artsy-eigen-web-association'
+blockIPs = require './middleware/block_ip'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
@@ -135,6 +136,7 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
+  app.use blockIPs 
   app.use downcase
   app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
