@@ -24,7 +24,7 @@ flex-display(justify = space-between, align = center)
 
   // introduction paragraph
   &__intro
-    height 100vh
+    height 70vh
     &-header
       width calc(30vw \+ 1px)
       height 0
@@ -65,25 +65,23 @@ flex-display(justify = space-between, align = center)
 // single page sections
 .article-body--section
   &__title
-    height 60vh
+    margin-top 400px
     flex-display(flex-end, flex-end)
     h2
       padding 100px 20px
       width 100%
   &__cover-image
     width 100%
-    padding 20px
+    padding 70px 20px
     position relative
-    transition all 1s
     flex-display()
     .image
       width 100%
-      transition all 1s
-    img
-      height auto
-      width 80%
-      max-width 100%
-      transition all 1s
+      img
+        height auto
+        width 77%
+        max-width 100%
+        transition all 1s
   &__sub-text
     .image
       position relative
@@ -107,12 +105,12 @@ flex-display(justify = space-between, align = center)
     max-width 100%
   .video-controls
     position absolute
-    top 70px
+    top 60px
     left 20px
-    bottom 92px
+    bottom 82px
     background rgba(0,0,0,.1)
-    right 10%
-    margin-right 35px
+    right 110px
+    // margin-right 35px
     &.active
       opacity 0
     .video-play-button
@@ -125,10 +123,11 @@ flex-display(justify = space-between, align = center)
 
 [data-section='1']
   .article-body--section
+    header
+      margin-top 200px
     &__title
       width 85%
       justify-content flex-end
-      height 35vh
     &__cover-image
       border-top 1px solid
       border-bottom 1px solid
@@ -190,7 +189,6 @@ flex-display(justify = space-between, align = center)
       header .spacer
         height calc(100% \- 40px)
       header .image
-        padding 70px 20px
         img
           width 75%
 
@@ -198,6 +196,12 @@ flex-display(justify = space-between, align = center)
   .article-body--section
     margin 0 auto
     &__cover-image
+      .image
+        padding 70px 20px
+        img
+          width 82%
+          margin-right 15%
+          margin-left auto
       .spacer
         border-top 1px solid
         position absolute
@@ -241,7 +245,6 @@ flex-display(justify = space-between, align = center)
         display none
     &.active
       .image
-        padding 70px 20px
         img
           width 85%
       .spacer
@@ -258,8 +261,19 @@ flex-display(justify = space-between, align = center)
       h2
         border-right 1px solid
     &__cover-image
-      border-top 1px solid
+      // border-top 1px solid
       border-bottom 1px solid
+      .spacer
+        &:nth-child(1)
+          top 0
+          left 0
+          right 0
+          border-top 1px solid
+          width 0
+          position absolute
+          transition all 3s
+          margin-right 20px
+          margin-left auto
     article
       border-right 1px solid
       margin-top 20px
@@ -289,10 +303,10 @@ flex-display(justify = space-between, align = center)
         padding-left 20px
         margin-right 20px
     &.active
-      .article-body--section__cover-image
-        padding 70px 20px
-        img
-          width 75%
+      header img
+        width 75%
+      .spacer:nth-child(1)
+        width calc(100% \- 20px)
 
 [data-section='4']
   .article-body--section
@@ -375,9 +389,8 @@ flex-display(justify = space-between, align = center)
         border-top 1px solid
         border-bottom 1px solid
         margin-right 20px
-        padding 20px
+        padding 70px 20px
     &.active .image
-      padding 70px 20px
       img
         width 75%
     &__text

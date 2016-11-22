@@ -23,8 +23,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @loadBody = _.once @deferredLoadBody
     @trackDirection()
     @watchWindow()
-    @bodyInView()
-    @setupCarousel()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
@@ -105,14 +103,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
 
   deferredLoadBody: =>
-    console.log @curation
     $('.article-body__content').append bodyView
       curation: @curation
       markdown: markdown
-
-  bodyInView: =>
+    @bodyInView()
     @introInView()
     @sectionsInView()
+    @setupCarousel()
+
+  bodyInView: =>
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
         $('.article-body__intro-inner').removeClass('active')
@@ -131,13 +130,20 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for i in [2..$('.article-body--section').length]
       $('.article-body section[data-section="' + i + '"]').waypoint () ->
         $(this).find('.article-body--section').toggleClass('active')
-      , {offset: '10%'}
+      , {offset: '40%'}
+
     $('.article-body section[data-section="1"]').waypoint () ->
       $(this).find('.article-body--section').toggleClass('active')
-    , {offset: '50%'}
+      $(this).find('video').next().addClass('active')
+    , {offset: '40%'}
     # draw line down side of first article
     $('.article-body section[data-section="1"] article').waypoint (direction) ->
       $(this).find('.spacer--article').toggleClass('active')
+      # auto play video
+      if direction is 'down'
+        $(this).find('video')[0].play()
+        $(this).find('video')[0].onended = () ->
+          $(this).find('video').next().removeClass('active')
     , {offset: '50%'}
     # draw line through center of fourth article
     $('.article-body section[data-section="4"] article').waypoint (direction) ->
