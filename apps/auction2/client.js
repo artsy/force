@@ -1,6 +1,5 @@
 import Auction from '../../models/auction.coffee'
 import ClockView from '../../components/clock/view.coffee'
-import AddToCalendar from '../../components/add_to_calendar/index.coffee'
 import { data as sd } from 'sharify'
 import _ from 'underscore'
 

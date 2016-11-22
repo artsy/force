@@ -9,13 +9,13 @@ import CurrentUser from '../../../models/current_user.coffee'
 import { resolve } from 'path'
 
 describe('auction templates', () => {
-  let baseData;
+  let baseData
 
   before(() => {
     baseData = {
       sd: {},
-      asset: (() => {}),
-      auction: new Auction,
+      asset: () => {},
+      auction: new Auction(),
       me: {}
     }
   })

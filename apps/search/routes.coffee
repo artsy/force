@@ -1,5 +1,5 @@
 Search = require '../../collections/search'
-GoogleSearchResults = require './collections/google_search_results'
+GlobalSearchResults = require './collections/global_search_results'
 removeDiacritics = require('diacritics').remove
 { crop, fill } = require '../../components/resizer'
 request = require 'superagent'
@@ -21,25 +21,25 @@ imageUrl = require './components/image_url'
   return res.redirect("/") unless req.query.q
 
   term = removeDiacritics req.query.q
-  data = { q: term }
+  indexes = ['Artwork', 'Artist', 'Article', 'Fair', 'Tag', 'Gene', 'Feature', 'Profile', 'PartnerShow', 'Sale']
+  data = { term: term, size: 10 }
+  data['indexes[]'] = indexes
+
   res.locals.sd.term = term
   page = Number(req.query.page)
   if page && page > 1
     res.locals.sd.page = page
-    data.start = (page - 1) * 10
+    data.page = page
 
-  results = new GoogleSearchResults()
+  results = new GlobalSearchResults()
   results.fetch
     dataType: 'jsonp'
     data: data
     cache: true
-    cacheTime: 86400 # 1 day
-    success: (results, response) ->
-      totalPages = Math.floor(response.queries?.nextPage?[0].totalResults / 10)
-      # Google docs say they only supports 99 pages
-      # They seem to support a few more but it is unreliable
+    cacheTime: 60 # 1 minute
+    success: (results, response, options) ->
+      totalPages = Math.ceil(parseInt(options.res.headers['x-total-count'] or 0)  / 10)
       totalPages = 99 if totalPages > 99
-
       models = results.moveMatchResultsToTop term
       res.locals.sd.RESULTS = results.toJSON()
       res.render 'template',
