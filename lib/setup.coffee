@@ -56,7 +56,7 @@ module.exports = (app) ->
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
   
   # rate limited
-  limiter = require('express-limiter')(app, client)
+  limiter = require('express-limiter')(app, cache.client)
   limiter
     path: '*'
     method: 'all'
