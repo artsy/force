@@ -86,8 +86,6 @@ module.exports = (app) ->
   # Inject sharify data before anything
   app.use sharify
 
-  #
-
   # Development / Test only middlewares that compile assets, mount antigravity, and
   # allow a back door to log in for tests.
   if "development" is NODE_ENV
