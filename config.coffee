@@ -14,7 +14,7 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   FUSION_URL: null
   APP_URL: 'http://localhost:3004'
-  MOBILE_URL: 'http://localhost:3003'
+  MOBILE_URL: 'http://localhost:3333'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'
