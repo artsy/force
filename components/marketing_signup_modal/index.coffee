@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-url = require 'url'
+qs = require 'querystring'
 sd = require('sharify').data
 FlashMessage = require '../flash/index.coffee'
 modalize = require '../modalize/index.coffee'
@@ -21,11 +21,12 @@ class MarketingSignupModalInner extends Backbone.View
     @$('.marketing-signup-modal-error').hide()
     @$('form button').addClass 'is-loading'
     $.ajax
-      url: "#{sd.API_URL}/api/v1/user"
+      url: sd.AP.signupPagePath
       method: 'POST'
       data:
         email: @$('[name=email]').val()
         password: @$('[name=password]').val()
+        acquisition_initiative: sd.MARKETING_SIGNUP_MODAL_SLUG
       error: (e) =>
         err = e.responseJSON?.error or e.toString()
         @$('.marketing-signup-modal-error').show().text err
@@ -45,13 +46,9 @@ module.exports = class MarketingSignupModal extends Backbone.View
     @maybeOpen()
 
   maybeOpen: ->
-    host = url.parse(sd.APP_URL).host
-    ref = document.referrer
-    paths = sd.MARKETING_SIGNUP_MODAL_PATHS.split(',')
+    slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
 
+    linkedFromCampaign = slug is sd.MARKETING_SIGNUP_MODAL_SLUG
     loggedOut = not sd.CURRENT_USER?
-    fromOutsideArtsy = Boolean ref and not host.match(ref)?
-    inWhitelistedPath = location.pathname in paths
 
-    if loggedOut and inWhitelistedPath and fromOutsideArtsy
-      setTimeout (=> @modal.open()), 3000
+    setTimeout (=> @modal.open()), 3000 if loggedOut and linkedFromCampaign
