@@ -13,7 +13,7 @@ module.exports =
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   FUSION_URL: null
-  REQUEST_LIMIT: 60
+  REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'

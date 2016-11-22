@@ -62,6 +62,9 @@ module.exports = (app) ->
     lookup: ['headers.x-forwarded-for']
     total: REQUEST_LIMIT
     expire: REQUEST_EXPIRE_MS
+    onRateLimited: -> (req, res, next) 
+      console.log 'Rate limit exceeded for', req.headers['x-forwarded-for']
+      next()
 
   app.use require '../apps/blank'
 
