@@ -2,8 +2,11 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 SuperArticleView = require '../../../../components/article/client/super_article.coffee'
 Article = require '../../../../models/article.coffee'
+Curation = require '../../../../models/curation.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
+markdown = require '../../../../components/util/markdown.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
@@ -14,14 +17,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
+    @curation = new Curation sd.CURATION
     @windowHeight = $(window).scrollTop()
     @setupSliderHeight()
-    @getScrollZones()
+    @loadBody = _.once @deferredLoadBody
     @trackDirection()
     @watchWindow()
     @bodyInView()
     @setupCarousel()
-    console.log sd.SUPER_ARTICLE
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
@@ -56,6 +59,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     #else
       #upscrolling
     @doSlider(scrollTop)
+    if scrollTop >= @getScrollZones()[7]
+      @loadBody()
     @windowHeight = scrollTop
 
   setupSliderHeight: =>
@@ -98,6 +103,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
           $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed')
           $('.scroller__items section[data-section="10"]').height(active - scrollTop)
 
+
+  deferredLoadBody: =>
+    console.log @curation
+    $('.article-body__content').append bodyView
+      curation: @curation
+      markdown: markdown
+
   bodyInView: =>
     @introInView()
     @sectionsInView()
@@ -120,17 +132,17 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $('.article-body section[data-section="' + i + '"]').waypoint () ->
         $(this).find('.article-body--section').toggleClass('active')
       , {offset: '10%'}
-      $('.article-body section[data-section="1"]').waypoint () ->
-        $(this).find('.article-body--section').toggleClass('active')
-      , {offset: '50%'}
-      # draw line down side of first article
-      $('.article-body section[data-section="1"] article').waypoint (direction) ->
-        $(this).find('.spacer--article').toggleClass('active')
-      , {offset: '50%'}
-      # draw line through center of fourth article
-      $('.article-body section[data-section="4"] article').waypoint (direction) ->
-        $(this).find('.article-body--section__sub-text .spacer').toggleClass('active')
-      , {offset: '60%'}
+    $('.article-body section[data-section="1"]').waypoint () ->
+      $(this).find('.article-body--section').toggleClass('active')
+    , {offset: '50%'}
+    # draw line down side of first article
+    $('.article-body section[data-section="1"] article').waypoint (direction) ->
+      $(this).find('.spacer--article').toggleClass('active')
+    , {offset: '50%'}
+    # draw line through center of fourth article
+    $('.article-body section[data-section="4"] article').waypoint (direction) ->
+      $(this).find('.article-body--section__sub-text .spacer').toggleClass('active')
+    , {offset: '60%'}
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
