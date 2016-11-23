@@ -1,7 +1,7 @@
 require 'hulk-editor'
 require 'jquery-ui'
 require 'blueimp-file-upload'
-require 'jquery.iframe-transport.js'
+require 'jquery.iframe-transport'
 GeminiForm = require '../../../components/gemini_form/view.coffee'
 
 module.exports = class JSONPageEditor

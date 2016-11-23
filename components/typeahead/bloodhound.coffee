@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Bloodhound = require 'typeahead.js/dist/bloodhound'
 IS_TEST_ENV = require '../../lib/is_test_env.coffee'
 
 module.exports = (remote = {}, options = {}) ->
@@ -13,6 +14,4 @@ module.exports = (remote = {}, options = {}) ->
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
 
-  # Bloodhound is exposed through typehead's require within
-  # ./components/main_layout/client.coffee
   new Bloodhound settings

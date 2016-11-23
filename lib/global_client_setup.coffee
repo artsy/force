@@ -80,8 +80,8 @@ setupJquery = ->
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
   require 'jquery-on-infinite-scroll'
-  require 'waypoints/lib/jquery.waypoints.js'
-  require 'waypoints/lib/shortcuts/sticky.js'
+  require 'jquery-waypoints/waypoints.js'
+  require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)
   # For drop down menus that appear on hover you may want that menu to close
