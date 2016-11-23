@@ -15,14 +15,13 @@ describe 'MarketingSignupModal', ->
       @MarketingSignupModal.__set__ 'sd', @sd =
         APP_URL: 'http://artsy.net'
         CURRENT_USER: null
-        MARKETING_SIGNUP_MODAL_PATHS: '/foo,/bar'
-        AP: {}
+        MARKETING_SIGNUP_MODAL_SLUG: 'foo'
+        AP: { signupPagePath: 'signuppath' }
       benv.expose sd: @sd
       @MarketingSignupModal.__set__ 'modalize', @modalize = sinon.stub()
       @modalize.returns @modal = view: new Backbone.View
       @modal.open = sinon.stub()
-      @MarketingSignupModal.__set__ 'location', @location = pathname: '/foo'
-      @MarketingSignupModal.__set__ 'document', @document = referrer: 'google.com'
+      @MarketingSignupModal.__set__ 'location', @location = search: '?m-id=foo'
       @MarketingSignupModal.__set__ 'setTimeout', @setTimeout = sinon.stub()
       @setTimeout.callsArg 0
       done()
@@ -38,17 +37,12 @@ describe 'MarketingSignupModal', ->
     beforeEach ->
       @view.modal.open = sinon.stub()
 
-    it 'opens if from oustide artsy and logged out', ->
+    it 'opens if from a campaign url and logged out', ->
       @view.maybeOpen()
       @view.modal.open.called.should.be.ok()
 
-    it 'doesnt open if from inside artsy and logged out', ->
-      @document.referrer = 'artsy.net'
-      @view.maybeOpen()
-      @view.modal.open.called.should.not.be.ok()
-
-    it 'doesnt open if from a blacklisted path', ->
-      @location.pathname = '/baz'
+    it 'doesnt open if from a non marketing url', ->
+      @location.search = '?foo=bar'
       @view.maybeOpen()
       @view.modal.open.called.should.not.be.ok()
 
@@ -58,7 +52,6 @@ describe 'MarketingSignupModal', ->
       @view.inner.$('[name=email]').val 'foo@bar.com'
       @view.inner.$('[name=password]').val 'moo'
       @view.inner.submit(preventDefault: sinon.stub())
-      $.ajax.args[0][0].url.should.containEql 'api/v1/user'
+      $.ajax.args[0][0].url.should.containEql 'signuppath'
       $.ajax.args[0][0].data.email.should.equal 'foo@bar.com'
       $.ajax.args[0][0].data.password.should.equal 'moo'
-

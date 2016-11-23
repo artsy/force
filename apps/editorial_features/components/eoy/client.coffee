@@ -2,9 +2,15 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 SuperArticleView = require '../../../../components/article/client/super_article.coffee'
 Article = require '../../../../models/article.coffee'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
 
 module.exports.EoyView = class EoyView extends Backbone.View
+
+  el: $('body')
+
+  events:
+    'click .video-controls': 'playVideo'
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
@@ -14,6 +20,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @trackDirection()
     @watchWindow()
     @bodyInView()
+    @setupCarousel()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
@@ -24,11 +31,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupSliderHeight()
 
   getScrollZones: =>
-    @scrollZones = []
-    @scrollZones.push @firstHeight
+    scrollZones = []
+    scrollZones.push @firstHeight
     for i in [1..($('.scroller__items section').length - 1)]
-      @scrollZones.push( (i * @activeHeight) + @firstHeight )
-    return @scrollZones
+      scrollZones.push( (i * @activeHeight) + @firstHeight )
+    return scrollZones
 
   closestSection: (scrollTop) =>
     scrollZones = @getScrollZones()
@@ -57,7 +64,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[10] + 75
-    # @openHeight = (($('.scroller__items section').length - 1) * @activeHeight) + @firstHeight + 75 + 20
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@firstHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
@@ -92,11 +98,45 @@ module.exports.EoyView = class EoyView extends Backbone.View
           $('.scroller__items section[data-section="10"]').height(active - scrollTop)
 
   bodyInView: =>
+    @introInView()
+    @sectionsInView()
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
-        $('.eoy-feature__menu').removeClass('overlay')
+        $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
-        $('.eoy-feature__menu').addClass('overlay')
+        $('.article-body__intro-inner').addClass('active')
+
+  introInView: =>
+    $('.article-body__intro').waypoint (direction) ->
+      if direction is 'up'
+        $('.article-body__intro-header').removeClass('active')
+      if direction is 'down'
+        $('.article-body__intro-header').addClass('active')
+    , {offset: '100%'}
+
+  sectionsInView: =>
+    for i in [1..$('.article-body--section').length]
+      $('.article-body section[data-section="' + i + '"]').waypoint () ->
+        $(this).find('.article-body--section').toggleClass('active')
+      , {offset: '30%'}
+      # draw line down side of first article
+      $('.article-body section[data-section="1"] article').waypoint (direction) ->
+        if direction is 'down'
+          $(this).find('.spacer--article').addClass('active')
+      , {offset: '50%'}
+
+  playVideo: (e) =>
+    $(e.target).toggleClass('active')
+    video = $(e.target).prev()
+    if video[0].paused
+      video[0].play()
+    else
+      video[0].pause()
+    video[0].onended = () ->
+      $(e.target).removeClass('active')
+
+  setupCarousel: ->
+    initCarousel $('.carousel'), imagesLoaded: true
 
 module.exports.init = ->
   new EoyView

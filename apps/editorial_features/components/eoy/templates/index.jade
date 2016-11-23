@@ -1,0 +1,38 @@
+extends ../../../../../components/main_layout/templates/blank.jade
+
+append locals
+  - assetPackage = 'editorial_features'
+  - sections = curation.get('sections')
+
+block body
+  - var superArticle = article
+  include ../../../../../components/article/templates/super_article_sticky_header.jade
+
+  .eoy-feature
+    video(class='video' autoplay='autoplay' loop='loop' muted='').eoy-feature__background
+      source(src='https://artsy-vanity-files-production.s3.amazonaws.com/videos/year-end-six.mp4' type='video/mp4')
+    nav.eoy-feature__menu
+      a(href='/')
+        img.logo(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/artsy_logo.png')
+      a(href='#')
+        span
+          | Presented in <br />
+          | Partnership with
+        img.planet-art(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/planetart.svg')
+
+    .eoy-feature__content
+      include ./scroller.jade
+
+    .article-body
+      .article-body__intro
+        .article-body__intro-header
+          .col
+        .article-body__intro-inner
+          .spacer
+          h3 Article Intro statement: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor.
+          .spacer
+      .article-body__content
+        include ./body.jade
+
+      include ../../../../../components/article/templates/super_article_footer.jade
+    #recently-viewed-artworks

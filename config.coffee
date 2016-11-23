@@ -13,6 +13,8 @@ module.exports =
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   FUSION_URL: null
+  REQUEST_LIMIT: 120
+  REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3333'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
@@ -117,7 +119,7 @@ module.exports =
   MARKETING_SIGNUP_MODAL_HEADER: 'Sign up'
   MARKETING_SIGNUP_MODAL_COPY: 'For early access'
   MARKETING_SIGNUP_MODAL_IMG: 'http://placekitten.com/700/1000'
-  MARKETING_SIGNUP_MODAL_PATHS: '/miami-beach,/feature/miami*'
+  MARKETING_SIGNUP_MODAL_SLUG: 'miami'
   EOY_2016_ARTICLE: null
 
 # Override any values with env variables if they exist.

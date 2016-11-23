@@ -36,7 +36,7 @@ describe 'EOY route', ->
 
     routes.eoy(@req, @res, @next)
     _.defer => _.defer =>
-      @res.render.args[0][0].should.containEql 'components/eoy/index'
+      @res.render.args[0][0].should.containEql 'components/eoy/templates/index'
       @res.render.args[0][1].curation.get('name').should.equal 'EOY Curation'
       @res.render.args[0][1].article.get('title').should.equal 'Moo'
       @res.render.args[0][1].superSubArticles.length.should.equal 2

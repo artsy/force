@@ -96,8 +96,12 @@ describe 'Fair', ->
          published: false,
          highlights: [],
          image_url: 'http://artsy.net/api/v1/'
-         display_model: 'Booth',
-         location: '/show/oriol-galeria-dart-oriol-galeria-dart-at-the-armory-show-2013',
+         display_model: 'Show',
+         venue: 'Armory Show 2013',
+         fair_id: 'the-armory-2013',
+         city: 'New York',
+         start_at: new Date('5-5-2015').toISOString(),
+         end_at: new Date('10-5-2015').toISOString()
       ]
       fair = new Fair (fabricate 'fair', about: 'about the fair')
       profile = new Profile (fabricate 'fair_profile')
@@ -117,7 +121,7 @@ describe 'Fair', ->
     it 'renders without errors', ->
       @$template.html().should.containEql 'Back to Artsy.net'
       @$template.root().find('.artsy-search-results .search-result').length.should.equal 1
-      @$template.root().find('.fair-search-results .search-result').html().should.containEql 'Booth'
+      @$template.root().find('.fair-search-results .search-result').html().should.containEql 'booth'
       @$template.root().find('.fair-search-results .search-result').length.should.equal 1
 
   describe 'overview', ->

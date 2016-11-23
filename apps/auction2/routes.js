@@ -2,16 +2,17 @@ import metaphysics from '../../lib/metaphysics'
 import Auction from '../../models/auction.coffee'
 
 export const index = async (req, res) => {
-  const user = req.user
   const {me} = await metaphysics({
     query: `{
-    me {
-      id
-      bidders(sale_id: "${req.params.id}") {
-        qualified_for_bidding
+      me {
+        id
+        bidders(sale_id: "${req.params.id}") {
+          qualified_for_bidding
+        }
       }
-    }
-  }`, req: req})
+    }`,
+    req: req
+  })
 
   const {sale} = await metaphysics({
     query: `{
