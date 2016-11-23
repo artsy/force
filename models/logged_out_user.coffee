@@ -41,7 +41,7 @@ module.exports = class LoggedOutUser extends User
   login: (options = {}) ->
     new Backbone.Model()
       .save @pick('email', 'password', '_csrf'), _.extend {}, options,
-        url: "#{APP_URL}#{sd.AP?.loginPagePath}"
+        url: "#{APP_URL}#{sd.AP.loginPagePath}"
         success: _.wrap options.success, (success, model, response, options) =>
           @__isLoggedIn__ = true
           @trigger('login') unless options.trigger_login is false
@@ -52,8 +52,8 @@ module.exports = class LoggedOutUser extends User
 
   signup: (options = {}) ->
     new Backbone.Model()
-      .save @pick('name', 'email', 'password'), _.extend {}, options,
-        url: "#{API_URL}/api/v1/user"
+      .save @pick('name', 'email', 'password', '_csrf'), _.extend {}, options,
+        url: "#{APP_URL}#{sd.AP.signupPagePath}"
         success: =>
           @__isRecentlyRegistered__ = true
           @trigger 'signup'

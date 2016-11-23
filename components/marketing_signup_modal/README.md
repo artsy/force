@@ -6,12 +6,12 @@ A modal that pops up after 3 seconds when a logged out user from outside Artsy l
 
 ## Usage
 
-This uses config variables to determine where it's applied. Use `heroku config:set` to configure a campaign. Leaving `MARKETING_SIGNUP_MODAL_PATHS` empty will effectively turn it off.
+This uses config variables to determine where it's applied. Use `heroku config:set` to configure a campaign. e.g. Set `MARKETING_SIGNUP_MODAL_SLUG=miami` to allow the query param ?m-id=miami to be added to any page for a modal to appear.
 
 Examples:
 
 ````
-MARKETING_SIGNUP_MODAL_PATHS=/miami-beach,/feature/miami*
+MARKETING_SIGNUP_MODAL_SLUG=miami
 MARKETING_SIGNUP_MODAL_COPY=Sign up for early access
 MARKETING_SIGNUP_MODAL_IMG=http://placekitten.com/200/200
 ````
