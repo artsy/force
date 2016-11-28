@@ -1,11 +1,3 @@
 unless artwork.is_in_auction || artwork.is_for_sale == false
   .artwork-commercial( class='js-artwork-commercial' )
-    form.artwork-commercial__form
-      if purchaseFlow && eligibleForPurchase
-        include templates/purchase_flow_index
-      else
-        include templates/index
-    .artwork-commercial__questions
-      | Questions about buying art on Artsy?
-      | Read our&nbsp;
-      a.collector-faq( href='/#' ) Collector FAQ
+    include templates/index

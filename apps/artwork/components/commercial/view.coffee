@@ -10,7 +10,8 @@ analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
 { isEligible } = require '../../../artwork_purchase/helpers.coffee'
-template = -> require('./templates/index.jade') arguments...
+splitTest = require '../../../../components/split_test/index.coffee'
+template = -> require('./index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 
 module.exports = class ArtworkCommercialView extends Backbone.View
@@ -83,14 +84,14 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     @user = User.instantiate()
     @user.set pick data, 'name', 'email'
     @inquiry.set data
-
     if attending
       @user.related()
         .collectorProfile.related()
         .userFairActions
-        .attendFair @fair
+        .attendFair @data.artwork.fair
 
     @artwork.fetch().then =>
+      @artwork.related().fairs.add @data.artwork.fair
       @modal = openInquiryQuestionnaireFor
         user: @user
         artwork: @artwork
@@ -114,11 +115,18 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     openMultiPageModal 'collector-faqs'
 
   render: ->
+    console.log 'template: ', template extend @data,
+      helpers: extend [
+        {}
+        commercial: require './helpers.coffee'
+        partner_stub: require '../partner_stub/helpers.coffee'
+      ]...
     @$el.html template extend @data,
       helpers: extend [
         {}
         commercial: require './helpers.coffee'
         partner_stub: require '../partner_stub/helpers.coffee'
       ]...
+    console.log @$el.html()
 
     this
