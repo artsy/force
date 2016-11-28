@@ -88,9 +88,11 @@ query = """
         href
         collecting_institution
         image {
-          url(version: "large")
-          width
-          height
+          resized(width: 359, version:"normalized"){
+            width
+            height
+            url
+          }
         }
         partner {
           href
