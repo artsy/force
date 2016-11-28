@@ -1,7 +1,8 @@
 if artwork.image
-  .artwork-item-image( style= "padding-bottom: #{ViewHelpers.factor(artwork.image) * 100}%" )
+  - var image = artwork.image.resized || artwork.image.cropped || artwork.image
+  .artwork-item-image( style= "padding-bottom: #{ViewHelpers.factor(image) * 100}%" )
     img(
-      src= artwork.image.url
+      src= image.url
       nopin= ViewHelpers.noPinAttr(artwork)
       alt= ViewHelpers.toAltText(artwork)
     )
