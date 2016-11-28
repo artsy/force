@@ -2,10 +2,11 @@ for section, i in curation.get('sections')
   section(data-section='#{i + 1}')
     .article-body--section
       header
-        //- if i != 2
-        //-   .spacer--article
+        if i == 5
+          .spacer--article
         .article-body--section__title
           h2=section.headline
+          .spacer
         .article-body--section__cover-image
           .spacer
           .spacer
