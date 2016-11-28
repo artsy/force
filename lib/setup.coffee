@@ -5,10 +5,26 @@
 #
 
 {
-  API_URL, APP_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, MICROGRAVITY_URL, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST, REQUEST_LIMIT,
-  REQUEST_EXPIRE_MS, LOGGER_FORMAT
+  API_URL,
+  APP_URL,
+  NODE_ENV,
+  ARTSY_ID,
+  ARTSY_SECRET,
+  SESSION_SECRET,
+  SESSION_COOKIE_MAX_AGE,
+  MICROGRAVITY_URL,
+  DEFAULT_CACHE_TIME,
+  COOKIE_DOMAIN,
+  AUTO_GRAVITY_LOGIN,
+  SESSION_COOKIE_KEY,
+  SENTRY_DSN,
+  API_REQUEST_TIMEOUT,
+  FUSION_URL,
+  IP_BLACKLIST,
+  REQUEST_LIMIT,
+  REQUEST_EXPIRE_MS,
+  LOGGER_FORMAT,
+  OPENREDIS_URL
 } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
@@ -53,18 +69,19 @@ ipfilter = require 'express-ipfilter'
 
 module.exports = (app) ->
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
-  
+
   # rate limited
-  limiter = require('express-limiter')(app, cache.client)
-  limiter
-    path: '*'
-    method: 'all'
-    lookup: ['headers.x-forwarded-for']
-    total: REQUEST_LIMIT
-    expire: REQUEST_EXPIRE_MS
-    onRateLimited: (req, res, next) -> 
-      console.log 'Rate limit exceeded for', req.headers['x-forwarded-for']
-      next()
+  if OPENREDIS_URL
+    limiter = require('express-limiter')(app, cache.client)
+    limiter
+      path: '*'
+      method: 'all'
+      lookup: ['headers.x-forwarded-for']
+      total: REQUEST_LIMIT
+      expire: REQUEST_EXPIRE_MS
+      onRateLimited: (req, res, next) ->
+        console.log 'Rate limit exceeded for', req.headers['x-forwarded-for']
+        next()
 
   app.use require '../apps/blank'
 
