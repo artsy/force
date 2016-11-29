@@ -12,7 +12,7 @@
   ARTSY_SECRET,
   SESSION_SECRET,
   SESSION_COOKIE_MAX_AGE,
-  MICROGRAVITY_URL,
+  MOBILE_URL,
   DEFAULT_CACHE_TIME,
   COOKIE_DOMAIN,
   AUTO_GRAVITY_LOGIN,
@@ -147,7 +147,8 @@ module.exports = (app) ->
   # We want the user to be able to log-in to force via the microgravity subdomain
   # the initial use case being the professional buyer application
   # (this is specific to responsive pages that require log-in)
-  app.use cors origin: [APP_URL, MOBILE_URL]
+  console.log('[APP_URL, MOBILE_URL]', [APP_URL, MOBILE_URL])
+  app.use cors origin: [APP_URL, MOBILE_URL, /\.artsy\.net$/]
 
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
