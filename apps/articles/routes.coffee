@@ -137,3 +137,4 @@ subscribedToEditorial = (email, cb) ->
         res.send req.body
     else
       res.status(500).send(response.errormsg)
+
