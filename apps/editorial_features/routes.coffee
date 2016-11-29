@@ -20,6 +20,7 @@ Q = require 'bluebird-q'
       @article.fetchSuperSubArticles(@superSubArticles)
     ).then =>
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
+      res.locals.sd.CURATION = @curation.toJSON()
       res.render 'components/eoy/templates/index',
         curation: @curation,
         article: @article,

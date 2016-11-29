@@ -24,11 +24,9 @@ module.exports = class ArtworkColumnsView extends Backbone.View
               href
               collecting_institution
               image {
-                resized(width: 359, version:"normalized"){
-                  width
-                  height
-                  url
-                }
+                url(version: "large")
+                width
+                height
               }
               partner {
                 href

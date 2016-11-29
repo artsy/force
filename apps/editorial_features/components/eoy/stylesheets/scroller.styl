@@ -48,10 +48,17 @@ flex-display(justify = space-between, align = center)
   section
     margin 0 auto
     height 0
-    transition padding .5s
+    // transition all .1s
+    &.bottom,
+    &.bottom .col,
+    &.bottom .left,
+    &.bottom .right,
+    &.bottom .inner
+      border-bottom-color rgba(255,255,255,0) !important
 
     &[data-state='closed']
       max-height 0
+      opacity 0
 
     &[data-section='0']
       article
