@@ -1,7 +1,3 @@
-grid-1 = 15vw
-grid-2 = 30vw
-grid-3 = 50%
-grid-4 = 60vw
 flex-display(justify = space-between, align = center)
   display flex
   justify-content justify
@@ -25,16 +21,20 @@ flex-display(justify = space-between, align = center)
     transition all 1s
     &.active
       opacity 1
+
+  // introduction paragraph
   &__intro
     &-header
-      width calc(grid-2 \+ 1px)
-      height 0
-      border-right 1px solid
+      width calc(30vw \+ 1px)
+      height 45vh
       margin-bottom 20px
       z-index 1000
-      transition all 1.25s ease-in
-      &.active
-        height 45vh
+      .col
+        transition all 1.25s ease-in
+        border-right 1px solid
+        height 0
+      &.active .col
+        height 100%
     &-inner
       margin 0 auto
       position relative
@@ -62,26 +62,31 @@ flex-display(justify = space-between, align = center)
         .spacer
           width 65vw
           left 15vw
-  &--section__title
-    height 70vh
+
+// single page sections
+.article-body--section
+  padding-bottom 400px
+  &__title
     flex-display(flex-end, flex-end)
     h2
-      margin-bottom 100px
-  &--section__cover-image
-    border-top 1px solid
-    border-bottom 1px solid
+      padding 100px 20px
+      width 100%
+  &__cover-image
     width 100%
+    padding 70px 20px
+    position relative
     flex-display()
     .image
       width 100%
-    img
-      height auto
-      width 75%
-      max-width 100%
-  &--section__sub-text
+      img
+        height auto
+        width 76%
+        max-width 100%
+        transition all 1s
+  &__sub-text
     .image
       position relative
-  &--section__sub-image
+  &__sub-image
     img
       max-width 800px
       width 100%
@@ -91,23 +96,21 @@ flex-display(justify = space-between, align = center)
     color gray-color
   .callout
     garamond-size('headline')
-  &--section__text
+  &__text
     padding 70px 20px
     p
       garamond-size('s-headline')
       padding-bottom 40px
       max-width 750px
-
   video
     max-width 100%
   .video-controls
     position absolute
-    top 70px
+    top 60px
     left 20px
-    bottom 92px
+    bottom 82px
     background rgba(0,0,0,.1)
-    right 10%
-    margin-right 35px
+    right 110px
     &.active
       opacity 0
     .video-play-button
@@ -120,12 +123,15 @@ flex-display(justify = space-between, align = center)
 
 [data-section='1']
   .article-body--section
+    header
+      margin-top 200px
     &__title
       width 85%
       justify-content flex-end
     &__cover-image
+      border-top 1px solid
+      border-bottom 1px solid
       justify-content flex-end
-      position relative
       .spacer
         position absolute
         border-right 1px solid
@@ -135,29 +141,8 @@ flex-display(justify = space-between, align = center)
         height 0
         transition all 4s
       .image
-        display flex
+        flex-display(space-between, flex-end)
         flex-direction column
-        align-items flex-end
-        margin 20px 0
-        transition all 1.5s
-        img
-          width 900px
-          max-width 900px
-          transition all 1.5s
-      .caption
-        margin-top -1.5em
-        opacity 0
-        transition all 3s
-    &.active
-      header .spacer
-        height calc(100% \- 40px)
-      .image
-        padding 70px 20px
-        img
-          width 850px
-      .caption
-        margin-top 15px
-        opacity 1
     article
       display flex
       position relative
@@ -170,20 +155,16 @@ flex-display(justify = space-between, align = center)
       margin-right 20px
       border-bottom 1px solid
       p
-        max-width 750px
         margin 0 auto
     &__sub-text
       order 1
       flex-display(space-between, center)
       .image
-        width calc( \(\(100vw \- 80px\) \/ 6\) \* 3)
+        width 60%
         border-right 1px solid
-        padding 60px 90px 60px 20px
-        video
-          width 90%
-          padding-right 20px
+        padding 60px 110px 60px 20px
       .callout
-        width calc( \(\(100vw \- 80px\) \/ 6\) \* 2)
+        flex 1
         text-align center
     &__sub-image
       order 3
@@ -204,268 +185,42 @@ flex-display(justify = space-between, align = center)
       transition all 7s
       &.active
         height 100%
+    &.active
+      header .spacer
+        height calc(100% \- 40px)
+      header .image
+        img
+          width 75%
 
 [data-section='2']
   .article-body--section
     margin 0 auto
-    &__title
-      h2
-        border-right 1px solid
-        margin 0
-        padding 100px 20px 100px
-        width 100%
+    &__title h2
+      min-width 100%
     &__cover-image
-      border-right 1px solid
-      border-top 0
-      border-bottom 0
-      padding 0
       .image
-        border-top 1px solid
-        border-bottom 1px solid
-        margin-right 20px
-        transition all 2s
         img
-          transition all 2s
-    &.active .image
-      padding 70px 20px
-      img
-        width 850px
-    &__text
-      border-left 1px solid
-      margin 20px 0
-      p
+          width 83%
+          margin-right 15%
+          margin-left auto
+      .spacer
+        border-top 1px solid
+        position absolute
+        width 0
+        left 0
+        right 20px
+        transition all 3s
         margin-right 0
         margin-left auto
-    &__sub-text
-      display flex
-      border-top 1px solid
-      padding 20px 0
-      .image
-        width grid-3
-        order 3
-        margin-left 20px
-        padding 40px 20px 60px
-        border-bottom 1px solid
-        img, .caption
-          max-width 75%
-          margin-left auto
-          margin-right 0
-      .spacer
-        order 2
-        border-right 1px solid
-      .callout
-        flex-display()
-        width grid-3
-        margin-right 20px
-        order 1
-        border-bottom 1px solid
-        p
-          border-left 1px solid
-          padding-left 20px
-          garamond-size('l-headline')
-
-[data-section='3']
-  .article-body--section
-    margin-left auto
-    margin-right 0
-    header
-      position relative
-      .spacer--article
-        border-right 1px solid
-        position absolute
-        left 0
-        top 0
-        height 0
-        transition all 7s
-    &.active .spacer--article
-          height 100%
-    &__title
-      height auto
-      // border-left 1px solid
-      margin-top calc(60vh \- 270px)
-      h2
-        width 100%
-        margin-top 100px
-        margin-left 20px
-        border-bottom 1px solid
-        margin-bottom 0
-        padding-bottom 100px
-        padding-left calc(\(100vw \- 80px\) \/ 6)
-    &__cover-image
-      border-top 0
-      border-bottom 0
-      margin-bottom 0
-      padding 0 20px 0 0
-      .image
-        margin-left 20px
-        border-bottom 1px solid
-        padding 70px 0
-        display flex
-        align-items flex-end
-        flex-direction column
-    &__text
-      border-right 1px solid
-    &__sub-text
-      margin-top 20px
-      padding-top 20px
-      border-top 1px solid
-      display flex
-      .image
-        width calc(60% \- 20px)
-        border-bottom 1px solid
-        padding 70px calc(20% \- 20px) 70px 20px
-        img
-          max-width 100%
-          max-height 700px
-          width auto
-          height auto
-      .callout
-        width calc(40% \- 20px)
-        border-bottom 1px solid
-        flex-display(center, center)
-      .spacer
-        border-right 1px solid
-        margin-right 20px
-        padding-right 20px
-
-[data-section='4']
-  .article-body--section
-    margin 0 auto
-    &__title
-      h2
-        margin-right 20px
-    &__cover-image
-      padding 20px 0
-      .image
-        border-right 1px solid
-        padding 50px 20px
-    article
-      position relative
-    &__text
-      display flex
-      justify-content flex-end
-      border-bottom 1px solid
-    &__sub-text
-      border-bottom 1px solid
-      .spacer
-        border-right 10px solid white
-        border-left 10px solid white
-        position absolute
-        left 15%
-        top 20px
-        bottom 20px
-        background black
-        width 21px
-      .image
-        padding-left calc(20% \+ 100px)
-        display flex
-        flex-direction column
-        align-items flex-end
-        padding-top 70px
-        padding-bottom 70px
-        padding-right 40px
-        img
-          max-height 600px
-      .callout
-        display none
-  .carousel.mgr-horizontal-nav
-    width 100%
-
-[data-section='5']
-  .article-body--section
-    &__title
-      h2
-        border-right 1px solid
-        margin-bottom 0
-        padding-bottom 100px
-        padding-top 100px
-        padding-right 20px
-        width 100%
-        text-align center
-    &__cover-image
-      border-bottom none
-      border-top none
-      padding-bottom 0
-      margin-bottom 0
-      border-right 1px solid
-      .image
-        border-top 1px solid
-        border-bottom 1px solid
-        width calc(100% \- 20px)
-        padding 50px 20px
-    &__text
-      border-right 1px solid
-      margin-bottom 20px
-    &__sub-text
-      border-top 1px solid
-      display flex
-      border-bottom 1px solid
-      .image
-        padding 70px 20px
-        width 75%
-        border-right 1px solid
-        margin 20px 0
-        img
-          width 75%
-      .callout
-        display none
-[data-section='6']
-  .article-body--section
-    margin-left auto
-    margin-right 0
-    &__title
-      h2
-        border-right 1px solid
-        margin-bottom 20px
-        padding 100px 20px
-        width 100%
-    &__cover-image
-      padding 70px 20px
-    article
-      border-right 1px solid
-      margin-top 20px
-      display flex
-      flex-direction column-reverse
-    &__text
-      border-bottom 1px solid
-      margin-bottom -20px
-      p
-        margin 0 auto
-    &__sub-text
-      display flex
-      border-bottom 1px solid
-      margin-right 20px
-      padding-left 20px
-      padding-bottom 20px
-      .image, .callout
-        width calc(grid-3 \- 20px)
-        padding 70px 20px
-        align-self center
-        img
-          width 100%
-        .caption
-          display none
-      .spacer
-        border-right 1px solid
-        padding-left 20px
-        margin-right 20px
-
-[data-section='7']
-  .article-body--section
-    margin 0 auto
-    &__cover-image
-      border-bottom 0
-      border-top 0
-      border-right 1px solid
-      .image
-        margin-right 20px
-        border-top 1px solid
-        border-bottom 1px solid
-        padding 70px 0 70px 5px
-        img
-          max-width 100%
-          max-height 100%
-          width 85%
+        &:first-child
+          top 0
+        &:nth-child(2)
+          bottom 0
+        &:nth-child(3)
+          right 0
+          height 0
+          bottom 0
+          border-right 1px solid
     &__text
       border-right 1px solid
       p
@@ -489,6 +244,308 @@ flex-display(justify = space-between, align = center)
         margin-bottom 20px
       .callout
         display none
+    &.active
+      .image
+        img
+          width 85%
+      .spacer
+        width calc(100% \- 20px)
+        &:nth-child(3)
+          width 1px
+          height 100%
+
+[data-section='3']
+  .article-body--section
+    margin-left auto
+    margin-right 0
+    &__title
+      position relative
+      overflow hidden
+      .spacer
+        position absolute
+        top 100%
+        bottom 0
+        right 0
+        border-right 1px solid
+        transition all 3s
+    &__cover-image
+      border-bottom 1px solid
+      .spacer
+        &:nth-child(1)
+          top 0
+          left 0
+          right 0
+          border-top 1px solid
+          width 0
+          position absolute
+          transition all 3s
+          margin-right 20px
+          margin-left auto
+    article
+      border-right 1px solid
+      margin-top 20px
+      display flex
+      flex-direction column-reverse
+    &__text
+      border-bottom 1px solid
+      margin-bottom -20px
+      p
+        margin 0 auto
+    &__sub-text
+      display flex
+      border-bottom 1px solid
+      margin-right 20px
+      padding-left 20px
+      padding-bottom 20px
+      .image, .callout
+        width calc(50% \- 20px)
+        padding 70px 20px
+        align-self center
+        img
+          width 100%
+        .caption
+          display none
+      .spacer
+        border-right 1px solid
+        padding-left 20px
+        margin-right 20px
+    &.active
+      header
+        .spacer
+          top 0
+        img
+          width 75%
+      .spacer:nth-child(1)
+        width calc(100% \- 20px)
+
+[data-section='4']
+  .article-body--section
+    margin 0 auto
+    &__title
+      h2
+        margin-right 20px
+        text-align right
+    &__cover-image
+      border-top 1px solid
+      border-bottom 1px solid
+      padding 20px 0
+      .image
+        padding 50px 20px
+        border-right 1px solid
+    article
+      position relative
+    &__text
+      display flex
+      justify-content flex-end
+      border-bottom 1px solid
+      flex-direction column
+      padding-left calc(15vw \+ 40px)
+      padding-right 50px
+      align-items flex-end
+    &__sub-text
+      border-bottom 1px solid
+      .spacer
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 15%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        height 0
+        transition all 4s
+        &.active
+          height calc(100% \- 40px)
+      .image
+        padding-left calc(20% \+ 100px)
+        display flex
+        flex-direction column
+        align-items flex-end
+        padding-top 70px
+        padding-bottom 70px
+        padding-right 40px
+        img
+          width 100%
+          height auto
+      .callout
+        display none
+    &.active
+      .article-body--section__cover-image .image
+        img
+          width 75%
+  .carousel
+    .mgr-cell.js-mgr-cell
+      width 100%
+      height 100%
+      display flex
+      align-items center
+      min-height 600px
+    &.mgr-horizontal-nav
+      width 100%
+      .mgr-navigation
+        opacity 1
+
+[data-section='5']
+  .article-body--section
+    margin-left 0
+    &__title
+      h2
+        border-right 1px solid
+    &__cover-image
+      border-right 1px solid
+      padding 0
+      .image
+        border-top 1px solid
+        border-bottom 1px solid
+        margin-right 20px
+        padding 70px 20px
+    &.active .image
+      img
+        width 75%
+    &__text
+      border-left 1px solid
+      margin 20px 0
+      p
+        margin-right 0
+        margin-left auto
+    &__sub-text
+      display flex
+      border-top 1px solid
+      padding 20px 0
+      .image
+        width 50%
+        order 3
+        margin-left 20px
+        padding 40px 20px 60px
+        border-bottom 1px solid
+        img, .caption
+          max-width 75%
+          margin-left auto
+          margin-right 0
+      .spacer
+        order 2
+        border-right 1px solid
+      .callout
+        flex-display()
+        width 50%
+        margin-right 20px
+        order 1
+        border-bottom 1px solid
+        p
+          border-left 1px solid
+          padding-left 20px
+          garamond-size('l-headline')
+
+[data-section='6']
+  .article-body--section
+    margin 0 auto
+    header
+      position relative
+      overflow hidden
+      .spacer--article
+        border-right 1px solid
+        position absolute
+        left 0
+        top 0
+        height 0
+        transition all 7s
+    &.active .spacer--article
+      height 100%
+    &__title
+      h2
+        margin-left 20px
+        border-bottom 1px solid
+        padding-left calc(\(100vw \- 80px\) \/ 6)
+    &__cover-image
+      padding 0 20px 0 0
+      .image
+        margin-left 20px
+        border-bottom 1px solid
+        flex-display(space-between, flex-end)
+        flex-direction column
+        padding 70px 0
+    &__text
+      border-right 1px solid
+    &__sub-text
+      margin-top 20px
+      padding-top 20px
+      border-top 1px solid
+      display flex
+      .image
+        width calc(60% \- 20px)
+        border-bottom 1px solid
+        padding 70px 0
+        img
+          max-width 100%
+          max-height 700px
+          width auto
+          height auto
+      .callout
+        width calc(40% \- 20px)
+        border-bottom 1px solid
+        flex-display(center, center)
+      .spacer
+        border-right 1px solid
+        margin-right 20px
+        padding-right 20px
+    &.active
+      .article-body--section__cover-image .image
+        img
+          width 75%
+
+[data-section='7']
+  .article-body--section
+    margin-right 0
+    margin-left auto
+    &__title
+      h2
+        border-right 1px solid
+        padding-right 20px
+        text-align center
+    &__cover-image
+      padding-bottom 0
+      padding-left 0
+      padding-top 0
+      border-right 1px solid
+      .image
+        border-top 1px solid
+        border-bottom 1px solid
+        width calc(100% \- 20px)
+        padding 50px 20px
+    &__text
+      border-right 1px solid
+      margin-bottom 20px
+    &__sub-text
+      border-top 1px solid
+      display flex
+      border-bottom 1px solid
+      .image
+        padding 70px 20px
+        width 75%
+        border-right 1px solid
+        margin 20px 0
+        img
+          width 75%
+      .callout
+        display none
+    &.active
+      .article-body--section__cover-image .image
+        img
+          width 75%
+
+[data-section='8']
+  .article-body--section
+    margin 0 auto
+
+[data-section='9']
+  .article-body--section
+    margin-left 0
+    margin-right auto
+
+[data-section='10']
+  .article-body--section
+    margin 0 auto
 
 @media screen and (max-width: 550px)
   .article-body
