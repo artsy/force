@@ -117,3 +117,23 @@ subscribedToEditorial = (email, cb) ->
         res.send req.body
     else
       res.status(500).send(response.errormsg)
+
+@eoyForm = (req, res, next) ->
+  sailthru.apiPost 'user',
+    id: req.body.email
+    lists:
+      "#{sd.SAILTHRU_MASTER_LIST}": 1
+    name: req.body.name
+    vars:
+      source: 'eoy2016'
+      receive_editorial_email: true
+      email_frequency: 'daily'
+  , (err, response) ->
+    if response.ok
+      sailthru.apiPost 'event',
+        event: 'editorial_welcome'
+        id: req.body.email
+      , (err, response) ->
+        res.send req.body
+    else
+      res.status(500).send(response.errormsg)
