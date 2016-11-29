@@ -169,11 +169,9 @@
   })
 
   bind('user:signup', function (context) {
-    if (context) {
-      analytics.track('Created account', {
-        context: 'inquiry_questionnaire'
-      })
-    }
+    analytics.track('Created account', {
+      context: 'inquiry_questionnaire'
+    })
   })
 
   bindOnce('inquiry:sync', function (context) {
