@@ -3,9 +3,19 @@
 //
 
 // Created account
-analyticsHooks.on('auth:register', function (options) {
-  analytics.track('Created account')
-})
+$(document).on(
+  'submit',
+  '.auth-register form, .marketing-signup-modal form',
+  function() {
+    $(document).ajaxComplete(function(e, xhr) {
+      analytics.track('Created account', {
+        acquisition_initiative: location.search.replace('?m-id=', ''),
+        signup_service: 'email',
+        user_id: xhr.responseJSON.user.id
+      })
+    })
+  }
+)
 
 analyticsHooks.on('auth:login', function (options) {
   analytics.track('Successfully logged in')
