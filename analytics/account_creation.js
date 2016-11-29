@@ -37,12 +37,13 @@ $(document).on(
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
   Cookies.expire('analytics-signup')
-  if (!sd.CURRENT_USER) return
-  analytics.track('Created account', {
-    acquisition_initiative: data.acquisition_initiative,
-    signup_service: data.service,
-    user_id: sd.CURRENT_USER.id
-  })
+  if (!sd.CURRENT_USER) {
+    analytics.track('Created account', {
+      acquisition_initiative: data.acquisition_initiative,
+      signup_service: data.service,
+      user_id: sd.CURRENT_USER.id
+    })
+  }
 }
 
 analyticsHooks.on('auth:login', function (options) {
