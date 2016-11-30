@@ -16,7 +16,7 @@ module.exports =
   REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
-  MOBILE_URL: 'http://localhost:3003'
+  MOBILE_URL: 'http://localhost:3333'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'

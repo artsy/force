@@ -227,9 +227,9 @@
       "resolved": "git://github.com/artsy/artsy-eigen-web-association.git#450a847d059ae4903e2cc83bd6cec388de656567"
     },
     "artsy-error-handler": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "from": "git://github.com/artsy/artsy-error-handler.git",
-      "resolved": "git://github.com/artsy/artsy-error-handler.git#1bf038a787f69a5c9003cbbcf2cca7a48e4bedc6"
+      "resolved": "git://github.com/artsy/artsy-error-handler.git#760d413df0f5d2de30ffddc7a86c65f04861bc97"
     },
     "artsy-ezel-components": {
       "version": "0.0.5",

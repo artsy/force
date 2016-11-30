@@ -57,12 +57,15 @@ module.exports = (id, bypass) ->
 
     # End of complete flow
     .on 'done', ->
-      # Send the inquiry immediately
-      inquiry.send {},
-        success: ->
-          location.href = artwork.href()
-        error: (model, response, options) ->
-          openErrorFlash response
+      if inquiry.send?
+        # Send the inquiry immediately
+        inquiry.send {},
+          success: ->
+            location.href = artwork.href()
+          error: (model, response, options) ->
+            openErrorFlash response
+      else
+        location.href = artwork.href()
 
   questionnaire = new StateView
     className: 'inquiry-questionnaire'
