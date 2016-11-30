@@ -20,7 +20,7 @@ query = """
         name
       }
       artist_names
-      image{
+      image {
         cropped(width:58, height:58){
           url
         }
@@ -33,7 +33,6 @@ query = """
 
 @index = (req, res, next) ->
   send = query: query, variables: req.params
-
   return if metaphysics.debug req, res, send
   purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow

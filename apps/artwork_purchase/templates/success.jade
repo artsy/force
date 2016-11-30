@@ -1,1 +1,13 @@
-h1 success
+.artwork-purchase__section.artwork-purchase__success-message
+  | Your request has been sent to #{artwork.partner.name}
+.artwork-purchase__section
+  h1 What's next?
+.artwork-purchase__section.artwork-purchase__success-whats-next
+  .artwork-purchase__success-whats-next-step
+    | #{artwork.partner.name} will confirm availability
+  .artwork-purchase__success-whats-next-step
+    | #{artwork.partner.name} will issue a quote
+  .artwork-purchase__success-whats-next-step
+    | You will review the quote and complete payment
+  .artwork-purchase__success-whats-next-step
+    | #{artwork.partner.name} will ship the work to your adress
