@@ -20,7 +20,7 @@ module.exports = class PartnerArtistsGridView extends Backbone.View
         # Display represented artists or non- ones who have published artworks
         partnerArtists.filter (pa) ->
           pa.get('represented_by') or
-          pa.get('published_artworks_count') > 0
+          (pa.get('published_artworks_count') > 0 and pa.get('display_on_partner_profile') is true)
 
   group: (artists) =>
     groups = _.groupBy artists, (pa) -> pa.get 'represented_by'
