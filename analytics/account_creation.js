@@ -37,7 +37,7 @@ $(document).on(
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
   Cookies.expire('analytics-signup')
-  if (!sd.CURRENT_USER) {
+  if (sd.CURRENT_USER) {
     analytics.track('Created account', {
       acquisition_initiative: data.acquisition_initiative,
       signup_service: data.service,
