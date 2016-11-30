@@ -3,6 +3,7 @@ mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
 route = require '../lib/route_helpers.coffee'
 window._ = require 'underscore'
+window.Cookies = require 'cookies-js'
 
 mediator.on 'all', (name, data) ->
   analyticsHooks.trigger "mediator:#{name}", data
