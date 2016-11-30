@@ -192,7 +192,7 @@ module.exports = class ArticleView extends Backbone.View
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
   fillwidth: (el, cb) =>
-    if @$(el).length < 1 or @windowWidth < 400
+    if @$(el).length < 1 or @windowWidth < 550
       @$(el).parent().removeClass('is-loading')
       return cb()
     $list = @$(el)
@@ -227,6 +227,7 @@ module.exports = class ArticleView extends Backbone.View
     @windowHeight = $(window).height()
     @resetImageSetPreview()
     @embedMobileHeight()
+    @addReadMore() if @gradient
     #Reset Artworks size
     $(".article-section-artworks ul").each (i, imgs) =>
       if $(imgs).children().length > 1
@@ -347,7 +348,10 @@ module.exports = class ArticleView extends Backbone.View
       $(".article-related-widget[data-id=#{@article.get('id')}]").remove()
 
   addReadMore: =>
-    maxTextHeight = 405 # line-height * line-count
+    if @windowWidth > 550
+      maxTextHeight = 405 # line-height * line-count
+    else
+      maxTextHeight = 500
     limit = 0
     textHeight = 0
 

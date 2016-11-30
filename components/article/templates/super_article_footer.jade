@@ -10,20 +10,21 @@
         a.article-sa-cta.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
 
     .article-sa-logos
-      .article-sa-primary-logos
-        a( href="/" ).article-sa-artsy-logo.icon-logotype
+      if superArticle.get('super_article').partner_logo
+        .article-sa-logos__presented Presented in Partnership with
+      .article-sa-logos__container
         .article-sa-primary-logo
           if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
             a( href=superArticle.get('super_article').partner_logo_link )
               img( src=superArticle.get('super_article').partner_logo )
-
-      .article-sa-secondary-logo
-        .article-sa-secondary-logo-text= superArticle.get('super_article').secondary_logo_text
         if superArticle.get('super_article').secondary_partner_logo && superArticle.get('super_article').secondary_logo_link
-          a( href=superArticle.get('super_article').secondary_logo_link )
-            img( src=superArticle.get('super_article').secondary_partner_logo )
+          .article-sa-plus.icon-close
+          .article-sa-secondary-logo
+            a( href=superArticle.get('super_article').secondary_logo_link )
+              img( src=superArticle.get('super_article').secondary_partner_logo )
 
   .article-sa-footer-right
-    .article-sa-related
-      for subArticle in superSubArticles.models
-        a( href=subArticle.href() )= subArticle.get('thumbnail_title')
+    for subArticle in superSubArticles.models
+      a.article-sa-related( href=subArticle.href() )
+        img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
+        .article-sa-related__title= subArticle.get('thumbnail_title')

@@ -50,10 +50,11 @@ describe 'LoggedOutUser', ->
 
     describe '#signup', ->
       it 'registers the user model', ->
+        LoggedOutUser.__set__ 'sd', AP: signupPagePath: '/users/sign_in'
         user = new LoggedOutUser email: 'foo@bar.com', name: 'Foo Bar', password: 'foobar'
         user.signup()
         Backbone.sync.args[0][0].should.equal 'create'
-        Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
+        Backbone.sync.args[0][2].url.should.containEql '/users/sign_in'
         Backbone.sync.args[0][1].attributes
           .should.containEql name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
 

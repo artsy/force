@@ -3,6 +3,8 @@ metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
+splitTest = require '../../components/split_test/index.coffee'
+{ isEligible } = require '../artwork_purchase/helpers.coffee'
 
 query = """
   query artwork($id: String!) {
@@ -60,16 +62,19 @@ bootstrap = ->
   require('./components/video/bootstrap') arguments...
 
 @index = (req, res, next) ->
-  res.locals.sd.INCLUDE_SAILTHRU = req.query?.microsite is '1'
   send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
-
+  purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
+      eligibleForPurchase = isEligible data.artwork
+      data.purchaseFlow = purchaseFlow
+      data.eligibleForPurchase = eligibleForPurchase
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params
+      res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.render 'index', data
 
     .catch next

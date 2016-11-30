@@ -141,6 +141,7 @@ describe '#redirectLive', ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
+      start_at: moment().startOf('day')
       live_start_at: moment().startOf('day')
       end_at: moment().endOf('day')
     bidder = {
@@ -161,6 +162,7 @@ describe '#redirectLive', ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
+      start_at: moment().startOf('day')
       live_start_at: moment().startOf('day')
       end_at: moment().endOf('day')
     bidder = {

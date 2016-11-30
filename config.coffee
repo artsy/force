@@ -13,6 +13,8 @@ module.exports =
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   FUSION_URL: null
+  REQUEST_LIMIT: 120
+  REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
@@ -110,9 +112,16 @@ module.exports =
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
   LOGGER_FORMAT: 'combined'
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
+  EOY_2016: '5829db77b5989e6f98f779a5'
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   ARTSY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/artsy-partner-updates$'
+  MARKETING_SIGNUP_MODAL_HEADER: 'Sign up'
+  MARKETING_SIGNUP_MODAL_COPY: 'For early access'
+  MARKETING_SIGNUP_MODAL_IMG: 'http://placekitten.com/700/1000'
+  MARKETING_SIGNUP_MODAL_SLUG: 'miami'
+  EOY_2016_ARTICLE: null
+  EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

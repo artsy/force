@@ -1,45 +1,81 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports = class SuperArticleView extends Backbone.View
 
+  events: ->
+    'click .js-article-sa-sticky-hamburger' : 'toggleHamburgerNav'
+
   initialize: (options) ->
     { @article } = options
+
     @$window = $(window)
-    @duration = 500
-    @renderSuperArticle()
-    @setupWaypoints()
+    @$body = $('body')
+    @$content = $('.article-content')
+    @$superArticleNavToc = $('.article-sa-sticky-related-container')
+    @$stickyHeader = $('.article-sa-sticky-header')
 
-  renderSuperArticle: ->
-    @$superArticleNavToc = @$('.article-sa-sticky-center .article-sa-related-container')
+    @setupSuperArticle()
 
-    @$('.article-sa-sticky-center .article-sa-sticky-title').hover =>
-      return if @$superArticleNavToc.hasClass('visible')
-      height = @$superArticleNavToc.find('.article-sa-related').height() + @$('.article-sa-sticky-center').height() + 50
-      @$superArticleNavToc.css 'max-height', "#{height}px"
-      @$superArticleNavToc.addClass 'visible'
+  setupSuperArticle: ->
+    @setStickyNav()
+    @setWaypoints()
 
-    @$('.article-sa-sticky-header').mouseleave =>
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
+    # Throttle scroll and resize
+    throttledScroll = _.throttle((=> @onScroll()), 100)
+    throttledResize = _.throttle((=> @setStickyNav()),
+     100)
+    @$window.on 'scroll', throttledScroll
+    @$window.on 'resize', throttledResize
 
     @$('footer').hide()
 
-    throttledScroll = _.throttle((=> @onSuperArticleScroll()), 100)
-    @$window.on 'scroll', throttledScroll
+  onScroll: ->
+    @hideNav() if @$superArticleNavToc.hasClass('visible')
 
-  onSuperArticleScroll: ->
-    if @$superArticleNavToc.hasClass('visible')
-      @$superArticleNavToc.css 'max-height', '0px'
-      @$superArticleNavToc.removeClass('visible')
+  hideNav: ->
+    @$superArticleNavToc.css 'height', '0px'
+    @$superArticleNavToc.removeClass('visible')
+    @$body.removeClass 'is-open'
 
-  setupWaypoints: ->
-    $stickyHeader = @$('.article-sa-sticky-header')
-    return unless $stickyHeader.length
+  setStickyNav: =>
+    if window.matchMedia('(max-width: 900px)').matches
+      @carousel?.navigation.flickity.destroy()
+      @$stickyHeader.unbind 'mouseenter mouseleave'
+      @hideNav()
+    else
+      @$stickyHeader.hover =>
+        return if @$superArticleNavToc.hasClass('visible')
+        height = @$('.article-sa-sticky-related-container .mgr-cells').outerHeight()
+        @$superArticleNavToc.css 'height', height
+        @$superArticleNavToc.addClass 'visible'
+      , =>
+        @hideNav()
 
-    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first'
+      @$body.removeClass 'is-open'
+      initCarousel @$('.article-sa-sticky-related-container'),
+        imagesLoaded: true
+        wrapAround: true
+        advanceBy: 1
+        cellAlign: 'left'
+      , (carousel) =>
+        # Wait for the callback to set carousel
+        @carousel = carousel
+
+  setWaypoints: ->
+    return unless @$stickyHeader.length
+
+    selector = if $('body').hasClass('body-fullscreen-article') then '.article-content.article-fullscreen-content' else '.article-section-container:first, .article-body'
     @$(".article-container[data-id=#{@article.get('id')}] #{selector}").waypoint (direction) =>
       if direction == 'down'
-        $stickyHeader.addClass 'visible'
-      else unless $stickyHeader.hasClass('no-transition')
-        $stickyHeader.removeClass 'visible'
+        @$stickyHeader.addClass 'visible'
+      else unless @$stickyHeader.hasClass('no-transition')
+        @$stickyHeader.removeClass 'visible'
+
+  toggleHamburgerNav: ->
+    if @$body.hasClass 'is-open'
+      @hideNav()
+    else
+      @$superArticleNavToc.css 'height', '100vh'
+      @$body.addClass 'is-open'

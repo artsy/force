@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "6.x.x",
-    "npm": "3.8.x"
+    "npm": "4.x.x"
   },
   "scripts": {
     "start": "make s",
@@ -26,7 +26,7 @@
     "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-newrelic": "^1.1.0",
-    "artsy-passport": "^1.1.2",
+    "artsy-passport": "^1.2.1",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^1.4.2",
     "babel": "^6.5.2",
@@ -39,10 +39,12 @@
     "backbone": "^1.2.3",
     "backbone-super-sync": "^1.1.1",
     "backbone.paginator": "git://github.com/artsy/backbone.paginator.git",
+    "background-check": "git://github.com/kennethcachia/background-check",
     "bluebird": "^2.10.2",
     "bluebird-q": "^1.0.3",
     "body-parser": "^1.14.1",
     "bucket-assets": "^0.2.11",
+    "cheerio": "^0.22.0",
     "coffee-script": "^1.10.0",
     "connect-flash": "^0.1.1",
     "connect-timeout": "^1.7.0",
@@ -54,7 +56,8 @@
     "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",
     "express": "^4.13.3",
     "express-ipfilter": "0.0.25",
-    "ezel-assets": "^1.0.3",
+    "express-limiter": "^1.6.0",
+    "ezel-assets": "1.0.2",
     "forever": "^0.15.1",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "geolib": "^2.0.18",
@@ -95,7 +98,6 @@
     "browserify": "^11.2.0",
     "browserify-dev-middleware": "^0.1.2",
     "caching-coffeeify": "^0.5.1",
-    "cheerio": "^0.19.0",
     "cookies-js": "^1.2.2",
     "ezel-assets": "1.0.2",
     "fastclick": "^1.0.6",

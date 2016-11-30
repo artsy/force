@@ -5,6 +5,7 @@ sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
+{ crop } = require '../../../components/resizer/index.coffee'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...
@@ -16,11 +17,11 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
   initialize: (options) ->
     if options.results
       for result in options.results
-        if result.display_model is 'artist'
+        if result.display_model is 'Artist'
           @initializeArtistRow result
-        else if result.display_model is 'category'
+        else if result.display_model is 'Category'
           @initializeGeneRow result
-        else if result.display_model is 'artwork'
+        else if result.display_model is 'Artwork'
           @refreshRenderArtworks result
 
   initializeArtistRow: (result) ->
@@ -56,6 +57,10 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
     artwork = new Artwork(id: result.id)
     artwork.fetch
       success: ->
+        artwork.set 'image_url', artwork.imageUrl()
+        artwork.imageUrl = ->
+          url = artwork.get('image_url')
+          crop url, width: 70, height: 70
         @$(".search-result[data-id='#{result.id}'] .search-result-thumbnail-fallback").html resolvedImage(result: artwork)
 
 module.exports.init = ->

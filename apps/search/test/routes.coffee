@@ -36,7 +36,7 @@ describe 'Search routes', ->
       res = { render: sinon.stub(), locals: { sd: {} } }
       routes.index req, res
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][2].data.q.should.equal 'foobAr'
+      Backbone.sync.args[0][2].data.term.should.equal 'foobAr'
 
     it 'redirects without query', ->
       req = { params: {}, query: { } }

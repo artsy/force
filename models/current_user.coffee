@@ -110,6 +110,14 @@ module.exports = class CurrentUser extends User
         access_token: @get('accessToken')
       success: options?.success
 
+  fetchRegistrations: (options) ->
+    new Backbone.Collection().fetch _.extend {}, options,
+      url: "#{sd.API_URL}/api/v1/me/bidders"
+      data: access_token: @get('accessToken')
+      complete: options.complete
+      success: _.wrap options.success, (success, collection) ->
+        success collection
+
   checkRegisteredForAuction: (options) ->
     new Backbone.Collection().fetch _.extend {}, options,
       url: "#{sd.API_URL}/api/v1/me/bidders"

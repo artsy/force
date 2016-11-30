@@ -5,10 +5,26 @@
 #
 
 {
-  API_URL, APP_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, MICROGRAVITY_URL, DEFAULT_CACHE_TIME, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN,
-  SESSION_COOKIE_KEY, SENTRY_DSN, API_REQUEST_TIMEOUT, FUSION_URL, IP_BLACKLIST,
-  LOGGER_FORMAT
+  API_URL,
+  APP_URL,
+  NODE_ENV,
+  ARTSY_ID,
+  ARTSY_SECRET,
+  SESSION_SECRET,
+  SESSION_COOKIE_MAX_AGE,
+  MICROGRAVITY_URL,
+  DEFAULT_CACHE_TIME,
+  COOKIE_DOMAIN,
+  AUTO_GRAVITY_LOGIN,
+  SESSION_COOKIE_KEY,
+  SENTRY_DSN,
+  API_REQUEST_TIMEOUT,
+  FUSION_URL,
+  IP_BLACKLIST,
+  REQUEST_LIMIT,
+  REQUEST_EXPIRE_MS,
+  LOGGER_FORMAT,
+  OPENREDIS_URL
 } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
@@ -53,6 +69,20 @@ ipfilter = require 'express-ipfilter'
 
 module.exports = (app) ->
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
+
+  # rate limited
+  if OPENREDIS_URL
+    limiter = require('express-limiter')(app, cache.client)
+    limiter
+      path: '*'
+      method: 'all'
+      lookup: ['headers.x-forwarded-for']
+      total: REQUEST_LIMIT
+      expire: REQUEST_EXPIRE_MS
+      onRateLimited: (req, res, next) ->
+        console.log 'Rate limit exceeded for', req.headers['x-forwarded-for']
+        next()
+
   app.use require '../apps/blank'
 
   # Increase max sockets. The goal of this is to improve app -> api
@@ -84,7 +114,7 @@ module.exports = (app) ->
       dest: path.resolve(__dirname, "../public")
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
-      transforms: [require("jadeify"), require('caching-coffeeify'), require('babelify')]
+      transforms: [require("jadeify"), require('caching-coffeeify')]
       insertGlobals: true
   if "test" is NODE_ENV
     app.use (req, res, next) ->
@@ -170,6 +200,7 @@ module.exports = (app) ->
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/auction_lots"
+  app.use require "../apps/artwork_purchase"
   app.use require "../apps/artwork"
   app.use require "../apps/about"
   app.use require "../apps/collect"
@@ -212,6 +243,7 @@ module.exports = (app) ->
   app.use require "../apps/articles"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"
+  app.use require "../apps/editorial_features"
 
   # Apps that need to fetch a profile
   app.use require "../apps/profile"

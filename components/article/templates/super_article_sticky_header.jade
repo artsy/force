@@ -2,18 +2,31 @@
   .article-sa-sticky-left
     .article-sa-primary-logos
       a( href="/" ).article-sa-artsy-logo.icon-logotype
+  .article-sa-sticky-center
+    a.article-sa-sticky-title( href=superArticle.href() )= superArticle.get('title')
+    .article-sa-sticky-related-container
+      .mgr-cells.js-mgr-cells
+        for subArticle in superSubArticles.models
+          .mgr-cell.js-mgr-cell
+            a.article-sa-related( href=subArticle.href() )
+              img.article-sa-related__image(src= crop(subArticle.get('thumbnail_image'), { width: 100, height: 66 }))
+              .article-sa-related__title= subArticle.get('thumbnail_title')
+      include ../../merry_go_round/templates/horizontal_navigation
+      a.article-sa-related__magazine-link(href=sd.APP_URL + '/articles')
+        i.icon-chevron-left
+        .article-sa-related__magazine-text Back to the Magazine Homepage
+
+  .article-sa-sticky-right
+    if superArticle.get('super_article').partner_logo
+      .article-sa-sticky__presented
+        |  Presented in
+        br
+        |  Partnership with
+      .article-sa-plus.icon-close
       .article-sa-primary-logo
         if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
           a( href=superArticle.get('super_article').partner_logo_link )
             img( src=superArticle.get('super_article').partner_logo )
-  .article-sa-sticky-center
-    a.article-sa-sticky-title( href=superArticle.href() )= superArticle.get('title')
-    .article-sa-related-container
-      .article-sa-related
-        for subArticle in superSubArticles.models
-          a( href=subArticle.href() )= subArticle.get('thumbnail_title')
-      if superArticle.get('super_article').partner_link_title
-        a.article-sa-cta-sticky.faux-underline( href=superArticle.get('super_article').partner_link )= superArticle.get('super_article').partner_link_title
-
-  .article-sa-sticky-right
-    a.article-sticky-back( href="/articles" ) Back to Artsy Magazine
+  .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
+    .article-sa-sticky-hamburger-icon
+    i.article-sa-sticky-close-icon.icon-close

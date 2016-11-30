@@ -34,14 +34,9 @@ renderArtwork = (artworkOptions = {}, sdOptions = {}) ->
 
 describe 'Commercial template', ->
 
-  it 'name and password display for prequalified work (with forced log in test result as "forced_login")', ->
-    html = renderArtwork { partner: is_pre_qualify: true }, { FORCED_LOGIN_INQUIRY: 'force_login' }
+  it 'name and password display for prequalified work', ->
+    html = renderArtwork { partner: is_pre_qualify: true }
     $ = cheerio.load(html)
     $('input[name=email]').length.should.eql 1
-
-  it 'does not display name and password for prequalified work (with forced log in test result as default)', ->
-    html = renderArtwork { partner: is_pre_qualify: true }, { FORCED_LOGIN_INQUIRY: 'default' }
-    $ = cheerio.load(html)
-    $('input[name=email]').length.should.eql 0
 
 

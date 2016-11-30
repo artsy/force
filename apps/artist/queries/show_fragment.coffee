@@ -22,5 +22,6 @@ module.exports =
     start_at
     end_at
     exhibition_period
+    is_reference
   }
   """

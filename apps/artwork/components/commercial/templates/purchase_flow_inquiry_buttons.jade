@@ -1,0 +1,14 @@
+.artwork-commercial__inquiry-buttons
+  button.avant-garde-button-black.is-block(
+    class='js-artwork-purchase-button analytics-artwork-contact-seller'
+    data-artwork_id= artwork._id
+    data-context_type='sidebar'
+  )
+    | Purchase
+
+  button.avant-garde-button-white.is-block(
+    class='js-artwork-inquire-button analytics-artwork-contact-seller'
+    data-artwork_id= artwork._id
+    data-context_type='sidebar'
+  )
+    | Contact #{artwork.partner.type}

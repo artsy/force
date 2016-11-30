@@ -107,16 +107,17 @@ block body
                 | Consign
 
     //- CTA
-    section.consignments-footer
+    aside.consignments-footer
       h3= sections.cta.headline
       input.bordered-input.is-block(
         class='js-typeahead'
         placeholder='Enter artist name'
-      )
+        )
+    
     //- FAQ
-    section.faq-multi-page
+    section.faq-multi-page.consignments-faq
       .js-multi-page-embed
+      //- Credit
+      .consignments-credit
+        = credit
 
-    //- Credit
-    .consignments-credit
-      = credit

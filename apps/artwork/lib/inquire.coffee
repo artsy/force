@@ -11,6 +11,8 @@ module.exports = (id) ->
 
   Promise artwork.fetch()
     .then ->
+      artwork.set('is_in_auction', true) if sd.AUCTION?
+
       openInquiryQuestionnaireFor
         user: user
         artwork: artwork

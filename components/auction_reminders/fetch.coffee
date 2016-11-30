@@ -11,11 +11,14 @@ module.exports = class AuctionReminders
     'id'
     'name'
     'start_at'
+    'live_start_at'
+    'registration_ends_at'
     'end_at'
     'sale_type'
     'is_auction'
     'image_versions'
     'image_url'
+    'auction_state'
   ]
 
   constructor: ->
@@ -41,12 +44,8 @@ module.exports = class AuctionReminders
             live: true
             published: true
             is_auction: true
-
         .then =>
-          @auctions.reset @auctions.filter (x) ->
-            x.isClosingSoon()
-
+          @auctions.reset @auctions.filter (x) -> x.reminderStatus()
           resolve @auctions.invoke('pick', @attrs)
-
         .catch reject
         .done()

@@ -15,37 +15,111 @@ describe 'Sale', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#isClosingSoon', ->
-    it 'returns false if the sale is closing soon', ->
-      new Sale end_at: moment().add(12, 'hours').format()
-        .isClosingSoon().should.be.true()
+  describe 'reminder states', ->
+    beforeEach ->
+      @liveOpenSale = new Sale fabricate 'sale',
+        end_at: moment().add(1, 'hours').format()
+        live_start_at: moment().subtract(1, 'hours').format()
+        auction_state: 'open'
+      @liveSoonSale = new Sale fabricate 'sale',
+        end_at: moment().add(13, 'hours').format()
+        live_start_at: moment().add(8, 'minutes').format()
+        auction_state: 'open'
+      @closingSoonSale = new Sale fabricate 'sale',
+        end_at: moment().add(12, 'hours')
+        auction_state: 'open'
+      @closedSale = new Sale fabricate 'sale',
+        end_at: moment().subtract(1, 'day').format()
+        auction_state: 'closed'
+      @liveClosedSale = new Sale fabricate 'sale',
+        end_at: moment().add(1, 'day').format()
+        live_start_at: moment().subtract(1, 'hours').format()
+        auction_state: 'closed'
 
-      new Sale end_at: moment().add(20, 'minutes').format()
-        .isClosingSoon().should.be.true()
+    describe '#reminderStatus', ->
+      it 'returns a string for a valid reminder state', ->
+        @liveOpenSale.reminderStatus().should.equal 'live_open'
+        @liveSoonSale.reminderStatus().should.equal 'live_open_soon'
+        @closingSoonSale.reminderStatus().should.equal 'closing_soon'
+      it 'returns undefined if no reminder is needed', ->
+        (typeof @closedSale.reminderStatus()).should.equal 'undefined'
+      it 'returns undefined for a sale that would be "closing soon" if it were not also live', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(10, 'hours').format()
+          live_start_at: moment().add(8, 'hours').format()
+        (typeof sale.reminderStatus()).should.equal 'undefined'
+    
+    describe '#isClosingSoon', ->
+      it 'returns true if the sale is closing soon', ->
+        @closingSoonSale.isClosingSoon().should.be.true()
+        new Sale fabricate 'sale', end_at: moment().add(20, 'minutes').format()
+          .isClosingSoon().should.be.true()
+        new Sale fabricate 'sale', end_at: moment().add(30, 'seconds').format()
+          .isClosingSoon().should.be.true()
+      it 'returns false if the sale is a live auction', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(10, 'hours').format()
+          live_start_at: moment().add(8, 'hours').format()
+        sale.isClosingSoon().should.be.false()
+      it 'returns false if the sale is not closing soon or is already over', ->
+        new Sale fabricate 'sale', end_at: moment().add(5, 'second').format()
+          .isClosingSoon().should.be.false()
+        new Sale fabricate 'sale', end_at: moment().add(2, 'days').format()
+          .isClosingSoon().should.be.false()
+        @closedSale.isClosingSoon().should.be.false()
 
-      new Sale end_at: moment().add(30, 'seconds').format()
-        .isClosingSoon().should.be.true()
+    describe '#isLiveOpenSoon', ->
+      it 'returns true if the sale is opening within 10 minutes', ->
+        @liveSoonSale.isLiveOpenSoon().should.be.true()
+      it 'returns false if the sale is closed', ->
+        new Sale fabricate 'sale',
+          end_at: moment().subtract(1, 'hours').format()
+          live_start_at: moment().subtract(2, 'hours').format()
+        .isLiveOpenSoon().should.be.false()
+      it 'returns false if a live auction is not opening within 10 minutes', ->
+        new Sale fabricate 'sale',
+          end_at: moment().add(36, 'hours').format()
+          live_start_at: moment().add(25, 'hours').format()
+        .isLiveOpenSoon().should.be.false()
 
-    it 'returns false if the sale is not closing soon or is already over', ->
-      new Sale end_at: moment().add(5, 'second').format()
-        .isClosingSoon().should.be.false()
+      # could this happen? Should this throw or log somewhere?
+      it 'returns false if for some reason the sale ends before live starts', ->
+        new Sale fabricate 'sale',
+          end_at: moment().add(10, 'hours').format()
+          live_start_at: moment().add(12, 'hours').format()
+        .isLiveOpenSoon().should.be.false()
 
-      new Sale end_at: moment().add(2, 'days').format()
-        .isClosingSoon().should.be.false()
+    describe '#isLiveOpen', ->
+      it 'returns true if sale is currently open for live bidding', ->
+        @liveOpenSale.isLiveOpen().should.be.true()
+      it 'returns false if it is not live_start_at time yet', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(1, 'hours').format()
+          live_start_at: moment().add(30, 'minutes').format()
+          auction_state: 'open'
+        sale.isLiveOpen().should.be.false()
+      it 'returns false if sale has a live property of false', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(10, 'hours').format()
+          live_start_at: moment().subtract(30, 'minutes').format()
+          auction_state: 'closed'
+        sale.isLiveOpen().should.be.false()
+      it 'returns false if sale is not a live auction', ->
+        sale = new Sale fabricate 'sale',
+          end_at: moment().add(1, 'hours').format()
+        sale.isLiveOpen().should.be.false()
 
-      new Sale end_at: moment().subtract(1, 'day').format()
-        .isClosingSoon().should.be.false()
 
-  describe '#isRegistrationEnded', ->
-    it 'returns false if there is no registration_ends_at', ->
-      @sale.set is_auction: true, registration_ends_at: null
-      @sale.isRegistrationEnded().should.be.false()
-    it 'returns false if the registration_ends_at is in the future', ->
-      @sale.set is_auction: true, registration_ends_at: moment().add(2, 'days').format()
-      @sale.isRegistrationEnded().should.be.false()
-    it 'returns true if the registration_ends_at is in the past', ->
-      @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
-      @sale.isRegistrationEnded().should.be.true()
+    describe '#isRegistrationEnded', ->
+      it 'returns false if there is no registration_ends_at', ->
+        @sale.set is_auction: true, registration_ends_at: null
+        @sale.isRegistrationEnded().should.be.false()
+      it 'returns false if the registration_ends_at is in the future', ->
+        @sale.set is_auction: true, registration_ends_at: moment().add(2, 'days').format()
+        @sale.isRegistrationEnded().should.be.false()
+      it 'returns true if the registration_ends_at is in the past', ->
+        @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
+        @sale.isRegistrationEnded().should.be.true()
 
   describe '#calculateAuctionState', ->
     before ->
@@ -157,7 +231,7 @@ describe 'Sale', ->
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Bid'
 
       it 'shows Enter Live Auction if live auction has opened', ->
-        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format()
+        @sale.set is_auction: true, live_start_at: moment().subtract(2, 'days').format(), end_at: moment().add(1, 'days').format(), auction_state: 'open'
         @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
         @user.set 'registered_to_bid', true
         @user.set 'qualified_for_bidding', true
@@ -287,14 +361,27 @@ describe 'Sale', ->
 
     describe '#upcomingLabel', ->
 
-      it 'renders the correct opening label', ->
-        time = moment().add(2, 'days').utcOffset(-4)
+      it 'renders the correct opening label when EDT', ->
+        time = moment('2016-11-02 12:00:00').utc()
         @sale.isPreviewState = -> true
         @sale.set
           start_at: time
           end_at: time.add(2, 'days')
         @sale.upcomingLabel().should
-          .equal "Auction opens #{time.format 'MMM D h:mm:ssA'} EST"
+          .containEql 'Auction opens Nov 4'
+        @sale.upcomingLabel().should
+          .containEql 'EDT'
+
+      it 'renders the correct opening label when EST', ->
+        time = moment('2016-1-02 12:00:00').utc()
+        @sale.isPreviewState = -> true
+        @sale.set
+          start_at: time
+          end_at: time.add(2, 'days')
+        @sale.upcomingLabel().should
+          .containEql 'Auction opens Jan 4'
+        @sale.upcomingLabel().should
+          .containEql 'EST'
 
     describe '#sortableDate', ->
       it 'returns the live_start_at if it exists', ->

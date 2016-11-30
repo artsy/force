@@ -4,13 +4,13 @@ Backbone = require 'backbone'
 setup = require './setup'
 Account = benv.requireWithJadeify require.resolve('../../views/account'), [
   'templates.login'
-  'templates.signup'
+  'templates.register'
   'templates.forgot'
 ]
 
 describe 'Account', setup ->
   beforeEach ->
-    @view = new Account user: @loggedOutUser, artwork: @artwork, state: @state
+    @view = new Account user: @loggedOutUser, artwork: @artwork, state: @state, inquiry: @inquiry
 
   describe '#render', ->
     beforeEach ->
@@ -18,9 +18,9 @@ describe 'Account', setup ->
 
     it 'renders the login page the first time it renders', ->
       @view.$('.iq-headline').text()
-        .should.containEql 'To skip these steps on your next inquiry'
+        .should.containEql 'Create an account to send your message'
       @view.$('input').map(-> $(this).attr('name')).get()
-        .should.eql ['password']
+        .should.eql ['name', 'email', 'password']
 
     it 're-renders when the mode changes', ->
       @view.active.set 'mode', 'forgot'
@@ -31,9 +31,9 @@ describe 'Account', setup ->
       @view.$('.iq-headline').text()
         .should.containEql 'Please log in to save information to your profile'
 
-      @view.active.set 'mode', 'signup'
+      @view.active.set 'mode', 'register'
       @view.$('.iq-headline').text()
-        .should.containEql 'To skip these steps on your next inquiry'
+        .should.containEql 'Create an account to send your message'
 
   describe '#forgot', ->
     beforeEach ->
