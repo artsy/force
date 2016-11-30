@@ -20,6 +20,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.scroller__items section').attr('data-state', 'closed')
     @curation = new Curation sd.CURATION
     @windowPosition = $(window).scrollTop()
+    @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
     @trackDirection()
@@ -29,9 +30,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     $(window).scroll () =>
-      @trackDirection()
+      throttled = _.throttle(@trackDirection, 10)
+      throttled()
     $(window).resize () =>
       @setupSliderHeight()
+      @windowHeight = $(window).height()
       $.waypoints('refresh')
 
   getScrollZones: =>
@@ -59,15 +62,16 @@ module.exports.EoyView = class EoyView extends Backbone.View
       #upscrolling
     @doSlider(scrollTop)
     if scrollTop >= @getScrollZones()[6]
+      # throttled = _.throttle(@animateBody, 100)
       @loadBody()
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
   setupSliderHeight: =>
     #height of bounding box / title section
-    @containerHeight = $(window).height() - 75 - 20
+    @containerHeight = @windowHeight - 75 - 20
     #height of one section open
-    @activeHeight = $(window).height() - 75 - ($(window).height() * .33)
+    @activeHeight = @windowHeight - 75 - (@windowHeight * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[10] + 75
     $('.eoy-feature__content').height(@openHeight)
@@ -113,7 +117,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @introInView()
     @firstSectionInView()
     $('.article-body__content').imagesLoaded () =>
-      @sectionsInView()
       @setupCarousel()
 
   bodyInView: =>
@@ -135,40 +138,49 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body section[data-section="1"]').waypoint () ->
       $(this).find('.article-body--section').toggleClass('active')
       $('.eoy-feature__background').toggleClass('active')
-      $(this).find('video').next().addClass('active')
     , {offset: '40%'}
 
     $('.article-body section[data-section="1"] article').waypoint (direction) ->
-      $(this).find('.spacer--article').toggleClass('active')
-      # auto play video
+      $(this).find('video').next().addClass('active')
       if direction is 'down'
         $(this).find('video')[0].play()
         $(this).find('video')[0].onended = () ->
           $(this).find('video').next().removeClass('active')
     , {offset: '50%'}
 
-  sectionsInView: =>
-    for i in [2..$('.article-body--section').length]
-      if i < 4
-        $('.article-body section[data-section="' + i + '"]').waypoint () ->
-          $(this).find('.article-body--section').toggleClass('active')
-        , {offset: '25%'}
-      else
-        $('.article-body section[data-section="' + i + '"]').waypoint () ->
-          $(this).find('.article-body--section').toggleClass('active')
-        , {offset: '55%'}
-    # draw line through center of fourth article
-    $('.article-body section[data-section="4"] article').waypoint (direction) ->
-      $(this).find('.article-body--section__sub-text .spacer').toggleClass('active')
-    , {offset: '60%'}
-
   animateBody: (scrollTop) =>
     boundaries = @getBodySectionBoundaries()
     active = @closestSection(scrollTop, boundaries.top)
-    console.log active
-    if active == 1
-      $('.article-body section[data-section="' + active + '"] spacer').first()
-      debugger
+    $('.article-body section[data-section!="' + active + '"]').find('.article-body--section').removeClass('active')
+    $active = $('.article-body section[data-section="' + active + '"]')
+    $active.find('.article-body--section').addClass('active')
+    spacers = []
+    switch
+      when active == 1
+        spacers.push {spacer: $active.find('.article-body--section__cover-image .spacer').first(), gutter: 40}
+        spacers.push {spacer: $active.find('.spacer--article'), gutter: 20}
+      when active == 3
+        max = $active.find('.article-body--section__sub-text .spacer').parent().height()
+        $active.find('.article-body--section__sub-text .spacer').css('max-height', max)
+        spacers.push {spacer: $active.find('.article-body--section__sub-text .spacer'), gutter: 20}
+        spacers.push {spacer: $active.find('.spacer--article'), gutter: 20}
+      when active == 4
+        spacers.push {spacer: $active.find('.article-body--section__cover-image .spacer').first(), gutter: 40}
+        spacers.push {spacer: $active.find('.spacer--article'), gutter: 40}
+      when active == 5
+        spacers.push {spacer: $active.find('header .spacer--article'), gutter: 20}
+        spacers.push {spacer: $active.find('.article-body--section__text .spacer'), gutter: 20}
+      when active == 6
+        spacers.push {spacer: $active.find('header .spacer--article'), gutter: 20}
+        spacers.push {spacer: $active.find('.article-body--section__text .spacer'), gutter: 20}
+    for spacer in spacers
+      throttled = _.throttle(@verticalScrollBoundary, 10)
+      throttled(scrollTop, spacer.spacer, spacer.gutter)
+
+  verticalScrollBoundary: (scrollTop, spacer, gutter) =>
+    windowBottom = scrollTop + @windowHeight
+    spacerHeight = windowBottom - $(spacer).parent().offset().top - gutter
+    $(spacer).height(spacerHeight)
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
@@ -183,13 +195,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
   getBodySectionBoundaries: () =>
     sectionBoundaries = []
     sectionTopBoundaries = []
-    for section in $('.article-body section[data-section!="0"]')
+    for section in $('.article-body section')
       top = $(section).position().top
       bottom = top + $(section).height()
       left = $(section).position().left
       right = left + $(section).width()
       sectionBoundaries.push {top: top, bottom: bottom, left: left, right: right}
-      sectionTopBoundaries.push top - $(window).height() + 400
+      sectionTopBoundaries.push top - @windowHeight + 400
     return { boundaries: sectionBoundaries, top: sectionTopBoundaries }
 
   setupCarousel: ->
