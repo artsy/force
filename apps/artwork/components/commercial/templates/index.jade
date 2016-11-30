@@ -1,10 +1,11 @@
-form.artwork-commercial__form
-  if purchaseFlow && eligibleForPurchase
-    include ./purchase_flow_index
-  else
-    include ./standard_index
-.artwork-commercial__questions
-  | Questions about buying art on Artsy?
-  | Read our&nbsp;
-  a.collector-faq( href='/#' ) Collector FAQ
+.artwork-commercial( class='js-artwork-commercial' )
+  form.artwork-commercial__form
+    if purchaseFlow && eligibleForPurchase
+      include ./purchase_flow_index
+    else
+      include ./standard_index
+  .artwork-commercial__questions
+    | Questions about buying art on Artsy?
+    | Read our&nbsp;
+    a.collector-faq( href='/#' ) Collector FAQ
 
