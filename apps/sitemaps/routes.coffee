@@ -112,7 +112,14 @@ getArtworkBuckets = (callback) ->
       limit: FUSION_PAGE_SIZE
       'fields[]': switch template
         when 'artworks' then ['id']
-        when 'images' then ['id', 'images', 'title', 'artist', 'date']
+        when 'images' then [
+          'id'
+          'images.image_urls.large'
+          'images.image_urls.larger'
+          'title'
+          'artist.name'
+          'date'
+        ]
     )
     .end (err, sres) ->
       return next err if err
