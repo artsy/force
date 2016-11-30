@@ -44,7 +44,7 @@ class PurchaseForm extends Backbone.View
 
   showSuccess: ->
     Backbone.history.navigate @artwork.href + '/thank-you', replace: true
-    $('.body-header-fixed').removeClass 'minimal-header'
+    # $('.body-header-fixed').removeClass 'minimal-header'
     @$el.html successTemplate { @artwork }
 
 class ThankYouView extends Backbone.View
