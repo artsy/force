@@ -130,8 +130,7 @@ module.exports = class AuthModalView extends ModalView
 
       @undelegateEvents()
 
-      @$('form').submit()
-
+      @$('form').submit() unless @state.get('mode') is 'reset'
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'
