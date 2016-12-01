@@ -1,5 +1,14 @@
 @require '../../components/stylus_lib'
 
+
+body.body-artwork-purchase
+  #main-layout-container
+    max-width 100%
+    margin main-header-height + 50px 0px 0px 0px
+
+  &.minimal-header #main-layout-container
+    margin 50px 0px 0px 0px
+
 a#purchase-page-header-title
   avant-garde-size('body')
   text-decoration none
@@ -12,24 +21,11 @@ a#purchase-page-header-title
   margin-bottom 165px
   h1
     white-space nowrap
+    garamond-size('l-headline')
+  h2
+    white-space nowrap
     garamond-size('headline')
   .artwork-purchase
-    &__how-it-works
-      padding-bottom 50px
-      border-bottom 1px solid gray-lightest-color
-      display flex
-      > *
-        &:first-child
-          padding-left 0
-        &:last-child
-          padding-right 0
-        padding 0 30px
-    &__how-item
-      flex-basis 40%
-      &:last-child
-        border-left 1px solid gray-lightest-color
-      &__explanation
-        garamond-size('l-body')
     &__form
       clearfix()
     &__inputs
@@ -56,11 +52,32 @@ a#purchase-page-header-title
         margin-bottom 25px
       textarea
         height 145px
+    &__artwork-image
+        display block
+        width 56px
+        height @width
 
   .ap-summary
     float right
     width calc('40% - 40px')
     border 2px solid gray-lightest-color
+    &__top
+      display flex
+    &__meta
+      color gray-darker-color
+      garamond-size(s-body)
+      white-space nowrap
+      margin -4px 0 0 10px
+      line-height 1.3
+    &__artist
+      font-style bold
+    &__title
+      font-style italic
+    &__top, &__meta, &__artist, &__title, &__partner
+      overflow hidden
+    &__artist, &__title, &__partner
+      text-overflow ellipsis
+
     &__row
       // margin 30px
       garamond-size('l-body')
@@ -83,3 +100,50 @@ a#purchase-page-header-title
       color gray-darker-color
       margin-top 15px
 
+  .ap-how
+    padding-bottom 50px
+    border-bottom 1px solid gray-lightest-color
+    display flex
+    > *
+      &:first-child
+        padding-left 0
+      &:last-child
+        padding-right 0
+      padding 0 30px
+    &__item
+      flex-basis 40%
+      display flex
+      align-items center
+      &:last-child
+        border-left 1px solid gray-lightest-color
+    &__item-explanation
+      garamond-size('l-body')
+      margin-left 15px
+
+  .ap-success
+    garamond-size(l-body)
+    h1, &__next
+      text-align center
+    .icon-circle-check
+      display inline
+      color green-color
+      vertical-align middle
+    &__top
+      border 1px solid gray-lightest-color
+      background-color #f8f8f8
+      display flex
+      align-items center
+      padding 30px
+      justify-content flex-start
+    &__message
+      padding-left 20px
+    &__next-step-images, &__next-step-text
+      display flex
+      align-items center
+      justify-content space-around
+    &__next-step-text
+      margin-top 30px
+    &__step
+      width calc(25%\-40px)
+      flex-grow 0
+      flex-shink 0

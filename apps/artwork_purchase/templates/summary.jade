@@ -1,9 +1,12 @@
 .ap-summary
-  .ap-summary__top
-    .ap-summary__image
-    .ap-summary__meta
-
   .ap-summary__split
+    .ap-summary__section
+      .ap-summary__row.ap-summary__top
+        img.artwork-purchase__artwork-image( src= artwork.image.url )
+        .ap-summary__meta
+          .ap-summary__artist= artwork.artist_names
+          .ap-summary__title= artwork.title
+          .ap-summary__partner= artwork.partner.name
     .ap-summary__section
       .ap-summary__row.ap-summary-price
         .ap-summary__left Price

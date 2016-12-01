@@ -1,27 +1,28 @@
-.artwork-purchase__how-it-works.artwork-purchase__section
-  h1 How it works
-  .artwork-purchase__how-confirm.artwork-purchase__how-item
-    .artwork-purchase__how-item__image
-    .artwork-purchase__how-item__explanation
+.ap-how.artwork-purchase__section
+  h2 How it works
+  .ap-how__confirm.ap-how__item
+    .ap-how__item-image
+      include ../../../components/main_layout/public/icons/purchase-availability.svg
+    .ap-how__item-explanation
       | #{artwork.partner.name} will confirm availability and provide the final quote
-  .artwork-purchase__how-complete.artwork-purchase__how-item
-    .artwork-purchase__how-item__image
-    .artwork-purchase__how-item__explanation
+  .ap-how__complete.ap-how__item
+    .ap-how__item-image
+      include ../../../components/main_layout/public/icons/purchase-payment.svg
+    .ap-how__item-explanation
       | You will review the quote and complete payment
-
 
 form.artwork-purchase__form.js-ap-form
   .artwork-purchase__form-errors.js-ap-form-errors
   .artwork-purchase__inputs
     .artwork-purchase__section
       .artwork-purchase__shipping
-        h1 Shipping Address
+        h2 Shipping Address
         .artwork-purchase__address-inputs
           include ./address_form
 
     .artwork-purchase__section
       .artwork-purchase__message
-        h1 Message to #{artwork.partner.name}
+        h2 Message to #{artwork.partner.name}
         .artwork-purchase__message__blurb
           | Tell the gallery about your collecting intersts and why you like this artwork—this helps develop a friendly reltionship. Ask clarifying questions about the work and shipping logistics.
         .artwork-purchase__input-full-width

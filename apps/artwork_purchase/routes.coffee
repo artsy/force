@@ -21,9 +21,7 @@ query = """
       }
       artist_names
       image {
-        cropped(width:58, height:58){
-          url
-        }
+        url(version: "square")
       }
     }
   }
