@@ -116,6 +116,7 @@ getArtworkBuckets = (callback) ->
           'id'
           'images.image_urls.large'
           'images.image_urls.larger'
+          'images.is_default'
           'title'
           'artist.name'
           'date'
