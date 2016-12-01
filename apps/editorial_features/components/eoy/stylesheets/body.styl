@@ -138,8 +138,7 @@ flex-display(justify = space-between, align = center)
         top 20px
         left 0
         bottom 0
-        height 0
-        // transition all 4s
+        height 100%
         max-height calc(100% \- 40px)
       .image
         flex-display(space-between, flex-end)
@@ -184,12 +183,9 @@ flex-display(justify = space-between, align = center)
       top 0
       height 0
       max-height 100%
-      // transition all 7s
       &.active
         height 100%
     &.active
-      header .spacer
-        // height calc(100% \- 40px)
       header .image
         img
           width 75%
@@ -247,9 +243,6 @@ flex-display(justify = space-between, align = center)
       .callout
         display none
     &.active
-      .image
-        img
-          // width 85%
       .spacer
         width calc(100% \- 20px)
         &:nth-child(3)
@@ -340,7 +333,6 @@ flex-display(justify = space-between, align = center)
     &__cover-image
       border-top 1px solid
       border-bottom 1px solid
-      // padding 20px 0
       .spacer:first-child
         position absolute
         top 20px
@@ -349,9 +341,6 @@ flex-display(justify = space-between, align = center)
         height 100%
         max-height calc(100% \- 40px)
         border-right 1px solid
-      .image
-        // padding 50px 20px
-        // border-right 1px solid
     article
       position relative
       .spacer--article
@@ -434,7 +423,6 @@ flex-display(justify = space-between, align = center)
     &__cover-image
       padding 0
       .image
-        // border-top 1px solid
         border-bottom 1px solid
         margin-right 20px
         padding 70px 20px
@@ -506,7 +494,6 @@ flex-display(justify = space-between, align = center)
         flex-direction column
         padding 70px 0
     &__text
-      // border-right 1px solid
       position relative
       .spacer
         position absolute

@@ -31,8 +31,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     $(window).scroll () =>
-      throttled = _.throttle(@trackDirection, 100)
       if window.scrollY != @windowPosition
+        throttled = _.throttle(@trackDirection, 30)
         throttled()
     $(window).resize () =>
       @setupSliderHeight()
@@ -59,13 +59,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
-    #else if scrollTop > @windowPosition
-      #downscrolling
-    #else
-      #upscrolling
-    @doSlider(scrollTop)
+    if scrollTop <= @openHeight
+      @doSlider(scrollTop)
     if scrollTop >= @getScrollZones()[6]
-      # throttled = _.throttle(@animateBody, 100)
       @loadBody()
       @animateBody(scrollTop)
     @windowPosition = scrollTop
@@ -110,18 +106,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
         if this.getScrollZones()[9] < scrollTop
           $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
           $('.scroller__items section[data-section="10"]').height(active - scrollTop).attr('data-state', 'open').addClass('bottom')
-
-  setImage: ->
-    $img = $(this)
-    src = $img.attr 'src'
-    if src != ''
-      width = 800
-      src = resize(src, width: width * (window.devicePixelRatio or 1))
-      $img.attr 'src', src
-
-  setImages: ->
-    $('.article-body__content img').each @setImage
-
 
   deferredLoadBody: =>
     $('.article-body__content').append bodyView
@@ -169,6 +153,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body section[data-section!="' + active + '"] .article-body--section').removeClass('active')
     $active = $('.article-body section[data-section="' + active + '"]')
     $active.find('.article-body--section').addClass('active')
+    @animateActiveSection($active, scrollTop)
+
+  animateActiveSection: ($active, scrollTop) =>
+    active = $active.data('section')
     spacers = []
     switch
       when active == 1
@@ -223,6 +211,17 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true
+
+  setImage: ->
+    $img = $(this)
+    src = $img.attr 'src'
+    if src != ''
+      width = 800
+      src = resize(src, width: width * (window.devicePixelRatio or 1))
+      $img.attr 'src', src
+
+  setImages: ->
+    $('.article-body__content img').each @setImage
 
 module.exports.init = ->
   new EoyView
