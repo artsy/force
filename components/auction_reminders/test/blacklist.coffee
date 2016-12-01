@@ -18,6 +18,7 @@ urls =
     '/personalize/categories'
     '/user/edit'
     '/sale/cool-sale'
+    '/2016-year-in-art'
   ]
 
 describe 'blacklist', ->
@@ -40,6 +41,7 @@ describe 'blacklist', ->
       ['/personalize/categories', true]
       ['/user/edit', true]
       ['/sale/cool-sale', true]
+      ['/2016-year-in-art', true]
     ]
 
   it 'does not blacklist routes that are ok', ->
