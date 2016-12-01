@@ -7,6 +7,8 @@ initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr
 bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
+{ resize } = require '../../../../components/resizer/index.coffee'
+
 Q = require 'bluebird-q'
 
 module.exports.EoyView = class EoyView extends Backbone.View
@@ -19,7 +21,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
     @curation = new Curation sd.CURATION
-    @windowPosition = $(window).scrollTop()
+    @windowPosition = window.scrollY
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
@@ -30,8 +32,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     $(window).scroll () =>
-      throttled = _.throttle(@trackDirection, 10)
-      throttled()
+      throttled = _.throttle(@trackDirection, 100)
+      if window.scrollY != @windowPosition
+        throttled()
     $(window).resize () =>
       @setupSliderHeight()
       @windowHeight = $(window).height()
@@ -52,7 +55,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return closest
 
   trackDirection: =>
-    scrollTop = $(window).scrollTop()
+    scrollTop = window.scrollY
+    scrollTop = Math.round(scrollTop)
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
@@ -108,6 +112,17 @@ module.exports.EoyView = class EoyView extends Backbone.View
           $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
           $('.scroller__items section[data-section="10"]').height(active - scrollTop).attr('data-state', 'open').addClass('bottom')
 
+  setImage: ->
+    $img = $(this)
+    src = $img.attr 'src'
+    if src != ''
+      width = 800
+      src = resize(src, width: width * (window.devicePixelRatio or 1))
+      $img.attr 'src', src
+
+  setImages: ->
+    $('.article-body__content img').each @setImage
+
 
   deferredLoadBody: =>
     $('.article-body__content').append bodyView
@@ -116,6 +131,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @bodyInView()
     @introInView()
     @firstSectionInView()
+    @setImages()
     $('.article-body__content').imagesLoaded () =>
       @setupCarousel()
 
@@ -151,7 +167,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   animateBody: (scrollTop) =>
     boundaries = @getBodySectionBoundaries()
     active = @closestSection(scrollTop, boundaries.top)
-    $('.article-body section[data-section!="' + active + '"]').find('.article-body--section').removeClass('active')
+    $('.article-body section[data-section!="' + active + '"] .article-body--section').removeClass('active')
     $active = $('.article-body section[data-section="' + active + '"]')
     $active.find('.article-body--section').addClass('active')
     spacers = []
@@ -174,13 +190,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
         spacers.push {spacer: $active.find('header .spacer--article'), gutter: 20}
         spacers.push {spacer: $active.find('.article-body--section__text .spacer'), gutter: 20}
     for spacer in spacers
-      throttled = _.throttle(@verticalScrollBoundary, 10)
+      throttled = _.throttle(@verticalScrollBoundary, 30)
       throttled(scrollTop, spacer.spacer, spacer.gutter)
 
   verticalScrollBoundary: (scrollTop, spacer, gutter) =>
     windowBottom = scrollTop + @windowHeight
+    initHeight = spacer.height
     spacerHeight = windowBottom - $(spacer).parent().offset().top - gutter
-    $(spacer).height(spacerHeight)
+    if initHeight != spacerHeight.toFixed()
+      $(spacer).height(spacerHeight.toFixed())
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
