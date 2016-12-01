@@ -14,7 +14,6 @@ Q = require 'bluebird-q'
 module.exports.EoyView = class EoyView extends Backbone.View
 
   el: $('body')
-
   events:
     'click .video-controls': 'playVideo'
 
