@@ -43,6 +43,5 @@ setupUser = (user, auction) ->
   reminders.fetch()
     .then (response) ->
       res.send response
-
     .catch(next)
     .done()

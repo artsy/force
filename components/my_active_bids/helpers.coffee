@@ -4,8 +4,8 @@ moment = require 'moment'
 module.exports =
   mpLiveSaleIsOpen: (sale) ->
     sale.live_start_at? and
-      moment().isBefore(sale.end_at) and
-      moment().isAfter(sale.live_start_at)
+      moment().isAfter(sale.live_start_at) and
+      sale.auction_state == 'open'
 
   liveAuctionUrl: (saleId) ->
     "#{PREDICTION_URL}/#{saleId}"
