@@ -4,6 +4,7 @@ sd = require('sharify').data
 Curation = require '../../models/curation.coffee'
 Article = require '../../models/article.coffee'
 Articles = require '../../collections/articles.coffee'
+markdown = require '../../components/util/markdown.coffee'
 Q = require 'bluebird-q'
 
 @eoy = (req, res, next) ->
@@ -24,4 +25,5 @@ Q = require 'bluebird-q'
       res.render 'components/eoy/templates/index',
         curation: @curation,
         article: @article,
-        superSubArticles: @superSubArticles
+        superSubArticles: @superSubArticles,
+        markdown: markdown
