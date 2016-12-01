@@ -27,6 +27,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('fair', model: 'fair', profile_id: 'foo-profile'))
         model.href().should.containEql '/foo-profile'
 
+      it 'has a location attribute when it is a city', ->
+        model = new SearchResult({ model: 'city', id: 'gotham' })
+        model.href().should.containEql '/shows/gotham'
+
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
@@ -116,6 +120,11 @@ describe 'SearchResult', ->
 
       result = new SearchResult(profile)
       result.about().should.equal 'A description of foo gallery'
+
+    describe '#formatCityAbout', ->
+      it 'uses a standard template', ->
+        result = new SearchResult({ model: 'city', display: 'Gotham', id: 'gotham' })
+        result.about().should.equal 'Browse current exhibitions in Gotham'
 
   describe '#status', ->
     it 'correctly detects closed event status', ->
