@@ -141,6 +141,8 @@ module.exports = class SearchResult extends Backbone.Model
     if formattedStartTime and formattedEndTime
       about = "#{title} running from #{formattedStartTime} to #{formattedEndTime}"
       about += " in #{location}" if location
+    else if formattedStartTime
+      about = "#{title} opening #{formattedStartTime}"
     else
       about = @get('description')
 
