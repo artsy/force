@@ -2,6 +2,7 @@ extends ../../../components/main_layout/templates/minimal_header
 
 append locals
   - assetPackage = 'artwork_purchase'
+  - bodyClass = helpers ? helpers.buildBodyClass(sd, 'minimal-header body-artwork-purchase') : ''
 
 block minimal-nav-header
   a#purchase-page-header-title(
@@ -11,5 +12,5 @@ block minimal-nav-header
 
 block body
   .responsive-layout-container
-    #purchase-page.artwork-purchase
+    #purchase-page.artwork-purchase.main-layout-container
       include ./main
