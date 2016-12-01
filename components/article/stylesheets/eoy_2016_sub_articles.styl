@@ -4,6 +4,8 @@ body.body-eoy-2016
     padding 80px 0px
     border-top 1px solid black
     border-bottom 1px solid black
+    max-width 1100px
+
   // Image border
   .article-section-container[data-section-type=image]
     &.eoy-border-no-top
@@ -41,6 +43,7 @@ body.body-eoy-2016
       garamond-size('s-body', true)
       text-transform none
       font-weight bold
+      letter-spacing inherit
     .article-date
       display none
     .article-author, .article-contributing-author
@@ -54,7 +57,7 @@ body.body-eoy-2016
   // h2 h3 Border
   .article-section-container[data-section-type=text].eoy-border
     &.eoy-border
-      margin-bottom 0px
+      margin 0px
       .article-section-text
         position relative
         border-top 1px solid black
@@ -84,4 +87,4 @@ body.body-eoy-2016
     @media screen and (max-width 900px)
       &.eoy-border
         .article-section-text
-          margin 0
+          margin 0 20px
