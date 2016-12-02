@@ -24,6 +24,7 @@ class MarketingSignupModalInner extends Backbone.View
       url: sd.AP.signupPagePath
       method: 'POST'
       data:
+        name: @$('[name=name]').val()
         email: @$('[name=email]').val()
         password: @$('[name=password]').val()
         acquisition_initiative: sd.MARKETING_SIGNUP_MODAL_SLUG
@@ -32,7 +33,8 @@ class MarketingSignupModalInner extends Backbone.View
         @$('.marketing-signup-modal-error').show().text err
       success: =>
         @trigger 'close'
-        new FlashMessage message: 'Thank you for joining Artsy'
+        flash = new FlashMessage message: 'Thank you for joining Artsy'
+        flash.$el.on 'transitionend', -> setTimeout (-> location.reload()), 500
       complete: =>
         @$('form button').removeClass 'is-loading'
 

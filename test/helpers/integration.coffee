@@ -31,6 +31,7 @@ Browser.debug = true
     @child.on "message", -> callback?()
     @child.stdout.pipe process.stdout
     @child.stderr.pipe process.stdout
+  return
 
 # Closes the server child process, used in an `after` hook and on
 # `process.exit` in case the test suite is interupted.

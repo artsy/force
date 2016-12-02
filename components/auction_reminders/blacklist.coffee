@@ -12,6 +12,7 @@ module.exports =
     '^/jobs'
     '^/job/.*'
     TEAM_BLOGS or '^/test'
+    '^/2016-year-in-art'
   ]
 
   check: ->

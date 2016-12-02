@@ -2,10 +2,49 @@
 // Generic events for tracking events around account creation.
 //
 
-// Created account
-analyticsHooks.on('auth:register', function (options) {
-  analytics.track('Created account')
-})
+// Created account (via email)
+$(document).on(
+  'submit',
+  '.auth-register form, .marketing-signup-modal form',
+  function() {
+    $(document).one('ajaxComplete', function(e, xhr) {
+      analytics.track('Created account', {
+        acquisition_initiative: location.search.replace('?m-id=', ''),
+        signup_service: 'email',
+        user_id: xhr.responseJSON.user.id
+      })
+    })
+  }
+)
+
+// Created account (via social)
+
+// 1. Upon clicking the social signup button
+$(document).on(
+  'click',
+  '.auth-signup-facebook, .marketing-signup-modal-fb',
+  function() {
+
+    // 2. Store some data in cookies before being redirected everywhere
+    Cookies.set('analytics-signup', JSON.stringify({
+      service: 'facebook',
+      acquisition_initiative: location.search.replace('?m-id=', '')
+    }))
+  }
+)
+
+// 3. After landing back on Artsy send the tracking call and expire the cookie
+if (Cookies.get('analytics-signup')) {
+  var data = JSON.parse(Cookies.get('analytics-signup'))
+  Cookies.expire('analytics-signup')
+  if (sd.CURRENT_USER) {
+    analytics.track('Created account', {
+      acquisition_initiative: data.acquisition_initiative,
+      signup_service: data.service,
+      user_id: sd.CURRENT_USER.id
+    })
+  }
+}
 
 analyticsHooks.on('auth:login', function (options) {
   analytics.track('Successfully logged in')
