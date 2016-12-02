@@ -279,3 +279,114 @@ flex-display(justify = space-between, align = center)
           max-height calc(100% \- 20px)
           border-right 1px solid
           margin-top 20px
+
+@media screen and (max-width: 550px)
+  .scroller
+    width calc(100% \- 20px)
+    margin 0 10px
+    section
+      &[data-section='0']
+        article .inner
+          margin 10px 0
+          height calc(100% \- 20px)
+          .top
+            margin-bottom 10px
+          .bottom
+            margin-top 10px
+      &[data-section='1']
+        .inner
+          .left
+            margin-top 10px
+            height calc(100% \- 10px)
+          .right
+            margin 10px 0
+            height calc(100% \- 20px)
+      &[data-section='2']
+        .left
+          width 50%
+          .col:first-child
+            width calc(15vw \- 11px)
+            margin-right 10px
+          .col:nth-child(2)
+            margin-bottom 20px
+          .col:last-child
+            width calc(35vw \- 20px)
+            margin-left 10px
+        .right
+          width 50%
+          .col:first-child
+            margin-top 10px
+            height calc(100% \- 10px)
+          .item
+            max-height calc(100% \- 20px)
+      &[data-section='3']
+        .left
+          width calc(50% \- 10px)
+          margin-right 10px
+          .item
+            max-height calc(100% \- 20px)
+          .col
+            height calc(100% \- 20px)
+            margin 10px 0
+        .col.spacer
+          margin-bottom 20px
+        .right
+          margin-left 10px
+          .col:first-child
+            margin 10px 0
+            height calc(100% \- 20px)
+      &[data-section='4']
+        .left, .right
+          height calc(100% \- 20px)
+          margin 10px 0
+      &[data-section='5']
+        .inner .left
+          height calc(100% \- 20px)
+      &[data-section='6']
+        .left
+          .col:first-child
+            width calc(15vw \- 11px)
+            margin-right 10px
+          .col:nth-child(2)
+            height calc(100% \- 10px)
+            margin-top 10px
+        .inner .right
+          height calc(100% \- 20px)
+          margin 10px 0
+      &[data-section='7']
+        .left .col
+          margin-bottom 10px
+          height calc(100% \- 10px)
+        .right
+          margin-left 10px
+          .col
+            margin 10px 0
+            height calc(100% \- 20px)
+      &[data-section='8']
+        .right
+          margin 10px 0
+          height calc(100% \- 20px)
+      &[data-section='9']
+        .col.spacer
+          margin-top 10px
+          height calc(100% \- 10px)
+        .left
+          margin-right 10px
+          width calc(50% \- 11px)
+          .col
+            margin 10px 0
+            height calc(100% \- 20px)
+        .right
+          margin-left 10px
+          width calc(50% \- 10px)
+      &[data-section='10']
+        .left
+          .col:first-child
+            height calc(100% \- 10px)
+            margin-top 10px
+        .right
+          height calc(100% \- 10px)
+          margin-bottom 10px
+          .item
+            margin-top 10px
+            max-height calc(100% \- 10px)
