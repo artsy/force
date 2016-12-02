@@ -135,7 +135,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   firstSectionInView: =>
     $('.article-body section[data-section="1"]').waypoint () ->
-      # $(this).find('.article-body--section').toggleClass('active')
       $('.eoy-feature__background').toggleClass('active')
     , {offset: '40%'}
 
