@@ -7,11 +7,13 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Profile = require '../../../models/profile.coffee'
 
-newLayoutPartnerProfiles = _.map ['gallery_one', 'gallery_two', 'gallery_three'], (layout) ->
+newLayoutPartnerProfiles = _.map ['gallery_one', 'gallery_two', 'gallery_three' ], (layout) ->
   new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: layout
 
-deprecatedLayoutPartnerProfiles = _.map ['institution', 'gallery_default', 'gallery_deprecated'], (layout) ->
+deprecatedLayoutPartnerProfiles = _.map ['gallery_default', 'gallery_deprecated'], (layout) ->
   new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: layout
+
+institutionLayoutPartnerProfile = new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: 'institution'
 
 prepareLocals = (profile) ->
   (req, res, next) ->
@@ -61,6 +63,31 @@ subscriptions1_0Specs = (partnerRoutes) ->
         .get route.replace(':id', 'partner-id').replace(':artistId', 'artist-id')
         .expect 200
         .expect 'partner1'
+
+# For institution profiles everyone except for Admin should see partner1 layouts
+itShouldBehaveDifferentlyForInstitutions = (partnerRoutes) ->
+  context 'public', ->
+    beforeEach ->
+      @app.use partner2
+      @app.use partner1
+
+    subscriptions1_0Specs(partnerRoutes)
+
+  context 'user', ->
+    beforeEach ->
+      @app.use loginAsUser
+      @app.use partner2
+      @app.use partner1
+
+    subscriptions1_0Specs(partnerRoutes)
+
+  context 'admin', ->
+    beforeEach ->
+      @app.use loginAsAdmin
+      @app.use partner2
+      @app.use partner1
+
+    subscriptions2_0Specs(partnerRoutes)
 
 # Shared examples for Subscriptions 2.0
 itShouldBehaveLikeSubscriptions2_0 = (partnerRoutes) ->
@@ -128,3 +155,10 @@ describe 'partner2 index', ->
         @app.use prepareLocals(profile)
 
       itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
+
+  context "with partner profile layout institution", ->
+    beforeEach ->
+      @app = express()
+      @app.use prepareLocals(institutionLayoutPartnerProfile)
+
+    itShouldBehaveDifferentlyForInstitutions(partnerRoutes)

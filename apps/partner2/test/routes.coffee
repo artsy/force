@@ -27,7 +27,9 @@ describe 'Partner routes', ->
         @next.calledOnce.should.be.ok
         _.isUndefined(@next.args[0][0]).should.be.ok()
 
-    _.each ['institution', 'gellery_default', 'gallery_deprecated'], (layout) ->
+    # TODO Update this test when institutions are approved
+    # _.each ['institution', 'gellery_default', 'gallery_deprecated'], (layout) ->
+    _.each ['gellery_default', 'gallery_deprecated'], (layout) ->
       it "skips the middlewares from this route stack if the profile layout is #{layout}", ->
         deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
           owner: fabricate 'partner', profile_layout: layout

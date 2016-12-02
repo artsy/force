@@ -16,7 +16,14 @@ articlesTemplate = -> require('../components/fixed_cells_count_carousel/articles
 
 module.exports = (partner, profile) ->
   contract =
-    institution: []
+    institution: [
+      galleryTwoHero partner, profile
+      galleryTwoAbout partner, profile
+      galleryTwoNews partner, profile
+      galleryTwoShows partner, profile
+      galleryTwoFairBooths partner, profile
+      galleryTwoArticles partner, profile
+    ]
     gallery_default: [
       galleryDefaultShows partner, profile
       galleryDefaultArtists partner, profile
