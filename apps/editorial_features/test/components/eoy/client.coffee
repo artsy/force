@@ -45,7 +45,36 @@ describe 'EoyView', ->
 
   describe '#initialize EOY feature', ->
 
-    it 'does a thing', ->
+    it 'does creates a curation and superarticle', ->
       console.log 'hi'
 
+    # it 'closes all scroller sections'
 
+  # describe '#watchWindow', ->
+
+    # it 'calls trackDirection on scroll', ->
+    # it 'calls setupSliderHeight on resize', ->
+
+  # describe '#getScrollZones', ->
+
+    # it 'is an array of 11 items', ->
+
+  # describe '#closestSection', ->
+
+    # it 'returns the section closest to where user scrolls', ->
+
+  # describe '#trackDirection', ->
+
+    # it 'opens the first scroller item when scroll is 0', ->
+    # it 'starts the featureslider if in the feature section', ->
+    # it 'loads the body and body animations if at the end of scroller', ->
+
+  # describe '#setupSliderHeight', ->
+
+    # it 'gives the feature scroller a height', ->
+    # it 'sets the height of the title section', ->
+    # it 'fades in the scroller and body', ->
+
+  # describe '#doSlider', ->
+
+    # it 'does stuff to the sections', ->
