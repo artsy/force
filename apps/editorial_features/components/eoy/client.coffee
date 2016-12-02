@@ -82,40 +82,40 @@ module.exports.EoyView = class EoyView extends Backbone.View
   doSlider: (scrollTop) =>
     scrollZones = @getScrollZones()
     active = @closestSection(scrollTop, scrollZones)
-    $primarySection = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
-    nextHeight = @containerHeight - $primarySection.height() - @activeHeight
+    $active = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
+    nextHeight = @containerHeight - $active.height() - @activeHeight
     diff = @getScrollZones()[active] - scrollTop
     if active < 1
-      $primarySection.height(diff).removeClass('bottom')
+      $active.height(diff).removeClass('bottom')
       if scrollTop < @activeHeight
-        $primarySection.next().attr('data-state', 'open').height(scrollTop).addClass('bottom')
-        $primarySection.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
+        $active.next().attr('data-state', 'open').height(scrollTop).addClass('bottom')
+        $active.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
       else
-        $primarySection.next().attr('data-state', 'open').height(@activeHeight).removeClass('bottom')
-        $primarySection.next().next().attr('data-state', 'open').height(nextHeight).addClass('bottom')
+        $active.next().attr('data-state', 'open').height(@activeHeight).removeClass('bottom')
+        $active.next().next().attr('data-state', 'open').height(nextHeight).addClass('bottom')
     else
-      $primarySection.prev().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
-      $primarySection.height(diff).removeClass('bottom')
+      $active.prev().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
+      $active.height(diff).removeClass('bottom')
       if diff + @activeHeight < @containerHeight
-        $primarySection.next().attr('data-state', 'open').height(@activeHeight).removeClass('bottom')
-        $primarySection.next().next().attr('data-state', 'open').height(nextHeight).addClass('bottom')
+        $active.next().attr('data-state', 'open').height(@activeHeight).removeClass('bottom')
+        $active.next().next().attr('data-state', 'open').height(nextHeight).addClass('bottom')
       else
-        $primarySection.next().height(@containerHeight - diff).attr('data-state', 'open').addClass('bottom')
-        $primarySection.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
+        $active.next().height(@containerHeight - diff).attr('data-state', 'open').addClass('bottom')
+        $active.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
       if active >= 9
         if this.getScrollZones()[9] < scrollTop
           $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
           $('.scroller__items section[data-section="10"]').height(active - scrollTop).attr('data-state', 'open').addClass('bottom')
 
   deferredLoadBody: =>
-    $('.article-body__content').append bodyView
+    $('.article-body').prepend bodyView
       curation: @curation
       markdown: markdown
     @bodyInView()
     @introInView()
     @firstSectionInView()
     @setImages()
-    $('.article-body__content').imagesLoaded () =>
+    $('.article-body').imagesLoaded () =>
       @setupCarousel()
 
   bodyInView: =>
@@ -135,7 +135,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   firstSectionInView: =>
     $('.article-body section[data-section="1"]').waypoint () ->
-      $(this).find('.article-body--section').toggleClass('active')
+      # $(this).find('.article-body--section').toggleClass('active')
       $('.eoy-feature__background').toggleClass('active')
     , {offset: '40%'}
 
@@ -149,7 +149,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   animateBody: (scrollTop) =>
     boundaries = @getBodySectionBoundaries()
-    active = @closestSection(scrollTop, boundaries.top)
+    active = @closestSection(scrollTop, boundaries.top) - 1
     $('.article-body section[data-section!="' + active + '"] .article-body--section').removeClass('active')
     $active = $('.article-body section[data-section="' + active + '"]')
     $active.find('.article-body--section').addClass('active')
