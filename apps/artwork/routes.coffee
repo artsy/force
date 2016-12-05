@@ -4,7 +4,6 @@ Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 splitTest = require '../../components/split_test/index.coffee'
-{ isEligible } = require '../artwork_purchase/helpers.coffee'
 
 query = """
   query artwork($id: String!) {
@@ -68,7 +67,7 @@ bootstrap = ->
   purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
-      eligibleForPurchase = isEligible data.artwork
+      eligibleForPurchase = data.artwork.is_purchasable
       data.purchaseFlow = purchaseFlow
       data.eligibleForPurchase = eligibleForPurchase
       extend res.locals.helpers, helpers

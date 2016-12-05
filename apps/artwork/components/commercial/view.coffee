@@ -9,7 +9,6 @@ PendingOrder = require '../../../../models/pending_order.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
 openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
-{ isEligible } = require '../../../artwork_purchase/helpers.coffee'
 splitTest = require '../../../../components/split_test/index.coffee'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
@@ -27,7 +26,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   initialize: ({ @data }) ->
     { artwork } = @data
 
-    if isEligible artwork
+    if artwork.is_purchasable
       splitTest('purchase_flow').view()
       @usePurchaseFlow = PURCHASE_FLOW is 'purchase'
 
