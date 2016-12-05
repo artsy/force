@@ -1,11 +1,6 @@
 _ = require 'underscore'
 
 module.exports =
-  isEligible: (artwork) ->
-    artwork.is_inquireable and
-      not artwork.is_acquireable and
-      artwork.sale_message and
-      not artwork.sale_message.match ' - ' # replace with actual data field
 
   formatMessage: ({ artwork, user, name, street1, street2, city, state, zip, country, message })->
     titleAndDate = _.compact([

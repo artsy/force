@@ -4,14 +4,12 @@ Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 splitTest = require '../../components/split_test/index.coffee'
-{ isEligible } = require './helpers.coffee'
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
       id
       _id
-      is_acquireable
-      is_inquireable
+      is_purchasable
       title
       date
       sale_message
@@ -36,7 +34,7 @@ query = """
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   metaphysics send
     .then ({ artwork }) ->
-      return res.redirect "/artwork/#{req.params.id}" if not isEligible artwork
+      return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
       res.render 'index', { artwork }
 
