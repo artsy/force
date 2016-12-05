@@ -21,7 +21,7 @@
   top 14px
 
 .article-sa-primary-logo img
-	height 39px
+	height 38px
 
 .article-sa-sticky__presented
   line-height 1.25
@@ -31,5 +31,22 @@
 	margin-top 20px
 
 @media screen and (max-width: 900px)
-  .article-sa-sticky-header .article-sa-sticky-right
-    left 145px
+  .article-sa-sticky-header
+    .article-sa-plus
+      display none
+    .article-sa-sticky-right
+      left 155px
+      .article-sa-primary-logo
+        margin-top 3px
+        margin-left 0
+    .article-sa-sticky-hamburger
+      top 18px
+      right 10px
+
+@media screen and (max-width: 550px)
+  .article-sa-sticky-header
+    .article-sa-sticky-left
+      left 10px
+    .article-sa-sticky-right
+      left 125px
+

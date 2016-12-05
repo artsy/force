@@ -16,7 +16,7 @@ module.exports =
   REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
-  MOBILE_URL: 'http://localhost:3003'
+  MOBILE_URL: 'http://localhost:3333'
   CANONICAL_MOBILE_URL: 'https://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'
@@ -122,7 +122,6 @@ module.exports =
   MARKETING_SIGNUP_MODAL_SLUG: 'miami'
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
-  EOY_2016_TEASER_THANKS: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser-thanks.html'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

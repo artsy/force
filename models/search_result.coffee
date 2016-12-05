@@ -38,6 +38,8 @@ module.exports = class SearchResult extends Backbone.Model
       "/show/#{@get('id')}"
     else if @get('model') is 'sale'
       "/auction/#{@get('id')}"
+    else if @get('model') is 'city'
+      "/shows/#{@get('id')}"
     else
       "/#{@get('model')}/#{@get('id')}"
 
@@ -80,6 +82,8 @@ module.exports = class SearchResult extends Backbone.Model
       @formatShowAbout()
     else if @get('display_model') in ['Artwork', 'Feature', 'Gallery']
       @get('description')
+    else if @get('display_model') == 'City'
+      @formatCityAbout()
     else undefined
 
   status: ->
@@ -92,6 +96,9 @@ module.exports = class SearchResult extends Backbone.Model
             'running'
           else
             'upcoming'
+
+  formatCityAbout: ->
+    "Browse current exhibitions in #{@get('display')}"
 
   formatArticleAbout: ->
     if publishedTime = @get('published_at')
