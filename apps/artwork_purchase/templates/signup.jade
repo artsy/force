@@ -1,0 +1,48 @@
+form.ap-signup.artwork-purchase__signup_form
+  h2 Create an account to send your request
+  .artwork-purchase__blurb
+    | Create an account to recieve alerts when new works are available by artists you like.
+  .ap-signup__errors.js-ap-signup-form-errors
+    //- Rendered separately
+  .artwork-purchase__inputs
+    .artwork-purchase__input-full-width
+      label( for='ap-signup-name') Full Name
+      input.bordered-input(
+        id='name'
+        name='name'
+        type='text'
+        placeholder='Full Name'
+        required
+      )
+
+    .artwork-purchase__input-full-width
+      label( for='ap-signup-email') Email
+      input.bordered-input(
+        id='ap-signup-email'
+        name='email'
+        type='email'
+        placeholder='Email'
+        required
+      )
+
+    .artwork-purchase__input-full-width
+      label( for='ap-signup-password') Password
+      input.bordered-input(
+        id='ap-signup-password'
+        name='password'
+        type='password'
+        placeholder='Password'
+        autocomplete='on'
+        pattern='.{6,}'
+        title='6 characters minimum'
+        autofocus
+        required
+      )
+
+    .ap-signup__submit
+      span
+        | By signing up, you agree to our&nbsp;
+        a.fine-faux-underline( href='/terms', target='_blank' ) Terms of Use
+        = ' and '
+        a.fine-faux-underline( href='/privacy', target='_blank' ) Privacy Policy
+        | .

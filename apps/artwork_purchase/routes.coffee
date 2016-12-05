@@ -4,6 +4,7 @@ metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
+User = require '../../models/user.coffee'
 splitTest = require '../../components/split_test/index.coffee'
 query = """
   query artwork($id: String!) {
@@ -38,7 +39,7 @@ query = """
     .then ({ artwork }) ->
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
-      res.render 'index', { artwork }
+      res.render 'index', { artwork, user: req.user }
 
     .catch next
 

@@ -101,6 +101,7 @@ module.exports = class CurrentUser extends User
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
   @orNull: ->
+    console.log sd.CURRENT_USER
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
 
   fetchCreditCards: (options) ->
