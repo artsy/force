@@ -226,6 +226,11 @@
       "from": "git://github.com/artsy/artsy-eigen-web-association.git",
       "resolved": "git://github.com/artsy/artsy-eigen-web-association.git#450a847d059ae4903e2cc83bd6cec388de656567"
     },
+    "artsy-error-handler": {
+      "version": "1.0.2",
+      "from": "artsy-error-handler@latest",
+      "resolved": "https://registry.npmjs.org/artsy-error-handler/-/artsy-error-handler-1.0.2.tgz"
+    },
     "artsy-ezel-components": {
       "version": "0.0.5",
       "from": "git://github.com/artsy/artsy-ezel-components.git",
