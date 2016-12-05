@@ -139,8 +139,11 @@ describe 'PartnerFilterFacet', ->
       @facet.isMatched('st petersburg', 'St -Petersburg').should.be.ok()
       @facet.isMatched('st petersburg', 'St- -Petersburg').should.be.ok()
 
-    it 'allows additinal whitespaces', ->
+    it 'allows additional whitespaces', ->
       @facet.isMatched('  st   petersburg ', 'St. Petersburg').should.be.ok()
+
+    it 'ignores diacritics', ->
+      @facet.isMatched('zur', 'Zürich').should.be.ok()
 
   describe '#async_matcher', ->
     beforeEach ->
