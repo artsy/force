@@ -23,7 +23,7 @@
     "accounting": "^0.4.1",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
-    "artsy-error-handler": "^1.0.2",
+    "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-newrelic": "^1.1.0",
     "artsy-passport": "^1.3.0",
