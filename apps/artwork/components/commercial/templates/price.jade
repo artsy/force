@@ -1,3 +1,18 @@
 if artwork.sale_message
-  .artwork-commercial__sale-message
-    = artwork.sale_message
+  .artwork-commercial__container
+    .artwork-commercial__sale-message
+      if artwork.price
+        .artwork-commercial__price-label= !artwork.is_price_range ? 'Price' : 'Price Range'
+        .artwork-commerical__price
+          | #{artwork.price}
+          span(
+            class= artwork.is_price_range ? 'help-tooltip' : ''
+            data-message= 'The range is an approximate indication of the work’s price point, and the exact price is quoted upon request.'
+            data-anchor= 'bottom-right'
+          )
+      else
+        | #{artwork.sale_message}
+
+    if artwork.price
+      .artwork-commercial__shipping-info
+        | Shipping, tax, and service quoted by seller
