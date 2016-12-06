@@ -1,5 +1,4 @@
 title= article.get('search_title') ? article.get('search_title') : article.get('thumbnail_title')
-meta( property="og:title", content=article.get('thumbnail_title') )
 link( rel="canonical", href=(sd.APP_URL + '/article/' + article.get('slug')) )
 meta( property="og:site_name" content='Artsy' )
 meta( property="og:url", content=(sd.APP_URL + '/article/' + article.get('slug')) )
@@ -15,7 +14,6 @@ meta( property='fb:app_id', content=sd.FACEBOOK_ID )
 
 //- Search Description
 meta( property='description', content= article.get('search_description') ? article.get('search_description') : article.get('description'))
-
 //- Social Image
 meta( property="og:image", content= article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image') )
 meta( property="twitter:image" content= article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'))
@@ -23,8 +21,8 @@ meta( property="twitter:image" content= article.get('social_image') ? article.ge
 meta( name='twitter:description' content= article.get('social_description') ? article.get('social_description') : article.get('description'))
 meta( name='og:description' content= article.get('social_description') ? article.get('social_description') : article.get('description'))
 //- Social Title
-meta( name='twitter:description' content= article.get('social_description') ? article.get('social_description') : article.get('description'))
-meta( name='og:description' content= article.get('social_description') ? article.get('social_description') : article.get('description'))
+meta( name='twitter:title' content= article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title'))
+meta( name='og:title' content= article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title'))
 
 //- Keywords
 if article.get('keywords') && article.get('keywords').length
