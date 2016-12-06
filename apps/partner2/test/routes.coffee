@@ -18,7 +18,7 @@ describe 'Partner routes', ->
     Backbone.sync.restore()
 
   describe '#requireNewLayout', ->
-    _.each ['gallery_one', 'gallery_two', 'gallery_three'], (layout) ->
+    _.each ['gallery_one', 'gallery_two', 'gallery_three', 'institution'], (layout) ->
       it "nexts to the middleware in this route stack if the profile layout is #{layout}", ->
         partnerProfile = new Profile fabricate 'partner_profile',
           owner: fabricate 'partner', profile_layout: layout
@@ -27,8 +27,6 @@ describe 'Partner routes', ->
         @next.calledOnce.should.be.ok
         _.isUndefined(@next.args[0][0]).should.be.ok()
 
-    # TODO Update this test when institutions are approved
-    # _.each ['institution', 'gellery_default', 'gallery_deprecated'], (layout) ->
     _.each ['gellery_default', 'gallery_deprecated'], (layout) ->
       it "skips the middlewares from this route stack if the profile layout is #{layout}", ->
         deprecatedLayoutPartnerProfile = new Profile fabricate 'partner_profile',
