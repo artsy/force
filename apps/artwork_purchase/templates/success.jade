@@ -3,7 +3,8 @@
     img.artwork-purchase__artwork-image( src= artwork.image.url )
     .ap-success__message
       | Your request has been sent to #{artwork.partner.name}
-      .icon-circle-check
+      .ap-success__green-check
+        include ../../../components/main_layout/public/icons/green-check.svg
   .artwork-purchase__section
     h1 What's next?
   .artwork-purchase__section.ap-success__next
