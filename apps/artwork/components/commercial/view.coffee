@@ -1,5 +1,5 @@
 { pick, extend } = require 'underscore'
-{ PURCHASE_FLOW } = require('sharify').data
+{ PURCHASE_FLOW, NODE_ENV } = require('sharify').data
 Backbone = require 'backbone'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
@@ -28,7 +28,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
 
     if artwork.is_purchasable
       splitTest('purchase_flow').view()
-      @usePurchaseFlow = PURCHASE_FLOW is 'purchase'
+      # @usePurchaseFlow = PURCHASE_FLOW is 'purchase'
+      @usePurchaseFlow = NODE_ENV is 'development' or NODE_ENV is 'staging'
 
     @artwork = new Artwork artwork
 

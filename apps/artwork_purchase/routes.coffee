@@ -1,4 +1,5 @@
 { extend } = require 'underscore'
+{ NODE_ENV, PURCHASE_FLOW } = require('sharify').data
 metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
@@ -30,7 +31,8 @@ query = """
 @index = (req, res, next) ->
   send = query: query, variables: req.params
   return if metaphysics.debug req, res, send
-  purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  purchaseFlow = (res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging')
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   metaphysics send
     .then ({ artwork }) ->
@@ -41,6 +43,7 @@ query = """
     .catch next
 
 @thankYou = (req, res, next) ->
-  purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   res.redirect "/artwork/#{req.params.id}/checkout"
