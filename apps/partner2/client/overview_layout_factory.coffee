@@ -22,6 +22,7 @@ module.exports = (partner, profile) ->
       galleryTwoNews partner, profile
       galleryTwoShows partner, profile
       galleryTwoFairBooths partner, profile
+      galleryTwoArtists partner, profile
       galleryTwoArticles partner, profile
     ]
     gallery_default: [
