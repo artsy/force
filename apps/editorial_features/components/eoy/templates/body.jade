@@ -5,6 +5,7 @@ section.article-body__intro(data-section=0)
     .spacer
     h3!= markdown(curation.get('intro'))
     .spacer
+  footer
 .article-body__content
   for section, i in curation.get('sections')
     section(data-section='#{i + 1}')
@@ -29,7 +30,7 @@ section.article-body__intro(data-section=0)
                 img(src=section.image width='800')
               .caption!= markdown(section.caption)
         article
-          if i == 2 || i == 3
+          if i > 1 || i == 3
             .spacer--article
           .article-body--section__text!= markdown(section.body)
             if i == 4 || i == 5
@@ -67,4 +68,5 @@ section.article-body__intro(data-section=0)
               .caption This image and its caption are manually edited.
               .spacer
             .spacer--article
+        footer
 section
