@@ -8,7 +8,7 @@ module.exports = class BidderPositions extends Backbone.Collection
   model: BidderPosition
 
   url: ->
-    "#{API_URL}/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
+    "#{API_URL}/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}&retracted=false"
 
   initialize: (models, options = {}) ->
     { @saleArtwork, @sale } = options
