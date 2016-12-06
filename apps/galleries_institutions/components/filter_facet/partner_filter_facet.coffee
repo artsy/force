@@ -36,8 +36,8 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     escape= (s) ->
       s.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
 
-    query = AsciiFolder.fold(query)
-    regex = _s.clean(escape(query)).replace(' ', '\\W* \\W*')
+    foldedQuery = AsciiFolder.fold(query)
+    regex = _s.clean(escape(foldedQuery)).replace(' ', '\\W* \\W*')
     substrRegex = new RegExp(regex, 'i')
     substrRegex.test AsciiFolder.fold(string)
 
