@@ -6,6 +6,7 @@ analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 LoggedOutUser = require '../../../models/logged_out_user.coffee'
 sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
 Mailcheck = require '../../../components/mailcheck/index.coffee'
+Cookies = require 'cookies-js'
 
 module.exports = class PurchaseSignupForm extends Backbone.View
   _.extend @prototype, Form
@@ -17,29 +18,31 @@ module.exports = class PurchaseSignupForm extends Backbone.View
   #   Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   submit: ({ success, error, isWithAccountCallback }) ->
-    console.log 'submit signup'
-
+    console.log 'submit'
     @user.set (data = @serializeForm())
-    @user.related().account.fetch().then =>
-      console.log 'hello'
-      if @user.isWithAccount()
-        console.log 'is with account'
-        isWithAccountCallback()
-      else
-        console.log 'is not with account'
-        @signup { success, error }
+    @user.related().account.fetch
+      complete: =>
+        console.log 'complete'
+        console.log @user, @user.isWithAccount()
+        if @user.isWithAccount()
+          isWithAccountCallback()
+        else
+          @signup { success, error }
 
   signup: ({ success, error }) ->
+    debugger
     @user.signup
-      success: =>
-        console.log 'sign up success'
-        analyticsHooks.trigger "auth:signup"
-        @user.repossess @user.id
-          success: success?()
-          error: error
+      success: success
+        # debugger
+        # analyticsHooks.trigger "auth:signup"
+        # @user.repossess @user.id,
+        #   success: success
+        #   error: (model, response, options) =>
+        #     @showError @errorMessage response
+        #     error?()
 
       error: (model, response, options) =>
-        console.log 'sign up error'
+        debugger
         @showError @errorMessage response
         error?()
 

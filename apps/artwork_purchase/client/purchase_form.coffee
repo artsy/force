@@ -12,6 +12,7 @@ module.exports = class PurchaseForm extends Backbone.View
     @inquiry = new ArtworkInquiry
 
   submit: ({ success, error })->
+    debugger
     user = CurrentUser.orNull()
     if not user
       console.log 'Attempted to submit inquiry without user'
@@ -30,10 +31,7 @@ module.exports = class PurchaseForm extends Backbone.View
     }
 
     @inquiry.save null,
-      success: ->
-        console.log 'inquiry success'
-        success()
+      success: success
       error: (model, response, options) =>
-        console.log 'inquiry error'
         @$('.js-ap-form-errors').html @errorMessage(response)
         error?()

@@ -28,23 +28,29 @@ query = """
 
 """
 
-
 @index = (req, res, next) ->
-  send = query: query, variables: req.params
   return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  purchaseFlow = (res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging')
+  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
+  send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
-      res.render 'index', { artwork, user: req.user }
-
+      res.render 'index', { artwork, user: req.user, bodyClass: 'minimal-header body-artwork-purchase' }
     .catch next
 
 @thankYou = (req, res, next) ->
+  return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
+  console.log purchaseFlow
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
-  res.redirect "/artwork/#{req.params.id}/checkout"
+  send = query: query, variables: req.params
+  metaphysics send
+    .then ({ artwork }) ->
+      return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
+      res.locals.sd.ARTWORK = artwork
+      res.render 'success', { artwork }
+    .catch next

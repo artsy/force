@@ -11,6 +11,8 @@ AuthModalView = require '../../../components/auth_modal/view.coffee'
 class PurchaseView extends Backbone.View
 
   initialize: ({ @artwork }) ->
+    @loggedIn = CurrentUser.orNull()?
+
     @$button = @$ '.js-ap-summary-submit'
 
     @purchaseForm = new PurchaseForm
@@ -18,13 +20,10 @@ class PurchaseView extends Backbone.View
       $button: @$button
       artwork: @artwork
 
-    if @needsSignup()
+    if not @loggedIn
       @signupForm = new SignupForm
         el: @$ '.js-ap-signup'
         $button: @$button
-
-  needsSignup: ->
-    not CurrentUser.orNull()
 
   events:
     'submit .js-ap-purchase form'  : 'onSubmit'
@@ -32,57 +31,72 @@ class PurchaseView extends Backbone.View
     'click  .js-ap-summary-submit' : 'onSubmit'
 
   onSubmit: (e) =>
-    @$button.blur()
-    return if not @validateForms()
-    return if @formsAreSubmitting()
     e.preventDefault()
-    @submit()
+    @$button.blur()
+    console.log 'onSubmit'
+    if @loggedIn then @submitPurchaseForm() else @submitSignupForm()
 
-  validateForms: ->
-    valid = @purchaseForm.validateForm()
-    valid = (@signupForm.validateForm() and valid) if @needsSignup()
-    return valid
+# Signup
+  # Submit
 
-  formsAreSubmitting: ->
-    purchaseSubmitting = @purchaseForm.formIsSubmitting()
-    return if @needsSignup() then @signupForm.formIsSubmitting() else purchaseSubmitting
-
-  submit: ->
+  submitSignupForm: (form, options)->
+    console.log 'submit signup'
+    # Validate both forms before moving on.
+    # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
+    signupValid = @signupForm.validateForm()
+    return if not (@purchaseForm.validateForm() and signupValid)
+    console.log @purchaseForm.validateForm()
+    return if @signupForm.formIsSubmitting() or @purchaseForm.formIsSubmitting()
+    console.log 'submit signup 2'
     @loadingButton()
-
-    submitPurchase = @purchaseForm.submit
-      success: @purchaseSucces
-      error: @purchaseError
-
-    return submitPurchase() if not @needsSignup()
-
     @signupForm.submit
-      success: submitPurchase
+      success: @signupSuccess
       error: @signupError
       isWithAccountCallback: @isWithAccount
 
-# Signup Callbacks
+  # Callbacks
+
+  signupSuccess: =>
+    debugger
+    @purchaseForm.submit
+      success: @purchaseSuccess
+      error: @purchaseError
 
   isWithAccount: =>
+    @signupForm.reenableForm()
+    @purchaseForm.reenableForm()
     @normalButton()
     return new AuthModalView
       width: '500px',
       mode: 'login'
+      redirect: @artwork.href + '/checkout'
 
   signupError: =>
+    debugger
     @signupForm.reenableForm()
     @purchaseForm.reenableForm()
     @errorButton()
 
-#Purchase Callbacks
+#Purchase
+  #Submit
+
+  submitPurchaseForm: (form, options) ->
+    console.log 'submit purchase'
+    return if not @purchaseForm.validateForm()
+    return if @purchaseForm.formIsSubmitting()
+    @loadingButton()
+    @purchaseForm.submit
+      success: @purchaseSuccess
+      error: @purchaseError
+
+  #Callbacks
 
   purchaseSuccess: =>
-    Backbone.history.navigate @artwork.href + '/thank-you', replace: true
-    $('.body-artwork-purchase').removeClass 'minimal-header'
-    @$el.html successTemplate { @artwork }
-    $('html,body').scrollTop(0);
+    debugger
+    window.location = @artwork.href + '/thank-you'
 
   purchaseError: =>
+    debugger
     @purchaseForm.reenableForm()
     @errorButton()
 
