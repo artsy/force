@@ -1,15 +1,14 @@
 title= article.get('search_title') ? article.get('search_title') : article.get('thumbnail_title')
-link( rel="canonical", href=(sd.APP_URL + '/article/' + article.get('slug')) )
+link( rel="canonical", href=(sd.APP_URL + '/2016-year-in-art') )
 meta( property="og:site_name" content='Artsy' )
-meta( property="og:url", content=(sd.APP_URL + '/article/' + article.get('slug')) )
+meta( property="og:url", content=(sd.APP_URL + '/2016-year-in-art') )
 meta( property="og:type", content="article" )
 meta( property="og:published_time", content=article.get('published_at') )
 meta( property="article:published_time", content=article.get('published_at') )
 meta( property='article:publisher', content='https://www.facebook.com/artsy/')
 meta( name='twitter:site', content='@artsy' )
-meta( property='twitter:url', content=(sd.APP_URL + '/article/' + article.get('slug')) )
+meta( property='twitter:url', content=(sd.APP_URL + '/2016-year-in-art') )
 meta( property="twitter:card", content="summary_large_image" )
-meta( name='cre', content='Artsy' )
 meta( property='fb:app_id', content=sd.FACEBOOK_ID )
 
 //- Search Description
@@ -45,21 +44,8 @@ if article.get('published')
       - var src = article.get('email_metadata').image_url
       meta( name="sailthru.image.full" content=crop(src, { width: 1200, height: 706 } ))
       meta( name="sailthru.image.thumb" content=crop(src, { width: 900, height: 530 } ))
-  - var keywords = ['article']
-  if article.get('featured') === true
-    - keywords = keywords.concat(['magazine'])
+  - var keywords = ['article', 'magazine']
   if article.get('keywords') && article.get('keywords').length
     - keywords = keywords.concat(article.get('keywords'))
   meta( name="sailthru.tags" content=keywords.join(','))
   meta( name="sailthru.date" content=article.get('published_at'))
-
-if sd.INCLUDE_ESCAPED_FRAGMENT
-  meta( name='fragment', content='!' )
-if article.get('contributing_authors') && article.get('contributing_authors').length
-  - for author in article.get('contributing_authors')
-      if author.name
-        meta( name='author', content=author.name )
-      if author.facebook_uid
-        meta( property='article:author', content=author.facebook_uid )
-      if author.twitter_uid
-        meta( property='twitter:creator:id', content=author.twitter_uid )

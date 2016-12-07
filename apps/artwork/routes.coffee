@@ -3,6 +3,7 @@ metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
+splitTest = require '../../components/split_test/index.coffee'
 
 query = """
   query artwork($id: String!) {
@@ -63,9 +64,12 @@ bootstrap = ->
   send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
-
+  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
   metaphysics send
     .then (data) ->
+      data.purchaseFlow = purchaseFlow
+      data.eligibleForPurchase = data.artwork.is_purchasable
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params

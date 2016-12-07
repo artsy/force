@@ -122,3 +122,21 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[1][1].toJSON()._csrf.should.equal 'csrfoo'
+
+  describe '#onSubmitSuccess', ->
+    beforeEach ->
+      @view.state = new Backbone.Model mode: 'reset'
+      @view.user = new LoggedOutUser
+      sinon.stub @view, 'reenableForm'
+      @submitSpy = sinon.spy $.fn, 'submit'
+
+    afterEach ->
+      @view.reenableForm.restore()
+      @submitSpy.restore()
+
+    it 'does not submit form if the the mode is password reset', ->
+      @view.onSubmitSuccess @view.user, { success: 200 }
+      @submitSpy.should.be.calledOnce
+      
+
+

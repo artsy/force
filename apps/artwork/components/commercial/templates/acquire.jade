@@ -3,4 +3,7 @@ if artwork.is_acquireable
     input( type='hidden', name='artwork_id', value= artwork.id )
 
     button.avant-garde-button-black.is-block( class='js-artwork-acquire-button' )
-      | Buy
+      if purchaseFlow
+        | Purchase
+      else
+        | Buy

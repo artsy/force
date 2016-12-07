@@ -1,0 +1,32 @@
+.ap-summary
+  .ap-summary__split
+    .ap-summary__section
+      .ap-summary__row.ap-summary__top
+        img.artwork-purchase__artwork-image( src= artwork.image.url )
+        .ap-summary__meta
+          .ap-summary__artist= artwork.artist_names
+          .ap-summary__title= artwork.title
+          .ap-summary__partner= artwork.partner.name
+    .ap-summary__section
+      .ap-summary__row.ap-summary-price
+        .ap-summary__left Price
+        b.ap-summary__right= artwork.sale_message
+    .ap-summary__section
+      .ap-summary__row.ap-summary-shipping
+        .ap-summary__left Shipping
+        .ap-summary__right Quoted by seller
+      .ap-summary__row.ap-summary-tax
+        .ap-summary__left Tax
+        .ap-summary__right Quoted by seller
+    .ap-summary__section.ap-summary-total
+      .ap-summary__row
+        .ap-summary__left Total
+        .ap-summary__right Quoted by seller
+      button.js-ap-summary-submit.avant-garde-button-black.is-block(
+        href= '#',
+        data-state= 'ok',
+        type= 'submit',
+        value= 'Sumbit'
+      ) Send Request
+      .ap-summary-cancel-message
+        | You may cancel your purchase within 72 hours after receiving the gallery's quote.

@@ -1,0 +1,149 @@
+@require '../../components/stylus_lib'
+
+
+body.body-artwork-purchase
+  #main-layout-container
+    max-width 100%
+    margin main-header-height + 50px 0px 0px 0px
+
+  &.minimal-header #main-layout-container
+    margin 50px 0px 0px 0px
+
+a#purchase-page-header-title
+  avant-garde-size('body')
+  text-decoration none
+  padding 20px 0 20px 17px
+.artwork-purchase
+  &__section
+    margin-top 50px
+
+#purchase-page
+  margin-bottom 165px
+  h1
+    white-space nowrap
+    garamond-size('l-headline')
+  h2
+    white-space nowrap
+    garamond-size('headline')
+  .artwork-purchase
+    &__form
+      clearfix()
+    &__inputs
+      width calc('60% - 40px')
+      float left
+      label
+        margin 22px 0 16px 0
+        avant-garde-size('s-headline')
+        display block
+      .bordered-input
+        width: 100%
+    &__input-full-width
+        width 100%
+    &__input-half-width
+        width calc('50% - 5px')
+    &__address-inputs
+      display flex
+      flex-wrap wrap
+      justify-content space-between
+    &__message
+      &__blurb
+        garamond-size(s-body)
+        color gray-darker-color
+        margin-bottom 25px
+      textarea
+        height 145px
+    &__artwork-image
+        display block
+        width 56px
+        height @width
+
+  .ap-summary
+    float right
+    width calc('40% - 40px')
+    border 2px solid gray-lightest-color
+    &__top
+      display flex
+    &__meta
+      color gray-darker-color
+      garamond-size(s-body)
+      white-space nowrap
+      margin -4px 0 0 10px
+      line-height 1.3
+    &__artist
+      font-style bold
+    &__title
+      font-style italic
+    &__top, &__meta, &__artist, &__title, &__partner
+      overflow hidden
+    &__artist, &__title, &__partner
+      text-overflow ellipsis
+
+    &__row
+      // margin 30px
+      garamond-size('l-body')
+      clearfix()
+      &:not(.ap-summary-price) .ap-summary__right
+        color gray-darker-color
+    &__split, &__section
+      &:not(:last-child)
+        border-bottom 1px solid gray-lightest-color
+    &__section
+      margin 25px 30px
+    &__row
+      margin 20px 0
+    &__left
+      float left
+    &__right
+      float right
+    .ap-summary-cancel-message
+      garamond-size 'l-caption'
+      color gray-darker-color
+      margin-top 15px
+
+  .ap-how
+    padding-bottom 50px
+    border-bottom 1px solid gray-lightest-color
+    display flex
+    > *
+      &:first-child
+        padding-left 0
+      &:last-child
+        padding-right 0
+      padding 0 30px
+    &__item
+      flex-basis 40%
+      display flex
+      align-items center
+      &:last-child
+        border-left 1px solid gray-lightest-color
+    &__item-explanation
+      garamond-size('l-body')
+      margin-left 15px
+
+  .ap-success
+    garamond-size(l-body)
+    h1, &__next
+      text-align center
+    &__green-check
+      display inline
+      vertical-align middle
+      margin-left 8px
+    &__top
+      border 1px solid gray-lightest-color
+      background-color #f8f8f8
+      display flex
+      align-items center
+      padding 30px
+      justify-content flex-start
+    &__message
+      padding-left 20px
+    &__next-step-images, &__next-step-text
+      display flex
+      align-items center
+      justify-content space-around
+    &__next-step-text
+      margin-top 30px
+    &__step
+      width calc(25%\-40px)
+      flex-grow 0
+      flex-shink 0

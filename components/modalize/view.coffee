@@ -6,14 +6,17 @@ Scrollbar = require '../scrollbar/index.coffee'
 module.exports = class Modalize extends Backbone.View
   className: 'modalize'
 
-  defaults: dimensions: width: '400px'
+  defaults:
+    dimensions:
+      width: '400px'
+    backdropCloses: true
 
   events:
     'click .js-modalize-backdrop': 'maybeClose'
     'click .js-modalize-close': 'clickClose'
 
   initialize: (options = {}) ->
-    { @subView, @dimensions } = _.defaults options, @defaults
+    { @subView, @dimensions, @backdropCloses } = _.defaults options, @defaults
     @scrollbar = new Scrollbar
     $(window).on 'keyup.modalize', @escape
 
@@ -65,7 +68,7 @@ module.exports = class Modalize extends Backbone.View
     @close(null, e) if e.which is 27
 
   maybeClose: (e) ->
-    @close(null, e) if $(e.target).hasClass('js-modalize-backdrop')
+    @close(null, e) if @backdropCloses and $(e.target).hasClass('js-modalize-backdrop')
 
   clickClose: (e) ->
     @close(null, e)
