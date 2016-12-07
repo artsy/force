@@ -31,7 +31,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     $(window).scroll () =>
-      if window.scrollY != @windowPosition
+      if $(window).scrollTop() != @windowPosition
         watchScrolling = _.throttle(@watchScrolling, 30)
         watchScrolling()
     $(window).resize () =>
@@ -53,9 +53,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
-  watchScrolling: =>
-    scrollTop = window.scrollY
-    scrollTop = Math.round(scrollTop)
+  watchScrolling: (scrollTop) =>
+    if scrollTop
+      scrollTop = Math.round(scrollTop)
+    else
+      scrollTop = $(window).scrollTop()
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
