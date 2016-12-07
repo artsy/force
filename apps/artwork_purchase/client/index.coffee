@@ -2,52 +2,60 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 { ARTWORK } = require('sharify').data
 Form = require '../../../components/mixins/form.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+User = require '../../../models/user.coffee'
 PurchaseForm = require './purchase_form.coffee'
 SignupForm = require './purchase_signup_form.coffee'
 successTemplate = ->require('../templates/success.jade') arguments...
 AuthModalView = require '../../../components/auth_modal/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 class PurchaseView extends Backbone.View
 
   initialize: ({ @artwork }) ->
-    @loggedIn = CurrentUser.orNull()?
-
+    @user = User.instantiate()
     @$button = @$ '.js-ap-summary-submit'
 
     @purchaseForm = new PurchaseForm
       el: @$ '.js-ap-purchase'
       $button: @$button
       artwork: @artwork
-
-    if not @loggedIn
+      user: @user
+    if @user.isLoggedOut()
       @signupForm = new SignupForm
         el: @$ '.js-ap-signup'
         $button: @$button
+        user: @user
 
   events:
     'submit .js-ap-purchase form'  : 'onSubmit'
     'submit .js-ap-signup form'    : 'onSubmit'
     'click  .js-ap-summary-submit' : 'onSubmit'
+    'click  .js-ap-login'          : 'onLoginClick'
 
   onSubmit: (e) =>
     e.preventDefault()
     @$button.blur()
-    console.log 'onSubmit'
-    if @loggedIn then @submitPurchaseForm() else @submitSignupForm()
+    if @user.isLoggedIn() then @submitPurchaseForm() else @submitSignupForm()
+
+  onLoginClick: (e) =>
+    e.preventDefault()
+    @openLoginModal()
+
+  openLoginModal: (copy) ->
+    mediator.trigger 'open:auth',
+      mode: 'login'
+      redirectTo: @artwork.href + '/checkout'
+      copy: copy
 
 # Signup
   # Submit
 
   submitSignupForm: (form, options)->
-    console.log 'submit signup'
     # Validate both forms before moving on.
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
     signupValid = @signupForm.validateForm()
     return if not (@purchaseForm.validateForm() and signupValid)
-    console.log @purchaseForm.validateForm()
     return if @signupForm.formIsSubmitting() or @purchaseForm.formIsSubmitting()
-    console.log 'submit signup 2'
     @loadingButton()
     @signupForm.submit
       success: @signupSuccess
@@ -57,7 +65,6 @@ class PurchaseView extends Backbone.View
   # Callbacks
 
   signupSuccess: =>
-    debugger
     @purchaseForm.submit
       success: @purchaseSuccess
       error: @purchaseError
@@ -66,13 +73,9 @@ class PurchaseView extends Backbone.View
     @signupForm.reenableForm()
     @purchaseForm.reenableForm()
     @normalButton()
-    return new AuthModalView
-      width: '500px',
-      mode: 'login'
-      redirect: @artwork.href + '/checkout'
+    @openLoginModal "We found an Artsy account associated with #{@user.get 'email'}. Please log in to continue."
 
   signupError: =>
-    debugger
     @signupForm.reenableForm()
     @purchaseForm.reenableForm()
     @errorButton()
@@ -81,7 +84,6 @@ class PurchaseView extends Backbone.View
   #Submit
 
   submitPurchaseForm: (form, options) ->
-    console.log 'submit purchase'
     return if not @purchaseForm.validateForm()
     return if @purchaseForm.formIsSubmitting()
     @loadingButton()
@@ -92,11 +94,9 @@ class PurchaseView extends Backbone.View
   #Callbacks
 
   purchaseSuccess: =>
-    debugger
     window.location = @artwork.href + '/thank-you'
 
   purchaseError: =>
-    debugger
     @purchaseForm.reenableForm()
     @errorButton()
 

@@ -96,7 +96,6 @@ module.exports = class AuthModalView extends ModalView
     @state.set 'mode', $(e.target).data('mode')
 
   submit: (e) ->
-    console.log 'submit'
     return unless @validateForm()
     return if @formIsSubmitting()
 
@@ -113,7 +112,6 @@ module.exports = class AuthModalView extends ModalView
         mediator.trigger 'auth:error', message
 
   onSubmitSuccess: (model, response, options) =>
-    console.log 'success'
     analyticsHooks.trigger "auth:#{@state.get 'mode'}"
     @reenableForm null, reset: false
 

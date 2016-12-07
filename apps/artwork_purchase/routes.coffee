@@ -45,7 +45,6 @@ query = """
   return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
-  console.log purchaseFlow
   return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
   send = query: query, variables: req.params
   metaphysics send

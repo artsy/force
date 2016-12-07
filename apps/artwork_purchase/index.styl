@@ -19,6 +19,7 @@ a#purchase-page-header-title
 
 #purchase-page
   margin-bottom 165px
+  clearfix()
   h1
     white-space nowrap
     garamond-size('l-headline')
@@ -33,7 +34,6 @@ a#purchase-page-header-title
     .bordered-input
       width: 100%
   .artwork-purchase
-    clearfix()
     &__left
       float left
       width calc('60% - 40px')
@@ -48,7 +48,7 @@ a#purchase-page-header-title
       display flex
       flex-wrap wrap
       justify-content space-between
-    &__blurb
+    &__text
       garamond-size(s-body)
       color gray-darker-color
       margin-bottom 25px
@@ -103,7 +103,11 @@ a#purchase-page-header-title
       garamond-size 'l-caption'
       color gray-darker-color
       margin-top 15px
-
+  .ap-signup
+    &__login
+      margin-top 20px
+      a
+        color gray-darker-color
   .ap-how
     padding-bottom 50px
     border-bottom 1px solid gray-lightest-color
