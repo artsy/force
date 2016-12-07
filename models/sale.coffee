@@ -169,7 +169,7 @@ module.exports = class Sale extends Backbone.Model
     else if @get('live_start_at') and not @isLiveOpen()
       "Live bidding begins #{zone 'live_start_at'}"
     else if @get('live_start_at')
-      "Live bidding open"
+      "Live bidding now open"
     else if @isPreviewState()
       "Auction opens #{zone 'start_at'}"
     else

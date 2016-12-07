@@ -38,7 +38,7 @@ setupActiveBidsView = (module, $el, user) ->
   mabView.fetch().then -> mabView.render().poll()
 
 auctionTimeLabel = (auction) ->
-  if auction.live_start_at then "Live bidding begins #{auction.live_start_at}" else "#{auction.start_at} - #{moment(auction.end_at).format("MMM D")}"
+  if auction.live_start_at then "Live bidding starts #{moment(auction.live_start_at).format("MMM D")}" else "#{auction.start_at} - #{moment(auction.end_at).format("MMM D")}"
 
 auctionClosesLabel = (auction) ->
   if auction.live_start_at then '' else "Closes #{moment(auction.end_at).format("MMM D [at] ha", timezone: moment.tz.guess())}"

@@ -105,7 +105,7 @@ module.exports =
 
   formatAuctionDetail: (auction) ->
     if auction.live_start_at and moment().isAfter(auction.live_start_at)
-      'Live Bidding Open'
+      'Live Bidding Now Open'
     else
       label = if auction.live_start_at then 'Live Bidding Opens' else 'Auction Closes'
       end = if auction.live_start_at then moment(auction.live_start_at) else moment(auction.end_at)
