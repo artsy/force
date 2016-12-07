@@ -8,8 +8,7 @@ module.exports =
         url
       }
     }
-    birthday
-    nationality
+    formatted_nationality_and_birthday
     years
     counts {
       artworks
