@@ -9,8 +9,6 @@ sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
 { resize } = require '../../../../components/resizer/index.coffee'
 
-Q = require 'bluebird-q'
-
 module.exports.EoyView = class EoyView extends Backbone.View
 
   el: $('body')
@@ -30,14 +28,16 @@ module.exports.EoyView = class EoyView extends Backbone.View
     new SuperArticleView el: $('body'), article: @article
 
   watchWindow: =>
+    watchScrolling = _.throttle(@watchScrolling, 30)
     $(window).scroll () =>
       if $(window).scrollTop() != @windowPosition
-        watchScrolling = _.throttle(@watchScrolling, 30)
         watchScrolling()
     $(window).resize () =>
       @setupSliderHeight()
+      @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
       $.waypoints('refresh')
+      watchScrolling()
 
   getScrollZones: =>
     scrollZones = []
@@ -53,18 +53,16 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
-  watchScrolling: (scrollTop) =>
-    if scrollTop
-      scrollTop = Math.round(scrollTop)
-    else
-      scrollTop = $(window).scrollTop()
+  watchScrolling: =>
+    @loadBody()
+    scrollTop = $(window).scrollTop()
+    scrollTop = Math.round(scrollTop)
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
     if scrollTop <= @openHeight
       @doSlider(scrollTop)
-    if scrollTop >= @getScrollZones()[6]
-      @loadBody()
+    if scrollTop >= @getScrollZones()[8]
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
@@ -116,6 +114,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @bodyInView()
     @firstSectionInView()
     @setImages()
+    @boundaries = @getBodySectionTopBoundaries()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @boundaries = @getBodySectionTopBoundaries()
@@ -157,14 +156,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $(e.target).removeClass('active')
 
   getBodySectionTopBoundaries: () =>
-    sectionTops = []
+    boundaries = []
     for section, i in $('.article-body section')
       top = $(section).position().top
       if i < 1
-        sectionTops.push top - @windowHeight
+        boundaries.push top - @windowHeight
       else
-        sectionTops.push top - @windowHeight + 400
-    return sectionTops
+        boundaries.push top - @windowHeight + 400
+    return boundaries
 
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true
