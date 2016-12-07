@@ -120,6 +120,16 @@ describe 'PartnerView', ->
             sections = @view.getDisplayableSections @view.getSections()
             sections.should.eql ['overview', 'shows', 'collection', 'shop', 'about']
 
+          it 'returns proper sections when display_artists_section is disabled', ->
+            @partner.set display_artists_section: false
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'collection', 'shop', 'about']
+
+          it 'returns proper sections when display_artists_section is enabled', ->
+            @partner.set display_artists_section: true
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'collection', 'artists', 'shop', 'about']
+
           it 'includes articles when @partnerArticlesCount > 0', ->
             @view.partnerArticlesCount = 1
             sections = @view.getDisplayableSections @view.getSections()
