@@ -4,8 +4,13 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 fixtures = require '../../../../../test/helpers/fixtures'
-EoyView = require '../../components/eoy/client.coffee'
+Curation = require '../../../../../models/curation.coffee'
+Article = require '../../../../../models/article.coffee'
+Articles = require '../../../../../collections/articles.coffee'
 { resize } = require '../../../../../components/resizer'
+markdown = require '../../../../../components/util/markdown.coffee'
+
+
 sd = require('sharify').data
 
 describe 'EoyView', ->
@@ -15,14 +20,18 @@ describe 'EoyView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
+      $.waypoints = sinon.stub()
       $.fn.waypoint = sinon.stub()
+      window.matchMedia = sinon.stub().returns { matches: true }
+      $.fn.scrollY = sinon.stub().returns 0
+      $.fn.scrollTop = sinon.stub().returns 806
       sinon.stub Backbone, 'sync'
-      @article = new EoyView
+      @curation = new Curation
           _id: "5829db77b5989e6f98f779a5",
           intro: "Article Intro statement: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor.",
           header_video: "https://artsy-media-uploads.s3.amazonaws.com/yB2-P7P5J3v1rihLw1v8nQ%2FUrmhuJUpFOnZ52kc8DUJsg-paintbrushes_slow_1200.mp4",
           name: "Year In Art 2016",
-          type: "editorial-feature"
+          type: "editorial-feature",
           sections: [
             {
               headline: "The Artist Becomes Political",
@@ -32,49 +41,85 @@ describe 'EoyView', ->
               caption: "Installation view of Carrie Mae Weems.",
               image_second: "https://artsy-media-uploads.s3.amazonaws.com/Aw572XiO__5T0T-Tc0j4SA%2FF+Lotus%2C+2016.mp4",
               caption_second: "Lorum Ipsum caption"
-            }
+            },
+            {
+              headline: "headline 2"
+            },
+            {
+              headline: "headline 3"
+            },
+            {
+              headline: "headline 4"
+            },
+            {
+              headline: "headline 5"
+            },
+            {
+              headline: "headline 6"
+            },
+            {
+              headline: "headline 7"
+            },
+            {
+              headline: "headline 8"
+            },
+            {
+              headline: "headline 9"
+            },
+            {
+              headline: "headline 10"
+            },
           ]
-      # benv.render resolve(__dirname, '../../components/eoy/templates/index.jade'), @locals = {
-      #   article: @article
-      # }, =>
-      done()
+      sd.CURATION = @curation
+      @options = {
+        curation: @curation,
+        article: new Article(fixtures.article),
+        superSubArticles: new Articles(),
+        sd: sd,
+        markdown: markdown,
+        asset: ->
+        }
+      benv.render resolve(__dirname, '../../../components/eoy/templates/index.jade'), @options, =>
+        { EoyView } = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        @view = new EoyView
+          curation: @curation,
+          el: $('body')
+        @view.windowPosition = 0
+        @view.windowHeight = 900
+        done()
 
   after ->
     benv.teardown()
     Backbone.sync.restore()
 
-  describe '#initialize EOY feature', ->
+  describe '#initialize', ->
 
-    it 'does creates a curation and superarticle', ->
-      console.log 'hi'
+    it 'Renders content from curation and superarticle', ->
 
-    # it 'closes all scroller sections'
+      $('.scroller__items section').should.have.lengthOf 11
+      $('.article-sa-sticky-header').should.have.lengthOf 1
 
-  # describe '#watchWindow', ->
+    it 'closes all scroller sections on load', ->
 
-    # it 'calls trackDirection on scroll', ->
-    # it 'calls setupSliderHeight on resize', ->
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 0
 
-  # describe '#getScrollZones', ->
+  describe '#Slider', ->
 
-    # it 'is an array of 11 items', ->
+    it 'sets up heights for the scroller', ->
+      @view.setupSliderHeight()
+      $('.scroller__items section[data-section=0]').height().should.equal 805
+      @view.containerHeight.should.equal 805
+      @view.activeHeight.should.equal 528
+      @view.openHeight.should.equal 6160
 
-  # describe '#closestSection', ->
 
-    # it 'returns the section closest to where user scrolls', ->
+    it 'opens containers on scroll', ->
+      @view.doSlider($(window).scrollTop())
+      $('.scroller__items section[data-section=0]').height().should.equal 0
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
 
-  # describe '#trackDirection', ->
+  describe '#closestSection', ->
 
-    # it 'opens the first scroller item when scroll is 0', ->
-    # it 'starts the featureslider if in the feature section', ->
-    # it 'loads the body and body animations if at the end of scroller', ->
-
-  # describe '#setupSliderHeight', ->
-
-    # it 'gives the feature scroller a height', ->
-    # it 'sets the height of the title section', ->
-    # it 'fades in the scroller and body', ->
-
-  # describe '#doSlider', ->
-
-    # it 'does stuff to the sections', ->
+    it 'returns the section closest to where user scrolls', ->
+      @view.closestSection(0, @view.getScrollZones()).should.equal 0
+      @view.closestSection(3000, @view.getScrollZones()).should.equal 5
