@@ -24,7 +24,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
-    @trackDirection()
+    @watchScrolling()
     @watchWindow()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
@@ -32,8 +32,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
   watchWindow: =>
     $(window).scroll () =>
       if window.scrollY != @windowPosition
-        throttled = _.throttle(@trackDirection, 30)
-        throttled()
+        watchScrolling = _.throttle(@watchScrolling, 30)
+        watchScrolling()
     $(window).resize () =>
       @setupSliderHeight()
       @windowHeight = $(window).height()
@@ -53,7 +53,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
-  trackDirection: =>
+  watchScrolling: =>
     scrollTop = window.scrollY
     scrollTop = Math.round(scrollTop)
     if scrollTop == 0
@@ -116,6 +116,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @setImages()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
+      @boundaries = @getBodySectionTopBoundaries()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) ->
@@ -139,11 +140,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
     , {offset: '50%'}
 
   animateBody: (scrollTop) =>
-    boundaries = @getBodySectionBoundaries()
-    active = @closestSection(scrollTop, boundaries.top) - 1
+    active = @closestSection(scrollTop, @boundaries) - 1
     $('.article-body section[data-section!="' + active + '"]').removeClass('active')
     $('.article-body section[data-section="' + active + '"]').addClass('active')
-
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
@@ -155,20 +154,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
     video[0].onended = () ->
       $(e.target).removeClass('active')
 
-  getBodySectionBoundaries: () =>
-    sectionBoundaries = []
-    sectionTopBoundaries = []
+  getBodySectionTopBoundaries: () =>
+    sectionTops = []
     for section, i in $('.article-body section')
       top = $(section).position().top
-      bottom = top + $(section).height()
-      left = $(section).position().left
-      right = left + $(section).width()
-      sectionBoundaries.push {top: top, bottom: bottom, left: left, right: right}
       if i < 1
-        sectionTopBoundaries.push top - @windowHeight
+        sectionTops.push top - @windowHeight
       else
-        sectionTopBoundaries.push top - @windowHeight + 400
-    return { boundaries: sectionBoundaries, top: sectionTopBoundaries }
+        sectionTops.push top - @windowHeight + 400
+    return sectionTops
 
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true

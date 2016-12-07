@@ -12,8 +12,6 @@ body
   color black
   background-color white
   width 100vw
-  min-height 100vh
-  overflow hidden
   section
     opacity 0
     transition all 1s
@@ -53,6 +51,8 @@ body
     &-inner
       margin 0 auto
       position relative
+      background-color white
+      z-index 100
       h3
         garamond-size('headline')
         line-height 45px
@@ -60,7 +60,7 @@ body
         padding 80px 20px
         max-width 55vw
         opacity 0
-        transition all 1.5s
+        transition all 3s
       .spacer
         border-top 1px solid
         width 0
@@ -84,6 +84,7 @@ body
   &__title
     flex-display(flex-end, flex-end)
     h2
+      font-size 4vw
       padding 100px 20px
       width 100%
   &__cover-image
@@ -518,10 +519,18 @@ body
         top 0
         height 100%
     &__title
+      position relative
       h2
         margin-left 20px
-        border-bottom 1px solid
         padding-left calc(\(100vw \- 80px\) \/ 6)
+      .spacer
+        position absolute
+        left 20px
+        right 0
+        bottom 0
+        border-top 1px solid
+        width 0
+        transition all 3s
     &__cover-image
       padding 0 20px 0 0
       .image
@@ -565,6 +574,9 @@ body
         border-right 1px solid
         margin-right 20px
         padding-right 20px
+  &.active
+    .article-body--section__title .spacer
+      width calc(100% \- 20px)
 
 [data-section='7']
   .article-body--section
@@ -664,6 +676,8 @@ body
         left 0
   .article-body--section
     padding-bottom 200px
+    &__title h2
+      padding 30px 0
     &__cover-image
       padding 30px 0
       img
