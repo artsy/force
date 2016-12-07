@@ -68,8 +68,7 @@ module.exports = class Modalize extends Backbone.View
     @close(null, e) if e.which is 27
 
   maybeClose: (e) ->
-    return unless @backdropCloses
-    @close(null, e) if $(e.target).hasClass('js-modalize-backdrop')
+    @close(null, e) if @backdropCloses and $(e.target).hasClass('js-modalize-backdrop')
 
   clickClose: (e) ->
     @close(null, e)
