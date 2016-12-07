@@ -15,7 +15,7 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/works': 'works'              #      x
     ':id/collection': 'collection'    #                x
     ':id/shop': 'shop'                #                x
-    ':id/artists': 'artists'          #      x         x
+    ':id/artists': 'artists'          #      x         x?
     ':id/artist/:artistId': 'artists' #      x         x
     ':id/articles': 'articles'        #      x         x
     ':id/contact': 'contact'          #      x

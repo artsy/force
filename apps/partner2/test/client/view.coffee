@@ -68,7 +68,7 @@ describe 'PartnerView', ->
           @partner.set type: 'Institution'
           @profile.set owner_type: 'PartnerInstitution'
           sections = @view.getDisplayableSections @view.getSections()
-          sections.should.eql ['about']
+          sections.should.eql ['overview', 'about']
 
       describe 'with maximum data to display', ->
         beforeEach ->
@@ -113,29 +113,29 @@ describe 'PartnerView', ->
           it 'returns proper sections when display works section is disabled', ->
             @partner.set display_works_section: false
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'shop', 'about']
 
           it 'returns proper sections when display work section is enabled', ->
             @partner.set display_works_section: true
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'collection', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'collection', 'shop', 'about']
 
           it 'includes articles when @partnerArticlesCount > 0', ->
             @view.partnerArticlesCount = 1
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'articles', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'articles', 'shop', 'about']
 
           it 'does not include articles when @partnerArticlesCount is 0', ->
             @view.partnerArticlesCount = 0
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'shop', 'about']
 
     describe '#initializeTablistAndContent', ->
 
       it 'renders tabs properly', ->
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
-        _.last(@tablistTemplate.args)[0].sections.should.eql ['about']
+        _.last(@tablistTemplate.args)[0].sections.should.eql ['overview', 'about']
 
     describe '#initializePartnerAndCounts', ->
       it 'returns a thenable promise', ->
