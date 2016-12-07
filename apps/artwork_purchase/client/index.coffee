@@ -8,6 +8,7 @@ SignupForm = require './purchase_signup_form.coffee'
 successTemplate = ->require('../templates/success.jade') arguments...
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
+Cookies = require '../../../components/cookies/index.coffee'
 
 class PurchaseView extends Backbone.View
 
@@ -46,6 +47,8 @@ class PurchaseView extends Backbone.View
       mode: 'login'
       redirectTo: @artwork.href + '/checkout'
       copy: copy
+    formData = _.extend artwork_id: @artwork.id, @purchaseForm.serializeForm()
+    Cookies.set 'purchase-inquiry', JSON.stringify formData
 
 # Signup
   # Submit
@@ -94,6 +97,7 @@ class PurchaseView extends Backbone.View
   #Callbacks
 
   purchaseSuccess: =>
+    Cookies.expire 'purchase-inquiry'
     window.location = @artwork.href + '/thank-you'
 
   purchaseError: =>

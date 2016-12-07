@@ -6,6 +6,7 @@ request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 User = require '../../models/user.coffee'
 splitTest = require '../../components/split_test/index.coffee'
+
 query = """
   query artwork($id: String!) {
     artwork(id: $id) {
@@ -36,9 +37,16 @@ query = """
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
+      cookie = req.cookies['purchase-inquiry']
+      cachedData = JSON.parse cookie if cookie
+      purchase = if cachedData?.artwork_id is artwork.id then cachedData else {}
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
-      res.render 'index', { artwork, user: req.user, bodyClass: 'minimal-header body-artwork-purchase' }
+      res.render 'index',
+        artwork: artwork
+        purchase: purchase
+        user: req.user
+        bodyClass: 'minimal-header body-artwork-purchase'
     .catch next
 
 @thankYou = (req, res, next) ->
