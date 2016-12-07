@@ -13,7 +13,6 @@ class MarketingSignupModalInner extends Backbone.View
 
   render: ->
     @$el.html template()
-    @$('input:first').focus()
     this
 
   submit: (e) ->
@@ -42,7 +41,7 @@ module.exports = class MarketingSignupModal extends Backbone.View
 
   initialize: ->
     @inner = new MarketingSignupModalInner
-    @modal = modalize @inner, dimensions: width: '900px'
+    @modal = modalize @inner, backdropCloses: false, dimensions: width: '900px'
     @modal.view.$el.addClass 'marketing-signup-modal-container'
     @inner.on 'close', => @modal.close()
     @maybeOpen()
@@ -53,4 +52,8 @@ module.exports = class MarketingSignupModal extends Backbone.View
     linkedFromCampaign = slug is sd.MARKETING_SIGNUP_MODAL_SLUG
     loggedOut = not sd.CURRENT_USER?
 
-    setTimeout (=> @modal.open()), 3000 if loggedOut and linkedFromCampaign
+    setTimeout @open, 2000 if loggedOut and linkedFromCampaign
+
+  open: =>
+    @modal.open()
+    @inner.$('input:first').focus()
