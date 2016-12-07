@@ -7,7 +7,7 @@ divider-height = 40px
 
   &-left
     background-size cover
-    background-position center center
+    background-position center right
 
   &-left, &-right
     width 50%
@@ -16,6 +16,7 @@ divider-height = 40px
 
   &-right
     padding 30px
+    min-width 450px
 
   &-h1
     garamond-size('headline')
@@ -61,6 +62,9 @@ divider-height = 40px
   &-have-account
     color gray-darker-color
 
+  &-container.modalize
+    z-index zindex-flash !important
+
   &-container .icon-close
     font-size 18px
     top -10px
@@ -71,7 +75,8 @@ divider-height = 40px
     background #3A4C95
 
   &-copy a
-    color gray-dark-color
+    color gray-darker-color
+    text-decoration underline
 
   &-error
     color red-color
