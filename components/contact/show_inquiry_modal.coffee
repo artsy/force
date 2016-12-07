@@ -35,8 +35,6 @@ module.exports = class ShowInquiryModal extends ContactView
   initialize: (options) ->
     { @show } = options
 
-    splitTest('forced_login_inquiry').view()
-
     @partner = new Partner @show.get('partner')
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
