@@ -35,6 +35,8 @@ module.exports = class ShowInquiryModal extends ContactView
   initialize: (options) ->
     { @show } = options
 
+    analyticsHooks.trigger 'show_feed:contact', show: @show
+    
     @partner = new Partner @show.get('partner')
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
@@ -53,9 +55,6 @@ module.exports = class ShowInquiryModal extends ContactView
 
   onSubmit: (e) ->
     super
-
-    analyticsHooks.trigger 'inquiry:show',
-      label: modelNameAndIdToLabel 'show', @show.get('id')
 
     @model.set
       inquireable_id: @show.get('id')
