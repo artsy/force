@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-_s = require 'underscore.string'
+{ clean, cleanDiacritics } = require 'underscore.string'
 FetchFilterPartners = require '../parameters/fetch_filter_partners.coffee'
 
 module.exports = class PartnerFilterFacet extends Backbone.Model
@@ -35,9 +35,9 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     escape= (s) ->
       s.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
 
-    regex = _s.clean(escape(query)).replace(' ', '\\W* \\W*')
+    regex = cleanDiacritics(clean(escape(query))).replace(' ', '\\W* \\W*')
     substrRegex = new RegExp(regex, 'i')
-    substrRegex.test string
+    substrRegex.test cleanDiacritics(string)
 
   async_matcher: (query, callback) =>
     if query.length
