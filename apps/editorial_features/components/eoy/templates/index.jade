@@ -4,6 +4,9 @@ append locals
   - assetPackage = 'editorial_features'
   - sections = curation.get('sections')
 
+block head
+  include head
+
 block body
   - var superArticle = article
   include ../../../../../components/article/templates/super_article_sticky_header.jade
