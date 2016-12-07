@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-splitTest = require '../split_test/index.coffee'
+FlashMessage = require '../flash/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 User = require '../../models/user.coffee'
 { modelNameAndIdToLabel } = require '../../analytics/helpers.js'
@@ -71,13 +71,23 @@ module.exports = class ShowInquiryModal extends ContactView
 
     user.prepareForInquiry()
       .then =>
-        @close()
-        @modal = openInquiryQuestionnaireFor
-          inquiry: @model
-          user: user
-          bypass: ['account', 'done']
-          artwork: fakeArtwork
-          state_attrs: inquiry: @model
+        
+        if user.isLoggedIn()
+          @model.save null, success: =>
+            @close()
+            new FlashMessage message: 'Your inquiry has been sent'
+        else
+          @close()
+          @modal = openInquiryQuestionnaireFor
+            inquiry: @model
+            user: user
+            bypass: ['account', 'done']
+            artwork: fakeArtwork
+            state_attrs: inquiry: @model
 
-
+        @listenToOnce @model, 'sync', =>
+          analyticsHooks.trigger 'show_feed:inquiry:sent', 
+            inquiry: @model
+            show: @show
+            fair_id: @show.get('fair')?.id 
 
