@@ -35,7 +35,8 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     escape= (s) ->
       s.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
 
-    regex = cleanDiacritics(clean(escape(query))).replace(' ', '\\W* \\W*')
+    cleanedEscapedQuery = cleanDiacritics(clean(escape(query)))
+    regex = cleanedEscapedQuery.replace(' ', '\\W* \\W*')
     substrRegex = new RegExp(regex, 'i')
     substrRegex.test cleanDiacritics(string)
 
