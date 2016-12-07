@@ -30,7 +30,7 @@ section.article-body__intro(data-section=0)
                 img(src=section.image width='800')
               .caption!= markdown(section.caption)
         article
-          if i > 1 || i == 3
+          if i == 2 || i == 3
             .spacer--article
           .article-body--section__text!= markdown(section.body)
             if i == 4 || i == 5

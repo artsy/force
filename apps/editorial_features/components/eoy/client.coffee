@@ -62,7 +62,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
     if scrollTop <= @openHeight
       @doSlider(scrollTop)
-    if scrollTop >= @getScrollZones()[8]
+    if scrollTop >= @getScrollZones()[9]
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
