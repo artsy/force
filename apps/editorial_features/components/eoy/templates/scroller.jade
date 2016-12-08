@@ -1,4 +1,4 @@
-.scroller
+.scroller.active
   .scroller__items
     section(data-section='0')
       article.main-title
@@ -16,7 +16,8 @@
           .left
           .right
             .item
-              h2=sections[0].headline
+              a(href='#section-1')
+                h2=sections[0].headline
     section(data-section='2')
       article
         .inner
@@ -27,13 +28,15 @@
           .right
             .col
             .item
-              h2=sections[1].headline
+              a(href='#section-2')
+                h2=sections[1].headline
     section(data-section='3')
       article
         .inner
           .left
             .item
-              h2=sections[2].headline
+              a(href='#section-3')
+                h2=sections[2].headline
             .col
           .col.spacer
           .right
@@ -46,13 +49,15 @@
             .col
           .right
             .item
-              h2=sections[3].headline
+              a(href='#section-4')
+                h2=sections[3].headline
     section(data-section='5')
       article
         .inner
           .left
             .item
-              h2=sections[4].headline
+              a(href='#section-5')
+                h2=sections[4].headline
           .right
     section(data-section='6')
       article
@@ -62,7 +67,8 @@
             .col
           .right
             .item
-              h2=sections[5].headline
+              a(href='#section-6')
+                h2=sections[5].headline
     section(data-section='7')
       article
         .inner
@@ -70,7 +76,8 @@
             .col
           .right
             .item
-              h2=sections[6].headline
+              a(href='#section-7')
+                h2=sections[6].headline
             .col
     section(data-section='8')
       article
@@ -79,14 +86,16 @@
             .col
           .right
             .item
-              h2=sections[7].headline
+              a(href='#section-8')
+                h2=sections[7].headline
     section(data-section='9')
       article
         .inner
           .left
             .col
             .item
-              h2=sections[8].headline
+              a(href='#section-9')
+                h2=sections[8].headline
           .col.spacer
           .right
             .col
@@ -98,4 +107,5 @@
           .right
             .col
             .item
-              h2=sections[9].headline
+              a(href='#section-10')
+                h2=sections[9].headline

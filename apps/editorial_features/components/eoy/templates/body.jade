@@ -9,6 +9,7 @@ section.article-body__intro(data-section=0)
 .article-body__content
   for section, i in curation.get('sections')
     section(data-section='#{i + 1}')
+      a(name='section-#{i + 1}')
       .article-body--section
         header
           if i == 4 || i == 5
@@ -21,14 +22,22 @@ section.article-body__intro(data-section=0)
             .spacer
             .spacer
             .image
-              if section.image.indexOf('mp4') > -1
-                video
-                  source(src=section.image)
-                .video-controls
-                  .video-play-button
+              if i != 8
+                if section.image.indexOf('mp4') > -1
+                  video(autoplay=true, controls=false, muted=true, playsinline=true)
+                    source(src=section.image)
+                  .video-controls
+                    .video-play-button
+                else
+                  img(src=section.image width='800')
+                  .caption!= markdown(section.caption)
               else
-                img(src=section.image width='800')
-              .caption!= markdown(section.caption)
+                .img
+                  img(src=section.image width='800')
+                  .caption!= markdown(section.caption)
+                .img
+                  img(src=section.image_second width='800')
+                  .caption!= markdown(section.caption_second)
         article
           if i == 2 || i == 3
             .spacer--article
@@ -38,10 +47,11 @@ section.article-body__intro(data-section=0)
           .article-body--section__sub-text
             .image
               if section.image_second.indexOf('mp4') > -1
-                video.video
+                video(autoplay=true, controls=false, muted=true, playsinline=true).video
                   source(src=section.image_second)
                 .video-controls
                   .video-play-button
+                .caption!= markdown(section.caption_second)
               else if i == 3
                 - length = 1
                 .carousel.mgr-horizontal-nav
@@ -52,9 +62,12 @@ section.article-body__intro(data-section=0)
                       img(src=section.image width='800')
                   nav.mgr-navigation.js-mgr-navigation
                     include ../../../../../components/merry_go_round/templates/horizontal_navigation
+              else if i == 8
+                img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg' width='800')
+                .caption This image and its caption are manually edited.
               else
                 img(src=section.image_second width='800')
-              .caption!= markdown(section.caption_second)
+                .caption!= markdown(section.caption_second)
             .spacer
             .callout
               if i != 2
@@ -62,6 +75,7 @@ section.article-body__intro(data-section=0)
               else
                 img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg')
                 .caption This image and its caption are manually edited.
+
           if i == 0
             .article-body--section__sub-image
               img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg')
