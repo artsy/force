@@ -118,7 +118,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @boundaries = @getBodySectionTopBoundaries()
-      @setVideoWaypoints()
+      @setupVideos()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) ->
@@ -168,7 +168,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   setImages: ->
     $('.article-body__content img').each @setImage
 
-  setVideoWaypoints: =>
+  setupVideos: =>
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
