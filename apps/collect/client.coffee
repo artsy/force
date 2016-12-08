@@ -55,6 +55,7 @@ module.exports.init = ->
     totalView = new PopularArtistsView
       el: $('.cf-artworks')
       artists: filter.popular_artists
+      params: params
 
   pillboxView = new PillboxView
     el: $('.cf-pillboxes')
