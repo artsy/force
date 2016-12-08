@@ -72,7 +72,8 @@ describe 'My Active Bids template', ->
 
   it 'does not render bid status for open live sale', ->
     @locals.myActiveBids[0].sale_artwork.sale.live_start_at = moment().subtract(1, 'day').format()
-    @locals.myActiveBids[0].sale_artwork.sale.end_at = moment().add(1, 'day').format()
+    @locals.myActiveBids[0].sale_artwork.sale.is_live_open = true
+    @locals.myActiveBids[0].sale_artwork.sale.end_at = null
     $ = cheerio.load(template(@locals))
     $('.bid-status').length.should.eql 0
     $('.my-active-bids-bid-live-button').length.should.eql 1

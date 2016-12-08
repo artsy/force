@@ -27,6 +27,7 @@ describe 'my active bids auction page template', ->
     describe 'live sale is open', ->
       beforeEach ->
         @data[0].sale_artwork.sale.live_start_at = moment().subtract(1, 'day').format()
+        @data[0].sale_artwork.sale.is_live_open = true
         @data[0].sale_artwork.sale.end_at = moment().add(1, 'day').format()
         @view.bidderPositions = @data
         @view.render()
@@ -43,6 +44,7 @@ describe 'my active bids auction page template', ->
     describe 'not live sale', ->
       beforeEach ->
         @data[0].sale_artwork.sale.live_start_at = null
+        @data[0].sale_artwork.sale.is_live_open = false
         @data[0].sale_artwork.sale.end_at = moment().add(1, 'day').format()
 
       describe 'leading bidder & reserve met', ->
@@ -89,6 +91,7 @@ describe 'my active bids auction page template', ->
       beforeEach ->
         @data[0].sale_artwork.sale.live_start_at = moment().add(1, 'day').format()
         @data[0].sale_artwork.sale.end_at = moment().add(2, 'days').format()
+        @data[0].sale_artwork.sale.is_live_open = false
 
       describe 'leading bidder & reserve met', ->
         it 'gives a highest bid message', ->

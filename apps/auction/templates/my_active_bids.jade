@@ -22,7 +22,7 @@ if myActiveBids && myActiveBids.length
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)
-            if ViewHelpers.mpLiveSaleIsOpen(bid.sale_artwork.sale)
+            if bid.sale_artwork.sale.is_live_open
               td
                 a.avant-garde-button-black.auction-mab-bid-live-button(
                     href=ViewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id)
