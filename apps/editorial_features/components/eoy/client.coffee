@@ -8,6 +8,7 @@ bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
 { resize } = require '../../../../components/resizer/index.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
@@ -22,6 +23,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
+    @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
     @watchScrolling()
     @article = new Article sd.SUPER_ARTICLE
@@ -121,11 +123,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupVideos()
 
   bodyInView: =>
-    $('.article-body').waypoint (direction) ->
+    $('.article-body').waypoint (direction) =>
       if direction is 'up'
         $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
         $('.article-body__intro-inner').addClass('active')
+        @trackScrollIntoBody()
     , {offset: '50%'}
 
     $('.article-body').waypoint (direction) ->
@@ -188,6 +191,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
       video[0].pause()
     video[0].onended = () ->
       $(e).removeClass('active')
+
+  trackScroll: ->
+    analyticsHooks.trigger 'scroll:sa-body'
 
 module.exports.init = ->
   new EoyView
