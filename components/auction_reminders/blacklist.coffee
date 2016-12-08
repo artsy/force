@@ -9,6 +9,8 @@ module.exports =
     '^/auction/.*'
     '^/dev$'
     '^/inquiry/.*'
+    '^/artwork/.*/checkout'
+    '^/artwork/.*/thank-you'
     '^/jobs'
     '^/job/.*'
     TEAM_BLOGS or '^/test'
