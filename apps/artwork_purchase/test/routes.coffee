@@ -52,7 +52,6 @@ describe 'Artist routes', ->
             @res.render.args[0][1].should.eql {
               artwork: artworkJSON,
               user: { id: 'foo-bar' }
-              bodyClass: 'minimal-header body-artwork-purchase'
             }
 
       it 'without a user', ->
@@ -62,7 +61,6 @@ describe 'Artist routes', ->
             @res.render.args[0][1].should.eql {
               artwork: artworkJSON,
               user: undefined
-              bodyClass: 'minimal-header body-artwork-purchase'
             }
 
     it 'thankYou', ->
@@ -71,6 +69,5 @@ describe 'Artist routes', ->
           @res.render.args[0][0].should.eql 'success'
           @res.render.args[0][1].should.eql {
             artwork: artworkJSON
-            bodyClass: 'body-artwork-purchase'
           }
 

@@ -48,7 +48,7 @@ query = """
         artwork: artwork
         purchase: purchase
         user: req.user
-        bodyClass: 'minimal-header body-artwork-purchase'
+
     .catch next
 
 @thankYou = (req, res, next) ->
@@ -63,5 +63,5 @@ query = """
     .then ({ artwork }) ->
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
-      res.render 'success', { artwork, bodyClass: 'body-artwork-purchase' }
+      res.render 'success', { artwork }
     .catch next
