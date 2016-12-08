@@ -18,6 +18,7 @@ module.exports = class MerryGoRoundNavView extends Backbone.View
     $(document).on 'keydown.mgr', @keypress
 
   keypress: (e) =>
+    return unless @flickity.options.accessibility
     return if $(e.target).is(':input')
     switch e.keyCode
       when 37
