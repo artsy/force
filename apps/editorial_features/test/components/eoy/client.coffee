@@ -141,3 +141,21 @@ describe 'EoyView', ->
     it 'returns the section closest to where user scrolls', ->
       @view.closestSection(0, @view.getScrollZones()).should.equal 0
       @view.closestSection(3000, @view.getScrollZones()).should.equal 5
+
+  describe '#deferredLoadBody', ->
+    it 'loads the body contents', ->
+
+  describe '#watchWindow', ->
+    it 'resets section boundaries when window changes size', ->
+
+  describe '#animateBody', ->
+    it 'adds a class to the closest section', ->
+
+  describe '#playVideo', ->
+    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
+
+  describe '#setVideoWaypoints', ->
+    it 'calls play video for each video', ->
+
+  describe '#setImages', ->
+    it 'uses a cloudfront src for each image', ->
