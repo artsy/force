@@ -654,6 +654,40 @@ video::-webkit-media-controls
   .article-body--section
     margin-left 0
     margin-right auto
+    &__title
+      position relative
+      text-align right
+      .spacer
+        width 100%
+        position absolute
+        bottom 0
+        left 0
+        right 0
+        border-bottom 1px solid
+    &__cover-image
+      .spacer:first-child
+        position absolute
+        bottom 0
+        left 50%
+        top 20px
+        height calc(100% \- 40px)
+        border-right 1px solid
+      .image
+        display flex
+        .img
+          padding 0 60px
+          width 50%
+          img
+            width 100%
+    &__sub-text
+      .image
+        img
+          margin-right 0
+          margin-left auto
+        .caption
+          margin-right 0
+      .callout
+        display none
 
 [data-section='10']
   .article-body--section

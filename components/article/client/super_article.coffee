@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
+sd = require('sharify').data
 
 module.exports = class SuperArticleView extends Backbone.View
 
@@ -21,6 +22,7 @@ module.exports = class SuperArticleView extends Backbone.View
   setupSuperArticle: ->
     @setStickyNav()
     @setWaypoints()
+    @maybeAddEoyClass() #eoy-2016
 
     # Throttle scroll and resize
     throttledScroll = _.throttle((=> @onScroll()), 100)
@@ -79,3 +81,15 @@ module.exports = class SuperArticleView extends Backbone.View
     else
       @$superArticleNavToc.css 'height', '100vh'
       @$body.addClass 'is-open'
+
+  maybeAddEoyClass: ->
+    if @article.isEOYSubArticle(sd.SUPER_SUB_ARTICLE_IDS, sd.SUPER_ARTICLE)
+      $('.article-section-container[data-section-type=text]').each ->
+        if $(@).find('h2,h3').length is 2
+          $(@).addClass('eoy-border')
+          if $(@).prev().data('sectionType') is 'image'
+            $(@).prev().addClass 'eoy-border-no-bottom'
+            $(@).addClass('eoy-border-no-top')
+          if $(@).next().data('sectionType') is 'image'
+            $(@).addClass('eoy-border-no-bottom')
+            $(@).next().addClass 'eoy-border-no-top'
