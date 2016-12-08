@@ -22,7 +22,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
-    @watchScrolling()
     @watchWindow()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
@@ -62,7 +61,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
     if scrollTop <= @openHeight
       @doSlider(scrollTop)
-    if scrollTop >= @getScrollZones()[9]
+    if scrollTop >= @getScrollZones()[10]
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
@@ -112,12 +111,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
       curation: @curation
       markdown: markdown
     @bodyInView()
-    @firstSectionInView()
     @setImages()
     @boundaries = @getBodySectionTopBoundaries()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @boundaries = @getBodySectionTopBoundaries()
+      @firstSectionInView()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) ->
@@ -127,18 +126,29 @@ module.exports.EoyView = class EoyView extends Backbone.View
         $('.article-body__intro-inner').addClass('active')
     , {offset: '50%'}
 
+    $('.article-body').waypoint (direction) ->
+      if direction is 'up'
+        # debugger
+        $('.article-body__intro').removeClass('active')
+      if direction is 'down'
+        # debugger
+        $('.article-body__intro').addClass('active')
+    , {offset: '100%'}
+
   firstSectionInView: =>
     $('.article-body section[data-section="1"]').waypoint () ->
       $('.eoy-feature__background').toggleClass('active')
     , {offset: '40%'}
 
-    $('.article-body section[data-section="1"] article').waypoint (direction) ->
-      $(this).find('video').next().addClass('active')
+    $('.article-body section[data-section="1"] article').waypoint (direction) =>
       if direction is 'down'
-        $(this).find('video')[0].play()
-        $(this).find('video')[0].onended = () ->
-          $(this).find('video').next().removeClass('active')
+        @playVideo $('.article-body section[data-section="1"] article').find('.video-controls')
     , {offset: '50%'}
+
+    $('.article-body section[data-section="7"] article').waypoint (direction) =>
+      if direction is 'down'
+        @playVideo $('.article-body section[data-section="7"] .video-controls')
+    , {offset: '100%'}
 
   animateBody: (scrollTop) =>
     active = @closestSection(scrollTop, @boundaries) - 1
@@ -146,14 +156,16 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
   playVideo: (e) =>
-    $(e.target).toggleClass('active')
-    video = $(e.target).prev()
+    if e.target
+      e = e.target
+    $(e).toggleClass('active')
+    video = $(e).prev()
     if video[0].paused
       video[0].play()
     else
       video[0].pause()
     video[0].onended = () ->
-      $(e.target).removeClass('active')
+      $(e).removeClass('active')
 
   getBodySectionTopBoundaries: () =>
     boundaries = []
