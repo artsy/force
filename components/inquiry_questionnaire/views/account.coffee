@@ -28,7 +28,8 @@ module.exports = class Account extends StepView
     super
 
   setup: ->
-    @sendResetOnce = _.once _.bind(@user.forgot, @user)
+    if @user.forgot?
+      @sendResetOnce = _.once _.bind(@user.forgot, @user)
 
   mode: ->
     if (mode = @active.get('mode')) is 'auth'

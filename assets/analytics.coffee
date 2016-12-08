@@ -29,6 +29,7 @@ $ -> analytics.ready ->
   require '../analytics/artworks_filter.js'
   require '../analytics/artist_page.js'
   require '../analytics/home.js'
+  require '../analytics/contact.js'
   require '../analytics/show_page.js'
   require '../analytics/account_creation.js'
   require '../analytics/account_login.js'
@@ -52,7 +53,5 @@ $ -> analytics.ready ->
   require '../analytics/pro_buyer.js'
   require '../analytics/recently_viewed_artworks.js'
   require '../analytics/save.js'
-
-  if route.test(/^\/inquiry\/.*/) or route.test(/^\/artwork\/.*/)
-    require '../analytics/embedded_inquiry.js'
-    require '../analytics/inquiry_questionnaire.js'
+  require '../analytics/embedded_inquiry.js'
+  require '../analytics/inquiry_questionnaire.js'
