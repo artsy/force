@@ -9,8 +9,6 @@ sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
 { resize } = require '../../../../components/resizer/index.coffee'
 
-Q = require 'bluebird-q'
-
 module.exports.EoyView = class EoyView extends Backbone.View
 
   el: $('body')
@@ -24,20 +22,22 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
-    @trackDirection()
+    @watchScrolling()
     @watchWindow()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
 
   watchWindow: =>
+    watchScrolling = _.throttle(@watchScrolling, 30)
     $(window).scroll () =>
-      if window.scrollY != @windowPosition
-        throttled = _.throttle(@trackDirection, 30)
-        throttled()
+      if $(window).scrollTop() != @windowPosition
+        watchScrolling()
     $(window).resize () =>
       @setupSliderHeight()
+      @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
       $.waypoints('refresh')
+      watchScrolling()
 
   getScrollZones: =>
     scrollZones = []
@@ -53,16 +53,16 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
-  trackDirection: =>
-    scrollTop = window.scrollY
+  watchScrolling: =>
+    @loadBody()
+    scrollTop = $(window).scrollTop()
     scrollTop = Math.round(scrollTop)
     if scrollTop == 0
       $('.scroller__items section[data-section!="0"]').attr('data-state', 'closed')
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
     if scrollTop <= @openHeight
       @doSlider(scrollTop)
-    if scrollTop >= @getScrollZones()[6]
-      @loadBody()
+    if scrollTop >= @getScrollZones()[9]
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
@@ -112,11 +112,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
       curation: @curation
       markdown: markdown
     @bodyInView()
-    @introInView()
     @firstSectionInView()
     @setImages()
+    @boundaries = @getBodySectionTopBoundaries()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
+      @boundaries = @getBodySectionTopBoundaries()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) ->
@@ -124,14 +125,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
         $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
         $('.article-body__intro-inner').addClass('active')
-
-  introInView: =>
-    $('.article-body__intro').waypoint (direction) ->
-      if direction is 'up'
-        $('.article-body__intro-header').removeClass('active')
-      if direction is 'down'
-        $('.article-body__intro-header').addClass('active')
-    , {offset: '100%'}
+    , {offset: '50%'}
 
   firstSectionInView: =>
     $('.article-body section[data-section="1"]').waypoint () ->
@@ -147,44 +141,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
     , {offset: '50%'}
 
   animateBody: (scrollTop) =>
-    boundaries = @getBodySectionBoundaries()
-    active = @closestSection(scrollTop, boundaries.top) - 1
-    $('.article-body section[data-section!="' + active + '"] .article-body--section').removeClass('active')
-    $active = $('.article-body section[data-section="' + active + '"]')
-    $active.find('.article-body--section').addClass('active')
-    @animateActiveSection($active, scrollTop)
-
-  animateActiveSection: ($active, scrollTop) =>
-    active = $active.data('section')
-    spacers = []
-    switch
-      when active == 1
-        spacers.push {spacer: $active.find('.article-body--section__cover-image .spacer').first(), gutter: 40}
-        spacers.push {spacer: $active.find('.spacer--article'), gutter: 20}
-      when active == 3
-        max = $active.find('.article-body--section__sub-text .spacer').parent().height()
-        $active.find('.article-body--section__sub-text .spacer').css('max-height', max)
-        spacers.push {spacer: $active.find('.article-body--section__sub-text .spacer'), gutter: 20}
-        spacers.push {spacer: $active.find('.spacer--article'), gutter: 20}
-      when active == 4
-        spacers.push {spacer: $active.find('.article-body--section__cover-image .spacer').first(), gutter: 40}
-        spacers.push {spacer: $active.find('.spacer--article'), gutter: 40}
-      when active == 5
-        spacers.push {spacer: $active.find('header .spacer--article'), gutter: 20}
-        spacers.push {spacer: $active.find('.article-body--section__text .spacer'), gutter: 20}
-      when active == 6
-        spacers.push {spacer: $active.find('header .spacer--article'), gutter: 20}
-        spacers.push {spacer: $active.find('.article-body--section__text .spacer'), gutter: 20}
-    for spacer in spacers
-      throttled = _.throttle(@verticalScrollBoundary, 30)
-      throttled(scrollTop, spacer.spacer, spacer.gutter)
-
-  verticalScrollBoundary: (scrollTop, spacer, gutter) =>
-    windowBottom = scrollTop + @windowHeight
-    initHeight = spacer.height
-    spacerHeight = windowBottom - $(spacer).parent().offset().top - gutter
-    if initHeight != spacerHeight.toFixed()
-      $(spacer).height(spacerHeight.toFixed())
+    active = @closestSection(scrollTop, @boundaries) - 1
+    $('.article-body section[data-section!="' + active + '"]').removeClass('active')
+    $('.article-body section[data-section="' + active + '"]').addClass('active')
 
   playVideo: (e) =>
     $(e.target).toggleClass('active')
@@ -196,17 +155,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
     video[0].onended = () ->
       $(e.target).removeClass('active')
 
-  getBodySectionBoundaries: () =>
-    sectionBoundaries = []
-    sectionTopBoundaries = []
-    for section in $('.article-body section')
+  getBodySectionTopBoundaries: () =>
+    boundaries = []
+    for section, i in $('.article-body section')
       top = $(section).position().top
-      bottom = top + $(section).height()
-      left = $(section).position().left
-      right = left + $(section).width()
-      sectionBoundaries.push {top: top, bottom: bottom, left: left, right: right}
-      sectionTopBoundaries.push top - @windowHeight + 400
-    return { boundaries: sectionBoundaries, top: sectionTopBoundaries }
+      if i < 1
+        boundaries.push top - @windowHeight
+      else
+        boundaries.push top - @windowHeight + 400
+    return boundaries
 
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true
