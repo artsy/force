@@ -23,8 +23,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @setupSliderHeight()
     @loadBody = _.once @deferredLoadBody
     @watchWindow()
+    @watchScrolling()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
+    $('.scroller').fadeIn(500)
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
@@ -75,7 +77,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@containerHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
-    $('.scroller').height(@containerHeight).fadeIn(500)
+    $('.scroller').height(@containerHeight)
     $('.article-body').fadeIn(500)
 
   doSlider: (scrollTop) =>
@@ -128,10 +130,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
-        # debugger
         $('.article-body__intro').removeClass('active')
       if direction is 'down'
-        # debugger
         $('.article-body__intro').addClass('active')
     , {offset: '100%'}
 
@@ -171,9 +171,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
   setVideoWaypoints: =>
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
-      $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) =>
+      playVideo = @playVideo
+      $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) ->
         if direction is 'down'
-          @playVideo $(".article-body section[data-section='" + active + "'] .video-controls")
+          playVideo this
       , {offset: '100%'}
 
   playVideo: (e) =>
