@@ -4,6 +4,7 @@
   var alreadyTracked = false
 
   var isRVARailVisible = function () {
+    if($('#recently-viewed-artworks').length < 1){ return false; }
     var viewportTop = $(window).scrollTop()
     var viewportBottom = viewportTop + $(window).height()
     var rvaTop = $('#recently-viewed-artworks').offset().top

@@ -1,32 +1,41 @@
-.ap-success
-  .artwork-purchase__section.ap-success__top
-    img.artwork-purchase__artwork-image( src= artwork.image.url )
-    .ap-success__message
-      | Your request has been sent to #{artwork.partner.name}
-      .ap-success__green-check
-        include ../../../components/main_layout/public/icons/green-check.svg
-  .artwork-purchase__section
-    h1 What's next?
-  .artwork-purchase__section.ap-success__next
-    .ap-success__next-step-images
-      .ap-success__step
-        include ../../../components/main_layout/public/icons/purchase-availability.svg
-      .ap-success__step
-        include ../../../components/main_layout/public/icons/purchase-invoice.svg
-      .ap-success__step
-          include ../../../components/main_layout/public/icons/purchase-creditcard.svg
-      .ap-success__step
-        include ../../../components/main_layout/public/icons/purchase-delivery.svg
-    .ap-success__next-step-text
-      .ap-success__step
-        | #{artwork.partner.name} will confirm availability
-      .ap-success__step
-        | #{artwork.partner.name} will issue a quote
-      .ap-success__step
-        | You will review the quote and complete payment
-      .ap-success__step
-        | #{artwork.partner.name} will ship the work to your adress
+extends ../../../components/main_layout/templates/minimal_header
 
-  .artwork-purchase__section
-    a.avant-garde-button-black.is-block(href= artwork.href)
-      | Back to browsing
+append locals
+  - assetPackage = 'artwork_purchase'
+  - bodyClass = 'body-artwork-purchase'
+
+block body
+  .responsive-layout-container
+    #purchase-page.artwork-purchase.main-layout-container
+      .ap-success
+        .artwork-purchase__section.ap-success__top
+          img.artwork-purchase__artwork-image( src= artwork.image.url )
+          .ap-success__message
+            | Your request has been sent to #{artwork.partner.name}
+            .ap-success__green-check
+              include ../../../components/main_layout/public/icons/green-check.svg
+        .artwork-purchase__section
+          h1 What's next?
+        .artwork-purchase__section.ap-success__next
+          .ap-success__next-step-images
+            .ap-success__step
+              include ../../../components/main_layout/public/icons/purchase-availability.svg
+            .ap-success__step
+              include ../../../components/main_layout/public/icons/purchase-invoice.svg
+            .ap-success__step
+                include ../../../components/main_layout/public/icons/purchase-creditcard.svg
+            .ap-success__step
+              include ../../../components/main_layout/public/icons/purchase-delivery.svg
+          .ap-success__next-step-text
+            .ap-success__step
+              | #{artwork.partner.name} will confirm availability
+            .ap-success__step
+              | #{artwork.partner.name} will issue a quote
+            .ap-success__step
+              | You will review the quote and complete payment
+            .ap-success__step
+              | #{artwork.partner.name} will ship the work to your address
+
+        .artwork-purchase__section
+          a.avant-garde-button-black.is-block(href= artwork.href)
+            | Back to Browsing
