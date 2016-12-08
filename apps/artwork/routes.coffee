@@ -65,7 +65,9 @@ bootstrap = ->
 
   return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or res.locals.sd.NODE_ENV is 'staging'
+  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
+    res.locals.sd.NODE_ENV is 'staging' or
+    res.locals.sd.NODE_ENV is 'test'
   metaphysics send
     .then (data) ->
       data.purchaseFlow = purchaseFlow
