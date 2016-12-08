@@ -49,3 +49,6 @@ if article.get('published')
     - keywords = keywords.concat(article.get('keywords'))
   meta( name="sailthru.tags" content=keywords.join(','))
   meta( name="sailthru.date" content=article.get('published_at'))
+
+if sd.IS_MOBILE
+  meta( name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" )

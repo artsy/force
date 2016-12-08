@@ -23,7 +23,7 @@ section.article-body__intro(data-section=0)
             .image
               if section.image.indexOf('mp4') > -1
                 video
-                  source(src=section.image)
+                  source(type='video/mp4' src=section.image)
                 .video-controls
                   .video-play-button
               else
@@ -39,7 +39,7 @@ section.article-body__intro(data-section=0)
             .image
               if section.image_second.indexOf('mp4') > -1
                 video.video
-                  source(src=section.image_second)
+                  source(type='video/mp4' src=section.image_second)
                 .video-controls
                   .video-play-button
               else if i == 3
