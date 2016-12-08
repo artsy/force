@@ -13,7 +13,11 @@ describe 'Artist routes', ->
     routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
     @metaphysics.debug = sinon.stub()
 
-    @req = params: { id: 'ioam-yumako-cosmo-oil-on-canvas-2' }, get: (->), query: {}
+    @req =
+      params: { id: 'foo-bar-id' }
+      get: (->)
+      query: {}
+      cookies: {}
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -30,13 +34,13 @@ describe 'Artist routes', ->
       routes.index @req, @res
         .then =>
           @res.render.called.should.be.false()
-          @res.redirect.args[0][0].should.eql '/artwork/ioam-yumako-cosmo-oil-on-canvas-2'
+          @res.redirect.args[0][0].should.eql '/artwork/foo-bar-id'
 
     it 'thankYou', ->
       routes.thankYou @req, @res
         .then =>
           @res.render.called.should.be.false()
-          @res.redirect.args[0][0].should.eql '/artwork/ioam-yumako-cosmo-oil-on-canvas-2'
+          @res.redirect.args[0][0].should.eql '/artwork/foo-bar-id'
 
 
   describe 'with a work that is purchasable', ->
@@ -52,6 +56,7 @@ describe 'Artist routes', ->
             @res.render.args[0][1].should.eql {
               artwork: artworkJSON,
               user: { id: 'foo-bar' }
+              purchase: undefined
             }
 
       it 'without a user', ->
@@ -61,7 +66,31 @@ describe 'Artist routes', ->
             @res.render.args[0][1].should.eql {
               artwork: artworkJSON,
               user: undefined
+              purchase: undefined
             }
+
+      describe 'with a cookie', ->
+        it 'does not pass purchase if artwork ids do not match', ->
+          @req.cookies['purchase-inquiry'] = '{"artwork_id":"foo-bar"}'
+          routes.index @req, @res
+            .then =>
+              @res.render.args[0][0].should.eql 'index'
+              @res.render.args[0][1].should.eql {
+                artwork: artworkJSON,
+                user: undefined
+                purchase: undefined
+              }
+
+        it 'passes purchase if artwork ids match', ->
+          @req.cookies['purchase-inquiry'] = '{"artwork_id":"foo-bar-id"}'
+          routes.index @req, @res
+            .then =>
+              @res.render.args[0][0].should.eql 'index'
+              @res.render.args[0][1].should.eql {
+                artwork: artworkJSON,
+                user: undefined
+                purchase: { artwork_id: 'foo-bar-id' }
+              }
 
     it 'thankYou', ->
       routes.thankYou @req, @res

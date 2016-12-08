@@ -1,16 +1,15 @@
 module.exports = {
-  "id": "ioam-yumako-cosmo-oil-on-canvas-2",
-  "_id": "582af1d08b3b81291800078b",
+  "id": "foo-bar-id",
   "is_purchasable": true,
-  "title": "\"COSMO\" Oil on Canvas",
+  "title": "Foo Bar",
   "date": "2011",
   "sale_message": "€9,500",
-  "href": "/artwork/ioam-yumako-cosmo-oil-on-canvas-2",
+  "href": "/artwork/foo-bar-id",
   "partner": {
-    "name": "Galerie Jacob Paulett"
+    "name": "Galerie Foo Bar"
   },
-  "artist_names": "IOAM YUMAKO",
+  "artist_names": "John Doe",
   "image": {
-    "url": "https://d32dm0rphc51dk.cloudfront.net/jqfgAlaWC8ab3IGFDmF8Ew/square.jpg"
+    "url": "foo-bar.jpg"
   }
 }

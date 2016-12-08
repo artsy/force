@@ -7,29 +7,29 @@ PendingOrder = require '../../models/pending_order'
 User = require '../../models/user.coffee'
 splitTest = require '../../components/split_test/index.coffee'
 
-query = """
-  query artwork($id: String!) {
-    artwork(id: $id) {
-      id
-      _id
-      is_purchasable
-      title
-      date
-      sale_message
-      href
-      partner{
-        name
-      }
-      artist_names
-      image {
-        url(version: "square")
+@index = (req, res, next) ->
+  query = """
+    query artwork($id: String!) {
+      artwork(id: $id) {
+        id
+        _id
+        is_purchasable
+        title
+        date
+        sale_message
+        href
+        partner{
+          name
+        }
+        artist_names
+        image {
+          url(version: "square")
+        }
       }
     }
-  }
 
-"""
+  """
 
-@index = (req, res, next) ->
   return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
@@ -41,7 +41,7 @@ query = """
     .then ({ artwork }) ->
       cookie = req.cookies['purchase-inquiry']
       cachedData = JSON.parse cookie if cookie
-      purchase = if cachedData?.artwork_id is artwork.id then cachedData else {}
+      purchase = cachedData if cachedData?.artwork_id is artwork.id
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
       res.render 'index',
@@ -52,6 +52,23 @@ query = """
     .catch next
 
 @thankYou = (req, res, next) ->
+  query = """
+    query artwork($id: String!) {
+      artwork(id: $id) {
+        id
+        _id
+        is_purchasable
+        href
+        partner{
+          name
+        }
+        image {
+          url(version: "square")
+        }
+      }
+    }
+
+  """
   return if metaphysics.debug req, res, send
   # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
   purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
