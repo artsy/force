@@ -120,3 +120,45 @@ describe 'Artist Module template', ->
       @$('.artwork-artist__content__biography__credit').length.should.equal 0
       @$('.artwork-artist__content__short-bio').html().should.containEql "We do not know"
 
+
+  describe 'when the biography_blurb is blank and no tabs are present', ->
+    beforeEach ->
+      @artwork = fabricate('artwork', {
+        partner: {
+          id: 'catty-partner'
+        }
+        artists: [
+          fabricate('artist', {
+            name: 'K Dot'
+            blurb: null
+            biography_blurb: {
+              text: "",
+              credit: null
+              partner_id: null
+            }
+            bio: null
+            exhibition_highlights: []
+            articles: []
+          })
+        ]
+      })
+
+      @html = render()(
+        artwork: @artwork
+        helpers: {
+          artists:
+            build: sinon.stub().returns []
+            name: sinon.stub()
+            groupBy: _.groupBy
+        }
+        asset: (->)
+      )
+
+      @$ = cheerio.load(@html)
+
+    it 'should not display any artist tabs', ->
+      @$('.side-tabs__nav').find('a[data-id=biography]').length.should.equal 0
+      @$('.side-tabs__nav').find('a[data-id=articles]').length.should.equal 0
+      @$('.side-tabs__nav').find('a[data-id=exhibition_highlights]').length.should.equal 0
+
+
