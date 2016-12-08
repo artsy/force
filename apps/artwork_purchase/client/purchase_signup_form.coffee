@@ -13,9 +13,6 @@ module.exports = class PurchaseSignupForm extends Backbone.View
 
   initialize: ({ @user }) -> #
 
-  # initializeMailcheck: ->
-  #   Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
-
   submit: ({ success, error, isWithAccountCallback }) ->
     @user.set (data = @serializeForm())
     @user.findOrCreate silent: true
