@@ -277,8 +277,11 @@ body
       .image
         padding 30px 20px 40px 0
         width 60%
-        img
-          max-width 100%
+        .video-controls
+          top 30px
+          left 0
+          right 20px
+          bottom 62px
       .spacer
         border-right 1px solid
         width 20%
@@ -286,11 +289,12 @@ body
       .callout
         display none
   &.active
-    .spacer
-      width calc(100% \- 20px)
-      &:nth-child(3)
-        width 1px
-        height 100%
+    .article-body--section__cover-image
+      .spacer
+        width calc(100% \- 20px)
+        &:nth-child(3)
+          width 1px
+          height 100%
 
 [data-section='3']
   .article-body--section
@@ -730,6 +734,8 @@ body
         .callout
           padding 60px 40px
           width 100%
+        .spacer
+          display none
       &__sub-image
         padding 30px 0
         .spacer
@@ -756,6 +762,7 @@ body
           display none
         .image
           width 85%
+          padding-right 0
 
   [data-section='3']
     .article-body--section
