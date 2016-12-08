@@ -58,31 +58,41 @@ describe 'PartnerView', ->
             published_for_sale_artworks_count: 0
           }
         it 'gallery', ->
-          @partner.set type: 'Gallery'
-          @partner.set claimed: true
+          @partner.set {
+            type: 'Gallery'
+            claimed: true,
+            # This assumes that galleries do not have the option to disable the artists section
+            display_artists_section: true
+          }
           @profile.set owner_type: 'PartnerGallery'
           sections = @view.getDisplayableSections @view.getSections()
           sections.should.eql ['overview', 'contact']
 
         it 'institution', ->
-          @partner.set type: 'Institution'
+          @partner.set {
+            type: 'Institution'
+            display_artists_section: false
+          }
           @profile.set owner_type: 'PartnerInstitution'
           sections = @view.getDisplayableSections @view.getSections()
-          sections.should.eql ['about']
+          sections.should.eql ['overview', 'about']
 
       describe 'with maximum data to display', ->
         beforeEach ->
           @partner.set {
             partner_artists_count: 1
             displayable_shows_count: 1
+            display_artists_section: true
             published_not_for_sale_artworks_count: 1
             published_for_sale_artworks_count: 1
           }
 
         describe 'gallery', ->
           beforeEach ->
-            @partner.set type: 'Gallery'
-            @partner.set claimed: true
+            @partner.set {
+              type: 'Gallery'
+              claimed: true
+            }
             @profile.set owner_type: 'PartnerGallery'
 
           it 'returns proper sections when display works section is disabled', ->
@@ -113,29 +123,39 @@ describe 'PartnerView', ->
           it 'returns proper sections when display works section is disabled', ->
             @partner.set display_works_section: false
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'artists', 'shop', 'about']
 
           it 'returns proper sections when display work section is enabled', ->
             @partner.set display_works_section: true
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'collection', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'collection', 'artists', 'shop', 'about']
+
+          it 'returns proper sections when display_artists_section is disabled', ->
+            @partner.set display_artists_section: false
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'shop', 'about']
+
+          it 'returns proper sections when display_artists_section is enabled', ->
+            @partner.set display_artists_section: true
+            sections = @view.getDisplayableSections @view.getSections()
+            sections.should.eql ['overview', 'shows', 'artists', 'shop', 'about']
 
           it 'includes articles when @partnerArticlesCount > 0', ->
             @view.partnerArticlesCount = 1
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'articles', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'articles', 'artists', 'shop', 'about']
 
           it 'does not include articles when @partnerArticlesCount is 0', ->
             @view.partnerArticlesCount = 0
             sections = @view.getDisplayableSections @view.getSections()
-            sections.should.eql ['shows', 'shop', 'about']
+            sections.should.eql ['overview', 'shows', 'artists', 'shop', 'about']
 
     describe '#initializeTablistAndContent', ->
 
       it 'renders tabs properly', ->
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
-        _.last(@tablistTemplate.args)[0].sections.should.eql ['about']
+        _.last(@tablistTemplate.args)[0].sections.should.eql ['overview', 'about']
 
     describe '#initializePartnerAndCounts', ->
       it 'returns a thenable promise', ->

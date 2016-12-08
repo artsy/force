@@ -129,7 +129,7 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     gallery          = ['overview', 'shows', 'works', 'artists', 'articles', 'contact']
-    institution      = ['shows', 'collection', 'articles', 'shop', 'about']
+    institution      = ['overview', 'shows', 'collection', 'articles', 'artists', 'shop', 'about']
     unclaimedGallery = ['overview']
 
     if @profile.isInstitution()
@@ -149,7 +149,7 @@ module.exports = class PartnerView extends Backbone.View
     criteria =
       overview: => true
       shows: => @partner.get('displayable_shows_count') > 0
-      artists: => @partner.get('partner_artists_count') > 0
+      artists: => @partner.get('partner_artists_count') > 0 and @partner.get('display_artists_section')
       works: => (@partner.get('published_not_for_sale_artworks_count') > 0 or @partner.get('published_for_sale_artworks_count')) > 0 and @partner.get('display_works_section')
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0 and @partner.get('display_works_section')
       contact: => true
