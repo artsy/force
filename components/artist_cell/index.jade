@@ -10,12 +10,8 @@
       .artist-cell-item__artist-name
         = artist.name
       .artist-cell-item__bio
-        if artist.nationality
-          = artist.nationality
-        if artist.nationality && artist.birthday
-          | ,&nbsp;
-        if artist.birthday
-          = "b. " + artist.birthday
+        if artist.formatted_nationality_and_birthday
+          = artist.formatted_nationality_and_birthday
       .artist-cell-item__followers
         if artist.counts
           - var total = artist.counts.artworks || 0
