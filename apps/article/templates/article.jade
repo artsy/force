@@ -5,7 +5,7 @@ block head
 
 append locals
   - assetPackage = 'article'
-  - bodyClass = bodyClass + ' ' + article.getBodyClass()
+  - bodyClass = bodyClass + ' ' + article.getBodyClass({ superArticle: sd.SUPER_ARTICLE, superSubArticleIds: sd.SUPER_SUB_ARTICLE_IDS})
 
 block body
 
