@@ -10,16 +10,17 @@ Q = require 'bluebird-q'
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
   @article = new Article(id: sd.EOY_2016_ARTICLE)
-
   Q.all([
-  	@curation.fetch()
-    @article.fetch()
+    @curation.fetch(cache: true)
+    @article.fetch(
+      cache:  true
+      headers: 'X-Access-Token': req.user?.get('accessToken') or ''
+    )
   ]).then (result) =>
-    @superSubArticles = new Articles()
+    @superSubArticles = new Articles
 
-    Q.all(
-      @article.fetchSuperSubArticles(@superSubArticles)
-    ).then =>
+    Q.all(@article.fetchSuperSubArticles(@superSubArticles, req.user?.get('accessToken')))
+    .then =>
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
       res.locals.sd.CURATION = @curation.toJSON()
       res.render 'components/eoy/templates/index',

@@ -188,10 +188,11 @@ module.exports = class Article extends Backbone.Model
         section
     @set 'sections', sections
 
-  fetchSuperSubArticles: (superSubArticles) ->
+  fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
     for id in @get('super_article').related_articles
       new Article(id: id).fetch
         cache: true
+        headers: 'X-Access-Token': accessToken
         success: (article) =>
           superSubArticles.add article
 
