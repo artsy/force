@@ -113,10 +113,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @bodyInView()
     @setImages()
     @boundaries = @getBodySectionTopBoundaries()
+    @setVideoWaypoints()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @boundaries = @getBodySectionTopBoundaries()
-      @firstSectionInView()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) ->
@@ -128,44 +128,19 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
-        # debugger
         $('.article-body__intro').removeClass('active')
       if direction is 'down'
-        # debugger
         $('.article-body__intro').addClass('active')
     , {offset: '100%'}
 
-  firstSectionInView: =>
-    $('.article-body section[data-section="1"]').waypoint () ->
+    $('.article-body').waypoint (direction) ->
       $('.eoy-feature__background').toggleClass('active')
-    , {offset: '40%'}
-
-    $('.article-body section[data-section="1"] article').waypoint (direction) =>
-      if direction is 'down'
-        @playVideo $('.article-body section[data-section="1"] article').find('.video-controls')
-    , {offset: '50%'}
-
-    $('.article-body section[data-section="7"] article').waypoint (direction) =>
-      if direction is 'down'
-        @playVideo $('.article-body section[data-section="7"] .video-controls')
-    , {offset: '100%'}
+    , {offset: '0'}
 
   animateBody: (scrollTop) =>
     active = @closestSection(scrollTop, @boundaries) - 1
     $('.article-body section[data-section!="' + active + '"]').removeClass('active')
     $('.article-body section[data-section="' + active + '"]').addClass('active')
-
-  playVideo: (e) =>
-    if e.target
-      e = e.target
-    $(e).toggleClass('active')
-    video = $(e).prev()
-    if video[0].paused
-      video[0].play()
-    else
-      video[0].pause()
-    video[0].onended = () ->
-      $(e).removeClass('active')
 
   getBodySectionTopBoundaries: () =>
     boundaries = []
@@ -190,6 +165,26 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setImages: ->
     $('.article-body__content img').each @setImage
+
+  setVideoWaypoints: =>
+    for video in $('.article-body__content .video-controls')
+      active = $(video).closest('section').data('section')
+      $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) =>
+        if direction is 'down'
+          @playVideo $(".article-body section[data-section='" + active + "'] .video-controls")
+      , {offset: '100%'}
+
+  playVideo: (e) =>
+    if e.target
+      e = e.target
+    $(e).toggleClass('active')
+    video = $(e).prev()
+    if video[0].paused
+      video[0].play()
+    else
+      video[0].pause()
+    video[0].onended = () ->
+      $(e).removeClass('active')
 
 module.exports.init = ->
   new EoyView
