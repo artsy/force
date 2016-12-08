@@ -19,24 +19,27 @@ a#purchase-page-header-title
 
 #purchase-page
   margin-bottom 165px
+  clearfix()
   h1
     white-space nowrap
     garamond-size('l-headline')
   h2
     white-space nowrap
     garamond-size('headline')
+  form
+    label
+      margin 22px 0 16px 0
+      avant-garde-size('s-headline')
+      display block
+    .bordered-input
+      width: 100%
   .artwork-purchase
-    &__form
-      clearfix()
-    &__inputs
-      width calc('60% - 40px')
+    &__left
       float left
-      label
-        margin 22px 0 16px 0
-        avant-garde-size('s-headline')
-        display block
-      .bordered-input
-        width: 100%
+      width calc('60% - 40px')
+    &__right
+      float right
+      width calc('40% - 40px')
     &__input-full-width
         width 100%
     &__input-half-width
@@ -45,21 +48,22 @@ a#purchase-page-header-title
       display flex
       flex-wrap wrap
       justify-content space-between
+    &__text
+      garamond-size(s-body)
+      color gray-darker-color
+      margin-bottom 25px
     &__message
-      &__blurb
-        garamond-size(s-body)
-        color gray-darker-color
-        margin-bottom 25px
       textarea
         height 145px
     &__artwork-image
-        display block
-        width 56px
-        height @width
+      display block
+      width 56px
+      height @width
+    &__signup_form
+      padding-top 50px
+      border-top 1px solid gray-lightest-color
 
   .ap-summary
-    float right
-    width calc('40% - 40px')
     border 2px solid gray-lightest-color
     &__top
       display flex
@@ -99,7 +103,11 @@ a#purchase-page-header-title
       garamond-size 'l-caption'
       color gray-darker-color
       margin-top 15px
-
+  .ap-signup
+    &__login
+      margin-top 20px
+      a
+        color gray-darker-color
   .ap-how
     padding-bottom 50px
     border-bottom 1px solid gray-lightest-color
