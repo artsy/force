@@ -9,6 +9,7 @@ section.article-body__intro(data-section=0)
 .article-body__content
   for section, i in curation.get('sections')
     section(data-section='#{i + 1}')
+      a(name='section-#{i + 1}')
       .article-body--section
         header
           if i == 4 || i == 5
@@ -22,7 +23,7 @@ section.article-body__intro(data-section=0)
             .spacer
             .image
               if section.image.indexOf('mp4') > -1
-                video
+                video(autoplay=true, controls=false, muted=true, playsinline=true)
                   source(src=section.image)
                 .video-controls
                   .video-play-button

@@ -137,6 +137,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
     $('.article-body').waypoint (direction) ->
       $('.eoy-feature__background').toggleClass('active')
+      $('.scroller').toggleClass('active')
     , {offset: '0'}
 
   animateBody: (scrollTop) =>
