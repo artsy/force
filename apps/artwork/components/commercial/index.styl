@@ -45,16 +45,29 @@
 .artwork-commercial
   clearfix()
   &__form
-    padding (gutter / 2) 0
+    padding 22px 0
     serif('s-body')
     line-height 1.25 // compact-line-height
 
-  &__limited-partner-message
   &__sale-message
-    block-margins(gutter / 2)
-    padding distance(gutter / 2) 0
+    garamond-size('l-body')
+    font-weight bold
+    line-height 1.5
+  &__price-label
+    avant-garde-size('s-headline')
+    color gray-darker-color
+    line-height 1.5
+    .help-tooltip
+      margin-bottom -1px
+  &__container
+    block-margins 25px
+    padding 25px 0
     border-top 1px solid gray-lighter-color
     border-bottom @border-top
+  &__shipping-info
+    garamond-size('l-caption')
+    color gray-darker-color
+    line-height 1.5
 
   &__consignables
     margin (gutter + (gutter / 3)) 0
