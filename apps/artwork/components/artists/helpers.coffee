@@ -19,7 +19,7 @@ module.exports =
     has: (section) ->
       switch section
         when 'biography'
-          artist.blurb || artist.bio || artist.biography_blurb
+          artist.blurb || artist.bio || artist.biography_blurb?.text != ""
         when 'exhibition_highlights'
           artist.exhibition_highlights? && artist.exhibition_highlights.length > 15
         when 'articles'
