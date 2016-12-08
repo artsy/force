@@ -11,7 +11,7 @@ Q = require 'bluebird-q'
   @curation = new Curation(id: sd.EOY_2016)
   @article = new Article(id: sd.EOY_2016_ARTICLE)
   Q.all([
-  	@curation.fetch(cache: true)
+    @curation.fetch(cache: true)
     @article.fetch(
       cache:  true
       headers: 'X-Access-Token': req.user?.get('accessToken') or ''
