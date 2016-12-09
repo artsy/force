@@ -26,7 +26,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @watchScrolling()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
-    $('.scroller').fadeIn(500)
+    $('.scroller').fadeIn 500, =>
+      @loadBody()
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
@@ -55,7 +56,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return closest
 
   watchScrolling: =>
-    @loadBody()
     scrollTop = $(window).scrollTop()
     scrollTop = Math.round(scrollTop)
     if scrollTop == 0
