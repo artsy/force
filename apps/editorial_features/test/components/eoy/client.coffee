@@ -25,6 +25,7 @@ describe 'EoyView', ->
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0
       $.fn.scrollTop = sinon.stub().returns 806
+      $.fn.resize = sinon.stub()
       sinon.stub Backbone, 'sync'
       @curation = new Curation
           _id: "5829db77b5989e6f98f779a5",
@@ -99,6 +100,8 @@ describe 'EoyView', ->
         }
       benv.render resolve(__dirname, '../../../components/eoy/templates/index.jade'), @options, =>
         { EoyView } = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        boundaryArray = [4931.6875, 6317.1875, 9595.125, 12164.203125, 14924.03125, 18523.484375, 21394.359375, 24569.453125, 27352.703125, 29895.953125, 32703.140625, 35213.125, 35293.125]
+        @getBodySectionTopBoundaries = sinon.stub(EoyView::, 'getBodySectionTopBoundaries').returns boundaryArray
         @view = new EoyView
           curation: @curation,
           el: $('body')
@@ -113,12 +116,10 @@ describe 'EoyView', ->
   describe '#initialize', ->
 
     it 'Renders content from curation and superarticle', ->
-
       $('.scroller__items section').should.have.lengthOf 11
       $('.article-sa-sticky-header').should.have.lengthOf 1
 
     it 'closes all scroller sections on load', ->
-
       $('.scroller__items section[data-state=open]').should.have.lengthOf 0
 
   describe '#Slider', ->
@@ -129,7 +130,6 @@ describe 'EoyView', ->
       @view.containerHeight.should.equal 805
       @view.activeHeight.should.equal 528
       @view.openHeight.should.equal 6160
-
 
     it 'opens containers on scroll', ->
       @view.doSlider($(window).scrollTop())
@@ -143,19 +143,41 @@ describe 'EoyView', ->
       @view.closestSection(3000, @view.getScrollZones()).should.equal 5
 
   describe '#deferredLoadBody', ->
+
     it 'loads the body contents', ->
+      $(@view.el).html().should.containEql 'In 2016, artists have produced work urging us'
 
   describe '#watchWindow', ->
+
     it 'resets section boundaries when window changes size', ->
+      $(window).resize()
+      $.fn.resize.args[0][0]()
+      @getBodySectionTopBoundaries.callCount.should.equal 2
 
   describe '#animateBody', ->
-    it 'adds a class to the closest section', ->
+
+    it 'adds a class to the closest section', (done) ->
+      @view.animateBody(10000)
+      _.defer =>
+        $('.article-body section[data-section!="1"]').hasClass('active').should.not.be.true()
+        $('.article-body section[data-section="2"]').hasClass('active').should.be.true()
+        done()
 
   describe '#playVideo', ->
-    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
 
-  describe '#setVideoWaypoints', ->
+    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
+      console.log $('.article-body section[data-section="8"] video')[0].paused
+      $('.article-body section[data-section="8"] .video-controls').click()
+      console.log $('.article-body section[data-section="8"] video')[0].paused
+      $('.article-body section[data-section!="4"] video')[0].paused.should.be.true()
+
+  describe '#setupVideos', ->
+
     it 'calls play video for each video', ->
+      @view.playVideo = sinon.stub()
+      @view.setupVideos()
+      console.log @view.playVideo.callCount
 
   describe '#setImages', ->
+
     it 'uses a cloudfront src for each image', ->

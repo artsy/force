@@ -35,11 +35,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
-    $(window).scroll () =>
+    $(window).scroll =>
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
-    $(window).resize () =>
-      @setupCarousel()
+    $(window).resize =>
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
@@ -150,7 +149,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body section[data-section!="' + active + '"]').removeClass('active')
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
-  getBodySectionTopBoundaries: () =>
+  getBodySectionTopBoundaries: =>
     boundaries = []
     for section, i in $('.article-body section')
       top = $(section).position().top
@@ -178,7 +177,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
+      console.log 'here?'
       $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) ->
+        console.log 'here'
         if direction is 'down'
           playVideo this
       , {offset: '100%'}
@@ -187,6 +188,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     if e.target
       e = e.target
     video = $(e).prev()
+    console.log video
     if video[0].paused
       $(e).addClass('active')
       video[0].play()
