@@ -1,10 +1,17 @@
 body.body-eoy-2016
   // Title border
-  h1
-    padding 80px 0px
-    border-top 1px solid black
-    border-bottom 1px solid black
-    max-width 1100px
+  .article-header
+    h1
+      padding 80px 0px
+      border-top 1px solid black
+      border-bottom 1px solid black
+      max-width 1100px
+  @media screen and (max-width 900px)
+    .article-header
+      margin 0 20px
+  @media screen and (max-width 500px)
+    .article-header
+      margin 0 10px
 
   // Image border
   .article-section-container[data-section-type=image]
@@ -13,6 +20,7 @@ body.body-eoy-2016
     &.eoy-border-no-bottom
       margin-bottom 0px
     figure.article-section-image
+      max-width 1100px !important
       position relative
       padding 60px 0
       border-top 1px solid black
@@ -28,13 +36,19 @@ body.body-eoy-2016
         width 1px
       img, figcaption
         max-width 85%
-        margin-right 0px
+        margin-right 20px
       figcaption
         float right
+      &.portrait
+        img, figcaption
+          max-width 65%
     @media screen and (max-width 900px)
       figure.article-section-image
         margin 0 20px
         width auto
+    @media screen and (max-width 500px)
+      figure.article-section-image
+        margin 0 10px
 
   // Author-date
   .article-author-date
@@ -89,3 +103,7 @@ body.body-eoy-2016
       &.eoy-border
         .article-section-text
           margin 0 20px
+    @media screen and (max-width 500px)
+      &.eoy-border
+        .article-section-text
+          margin 0 10px

@@ -2,7 +2,7 @@
 # Detects a mobile browser by user agent and redirects it to Microgravity
 #
 
-{ MOBILE_URL, TEAM_BLOGS } = require '../../config'
+{ MOBILE_URL, TEAM_BLOGS, EOY_2016_SLUGS } = require '../../config'
 express = require 'express'
 router = express.Router()
 
@@ -40,5 +40,6 @@ router.get '/professional-buyer*', isResponsive
 router.all '/2016-year-in-art*', isResponsive
 router.get '/eoy-2016', isResponsive
 router.get TEAM_BLOGS, isResponsive
+router.get EOY_2016_SLUGS, isResponsive
 router.use redirect
 module.exports = router
