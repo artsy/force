@@ -26,7 +26,7 @@ sd:
 
 # Start the server pointing to staging
 ss:
-	APP_URL=http://localhost:5000 METAPHYSICS_ENDPOINT=http://localhost:5001 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start
+	APP_URL=http://localhost:5000 METAPHYSICS_ENDPOINT=https://metaphysics-staging.artsy.net APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start
 
 # Start the server pointing to staging with cache
 ssc:

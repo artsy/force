@@ -18,7 +18,9 @@ contexts =
   popular_artists: (module) ->
     popularArtistsTemplate artists: module.context.artists
   live_auctions: (module) ->
-    auctionTemplate auctionTimeLabel: auctionTimeLabel(module.context), auctionClosesLabel: auctionClosesLabel(module.context)
+    auctionTemplate
+      auctionTimeLabel: auctionTimeLabel(module.context)
+      auctionClosesLabel: auctionClosesLabel(module.context)
   current_fairs: (module) ->
     fairTemplate fair: module.context, timeSpan: timeSpan
 
@@ -38,10 +40,16 @@ setupActiveBidsView = (module, $el, user) ->
   mabView.fetch().then -> mabView.render().poll()
 
 auctionTimeLabel = (auction) ->
-  if auction.live_start_at then "Live bidding starts #{moment(auction.live_start_at).format("MMM D")}" else "#{auction.start_at} - #{moment(auction.end_at).format("MMM D")}"
+  if auction.live_start_at
+    "Live bidding starts #{moment(auction.live_start_at).format("MMM D")}"
+  else
+    "#{auction.start_at} - #{moment(auction.end_at).format("MMM D")}"
 
 auctionClosesLabel = (auction) ->
-  if auction.live_start_at then '' else "Closes #{moment(auction.end_at).format("MMM D [at] ha", timezone: moment.tz.guess())}"
+  if auction.live_start_at
+    ''
+  else
+    "Closes #{moment(auction.end_at).format("MMM D [at] ha", timezone: moment.tz.guess())}"
 
 module.exports = ->
   user = User.instantiate()
