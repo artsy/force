@@ -2,7 +2,7 @@ if artwork.sale_message
   .artwork-commercial__container
     .artwork-commercial__sale-message
       if artwork.price
-        .artwork-commercial__price-label= !artwork.is_price_range ? 'Price' : 'Price Range'
+        .artwork-commercial__price-label Price
         .artwork-commerical__price
           | #{artwork.price}
           span(
