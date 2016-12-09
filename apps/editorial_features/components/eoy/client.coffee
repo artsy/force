@@ -116,8 +116,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body').prepend bodyView
       curation: @curation
       markdown: markdown
+      resize: resize
     @bodyInView()
-    @setImages()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @setupVideos()
@@ -162,24 +162,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true
 
-  setImage: ->
-    $img = $(this)
-    src = $img.attr 'src'
-    if src != ''
-      width = 800
-      src = resize(src, width: width * (window.devicePixelRatio or 1))
-      $img.attr 'src', src
-
-  setImages: ->
-    $('.article-body__content img').each @setImage
-
   setupVideos: =>
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
-      console.log 'here?'
       $(".article-body section[data-section='" + active + "'] .video-controls").waypoint (direction) ->
-        console.log 'here'
         if direction is 'down'
           playVideo this
       , {offset: '100%'}
@@ -188,7 +175,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     if e.target
       e = e.target
     video = $(e).prev()
-    console.log video
     if video[0].paused
       $(e).addClass('active')
       video[0].play()

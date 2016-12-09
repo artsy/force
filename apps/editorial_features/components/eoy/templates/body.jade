@@ -30,14 +30,14 @@ section.article-body__intro(data-section=0)
                   .video-controls
                     .video-play-button
                 else
-                  img(src=section.image width='800')
+                  img(src=resize(section.image, { width: 800 }))
                   .caption!= markdown(section.caption)
               else
                 .img
-                  img(src=section.image width='800')
+                  img(src=resize(section.image, { width: 800 }))
                   .caption!= markdown(section.caption)
                 .img
-                  img(src=section.image_second width='800')
+                  img(src=resize(section.image_second, { width: 800 }))
                   .caption!= markdown(section.caption_second)
         article
           if i == 2 || i == 3 || i == 7 || i == 8 || i == 9
@@ -57,10 +57,10 @@ section.article-body__intro(data-section=0)
               else if i == 3
                 include ./carousel
               else if i == 8
-                img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg' width='800')
+                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
                 .caption This image and its caption are manually edited.
               else
-                img(src=section.image_second width='800')
+                img(src=resize(section.image_second, { width: 800 }))
                 .caption!= markdown(section.caption_second)
 
             .spacer
@@ -68,12 +68,12 @@ section.article-body__intro(data-section=0)
               if i != 2
                 p=section.callout
               else
-                img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg')
+                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
                 .caption This image and its caption are manually edited.
 
           if i == 0
             .article-body--section__sub-image
-              img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg')
+              img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg', { width: 800 }))
               .caption This image and its caption are manually edited.
               .spacer
             .spacer--article

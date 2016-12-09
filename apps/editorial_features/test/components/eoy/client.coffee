@@ -20,7 +20,7 @@ describe 'EoyView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
-      $.waypoints = sinon.stub()
+      @waypoint = $.waypoints = sinon.stub()
       $.fn.waypoint = sinon.stub()
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0
@@ -45,7 +45,7 @@ describe 'EoyView', ->
             },
             {
               headline: "headline 2",
-              image_second: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.jpg",
+              image_second: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.mp4",
               image: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.jpg"
             },
             {
@@ -55,7 +55,7 @@ describe 'EoyView', ->
             },
             {
               image: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.jpg",
-              image_second: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.jpg",
+              image_second: "https://artsy-media-uploads.s3.amazonaws.com/WU6t2X-XoeBlY1KWVOQbdQ%2FAW_01.mp4",
               headline: "headline 4"
             },
             {
@@ -100,6 +100,7 @@ describe 'EoyView', ->
         }
       benv.render resolve(__dirname, '../../../components/eoy/templates/index.jade'), @options, =>
         { EoyView } = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        @playVideo = sinon.stub EoyView::, 'playVideo'
         boundaryArray = [4931.6875, 6317.1875, 9595.125, 12164.203125, 14924.03125, 18523.484375, 21394.359375, 24569.453125, 27352.703125, 29895.953125, 32703.140625, 35213.125, 35293.125]
         @getBodySectionTopBoundaries = sinon.stub(EoyView::, 'getBodySectionTopBoundaries').returns boundaryArray
         @view = new EoyView
@@ -122,7 +123,34 @@ describe 'EoyView', ->
     it 'closes all scroller sections on load', ->
       $('.scroller__items section[data-state=open]').should.have.lengthOf 0
 
-  describe '#Slider', ->
+  describe '#watchWindow', ->
+
+    it 'resets section boundaries when window changes size', ->
+      $(window).resize()
+      $.fn.resize.args[0][0]()
+      @getBodySectionTopBoundaries.callCount.should.equal 2
+
+  describe '#getScrollZones', ->
+
+    it 'returns an array of heights that corresponds to each section', ->
+
+  describe '#closestSection', ->
+
+    it 'returns the section closest to where user scrolls', ->
+      @view.closestSection(0, @view.getScrollZones()).should.equal 0
+      @view.closestSection(3000, @view.getScrollZones()).should.equal 5
+
+  describe '#watchScrolling', ->
+
+    it 'handles the top of the page', ->
+
+    it 'handles the middle of the body', ->
+
+    it 'handles the bottom of the page', ->
+
+  describe '#setupSliderHeight', ->
+
+    it 'sets height based on position', ->
 
     it 'sets up heights for the scroller', ->
       @view.setupSliderHeight()
@@ -131,53 +159,47 @@ describe 'EoyView', ->
       @view.activeHeight.should.equal 528
       @view.openHeight.should.equal 6160
 
+  describe '#doSlider', ->
+
     it 'opens containers on scroll', ->
       @view.doSlider($(window).scrollTop())
       $('.scroller__items section[data-section=0]').height().should.equal 0
       $('.scroller__items section[data-state=open]').should.have.lengthOf 2
-
-  describe '#closestSection', ->
-
-    it 'returns the section closest to where user scrolls', ->
-      @view.closestSection(0, @view.getScrollZones()).should.equal 0
-      @view.closestSection(3000, @view.getScrollZones()).should.equal 5
 
   describe '#deferredLoadBody', ->
 
     it 'loads the body contents', ->
       $(@view.el).html().should.containEql 'In 2016, artists have produced work urging us'
 
-  describe '#watchWindow', ->
+  describe '#bodyInView', ->
 
-    it 'resets section boundaries when window changes size', ->
-      $(window).resize()
-      $.fn.resize.args[0][0]()
-      @getBodySectionTopBoundaries.callCount.should.equal 2
+    it 'sets waypoints', ->
 
   describe '#animateBody', ->
 
     it 'adds a class to the closest section', (done) ->
       @view.animateBody(10000)
       _.defer =>
-        $('.article-body section[data-section!="1"]').hasClass('active').should.not.be.true()
+        $('.article-body section[data-section="1"]').hasClass('active').should.not.be.true()
         $('.article-body section[data-section="2"]').hasClass('active').should.be.true()
         done()
 
-  describe '#playVideo', ->
+  describe '#setupCarousel', ->
 
-    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
-      console.log $('.article-body section[data-section="8"] video')[0].paused
-      $('.article-body section[data-section="8"] .video-controls').click()
-      console.log $('.article-body section[data-section="8"] video')[0].paused
-      $('.article-body section[data-section!="4"] video')[0].paused.should.be.true()
+    it 'calls initCarousel', ->
 
   describe '#setupVideos', ->
 
     it 'calls play video for each video', ->
-      @view.playVideo = sinon.stub()
       @view.setupVideos()
-      console.log @view.playVideo.callCount
+      $.fn.waypoint.args[4][0]()
+      $.fn.waypoint.args[5][0]()
+      $.fn.waypoint.args[6][0]()
+      @playVideo.callCount.should.equal 1
+      $.fn.waypoint.callCount.should.equal 7
 
-  describe '#setImages', ->
+  describe '#playVideo', ->
 
-    it 'uses a cloudfront src for each image', ->
+    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
+      $('.article-body section[data-section="4"] .video-controls').click()
+      $('.article-body section[data-section!="4"] video')[0].paused.should.be.true()
