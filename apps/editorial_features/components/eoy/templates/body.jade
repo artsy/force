@@ -25,7 +25,7 @@ section.article-body__intro(data-section=0)
               if i != 8
                 if section.image.indexOf('mp4') > -1
                   video(autoplay=true, controls=false, muted=true, playsinline=true)
-                    source(src=section.image)
+                    source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button
                 else
@@ -48,7 +48,7 @@ section.article-body__intro(data-section=0)
             .image
               if section.image_second.indexOf('mp4') > -1
                 video(autoplay=true, controls=false, muted=true, playsinline=true).video
-                  source(src=section.image_second)
+                  source(src=section.image_second type='video/mp4')
                 .video-controls
                   .video-play-button
                 .caption!= markdown(section.caption_second)
