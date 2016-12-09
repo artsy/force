@@ -58,7 +58,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return closest
 
   watchScrolling: =>
-    # @loadBody()
     scrollTop = $(window).scrollTop()
     scrollTop = Math.round(scrollTop)
     if scrollTop == 0
