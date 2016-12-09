@@ -10,6 +10,9 @@ body
 video::-webkit-media-controls
   display none !important
 
+img
+  max-width 90vw
+
 .article-body
   display none
   padding 0 40px
@@ -46,7 +49,7 @@ video::-webkit-media-controls
   &__intro
     opacity 1
     &-header
-      width calc(30vw \+ 1px)
+      width 30vw
       height 50vh
       margin-bottom 20px
       z-index 1000
@@ -63,25 +66,38 @@ video::-webkit-media-controls
         line-height 45px
         margin-left 15vw
         padding 80px 20px
-        max-width 55vw
+        max-width 900px
+        width 55vw
         opacity 0
-        transition all 3s
+        transition opacity 3s
       .spacer
-        border-top 1px solid
-        width 0
         position absolute
-        left calc(30vw \- 5px)
         transition all .75s
+        width 0
         &:first-child
           top 0
-        &:last-child
+          border-top 1px solid
+          left calc(30vw \- 5px)
+        &:nth-child(3)
           bottom 0
+          border-top 1px solid
+          left calc(30vw \- 5px)
+        &:last-child
+          right calc(15vw \- 25px)
+          top 20px
+          margin-top 5em
+          height 0
+          border-right 1px solid
+          transition all 3s
       &.active
         h3
           opacity 1
-        .spacer
+        .spacer:first-child, .spacer:nth-child(3)
           width 65vw
           left 15vw
+        .spacer:last-child
+          height calc(100% \- 40px)
+          margin-top 0
 
 // single page sections
 .article-body--section
@@ -93,6 +109,7 @@ video::-webkit-media-controls
       line-height 1.35em
       padding 100px 20px
       width 100%
+      z-index 100
   &__cover-image
     width 100%
     padding 70px 20px
@@ -429,6 +446,7 @@ video::-webkit-media-controls
       .callout
         display none
   .carousel
+    max-height 600px
     .mgr-cell.js-mgr-cell
       width 100%
       height 100%
@@ -577,6 +595,8 @@ video::-webkit-media-controls
           max-height 700px
           width auto
           height auto
+        .caption
+          text-align left
       .callout
         width calc(40% \- 20px)
         border-bottom 1px solid
@@ -649,6 +669,67 @@ video::-webkit-media-controls
 [data-section='8']
   .article-body--section
     margin 0 auto
+    &__title
+      position relative
+      .spacer
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 100%
+        border-bottom 1px solid
+    &__cover-image
+      .image
+        img
+          margin-right 0
+          margin-left auto
+        .caption
+          margin-right 0
+          margin-left 25%
+      .spacer:first-child
+        position absolute
+        left 0
+        top 20px
+        bottom 0
+        height calc(100% \- 40px)
+        border-right 1px solid
+      .spacer:nth-child(2)
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 100%
+        border-bottom 1px solid
+    article
+      position relative
+      .spacer--article
+        position absolute
+        top 20px
+        right 0
+        bottom 0
+        height calc(100% \- 20px)
+        border-right 1px solid
+    &__sub-text
+      margin-right 20px
+      border-top 1px solid
+      padding 60px 0
+      .image
+        width 75%
+        margin 0 auto
+        img
+          width 100%
+        .caption
+          text-align left
+          width 100%
+      .callout
+        display none
+      .spacer
+        position absolute
+        bottom 0
+        left 0
+        right 20px
+        border-bottom 1px solid
+        width calc(100% \- 20px)
 
 [data-section='9']
   .article-body--section
@@ -658,19 +739,36 @@ video::-webkit-media-controls
       position relative
       text-align right
       .spacer
-        width 100%
+        height 0
         position absolute
         bottom 0
         left 0
-        right 0
-        border-bottom 1px solid
+        top 0
+        border-right 1px solid
+        transition all 3s
     &__cover-image
       .spacer:first-child
+        position absolute
+        top 0
+        left 0
+        right 0
+        width 0
+        margin-left 50%
+        transition all 3s
+        border-top 1px solid
+      .spacer:nth-child(2)
         position absolute
         bottom 0
         left 50%
         top 20px
         height calc(100% \- 40px)
+        border-right 1px solid
+      .spacer:nth-child(3)
+        position absolute
+        bottom 0
+        right 0
+        top 20px
+        height calc(100% \- 20px)
         border-right 1px solid
       .image
         display flex
@@ -679,19 +777,109 @@ video::-webkit-media-controls
           width 50%
           img
             width 100%
-    &__sub-text
-      .image
-        img
-          margin-right 0
-          margin-left auto
         .caption
           margin-right 0
+          min-width 100%
+          text-align left
+    article
+      position relative
+      .spacer--article
+        position absolute
+        top 0
+        left 0
+        right 0
+        border-top 1px solid
+        width calc(100% \- 20px)
+    &__text
+      border-right 1px solid
+    &__sub-text
+      margin-top 20px
+      .image
+        padding 60px 20px
+        border-top 1px solid
+        border-bottom 1px solid
+        img
+          margin-right 0
+          margin-left 25%
+          width 75%
+        .caption
+          margin-right 0
+          margin-left 25%
+          text-align left
       .callout
         display none
+  &.active
+    header .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
+      margin-left 0
 
 [data-section='10']
   .article-body--section
     margin 0 auto
+    &__title
+      position relative
+      .spacer
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        height calc(100% \- 20px)
+        border-right 1px solid
+    &__cover-image
+      .image
+        img
+          margin 0 auto
+        .caption
+          margin-left auto
+          margin-right auto
+          text-align left
+      .spacer:first-child
+        position absolute
+        top 0
+        left 0
+        right 0
+        width 100%
+        border-top 1px solid
+      .spacer:nth-child(2)
+        position absolute
+        bottom 0
+        left 0
+        right 0
+        width 100%
+        border-top 1px solid
+    &__text
+      display flex
+      align-items flex-end
+      flex-direction column
+    article
+      position relative
+      .spacer--article
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 7.5%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        max-height calc(100% \- 40px)
+    &__sub-text
+      border-bottom 1px solid
+      border-top 1px solid
+      .image
+        padding 60px 20px
+        img
+          margin-right 0
+          margin-left auto
+          width 75%
+        .caption
+          margin-left 25%
+          margin-right 0
+      .callout
+        display none
+
 
 @media screen and (max-width: 1200px)
   .article-body--section
@@ -723,6 +911,7 @@ video::-webkit-media-controls
     padding-bottom 200px
     &__title h2
       padding 30px 0
+      font-size 40px
     &__cover-image
       padding 30px 0
       img

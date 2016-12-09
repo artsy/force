@@ -19,17 +19,19 @@ module.exports.EoyView = class EoyView extends Backbone.View
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
     @curation = new Curation sd.CURATION
-    @windowPosition = window.scrollY
+    @windowPosition = $(window).scrollTop()
     @windowHeight = $(window).height()
     @setupSliderHeight()
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
-    @watchScrolling()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
     @loadBody = _.once @deferredLoadBody
+    @watchScrolling()
     $('.scroller').fadeIn 500, =>
       @loadBody()
+      @boundaries = @getBodySectionTopBoundaries()
+      @animateBody($(window).scrollTop())
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
@@ -37,6 +39,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
     $(window).resize () =>
+      @setupCarousel()
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
@@ -116,11 +119,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
       markdown: markdown
     @bodyInView()
     @setImages()
-    @boundaries = @getBodySectionTopBoundaries()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
-      @boundaries = @getBodySectionTopBoundaries()
       @setupVideos()
+      @boundaries = @getBodySectionTopBoundaries()
 
   bodyInView: =>
     $('.article-body').waypoint (direction) =>
@@ -184,12 +186,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
   playVideo: (e) =>
     if e.target
       e = e.target
-    $(e).toggleClass('active')
     video = $(e).prev()
     if video[0].paused
+      $(e).addClass('active')
       video[0].play()
     else
       video[0].pause()
+      $(e).removeClass('active')
     video[0].onended = () ->
       $(e).removeClass('active')
 

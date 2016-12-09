@@ -16,7 +16,6 @@ flex-display(justify = space-between, align = center)
   bottom 20px
   display none
   overflow hidden
-  border-bottom 1px solid
   z-index -1
   &.active
     z-index 100
@@ -71,6 +70,7 @@ flex-display(justify = space-between, align = center)
         font-size 7vw
         font-weight 500
         width 100%
+        border-bottom 1px solid
         .inner
           flex-direction column
           border-left 1px solid
@@ -94,7 +94,6 @@ flex-display(justify = space-between, align = center)
 
     &[data-section='1']
       .inner
-        border-top 1px solid
         .left
           width grid-1
           height calc(100% \- 20px)
@@ -290,6 +289,10 @@ flex-display(justify = space-between, align = center)
   .scroller
     width calc(100% \- 20px)
     margin 0 10px
+    .inner h2
+      font-size 40px
+    h1
+      font-size 50px
     section
       &[data-section='0']
         article .inner

@@ -5,6 +5,7 @@ section.article-body__intro(data-section=0)
     .spacer
     h3!= markdown(curation.get('intro'))
     .spacer
+    .spacer
   footer
 .article-body__content
   for section, i in curation.get('sections')
@@ -39,11 +40,12 @@ section.article-body__intro(data-section=0)
                   img(src=section.image_second width='800')
                   .caption!= markdown(section.caption_second)
         article
-          if i == 2 || i == 3
+          if i == 2 || i == 3 || i == 7 || i == 8 || i == 9
             .spacer--article
           .article-body--section__text!= markdown(section.body)
             if i == 4 || i == 5
               .spacer
+
           .article-body--section__sub-text
             .image
               if section.image_second.indexOf('mp4') > -1
@@ -53,21 +55,14 @@ section.article-body__intro(data-section=0)
                   .video-play-button
                 .caption!= markdown(section.caption_second)
               else if i == 3
-                - length = 1
-                .carousel.mgr-horizontal-nav
-                  .mgr-cells.js-mgr-cells
-                    .mgr-cell.js-mgr-cell
-                      img(src=section.image_second width='800')
-                    .mgr-cell.js-mgr-cell
-                      img(src=section.image width='800')
-                  nav.mgr-navigation.js-mgr-navigation
-                    include ../../../../../components/merry_go_round/templates/horizontal_navigation
+                include ./carousel
               else if i == 8
                 img(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg' width='800')
                 .caption This image and its caption are manually edited.
               else
                 img(src=section.image_second width='800')
                 .caption!= markdown(section.caption_second)
+
             .spacer
             .callout
               if i != 2
