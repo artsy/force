@@ -22,13 +22,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowPosition = window.scrollY
     @windowHeight = $(window).height()
     @setupSliderHeight()
-    @loadBody = _.once @deferredLoadBody
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
     @watchScrolling()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
-    $('.scroller').fadeIn(500)
+    @loadBody = _.once @deferredLoadBody
+    $('.scroller').fadeIn 500, =>
+      @loadBody()
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
@@ -57,7 +58,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return closest
 
   watchScrolling: =>
-    @loadBody()
+    # @loadBody()
     scrollTop = $(window).scrollTop()
     scrollTop = Math.round(scrollTop)
     if scrollTop == 0
