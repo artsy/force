@@ -27,10 +27,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
     @loadBody = _.once @deferredLoadBody
+    @watchScrolling()
     $('.scroller').fadeIn 500, =>
       @loadBody()
       @boundaries = @getBodySectionTopBoundaries()
-      @watchScrolling()
       @animateBody($(window).scrollTop())
 
   watchWindow: =>
