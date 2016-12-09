@@ -36,8 +36,8 @@ module.exports = class Article extends Backbone.Model
       superArticles.fetch(
         error: options.error
         cache: true
+        headers: 'X-Access-Token': options.accessToken or ''
         data:
-          published: true
           is_super_article: true
       )
     ]).then =>
@@ -63,9 +63,9 @@ module.exports = class Article extends Backbone.Model
          # Check if the article is IN a super article
         dfds.push new Articles().fetch
           cache: true
+          headers: 'X-Access-Token': options.accessToken or ''
           data:
             super_article_for: @get('id')
-            published: true
           success: (articles) ->
             superArticle = articles?.models[0]
 
@@ -76,7 +76,7 @@ module.exports = class Article extends Backbone.Model
         dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(cache: true)
 
       Q.allSettled(dfds).then =>
-        superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles) else []
+        superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles, options.accessToken) else []
         Q.allSettled(superArticleDefferreds)
           .then =>
 
