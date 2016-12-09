@@ -9,10 +9,13 @@ module.exports =
     '^/auction/.*'
     '^/dev$'
     '^/inquiry/.*'
+    '^/artwork/.*/checkout'
+    '^/artwork/.*/thank-you'
     '^/jobs'
     '^/job/.*'
     TEAM_BLOGS or '^/test'
     '^/2016-year-in-art'
+    '^/eoy-2016'
   ]
 
   check: ->

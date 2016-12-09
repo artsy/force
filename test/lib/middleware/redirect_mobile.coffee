@@ -7,7 +7,7 @@ describe 'Redirect mobile middleware', ->
   beforeEach ->
     redirectMobile.__set__ 'MOBILE_URL', 'm.foobart.sy'
     @redirect = redirectMobile.__get__ 'redirect'
-    @req = { params: {}, logout: sinon.stub() }
+    @req = { params: {}, logout: sinon.stub(), get: sinon.stub() }
     @res = { redirect: sinon.stub(), locals: sd: {} }
 
   it 'redirects mobile user agents', ->
@@ -30,3 +30,8 @@ describe 'Redirect mobile middleware', ->
     @res.locals.sd.IS_RESPONSIVE = true
     @redirect @req, @res, ->
     @res.redirect.called.should.not.be.ok()
+
+  it 'sets IS_MOBILE if the user agent is a phone', ->
+    @req.get.returns 'iPhone'
+    @redirect @req, @res, ->
+    @res.locals.sd.IS_MOBILE.should.be.true()

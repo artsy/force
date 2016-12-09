@@ -3,7 +3,7 @@
 // and potentionally other alternative layout options or more.
 //
 
-if (location.pathname.match('/article/')) {
+if (location.pathname.match('/article/') || location.pathname.match('/eoy-2016') || location.pathname.match('/year-in-art-2016')) {
   $(document.body).on('click', '.article-social a', function () {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Article Share', {
@@ -51,6 +51,24 @@ if (location.pathname.match('/article/')) {
       article_id: articleId,
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
       impression_type: 'related_article',
+      context_type: 'article_fixed'
+    })
+  }).on('click', '.article-sa-primary-logo a', function(){
+    analytics.track('Clicked primary partner logo', {
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      impression_type: 'sa_primary_logo',
+      context_type: 'article_fixed'
+    })
+  }).on('click', '.article-sa-secondary-logo a', function(){
+    analytics.track('Clicked secondary partner logo', {
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      impression_type: 'sa_secondary_logo',
+      context_type: 'article_fixed'
+    })
+  }).on('click', '.article-sa-cta-container a', function(){
+    analytics.track('Clicked partner cta link', {
+      destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
+      impression_type: 'sa_partner_cta',
       context_type: 'article_fixed'
     })
   })

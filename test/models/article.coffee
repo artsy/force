@@ -2,13 +2,15 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Article = require '../../models/article'
+rewire = require 'rewire'
+Article = rewire '../../models/article'
 Articles = require '../../collections/articles'
 sinon = require 'sinon'
 fixtures = require '../helpers/fixtures'
 
 describe "Article", ->
   beforeEach ->
+    Article.__set__ 'sd', { EOY_2016_ARTICLE: '1234' }
     sinon.stub Backbone, 'sync'
       .returns Q.defer()
     @article = new Article
@@ -30,6 +32,7 @@ describe "Article", ->
       @article.fetchWithRelated success: (data) ->
         data.article.get('title').should.equal 'Moo'
         done()
+      return
 
     it 'gets the slideshow artworks', (done) ->
       slideshowArticle = _.extend {}, fixtures.article,
@@ -59,6 +62,7 @@ describe "Article", ->
       @article.fetchWithRelated success: (data) ->
         data.slideshowArtworks.first().get('title').should.equal 'foobar'
         done()
+      return
 
     it 'works for those rare sectionless articles', (done) ->
       sectionlessArticle = _.extend {}, fixtures.article,
@@ -77,6 +81,7 @@ describe "Article", ->
       @article.fetchWithRelated success: (data) ->
         data.article.get('title').should.equal 'Moo'
         done()
+      return
 
     it 'fetches related articles for super articles', (done) ->
       superArticle = _.extend {}, fixtures.article,
@@ -103,6 +108,7 @@ describe "Article", ->
         data.superSubArticles.models[0].get('title').should.equal 'RelatedArticle'
         data.article.get('title').should.equal 'SuperArticle'
         done()
+      return
 
     it 'fetches related articles for article in super article', (done) ->
       relatedArticle1 = _.extend {}, fixtures.article,
@@ -137,6 +143,7 @@ describe "Article", ->
         data.superSubArticles.first().get('title').should.equal 'RelatedArticle 1'
         data.superSubArticles.last().get('title').should.equal 'RelatedArticle 2'
         done()
+      return
 
   describe '#strip', ->
     it 'returns the attr without tags', ->
@@ -225,3 +232,21 @@ describe "Article", ->
     it 'returns Other', ->
       @article.clear()
       @article.getParselySection().should.equal 'Other'
+
+  describe 'isEOYSubArticle', ->
+
+    it 'returns true for a super-sub-article with matching super article id', ->
+      @article.set 'id', '1212'
+      @article.isEOYSubArticle(['12','23', '1212'], id: '1234').should.be.true()
+
+    it 'returns false if no sub articles', ->
+      @article.set 'id', '1213'
+      @article.isEOYSubArticle([], id: '1234').should.be.false()
+
+    it 'returns false if super article does not match', ->
+      @article.set 'id', '1213'
+      @article.isEOYSubArticle(['12','23', '1213'], id: '1236').should.be.false()
+
+    it 'returns false if article is a super article', ->
+      @article.set 'is_super_article', true
+      @article.isEOYSubArticle(['12','23', '1213'], id: '1234').should.be.false()
