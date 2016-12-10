@@ -904,9 +904,11 @@ img
         margin-left 0
         padding 30px 10px
     &__intro-inner.active
-      .spacer
+      .spacer:nth-child(3), .spacer:first-child
         width 100%
         left 0
+      .spacer:last-child
+        display none
   .article-body--section
     padding-bottom 200px
     &__title h2
@@ -1025,6 +1027,7 @@ img
       &__title h2
         margin-right 0
       &__cover-image
+        padding 30px 0 30px 10px
         .spacer:first-child
           top 10px
           max-height calc(100% \- 20px)
@@ -1035,11 +1038,17 @@ img
       &__text
         padding-left 10px
         padding-right 10px
+        margin-right 0
       &__sub-text
         .image
           padding 40px 20px
         .mgr-arrow-icon
           font-size 15px
+        .flickity-viewport
+          max-height 350px
+          .mgr-cell.js-mgr-cell
+            max-height 350px
+            min-height 350px
 
   [data-section='5']
     .article-body--section
@@ -1064,6 +1073,7 @@ img
         .spacer
           display none
       &__sub-text
+        padding 10px 0
         .callout
           display block
           width 100%
@@ -1093,9 +1103,9 @@ img
           margin-left 10px
           padding 30px 0
           img, .caption
-            width calc(100% \- 10px)
+            width calc(100% \- 20px)
             margin-right auto
-            margin-left 0
+            margin-left 10px
       &__text
         margin-right 0
         .spacer
@@ -1111,19 +1121,108 @@ img
           border-bottom none
         .callout
           display none
+    &.active
+      .article-body--section__title .spacer
+        left 10px
+        width calc(100% \- 10px)
 
   [data-section='7']
     .article-body--section
       &__cover-image
         .image
           margin-right 10px
-          width calc(100% - 10px)
-          padding 30px 0 30px 10px
+          width calc(100% \- 10px)
+          padding 0
+          margin-left 10px
+          margin-right 15%
+        .spacer
+          width calc(100% \- 10px)
       &__text
         border-right 0
         margin-bottom 0
       &__sub-text
+        padding 30px 0
         .image
           min-width 100%
           margin 10px 0
-          padding 20px 0 20px 10px
+          padding 0 0 0 10px
+        .spacer
+          right 0
+          top 10px
+          height calc(100% \- 20px)
+
+  [data-section='8']
+    .article-body--section
+      &__cover-image
+        .image
+          margin-right 10px
+          .caption
+            width 85%
+            margin-left 15%
+        .spacer:first-child
+          top 10px
+          height calc(100% \- 20px)
+      article .spacer--article
+        display none
+      &__sub-text
+        margin-right 10px
+        padding 30px 0 30px 10px
+        position relative
+        border-bottom 1px solid
+        .spacer
+          left calc(100% \+ 10px)
+          height 100%
+          width 0
+          top 0
+          border-right 1px solid
+
+  [data-section='9']
+    .article-body--section
+      &__title h2
+        padding-right 10px
+      &__cover-image
+        padding 0
+        .spacer:nth-child(2)
+          left 0
+          right 10px
+          width calc(100% \- 10px)
+          height 0
+          border-bottom 1px solid
+          top 50%
+        .spacer:nth-child(3)
+          width calc(100% \- 10px)
+          top 10px
+        .image
+          flex-direction column
+          .img
+            width 100%
+            padding 30px 60px
+      article .spacer--article
+        width 100%
+      &__text
+        border-right none
+      &__sub-text
+        margin-top 0
+        .image
+          padding 30px 10px
+          img, .caption
+            width 85%
+            margin-left 15%
+    &.active
+      header .spacer
+        height calc(100% \- 10px)
+
+  [data-section='10']
+    .article-body--section
+      .spacer--article
+        display none
+      &__title
+        .spacer
+          height calc(100% \- 10px)
+      &__sub-text
+        padding 30px 10px
+        .image
+          padding 0
+          img, .caption
+            width 85%
+            margin-left 15%
