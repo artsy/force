@@ -174,6 +174,7 @@ img
 
 [data-section='1']
   .article-body--section
+    padding-bottom 0
     header
       margin-top 200px
     &__title
@@ -201,6 +202,7 @@ img
       position relative
       margin-top 20px
       flex-direction column
+      padding-bottom 400px
     &__text
       order 2
       border-top 1px solid
@@ -295,6 +297,7 @@ img
       display flex
       flex-direction row-reverse
       justify-content space-between
+      position relative
       .image
         padding 30px 20px 40px 0
         width 60%
@@ -304,9 +307,15 @@ img
           right 20px
           bottom 62px
       .spacer
-        border-right 1px solid
-        width 20%
-        margin-bottom 20px
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 20%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        height calc(100% \+ 400px)
       .callout
         display none
   &.active
@@ -354,12 +363,12 @@ img
         top 0
         right 0
         bottom 0
-        height 100%
-        max-height 100%
+        height calc(100% \+ 400px)
         border-right 1px solid
     &__text
       border-bottom 1px solid
       margin-bottom -20px
+      margin-right 10px
       p
         margin 0 auto
     &__sub-text
@@ -395,6 +404,7 @@ img
 [data-section='4']
   .article-body--section
     margin 0 auto
+    padding-bottom 0
     &__title
       h2
         margin-right 20px
@@ -412,6 +422,7 @@ img
         border-right 1px solid
     article
       position relative
+      padding-bottom 400px
       .spacer--article
         border-right 10px solid white
         border-left 10px solid white
@@ -508,6 +519,7 @@ img
       display flex
       border-top 1px solid
       padding 20px 0
+      position relative
       .image
         width 50%
         order 3
@@ -519,8 +531,12 @@ img
           margin-left auto
           margin-right 0
       .spacer
-        order 2
+        position absolute
         border-right 1px solid
+        left 50%
+        top 20px
+        bottom 0
+        height calc(100% \+ 400px)
       .callout
         flex-display()
         width 50%
@@ -586,6 +602,8 @@ img
       padding-top 20px
       border-top 1px solid
       display flex
+      justify-content space-between
+      position relative
       .image
         width calc(60% \- 20px)
         border-bottom 1px solid
@@ -603,8 +621,11 @@ img
         flex-display(center, center)
       .spacer
         border-right 1px solid
-        margin-right 20px
-        padding-right 20px
+        left 60%
+        top 20px
+        height calc(100% \+ 400px)
+        bottom 0
+        position absolute
   &.active
     .article-body--section__title .spacer
       width calc(100% \- 20px)
@@ -650,7 +671,7 @@ img
         top 20px
         right 0
         bottom 0
-        height calc(100% \- 20px)
+        height calc(100% \+ 400px)
         border-right 1px solid
     &__sub-text
       margin-right 20px
@@ -729,8 +750,11 @@ img
         top 20px
         bottom 0
         right 25%
-        border-right 1px solid
-        height calc(100% \- 40px)
+        height calc(100% \+ 400px)
+        width 21px
+        background-color black
+        border-right 10px solid white
+        border-left 10px solid white
 
 [data-section='9']
   .article-body--section
@@ -819,6 +843,7 @@ img
 [data-section='10']
   .article-body--section
     margin 0 auto
+    padding-bottom 0
     &__title
       position relative
       .spacer
@@ -854,8 +879,10 @@ img
       display flex
       align-items flex-end
       flex-direction column
+      margin-left 15%
     article
       position relative
+      padding-bottom 400px
       .spacer--article
         border-right 10px solid white
         border-left 10px solid white
@@ -865,7 +892,7 @@ img
         bottom 0
         background black
         width 21px
-        max-height calc(100% \- 40px)
+        max-height calc(100% \+ 400px)
     &__sub-text
       border-bottom 1px solid
       border-top 1px solid
