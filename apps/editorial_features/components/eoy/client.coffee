@@ -48,7 +48,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   getScrollZones: =>
     scrollZones = []
     scrollZones.push @containerHeight
-    for i in [1..($('.scroller__items section').length - 1)]
+    for i in [1..10]
       scrollZones.push( (i * @activeHeight) + @containerHeight )
     return scrollZones
 
@@ -172,6 +172,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       , {offset: '100%'}
 
   playVideo: (e) =>
+    console.log 'here'
     if e.target
       e = e.target
     video = $(e).prev()

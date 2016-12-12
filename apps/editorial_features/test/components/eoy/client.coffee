@@ -24,7 +24,7 @@ describe 'EoyView', ->
       $.fn.waypoint = sinon.stub()
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0
-      $.fn.scrollTop = sinon.stub().returns 806
+      $.fn.scrollTop = @scrollTop = sinon.stub().returns 806
       $.fn.resize = sinon.stub()
       sinon.stub Backbone, 'sync'
       @curation = new Curation
@@ -99,10 +99,12 @@ describe 'EoyView', ->
         asset: ->
         }
       benv.render resolve(__dirname, '../../../components/eoy/templates/index.jade'), @options, =>
-        { EoyView } = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        { EoyView } = mod = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
+        mod.__set__ 'initCarousel', @carousel = sinon.stub()
         @playVideo = sinon.stub EoyView::, 'playVideo'
         boundaryArray = [4931.6875, 6317.1875, 9595.125, 12164.203125, 14924.03125, 18523.484375, 21394.359375, 24569.453125, 27352.703125, 29895.953125, 32703.140625, 35213.125, 35293.125]
         @getBodySectionTopBoundaries = sinon.stub(EoyView::, 'getBodySectionTopBoundaries').returns boundaryArray
+
         @view = new EoyView
           curation: @curation,
           el: $('body')
@@ -116,7 +118,7 @@ describe 'EoyView', ->
 
   describe '#initialize', ->
 
-    it 'Renders content from curation and superarticle', ->
+    it 'renders content from curation and superarticle', ->
       $('.scroller__items section').should.have.lengthOf 11
       $('.article-sa-sticky-header').should.have.lengthOf 1
 
@@ -133,6 +135,18 @@ describe 'EoyView', ->
   describe '#getScrollZones', ->
 
     it 'returns an array of heights that corresponds to each section', ->
+      zones = @view.getScrollZones()
+      zones[0].should.equal 805
+      zones[1].should.equal 1333
+      zones[2].should.equal 1861
+      zones[3].should.equal 2389
+      zones[4].should.equal 2917
+      zones[5].should.equal 3445
+      zones[6].should.equal 3973
+      zones[7].should.equal 4501
+      zones[8].should.equal 5029
+      zones[9].should.equal 5557
+      zones[10].should.equal 6085
 
   describe '#closestSection', ->
 
@@ -140,17 +154,61 @@ describe 'EoyView', ->
       @view.closestSection(0, @view.getScrollZones()).should.equal 0
       @view.closestSection(3000, @view.getScrollZones()).should.equal 5
 
+  describe '#doSlider', ->
+
+    it 'opens containers on scroll', ->
+      @view.doSlider($(window).scrollTop())
+      $('.scroller__items section[data-section=0]').height().should.equal 0
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
+
+  describe '#animateBody', ->
+
+    it 'adds a class to the closest section', ->
+      @view.animateBody(10000)
+      $('.article-body section[data-section="1"]').hasClass('active').should.not.be.true()
+      $('.article-body section[data-section="2"]').hasClass('active').should.be.true()
+
+  describe '#setupVideos', ->
+
+    it 'calls play video for each video', ->
+      @view.setupVideos()
+      $('.video-controls').waypoint.args[4][0]()
+      $('.video-controls').waypoint.args[5][0]()
+      $('.video-controls').waypoint.args[6][0]()
+      $('.video-controls').waypoint.callCount.should.equal 7
+
   describe '#watchScrolling', ->
 
     it 'handles the top of the page', ->
+      @scrollTop.returns 0
+      @view.openHeight = -1
+      @view.watchScrolling()
+      $('.scroller__items section[data-section="1"]').data('state').should.equal 'closed'
+      $('.scroller__items section[data-section="0"]').data('state').should.equal 'open'
 
     it 'handles the middle of the body', ->
+      @view.doSlider = sinon.stub()
+      @scrollTop.returns 100
+      @view.openHeight = 300
+      @view.watchScrolling()
+      @view.doSlider.callCount.should.equal 1
+      @view.doSlider.reset()
 
     it 'handles the bottom of the page', ->
+      @view.animateBody = sinon.stub()
+      @scrollTop.returns 9000
+      @view.watchScrolling()
+      @view.animateBody.callCount.should.equal 1
+      @view.animateBody.reset()
 
   describe '#setupSliderHeight', ->
 
     it 'sets height based on position', ->
+      @view.windowHeight = 900
+      @view.setupSliderHeight()
+      @view.containerHeight.should.equal 805
+      @view.activeHeight.should.equal 528
+      @view.openHeight.should.equal 6160
 
     it 'sets up heights for the scroller', ->
       @view.setupSliderHeight()
@@ -158,13 +216,6 @@ describe 'EoyView', ->
       @view.containerHeight.should.equal 805
       @view.activeHeight.should.equal 528
       @view.openHeight.should.equal 6160
-
-  describe '#doSlider', ->
-
-    it 'opens containers on scroll', ->
-      @view.doSlider($(window).scrollTop())
-      $('.scroller__items section[data-section=0]').height().should.equal 0
-      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
 
   describe '#deferredLoadBody', ->
 
@@ -174,32 +225,12 @@ describe 'EoyView', ->
   describe '#bodyInView', ->
 
     it 'sets waypoints', ->
-
-  describe '#animateBody', ->
-
-    it 'adds a class to the closest section', (done) ->
-      @view.animateBody(10000)
-      _.defer =>
-        $('.article-body section[data-section="1"]').hasClass('active').should.not.be.true()
-        $('.article-body section[data-section="2"]').hasClass('active').should.be.true()
-        done()
+      @view.bodyInView()
+      $('.article-body').waypoint.args[1][1].offset.should.equal '50%'
+      $('.article-body').waypoint.args[2][1].offset.should.equal '100%'
+      $('.article-body').waypoint.args[3][1].offset.should.equal '0'
 
   describe '#setupCarousel', ->
 
     it 'calls initCarousel', ->
-
-  describe '#setupVideos', ->
-
-    it 'calls play video for each video', ->
-      @view.setupVideos()
-      $.fn.waypoint.args[4][0]()
-      $.fn.waypoint.args[5][0]()
-      $.fn.waypoint.args[6][0]()
-      @playVideo.callCount.should.equal 1
-      $.fn.waypoint.callCount.should.equal 7
-
-  describe '#playVideo', ->
-
-    it 'hides and shows the controls, plays the video, knows if the video is already playing', ->
-      $('.article-body section[data-section="4"] .video-controls').click()
-      $('.article-body section[data-section!="4"] video')[0].paused.should.be.true()
+      @carousel.callCount.should.equal 1
