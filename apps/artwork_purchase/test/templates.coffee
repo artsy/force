@@ -144,19 +144,16 @@ describe 'summary', ->
 
   it 'excludes terms and conditions if logged in', ->
     html = render('summary') artwork: artworkJSON, user: {}
-    $html = $(html)
 
-    $html.find('.ap-summary__fine-print').text().should.eql "You may cancel your purchase within 72 hours after receiving the gallery's quote."
-    $html.find('.ap-summary__fine-print').should.not.containEql "/terms"
-    $html.find('.ap-summary__fine-print').should.not.containEql "/privacy"
+    html.should.not.containEql "You may cancel your purchase within 72 hours after receiving the gallery's quote."
 
   it 'includes terms and conditions if logged out', ->
     html = render('summary') artwork: artworkJSON
     $html = $(html)
 
-    $html.find('.ap-summary__fine-print').text().should.containEql "You may cancel your purchase within 72 hours after receiving the gallery's quote."
-    $html.find('.ap-summary__fine-print').should.not.containEql "/terms"
-    $html.find('.ap-summary__fine-print').should.not.containEql "/privacy"
+    $html.find('.ap-summary__fine-print').text().should.containEql "By signing up, you agree to our Terms of Use and Privacy Policy."
+    $html.find('.ap-summary__fine-print').html().should.containEql "/terms"
+    $html.find('.ap-summary__fine-print').html().should.containEql "/privacy"
 
 describe 'sign up', ->
   it 'renders form', ->
