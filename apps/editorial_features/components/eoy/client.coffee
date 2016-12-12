@@ -39,6 +39,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
     $(window).resize =>
+      @videoControls()
       @setupCarousel()
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
@@ -164,6 +165,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     initCarousel $('.carousel'), imagesLoaded: true
 
   setupVideos: =>
+    @videoControls()
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
@@ -171,6 +173,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
         if direction is 'down'
           playVideo this
       , {offset: '100%'}
+
+  videoControls: =>
+    for videoControls in $('.article-body__content .video-controls')
+      video = $(videoControls).prev('video')
+      $(videoControls).width(video.width()).height(video.height())
 
   playVideo: (e) =>
     if e.target
