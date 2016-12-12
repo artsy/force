@@ -9,13 +9,11 @@ Article = require '../../../../../models/article.coffee'
 Articles = require '../../../../../collections/articles.coffee'
 { resize } = require '../../../../../components/resizer'
 markdown = require '../../../../../components/util/markdown.coffee'
-
-
 sd = require('sharify').data
 
 describe 'EoyView', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
@@ -104,7 +102,6 @@ describe 'EoyView', ->
         @playVideo = sinon.stub EoyView::, 'playVideo'
         boundaryArray = [4931.6875, 6317.1875, 9595.125, 12164.203125, 14924.03125, 18523.484375, 21394.359375, 24569.453125, 27352.703125, 29895.953125, 32703.140625, 35213.125, 35293.125]
         @getBodySectionTopBoundaries = sinon.stub(EoyView::, 'getBodySectionTopBoundaries').returns boundaryArray
-
         @view = new EoyView
           curation: @curation,
           el: $('body')
@@ -112,7 +109,7 @@ describe 'EoyView', ->
         @view.windowHeight = 900
         done()
 
-  after ->
+  afterEach ->
     benv.teardown()
     Backbone.sync.restore()
 
@@ -123,13 +120,24 @@ describe 'EoyView', ->
       $('.article-sa-sticky-header').should.have.lengthOf 1
 
     it 'closes all scroller sections on load', ->
-      $('.scroller__items section[data-state=open]').should.have.lengthOf 0
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
+
+  describe '#setupSliderHeight', ->
+
+    it 'sets height based on position', ->
+      @view.windowHeight = 900
+      @view.setupSliderHeight()
+      @view.containerHeight.should.equal 805
+      @view.activeHeight.should.equal 528
+      @view.openHeight.should.equal 6160
+
+  beforeEach ->
+    $(window).resize()
+    $.fn.resize.args[0][0]()
 
   describe '#watchWindow', ->
 
     it 'resets section boundaries when window changes size', ->
-      $(window).resize()
-      $.fn.resize.args[0][0]()
       @getBodySectionTopBoundaries.callCount.should.equal 2
 
   describe '#getScrollZones', ->
@@ -200,22 +208,6 @@ describe 'EoyView', ->
       @view.watchScrolling()
       @view.animateBody.callCount.should.equal 1
       @view.animateBody.reset()
-
-  describe '#setupSliderHeight', ->
-
-    it 'sets height based on position', ->
-      @view.windowHeight = 900
-      @view.setupSliderHeight()
-      @view.containerHeight.should.equal 805
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
-
-    it 'sets up heights for the scroller', ->
-      @view.setupSliderHeight()
-      $('.scroller__items section[data-section=0]').height().should.equal 805
-      @view.containerHeight.should.equal 805
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
 
   describe '#deferredLoadBody', ->
 

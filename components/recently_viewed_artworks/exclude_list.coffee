@@ -16,5 +16,6 @@ module.exports =
     '/consign'
     '/professional-buyer'
     '/eoy-2016'
+    '/2016-year-in-art'
     /\/feature/     # any /feature page
   ]
