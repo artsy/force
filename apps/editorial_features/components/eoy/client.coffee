@@ -35,10 +35,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 30)
-    $(window).scroll () =>
+    $(window).scroll =>
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
-    $(window).resize () =>
+    $(window).resize =>
       @setupCarousel()
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
@@ -49,7 +49,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   getScrollZones: =>
     scrollZones = []
     scrollZones.push @containerHeight
-    for i in [1..($('.scroller__items section').length - 1)]
+    for i in [1..10]
       scrollZones.push( (i * @activeHeight) + @containerHeight )
     return scrollZones
 
@@ -117,8 +117,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body').prepend bodyView
       curation: @curation
       markdown: markdown
+      resize: resize
     @bodyInView()
-    @setImages()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
       @setupVideos()
@@ -150,7 +150,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body section[data-section!="' + active + '"]').removeClass('active')
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
-  getBodySectionTopBoundaries: () =>
+  getBodySectionTopBoundaries: =>
     boundaries = []
     for section, i in $('.article-body section')
       top = $(section).position().top
@@ -162,17 +162,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setupCarousel: ->
     initCarousel $('.carousel'), imagesLoaded: true
-
-  setImage: ->
-    $img = $(this)
-    src = $img.attr 'src'
-    if src != ''
-      width = 800
-      src = resize(src, width: width * (window.devicePixelRatio or 1))
-      $img.attr 'src', src
-
-  setImages: ->
-    $('.article-body__content img').each @setImage
 
   setupVideos: =>
     for video in $('.article-body__content .video-controls')
