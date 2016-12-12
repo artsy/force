@@ -18,7 +18,7 @@ module.exports =
 
   updateState: ->
     @set('clockState', (
-      if @get('auction_state') == 'closed'
+      if moment().isAfter(@get 'offsetEndAtMoment') or @get('auction_state') == 'closed'
         'closed'
       else if @get('live_start_at') and moment().isBefore(@get 'offsetLiveStartAtMoment')
         'live'
