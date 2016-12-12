@@ -33,6 +33,10 @@ module.exports = class ClockView extends Backbone.View
       when 'live'
         @$('.clock-header').html "Live bidding opening in:"
         @toDate = @model.get 'offsetLiveStartAtMoment'
+      when 'live-open'
+        mediator.trigger 'clock:is-over'
+        @$el.html "<div class='clock-header clock-closed'>Live Bidding Now Open</div>"
+        return
       when 'preview'
         @$('.clock-header').html "Opening in"
         @toDate = @model.get 'offsetStartAtMoment'

@@ -9,7 +9,7 @@ sd = require('sharify').data
 class Model extends Backbone.Model
   _.extend @prototype, ClockMixin
 
-describe 'Image Sizes Mixin', ->
+describe 'Clock Mixin', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @model = new Model fabricate 'sale'
@@ -45,6 +45,7 @@ describe 'Image Sizes Mixin', ->
         @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
+        @model.set auction_state: 'closed'
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 4)
@@ -88,11 +89,21 @@ describe 'Image Sizes Mixin', ->
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))
 
       it 'reflects server closed state', ->
+        @model.set auction_state: 'closed'
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 2)
         @model.get('clockState').should.equal 'closed'
+
+      it 'reflects live open', ->
+        @model.set
+          live_start_at: moment().subtract(1, 'minutes').format("YYYY-MM-DD HH:mm:ss ZZ")
+          end_at: null
+        @model.calculateOffsetTimes()
+        Backbone.sync.args[0][2].success { iso8601: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
+        @model.get('offsetLiveStartAtMoment').should.eql moment(@model.get('live_start_at'))
+        @model.get('clockState').should.equal 'live-open'
 
     describe 'client time closed', ->
 
@@ -122,6 +133,7 @@ describe 'Image Sizes Mixin', ->
         @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
+        @model.set auction_state: 'closed'
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('clockState').should.equal 'closed'

@@ -103,8 +103,13 @@ module.exports =
           thumbnailUrl: artwork.image.url
     }
 
-  formatAuctionDetail: (end) ->
-    minuteFormat = if end.minute() > 0 then ':mm' else ''
-    end.format('[Auction Closes] MMM D [at] h' + minuteFormat + ' A');
+  formatAuctionDetail: (auction) ->
+    if auction.live_start_at and moment().isAfter(auction.live_start_at)
+      'Live Bidding Now Open'
+    else
+      label = if auction.live_start_at then 'Live Bidding Opens' else 'Auction Closes'
+      end = if auction.live_start_at then moment(auction.live_start_at) else moment(auction.end_at)
+      minuteFormat = if end.minute() > 0 then ':mm' else ''
+      end.format('[' + label + '] MMM D [at] h' + minuteFormat + ' A');
 
   hasOverviewHeaderMeta: (artist) -> artist.biography_blurb?.text?.length || @artistMeta(artist).length

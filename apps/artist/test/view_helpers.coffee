@@ -1,6 +1,7 @@
 sinon = require 'sinon'
 helpers = require '../view_helpers'
 moment = require 'moment'
+{ fabricate } = require 'antigravity'
 
 describe 'ArtistViewHelpers', ->
   it 'formatAlternateNames', ->
@@ -85,6 +86,11 @@ describe 'ArtistViewHelpers', ->
       <p>Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely,” he says. “My art and my personal life are based in it.” Working with seductive commercial materials (such as the high chromium stainless steel of his “<a href="/artwork/jeff-koons-balloon-dog-blue">Balloon Dog</a>” sculptures or his vinyl “Inflatables”), shifts of scale, and an elaborate studio system involving many technicians, Koons turns banal objects into high art icons. His paintings and sculptures borrow widely from art-historical techniques and styles; although often seen as ironic or tongue-in-cheek, Koons insists his practice is earnest and optimistic. “I’ve always loved <a href="/gene/surrealism">Surrealism</a> and <a href="/gene/dada">Dada</a> and <a href="/gene/pop-art">Pop</a>, so I just follow my interests and focus on them,” he says. “When you do that, things become very metaphysical.” The “Banality” series that brought him fame in the 1980s included pseudo-<a href="/gene/baroque">Baroque</a> sculptures of subjects like Michael Jackson with his pet ape, while his monumental topiaries, like the floral <em>Puppy</em> (1992), reference 17th-century French garden design.</p>
     """
 
-  it 'formatAuctionDetail', ->
-    end = moment.utc('2016-12-05T12:00:00+00:00')
-    helpers.formatAuctionDetail(end).should.eql 'Auction Closes Dec 5 at 12 PM'
+  describe 'formatAuctionDetail', ->
+    it 'formats correctly for auction that is ending', ->
+      auction = fabricate 'sale', is_auction: true, end_at: moment.utc('2016-12-05T12:00:00+00:00')
+      helpers.formatAuctionDetail(auction).should.eql 'Auction Closes Dec 5 at 12 PM'
+    it 'formats correctly for auction that is open for live bidding', ->
+      auction = fabricate 'sale', is_auction: true, end_at: null, live_start_at: moment().subtract(2, 'days')
+      helpers.formatAuctionDetail(auction).should.eql 'Live Bidding Now Open'
+

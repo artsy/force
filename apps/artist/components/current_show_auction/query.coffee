@@ -10,6 +10,7 @@ module.exports = """
       name
       start_at
       end_at
+      live_start_at
     }
     show: shows(size:2, at_a_fair: false, status:"running", sort:end_at_asc, top_tier: true) {
       ... relatedShow

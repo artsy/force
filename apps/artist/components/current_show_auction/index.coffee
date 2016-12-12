@@ -13,7 +13,7 @@ current = (type, artist) ->
     ]).join ', '
   else
     ''
-  _.extend(_.pick(item, 'location', 'start_at', 'end_at', 'name', 'href', 'exhibition_period'), {
+  _.extend(_.pick(item, 'location', 'start_at', 'end_at', 'name', 'href', 'live_start_at', 'exhibition_period'), {
     heading: heading
     type: type
     imageUrl: item.cover_image?.cropped.url
