@@ -1,5 +1,5 @@
 - if(!purchase) { purchase = {} };
-.ap-how.artwork-purchase__section
+.ap-how
   h2 How it works
   .ap-how__confirm.ap-how__item
     .ap-how__item-image
@@ -11,29 +11,30 @@
       include ../../../components/main_layout/public/icons/purchase-payment.svg
     .ap-how__item-explanation
       | You will review the quote and complete payment
-.artwork-purchase__left
-  .js-ap-purchase
-    form.artwork-purchase__purchase-form
-      .artwork-purchase__form-errors.js-ap-form-errors
-      .artwork-purchase__section
-        .artwork-purchase__shipping
-          h2 Shipping Address
-          .artwork-purchase__address-inputs
-            include ./address_form
+.artwork-purchase__body
+  .artwork-purchase__left
+    .js-ap-purchase
+      form.artwork-purchase__purchase-form
+        .artwork-purchase__form-errors.js-ap-form-errors
+        .artwork-purchase__section
+          .artwork-purchase__shipping
+            h2 Shipping Address
+            .artwork-purchase__address-inputs
+              include ./address_form
 
-      .artwork-purchase__section
-        .artwork-purchase__message
-          h2 Message to #{artwork.partner.name}
-          .artwork-purchase__text
-            | Tell the gallery about your collecting intersts and why you like this artwork—this helps develop a friendly reltionship. Ask clarifying questions about the work and shipping logistics.
-          .artwork-purchase__input-full-width
-            textarea.bordered-input( name='message', type='text', id='artwork-purchase-message')
-              = purchase.message
+        .artwork-purchase__section
+          .artwork-purchase__message
+            h2 Message to #{artwork.partner.name}
+            .artwork-purchase__text
+              | Tell the gallery about your collecting interests and why you like this artwork—this helps develop a friendly relationship. Ask clarifying questions about the work and shipping logistics.
+            .artwork-purchase__input-full-width
+              textarea.bordered-input( name='message', type='text', id='artwork-purchase-message')
+                = purchase.message
 
-  if !user
-    .artwork-purchase__section.js-ap-signup
-      include ./signup.jade
+    if !user
+      .artwork-purchase__section.js-ap-signup
+        include ./signup.jade
 
-.artwork-purchase__right
-  .artwork-purchase__section
-    include ./summary
+  .artwork-purchase__right
+    .artwork-purchase__section.js-ap-summary
+      include ./summary

@@ -6,6 +6,7 @@
     type='text',
     id='artwork-purchase-full-name',
     required
+    autofocus
   )
 
 .artwork-purchase__input-full-width
@@ -38,7 +39,7 @@
   )
 
 .artwork-purchase__input-half-width
-  label( for='artwork-purchase-state') State
+  label( for='artwork-purchase-state') State / Region / Province
   input.bordered-input(
     name='state',
     value= purchase.state,
@@ -48,7 +49,7 @@
   )
 
 .artwork-purchase__input-half-width
-  label( for='artwork-purchase-zip') Zip code
+  label( for='artwork-purchase-zip') Postal Code
   input.bordered-input(
     name='zip',
     value= purchase.zip,

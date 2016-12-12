@@ -9,12 +9,16 @@ successTemplate = ->require('../templates/success.jade') arguments...
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 Cookies = require '../../../components/cookies/index.coffee'
+Sticky = require '../../../components/sticky/index.coffee'
 
 class PurchaseView extends Backbone.View
 
   initialize: ({ @artwork }) ->
     @user = User.instantiate()
     @$button = @$ '.js-ap-summary-submit'
+    sticky = new Sticky
+    sticky.add $('.js-ap-summary')
+    sticky.rebuild()
 
     @purchaseForm = new PurchaseForm
       el: @$ '.js-ap-purchase'
