@@ -97,7 +97,7 @@ describe 'EoyView', ->
         sd: sd,
         markdown: markdown,
         asset: ->
-        }
+      }
       benv.render resolve(__dirname, '../../../components/eoy/templates/index.jade'), @options, =>
         { EoyView } = mod = benv.requireWithJadeify resolve(__dirname, '../../../components/eoy/client'), ['bodyView']
         mod.__set__ 'initCarousel', @carousel = sinon.stub()
