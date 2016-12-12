@@ -7,6 +7,7 @@ template = -> require('../templates/image_set.jade') arguments...
 imagesLoaded = require 'imagesloaded'
 { resize } = require '../../resizer/index.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
 
@@ -71,6 +72,9 @@ module.exports = class ImageSetView extends Backbone.View
       href: sd.APP_URL + sd.CURRENT_PATH
 
   preload: ->
+    initCarousel $('.image-set-modal'),
+      advanceBy: 1
+
     for item in @items
       url = item.url or item.image
       image = new Image()
