@@ -25,6 +25,12 @@ module.exports = class PurchaseForm extends Backbone.View
       user: @user
     }
 
+    if formData.attending
+      @user.related()
+        .collectorProfile.related()
+        .userFairActions
+        .attendFair @artwork.fair
+
     @inquiry.save null,
       success: success
       error: (model, response, options) =>

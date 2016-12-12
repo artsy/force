@@ -64,10 +64,11 @@ class PurchaseView extends Backbone.View
     return if not (@purchaseForm.validateForm() and signupValid)
     return if @signupForm.formIsSubmitting() or @purchaseForm.formIsSubmitting()
     @loadingButton()
-    @signupForm.submit
-      success: @signupSuccess
-      error: @signupError
-      isWithAccountCallback: @isWithAccount
+    @user.prepareForInquiry().then ->
+      @signupForm.submit
+        success: @signupSuccess
+        error: @signupError
+        isWithAccountCallback: @isWithAccount
 
   # Callbacks
 
@@ -94,9 +95,10 @@ class PurchaseView extends Backbone.View
     return if not @purchaseForm.validateForm()
     return if @purchaseForm.formIsSubmitting()
     @loadingButton()
-    @purchaseForm.submit
-      success: @purchaseSuccess
-      error: @purchaseError
+    @user.prepareForInquiry().then ->
+      @purchaseForm.submit
+        success: @purchaseSuccess
+        error: @purchaseError
 
   #Callbacks
 

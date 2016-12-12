@@ -15,14 +15,10 @@ module.exports = class PurchaseSignupForm extends Backbone.View
 
   submit: ({ success, error, isWithAccountCallback }) ->
     @user.set (data = @serializeForm())
-    @user.findOrCreate silent: true
-      .then =>
-        @user.related().account.fetch()
-      .done =>
-        if @user.isWithAccount()
-          isWithAccountCallback()
-        else
-          @signup { success, error }
+    if @user.isWithAccount()
+      isWithAccountCallback()
+    else
+      @signup { success, error }
 
   signup: ({ success, error }) ->
     @user.signup
