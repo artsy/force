@@ -4,6 +4,7 @@ module.exports = (sd, { artwork }) ->
       id: artwork.id
       is_acquireable: artwork.is_acquireable
       is_inquireable: artwork.is_inquireable
+      is_purchasable: artwork.is_purchasable
 
   if artwork.fair?
     sd.COMMERCIAL.artwork.fair =

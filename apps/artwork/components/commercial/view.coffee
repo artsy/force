@@ -55,6 +55,9 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   # modal when there is no pre-filled form in the side bar.
   contactGallery: (e) ->
     e.preventDefault()
+    $button = $ '.js-artwork-inquire-button'
+    $button.attr 'data-state', 'loading'
+    $button.prop 'disabled', true
 
     @inquiry = new ArtworkInquiry notification_delay: 600
 
@@ -66,13 +69,18 @@ module.exports = class ArtworkCommercialView extends Backbone.View
         artwork: @artwork
         inquiry: @inquiry
 
+      # Stop the spinner once the modal opens
+      @listenToOnce @modal.view, 'opened', ->
+        $button.attr 'data-state', ''
+        $button.prop 'disabled', false
+
       # Success
       @listenToOnce @inquiry, 'sync', =>
         @$('.artwork-commercial__inquiry-buttons')
           .html confirmation()
 
-  inquire: (e) ->
-    return @contactGallery() if @usePurchaseFlow
+  inquire: (e) =>
+    return @contactGallery(e) if @usePurchaseFlow
     e.preventDefault()
 
     @inquiry = new ArtworkInquiry notification_delay: 600
