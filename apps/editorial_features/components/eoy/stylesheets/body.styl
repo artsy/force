@@ -48,6 +48,7 @@ img
   // introduction paragraph
   &__intro
     opacity 1
+    margin 0 auto
     &-header
       width 30vw
       height 50vh
@@ -61,15 +62,14 @@ img
       position relative
       background-color white
       z-index 100
+      max-width 900px
       h3
         garamond-size('headline')
         line-height 45px
-        margin-left 15vw
         padding 80px 20px
-        max-width 900px
-        width 55vw
+        width 85%
         opacity 0
-        transition opacity 3s
+        transition opacity 2.5s
       .spacer
         position absolute
         transition all .75s
@@ -77,13 +77,13 @@ img
         &:first-child
           top 0
           border-top 1px solid
-          left calc(30vw \- 5px)
+          left 15%
         &:nth-child(3)
           bottom 0
           border-top 1px solid
-          left calc(30vw \- 5px)
+          left 15%
         &:last-child
-          right calc(15vw \- 25px)
+          right 0
           top 20px
           margin-top 5em
           height 0
@@ -93,8 +93,8 @@ img
         h3
           opacity 1
         .spacer:first-child, .spacer:nth-child(3)
-          width 65vw
-          left 15vw
+          width 100%
+          left 0
         .spacer:last-child
           height calc(100% \- 40px)
           margin-top 0
@@ -105,7 +105,7 @@ img
   &__title
     flex-display(flex-end, flex-end)
     h2
-      font-size 4vw
+      font-size 72px
       line-height 1.35em
       padding 100px 20px
       width 100%
@@ -306,6 +306,8 @@ img
           left 0
           right 20px
           bottom 62px
+        .caption
+          margin-right 0
       .spacer
         border-right 10px solid white
         border-left 10px solid white
@@ -315,7 +317,7 @@ img
         bottom 0
         background black
         width 21px
-        height calc(100% \+ 400px)
+        height calc(100% \+ 320px)
       .callout
         display none
   &.active
@@ -432,7 +434,7 @@ img
         bottom 0
         background black
         width 21px
-        max-height calc(100% \- 40px)
+        max-height calc(100% \- 120px)
     &__text
       display flex
       justify-content flex-end
@@ -536,7 +538,7 @@ img
         left 50%
         top 20px
         bottom 0
-        height calc(100% \+ 400px)
+        height calc(100% \+ 260px)
       .callout
         flex-display()
         width 50%
@@ -567,7 +569,7 @@ img
       position relative
       h2
         margin-left 20px
-        padding-left calc(\(100vw \- 80px\) \/ 6)
+        padding-left 25%
       .spacer
         position absolute
         left 20px
@@ -604,9 +606,9 @@ img
       display flex
       justify-content space-between
       position relative
+      border-bottom 1px solid
       .image
-        width calc(60% \- 20px)
-        border-bottom 1px solid
+        width 60%
         padding 70px 0 70px 20px
         img
           max-width 100%
@@ -616,16 +618,18 @@ img
         .caption
           text-align left
       .callout
-        width calc(40% \- 20px)
-        border-bottom 1px solid
+        width 40%
         flex-display(center, center)
       .spacer
-        border-right 1px solid
-        left 60%
+        left calc(60% \- 10px)
         top 20px
-        height calc(100% \+ 400px)
+        height calc(100% \+ 360px)
         bottom 0
         position absolute
+        width 21px
+        background-color black
+        border-right 10px solid white
+        border-left 10px solid white
   &.active
     .article-body--section__title .spacer
       width calc(100% \- 20px)
@@ -671,7 +675,7 @@ img
         top 20px
         right 0
         bottom 0
-        height calc(100% \+ 400px)
+        height calc(100% \+ 280px)
         border-right 1px solid
     &__sub-text
       margin-right 20px
@@ -750,7 +754,7 @@ img
         top 20px
         bottom 0
         right 25%
-        height calc(100% \+ 400px)
+        height calc(100% \+ 280px)
         width 21px
         background-color black
         border-right 10px solid white
@@ -908,6 +912,10 @@ img
       .callout
         display none
 
+@media screen and (max-width: 1280px)
+  .article-body--section
+    &__title h2
+      font-size 60px
 
 @media screen and (max-width: 1200px)
   .article-body--section
@@ -920,6 +928,11 @@ img
       .caption
         max-width 85%
         margin-right 15%
+
+@media screen and (max-width: 900px)
+  .article-body--section
+    &__title h2
+      font-size 45px
 
 @media screen and (max-width: 550px)
   .article-body
@@ -972,8 +985,14 @@ img
     .article-body--section
       &__title
         text-align right
+      &__cover-image .spacer
+        top 10px
+        max-height calc(100% \- 20px)
       article
         margin-top 10px
+        padding-bottom 200px
+        .spacer--article
+          max-height calc(100% \- 200px)
       &__text
         margin-top 0
       &__sub-text
@@ -1061,6 +1080,8 @@ img
           max-height calc(100% \- 20px)
         .caption
           margin-left 0
+      article
+        padding-bottom 200px
       .spacer--article
         display none
       &__text
@@ -1102,6 +1123,8 @@ img
           display none
       &__sub-text
         padding 10px 0
+        .spacer
+          display none
         .callout
           display block
           width 100%
@@ -1125,6 +1148,7 @@ img
     .article-body--section
       &__title h2
         margin-left 10px
+        padding-left 20px
       &__cover-image
         padding-right 0px
         .image
@@ -1142,6 +1166,8 @@ img
         margin-top 0
         padding 10px 0
         border-bottom 1px solid
+        .spacer
+          display none
         .image
           width 85%
           padding-right 30%
@@ -1203,6 +1229,8 @@ img
           right 0
           top 10px
           height calc(100% \- 20px)
+          border-right 0
+          width 11px
 
   [data-section='9']
     .article-body--section
@@ -1247,6 +1275,10 @@ img
       &__title
         .spacer
           height calc(100% \- 10px)
+      article
+        padding-bottom 200px
+      &__text
+        margin-left 0
       &__sub-text
         padding 30px 10px
         .image

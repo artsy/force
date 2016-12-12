@@ -30,6 +30,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @watchScrolling()
     $('.scroller').fadeIn 500, =>
       @loadBody()
+      @smoothAnchorScroll()
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
@@ -144,11 +145,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body').waypoint (direction) ->
       $('.eoy-feature__background').toggleClass('active')
       $('.scroller').toggleClass('active')
+      if direction is 'up'
+        $('.article-body section.active').removeClass('active')
     , {offset: '0'}
 
   animateBody: (scrollTop) =>
     active = @closestSection(scrollTop, @boundaries) - 1
-    $('.article-body section[data-section!="' + active + '"]').removeClass('active')
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
   getBodySectionTopBoundaries: =>
@@ -157,8 +159,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
       top = $(section).position().top
       if i < 1
         boundaries.push top - @windowHeight
+      else if $(window).width() > 550
+        boundaries.push top - @windowHeight + 300
       else
-        boundaries.push top - @windowHeight + 400
+        boundaries.push top - @windowHeight + 150
     return boundaries
 
   setupCarousel: ->
@@ -191,6 +195,17 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $(e).removeClass('active')
     video[0].onended = () ->
       $(e).removeClass('active')
+
+  smoothAnchorScroll: =>
+    $('.scroller a[href*=#]:not([href=#])').click (e) ->
+      e.preventDefault()
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
+        target = this.hash.slice(1)
+        target = $('[name=' + target + ']')
+        if target.length
+          $('html, body').animate({
+            scrollTop: target.offset().top - 100
+            }, 2500)
 
   trackScroll: ->
     analyticsHooks.trigger 'scroll:sa-body'
