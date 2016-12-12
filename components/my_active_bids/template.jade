@@ -13,7 +13,7 @@ if myActiveBids && myActiveBids.length
               h4 Lot #{bid.sale_artwork.lot_number}
               strong= bid.sale_artwork.artwork.artist.name
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
-          if ViewHelpers.mpLiveSaleIsOpen(bid.sale_artwork.sale)
+          if bid.sale_artwork.sale.is_live_open
             a.avant-garde-button-black.my-active-bids-bid-live-button(
               href=ViewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id)
             ) Bid Live

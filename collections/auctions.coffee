@@ -30,7 +30,7 @@ module.exports = class Auctions extends Sales
       # Includes auction promos
       (auction.isAuction() or auction.isAuctionPromo()) and auction.isClosed()
     .sortBy (auction) ->
-      -(Date.parse auction.get('end_at'))
+      -(Date.parse auction.sortableDate())
     .value()
 
   auctions: ->
@@ -42,7 +42,7 @@ module.exports = class Auctions extends Sales
     .select (auction) ->
       auction.isAuctionPromo() and not auction.isClosed()
     .sortBy (auction) ->
-      -(Date.parse auction.get('end_at'))
+      -(Date.parse auction.sortableDate())
     .value()
 
   next: ->

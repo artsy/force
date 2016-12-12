@@ -10,7 +10,7 @@ header.auction-header
       = auction.get('name')
     .auction-callout
       = auction.upcomingLabel()
-      unless auction.isClosed()
+      unless auction.isClosed() || auction.isLiveOpen()
         +add-to-calendar(auction.event())
       .auction-callout-live-label
         if auction.get('live_start_at')

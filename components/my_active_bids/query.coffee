@@ -20,6 +20,7 @@ module.exports = """
           sale {
             live_start_at
             end_at
+            is_live_open
           }
           artwork {
             href

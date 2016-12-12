@@ -48,7 +48,7 @@ describe 'Sale', ->
           end_at: moment().add(10, 'hours').format()
           live_start_at: moment().add(8, 'hours').format()
         (typeof sale.reminderStatus()).should.equal 'undefined'
-    
+
     describe '#isClosingSoon', ->
       it 'returns true if the sale is closing soon', ->
         @closingSoonSale.isClosingSoon().should.be.true()
@@ -120,47 +120,6 @@ describe 'Sale', ->
       it 'returns true if the registration_ends_at is in the past', ->
         @sale.set is_auction: true, registration_ends_at: moment().subtract(2, 'days').format()
         @sale.isRegistrationEnded().should.be.true()
-
-  describe '#calculateAuctionState', ->
-    before ->
-      # moment#unix returns seconds
-      # sinon#useFakeTimers accepts milliseconds
-      now = moment([2010, 0, 15]).unix() * 1000
-      @clock = sinon.useFakeTimers now
-
-    after ->
-      @clock.restore()
-
-    it 'returns with the correct state (closed)', ->
-      start = moment().subtract(1, 'minutes').format()
-      end = moment().subtract(3, 'minutes').format()
-      @sale.calculateAuctionState(start, end).should.equal 'closed'
-
-    it 'returns with the correct state (preview)', ->
-      start = moment().add(1, 'minutes').format()
-      end = moment().add(3, 'minutes').format()
-      @sale.calculateAuctionState(start, end).should.equal 'preview'
-
-    it 'returns with the correct state (open)', ->
-      start = moment().subtract(1, 'minutes').format()
-      end = moment().add(3, 'minutes').format()
-      @sale.calculateAuctionState(start, end).should.equal 'open'
-
-    it 'accomdates offsets', ->
-      start = moment().subtract(1, 'seconds').format()
-      end = moment().add(1, 'seconds').format()
-      @sale.calculateAuctionState(start, end, 0).should.equal 'open'
-      @sale.calculateAuctionState(start, end, -999).should.equal 'open'
-      @sale.calculateAuctionState(start, end, -1000).should.equal 'closed'
-
-  describe '#parse', ->
-    it 'corrects the state', ->
-      staleSale = new Sale
-        auction_state: 'open' # An incorrect state 'returned from the server'
-        start_at: moment().subtract(1, 'minutes').format()
-        end_at: moment().subtract(3, 'minutes').format()
-      , parse: true
-      staleSale.get('auction_state').should.equal 'closed'
 
   describe 'actionButtonState', ->
     beforeEach ->
@@ -285,6 +244,7 @@ describe 'Sale', ->
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
+        @sale.set(auction_state: 'closed')
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add(4, 'minutes').format() }
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(4, 'minutes')
@@ -319,6 +279,7 @@ describe 'Sale', ->
         @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
 
       it 'reflects server closed state', ->
+        @sale.set(auction_state: 'closed')
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add(2, 'minutes').format() }
         @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(2, 'minutes')
@@ -353,6 +314,7 @@ describe 'Sale', ->
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
+        @sale.set(auction_state: 'closed')
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('clockState').should.equal 'closed'

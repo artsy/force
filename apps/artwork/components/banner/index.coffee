@@ -7,7 +7,6 @@ module.exports = ->
     clockView = new ClockView
       label: countdownLabel start_at, live_start_at
       timestamp: countdownTimestamp start_at, end_at, live_start_at
-
     clockView.start()
 
     $('.js-artwork-banner__countdown')

@@ -105,6 +105,39 @@ describe 'auction templates', ->
     it 'shows an email invite', ->
       $('.auction-header-metadata').text().should.containEql 'Receive an email invitation when the auction begins.'
 
+  describe 'live auction', ->
+    describe 'live auction that is open for pre-bidding', ->
+      before (done) ->
+        benv.setup =>
+          benv.expose $: benv.require 'jquery'
+          data = _.extend {}, @baseData,
+            auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'open',  live_start_at: moment().add(2, 'days')
+            user: null
+          benv.render require.resolve('../templates/index.jade'), data, ->
+            done()
+      after ->
+        benv.teardown()
+
+      it 'shows a timer for when live bidding opens', ->
+        $('.auction-callout').text().should.containEql 'Live bidding begins'
+        $('.auction-callout').text().should.containEql 'EST'
+
+    describe 'live auction that is open for live bidding', ->
+      before (done) ->
+        benv.setup =>
+          benv.expose $: benv.require 'jquery'
+          data = _.extend {}, @baseData,
+            auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'open',  live_start_at: moment().subtract(2, 'days')
+            user: null
+          benv.render require.resolve('../templates/index.jade'), data, ->
+            done()
+      after ->
+        benv.teardown()
+
+      it 'says live bidding now open', ->
+        $('.auction-callout').text().should.containEql 'Live bidding now open'
+        $('.auction-callout').text().should.not.containEql 'EST'
+
   describe 'open auction with no user', ->
     before (done) ->
       benv.setup =>

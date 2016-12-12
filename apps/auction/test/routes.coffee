@@ -141,6 +141,7 @@ describe '#redirectLive', ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
+      auction_state: 'open'
       start_at: moment().startOf('day')
       live_start_at: moment().startOf('day')
       end_at: moment().endOf('day')
@@ -163,6 +164,7 @@ describe '#redirectLive', ->
       id: 'foo'
       is_auction: true
       start_at: moment().startOf('day')
+      auction_state: 'open'
       live_start_at: moment().startOf('day')
       end_at: moment().endOf('day')
     bidder = {
@@ -181,6 +183,7 @@ describe '#redirectLive', ->
     auction = fabricate 'sale',
       id: 'foo'
       is_auction: true
+      auction_state: 'open'
       live_start_at: null
       end_at: moment().endOf('day')
     routes.redirectLive @req, @res, @next

@@ -40,7 +40,7 @@ section.article-body__intro(data-section=0)
                   img(src=resize(section.image_second, { width: 800 }))
                   .caption!= markdown(section.caption_second)
         article
-          if i == 2 || i == 3 || i == 7 || i == 8 || i == 9
+          if i == 2 || i == 3 || i == 6 || i == 8 || i == 9
             .spacer--article
           .article-body--section__text!= markdown(section.body)
             if i == 4 || i == 5

@@ -20,10 +20,6 @@ module.exports = class Sale extends Backbone.Model
 
   urlRoot: "#{API_URL}/api/v1/sale"
 
-  parse: (response) ->
-    response.auction_state = @calculateAuctionState response.start_at, response.end_at
-    response
-
   href: ->
     if @isSale()
       "/sale/#{@id}"
@@ -49,19 +45,6 @@ module.exports = class Sale extends Backbone.Model
       @bidUrl artwork
     else
       @href()
-
-  calculateAuctionState: (start_at, end_at, offset = 0) ->
-    start = moment(start_at).add(offset, 'milliseconds')
-    end = moment(end_at).add(offset, 'milliseconds')
-    if moment().isAfter(end) or moment().isSame(end)
-      'closed'
-    else if moment().isBetween(start, end)
-      'open'
-    else if moment().isBefore(start) or moment().isSame(start)
-      'preview'
-
-  auctionState: ->
-    @calculateAuctionState _.values(@pick('start_at', 'end_at', 'offset'))...
 
   contactButtonState: (user, artwork) ->
     if @isAuctionPromo()
@@ -118,7 +101,7 @@ module.exports = class Sale extends Backbone.Model
     @isAuction() and moment().isAfter(@get 'registration_ends_at')
 
   isLiveAuction: ->
-    @get('live_start_at') and moment(@get('live_start_at')).isBefore(moment(@get('end_at')))
+    @get('live_start_at')
 
   isLiveOpen: ->
     @get('auction_state') == 'open' and moment().isAfter(@get 'live_start_at')
@@ -185,6 +168,8 @@ module.exports = class Sale extends Backbone.Model
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
       "Live bidding begins #{zone 'live_start_at'}"
+    else if @get('live_start_at')
+      "Live bidding now open"
     else if @isPreviewState()
       "Auction opens #{zone 'start_at'}"
     else
