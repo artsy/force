@@ -43,8 +43,12 @@ flex-display(justify = space-between, align = center)
       a
         color white
         text-decoration none
+        opacity 1
+        transition opacity .25s
+        &:hover
+          opacity .6
       h2
-        font-size 4vw
+        font-size 72px
         line-height 1.35em
         padding 0 40px
         width 100%
@@ -285,11 +289,20 @@ flex-display(justify = space-between, align = center)
           border-right 1px solid
           margin-top 20px
 
+
+@media screen and (max-width: 1200px)
+  .scroller__items article .inner h2
+    font-size 60px
+
+@media screen and (max-width: 1100px)
+  .scroller__items article .inner h2
+    font-size 50px
+
 @media screen and (max-width: 550px)
   .scroller
     width calc(100% \- 20px)
     margin 0 10px
-    .inner h2
+    .scroller__items article .inner h2
       font-size 40px
     h1
       font-size 50px
