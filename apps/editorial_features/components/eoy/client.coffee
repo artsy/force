@@ -39,6 +39,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
     $(window).resize =>
+      @setupCarousel()
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
@@ -172,7 +173,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
       , {offset: '100%'}
 
   playVideo: (e) =>
-    console.log 'here'
     if e.target
       e = e.target
     video = $(e).prev()
