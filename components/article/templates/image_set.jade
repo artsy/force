@@ -1,29 +1,30 @@
-.image-set-modal.mgr-cells.js-mgr-cells
+.image-set-modal
 
-  .image-set-modal-js__left.image-set-modal__navigation
-    .icon-chevron-left
+  .mgr-cells.js-mgr-cells
 
-  .image-set-modal__container.mgr-cell.js-mgr-cell
-    if item.type === 'artwork' && item.artist && item.artist.name
-      a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
-      a.entity-follow.artist-follow(data-id=item.artist.slug)
+    for item in items
+      .mgr-cell.js-mgr-cell
+        .image-set-modal__container
+          if item.type === 'artwork' && item.artist && item.artist.name
+            a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
+            a.entity-follow.artist-follow(data-id=item.artist.slug)
 
-    - var image = resize( (item.image || item.url || ''), { height: 900 } )
-    img.image-set-modal__image(src=image)
+          - var image = resize( (item.image || item.url || ''), { height: 900 } )
+          img.image-set-modal__image(src=image)
 
-    .image-set-modal__metadata
-      .image-set-modal__pagination= index + "/" + length
-      if item.type === 'image'
-        .image-set-modal__caption!= item.caption
+          .image-set-modal__metadata
+            .image-set-modal__pagination= index + "/" + length
+            if item.type === 'image'
+              .image-set-modal__caption!= item.caption
 
-      if item.type === 'artwork'
-        .image-set-modal__title-container
-          .image-set-modal__title= item.title
-          .image-set-modal__date= ", " + item.date
-        .image-set-modal__partner= item.partner.name
-        a.image-set-modal__link(href="/artwork/#{item.slug}") View Details
+            if item.type === 'artwork'
+              .image-set-modal__title-container
+                .image-set-modal__title= item.title
+                .image-set-modal__date= ", " + item.date
+              .image-set-modal__partner= item.partner.name
+              a.image-set-modal__link(href="/artwork/#{item.slug}") View Details
 
-  .image-set-modal-js__right.image-set-modal__navigation
-    .icon-chevron-right
+  nav.mgr-navigation.js-mgr-navigation.image-set-modal__navigation
+    include ../../../components/merry_go_round/templates/horizontal_navigation
 
 .loading-spinner

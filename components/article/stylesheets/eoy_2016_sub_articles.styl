@@ -22,7 +22,7 @@ body.body-eoy-2016
     figure.article-section-image
       max-width 1100px !important
       position relative
-      padding 60px 0
+      padding 60px 20px 60px 60px
       border-top 1px solid black
       border-bottom 1px solid black
       overflow auto
@@ -35,13 +35,15 @@ body.body-eoy-2016
         height calc('100% - 40px')
         width 1px
       img, figcaption
-        max-width 85%
+        max-height 80vh
+        width auto
         margin-right 20px
       figcaption
         float right
       &.portrait
         img, figcaption
-          max-width 65%
+          max-height 80vh
+          width auto
     @media screen and (max-width 900px)
       figure.article-section-image
         margin 0 20px
@@ -76,7 +78,7 @@ body.body-eoy-2016
         border-top 1px solid black
         border-bottom 1px solid black
         padding 50px
-        padding-left 0px
+        padding-left 20px
         width auto
         max-width 1100px
         &:before
