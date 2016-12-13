@@ -52,13 +52,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
   getScrollZones: =>
     scrollZones = []
     scrollZones.push @containerHeight
-    for i in [1..10]
-      scrollZones.push( (i * @activeHeight) + @containerHeight )
+    for i in [1..11]
+      scrollZones.push( (i * @activeHeight) + @containerHeight + 20)
     return scrollZones
 
   closestSection: (scrollTop, scrollZones) =>
     closest = Math.max.apply(null, scrollZones)
-    for i in [0..scrollZones.length + 1]
+    for i in [0..scrollZones.length]
       if scrollZones[i] >= scrollTop and scrollZones[i] < closest
         closest = i
     return closest
@@ -71,31 +71,31 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $('.scroller__items section[data-section="0"]').attr('data-state', 'open').height(@containerHeight)
     if scrollTop <= @openHeight
       @doSlider(scrollTop)
-    if scrollTop >= @getScrollZones()[10]
+    if scrollTop >= @getScrollZones()[11]
       @animateBody(scrollTop)
     @windowPosition = scrollTop
 
   setupSliderHeight: =>
     #height of bounding box / title section
-    @containerHeight = @windowHeight - 75 - 20
+    @containerHeight = @windowHeight - 75
     #height of one section open
     @activeHeight = @windowHeight - 75 - (@windowHeight * .33)
     #bottom scroll border of header content
-    @openHeight = @getScrollZones()[10] + 75
+    @openHeight = @getScrollZones()[11] + 75
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@containerHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
-    $('.scroller').height(@containerHeight + 20)
+    $('.scroller').height(@containerHeight)
     $('.article-body').fadeIn(500)
 
   doSlider: (scrollTop) =>
     scrollZones = @getScrollZones()
     active = @closestSection(scrollTop, scrollZones)
     $active = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
-    nextHeight = @containerHeight + 20 - $active.height() - @activeHeight
+    nextHeight = @containerHeight - $active.height() - @activeHeight
     diff = @getScrollZones()[active] - scrollTop
     if active < 1
-      $active.height(diff).removeClass('bottom')
+      $active.height(diff - 20).removeClass('bottom')
       if scrollTop < @activeHeight
         $active.next().attr('data-state', 'open').height(scrollTop).addClass('bottom')
         $active.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
@@ -111,10 +111,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
       else
         $active.next().height(@containerHeight - diff).attr('data-state', 'open').addClass('bottom')
         $active.next().next().attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
-      if active >= 9
-        if this.getScrollZones()[9] < scrollTop
-          $('.scroller__items section[data-section!="10"]').attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
-          $('.scroller__items section[data-section="10"]').height(active - scrollTop).attr('data-state', 'open').addClass('bottom')
+      if active >= 10
+        if this.getScrollZones()[10] < scrollTop
+          $('.scroller__items section[data-section!="11"]').attr('data-state', 'closed').removeAttr('style').removeClass('bottom')
+          $('.scroller__items section[data-section="11"]').height(active - scrollTop).attr('data-state', 'open').addClass('bottom')
 
   deferredLoadBody: =>
     $('.article-body').prepend bodyView
@@ -128,16 +128,15 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   bodyInView: =>
     $('.article-body').waypoint (direction) =>
-      if direction is 'up'
-        $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
-        $('.article-body__intro-inner').addClass('active')
         @trackScrollIntoBody()
+        $('.article-body section[data-section="1"]').addClass('active')
     , {offset: '50%'}
 
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
         $('.article-body__intro').removeClass('active')
+        $('.article-body section.active').removeClass('active')
       if direction is 'down'
         $('.article-body__intro').addClass('active')
     , {offset: '100%'}
@@ -145,12 +144,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.article-body').waypoint (direction) ->
       $('.eoy-feature__background').toggleClass('active')
       $('.scroller').toggleClass('active')
-      if direction is 'up'
-        $('.article-body section.active').removeClass('active')
     , {offset: '0'}
 
   animateBody: (scrollTop) =>
     active = @closestSection(scrollTop, @boundaries) - 1
+    if active > 9
+      active = 10
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
   getBodySectionTopBoundaries: =>
@@ -158,7 +157,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for section, i in $('.article-body section')
       top = $(section).position().top
       if i < 1
-        boundaries.push top - @windowHeight
+        boundaries.push top - @windowHeight - 400
       else if $(window).width() > 550
         boundaries.push top - @windowHeight + 300
       else
