@@ -28,8 +28,29 @@
             .artwork-purchase__text
               | Tell the gallery about your collecting interests and why you like this artwork—this helps develop a friendly relationship. Ask clarifying questions about the work and shipping logistics.
             .artwork-purchase__input-full-width
-              textarea.bordered-input( name='message', type='text', id='artwork-purchase-message')
-                = purchase.message
+              textarea.bordered-input(
+                name='message',
+                type='text',
+                id='artwork-purchase-message'
+              )= purchase.message
+
+        if artwork.fair
+          .artwork-purchase__attending.artsy-checkbox
+            .artsy-checkbox--checkbox
+              input(
+                id= 'artwork-purchase-attending'
+                type='checkbox'
+                name='attending'
+                checked= user && user.isAttending(fair)
+              )
+              label( for= 'artwork-purchase-attending' )
+            label.artsy-checkbox--label( for= 'artwork-purchase-attending' )
+              | I will attend #{artwork.fair.name_without_year}
+              span.help-tooltip(
+                data-anchor='bottom-right'
+                data-message="This artwork is part of the art fair—#{artwork.fair.name_without_year}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
+              )
+
 
     if !user
       .artwork-purchase__section.js-ap-signup
