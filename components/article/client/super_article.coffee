@@ -21,7 +21,7 @@ module.exports = class SuperArticleView extends Backbone.View
   setupSuperArticle: ->
     @setStickyNav()
     @setWaypoints()
-    @maybeAddEoyClass() #eoy-2016
+    @maybeAddEoyClass() #2016-year-in-art
 
     # Throttle scroll and resize
     throttledScroll = _.throttle((=> @onScroll()), 100)
