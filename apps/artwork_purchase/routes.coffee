@@ -43,10 +43,6 @@ splitTest = require '../../components/split_test/index.coffee'
       cachedData = JSON.parse cookie if cookie
       purchase = cachedData if cachedData?.artwork_id is artwork.id
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
-      artwork.fair =
-        id: 'miami-project-2016'
-        name: 'Miami Project 2016'
-        name_without_year: 'Miami Project'
       res.locals.sd.ARTWORK = artwork
       res.render 'index',
         artwork: artwork

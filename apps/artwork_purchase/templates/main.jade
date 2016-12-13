@@ -41,7 +41,7 @@
                 id= 'artwork-purchase-attending'
                 type='checkbox'
                 name='attending'
-                checked= user && user.isAttending(fair)
+                checked= purchase && purchase.attending && (purchase.fair_id == artwork.fair.id)
               )
               label( for= 'artwork-purchase-attending' )
             label.artsy-checkbox--label( for= 'artwork-purchase-attending' )
@@ -50,7 +50,6 @@
                 data-anchor='bottom-right'
                 data-message="This artwork is part of the art fair—#{artwork.fair.name_without_year}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
               )
-
 
     if !user
       .artwork-purchase__section.js-ap-signup
