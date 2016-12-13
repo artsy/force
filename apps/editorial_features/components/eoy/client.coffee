@@ -26,13 +26,13 @@ module.exports.EoyView = class EoyView extends Backbone.View
     new SuperArticleView el: $('body'), article: @article
     @loadBody = _.once @deferredLoadBody
     @watchScrolling()
-    $('.video-controls').on 'click', @playVideo
     $('.scroller__items section[data-section="0"]').on 'click', @hintScroll
     $('.video').on 'loadedmetadata', @videoControls
     $('.scroller').fadeIn 500, =>
       @loadBody()
       @smoothAnchorScroll()
       @setupVideos()
+      $('.video-controls').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
