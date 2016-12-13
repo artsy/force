@@ -1,11 +1,6 @@
 section.article-body__intro(data-section=0)
   .article-body__intro-header
     .col
-  .article-body__intro-inner
-    .spacer
-    h3!= markdown(curation.get('intro'))
-    .spacer
-    .spacer
   footer
 .article-body__content
   for section, i in curation.get('sections')
