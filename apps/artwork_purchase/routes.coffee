@@ -6,6 +6,7 @@ request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 User = require '../../models/user.coffee'
 splitTest = require '../../components/split_test/index.coffee'
+Fair = require '../../models/fair.coffee'
 
 @index = (req, res, next) ->
   query = """
@@ -18,6 +19,10 @@ splitTest = require '../../components/split_test/index.coffee'
         date
         sale_message
         href
+        fair {
+          id
+          name
+        }
         partner{
           name
         }
@@ -43,11 +48,14 @@ splitTest = require '../../components/split_test/index.coffee'
       cachedData = JSON.parse cookie if cookie
       purchase = cachedData if cachedData?.artwork_id is artwork.id
       return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
+      fair = new Fair artwork.fair if artwork.fair
       res.locals.sd.ARTWORK = artwork
-      res.render 'index',
-        artwork: artwork
-        purchase: purchase
+      res.render 'index', {
+        artwork,
+        fair,
+        purchase,
         user: req.user
+      }
 
     .catch next
 
