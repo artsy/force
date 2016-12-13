@@ -15,6 +15,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   el: $('body')
   events:
     'click .video-controls': 'playVideo'
+    'click .scroller__items section[data-section="0"]': 'hintScroll'
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
@@ -195,6 +196,12 @@ module.exports.EoyView = class EoyView extends Backbone.View
       $(e).removeClass('active')
     video[0].onended = () ->
       $(e).removeClass('active')
+
+  hintScroll: =>
+    if @windowPosition == 0
+      $('html, body').animate({
+        scrollTop: @activeHeight
+        }, 1000)
 
   smoothAnchorScroll: =>
     $('.scroller a[href*=#]:not([href=#])').click (e) ->
