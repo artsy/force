@@ -16,13 +16,13 @@ block body
     video(class='video' autoplay=true, controls=false, loop=true, muted=true, playsinline=true poster=curation.get('placeholder')).eoy-feature__background.active
       source(src='#{curation.get("header_video")}' type='video/mp4')
     nav.eoy-feature__menu
-      a(href='/')
-        img.logo(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/artsy_logo.png')
-      a(href= '#{superArticle.get("super_article").partner_logo_link}')
+      a(href='/').article-sa-artsy-logo.icon-logotype.logo
+      a(href= '#{superArticle.get("super_article").partner_logo_link}').planet-art-link
         span
           | Presented in <br />
           | Partnership with
-        img.planet-art(src='https://artsy-vanity-files-production.s3.amazonaws.com/images/planetart.svg')
+        .article-sa-plus.icon-close
+        img.article-sa-primary-logo.planet-art(src=superArticle.get('super_article').partner_fullscreen_header_logo)
 
     .eoy-feature__content
       include ./scroller.jade
