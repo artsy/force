@@ -84,7 +84,7 @@ module.exports = class SuperArticleView extends Backbone.View
   maybeAddEoyClass: ->
     if @article.isEOYSubArticle(sd.SUPER_SUB_ARTICLE_IDS, sd.SUPER_ARTICLE)
       $('.article-section-container[data-section-type=text]').each ->
-        if $(@).has('h2,h3').not(':has(p)')
+        if $(@).has('h2,h3').length and not $(@).has('p').length
           $(@).addClass('eoy-border')
           if $(@).prev().data('sectionType') is 'image'
             $(@).prev().addClass 'eoy-border-no-bottom'
