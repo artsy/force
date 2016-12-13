@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+Q = require 'bluebird-q'
 Form = require '../../../components/mixins/form.coffee'
 User = require '../../../models/user.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -24,9 +25,26 @@ module.exports = class PurchaseForm extends Backbone.View
       inquiry_url: window.location.href,
       user: @user
     }
+    @user.related().collectorProfile.findOrCreate() .then =>
 
-    @inquiry.save null,
-      success: success
-      error: (model, response, options) =>
-        @$('.js-ap-form-errors').html @errorMessage(response)
-        error?()
+    promises = [Q.promise (resolve) =>
+      @inquiry.save null,
+        success: resolve
+        error: (model, response, options) =>
+          @$('.js-ap-form-errors').html @errorMessage(response)
+          error?()
+    ]
+
+    if formData.attending
+      @user.related()
+        .collectorProfile.related()
+        .userFairActions
+        .attendFair @artwork.fair
+
+      promises.push Q.allSettled(
+        @user
+          .related().collectorProfile
+          .related().userFairActions.invoke 'save'
+      )
+
+    Q.all(promises).then success

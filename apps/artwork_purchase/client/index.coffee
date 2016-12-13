@@ -25,7 +25,12 @@ class PurchaseView extends Backbone.View
       $button: @$button
       artwork: @artwork
       user: @user
-    if @user.isLoggedOut()
+
+    if @user.isLoggedIn()
+      # If user is logged out we call `prepareForInquiry`
+      # after user data has been entered in signup form.
+      @user.prepareForInquiry()
+    else
       @signupForm = new SignupForm
         el: @$ '.js-ap-signup'
         $button: @$button
@@ -51,7 +56,11 @@ class PurchaseView extends Backbone.View
       mode: 'login'
       redirectTo: @artwork.href + '/checkout'
       copy: copy
-    formData = _.extend artwork_id: @artwork.id, @purchaseForm.serializeForm()
+
+    formData = _.extend {
+      artwork_id: @artwork.id,
+      fair_id: @artwork.fair?.id
+    }, @purchaseForm.serializeForm()
     Cookies.set 'purchase-inquiry', JSON.stringify formData
 
 # Signup
