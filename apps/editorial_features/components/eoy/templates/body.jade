@@ -25,7 +25,7 @@ section.article-body__intro(data-section=0)
             .image
               if i != 8
                 if section.image.indexOf('mp4') > -1
-                  video(autoplay=true, controls=false, muted=true, playsinline=true)
+                  video(autoplay=true, controls=false, muted=true, playsinline=true).video
                     source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button

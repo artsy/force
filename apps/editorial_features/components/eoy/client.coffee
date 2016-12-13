@@ -16,6 +16,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   events:
     'click .video-controls': 'playVideo'
     'click .scroller__items section[data-section="0"]': 'hintScroll'
+    'loadedmetadata .video': 'videoControls'
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
@@ -32,6 +33,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.scroller').fadeIn 500, =>
       @loadBody()
       @smoothAnchorScroll()
+      @setupVideos()
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
@@ -84,14 +86,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@containerHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
-    $('.scroller').height(@containerHeight)
+    $('.scroller').height(@containerHeight + 20)
     $('.article-body').fadeIn(500)
 
   doSlider: (scrollTop) =>
     scrollZones = @getScrollZones()
     active = @closestSection(scrollTop, scrollZones)
     $active = $('.scroller__items section[data-section="' + active + '"]').attr('data-state', 'open')
-    nextHeight = @containerHeight - $active.height() - @activeHeight
+    nextHeight = @containerHeight + 20 - $active.height() - @activeHeight
     diff = @getScrollZones()[active] - scrollTop
     if active < 1
       $active.height(diff).removeClass('bottom')
@@ -123,7 +125,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @bodyInView()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
-      @setupVideos()
       @boundaries = @getBodySectionTopBoundaries()
 
   bodyInView: =>
@@ -172,7 +173,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       wrapAround: true
 
   setupVideos: =>
-    @videoControls()
+    # @videoControls()
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
@@ -182,6 +183,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       , {offset: '100%'}
 
   videoControls: =>
+    debugger
     for videoControls in $('.article-body__content .video-controls')
       video = $(videoControls).prev('video')
       $(videoControls).width(video.width()).height(video.height())
