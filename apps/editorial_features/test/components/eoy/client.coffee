@@ -119,7 +119,7 @@ describe 'EoyView', ->
   describe '#initialize', ->
 
     it 'renders content from curation and superarticle', ->
-      $('.scroller__items section').should.have.lengthOf 11
+      $('.scroller__items section').should.have.lengthOf 12
       $('.article-sa-sticky-header').should.have.lengthOf 1
 
     it 'closes all scroller sections on load', ->
@@ -136,17 +136,17 @@ describe 'EoyView', ->
 
     it 'returns an array of heights that corresponds to each section', ->
       zones = @view.getScrollZones()
-      zones[0].should.equal 805
-      zones[1].should.equal 1333
-      zones[2].should.equal 1861
-      zones[3].should.equal 2389
-      zones[4].should.equal 2917
-      zones[5].should.equal 3445
-      zones[6].should.equal 3973
-      zones[7].should.equal 4501
-      zones[8].should.equal 5029
-      zones[9].should.equal 5557
-      zones[10].should.equal 6085
+      zones[0].should.equal 825
+      zones[1].should.equal 1373
+      zones[2].should.equal 1901
+      zones[3].should.equal 2429
+      zones[4].should.equal 2957
+      zones[5].should.equal 3485
+      zones[6].should.equal 4013
+      zones[7].should.equal 4541
+      zones[8].should.equal 5069
+      zones[9].should.equal 5597
+      zones[10].should.equal 6125
 
   describe '#closestSection', ->
 
@@ -159,7 +159,7 @@ describe 'EoyView', ->
     it 'opens containers on scroll', ->
       @view.doSlider($(window).scrollTop())
       $('.scroller__items section[data-section=0]').height().should.equal 0
-      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 3
 
   describe '#animateBody', ->
 
@@ -206,16 +206,16 @@ describe 'EoyView', ->
     it 'sets height based on position', ->
       @view.windowHeight = 900
       @view.setupSliderHeight()
-      @view.containerHeight.should.equal 805
+      @view.containerHeight.should.equal 825
       @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
+      @view.openHeight.should.equal 6728
 
     it 'sets up heights for the scroller', ->
       @view.setupSliderHeight()
-      $('.scroller__items section[data-section=0]').height().should.equal 805
-      @view.containerHeight.should.equal 805
+      $('.scroller__items section[data-section=0]').height().should.equal 825
+      @view.containerHeight.should.equal 825
       @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
+      @view.openHeight.should.equal 6728
 
   describe '#deferredLoadBody', ->
 
