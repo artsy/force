@@ -1,6 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
+Bloodhound = require 'typeahead.js/dist/bloodhound'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'

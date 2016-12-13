@@ -3,8 +3,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-DeepZoomView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
+DeepZoomView = null
 OpenSeadragon = ->
   addHandler: sinon.stub()
   viewport:
@@ -38,6 +38,8 @@ describe 'DeepZoomView', ->
         OpenSeadragon: OpenSeadragon
 
       Backbone.$ = $
+
+      DeepZoomView = benv.requireWithJadeify require.resolve('../view'), ['template']
 
       sinon.stub _, 'defer', (cb) -> cb()
       $.support.transition = end: 'transitionend'
