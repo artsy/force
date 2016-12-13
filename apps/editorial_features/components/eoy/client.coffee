@@ -13,10 +13,6 @@ analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 module.exports.EoyView = class EoyView extends Backbone.View
 
   el: $('body')
-  events:
-    'click .video-controls': 'playVideo'
-    'click .scroller__items section[data-section="0"]': 'hintScroll'
-    'loadedmetadata .video': 'videoControls'
 
   initialize: ->
     $('.scroller__items section').attr('data-state', 'closed')
@@ -30,6 +26,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
     new SuperArticleView el: $('body'), article: @article
     @loadBody = _.once @deferredLoadBody
     @watchScrolling()
+    $('.video-controls').on 'click', @playVideo
+    $('.scroller__items section[data-section="0"]').on 'click', @hintScroll
+    $('.video').on 'loadedmetadata', @videoControls
     $('.scroller').fadeIn 500, =>
       @loadBody()
       @smoothAnchorScroll()
