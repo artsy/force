@@ -1,6 +1,7 @@
 PartnerFilterFacet = require './partner_filter_facet.coffee'
 { CATEGORIES } = require('sharify').data
 { Cities, FeaturedCities } = require '../../../../components/partner_cities/index.coffee'
+locationSynonyms = require './locationSynonyms.coffee'
 
 _ = require 'underscore'
 facetDefaults = require './facet_defaults.coffee'
@@ -11,6 +12,7 @@ module.exports = ({params, aggregations}) -> [
       emptyStateItemIDs: _.pluck FeaturedCities, 'slug'
       params: params
       aggregations: aggregations
+      synonyms: locationSynonyms
     }, _.find facetDefaults(params.get('type')), facetName: 'location'
   ),
   new PartnerFilterFacet(_.extend {
