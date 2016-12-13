@@ -1,6 +1,5 @@
 @require './scroller'
 @require './body'
-@import '../components/merry_go_round'
 
 flex-display(justify = space-between, align = center)
   display flex
@@ -28,11 +27,11 @@ flex-display(justify = space-between, align = center)
     height 75px
     border-bottom 1px solid white
     z-index 100
-    flex-display()
+    flex-display(flex-start)
     align-items center
     img.logo
       height 30px
-    img.planet-art
+    img.ubs
       height 25px
       display inline-block
       color white
@@ -50,10 +49,22 @@ flex-display(justify = space-between, align = center)
       color white
       font-size 32px
     .article-sa-plus
-      display none
+      color white
+    a.back-to-magazine
+      color white
+      avant-garde-size('body')
+      margin-left auto
   &__sa-header
     .mgr-cell
       margin-right 0px
+    .article-sa-sticky-left
+      left 40px
+    .article-sa-sticky-right
+      right 35px
+      .article-sa-primary-logo img
+        height 30px
+    .article-sa-sticky__presented
+      margin-right 12px
   video[poster]
     height 100%
     background-size cover
@@ -64,10 +75,16 @@ flex-display(justify = space-between, align = center)
   .eoy-feature__menu
     margin 0 10px
     justify-content flex-start
-    .planet-art
+    .ubs
       margin-top 13px
+    a.ubs-link span
+      display none
     .article-sa-plus
       display inline-block
       font-size 12px
-    a.planet-art-link span
-      display none
+    a.back-to-magazine
+      avant-garde-size('s-headline')
+@media screen and (max-width: 900px)
+  .eoy-feature__sa-header
+    .article-sa-sticky-left
+      left 20px
