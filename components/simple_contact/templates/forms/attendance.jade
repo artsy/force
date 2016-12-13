@@ -6,12 +6,12 @@
       id= simpleContactFormAttendingId
       type='checkbox'
       name='attending'
-      checked= user && user.isAttending(fair)
+      checked= true
     )
     label( for= simpleContactFormAttendingId )
   label.artsy-checkbox--label( for= simpleContactFormAttendingId )
-    | I will attend #{fair.nameSansYear()}
+    | I will attend ABCDE
     span.help-tooltip(
       data-anchor='bottom-right'
-      data-message="This artwork is part of the art fair—#{fair.nameSansYear()}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
+      data-message="This artwork is part of the art fair—ABCDE. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
     )
