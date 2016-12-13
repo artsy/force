@@ -11,17 +11,16 @@ initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
 
-  # events:
-  #   'click .image-set-modal-js__left': 'previous'
-  #   'click .image-set-modal-js__right': 'next'
+  events:
+    'click .image-set-modal-js__left': 'previous'
+    'click .image-set-modal-js__right': 'next'
 
   initialize: (options) ->
     { @items, @user, @startIndex } = options
     @length = @items?.length
     @currentIndex = @startIndex
-    # $(window).on 'keyup.modalize', @onKeyUp
+    $(window).on 'keyup.modalize', @onKeyUp
     @following = new Following(null, kind: 'artist') if @user?
-    @setupFollowButtons()
     @renderTemplate()
 
   renderTemplate: ->
@@ -34,47 +33,40 @@ module.exports = class ImageSetView extends Backbone.View
     $set.imagesLoaded =>
       $set.attr 'data-state', 'loaded'
       @$('.loading-spinner').remove()
-      initCarousel $set,
+      @carousel = initCarousel $set,
         wrapAround: true
-        advanceBy: 2
-    # @addFollowButton()
+        advanceBy: 1
+      @carousel.navigation.flickity.select(@startIndex)
+    @addFollowButtons()
 
-  # next: ->
-  #   @currentIndex = if @currentIndex is @length - 1 then 0 else @currentIndex + 1
-  #   @render()
+  next: ->
+    analyticsHooks.trigger 'view:image-set-item'
+    @currentIndex = if @currentIndex is @length - 1 then 0 else @currentIndex + 1
+    @carousel.navigation.flickity.next()
 
-  # previous: ->
-  #   @currentIndex = if @currentIndex is 0 then @length - 1 else @currentIndex - 1
-  #   @render()
+  previous: ->
+    analyticsHooks.trigger 'view:image-set-item'
+    @currentIndex = if @currentIndex is 0 then @length - 1 else @currentIndex - 1
+    @carousel.navigation.flickity.previous()
 
-  # onKeyUp: (e) =>
-  #   if e.keyCode is 37
-  #     @previous()
-  #   else if e.keyCode is 39
-  #     @next()
+  onKeyUp: (e) =>
+    if e.keyCode is 37
+      @previous()
+    else if e.keyCode is 39
+      @next()
 
-  setupFollowButtons: ->
+  addFollowButtons: ->
     @artists = []
     _.where(@items, type: 'artwork').map (work) =>
-      @artists.push id: work.artist?.slug
+      id = work.artist?.slug
+      @artists.push id: id
+      artist = new Artist id: id
+      new FollowButton
+        el: @$(".artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: "Article page"
+        context_module: 'article_image_set'
+        href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if @user?
-
-  addFollowButton: ->
-    item = @items[@currentIndex]
-    return unless item.artist?.slug
-    artist = new Artist id: item.artist.slug
-    analyticsHooks.trigger 'view:image-set-item'
-    new FollowButton
-      el: @$(".artist-follow[data-id='#{artist.id}']")
-      following: @following
-      modelName: 'artist'
-      model: artist
-      context_page: "Article page"
-      context_module: 'article_image_set'
-      href: sd.APP_URL + sd.CURRENT_PATH
-
-  # preload: ->
-  #   for item in @items
-  #     url = item.url or item.image
-  #     image = new Image()
-  #     image.src = resize(url, { height: 900 } )

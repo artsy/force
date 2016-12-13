@@ -2,18 +2,19 @@
 
   .mgr-cells.js-mgr-cells
 
-    for item in items
+    for item, i in items
       .mgr-cell.js-mgr-cell
         .image-set-modal__container
           if item.type === 'artwork' && item.artist && item.artist.name
-            a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
-            a.entity-follow.artist-follow(data-id=item.artist.slug)
+            .image-set-modal__artist-container
+              a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
+              a.entity-follow.artist-follow(data-id=item.artist.slug)
 
           - var image = resize( (item.image || item.url || ''), { height: 900 } )
           img.image-set-modal__image(src=image)
 
           .image-set-modal__metadata
-            .image-set-modal__pagination= index + "/" + length
+            .image-set-modal__pagination= (i + 1) + "/" + length
             if item.type === 'image'
               .image-set-modal__caption!= item.caption
 
@@ -24,7 +25,7 @@
               .image-set-modal__partner= item.partner.name
               a.image-set-modal__link(href="/artwork/#{item.slug}") View Details
 
-  nav.mgr-navigation.js-mgr-navigation.image-set-modal__navigation
+  nav.mgr-navigation.js-mgr-navigation
     include ../../../components/merry_go_round/templates/horizontal_navigation
 
 .loading-spinner

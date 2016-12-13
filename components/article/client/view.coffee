@@ -61,6 +61,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupMobileShare()
     @setupFollowButtons()
     @setupImageSets()
+    @resetImageSetPreview()
     if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
       @setupMarketoStyles()
 
@@ -165,10 +166,9 @@ module.exports = class ArticleView extends Backbone.View
         allowedPixels = 580.0 - 120 # min-width + margins
         totalPixels = 0.0
         $(value).find('img').each (i, img) ->
-          _.defer ->
-            totalPixels = totalPixels + img.width
-            return false if totalPixels > allowedPixels
-            $(img).parent('.article-section-image-set__image-container').css('display', 'inline-block')
+          totalPixels = totalPixels + img.width
+          return false if totalPixels > allowedPixels
+          $(img).parent('.article-section-image-set__image-container').css('display', 'inline-block')
 
   toggleModal: (e) ->
     # Slideshow Modal
