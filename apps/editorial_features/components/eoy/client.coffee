@@ -173,7 +173,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
       wrapAround: true
 
   setupVideos: =>
-    # @videoControls()
     for video in $('.article-body__content .video-controls')
       active = $(video).closest('section').data('section')
       playVideo = @playVideo
@@ -183,7 +182,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
       , {offset: '100%'}
 
   videoControls: =>
-    debugger
     for videoControls in $('.article-body__content .video-controls')
       video = $(videoControls).prev('video')
       $(videoControls).width(video.width()).height(video.height())
