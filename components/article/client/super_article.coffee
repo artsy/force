@@ -74,7 +74,7 @@ module.exports = class SuperArticleView extends Backbone.View
       else unless @$stickyHeader.hasClass('no-transition')
         @$stickyHeader.removeClass 'visible'
 
-  toggleHamburgerNav: ->
+  toggleHamburgerNav: =>
     if @$body.hasClass 'is-open'
       @hideNav()
     else
