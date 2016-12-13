@@ -41,12 +41,10 @@ module.exports = class ImageSetView extends Backbone.View
 
   next: ->
     analyticsHooks.trigger 'view:image-set-item'
-    @currentIndex = if @currentIndex is @length - 1 then 0 else @currentIndex + 1
     @carousel.navigation.flickity.next()
 
   previous: ->
     analyticsHooks.trigger 'view:image-set-item'
-    @currentIndex = if @currentIndex is 0 then @length - 1 else @currentIndex - 1
     @carousel.navigation.flickity.previous()
 
   onKeyUp: (e) =>
