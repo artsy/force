@@ -7,22 +7,24 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
 Artwork = require '../../../models/artwork'
 ArtworkInquiry = require '../../../models/artwork_inquiry'
-openInquiryQuestionnaireFor = rewire '../index'
+openInquiryQuestionnaireFor = null
 
 describe 'openInquiryQuestionnaireFor', ->
   before (done) ->
-    sinon.stub _, 'defer', (cb) -> cb()
-
-    @StateView = openInquiryQuestionnaireFor.__get__ 'StateView'
-    @render = sinon.stub @StateView::, 'render', -> this
-
-    @Logger = openInquiryQuestionnaireFor.__get__ 'Logger'
-
-    benv.setup ->
+    benv.setup =>
       benv.expose $: benv.require 'jquery'
+      window.jQuery = $
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      sinon.stub _, 'defer', (cb) -> cb()
+      openInquiryQuestionnaireFor = rewire '../index'
+
+      @StateView = openInquiryQuestionnaireFor.__get__ 'StateView'
+      @render = sinon.stub @StateView::, 'render', -> this
+
+      @Logger = openInquiryQuestionnaireFor.__get__ 'Logger'
+
       done()
 
   after ->

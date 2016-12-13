@@ -10,6 +10,7 @@ describe 'FilterArtworksView', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
+      window.jQuery = $
       Backbone.$ = $
       sinon.stub _, 'defer'
       FilterArtworksView = benv.require resolve __dirname, '../view'

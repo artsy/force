@@ -1,7 +1,7 @@
 benv = require 'benv'
 Backbone = require 'backbone'
-acquireArtwork = require('../view.coffee').acquireArtwork
 sinon = require 'sinon'
+acquireArtwork = null
 
 describe 'AcquireArtwork Component', ->
 
@@ -9,6 +9,7 @@ describe 'AcquireArtwork Component', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      acquireArtwork = require('../view.coffee').acquireArtwork
       done()
 
   after ->

@@ -7,7 +7,6 @@ Genes = require '../collections/genes.coffee'
 Artists = require '../collections/artists.coffee'
 Artworks = require '../collections/artworks.coffee'
 sd = require('sharify').data
-analytics = require '../lib/analytics.coffee'
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
 Following = require '../components/follow_button/collection.coffee'

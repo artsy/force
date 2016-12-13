@@ -63,11 +63,11 @@ test:
 
 # Run tests sans-asset compilation
 test-l:
-	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
-	$(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
+	# $(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
+	# $(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
-	$(BIN)/mocha $(shell find apps/*/test -name '*.coffee' -not -path 'test/helpers/*')
-	$(BIN)/mocha $(shell find apps/*/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
+	# $(BIN)/mocha $(shell find apps/*/test -name '*.coffee' -not -path 'test/helpers/*')
+	# $(BIN)/mocha $(shell find apps/*/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
 
 # Start the integration server for debugging
 test-s:

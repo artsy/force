@@ -1,6 +1,6 @@
 CurrentUser = require '../../models/current_user.coffee'
 mediator = require '../../lib/mediator.coffee'
-{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports =

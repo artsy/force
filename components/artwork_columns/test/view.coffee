@@ -8,8 +8,7 @@ Artworks = require '../../../collections/artworks.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
-# This view has templates, need to require with Jadeify
-ArtworkColumnsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['artworkColumns', 'artworkItem']
+ArtworkColumnsView = null
 
 describe 'ArtworkColumns', ->
 
@@ -18,6 +17,8 @@ describe 'ArtworkColumns', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
+      window.jQuery = $
+      ArtworkColumnsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['artworkColumns', 'artworkItem']
       Backbone.$ = $
       done()
 

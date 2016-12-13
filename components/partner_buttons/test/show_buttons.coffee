@@ -10,6 +10,7 @@ describe 'PartnerShowButtons', ->
     beforeEach (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
+        window.jQuery = $
         Backbone.$ = $
         PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
         PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()

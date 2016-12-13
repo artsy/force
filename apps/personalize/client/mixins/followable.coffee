@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 TypeaheadView = require '../../../../components/typeahead/view.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../../../lib/analytics_helpers.coffee'
 followedTemplate = -> require('../../templates/followed.jade') arguments...
 
 # Common functionality between views with auto-complete/following

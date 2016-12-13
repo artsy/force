@@ -13,6 +13,7 @@ describe 'ShowInquiryModal', ->
       benv.expose
         $: benv.require 'jquery'
         sd: {}
+      window.jQuery = $
       Backbone.$ = $
       @ShowInquiryView = benv.require resolve __dirname, '../show_inquiry_modal'
       @ContactView = @ShowInquiryView.__get__ 'ContactView'

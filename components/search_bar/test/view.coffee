@@ -5,17 +5,18 @@ sinon = require 'sinon'
 fabricate = require('antigravity').fabricate
 { resolve } = require 'path'
 SearchResult = require '../../../models/search_result'
-SearchBarView = require '../view'
-Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
-Bloodhound.tokenizers = obj: whitespace: sinon.stub()
+SearchBarView = null
 
 describe 'SearchBarView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose
-        $: benv.require 'jquery'
-        Bloodhound: Bloodhound
+      benv.expose $: benv.require 'jquery'
+      window.jQuery = $
       Backbone.$ = $
+      SearchBarView = benv.require require.resolve '../view'
+      Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
+      Bloodhound.tokenizers = obj: whitespace: sinon.stub()
+      SearchBarView.__set__ 'Bloodhound', Bloodhound
       location.assign = sinon.stub()
       benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         @$input = $('#main-layout-search-bar-input')

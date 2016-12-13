@@ -3,28 +3,35 @@ rewire = require 'rewire'
 CurrentUser = require '../../../models/current_user'
 Artwork = require '../../../models/artwork'
 State = require '../../branching_state'
-map = require '../map'
+map = null
+benv = require 'benv'
 
 describe 'map', ->
-  beforeEach ->
-    @Logger = rewire '../../logger'
-    @Cookies = @Logger.__get__ 'Cookies'
-    store = {}
-    @Cookies.set = (name, value) -> store[name] = value
-    @Cookies.get = (name) -> store[name]
-    @logger = new @Logger 'map'
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose $: benv.require 'jquery'
+      window.jQuery = $
+      map = require '../map'
+      @Logger = rewire '../../logger'
+      @Cookies = @Logger.__get__ 'Cookies'
+      store = {}
+      @Cookies.set = (name, value) -> store[name] = value
+      @Cookies.get = (name) -> store[name]
+      @logger = new @Logger 'map'
 
-    @state = new State map
-    @user = new CurrentUser # logged in user
-    @artwork = new Artwork
-    @state.inject
-      user: @user
-      state: @state
-      artwork: @artwork
-      logger: @logger
+      @state = new State map
+      @user = new CurrentUser # logged in user
+      @artwork = new Artwork
+      @state.inject
+        user: @user
+        state: @state
+        artwork: @artwork
+        logger: @logger
 
-    @state.on 'next', (step) =>
-      @logger.log step
+      @state.on 'next', (step) =>
+        @logger.log step
+
+      done()
 
   afterEach ->
     @logger.reset()

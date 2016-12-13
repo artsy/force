@@ -6,7 +6,7 @@ sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 

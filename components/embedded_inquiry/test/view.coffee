@@ -6,15 +6,17 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
 CurrentUser = require '../../../models/current_user'
-EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
-  'template'
-  'confirmation'
-]
+EmbeddedInquiryView = null
 
 describe 'EmbeddedInquiryView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
+      window.jQuery = $
+      EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
+        'template'
+        'confirmation'
+      ]
       Backbone.$ = $
       done()
 

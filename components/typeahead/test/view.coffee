@@ -2,16 +2,18 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Suggestion = require '../../../models/suggestion'
-TypeaheadView = benv.requireWithJadeify require.resolve('../view'), [
-  'templates.index'
-  'templates.empty'
-  'templates.suggestion'
-]
+TypeaheadView = null
 
 describe 'TypeaheadView', ->
   before (done) ->
     benv.setup ->
       benv.expose $: benv.require 'jquery'
+      window.jQuery = $
+      TypeaheadView = benv.requireWithJadeify require.resolve('../view'), [
+        'templates.index'
+        'templates.empty'
+        'templates.suggestion'
+      ]
       Backbone.$ = $
       $.fn.typeahead = -> this
       done()

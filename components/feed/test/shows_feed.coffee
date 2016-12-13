@@ -10,6 +10,7 @@ describe 'ShowsFeed', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
+      window.jQuery = $
       Backbone.$ = $
       ShowsFeed = benv.require resolve __dirname, '../client/shows_feed'
       ShowsFeed.__set__ 'PartnerShowButtons', @PartnerShowButtons = sinon.stub()
