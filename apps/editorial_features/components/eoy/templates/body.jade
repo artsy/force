@@ -24,6 +24,7 @@ section.article-body__intro(data-section=0)
                     source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button
+                  .caption!= markdown(section.caption_second)
                 else
                   img(src=resize(section.image, { width: 800 }))
                   .caption!= markdown(section.caption)
@@ -53,7 +54,7 @@ section.article-body__intro(data-section=0)
                 include ./carousel
               else if i == 8
                 img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
-                .caption This image and its caption are manually edited.
+                .caption Photo: DANIEL LEAL-OLIVAS/AFP/Getty Images
               else
                 img(src=resize(section.image_second, { width: 800 }))
                 .caption!= markdown(section.caption_second)
@@ -64,12 +65,12 @@ section.article-body__intro(data-section=0)
                 p=section.callout
               else
                 img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
-                .caption This image and its caption are manually edited.
+                .caption Photo: DANIEL LEAL-OLIVAS/AFP/Getty Images
 
           if i == 0
             .article-body--section__sub-image
               img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg', { width: 800 }))
-              .caption This image and its caption are manually edited.
+              .caption Photo: Guillaume Pinon/NurPhoto/Getty Images
               .spacer
             .spacer--article
         footer
