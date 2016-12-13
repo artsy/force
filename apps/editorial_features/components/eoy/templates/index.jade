@@ -17,13 +17,10 @@ block body
       source(src='#{curation.get("header_video")}' type='video/mp4')
     nav.eoy-feature__menu
       a(href='/').article-sa-artsy-logo.icon-logotype.logo
-      a(href= '#{superArticle.get("super_article").partner_logo_link}').planet-art-link
-        span
-          | Presented in <br />
-          | Partnership with
-        .article-sa-plus.icon-close
-        img.article-sa-primary-logo.planet-art(src=superArticle.get('super_article').partner_fullscreen_header_logo)
-
+      .article-sa-plus.icon-close
+      a(href= '#{superArticle.get("super_article").partner_logo_link}').ubs-link
+        img.article-sa-primary-logo.ubs(src=superArticle.get('super_article').partner_fullscreen_header_logo)
+      a(href='/articles').back-to-magazine Back to Magazine
     .eoy-feature__content
       include ./scroller.jade
 

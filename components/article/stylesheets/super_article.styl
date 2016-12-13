@@ -105,6 +105,10 @@
     garamond-size('l-body')
     margin-left 20px
 
+.article-sa-magazine-link
+  avant-garde-size('s-headline')
+  text-decoration none
+
 // Sticky header
 .article-sa-sticky-header
   position fixed
@@ -124,7 +128,6 @@
     transition all 200ms
   .article-sa-plus
     font-size 15px
-    display none
 
 .article-sa-sticky-close-icon
   display none
@@ -136,12 +139,13 @@
   position absolute
   display flex
   align-items center
-  top 12px
 
 .article-sa-sticky-left
   left 20px
+  height 57px
 
 .article-sa-sticky-right
+  top 20px
   right 20px
   .article-sticky-back
     text-decoration none
@@ -233,16 +237,13 @@
     .article-sa-plus
       display inline-block
       margin 0px
-    .article-sa-sticky__presented
-      display none
     .article-sa-sticky-title
       visibility hidden
       overflow hidden
       white-space nowrap
       text-overflow ellipsis
     .article-sa-sticky-right
-      left 107px
-      right unset
+      display none
     .article-sa-sticky-related-container
       overflow scroll
       .mgr-navigation

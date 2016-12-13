@@ -2,6 +2,12 @@
   .article-sa-sticky-left
     .article-sa-primary-logos
       a( href="/" ).article-sa-artsy-logo.icon-logotype
+    if superArticle.get('super_article').partner_logo
+      .article-sa-plus.icon-close
+      .article-sa-primary-logo
+        if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
+          a( href=superArticle.get('super_article').partner_logo_link )
+            img( src=superArticle.get('super_article').partner_logo )
   .article-sa-sticky-center
     a.article-sa-sticky-title( href=superArticle.href() )= superArticle.get('title')
     .article-sa-sticky-related-container
@@ -17,16 +23,7 @@
         .article-sa-related__magazine-text Back to the Magazine Homepage
 
   .article-sa-sticky-right
-    if superArticle.get('super_article').partner_logo
-      .article-sa-sticky__presented
-        |  Presented in
-        br
-        |  Partnership with
-      .article-sa-plus.icon-close
-      .article-sa-primary-logo
-        if superArticle.get('super_article').partner_logo && superArticle.get('super_article').partner_logo_link
-          a( href=superArticle.get('super_article').partner_logo_link )
-            img( src=superArticle.get('super_article').partner_logo )
+    a.article-sa-magazine-link(href=sd.APP_URL + '/articles') Back to Magazine
   .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
     .article-sa-sticky-hamburger-icon
     i.article-sa-sticky-close-icon.icon-close
