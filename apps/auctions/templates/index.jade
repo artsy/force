@@ -37,7 +37,7 @@ block body
             for auction in pastAuctions
               a.leader-dots-list-item( href= auction.href() )
                 span= auction.get('name')
-                span= auction.date('end_at').format('MMM D, YYYY')
+                span= auction.endedTime().format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
         .auctions-my-active-bids
