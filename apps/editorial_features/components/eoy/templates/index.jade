@@ -9,7 +9,8 @@ block head
 
 block body
   - var superArticle = article
-  include ../../../../../components/article/templates/super_article_sticky_header.jade
+  .eoy-feature__sa-header
+    include ../../../../../components/article/templates/super_article_sticky_header.jade
 
   .eoy-feature
     video(class='video' autoplay=true, controls=false, loop=true, muted=true, playsinline=true).eoy-feature__background.active
