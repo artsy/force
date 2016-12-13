@@ -412,3 +412,10 @@ flex-display(justify = space-between, align = center)
           .item
             margin-top 10px
             max-height calc(100% \- 10px)
+
+@media only screen and (max-width: 550px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2)
+  .item h1
+    font-size 40px
+  .scroller .scroller__items article .inner h2
+    font-size 30px
+    padding 0 20px

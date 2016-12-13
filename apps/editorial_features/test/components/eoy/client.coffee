@@ -170,7 +170,7 @@ describe 'EoyView', ->
 
   describe '#setupVideos', ->
 
-    it 'calls play video for each video', ->
+    xit 'calls play video for each video', ->
       @view.setupVideos()
       $('.video-controls').waypoint.args[4][0]()
       $('.video-controls').waypoint.args[5][0]()
