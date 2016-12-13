@@ -54,6 +54,14 @@ flex-display(justify = space-between, align = center)
   &__sa-header
     .mgr-cell
       margin-right 0px
+    .article-sa-sticky-left
+      left 40px
+    .article-sa-sticky-right
+      right 35px
+      .article-sa-primary-logo img
+        height 30px
+    .article-sa-sticky__presented
+      margin-right 12px
   video[poster]
     height 100%
     background-size cover
@@ -66,8 +74,12 @@ flex-display(justify = space-between, align = center)
     justify-content flex-start
     .planet-art
       margin-top 13px
+    a.planet-art-link span
+      display none
     .article-sa-plus
       display inline-block
       font-size 12px
-    a.planet-art-link span
-      display none
+@media screen and (max-width: 900px)
+  .eoy-feature__sa-header
+    .article-sa-sticky-left
+      left 20px
