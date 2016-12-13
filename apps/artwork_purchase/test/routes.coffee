@@ -57,6 +57,7 @@ describe 'Artist routes', ->
               artwork: artworkJSON,
               user: { id: 'foo-bar' }
               purchase: undefined
+              fair: undefined
             }
 
       it 'without a user', ->
@@ -67,7 +68,26 @@ describe 'Artist routes', ->
               artwork: artworkJSON,
               user: undefined
               purchase: undefined
+              fair: undefined
             }
+
+      it 'passes fair', ->
+        fair =
+          id: 'foo-fest'
+          name: 'Foo Fest 2016'
+        @metaphysics.returns Q.resolve artwork: _.extend { fair }, artworkJSON
+
+        routes.index @req, @res
+          .then =>
+            @res.render.args[0][0].should.eql 'index'
+            @res.render.args[0][1].should.containEql {
+              artwork: _.extend { fair }, artworkJSON
+              user: undefined
+              purchase: undefined
+            }
+            @res.render.args[0][1].fair.attributes.should.containEql
+              id: 'foo-fest'
+              name: 'Foo Fest 2016'
 
       describe 'with a cookie', ->
         it 'does not pass purchase if artwork ids do not match', ->
@@ -79,6 +99,7 @@ describe 'Artist routes', ->
                 artwork: artworkJSON,
                 user: undefined
                 purchase: undefined
+                fair: undefined
               }
 
         it 'passes purchase if artwork ids match', ->
@@ -90,6 +111,7 @@ describe 'Artist routes', ->
                 artwork: artworkJSON,
                 user: undefined
                 purchase: { artwork_id: 'foo-bar-id' }
+                fair: undefined
               }
 
     it 'thankYou', ->
@@ -99,4 +121,3 @@ describe 'Artist routes', ->
           @res.render.args[0][1].should.eql {
             artwork: artworkJSON
           }
-
