@@ -61,6 +61,7 @@ module.exports = class ArticleView extends Backbone.View
     @setupMobileShare()
     @setupFollowButtons()
     @setupImageSets()
+    @resetImageSetPreview()
     if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
       @setupMarketoStyles()
 
@@ -88,11 +89,12 @@ module.exports = class ArticleView extends Backbone.View
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
       .each (i, img) ->
-        newWidth = ((img.width * window.innerHeight * 0.9) / img.height)
+        optimizedHeight = window.innerHeight * 0.9
+        newWidth = ((img.width * optimizedHeight) / img.height)
+        if img.width < (img.height * 0.9)
+          $(img).parent().addClass('portrait')
         if newWidth < 580
           $(img).parent().css('max-width', 580)
-        else if img.width < (img.height * .9)
-          $(img).parent().addClass('portrait')
     @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
@@ -164,10 +166,9 @@ module.exports = class ArticleView extends Backbone.View
         allowedPixels = 580.0 - 120 # min-width + margins
         totalPixels = 0.0
         $(value).find('img').each (i, img) ->
-          _.defer ->
-            totalPixels = totalPixels + img.width
-            return false if totalPixels > allowedPixels
-            $(img).parent('.article-section-image-set__image-container').css('display', 'inline-block')
+          totalPixels = totalPixels + img.width
+          return false if totalPixels > allowedPixels
+          $(img).parent('.article-section-image-set__image-container').css('display', 'inline-block')
 
   toggleModal: (e) ->
     # Slideshow Modal

@@ -11,7 +11,7 @@ sd = require('sharify').data
 
 describe 'ImageSetView', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
@@ -23,6 +23,12 @@ describe 'ImageSetView', ->
       @ImageSetView.__set__ 'Image', ->
       @ImageSetView.__set__ 'resize', (url) -> url
       @ImageSetView.__set__ 'Follow', { Following: sinon.stub(), FollowButton: sinon.stub() }
+      @flickity = { navigation: flickity:
+        select: @select = sinon.stub()
+        next: @next = sinon.stub()
+        previous: @previous = sinon.stub()
+      }
+      @ImageSetView.__set__ 'initCarousel', sinon.stub().returns @flickity
       stubChildClasses @ImageSetView, this,
         ['addFollowButton', 'setupFollowButtons' ]
         []
@@ -39,44 +45,35 @@ describe 'ImageSetView', ->
           date: '1999'
         }
       ]
+      sinon.stub Backbone, 'sync'
+      @view = new @ImageSetView
+        el: $('body')
+        items: @collection
+        user: @user
+        startIndex: 0
+      @view.carousel = @flickity
       done()
 
-  after ->
-    benv.teardown()
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @view = new @ImageSetView
-      el: $('body')
-      items: @collection
-      user: @user
-      startIndex: 0
-
   afterEach ->
+    benv.teardown()
     Backbone.sync.restore()
 
   describe 'slideshow is functional', ->
 
-    it 'slideshow starts at index 0', ->
-      @view.currentIndex.should.equal 0
-
     it 'iterates to the next page on next', ->
       @view.next()
-      @view.currentIndex.should.equal 1
+      @next.called.should.be.true()
 
     it 'loops back to the beginning on last image', ->
       @view.next()
       @view.next()
-      @view.currentIndex.should.equal 0
+      @next.callCount.should.equal 2
 
     it 'iterates to previous page on previous', ->
       @view.next()
       @view.previous()
-      @view.currentIndex.should.equal 0
-
-    it 'loops to the end on first image on previous', ->
-      @view.previous()
-      @view.currentIndex.should.equal 1
+      @next.callCount.should.equal 1
+      @previous.callCount.should.equal 1
 
   describe '#render', ->
 

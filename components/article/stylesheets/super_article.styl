@@ -115,7 +115,6 @@
   background white
   opacity 0
   transition all 400ms
-  min-height 80px
   pointer-events none
   &.no-transition
     transition all 0ms
@@ -137,22 +136,21 @@
   position absolute
   display flex
   align-items center
-  top 24px
+  top 12px
 
 .article-sa-sticky-left
   left 20px
 
 .article-sa-sticky-right
   right 20px
-  top 25px
   .article-sticky-back
     text-decoration none
 
 .article-sa-sticky-center
   text-align center
-  margin-top 25px
+  margin-top 15px
   .article-sa-sticky-title
-    garamond-size('s-headline')
+    garamond-size('l-body')
     cursor pointer
     transition all 200ms
     text-decoration none
@@ -163,7 +161,7 @@
   border-top 1px solid gray-lighter-color
   height 0px
   transition height 200ms
-  margin-top 25px
+  margin-top 15px
   overflow hidden
   &.visible
     border-bottom 1px solid gray-lighter-color
@@ -243,7 +241,7 @@
       white-space nowrap
       text-overflow ellipsis
     .article-sa-sticky-right
-      left 130px
+      left 107px
       right unset
     .article-sa-sticky-related-container
       overflow scroll
@@ -257,10 +255,16 @@
         padding 0 25px
     .article-sa-primary-logo
       margin-left 10px
+      img
+        height 25px
+    .article-sa-artsy-logo
+      font-size 25px
+    .article-sa-plus
+      font-size 12px
     .article-sa-sticky-hamburger
       position absolute
-      top 25px
-      right 25px
+      top 10px
+      right 20px
       &-icon
         vertical-align middle
         position relative

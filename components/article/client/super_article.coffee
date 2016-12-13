@@ -5,9 +5,6 @@ sd = require('sharify').data
 
 module.exports = class SuperArticleView extends Backbone.View
 
-  events: ->
-    'click .js-article-sa-sticky-hamburger' : 'toggleHamburgerNav'
-
   initialize: (options) ->
     { @article } = options
 
@@ -18,6 +15,8 @@ module.exports = class SuperArticleView extends Backbone.View
     @$stickyHeader = $('.article-sa-sticky-header')
 
     @setupSuperArticle()
+
+    $('.js-article-sa-sticky-hamburger').on 'click', @toggleHamburgerNav
 
   setupSuperArticle: ->
     @setStickyNav()
@@ -75,7 +74,7 @@ module.exports = class SuperArticleView extends Backbone.View
       else unless @$stickyHeader.hasClass('no-transition')
         @$stickyHeader.removeClass 'visible'
 
-  toggleHamburgerNav: ->
+  toggleHamburgerNav: =>
     if @$body.hasClass 'is-open'
       @hideNav()
     else
