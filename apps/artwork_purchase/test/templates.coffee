@@ -86,14 +86,6 @@ describe 'address form', ->
         zip: '10013'
         country: 'USA'
 
-    html.should.containEql '<label for="artwork-purchase-full-name">Full Name</label>'
-    html.should.containEql '<label for="artwork-purchase-street-1">Address Line 1</label>'
-    html.should.containEql '<label for="artwork-purchase-street-2">Address Line 2</label>'
-    html.should.containEql '<label for="artwork-purchase-city">City</label>'
-    html.should.containEql '<label for="artwork-purchase-state">State</label>'
-    html.should.containEql '<label for="artwork-purchase-zip">Zip code</label>'
-    html.should.containEql '<label for="artwork-country">Country</label>'
-
     html.should.containEql 'input name="name" value="Foo Bar"'
     html.should.containEql 'input name="street1" value="401 Broadway"'
     html.should.containEql 'input name="street2" value="c/o Artsy"'
@@ -105,14 +97,6 @@ describe 'address form', ->
   it 'otherwiser renders empty inputs', ->
     html = render('address_form') purchase: {}
 
-    html.should.containEql '<label for="artwork-purchase-full-name">Full Name</label>'
-    html.should.containEql '<label for="artwork-purchase-street-1">Address Line 1</label>'
-    html.should.containEql '<label for="artwork-purchase-street-2">Address Line 2</label>'
-    html.should.containEql '<label for="artwork-purchase-city">City</label>'
-    html.should.containEql '<label for="artwork-purchase-state">State</label>'
-    html.should.containEql '<label for="artwork-purchase-zip">Zip code</label>'
-    html.should.containEql '<label for="artwork-country">Country</label>'
-
     html.should.not.containEql 'value='
 
 describe 'summary', ->
@@ -123,7 +107,7 @@ describe 'summary', ->
     $html = $(html)
     $html.find('.ap-summary__artist').text().should.eql "John Doe"
     $html.find('.ap-summary__title').text().should.eql "Foo Bar"
-    $html.find('.ap-summary__partner').text().should.eql "Galerie Foo Bar"
+    $html.find('.ap-summary__partner').text().should.eql "Offered by Galerie Foo Bar"
     $html.find('.ap-summary__price').text().should.containEql 'Price'
     $html.find('.ap-summary__price').text().should.containEql '€9,500'
 
