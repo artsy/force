@@ -3,7 +3,7 @@
 // and potentionally other alternative layout options or more.
 //
 
-if (location.pathname.match('/article/') || location.pathname.match('/year-in-art-2016')) {
+if (location.pathname.match('/article/') || location.pathname.match('/2016-year-in-art')) {
   $(document.body).on('click', '.article-social a', function () {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Article Share', {
