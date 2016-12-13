@@ -69,7 +69,7 @@ flex-display(justify = space-between, align = center)
       max-height 0
       opacity 0
 
-    &[data-section='0']
+    &[data-section='0'] //title
       article
         font-size 7vw
         font-weight 500
@@ -96,7 +96,24 @@ flex-display(justify = space-between, align = center)
           .bottom
             margin-top 20px
 
-    &[data-section='1']
+    &[data-section='1'] //intro
+      border-bottom 1px solid
+      h3
+        garamond-size('l-headline')
+        line-height 45px
+        width 900px
+        max-width 80vw
+        padding 20px
+      .inner
+        height calc(100% \- 40px)
+        margin 20px 0
+        border-right 1px solid
+        border-left 1px solid
+        display flex
+        align-items center
+        justify-content center
+
+    &[data-section='2']
       .inner
         .left
           width grid-1
@@ -111,7 +128,7 @@ flex-display(justify = space-between, align = center)
           .item
             max-height 100%
 
-    &[data-section='2']
+    &[data-section='3']
       .left
         width calc(50vw \- 40px)
         .col
@@ -137,7 +154,7 @@ flex-display(justify = space-between, align = center)
         .item
           border-right 1px solid
 
-    &[data-section='3']
+    &[data-section='4']
       .left
         width calc(50vw \-60px)
         margin-right 20px
@@ -164,7 +181,7 @@ flex-display(justify = space-between, align = center)
           &:nth-child(2)
             width calc(grid-2 \- 1px)
 
-    &[data-section='4']
+    &[data-section='5']
       .inner
         border-top 1px solid
       .left
@@ -179,7 +196,7 @@ flex-display(justify = space-between, align = center)
         height calc(100% \- 40px)
         .item
           max-height 100%
-    &[data-section='5']
+    &[data-section='6']
       .inner
         border-top 1px solid
         border-bottom 1px solid
@@ -193,7 +210,7 @@ flex-display(justify = space-between, align = center)
         .right
           width calc(grid-1 \- 1px)
 
-    &[data-section='6']
+    &[data-section='7']
       .left
         .col
           &:first-child
@@ -214,7 +231,7 @@ flex-display(justify = space-between, align = center)
         .item
           max-height 100%
 
-    &[data-section='7']
+    &[data-section='8']
       .left
         .col
           height calc(100% \-20px)
@@ -233,7 +250,7 @@ flex-display(justify = space-between, align = center)
           margin 20px 0
           height calc(100% \- 40px)
 
-    &[data-section='8']
+    &[data-section='9']
       border-top 1px solid
       border-bottom 1px solid
       .left
@@ -248,7 +265,7 @@ flex-display(justify = space-between, align = center)
         .item
           max-height 100%
 
-    &[data-section='9']
+    &[data-section='10']
       .left
         flex 1
         border-bottom 1px solid
@@ -269,7 +286,7 @@ flex-display(justify = space-between, align = center)
         border-bottom 1px solid
         margin-left 20px
 
-    &[data-section='10']
+    &[data-section='11']
       .left
         width calc(grid-3 \- 1px)
         justify-content flex-start
@@ -315,7 +332,7 @@ flex-display(justify = space-between, align = center)
             margin-bottom 10px
           .bottom
             margin-top 10px
-      &[data-section='1']
+      &[data-section='2']
         .inner
           .left
             margin-top 10px
@@ -323,7 +340,7 @@ flex-display(justify = space-between, align = center)
           .right
             margin 10px 0
             height calc(100% \- 20px)
-      &[data-section='2']
+      &[data-section='3']
         .left
           width 50%
           .col:first-child
@@ -341,7 +358,7 @@ flex-display(justify = space-between, align = center)
             height calc(100% \- 10px)
           .item
             max-height calc(100% \- 20px)
-      &[data-section='3']
+      &[data-section='4']
         .left
           width calc(50% \- 10px)
           margin-right 10px
@@ -357,14 +374,14 @@ flex-display(justify = space-between, align = center)
           .col:first-child
             margin 10px 0
             height calc(100% \- 20px)
-      &[data-section='4']
+      &[data-section='5']
         .left, .right
           height calc(100% \- 20px)
           margin 10px 0
-      &[data-section='5']
+      &[data-section='6']
         .inner .left
           height calc(100% \- 20px)
-      &[data-section='6']
+      &[data-section='7']
         .left
           .col:first-child
             width calc(15vw \- 11px)
@@ -375,7 +392,7 @@ flex-display(justify = space-between, align = center)
         .inner .right
           height calc(100% \- 20px)
           margin 10px 0
-      &[data-section='7']
+      &[data-section='8']
         .left .col
           margin-bottom 10px
           height calc(100% \- 10px)
@@ -384,11 +401,11 @@ flex-display(justify = space-between, align = center)
           .col
             margin 10px 0
             height calc(100% \- 20px)
-      &[data-section='8']
+      &[data-section='9']
         .right
           margin 10px 0
           height calc(100% \- 20px)
-      &[data-section='9']
+      &[data-section='10']
         .col.spacer
           margin-top 10px
           height calc(100% \- 10px)
@@ -401,7 +418,7 @@ flex-display(justify = space-between, align = center)
         .right
           margin-left 10px
           width calc(50% \- 10px)
-      &[data-section='10']
+      &[data-section='11']
         .left
           .col:first-child
             height calc(100% \- 10px)
