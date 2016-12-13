@@ -129,25 +129,24 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   bodyInView: =>
     $('.article-body').waypoint (direction) =>
-      if direction is 'up'
-        $('.article-body__intro-inner').removeClass('active')
       if direction is 'down'
-        $('.article-body__intro-inner').addClass('active')
         @trackScrollIntoBody()
+        $('.article-body section[data-section="1"]').addClass('active')
     , {offset: '50%'}
 
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
+        console.log 'intro waypoint up'
         $('.article-body__intro').removeClass('active')
+        $('.article-body section.active').removeClass('active')
       if direction is 'down'
+        console.log 'intro waypoint down'
         $('.article-body__intro').addClass('active')
     , {offset: '100%'}
 
     $('.article-body').waypoint (direction) ->
       $('.eoy-feature__background').toggleClass('active')
       $('.scroller').toggleClass('active')
-      if direction is 'up'
-        $('.article-body section.active').removeClass('active')
     , {offset: '0'}
 
   animateBody: (scrollTop) =>
@@ -159,7 +158,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     for section, i in $('.article-body section')
       top = $(section).position().top
       if i < 1
-        boundaries.push top - @windowHeight
+        boundaries.push top - @windowHeight - 400
       else if $(window).width() > 550
         boundaries.push top - @windowHeight + 300
       else
