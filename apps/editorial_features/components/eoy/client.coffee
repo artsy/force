@@ -59,7 +59,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   closestSection: (scrollTop, scrollZones) =>
     closest = Math.max.apply(null, scrollZones)
-    for i in [0..scrollZones.length + 1]
+    for i in [0..scrollZones.length]
       if scrollZones[i] >= scrollTop and scrollZones[i] < closest
         closest = i
     return closest
@@ -149,6 +149,8 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   animateBody: (scrollTop) =>
     active = @closestSection(scrollTop, @boundaries) - 1
+    if active > 9
+      active = 10
     $('.article-body section[data-section="' + active + '"]').addClass('active')
 
   getBodySectionTopBoundaries: =>
