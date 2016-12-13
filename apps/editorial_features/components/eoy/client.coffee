@@ -42,7 +42,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
         watchScrolling()
     $(window).resize =>
       @videoControls()
-      @setupCarousel()
       @setupSliderHeight()
       @boundaries = @getBodySectionTopBoundaries()
       @windowHeight = $(window).height()
@@ -167,7 +166,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return boundaries
 
   setupCarousel: ->
-    initCarousel $('.carousel'), imagesLoaded: true
+    initCarousel $('.carousel'),
+      imagesLoaded: true
+      advanceBy: 1
+      wrapAround: true
 
   setupVideos: =>
     @videoControls()

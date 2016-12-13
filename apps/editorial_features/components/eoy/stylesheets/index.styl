@@ -1,4 +1,3 @@
-@require './super_article'
 @require './scroller'
 @require './body'
 @import '../components/merry_go_round'
@@ -26,7 +25,7 @@ flex-display(justify = space-between, align = center)
     left 0
     right 0
     margin 0 40px
-    height 75px
+    height 57px
     border-bottom 1px solid white
     z-index 100
     flex-display()
@@ -36,7 +35,8 @@ flex-display(justify = space-between, align = center)
     img.planet-art
       height 25px
       display inline-block
-    a
+      color white
+    a:not(.article-sa-artsy-logo)
       color white
       text-decoration none
       font-size 14px
@@ -45,13 +45,29 @@ flex-display(justify = space-between, align = center)
         display inline-block
         line-height 15px
         margin-right 12px
+        vertical-align middle
+    .article-sa-artsy-logo
+      color white
+      font-size 32px
+    .article-sa-plus
+      display none
+  &__sa-header
+    .mgr-cell
+      margin-right 0px
+  video[poster]
+    height 100%
+    background-size cover
+    background-repeat no-repeat
+    background-position center
 
 @media screen and (max-width: 550px)
   .eoy-feature__menu
     margin 0 10px
     justify-content flex-start
     .planet-art
-      margin-left 30px
-      margin-top 5px
-    a span
+      margin-top 13px
+    .article-sa-plus
+      display inline-block
+      font-size 12px
+    a.planet-art-link span
       display none
