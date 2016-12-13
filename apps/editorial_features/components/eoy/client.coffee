@@ -136,11 +136,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
     $('.article-body').waypoint (direction) ->
       if direction is 'up'
-        console.log 'intro waypoint up'
         $('.article-body__intro').removeClass('active')
         $('.article-body section.active').removeClass('active')
       if direction is 'down'
-        console.log 'intro waypoint down'
         $('.article-body__intro').addClass('active')
     , {offset: '100%'}
 
