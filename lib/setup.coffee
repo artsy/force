@@ -195,6 +195,7 @@ module.exports = (app) ->
 
   # Apps with hardcoded routes or "RESTful" routes
   app.use require "../apps/home"
+  app.use require "../apps/editorial_features"
   app.use require "../apps/toolkit"
   app.use require "../apps/apply"
   app.use require "../apps/auctions"
@@ -239,12 +240,11 @@ module.exports = (app) ->
   app.use require '../apps/dev'
   app.use require "../apps/article"
 
-  # Non-profile vanity url apps
+  # Non-profile dynamic vanity url apps
   app.use require "../apps/galleries_institutions"
   app.use require "../apps/articles"
   app.use require "../apps/page"
   app.use require "../apps/shortcuts"
-  app.use require "../apps/editorial_features"
 
   # Apps that need to fetch a profile
   app.use require "../apps/profile"
