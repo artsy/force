@@ -7,7 +7,7 @@ initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr
 bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
-{ resize } = require '../../../../components/resizer/index.coffee'
+{ resize, crop } = require '../../../../components/resizer/index.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
@@ -19,6 +19,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @curation = new Curation sd.CURATION
     @windowPosition = $(window).scrollTop()
     @windowHeight = $(window).height()
+    @headerHeight = if sd.IS_MOBILE then 0 else 75
     @setupSliderHeight()
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
@@ -77,9 +78,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setupSliderHeight: =>
     #height of bounding box / title section
-    @containerHeight = @windowHeight - 75
+    @containerHeight = @windowHeight - @headerHeight
     #height of one section open
-    @activeHeight = @windowHeight - 75 - (@windowHeight * .33)
+    @activeHeight = @windowHeight - @headerHeight - (@windowHeight * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[11] + 75
     $('.eoy-feature__content').height(@openHeight)
@@ -121,6 +122,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       curation: @curation
       markdown: markdown
       resize: resize
+      crop: crop
     @bodyInView()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
