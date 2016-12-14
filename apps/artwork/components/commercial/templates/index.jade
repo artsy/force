@@ -1,6 +1,6 @@
 .artwork-commercial( class='js-artwork-commercial' )
   form.artwork-commercial__form
-    if inPurchaseTestGroup && isPurchasable
+    if inPurchaseTestGroup && isPurchasable && notProduction
       include ./purchase_flow_index
     else
       include ./standard_index

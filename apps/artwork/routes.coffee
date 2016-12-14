@@ -68,6 +68,9 @@ bootstrap = ->
   metaphysics send
     .then (data) ->
       data.inPurchaseTestGroup = inPurchaseTestGroup
+      data.notProduction = res.locals.sd.NODE_ENV is 'development' or
+        res.locals.sd.NODE_ENV is 'staging' or
+        res.locals.sd.NODE_ENV is 'test'
       data.isPurchasable = data.artwork.is_purchasable
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data

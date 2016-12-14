@@ -25,7 +25,8 @@ module.exports = class PurchaseSignupForm extends Backbone.View
     @user.signup
       trigger_login: false
       success: (model, { user }) =>
-        analyticsHooks.trigger "auth:signup"
+        analyticsHooks.trigger "purchase:signup:success",
+          user: user
         @user.repossess user.id,
           success: ->
             success?()

@@ -29,8 +29,11 @@ module.exports = class PurchaseForm extends Backbone.View
 
     promises = [Q.promise (resolve) =>
       @inquiry.save null,
-        success: resolve
+        success: =>
+          analyticsHooks.trigger 'purchase:inquiry:success', { @artwork, @inquiry }
+          resolve()
         error: (model, response, options) =>
+          analyticsHooks.trigger 'purchase:inquiry:failiure'
           @$('.js-ap-form-errors').html @errorMessage(response)
           error?()
     ]
