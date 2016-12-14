@@ -4,8 +4,8 @@ block locals
 doctype html
 html( data-useragent= userAgent )
   head
-    block head
     include head
+    block head
 
     link( type='text/css', rel='stylesheet', href= asset('/assets/main_layout.css') )
     if assetPackage
