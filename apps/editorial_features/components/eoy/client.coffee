@@ -32,13 +32,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @loadBody()
       @smoothAnchorScroll()
       @setupVideos()
+      @autoScroll()
       $('.video').on 'loadedmetadata', @videoControls
       $('.video-controls, video-play-button').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
   watchWindow: =>
-    watchScrolling = _.throttle(@watchScrolling, 30)
+    watchScrolling = _.throttle(@watchScrolling, 25)
     $(window).scroll =>
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
@@ -63,6 +64,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
       if scrollZones[i] >= scrollTop and scrollZones[i] < closest
         closest = i
     return closest
+
+  autoScroll: =>
+    if @windowPosition < @openHeight
+      window.scrollBy(0,1);
+      scrolldelay = setTimeout(@autoScroll,30)
 
   watchScrolling: =>
     scrollTop = $(window).scrollTop()
