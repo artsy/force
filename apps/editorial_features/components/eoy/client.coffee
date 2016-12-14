@@ -68,7 +68,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   autoScroll: =>
     if @windowPosition < @openHeight
       window.scrollBy(0,1);
-      scrolldelay = setTimeout(@autoScroll,30)
+      scrolldelay = setTimeout(@autoScroll,25)
 
   watchScrolling: =>
     scrollTop = $(window).scrollTop()
