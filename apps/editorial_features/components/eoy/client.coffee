@@ -19,6 +19,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @curation = new Curation sd.CURATION
     @windowPosition = $(window).scrollTop()
     @windowHeight = $(window).height()
+    @headerHeight = if sd.IS_MOBILE then 0 else 75
     @setupSliderHeight()
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
@@ -77,9 +78,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   setupSliderHeight: =>
     #height of bounding box / title section
-    @containerHeight = @windowHeight - 75
+    @containerHeight = @windowHeight - @headerHeight
     #height of one section open
-    @activeHeight = @windowHeight - 75 - (@windowHeight * .33)
+    @activeHeight = @windowHeight - @headerHeight - (@windowHeight * .33)
     #bottom scroll border of header content
     @openHeight = @getScrollZones()[11] + 75
     $('.eoy-feature__content').height(@openHeight)
