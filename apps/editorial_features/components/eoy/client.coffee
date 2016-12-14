@@ -7,7 +7,7 @@ initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr
 bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
-{ resize } = require '../../../../components/resizer/index.coffee'
+{ resize, crop } = require '../../../../components/resizer/index.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
@@ -122,6 +122,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       curation: @curation
       markdown: markdown
       resize: resize
+      crop: crop
     @bodyInView()
     $('.article-body').imagesLoaded () =>
       @setupCarousel()
