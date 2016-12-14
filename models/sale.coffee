@@ -125,6 +125,9 @@ module.exports = class Sale extends Backbone.Model
   sortableDate: ->
     if @get('live_start_at')? then @get('live_start_at') else @get('end_at')
 
+  endedTime: ->
+    if @get('end_at')? then moment.utc(@get('end_at')) else moment.utc(@get('ended_at'))
+
   # if a reminder is in order, return relevant data. else undefined.
   reminderStatus: ->
     return 'closing_soon' if @isClosingSoon()
