@@ -315,6 +315,12 @@ flex-display(justify = space-between, align = center)
   .scroller__items article .inner h2
     font-size 50px
 
+@media screen and (max-width: 900px)
+  .scroller
+    .scroller__items section[data-section='1']
+      h3
+        font-size 24px
+        line-height 1.35em
 @media screen and (max-width: 550px)
   .scroller
     width calc(100% \- 20px)
@@ -337,8 +343,11 @@ flex-display(justify = space-between, align = center)
             margin-top 10px
       &[data-section='1']
         h3
-          font-size 24px
+          font-size 18px
           line-height 1.25em
+        .inner
+          height calc(100% \- 20px)
+          margin 10px 0
       &[data-section='2']
         .inner
           .left

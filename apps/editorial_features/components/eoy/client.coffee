@@ -27,11 +27,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @loadBody = _.once @deferredLoadBody
     @watchScrolling()
     $('.scroller__items section[data-section="0"]').on 'click', @hintScroll
-    $('.video').on 'loadedmetadata', @videoControls
     $('.scroller').fadeIn 500, =>
       @loadBody()
       @smoothAnchorScroll()
       @setupVideos()
+      $('.video').on 'loadedmetadata', @videoControls
       $('.video-controls').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
