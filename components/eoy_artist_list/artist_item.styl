@@ -1,8 +1,12 @@
 .eoy-artist-item
   width 25%
   display inline-block
-  clearfix()
   margin-bottom 10px
+  clearfix()
+  @media (max-width: 1300px)
+    width 33%
+  @media (max-width: 1100px)
+    width 50%
   &__thumbnail
     float left
     img
