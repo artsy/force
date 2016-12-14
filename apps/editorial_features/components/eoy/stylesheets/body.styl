@@ -48,6 +48,8 @@ img
     margin 0 auto
     p a
       fine-faux-underline()
+      &:hover
+        color purple-color
   &--section
     width calc(85vw \- 80px)
     max-width 1250px
@@ -118,6 +120,14 @@ img
       max-width 750px
       z-index 100
       position relative
+    p:last-child
+      padding-bottom 30px
+    .share
+      max-width 750px
+      margin 0 auto
+      .share-item:first-child
+        margin-left -10px
+
   video
     max-width 100%
     z-index 100
@@ -422,6 +432,8 @@ img
       padding-left calc(15vw \+ 40px)
       padding-right 50px
       align-items flex-end
+      .share
+        margin-left 0
     &__sub-text
       border-bottom 1px solid
       .image
@@ -444,6 +456,7 @@ img
       height 100%
       display flex
       align-items flex-start
+      justify-content center
       flex-direction column
       min-height 600px
     .carousel-caption
@@ -452,10 +465,13 @@ img
       garamond-size('s-body')
       white-space normal
       padding 0px 10px
+      max-height 3em
     &.mgr-horizontal-nav
       width 100%
       .mgr-navigation
         opacity 1
+      .mgr-arrow-icon
+        margin-bottom 1.5em
 
 [data-section='5']
   .article-body--section
@@ -495,6 +511,8 @@ img
       p
         margin-right 0
         margin-left auto
+      .share
+        margin-right 0
       .spacer
         position absolute
         top 0
@@ -578,6 +596,8 @@ img
     &__text
       position relative
       z-index initial
+      .share
+        margin-left 0
       .spacer
         position absolute
         top 0
@@ -655,6 +675,9 @@ img
         bottom 0
         width 100%
         border-bottom 1px solid
+    &__text
+      .share
+        margin-left 0
     article
       position relative
       .spacer--article
@@ -723,6 +746,8 @@ img
     &__text
       border-right 1px solid
       margin-bottom 20px
+      .share
+        margin-left 0
     &__sub-text
       border-top 1px solid
       display flex
@@ -808,6 +833,8 @@ img
         width calc(100% \- 20px)
     &__text
       border-right 1px solid
+      .share
+        margin-left 0
     &__sub-text
       margin-top 20px
       .image
@@ -871,6 +898,8 @@ img
       align-items flex-end
       flex-direction column
       margin-left 15%
+      .share
+        margin-left 0
     article
       position relative
       padding-bottom 350px

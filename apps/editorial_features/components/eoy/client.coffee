@@ -19,7 +19,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @curation = new Curation sd.CURATION
     @windowPosition = $(window).scrollTop()
     @windowHeight = $(window).height()
-    @headerHeight = if sd.IS_MOBILE then 0 else 75
+    @headerHeight = if sd.IS_MOBILE then 0 else 55
     @setupSliderHeight()
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
@@ -82,7 +82,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     #height of one section open
     @activeHeight = @windowHeight - @headerHeight - (@windowHeight * .33)
     #bottom scroll border of header content
-    @openHeight = @getScrollZones()[11] + 75
+    @openHeight = @getScrollZones()[11] + 55
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@containerHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
@@ -120,7 +120,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
   deferredLoadBody: =>
     $('.article-body').prepend bodyView
       curation: @curation
+      article: @article
       markdown: markdown
+      url: sd.APP_URL
       resize: resize
       crop: crop
     @bodyInView()
