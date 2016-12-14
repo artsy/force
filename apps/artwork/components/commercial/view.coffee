@@ -26,12 +26,12 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   initialize: ({ @data }) ->
     { artwork } = @data
 
+    inPurchaseTestGroup = PURCHASE_FLOW is 'purchase'
+
     if artwork.is_purchasable
       splitTest('purchase_flow').view()
-      # @usePurchaseFlow = PURCHASE_FLOW is 'purchase'
-      @usePurchaseFlow = NODE_ENV is 'development' or
-        NODE_ENV is 'staging' or
-        NODE_ENV is 'test'
+
+    @usePurchaseFlow = inPurchaseTestGroup and artwork.is_purchasable
 
     @artwork = new Artwork artwork
 
