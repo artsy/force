@@ -33,7 +33,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @smoothAnchorScroll()
       @setupVideos()
       $('.video').on 'loadedmetadata', @videoControls
-      $('.video-controls').on 'click', @playVideo
+      $('.video-controls, video-play-button').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
@@ -190,7 +190,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   playVideo: (e) =>
     if e.target
-      e = e.target
+      if $(e.target).hasClass('video-play-button')
+        e = $(e.target).parent()
+      else
+        e = e.target
     video = $(e).prev()
     if video[0].paused
       $(e).addClass('active')
