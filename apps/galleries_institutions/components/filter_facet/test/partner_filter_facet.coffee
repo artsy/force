@@ -40,6 +40,7 @@ describe 'PartnerFilterFacet', ->
       facetName: 'location'
       displayName: 'Locations'
       aggregations: @aggregations
+      synonyms: [ ['st', 'saint'] ]
 
   describe '#initialize', ->
     it 'creates the item for all suggestions', ->
@@ -144,6 +145,9 @@ describe 'PartnerFilterFacet', ->
 
     it 'ignores diacritics', ->
       @facet.isMatched('zur', 'Zürich').should.be.ok()
+
+    it 'replaces synonyms', ->
+      @facet.isMatched('st ives', 'Saint Ives').should.be.ok()
 
   describe '#async_matcher', ->
     beforeEach ->

@@ -1,16 +1,18 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 { clean, cleanDiacritics } = require 'underscore.string'
+normalizeSynonyms = require '../../../../lib/normalizeSynonyms.coffee'
 FetchFilterPartners = require '../parameters/fetch_filter_partners.coffee'
 
 module.exports = class PartnerFilterFacet extends Backbone.Model
 
-  initialize: ({allItems, @emptyStateItemIDs, @facetName, @displayName, aggregations, @params, @search}) -> #
+  initialize: ({allItems, @emptyStateItemIDs, @facetName, @displayName, aggregations, @params, @search, @synonyms}) -> #
     @listenTo aggregations, "change:#{@facetName}", @updateSuggestions
     @allItemsSuggestion = name: 'All ' + @displayName
     @countItems = @allItems = _.map(allItems, (c) -> _.pick c, 'id', 'name')
     @emptyStateItemIDs ?= _.pluck @allItems, 'id'
     @search ?= false
+    @synonyms ?= []
 
   updateSuggestions: (aggregations, changed) ->
     return if not changed
@@ -35,10 +37,10 @@ module.exports = class PartnerFilterFacet extends Backbone.Model
     escape= (s) ->
       s.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
 
-    cleanedEscapedQuery = cleanDiacritics(clean(escape(query)))
+    cleanedEscapedQuery = cleanDiacritics(clean(escape(normalizeSynonyms(@synonyms, query))))
     regex = cleanedEscapedQuery.replace(' ', '\\W* \\W*')
     substrRegex = new RegExp(regex, 'i')
-    substrRegex.test cleanDiacritics(string)
+    substrRegex.test cleanDiacritics(normalizeSynonyms(@synonyms, string))
 
   async_matcher: (query, callback) =>
     if query.length
