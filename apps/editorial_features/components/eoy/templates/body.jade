@@ -24,7 +24,7 @@ section.article-body__intro(data-section=0)
                     source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button
-                  .caption!= markdown(section.caption_second)
+                  .caption!= markdown(section.caption)
                 else
                   img(src=resize(section.image, { width: 800 }))
                   .caption!= markdown(section.caption)
