@@ -652,8 +652,10 @@ img
         left 0
         right 0
         bottom 0
-        width 100%
+        width 0
+        margin 0 auto
         border-bottom 1px solid
+        transition all 4s ease-out
     &__cover-image
       .image
         img
@@ -667,7 +669,9 @@ img
         left 0
         top 20px
         bottom 0
-        height calc(100% \- 40px)
+        height 0
+        margin auto 0
+        transition all 3.5s ease-out
         border-right 1px solid
       .spacer:nth-child(2)
         position absolute
@@ -709,7 +713,11 @@ img
         right 20px
         border-bottom 1px solid
         width calc(100% \- 20px)
-
+  &.active
+    .article-body--section__title .spacer
+      width 100%
+    .article-body--section__cover-image .spacer:first-child
+      height calc(100% \- 40px)
 
 [data-section='8']
   .article-body--section
@@ -869,9 +877,11 @@ img
         position absolute
         top 0
         right 0
-        bottom 0
-        height calc(100% \- 20px)
+        bottom 20px
+        height 0
         border-right 1px solid
+        margin-top auto
+        transition all 3.5s ease-out
     &__cover-image
       .image
         img
@@ -885,8 +895,10 @@ img
         top 0
         left 0
         right 0
-        width 100%
+        width 0
         border-top 1px solid
+        transition all 4s ease-out
+        margin-left auto
       .spacer:nth-child(2)
         position absolute
         bottom 0
@@ -928,7 +940,11 @@ img
           margin-right 0
       .callout
         display none
-
+  &.active
+    .article-body--section__title .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
 @media screen and (max-width: 1280px)
   .article-body--section
     &__title h2

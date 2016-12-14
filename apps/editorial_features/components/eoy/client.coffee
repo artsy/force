@@ -32,7 +32,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @loadBody()
       @smoothAnchorScroll()
       @setupVideos()
-      @autoScroll()
+      @autoScroll() if !sd.IS_MOBILE
       $('.video').on 'loadedmetadata', @videoControls
       $('.video-controls, video-play-button').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
