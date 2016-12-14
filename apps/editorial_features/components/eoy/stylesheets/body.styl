@@ -48,6 +48,8 @@ img
     margin 0 auto
     p a
       fine-faux-underline()
+      &:hover
+        color purple-color
   &--section
     width calc(85vw \- 80px)
     max-width 1250px
@@ -118,6 +120,14 @@ img
       max-width 750px
       z-index 100
       position relative
+    p:last-child
+      padding-bottom 30px
+    .share
+      max-width 750px
+      margin 0 auto
+      .share-item:first-child
+        margin-left -10px
+
   video
     max-width 100%
     z-index 100

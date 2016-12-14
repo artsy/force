@@ -120,6 +120,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
   deferredLoadBody: =>
     $('.article-body').prepend bodyView
       curation: @curation
+      article: @article
       markdown: markdown
       resize: resize
       crop: crop

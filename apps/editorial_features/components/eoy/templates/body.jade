@@ -1,3 +1,5 @@
+include ../../../../../components/article/templates/share
+
 section.article-body__intro(data-section=0)
   .article-body__intro-header
     .col
@@ -39,6 +41,8 @@ section.article-body__intro(data-section=0)
           if i == 2 || i == 3 || i == 6 || i == 8 || i == 9
             .spacer--article
           .article-body--section__text!= markdown(section.body)
+            .share
+              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (sd.APP_URL + '/2016-year-in-art'))
             if i == 4 || i == 5
               .spacer
 
