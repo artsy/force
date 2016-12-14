@@ -210,6 +210,7 @@ module.exports = (app) ->
   app.use require "../apps/categories2"
   app.use require "../apps/consignments"
   app.use require "../apps/contact"
+  app.use require "../apps/eoy_2016"
   app.use require "../apps/how_auctions_work"
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
