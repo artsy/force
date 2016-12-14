@@ -122,6 +122,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
       curation: @curation
       article: @article
       markdown: markdown
+      url: sd.APP_URL
       resize: resize
       crop: crop
     @bodyInView()

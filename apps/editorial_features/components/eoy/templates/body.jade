@@ -42,7 +42,7 @@ section.article-body__intro(data-section=0)
             .spacer--article
           .article-body--section__text!= markdown(section.body)
             .share
-              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (sd.APP_URL + '/2016-year-in-art'))
+              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (url + '/2016-year-in-art'))
             if i == 4 || i == 5
               .spacer
 
