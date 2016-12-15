@@ -11,8 +11,7 @@ EmbeddedInquiryView = null
 describe 'EmbeddedInquiryView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
         'template'
         'confirmation'

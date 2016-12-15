@@ -9,7 +9,7 @@ Backbone = require 'backbone'
 xdescribe 'setupAuctionReminder', ->
   beforeEach (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
 
       setupAuctionReminder = rewire '../index'
       setupAuctionReminder.__set__ 'AuctionReminderView',

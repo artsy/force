@@ -16,7 +16,6 @@ describe 'HeaderView', ->
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
-      window.jQuery = $
       Backbone.$ = $
       done()
 

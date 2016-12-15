@@ -11,7 +11,9 @@ Artist = require '../../../../models/artist.coffee'
 describe 'ArtistsView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
       done()
 

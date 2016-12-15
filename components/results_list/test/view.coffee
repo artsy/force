@@ -8,8 +8,7 @@ ResultsListView = null
 describe 'ResultsListView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       TypeaheadView = benv.requireWithJadeify require.resolve('../../typeahead/view'), [
         'templates.index'

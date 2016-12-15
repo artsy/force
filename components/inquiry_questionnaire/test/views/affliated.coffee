@@ -13,7 +13,7 @@ describe 'Affiliated', setup ->
   beforeEach ->
     $.fn.typeahead = -> this
 
-    benv.expose $: benv.require 'jquery'
+    benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
     window.jQuery = $
 
     Affiliated = benv.requireWithJadeify require.resolve('../../views/affiliated'), ['template']

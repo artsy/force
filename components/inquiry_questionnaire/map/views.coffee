@@ -1,3 +1,4 @@
+return module.exports = {} unless window?
 module.exports =
   confirmation: require '../views/confirmation.coffee'
 

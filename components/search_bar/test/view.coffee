@@ -10,8 +10,7 @@ SearchBarView = null
 describe 'SearchBarView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       SearchBarView = benv.require require.resolve '../view'
       Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()

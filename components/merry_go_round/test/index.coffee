@@ -11,7 +11,7 @@ horizontalNavTemplate = require('jade').compileFile(require.resolve '../template
 xdescribe 'MerryGoRound', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       $.fn.imagesLoaded = (cb) -> cb()
       Backbone.$ = $
 

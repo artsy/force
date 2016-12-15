@@ -12,8 +12,7 @@ openInquiryQuestionnaireFor = null
 describe 'openInquiryQuestionnaireFor', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end

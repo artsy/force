@@ -16,7 +16,7 @@ describe 'ArticleIndexView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @model = new Article _.extend fixtures.article,
         sections: [

@@ -8,8 +8,7 @@ UserInterestsView = null
 describe 'UserInterestsView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       UserInterestsView = rewire  '../view'
       UserInterestsView.__set__ 'CURRENT_USER', 'existy'
       UserInterestsView.__set__ 'ResultsListView', Backbone.View

@@ -7,7 +7,7 @@ rewire = require 'rewire'
 describe 'AuctionResultsRouter', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @AuctionResultsRouter = rewire '../../client/router'
       @AuctionResultsRouter.__set__ 'DetailView', (@detailStub = sinon.stub())

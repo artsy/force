@@ -9,7 +9,7 @@ describe 'TeamChannelView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.fn.waypoint = (@waypoint = sinon.stub())
       @carousel = { navigation: {} }

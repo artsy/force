@@ -13,7 +13,7 @@ PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_
 describe 'PartnerLocations', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

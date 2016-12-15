@@ -18,7 +18,7 @@ describe 'Auctions template', ->
   describe 'with at least one of every kind of auction', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
           asset: (->)
@@ -52,7 +52,7 @@ describe 'Auctions template', ->
   describe 'without current auctions', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
           asset: (->)

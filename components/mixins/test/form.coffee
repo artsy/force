@@ -43,7 +43,7 @@ class FormView extends Backbone.View
 describe 'Form', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @view = new FormView().render()
       sinon.stub FormView::, 'submitStub'

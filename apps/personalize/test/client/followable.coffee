@@ -8,27 +8,28 @@ CurrentUser = require '../../../../models/current_user.coffee'
 { Following } = require '../../../../components/follow_button/index.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Followable = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
-
-class TestView extends Backbone.View
-  _.extend @prototype, Followable
-
-  initialize: (options) ->
-    { @state, @user } = options
-
-    @following = new Following
-
-    @initializeFollowable()
-
-  render: ->
-    @$el.html '<div id="personalize-followed"></div><a class="personalize-skip">Skip</a>'
-    this
+Followable = null
+TestView = null
 
 describe 'Followable', ->
   before (done) ->
     benv.setup ->
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
+      Followable = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
+      class TestView extends Backbone.View
+        _.extend @prototype, Followable
+
+        initialize: (options) ->
+          { @state, @user } = options
+
+          @following = new Following
+
+          @initializeFollowable()
+
+        render: ->
+          @$el.html '<div id="personalize-followed"></div><a class="personalize-skip">Skip</a>'
+          this
       done()
 
   beforeEach ->

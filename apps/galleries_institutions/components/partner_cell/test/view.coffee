@@ -10,7 +10,7 @@ PartnerCellView.__set__ 'Cities', [{"slug": "new-york-ny-usa", "name": "New York
 describe 'PartnerCellView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

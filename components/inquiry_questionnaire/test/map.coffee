@@ -9,8 +9,7 @@ benv = require 'benv'
 describe 'map', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
-      window.jQuery = $
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       map = require '../map'
       @Logger = rewire '../../logger'
       @Cookies = @Logger.__get__ 'Cookies'

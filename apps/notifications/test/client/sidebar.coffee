@@ -1,18 +1,20 @@
-
 _ = require 'underscore'
 { resolve } = require 'path'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 Notifications = require '../../../../collections/notifications.coffee'
-SidebarView = require '../../client/sidebar.coffee'
+SidebarView = null
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'SidebarView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
+      SidebarView = require '../../client/sidebar.coffee'
       done()
 
   after ->

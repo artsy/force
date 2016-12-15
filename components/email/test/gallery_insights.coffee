@@ -9,7 +9,7 @@ describe 'GalleryInsightsView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       $.fn.waypoint = sinon.stub()
       Backbone.$ = $
       $el = $('<div></div>')

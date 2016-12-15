@@ -8,13 +8,16 @@ PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../models/current_user'
 Artist = require '../../../../models/artist'
 FeaturedLink = require '../../../../models/featured_link'
-CategoriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/categories'), ['template', 'categoryTemplate']
+CategoriesView = null
 
 describe 'CategoriesView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
+      CategoriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/categories'), ['template', 'categoryTemplate']
       done()
 
   after ->

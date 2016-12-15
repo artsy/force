@@ -5,7 +5,7 @@ sinon = require 'sinon'
 describe 'blurb', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       $.fn.imagesLoaded = (cb) -> cb()
       done()
 
