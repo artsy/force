@@ -163,9 +163,10 @@ galleryTwoNews = (partner, parfile) ->
 galleryTwoArtists = (partner, profile) ->
   name: 'artists'
   component:
-    switch partner.get('profile_artists_layout')
-      when 'Grid' then ArtistsGridView
-      else ArtistsListView
+    if partner.get('display_artists_section')
+      switch partner.get('profile_artists_layout')
+        when 'Grid' then ArtistsGridView
+        else ArtistsListView
   options: partner: partner
   title: 'Artists' unless partner.get('profile_artists_layout') is 'Grid'
   viewAll: "#{partner.href()}/artists" unless partner.get('profile_artists_layout') is 'Grid'
