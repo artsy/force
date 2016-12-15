@@ -1,7 +1,8 @@
 .eoy-artist-item
   .eoy-artist-item__thumbnail
     img(src="#{sd.API_URL}/api/v1/artist/#{artist.slug}/image")
+  
   .eoy-artist-item__name
-    | #{artist.name}
+    a.eoy-artist-item__name__link(href="/artist/#{artist.slug}")= artist.name
     .eoy-artist-item__name__follow-button.entity-follow.artist-follow(data-id=artist.slug)
-      //- Renderer on the client
+      //- Rendered on the client
