@@ -24,7 +24,7 @@ describe 'EoyView', ->
       $.fn.waypoint = sinon.stub()
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0
-      $.fn.scrollTop = @scrollTop = sinon.stub().returns 806
+      $.fn.scrollTop = @scrollTop = sinon.stub().returns 845
       $.fn.resize = sinon.stub()
       sinon.stub Backbone, 'sync'
       @curation = new Curation
@@ -136,23 +136,23 @@ describe 'EoyView', ->
 
     it 'returns an array of heights that corresponds to each section', ->
       zones = @view.getScrollZones()
-      zones[0].should.equal 825
-      zones[1].should.equal 1373
-      zones[2].should.equal 1901
-      zones[3].should.equal 2429
-      zones[4].should.equal 2957
-      zones[5].should.equal 3485
-      zones[6].should.equal 4013
-      zones[7].should.equal 4541
-      zones[8].should.equal 5069
-      zones[9].should.equal 5597
-      zones[10].should.equal 6125
+      zones[0].should.equal 845
+      zones[1].should.equal 1413
+      zones[2].should.equal 1961
+      zones[3].should.equal 2509
+      zones[4].should.equal 3057
+      zones[5].should.equal 3605
+      zones[6].should.equal 4153
+      zones[7].should.equal 4701
+      zones[8].should.equal 5249
+      zones[9].should.equal 5797
+      zones[10].should.equal 6345
 
   describe '#closestSection', ->
 
     it 'returns the section closest to where user scrolls', ->
       @view.closestSection(0, @view.getScrollZones()).should.equal 0
-      @view.closestSection(3000, @view.getScrollZones()).should.equal 5
+      @view.closestSection(3000, @view.getScrollZones()).should.equal 4
 
   describe '#doSlider', ->
 
@@ -206,16 +206,16 @@ describe 'EoyView', ->
     it 'sets height based on position', ->
       @view.windowHeight = 900
       @view.setupSliderHeight()
-      @view.containerHeight.should.equal 825
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6728
+      @view.containerHeight.should.equal 845
+      @view.activeHeight.should.equal 548
+      @view.openHeight.should.equal 6948
 
     it 'sets up heights for the scroller', ->
       @view.setupSliderHeight()
-      $('.scroller__items section[data-section=0]').height().should.equal 825
-      @view.containerHeight.should.equal 825
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6728
+      $('.scroller__items section[data-section=0]').height().should.equal 845
+      @view.containerHeight.should.equal 845
+      @view.activeHeight.should.equal 548
+      @view.openHeight.should.equal 6948
 
   describe '#deferredLoadBody', ->
 

@@ -37,7 +37,7 @@ flex-display(justify = space-between, align = center)
       color white
       text-decoration none
       font-size 14px
-      font-weight 600
+      font-weight normal
       span
         display inline-block
         line-height 15px
@@ -68,6 +68,20 @@ flex-display(justify = space-between, align = center)
     background-size cover
     background-repeat no-repeat
     background-position center
+
+  .share
+    display flex
+    .share-item a
+      text-decoration none
+      &:hover
+        color purple-color
+
+@media screen and (min-width: 1600px)
+  .eoy-feature
+    &__sa-header
+      .mgr-horizontal-nav .mgr-cell
+        width 25%
+        min-width 400px
 
 @media screen and (max-width: 550px)
   .eoy-feature__menu

@@ -5,7 +5,6 @@ flex-display(justify = space-between, align = center)
 
 body
   width 100vw
-  overflow-x hidden
 
 video::-webkit-media-controls
   display none !important
@@ -49,6 +48,8 @@ img
     margin 0 auto
     p a
       fine-faux-underline()
+      &:hover
+        color purple-color
   &--section
     width calc(85vw \- 80px)
     max-width 1250px
@@ -89,7 +90,7 @@ img
         height auto
         width 75%
         max-width 100%
-        transition all 3s
+        transition all 4s ease-out
         opacity 0
     .caption
       max-width 75%
@@ -119,6 +120,15 @@ img
       max-width 750px
       z-index 100
       position relative
+    p:last-child
+      padding-bottom 30px
+    .share
+      max-width 750px
+      margin 0 auto
+      width 100%
+      .share-item:first-child
+        margin-left -10px
+
   video
     max-width 100%
     z-index 100
@@ -423,6 +433,8 @@ img
       padding-left calc(15vw \+ 40px)
       padding-right 50px
       align-items flex-end
+      .share
+        margin-right 0
     &__sub-text
       border-bottom 1px solid
       .image
@@ -445,6 +457,7 @@ img
       height 100%
       display flex
       align-items flex-start
+      justify-content center
       flex-direction column
       min-height 600px
     .carousel-caption
@@ -453,10 +466,13 @@ img
       garamond-size('s-body')
       white-space normal
       padding 0px 10px
+      max-height 3em
     &.mgr-horizontal-nav
       width 100%
       .mgr-navigation
         opacity 1
+      .mgr-arrow-icon
+        margin-bottom 1.5em
 
 [data-section='5']
   .article-body--section
@@ -496,6 +512,8 @@ img
       p
         margin-right 0
         margin-left auto
+      .share
+        margin-right 0
       .spacer
         position absolute
         top 0
@@ -579,6 +597,8 @@ img
     &__text
       position relative
       z-index initial
+      .share
+        margin-left 0
       .spacer
         position absolute
         top 0
@@ -632,8 +652,10 @@ img
         left 0
         right 0
         bottom 0
-        width 100%
+        width 0
+        margin 0 auto
         border-bottom 1px solid
+        transition all 4s ease-out
     &__cover-image
       .image
         img
@@ -647,7 +669,9 @@ img
         left 0
         top 20px
         bottom 0
-        height calc(100% \- 40px)
+        height 0
+        margin auto 0
+        transition all 3.5s ease-out
         border-right 1px solid
       .spacer:nth-child(2)
         position absolute
@@ -656,6 +680,9 @@ img
         bottom 0
         width 100%
         border-bottom 1px solid
+    &__text
+      .share
+        margin-left 0
     article
       position relative
       .spacer--article
@@ -686,7 +713,11 @@ img
         right 20px
         border-bottom 1px solid
         width calc(100% \- 20px)
-
+  &.active
+    .article-body--section__title .spacer
+      width 100%
+    .article-body--section__cover-image .spacer:first-child
+      height calc(100% \- 40px)
 
 [data-section='8']
   .article-body--section
@@ -724,6 +755,8 @@ img
     &__text
       border-right 1px solid
       margin-bottom 20px
+      .share
+        margin-left 0
     &__sub-text
       border-top 1px solid
       display flex
@@ -809,6 +842,8 @@ img
         width calc(100% \- 20px)
     &__text
       border-right 1px solid
+      .share
+        margin-left 0
     &__sub-text
       margin-top 20px
       .image
@@ -842,9 +877,11 @@ img
         position absolute
         top 0
         right 0
-        bottom 0
-        height calc(100% \- 20px)
+        bottom 20px
+        height 0
         border-right 1px solid
+        margin-top auto
+        transition all 3.5s ease-out
     &__cover-image
       .image
         img
@@ -858,8 +895,10 @@ img
         top 0
         left 0
         right 0
-        width 100%
+        width 0
         border-top 1px solid
+        transition all 4s ease-out
+        margin-left auto
       .spacer:nth-child(2)
         position absolute
         bottom 0
@@ -872,6 +911,8 @@ img
       align-items flex-end
       flex-direction column
       margin-left 15%
+      .share
+        margin-right 0
     article
       position relative
       padding-bottom 350px
@@ -899,7 +940,11 @@ img
           margin-right 0
       .callout
         display none
-
+  &.active
+    .article-body--section__title .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
 @media screen and (max-width: 1280px)
   .article-body--section
     &__title h2

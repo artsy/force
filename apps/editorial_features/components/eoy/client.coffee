@@ -19,7 +19,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @curation = new Curation sd.CURATION
     @windowPosition = $(window).scrollTop()
     @windowHeight = $(window).height()
-    @headerHeight = if sd.IS_MOBILE then 0 else 75
+    @headerHeight = if sd.IS_MOBILE then 0 else 55
     @setupSliderHeight()
     @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
@@ -32,13 +32,14 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @loadBody()
       @smoothAnchorScroll()
       @setupVideos()
+      @autoScroll() if !sd.IS_MOBILE
       $('.video').on 'loadedmetadata', @videoControls
-      $('.video-controls').on 'click', @playVideo
+      $('.video-controls, video-play-button').on 'click', @playVideo
       @boundaries = @getBodySectionTopBoundaries()
       @animateBody($(window).scrollTop())
 
   watchWindow: =>
-    watchScrolling = _.throttle(@watchScrolling, 30)
+    watchScrolling = _.throttle(@watchScrolling, 25)
     $(window).scroll =>
       console.log 'scroll'
       if $(window).scrollTop() != @windowPosition
@@ -65,6 +66,11 @@ module.exports.EoyView = class EoyView extends Backbone.View
         closest = i
     return closest
 
+  autoScroll: =>
+    if @windowPosition < @openHeight
+      window.scrollBy(0,1);
+      scrolldelay = setTimeout(@autoScroll,25)
+
   watchScrolling: =>
     scrollTop = $(window).scrollTop()
     scrollTop = Math.round(scrollTop)
@@ -83,7 +89,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     #height of one section open
     @activeHeight = @windowHeight - @headerHeight - (@windowHeight * .33)
     #bottom scroll border of header content
-    @openHeight = @getScrollZones()[11] + 75
+    @openHeight = @getScrollZones()[11] + 55
     $('.eoy-feature__content').height(@openHeight)
     $('.scroller__items section').first().height(@containerHeight)
     $('.scroller__items section[data-section!="0"][data-state="open"]').css('max-height', @activeHeight)
@@ -121,7 +127,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
   deferredLoadBody: =>
     $('.article-body').prepend bodyView
       curation: @curation
+      article: @article
       markdown: markdown
+      url: sd.APP_URL
       resize: resize
       crop: crop
     @bodyInView()
@@ -189,7 +197,10 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   playVideo: (e) =>
     if e.target
-      e = e.target
+      if $(e.target).hasClass('video-play-button')
+        e = $(e.target).parent()
+      else
+        e = e.target
     video = $(e).prev()
     if video[0].paused
       $(e).addClass('active')
