@@ -20,7 +20,10 @@
       flex-basis calc(66% \- 40px)
       margin-right 40px
     &[data-module=news]
-      flex-basis 33%
+      .partner2-news
+        display flex
+      .partner2-news-item
+        flex-basis 33%
       .partner-overview-section-title
         display none
     &[data-module=about]
@@ -28,7 +31,8 @@
       min-height 100px
       .partner-overview-section-title
         avant-garde-size('m-headline')
-    &[data-module=news]
+    &[data-module=about] + [data-module=news]
+      flex-basis 33.33%
       .partner-overview-section-title
       .partner2-news
         display block
