@@ -18,13 +18,13 @@ module.exports =
       Please note that the collector will review your quote before agreeing to purchase \
       the work and notify you of the final decision."
 
+    cityStateZip = "#{city}, #{state} #{zip}"
+
     address = _.compact([
       name,
       street1,
       street2,
-      city,
-      state,
-      zip,
+      cityStateZip,
       country
     ]).join '\n'
 
