@@ -23,15 +23,13 @@ module.exports = class PurchaseForm extends Backbone.View
       inquiry_url: window.location.href,
     }
 
-    promises = [Q.promise (resolve) =>
-      @inquiry.save null,
-        success: (model, response) =>
-          analyticsHooks.trigger 'purchase:inquiry:success', { @artwork, @inquiry, user }
-          resolve()
-        error: (model, response, options) =>
-          analyticsHooks.trigger 'purchase:inquiry:failiure'
-          @$('.js-ap-form-errors').html @errorMessage(response)
-          error?()
+    promises = [@inquiry.save null,
+      success: (model, response) =>
+        analyticsHooks.trigger 'purchase:inquiry:success', { @artwork, @inquiry, user }
+      error: (model, response, options) =>
+        analyticsHooks.trigger 'purchase:inquiry:failiure'
+        @$('.js-ap-form-errors').html @errorMessage(response)
+        error?()
     ]
 
     action = new UserFairAction
