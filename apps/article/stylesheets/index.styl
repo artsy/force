@@ -1,4 +1,5 @@
 @require '../../../components/stylus_lib'
+@require './promoted_content.styl'
 
 #articles-show
   margin-top 120px
@@ -20,31 +21,6 @@
 
 #articles-body-container
   position relative
-
-.articles-promoted
-  display flex
-  justify-content space-between
-  padding 20px 0
-  border-bottom 1px solid gray-lighter-color
-  margin auto
-  margin -67px auto 45px auto
-  &__left, &__right
-    display flex
-  &__img
-    width 100px
-    height 66px
-    margin-right 20px
-  &__text
-    display flex
-    flex-direction column
-    justify-content space-around
-  &__title
-    avant-garde-size('s-headline')
-  &__name
-    garamond-size('s-headline')
-  &__explore
-    height 45px
-    margin auto
 
 .articles-featured-articles
   margin gutter-size auto
