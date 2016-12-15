@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-{ ARTWORK } = require('sharify').data
+{ ARTWORK, CURRENT_USER } = require('sharify').data
 Form = require '../../../components/mixins/form.coffee'
-User = require '../../../models/user.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 PurchaseForm = require './purchase_form.coffee'
 SignupForm = require './purchase_signup_form.coffee'
 successTemplate = ->require('../templates/success.jade') arguments...
@@ -14,7 +14,6 @@ Sticky = require '../../../components/sticky/index.coffee'
 class PurchaseView extends Backbone.View
 
   initialize: ({ @artwork }) ->
-    @user = User.instantiate()
     @$button = @$ '.js-ap-summary-submit'
     sticky = new Sticky
     sticky.add $('.js-ap-summary')
@@ -24,17 +23,11 @@ class PurchaseView extends Backbone.View
       el: @$ '.js-ap-purchase'
       $button: @$button
       artwork: @artwork
-      user: @user
 
-    if @user.isLoggedIn()
-      # If user is logged out we call `prepareForInquiry`
-      # after user data has been entered in signup form.
-      @user.prepareForInquiry()
-    else
+    unless CURRENT_USER
       @signupForm = new SignupForm
         el: @$ '.js-ap-signup'
         $button: @$button
-        user: @user
 
   events:
     'submit .js-ap-purchase form'  : 'onSubmit'
@@ -45,7 +38,7 @@ class PurchaseView extends Backbone.View
   onSubmit: (e) =>
     e.preventDefault()
     @$button.blur()
-    if @user.isLoggedIn() then @submitPurchaseForm() else @submitSignupForm()
+    if CURRENT_USER then @submitPurchaseForm() else @submitSignupForm()
 
   onLoginClick: (e) =>
     e.preventDefault()
@@ -66,7 +59,7 @@ class PurchaseView extends Backbone.View
 # Signup
   # Submit
 
-  submitSignupForm: (form, options)->
+  submitSignupForm: (form, options) ->
     # Validate both forms before moving on.
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
     signupValid = @signupForm.validateForm()
@@ -80,10 +73,14 @@ class PurchaseView extends Backbone.View
 
   # Callbacks
 
-  signupSuccess: =>
-    @purchaseForm.submit
-      success: @purchaseSuccess
+  signupSuccess: (model, { user }) =>
+    @user = user
+    analyticsHooks.trigger "purchase:signup:success", user: user
+    @purchaseForm.submit {
+      user,
+      success: @purchaseSuccess,
       error: @purchaseError
+    }
 
   isWithAccount: =>
     @signupForm.reenableForm()
@@ -109,11 +106,17 @@ class PurchaseView extends Backbone.View
 
   #Callbacks
 
-  purchaseSuccess: =>
+  purchaseSuccess: (inquiry, fairAction)=>
+    analyticsHooks.trigger 'purchase:inquiry:success', {
+      @artwork,
+      inquiry,
+      user: CURRENT_USER or @user
+    }
     Cookies.expire 'purchase-inquiry'
     window.location = @artwork.href + '/thank-you'
 
   purchaseError: =>
+    analyticsHooks.trigger 'purchase:inquiry:failiure'
     @purchaseForm.reenableForm()
     @errorButton()
 
@@ -132,5 +135,5 @@ class PurchaseView extends Backbone.View
     @$button.prop 'disabled', false
 
 module.exports.init = ->
-  Backbone.history.start pushState: true
+  return if not window.location.pathname.match(/.*\/checkout/)
   new PurchaseView { artwork: ARTWORK, el: $('#purchase-page') }

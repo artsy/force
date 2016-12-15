@@ -3,7 +3,6 @@
 
   // DOM events
   var $document = $(document)
-
   $document
     .on('click', '.analytics-artwork-show-phone-number', function () {
       analytics.track("Clicked 'Show phone number'", $(this).data())
@@ -29,6 +28,13 @@
     .on('click', '.analytics-artwork-contact-seller', function () {
       var context = $(this).data()
       analytics.track('Clicked "Contact Gallery"', {
+        artwork_id: context.artwork_id,
+        context_type: context.context_type
+      })
+    })
+    .on('click', '.analytics-artwork-purchase', function () {
+      var context = $(this).data()
+      analytics.track('Clicked "Purchase"', {
         artwork_id: context.artwork_id,
         context_type: context.context_type
       })
