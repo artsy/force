@@ -17,6 +17,7 @@ module.exports = class PurchaseForm extends Backbone.View
     formData = @serializeForm()
     message = formatMessage _.extend { @artwork, @user }, formData
     { name } = formData
+    console.log message
     @inquiry.set {
       name,
       message,
