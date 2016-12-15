@@ -12,7 +12,7 @@ Q = require 'bluebird-q'
 describe 'ShowsView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
 
       @ShowsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/shows'), ['template']

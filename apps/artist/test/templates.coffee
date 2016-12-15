@@ -14,7 +14,7 @@ helpers = require '../view_helpers'
 describe 'Artist header', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 
   after ->

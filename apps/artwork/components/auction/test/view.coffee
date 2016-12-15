@@ -7,7 +7,7 @@ describe 'auction', ->
   before (done) ->
     sinon.stub global, 'setInterval'
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

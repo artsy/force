@@ -3,14 +3,15 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-UserInterestsView = rewire  '../view'
-UserInterestsView.__set__ 'CURRENT_USER', 'existy'
-UserInterestsView.__set__ 'ResultsListView', Backbone.View
+UserInterestsView = null
 
 describe 'UserInterestsView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      UserInterestsView = rewire  '../view'
+      UserInterestsView.__set__ 'CURRENT_USER', 'existy'
+      UserInterestsView.__set__ 'ResultsListView', Backbone.View
       Backbone.$ = $
       done()
 

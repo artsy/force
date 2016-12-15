@@ -7,7 +7,7 @@ rewire = require 'rewire'
 describe 'ContactView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @ContactView = rewire '../view'
       sinon.stub @ContactView.prototype, 'open'

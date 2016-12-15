@@ -10,7 +10,7 @@ describe 'PartnerCellCarouselView', ->
 
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       PartnerCellCarouselView.__set__ 'PartnerCellView', PartnerCellView
       done()

@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 ShippingForm = require('./shipping_form.coffee')
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class CheckoutForm extends ShippingForm

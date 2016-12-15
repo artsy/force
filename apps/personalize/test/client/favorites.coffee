@@ -6,14 +6,15 @@ PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-FavoritesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/favorites'), ['template']
-FavoritesView.__set__ 'ArtworkColumnsView', Backbone.View
+FavoritesView = null
 
 describe 'FavoritesView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
+      FavoritesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/favorites'), ['template']
+      FavoritesView.__set__ 'ArtworkColumnsView', Backbone.View
       done()
 
   after ->

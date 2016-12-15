@@ -7,7 +7,7 @@ Backbone = require 'backbone'
 describe 'AboutRouter', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @AboutRouter = rewire '../../client/router'
       @AboutRouter.__set__ 'AboutView', Backbone.View

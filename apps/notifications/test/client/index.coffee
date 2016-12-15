@@ -10,16 +10,21 @@ Artworks = require '../../../../collections/artworks.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Artist = require '../../../../models/artist.coffee'
 Artists = require '../../../../collections/artists.coffee'
-SidebarView = require '../../client/sidebar.coffee'
-RecentlyAddedWorksView = require '../../client/recently_added_works.coffee'
-ArtistWorksView = require '../../client/artist_works.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
+SidebarView = null
+RecentlyAddedWorksView = null
+ArtistWorksView = null
 
 describe 'NotificationsView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
+      SidebarView = require '../../client/sidebar.coffee'
+      RecentlyAddedWorksView = require '../../client/recently_added_works.coffee'
+      ArtistWorksView = require '../../client/artist_works.coffee'
       done()
 
   after ->

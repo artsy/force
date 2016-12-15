@@ -9,7 +9,8 @@ describe 'PartnerShowButtons', ->
   describe 'with valid data', ->
     beforeEach (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+        window.jQuery = $
         Backbone.$ = $
         PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
         PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
@@ -32,7 +33,7 @@ describe 'PartnerShowButtons', ->
   describe 'with invalid data', ->
     beforeEach (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         Backbone.$ = $
         PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
         PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()

@@ -16,7 +16,7 @@ BidForm = rewire '../../client/bid_form'
 describe 'BidForm', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

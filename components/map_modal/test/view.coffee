@@ -11,7 +11,7 @@ template = require('jade').compileFile(require.resolve './fixtures/template.jade
 describe 'MapModalView', ->
   beforeEach (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

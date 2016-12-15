@@ -6,7 +6,7 @@ FooterView = require '../view'
 describe 'FooterView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       benv.render require.resolve('../template.jade'), {}, =>
         @view = new FooterView el: $('#main-layout-footer')
