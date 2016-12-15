@@ -26,6 +26,10 @@ body.body-article
       @media screen and (max-width 900px)
         display none
 
+.article-header.responsive-layout-container
+  @media screen and (max-width 550px)
+    margin 0px 20px
+
 .article-container h1
   max-width 900px
   margin auto
@@ -136,6 +140,8 @@ body.body-article
 .article-author
   avant-garde-size('m-headline')
   &.has-contributing-author
+    avant-garde-size('s-headline')
+  @media screen and (max-width 550px)
     avant-garde-size('s-headline')
 
 .article-contributing-author
