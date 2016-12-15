@@ -64,14 +64,14 @@ bootstrap = ->
   send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
-  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
-    res.locals.sd.NODE_ENV is 'staging' or
-    res.locals.sd.NODE_ENV is 'test'
+  inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
-      data.purchaseFlow = purchaseFlow
-      data.eligibleForPurchase = data.artwork.is_purchasable
+      data.inPurchaseTestGroup = inPurchaseTestGroup
+      data.notProduction = res.locals.sd.NODE_ENV is 'development' or
+        res.locals.sd.NODE_ENV is 'staging' or
+        res.locals.sd.NODE_ENV is 'test'
+      data.isPurchasable = data.artwork.is_purchasable
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params
