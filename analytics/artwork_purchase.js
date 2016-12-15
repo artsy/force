@@ -8,13 +8,9 @@
   })
 
   analyticsHooks.on('purchase:signup:success', function (context) {
-    var user_id
-    if (context.user) {
-      user_id = context.user._id
-    }
     analytics.track("Created account", {
       context: 'purchase flow',
-      user_id: user_id
+      user_id: context.user.id
     })
   })
 
@@ -22,7 +18,8 @@
     analytics.track('Sent artwork inquiry', {
       artwork_id: context.artwork._id,
       artwork_slug: context.artwork.id,
-      inquiry_id: context.inquiry.id
+      inquiry_id: context.inquiry.id,
+      user_id: context.user.id
     })
   })
   analyticsHooks.on('purchase:inquiry:failure', function (context) {
