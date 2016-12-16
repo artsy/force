@@ -6,7 +6,7 @@ module.exports =
       'forSale': null
       'hideForSaleButton': false
 
-    # An institution's 'WORKS' section. Includes for-sale and not-for-sale works, excludes filtering based on price and saleability.
+    # An institution's 'WORKS' section. Includes not-for-sale works, excludes filtering based on price and saleability.
     'collection':
       'aggregations': ['dimension_range', 'medium', 'total']
       'forSale': false
