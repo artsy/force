@@ -3,6 +3,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Curation = require '../../models/curation.coffee'
 Article = require '../../models/article.coffee'
+Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 markdown = require '../../components/util/markdown.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
@@ -24,6 +25,7 @@ Q = require 'bluebird-q'
     .then =>
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
       res.locals.sd.CURATION = @curation.toJSON()
+      @article.set 'channel', new Channel name: 'Artsy Editorial'
       res.locals.jsonLD = stringifyJSONForWeb(@article.toJSONLD())
       res.locals.sd.INCLUDE_SAILTHRU = true
       res.render 'components/eoy/templates/index',

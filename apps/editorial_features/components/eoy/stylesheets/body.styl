@@ -5,7 +5,6 @@ flex-display(justify = space-between, align = center)
 
 body
   width 100vw
-  overflow-x hidden
 
 video::-webkit-media-controls
   display none !important
@@ -32,6 +31,12 @@ img
       display none
     &.footer
       opacity 1
+      .caption
+        color gray-color
+        garamond-size('s-body')
+        margin 30px auto
+        max-width 1250px
+        margin-top -80px
     &.active
       opacity 1
       img
@@ -43,67 +48,28 @@ img
     margin 0 auto
     p a
       fine-faux-underline()
+      &:hover
+        color purple-color
   &--section
     width calc(85vw \- 80px)
     max-width 1250px
 
   // introduction paragraph
   &__intro
-    opacity 1
+    opacity 1 !important
     margin 0 auto
     &-header
       width 30vw
-      height 50vh
+      height 30vh
       margin-bottom 20px
       z-index 1000
       .col
         border-right 1px solid
         height 100%
-    &-inner
-      margin 0 auto
-      position relative
-      background-color white
-      z-index 100
-      max-width 900px
-      h3
-        garamond-size('headline')
-        line-height 45px
-        padding 80px 20px
-        width 85%
-        opacity 0
-        transition opacity 2.5s
-      .spacer
-        position absolute
-        transition all .75s
-        width 0
-        &:first-child
-          top 0
-          border-top 1px solid
-          left 15%
-        &:nth-child(3)
-          bottom 0
-          border-top 1px solid
-          left 15%
-        &:last-child
-          right 0
-          top 20px
-          margin-top 5em
-          height 0
-          border-right 1px solid
-          transition all 3s
-      &.active
-        h3
-          opacity 1
-        .spacer:first-child, .spacer:nth-child(3)
-          width 100%
-          left 0
-        .spacer:last-child
-          height calc(100% \- 40px)
-          margin-top 0
 
 // single page sections
 .article-body--section
-  padding-bottom 400px
+  padding-bottom 350px
   &__title
     flex-display(flex-end, flex-end)
     h2
@@ -124,7 +90,7 @@ img
         height auto
         width 75%
         max-width 100%
-        transition all 3s
+        transition all 4s ease-out
         opacity 0
     .caption
       max-width 75%
@@ -154,6 +120,15 @@ img
       max-width 750px
       z-index 100
       position relative
+    p:last-child
+      padding-bottom 30px
+    .share
+      max-width 750px
+      margin 0 auto
+      width 100%
+      .share-item:first-child
+        margin-left -10px
+
   video
     max-width 100%
     z-index 100
@@ -177,13 +152,18 @@ img
 [data-section='1']
   .article-body--section
     padding-bottom 0
-    header
-      margin-top 200px
     &__title
-      width 85%
       justify-content flex-end
+      position relative
+      .spacer
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 0
+        transition all 3s
+        border-bottom 1px solid
     &__cover-image
-      border-top 1px solid
       border-bottom 1px solid
       justify-content flex-end
       .spacer
@@ -192,7 +172,8 @@ img
         top 20px
         left 0
         bottom 0
-        height 100%
+        height 0
+        transition all 3s
         max-height calc(100% \- 40px)
       .image
         flex-display(space-between, flex-end)
@@ -204,7 +185,7 @@ img
       position relative
       margin-top 20px
       flex-direction column
-      padding-bottom 400px
+      padding-bottom 350px
     &__text
       order 2
       border-top 1px solid
@@ -221,7 +202,7 @@ img
         width 60%
         padding 60px 110px 60px 20px
         .caption
-          display none
+          margin-right 0px
       .callout
         flex 1
         text-align center
@@ -254,6 +235,13 @@ img
       top 0
       height 100%
       max-height 100%
+  &.active
+    .article-body--section__cover-image
+      .spacer
+        height 100%
+    .article-body--section__title
+      .spacer
+        width 100%
 
 [data-section='2']
   .article-body--section
@@ -367,7 +355,7 @@ img
         top 0
         right 0
         bottom 0
-        height calc(100% \+ 400px)
+        height calc(100% \+ 350px)
         border-right 1px solid
     &__text
       border-bottom 1px solid
@@ -385,11 +373,11 @@ img
       .image, .callout
         width calc(50% \- 20px)
         padding 70px 20px
-        align-self center
+        align-self flex-start
         img
           width 100%
         .caption
-          display none
+          margin-right 0px
       .spacer
         border-right 1px solid
         max-height 100%
@@ -426,7 +414,7 @@ img
         border-right 1px solid
     article
       position relative
-      padding-bottom 400px
+      padding-bottom 350px
       .spacer--article
         border-right 10px solid white
         border-left 10px solid white
@@ -445,6 +433,8 @@ img
       padding-left calc(15vw \+ 40px)
       padding-right 50px
       align-items flex-end
+      .share
+        margin-right 0
     &__sub-text
       border-bottom 1px solid
       .image
@@ -474,10 +464,15 @@ img
       margin-top 10px
       color gray-color
       garamond-size('s-body')
+      white-space normal
+      padding 0px 10px
+      max-height 3em
     &.mgr-horizontal-nav
       width 100%
       .mgr-navigation
         opacity 1
+      .mgr-arrow-icon
+        margin-bottom 1.5em
 
 [data-section='5']
   .article-body--section
@@ -517,6 +512,8 @@ img
       p
         margin-right 0
         margin-left auto
+      .share
+        margin-right 0
       .spacer
         position absolute
         top 0
@@ -600,6 +597,8 @@ img
     &__text
       position relative
       z-index initial
+      .share
+        margin-left 0
       .spacer
         position absolute
         top 0
@@ -653,8 +652,10 @@ img
         left 0
         right 0
         bottom 0
-        width 100%
+        width 0
+        margin 0 auto
         border-bottom 1px solid
+        transition all 4s ease-out
     &__cover-image
       .image
         img
@@ -668,7 +669,9 @@ img
         left 0
         top 20px
         bottom 0
-        height calc(100% \- 40px)
+        height 0
+        margin auto 0
+        transition all 3.5s ease-out
         border-right 1px solid
       .spacer:nth-child(2)
         position absolute
@@ -677,6 +680,9 @@ img
         bottom 0
         width 100%
         border-bottom 1px solid
+    &__text
+      .share
+        margin-left 0
     article
       position relative
       .spacer--article
@@ -707,7 +713,11 @@ img
         right 20px
         border-bottom 1px solid
         width calc(100% \- 20px)
-
+  &.active
+    .article-body--section__title .spacer
+      width 100%
+    .article-body--section__cover-image .spacer:first-child
+      height calc(100% \- 40px)
 
 [data-section='8']
   .article-body--section
@@ -745,6 +755,8 @@ img
     &__text
       border-right 1px solid
       margin-bottom 20px
+      .share
+        margin-left 0
     &__sub-text
       border-top 1px solid
       display flex
@@ -830,6 +842,8 @@ img
         width calc(100% \- 20px)
     &__text
       border-right 1px solid
+      .share
+        margin-left 0
     &__sub-text
       margin-top 20px
       .image
@@ -863,9 +877,11 @@ img
         position absolute
         top 0
         right 0
-        bottom 0
-        height calc(100% \- 20px)
+        bottom 20px
+        height 0
         border-right 1px solid
+        margin-top auto
+        transition all 3.5s ease-out
     &__cover-image
       .image
         img
@@ -879,8 +895,10 @@ img
         top 0
         left 0
         right 0
-        width 100%
+        width 0
         border-top 1px solid
+        transition all 4s ease-out
+        margin-left auto
       .spacer:nth-child(2)
         position absolute
         bottom 0
@@ -893,9 +911,11 @@ img
       align-items flex-end
       flex-direction column
       margin-left 15%
+      .share
+        margin-right 0
     article
       position relative
-      padding-bottom 400px
+      padding-bottom 350px
       .spacer--article
         border-right 10px solid white
         border-left 10px solid white
@@ -905,7 +925,7 @@ img
         bottom 0
         background black
         width 21px
-        max-height calc(100% \+ 400px)
+        max-height calc(100% \+ 350px)
     &__sub-text
       border-bottom 1px solid
       border-top 1px solid
@@ -920,7 +940,11 @@ img
           margin-right 0
       .callout
         display none
-
+  &.active
+    .article-body--section__title .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
 @media screen and (max-width: 1280px)
   .article-body--section
     &__title h2
@@ -1076,7 +1100,9 @@ img
         .image, .callout
           border-top 1px solid
           min-width 100%
-          padding 40px 70px
+          padding 40px 10px
+          img
+            min-width 100%
 
   [data-section='4']
     .article-body--section
@@ -1105,8 +1131,10 @@ img
         .flickity-viewport
           max-height 350px
           .mgr-cell.js-mgr-cell
-            max-height 350px
-            min-height 350px
+            max-height 330px
+            min-height 330px
+            .carousel-caption
+              garamond-size('l-caption')
 
   [data-section='5']
     .article-body--section

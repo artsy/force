@@ -1,3 +1,5 @@
+include ../../../../../components/article/templates/share
+
 .scroller.active
   .scroller__items
     section(data-section='0')
@@ -11,6 +13,13 @@
             .item
               h1 2016
     section(data-section='1')
+      article.main-title
+        .inner
+          .item
+            h3!= markdown(curation.get('intro'))
+            .share
+              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (sd.APP_URL + '/2016-year-in-art'))
+    section(data-section='2')
       article
         .inner
           .left
@@ -18,7 +27,7 @@
             .item
               a(href='#section-1')
                 h2=sections[0].headline
-    section(data-section='2')
+    section(data-section='3')
       article
         .inner
           .left
@@ -30,7 +39,7 @@
             .item
               a(href='#section-2')
                 h2=sections[1].headline
-    section(data-section='3')
+    section(data-section='4')
       article
         .inner
           .left
@@ -42,7 +51,7 @@
           .right
             .col
             .col
-    section(data-section='4')
+    section(data-section='5')
       article
         .inner
           .left
@@ -51,7 +60,7 @@
             .item
               a(href='#section-4')
                 h2=sections[3].headline
-    section(data-section='5')
+    section(data-section='6')
       article
         .inner
           .left
@@ -59,7 +68,7 @@
               a(href='#section-5')
                 h2=sections[4].headline
           .right
-    section(data-section='6')
+    section(data-section='7')
       article
         .inner
           .left
@@ -69,7 +78,7 @@
             .item
               a(href='#section-6')
                 h2=sections[5].headline
-    section(data-section='7')
+    section(data-section='8')
       article
         .inner
           .left
@@ -79,7 +88,7 @@
               a(href='#section-7')
                 h2=sections[6].headline
             .col
-    section(data-section='8')
+    section(data-section='9')
       article
         .inner
           .left
@@ -88,7 +97,7 @@
             .item
               a(href='#section-8')
                 h2=sections[7].headline
-    section(data-section='9')
+    section(data-section='10')
       article
         .inner
           .left
@@ -99,7 +108,7 @@
           .col.spacer
           .right
             .col
-    section(data-section='10').last
+    section(data-section='11').last
       article
         .inner
           .left

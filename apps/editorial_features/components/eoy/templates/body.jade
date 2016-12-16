@@ -1,11 +1,8 @@
+include ../../../../../components/article/templates/share
+
 section.article-body__intro(data-section=0)
   .article-body__intro-header
     .col
-  .article-body__intro-inner
-    .spacer
-    h3!= markdown(curation.get('intro'))
-    .spacer
-    .spacer
   footer
 .article-body__content
   for section, i in curation.get('sections')
@@ -29,6 +26,7 @@ section.article-body__intro(data-section=0)
                     source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button
+                  .caption!= markdown(section.caption)
                 else
                   img(src=resize(section.image, { width: 800 }))
                   .caption!= markdown(section.caption)
@@ -43,6 +41,8 @@ section.article-body__intro(data-section=0)
           if i == 2 || i == 3 || i == 6 || i == 8 || i == 9
             .spacer--article
           .article-body--section__text!= markdown(section.body)
+            .share
+              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (url + '/2016-year-in-art'))
             if i == 4 || i == 5
               .spacer
 
@@ -57,8 +57,8 @@ section.article-body__intro(data-section=0)
               else if i == 3
                 include ./carousel
               else if i == 8
-                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
-                .caption This image and its caption are manually edited.
+                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/schenck-high-line-art-wanderlust-2016_07_12-dsc_5823.jpg', { width: 800 }))
+                .caption Barbara Kruger, <em>Untitled (Blind Idealism Is...)</em>, 2016. A High Line Commission, New York. Photo: Timothy Schenck. Courtesy of Friends of the High Line.
               else
                 img(src=resize(section.image_second, { width: 800 }))
                 .caption!= markdown(section.caption_second)
@@ -69,12 +69,12 @@ section.article-body__intro(data-section=0)
                 p=section.callout
               else
                 img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
-                .caption This image and its caption are manually edited.
+                .caption Installation view of <em>The Passing Winter</em>, 2005 by Yayoi Kusama in the Switch House extension of the Tate Modern, London, 2014. Photo: DANIEL LEAL-OLIVAS/AFP/Getty Images
 
           if i == 0
             .article-body--section__sub-image
               img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg', { width: 800 }))
-              .caption This image and its caption are manually edited.
+              .caption Photo: Guillaume Pinon/NurPhoto/Getty Images
               .spacer
             .spacer--article
         footer

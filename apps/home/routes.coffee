@@ -12,6 +12,7 @@ viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'
 browseCategories = require './browse_categories.coffee'
 query = require './queries/initial'
+fetchEOY2016Lists = require '../../components/eoy_artist_list/server.coffee'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or
@@ -61,6 +62,7 @@ maybeFetchHomepageRails = (req)->
     .all [
       heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
       maybeFetchHomepageRails req
+      fetchEOY2016Lists()
       featuredLinks.fetch cache: true
       featuredArticles.fetch
         cache: true
@@ -72,7 +74,7 @@ maybeFetchHomepageRails = (req)->
       featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
     ]
 
-    .then ([x, { home_page }]) ->
+    .then ([x, { home_page }, eoy_artist_list]) ->
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       # always show followed artist rail for logged in users,
@@ -92,6 +94,7 @@ maybeFetchHomepageRails = (req)->
         viewHelpers: viewHelpers
         browseCategories: browseCategories
         jsonLD: JSON.stringify jsonLD
+        eoy_2016: eoy_artist_list
 
     .catch next
 

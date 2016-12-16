@@ -37,8 +37,7 @@ router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
 router.get '/consign', isResponsive
 router.get '/professional-buyer*', isResponsive
-router.all '/2016-year-in-art*', isResponsive
-router.get '/eoy-2016', isResponsive
+router.get '/2016-year-in-art*', isResponsive
 router.get TEAM_BLOGS, isResponsive
 router.get EOY_2016_SLUGS, isResponsive
 router.use redirect

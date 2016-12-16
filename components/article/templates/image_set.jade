@@ -20,8 +20,10 @@
 
             if item.type === 'artwork'
               .image-set-modal__title-container
-                .image-set-modal__title= item.title
-                .image-set-modal__date= ", " + item.date
+                .image-set-modal__title
+                  = item.title
+                  span
+                    = ", " + item.date
               .image-set-modal__partner= item.partner.name
               a.image-set-modal__link(href="/artwork/#{item.slug}") View Details
 

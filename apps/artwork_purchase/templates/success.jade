@@ -37,5 +37,7 @@ block body
               | #{artwork.partner.name} will ship the work to your address
 
         .artwork-purchase__section
-          a.avant-garde-button-black.is-block(href= artwork.href)
-            | Back to Browsing
+          a.avant-garde-button-black.is-block(
+            href= artwork.href
+            class= 'analytics-artwork-purchase-back-to-browsing'
+          ) Back to Browsing

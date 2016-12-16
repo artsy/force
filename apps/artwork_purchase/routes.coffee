@@ -36,18 +36,18 @@ Fair = require '../../models/fair.coffee'
   """
 
   return if metaphysics.debug req, res, send
-  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
+  inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  notProduction = res.locals.sd.NODE_ENV is 'development' or
     res.locals.sd.NODE_ENV is 'staging' or
     res.locals.sd.NODE_ENV is 'test'
-  return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
+  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup and notProduction
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
       cookie = req.cookies['purchase-inquiry']
       cachedData = JSON.parse cookie if cookie
       purchase = cachedData if cachedData?.artwork_id is artwork.id
-      return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
+      return res.redirect "/artwork/#{req.params.id}" unless artwork.is_purchasable
       fair = new Fair artwork.fair if artwork.fair
       res.locals.sd.ARTWORK = artwork
       res.render 'index', {
@@ -78,15 +78,15 @@ Fair = require '../../models/fair.coffee'
 
   """
   return if metaphysics.debug req, res, send
-  # purchaseFlow = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  purchaseFlow = res.locals.sd.NODE_ENV is 'development' or
+  inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
+  notProduction = res.locals.sd.NODE_ENV is 'development' or
     res.locals.sd.NODE_ENV is 'staging' or
     res.locals.sd.NODE_ENV is 'test'
-  return res.redirect "/artwork/#{req.params.id}" if not purchaseFlow
+  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup and notProduction
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
-      return res.redirect "/artwork/#{req.params.id}" if not artwork.is_purchasable
+      return res.redirect "/artwork/#{req.params.id}" unless artwork.is_purchasable
       res.locals.sd.ARTWORK = artwork
       res.render 'success', { artwork }
     .catch next

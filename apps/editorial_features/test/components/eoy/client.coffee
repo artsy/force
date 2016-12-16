@@ -24,7 +24,7 @@ describe 'EoyView', ->
       $.fn.waypoint = sinon.stub()
       window.matchMedia = sinon.stub().returns { matches: true }
       $.fn.scrollY = sinon.stub().returns 0
-      $.fn.scrollTop = @scrollTop = sinon.stub().returns 806
+      $.fn.scrollTop = @scrollTop = sinon.stub().returns 845
       $.fn.resize = sinon.stub()
       sinon.stub Backbone, 'sync'
       @curation = new Curation
@@ -119,7 +119,7 @@ describe 'EoyView', ->
   describe '#initialize', ->
 
     it 'renders content from curation and superarticle', ->
-      $('.scroller__items section').should.have.lengthOf 11
+      $('.scroller__items section').should.have.lengthOf 12
       $('.article-sa-sticky-header').should.have.lengthOf 1
 
     it 'closes all scroller sections on load', ->
@@ -136,30 +136,30 @@ describe 'EoyView', ->
 
     it 'returns an array of heights that corresponds to each section', ->
       zones = @view.getScrollZones()
-      zones[0].should.equal 805
-      zones[1].should.equal 1333
-      zones[2].should.equal 1861
-      zones[3].should.equal 2389
-      zones[4].should.equal 2917
-      zones[5].should.equal 3445
-      zones[6].should.equal 3973
-      zones[7].should.equal 4501
-      zones[8].should.equal 5029
-      zones[9].should.equal 5557
-      zones[10].should.equal 6085
+      zones[0].should.equal 845
+      zones[1].should.equal 1413
+      zones[2].should.equal 1961
+      zones[3].should.equal 2509
+      zones[4].should.equal 3057
+      zones[5].should.equal 3605
+      zones[6].should.equal 4153
+      zones[7].should.equal 4701
+      zones[8].should.equal 5249
+      zones[9].should.equal 5797
+      zones[10].should.equal 6345
 
   describe '#closestSection', ->
 
     it 'returns the section closest to where user scrolls', ->
       @view.closestSection(0, @view.getScrollZones()).should.equal 0
-      @view.closestSection(3000, @view.getScrollZones()).should.equal 5
+      @view.closestSection(3000, @view.getScrollZones()).should.equal 4
 
   describe '#doSlider', ->
 
     it 'opens containers on scroll', ->
       @view.doSlider($(window).scrollTop())
       $('.scroller__items section[data-section=0]').height().should.equal 0
-      $('.scroller__items section[data-state=open]').should.have.lengthOf 2
+      $('.scroller__items section[data-state=open]').should.have.lengthOf 3
 
   describe '#animateBody', ->
 
@@ -206,16 +206,16 @@ describe 'EoyView', ->
     it 'sets height based on position', ->
       @view.windowHeight = 900
       @view.setupSliderHeight()
-      @view.containerHeight.should.equal 805
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
+      @view.containerHeight.should.equal 845
+      @view.activeHeight.should.equal 548
+      @view.openHeight.should.equal 6948
 
     it 'sets up heights for the scroller', ->
       @view.setupSliderHeight()
-      $('.scroller__items section[data-section=0]').height().should.equal 805
-      @view.containerHeight.should.equal 805
-      @view.activeHeight.should.equal 528
-      @view.openHeight.should.equal 6160
+      $('.scroller__items section[data-section=0]').height().should.equal 845
+      @view.containerHeight.should.equal 845
+      @view.activeHeight.should.equal 548
+      @view.openHeight.should.equal 6948
 
   describe '#deferredLoadBody', ->
 

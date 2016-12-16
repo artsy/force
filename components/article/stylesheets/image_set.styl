@@ -142,12 +142,16 @@ body.body-article
     display flex
     flex-direction column
     justify-content center
+  &__metadata, &__artist-container
+    white-space normal
   &__image
     max-height 70vh
     max-width 70vw
     margin 20px auto auto auto
   &__title
     font-style italic
+    span
+      font-style none
   &__title, &__date
     display inline-block
   &__title-container, &__caption
@@ -169,10 +173,13 @@ body.body-article
       padding 0px
     &__image
       max-width 100vw
+      max-height 50vh
     .mgr-navigation
       display none
     &__metadata
       margin 0 20px
+    &__caption, &__title-container, &__link, &__partner
+      garamond-size('l-caption',true)
 
   .entity-follow
     display inline-block

@@ -196,6 +196,15 @@ describe 'Sale', ->
         @user.set 'qualified_for_bidding', true
         @sale.bidButtonState(@user, @artwork).label.should.equal 'Enter Live Auction'
 
+  describe 'endedTime', ->
+    it 'returns the end_at if the sale has an end_at', ->
+      @sale.set end_at: moment('2016-12-30')
+      @sale.endedTime().format('MMM D, YYYY').should.equal 'Dec 30, 2016'
+
+    it 'returns the ended_at if the sale has no end_at', ->
+      @sale.set end_at: null, ended_at: moment('2016-12-30')
+      @sale.endedTime().format('MMM D, YYYY').should.equal 'Dec 30, 2016'
+
   describe '#fetchArtworks', ->
 
     it 'fetches the sale artworks', ->

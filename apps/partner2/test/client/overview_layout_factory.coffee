@@ -28,7 +28,7 @@ describe 'overview_layout_factory', ->
   describe 'gallery_three', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', full_bio: 'full_bil'
-      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_three'
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_three', display_artists_section: true
 
     it 'returns modules properly for profile_banner_display: "Shows", profile_artists_layout: "Grid"', ->
       @partner.set profile_banner_display: 'Shows'
@@ -131,7 +131,7 @@ describe 'overview_layout_factory', ->
   describe 'gallery_two', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', full_bio: 'full bio here'
-      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_two'
+      @partner = new Partner fabricate 'partner', profile_layout: 'gallery_two', display_artists_section: true
 
     it 'returns modules properly for profile_banner_display: "Shows", profile_artists_layout: "Grid"', ->
       @partner.set profile_banner_display: 'Shows'
@@ -230,6 +230,11 @@ describe 'overview_layout_factory', ->
           viewAll: "#{@partner.href()}/articles"
         }
       ]
+
+    it 'does not return the "Artists" module when display_artists_section is false', ->
+      @partner.set display_artists_section: false
+      modules = factory(@partner, @profile)
+      modules.should.containDeep [{ name: 'artists', component: undefined }]
 
   describe 'gallery_one', ->
     beforeEach ->
