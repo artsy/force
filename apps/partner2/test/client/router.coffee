@@ -47,7 +47,7 @@ describe 'PartnerRouter', ->
 
       settings = {
         'aggregations': ['dimension_range', 'medium', 'price_range', 'total', 'for_sale']
-        'forSaleOnly': false
+        'forSale': false
         'hideForSaleButton': false
         'filterRoot': '/partner-id/section-id'
       }
@@ -60,6 +60,6 @@ describe 'PartnerRouter', ->
       @router.baseView.renderSection.called.should.be.ok()
       @router.baseView.renderSection.args[0][0].should.equal 'section-name'
       @router.baseView.renderSection.args[0][1].aggregations.should.equal settings.aggregations
-      @router.baseView.renderSection.args[0][1].forSaleOnly.should.equal settings.forSaleOnly
+      @router.baseView.renderSection.args[0][1].forSale.should.equal settings.forSale
       @router.baseView.renderSection.args[0][1].hideForSaleButton.should.equal settings.hideForSaleButton
       @router.baseView.renderSection.args[0][1].filterRoot.should.equal settings.filterRoot
