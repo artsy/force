@@ -14,7 +14,7 @@ module.exports =
       includeFixedHeader: includeFixedHeader
       includeAllWorksButton: false
       hideForSaleButton: false
-      forSale: 'true'
+      forSale: null
 
     { aggregations,
       el,
