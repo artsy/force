@@ -1,7 +1,7 @@
 if eoy_2016
   .eoy-artist-feature
-    .eoy-artist-feature__headline= eoy_2016.headline
-    .eoy-artist-feature__subheadline= eoy_2016.subheadline
+    .eoy-artist-feature__headline!= eoy_2016.headline
+    .eoy-artist-feature__subheadline!= eoy_2016.subheadline
     a.avant-garde-button-white.is-small(href=eoy_2016.article_link) Read Article
     .eoy-artist-feature__lists
       for list in eoy_2016.lists
