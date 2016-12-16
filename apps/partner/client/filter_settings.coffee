@@ -3,7 +3,7 @@ module.exports =
     # A gallery's 'WORKS' section, if enabled. Includes for-sale & not-for-sale, all search facets
     'works':
       'aggregations': ['dimension_range', 'medium', 'price_range', 'total', 'for_sale']
-      'forSaleOnly': false
+      'forSaleOnly': null
       'hideForSaleButton': false
 
     # An institution's 'WORKS' section. Includes for-sale and not-for-sale works, excludes filtering based on price and saleability.

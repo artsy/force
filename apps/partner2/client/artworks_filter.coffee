@@ -46,4 +46,4 @@ module.exports = class PartnerArtworksView extends Backbone.View
       startHistory: false
       forSale: @forSaleOnly
       filterRoot: @filterRoot
-
+      defaultHeading: 'Artworks'
