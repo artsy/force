@@ -11,7 +11,6 @@ Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
-analytics = require './analytics.coffee'
 templateModules = require './template_modules.coffee'
 setupAuctionReminder = require '../components/auction_reminders/index.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
@@ -27,7 +26,6 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  setupAnalytics()
   disableRightClick()
 
 ensureFreshUser = (data) ->
@@ -49,19 +47,6 @@ syncAuth = module.exports.syncAuth = ->
           url: '/users/sign_out'
           complete: ->
             window.location.reload()
-
-setupAnalytics = ->
-  window.analytics?.ready ->
-    analytics(mixpanel: (mixpanel ? null), ga: ga)
-    analytics.registerCurrentUser()
-  # Log a visit once per session
-  unless Cookies.get('active_session')?
-    Cookies.set 'active_session', true
-    mediator.trigger 'session:start'
-    analytics.track.funnel if sd.CURRENT_USER
-      'Visited logged in'
-    else
-      'Visited logged out'
 
 setupReferrerTracking = ->
   # Live, document.referrer always exists, but let's check
