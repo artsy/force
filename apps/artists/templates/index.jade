@@ -16,8 +16,7 @@ block body
           a( href='/artists/artists-starting-with-#{letter}' )
             = letter
 
-    if user && user.isAdmin()
-      include ../../../components/eoy_artist_list/index
+    include ../../../components/eoy_artist_list/index
 
     for set in featured_artists
       h1.avant-garde-header-center
