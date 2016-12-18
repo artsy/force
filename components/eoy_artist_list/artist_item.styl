@@ -26,9 +26,12 @@
     padding-top 5px
     padding-left 10px
     line-height 1
-
+    max-width calc(100% \- 55px)
+    position relative
     &__link
       text-decoration none
+      overflow hidden
+      white-space nowrap
     &__follow-button.entity-follow.artist-follow
       margin-left -5px 
       garamond-size('s-body', true)
