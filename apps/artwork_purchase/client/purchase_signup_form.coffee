@@ -29,7 +29,7 @@ module.exports = class PurchaseSignupForm extends Backbone.View
 
     userLookup.then =>
       if @loggedOutUser.isWithAccount()
-        isWithAccountCallback()
+        isWithAccountCallback @loggedOutUser
       else
         @signup { success, error }
 

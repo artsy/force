@@ -80,11 +80,11 @@ class PurchaseView extends Backbone.View
       error: @purchaseError
     }
 
-  isWithAccount: =>
+  isWithAccount: (user) =>
     @signupForm.reenableForm()
     @purchaseForm.reenableForm()
     @normalButton()
-    @openLoginModal "We found an Artsy account associated with #{@user.get 'email'}. Please log in to continue."
+    @openLoginModal "We found an Artsy account associated with #{user.get 'email'}. Please log in to continue."
 
   signupError: =>
     @signupForm.reenableForm()
