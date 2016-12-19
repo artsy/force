@@ -13,7 +13,7 @@ block body
     include ../../../../../components/article/templates/super_article_sticky_header.jade
 
   .eoy-feature
-    video(class='video' autoplay=true, controls=false, loop=true, muted=true, playsinline=true poster=curation.get('placeholder')).eoy-feature__background.active
+    video(class='video' autoplay=true, controls=false, loop=true, muted=true, playsinline=true poster='https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-cover-placeholder.png').eoy-feature__background.active
       source(src='#{curation.get("header_video")}' type='video/mp4')
       img(src=curation.get('placeholder'))
     nav.eoy-feature__menu
