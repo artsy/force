@@ -6,6 +6,14 @@ section.article-body__intro(data-section=0)
   footer
 .article-body__content
   for section, i in curation.get('sections')
+
+    if i == 0
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-f-lotus-placeholder.png'
+    if i == 1
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-virtualreality-poster.png'
+    if i == 7
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-gg-poster.png'
+
     section(data-section='#{i + 1}')
       a(name='section-#{i + 1}')
       .article-body--section
@@ -22,7 +30,7 @@ section.article-body__intro(data-section=0)
             .image
               if i != 8
                 if section.image.indexOf('mp4') > -1
-                  video(autoplay=true, controls=false, muted=true, playsinline=true).video
+                  video(autoplay=true, controls=false, muted=true, playsinline=true poster= poster).video
                     source(src=section.image type='video/mp4')
                   .video-controls
                     .video-play-button
@@ -49,7 +57,7 @@ section.article-body__intro(data-section=0)
           .article-body--section__sub-text
             .image
               if section.image_second.indexOf('mp4') > -1
-                video(autoplay=true, controls=false, muted=true, playsinline=true).video
+                video(autoplay=true, controls=false, muted=true, playsinline=true poster= poster).video
                   source(src=section.image_second type='video/mp4')
                 .video-controls
                   .video-play-button
