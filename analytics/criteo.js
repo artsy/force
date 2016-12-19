@@ -10,7 +10,7 @@ if (pathSplit[1] === 'auctions') {
     { event: 'viewHome' }
   )
 } else if (pathSplit[1] === 'auction') {
-  if (pathSplit[3] === null) {
+  if (!pathSplit[3]) {
     window.criteo_q.push(
       { event: 'setAccount', account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
       { event: 'setSiteType', type: 'd' },
@@ -36,7 +36,7 @@ if (pathSplit[1] === 'auctions') {
       )
     })
   }
-} else if (pathSplit[1] === 'artwork' && pathSplit[3] === null) {
+} else if (pathSplit[1] === 'artwork' && !pathSplit[3]) {
   // Auctions event
   window.criteo_q.push(
     { event: 'setAccount', account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
@@ -49,7 +49,7 @@ if (pathSplit[1] === 'auctions') {
     { event: 'setSiteType', type: 'd' },
     { event: 'viewItem', item: sd.ARTWORK.id }
   )
-  analyticsHooks.on('artwork:contact-gallery', function (data) {
+  analyticsHooks.on('inquiry_questionnaire:modal:opened', function (data) {
     window.criteo_q.push(
       { event: 'setAccount', account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
       { event: 'setSiteType', type: 'd' },
@@ -91,11 +91,11 @@ if (pathSplit[1] === 'auctions') {
       { event: 'setSiteType', type: 'd' },
       { event: 'viewHome' }
     )
-  } else if (pathSplit[1] === 'artist' && pathSplit[3] === null) {
+  } else if (pathSplit[1] === 'artist' && !pathSplit[3]) {
     window.criteo_q.push(
       { event: 'setAccount', account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
       { event: 'setSiteType', type: 'd' },
-      { event: 'viewList', sd.ARTWORKS.map(function (a) { return a._id }) }
+      { event: 'viewList', item: sd.ARTWORKS.map(function (a) { return a._id }) }
     )
   }
 }
