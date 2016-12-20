@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 describe 'MarketingSignupModal', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       sinon.stub $, 'ajax'
       @MarketingSignupModal = benv.requireWithJadeify(

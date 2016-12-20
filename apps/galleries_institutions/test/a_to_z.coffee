@@ -23,7 +23,7 @@ describe 'Galleries / Institutions', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       benv.render resolve(__dirname, '../templates/a_z.jade'), {
         sd: CURRENT_PATH: '/institution-a-z'
         asset: (->)

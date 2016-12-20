@@ -8,7 +8,7 @@ EmailPreferencesView = benv.requireWithJadeify require.resolve('../view'), ['tem
 describe 'EmailPreferencesView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

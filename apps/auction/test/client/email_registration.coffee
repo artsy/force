@@ -10,7 +10,7 @@ describe 'EmailRegistrationView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       sinon.stub $, 'ajax'
       $.ajax.returns Q.resolve { email: 'craig@foo.com' }
       Backbone.$ = $

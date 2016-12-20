@@ -241,23 +241,23 @@ describe 'Sale', ->
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).unix()
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add(2, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(2, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(2, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).subtract(2, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).subtract(2, 'minutes').unix()
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @sale.set(auction_state: 'closed')
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add(4, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(4, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(4, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).subtract(4, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).subtract(4, 'minutes').unix()
         @sale.get('clockState').should.equal 'closed'
 
     describe 'client time open', ->
@@ -276,23 +276,23 @@ describe 'Sale', ->
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().subtract(2, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(2, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(2, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).add(2, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).add(2, 'minutes').unix()
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('clockState').should.equal 'open'
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).unix()
 
       it 'reflects server closed state', ->
         @sale.set(auction_state: 'closed')
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().add(2, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).subtract(2, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).subtract(2, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).subtract(2, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).subtract(2, 'minutes').unix()
         @sale.get('clockState').should.equal 'closed'
 
     describe 'client time closed', ->
@@ -311,15 +311,15 @@ describe 'Sale', ->
       it 'reflects server preview state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().subtract(4, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(4, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(4, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).add(4, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).add(4, 'minutes').unix()
         @sale.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().subtract(2, 'minutes').format() }
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at')).add(2, 'minutes')
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at')).add(2, 'minutes')
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).add(2, 'minutes').unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).add(2, 'minutes').unix()
         @sale.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
@@ -327,8 +327,8 @@ describe 'Sale', ->
         @sale.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { iso8601: moment().format() }
         @sale.get('clockState').should.equal 'closed'
-        @sale.get('offsetStartAtMoment').should.eql moment(@sale.get('start_at'))
-        @sale.get('offsetEndAtMoment').should.eql moment(@sale.get('end_at'))
+        @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).unix()
+        @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).unix()
 
     describe '#upcomingLabel', ->
 

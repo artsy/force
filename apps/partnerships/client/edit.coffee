@@ -1,5 +1,5 @@
 _ = require 'underscore'
-require '../../../lib/vendor/hulk'
+require 'hulk-editor'
 GeminiForm = require '../../../components/gemini_form/view.coffee'
 { DATA } = sd = require('sharify').data
 { crop } = require '../../../components/resizer/index.coffee'

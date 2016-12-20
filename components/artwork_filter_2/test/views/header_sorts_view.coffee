@@ -9,7 +9,7 @@ describe 'HeaderCountsView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @HeaderSortsView = benv.requireWithJadeify resolve(__dirname, '../../views/header_sorts_view'), ['template']
 

@@ -10,7 +10,7 @@ describe 'my active bids auction page template', ->
   before (done) ->
     @baseData = -> bidderPositions
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       sd.PREDICTION_URL = 'http://live-test.artsy.net'
       Backbone.$ = $
       done()

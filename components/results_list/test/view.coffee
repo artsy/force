@@ -2,20 +2,22 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-TypeaheadView = benv.requireWithJadeify require.resolve('../../typeahead/view'), [
-  'templates.index'
-  'templates.empty'
-  'templates.suggestion'
-]
-ResultsView = benv.requireWithJadeify require.resolve('../views/results'), ['template']
-ResultsListView = rewire '../view'
-ResultsListView.__set__ 'ResultsView', ResultsView
+TypeaheadView = null
+ResultsListView = null
 
 describe 'ResultsListView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
+      TypeaheadView = benv.requireWithJadeify require.resolve('../../typeahead/view'), [
+        'templates.index'
+        'templates.empty'
+        'templates.suggestion'
+      ]
+      ResultsView = benv.requireWithJadeify require.resolve('../views/results'), ['template']
+      ResultsListView = rewire '../view'
+      ResultsListView.__set__ 'ResultsView', ResultsView
       $.fn.typeahead = -> this
       done()
 

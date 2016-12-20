@@ -9,7 +9,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 describe 'ArtistRouter', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @ArtistRouter = require '../../client/router'
       done()

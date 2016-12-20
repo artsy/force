@@ -10,7 +10,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       location.assign = sinon.stub()
       sinon.stub _, 'defer', (cb) -> cb()

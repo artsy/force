@@ -14,7 +14,7 @@ module.exports = (cb) -> _.wrap cb, (cb) ->
   before (done) ->
     sinon.stub _, 'defer', (cb) -> cb()
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

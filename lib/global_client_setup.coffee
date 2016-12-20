@@ -11,7 +11,6 @@ Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
-analytics = require './analytics.coffee'
 templateModules = require './template_modules.coffee'
 setupAuctionReminder = require '../components/auction_reminders/index.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
@@ -27,7 +26,6 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  setupAnalytics()
   disableRightClick()
 
 ensureFreshUser = (data) ->
@@ -50,19 +48,6 @@ syncAuth = module.exports.syncAuth = ->
           complete: ->
             window.location.reload()
 
-setupAnalytics = ->
-  window.analytics?.ready ->
-    analytics(mixpanel: (mixpanel ? null), ga: ga)
-    analytics.registerCurrentUser()
-  # Log a visit once per session
-  unless Cookies.get('active_session')?
-    Cookies.set 'active_session', true
-    mediator.trigger 'session:start'
-    analytics.track.funnel if sd.CURRENT_USER
-      'Visited logged in'
-    else
-      'Visited logged out'
-
 setupReferrerTracking = ->
   # Live, document.referrer always exists, but let's check
   # 'document?.referrer?.indexOf' just in case we're in a
@@ -72,16 +57,26 @@ setupReferrerTracking = ->
     Cookies.set 'force-session-start', window.location.href
 
 setupJquery = ->
-  require '../node_modules/typeahead.js/dist/typeahead.bundle.min.js'
+  require 'typeahead.js/dist/typeahead.jquery.js'
+  # Typeahead adds to the jQuery npm dependency, we use Google's CDNed jQuery.
+  # TODO: Drop latter and only use npm dependency
+  $.fn.typeahead = require('jquery').fn.typeahead
   require 'jquery.transition'
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
   require 'jquery-on-infinite-scroll'
-  require './vendor/waypoints.js'
-  require './vendor/waypoints-sticky.js'
-  require './jquery/hidehover.coffee'
+  require 'jquery-waypoints/waypoints.js'
+  require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)
+  # For drop down menus that appear on hover you may want that menu to close
+  # once you click it. For these cases do `$el.click -> $(@).hidehover()` and
+  # the menu will hide and then remove the `display` property so the default
+  # CSS will kick in again.
+  $.fn.hidehover = ->
+    $el = $(@)
+    $el.css(display: 'none')
+    setTimeout (-> $el.css display: ''), 200
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken

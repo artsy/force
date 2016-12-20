@@ -15,7 +15,7 @@ describe 'current auction or show', ->
       detail: 'Item Detail'
       heading: 'Current Show'
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 
   after ->

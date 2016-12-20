@@ -4,24 +4,33 @@ rewire = require 'rewire'
 Backbone = require 'backbone'
 setup = require './setup'
 
-Affiliated = benv.requireWithJadeify require.resolve('../../views/affiliated'), ['template']
-ResultsView = benv.requireWithJadeify require.resolve('../../../results_list/views/results'), ['template']
-TypeaheadView = benv.requireWithJadeify require.resolve('../../../typeahead/view'), ['templates.index']
-
-ResultsListView = rewire '../../../results_list/view'
-ResultsListView.__set__ 'ResultsView', ResultsView
-Affiliated.__set__ 'TypeaheadView', TypeaheadView
-Affiliated.__set__ 'ResultsListView', ResultsListView
-
-class TestAffiliated extends Affiliated
-  title: 'This is only a test.'
-  collectorProfileAttribute: 'affiliated_test_ids'
-  galaxyPath: '_embedded.tests'
-  galaxyEndpoint: 'tests'
+Affiliated = null
+ResultsView = null
+TypeaheadView = null
+ResultsListView = null
 
 describe 'Affiliated', setup ->
   beforeEach ->
     $.fn.typeahead = -> this
+
+    benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+    window.jQuery = $
+
+    Affiliated = benv.requireWithJadeify require.resolve('../../views/affiliated'), ['template']
+    ResultsView = benv.requireWithJadeify require.resolve('../../../results_list/views/results'), ['template']
+    TypeaheadView = benv.requireWithJadeify require.resolve('../../../typeahead/view'), ['templates.index']
+
+    ResultsListView = rewire '../../../results_list/view'
+    ResultsListView.__set__ 'ResultsView', ResultsView
+    Affiliated.__set__ 'TypeaheadView', TypeaheadView
+    Affiliated.__set__ 'ResultsListView', ResultsListView
+
+    class TestAffiliated extends Affiliated
+      title: 'This is only a test.'
+      collectorProfileAttribute: 'affiliated_test_ids'
+      galaxyPath: '_embedded.tests'
+      galaxyEndpoint: 'tests'
+
 
     sinon.stub $, 'ajax'
       .yieldsTo 'success', {

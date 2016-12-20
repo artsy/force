@@ -1,7 +1,11 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
-{ setDimension } = require '../../lib/analytics.coffee'
 IS_TEST_ENV = require '../../lib/is_test_env.coffee'
+
+# These need to be set up individually before using. Read this non-sense:
+# https://developers.google.com/analytics/devguides/platform/customdimsmets
+setDimension = (index, value) ->
+  ga? 'set', index, value
 
 module.exports = class SplitTest
   constructor: ({ @key, @outcomes, @edge, @dimension }) ->

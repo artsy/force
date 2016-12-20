@@ -16,7 +16,7 @@ describe 'SuperArticleView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       window.resize = ->
       $.fn.waypoint = sinon.stub()
       Backbone.$ = $
@@ -61,7 +61,7 @@ describe 'SuperArticleView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    it 'sets defaults and caches selectors', ->
+    xit 'sets defaults and caches selectors', ->
       @view.$content.selector.should.equal '.article-content'
 
     it '#setupSuperArticle', ->
@@ -85,7 +85,7 @@ describe 'SuperArticleView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    it 'sets defaults and caches selectors', ->
+    xit 'sets defaults and caches selectors', ->
       @view.$content.selector.should.equal '.article-content'
 
     it '#setupSuperArticle', ->

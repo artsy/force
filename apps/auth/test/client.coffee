@@ -10,7 +10,7 @@ Backbone = require 'backbone'
 describe 'PasswordResetView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

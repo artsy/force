@@ -5,7 +5,7 @@ analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 User = require '../../models/user.coffee'
-{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 Partner = require '../../models/partner.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 
@@ -36,7 +36,7 @@ module.exports = class ShowInquiryModal extends ContactView
     { @show } = options
 
     analyticsHooks.trigger 'show_feed:contact', show: @show
-    
+
     @partner = new Partner @show.get('partner')
     @partner.related().locations.fetch complete: =>
       @renderTemplates()
@@ -71,7 +71,7 @@ module.exports = class ShowInquiryModal extends ContactView
 
     user.prepareForInquiry()
       .then =>
-        
+
         if user.isLoggedIn()
           @model.save null, success: =>
             @close()
@@ -86,8 +86,8 @@ module.exports = class ShowInquiryModal extends ContactView
             state_attrs: inquiry: @model
 
         @listenToOnce @model, 'sync', =>
-          analyticsHooks.trigger 'show_feed:inquiry:sent', 
+          analyticsHooks.trigger 'show_feed:inquiry:sent',
             inquiry: @model
             show: @show
-            fair_id: @show.get('fair')?.id 
+            fair_id: @show.get('fair')?.id
 

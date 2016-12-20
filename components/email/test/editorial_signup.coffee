@@ -10,7 +10,7 @@ describe 'EditorialSignupView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       $.fn.waypoint = sinon.stub()
       sinon.stub($, 'ajax')
       Backbone.$ = $

@@ -5,7 +5,7 @@ Notice = require '../index'
 describe 'Notice', ->
   beforeEach (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

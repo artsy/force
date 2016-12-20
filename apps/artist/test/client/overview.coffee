@@ -10,7 +10,7 @@ artistJSON = require '../fixtures'
 describe 'OverviewView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @OverviewView = benv.requireWithJadeify require.resolve('../../client/views/overview'), ['template']
       done()

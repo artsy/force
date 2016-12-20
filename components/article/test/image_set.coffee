@@ -13,7 +13,7 @@ describe 'ImageSetView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.fn.imagesLoaded = ->
       @ImageSetView = benv.requireWithJadeify(

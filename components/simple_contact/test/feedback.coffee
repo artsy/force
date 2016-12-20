@@ -8,7 +8,7 @@ FeedbackView = benv.requireWithJadeify require.resolve('../views/feedback'), ['t
 describe 'FeedbackView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       done()
 

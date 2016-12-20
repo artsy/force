@@ -6,6 +6,7 @@ module.exports = (remote = {}, options = {}) ->
 
   return { initialize: (->) } if IS_TEST_ENV
 
+  Bloodhound = require 'typeahead.js/dist/bloodhound'
   settings = _.defaults options,
     limit: 4
     remote: remote
@@ -13,6 +14,4 @@ module.exports = (remote = {}, options = {}) ->
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
 
-  # Bloodhound is exposed through typehead's require within
-  # ./components/main_layout/client.coffee
   new Bloodhound settings

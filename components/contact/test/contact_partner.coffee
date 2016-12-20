@@ -12,7 +12,7 @@ describe 'ContactPartnerView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       @artwork = new Artwork fabricate 'artwork'
