@@ -19,11 +19,9 @@ block body
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
         include featured_links
-        if !user
+        include ../../../components/eoy_artist_list/index
+        unless user 
           include browse
-    #home-layout-container.responsive-layout-container
-    .main-layout-container: #home-body
-      include ../../../components/eoy_artist_list/index
     include rails
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body
