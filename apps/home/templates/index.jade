@@ -21,10 +21,9 @@ block body
         include featured_links
         if !user
           include browse
-    if user && user.isAdmin()
-      #home-layout-container.responsive-layout-container
-      .main-layout-container: #home-body
-        include ../../../components/eoy_artist_list/index
+    #home-layout-container.responsive-layout-container
+    .main-layout-container: #home-body
+      include ../../../components/eoy_artist_list/index
     include rails
     #home-layout-container.responsive-layout-container
       .main-layout-container: #home-body

@@ -30,7 +30,7 @@ module.exports = class HeadlineView extends Backbone.View
     @collection.counts?[facet]?[@params.get(facet)]?.name
 
   anyFacetsSelected: ->
-    @params.get('for_sale') is 'true' || _.any @facets, (facet) => @params.has facet
+    _.any @facets, (facet) => @params.has facet
 
   humanizeMedium: ->
     # replace the 'slash' in 'film-slash-video'
