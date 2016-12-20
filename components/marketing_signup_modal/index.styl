@@ -8,6 +8,9 @@ divider-height = 40px
   &-left
     background-size cover
     background-position center right
+  
+    @media screen and (max-width 900px)
+      display none
 
   &-left, &-right
     width 50%
@@ -17,6 +20,8 @@ divider-height = 40px
   &-right
     padding 30px
     min-width 450px
+    @media screen and (max-width 900px)
+      width 100%
 
   &-h1
     garamond-size('headline')
