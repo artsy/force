@@ -181,13 +181,23 @@ describe 'Inquiry', setup ->
         inquiry: @inquiry
         state: @state
 
-      @view.render()
-
     describe '#render', ->
-      it 'renders the attendance checkbox', ->
+      it 'renders the attendance checkbox for open fair', ->
+        tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
+        @artwork.related().fairs.first().set 'end_at', tomorrow.toISOString()
+        @view.render()
         @view.$el.html().should.containEql 'I will attend Armory Show'
 
+      it 'renders the attendance checkbox for closed fair', ->
+        yesterday = new Date (new Date()).getTime() - (24*60*60*1000)
+        @artwork.related().fairs.first().set 'end_at', yesterday.toISOString()
+        @view.render()
+        @view.$el.html().should.containEql 'I attended Armory Show'
+
     describe '#next', ->
+      beforeEach ->
+        @view.render()
+
       it 'saves the user fair action', ->
         @view.$('input[name="name"]').val 'Foo Bar'
         @view.$('input[name="email"]').val 'foo@bar.com'

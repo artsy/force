@@ -3,6 +3,7 @@
 Backbone = require 'backbone'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
+Fair = require '../../../../models/fair.coffee'
 ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
 Form = require '../../../../components/form/index.coffee'
 PendingOrder = require '../../../../models/pending_order.coffee'
@@ -128,7 +129,9 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     openMultiPageModal 'collector-faqs'
 
   render: ->
-    html = template extend @data,
+    if @data.artwork.fair
+      fair = new Fair @data.artwork.fair
+    html = template extend @data, { fair },
       helpers: extend [
         {}
         commercial: require './helpers.coffee'
