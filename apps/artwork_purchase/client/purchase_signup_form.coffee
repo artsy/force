@@ -20,6 +20,9 @@ module.exports = class PurchaseSignupForm extends Backbone.View
     @loggedOutUser.set (data = @serializeForm())
 
     userLookup = @loggedOutUser.findOrCreate silent: true
+      .catch ({ responseJSON }) =>
+        @showError responseJSON.message
+        error?()
       .then =>
         Q.promise (resolve) =>
           @loggedOutUser.related().account.fetch
