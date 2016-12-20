@@ -50,5 +50,6 @@ describe 'ConfirmRegistration', ->
         sale: fabricate('sale', id: 'foo-bar-auction')
         qualified_for_bidding: false
       }
-      @view.$('.credit-card-unqualified-msg').attr('style')
-        .should.containEql 'display: block'
+      @view.$('.credit-card-unqualified-msg').is(':visible')
+        .should.be.ok()
+

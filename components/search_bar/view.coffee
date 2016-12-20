@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-Bloodhound = require 'typeahead.js/dist/bloodhound'
+Bloodhound = null
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -126,6 +126,7 @@ module.exports = class SearchBarView extends Backbone.View
       query: @$input.val()
 
   setupBloodHound: ->
+    Bloodhound ?= require 'typeahead.js/dist/bloodhound'
     @hound = new Bloodhound
       limit: @limit
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace 'value'

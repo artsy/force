@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 TypeaheadView = require '../../../../components/typeahead/view.coffee'
 { GEOCODED_CITIES } = require('sharify').data
 { cleanDiacritics } = require 'underscore.string'
-characterMap = require './character_map.coffee'
 Bloodhound = require 'typeahead.js/dist/bloodhound'
 template = -> require('./index.jade') arguments...
 searchItemTemplate = -> require('./search_item.jade') arguments...

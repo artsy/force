@@ -186,7 +186,7 @@ describe 'PartnerShow', ->
     it 'returns a boolean if the show ends within the desired timeframe (default 5 days)', ->
       @partnerShow.isEndingSoon(5, moment(@ending).subtract(3, 'days')).should.be.true()
       @partnerShow.isEndingSoon(5, moment(@ending).subtract(5, 'days')).should.be.true()
-      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.1, 'days')).should.be.false()
+      @partnerShow.isEndingSoon(5, moment(@ending).subtract(5.5, 'days')).should.be.false()
       @partnerShow.isEndingSoon(5, moment(@ending).subtract(6, 'days')).should.be.false()
 
     it 'supports custom day values for "soon"', ->

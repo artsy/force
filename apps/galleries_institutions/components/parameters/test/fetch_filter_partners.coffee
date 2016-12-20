@@ -88,8 +88,14 @@ describe 'FetchFilterPartners', ->
         @filterPartners.unset 'location', 'category'
         variables = @filterPartners.formatVariables()
         variables.should.not.have.keys 'near',
-        variables.should.have.keys [
-          'category', 'page', 'near', 'includeAggregations', 'includeResults', 'type']
+        variables.should.have.keys(
+          'category',
+          'near',
+          'page',
+          'includeAggregations',
+          'includeResults',
+          'type'
+        )
 
       describe 'first page', ->
         it 'requests aggregations and results', ->
