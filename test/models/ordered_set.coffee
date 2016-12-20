@@ -23,5 +23,5 @@ describe 'OrderedSet', ->
       @orderedSet.fetchItems()
       @orderedSet.get('items').constructor.name.should.equal 'Items'
 
-    it 'returns a promise', (done) ->
-      @orderedSet.fetchItems().then -> done()
+    it 'returns a promise', ->
+      @orderedSet.fetchItems()

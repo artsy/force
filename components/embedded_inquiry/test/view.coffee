@@ -6,15 +6,16 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
 CurrentUser = require '../../../models/current_user'
-EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
-  'template'
-  'confirmation'
-]
+EmbeddedInquiryView = null
 
 describe 'EmbeddedInquiryView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
+        'template'
+        'confirmation'
+      ]
       Backbone.$ = $
       done()
 
@@ -170,11 +171,22 @@ describe 'EmbeddedInquiryView', ->
       @artwork = new Artwork fabricate 'artwork'
       @artwork.related().fairs.add fabricate 'fair'
       @view = new EmbeddedInquiryView artwork: @artwork
-      @view.render()
 
-    it 'renders the attendance checkbox', ->
+    it 'renders the attendance checkbox for an open fair', ->
+      tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
+      @artwork.related().fairs.first().set 'end_at', tomorrow.toISOString()
+      @artwork.related().fairs.first().isOver()
+      @view.render()
       html = @view.$el.html()
       html.should.containEql 'I will attend Armory Show'
+      html.should.containEql 'This artwork is part of the art fair—Armory Show.'
+
+    it 'renders the attendance checkbox for an closed fair', ->
+      yesterday = new Date (new Date()).getTime() - (24*60*60*1000)
+      @artwork.related().fairs.first().set 'end_at', yesterday.toISOString()
+      @view.render()
+      html = @view.$el.html()
+      html.should.containEql 'I attended Armory Show'
       html.should.containEql 'This artwork is part of the art fair—Armory Show.'
 
     it 'renders if the sync comes post-render', ->
@@ -192,6 +204,7 @@ describe 'EmbeddedInquiryView', ->
 
     describe 'user is not attending', ->
       it 'does not add a user fair action', ->
+        @view.render()
         @view.$('input[name="name"]').val 'Not Attending'
         @view.$('button').click()
 
@@ -205,6 +218,7 @@ describe 'EmbeddedInquiryView', ->
 
     describe 'user is attending', ->
       it 'adds a user fair action, when the box is checked', ->
+        @view.render()
         @view.$('input[name="name"]').val 'Is Attending'
         @view.$('input[type="checkbox"]').click()
         @view.$('button').click()

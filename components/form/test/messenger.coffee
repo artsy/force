@@ -6,7 +6,7 @@ Messenger = require '../messenger'
 describe 'Messenger', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 
   after ->

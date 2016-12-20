@@ -15,7 +15,7 @@ module.exports = class PartnerArtworksView extends Backbone.View
       @profile,
       @partner,
       @aggregations,
-      @forSaleOnly,
+      @forSale,
       @hideForSaleButton,
       @counts,
       @filterRoot
@@ -44,6 +44,5 @@ module.exports = class PartnerArtworksView extends Backbone.View
       facets: @aggregations
       aggregations: @aggregations
       startHistory: false
-      forSale: @forSaleOnly
+      forSale: @forSale
       filterRoot: @filterRoot
-

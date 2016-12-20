@@ -5,15 +5,18 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../models/current_user.coffee'
-UserInterestsView = rewire '../../../../components/user_interests/view'
-UserInterestsView.__set__ 'TypeaheadView', Backbone.View
-UserInterestsView.__set__ 'ResultsListView', Backbone.View
+UserInterestsView = null
 
 describe 'BookmarksView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
+      UserInterestsView = rewire '../../../../components/user_interests/view'
+      UserInterestsView.__set__ 'TypeaheadView', Backbone.View
+      UserInterestsView.__set__ 'ResultsListView', Backbone.View
       @BookmarksView = benv.requireWithJadeify require.resolve('../../client/views/bookmarks'), ['template']
       @BookmarksView.__set__ 'UserInterestsView', UserInterestsView
       done()

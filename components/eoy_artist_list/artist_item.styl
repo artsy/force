@@ -8,9 +8,13 @@
     width 33%
   @media (max-width: 1100px)
     width 50%
+  @media (max-width: 730px)
+    width 100%
   &__thumbnail
     display inline-block
     vertical-align middle
+    a
+      text-decoration none
     img
       border-radius 45px
       width 45px
@@ -22,7 +26,16 @@
     padding-top 5px
     padding-left 10px
     line-height 1
+    max-width calc(100% \- 55px)
+    position relative
     &__link
       text-decoration none
-    &__follow-button
-      margin-left -5px      
+      overflow hidden
+      white-space nowrap
+    &__follow-button.entity-follow.artist-follow
+      margin-left -5px 
+      garamond-size('s-body', true)
+      text-transform none
+      letter-spacing 0
+      cursor pointer
+

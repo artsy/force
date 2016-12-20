@@ -2,17 +2,19 @@ benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
-initializeInquiry = rewire '../../client/routes/inquiry'
-initializeInquiry.__set__ 'attachFastClick', sinon.stub()
+initializeInquiry = null
 
 describe 'mobile inquiry flow initialization', ->
   before (done) ->
-    @StateView = initializeInquiry.__get__ 'StateView'
-    @render = sinon.stub @StateView::, 'render', -> this
-
-    benv.setup ->
-      benv.expose $: benv.require 'jquery'
+    benv.setup =>
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
+      initializeInquiry = rewire '../../client/routes/inquiry'
+      initializeInquiry.__set__ 'attachFastClick', sinon.stub()
+      @StateView = initializeInquiry.__get__ 'StateView'
+      @render = sinon.stub @StateView::, 'render', -> this
       done()
 
   after ->

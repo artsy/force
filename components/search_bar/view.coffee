@@ -1,11 +1,12 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
+Bloodhound = null
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../analytics/helpers.js'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
@@ -125,6 +126,7 @@ module.exports = class SearchBarView extends Backbone.View
       query: @$input.val()
 
   setupBloodHound: ->
+    Bloodhound ?= require 'typeahead.js/dist/bloodhound'
     @hound = new Bloodhound
       limit: @limit
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace 'value'

@@ -61,4 +61,4 @@ module.exports.init = ->
     $('.js-auction-clock').addClass 'is-almost-over'
 
   mediator.once 'clock:is-over', ->
-    $('.avant-garde-button-black').addClass 'is-disabled'
+    $('.auction-bid-form-confirm.avant-garde-button-black').addClass 'is-disabled'

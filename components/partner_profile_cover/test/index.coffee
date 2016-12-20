@@ -13,7 +13,7 @@ describe 'Template', ->
       id: 'foobar'
       cover_image: fabricate 'profile_cover_image', image_versions: ['medium250x165'], image_url: ':version'
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       done()
 
   afterEach ->

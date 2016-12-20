@@ -1,6 +1,7 @@
 { extend } = require 'underscore'
 metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
+Fair = require '../../models/fair'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
 splitTest = require '../../components/split_test/index.coffee'
@@ -67,6 +68,7 @@ bootstrap = ->
   inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
+      data.fair = new Fair data.artwork.fair if data.artwork.fair
       data.inPurchaseTestGroup = inPurchaseTestGroup
       data.notProduction = res.locals.sd.NODE_ENV is 'development' or
         res.locals.sd.NODE_ENV is 'staging' or

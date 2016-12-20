@@ -8,7 +8,7 @@ AuctionReminderView = benv.requireWithJadeify require.resolve('../view'), ['temp
 describe 'AuctionReminderView', ->
   before (done) ->
     benv.setup ->
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
@@ -24,7 +24,7 @@ describe 'AuctionReminderView', ->
       image_url: '/:version.jpg'
       is_auction: true
     sinon.stub(@auction, 'reminderStatus').returns('closing_soon')
-    
+
     @view = new AuctionReminderView
       model: @auction
       dismisser:

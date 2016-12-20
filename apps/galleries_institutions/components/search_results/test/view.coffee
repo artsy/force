@@ -23,7 +23,7 @@ describe 'ResultsView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       ResultsView.__set__ 'PartnerCellView', PartnerCellView
       $.onInfiniteScroll = sinon.stub()

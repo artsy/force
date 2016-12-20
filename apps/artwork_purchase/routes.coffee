@@ -22,6 +22,7 @@ Fair = require '../../models/fair.coffee'
         fair {
           id
           name
+          end_at
         }
         partner{
           name

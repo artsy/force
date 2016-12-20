@@ -11,7 +11,7 @@ CurrentUser = require '../../../models/current_user'
 describe 'SaleArtworks', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
 
       @artwork = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')

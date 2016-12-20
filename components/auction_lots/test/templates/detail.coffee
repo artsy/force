@@ -23,7 +23,7 @@ render = (templateName) ->
 describe 'Detail auction lots template', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       @lot = new AuctionLot fabricate 'auction_result'
       @artist = new Artist fabricate 'artist', published_artworks_count: 2, forsale_artworks_count: 1
       @artworks = new Artworks [fabricate 'artwork']

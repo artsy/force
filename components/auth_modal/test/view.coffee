@@ -20,7 +20,7 @@ render = (templateName) ->
 describe 'AuthModalView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @AuthModalView = rewire '../view'
       @AuthModalView.__set__ 'Cookies',
@@ -137,6 +137,6 @@ describe 'AuthModalView', ->
     it 'does not submit form if the the mode is password reset', ->
       @view.onSubmitSuccess @view.user, { success: 200 }
       @submitSpy.should.be.calledOnce
-      
+
 
 

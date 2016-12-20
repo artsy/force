@@ -3,6 +3,7 @@ qs = require 'querystring'
 sd = require('sharify').data
 FlashMessage = require '../flash/index.coffee'
 modalize = require '../modalize/index.coffee'
+mediator = require '../../lib/mediator.coffee'
 template = -> require('./index.jade') arguments...
 
 class MarketingSignupModalInner extends Backbone.View
@@ -10,10 +11,16 @@ class MarketingSignupModalInner extends Backbone.View
 
   events:
     'submit form': 'submit'
+    'click .marketing-signup-modal-have-account a': 'openLogin'
 
   render: ->
     @$el.html template()
     this
+
+  openLogin: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:auth', mode: 'login'
+    @trigger 'close'
 
   submit: (e) ->
     e.preventDefault()

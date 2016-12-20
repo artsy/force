@@ -1,4 +1,4 @@
-module.exports =
+if not window? then module.exports = {} else module.exports =
   confirmation: require '../views/confirmation.coffee'
 
   commercial_interest: require '../views/commercial_interest.coffee'

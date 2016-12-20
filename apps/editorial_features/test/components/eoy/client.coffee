@@ -17,7 +17,7 @@ describe 'EoyView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
       @waypoint = $.waypoints = sinon.stub()

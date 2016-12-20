@@ -15,6 +15,7 @@ describe 'HeaderView', ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery')
+        jQuery: benv.require('jquery')
       Backbone.$ = $
       @Cookies = require '../../../cookies/index.coffee'
       done()

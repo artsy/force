@@ -102,22 +102,49 @@ describe 'ArtworkCommercialView', ->
               html.should.containEql 'You will receive an email receipt of your inquiry shortly.'
 
   describe 'an inquireable work, in a fair', ->
-    beforeEach ->
-      fixture = extend {}, require './fixtures/inquireable.json'
-      fixture.data.artwork.fair = id: 'foo-fair', name: 'Foo Fair'
-      @view = new ArtworkCommercialView fixture
-      @view.render()
 
-    describe '#render', ->
-      it 'correctly renders the template', ->
-        @view.$el.html()
-          .should.containEql 'I will attend Foo Fair'
+    describe 'fair is open', ->
+      beforeEach ->
+        fixture = extend {}, require './fixtures/inquireable.json'
+        tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
+        fixture.data.artwork.fair = id: 'foo-fair', name: 'Foo Fair 2016', end_at: tomorrow.toISOString()
+        @view = new ArtworkCommercialView fixture
 
-    describe '#inquiry', ->
-      it 'marks the attendance', ->
-        Backbone.sync.returns then: sinon.stub()
-        @view.$('input[name="attending"]').prop 'checked', true
-        @view.$('.js-artwork-inquire-button').click()
+        @view.render()
 
-        @view.user.isAttending id: 'foo-fair'
-          .should.be.true()
+      describe '#render', ->
+        it 'correctly renders the template', ->
+          @view.$el.html()
+            .should.containEql 'I will attend Foo Fair'
+
+      describe '#inquiry', ->
+        it 'marks the attendance', ->
+          Backbone.sync.returns then: sinon.stub()
+          @view.$('input[name="attending"]').prop 'checked', true
+          @view.$('.js-artwork-inquire-button').click()
+
+          @view.user.isAttending id: 'foo-fair'
+            .should.be.true()
+
+    describe 'fair is closed', ->
+      beforeEach ->
+        fixture = extend {}, require './fixtures/inquireable.json'
+        yesterday = new Date (new Date()).getTime() - (24*60*60*1000)
+        fixture.data.artwork.fair = id: 'foo-fair', name: 'Foo Fair 2016', end_at: yesterday.toISOString()
+        @view = new ArtworkCommercialView fixture
+
+        @view.render()
+
+      describe '#render', ->
+        it 'correctly renders the template', ->
+          @view.$el.html()
+            .should.containEql 'I attended Foo Fair'
+
+      describe '#inquiry', ->
+        it 'marks the attendance', ->
+          Backbone.sync.returns then: sinon.stub()
+          @view.$('input[name="attending"]').prop 'checked', true
+          @view.$('.js-artwork-inquire-button').click()
+
+          @view.user.isAttending id: 'foo-fair'
+            .should.be.true()

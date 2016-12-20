@@ -32,17 +32,17 @@ if artwork.is_inquireable
         = artwork.partner.contact_message
         = ' '
 
-    if artwork.fair
+    if fair
       .artsy-checkbox
         .artsy-checkbox--checkbox
           input( type='checkbox', name='attending', id='embedded-inquiry-form-attending' )
           label( for='embedded-inquiry-form-attending' )
 
         label.artsy-checkbox--label( for='embedded-inquiry-form-attending' )
-          | I will attend #{artwork.fair.name}
+          | I #{fair.isNotOver() ? 'will attend' : 'attended'} #{fair.nameSansYear()}
           span.help-tooltip(
             data-anchor='bottom-right'
-            data-message='This artwork is part of the art fair—#{artwork.fair.name}.Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'
+            data-message='This artwork is part of the art fair—#{fair.nameSansYear()}.Providing this information enables galleries to offer a more customized service, and helps us send better recommendations and event invitations to you.'
           )
 
     button.avant-garde-button-black(

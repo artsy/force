@@ -16,7 +16,7 @@ describe 'ArticleIndexView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @model = new Article _.extend fixtures.article,
         sections: [
@@ -130,8 +130,8 @@ describe 'ArticleIndexView', ->
       Backbone.sync.args[4][2].success fabricate 'partner_profile'
       $('.articles-promoted__img').attr('src').should.equal '/images/missing_image.png'
       $('.articles-promoted__name').text().should.equal 'Gagosian Gallery'
-      $('.articles-promoted__explore').text().should.equal 'Explore Institution'
-      $('.articles-promoted__explore').attr('href').should.equal '/getty'
+      $('.articles-promoted__explore-button').text().should.equal 'Explore Institution'
+      $('.articles-promoted__explore-button').attr('href').should.equal '/getty'
 
   describe 'promoted content auction', ->
 
@@ -147,5 +147,5 @@ describe 'ArticleIndexView', ->
       Backbone.sync.args[5][2].success fabricate 'sale'
       $('.articles-promoted__img').attr('src').should.equal 'https://i.embed.ly/1/display/crop?url=%2Fimages%2Fmissing_image.png&width=250&height=165&quality=95'
       $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
-      $('.articles-promoted__explore').text().should.equal 'Explore Auction'
-      $('.articles-promoted__explore').attr('href').should.equal '/sale/whtney-art-party'
+      $('.articles-promoted__explore-button').text().should.equal 'Explore Auction'
+      $('.articles-promoted__explore-button').attr('href').should.equal '/sale/whtney-art-party'

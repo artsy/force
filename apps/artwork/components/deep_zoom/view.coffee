@@ -1,10 +1,10 @@
+require 'openseadragon'
 _ = require 'underscore'
 Backbone = require 'backbone'
-Transition = require '../mixins/transition.coffee'
 template = -> require('./index.jade') arguments...
+Transition = require '../../../../components/mixins/transition.coffee'
 
 module.exports = class DeepZoomView extends Backbone.View
-  id: 'deep-zoom'
   className: 'deep-zoom'
   attributes:
     'data-state': 'loading'
@@ -67,13 +67,12 @@ module.exports = class DeepZoomView extends Backbone.View
   render: ->
     @$el.html template
 
-    $.getScript '/javascripts/openseadragon.min.js', =>
-      @viewer = OpenSeadragon _.extend {}, @openSeadragon.config,
-        id: @id
-        tileSources: @image
-        error: @remove
+    @viewer = OpenSeadragon _.extend {}, @openSeadragon.config,
+      element: @$el[0]
+      tileSources: @image
+      error: @remove
 
-      @postRender()
+    @postRender()
 
     this
 

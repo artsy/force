@@ -5,7 +5,7 @@ _ = require 'underscore'
 CurrentUser = require '../../models/current_user.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaveControls = require '../artwork_item/save_controls/view.coffee'
-{ excludeList } = require './exclude_list.coffee'
+blacklist = require './blacklist.coffee'
 COOKIE_NAME = 'recently-viewed-artworks'
 COOKIE_EXPIRY = 60 * 60 * 24 * 365
 ARTWORK_COUNT = 8
@@ -15,15 +15,6 @@ template = -> require('./index.jade') arguments...
 cookieValue = ->
   JSON.parse(Cookies.get(COOKIE_NAME) or '[]')
 
-currentPathIsInExcludeList = ->
-  _.each(excludeList, (urlPattern) ->
-    if typeof urlPattern is 'object'
-      return true if window.location.pathname.match(urlPattern)
-    else if typeof urlPattern is 'string'
-      return true if window.location.pathname is urlPattern
-  )
-  return false
-
 module.exports =
   setCookie: (artworkId) ->
     uniqueArtworkIds = _.without(cookieValue(), artworkId)
@@ -32,7 +23,7 @@ module.exports =
     Cookies.set COOKIE_NAME, JSON.stringify(artworkIdsToStore), expires: COOKIE_EXPIRY
 
   shouldShowRVARail: ->
-    !currentPathIsInExcludeList() && cookieValue().length > 0
+    !blacklist.check() && cookieValue().length > 0
 
   reInitRVARail: ($el) ->
     return unless $el.find('.rva-container').length > 0
@@ -65,4 +56,3 @@ module.exports =
             )
             savedArtworks?.addRepoArtworks data.artworks
             savedArtworks?.syncSavedArtworks()
-      

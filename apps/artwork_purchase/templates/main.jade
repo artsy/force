@@ -45,7 +45,7 @@
               )
               label( for= 'artwork-purchase-attending' )
             label.artsy-checkbox--label( for= 'artwork-purchase-attending' )
-              | I will attend #{fair.nameSansYear()}
+              | I #{fair.isNotOver() ? 'will attend' : 'attended'} #{fair.nameSansYear()}
               span.help-tooltip(
                 data-anchor='bottom-right'
                 data-message="This artwork is part of the art fair—#{fair.nameSansYear()}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."

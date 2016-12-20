@@ -10,3 +10,4 @@ module.exports = (sd, { artwork }) ->
     sd.COMMERCIAL.artwork.fair =
       id: artwork.fair.id
       name: artwork.fair.name
+      end_at: artwork.fair.end_at

@@ -16,7 +16,7 @@ describe 'TeamChannelView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       window.resize = ->
       window.matchMedia = sinon.stub().returns { matches: true }

@@ -26,7 +26,7 @@ describe 'auction templates', ->
   describe 'default auction', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
 
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction'
@@ -53,7 +53,7 @@ describe 'auction templates', ->
   describe 'auction promo', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
 
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction Promo', sale_type: 'auction promo'
@@ -75,7 +75,7 @@ describe 'auction templates', ->
   describe 'with associated sale', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
 
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction', associated_sale: fabricate 'sale', name: 'An Associated Sale'
@@ -93,7 +93,7 @@ describe 'auction templates', ->
   describe 'auction in preview with no user', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
           user: null
@@ -109,7 +109,7 @@ describe 'auction templates', ->
     describe 'live auction that is open for pre-bidding', ->
       before (done) ->
         benv.setup =>
-          benv.expose $: benv.require 'jquery'
+          benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
           data = _.extend {}, @baseData,
             auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'open',  live_start_at: moment().add(2, 'days')
             user: null
@@ -125,7 +125,7 @@ describe 'auction templates', ->
     describe 'live auction that is open for live bidding', ->
       before (done) ->
         benv.setup =>
-          benv.expose $: benv.require 'jquery'
+          benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
           data = _.extend {}, @baseData,
             auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'open',  live_start_at: moment().subtract(2, 'days')
             user: null
@@ -141,7 +141,7 @@ describe 'auction templates', ->
   describe 'open auction with no user', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction'
           user: null
@@ -157,7 +157,7 @@ describe 'auction templates', ->
   describe 'user not qualified_for_bidding', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
         data.user.set qualified_for_bidding: false, registered_to_bid: true
@@ -173,7 +173,7 @@ describe 'auction templates', ->
   describe 'user is qualified_for_bidding', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction', auction_state: 'preview'
         data.user.set qualified_for_bidding: true, registered_to_bid: true
@@ -188,7 +188,7 @@ describe 'auction templates', ->
   describe 'registration is closed', ->
     before (done) ->
       benv.setup =>
-        benv.expose $: benv.require 'jquery'
+        benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         data = _.extend {}, @baseData,
           auction: @auction = new Auction fabricate 'sale', name: 'An Auction'
           user: null
