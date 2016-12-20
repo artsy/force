@@ -48,7 +48,8 @@ module.exports = class MarketingSignupModal extends Backbone.View
 
   initialize: ->
     @inner = new MarketingSignupModalInner
-    @modal = modalize @inner, backdropCloses: false, dimensions: width: '900px'
+    width = if sd.IS_RESPONSIVE then '100%' else '900px'
+    @modal = modalize @inner, backdropCloses: false, dimensions: width: width
     @modal.view.$el.addClass 'marketing-signup-modal-container'
     @inner.on 'close', => @modal.close()
     @maybeOpen()
