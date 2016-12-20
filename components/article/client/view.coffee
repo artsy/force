@@ -185,6 +185,7 @@ module.exports = class ArticleView extends Backbone.View
       startIndex: startIndex
     @modal = modalize imageSet,
       dimensions: width: '100vw', height: '100vh'
+    @modal.view.$el.addClass 'image-set-container'
     @modal.open()
 
   jumpSmooth: (e) ->
