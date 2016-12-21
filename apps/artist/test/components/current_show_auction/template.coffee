@@ -22,7 +22,7 @@ describe 'current auction or show', ->
     benv.teardown()
 
   it 'with no image', (done) ->
-    benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
+    benv.render resolve(__dirname, '../../../components/current_item/index.jade'), {
       currentItem: _.extend {}, @item, imageUrl: null
       viewHelpers: helpers
     }, =>
@@ -34,7 +34,7 @@ describe 'current auction or show', ->
       done()
 
   it 'with an image', ->
-    benv.render resolve(__dirname, '../../../components/current_show_auction/index.jade'), {
+    benv.render resolve(__dirname, '../../../components/current_item/index.jade'), {
       currentItem: _.extend {}, @item
       viewHelpers: helpers
     }, =>

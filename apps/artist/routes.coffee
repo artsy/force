@@ -12,6 +12,7 @@ metaphysics = require '../../lib/metaphysics'
 query = require './queries/server.coffee'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
+currentEOYListing = require './components/current_eoy_listing/index'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
@@ -33,19 +34,23 @@ sd = require('sharify').data
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
-        res.locals.sd.ARTIST = artist
-        res.locals.sd.TAB = tab
-        currentItem = currentShowAuction(artist)
+        currentEOYListing(artist)
+          .then (currentEOYListing) ->
+            currentItem = currentEOYListing or currentShowAuction(artist)
 
-        res.locals.sd.CURRENT_SHOW_AUCTION = currentItem
+            res.locals.sd.ARTIST = artist
+            res.locals.sd.TAB = tab
+            res.locals.sd.CURRENT_ITEM = currentItem
 
-        res.render 'index',
-          viewHelpers: helpers
-          artist: artist
-          tab: tab
-          nav: nav
-          currentItem: currentItem
-          jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+            res.render 'index',
+              viewHelpers: helpers
+              artist: artist
+              tab: tab
+              nav: nav
+              currentItem: currentItem
+              jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
+
+          .catch (err) -> next(err if NODE_ENV is 'development')
 
       else
         res.redirect artist.href
