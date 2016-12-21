@@ -41,7 +41,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
   watchWindow: =>
     watchScrolling = _.throttle(@watchScrolling, 25)
     $(window).scroll =>
-      console.log 'scroll'
       if $(window).scrollTop() != @windowPosition
         watchScrolling()
     $(window).resize =>
