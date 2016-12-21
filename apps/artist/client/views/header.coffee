@@ -2,9 +2,9 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-{ CURRENT_SHOW_AUCTION } = require('sharify').data
+{ CURRENT_ITEM } = require('sharify').data
 ShareView = require '../../../../components/share/view.coffee'
-currentItemTemplate = -> require('../../components/current_show_auction/index.jade') arguments...
+currentItemTemplate = -> require('../../components/current_item/index.jade') arguments...
 viewHelpers = require '../../view_helpers.coffee'
 { numberFormat } = require 'underscore.string'
 
@@ -43,9 +43,9 @@ module.exports = class ArtistHeaderView extends Backbone.View
     @$('.artist-header-follow-count').attr 'data-count', numberFormat count
 
   updateCurrentItem: ->
-    currentItem = CURRENT_SHOW_AUCTION
-    if currentItem?.type is 'auction'
-      currentItem.detail = viewHelpers.formatAuctionDetail currentItem
+    currentItem = CURRENT_ITEM
+    if currentItem
+      currentItem.detail = viewHelpers.formatAuctionDetail(currentItem) if currentItem.type is 'auction'
       @$('.current-item-container').html currentItemTemplate { currentItem, viewHelpers }
 
   navClick: (e) =>
