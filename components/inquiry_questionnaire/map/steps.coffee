@@ -5,7 +5,6 @@ module.exports = [
       { is_logged_out: true: ['account'] }
     ]
     false: [
-      { is_logged_out_but_has_account: true: ['account'] }
       pre_qualify: {
         true: [
           { has_seen_commercial_interest: false: ['commercial_interest'] }
