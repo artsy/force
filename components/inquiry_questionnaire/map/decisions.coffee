@@ -26,9 +26,6 @@ decisions =
   is_logged_in: ({ user }) ->
     user.isLoggedIn()
 
-  is_logged_out_but_has_account: ({ user }) ->
-    user.isLoggedOut() and user.isWithAccount()
-
   is_logged_out: ({ user }) ->
     user.isLoggedOut()
 

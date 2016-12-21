@@ -89,7 +89,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     e.preventDefault()
     @inquiry = new ArtworkInquiry notification_delay: 600
 
-    form = new Form model: @inquiry, $form: @$el
+    form = new Form model: @inquiry, $form: @$('form')
     return unless form.isReady()
 
     form.state 'loading'
