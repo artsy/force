@@ -6,7 +6,6 @@ module.exports = (remote = {}, options = {}) ->
 
   return { initialize: (->) } if IS_TEST_ENV
 
-  Bloodhound = require 'typeahead.js/dist/bloodhound'
   settings = _.defaults options,
     limit: 4
     remote: remote

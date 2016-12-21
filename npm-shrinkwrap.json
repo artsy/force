@@ -6060,9 +6060,9 @@
       "resolved": "https://registry.npmjs.org/type-is/-/type-is-1.6.14.tgz"
     },
     "typeahead.js": {
-      "version": "0.11.1",
-      "from": "typeahead.js@>=0.11.0 <0.12.0",
-      "resolved": "https://registry.npmjs.org/typeahead.js/-/typeahead.js-0.11.1.tgz",
+      "version": "0.10.5",
+      "from": "typeahead.js@>=0.10.0 <0.11.0",
+      "resolved": "https://registry.npmjs.org/typeahead.js/-/typeahead.js-0.10.5.tgz",
       "dev": true
     },
     "typedarray": {
