@@ -27,8 +27,14 @@ module.exports = class PurchaseForm extends Backbone.View
       success: (model, response) =>
         analyticsHooks.trigger 'purchase:inquiry:success', { @artwork, @inquiry, user }
       error: (model, response, options) =>
-        analyticsHooks.trigger 'purchase:inquiry:failure'
-        @$('.js-ap-form-errors').html @errorMessage(response)
+        errorMessage = @errorMessage(response)
+        analyticsHooks.trigger 'purchase:inquiry:failure', {
+          @artwork,
+          @inquiry,
+          user,
+          message: errorMessage
+        }
+        @$('.js-ap-form-errors').html errorMessage
         error?()
     ]
 
@@ -39,4 +45,6 @@ module.exports = class PurchaseForm extends Backbone.View
           success: resolve
           error: resolve
 
-    Q.all(promises).then success
+    Q.all(promises)
+      .then success
+      .catch -> # handled by error callback

@@ -63,7 +63,12 @@ class PurchaseView extends Backbone.View
     # Validate both forms before moving on.
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
     signupValid = @signupForm.validateForm()
-    return if not (@purchaseForm.validateForm() and signupValid)
+    unless (@purchaseForm.validateForm() and signupValid)
+      analyticsHooks.trigger "purchase:signup:failure",
+        artwork: @artwork
+        message: "client-side form validation failed"
+      return
+
     return if @signupForm.formIsSubmitting() or @purchaseForm.formIsSubmitting()
     @loadingButton()
     @signupForm.submit
@@ -74,6 +79,7 @@ class PurchaseView extends Backbone.View
   # Callbacks
 
   signupSuccess: (user) =>
+    analyticsHooks.trigger "purchase:signup:success", user: user
     @purchaseForm.submit {
       user,
       success: @purchaseSuccess,
@@ -81,21 +87,33 @@ class PurchaseView extends Backbone.View
     }
 
   isWithAccount: (user) =>
-    @signupForm.reenableForm()
-    @purchaseForm.reenableForm()
+    analyticsHooks.trigger "purchase:signup:failure",
+      user: user
+      artwork: @artwork
+      message: "user already exists, login required"
+    @reenableForm @signupForm
+    @reenableForm @purchaseForm
     @normalButton()
     @openLoginModal "We found an Artsy account associated with #{user.get 'email'}. Please log in to continue."
 
-  signupError: =>
-    @signupForm.reenableForm()
-    @purchaseForm.reenableForm()
+  signupError: (errorMessage) =>
+    analyticsHooks.trigger "purchase:signup:failure",
+      artwork: @artwork
+      message: errorMessage
+    @reenableForm @signupForm
+    @reenableForm @purchaseForm
     @errorButton()
 
 #Purchase
   #Submit
 
   submitPurchaseForm: (form, options) ->
-    return if not @purchaseForm.validateForm()
+    unless @purchaseForm.validateForm()
+      analyticsHooks.trigger "purchase:signup:failure",
+        artwork: @artwork
+        message: "client-side form validation failed"
+        user: CURRENT_USER
+      return
     return if @purchaseForm.formIsSubmitting()
     @loadingButton()
     @purchaseForm.submit
@@ -110,7 +128,7 @@ class PurchaseView extends Backbone.View
     window.location = @artwork.href + '/thank-you'
 
   purchaseError: =>
-    @purchaseForm.reenableForm()
+    @reenableForm @purchaseForm
     @errorButton()
 
 # Button State
@@ -126,6 +144,9 @@ class PurchaseView extends Backbone.View
   errorButton: ->
     @$button.attr 'data-state', 'error'
     @$button.prop 'disabled', false
+
+  reenableForm: (form) ->
+    form.reenableForm undefined, reset: false
 
 module.exports.init = ->
   return if not window.location.pathname.match(/.*\/checkout/)

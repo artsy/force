@@ -23,6 +23,11 @@
     })
   })
   analyticsHooks.on('purchase:inquiry:failure', function (context) {
-    analytics.track('Purchase request failed to submit')
+    analytics.track('Purchase request failed to submit', {
+      artwork_id: context.artwork._id,
+      artwork_slug: context.artwork.id,
+      user_id: context.user.id,
+      message: context.message
+    })
   })
 })()

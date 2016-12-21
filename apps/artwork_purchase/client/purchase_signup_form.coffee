@@ -16,35 +16,39 @@ module.exports = class PurchaseSignupForm extends Backbone.View
   initialize: -> #
     @loggedOutUser = new LoggedOutUser
 
-  submit: ({ success, error, isWithAccountCallback }) ->
+  submit: ( options ) ->
     @loggedOutUser.set (data = @serializeForm())
+    @loggedOutUser.save {},
+      silent: true
+      success: =>
+        @fetchAccount options
+      error: (model, response) =>
+        errorMessage = @errorMessage response
+        @showError errorMessage
+        options.error?(errorMessage)
 
-    userLookup = @loggedOutUser.findOrCreate silent: true
-      .catch ({ responseJSON }) =>
-        @showError responseJSON.message
-        error?()
-      .then =>
-        Q.promise (resolve) =>
-          @loggedOutUser.related().account.fetch
-            silent: true
-            success: resolve
-            error: resolve
-
-    userLookup.then =>
+  fetchAccount: ({ success, error, isWithAccountCallback }) =>
+    complete = =>
       if @loggedOutUser.isWithAccount()
         isWithAccountCallback @loggedOutUser
       else
         @signup { success, error }
 
+    @loggedOutUser.related().account.fetch
+      silent: true
+      success: complete
+      error: complete
+
   signup: ({ success, error }) ->
     @loggedOutUser.signup
       trigger_login: false
       success: ( model, { user } )->
-        analyticsHooks.trigger "purchase:signup:success", user: user
         success?(user)
-      error: (model, response, options) =>
-        @showError @errorMessage response
-        error?()
+
+      error: (model, response) =>
+        errorMessage = @errorMessage response
+        @showError errorMessage
+        error?(errorMessage)
 
   showError: (msg) =>
     @$('.js-ap-signup-form-errors').html msg
