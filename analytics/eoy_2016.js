@@ -12,7 +12,8 @@
 
   $document.on('click', '.eoy-artist-item', function () {
     analytics.track('Clicked EOY promotion artist', {
-      slug: $(this).data('slug')
+      slug: $(this).data('slug'),
+      id: $(this).data('id')
     })
   })
 })()
