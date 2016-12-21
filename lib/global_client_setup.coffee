@@ -57,10 +57,7 @@ setupReferrerTracking = ->
     Cookies.set 'force-session-start', window.location.href
 
 setupJquery = ->
-  require 'typeahead.js/dist/typeahead.jquery.js'
-  # Typeahead adds to the jQuery npm dependency, we use Google's CDNed jQuery.
-  # TODO: Drop latter and only use npm dependency
-  $.fn.typeahead = require('jquery').fn.typeahead
+  require 'typeahead.js/dist/typeahead.bundle.min.js'
   require 'jquery.transition'
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
