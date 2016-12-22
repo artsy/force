@@ -23,11 +23,14 @@
     })
   })
   analyticsHooks.on('purchase:inquiry:failure', function (context) {
-    analytics.track('Purchase request failed to submit', {
+    var data = {
       artwork_id: context.artwork._id,
       artwork_slug: context.artwork.id,
-      user_id: context.user.id,
       message: context.message
-    })
+    }
+    if (context.user && context.user.id) {
+      data.user_id = context.user.id;
+    }
+    analytics.track('Purchase request failed to submit', data)
   })
 })()

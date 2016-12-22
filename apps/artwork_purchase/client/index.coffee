@@ -64,7 +64,7 @@ class PurchaseView extends Backbone.View
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
     signupValid = @signupForm.validateForm()
     unless (@purchaseForm.validateForm() and signupValid)
-      analyticsHooks.trigger "purchase:signup:failure",
+      analyticsHooks.trigger "purchase:inquiry:failure",
         artwork: @artwork
         message: "client-side form validation failed"
       return
@@ -86,18 +86,17 @@ class PurchaseView extends Backbone.View
       error: @purchaseError
     }
 
-  isWithAccount: (user) =>
-    analyticsHooks.trigger "purchase:signup:failure",
-      user: user
+  isWithAccount: (loggedOutUser) =>
+    analyticsHooks.trigger "purchase:inquiry:failure",
       artwork: @artwork
       message: "user already exists, login required"
     @reenableForm @signupForm
     @reenableForm @purchaseForm
     @normalButton()
-    @openLoginModal "We found an Artsy account associated with #{user.get 'email'}. Please log in to continue."
+    @openLoginModal "We found an Artsy account associated with #{loggedOutUser.get 'email'}. Please log in to continue."
 
   signupError: (errorMessage) =>
-    analyticsHooks.trigger "purchase:signup:failure",
+    analyticsHooks.trigger "purchase:inquiry:failure",
       artwork: @artwork
       message: errorMessage
     @reenableForm @signupForm
@@ -109,7 +108,7 @@ class PurchaseView extends Backbone.View
 
   submitPurchaseForm: (form, options) ->
     unless @purchaseForm.validateForm()
-      analyticsHooks.trigger "purchase:signup:failure",
+      analyticsHooks.trigger "purchase:inquiry:failure",
         artwork: @artwork
         message: "client-side form validation failed"
         user: CURRENT_USER
