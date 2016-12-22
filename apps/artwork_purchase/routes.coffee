@@ -1,5 +1,5 @@
 { extend } = require 'underscore'
-{ NODE_ENV, PURCHASE_FLOW } = require('sharify').data
+{ PURCHASE_FLOW } = require('sharify').data
 metaphysics = require '../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
@@ -38,10 +38,7 @@ Fair = require '../../models/fair.coffee'
 
   return if metaphysics.debug req, res, send
   inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  notProduction = res.locals.sd.NODE_ENV is 'development' or
-    res.locals.sd.NODE_ENV is 'staging' or
-    res.locals.sd.NODE_ENV is 'test'
-  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup and notProduction
+  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->
@@ -80,10 +77,7 @@ Fair = require '../../models/fair.coffee'
   """
   return if metaphysics.debug req, res, send
   inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
-  notProduction = res.locals.sd.NODE_ENV is 'development' or
-    res.locals.sd.NODE_ENV is 'staging' or
-    res.locals.sd.NODE_ENV is 'test'
-  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup and notProduction
+  return res.redirect "/artwork/#{req.params.id}" unless inPurchaseTestGroup
   send = query: query, variables: req.params
   metaphysics send
     .then ({ artwork }) ->

@@ -70,10 +70,6 @@ bootstrap = ->
     .then (data) ->
       data.fair = new Fair data.artwork.fair if data.artwork.fair
       data.inPurchaseTestGroup = inPurchaseTestGroup
-      data.notProduction = res.locals.sd.NODE_ENV is 'development' or
-        res.locals.sd.NODE_ENV is 'staging' or
-        res.locals.sd.NODE_ENV is 'test'
-      data.isPurchasable = data.artwork.is_purchasable
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params

@@ -24,7 +24,6 @@ describe 'Artist routes', ->
       send: sinon.stub()
       type: sinon.stub()
       locals: sd:
-        NODE_ENV: 'test'
         PURCHASE_FLOW: 'purchase'
 
   describe 'with a work that is not purchasable', ->

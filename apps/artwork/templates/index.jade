@@ -21,7 +21,7 @@ block body
             include ../client/fold
 
         .artwork__main__metadata(
-          class= inPurchaseTestGroup && isPurchasable && notProduction ? 'purchase-flow' : ''
+          class= inPurchaseTestGroup && artwork.is_purchasable ? 'purchase-flow' : ''
         )
           include ../components/metadata/index
           include ../components/commercial/index
