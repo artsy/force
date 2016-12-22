@@ -13,7 +13,7 @@ module.exports =
     p1 = user.name + ' submitted a request to purchase ' + titleAndDate + ' by ' + artwork.artist_names + '.'
 
     p2 = "Please confirm the work's availability and details, and provide \
-      a shipping estimate to the below address. We ask you to reply witin 3 business \
+      a shipping estimate to the below address. We ask you to reply within 3 business \
       days, and collectors to confirm purchase within 72 hours after receiving a quote. \
       Please note that the collector will review your quote before agreeing to purchase \
       the work and notify you of the final decision."
