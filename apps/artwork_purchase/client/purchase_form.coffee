@@ -21,7 +21,7 @@ module.exports = class PurchaseForm extends Backbone.View
       artwork: @artwork.id,
       contact_gallery: true,
       inquiry_url: window.location.href,
-      purchase: true,
+      purchase_request: true,
     }
 
     promises = [@inquiry.save null,
