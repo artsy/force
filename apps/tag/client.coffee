@@ -20,5 +20,4 @@ module.exports.init = ->
     defaultHeading: tag.get('name')
     stuckParam: { 'tag_id': tag.id }
     aggregations: aggregationParams
-    forSale: 'false'
     filterRoot: tag.href() + '/artworks'
