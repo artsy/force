@@ -44,7 +44,6 @@ module.exports.init = ->
     defaultHeading: gene.displayName()
     stuckParam: { 'gene_id': gene.id }
     aggregations: aggregationParams
-    forSale: 'false'
     filterRoot: gene.href() + '/artworks'
     includeMediumFilterInAggregation: { include_medium_filter_in_aggregation: true }
 
@@ -78,5 +77,3 @@ module.exports.init = ->
     id: gene.id
 
   scrollFrame '#gene-filter-content a' unless sd.EIGEN
-
-
