@@ -48,7 +48,7 @@
     "connect-flash": "^0.1.1",
     "connect-timeout": "^1.7.0",
     "cookie-parser": "^1.4.0",
-    "cookie-session": "^2.0.0-alpha.2",
+    "cookie-session": "^1.2.0",
     "cors": "^2.8.1",
     "diacritics": "^1.2.2",
     "dompurify": "^0.8.4",
