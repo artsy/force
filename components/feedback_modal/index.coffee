@@ -36,7 +36,7 @@ module.exports = ->
     switch step
       when 'collector'
         modal.close ->
-          openMultiPageModal 'collector-faqs'
+          openMultiPageModal 'collector-faqs', 'collector-faqs-selling-on-artsy'
 
       when 'artist'
         modal.close ->
