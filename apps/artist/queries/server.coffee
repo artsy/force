@@ -18,6 +18,9 @@ module.exports = """
         text
         credit
       }
+      _artworks: artworks(size: 50, filter: IS_FOR_SALE) {
+        _id
+      }
       counts {
         follows
         artworks

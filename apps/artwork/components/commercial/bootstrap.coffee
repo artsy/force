@@ -2,6 +2,8 @@ module.exports = (sd, { artwork }) ->
   sd.COMMERCIAL =
     artwork:
       id: artwork.id
+      _id: artwork._id
+      price: artwork.price
       is_acquireable: artwork.is_acquireable
       is_inquireable: artwork.is_inquireable
       is_purchasable: artwork.is_purchasable
