@@ -10,7 +10,7 @@ BIN = node_modules/.bin
 
 # Start the server with the OSS env vars instead of the developer's `.env`
 oss:
-	APP_URL=http://localhost:5000 APPLICATION_NAME=force-development $(BIN)/nf start --env .env.oss
+	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging $(BIN)/nf start --env .env.oss
 
 # Start the server
 s:
@@ -46,11 +46,11 @@ spc:
 
 # Start the server pointing to production with debugger
 spd:
-	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start -f ./Procfile.dev
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-production API_URL=https://api.artsy.net $(BIN)/nf start -j ./Procfile.dev
 
 # Start the server pointing to staging with debugger
 ssd:
-	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start -f ./Procfile.dev
+	$(BIN)/node-inspector --web-port=8081 & APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net $(BIN)/nf start -j ./Procfile.dev
 
 # Run all of the project-level tests, followed by app-level tests
 test:
