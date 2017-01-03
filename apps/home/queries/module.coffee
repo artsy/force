@@ -21,6 +21,7 @@ module.exports = """
           ... popular_artists_context
           ... followed_artists_context
           ... related_artists_context
+          ... followed_artist_context
         }
       }
     }
@@ -32,4 +33,5 @@ module.exports = """
   #{require '../components/followed_artists/query.coffee'}
   #{require '../components/gene_context/query.coffee'}
   #{require '../components/related_artists_context/query.coffee'}
+  #{require '../components/followed_artist_context/query.coffee'}
 """
