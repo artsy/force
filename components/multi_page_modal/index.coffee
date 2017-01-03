@@ -1,8 +1,8 @@
 modalize = require '../modalize/index.coffee'
 multiPageView = require '../multi_page/index.coffee'
 
-module.exports = (key, defaultPage = null, cb = null) ->
-  view = multiPageView key, defaultPage
+module.exports = (key, defaultPageId = null, cb = null) ->
+  view = multiPageView key, defaultPageId
 
   modal = modalize view,
     dimensions: width: '900px', height: '580px'
