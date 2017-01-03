@@ -10,11 +10,11 @@ module.exports = class MultiPageView extends Backbone.View
   events:
     'click .js-page': 'change'
 
-  initialize: ({ @title, @description, @pages }) ->
+  initialize: ({ @title, @description, @pages, @defaultPageId }) ->
     @collection = new Backbone.Collection _.map @pages, (id, title) ->
       new Page id: id, title: title
 
-    @state = new Backbone.Model active: @collection.first().id
+    @state = new Backbone.Model active: if @collection.get(@defaultPageId) then @defaultPageId else @collection.first().id
 
     @listenTo @state, 'change:active', @render
 

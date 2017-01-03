@@ -3,7 +3,7 @@ module.exports =
     title: 'Auction FAQs'
     description: '
       How can we help you? Below are a few general categories to help you find the answers you’re looking for.\n\n
-      Need more immediate assistance? Please [contact us](mailto:support@artsy.net)
+      Need more immediate assistance? Please [contact us](mailto:specialist@artsy.net)
     '
     pages:
       'Bidding': 'how-auctions-work-bidding'
@@ -26,7 +26,6 @@ module.exports =
     title: 'Artist FAQs'
     description: '
       How can we help you? Below are answers to some of the most common questions from artists.\n\n
-      Need more immediate assistance? Please [contact us](mailto:support@artsy.net)
     '
     pages:
       'How Artsy Works': 'artist-faqs-how-artsy-works'

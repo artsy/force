@@ -1,3 +1,4 @@
+_ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -32,3 +33,13 @@ describe 'MultiPageView', ->
       @view.state.get('active').should.equal 'how-auctions-work-conditions-of-sale'
       @view.$('.mpv-nav a:last').hasClass('is-active').should.be.true()
       @view.$('.is-active').should.have.lengthOf 1
+
+  describe 'defaultPageId', ->
+    it 'displays default page when a defaultPageId is passed', ->
+      options = _.extend(config['collector-faqs'], { defaultPageId: 'collector-faqs-selling-on-artsy' })
+      view = new MultiPageView options
+      view.render()
+
+      view.state.get('active').should.equal 'collector-faqs-selling-on-artsy'
+      view.$('.mpv-nav a:last').hasClass('is-active').should.be.true()
+      view.$('.is-active').should.have.lengthOf 1

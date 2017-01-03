@@ -30,6 +30,7 @@ describe 'openFeedbackModal', ->
       .map -> $(this).text()
       .get()
         .should.eql [
+          "I have an auction-related question."
           'I’m an artist interested in listing my work.'
           'I’m an individual interested in selling artwork.'
           'I have a press inquiry.'
