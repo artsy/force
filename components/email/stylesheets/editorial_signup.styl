@@ -18,15 +18,14 @@
     max-width 100vw
     overflow hidden
   &__container, &__social
-    width 1250px
+    max-width 580px
     margin auto
-    padding-left 200px
     z-index 5
+    padding 0px 30px
   &__container
     h2
       garamond-size('l-headline')
       margin-bottom 40px
-      width 500px
     h3
       avant-garde-size('body')
       margin-bottom 20px
@@ -43,7 +42,7 @@
     > input
       background-color white
       border none
-      width 617px
+      width 100%
       height 50px
   &__social
     display none
@@ -100,22 +99,25 @@
       avant-garde-size('s-headline')
       border-bottom 1px solid white
   &__background
-    width 1250px
+    max-width 1250px
     li
-      width 1250px
+      max-width 1250px
       height 380px
+      left 0
       position absolute
       background-size cover
       background center center no-repeat
   &__background-cover
     z-index 4
     height 380px
-    width 1250px
+    max-width 1250px
     left 0
     right 0
     margin auto
     position absolute
     background-image linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)
+  // @media screen only (max-width: 550px)
+    
 
 .articles-es-cta--banner
   @extend .articles-es-cta
