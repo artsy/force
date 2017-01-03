@@ -24,7 +24,7 @@ module.exports = class ArticlesFeedView extends Backbone.View
 
     @$('.js-load-more-articles').attr 'data-state', 'loading'
 
-    data = _.extend({}, offset: @collection.length, @fetchWith)
+    data = _.extend({}, offset: @collection.length + 4, @fetchWith)
 
     @collection.fetch(remove: false, data: data)
       .then @renderButton
