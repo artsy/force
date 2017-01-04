@@ -1,7 +1,17 @@
 { MEDIUM, CURRENT_USER } = require('sharify').data
+{ contains } = require 'underscore'
 CTABarView = require '../../../components/cta_bar/view.coffee'
+ArtistPageCTAView = require '../../../components/artist_page_cta/view.coffee'
 
 module.exports = (artist) ->
+  # Temporarily always show new CTA to lab feature users
+  if CURRENT_USER? and contains(CURRENT_USER.lab_features, 'New Artist Page CTA')
+    artistPageCTAView = new ArtistPageCTAView
+      artist: artist
+
+    $('body').append artistPageCTAView.render().$el
+    return
+
   return unless MEDIUM is 'search' and not CURRENT_USER?
 
   name = 'artist_cta'
