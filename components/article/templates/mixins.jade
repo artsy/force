@@ -105,6 +105,13 @@ mixin embed(section)
   .article-embed-container
     iframe(src=section.url height=section.height data-d-height=section.height data-m-height=section.mobile_height scrolling='no' frameborder='0')
 
+mixin printArtistNames(artwork)
+  for artist, i in artwork.artists
+    if artist.slug
+      a(href='/artist/' + artist.slug )= artist.name
+    else
+      |= artist.name
+
 mixin artwork(artwork)
   li( data-id=artwork.id )
     figure.artwork-item
@@ -115,10 +122,7 @@ mixin artwork(artwork)
       figcaption.artwork-item-caption
         if artwork.artist && artwork.artist.name
           p.artwork-item-artist.artwork-item-overflow
-            if artwork.artist.slug
-              a(href='/artist/' + artwork.artist.slug )= artwork.artist.name
-            else
-              |= artwork.artist.name
+            +printArtistNames(artwork)
         if artwork.title
           p.artwork-item-title.artwork-item-overflow
             if artwork.slug
