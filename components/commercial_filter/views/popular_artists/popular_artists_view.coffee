@@ -8,7 +8,7 @@ module.exports = class PopularArtistsView extends Backbone.View
     @listenTo @artists, 'reset', @render
 
   render: ->
-    if @params.get('medium') in ['design', 'jewelry']
+    if @params.get('medium') in ['design', 'jewelry'] or @params.get('page') != 1
       $('.cf-popular_artists').hide()
     else
       $('.cf-popular_artists').show()
