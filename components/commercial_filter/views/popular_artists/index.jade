@@ -4,4 +4,5 @@
     .cf-popular_artists__row
       a(href=artist.get('href'))
         img(src=artist.get('image').thumb.url, width=30)
-        span.avant-garde-body= artist.get('name')
+        div.avant-garde-body= artist.get('name')
+        i.icon-chevron-small-right
