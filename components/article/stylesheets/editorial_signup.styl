@@ -45,6 +45,7 @@
     padding 60px 30px 30px 30px
     text-align center
 
+
     .article-subscribe-mainheader
       avant-garde-size('m-headline')
 
@@ -73,3 +74,22 @@
         avant-garde-size('s-headline')
       .mktoButtonWrap button::after
         top 10px
+
+    @media (min-width: 1600px)
+      max-width 1600px
+      margin 0 auto
+    @media (max-width: 550px)
+      &.responsive-layout-container
+        margin 0 20px
+      .article-subscribe-container
+        height auto
+      .articles-insights-marketo-form
+        max-width 100%
+        .mktoButtonRow
+          position relative
+          button
+            width 100%
+            position relative
+            right 0
+      .article-subscribe-header
+        position relative
