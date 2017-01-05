@@ -39,7 +39,6 @@ router.get '/consign', isResponsive
 router.get '/professional-buyer*', isResponsive
 router.get '/2016-year-in-art*', isResponsive
 router.get TEAM_BLOGS, isResponsive
-# router.get EOY_2016_SLUGS, isResponsive
-router.get '/article/*', isResponsive
+router.get EOY_2016_SLUGS, isResponsive
 router.use redirect
 module.exports = router
