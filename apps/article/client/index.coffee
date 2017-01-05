@@ -149,5 +149,5 @@ module.exports = class ArticleIndexView extends Backbone.View
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')
-  new GalleryInsightsView el: $('body')
+  new GalleryInsightsView el: $('body').addClass('body-responsive')
   new EditorialSignupView el: $('body')
