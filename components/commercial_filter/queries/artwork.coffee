@@ -31,6 +31,7 @@ module.exports = """
     sale_message
     is_for_sale
     is_inquireable
+    is_biddable
     partner {
       name
       href
