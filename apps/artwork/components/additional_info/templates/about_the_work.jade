@@ -1,19 +1,21 @@
-if artwork.description
-  != artwork.description
+.artwork-additional-info__content__about-the-work
 
-if artwork.additional_information
-  != artwork.additional_information
+  if artwork.description
+    != artwork.description
 
-if artwork.signature
-  p Signature: #{artwork.signature}
+  if artwork.additional_information
+    != artwork.additional_information
 
-if artwork.publisher
-  p Publisher: #{artwork.publisher}
+  if artwork.signature
+    p Signature: #{artwork.signature}
 
-if artwork.manufacturer
-  p Manufacturer: #{artwork.manufacturer}
+  if artwork.publisher
+    p Publisher: #{artwork.publisher}
 
-if artwork.articles.length
-  .artwork-additional-info__content__articles
-    for article in artwork.articles
-      include ./article
+  if artwork.manufacturer
+    p Manufacturer: #{artwork.manufacturer}
+
+  if artwork.articles.length
+    .artwork-additional-info__content__articles
+      for article in artwork.articles
+        include ./article
