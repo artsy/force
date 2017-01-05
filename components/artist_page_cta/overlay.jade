@@ -2,4 +2,23 @@ div.artist-page-cta-overlay__headline Sign up to keep track of&nbsp;
   span.artist-page-cta-overlay__headline__artist-name
     | #{artist.get('name')}&nbsp;
   | and your other favorite artists
+
+div.artist-page-cta-overlay__feed
+  span.artist-page-cta-overlay__feed__pulldown.hover-pulldown(data-state='active') Works For You
+    .artist-page-cta-overlay__feed__items.hover-pulldown-menu
+      ul
+        li
+          - var image = artist.get('cta_image').thumb.url
+          - var count = 7
+          - var name = artist.get('name')
+          include ./row.jade
+        li
+          - var image = artist.get('cta_artist')[0].image.thumb.url
+          - var count = 3
+          - var name = artist.get('cta_artist')[0].name
+          include ./row.jade
+
+  include ../main_layout/public/icons/bell.svg
+  .artist-page-cta-overlay__feed__count 3
+
 span.artist-page-cta-overlay__close ×

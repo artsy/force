@@ -15,6 +15,14 @@ module.exports =
       artists (size: 15) @include(if: $artists){
         ... artistCell
       }
+      cta_artist: artists(size: 1) {
+        image {
+          thumb: resized(width: 150, version: "square") {
+            url
+          }
+        }
+        name
+      }
       articles (limit: 15, sort: PUBLISHED_AT_DESC) @include(if: $articles){
         href
         thumbnail_title
