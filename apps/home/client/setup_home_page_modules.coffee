@@ -10,6 +10,8 @@ ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coff
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
 setupFollowButton = require '../components/follow_button/index.coffee'
+
+relatedArtistsAnnotation = -> require('../components/related_artists_context/annotation.jade') arguments ...
 popularArtistsTemplate = -> require('../components/popular_artists_context/templates/index.jade') arguments...
 auctionTemplate = -> require('../components/auction_context/templates/index.jade') arguments...
 fairTemplate = -> require('../components/fair_context/templates/index.jade') arguments...
@@ -22,7 +24,7 @@ contexts =
       auctionTimeLabel: auctionTimeLabel(module.context)
       auctionClosesLabel: auctionClosesLabel(module.context)
   current_fairs: (module) ->
-    fairTemplate fair: module.context, timeSpan: timeSpan
+    fairTemplate fair: module.context, timeSpan: timeSpan    
 
 setupFollowedArtistsView = (module, $el, user) ->
   view = new FollowedArtistsRailView
@@ -73,15 +75,21 @@ module.exports = ->
       return setupActiveBidsView(module, $el.find('.abrv-content'), user) if module.key is 'active_bids'
       return setupFollowedArtistsView(module, $el, user) if module.key is 'followed_artists'
 
-      view = new ArtworkBrickRailView
+      options = 
         $el: $el
         artworks: module.results
         title: module.title
         viewAllUrl: viewAllUrl module
         hasContext: contexts[module.key]?
-        followAnnotation: module.context?.based_on?.name
         user: user
         category: module.key is 'genes' or module.key is 'generic_gene'
+
+      if module.key is 'related_artists'
+        options.annotation = relatedArtistsAnnotation 
+          based_on: module.context?.based_on
+
+      view = new ArtworkBrickRailView options
+        
 
       view.on 'post-render', ->
 
