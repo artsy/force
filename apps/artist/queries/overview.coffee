@@ -15,7 +15,7 @@ module.exports =
       artists (size: 15) @include(if: $artists){
         ... artistCell
       }
-      cta_artist: artists(size: 1) {
+      cta_artists: artists(size: 1) {
         image {
           thumb: resized(width: 150, version: "square") {
             url
