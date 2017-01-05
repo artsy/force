@@ -1,10 +1,15 @@
+body-width = 580px
+padding = 30px
+desktop-height = 380px
+mobile-height = 260px
+
 // Editorial Signup
 .articles-es-cta
   position relative
   display flex
   align-items center
   flex-direction column
-  height 380px
+  height desktop-height
   width 100%
   background-color black
   color white
@@ -13,40 +18,48 @@
       display none
     .articles-es-cta__social
       display block
+  &__container, &__social
+    max-width 1250px
+    margin auto
+    z-index 5
+    padding 0px padding
   &.is-article-page
     margin-bottom 100px
     max-width 100vw
     overflow hidden
-  &__container, &__social
-    width 1250px
-    margin auto
-    padding-left 200px
-    z-index 5
+    .articles-es-cta__social, .articles-es-cta__container
+      max-width body-width + (padding * 2)
   &__container
+    display flex
+    flex-direction column
+    justify-content center
     h2
       garamond-size('l-headline')
       margin-bottom 40px
-      width 500px
     h3
       avant-garde-size('body')
       margin-bottom 20px
   &__form
-    > button
+    display flex
+    align-items center
+    width 90%
+    button
       padding 10px
       height 30px
-      width 90px
       border-radius 2px
       background-color black
-      left -100px
       avant-garde-size('s-headline')
       line-height 1em
-    > input
+      margin-left -100px
+    input
       background-color white
       border none
-      width 617px
       height 50px
+      width 100%
   &__social
     display none
+    max-width body-width + (padding * 2)
+    width 100%
     h2
       garamond-size('s-headline')
       margin-bottom 20px
@@ -100,22 +113,49 @@
       avant-garde-size('s-headline')
       border-bottom 1px solid white
   &__background
-    width 1250px
+    max-width 1250px
     li
-      width 1250px
-      height 380px
+      width 100%
+      height desktop-height
+      left 0
       position absolute
       background-size cover
       background center center no-repeat
   &__background-cover
+    max-width 1250px
+    width 100%
     z-index 4
-    height 380px
-    width 1250px
+    height desktop-height
     left 0
     right 0
     margin auto
     position absolute
     background-image linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)
+  @media screen and (max-width 550px)
+    height mobile-height
+    .articles-es-cta
+      &__form
+        width 100%
+      &__container
+        h2
+          garamond-size('headline')
+        h3
+          avant-garde-size('s-headline')
+      &__container, &__background-cover, &__background li
+        height mobile-height
+      &__social
+        padding 40px 20px
+      &__social-item
+        width 50%
+        height 50px
+        padding 0 padding
+      &__social-item:nth-child(2)
+        border-left 0px
+        border-bottom 0px
+      &__row
+        display flex
+        &:last-of-type
+          border-bottom 1px solid white
 
 .articles-es-cta--banner
   @extend .articles-es-cta
