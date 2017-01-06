@@ -81,9 +81,11 @@
   .team-channel-featured,
   .team-channel-grid,
   .team-channel-header__text-container,
-  .articles-grid__more-button
+  .js-articles-grid-more.articles-grid__more-button,
+  .team-channel-footer .mlf,
+  .team-channel-footer .main-layout-container
     max-width 1600px
-    min-width 1600px
+    margin 0 auto
 @media (max-width: 900px)
   .team-channel-featured
     .mgr-cell:nth-child(1n)
@@ -95,3 +97,6 @@
   .team-channel-grid
     .articles-grid__header
       margin-top 30px
+@media (max-width: 600px)
+  .body-responsive .team-channel-footer #main-layout-footer
+    display block
