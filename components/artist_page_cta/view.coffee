@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 Form = require '../mixins/form.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
+AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
 
@@ -13,8 +14,15 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   events:
     'click': 'fullScreenOverlay'
     'submit .artist-page-cta-overlay__register': 'submit'
+    'click .auth-toggle': 'triggerLoginModal'
 
-  fullScreenOverlay: (e)->
+  triggerLoginModal: (e) ->
+    e.stopPropagation()
+    new AuthModalView
+      width: '500px'
+      mode: 'login'
+
+  fullScreenOverlay: (e) ->
     return if @$el.hasClass 'fullscreen'
     @$el.addClass 'fullscreen'
     @$('.main-layout-container').html overlayTemplate
