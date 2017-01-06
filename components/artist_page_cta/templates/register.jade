@@ -1,0 +1,24 @@
+div.artist-page-cta-overlay__register
+  form.auth-form(
+    action=sd.AP.loginPagePath
+    method='POST'
+  )
+    .auth-errors
+    input#js-mailcheck-input-modal.bordered-input.is-block(
+      name='email', type='email', placeholder='Email', required
+    )
+    #js-mailcheck-hint-modal
+    input.bordered-input.is-block(
+      name= 'password'
+      type= 'password'
+      placeholder= 'Password'
+      autocomplete= 'on'
+      pattern= '.{6,}'
+      title= '6 characters minimum'
+      required
+    )
+    input.bordered-input.is-block(
+      name='name', type='text', placeholder='Full Name', required
+    )
+    input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+    button#auth-submit.avant-garde-button-black.is-block Join Artsy

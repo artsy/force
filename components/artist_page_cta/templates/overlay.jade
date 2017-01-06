@@ -13,12 +13,14 @@ div.artist-page-cta-overlay__feed
           - var name = artist.get('name')
           include ./row.jade
         li
-          - var image = artist.get('cta_artist')[0].image.thumb.url
+          - var image = artist.get('cta_artists')[0].image.thumb.url
           - var count = 3
-          - var name = artist.get('cta_artist')[0].name
+          - var name = artist.get('cta_artists')[0].name
           include ./row.jade
 
-  include ../main_layout/public/icons/bell.svg
+  include ../../main_layout/public/icons/bell.svg
   .artist-page-cta-overlay__feed__count 3
+
+include ./register.jade
 
 span.artist-page-cta-overlay__close ×
