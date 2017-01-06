@@ -67,3 +67,13 @@ sd = require('sharify').data
     error: res.backboneError
     success: ->
       res.redirect "/artist/#{req.params.id}"
+
+@ctaPayoff = (req, res) ->
+  if req.user?
+    req.user.fetch
+      success: (model, resp, options) ->
+        res.locals.sd.CURRENT_USER = _.extend(resp, res.locals.sd.CURRENT_USER)
+        res.locals.sd.IS_PAYOFF = true
+        res.render 'payoff'
+  else
+    res.redirect "/artist/#{req.params.id}"
