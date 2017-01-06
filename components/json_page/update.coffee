@@ -2,9 +2,10 @@ _ = require 'underscore'
 fs = require 'fs'
 inquirer = require 'inquirer'
 JSONPage = require './index'
+sd = require('sharify').data
 
 [name, environment, path] = process.argv.slice 2
-bucket = "force-#{environment or 'staging'}"
+bucket = sd.APPLICATION_NAME
 
 try
   fixture = require.resolve path
