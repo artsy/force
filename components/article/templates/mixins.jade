@@ -124,7 +124,7 @@ mixin artwork(artwork)
             for artist, i in artwork.artists
               +printArtistName(artist)
           else if artwork.artist && artwork.artist.name
-            +printArtistName(artist)
+            +printArtistName(artwork.artist)
         if artwork.title
           p.artwork-item-title.artwork-item-overflow
             if artwork.slug
