@@ -68,10 +68,10 @@ describe 'ArticleView', ->
                     name: "October Gallery",
                     slug: "october-gallery"
                   },
-                  artist: {
+                  artists: [{
                     name: "Govinda Sah 'Azad'",
                     slug: "govinda-sah-azad"
-                  }
+                  }]
                 },{
                   type: 'artwork'
                   id: '5321b71c275b24bcaa0001a5'
@@ -83,10 +83,10 @@ describe 'ArticleView', ->
                     name: "October Gallery",
                     slug: "october-gallery"
                   },
-                  artist: {
+                  artists: [{
                     name: "Govinda Sah 'Azad'",
                     slug: "govinda-sah-azad"
-                  }
+                  }]
                 }
               ]
             }
