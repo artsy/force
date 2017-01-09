@@ -53,8 +53,11 @@ gutter-unit = 60px
     max-width 1250px
     margin auto
 
-.body-responsive
+.responsive-layout-container
   .articles-grid
+    @media (min-width: 1660px)
+      max-width 1600px
+      margin 0 auto
     @media (max-width: 1130px)
       &__articles
         grid-2-up(40px, 60px)
@@ -62,10 +65,16 @@ gutter-unit = 60px
       &__articles
         .grid-item
           width 100%
+          margin-right 0
+          margin-left 0
     @media (max-width: 550px)
       &__figcaption
         margin 20px 0px
       &__title
         garamond-size('l-body')
-      &__figure
+      &__figure.grid-item
         border-bottom 1px solid gray-lighter-color
+        margin-top 60px
+        &:nth-child(1n)
+          margin-bottom 60px
+

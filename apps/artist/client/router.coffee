@@ -17,6 +17,7 @@ mediator = require '../../../lib/mediator.coffee'
 attachCTA = require './cta.coffee'
 AuctionLots = require '../../../collections/auction_lots.coffee'
 ArtistAuctionResultsView = require './views/auction_results.coffee'
+Artist = require '../../../models/artist.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -63,8 +64,8 @@ module.exports = class ArtistRouter extends Backbone.Router
   overview: ->
     @view = new OverviewView @options
     $('body').append @jump.$el
-    @view.on 'artist:overview:sync', =>
-      attachCTA @model
+    @view.on 'artist:overview:sync', (artist) =>
+      attachCTA new Artist(_.extend({}, artist, @model.attributes))
 
   cv: ->
     @view = new CVView @options

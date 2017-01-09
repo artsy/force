@@ -18,7 +18,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       @artworks,
       @includeContact = true,
       @hasContext,
-      @followAnnotation,
+      @annotation,
       @user,
       @category
     } = options
@@ -31,7 +31,7 @@ module.exports = class ArtworkBrickRailView extends Backbone.View
       railId: @railId
       includeContact: @includeContact
       hasContext: @hasContext
-      followAnnotation: @followAnnotation
+      annotation: @annotation
       category: @category
 
     @postRender()

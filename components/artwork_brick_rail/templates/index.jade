@@ -1,7 +1,7 @@
 .abrv-inner( data-rail= railId )
   .abrv-header
-    if followAnnotation
-      .abrv-follow-annotation.avant-garde-s-headline Based on #{followAnnotation}
+    if annotation
+      != annotation
     if category
       .abrv-category-annotation.avant-garde-s-headline Category
     if viewAllUrl

@@ -140,7 +140,7 @@ module.exports = class ArticleIndexView extends Backbone.View
       data.channel_id = sd.ARTSY_EDITORIAL_CHANNEL
     @collection = new Articles
     new ArticlesGridView
-      el: $('#articles-footer')
+      el: $('#articles-footer').addClass('articles-grid')
       hideMore: true
       header: "More from #{@channel.get('name') or 'Artsy'}"
       collection: @collection
@@ -149,5 +149,5 @@ module.exports = class ArticleIndexView extends Backbone.View
 
 module.exports.init = ->
   new ArticleIndexView el: $('body')
-  new GalleryInsightsView el: $('body')
+  new GalleryInsightsView el: $('body').addClass('body-responsive')
   new EditorialSignupView el: $('body')

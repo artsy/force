@@ -32,6 +32,11 @@ module.exports = """
       ... statuses
       ... carousel
       ... jsonLD @include(if: $includeJSONLD)
+      cta_image: image {
+        thumb: resized(width: 150, version: "square") {
+          url
+        }
+      }
     }
   }
 

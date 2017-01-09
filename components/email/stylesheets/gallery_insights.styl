@@ -94,7 +94,7 @@
     display block !important
 
 .cta-bar-container .articles-insights-marketo-form
-  padding-right 20px !important
+  padding-right 20px
   .mktoFormRow
     display none
     &:first-of-type
@@ -108,11 +108,54 @@
     border white
   label
     color white
-  .cta-bar-header
-    min-width 390px !important
   & + .cta-bar-defer
     position absolute
     top 20px
     right 20px
     a
       border-bottom none
+
+.cta-bar[data-mode="gallery-insights"] .cta-bar-header
+  min-width 390px
+
+@media (max-width: 1000px)
+  .cta-bar-container
+    height auto
+    .articles-insights-marketo-form
+      .mktoFormRow .mktoFieldWrap
+        min-width 100%
+        input
+          max-width calc(100% \- 170px)
+
+@media (max-width: 900px)
+  .cta-bar[data-mode="gallery-insights"][data-state="in"]
+    bottom 50px
+    padding 30px
+    .articles-insights-marketo-form
+      padding-right 0
+    .cta-bar-small
+      flex-direction column
+    .cta-bar-header
+      margin-bottom 30px
+
+@media (max-width: 550px)
+  .cta-bar[data-mode="gallery-insights"][data-state="in"]
+    min-width calc(100vw \- 40px)
+    padding 30px 20px
+  .cta-bar-small, .cta-bar-header h3
+    max-width calc(100vw \- 40px)
+  h2
+    garamond-size('s-headline')
+  .articles-insights-marketo-form
+    .mktoForm
+      padding-left 0
+      padding-right 0
+    .mktoButtonWrap button
+      width 120px
+    .mktoFormRow .mktoFieldWrap input
+      min-width calc(100% \- 130px)
+      height 45px
+
+  @media (max-width: 480px)
+    .articles-insights-marketo-form .mktoButtonRow
+      top 7.5px

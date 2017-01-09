@@ -21,7 +21,6 @@ ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
-User = require '../../models/user.coffee'
 
 module.exports.init = ->
   # Set initial params from the url params
@@ -46,16 +45,14 @@ module.exports.init = ->
     filter: filter
     artworks: filter.artworks
 
-  totalView = new SortView
+  sortView = new SortView
     el: $('.cf-total-sort__sort')
     params: params
 
-  user = User.instantiate()
-  if user.isLoggedIn() and user.hasLabFeature('Popular Artists on Commercial Filtering')
-    totalView = new PopularArtistsView
-      el: $('.cf-artworks')
-      artists: filter.popular_artists
-      params: params
+  popArtistsView = new PopularArtistsView
+    el: $('.cf-artworks')
+    artists: filter.popular_artists
+    params: params
 
   pillboxView = new PillboxView
     el: $('.cf-pillboxes')
