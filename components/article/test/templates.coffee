@@ -192,10 +192,14 @@ describe 'article show template', ->
                   name: "October Gallery",
                   slug: "october-gallery"
                 },
-                artist: {
+                artists: [{
                   name: "Govinda Sah 'Azad'",
                   slug: "govinda-sah-azad"
-                }
+                },
+                {
+                  name: "Andy Warhol",
+                  slug: "andy-warhol"
+                }]
               },{
                 type: 'artwork'
                 id: '5321b71c275b24bcaa0001a5'
@@ -207,10 +211,10 @@ describe 'article show template', ->
                   name: "October Gallery",
                   slug: "october-gallery"
                 },
-                artist: {
+                artists: [{
                   name: "Govinda Sah 'Azad'",
                   slug: "govinda-sah-azad"
-                }
+                }]
               }
             ]
           }
@@ -226,4 +230,5 @@ describe 'article show template', ->
     html.should.containEql '/artwork/govinda-sah-azad-in-between-2'
     html.should.containEql 'October Gallery'
     html.should.containEql "Govinda Sah 'Azad'"
+    html.should.containEql "Andy Warhol"
     html.should.containEql 'In Between 2'
