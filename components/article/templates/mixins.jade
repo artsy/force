@@ -20,7 +20,7 @@ mixin video(video)
       != embed(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
 
 mixin image(image)
-  figure.article-section-image( data-layout="#{image.layout ? image.layout : 'column_width'}" )
+  figure.article-section-image( data-layout="#{image.layout ? image.layout : 'overflow_fillwidth'}" )
     img( src=resize(image.url, { width: 1100 }) )
     if image.caption
       figcaption!= image.caption
