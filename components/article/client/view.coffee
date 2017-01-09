@@ -89,12 +89,15 @@ module.exports = class ArticleView extends Backbone.View
   setupMaxImageHeights: ->
     @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
       .each (i, img) ->
+        $(img).parent().css('max-width', '')
         optimizedHeight = window.innerHeight * 0.9
         newWidth = ((img.width * optimizedHeight) / img.height)
+        # image is narrower than container
         if newWidth < 580
           $(img).parent().css('max-width', 580)
-        else if img.width < (img.height * 0.9)
-          $(img).parent().addClass('portrait')
+        # image is taller than window
+        else if img.height > optimizedHeight
+          $(img).parent().css('max-width', newWidth)
     @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
@@ -228,6 +231,7 @@ module.exports = class ArticleView extends Backbone.View
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
     @resetImageSetPreview()
+    @setupMaxImageHeights()
     @embedMobileHeight()
     @addReadMore() if @gradient
     #Reset Artworks size

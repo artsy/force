@@ -214,6 +214,8 @@ body.body-article
       line-height 15px
     a
       color gray-dark-color
+  &[data-layout=column_width]
+    max-width 580px
 .article-section-artworks
   position relative
   a
@@ -352,8 +354,6 @@ body.body-article
     margin 20px
 .responsive-layout-container.article-section-container&[data-section-type="image"],
 .main-layout-container&[data-section-type="hero"]
-  figure.portrait
-    max-width 580px
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
