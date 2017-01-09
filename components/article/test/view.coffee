@@ -31,6 +31,7 @@ describe 'ArticleView', ->
       @ArticleView.__set__ 'CurrentUser', fabricate 'user'
       @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
       @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
+      @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
       @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
       stubChildClasses @ArticleView, this,
         ['initCarousel']
@@ -182,6 +183,10 @@ describe 'ArticleView', ->
     it 'calls fillwidth on artworks', ->
       @view.refreshWindowSize()
       @fillwidth.callCount.should.be.above 1
+
+    it 'calls setupMaxImageHeights on artworks', ->
+      @view.refreshWindowSize()
+      @setupMaxImageHeights.callCount.should.be.above 1
 
   describe '#embedMobileHeight', ->
 
