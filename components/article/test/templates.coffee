@@ -195,6 +195,10 @@ describe 'article show template', ->
                 artists: [{
                   name: "Govinda Sah 'Azad'",
                   slug: "govinda-sah-azad"
+                },
+                {
+                  name: "Andy Warhol",
+                  slug: "andy-warhol"
                 }]
               },{
                 type: 'artwork'
@@ -226,4 +230,5 @@ describe 'article show template', ->
     html.should.containEql '/artwork/govinda-sah-azad-in-between-2'
     html.should.containEql 'October Gallery'
     html.should.containEql "Govinda Sah 'Azad'"
+    html.should.containEql "Andy Warhol"
     html.should.containEql 'In Between 2'
