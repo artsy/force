@@ -1,11 +1,5 @@
 - header-height = 400px
 
-.team-channel-featured
-.team-channel-grid
-.team-channel-header__text-container
-  max-width 1250px
-  margin auto
-
 .team-channel-body
   margin-bottom 80px
 
@@ -77,6 +71,16 @@
   .articles-grid__figure
     margin-top 60px
 
+@media (min-width: 1660px)
+  .team-channel-nav__container,
+  .team-channel-featured,
+  .team-channel-grid,
+  .team-channel-header__text-container,
+  .js-articles-grid-more.articles-grid__more-button,
+  .team-channel-footer .mlf,
+  .team-channel-footer .main-layout-container
+    max-width 1600px
+    margin 0 auto
 @media (max-width: 900px)
   .team-channel-featured
     .mgr-cell:nth-child(1n)
