@@ -222,7 +222,7 @@ module.exports = class Article extends Backbone.Model
       "@context": "http://schema.org"
       "@type": "NewsArticle"
       "headline": @get('thumbnail_title')
-      "url": @href()
+      "url": @fullHref()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
       "articleSection": @getParselySection()
