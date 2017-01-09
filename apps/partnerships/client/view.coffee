@@ -23,8 +23,6 @@ module.exports = class PartnershipsView extends Backbone.View
     href = $(e.currentTarget).attr('href')
     e.preventDefault()
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
-    if $(e.currentTarget).hasClass('partnerships-nav-apply-link')
-      mediator.once 'scrolled:position', => $('#apply-name-field').focus()
 
   cacheSelectors: ->
     @$nav = @$ '.partnerships-section-nav'
