@@ -14,8 +14,13 @@ template = -> require('./templates/index.jade') arguments...
 module.exports = class FollowedArtistsRailView extends Backbone.View
   subViews: []
 
-  initialize: ({ @module, @$el, @user }) ->
-    # no op
+  defaults:
+    useInitialArtists: false
+    showHeader: true
+    includeContext: true
+
+  initialize: (options = {}) ->
+    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext } = _.defaults options, @defaults
 
   render: ->
     artists = new Backbone.Collection @module.context.artists
@@ -25,11 +30,13 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
       counts: @module.context.counts
       artists: artists.models
       imageHeight: '220px'
+      showHeader: @showHeader
+      includeContext: @includeContext
 
     @_postRender()
 
   _postRender: ->
-    if @module.context.counts.artists < 1 or @module.results.length < 1
+    if @module.context.counts.artists < 1 or @module.results.length < 1 or @useInitialArtists
       return @_renderEmptyView()
 
     @setupArtworkViews()
@@ -69,33 +76,41 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
         @$('.mgr-navigation').addClass 'is-hidden'
 
   _renderEmptyView: ->
-    # pre-populate search with featured artists
-    featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
-    # empty collection to pass along to keep track of new follows
-    followedArtists = new Artists @module.context.artists
-    suggestedArtists = new Artists []
-
-    Q.all [
-      featuredArtists.fetch()
-    ]
-    .then ->
-      # get the artist from the ids of the featured links :|
-      ids = featuredArtists.pluck('href').map (href) ->
-        href.replace('https://www.artsy.net/artist/','')
-      artists = map ids, (id) -> new Artist id: id
-      # return a promise for all the individual artist fetches
-      Q.all(map(artists, (artist) -> artist.fetch()))
-    .then (artists) =>
+    # pre-populate search with featured artists or use initial artists
+    if @useInitialArtists
+      initialArtists = new Artists []
       @subViews.push sav = new SearchArtistsView
         el: @$('.arbv-follow-search-container')
-        initialSuggestions: suggestedArtists
-        followedArtists: followedArtists
+        initialSuggestions: initialArtists
+        followedArtists: new Artists []
+      initialArtists.add @module.context.artists
+    else
+      featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
+      # empty collection to pass along to keep track of new follows
+      followedArtists = new Artists @module.context.artists
+      suggestedArtists = new Artists []
 
-      suggestedArtists.add artists
+      Q.all [
+        featuredArtists.fetch()
+      ]
+      .then ->
+        # get the artist from the ids of the featured links :|
+        ids = featuredArtists.pluck('href').map (href) ->
+          href.replace('https://www.artsy.net/artist/','')
+        artists = map ids, (id) -> new Artist id: id
+        # return a promise for all the individual artist fetches
+        Q.all(map(artists, (artist) -> artist.fetch()))
+      .then (artists) =>
+        @subViews.push sav = new SearchArtistsView
+          el: @$('.arbv-follow-search-container')
+          initialSuggestions: suggestedArtists
+          followedArtists: followedArtists
 
-      @subViews.push fav = new FollowedArtistsView
-        el: @$('.arbv-context--followed-artists')
-        collection: followedArtists
+        suggestedArtists.add artists
+
+        @subViews.push fav = new FollowedArtistsView
+          el: @$('.arbv-context--followed-artists')
+          collection: followedArtists
 
   remove: ->
     invoke @subViews, 'remove'

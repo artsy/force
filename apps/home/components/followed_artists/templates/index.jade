@@ -2,13 +2,14 @@
 
 .abrv-inner( data-rail="followed_artists" )
   .abrv-header
-    if artworks && artworks.length
-      h1 Works by Artists you Follow
-    else
-      h1 Follow Artists and Keep Up-to-Date
+    if showHeader
+      if artworks && artworks.length
+        h1 Works by Artists you Follow
+      else
+        h1 Follow Artists and Keep Up-to-Date
 
-    a.abrv-view-all( href=viewAllUrl )
-      | View All
+      a.abrv-view-all( href=viewAllUrl )
+        | View All
 
   .abrv-content
     .abrv-carousel.mgr-horizontal-nav( class='js-my-carousel' )
@@ -22,8 +23,9 @@
           li.mgr-cell.abrv-fillwidth-row( class='js-mgr-cell' )
             include ../../../../../components/artwork_brick_rail/templates/view_all
       else
-        .abrv-context.abrv-fillwidth-row.abrv-context--float.arbv-context--followed-artists
-          include context
+        if includeContext
+          .abrv-context.abrv-fillwidth-row.abrv-context--float.arbv-context--followed-artists
+            include context
         .arbv-follow-search-container
           include search
       if artworks && artworks.length

@@ -2,7 +2,7 @@
   .tt-suggestion-inner(data-artist-id=suggestion.get('id'))
     .typeahead-suggestion-thumbnail
       span: img(
-        src= suggestion.cropUrlFor({ width: 32, height: 32 })
+        src= suggestion.has('thumb') ? suggestion.get('thumb').cropped.url : suggestion.cropUrlFor({ width: 32, height: 32 })
         width='32'
         height='32'
         onerror='this.style.display="none";'
