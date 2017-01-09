@@ -50,6 +50,8 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       error: (model, response, options) =>
         @reenableForm()
         message = @errorMessage response
+        @$('button').attr 'data-state', 'error'
+        @$('.auth-errors').text message
         mediator.trigger 'auth:error', message
 
   onRegisterSuccess: (model, response, options) =>
