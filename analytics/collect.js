@@ -12,7 +12,7 @@
   $(document).on('click', '.cf-popular_artists__row', function (e) {
     var $row = $(e.currentTarget)
 
-    analytics.track('Clicked popular artists', {
+    analytics.track('Click', {
       label: 'Popular Artists',
       context_module: 'popular artists widget',
       type: 'link',
