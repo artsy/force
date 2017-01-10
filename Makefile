@@ -79,7 +79,7 @@ test-s:
 deploy:
 	$(BIN)/ezel-assets
 	$(BIN)/bucket-assets --bucket force-$(env)
-	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
+	heroku config:set ASSET_MANIFEST=$(shell cat manifest.json) --app=force-$(env)
 	git push --force git@heroku.com:force-$(env).git
 
 # Runs all the necessary build tasks to push the currently checked out branch
@@ -88,7 +88,7 @@ deploy:
 deploy_custom:
 	$(BIN)/ezel-assets
 	$(BIN)/bucket-assets --bucket $(app)
-	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=$(app)
+	heroku config:set ASSET_MANIFEST=$(shell cat manifest.json) --app=$(app)
 	git push -f git@heroku.com:$(app).git $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD):master
 
 .PHONY: test

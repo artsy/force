@@ -1148,9 +1148,9 @@
       "dev": true
     },
     "bucket-assets": {
-      "version": "0.2.12",
-      "from": "bucket-assets@>=0.2.11 <0.3.0",
-      "resolved": "https://registry.npmjs.org/bucket-assets/-/bucket-assets-0.2.12.tgz",
+      "version": "1.0.0",
+      "from": "bucket-assets@latest",
+      "resolved": "https://registry.npmjs.org/bucket-assets/-/bucket-assets-1.0.0.tgz",
       "dependencies": {
         "async": {
           "version": "0.9.2",
