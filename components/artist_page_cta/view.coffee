@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 Form = require '../mixins/form.coffee'
+mediator = require '../../lib/mediator.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -21,6 +22,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     new AuthModalView
       width: '500px'
       mode: 'login'
+      redirectTo: "#{@artist.get('href')}/payoff"
 
   fullScreenOverlay: (e) ->
     return if @$el.hasClass 'fullscreen'
@@ -48,10 +50,12 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       error: (model, response, options) =>
         @reenableForm()
         message = @errorMessage response
+        @$('button').attr 'data-state', 'error'
+        @$('.auth-errors').text message
         mediator.trigger 'auth:error', message
 
   onRegisterSuccess: (model, response, options) =>
-    # TODO: Payoff Screen
+    window.location = "#{@artist.get('href')}/payoff"
 
   initialize: ({ artist }) ->
     @artist = artist
