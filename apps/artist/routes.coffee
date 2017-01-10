@@ -4,7 +4,7 @@ fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
-{ APPLICATION_NAME, NODE_ENV } = require '../../config'
+{ APPLICATION_NAME, NODE_ENV, SHOW_ARTIST_CTA_CODE } = require '../../config'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
@@ -18,6 +18,7 @@ sd = require('sharify').data
 
 @index = (req, res, next) ->
   tab = if req.params.tab? then req.params.tab else ''
+  showArtistCTA = req.query.show_artist_cta_code is SHOW_ARTIST_CTA_CODE
   includeJSONLD = res.locals.sd.REFLECTION
   send =
     query: query,
@@ -42,6 +43,7 @@ sd = require('sharify').data
             res.locals.sd.ARTIST = artist
             res.locals.sd.TAB = tab
             res.locals.sd.CURRENT_ITEM = currentItem
+            res.locals.sd.SHOW_ARTIST_CTA = showArtistCTA
 
             res.render 'index',
               viewHelpers: helpers

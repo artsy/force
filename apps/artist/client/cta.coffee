@@ -1,11 +1,11 @@
-{ MEDIUM, CURRENT_USER } = require('sharify').data
+{ MEDIUM, CURRENT_USER, SHOW_ARTIST_CTA } = require('sharify').data
 { contains } = require 'underscore'
 CTABarView = require '../../../components/cta_bar/view.coffee'
 ArtistPageCTAView = require '../../../components/artist_page_cta/view.coffee'
 
 module.exports = (artist) ->
-  # Temporarily always show new CTA to lab feature users
-  if CURRENT_USER? and contains(CURRENT_USER.lab_features, 'New Artist Page CTA')
+  # Temporarily always show new CTA if the query param is present
+  if SHOW_ARTIST_CTA
     artistPageCTAView = new ArtistPageCTAView
       artist: artist
 
