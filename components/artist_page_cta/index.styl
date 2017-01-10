@@ -56,7 +56,15 @@
       font-size 16px
       vertical-align middle
       &:after
-        left 60%
+        left 40%
+        font-size 30px
+        content '▲'
+        text-shadow 0 -5px 8px rgba(200,200,200,0.3)
+        color white
+        z-index 999
+        transform scaleY(0.6)
+        margin 7px 0 0 0
+        border 0
      &__count
       avant-garde()
       font-size 10px
@@ -72,10 +80,12 @@
       color white
       text-align center
     &__items
-      box-shadow 2px -4px 20px rgba(0,0,0,0.3)
+      box-shadow 2px 0px 20px rgba(220,220,220,0.3)
       background-color white
       width 300px
       height 200px
+      margin-left -150px
+
       &:after
         display block
         position absolute
