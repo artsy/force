@@ -17,6 +17,17 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     'submit .artist-page-cta-overlay__register': 'submit'
     'click .auth-toggle': 'triggerLoginModal'
 
+  initialize: ({ artist }) ->
+    @artist = artist
+    @user = new LoggedOutUser
+    @$window = $ window
+    @targetScrollPosition = @$window.height() * 2
+    @alreadyDismissed = false
+    @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
+
+  maybeShowOverlay: (e) =>
+    @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
+
   triggerLoginModal: (e) ->
     e.stopPropagation()
     new AuthModalView
@@ -34,6 +45,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   closeOverlay: (e) =>
     e.stopPropagation()
     @$el.removeClass 'fullscreen'
+    @alreadyDismissed = true
     @render()
 
   submit: (e) ->
@@ -56,10 +68,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   onRegisterSuccess: (model, response, options) =>
     window.location = "#{@artist.get('href')}/payoff"
-
-  initialize: ({ artist }) ->
-    @artist = artist
-    @user = new LoggedOutUser
 
   render: ->
     @$el.html template
