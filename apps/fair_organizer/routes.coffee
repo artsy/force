@@ -43,6 +43,7 @@ representation = (fair) ->
     cache: true
     data:
       fair_organizer_id: fairOrg.get('_id')
+      sort: "-start_at"
     success: (models, response, options)->
       articles = new Articles()
 
