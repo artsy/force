@@ -1,16 +1,15 @@
 {
-  "gray-lightest-color": "#efefef",
-  "gray-lighter-color": "#e5e5e5",
-  "gray-color": "#cccccc",
+  "gray-lightest-color": "#F8F8F8",
+  "gray-lighter-color": "#E5E5E5",
+  "gray-color": "#CCCCCC",
   "gray-dark-color": "#999999",
   "gray-darker-color": "#666666",
   "gray-darkest-color": "#333333",
-  "purple-light-color": "#b179d4",
-  "purple-color": "#6a0bc1",
-  "red-light-color": "#f4acb2",
-  "red-color": "#cc3333",
-  "yellow-light-color": "#f9f8d8",
-  "yellow-color": "#ccc8a2",
-  "green-light-color": "#b0d766",
-  "green-color": "#4f8200"
+  "purple-light-color": "#E2D2FF",
+  "purple-color": "#6E1FFF",
+  "red-color": "#F7625A",
+  "yellow-light-color": "#FDEFD1",
+  "yellow-color": "#FCE1A8",
+  "yellow-bold-color": "#F1AF1B",
+  "green-color": "#0EDA83"
 }

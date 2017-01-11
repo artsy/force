@@ -247,9 +247,9 @@
       "resolved": "https://registry.npmjs.org/artsy-error-handler/-/artsy-error-handler-1.0.2.tgz"
     },
     "artsy-ezel-components": {
-      "version": "0.0.5",
+      "version": "0.0.6",
       "from": "git://github.com/artsy/artsy-ezel-components.git",
-      "resolved": "git://github.com/artsy/artsy-ezel-components.git#7d88dea9a488fca5a3bd63074445a5ac5e877ab1"
+      "resolved": "git://github.com/artsy/artsy-ezel-components.git#b94a4b17b5ba9dd53b0113d90d29bd74e8d23f2d"
     },
     "artsy-gemini-upload": {
       "version": "0.0.6",
