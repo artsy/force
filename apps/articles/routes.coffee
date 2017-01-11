@@ -28,6 +28,7 @@ query = require './queries/editorial_articles.coffee'
     .then (result) ->
       articles = new Articles result.articles
       user = res.locals.sd.CURRENT_USER
+      res.locals.sd.ARTICLES_COUNT = articles.count
       setupEmailSubscriptions user, (results) ->
         res.locals.sd.SUBSCRIBED_TO_EDITORIAL = results.editorial
         res.locals.sd.ARTICLES = articles.toJSON()
