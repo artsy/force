@@ -15,11 +15,11 @@ if article.strip('lead_paragraph')
 for section, i in article.get('sections')
   case section.type
     when 'text'
-      p!= section.body
+      != section.body
     when 'image'
       img( src=resize(section.url, { width: 500 }) )
       if section.caption
-        p!= section.caption
+        != section.caption
     when 'video'
       != embed(section.url)
     when 'artworks'
@@ -28,7 +28,9 @@ for section, i in article.get('sections')
           img(src=resize(artwork.image, { width: 500 } ))
           p= artwork.title + ", " + artwork.date + ". "
             br
-            if artwork.artist
+            if artwork.artists
+              = toSentence(_.pluck(artwork.artists, 'name'))
+            else if artwork.artist
               = artwork.artist.name
             br
             if artwork.partner
