@@ -18,5 +18,3 @@ module.exports.init = ->
       sort: '-published_at'
   feedView.render()
   new EditorialSignupView el: $('body')
-
-

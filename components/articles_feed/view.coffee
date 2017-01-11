@@ -20,13 +20,12 @@ module.exports = class ArticlesFeedView extends Backbone.View
     @listenTo @collection, 'sync', @render
 
   more: (e) ->
-    debugger
     return if @collection.length >= @collection.count
 
     @$('.js-load-more-articles').attr 'data-state', 'loading'
-
+    if @fetchWith.featured then  @collection.length = @collection.length + 4
     data = _.extend({}, offset: @collection.length, @fetchWith)
-    debugger
+
     @collection.fetch(remove: false, data: data)
       .then @renderButton
 
