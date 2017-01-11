@@ -44,4 +44,4 @@ describe '/rss', ->
         contributing_authors: []
       )
       rendered = articleTemplate(sd: sd, article: article)
-      rendered.should.containEql '<p>Andy Foobar never wanted fame.</p><p>But sometimes fame chooses you.</p>'
+      rendered.should.containEql 'Andy Foobar never wanted fame.But sometimes fame chooses you.'

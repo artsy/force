@@ -7,11 +7,11 @@ if hero
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
-        p!= hero.caption
+        != hero.caption
 
 //- Content
 if article.strip('lead_paragraph')
-  p!= article.get('lead_paragraph')
+  != article.get('lead_paragraph')
 for section, i in article.get('sections')
   case section.type
     when 'text'
