@@ -21,7 +21,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @artist = artist
     @user = new LoggedOutUser
     @$window = $ window
-    @targetScrollPosition = @$window.height() * 2
+    @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
 
