@@ -1,7 +1,5 @@
 _ = require 'underscore'
 
-# TODO When partner1 is retired and the code deleted, the following
-# methods that handle layout switching can also be deleted.
 layoutContains = (res = {}, types = []) ->
   layout = res.locals.profile?.get('owner')?.profile_layout
   _.contains types, layout
@@ -10,18 +8,6 @@ layoutContains = (res = {}, types = []) ->
 @requireNewLayout = (req, res, next) ->
   newLayout = layoutContains res, ['gallery_one', 'gallery_two', 'gallery_three', 'institution']
   if newLayout then next() else next('route')
-
-# Restrict new layout for institution if the user's an admin
-# TODO This can be deleted when new layout for institutions is approved
-@requireAdminIfInstitution = (req, res, next) ->
-  isAllowedGallery = layoutContains res, ['gallery_one', 'gallery_two', 'gallery_three']
-  isInstitution = layoutContains res, ['institution']
-  if req.user?.get('type') is 'Admin' and isInstitution
-    next()
-  else if isAllowedGallery
-    next()
-  else
-    next('route')
 
 @overview = (req, res, next) ->
   return next() unless res.locals.profile?.isPartner()

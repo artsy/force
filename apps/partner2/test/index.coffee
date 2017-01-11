@@ -65,13 +65,13 @@ subscriptions1_0Specs = (partnerRoutes) ->
         .expect 'partner1'
 
 # For institution profiles everyone except for Admin should see partner1 layouts
-itShouldBehaveDifferentlyForInstitutions = (partnerRoutes) ->
+itShouldBeLikeSubscriptions2_0ForInstitutions = (partnerRoutes) ->
   context 'public', ->
     beforeEach ->
       @app.use partner2
       @app.use partner1
 
-    subscriptions1_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
 
   context 'user', ->
     beforeEach ->
@@ -79,7 +79,7 @@ itShouldBehaveDifferentlyForInstitutions = (partnerRoutes) ->
       @app.use partner2
       @app.use partner1
 
-    subscriptions1_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
 
   context 'admin', ->
     beforeEach ->
@@ -161,4 +161,4 @@ describe 'partner2 index', ->
       @app = express()
       @app.use prepareLocals(institutionLayoutPartnerProfile)
 
-    itShouldBehaveDifferentlyForInstitutions(partnerRoutes)
+    itShouldBeLikeSubscriptions2_0ForInstitutions(partnerRoutes)
