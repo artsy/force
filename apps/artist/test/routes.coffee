@@ -71,11 +71,12 @@ describe 'Artist routes', ->
       routes.follow @req, @res
       @res.redirect.args[0][0].should.equal '/artist/foo'
 
-    it 'follows an artist and redirects to the artist page', ->
+    it 'follows an artist and redirects to the artist page with any query params', ->
       @res.redirect = sinon.stub()
       @req.user = new CurrentUser fabricate 'user'
+      @req.query = { medium: 'work-on-paper' }
       routes.follow @req, @res
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/follow/artist'
       Backbone.sync.args[0][1].get('artist_id').should.equal 'foo'
       Backbone.sync.args[0][2].success()
-      @res.redirect.args[0][0].should.equal '/artist/foo'
+      @res.redirect.args[0][0].should.equal '/artist/foo?medium=work-on-paper'

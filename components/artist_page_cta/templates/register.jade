@@ -27,7 +27,7 @@ div.artist-page-cta-overlay__register
   h2
     span Or
 
-  a.auth-signup-facebook.avant-garde-button-black(href="/users/auth/facebook?redirect-to=#{artist.get('href')}/payoff")
+  a.auth-signup-facebook.avant-garde-button-black(href="/users/auth/facebook?skip-onboarding=true&redirect-to=#{afterAuthPath}")
     i.icon-facebook
     | Continue with Facebook
 
