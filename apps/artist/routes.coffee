@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
+qs = require 'qs'
 fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
@@ -69,7 +70,7 @@ sd = require('sharify').data
   req.user.followArtist req.params.id,
     error: res.backboneError
     success: ->
-      res.redirect "/artist/#{req.params.id}"
+      res.redirect "/artist/#{req.params.id}?#{qs.stringify req.query}"
 
 @ctaPayoff = (req, res) ->
   if req.user?
@@ -90,7 +91,7 @@ sd = require('sharify').data
             res.locals.sd.IS_PAYOFF = true
             res.render 'payoff',
               name: user.name
-              href: "/artist/#{req.params.id}/follow"
+              href: "/artist/#{req.params.id}/follow?#{qs.stringify req.query}"
           .catch (err) -> next(err if NODE_ENV is 'development')
   else
     res.redirect "/artist/#{req.params.id}"

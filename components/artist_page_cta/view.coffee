@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+qs = require 'qs'
 _ = require 'underscore'
 Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -23,8 +24,9 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$window = $ window
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
+    @afterAuthPath = "#{@artist.get('href')}/payoff"
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
-
+    
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
 
@@ -33,13 +35,20 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     new AuthModalView
       width: '500px'
       mode: 'login'
-      redirectTo: "#{@artist.get('href')}/payoff"
+      redirectTo: @afterAuthPath
+
+  currentParams: ->
+    params = qs.parse(location.search.replace(/^\?/, ''))
+    _.omit(params, 'show_artist_cta_code')
 
   fullScreenOverlay: (e) ->
     return if @$el.hasClass 'fullscreen'
+    fragment = qs.stringify @currentParams()
+    @afterAuthPath += "?#{fragment}" if fragment
     @$el.addClass 'fullscreen'
     @$('.main-layout-container').html overlayTemplate
       artist: @artist
+      afterAuthPath: @afterAuthPath
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
 
   closeOverlay: (e) =>
@@ -67,7 +76,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
         mediator.trigger 'auth:error', message
 
   onRegisterSuccess: (model, response, options) =>
-    window.location = "#{@artist.get('href')}/payoff"
+    window.location = @afterAuthPath
 
   render: ->
     @$el.html template
