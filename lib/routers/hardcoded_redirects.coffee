@@ -21,7 +21,7 @@ redirects =
   '/settings': '/user/edit'
   '/collector/edit': '/profile/edit'
   '/_=_': '/' # Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
-  '/press': '/press/press-releases'
+  '/press': '/press/in-the-media'
   '/about/press': '/press/press-releases'
   '/about/page/press': '/press/press-releases'
   '/about/page/events': '/press/in-the-media'
