@@ -123,7 +123,6 @@ module.exports =
   MARKETING_SIGNUP_MODAL_SLUG: 'miami'
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
-  EOY_2016_SLUGS: ''
   SHOW_ARTIST_CTA_CODE: null
 
 # Override any values with env variables if they exist.

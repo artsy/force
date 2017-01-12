@@ -2,7 +2,7 @@
 # Detects a mobile browser by user agent and redirects it to Microgravity
 #
 
-{ MOBILE_URL, TEAM_BLOGS, EOY_2016_SLUGS } = require '../../config'
+{ MOBILE_URL, TEAM_BLOGS } = require '../../config'
 express = require 'express'
 router = express.Router()
 
