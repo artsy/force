@@ -1,0 +1,37 @@
+include ../../../components/bid_status/index
+
+if myActiveBids && myActiveBids.length
+  h2 Your Active Bids
+  table
+    tbody
+      for bid in myActiveBids
+        if bid.sale_artwork
+          tr
+            td.auction-mab-artist-artwork-container
+              a(
+                href=bid.sale_artwork.artwork.href
+              )
+                img.auction-mab-img( src=bid.sale_artwork.artwork.image.url )
+            td.auction-mab-artwork-info
+              .auction-mab-artist-artwork
+                h2 Lot #{bid.sale_artwork.lot_number}
+                h3= bid.sale_artwork.artwork.artist.name
+                .auction-mab-title
+                  em= bid.sale_artwork.artwork.title
+                  | ,&nbsp;
+                  = bid.sale_artwork.artwork.date
+            td.auction-mab-current-bid
+              <b>Current Bid:</b> (#{bid.sale_artwork.counts.bidder_positions} Bids)
+            td.auction-mab-bid-num #{bid.sale_artwork.highest_bid.display}
+            if bid.sale_artwork.sale.is_live_open
+              td
+                a.avant-garde-button-black.auction-mab-bid-live-button(
+                    href=ViewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id)
+                  ) Bid Live
+            else
+              td.bid-status-cell
+                +bidStatus(bid, bid.sale_artwork)
+              td
+                a.avant-garde-button-black.auction-mab-bid-button(
+                  href=bid.sale_artwork.artwork.href
+                ) Bid
