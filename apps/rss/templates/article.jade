@@ -1,7 +1,3 @@
-//- Meta
-meta(name='author' content=article.getAuthorArray().join(','))
-
-
 //- Hero Section
 - hero = article.get('hero_section')
 if hero
@@ -11,19 +7,19 @@ if hero
     when 'image'
       img( src=resize(hero.url, { width: 1100 }) )
       if hero.caption
-        p!= hero.caption
+        != hero.caption
 
 //- Content
 if article.strip('lead_paragraph')
-  p!= article.get('lead_paragraph')
+  != article.get('lead_paragraph')
 for section, i in article.get('sections')
   case section.type
     when 'text'
-      p!= section.body
+      != section.body
     when 'image'
       img( src=resize(section.url, { width: 500 }) )
       if section.caption
-        p!= section.caption
+        != section.caption
     when 'video'
       != embed(section.url)
     when 'artworks'
@@ -32,7 +28,9 @@ for section, i in article.get('sections')
           img(src=resize(artwork.image, { width: 500 } ))
           p= artwork.title + ", " + artwork.date + ". "
             br
-            if artwork.artist
+            if artwork.artists
+              = toSentence(_.pluck(artwork.artists, 'name'))
+            else if artwork.artist
               = artwork.artist.name
             br
             if artwork.partner
