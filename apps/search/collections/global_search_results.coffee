@@ -12,7 +12,7 @@ module.exports = class GlobalSearchResults extends Backbone.Collection
   parse:  (response) ->
     _.reject response, (item) ->
       # HACK filter out sensitive results (at the artist's request)
-      JSON.stringify(item).match(/kippenberger|zoe.*leonard|pat.*lipsky/i)
+      JSON.stringify(item).match(/kippenberger|zoe.*leonard/i)
 
   moveMatchResultsToTop: (query) ->
     models = @models
