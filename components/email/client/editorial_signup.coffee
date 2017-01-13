@@ -18,6 +18,7 @@ module.exports = class EditorialSignupView extends Backbone.View
     'click .js-article-es': 'onSubscribe'
     'click .js-article-es-dismiss': 'onDismiss'
     'click .modal-bg': 'hideEditorialCTA'
+    'click .cta-bar-defer': 'hideEditorialCTA'
 
   initialize: ->
     @setupAEArticlePage() if @inAEArticlePage()
