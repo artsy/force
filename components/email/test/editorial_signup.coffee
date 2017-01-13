@@ -26,12 +26,11 @@ describe 'EditorialSignupView', ->
           <div class="articles-feed-item"></div>
           <div class="articles-feed-item"></div>
         </div>')
-      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialSignupTemplate', 'editorialCTABannerTemplate']
+      @EditorialSignupView = benv.requireWithJadeify resolve(__dirname, '../client/editorial_signup'), ['editorialSignupLushTemplate', 'editorialCTABannerTemplate']
       stubChildClasses @EditorialSignupView, this,
         ['CTABarView', 'splitTest']
         ['previouslyDismissed', 'render', 'transitionIn', 'transitionOut', 'close']
       outcome = { outcome: sinon.stub().returns('old_modal'), view: sinon.stub() }
-      @splitTest.returns(outcome)
       @CTABarView::render.returns $el
       @CTABarView::previouslyDismissed.returns false
       @inAEArticlePage = sinon.spy @EditorialSignupView::, 'inAEArticlePage'
@@ -101,27 +100,7 @@ describe 'EditorialSignupView', ->
 
   describe '#showEditorialCTA', ->
 
-    it 'old modal is hidden if an auction reminder is visible', ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        ARTSY_EDITORIAL_CHANNEL: '123'
-        SUBSCRIBED_TO_EDITORIAL: false
-      @view.initialize()
-      @trigger.callCount.should.equal 0
-
-    it 'old modal is displayed if there arent any auction reminders', (done) ->
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        ARTSY_EDITORIAL_CHANNEL: '123'
-        SUBSCRIBED_TO_EDITORIAL: false
-      @view.initialize()
-      mediator.trigger 'auction-reminders:none'
-      _.defer =>
-        @view.ctaBarView.render.callCount.should.equal 1
-        done()
-
-    it 'displays modal when test outcome is modal', ->
-      @splitTest.returns({ outcome: sinon.stub().returns('modal'), view: sinon.stub() })
+    it 'displays modal', ->
       @EditorialSignupView.__set__ 'sd',
         ARTICLE: channel_id: '123'
         ARTSY_EDITORIAL_CHANNEL: '123'
@@ -129,16 +108,6 @@ describe 'EditorialSignupView', ->
         EDITORIAL_CTA_BANNER_IMG: 'img.jpg'
       @view.initialize()
       @view.$el.find('.articles-es-cta--banner').hasClass('modal').should.be.true()
-
-    it 'displays banner when test outcome is banner', ->
-      @splitTest.returns({ outcome: sinon.stub().returns('banner'), view: sinon.stub() })
-      @EditorialSignupView.__set__ 'sd',
-        ARTICLE: channel_id: '123'
-        ARTSY_EDITORIAL_CHANNEL: '123'
-        SUBSCRIBED_TO_EDITORIAL: false
-        EDITORIAL_CTA_BANNER_IMG: 'img.jpg'
-      @view.initialize()
-      @view.$el.find('.articles-es-cta--banner').hasClass('banner').should.be.true()
 
   describe '#onSubscribe', ->
 

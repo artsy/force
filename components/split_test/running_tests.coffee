@@ -15,13 +15,6 @@
 # module.exports = {}
 
 module.exports =
-  editorial_cta_banner:
-    key: 'editorial_cta_banner'
-    outcomes:
-      old_modal: 34
-      banner: 33
-      modal: 33
-    dimension: 'dimension16'
 
   purchase_flow:
     key: 'purchase_flow'
