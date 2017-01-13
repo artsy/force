@@ -53,7 +53,6 @@ module.exports = class EditorialSignupView extends Backbone.View
       @showEditorialCTA 'modal'
 
   setupAEArticlePage: ->
-    @outcome = 'modal'
     @ctaBarView = new CTABarView
       mode: 'editorial-signup'
       name: 'editorial-signup-dismissed'
@@ -94,18 +93,14 @@ module.exports = class EditorialSignupView extends Backbone.View
       image: sd.EDITORIAL_CTA_BANNER_IMG
     @$('#articles-show, .articles-articles-page').waypoint (direction) =>
       if direction is 'down'
-        setTimeout((=> @$('.articles-es-cta--banner').attr('data-state', 'in').css('opacity', 1)), 2000)
+        setTimeout((=> @$('.articles-es-cta--banner').css('opacity', 1)), 2000)
     analyticsHooks.trigger('view:editorial-signup', type: 'modal' )
 
   hideEditorialCTA: (e) ->
     e?.preventDefault()
     cta = @$(e.target).closest('.articles-es-cta--banner')
-    @onDismiss()
-    cta.css('opacity', 0)
-    setTimeout((=>
-      cta.attr('data-state', 'out')
-      cta.hide()
-      ), 2000)
+    @onDismiss(e)
+    cta.fadeOut()
 
   setupCTAWaypoints: =>
     @$el.append @ctaBarView.render().$el
@@ -139,7 +134,7 @@ module.exports = class EditorialSignupView extends Backbone.View
           @$('.articles-es-cta__social').fadeIn()
         @ctaBarView.close()
         # CTA Banner
-        @$('.articles-es-cta--banner').css('opacity', 0).attr('data-state', 'out')
+        @$('.articles-es-cta--banner').css('opacity', 0)
         analyticsHooks.trigger('submit:editorial-signup', type: @getSubmissionType(e), email: @email)
 
   getSubmissionType: (e)->
@@ -151,6 +146,6 @@ module.exports = class EditorialSignupView extends Backbone.View
     else
       'article_popup'
 
-  onDismiss: ->
+  onDismiss: (e)->
     @ctaBarView.logDimissal()
-    analyticsHooks.trigger('dismiss:editorial-signup')
+    analyticsHooks.trigger('dismiss:editorial-signup', type: @getSubmissionType(e))
