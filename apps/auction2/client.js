@@ -13,10 +13,12 @@ const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 const clock = new ClockView({modelName: 'Auction', model: auction, el: $('.auction2-clock')})
 clock.start()
 
-const activeBids = new MyActiveBids({
-  user: user,
-  el: $('.auction2-my-active-bids'),
-  template: myActiveBidsTemplate,
-  saleId: auction.get('_id')
-})
-activeBids.start()
+if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
+  const activeBids = new MyActiveBids({
+    user: user,
+    el: $('.auction2-my-active-bids'),
+    template: myActiveBidsTemplate,
+    saleId: auction.get('_id')
+  })
+  activeBids.start()
+}
