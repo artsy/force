@@ -42,6 +42,7 @@ module.exports = class ArtworkColumnsView extends Backbone.View
               date
               title
               sale_message
+              is_inquireable
             }
           }
         }
