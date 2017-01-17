@@ -50,8 +50,8 @@ module.exports = class SearchResult extends Backbone.Model
       else if @get('model') is 'partnershow'
         'show'
       else if @get('model') is 'profile'
-        isInstitution = _.contains(['PartnerInstitution', 'PartnerInstitutionalSeller'], @get('owner_type'))
-        if isInstitution then 'institution' else 'gallery'
+        institutionTypes = ['PartnerInstitution', 'PartnerInstitutionalSeller']
+        if @get('owner_type') in institutionTypes then 'institution' else 'gallery'
       else @get('model')
 
     _s.capitalize model
