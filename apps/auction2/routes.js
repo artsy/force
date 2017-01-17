@@ -22,6 +22,7 @@ export const index = async (req, res) => {
       start_at
       end_at
       live_start_at
+      is_live_open
       status
       start_at
       description
