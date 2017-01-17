@@ -11,13 +11,15 @@
 
   $('#partner-contact .email-gallery').click(function (e) {
     analytics.track('Clicked Contact Gallery Via Email', {
-      gallery_id: $(e.currentTarget).data('id')
+      partner_id: $(e.currentTarget).data('partner-id'),
+      partner_slug: $(e.currentTarget).data('partner-slug')
     })
   })
 
   $('#partner-contact .partner-website').click(function (e) {
     analytics.track('Clicked Gallery Website', {
-      gallery_id: $(e.currentTarget).data('id')
+      partner_id: $(e.currentTarget).data('partner-id'),
+      partner_slug: $(e.currentTarget).data('partner-slug')
     })
   })
 })()
