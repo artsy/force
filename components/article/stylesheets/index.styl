@@ -2,6 +2,7 @@
 @require './super_article'
 @require './fullscreen_article'
 @require './editorial_signup'
+@require './image'
 @require './image_set'
 @require './eoy_2016_sub_articles'
 
@@ -197,28 +198,6 @@ body.body-article
       .share-item
         width 33.333%
 
-.article-section-image
-  max-width overflow-width
-  margin auto
-  img
-    width 100%
-    max-width 100%
-    display block
-    margin auto
-  figcaption
-    margin-top 10px
-    text-align left
-    color gray-darker-color
-    font-size 15px
-    line-height 1.3
-    @media screen and (max-width 400px)
-      font-size 13px
-      line-height 15px
-    a
-      color gray-dark-color
-  &[data-layout=column_width]
-    max-width 580px
-
 .article-section-artworks
   position relative
   a
@@ -254,6 +233,7 @@ body.body-article
     @media screen and (max-width 900px)
       width 100%
       margin 0
+      overflow hidden
   &.is-loading
     [data-id]
       opacity 0
@@ -357,16 +337,11 @@ body.body-article
   margin-bottom 45px
   @media screen and (max-width 550px)
     margin 20px
-.responsive-layout-container.article-section-container&[data-section-type="image"],
+
 .main-layout-container&[data-section-type="hero"]
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
-  @media screen and (max-width 1100px)
-    figure
-      width 100%
-      figcaption
-        margin 10px 20px
   @media screen and (max-width 900px)
     margin 45px 0
     max-width 100%
