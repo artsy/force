@@ -288,6 +288,8 @@ body.body-article
     margin-right 30px
     &:last-child
       margin-right 0
+    @media screen and (max-width 550px)
+      margin-right 0px
   .artwork-item-image-container
     height auto !important
     img
@@ -304,7 +306,8 @@ body.body-article
     overflow ellipsis
     @media screen and (max-width 900px)
       margin 10px 30px
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
+      width calc(100% \- 40px)
       margin 10px 20px
   .overlay-container
     display none
@@ -349,7 +352,6 @@ body.body-article
     width body-width
     height (9 / 16 * body-width)
 
-
 .responsive-layout-container.article-section-container
   margin-top 45px
   margin-bottom 45px
@@ -360,6 +362,7 @@ body.body-article
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
+  @media screen and (max-width 1100px)
     figure
       width 100%
       figcaption
