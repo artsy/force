@@ -48,6 +48,18 @@ describe 'SearchResult', ->
         model = new SearchResult(model: 'article')
         model.get('display_model').should.equal 'Article'
 
+      it 'has a display_model attribute when it is a profile', ->
+        model = new SearchResult(model: 'profile')
+        model.get('display_model').should.equal 'Gallery'
+
+      it 'has a display_model attribute when it an institution profile', ->
+        model = new SearchResult(model: 'profile', owner_type: 'PartnerInstitution')
+        model.get('display_model').should.equal 'Institution'
+
+      it 'has a display_model attribute when it an institution seller profile', ->
+        model = new SearchResult(model: 'profile', owner_type: 'PartnerInstitutionalSeller')
+        model.get('display_model').should.equal 'Institution'
+
   describe '#updateForFair', ->
     it 'cleans up data returned from fair search API', ->
       fair = new Fair(fabricate 'fair')
