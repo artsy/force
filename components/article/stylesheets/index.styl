@@ -288,6 +288,8 @@ body.body-article
     margin-right 30px
     &:last-child
       margin-right 0
+    @media screen and (max-width 550px)
+      margin-right 0px
   .artwork-item-image-container
     height auto !important
     img
@@ -302,10 +304,10 @@ body.body-article
     padding-bottom 0 !important
   .artwork-item-caption
     overflow ellipsis
-    width calc(100% \- 40px)
     @media screen and (max-width 900px)
       margin 10px 30px
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
+      width calc(100% \- 40px)
       margin 10px 20px
   .overlay-container
     display none
