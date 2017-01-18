@@ -1,0 +1,75 @@
+include amp_mixins
+
+<!doctype html>
+
+html(amp)
+  head
+    meta(charset='utf-8')
+    title= article.get('search_title') || article.get('thumbnail_title')
+    link(rel='canonical', href=article.fullHref())
+    link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/9e016414-fa93-4783-9247-0140188bdad0.css")
+    meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
+    style(amp-custom='').
+      a {
+        text-decoration: none;
+        color: inherit;
+        background-image: linear-gradient(to bottom,transparent 0,#333 1px,transparent 0);
+        background-size: 1px 3px;
+        background-repeat: repeat-x;
+        background-position: bottom;
+      }
+      h1 {
+        font-weight: normal;
+      }
+      .garamond {
+        font-family: 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif';
+        -webkit-font-smoothing: antialiased;
+        font-smoothing: antialiased;
+        line-height: 1.33;
+        text-rendering: optimizeLegibility;
+        font-weight: inherit;
+      }
+      .margin-20 { margin: 20px; }
+      .gray-color { color: #666; }
+      .caption-font-size { font-size: 15px; }
+      .l-font-size {
+        font-size: 30px;
+        line-height: 1.25;
+      }
+      .body-font-size {
+        font-size: 20px;
+        line-height: 27px;
+      }
+      .body-font-size h2 {
+        font-weight: normal;
+      }
+    script(type='application/ld+json')=article.toJSONLD()
+    script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
+    style(amp-boilerplate='').
+      body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+    noscript
+      style(amp-boilerplate='').
+        body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
+    script(async='', src='https://cdn.ampproject.org/v0.js')
+  body.garamond
+    h1.margin-20= article.get('title')
+    for section in article.get('sections')
+      case section.type
+        when 'text'
+          .margin-20.body-font-size
+            != section.body
+        when 'artworks'
+          +artworks(section)
+        when 'image'
+          +image(section)
+        when 'video'
+          +video(section)
+        //- when 'embed'
+        //-   +embed(section)
+        //- when 'callout'
+        //-   if section.article.length > 0
+        //-     //- TODO: Article Callout
+        //-   else if section.text && section.text.length > 0
+        //-     aside= section.text
+        //- when 'image_set'
+        //-   +imageSet(section)

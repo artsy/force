@@ -1,0 +1,59 @@
+//- mixin hero_section(hero)
+//-   figure
+//-     case hero.type
+//-       when 'image'
+//-         img(src=hero.url)/
+//-         figcaption= hero.caption
+//-       when 'fullscreen'
+//-         if hero.background_url
+//-           figure
+//-             video(loop=true)
+//-               source(src=hero.background_url type='video/mp4')
+//-         else
+//-           img(src= hero.background_image_url)/
+
+mixin artworks(section)
+  if section.artworks
+    each artwork in section.artworks
+      +artwork(artwork)
+
+mixin artwork(artwork)
+  amp-img(src=artwork.image layout="responsive" width="300", height="200")
+  +artworkCaption(artwork)
+
+mixin image(section)
+  amp-img(src=section.url layout="responsive" width="300", height="200")
+  if section.caption && section.caption.length > 0
+    figcaption.margin-20.gray-color.caption-font-size
+      != section.caption
+
+//- mixin imageSet(section)
+//-   figure.op-slideshow
+//-     each item in section.images
+//-       if item.type === 'image'
+//-         +image(item)
+//-       else if item.type === 'artwork'
+//-         +artwork(item)
+
+mixin video(section)
+  if section.url.match('youtube')
+    amp-youtube(src=section.url)
+  else if section.url.match('vimeo')
+    amp-vimeo(src=section.url)
+
+mixin artworkCaption(artwork)
+  figcaption.margin-20.gray-color.caption-font-size
+    p
+      a(href="#{sd.APP_URL}/artwork/#{artwork.slug}")= artwork.title + ", " + artwork.date + ". "
+      br
+      if artwork.artists
+        = toSentence(_.pluck(artwork.artists, 'name'))
+      else if artwork.artist
+        = artwork.artist.name
+      br
+      if artwork.partner
+        = artwork.partner.name
+
+//- mixin embed(section)
+//-   figure.op-interactive
+//-     iframe(class='no-margin' src=section.url height="#{section.mobile_height || section.height }")
