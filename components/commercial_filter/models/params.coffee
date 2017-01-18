@@ -13,7 +13,8 @@ module.exports = class Params extends Backbone.Model
     'gene_id',
     'sort',
     'major_periods',
-    'partner_cities'
+    'partner_cities',
+    'sale_id'
   ]
   defaults:
     size: 50
@@ -36,9 +37,12 @@ module.exports = class Params extends Backbone.Model
   initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
 
   current: ->
-    categories = @categoryMap[@get('medium') || 'global']
-    extra_aggregation_gene_ids = _.pluck categories, 'id'
-    _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @allLocations()
+    if @categoryMap
+      categories = @categoryMap[@get('medium') || 'global']
+      extra_aggregation_gene_ids = _.pluck categories, 'id'
+      _.extend @attributes, extra_aggregation_gene_ids: extra_aggregation_gene_ids, aggregation_partner_cities: @allLocations()
+    else
+      @attributes
 
   allLocations: ->
     _.uniq(@fullyQualifiedLocations.concat((@get('aggregation_partner_cities') || [])).concat @get('partner_cities'))
