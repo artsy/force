@@ -119,6 +119,9 @@ module.exports = class Article extends Backbone.Model
   fullHref: ->
     "#{APP_URL}/article/#{@get('slug')}"
 
+  ampHref: ->
+    "#{APP_URL}/article/#{@get('slug')}/amp"
+
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
 
@@ -201,6 +204,21 @@ module.exports = class Article extends Backbone.Model
           if image.type is 'image'
             image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption
           image
+        section
+      else
+        section
+    @set 'sections', sections
+
+  prepForAMP: ->
+
+    sections =  _.map @get('sections'), (section) ->
+      if section.type is 'text'
+        $ = cheerio.load(section.body)
+        $('br').remove()
+        $('*:empty').remove()
+        $('p').each ->
+          $(this).remove() if $(this).text().length is 0
+        section.body = $.html()
         section
       else
         section

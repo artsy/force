@@ -17,6 +17,6 @@ app.locals.toSentence = toSentence
 # Permalink routes
 app.get '/post/:id', routes.redirectPost
 app.get '/:id/posts', routes.redirectPost
+app.get '/article/:slug/amp', routes.ampArticle
 app.get '/article/:slug', routes.article
-app.get '/article/amp/:slug', routes.ampArticle
 app.post '/editorial-signup/form', routes.editorialForm

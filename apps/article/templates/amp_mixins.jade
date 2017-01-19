@@ -1,45 +1,47 @@
-//- mixin hero_section(hero)
-//-   figure
-//-     case hero.type
-//-       when 'image'
-//-         img(src=hero.url)/
-//-         figcaption= hero.caption
-//-       when 'fullscreen'
-//-         if hero.background_url
-//-           figure
-//-             video(loop=true)
-//-               source(src=hero.background_url type='video/mp4')
-//-         else
-//-           img(src= hero.background_image_url)/
+mixin hero_section(hero)
+  case hero.type
+    when 'image'
+      amp-img(src=hero.background_image_url layout="responsive" width="300", height="200")
+      figcaption.margin-20.gray-color.caption-font-size= hero.caption
+    when 'fullscreen'
+      if hero.background_url
+        video(loop=true)
+          source(src=hero.background_url type='video/mp4')
+      else
+        amp-img(src=hero.background_image_url layout="responsive" width="300", height="200")
+    when 'video'
+      +video(hero)
 
 mixin artworks(section)
   if section.artworks
     each artwork in section.artworks
       +artwork(artwork)
 
-mixin artwork(artwork)
-  amp-img(src=artwork.image layout="responsive" width="300", height="200")
-  +artworkCaption(artwork)
+mixin artwork(artwork, layout)
+  .amp-img-container
+    amp-img(src=artwork.image layout="fixed-height" width="auto", height="300")
+      +artworkCaption(artwork)
 
 mixin image(section)
-  amp-img(src=section.url layout="responsive" width="300", height="200")
-  if section.caption && section.caption.length > 0
-    figcaption.margin-20.gray-color.caption-font-size
-      != section.caption
+  .amp-img-container
+    amp-img(src=section.url layout="fixed-height" width="auto", height="300")
+    if section.caption && section.caption.length > 0
+      figcaption.margin-20.gray-color.caption-font-size
+        != section.caption
 
-//- mixin imageSet(section)
-//-   figure.op-slideshow
-//-     each item in section.images
-//-       if item.type === 'image'
-//-         +image(item)
-//-       else if item.type === 'artwork'
-//-         +artwork(item)
+mixin imageSet(section)
+  amp-carousel(height="400" type="slides" loop)
+    each item in section.images
+      if item.type === 'image'
+        +image(item)
+      else if item.type === 'artwork'
+        +artwork(item)
 
 mixin video(section)
   if section.url.match('youtube')
-    amp-youtube(src=section.url)
+    amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
   else if section.url.match('vimeo')
-    amp-vimeo(src=section.url)
+    amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
 
 mixin artworkCaption(artwork)
   figcaption.margin-20.gray-color.caption-font-size
@@ -54,6 +56,5 @@ mixin artworkCaption(artwork)
       if artwork.partner
         = artwork.partner.name
 
-//- mixin embed(section)
-//-   figure.op-interactive
-//-     iframe(class='no-margin' src=section.url height="#{section.mobile_height || section.height }")
+mixin embed(section)
+  amp-iframe.margin-20(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
