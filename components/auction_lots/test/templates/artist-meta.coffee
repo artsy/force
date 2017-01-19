@@ -1,12 +1,13 @@
 fs = require 'fs'
 jade = require 'jade'
+path = require 'path'
 Artist = require '../../../../models/artist'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
 
   before ->
-    @file = "#{process.cwd()}/components/auction_lots/templates/meta/artist.jade"
+    @file = "#{path.resolve __dirname, '../../'}/templates/meta/artist.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
       API_URL: 'http://localhost:5000'

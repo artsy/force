@@ -1,6 +1,7 @@
 fs = require 'fs'
 jade = require 'jade'
 sinon = require 'sinon'
+path = require 'path'
 Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 artistJSON = require './fixtures'
@@ -10,7 +11,7 @@ _ = require 'underscore'
 
 describe 'Meta tags', ->
   before ->
-    @file = "#{process.cwd()}/apps/artist/templates/meta.jade"
+    @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'

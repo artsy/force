@@ -1,4 +1,5 @@
 fs = require 'fs'
+path = require 'path'
 jade = require 'jade'
 { fabricate } = require 'antigravity'
 
@@ -6,7 +7,7 @@ describe 'Meta tags', ->
   describe 'index', ->
     before ->
       @sd = APP_URL: 'http://localhost:5000'
-      @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
+      @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(), sd: @sd, asset: ((u) -> u)
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
@@ -24,7 +25,7 @@ describe 'Meta tags', ->
   describe 'city', ->
     before ->
       @sd = APP_URL: 'http://localhost:5000'
-      @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
+      @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(), asset: ((u) -> u), sd: @sd, city: name: 'Cool Place'
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
