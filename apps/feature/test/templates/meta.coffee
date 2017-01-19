@@ -1,5 +1,6 @@
 fs = require 'fs'
 jade = require 'jade'
+path = require 'path'
 { fabricate } = require 'antigravity'
 Feature = require '../../../../models/feature'
 
@@ -10,7 +11,7 @@ describe 'Meta tags', ->
     before ->
       @sd =
         APP_URL: "http://localhost:5000"
-      @file = "#{process.cwd()}/apps/feature/templates/meta.jade"
+      @file = "#{path.resolve __dirname, '../../'}/templates/meta.jade"
       @feature = new Feature fabricate('feature')
       @feature.href = -> ''
       @html = jade.render fs.readFileSync(@file).toString(),

@@ -1,5 +1,6 @@
 fs = require 'fs'
 jade = require 'jade'
+path = require 'path'
 Page = require '../../../models/page'
 { fabricate } = require 'antigravity'
 
@@ -8,7 +9,7 @@ describe 'Meta tags', ->
   describe 'press page', ->
 
     before ->
-      @file = "#{process.cwd()}/apps/page/meta/press.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/press.jade"
       @sd =
         CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
@@ -27,7 +28,7 @@ describe 'Meta tags', ->
   describe 'terms page', ->
 
     before ->
-      @file = "#{process.cwd()}/apps/page/meta/terms.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/terms.jade"
       @sd =
         CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
@@ -46,7 +47,7 @@ describe 'Meta tags', ->
   describe 'privacy page', ->
 
     before ->
-      @file = "#{process.cwd()}/apps/page/meta/privacy.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/privacy.jade"
       @sd =
         CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
@@ -65,7 +66,7 @@ describe 'Meta tags', ->
   describe 'security page', ->
 
     before ->
-      @file = "#{process.cwd()}/apps/page/meta/security.jade"
+      @file = "#{path.resolve __dirname, '../'}/meta/security.jade"
       @sd =
         CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY: 'mobile-media-query'
