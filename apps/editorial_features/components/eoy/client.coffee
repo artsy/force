@@ -217,7 +217,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
         }, 1000)
 
   smoothAnchorScroll: =>
-    $('.scroller a[href*=#]:not([href=#])').click (e) ->
+    $('.scroller a[href*="#"]:not([href="#"])').click (e) ->
       e.preventDefault()
       if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
         target = this.hash.slice(1)
