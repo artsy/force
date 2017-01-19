@@ -2,11 +2,8 @@
 Artist = require '../../../models/artist.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 CarouselView = require './carousel.coffee'
-setupEOYFollowButtons = require '../../../components/eoy_artist_list/index.coffee'
 
 module.exports.init = ->
-  setupEOYFollowButtons('Artists page')
-
   if CURRENT_USER?
     following = new Following(null, kind: 'artist')
 

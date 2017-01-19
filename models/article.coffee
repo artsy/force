@@ -164,16 +164,9 @@ module.exports = class Article extends Backbone.Model
       bodyClass += ' body-no-margins body-transparent-header body-transparent-header-white body-fullscreen-article'
       if @get('is_super_article')
         bodyClass += ' body-no-header'
-    if @isEOYSubArticle(data.superSubArticleIds, data.superArticle)
-      bodyClass += ' body-eoy-2016'
     if @get('channel')?.isTeam()
       bodyClass += ' body-no-header is-sticky'
     bodyClass
-
-  isEOYSubArticle: (subArticles = [], superArticle) ->
-    subArticles.length > 0 and
-    not @get('is_super_article') and
-    superArticle?.id is sd.EOY_2016_ARTICLE
 
   prepForInstant: ->
 
