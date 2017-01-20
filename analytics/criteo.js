@@ -85,7 +85,7 @@ if (pathSplit[1] === 'auctions') {
     )
   })
   // ARTWORKS trackTransaction
-  analyticsHooks.on('inquiry:sent', function(data) {
+  analyticsHooks.on('inquiry_questionnaire:inquiry:sync', function(data) {
     window.criteo_q.push(
       { event: 'setAccount', account: sd.CRITEO_ARTWORKS_ACCOUNT_NUMBER },
       { event: 'setSiteType', type: 'd' },
