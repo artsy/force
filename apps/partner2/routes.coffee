@@ -6,7 +6,12 @@ layoutContains = (res = {}, types = []) ->
 
 # Allow new layout for the following partner types
 @requireNewLayout = (req, res, next) ->
-  newLayout = layoutContains res, ['gallery_one', 'gallery_two', 'gallery_three', 'institution']
+  newLayout = res.locals.sd.PARTNER_NEW_LAYOUT = layoutContains res, [
+    'gallery_one'
+    'gallery_two'
+    'gallery_three'
+    'institution'
+  ]
   if newLayout then next() else next('route')
 
 @overview = (req, res, next) ->

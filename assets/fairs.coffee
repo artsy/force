@@ -1,3 +1,4 @@
+sd = require('sharify').data
 require('backbone').$ = $
 
 if location.pathname is '/art-fairs'
