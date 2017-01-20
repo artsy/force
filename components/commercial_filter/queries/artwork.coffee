@@ -43,6 +43,12 @@ module.exports = """
         phone
       }
     }
+    sale {
+      name
+    }
+    sale_artwork {
+      lot_number
+    }
     edition_of
     edition_sets {
       edition_of
