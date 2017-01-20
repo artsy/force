@@ -7,7 +7,7 @@ html( data-useragent=userAgent )
   head
     block head
     include head
-    link( type='text/css', rel='stylesheet', href=asset('/assets/fair.css') )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/fairs.css') )
     if assetPackage
       link( type='text/css', rel='stylesheet', href=asset("/assets/#{assetPackage}.css") )
   body( class= bodyClass )
@@ -23,6 +23,6 @@ html( data-useragent=userAgent )
     include ../../main_layout/footer/template
     #scripts
       include ../../main_layout/templates/scripts
-      script( src=asset('/assets/fair.js') )
+      script( src=asset('/assets/fairs.js') )
       if assetPackage
         script( src=asset("/assets/#{assetPackage}.js") )
