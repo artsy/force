@@ -1,0 +1,8 @@
+.artsy-checkbox.cf-genes__checkbox(data-has-results=agg ? 'true' : 'false')
+  .artsy-checkbox--checkbox
+    input( type='checkbox', id=id, checked=isSelected, disabled=!agg )
+    label( for=id )
+  label.artsy-checkbox--label( for=id ) #{name}
+    if agg
+      | &nbsp;
+      span.cf-genes__total.garamond-m-caption (#{numberFormat(agg.count)})

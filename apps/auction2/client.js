@@ -13,6 +13,7 @@ import TotalView from '../../components/commercial_filter/views/total/total_view
 import SortView from '../../components/commercial_filter/views/sort/sort_view.coffee'
 import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 import MediumFilterView from '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
+// import GeneIdsFilterView from '../../components/commercial_filter/filters/gene_ids/gene_ids_filter_view.coffee'
 import ArtworkColumnsView from '../../components/artwork_columns/view.coffee'
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
@@ -68,16 +69,18 @@ const sortView = new SortView({
 })
 
 // Sidebar
-const priceView = new PriceFilterView({
-  el: $('.cf-sidebar__price'),
-  params: params
-})
-
-const mediumsView = new MediumFilterView({
+const mediumFilterView = new MediumFilterView({
   el: $('.cf-sidebar__mediums'),
   params: params,
-  aggregations: filter.aggregations,
+  aggregations: filter.aggregations
 })
+
+// TODO: replace when backend supports this kind of query
+// const genesView = new GeneIdsFilterView({
+//   el: $('.cf-sidebar__genes'),
+//   params: params,
+//   aggregations: filter.aggregations
+// })
 
 const followedArtistsView = new FollowedArtistFilterView({
   el: $('.cf-sidebar__followed_artists'),

@@ -14,7 +14,8 @@ module.exports = class Params extends Backbone.Model
     'sort',
     'major_periods',
     'partner_cities',
-    'sale_id'
+    'sale_id',
+    'gene_ids'
   ]
   defaults:
     size: 50
@@ -22,6 +23,7 @@ module.exports = class Params extends Backbone.Model
     for_sale: true
     major_periods: []
     partner_cities: []
+    gene_ids: []
     aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS', 'MERCHANDISABLE_ARTISTS']
     ranges:
       price_range:
