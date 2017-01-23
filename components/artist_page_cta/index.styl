@@ -50,6 +50,8 @@
       font-weight bold
 
 .artist-page-cta-overlay
+  &__content
+    padding-left 120px
   &__headline
     text-align center
     margin-top 40px
@@ -62,18 +64,20 @@
     margin-top 50px
     svg
       fill black
-      width 25px
-      height 25px
+      width 35px
+      height 35px
       vertical-align middle
     &__pulldown
+      span
+        font-size 15px
       avant-garde()
       font-size 16px
       vertical-align middle
       &:after
-        left 40%
+        left 50%
         font-size 30px
         content '▲'
-        text-shadow 0 -5px 8px rgba(200,200,200,0.3)
+        text-shadow 0px -7px 12px rgba(0,0,0,0.1)
         color white
         z-index 999
         transform scaleY(0.6)
@@ -94,9 +98,9 @@
       color white
       text-align center
     &__items
-      box-shadow 2px 0px 20px rgba(220,220,220,0.3)
+      box-shadow 0 0 20px 0 rgba(0,0,0,0.1)
       background-color white
-      width 300px
+      width 340px
       height 200px
       margin-left -150px
 
@@ -143,17 +147,18 @@
         margin-right 15px
   &__register
     float right
-    width 500px
-    margin-top 50px
+    width 340px
+    margin-top 10px
+    margin-right 50px
     .auth-signup-facebook
       background-color #38409E
-      width 500px
+      width 340px
     button
       margin-bottom 20px
     h2
       width 100%
       text-align center
-      border-bottom 1px solid gray-darker-color
+      border-bottom 1px solid gray-lighter-color
       line-height 0.1em
       margin 10px 0 20px
       span 
