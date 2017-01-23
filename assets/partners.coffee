@@ -19,10 +19,6 @@ routes =
   ''': require('../apps/galleries_institutions/client/index.coffee')
 
   '''
-  /gallery-insights
-  ''': require('../apps/gallery_insights/client/index.coffee').init
-
-  '''
   /auction-partnerships
   /institution-partnerships
   /gallery-partnerships

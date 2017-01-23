@@ -32,7 +32,6 @@ router.get '/order', isResponsive
 router.get '/christies-spring-auctions-2015', isResponsive
 router.get '/jobs', isResponsive
 router.get '/press/*', isResponsive
-router.all '/social-media-toolkit', isResponsive
 router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
 router.get '/consign', isResponsive
