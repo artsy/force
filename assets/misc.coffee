@@ -20,8 +20,6 @@ routes =
 
   '/style-guide': require('../apps/style_guide/client/index.coffee').init
 
-  '/social-media-toolkit': require('../apps/toolkit/client.coffee').init
-
   '/unsubscribe': require('../apps/unsubscribe/client/index.coffee').init
 
   '/consign': require('../apps/consignments/client/index.coffee')

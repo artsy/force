@@ -55,5 +55,5 @@ module.exports = class NewsView extends Backbone.View
     @$el.html template news: news
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

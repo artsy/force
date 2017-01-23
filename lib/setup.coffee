@@ -196,7 +196,6 @@ module.exports = (app) ->
   # Apps with hardcoded routes or "RESTful" routes
   app.use require "../apps/home"
   app.use require "../apps/editorial_features"
-  app.use require "../apps/toolkit"
   app.use require "../apps/apply"
   app.use require "../apps/auctions"
   app.use require "../apps/artist"
@@ -215,7 +214,6 @@ module.exports = (app) ->
   app.use require "../apps/inquiry"
   app.use require "../apps/fairs"
   app.use require "../apps/flash"
-  app.use require "../apps/gallery_insights"
   app.use require "../apps/partnerships"
   app.use require "../apps/gene"
   app.use require "../apps/geo"
@@ -237,7 +235,6 @@ module.exports = (app) ->
   app.use require "../apps/clear_cache"
   app.use require "../apps/sitemaps"
   app.use require "../apps/rss"
-  app.use require "../apps/mailchimp_subscribe"
   app.use require '../apps/dev'
   app.use require "../apps/article"
 

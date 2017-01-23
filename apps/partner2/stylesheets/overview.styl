@@ -1,8 +1,8 @@
-#partner-overview
-  .partner-overview-container
+#partner2-overview
+  .partner2-overview-container
     display flex
     flex-wrap wrap
-  .partner-overview-section
+  .partner2-overview-section
     min-height 200px
     margin-bottom 60px
     border-top 1px solid gray-color
@@ -24,16 +24,16 @@
         display flex
       .partner2-news-item
         flex-basis 33%
-      .partner-overview-section-title
+      .partner2-overview-section-title
         display none
     &[data-module=about]
     &[data-module=news]
       min-height 100px
-      .partner-overview-section-title
+      .partner2-overview-section-title
         avant-garde-size('m-headline')
     &[data-module=about] + [data-module=news]
       flex-basis 33.33%
-      .partner-overview-section-title
+      .partner2-overview-section-title
       .partner2-news
         display block
       .partner2-news-item
@@ -42,25 +42,25 @@
         margin 0
     &[data-module=artists][data-component=PartnerArtistsGridView]
       order 99
-    .partner-overview-section:first-child
+    .partner2-overview-section:first-child
       border-top none
 
-  .partner-overview-section-title
-  .partner-overview-section-view-all
+  .partner2-overview-section-title
+  .partner2-overview-section-view-all
     display inline-block
     margin 15px 0 20px 0
     vertical-align middle
 
-  .partner-overview-section-title
+  .partner2-overview-section-title
     garamond-size('headline')
     width calc(100% \- 100px)
 
-  .partner-overview-section-view-all
+  .partner2-overview-section-view-all
     garamond-size('l-caption')
     width 100px
     text-align right
 
-  .partner-overview-messages
+  .partner2-overview-messages
     min-height 0
     background-color #fff5db
     padding 100px 0

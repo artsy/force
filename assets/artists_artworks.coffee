@@ -6,8 +6,7 @@ routes =
   '/artists': require('../apps/artists/client/index.coffee').init
 
   '/artwork': ->
-    if location.pathname.match 'checkout' or
-       location.pathname.match 'thank-you'
+    if location.pathname.match 'checkout'
       require('../apps/artwork_purchase/client/index.coffee').init()
     else
       require('../apps/artwork/client/index.coffee').init()

@@ -36,5 +36,5 @@ module.exports = class PartnerArtistsGridView extends Backbone.View
     @$el.html template partner: @partner, groups: groups
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

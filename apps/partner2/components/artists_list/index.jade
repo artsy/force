@@ -1,4 +1,4 @@
-.partner-artists-list
+.partner2-artists-list
   .artists-groups-container
     each group in groups
       nav( class="artists-group artists-group-#{group.cols.length}-columns" )
@@ -8,7 +8,7 @@
             ul.artists-column
               each pa in col
                 if linkToPartnerArtist && pa.get('published_artworks_count') > 0
-                  li( data-artist-id=pa.get('artist').id ): a.partner-route-link( href=pa.href() )= pa.get('artist').name
+                  li( data-artist-id=pa.get('artist').id ): a.partner2-route-link( href=pa.href() )= pa.get('artist').name
                 else if !linkToPartnerArtist
                   li( data-artist-id=pa.get('artist').id ): a( href="/artist/#{pa.get('artist').id}" )= pa.get('artist').name
                 else
