@@ -1,15 +1,15 @@
-header.partner-header
-  .partner-brand-container
-    .partner-info
-      h1.partner-name= profile.displayName()
-      .partner-locations
-      .partner-actions
+header.partner2-header
+  .partner2-brand-container
+    .partner2-info
+      h1.partner2-name= profile.displayName()
+      .partner2-locations
+      .partner2-actions
         button.avant-garde-follow-button-black.follow-button.is-small
-    a.profile-badge.partner-icon( href=profile.href() )
+    a.profile-badge.partner2-icon( href=profile.href() )
       .profile-badge-icon
         if profile.hasIconImage()
           img( src=profile.iconImageUrl(), alt=profile.displayName() )
         else
           .profile-badge-initials= profile.defaultIconInitials()
-  .partner-navs-container
-    .partner-nav
+  .partner2-navs-container
+    .partner2-nav

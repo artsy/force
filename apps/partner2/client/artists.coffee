@@ -58,7 +58,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
 
   appendArtist: (partnerArtist, scroll = false, allArtworks = false) ->
     a = partnerArtist.get('artist')
-    $artistInList = @$(".partner-artists-list li[data-artist-id='#{a.id}'] > a")
+    $artistInList = @$(".partner2-artists-list li[data-artist-id='#{a.id}'] > a")
     new ArtistView
       model: partnerArtist
       scroll: scroll
@@ -82,5 +82,5 @@ module.exports = class PartnerArtistsView extends Backbone.View
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('#artists-details .partner-artist:last')
+    $lastItem = @$('#artists-details .partner2-artist:last')
     @renderNextPageOfArtists() unless fold < $lastItem.offset()?.top + $lastItem.height()

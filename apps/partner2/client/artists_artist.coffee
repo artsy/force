@@ -38,8 +38,8 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   render: ->
     brief = (_.compact [@artist.get('nationality'), @artist.get('years')]).join(", ")
-    @$('.partner-artist-brief').html brief
-    @$('.partner-artist-name').html @artist.get('name')
+    @$('.partner2-artist-brief').html brief
+    @$('.partner2-artist-name').html @artist.get('name')
     @initializeBio()
 
     @$el.css "visibility", "visible"
@@ -70,7 +70,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
         else
           @artworkColumns.appendArtworks artworks.models if @artworkColumns?
           @artworkColumns ?= new ArtworkColumnsView
-            el: @$('.partner-artist-artworks')
+            el: @$('.partner2-artist-artworks')
             collection: artworks
             numberOfColumns: 4
             gutterWidth: 60
@@ -82,19 +82,19 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('.partner-artist-artworks')
+    $lastItem = @$('.partner2-artist-artworks')
     @fetchNextPageArtworks() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   initializeBio: ->
     if @partnerArtist.get('use_default_biography')
-      @$('.partner-artist-blurb').html @artist.mdToHtml('blurb')
+      @$('.partner2-artist-blurb').html @artist.mdToHtml('blurb')
     else if not _s.isBlank(@partnerArtist.get('biography'))
-      @$('.partner-artist-blurb').html @partnerArtist.mdToHtml('biography')
+      @$('.partner2-artist-blurb').html @partnerArtist.mdToHtml('biography')
         .after "<div class='partner-artist-blurb-postfix'>&mdash; Submitted by #{@partner.get('name')}</div>"
     @initializeBlurb()
 
   initializeBlurb: ->
-    $blurb = @$('.partner-artist-blurb')
+    $blurb = @$('.partner2-artist-blurb')
     if $blurb.length > 0
       new BlurbView el: $blurb, updateOnResize: true, lineCount: 4
 

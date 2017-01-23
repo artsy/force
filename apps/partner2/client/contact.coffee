@@ -22,7 +22,7 @@ module.exports = class PartnerContactView extends Backbone.View
     _.each locations.groupBy('city'), (locations, city) ->
       _.each locations, (location) ->
         locationStrings.push locationTemplate(location: location)
-    @$('.partner-locations').html locationStrings.join("")
+    @$('.partner2-locations').html locationStrings.join("")
 
   renderAdditionalInfo: ->
-    @$('.partner-contact-info').html contactTemplate(profile: @profile, partner: @partner)
+    @$('.partner2-contact-info').html contactTemplate(profile: @profile, partner: @partner)

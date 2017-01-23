@@ -4,4 +4,4 @@ if profile.isGallery() && partner.has('email')
     a.email-gallery( data-partner-id=partner.get('_id'), data-partner-slug=partner.get('id'), href=partner.getMailTo() ) Contact #{partner.displayName()} via email.
 if partner.has('website')
   .contact-website
-    a.partner-website( data-partner-id=partner.get('_id'), data-partner-slug=partner.get('id') href=partner.get('website'), target='_blank' )= partner.getSimpleWebsite()
+    a.partner2-website( data-partner-id=partner.get('_id'), data-partner-slug=partner.get('id') href=partner.get('website'), target='_blank' )= partner.getSimpleWebsite()

@@ -31,7 +31,7 @@ module.exports = class PartnerView extends Backbone.View
 
   events:
     # Links that uses router should have a partner-route-link class
-    'click .partner-route-link': 'intercept'
+    'click .partner2-route-link': 'intercept'
 
   defaults:
     currentSection: 'overview'
@@ -53,7 +53,7 @@ module.exports = class PartnerView extends Backbone.View
     # Otherwise, we can just go ahead and render the content.
     return unless @isPartnerFetched or @currentSection isnt 'overview'
     new sectionToView[@currentSection]?( _.extend(
-      el: @$('.partner-content')
+      el: @$('.partner2-content')
       profile: @profile
       partner: @partner
       cache: @cache[@currentSection]
@@ -84,14 +84,14 @@ module.exports = class PartnerView extends Backbone.View
   initializePartnerLocations: ->
     @partner.related().locations.fetch
       success: (locations) =>
-        @$('.partner-header .partner-locations').html locations.displayCities(' • ')
+        @$('.partner2-header .partner2-locations').html locations.displayCities(' • ')
 
   initializeTablistAndContent: =>
     @isPartnerFetched = true
     @sections = @getDisplayableSections @getSections()
 
     # Render tablist
-    @$('.partner-nav').html( tablistTemplate
+    @$('.partner2-nav').html( tablistTemplate
       profile: @profile
       sections: @sections
       currentSection: @currentSection
@@ -110,7 +110,7 @@ module.exports = class PartnerView extends Backbone.View
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
 
     @followButtons = new FollowButton
-      el: @$(".partner-actions .follow-button")
+      el: @$(".partner2-actions .follow-button")
       following: @following
       modelName: 'partner'
       model: @profile
@@ -119,7 +119,7 @@ module.exports = class PartnerView extends Backbone.View
     @following?.syncFollows [@profile.get('id')]
 
   highlightTab: (section) ->
-    $tabs = @$('.partner-tabs a[data-section]')
+    $tabs = @$('.partner2-tabs a[data-section]')
 
     $tabs.removeClass('is-active').addClass('is-inactive')
     $tabs.filter("[data-section='#{section}']").addClass('is-active')
