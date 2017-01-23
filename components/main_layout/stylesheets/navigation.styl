@@ -196,12 +196,15 @@ a.entity-link:hover
     content '\e629'
     vertical-align -(entity-height / 2)
   &:after
+    margin-left -3px
     content 'Follow'
   &:hover
     color purple-color
   &.is-following
   &[data-state='following']
-    color gray-lighter-color
+    color gray-darker-color
+    &:before
+      content '\e628'
     &:after
       content 'Following'
     &:hover

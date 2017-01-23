@@ -26,7 +26,6 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  disableRightClick()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -78,18 +77,3 @@ setupJquery = ->
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
   window[key] = helper for key, helper of templateModules
-
-# We tell our partners, importantly institutions like Museums, that we'll
-# disable right click to "protect" their images. Yes, it's just smoke and
-# mirrors, but it makes them _feel_ better so please be mindful of that.
-disableRightClick = ->
-  # Allow it for admins (e.g. it's super annoying to the design team)
-  return if sd.CURRENT_USER?.type is 'Admin'
-  $(document).on 'contextmenu', (e) ->
-    # Grenade for selecting any images with the name 'artwork' in their,
-    # or their parent's, class
-    $target = $(e.target)
-    return unless $target.is('img')
-    disable = $target.is('[class*=artwork]') or
-              $target.parent().is('[class*=artwork]')
-    return false if disable

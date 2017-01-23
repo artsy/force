@@ -2,6 +2,7 @@
 @require './super_article'
 @require './fullscreen_article'
 @require './editorial_signup'
+@require './image'
 @require './image_set'
 @require './eoy_2016_sub_articles'
 
@@ -197,25 +198,6 @@ body.body-article
       .share-item
         width 33.333%
 
-.article-section-image
-  max-width overflow-width
-  margin auto
-  img
-    width 100%
-    max-width 100%
-    display block
-    margin auto
-  figcaption
-    margin-top 10px
-    color gray-dark-color
-    text-align left
-    @media screen and (max-width 400px)
-      font-size 13px
-      line-height 15px
-    a
-      color gray-dark-color
-  &[data-layout=column_width]
-    max-width 580px
 .article-section-artworks
   position relative
   a
@@ -251,6 +233,7 @@ body.body-article
     @media screen and (max-width 900px)
       width 100%
       margin 0
+      overflow hidden
   &.is-loading
     [data-id]
       opacity 0
@@ -285,6 +268,8 @@ body.body-article
     margin-right 30px
     &:last-child
       margin-right 0
+    @media screen and (max-width 550px)
+      margin-right 0px
   .artwork-item-image-container
     height auto !important
     img
@@ -301,7 +286,8 @@ body.body-article
     overflow ellipsis
     @media screen and (max-width 900px)
       margin 10px 30px
-    @media screen and (max-width 400px)
+    @media screen and (max-width 550px)
+      width calc(100% \- 40px)
       margin 10px 20px
   .overlay-container
     display none
@@ -346,21 +332,16 @@ body.body-article
     width body-width
     height (9 / 16 * body-width)
 
-
 .responsive-layout-container.article-section-container
   margin-top 45px
   margin-bottom 45px
   @media screen and (max-width 550px)
     margin 20px
-.responsive-layout-container.article-section-container&[data-section-type="image"],
+
 .main-layout-container&[data-section-type="hero"]
   @media screen and (max-width 1250px)
     margin 45px 75px
     position relative
-    figure
-      width 100%
-      figcaption
-        margin 10px 20px
   @media screen and (max-width 900px)
     margin 45px 0
     max-width 100%

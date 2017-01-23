@@ -38,6 +38,7 @@ describe('auction templates', () => {
       it('renders correctly', () => {
         $('.auction2-title').text().should.equal('An Auction')
         $('.js-register-button').text().should.equal('Register to bid')
+        $('.auction2-my-active-bids').text().should.not.containEql('Your Active Bids')
       })
     })
   })

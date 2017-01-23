@@ -141,14 +141,18 @@ mobile-height = 260px
           garamond-size('headline')
         h3
           avant-garde-size('s-headline')
-      &__container, &__background-cover, &__background li
+      &__container, &__background-cover
         height mobile-height
       &__social
         padding 40px 20px
       &__social-item
         width 50%
         height 50px
-        padding 0 padding
+        padding 0 20px
+        i.icon-facebook, i.icon-twitter
+          margin-right 15px
+        i.icon-snapchat svg, i.icon-instagram
+          margin-right 20px
       &__social-item:nth-child(2)
         border-left 0px
         border-bottom 0px
@@ -159,80 +163,105 @@ mobile-height = 260px
 
 .articles-es-cta--banner
   @extend .articles-es-cta
-  background-color #F8F8F8
-  height 0
   color black
-  margin-bottom -53px
-  margin-top 53px
   transition all 0.5s ease-out
-  &.modal
-    opacity 0
-    background none transparent
+  opacity 0
+  background none transparent
+  position fixed
+  top 0
+  left 0
+  bottom 0
+  right 0
+  margin 0
+  height 100%
+  display flex
+  justify-content center
+  align-items center
+  z-index 1100
+  .modal-bg
+    background-color rgba(0,0,0,.5)
     position fixed
     top 0
     left 0
     bottom 0
     right 0
-    margin 0
-    height 100%
-    display flex
-    justify-content center
-    align-items center
-    z-index 1100
-    .modal-bg
-      background-color rgba(0,0,0,.5)
-      position fixed
-      top 0
-      left 0
-      bottom 0
-      right 0
-  &.modal[data-state=in]
-    .articles-es-cta--banner__container
-      background-color white
-      position relative
-      width 740px
-      height 335px
-      .cta-bar-defer a
-        top 15px
-        right 20px
-        color gray-color
-    .articles-es-cta--banner__left
-      width 460px
-      padding 60px 0
-      input
-        width 370px
   .cta-bar-defer a
     position absolute
-    right 25px
-    top 20px
+    top 15px
+    right 20px
+    color gray-color
     font-size 12px
     border none
     font-weight 900
-    color gray-dark-color
-    opacity 0
-    float right
-    transition all 2s
-  &[data-state=in]
-    .cta-bar-defer a
-      opacity 1
   &__container
-    width 800px
+    width 750px
+    background-color white
     padding-left 0
+    padding-right 0
+    position relative
     display flex
     justify-content center
     align-items flex-end
     margin auto
     flex-direction row
   &__left
-    width 550px
-    padding 50px 0
+    width 460px
+    padding 60px 0
   &__form > input
-    width 390px
+    width 370px
     border 1px solid gray-lighter-color
   &__right
     padding-top 20px
     .img
       height 280px
+
+.articles-es-cta--banner
+  @media screen and (max-width 750px)
+    &__container
+      max-width calc(100% \- 60px)
+      padding 0 20px
+    &__left
+      max-width 65%
+      padding-left 10px
+      h2
+        garamond-size('headline')
+        margin-bottom 20px
+    &__right
+      padding-right 10px
+      img
+        max-height 260px
+  @media screen and (max-width 600px)
+    .modal-bg
+      top calc(100% \- 285px)
+      background none transparent
+      background linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.25))
+    &__container
+      max-width calc(100% \- 30px)
+      margin-bottom 10px
+      max-height 180px
+      padding-right 0
+    &__left
+      width 100%
+      max-width 100%
+      padding 20px !important
+      h2
+        garamond-size('s-headline')
+        margin-bottom 15px
+      h3
+        display none
+    &__right
+      display none
+    &__form
+      width calc(100% \- 15px)
+    &__form > input
+      min-width 100%
+    .cta-bar-defer a
+      font-size 20px
+      top 20px
+
+  @media screen and (max-width 400px)
+    &__left h2
+      garamond-size('l-body')
 
 #js--mail-hint, .js-suggestion a
   color white

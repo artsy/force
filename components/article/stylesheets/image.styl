@@ -1,0 +1,50 @@
+@require '../../stylus_lib'
+
+overflow-width = 1100px
+column-width = 580px
+
+.responsive-layout-container.article-section-container[data-section-type="image"]
+  .article-section-image
+    margin auto
+    &[data-layout=column_width]
+      max-width column-width
+    &[data-layout=overflow_fillwidth]
+      max-width overflow-width
+    img
+      width 100%
+      max-width 100%
+      display block
+      margin auto
+    figcaption
+      margin-top 10px
+      text-align left
+      color gray-darker-color
+      font-size 15px
+      line-height 1.3
+      a
+        color gray-dark-color
+
+  @media screen and (max-width 1250px)
+    margin 45px 75px
+    position relative
+
+  @media screen and (max-width 1100px)
+    .article-section-image
+      width 100%
+      &[data-layout="overflow_fillwidth"] figcaption
+        margin 10px 20px
+
+  @media screen and (max-width 900px)
+    margin 45px 0
+    max-width 100%
+
+  @media screen and (max-width 650px)
+    .article-section-image[data-layout="column_width"]
+      min-width 100%
+      figcaption
+        margin 10px 20px
+
+  @media screen and (max-width 400px)
+    .article-section-image figcaption
+      font-size 13px
+      line-height 15px
