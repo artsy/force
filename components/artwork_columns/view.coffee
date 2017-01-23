@@ -162,7 +162,6 @@ module.exports = class ArtworkColumns extends Backbone.View
       maxDimension: @maxArtworkHeight
       notes: (if @displayNotes && notes then notes)
       displayBid: @displayBid
-      isAuction: @isAuction
       displayPurchase: @displayPurchase
       displaySold: @displaySold
       displayMoreInfo: @displayMoreInfo
