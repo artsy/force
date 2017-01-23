@@ -1,4 +1,5 @@
 benv = require 'benv'
+_ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 Profile = require '../../../models/profile.coffee'
@@ -46,7 +47,7 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the model name as the label', ->
       @view.$el.click()
-      @mediator.trigger.args[0][1].copy.should.equal 'Sign up to follow profiles'
+      _.last(@mediator.trigger.args)[1].copy.should.equal 'Sign up to follow profiles'
 
   describe '#toggle with label', ->
     before ->
@@ -58,4 +59,4 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the passed in label', ->
       @view.$el.click()
-      @mediator.trigger.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
+      _.last(@mediator.trigger.args)[1].copy.should.equal 'Sign up to follow The Armory Show'

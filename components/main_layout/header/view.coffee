@@ -97,6 +97,9 @@ module.exports = class HeaderView extends Backbone.View
     false
 
   openAuth: (options) ->
+    if sd.SHOW_ARTIST_CTA
+      mediator.trigger 'clickHeaderAuth'
+      return
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
 
   signup: (e) ->

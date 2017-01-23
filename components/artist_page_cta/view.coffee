@@ -26,7 +26,9 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @alreadyDismissed = false
     @afterAuthPath = "#{@artist.get('href')}/payoff"
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
-    
+    mediator.on 'clickFollowButton', @fullScreenOverlay
+    mediator.on 'clickHeaderAuth', @fullScreenOverlay
+
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
 
@@ -41,7 +43,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     params = qs.parse(location.search.replace(/^\?/, ''))
     _.omit(params, 'show_artist_cta_code')
 
-  fullScreenOverlay: (e) ->
+  fullScreenOverlay: (e) =>
     return if @$el.hasClass 'fullscreen'
     fragment = qs.stringify @currentParams()
     @afterAuthPath += "?#{fragment}" if fragment

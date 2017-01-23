@@ -19,10 +19,12 @@ module.exports = class FollowButton extends Backbone.View
       @href,
       @context_page,
       @context_module,
-      @hideSuggestions
+      @hideSuggestions,
+      @authOnClick
     } = options
 
     @label = if options.label then options.label else "#{@modelName}s"
+    @authOnClick ?= true
 
     return unless @following
 
@@ -49,6 +51,8 @@ module.exports = class FollowButton extends Backbone.View
     @trigger 'click'
 
     unless @following
+      mediator.trigger 'clickFollowButton'
+      return unless @authOnClick
       analyticsHooks.trigger 'follow:sign-up'
       mediator.trigger 'open:auth',
         mode: 'register'
