@@ -83,16 +83,19 @@ sd = require('sharify').data
             artist_id: req.params.id
           req: user: user
 
-        return if metaphysics.debug req, res, send
-        metaphysics send
-          .then ({ me, artist }) ->
-            res.locals.sd.CURRENT_USER = user
-            res.locals.sd.INITIAL_ARTISTS = me.suggested_artists
-            res.locals.sd.IS_PAYOFF = true
-            res.render 'payoff',
-              name: user.name
-              href: "/artist/#{req.params.id}/follow?#{qs.stringify req.query}"
-              artist: artist
-          .catch (err) -> next(err if NODE_ENV is 'development')
+        req.user.followArtist req.params.id,
+          error: res.backboneError
+          success: ->
+            return if metaphysics.debug req, res, send
+            metaphysics send
+              .then ({ me, artist }) ->
+                res.locals.sd.CURRENT_USER = user
+                res.locals.sd.INITIAL_ARTISTS = me.suggested_artists
+                res.locals.sd.IS_PAYOFF = true
+                res.render 'payoff',
+                  name: user.name
+                  href: "/artist/#{req.params.id}?#{qs.stringify req.query}"
+                  artist: artist
+              .catch (err) -> next(err if NODE_ENV is 'development')
   else
     res.redirect "/artist/#{req.params.id}"
