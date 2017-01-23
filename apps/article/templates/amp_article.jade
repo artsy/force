@@ -8,50 +8,9 @@ html(amp)
     title= article.get('search_title') || article.get('thumbnail_title')
     link(rel='canonical', href=article.fullHref())
     link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/articles.css') )
     meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
-    style(amp-custom='').
-      a {
-        text-decoration: none;
-        color: inherit;
-        background-image: linear-gradient(to bottom,transparent 0,#333 1px,transparent 0);
-        background-size: 1px 3px;
-        background-repeat: repeat-x;
-        background-position: bottom;
-      }
-      h1 {
-        font-weight: normal;
-      }
-      .avant-garde {
-        font-family: 'ITC Avant Garde Gothic W01', 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif';
-        font-smoothing: antialiased;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .garamond {
-        font-family: 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif';
-        -webkit-font-smoothing: antialiased;
-        font-smoothing: antialiased;
-        line-height: 1.33;
-        text-rendering: optimizeLegibility;
-        font-weight: inherit;
-      }
-      .margin-20 { margin: 20px; }
-      .margin-top-40 { margin-top: 40px }
-      .margin-left-20 { margin-left: 20px; }
-      .gray-color { color: #666; }
-      .caption-font-size { font-size: 15px; }
-      .l-font-size {
-        font-size: 30px;
-        line-height: 1.25;
-      }
-      .body-font-size {
-        font-size: 20px;
-        line-height: 27px;
-      }
-      .body-font-size h2 { font-weight: normal; }
-      .avant-garde-m { font-size: 15px; }
-      .avant-garde-s { font-size: 13px; }
-      .avant-garde-xs { font-size: 11px; }
     script(type='application/ld+json')=article.toJSONLD()
     script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
     <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
@@ -65,7 +24,7 @@ html(amp)
         body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
     script(async='', src='https://cdn.ampproject.org/v0.js')
 
-  body.garamond
+  body.body-article.body-responsive
     if article.get('hero_section')
       +hero_section(article.get('hero_section'))
     header.margin-20.margin-top-40
@@ -78,30 +37,28 @@ html(amp)
     amp-social-share.margin-left-20(type="facebook" width="30" height="30")
     amp-social-share(type="twitter" width="30" height="30")
     amp-social-share(type="email" width="30" height="30")
-
-    for section in article.get('sections')
-      case section.type
-        when 'text'
-          .margin-top-40
-            .margin-20.body-font-size
-              != section.body
-        when 'artworks'
-          .margin-top-40
-            +artworks(section)
-        when 'image'
-          .margin-top-40
-            +image(section)
-        when 'video'
-          .margin-top-40
-            +video(section)
-        when 'embed'
-          .margin-top-40
-            +embed(section)
-        //- when 'callout'
-        //-   if section.article.length > 0
-        //-     //- TODO: Article Callout
-        //-   else if section.text && section.text.length > 0
-        //-     aside= section.text
-        when 'image_set'
-          .margin-top-40
-            +imageSet(section)
+    #articles-show: #articles-body-container: .article-container: .article-content
+      for section in article.get('sections')
+        case section.type
+          when 'text'
+            .article-section-text!= section.body
+          when 'artworks'
+            .article-section-artworks
+              +artworks(section)
+          when 'image'
+            .margin-top-40
+              +image(section)
+          when 'video'
+            .margin-top-40
+              +video(section)
+          when 'embed'
+            .margin-top-40
+              +embed(section)
+          //- when 'callout'
+          //-   if section.article.length > 0
+          //-     //- TODO: Article Callout
+          //-   else if section.text && section.text.length > 0
+          //-     aside= section.text
+          when 'image_set'
+            .margin-top-40
+              +imageSet(section)
