@@ -85,13 +85,14 @@ sd = require('sharify').data
 
         return if metaphysics.debug req, res, send
         metaphysics send
-          .then ({ me }) ->
+          .then ({ me, artist }) ->
             res.locals.sd.CURRENT_USER = user
             res.locals.sd.INITIAL_ARTISTS = me.suggested_artists
             res.locals.sd.IS_PAYOFF = true
             res.render 'payoff',
               name: user.name
               href: "/artist/#{req.params.id}/follow?#{qs.stringify req.query}"
+              artist: artist
           .catch (err) -> next(err if NODE_ENV is 'development')
   else
     res.redirect "/artist/#{req.params.id}"
