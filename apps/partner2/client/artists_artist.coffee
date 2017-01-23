@@ -90,7 +90,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
       @$('.partner2-artist-blurb').html @artist.mdToHtml('blurb')
     else if not _s.isBlank(@partnerArtist.get('biography'))
       @$('.partner2-artist-blurb').html @partnerArtist.mdToHtml('biography')
-        .after "<div class='partner-artist-blurb-postfix'>&mdash; Submitted by #{@partner.get('name')}</div>"
+        .after "<div class='partner2-artist-blurb-postfix'>&mdash; Submitted by #{@partner.get('name')}</div>"
     @initializeBlurb()
 
   initializeBlurb: ->
