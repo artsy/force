@@ -32,6 +32,8 @@ routes =
 
   '/works-for-you': require('../apps/notifications/client/index.coffee').init
 
+  '/profile/.*': require('../apps/user/client/index.coffee').init
+
   '/user/.*': require('../apps/user/client/index.coffee').init
 
   '/search': require('../apps/search/client/index.coffee').init
