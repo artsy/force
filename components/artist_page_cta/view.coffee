@@ -27,7 +27,8 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @afterAuthPath = "#{@artist.get('href')}/payoff"
     @$window.on 'scroll', _.throttle(@maybeShowOverlay, 200)
     mediator.on 'clickFollowButton', @fullScreenOverlay
-    
+    mediator.on 'clickHeaderAuth', @fullScreenOverlay
+
   maybeShowOverlay: (e) =>
     @fullScreenOverlay() if @$window.scrollTop() > @desiredScrollPosition and not @alreadyDismissed
 
