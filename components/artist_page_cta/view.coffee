@@ -49,6 +49,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$('.main-layout-container').html overlayTemplate
       artist: @artist
       afterAuthPath: @afterAuthPath
+    @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
 
   closeOverlay: (e) =>
