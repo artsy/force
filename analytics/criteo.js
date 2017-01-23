@@ -92,6 +92,7 @@ if (pathSplit[1] === 'auctions') {
       { event: 'setEmail', email: userEmail },
       {
         event: 'trackTransaction',
+        id: data.inquiry.id,
         item: [
           {
             id: sd.COMMERCIAL.artwork._id,
