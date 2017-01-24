@@ -19,7 +19,7 @@ mixin video(video)
     .article-video
       != embed(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
 
-mixin image(image)
+mixin singleImage(image)
   figure.article-section-image( data-layout="#{image.layout ? image.layout : 'overflow_fillwidth'}" )
     img( src=resize(image.url, { width: 1100 }) )
     if image.caption
@@ -80,6 +80,21 @@ mixin toc(section)
       .article-section-toc-link
         a(href="##{link.value}")= link.name
 
+mixin imageCollection(images)
+  ul
+    for image, i in images
+      if image.type == 'artwork'
+        +artwork(image)
+      else
+        +image(image)
+
+mixin image(image)
+  li
+    figure.article-section-image
+      img( src=resize(image.url, { width: 1100 }) )
+      if image.caption
+        figcaption!= image.caption
+
 mixin imageSet(section)
   .article-section-image-set__images
     for item, i in section.images.slice(0,3)
@@ -120,7 +135,7 @@ mixin artwork(artwork)
             img( src=artwork.image )
       figcaption.artwork-item-caption
         p.artwork-item-artist.artwork-item-overflow
-          if artwork.artists
+          if artwork.artists && artwork.artists.length > 0
             for artist, i in artwork.artists
               +printArtistName(artist)
           else if artwork.artist && artwork.artist.name

@@ -55,6 +55,7 @@ module.exports = class ArticleView extends Backbone.View
     # Render sections
     @renderSlideshow()
     @resizeArtworks()
+    @resizeImageCollection()
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
@@ -87,7 +88,7 @@ module.exports = class ArticleView extends Backbone.View
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
   setupMaxImageHeights: ->
-    @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
+    @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img, .article-section-container[data-section-type=image_collection] img")
       .each (i, img) ->
         $(img).parent().css('max-width', '')
         optimizedHeight = window.innerHeight * 0.9
@@ -96,8 +97,12 @@ module.exports = class ArticleView extends Backbone.View
         if newWidth < 580
           $(img).parent().css('max-width', 580)
         # image is taller than window
-        else if img.height > optimizedHeight
-          $(img).parent().css('max-width', newWidth)
+        # else if img.height > optimizedHeight
+        #   # if $(img).closest('li')?.length
+        #     # console.log 'sup'
+        #     # $(img).closest('li').css('max-width', newWidth)
+        #   # else
+        #   $(img).parent().css('max-width', newWidth)
     @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
     @loadedImageHeights = true
     @maybeFinishedLoading()
@@ -111,7 +116,20 @@ module.exports = class ArticleView extends Backbone.View
     Q.all( _.map artworkSections, (section) =>
       $el = @$("[data-layout=overflow_fillwidth]" +
         " li[data-id=#{section.artworks[0].id}]").parent()
-      if $el.children().length == 1
+      if $el.children()?.length == 1
+        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+        $el.addClass('single')
+      else
+        Q.nfcall @fillwidth, $el
+    ).done =>
+      @loadedArtworks = true
+      @maybeFinishedLoading()
+
+  resizeImageCollection: =>
+    imageSections = $('.article-section-container[data-section-type=image_collection][data-layout=overflow_fillwidth]')
+    Q.all( _.map imageSections, (section) =>
+      $el = $(section).find('ul')
+      if $el.children()?.length == 1
         $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
         $el.addClass('single')
       else
@@ -196,10 +214,10 @@ module.exports = class ArticleView extends Backbone.View
     name = $(e.currentTarget).attr('href').substring(1)
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
-  fillwidth: (el, cb) =>
-    if @$(el).length < 1 or @windowWidth < 550
+  fillwidth: (el) =>
+    debugger
+    if @$(el).children()?.length < 1 or @windowWidth < 550
       @$(el).parent().removeClass('is-loading')
-      return cb()
     $list = @$(el)
     if @windowHeight > 700
       newHeight = @windowHeight * .8
@@ -217,7 +235,6 @@ module.exports = class ArticleView extends Backbone.View
           $list.css({'display':'flex', 'justify-content':'center'})
         # Remove loading state
         $list.parent().removeClass('is-loading')
-        cb()
 
   imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
@@ -235,8 +252,9 @@ module.exports = class ArticleView extends Backbone.View
     @embedMobileHeight()
     @addReadMore() if @gradient
     #Reset Artworks size
-    $(".article-section-artworks ul").each (i, imgs) =>
-      if $(imgs).children().length > 1
+    $(".article-section-artworks ul, .article-section-image-collection[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
+      debugger
+      if $(imgs)?.children()?.length > 1
         @parentWidth = $(imgs).width()
         @fillwidth imgs, ->
 

@@ -51,7 +51,7 @@ if superArticle
                 for artwork in section.artworks
                   +artwork(artwork)
           when 'image'
-              +image(section)
+              +singleImage(section)
           when 'video'
             .article-section-video( class="article-video-background-" + section.background_color )
               +video(section)
@@ -74,6 +74,10 @@ if superArticle
             if section.images.length > 0
               .article-section-image-set( data-index= i )
                 +imageSet(section)
+          when 'image_collection'
+            if section.images.length > 0
+              .article-section-image-collection( data-index= i data-layout=section.layout )
+                +imageCollection(section.images)
 
     if !hideShare
       .responsive-layout-container
