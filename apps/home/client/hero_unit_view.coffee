@@ -26,6 +26,9 @@ module.exports = class HeroUnitView extends Backbone.View
 
     @$heroUnitsContainer.imagesLoaded @setRetinaHeroTitles
 
+    @$('.home-hero-unit').swipeleft => @onLeftArrow()
+    @$('.home-hero-unit').swiperight => @onRightArrow()
+
   setRetinaHeroTitles: =>
     @$('.hhu-title').each ->
       $(this)
@@ -38,6 +41,9 @@ module.exports = class HeroUnitView extends Backbone.View
   setInterval: =>
     clearInterval @interval
     @interval = setInterval @nextHeroUnit, @pauseLength
+
+  handleSwipe: (e, direction) ->
+    console.log('swiped', direction)
 
   setBodyClass: =>
     if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
