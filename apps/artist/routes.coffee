@@ -43,6 +43,7 @@ sd = require('sharify').data
             res.locals.sd.ARTIST = artist
             res.locals.sd.TAB = tab
             res.locals.sd.CURRENT_ITEM = currentItem
+            res.locals.sd.ON_ARTIST_PAGE = true
 
             res.render 'index',
               viewHelpers: helpers

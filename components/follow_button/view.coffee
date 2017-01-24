@@ -4,7 +4,7 @@ mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 ArtistSuggestions = require './artist_suggestions.coffee'
-{ NEW_ARTIST_PAGE_CTA } = require('sharify').data
+{ NEW_ARTIST_PAGE_CTA, ON_ARTIST_PAGE } = require('sharify').data
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -51,7 +51,7 @@ module.exports = class FollowButton extends Backbone.View
 
     unless @following
       mediator.trigger 'clickFollowButton'
-      return if NEW_ARTIST_PAGE_CTA is 'new_cta'
+      return if NEW_ARTIST_PAGE_CTA is 'new_cta' and ON_ARTIST_PAGE
       analyticsHooks.trigger 'follow:sign-up'
       mediator.trigger 'open:auth',
         mode: 'register'
