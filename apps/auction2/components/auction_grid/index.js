@@ -3,7 +3,7 @@ import AuctionGridArtwork from '../auction_grid_artwork/index'
 
 export default function AuctionGrid({ artworks }, _) {
   return (
-    <div className={'auction-grid'}>
+    <div className={'auction2-grid'}>
       {
         artworks.map((artwork) => (
           <AuctionGridArtwork key={artwork.get('_id')} artwork={artwork} />

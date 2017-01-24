@@ -11,9 +11,9 @@ export default function BidStatus({ artwork }, _) {
   }
 
   return (
-    <div className='bid-status'>
-      <span className='bid-status__bid-label' dangerouslySetInnerHTML={{ __html: bidLabel }}></span>
-      <span className='bid-status__bid-amount'>{ saleArtwork.current_bid.display }</span>
+    <div className='auction2-bid-status'>
+      <span className='auction2-bid-status__bid-label' dangerouslySetInnerHTML={{ __html: bidLabel }}></span>
+      <span className='auction2-bid-status__bid-amount'>{ saleArtwork.current_bid.display }</span>
     </div>
   );
 }
