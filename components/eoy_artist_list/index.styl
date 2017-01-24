@@ -1,0 +1,35 @@
+@require '../stylus_lib'
+@require './artist_item.styl'
+
+.eoy-artist-feature
+  padding 20px 40px
+  margin 50px 0
+  text-align center
+  border 2px solid gray-lighter-color
+  @media (max-width: 1300px)
+    margin 50px 20px
+  &__headline
+    garamond-size('xxl-headline')
+    padding-bottom 10px
+  &__subheadline
+    garamond-size('s-body')
+    color gray-darker-color
+    padding-bottom 20px
+    max-width 530px
+    margin 0 auto
+    a
+      color gray-darker-color
+  &__lists
+    &__list
+      margin-top 40px
+      &__headline
+        garamond-size('l-headline')
+        padding-bottom 10px
+      &__subheadline
+        garamond-size('s-body')
+        color gray-darker-color
+        max-width 40%
+        margin 0 auto
+      &__artists
+        margin-top 20px
+        text-align left
