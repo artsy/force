@@ -23,8 +23,7 @@
 
 .artist-page-cta.fullscreen
   height calc(100%)
-  .main-layout-container
-    width 800px
+  width calc(100%)
 
 .artist-page-cta
   position fixed
@@ -57,11 +56,16 @@
       font-weight bold
 
 .artist-page-cta-overlay
+  &__wrapper
+    width 710px
+    position fixed
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
   &__content
-    padding-left 120px
+    clearfix()
   &__headline
     text-align center
-    margin-top 40px
     font-size 40px
     line-height 1.3em
     &__artist-name
@@ -69,6 +73,7 @@
   &__feed
     display inline-block
     margin-top 50px
+    margin-left 85px
     svg
       fill black
       width 35px
@@ -116,9 +121,9 @@
         display block
         position absolute
         content ''
-        right 0
-        bottom 0
-        left 0
+        right -20px
+        bottom -20px
+        left -20px
         height 125px
         background-image linear-gradient(to bottom, rgba(255,255,255,0), white 100px)
       li
@@ -157,7 +162,6 @@
     float right
     width 340px
     margin-top 10px
-    margin-right 50px
     .auth-signup-facebook
       background-color #38409E
       width 340px
@@ -169,7 +173,7 @@
       border-bottom 1px solid gray-lighter-color
       line-height 0.1em
       margin 10px 0 20px
-      span 
+      span
         avant-garde()
         font-size 11px
         color gray-darker-color

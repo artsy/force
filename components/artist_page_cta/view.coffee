@@ -48,7 +48,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     fragment = qs.stringify @currentParams()
     @afterAuthPath += "?#{fragment}" if fragment
     @$el.addClass 'fullscreen'
-    @$('.main-layout-container').html overlayTemplate
+    @$el.html overlayTemplate
       artist: @artist
       afterAuthPath: @afterAuthPath
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
@@ -83,5 +83,5 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   render: ->
     @$el.html template
-      artist: @artist 
+      artist: @artist
     @
