@@ -4500,6 +4500,11 @@
       "from": "jquery-on-infinite-scroll@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/jquery-on-infinite-scroll/-/jquery-on-infinite-scroll-1.0.1.tgz"
     },
+    "jquery-touch-events": {
+      "version": "1.0.6",
+      "from": "git+https://github.com/benmajor/jQuery-Touch-Events.git",
+      "resolved": "git+https://github.com/benmajor/jQuery-Touch-Events.git#d380d7e48e9bf96dd8c1c1b37e3218e2156f398a"
+    },
     "jquery-ui": {
       "version": "1.12.1",
       "from": "jquery-ui@>=1.12.1 <2.0.0",
