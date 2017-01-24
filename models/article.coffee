@@ -210,19 +210,24 @@ module.exports = class Article extends Backbone.Model
     @set 'sections', sections
 
   prepForAMP: ->
-
     sections =  _.map @get('sections'), (section) ->
       if section.type is 'text'
         $ = cheerio.load(section.body)
-        $('br').remove()
-        $('*:empty').remove()
-        $('p').each ->
-          $(this).remove() if $(this).text().length is 0
+        $('a:empty').remove()
         section.body = $.html()
+        section
+      else if section.type is 'image'
+        # img = new Image()
+        # img.src = section.url
         section
       else
         section
     @set 'sections', sections
+
+  hasAMP: ->
+    for section in @get('sections')
+      return false if section.type in ['artwork', 'image']
+    return true
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
     for id in @get('super_article').related_articles

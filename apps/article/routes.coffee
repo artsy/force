@@ -54,6 +54,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         return res.redirect "/#{data.partner.get('default_profile_id')}/article/#{data.article.get('slug')}"
       unless data.article.get('featured') and data.article.get('published')
         return next()
+      # Return if there's an artwork or image section
       data.article = data.article.prepForAMP()
       res.render 'amp_article', _.extend data,
         resize: resize

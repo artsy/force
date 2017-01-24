@@ -1,60 +1,62 @@
-mixin hero_section(hero)
+mixin amp_hero_section(hero)
   case hero.type
     when 'image'
-      amp-img(src=hero.background_image_url layout="responsive" width="300", height="200")
-      figcaption.margin-20.gray-color.caption-font-size= hero.caption
+      amp-img(src=resize(hero.background_image_url, {width: 600}) layout="responsive" width="300", height="200")
+      figcaption= hero.caption
     when 'fullscreen'
       if hero.background_url
         video(loop=true)
           source(src=hero.background_url type='video/mp4')
       else
-        amp-img(src=hero.background_image_url layout="responsive" width="300", height="200")
+        amp-img(src=resize(hero.background_image_url, {width: 600}) layout="responsive" width="300", height="200")
     when 'video'
-      +video(hero)
+      +amp_video(hero)
 
-mixin artworks(section)
-  if section.artworks
-    each artwork in section.artworks
-      +artwork(artwork)
+//- mixin amp_artworks(section)
+//-   .article-section-container(data-section-type="artwork")
+//-     .article-section-artworks
+//-       ul
+//-         if section.artworks
+//-           each artwork in section.artworks
+//-             +amp_artwork(artwork)
 
-mixin artwork(artwork, layout)
-  .amp-img-container
-    amp-img(src=artwork.image layout="fixed-height" width="auto", height="300")
-      +artworkCaption(artwork)
+mixin amp_artwork(section)
+  .amp-artwork
+    amp-img(src=resize(section.image, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
+    +artwork_caption(section)
 
-mixin image(section)
-  .amp-img-container
-    amp-img(src=section.url layout="fixed-height" width="auto", height="300")
+mixin amp_image(section)
+  .amp-img
+    amp-img(src=resize(section.url, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
     if section.caption && section.caption.length > 0
-      figcaption.margin-20.gray-color.caption-font-size
+      figcaption
         != section.caption
 
-mixin imageSet(section)
+mixin amp_image_collection(section)
+  .amp-image-collection
+    each image in section.images
+      if image.type === 'artwork'
+        +amp_artwork(image)
+      else if image.type = 'image'
+        +amp_image(image)
+
+mixin amp_image_set(section)
   amp-carousel(height="400" type="slides" loop)
     each item in section.images
       if item.type === 'image'
-        +image(item)
+        +amp_image(item)
       else if item.type === 'artwork'
-        +artwork(item)
+        +amp_artwork(item)
 
-mixin video(section)
-  if section.url.match('youtube')
-    amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
-  else if section.url.match('vimeo')
-    amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+mixin amp_video(section)
+  .article-section-container.responsive-layout-container
+    .article-section-video
+      if section.url.match('youtube')
+        amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+      else if section.url.match('vimeo')
+        amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
 
-mixin artworkCaption(artwork)
-  figcaption.margin-20.gray-color.caption-font-size
-    p
-      a(href="#{sd.APP_URL}/artwork/#{artwork.slug}")= artwork.title + ", " + artwork.date + ". "
-      br
-      if artwork.artists
-        = toSentence(_.pluck(artwork.artists, 'name'))
-      else if artwork.artist
-        = artwork.artist.name
-      br
-      if artwork.partner
-        = artwork.partner.name
-
-mixin embed(section)
-  amp-iframe.margin-20(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
+mixin amp_embed(section)
+  .article-section-container.responsive-layout-container
+    .article-section-embed
+      amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")

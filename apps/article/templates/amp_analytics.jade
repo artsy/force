@@ -1,0 +1,18 @@
+amp-analytics(type="segment")
+  script(type="application/json").
+    {
+      "vars": {
+        "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
+        "name": "#{article.get('thumbnail_title')}"
+      },
+      "extraUrlParams": {
+        "properties.type": "NewsArticle",
+        "properties.creator": "#{article.getAuthorArray()}",
+        "properties.keywords": "#{article.get('tags')}",
+        "properties.dateCreated": "#{article.get('published_at')}",
+        "properties.articleSection": "#{article.getParselySection()}",
+        "properties.thumbnailUrl": "#{article.get('thumbnail_image')}",
+        "properties.url": "#{article.fullHref()}",
+        "properties.headline": "#{article.get('thumbanil_title')}"
+      }
+    }

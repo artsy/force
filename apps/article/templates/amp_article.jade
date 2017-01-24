@@ -1,4 +1,5 @@
 include amp_mixins
+include ../../../components/article/templates/mixins
 
 <!doctype html>
 
@@ -9,7 +10,7 @@ html(amp)
     link(rel='canonical', href=article.fullHref())
     link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
     link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
-    link( type='text/css', rel='stylesheet', href=asset('/assets/articles.css') )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/article.css') )
     meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
     script(type='application/ld+json')=article.toJSONLD()
     script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
@@ -17,6 +18,7 @@ html(amp)
     <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
     <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     style(amp-boilerplate='').
       body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
     noscript
@@ -24,41 +26,37 @@ html(amp)
         body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
     script(async='', src='https://cdn.ampproject.org/v0.js')
 
-  body.body-article.body-responsive
+  body.body-article.body-responsive.body-amp
     if article.get('hero_section')
-      +hero_section(article.get('hero_section'))
-    header.margin-20.margin-top-40
-      h1= article.get('title')
-      h3!= article.get('lead_paragraph')
-      .avant-garde.avant-garde-xs Artsy Editorial
-      if article.get('contributing_authors').length
-        .avant-garde.avant-garde-s= "By " + article.contributingByline()
-      .avant-garde.avant-garde-xs.gray-color= article.date('published_at').format('MMM Do, YYYY h:mm a')
-    amp-social-share.margin-left-20(type="facebook" width="30" height="30")
-    amp-social-share(type="twitter" width="30" height="30")
-    amp-social-share(type="email" width="30" height="30")
-    #articles-show: #articles-body-container: .article-container: .article-content
+      +amp_hero_section(article.get('hero_section'))
+    .article-container: .article-content
+      .article-header.responsive-layout-container
+        h1.large-garamond-header= article.get('title')
+        +author-date
+        amp-social-share(type="facebook" width="30" height="30" data-uri=)
+        amp-social-share(type="twitter" width="30" height="30")
+        amp-social-share(type="email" width="30" height="30")
+        .article-lead-paragraph!= article.get('lead_paragraph')
       for section in article.get('sections')
         case section.type
           when 'text'
-            .article-section-text!= section.body
-          when 'artworks'
-            .article-section-artworks
-              +artworks(section)
-          when 'image'
-            .margin-top-40
-              +image(section)
+            .article-section-container.responsive-layout-container
+              .article-section-text
+                != section.body
+          when 'image_collection'
+            +amp_image_collection(section)
           when 'video'
-            .margin-top-40
-              +video(section)
+            +amp_video(section)
           when 'embed'
-            .margin-top-40
-              +embed(section)
-          //- when 'callout'
-          //-   if section.article.length > 0
-          //-     //- TODO: Article Callout
-          //-   else if section.text && section.text.length > 0
-          //-     aside= section.text
+            +amp_embed(section)
+          when 'callout'
+            .article-section-container.responsive-layout-container(data-section-type="callout")
+              if section.article && section.article.length > 0
+                +callout(section)
+              else if section.text && section.text.length > 0
+                +pullquote(section)
           when 'image_set'
-            .margin-top-40
-              +imageSet(section)
+            .article-section-container.responsive-layout-container
+              .article-section-image-set
+                +amp_image_set(section)
+    include amp_analytics
