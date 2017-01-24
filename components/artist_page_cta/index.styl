@@ -10,16 +10,21 @@
       line-height 1.3em
       font-size 20px
   &__content
-    padding-top 40px
-    margin-left 300px
-    .arbv-follow-search-container
-      width 500px
-  &__done
-    margin-left 300px
+    padding-top 340px
+    clearfix()
+    position relative
+    left 50%
     width 500px
-    margin-top 20px
-    padding-top 10px
-    padding-bottom 10px
+    transform translate(-50%, -50%)
+    .arbv-follow-search-container
+      width 100%
+  &__done
+    position absolute
+    left 50%
+    top 50%
+    margin-top 90px
+    transform translate(-50%, -50%)
+    width 500px
 
 .artist-page-cta.fullscreen
   height calc(100%)
