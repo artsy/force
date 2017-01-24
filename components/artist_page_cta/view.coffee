@@ -53,10 +53,18 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       afterAuthPath: @afterAuthPath
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
+    @disableScroll()
+
+  disableScroll: ->
+    $('#main-layout-container').addClass('artist-page-cta__no-scroll')
+
+  reenableScroll: ->
+    $('#main-layout-container').removeClass('artist-page-cta__no-scroll')
 
   closeOverlay: (e) =>
     e.stopPropagation()
     @$el.removeClass 'fullscreen'
+    @reenableScroll()
     @alreadyDismissed = true
     @render()
 
