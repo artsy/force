@@ -40,8 +40,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       redirectTo: @afterAuthPath
 
   currentParams: ->
-    params = qs.parse(location.search.replace(/^\?/, ''))
-    _.omit(params, 'show_artist_cta_code')
+    qs.parse(location.search.replace(/^\?/, ''))
 
   fullScreenOverlay: (e) =>
     return if @$el.hasClass 'fullscreen'
