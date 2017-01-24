@@ -42,9 +42,6 @@ module.exports = class HeroUnitView extends Backbone.View
     clearInterval @interval
     @interval = setInterval @nextHeroUnit, @pauseLength
 
-  handleSwipe: (e, direction) ->
-    console.log('swiped', direction)
-
   setBodyClass: =>
     if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
       if @$('.home-hero-unit-active').hasClass('home-hero-unit-white')
