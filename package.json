@@ -141,5 +141,8 @@
     "uglifyify": "^3.0.1",
     "validator": "^6.1.0",
     "zombie": "^5.0.4"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   }
 }
