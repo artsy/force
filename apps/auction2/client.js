@@ -14,10 +14,13 @@ import SortView from '../../components/commercial_filter/views/sort/sort_view.co
 import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 import MediumFilterView from '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
 // import GeneIdsFilterView from '../../components/commercial_filter/filters/gene_ids/gene_ids_filter_view.coffee'
-import ArtworkColumnsView from '../../components/artwork_columns/view.coffee'
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
+
+import React from 'react';
+import { render } from 'react-dom';
+import AuctionGrid from './components/auction_grid/index.js'
 
 const { fullyQualifiedLocations } = require('../../components/commercial_filter/filters/location/location_map.coffee')
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -39,21 +42,17 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 }
 
 // Commercial filtering
-const params = new Params({sale_id: sd.AUCTION.id}, {
+const params = new Params({sale_id: sd.AUCTION.id, size: 20}, {
   fullyQualifiedLocations: fullyQualifiedLocations
 })
 const filter = new Filter({params: params})
 
 // Main Artworks view
 filter.artworks.on('reset', () => {
-  const artworkView = new ArtworkColumnsView({
-    collection: filter.artworks,
-    el: $('.cf-artworks'),
-    allowDuplicates: true,
-    gutterWidth: 30,
-    numberOfColumns: 3,
-    context_page: 'Collect page'
-  })
+  render(
+    <AuctionGrid artworks={filter.artworks.models} />,
+    document.getElementById('cf-artworks')
+  );
 })
 
 // Header
