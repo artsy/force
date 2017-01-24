@@ -1,4 +1,3 @@
-{ some } = require 'underscore'
 filenameMap = require './image_filename_map.coffee'
 
 module.exports =
