@@ -15,11 +15,12 @@ div.artist-page-cta-overlay__wrapper
               - var count = 7
               - var name = artist.get('name')
               include ./row.jade
-            li
-              - var image = artist.get('cta_artists')[0].image.thumb.url
-              - var count = 3
-              - var name = artist.get('cta_artists')[0].name
-              include ./row.jade
+            if artist.get('cta_artists')[0]
+              li
+                - var image = artist.get('cta_artists')[0].image.thumb.url
+                - var count = 3
+                - var name = artist.get('cta_artists')[0].name
+                include ./row.jade
 
       include ../../main_layout/public/icons/bell.svg
       .artist-page-cta-overlay__feed__count 3

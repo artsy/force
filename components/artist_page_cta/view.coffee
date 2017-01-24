@@ -22,6 +22,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @artist = artist
     @user = new LoggedOutUser
     @$window = $ window
+    @$body = $('body')
     @desiredScrollPosition = @$window.height() * 2
     @alreadyDismissed = false
     @afterAuthPath = "#{@artist.get('href')}/payoff"
@@ -53,10 +54,18 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       afterAuthPath: @afterAuthPath
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
+    setTimeout (=> @disableScroll()), 400
+
+  disableScroll: ->
+    @$body.addClass('is-scrolling-disabled')
+
+  reenableScroll: ->
+    @$body.removeClass('is-scrolling-disabled')
 
   closeOverlay: (e) =>
     e.stopPropagation()
     @$el.removeClass 'fullscreen'
+    setTimeout (=> @reenableScroll()), 400
     @alreadyDismissed = true
     @render()
 
