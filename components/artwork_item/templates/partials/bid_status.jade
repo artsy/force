@@ -1,0 +1,36 @@
+unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
+  .aga-bidding
+    unless auction.isAuctionPromo()
+      if auction.isOpen()
+        //- Even buyable works can be bid on
+        .aga-bid-status
+          //- And possibly prematurely marked sold
+          if artwork.get('sold') && !artwork.get('acquireable')
+            .aabs-price
+              | Sold
+          else
+            .aabs-label
+              | <strong>#{saleArtwork.bidLabel()}</strong> #{saleArtwork.formatBidCount()}
+            .aabs-price
+              = saleArtwork.currentBid()
+
+        if artwork.get('acquireable')
+          .aga-bid-status
+            .aabs-label
+              strong Buy Now Price
+            .aabs-price
+              if artwork.get('acquireable')
+                if artwork.get('sold')
+                  | Sold
+                else
+                  = artwork.saleMessage() || 'Unavailable'
+        else
+          //- Hack to always maintain consistent grid height
+          //- (reconsider using flexbox or table layout)
+          .aga-bid-status: .aabs-price &nbsp;
+      else if !auction.isClosed()
+        .aga-bid-status
+          .aabs-label
+            //-
+          .aabs-price
+            != artwork.saleMessage() || '&nbsp;'

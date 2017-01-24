@@ -15,7 +15,7 @@ module.exports = class GeneIdsFilterView extends Backbone.View
     throw new Error 'Requires an aggregations collection' unless @aggregations?
 
     @listenTo @params, 'change:gene_ids', @render
-    @listenTo @aggregations, 'reset', @render2
+    @listenTo @aggregations, 'reset', @render
 
   resolveGenes: (selectedGene) ->
     if selectedGene is 'genes-all'
@@ -34,15 +34,6 @@ module.exports = class GeneIdsFilterView extends Backbone.View
 
   findAggregation: (counts, id) ->
     _.find counts, (count) -> count.id is id
-
-  render2: ->
-    @$el.html template
-      counts: @aggregations.get('MEDIUM')?.get('counts')
-      gene_ids: mediumMap
-      selected: @params.get('gene_ids')
-      hasResults: @hasResults
-      findAggregation: @findAggregation
-      numberFormat: numberFormat
 
   render: ->
     @$el.html template

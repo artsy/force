@@ -45,9 +45,16 @@ module.exports = """
     }
     sale {
       name
+      is_live_open
     }
     sale_artwork {
       lot_number
+      counts {
+        bidder_positions
+      }
+      current_bid {
+        display
+      }
     }
     edition_of
     edition_sets {
