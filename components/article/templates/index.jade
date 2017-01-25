@@ -59,12 +59,11 @@ if superArticle
             .article-section-embed( data-layout=section.layout )
               +embed(section)
           when 'callout'
-            if section.article.length > 0
-              .article-section-callout-container(data-id=section.article)
-                //- Rendered on client
+            if section.article
+              +callout(section)
             else if section.text && section.text.length > 0
               +pullquote(section)
-            else
+            else if section.topStories
               +topStories
           when 'toc'
             if section.links.length > 0
