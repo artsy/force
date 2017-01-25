@@ -145,6 +145,26 @@ describe "Article", ->
         done()
       return
 
+    it 'fetches callout articles', (done) ->
+      calloutArticle = _.extend {}, fixtures.article,
+        sections: [
+          type: 'callout'
+          article: '12345'
+        ]
+
+      Backbone.sync
+        .onCall 0
+        .yieldsTo 'success', calloutArticle
+        .onCall 4
+        .yieldsTo 'success', _.extend {}, fixtures.article,
+          thumbnail_title: 'The title of a callout article'
+
+      @article.fetchWithRelated success: (data) ->
+        data.calloutArticles.length.should.equal 1
+        data.calloutArticles.first().get('thumbnail_title').should.equal 'The title of a callout article'
+        done()
+      return
+
   describe '#strip', ->
     it 'returns the attr without tags', ->
       @article.set 'lead_paragraph', '<p><br></p>'
