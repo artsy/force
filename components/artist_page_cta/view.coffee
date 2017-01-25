@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 qs = require 'qs'
 _ = require 'underscore'
 Form = require '../mixins/form.coffee'
+Mailcheck = require '../mailcheck/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
@@ -97,3 +98,6 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$banner = @$('.artist-page-cta-banner')
     @$overlay = @$('.artist-page-cta-overlay')
     @
+
+  initializeMailcheck: ->
+    Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
