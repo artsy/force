@@ -9,7 +9,7 @@ module.exports = (artist) ->
   return if CURRENT_USER || REFERRER?.includes(APP_URL)
 
   # Track AB Test
-  split_test('new_artist_page_cta').view()
+  splitTest('new_artist_page_cta').view()
 
   # AB Test new CTA
   if NEW_ARTIST_PAGE_CTA is 'new_cta'
