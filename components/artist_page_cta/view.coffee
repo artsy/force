@@ -46,12 +46,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   fullScreenOverlay: (e) =>
     return if @$el.hasClass 'fullscreen'
+    @$overlay.fadeIn 300
+    @$banner.fadeOut 300
     fragment = qs.stringify @currentParams()
     @afterAuthPath += "?#{fragment}" if fragment
     @$el.addClass 'fullscreen'
-    @$el.html overlayTemplate
-      artist: @artist
-      afterAuthPath: @afterAuthPath
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
     setTimeout (=> @disableScroll()), 400
@@ -64,10 +63,11 @@ module.exports = class ArtistPageCTAView extends Backbone.View
 
   closeOverlay: (e) =>
     e.stopPropagation()
+    @$overlay.fadeOut 300
+    @$banner.fadeIn 300
     @$el.removeClass 'fullscreen'
     setTimeout (=> @reenableScroll()), 400
     @alreadyDismissed = true
-    @render()
 
   submit: (e) ->
     return unless @validateForm()
@@ -93,4 +93,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
   render: ->
     @$el.html template
       artist: @artist
+      afterAuthPath: @afterAuthPath
+    @$banner = @$('.artist-page-cta-banner')
+    @$overlay = @$('.artist-page-cta-overlay')
     @
