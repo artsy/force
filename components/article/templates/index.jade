@@ -46,12 +46,14 @@ if superArticle
           when 'text'
             .article-section-text!= section.body
           when 'artworks'
-            .article-section-artworks( data-layout=section.layout )
+            .article-section-image-collection( data-layout=section.layout )
               ul
                 for artwork in section.artworks
                   +artwork(artwork)
           when 'image'
-              +singleImage(section)
+            .article-section-image-collection( data-layout="#{section.layout ? section.layout : 'overflow_fillwidth'}" )
+              ul
+                +image(section)
           when 'video'
             .article-section-video( class="article-video-background-" + section.background_color )
               +video(section)

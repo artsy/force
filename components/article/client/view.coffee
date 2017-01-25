@@ -54,8 +54,7 @@ module.exports = class ArticleView extends Backbone.View
 
     # Render sections
     @renderSlideshow()
-    @resizeArtworks()
-    @resizeImageCollection()
+    @resizeImages(@doneResizingImages)
     @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
@@ -81,62 +80,41 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
-      @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
+    if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
-  setupMaxImageHeights: ->
-    @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img, .article-section-container[data-section-type=image_collection] img")
+  setupMaxImageHeights: (el) ->
+    $(el).find('img')
       .each (i, img) ->
         $(img).parent().css('max-width', '')
         optimizedHeight = window.innerHeight * 0.9
         newWidth = ((img.width * optimizedHeight) / img.height)
-        # image is narrower than container
         if newWidth < 580
-          $(img).parent().css('max-width', 580)
-        # image is taller than window
-        # else if img.height > optimizedHeight
-        #   # if $(img).closest('li')?.length
-        #     # console.log 'sup'
-        #     # $(img).closest('li').css('max-width', newWidth)
-        #   # else
-        #   $(img).parent().css('max-width', newWidth)
-    @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
-    @loadedImageHeights = true
-    @maybeFinishedLoading()
+          $(img).closest('li').css('max-width', 580)
+        else
+          $(img).closest('li').css('max-width', newWidth)
+    $(el).closest('.article-section-image-collection').addClass 'images-loaded'
 
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
 
-  resizeArtworks: =>
-    artworkSections = _.filter @article.get('sections'), (section) ->
-      section.type is 'artworks' and section.layout is 'overflow_fillwidth'
-    Q.all( _.map artworkSections, (section) =>
-      $el = @$("[data-layout=overflow_fillwidth]" +
-        " li[data-id=#{section.artworks[0].id}]").parent()
-      if $el.children()?.length == 1
-        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
-        $el.addClass('single')
-      else
-        Q.nfcall @fillwidth, $el
-    ).done =>
-      @loadedArtworks = true
-      @maybeFinishedLoading()
-
-  resizeImageCollection: =>
-    imageSections = $('.article-section-container[data-section-type=image_collection][data-layout=overflow_fillwidth]')
-    Q.all( _.map imageSections, (section) =>
+  resizeImages: (cb=->) =>
+    imageSections = $('.article-section-image-collection').closest('.article-section-container')
+    for section in imageSections
       $el = $(section).find('ul')
-      if $el.children()?.length == 1
+      if $el.children().length < 2 or $el.closest('.article-section-image-collection').data('layout') is 'column_width'
         $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
-        $el.addClass('single')
+        $el.addClass('single') if $el.children().length is 1
+        @setupMaxImageHeights $el
       else
         Q.nfcall @fillwidth, $el
-    ).done =>
-      @loadedArtworks = true
-      @maybeFinishedLoading()
+    cb()
+
+  doneResizingImages: =>
+    @loadedImageHeights = true
+    @loadedArtworks = true
+    @maybeFinishedLoading()
 
   embedMobileHeight: =>
     $('.article-section-container[data-section-type=embed]').each (i, embed) =>
@@ -215,48 +193,48 @@ module.exports = class ArticleView extends Backbone.View
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
   fillwidth: (el) =>
-    debugger
-    if @$(el).children()?.length < 1 or @windowWidth < 550
-      @$(el).parent().removeClass('is-loading')
-    $list = @$(el)
-    if @windowHeight > 700
-      newHeight = @windowHeight * .8
-    $list.fillwidthLite
-      gutterSize: 30
-      targetHeight: newHeight || 600
-      apply: (img) ->
-        img.$el.closest('li').width(img.width)
-      done: (imgs) =>
-        # Make sure the captions line up in case rounding off skewed things
-        tallest = _.max _.map imgs, (img) -> img.height
-        $list.find('.artwork-item-image-container').each -> $(this).height tallest
-        # Account for screens that are both wide & short
-        if !@imgsFillContainer(imgs, $list, 30).isFilled
-          $list.css({'display':'flex', 'justify-content':'center'})
-        # Remove loading state
-        $list.parent().removeClass('is-loading')
+    if @windowWidth < 550
+      @removeFillwidth el
+      @setupMaxImageHeights el
+    else
+      $list = $(el)
+      if @windowHeight > 700
+        newHeight = @windowHeight * .8
+      $list.fillwidthLite
+        gutterSize: 30
+        targetHeight: newHeight || 600
+        apply: (img) ->
+          img.$el.closest('li').width(img.width)
+        done: (imgs) =>
+          # Make sure the captions line up in case rounding off skewed things
+          tallest = _.max _.map imgs, (img) -> img.height
+          $list.find('.artwork-item-image-container').each -> $(this).height tallest
+          # Account for screens that are both wide & short
+          if !@imgsFillContainer(imgs, $list, 30).isFilled
+            $list.css({'display':'flex', 'justify-content':'center'})
+          # Remove loading state
+          $list.closest('.article-section-image-collection').addClass 'images-loaded'
+
 
   imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
-    isFilled = $container.width() - 15 > imgsWidth
+    isFilled = $container.width() - 15 < imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
+
+  removeFillwidth: (imgs) ->
+    $(imgs).find('li').css({'width' : '', 'max-width' : ''})
+    $(imgs).find('.artwork-item-image-container').css('height', '')
 
   refreshWindowSize: =>
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
+    @resizeImages()
     @resetImageSetPreview()
-    @setupMaxImageHeights()
     @embedMobileHeight()
     @addReadMore() if @gradient
-    #Reset Artworks size
-    $(".article-section-artworks ul, .article-section-image-collection[data-layout='overflow_fillwidth'] ul").each (i, imgs) =>
-      debugger
-      if $(imgs)?.children()?.length > 1
-        @parentWidth = $(imgs).width()
-        @fillwidth imgs, ->
 
   resetImageSetPreview: =>
     $('.article-section-image-set__images').each (i, container) =>

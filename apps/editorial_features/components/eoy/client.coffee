@@ -59,6 +59,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
     return scrollZones
 
   closestSection: (scrollTop, scrollZones) =>
+    debugger
     closest = Math.max.apply(null, scrollZones)
     for i in [0..scrollZones.length]
       if scrollZones[i] >= scrollTop and scrollZones[i] < closest
