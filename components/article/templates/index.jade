@@ -59,11 +59,11 @@ if superArticle
             .article-section-embed( data-layout=section.layout )
               +embed(section)
           when 'callout'
-            if section.article
+            if section.article && section.article.length > 0
               +callout(section)
             else if section.text && section.text.length > 0
               +pullquote(section)
-            else if section.topStories
+            else if section.top_stories
               +topStories
           when 'toc'
             if section.links.length > 0

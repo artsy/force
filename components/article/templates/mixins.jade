@@ -65,12 +65,13 @@ mixin fullscreen(article)
 
 mixin callout(section)
   - var calloutArticle = calloutArticles.findWhere({id: section.article})
-  .article-section-callout
-    .related-title Related Article
-    a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
-      if !section.hide_image
-        img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
-      .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+  if calloutArticle
+    .article-section-callout
+      .related-title Related Article
+      a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
+        if !section.hide_image
+          img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
+        .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
 
 mixin pullquote(section)
   .article-section-callout
@@ -90,7 +91,7 @@ mixin imageSet(section)
         - var image = resize( (item.image || item.url || ''), {height: 150} )
         img.hoverable-image(src=image)
   .article-section-image-set__remaining
-    .article-section-image-set__icon(data-total=section.images.length class=section.images.length > 9 ? 'is-double-digit' : '')
+    .article-section-image-set__icon(data-total="#{section.images.length}" class=section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
     .article-section-image-set__text Enter Slideshow
 
