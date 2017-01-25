@@ -24,7 +24,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
 
   selectTab: (type) ->
     @$(".artists-to-follow-tab.is-active").removeClass('is-active')
-    @$(".artists-to-follow-tab[data-mode=#{@state.get('type')}]").addClass('is-active')
+    @$(".artists-to-follow-tab[data-type=#{@state.get('type')}]").addClass('is-active')
 
   updateResults: ->
     metaphysics
