@@ -2,10 +2,14 @@
 { contains } = require 'underscore'
 CTABarView = require '../../../components/cta_bar/view.coffee'
 ArtistPageCTAView = require '../../../components/artist_page_cta/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
 
 module.exports = (artist) ->
   # When user is logged-out and the referrer is an external source
   return if CURRENT_USER || REFERRER?.includes(APP_URL)
+
+  # Track AB Test
+  split_test('new_artist_page_cta').view()
 
   # AB Test new CTA
   if NEW_ARTIST_PAGE_CTA is 'new_cta'
