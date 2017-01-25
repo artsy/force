@@ -4,7 +4,7 @@ imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class HeroUnitView extends Backbone.View
-  pauseLength: 8000
+  pauseLength: 6500
 
   events:
     'click #home-hero-units-left-arrow': 'onLeftArrow'
@@ -19,7 +19,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @$heroUnits = @$('.home-hero-unit')
 
     @setBodyClass()
-    @initInterval()
+    @setInterval()
 
     @$window.on 'scroll', _.throttle @setBodyClass, 100
     @$window.on 'keyup', (e) => @onKeyUp(e)
@@ -31,9 +31,6 @@ module.exports = class HeroUnitView extends Backbone.View
       $(this)
         .height($(this).height())
         .attr 'src', $(this).attr('data-retina')
-
-  initInterval: ->
-    if (@$heroUnits.first().data('type') is 'welcome') then @setInterval else _.delay(@setInterval, @pauseLength)
 
   setInterval: =>
     clearInterval @interval
@@ -86,6 +83,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @nextHeroUnit()
 
   onDot: (e) ->
+    @setInterval()
     @showHeroUnit $(e.target).index()
 
   signUp: (e) ->
