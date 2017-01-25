@@ -17,8 +17,8 @@ module.exports = (artist) ->
   # show cta bar
   if !CURRENT_USER and !REFERRER?.includes(APP_URL)
     name = 'artist_cta'
-    ctaHeadline = "Get updates on new shows and works by #{artist.get('name')}."
-    modalCopy = "Get the latest new shows and works by #{artist.get('name')}."
+    ctaHeadline = "Yes, tell me when Artsy adds new works by #{artist.get('name')}"
+    modalCopy = "Join Artsy to discover new works by #{artist.get('name')} and more artists you love"
 
     ctaBarView = new CTABarView
       headline: ctaHeadline
