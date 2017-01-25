@@ -216,15 +216,13 @@ module.exports = class Article extends Backbone.Model
         $('a:empty').remove()
         section.body = $.html()
         section
-      else if section.type is 'image'
-        # img = new Image()
-        # img.src = section.url
-        section
       else
         section
     @set 'sections', sections
 
   hasAMP: ->
+    # AMP requires that images provide a width and height
+    # Articles that have been converted to ImageCollections will have this info
     for section in @get('sections')
       return false if section.type in ['artwork', 'image']
     return true
