@@ -22,7 +22,6 @@ analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 JumpView = require '../../jump/view.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
 relatedTemplate = -> require('../templates/related.jade') arguments...
-calloutTemplate = -> require('../templates/callout.jade') arguments...
 
 DATA =
   sort: '-published_at'
@@ -45,7 +44,7 @@ module.exports = class ArticleView extends Backbone.View
     { @article, @gradient, @waypointUrls, @seenArticleIds, @lushSignup } = options
     new ShareView el: @$('.article-social')
     new ShareView el: @$('.article-share-fixed')
-    @loadedArtworks = @loadedCallouts = @loadedImageHeights = false
+    @loadedArtworks = @loadedImageHeights = false
     @sticky = new Sticky
     @jump = new JumpView
     @previousHref = options.previousHref
@@ -55,7 +54,6 @@ module.exports = class ArticleView extends Backbone.View
     # Render sections
     @renderSlideshow()
     @resizeArtworks()
-    @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
     @setupMobileShare()
@@ -80,9 +78,9 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
+    if @loadedArtworks and not @loadedImageHeights
       @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
+    else if @loadedArtworks and @loadedImageHeights
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
@@ -128,22 +126,6 @@ module.exports = class ArticleView extends Backbone.View
         $(embed).find('iframe').height(mHeight)
       else
         $(embed).find('iframe').height(dHeight)
-
-  renderCalloutSections: =>
-    Q.allSettled( for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
-      new Article(id: section.article).fetch()
-    ).then (articles) =>
-      articles = _.pluck(_.reject(articles, (article) -> article.state is 'rejected'), 'value')
-      for section in @article.get('sections') when section.type is 'callout' and section.article.length > 0
-        $calloutSection = @$(".article-section-callout-container[data-id=#{section.article}]")
-        article = _.find articles, { id: section.article }
-        $($calloutSection).append calloutTemplate
-          section: section
-          calloutArticle: new Article article if article
-          crop: crop
-    .done =>
-      @loadedCallouts = true
-      @maybeFinishedLoading()
 
   setupFollowButtons: ->
     @artists = []

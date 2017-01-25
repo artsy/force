@@ -6,6 +6,7 @@ fs = require 'fs'
 moment = require 'moment'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
+fixtures = require '../../../test/helpers/fixtures.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -170,6 +171,72 @@ describe 'article show template', ->
     html.should.containEql '5 Must Read Stories'
     html.should.containEql 'http://artsy.net/article/editorial-cool-article'
     html.should.containEql 'http://artsy.net/image.png'
+
+  it 'renders pull quotes', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'callout'
+            top_stories: false
+            article: ''
+            text: 'It isn’t about ownership. It is about understanding these pieces not as static works of art for study, but as living pieces of significance to indigenous groups who have a right to them.'
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      calloutArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      asset: ->
+      sd: {}
+    html.should.containEql 'It isn’t about ownership.'
+
+  it 'renders callouts without a text field', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'callout'
+            top_stories: false
+            article: '54276766fd4f50996aeca2b8'
+            text: ''
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      calloutArticles: new Articles fixtures.article
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      asset: ->
+      sd: {}
+    html.should.containEql 'Top Ten Booths at miart 2014'
+
+  it 'renders callouts with a text field', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'callout'
+            top_stories: false
+            article: '54276766fd4f50996aeca2b8'
+            text: 'There is a text field here.'
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      calloutArticles: new Articles fixtures.article
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      asset: ->
+      sd: {}
+    html.should.containEql 'There is a text field here.'
 
   it 'renders artworks', ->
     html = render('index')
