@@ -24,7 +24,7 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['editTemplate', 'calloutTemplate' ]
+        ['editTemplate' ]
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
@@ -39,6 +39,7 @@ describe 'ArticleView', ->
       benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
+        calloutArticles: new Articles fixtures.article
         article: @article = new Article _.extend fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
@@ -100,7 +101,7 @@ describe 'ArticleView', ->
             }
             {
               type: 'callout',
-              article: '123',
+              article: '54276766fd4f50996aeca2b8',
               text: '',
               title: ''
               hide_image: false
@@ -113,6 +114,7 @@ describe 'ArticleView', ->
         embed: require('particle')
         moment: require('moment')
         resize: sinon.stub()
+        crop: sinon.stub()
       }, =>
         done()
 
@@ -153,19 +155,6 @@ describe 'ArticleView', ->
       @view.user = _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a', has_partner_access: true } )
       @view.checkEditable()
       @view.renderedEditButton.should.be.ok()
-
-  describe '#renderCalloutSections', ->
-
-    it 'renders callout content from the article', ->
-      Backbone.sync.restore()
-      sinon.stub Backbone, 'sync'
-      Backbone.sync
-        .onCall 0
-        .yieldsTo 'success', article = fabricate 'article', { thumbnail_title: 'Callout title', id: '123'}
-        .returns Q.resolve(article)
-      @view.renderCalloutSections()
-      _.defer =>
-        @view.$('.article-section-callout-container').html().should.containEql 'Callout title'
 
   describe '#setupFollowButtons', ->
 

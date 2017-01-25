@@ -17,6 +17,8 @@ module.exports = (artist) ->
       artist: artist
 
     $('body').append artistPageCTAView.render().$el
+    artistPageCTAView.initializeMailcheck()
+    setTimeout (=> artistPageCTAView.$el.removeClass 'initial'), 500
     return
 
   # Old CTA

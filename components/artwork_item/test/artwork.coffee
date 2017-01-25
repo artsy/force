@@ -211,27 +211,30 @@ describe 'Artwork Item template', ->
 
   describe 'is auction', ->
     it 'displays a buy now price', ->
-      @artwork = new Artwork fabricate 'artwork', { sale_message: '$10,000', sale_ids: ['sale_1'] }
+      @artwork = new Artwork fabricate 'artwork', { sale_message: '$10,000' }
       @artwork.set 'sale_artwork', fabricate 'sale_artwork'
       $ = cheerio.load render('artwork')
         artwork: @artwork
+        isAuction: true
         sd: {}
       $('.artwork-item-buy-now-price').text().should.containEql '$10,000'
 
     it 'displays estimate', ->
-      @artwork = new Artwork fabricate 'artwork', { sale_ids: ['sale_1'] }
+      @artwork = new Artwork fabricate 'artwork'
       @artwork.set 'sale_artwork', fabricate 'sale_artwork', { display_low_estimate_dollars: '$3,000', display_high_estimate_dollars: '$7,000' }
       $ = cheerio.load render('artwork')
         artwork: @artwork
+        isAuction: true
         sd: {}
       $('.artwork-item-estimate').text().should.containEql 'Estimate: $3,000–$7,000'
 
     it 'displays lot numbers', ->
-      @artwork = new Artwork fabricate 'artwork', { sale_ids: ['sale_1'] }
+      @artwork = new Artwork fabricate 'artwork'
       @artwork.set 'sale_artwork', fabricate 'sale_artwork',
         { low_estimate_cents: 300000, high_estimate_cents: 700000, lot_number: 10 }
       $ = cheerio.load render('artwork')
         artwork: @artwork
+        isAuction: true
         sd: {}
       $('.artwork-item-lot-number').text().should.containEql 'Lot 10'
 

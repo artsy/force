@@ -44,6 +44,7 @@ module.exports = class Article extends Backbone.Model
       slideshowArtworks = new Artworks
       superArticle = null
       superSubArticles = new Articles
+      calloutArticles = new Articles
       dfds = []
 
       # Get slideshow artworks to render server-side carousel
@@ -75,6 +76,15 @@ module.exports = class Article extends Backbone.Model
       else if @get('channel_id')
         dfds.push (channel = new Channel(id: @get('channel_id'))).fetch(cache: true)
 
+      # Callouts
+      if @get('sections')?.length
+        for item in @get('sections') when item.type is 'callout' and item.article
+          dfds.push new Article(id: item.article).fetch
+            cache: true
+            data: access_token: options.accessToken
+            success: (article) ->
+              calloutArticles.add(article)
+
       Q.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles, options.accessToken) else []
         Q.allSettled(superArticleDefferreds)
@@ -97,6 +107,7 @@ module.exports = class Article extends Backbone.Model
               superSubArticleIds: superSubArticleIds
               partner: partner if partner
               channel: channel if channel
+              calloutArticles: calloutArticles
             )
 
   isTopTier: ->
@@ -115,7 +126,7 @@ module.exports = class Article extends Backbone.Model
     crop @get(attr), args...
 
   date: (attr) ->
-    moment(new Date(@get(attr))).local()
+    moment(@get(attr)).local()
 
   strip: (attr) ->
     stripTags(@get attr)

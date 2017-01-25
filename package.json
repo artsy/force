@@ -120,7 +120,7 @@
     "jquery-on-infinite-scroll": "^1.0.1",
     "jquery-ui": "^1.12.1",
     "jquery-waypoints": "^2.0.5",
-    "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
+    "jquery.dotdotdot": "1.7.4",
     "jquery.fillwidth": "^0.1.7",
     "jquery.iframe-transport": "^1.0.0",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
