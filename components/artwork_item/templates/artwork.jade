@@ -19,8 +19,6 @@ figure.artwork-item( data-artwork= artwork.get('id') data-id= artwork.get('_id')
       include ./partials/save
 
   figcaption.artwork-item-caption
-    if hasAuctionPartner && !isAuction
-      include ./partials/lot_number
     include ./partials/artist
     include ./partials/title
     include ./partials/partner
