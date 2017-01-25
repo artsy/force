@@ -52,6 +52,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       afterAuthPath: @afterAuthPath
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
+    analyticsHooks.trigger 'artist_page:cta:shown'
 
   closeOverlay: (e) =>
     e.stopPropagation()
