@@ -41,10 +41,10 @@ module.exports = class HeroUnitView extends Backbone.View
 
   setBodyClass: =>
     if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
-      if @$('.home-hero-unit-active').hasClass('home-hero-unit-white')
-        @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
-      else
+      if @$('.home-hero-unit-active').attr('class').match('-light')
         @$el.removeClass('body-transparent-header').addClass 'body-transparent-header-white'
+      else
+        @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
     else
       @$el.removeClass 'body-transparent-header body-transparent-header-white'
 

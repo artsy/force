@@ -1,26 +1,24 @@
 .home-hero-unit(
-  class= heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : '')
-  style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
-  data-type=heroUnit.get('type').toLowerCase()
+  class= 'home-hero-unit' + _s.dasherize(_s.humanize(heroUnit.mode)) + (i == 0 ? ' home-hero-unit-active' : '')
+  style="background-image: url('#{heroUnit.background_image_url}')"
+  data-mode=heroUnit.mode
 )
-  a.hhu-frame( class='js-homepage-hero-unit', href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
+  a.hhu-frame( class='js-homepage-hero-unit', href=heroUnit.href ): .responsive-layout-container: .main-layout-container
     .vam-outer: .vam-inner: .hhu-inner
-      if heroUnit.get('type') === 'welcome'
+      if heroUnit.mode === 'WELCOME'
         i.icon-logotype
 
       .hhu-header.small-caps
-        = heroUnit.get('heading')
-      if heroUnit.has('title_image_url')
+        = heroUnit.heading
+      if heroUnit.title_image_url
         img.hhu-title(
-          src= heroUnit.titleImageUrl()
-          data-retina= heroUnit.titleImageRetinaUrl()
-          alt= heroUnit.get('name')
+          src= heroUnit.title_image_url
+          data-retina= heroUnit.retina_title_image_url
+          alt= heroUnit.title
         )
       .hhu-subheading
-        != heroUnit.mdToHtml('description')
+        != heroUnit.subtitle
       .avant-garde-button(
-        onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
-        onMouseOut="this.style.color=null"
-      )= heroUnit.get('link_text')
+      )= heroUnit.link_text
 
-    .hhu-credit= heroUnit.get('credit_line')
+    .hhu-credit= heroUnit.credit_line
