@@ -58,6 +58,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     e.stopPropagation()
     @$el.removeClass 'fullscreen'
     @alreadyDismissed = true
+    analyticsHooks.trigger 'artist_page:cta:hidden'
     @render()
 
   submit: (e) ->
