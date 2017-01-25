@@ -1,5 +1,25 @@
+@require '../../../components/clock'
+@require '../../../components/add_to_calendar'
+@require '../../../components/my_active_bids'
+@require '../../../components/bid_status'
+@require '../../../components/artwork_item/stylesheets'
+@require '../../../components/artwork_columns'
+@require '../../../components/bordered_pulldown'
 @require '../../../components/stylus_lib'
+@require '../../../components/commercial_filter/stylesheets'
+@require '../components/auction_grid/index'
+@require '../components/auction_grid_artwork/index'
+@require '../components/bid_status/index'
 @require './banner'
 @require './header'
 @require './my_active_bids'
 @require './registration_component'
+
+.auction2-page
+  clearfix()
+
+.auction2-commercial-filter
+  border-top 1px solid gray-lighter-color
+
+  .cf-sidebar__filter.cf-sidebar__price
+    border-top none

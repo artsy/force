@@ -304,9 +304,6 @@ module.exports = class Artwork extends Backbone.Model
     else
       _s(@get('availability')).capitalize().value()
 
-  salePrice: (isAuction = false) ->
-    @saleMessage() if @saleMessage() and not isAuction
-
   noPinAttr: ->
     if @get('can_share_image') then undefined else "nopin"
 

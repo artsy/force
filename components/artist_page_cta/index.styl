@@ -3,23 +3,45 @@
 .payoff-content
   &__header
     text-align center
-    line-height 2.3em
     &__headline
       font-size 30px
+      padding-bottom 20px
+    &__subheadline
+      line-height 1.3em
+      font-size 20px
   &__content
-    margin-left 300px
+    padding-top 340px
+    clearfix()
+    position relative
+    left 50%
+    width 500px
+    transform translate(-50%, -50%)
     .arbv-follow-search-container
-      width 600px
+      width 100%
   &__done
-    margin-left 300px
-    width 600px
+    position absolute
+    left 50%
+    top 50%
+    margin-top 90px
+    transform translate(-50%, -50%)
+    width 500px
 
 .artist-page-cta.fullscreen
   height calc(100%)
-  .main-layout-container
-    width 800px
+  width calc(100%)
+  cursor auto
+  .artist-page-cta-overlay
+    &__center
+      transform translate(-50%, -50%)
+
+.artist-page-cta-overlay__center
+.artist-page-cta
+  transition all, 300ms, ease
 
 .artist-page-cta
+  &.initial
+    bottom -100px
+  cursor pointer
   position fixed
   right 0
   bottom 0
@@ -30,7 +52,6 @@
   transform translateY(0%)
   z-index 999
   border-top 2px solid purple-color
-  transition all, 300ms, ease
   .main-layout-container
     margin-top 20px
   button
@@ -49,10 +70,21 @@
     &__artist-name
       font-weight bold
 
+.artist-page-cta-banner
+  display block
+
 .artist-page-cta-overlay
+  display none
+  &__center
+    width 710px
+    position fixed
+    left 50%
+    top 50%
+    transform translate(-50%, 0)
+  &__content
+    clearfix()
   &__headline
     text-align center
-    margin-top 40px
     font-size 40px
     line-height 1.3em
     &__artist-name
@@ -60,20 +92,24 @@
   &__feed
     display inline-block
     margin-top 50px
+    margin-left 85px
     svg
       fill black
-      width 25px
-      height 25px
+      width 35px
+      height 35px
       vertical-align middle
     &__pulldown
+      span
+        font-size 15px
       avant-garde()
       font-size 16px
       vertical-align middle
+      cursor auto
       &:after
-        left 40%
+        left 50%
         font-size 30px
         content '▲'
-        text-shadow 0 -5px 8px rgba(200,200,200,0.3)
+        text-shadow 0px -7px 12px rgba(0,0,0,0.1)
         color white
         z-index 999
         transform scaleY(0.6)
@@ -94,19 +130,19 @@
       color white
       text-align center
     &__items
-      box-shadow 2px 0px 20px rgba(220,220,220,0.3)
+      box-shadow 0 0 20px 0 rgba(0,0,0,0.1)
       background-color white
-      width 300px
+      width 340px
       height 200px
       margin-left -150px
-
+      transition none
       &:after
         display block
         position absolute
         content ''
-        right 0
-        bottom 0
-        left 0
+        right -20px
+        bottom -20px
+        left -20px
         height 125px
         background-image linear-gradient(to bottom, rgba(255,255,255,0), white 100px)
       li
@@ -143,20 +179,20 @@
         margin-right 15px
   &__register
     float right
-    width 500px
-    margin-top 50px
+    width 340px
+    margin-top 10px
     .auth-signup-facebook
       background-color #38409E
-      width 500px
+      width 340px
     button
       margin-bottom 20px
     h2
       width 100%
       text-align center
-      border-bottom 1px solid gray-darker-color
+      border-bottom 1px solid gray-lighter-color
       line-height 0.1em
       margin 10px 0 20px
-      span 
+      span
         avant-garde()
         font-size 11px
         color gray-darker-color
@@ -164,6 +200,9 @@
         padding 0 10px
     #auth-footer
       text-align center
+      aside
+        font-size 13px
+        line-height 1.3em
       p
         opacity 0.8
         color gray-darkest-color

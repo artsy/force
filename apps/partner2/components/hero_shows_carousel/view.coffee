@@ -57,5 +57,5 @@ module.exports = class HeroShowsCarousel extends Backbone.View
     ) if partnerShows.length > 1
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

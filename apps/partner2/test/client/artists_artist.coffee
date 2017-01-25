@@ -60,19 +60,19 @@ describe 'PartnerArtistsArtistView', ->
       @view.partnerArtist.set use_default_biography: true
       @view.artist.set blurb: 'artsy bio'
       @view.initializeBio()
-      @view.$('.partner-artist-blurb').html().should.containEql 'artsy bio'
+      @view.$('.partner2-artist-blurb').html().should.containEql 'artsy bio'
 
     it 'renders the partner provided artist bio if not use_default_biography', ->
       @view.partnerArtist.set use_default_biography: false, biography: 'partner provided bio'
       @view.initializeBio()
-      @view.$('.partner-artist-blurb').html().should.containEql '<p>partner provided bio'
-      @view.$('.partner-artist-blurb-postfix').html().should.containEql "Submitted by #{@partnerArtist.get('partner').name}"
+      @view.$('.partner2-artist-blurb').html().should.containEql '<p>partner provided bio'
+      @view.$('.partner2-artist-blurb-postfix').html().should.containEql "Submitted by #{@partnerArtist.get('partner').name}"
 
     it 'does not render the attribution line if not use_default_biography and blank provided artist bio', ->
       @view.partnerArtist.set use_default_biography: false, biography: '   '
       @view.initializeBio()
-      @view.$('.partner-artist-blurb').html().should.be.empty()
-      @view.$('.partner-artist-blurb-postfix').should.have.length 0
+      @view.$('.partner2-artist-blurb').html().should.be.empty()
+      @view.$('.partner2-artist-blurb-postfix').should.have.length 0
 
   describe '#fetchNextPageArtworks', ->
 

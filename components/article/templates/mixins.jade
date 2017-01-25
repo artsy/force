@@ -63,15 +63,19 @@ mixin fullscreen(article)
             .article-lead-paragraph.article-fullscreen-intro
               != article.get('hero_section').intro
 
+mixin callout(section)
+  - var calloutArticle = calloutArticles.findWhere({id: section.article})
+  if calloutArticle
+    .article-section-callout
+      .related-title Related Article
+      a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
+        if !section.hide_image
+          img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
+        .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+
 mixin pullquote(section)
   .article-section-callout
-    if !section.hide_image && section.thumbnail_url
-      img( src=section.thumbnail_url )
-    .article-section-callout-text(
-      class=("article-section-callout-pullquote #{section.hide_image ? 'article-section-callout-no-image' : ''}")
-    )
-      if section.text
-        .article-section-callout-title= section.text
+    .article-section-callout__pullquote= section.text
 
 mixin toc(section)
   .article-section-toc-header Table Of Contents
@@ -87,7 +91,7 @@ mixin imageSet(section)
         - var image = resize( (item.image || item.url || ''), {height: 150} )
         img.hoverable-image(src=image)
   .article-section-image-set__remaining
-    .article-section-image-set__icon( data-total=section.images.length class= section.images.length > 9 ? 'is-double-digit' : '')
+    .article-section-image-set__icon(data-total="#{section.images.length}" class=section.images.length > 9 ? 'is-double-digit' : '')
       include ../../main_layout/public/icons/image-set.svg
     .article-section-image-set__text Enter Slideshow
 

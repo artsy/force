@@ -36,10 +36,10 @@ module.exports = class PartnerArtworksView extends Backbone.View
       params: params
       activeText: ''
 
-    scrollFrame '#partner-filter a' unless sd.EIGEN
+    scrollFrame '#partner2-filter a' unless sd.EIGEN
 
     { params } = setupFilter
-      el: $ '#partner-filter'
+      el: $ '#partner2-filter'
       stuckParam: { 'partner_id': @partner.id }
       facets: @aggregations
       aggregations: @aggregations

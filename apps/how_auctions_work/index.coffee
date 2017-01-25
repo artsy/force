@@ -8,7 +8,11 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 JSONPage = require '../../components/json_page'
-page = new JSONPage name: 'how-auctions-work', paths: show: '/how-auctions-work', edit: '/how-auctions-work/edit'
+page = new JSONPage
+  name: 'how-auctions-work'
+  paths:
+    show: '/how-auctions-work'
+    edit: '/how-auctions-work/edit'
 { data, edit, upload } = require('../../components/json_page/routes')(page)
 
 app.get page.paths.show, routes.index

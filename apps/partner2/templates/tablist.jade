@@ -3,12 +3,12 @@
 -   return map[section] || section;
 - }
 
-nav.partner-tabs.garamond-bordered-tablist
+nav.partner2-tabs.garamond-bordered-tablist
   if sections.length > 1
     each section, index in sections
       if index > 0
         span.garamond-tab-separator
-      a.garamond-tab.partner-route-link(
+      a.garamond-tab.partner2-route-link(
         href="/#{profile.get('id')}/#{section}",
         class=(section == currentSection ? 'is-active' : 'is-inactive'),
         data-section=section

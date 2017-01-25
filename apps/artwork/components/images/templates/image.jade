@@ -16,7 +16,7 @@ a.artwork-images__images__image(
   )
     img.artwork-images__images__image__display__img(
       class='js-artwork-images__images__image__display__img'
-      data-src= image.url
+      data-src= helpers.images.imageUrl(image)
       data-default= (i === (artwork.images.length - 1))
       alt= artwork.image_alt
       title= artwork.image_title

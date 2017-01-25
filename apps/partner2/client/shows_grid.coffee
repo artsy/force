@@ -46,9 +46,9 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       past: past
 
     if numberOfAllShows == featured.length # lonely featured show
-      @$('.partner-shows-section.featured').addClass('lonely')
+      @$('.partner2-shows-section.featured').addClass('lonely')
 
-    $name = @$('.partner-shows-section.featured .partner-show-name')
+    $name = @$('.partner2-shows-section.featured .partner2-show-name')
     return unless $name.length > 0
 
     # Truncate with ellipsis for long titles (usually lots of artist names)
@@ -114,7 +114,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       displayMore = false
 
     $(".#{type} .loading-spinner").remove()
-    $(".#{type} .partner-shows-container").append showFiguresTemplate
+    $(".#{type} .partner2-shows-container").append showFiguresTemplate
       shows: shows
       type: type
       displayMore: displayMore
@@ -140,6 +140,6 @@ module.exports = class PartnerShowsGridView extends Backbone.View
         @renderShowPosterImage(show, url)
 
   renderShowPosterImage: (show, imageUrl) ->
-    $coverImage = @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image")
+    $coverImage = @$(".partner2-show[data-show-id='#{show.get('id')}'] .partner2-show-cover-image")
     $coverImage.css "background-image": "url(#{imageUrl})"
     $coverImage.find("> img").attr src: imageUrl

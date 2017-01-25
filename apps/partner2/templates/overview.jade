@@ -1,16 +1,16 @@
-#partner-overview
-  .partner-overview-container
+#partner2-overview
+  .partner2-overview-container
     if showBanner
       include overview_banner
     for module in layout
       if module.component || module.template
-        section.partner-overview-section( data-module=module.name, data-component=(module.component ? module.component.name : null) )
+        section.partner2-overview-section( data-module=module.name, data-component=(module.component ? module.component.name : null) )
           if module.title
-            h3.partner-overview-section-title= module.title
+            h3.partner2-overview-section-title= module.title
           if module.viewAll
-            .partner-overview-section-view-all
+            .partner2-overview-section-view-all
               a( href=module.viewAll ) View All
-          .partner-overview-section-content
+          .partner2-overview-section-content
             if module.template
               != module.template
             else

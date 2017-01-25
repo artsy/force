@@ -65,5 +65,5 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     _.filter [bigger, smaller], (g) -> g.list.length > 0
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

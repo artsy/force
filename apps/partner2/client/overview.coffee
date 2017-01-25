@@ -22,7 +22,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
 
   initLayout: ->
     _.each @layout(), (module) =>
-      selector = ".partner-overview-section[data-module=#{module.name}] .partner-overview-section-content"
+      selector = ".partner2-overview-section[data-module=#{module.name}] .partner2-overview-section-content"
       new module.component?(
         _.extend module.options, el: @$(selector)
       ).startUp()

@@ -1,34 +1,34 @@
 mixin showsGallery(shows, isFeatured, type)
-  .partner-shows-container.grid-3-up
+  .partner2-shows-container.grid-3-up
     include show_figures
 
 .partner2-shows( class= isCombined ? 'combined' : null )
 
   if heading
-    h2.partner-shows-heading= heading
+    h2.partner2-shows-heading= heading
 
   if featured
-    section.partner-shows-section.featured
+    section.partner2-shows-section.featured
       +showsGallery([featured], true, 'featured')
 
   if current && current.length > 0
-    section.partner-shows-section.current
-      h2.partner-shows-section-heading Current Shows
+    section.partner2-shows-section.current
+      h2.partner2-shows-section-heading Current Shows
       +showsGallery(current, false, 'current')
 
   if upcoming && upcoming.length > 0
-    section.partner-shows-section.upcoming
-      h2.partner-shows-section-heading Upcoming Shows
+    section.partner2-shows-section.upcoming
+      h2.partner2-shows-section-heading Upcoming Shows
       +showsGallery(upcoming, false, 'upcoming')
 
   if past && past.length > 0
-    section.partner-shows-section.past
-      h2.partner-shows-section-heading Past Shows
+    section.partner2-shows-section.past
+      h2.partner2-shows-section-heading Past Shows
       +showsGallery(past, false, 'past')
 
   if seeAll
-    section.partner-shows-section.actions.see-all
+    section.partner2-shows-section.actions.see-all
       .avant-garde-header-center
-        a.faux-underline-hover.partner-route-link(
+        a.faux-underline-hover.partner2-route-link(
           href="#{partner.href()}/shows"
         ) See all shows

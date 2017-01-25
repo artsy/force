@@ -32,5 +32,5 @@ module.exports = class HeroArtworksCarousel extends Backbone.View
       carousel.cells.flickity.resize()
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

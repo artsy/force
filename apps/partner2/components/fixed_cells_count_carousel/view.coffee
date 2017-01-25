@@ -49,5 +49,5 @@ module.exports = class FixedCellsCountCarousel extends Backbone.View
       @$('.js-mgr-next').on 'click', => fky.select fky.selectedIndex + @cellsCountPerPage
 
   remove: ->
-    @$el.closest('.partner-overview-section').remove()
+    @$el.closest('.partner2-overview-section').remove()
     super

@@ -69,8 +69,6 @@ module.exports =
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   SENTRY_PUBLIC_DSN: null
-  GOOGLE_SEARCH_KEY: null
-  GOOGLE_SEARCH_CX: null
   SEGMENT_WRITE_KEY: null
   SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
@@ -78,15 +76,12 @@ module.exports =
   CHECK_FOR_AUCTION_REMINDER: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,kana'
   STRIPE_PUBLISHABLE_KEY: null
-  MAILCHIMP_KEY: null
   GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
   GALLERY_INSIGHTS_LIST: null
   GALAXY_URL: null
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
-  MAILCHIMP_WELCOME_LIST_ID: '8e345ac211'
-  MAILCHIMP_AUCTION_LIST_ID: 'b7b9959ee0'
   METAPHYSICS_ENDPOINT: null
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   SAILTHRU_KEY: null
@@ -123,7 +118,7 @@ module.exports =
   MARKETING_SIGNUP_MODAL_SLUG: 'miami'
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
-  SHOW_ARTIST_CTA_CODE: null
+  SHOW_ARTIST_CTA_CODE: 'show-me'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

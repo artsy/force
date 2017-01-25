@@ -1,0 +1,8 @@
+.avant-garde-s-headline.cf-genes__title Medium
+include ./all.jade
+
+each name, id in gene_ids
+  - agg = findAggregation(counts, id)
+  - isSelected = _.contains(selected, id)
+  if agg
+    include ./gene.jade

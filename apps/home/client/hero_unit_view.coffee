@@ -26,6 +26,9 @@ module.exports = class HeroUnitView extends Backbone.View
 
     @$heroUnitsContainer.imagesLoaded @setRetinaHeroTitles
 
+    @$('.home-hero-unit').swipeleft => @onLeftArrow()
+    @$('.home-hero-unit').swiperight => @onRightArrow()
+
   setRetinaHeroTitles: =>
     @$('.hhu-title').each ->
       $(this)
