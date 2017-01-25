@@ -42,6 +42,7 @@ module.exports = class FeatureView extends Backbone.View
         setHeight: 400
         gutterWidth: 0
         showBlurbs: true
+        isAuction: false
         context_page: 'Feature page'
 
     # Always append
