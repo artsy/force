@@ -11,7 +11,7 @@ overlayTemplate = -> require('./templates/overlay.jade') arguments...
 module.exports = class ArtistPageCTAView extends Backbone.View
   _.extend @prototype, Form
 
-  className: 'artist-page-cta'
+  className: 'artist-page-cta initial'
 
   events:
     'click': 'fullScreenOverlay'
