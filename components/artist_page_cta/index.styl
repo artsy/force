@@ -29,6 +29,13 @@
 .artist-page-cta.fullscreen
   height calc(100%)
   width calc(100%)
+  .artist-page-cta-overlay
+    &__center
+      transform translate(-50%, -50%)
+
+.artist-page-cta-overlay__center
+.artist-page-cta
+  transition all, 300ms, ease
 
 .artist-page-cta
   &.initial
@@ -43,7 +50,6 @@
   transform translateY(0%)
   z-index 999
   border-top 2px solid purple-color
-  transition all, 300ms, ease
   .main-layout-container
     margin-top 20px
   button
@@ -62,13 +68,17 @@
     &__artist-name
       font-weight bold
 
+.artist-page-cta-banner
+  display block
+
 .artist-page-cta-overlay
-  &__wrapper
+  display none
+  &__center
     width 710px
     position fixed
     left 50%
     top 50%
-    transform translate(-50%, -50%)
+    transform translate(-50%, 0)
   &__content
     clearfix()
   &__headline
@@ -123,7 +133,7 @@
       width 340px
       height 200px
       margin-left -150px
-
+      transition none
       &:after
         display block
         position absolute
