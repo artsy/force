@@ -78,6 +78,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
         @$('button').attr 'data-state', 'error'
         @$('.auth-errors').text message
         mediator.trigger 'auth:error', message
+      context: 'artist_page_cta'
 
   onRegisterSuccess: (model, response, options) =>
     window.location = @afterAuthPath
