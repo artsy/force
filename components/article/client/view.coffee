@@ -22,6 +22,7 @@ analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 JumpView = require '../../jump/view.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
 relatedTemplate = -> require('../templates/related.jade') arguments...
+calloutTemplate = -> require('../templates/callout.jade') arguments...
 
 DATA =
   sort: '-published_at'
@@ -50,6 +51,7 @@ module.exports = class ArticleView extends Backbone.View
     @previousHref = options.previousHref
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
+    @$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
 
     # Render sections
     @renderSlideshow()
@@ -62,6 +64,7 @@ module.exports = class ArticleView extends Backbone.View
     @resetImageSetPreview()
     if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
       @setupMarketoStyles()
+    @renderCalloutSections()
 
     # Resizing
     @sizeVideo()
@@ -78,9 +81,9 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and not @loadedImageHeights
+    if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedImageHeights
+    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
@@ -380,3 +383,23 @@ module.exports = class ArticleView extends Backbone.View
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+  renderCalloutSections: =>
+    calloutSections = _.filter @article.get('sections'), (section)-> section.type is 'callout'
+    ids = _.pluck(calloutSections, 'article')
+
+    if sd.ARTICLE.id is @article.get('id') or not ids.length
+      @loadedCallouts = true
+      @maybeFinishedLoading()
+      return
+
+    (articles = new Articles()).fetch
+      data: ids: ids
+      success: =>
+        for section in calloutSections
+          @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
+            section: section
+            calloutArticles: articles
+            crop: crop
+        @loadedCallouts = true
+        @maybeFinishedLoading()

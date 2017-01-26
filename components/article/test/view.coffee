@@ -24,7 +24,7 @@ describe 'ArticleView', ->
       sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['editTemplate' ]
+        ['editTemplate', 'calloutTemplate' ]
       )
       @ArticleView.__set__ 'imagesLoaded', sinon.stub()
       @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
@@ -39,7 +39,6 @@ describe 'ArticleView', ->
       benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
-        calloutArticles: new Articles fixtures.article
         article: @article = new Article _.extend fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
@@ -129,6 +128,7 @@ describe 'ArticleView', ->
     @view.setElement $('body')
     @view.article = @article
     @view.windowWidth = 1250
+    @view.$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
 
   afterEach ->
     Backbone.sync.restore()
@@ -161,7 +161,6 @@ describe 'ArticleView', ->
     it 'sets the list of artists in an article with ids', ->
       @view.setupFollowButtons()
       @view.artists[0].id.should.equal 'damon-zucconi'
-
 
   describe '#refreshWindowSize', ->
 
