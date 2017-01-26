@@ -246,9 +246,9 @@
       "resolved": "https://registry.npmjs.org/artsy-newrelic/-/artsy-newrelic-1.1.0.tgz"
     },
     "artsy-passport": {
-      "version": "1.5.1",
+      "version": "1.5.0",
       "from": "artsy-passport@latest",
-      "resolved": "https://registry.npmjs.org/artsy-passport/-/artsy-passport-1.5.1.tgz",
+      "resolved": "https://registry.npmjs.org/artsy-passport/-/artsy-passport-1.5.0.tgz",
       "dependencies": {
         "async": {
           "version": "1.5.2",
