@@ -26,7 +26,7 @@ module.exports = class MyActiveBids extends Backbone.View
       variables: live: true, sale_id: @saleId
       req: user: @user
     ).then (data) =>
-      @bidderPositions = data.me.lot_standings
+      @bidderPositions = data.me?.lot_standings
 
   render: =>
     @$el.html @template myActiveBids: @bidderPositions, ViewHelpers: ViewHelpers
