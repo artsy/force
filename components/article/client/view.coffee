@@ -54,7 +54,6 @@ module.exports = class ArticleView extends Backbone.View
     # Render sections
     @renderSlideshow()
     @resizeImages(@doneResizingImages)
-    @renderCalloutSections()
     @setupFooterArticles()
     @setupStickyShare()
     @setupMobileShare()
@@ -169,7 +168,7 @@ module.exports = class ArticleView extends Backbone.View
         $(img).parent().css('max-width', '')
         optimizedHeight = window.innerHeight * 0.9
         newWidth = ((img.width * optimizedHeight) / img.height)
-        if newWidth < 580
+        if newWidth < 580 and !$(img).closest('ul').hasClass('portrait')
           $(img).closest('li').css('max-width', 580)
         else
           $(img).closest('li').css('max-width', newWidth)
@@ -204,7 +203,7 @@ module.exports = class ArticleView extends Backbone.View
     imgsWidth = _.reduce(getWidth, (a, b) ->
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
-    isFilled = $container.width() - 15 > imgsWidth
+    isFilled = $container.width() - 15 < imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
 
   removeFillwidth: (imgs) ->
