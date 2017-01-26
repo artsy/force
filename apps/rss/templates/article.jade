@@ -22,10 +22,6 @@ for section, i in article.get('sections')
         != section.caption
     when 'video'
       != embed(section.url)
-    when 'image_collection'
-      if section.images
-        for image in section.images
-          p hello
     when 'artworks'
       if section.artworks
         for artwork in section.artworks
