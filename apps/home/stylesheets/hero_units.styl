@@ -12,9 +12,9 @@ hhu-credit-height = 30px
   transition opacity fade-duration ease-out
   opacity 0
   z-index 0
-  &[data-type="right"]
+  &[data-mode="RIGHT_DARK"], &[data-mode="RIGHT_LIGHT"]
     text-align right
-  &[data-type="center"]
+  &[data-mode="CENTER_DARK"], &[data-mode="CENTER_LIGHT"]
     text-align center
   &.home-hero-unit-active
     opacity 1
@@ -62,7 +62,9 @@ hhu-credit-height = 30px
   font-size 11px
   opacity 0.65
 
-.home-hero-unit-black
+.home-hero-unit-left-light
+.home-hero-unit-center-light
+.home-hero-unit-right-light
   .hhu-subheading
   .hhu-header
   .hhu-credit
