@@ -439,12 +439,12 @@ body.body-article
   i
     vertical-align middle
 
-.article-section-callout-container
+.article-section-callout
   max-width 580px
   margin 0 auto
   .related-title
     avant-garde-size('body')
-  a.article-section-callout
+  a
     display flex
     align-items center
     text-decoration none
@@ -452,27 +452,19 @@ body.body-article
     transition border-color 0.3s
     padding 15px
     margin-top 10px
+    garamond-size('l-body')
     &.no-image
       border none
       padding 0
-      .article-section-callout-title
-        garamond-size('s-headline')
-    img, .article-section-callout
-      display inline-block
-      vertical-align middle
     img
       max-width 120px
       margin-right 20px
-    .article-section-callout
-      garamond-size('l-body')
     &:hover
       border-color gray-dark-color
-
-.article-section-callout-pullquote
-  margin 20px auto
-  padding 15px 0px
-  max-width 750px
-  .article-section-callout-title
+  &__pullquote
+    margin 20px auto
+    padding 15px 0px
+    max-width 750px
     garamond-size('l-headline')
     text-align center
 

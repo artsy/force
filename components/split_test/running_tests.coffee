@@ -22,3 +22,9 @@ module.exports =
     outcomes:
       default: 50
       purchase: 50
+
+  new_artist_page_cta:
+    key: 'new_artist_page_cta'
+    outcomes:
+      old_cta: 50
+      new_cta: 50
