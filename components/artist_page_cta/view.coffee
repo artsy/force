@@ -42,8 +42,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
       redirectTo: @afterAuthPath
 
   currentParams: ->
-    params = qs.parse(location.search.replace(/^\?/, ''))
-    _.omit(params, 'show_artist_cta_code')
+    qs.parse(location.search.replace(/^\?/, ''))
 
   fullScreenOverlay: (e) =>
     return if @$el.hasClass 'fullscreen'
@@ -54,6 +53,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$el.addClass 'fullscreen'
     @$(".artist-page-cta-overlay__register input[name='name']").focus()
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
+    analyticsHooks.trigger 'artist_page:cta:shown'
     setTimeout (=> @disableScroll()), 400
 
   disableScroll: ->
@@ -69,6 +69,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$el.removeClass 'fullscreen'
     setTimeout (=> @reenableScroll()), 400
     @alreadyDismissed = true
+    analyticsHooks.trigger 'artist_page:cta:hidden'
 
   submit: (e) ->
     return unless @validateForm()
@@ -87,6 +88,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
         @$('button').attr 'data-state', 'error'
         @$('.auth-errors').text message
         mediator.trigger 'auth:error', message
+      context: 'artist_page_cta'
 
   onRegisterSuccess: (model, response, options) =>
     window.location = @afterAuthPath

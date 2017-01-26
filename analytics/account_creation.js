@@ -5,13 +5,14 @@
 // Created account (via email)
 $(document).on(
   'submit',
-  '.auth-register form, .marketing-signup-modal form',
+  '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
   function() {
-    $(document).one('ajaxComplete', function(e, xhr) {
+    $(document).one('ajaxComplete', function(e, xhr, options) {
       analytics.track('Created account', {
         acquisition_initiative: location.search.replace('?m-id=', ''),
         signup_service: 'email',
-        user_id: xhr.responseJSON.user.id
+        user_id: xhr.responseJSON.user.id,
+        context: options.context
       })
     })
   }
@@ -23,12 +24,12 @@ $(document).on(
 $(document).on(
   'click',
   '.auth-signup-facebook, .marketing-signup-modal-fb',
-  function() {
-
+  function(e) {
     // 2. Store some data in cookies before being redirected everywhere
     Cookies.set('analytics-signup', JSON.stringify({
       service: 'facebook',
-      acquisition_initiative: location.search.replace('?m-id=', '')
+      acquisition_initiative: location.search.replace('?m-id=', ''),
+      context: $(e.currentTarget).data('context')
     }))
   }
 )
@@ -41,7 +42,8 @@ if (Cookies.get('analytics-signup')) {
     analytics.track('Created account', {
       acquisition_initiative: data.acquisition_initiative,
       signup_service: data.service,
-      user_id: sd.CURRENT_USER.id
+      user_id: sd.CURRENT_USER.id,
+      context: data.context
     })
   }
 }

@@ -14,11 +14,10 @@ helpers = require '../view_helpers'
 describe 'Artist routes', ->
   beforeEach ->
     routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
-    routes.__set__ 'SHOW_ARTIST_CTA_CODE', 'show-me'
     @metaphysics.debug = sinon.stub()
     @metaphysics.returns Q.resolve artist: artistJSON
 
-    @req = params: { id: 'foo' }, get: (->), query: { show_artist_cta_code: 'show-me' }
+    @req = params: { id: 'foo' }, get: (->), query: {}
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -38,11 +37,6 @@ describe 'Artist routes', ->
       routes.index @req, @res
         .then =>
           @res.locals.sd.ARTIST.should.equal artistJSON
-
-    it 'bootstraps the show cta flag', ->
-      routes.index @req, @res
-        .then =>
-          @res.locals.sd.SHOW_ARTIST_CTA.should.equal true
 
     it 'redirects to canonical url', ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'
