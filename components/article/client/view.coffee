@@ -84,37 +84,8 @@ module.exports = class ArticleView extends Backbone.View
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
-  setupMaxImageHeights: (el) ->
-    $(el).find('img')
-      .each (i, img) ->
-        $(img).parent().css('max-width', '')
-        optimizedHeight = window.innerHeight * 0.9
-        newWidth = ((img.width * optimizedHeight) / img.height)
-        if newWidth < 580
-          $(img).closest('li').css('max-width', 580)
-        else
-          $(img).closest('li').css('max-width', newWidth)
-    $(el).closest('.article-section-image-collection').addClass 'images-loaded'
-
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
-
-  resizeImages: (cb=->) =>
-    imageSections = $('.article-section-image-collection').closest('.article-section-container')
-    for section in imageSections
-      $el = $(section).find('ul')
-      if $el.children().length < 2 or $el.closest('.article-section-image-collection').data('layout') is 'column_width'
-        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
-        $el.addClass('single') if $el.children().length is 1
-        @setupMaxImageHeights $el
-      else
-        Q.nfcall @fillwidth, $el
-    cb()
-
-  doneResizingImages: =>
-    @loadedImageHeights = true
-    @loadedArtworks = true
-    @maybeFinishedLoading()
 
   embedMobileHeight: =>
     $('.article-section-container[data-section-type=embed]').each (i, embed) =>
@@ -192,6 +163,35 @@ module.exports = class ArticleView extends Backbone.View
     name = $(e.currentTarget).attr('href').substring(1)
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
+  resizeImages: (cb=->) =>
+    imageSections = $('.article-section-image-collection ul')
+    for section in imageSections
+      $el = $(section)
+      if $el.children().length < 2 or $el.closest('.article-section-image-collection').data('layout') is 'column_width'
+        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+        $el.addClass('single') if $el.children().length is 1
+        @setupMaxImageHeights $el
+      else
+        Q.nfcall @fillwidth, $el
+    cb()
+
+  doneResizingImages: =>
+    @loadedImageHeights = true
+    @loadedArtworks = true
+    @maybeFinishedLoading()
+
+  setupMaxImageHeights: (el) ->
+    $(el).find('img')
+      .each (i, img) ->
+        $(img).parent().css('max-width', '')
+        optimizedHeight = window.innerHeight * 0.9
+        newWidth = ((img.width * optimizedHeight) / img.height)
+        if newWidth < 580
+          $(img).closest('li').css('max-width', 580)
+        else
+          $(img).closest('li').css('max-width', newWidth)
+    $(el).closest('.article-section-image-collection').addClass 'images-loaded'
+
   fillwidth: (el) =>
     if @windowWidth < 550
       @removeFillwidth el
@@ -221,7 +221,7 @@ module.exports = class ArticleView extends Backbone.View
     imgsWidth = _.reduce(getWidth, (a, b) ->
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
-    isFilled = $container.width() - 15 < imgsWidth
+    isFilled = $container.width() - 15 > imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
 
   removeFillwidth: (imgs) ->

@@ -49,7 +49,40 @@ describe 'ArticleView', ->
                 {
                   type: 'image',
                   url: 'https://image.png',
+                  caption: 'Trademarked'
+                }
+              ]
+            },
+            {
+              type: "image",
+              url: 'https://image2.png',
+              caption: 'Trademarked 2',
+              layout: 'column_width'
+            },
+            {
+              type: "image_collection",
+              layout: 'overflow_fillwidth',
+              images: [
+                {
+                  type: 'image',
+                  url: 'https://image.png',
                   caption: 'Trademarked',
+                },
+                {
+                  type: 'artwork'
+                  id: '5321b73dc9dc2458c4000196'
+                  slug: "govinda-sah-azad-in-between-1",
+                  date: "2015",
+                  title: "In Between",
+                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+                  partner: {
+                    name: "October Gallery",
+                    slug: "october-gallery"
+                  },
+                  artists: [{
+                    name: "Govinda Sah 'Azad'",
+                    slug: "govinda-sah-azad"
+                  }]
                 }
               ]
             },
@@ -139,12 +172,12 @@ describe 'ArticleView', ->
       @view.renderSlideshow()
       @initCarousel.called.should.be.ok()
 
-  describe '#resizeArtworks', ->
+  describe '#resizeImages', ->
 
-    it 'fillwidth is called on each artwork section', ->
-      @view.resizeArtworks()
+    it 'fillwidth is called on each image section', ->
+      @view.resizeImages()
       _.defer =>
-        @fillwidth.callCount.should.equal 1
+        @fillwidth.callCount.should.be above 1
 
   describe '#checkEditable', ->
 
@@ -180,11 +213,11 @@ describe 'ArticleView', ->
       @view.refreshWindowSize()
       @resetImageSetPreview.callCount.should.equal 1
 
-    it 'calls fillwidth on artworks', ->
+    it 'calls fillwidth on images', ->
       @view.refreshWindowSize()
       @fillwidth.callCount.should.be.above 1
 
-    it 'calls setupMaxImageHeights on artworks', ->
+    it 'calls setupMaxImageHeights on single images', ->
       @view.refreshWindowSize()
       @setupMaxImageHeights.callCount.should.be.above 1
 
