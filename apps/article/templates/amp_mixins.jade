@@ -12,14 +12,6 @@ mixin amp_hero_section(hero)
     when 'video'
       +amp_video(hero)
 
-//- mixin amp_artworks(section)
-//-   .article-section-container(data-section-type="artwork")
-//-     .article-section-artworks
-//-       ul
-//-         if section.artworks
-//-           each artwork in section.artworks
-//-             +amp_artwork(artwork)
-
 mixin amp_artwork(section)
   .amp-artwork
     amp-img(src=resize(section.image, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
