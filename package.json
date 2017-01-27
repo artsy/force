@@ -27,7 +27,7 @@
     "artsy-error-handler": "^1.0.2",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-newrelic": "^1.1.0",
-    "artsy-passport": "^1.5.0",
+    "artsy-passport": "^1.6.0",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^2.1.2",
     "babel": "^6.5.2",

@@ -9,6 +9,18 @@ module.exports = """
           followed_artist_id
         }
       }
+      hero_units(platform: DESKTOP) {
+        mode
+        heading
+        title
+        title_image_url
+        retina_title_image_url: title_image_url(retina: true)
+        subtitle
+        link_text
+        href
+        background_image_url
+        credit_line
+      }
     }
   }
 """

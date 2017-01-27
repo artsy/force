@@ -20,7 +20,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     includeContext: true
 
   initialize: (options = {}) ->
-    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext } = _.defaults options, @defaults
+    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext, @analyticsMessage } = _.defaults options, @defaults
 
   render: ->
     artists = new Backbone.Collection @module.context.artists
@@ -83,6 +83,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
         el: @$('.arbv-follow-search-container')
         initialSuggestions: initialArtists
         followedArtists: new Artists []
+        analyticsMessage: @analyticsMessage
       initialArtists.add @module.context.artists
     else
       featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'

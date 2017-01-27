@@ -4,7 +4,7 @@ imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class HeroUnitView extends Backbone.View
-  pauseLength: 8000
+  pauseLength: 6500
 
   events:
     'click #home-hero-units-left-arrow': 'onLeftArrow'
@@ -19,7 +19,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @$heroUnits = @$('.home-hero-unit')
 
     @setBodyClass()
-    @initInterval()
+    @setInterval()
 
     @$window.on 'scroll', _.throttle @setBodyClass, 100
     @$window.on 'keyup', (e) => @onKeyUp(e)
@@ -35,19 +35,16 @@ module.exports = class HeroUnitView extends Backbone.View
         .height($(this).height())
         .attr 'src', $(this).attr('data-retina')
 
-  initInterval: ->
-    if (@$heroUnits.first().data('type') is 'welcome') then @setInterval else _.delay(@setInterval, @pauseLength)
-
   setInterval: =>
     clearInterval @interval
     @interval = setInterval @nextHeroUnit, @pauseLength
 
   setBodyClass: =>
     if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
-      if @$('.home-hero-unit-active').hasClass('home-hero-unit-white')
-        @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
-      else
+      if @$('.home-hero-unit-active').attr('class').match('-light')
         @$el.removeClass('body-transparent-header').addClass 'body-transparent-header-white'
+      else
+        @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
     else
       @$el.removeClass 'body-transparent-header body-transparent-header-white'
 
@@ -89,6 +86,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @nextHeroUnit()
 
   onDot: (e) ->
+    @setInterval()
     @showHeroUnit $(e.target).index()
 
   signUp: (e) ->

@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Items = require '../../collections/items'
 Articles = require '../../collections/articles'
-HeroUnits = require '../../collections/hero_units'
 { client } = require '../../lib/cache'
 metaphysics = require '../../lib/metaphysics.coffee'
 viewHelpers = require './view_helpers.coffee'
@@ -36,7 +35,6 @@ maybeFetchHomepageRails = (req)->
 @index = (req, res, next) ->
   return if metaphysics.debug req, res, { method: 'post', query: query }
 
-  heroUnits = new HeroUnits
   timeToCacheInSeconds = 300 # 5 Minutes
 
   # homepage:featured-sections
@@ -59,7 +57,6 @@ maybeFetchHomepageRails = (req)->
 
   Q
     .all [
-      heroUnits.fetch cache: true, cacheTime: timeToCacheInSeconds
       maybeFetchHomepageRails req
       featuredLinks.fetch cache: true
       featuredArticles.fetch
@@ -72,7 +69,8 @@ maybeFetchHomepageRails = (req)->
       featuredShows.fetch cache: true, cacheTime: timeToCacheInSeconds
     ]
 
-    .then ([x, { home_page }]) ->
+    .then ([{ home_page }]) ->
+      heroUnits = home_page.hero_units
       heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
 
       # always show followed artist rail for logged in users,
@@ -80,7 +78,7 @@ maybeFetchHomepageRails = (req)->
       if req.user and not _.findWhere home_page.artwork_modules, { key: 'followed_artists' }
         home_page.artwork_modules.unshift { key: 'followed_artists' }
 
-      res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+      res.locals.sd.HERO_UNITS = heroUnits
       res.locals.sd.USER_HOME_PAGE = home_page.artwork_modules
 
       res.render 'index',

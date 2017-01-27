@@ -20,6 +20,7 @@ module.exports.init = ->
       useInitialArtists: true
       includeContext: false
       showHeader: false
+      analyticsMessage: 'artist page sign up prompt payoff screen'
 
     view.render()
     return
