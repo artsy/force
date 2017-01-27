@@ -12,7 +12,6 @@ headline2-font-size = 30px
 gutter-size = 30px
 overflow-width = 1100px
 body-width = 580px
-artwork-height = 500px
 gutter-size = 30px
 play-button-size = 30px
 column-width = 580px
@@ -198,100 +197,6 @@ body.body-article
       .share-item
         width 33.333%
 
-.article-section-artworks
-  position relative
-  a
-    text-decoration none
-
-.article-section-artworks, .article-section-container[data-section-type=image]
-  opacity 0
-  transition opacity 0.25s
-  &.images-loaded
-    opacity 1
-
-.article-section-artworks[data-layout="column_width"]
-  width body-width
-  margin auto
-  max-width 100%
-  .loading-spinner
-    display none
-  .artwork-item-image
-    background transparent
-    img
-      max-width 100%
-      height auto
-      width auto
-      position relative
-
-.article-section-artworks[data-layout="overflow_fillwidth"]
-  max-width (overflow-width + gutter-size)
-  margin 0 auto
-  text-align center
-  @media screen and (max-width 1250px)
-    width calc(100% \- 150px)
-    margin 0 75px
-    @media screen and (max-width 900px)
-      width 100%
-      margin 0
-      overflow hidden
-  &.is-loading
-    [data-id]
-      opacity 0
-    height artwork-height
-    .loading-spinner
-      display block
-  .loading-spinner
-    display none
-  [data-id]
-    display inline-block
-    vertical-align top
-    padding 0
-    @media screen and (max-width 400px)
-      min-width 100%
-      margin 0
-      width 100% !important
-      &:first-child
-        margin-bottom 20px
-  ul
-    &.is-loading
-      opacity 0
-      overflow hidden
-      height artwork-height
-    @media screen and (max-width 400px)
-      display block !important
-    &.single li
-      width 100%
-    &.single.portrait li
-      width auto
-  li
-    transition all .5s
-    margin-right 30px
-    &:last-child
-      margin-right 0
-    @media screen and (max-width 550px)
-      margin-right 0px
-  .artwork-item-image-container
-    height auto !important
-    img
-      position relative
-      height auto
-      width 100%
-  .portrait img
-    max-height 90vh
-    width auto
-    max-width 100vw
-  .artwork-item-image
-    padding-bottom 0 !important
-  .artwork-item-caption
-    overflow ellipsis
-    @media screen and (max-width 900px)
-      margin 10px 30px
-    @media screen and (max-width 550px)
-      width calc(100% \- 40px)
-      margin 10px 20px
-  .overlay-container
-    display none
-
 .responsive-layout-container[data-layout="overflow"]
   @media screen and (max-width 900px)
     margin 40px 0
@@ -430,6 +335,8 @@ body.body-article
     top 0
     left 0
     width 100%
+  li
+    list-style none
 
 .article-video-cover-image
   background center center

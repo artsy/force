@@ -1,3 +1,5 @@
+include article_mixins
+
 //- Hero Section
 - hero = article.get('hero_section')
 if hero
@@ -5,9 +7,7 @@ if hero
     when 'video'
       != particle(hero.url)
     when 'image'
-      img( src=resize(hero.url, { width: 1100 }) )
-      if hero.caption
-        p!= hero.caption
+      +image(hero, 1100)
 
 //- Content
 if article.strip('lead_paragraph')
@@ -17,19 +17,17 @@ for section, i in article.get('sections')
     when 'text'
       p!= section.body
     when 'image'
-      img( src=resize(section.url, { width: 500 }) )
-      if section.caption
-        p!= section.caption
+      +image(section, 500)
     when 'video'
       != embed(section.url)
+    when 'image_collection'
+      if section.images
+        for image in section.images
+          if image.type == 'image'
+            +image(image, 500)
+          else
+            +artwork(image)
     when 'artworks'
       if section.artworks
         for artwork in section.artworks
-          img(src=resize(artwork.image, { width: 500 } ))
-          p= artwork.title + ", " + artwork.date + ". "
-            br
-            if artwork.artist
-              = artwork.artist.name
-            br
-            if artwork.partner
-              = artwork.partner.name
+          +artwork(artwork)

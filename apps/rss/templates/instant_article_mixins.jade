@@ -29,6 +29,14 @@ mixin image(section)
       figcaption
         != section.caption
 
+mixin imageCollection(section)
+  if section.images
+    each item in section.images
+      if item.type === 'image'
+        +image(item)
+      else if item.type === 'artwork'
+        +artwork(item)
+
 mixin imageSet(section)
   figure.op-slideshow
     each item in section.images
@@ -46,7 +54,9 @@ mixin artworkCaption(artwork)
     h1
       a(href="#{sd.APP_URL}/artwork/#{artwork.slug}")= artwork.title + ", " + artwork.date + ". "
     h2
-      if artwork.artist
+      if artwork.artists
+        = toSentence(_.pluck(artwork.artists, 'name'))
+      else if artwork.artist
         = artwork.artist.name
       br
       if artwork.partner
