@@ -78,7 +78,7 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and @loadedCallouts and @loadedImageHeights
+    if @loadedArtworks and @loadedImageHeights
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
