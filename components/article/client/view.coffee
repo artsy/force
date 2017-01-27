@@ -395,7 +395,6 @@ module.exports = class ArticleView extends Backbone.View
 
     new Articles().fetch
       data: ids: ids
-      error: ->
       success: (articles) =>
         for section in calloutSections
           @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
