@@ -203,6 +203,6 @@ describe 'ArticleView', ->
   describe '#renderCalloutSections', ->
 
     it 'renders callouts', ->
-      articles = [_.extend(fixtures.article, { thumbnail_title: 'callout article' })]
+      articles = [_.extend({}, fixtures.article, { thumbnail_title: 'callout article' })]
       Backbone.sync.args[0][2].success results: articles
       @view.$el.html().should.containEql 'callout article'
