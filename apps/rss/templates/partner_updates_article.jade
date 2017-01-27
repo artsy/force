@@ -17,7 +17,7 @@ for section, i in article.get('sections')
     when 'text'
       p!= section.body
     when 'image'
-      +image(hero, 500)
+      +image(section, 500)
     when 'video'
       != embed(section.url)
     when 'image_collection'

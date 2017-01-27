@@ -54,7 +54,9 @@ mixin artworkCaption(artwork)
     h1
       a(href="#{sd.APP_URL}/artwork/#{artwork.slug}")= artwork.title + ", " + artwork.date + ". "
     h2
-      if artwork.artist
+      if artwork.artists
+        = toSentence(_.pluck(artwork.artists, 'name'))
+      else if artwork.artist
         = artwork.artist.name
       br
       if artwork.partner
