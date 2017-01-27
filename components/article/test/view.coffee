@@ -1,41 +1,27 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 sd = require('sharify').data
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
+embed = require 'particle'
 
 describe 'ArticleView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       $.fn.fillwidthLite = sinon.stub().yieldsTo('done')
       Backbone.$ = $
-      sd.SCROLL_ARTICLE = 'static'
-      @ArticleView = benv.requireWithJadeify(
-        resolve(__dirname, '../client/view')
-        ['editTemplate', 'calloutTemplate' ]
-      )
-      @ArticleView.__set__ 'imagesLoaded', sinon.stub()
-      @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
-      @ArticleView.__set__ 'CurrentUser', fabricate 'user'
-      @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
-      @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
-      @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
-      @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
-      stubChildClasses @ArticleView, this,
-        ['initCarousel']
-        []
       benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
@@ -90,14 +76,14 @@ describe 'ArticleView', ->
                   }]
                 }
               ]
-            }
+            },
             {
               type: 'embed',
               layout: 'overflow',
               url: 'http://files.artsy.net/data.pdf',
               height: '600'
               mobile_height: '1100'
-            }
+            },
             {
               type: 'callout',
               article: '54276766fd4f50996aeca2b8',
@@ -110,11 +96,20 @@ describe 'ArticleView', ->
         sd:
           SCROLL_ARTICLE: 'static'
         asset: (->)
-        embed: require('particle')
-        moment: require('moment')
+        embed: embed
+        moment: sinon.stub()
         resize: sinon.stub()
         crop: sinon.stub()
       }, =>
+        @ArticleView = benv.requireWithJadeify(
+          resolve(__dirname, '../client/view')
+          ['editTemplate', 'calloutTemplate', 'relatedTemplate' ]
+        )
+        stubChildClasses @ArticleView, this,
+          ['initCarousel']
+          []
+        @ArticleView.__set__ 'imagesLoaded', sinon.stub()
+        @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
         done()
 
   after ->
@@ -122,18 +117,20 @@ describe 'ArticleView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    sinon.stub($, 'get').returns { html: '<iframe>Test</iframe>' }
-    sinon.stub @ArticleView.prototype, 'initialize'
+    @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
+    @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
+    @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
+    @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
     @view = new @ArticleView
-    @view.setElement $('body')
-    @view.article = @article
-    @view.windowWidth = 1250
-    @view.$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
+      el: $('body')
+      article: @article
 
   afterEach ->
+    @fillwidth.restore()
+    @imgsFillContainer.restore()
+    @setupMaxImageHeights.restore()
+    @resetImageSetPreview.restore()
     Backbone.sync.restore()
-    $.get.restore()
-    @ArticleView.prototype.initialize.restore()
 
   describe '#renderSlideshow', ->
 
@@ -165,7 +162,6 @@ describe 'ArticleView', ->
   describe '#refreshWindowSize', ->
 
     it 'resets image sizes for imageset previews', ->
-      @view.refreshWindowSize()
       @resetImageSetPreview.callCount.should.equal 1
 
     it 'calls fillwidth on artworks', ->
@@ -174,11 +170,13 @@ describe 'ArticleView', ->
 
     it 'calls setupMaxImageHeights on artworks', ->
       @view.refreshWindowSize()
-      @setupMaxImageHeights.callCount.should.be.above 1
+      @setupMaxImageHeights.callCount.should.equal 1
 
   describe '#embedMobileHeight', ->
 
     it 'sets iframe height to desktop height on large screens', ->
+      @view.windowWidth = 1250
+      @view.embedMobileHeight()
       @view.$el.find('iframe').height().should.equal 600
 
     it 'sets iframe height to mobile height on small screens', ->
@@ -193,10 +191,21 @@ describe 'ArticleView', ->
 
     it 'on small screens, resets image sizes for imageset previews', ->
       @view.windowWidth = 600
-      @imgsFillContainer.callCount.should.be.above 1
+      @imgsFillContainer.callCount.should.equal 1
 
   describe '#imgsFillContainer', ->
     it 'returns true if images are narrower than their container', ->
       container = @view.$('.article-section-artworks ul').width(1400)
       imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
       imgsFillContainer.isFilled.should.equal true
+
+  describe '#renderCalloutSections', ->
+
+    it 'renders callouts', (done) ->
+      @view.renderCalloutSections()
+      articles = new Articles [_.extend fixtures.articles, {thumbnail_title: 'callout article'}]
+      Backbone.sync.args[0][2].success articles
+      _.defer => _.defer =>
+        console.log @view.$el.html()
+        @view.$el.find('.article-section-callout').html().should.containEql 'callout article'
+        done()

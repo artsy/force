@@ -385,17 +385,18 @@ module.exports = class ArticleView extends Backbone.View
     , { offset: 'bottom-in-view' }
 
   renderCalloutSections: =>
-    calloutSections = _.filter @article.get('sections'), (section)-> section.type is 'callout'
+    calloutSections = _.filter @article.get('sections'), (section) -> section.type is 'callout'
     ids = _.pluck(calloutSections, 'article')
 
-    if sd.ARTICLE.id is @article.get('id') or not ids.length
+    if sd.ARTICLE?.id is @article.get('id') or not ids.length
       @loadedCallouts = true
       @maybeFinishedLoading()
       return
 
-    (articles = new Articles()).fetch
+    new Articles().fetch
       data: ids: ids
-      success: =>
+      error: ->
+      success: (articles) =>
         for section in calloutSections
           @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
             section: section
