@@ -5,10 +5,10 @@
     for item, i in items
       .mgr-cell.js-mgr-cell
         .image-set-modal__container
-          if item.type === 'artwork' && item.artists
+          if item.type === 'artwork' && item.artist && item.artist.name
             .image-set-modal__artist-container
-              a.image-set-modal__artist-name(href="/artist/#{item.artists[0].slug}")= item.artists[0].name
-              a.entity-follow.artist-follow(data-id=item.artists[0].slug)
+              a.image-set-modal__artist-name(href="/artist/#{item.artist.slug}")= item.artist.name
+              a.entity-follow.artist-follow(data-id=item.artist.slug)
 
           - var image = resize( (item.image || item.url || ''), { height: 900 } )
           img.image-set-modal__image(src=image)
