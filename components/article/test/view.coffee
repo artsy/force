@@ -204,7 +204,7 @@ describe 'ArticleView', ->
 
     it 'calls setupMaxImageHeights on single images', ->
       @view.refreshWindowSize()
-      @setupMaxImageHeights.callCount.should.equal 1
+      @setupMaxImageHeights.callCount.should.be.above 1
 
   describe '#embedMobileHeight', ->
 
@@ -225,7 +225,7 @@ describe 'ArticleView', ->
 
     it 'on small screens, resets image sizes for imageset previews', ->
       @view.windowWidth = 600
-      @imgsFillContainer.callCount.should.equal 1
+      @imgsFillContainer.callCount.should.be.above 1
 
   describe '#imgsFillContainer', ->
     it 'returns true if images are narrower than their container', ->
