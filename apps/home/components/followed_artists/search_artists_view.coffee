@@ -24,7 +24,7 @@ module.exports = class SearchArtistsView extends Backbone.View
   emptyInput: ->
     trim(@input().val()) == ""
 
-  initialize: ({ @initialSuggestions, @followedArtists }) ->
+  initialize: ({ @initialSuggestions, @followedArtists, @analyticsMessage }) ->
     @match = new Match
     @match.kind = 'artists'
 
@@ -35,6 +35,8 @@ module.exports = class SearchArtistsView extends Backbone.View
     @listenTo @match, 'sync reset', @renderResults
 
     @pastMatches = new Backbone.Collection
+
+    @analyticsMessage ?= 'Homepage followed artists'
 
     @input().focus()
 
@@ -82,13 +84,15 @@ module.exports = class SearchArtistsView extends Backbone.View
   followAndSwap: (e) ->
     e.preventDefault()
     $suggestion = $(e.currentTarget)
+    slug = $suggestion.data('artist-slug')
     id = $suggestion.data('artist-id')
     @following.follow(id) if @user
     $suggestion.find('.typeahead-suggestion-follow').attr 'data-state', 'following'
     analyticsHooks.trigger 'followable:followed',  {
       modelName: @match.kind
-      entity_slug: id
-      context_module: 'Homepage followed artists'
+      entity_slug: slug
+      entity_id: id
+      context_module: @analyticsMessage
     }
     $suggestion.addClass 'tt-suggestion-inner__selected'
     @$('input').select()
