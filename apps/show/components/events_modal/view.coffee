@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 template = -> require('./template.jade') arguments...
+{ sortBy } = require 'underscore'
 
 module.exports = class EventsModalView extends Backbone.View
   className: 'show-events-modal'
@@ -9,5 +10,6 @@ module.exports = class EventsModalView extends Backbone.View
     { @show, @events } = options
 
   render: ->
-    @$el.html template(show: @show, showEvents: @events, ViewHelpers: ViewHelpers)
+    sortedEvents = sortBy @events, 'start_at'
+    @$el.html template(show: @show, showEvents: sortedEvents, ViewHelpers: ViewHelpers)
     this
