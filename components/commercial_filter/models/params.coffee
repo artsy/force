@@ -18,7 +18,8 @@ module.exports = class Params extends Backbone.Model
     'gene_ids',
     'artist_ids'
   ]
-  defaults:
+
+  defaultParams:
     size: 50
     page: 1
     for_sale: true
@@ -38,7 +39,10 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
-  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
+  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations, @customDefaults }) ->
+
+  initialParams: ->
+    @customDefaults || @defaultParams
 
   current: ->
     if @categoryMap

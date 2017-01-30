@@ -32,6 +32,21 @@ const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 const clock = new ClockView({modelName: 'Auction', model: auction, el: $('.auction2-clock')})
 clock.start()
 
+const customSortMap = {
+  "lot_number": "Lot Number (asc.)",
+  "-lot_number": "Lot Number (desc.)",
+  "-searchable_estimate": "Most Expensive",
+  "searchable_estimate": "Least Expensive"
+}
+
+const defaultParams = {
+  size: 20,
+  page: 1,
+  aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
+  sale_id: sd.AUCTION.id,
+  sort: 'lot_number',
+}
+
 if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
   const activeBids = new MyActiveBids({
     user: user,
@@ -43,10 +58,11 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 }
 
 // Commercial filtering
-const params = new Params({sale_id: sd.AUCTION.id, size: 20}, {
-  fullyQualifiedLocations: fullyQualifiedLocations
+const params = new Params({}, {
+  fullyQualifiedLocations: fullyQualifiedLocations,
+  customDefaults: defaultParams
 })
-const filter = new Filter({params: params})
+const filter = new Filter({ params: params })
 
 // Main Artworks view
 filter.artworks.on('reset', () => {
@@ -65,7 +81,8 @@ const totalView = new TotalView({
 
 const sortView = new SortView({
   el: $('.cf-total-sort__sort'),
-  params: params
+  params: params,
+  customSortMap: customSortMap
 })
 
 // Sidebar

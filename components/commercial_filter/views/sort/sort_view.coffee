@@ -1,16 +1,20 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 BorderedPulldown = require '../../../bordered_pulldown/view.coffee'
-sortMap = require './sort_map.coffee'
+defaultSortMap = require './sort_map.coffee'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SortView extends Backbone.View
   events:
     'click .bordered-pulldown-options a': 'setSort'
 
-  defaultSort: '-partner_updated_at'
+  sortMap: ->
+    @customSortMap || defaultSortMap
 
-  initialize: ({ @params }) ->
+  defaultSort: ->
+    _.keys(@sortMap())[0]
+
+  initialize: ({ @params, @customSortMap }) ->
     throw new Error 'Requires a params model' unless @params?
 
     @listenToOnce @params, 'change', @render
@@ -21,8 +25,8 @@ module.exports = class SortView extends Backbone.View
 
   render: ->
     @$el.html template
-      currentSort: @params.get('sort') or @defaultSort
-      map: sortMap
+      currentSort: @params.get('sort') or @defaultSort()
+      map: @sortMap()
 
     _.defer => @_postRender()
 

@@ -5,6 +5,11 @@ export default function AuctionGridArtwork({ artwork }, _) {
   const artists = artwork.get('artists')
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
 
+  let bidStatus
+  if (artwork.get('sale_artwork')) {
+    bidStatus = <BidStatus artwork={artwork} />
+  }
+
   return (
     <div className='auction2-grid-artwork' key={artwork._id}>
       <div className='auction2-grid-artwork__image-container'>
@@ -18,7 +23,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
       </div>
       <div className='auction2-grid-artwork__primary-information'>
         <div className='auction2-grid-artwork__lot-number'>
-          Lot {artwork.get('sale_artwork').lot_number}
+          Lot {artwork.get('sale_artwork') && artwork.get('sale_artwork').lot_number}
         </div>
         <div className='auction2-grid-artwork__artists'>
           {artistDisplay}
@@ -28,7 +33,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
           { artwork.get('sale') && artwork.get('sale').name }
         </div>
       </div>
-      <BidStatus artwork={artwork} />
+
     </div>
   );
 }

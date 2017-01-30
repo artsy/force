@@ -33,6 +33,18 @@ module.exports = class Filter extends Backbone.Model
     else
       ''
 
+  merchandisableArtists: ->
+    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+      require '../queries/merchandisable_artists.coffee'
+    else
+      ''
+
+  artistFragment: ->
+    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+      require '../queries/artist.coffee'
+    else
+      ''
+
   query: ->
     query = """
       query filterArtworks(
@@ -83,13 +95,11 @@ module.exports = class Filter extends Backbone.Model
           hits {
             ... artwork
           }
-          merchandisable_artists {
-            ... artist
-          }
+          #{@merchandisableArtists()}
         }
       }
       #{require '../queries/artwork.coffee'}
-      #{require '../queries/artist.coffee'}
+      #{@artistFragment()}
       #{@aggregationFragment()}
     """
 
