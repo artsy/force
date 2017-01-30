@@ -3,8 +3,23 @@ module.exports = """
     _id
     href
     is_inquireable
-    is_in_auction
-    is_biddable
+    sale {
+      is_auction
+      is_live_open
+      is_open
+      is_closed
+    }
+    sale_artwork {
+      highest_bid {
+        display
+      }
+      opening_bid {
+        display
+      }
+      counts {
+        bidder_positions
+      }
+    }
     partner(shallow: true) {
       type
       href
