@@ -1,0 +1,7 @@
+.artsy-checkbox.cf-items__checkbox
+  .artsy-checkbox--checkbox
+    input( type='checkbox', id=item.id, checked=isSelected)
+    label( for=item.id )
+  label.artsy-checkbox--label( for=item.id ) #{item.name}
+    | &nbsp;
+    span.garamond-m-caption.cf-items__total (#{numberFormat(item.count)})

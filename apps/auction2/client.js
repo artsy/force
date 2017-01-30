@@ -13,6 +13,7 @@ import TotalView from '../../components/commercial_filter/views/total/total_view
 import SortView from '../../components/commercial_filter/views/sort/sort_view.coffee'
 import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 import MediumFilterView from '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
+import CheckBoxesFilterView from '../../components/commercial_filter/filters/check_boxes/check_boxes_filter_view.coffee'
 // import GeneIdsFilterView from '../../components/commercial_filter/filters/gene_ids/gene_ids_filter_view.coffee'
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
@@ -85,6 +86,14 @@ const followedArtistsView = new FollowedArtistFilterView({
   el: $('.cf-sidebar__followed_artists'),
   params: params,
   filter: filter
+})
+
+const aggregatedArtistsView = new CheckBoxesFilterView({
+  el: $('.cf-sidebar__aggregated_artists'),
+  params: params,
+  aggregations: filter.aggregations,
+  itemType: 'artist',
+  paramName: 'artist_ids'
 })
 
 // bottom
