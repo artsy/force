@@ -17,8 +17,8 @@
           alt= heroUnit.title
         )
       .hhu-subheading
-        != heroUnit.subtitle
+        != markdown(heroUnit.subtitle)
       .avant-garde-button(
       )= heroUnit.link_text
 
-    .hhu-credit= heroUnit.credit_line
+    .hhu-credit!= markdown(heroUnit.credit_line)
