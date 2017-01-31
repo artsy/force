@@ -4,7 +4,7 @@ export default function BidStatus({ artwork }, _) {
   const saleArtwork = artwork.get('sale_artwork')
 
   let bidLabel
-  if (saleArtwork.counts.bidder_positions > 0) {
+  if (saleArtwork && saleArtwork.counts && saleArtwork.counts.bidder_positions > 0) {
     bidLabel = `<b>Current Bid:</b> (${saleArtwork.counts.bidder_positions} Bids)`
   } else {
     bidLabel = `<b>Starting Bid</b>`
