@@ -14,7 +14,6 @@ query = require './queries/server.coffee'
 payoffQuery = require '../../components/artist_page_cta/query'
 helpers = require './view_helpers'
 currentShowAuction = require './components/current_show_auction/index'
-currentEOYListing = require './components/current_eoy_listing/index'
 sd = require('sharify').data
 
 @index = (req, res, next) ->
@@ -36,24 +35,20 @@ sd = require('sharify').data
       return res.redirect(artist.href) unless(_.find nav.sections(), slug: tab) or artist.counts.artworks is 0
 
       if (req.params.tab? or artist.href is res.locals.sd.CURRENT_PATH)
-        currentEOYListing(artist)
-          .then (currentEOYListing) ->
-            currentItem = currentEOYListing or currentShowAuction(artist)
+          currentItem = currentShowAuction(artist)
 
-            res.locals.sd.ARTIST = artist
-            res.locals.sd.TAB = tab
-            res.locals.sd.CURRENT_ITEM = currentItem
-            res.locals.sd.ON_ARTIST_PAGE = true
+          res.locals.sd.ARTIST = artist
+          res.locals.sd.TAB = tab
+          res.locals.sd.CURRENT_ITEM = currentItem
+          res.locals.sd.ON_ARTIST_PAGE = true
 
-            res.render 'index',
-              viewHelpers: helpers
-              artist: artist
-              tab: tab
-              nav: nav
-              currentItem: currentItem
-              jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
-
-          .catch (err) -> next(err if NODE_ENV is 'development')
+          res.render 'index',
+            viewHelpers: helpers
+            artist: artist
+            tab: tab
+            nav: nav
+            currentItem: currentItem
+            jsonLD: JSON.stringify helpers.toJSONLD artist if includeJSONLD
 
       else
         res.redirect artist.href
