@@ -33,7 +33,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
           { artwork.get('sale') && artwork.get('sale').name }
         </div>
       </div>
-
+      { bidStatus }
     </div>
   );
 }

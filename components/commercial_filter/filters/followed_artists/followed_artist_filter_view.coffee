@@ -23,7 +23,7 @@ module.exports = class FollowedArtistsFilterView extends Backbone.View
   toggleFollowedArtists: (e) ->
     currentValue = @params.get('include_artworks_by_followed_artists')
     if @filter.get('followed_artists_total') is 0 and !currentValue
-      @params.clear(silent: true).set _.defaults include_artworks_by_followed_artists: true, @params.defaults()
+      @params.clear(silent: true).set _.defaults include_artworks_by_followed_artists: true, @params.initialParams()
     else
       @params.set include_artworks_by_followed_artists: !currentValue, page: 1
 

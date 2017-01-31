@@ -12,9 +12,8 @@ import Filter from '../../components/commercial_filter/models/filter.coffee'
 import TotalView from '../../components/commercial_filter/views/total/total_view.coffee'
 import SortView from '../../components/commercial_filter/views/sort/sort_view.coffee'
 import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
-import MediumFilterView from '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
+import RangeFilterView from '../../components/commercial_filter/filters/range_slider/range_filter_view.coffee'
 import CheckBoxesFilterView from '../../components/commercial_filter/filters/check_boxes/check_boxes_filter_view.coffee'
-// import GeneIdsFilterView from '../../components/commercial_filter/filters/gene_ids/gene_ids_filter_view.coffee'
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
@@ -45,6 +44,14 @@ const defaultParams = {
   aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
   sale_id: sd.AUCTION.id,
   sort: 'lot_number',
+  gene_ids: [],
+  artist_ids: [],
+  ranges: {
+    estimate_range: {
+      min: 50,
+      max: 50000
+    }
+  }
 }
 
 if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
@@ -58,7 +65,7 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 }
 
 // Commercial filtering
-const params = new Params({}, {
+const params = new Params(defaultParams, {
   fullyQualifiedLocations: fullyQualifiedLocations,
   customDefaults: defaultParams
 })
@@ -86,18 +93,19 @@ const sortView = new SortView({
 })
 
 // Sidebar
-const mediumFilterView = new MediumFilterView({
-  el: $('.cf-sidebar__mediums'),
+const rangeFilterView = new RangeFilterView({
+  el: $('.cf-sidebar__estimate-range'),
   params: params,
-  aggregations: filter.aggregations
+  rangeType: 'estimate_range'
 })
 
-// TODO: replace when backend supports this kind of query
-// const genesView = new GeneIdsFilterView({
-//   el: $('.cf-sidebar__genes'),
-//   params: params,
-//   aggregations: filter.aggregations
-// })
+const mediumFilterView = new CheckBoxesFilterView({
+  el: $('.cf-sidebar__mediums'),
+  params: params,
+  aggregations: filter.aggregations,
+  itemType: 'medium',
+  paramName: 'gene_ids'
+})
 
 const followedArtistsView = new FollowedArtistFilterView({
   el: $('.cf-sidebar__followed_artists'),

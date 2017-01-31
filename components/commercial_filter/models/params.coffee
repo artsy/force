@@ -8,6 +8,7 @@ module.exports = class Params extends Backbone.Model
     'medium'
     'color',
     'price_range',
+    'estimate_range',
     'width',
     'height',
     'gene_id',
@@ -19,7 +20,7 @@ module.exports = class Params extends Backbone.Model
     'artist_ids'
   ]
 
-  defaultParams:
+  defaults:
     size: 50
     page: 1
     for_sale: true
@@ -42,7 +43,7 @@ module.exports = class Params extends Backbone.Model
   initialize: (attributes, { @categoryMap, @fullyQualifiedLocations, @customDefaults }) ->
 
   initialParams: ->
-    @customDefaults || @defaultParams
+    @customDefaults || @defaults
 
   current: ->
     if @categoryMap
