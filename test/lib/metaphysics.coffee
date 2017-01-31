@@ -110,7 +110,6 @@ describe 'metaphysics', ->
           }
         '
       .catch (err) ->
-        console.log err.data
         err.data.foo.should.equal 'bar'
 
   describe 'partial error', ->
