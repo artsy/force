@@ -49,3 +49,4 @@ module.exports = class CheckBoxesFilterView extends Backbone.View
       findAggregation: @findAggregation
       numberFormat: numberFormat
       itemType: @itemType
+      _: _

@@ -66,7 +66,6 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 
 // Commercial filtering
 const params = new Params(defaultParams, {
-  fullyQualifiedLocations: fullyQualifiedLocations,
   customDefaults: defaultParams
 })
 const filter = new Filter({ params: params })

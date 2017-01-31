@@ -5,6 +5,7 @@ Artworks = require '../../../collections/artworks.coffee'
 Artists = require '../../../collections/artists.coffee'
 User = require '../../../models/user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
+_ = require 'underscore'
 
 module.exports = class Filter extends Backbone.Model
   defaults:
