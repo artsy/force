@@ -31,6 +31,7 @@ metaphysics = ({ method, query, variables, req } = {}) ->
       if response.body.errors?
         error = new Error JSON.stringify response.body.errors
         error.status = 404 if some(response.body.errors, ({ message }) -> message.match /Not Found/)
+        error.data = response.body.data
         return reject error
 
       resolve response.body.data

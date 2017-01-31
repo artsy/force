@@ -24,12 +24,15 @@ positionWelcomeHeroMethod = (req, res) ->
   res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
   method
 
-maybeFetchHomepageRails = (req)->
+fetchMetaphysicsData = (req)->
   deferred = Q.defer()
   metaphysics(query: query, req: req)
     .then (data) -> deferred.resolve data
-    .catch -> deferred.resolve home_page: { artwork_modules: [] }
-
+    .catch (err) ->
+      deferred.resolve
+        home_page:
+          artwork_modules: []
+          hero_units: err.data.home_page.hero_units
   deferred.promise
 
 @index = (req, res, next) ->
@@ -57,7 +60,7 @@ maybeFetchHomepageRails = (req)->
 
   Q
     .all [
-      maybeFetchHomepageRails req
+      fetchMetaphysicsData req
       featuredLinks.fetch cache: true
       featuredArticles.fetch
         cache: true

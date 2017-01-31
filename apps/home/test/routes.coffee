@@ -93,6 +93,20 @@ describe 'Home routes', ->
             @res.render.args[0][1].heroUnits[0].subtitle
               .should.equal 'My hero'
 
+      it 'catches error fetching homepage rails and still renders hero units', ->
+        err = new Error 'Failed to get rails'
+        err.data = home_page: hero_units: [heroUnit]
+        @metaphysics.returns Promise.reject err
+        Backbone.sync
+          .onCall 0
+          .yieldsTo 'success', [fabricate 'featured_link']
+        routes.index extend({ user: 'existy' }, @req), @res
+          .then =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
+            @res.render.args[0][1].heroUnits[0].subtitle
+              .should.equal 'My hero'
+
   describe '#redirectToSignup', ->
     it 'redirects to signup', ->
       routes.redirectToSignup @req, @res
