@@ -125,7 +125,7 @@ mixin artwork(artwork)
         a.artwork-item-image-link( href='/artwork/' + artwork.slug )
           .artwork-item-image
             img( src=artwork.image )
-            +artwork_caption(artwork)
+      +artwork_caption(artwork)
 
 mixin artwork_caption(artwork)
   figcaption.artwork-item-caption

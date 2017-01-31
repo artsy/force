@@ -25,7 +25,7 @@ mixin amp_image(section)
         != section.caption
 
 mixin amp_image_collection(section)
-  .amp-image-collection
+  .amp-image-collection.article-section-container
     each image in section.images
       if image.type === 'artwork'
         +amp_artwork(image)
