@@ -5,9 +5,10 @@ if artwork.sale && artwork.sale.is_auction
     else if artwork.sale.is_open
       a(href= artwork.href)
         - var sa = artwork.sale_artwork
-        if artwork.sale_artwork.counts.bidder_positions > 0
+        - var bids = sa.counts.bidder_positions
+        if bids > 0
           | #{sa.highest_bid.display}&nbsp;
-          | (#{sa.counts.bidder_positions} bids)
+          = '(' + bids + (bids > 1 ? ' bids' : ' bid') + ')'
         else
           | #{sa.opening_bid.display}
     else if artwork.sale.is_closed
