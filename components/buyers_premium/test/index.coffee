@@ -14,7 +14,8 @@ describe 'buyersPremium', ->
 
   it 'renders buyers premium based on the sale and page', (done) ->
     buyersPremium new Sale(fabricate 'sale'), (err, html) ->
-      html.should.containEql "<div class='buyers-premium-perc'>25%"
+      html.should.containEql "<div class='buyers-premium-pre'>"
+      html.should.containEql '25%'
       done()
     Backbone.sync.args[0][2].success fabricate 'page'
 

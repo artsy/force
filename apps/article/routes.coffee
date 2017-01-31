@@ -52,7 +52,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         return res.redirect "/article/#{data.get('slug')}/amp"
       if data.partner
         return res.redirect "/#{data.partner.get('default_profile_id')}/article/#{data.article.get('slug')}"
-      # return next() unless data.article.hasAMP()
+      return next() unless data.article.hasAMP()
       unless data.article.get('featured') and data.article.get('published')
         return next()
       # Return if there's an artwork or image section

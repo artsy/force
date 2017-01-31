@@ -10,6 +10,7 @@ query = """
     partner_show(id: $id) {
       _id
       id
+      created_at
       start_at
       end_at
       name

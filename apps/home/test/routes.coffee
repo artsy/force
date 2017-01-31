@@ -5,9 +5,22 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
 
+heroUnit =
+  "title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
+  "retina_title_image_url": "https://d32dm0rphc51dk.cloudfront.net/o8z4tRzTn3ObRWxvLg3L0g/untouched-png.png",
+  "background_image_url": "https://d32dm0rphc51dk.cloudfront.net/lOFraLWi5vCJJl2FqnzMKA/untouched-jpg.jpg",
+  "mode": "LEFT_LIGHT",
+  "title": "Heritage: Trending Contemporary (Jan 2017)",
+  "subtitle": 'My hero',
+  "link_text": "Bid Now",
+  "credit_line": "Bjarne Melgaard, The times never will be there again, 2012; Courtesy of Heritage Auctions."
+
 describe 'Home routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
+    @metaphysics.debug = sinon.stub()
+
     @req =
       body: {}
       query: {}
@@ -28,20 +41,20 @@ describe 'Home routes', ->
     describe 'logged out', ->
       describe 'first time', ->
         it 'renders the home page with hero units + welcome hero unit at the front', ->
+
+          @metaphysics.returns Promise.resolve home_page: hero_units: [heroUnit]
           Backbone.sync
             .onCall 0
-            .yieldsTo 'success', [fabricate 'site_hero_unit']
-            .onCall 1
             .yieldsTo 'success', [fabricate 'featured_link']
-            .onCall 2
+            .onCall 1
             .yieldsTo 'success', [fabricate 'featured_link']
 
           routes.index @req, @res
             .then =>
               @res.render.args[0][0].should.equal 'index'
-              @res.render.args[0][1].heroUnits.at(0).get 'description'
+              @res.render.args[0][1].heroUnits[0].subtitle
                 .should.equal 'Sign up to get updates on your favorite artists'
-              @res.render.args[0][1].heroUnits.at(1).get 'description'
+              @res.render.args[0][1].heroUnits[1].subtitle
                 .should.equal 'My hero'
               @res.cookie.args[0][0].should.equal 'hide-welcome-hero'
               @res.cookie.args[0][1].should.equal '1'
@@ -50,33 +63,34 @@ describe 'Home routes', ->
         it 'renders the home page with hero units + welcome hero unit at the end', ->
           @req.cookies = 'hide-welcome-hero': '1'
 
+          @metaphysics.returns Promise.resolve home_page: hero_units: [heroUnit]
           Backbone.sync
             .onCall 0
-            .yieldsTo 'success', [fabricate 'site_hero_unit']
-            .onCall 1
             .yieldsTo 'success', [fabricate 'featured_link']
-            .onCall 2
+            .onCall 1
             .yieldsTo 'success', [fabricate 'featured_link']
 
           routes.index @req, @res
             .then =>
               @res.render.args[0][0].should.equal 'index'
-              @res.render.args[0][1].heroUnits.last().get 'description'
+              @res.render.args[0][1].heroUnits[1].subtitle
                 .should.equal 'Sign up to get updates on your favorite artists'
 
     describe 'logged in', ->
       it 'renders the homepage without the welcome hero unit', ->
+        @metaphysics.returns Promise.resolve
+          home_page:
+            hero_units: [heroUnit]
+            artwork_modules: []
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', [fabricate 'site_hero_unit']
-          .onCall 1
           .yieldsTo 'success', [fabricate 'featured_link']
 
         routes.index extend({ user: 'existy' }, @req), @res
           .then =>
             @res.render.args[0][0].should.equal 'index'
             @res.render.args[0][1].modules[0].key.should.equal 'followed_artists'
-            @res.render.args[0][1].heroUnits.first().get 'description'
+            @res.render.args[0][1].heroUnits[0].subtitle
               .should.equal 'My hero'
 
   describe '#redirectToSignup', ->

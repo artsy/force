@@ -1,14 +1,14 @@
 mixin amp_hero_section(hero)
   case hero.type
     when 'image'
-      amp-img(src=resize(hero.background_image_url, {width: 600}) layout="responsive" width="300", height="200")
+      amp-img(src=crop(hero.background_image_url, {width: 600, height: 400}) layout="responsive" width="600", height="400")
       figcaption= hero.caption
     when 'fullscreen'
       if hero.background_url
         video(loop=true)
           source(src=hero.background_url type='video/mp4')
       else
-        amp-img(src=resize(hero.background_image_url, {width: 600}) layout="responsive" width="300", height="200")
+        amp-img(src=crop(hero.background_image_url, { width: 600, height: 400 }) layout="responsive" width="600", height="400")
     when 'video'
       +amp_video(hero)
 

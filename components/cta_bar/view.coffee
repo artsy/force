@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Form = require '../mixins/form.coffee'
 AuthModalView = require '../auth_modal/view.coffee'
 Cookies = require '../cookies/index.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 template = -> require('./template.jade') arguments...
 
@@ -50,7 +51,9 @@ module.exports = class CTABarView extends Backbone.View
     this
 
   transitionIn: (cb) ->
+    debugger
     @__transition__ 'in', cb
+    analyticsHooks.trigger 'artist_page:cta:shown'
 
   transitionOut: (cb) ->
     @__transition__ 'out', cb

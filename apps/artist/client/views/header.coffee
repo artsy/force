@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-{ CURRENT_ITEM, SHOW_ARTIST_CTA } = require('sharify').data
+{ CURRENT_ITEM } = require('sharify').data
 ShareView = require '../../../../components/share/view.coffee'
 currentItemTemplate = -> require('../../components/current_item/index.jade') arguments...
 viewHelpers = require '../../view_helpers.coffee'
@@ -31,7 +31,6 @@ module.exports = class ArtistHeaderView extends Backbone.View
         following: view.following
         modelName: 'artist'
         model: view.model
-        authOnClick: !SHOW_ARTIST_CTA
 
       view.listenTo followButton, 'followed', -> view.updateFollowCount 1
       view.listenTo followButton, 'unfollowed', -> view.updateFollowCount -1

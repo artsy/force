@@ -1,45 +1,39 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 sd = require('sharify').data
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
+embed = require 'particle'
 
 describe 'ArticleView', ->
 
-  before (done) ->
+  before ->
     benv.setup =>
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
+      Backbone.$ = $
       $.fn.imagesLoaded = sinon.stub()
       $.fn.waypoint = sinon.stub()
       $.fn.fillwidthLite = sinon.stub().yieldsTo('done')
-      Backbone.$ = $
-      sd.SCROLL_ARTICLE = 'static'
       @ArticleView = benv.requireWithJadeify(
         resolve(__dirname, '../client/view')
-        ['editTemplate' ]
+        ['editTemplate', 'calloutTemplate', 'relatedTemplate' ]
       )
-      @ArticleView.__set__ 'imagesLoaded', sinon.stub()
-      @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
-      @ArticleView.__set__ 'CurrentUser', fabricate 'user'
-      @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
-      @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
-      @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
-      @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
       stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
-      benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
+      @ArticleView.__set__ 'imagesLoaded', sinon.stub()
+      @ArticleView.__set__ 'Sticky', -> { add: sinon.stub() }
+      @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
-        calloutArticles: new Articles fixtures.article
         article: @article = new Article _.extend fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
@@ -50,7 +44,40 @@ describe 'ArticleView', ->
                 {
                   type: 'image',
                   url: 'https://image.png',
+                  caption: 'Trademarked'
+                }
+              ]
+            },
+            {
+              type: "image",
+              url: 'https://image2.png',
+              caption: 'Trademarked 2',
+              layout: 'column_width'
+            },
+            {
+              type: "image_collection",
+              layout: 'overflow_fillwidth',
+              images: [
+                {
+                  type: 'image',
+                  url: 'https://image.png',
                   caption: 'Trademarked',
+                },
+                {
+                  type: 'artwork'
+                  id: '5321b73dc9dc2458c4000196'
+                  slug: "govinda-sah-azad-in-between-1",
+                  date: "2015",
+                  title: "In Between",
+                  image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+                  partner: {
+                    name: "October Gallery",
+                    slug: "october-gallery"
+                  },
+                  artists: [{
+                    name: "Govinda Sah 'Azad'",
+                    slug: "govinda-sah-azad"
+                  }]
                 }
               ]
             },
@@ -91,14 +118,14 @@ describe 'ArticleView', ->
                   }]
                 }
               ]
-            }
+            },
             {
               type: 'embed',
               layout: 'overflow',
               url: 'http://files.artsy.net/data.pdf',
               height: '600'
               mobile_height: '1100'
-            }
+            },
             {
               type: 'callout',
               article: '54276766fd4f50996aeca2b8',
@@ -111,29 +138,33 @@ describe 'ArticleView', ->
         sd:
           SCROLL_ARTICLE: 'static'
         asset: (->)
-        embed: require('particle')
-        moment: require('moment')
+        embed: embed
+        moment: sinon.stub()
         resize: sinon.stub()
         crop: sinon.stub()
-      }, =>
-        done()
+      }
 
   after ->
     benv.teardown()
 
-  beforeEach ->
+  beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    sinon.stub($, 'get').returns { html: '<iframe>Test</iframe>' }
-    sinon.stub @ArticleView.prototype, 'initialize'
-    @view = new @ArticleView
-    @view.setElement $('body')
-    @view.article = @article
-    @view.windowWidth = 1250
+    @fillwidth = sinon.spy(@ArticleView::, 'fillwidth')
+    @imgsFillContainer = sinon.spy(@ArticleView::, 'imgsFillContainer')
+    @setupMaxImageHeights = sinon.spy(@ArticleView::, 'setupMaxImageHeights')
+    @resetImageSetPreview = sinon.spy(@ArticleView::, 'resetImageSetPreview')
+    benv.render resolve(__dirname, '../templates/index.jade'), @locals, =>
+      @view = new @ArticleView
+        el: $('body')
+        article: @article
+      done()
 
   afterEach ->
     Backbone.sync.restore()
-    $.get.restore()
-    @ArticleView.prototype.initialize.restore()
+    @fillwidth.restore()
+    @imgsFillContainer.restore()
+    @setupMaxImageHeights.restore()
+    @resetImageSetPreview.restore()
 
   describe '#renderSlideshow', ->
 
@@ -141,12 +172,12 @@ describe 'ArticleView', ->
       @view.renderSlideshow()
       @initCarousel.called.should.be.ok()
 
-  describe '#resizeArtworks', ->
+  describe '#resizeImages', ->
 
-    it 'fillwidth is called on each artwork section', ->
-      @view.resizeArtworks()
+    it 'fillwidth is called on each image section', ->
+      @view.resizeImages()
       _.defer =>
-        @fillwidth.callCount.should.equal 1
+        @fillwidth.callCount.should.be above 1
 
   describe '#checkEditable', ->
 
@@ -162,24 +193,24 @@ describe 'ArticleView', ->
       @view.setupFollowButtons()
       @view.artists[0].id.should.equal 'damon-zucconi'
 
-
   describe '#refreshWindowSize', ->
 
     it 'resets image sizes for imageset previews', ->
-      @view.refreshWindowSize()
       @resetImageSetPreview.callCount.should.equal 1
 
-    it 'calls fillwidth on artworks', ->
+    it 'calls fillwidth on images', ->
       @view.refreshWindowSize()
       @fillwidth.callCount.should.be.above 1
 
-    it 'calls setupMaxImageHeights on artworks', ->
+    it 'calls setupMaxImageHeights on single images', ->
       @view.refreshWindowSize()
       @setupMaxImageHeights.callCount.should.be.above 1
 
   describe '#embedMobileHeight', ->
 
     it 'sets iframe height to desktop height on large screens', ->
+      @view.windowWidth = 1250
+      @view.embedMobileHeight()
       @view.$el.find('iframe').height().should.equal 600
 
     it 'sets iframe height to mobile height on small screens', ->
@@ -201,3 +232,10 @@ describe 'ArticleView', ->
       container = @view.$('.article-section-artworks ul').width(1400)
       imgsFillContainer = @view.imgsFillContainer([{width: 600}, {width:700}], container, 5)
       imgsFillContainer.isFilled.should.equal true
+
+  describe '#renderCalloutSections', ->
+
+    it 'renders callouts', ->
+      articles = [_.extend({}, fixtures.article, { thumbnail_title: 'callout article' })]
+      Backbone.sync.args[0][2].success results: articles
+      @view.$el.html().should.containEql 'callout article'

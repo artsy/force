@@ -299,3 +299,54 @@ describe 'article show template', ->
     html.should.containEql "Govinda Sah 'Azad'"
     html.should.containEql "Andy Warhol"
     html.should.containEql 'In Between 2'
+
+
+  it 'renders image collections', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: [
+          {
+            type: 'image_collection',
+            layout: 'overflow_fillwidth',
+            images: [
+              {
+                type: 'artwork'
+                id: '5321b73dc9dc2458c4000196'
+                slug: "govinda-sah-azad-in-between-1",
+                date: "2015",
+                title: "In Between",
+                image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ/larger.jpg",
+                partner: {
+                  name: "October Gallery",
+                  slug: "october-gallery"
+                },
+                artists: [{
+                  name: "Govinda Sah 'Azad'",
+                  slug: "govinda-sah-azad"
+                },
+                {
+                  name: "Andy Warhol",
+                  slug: "andy-warhol"
+                }]
+              },{
+                type: 'image'
+                url: "http://artsy.net/image.jpg",
+                caption: "<p>Some cool art from 2015</p>",
+              }
+            ]
+          }
+        ]
+        contributing_authors: []
+      footerArticles: new Articles
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql '/artwork/govinda-sah-azad-in-between-1'
+    html.should.containEql 'http://artsy.net/image.jpg'
+    html.should.containEql '/october-gallery'
+    html.should.containEql "Govinda Sah 'Azad'"
+    html.should.containEql "Andy Warhol"
+    html.should.containEql '<p>Some cool art from 2015</p>'

@@ -29,6 +29,14 @@ mixin image(section)
       figcaption
         != section.caption
 
+mixin imageCollection(section)
+  if section.images
+    each item in section.images
+      if item.type === 'image'
+        +image(item)
+      else if item.type === 'artwork'
+        +artwork(item)
+
 mixin imageSet(section)
   figure.op-slideshow
     each item in section.images

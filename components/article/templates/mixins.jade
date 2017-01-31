@@ -19,12 +19,6 @@ mixin video(video)
     .article-video
       != embed(video.url, { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } })
 
-mixin image(image)
-  figure.article-section-image( data-layout="#{image.layout ? image.layout : 'overflow_fillwidth'}" )
-    img( src=resize(image.url, { width: 1100 }) )
-    if image.caption
-      figcaption!= image.caption
-
 mixin fullscreen(article)
   figure.article-fullscreen( class= article.get('is_super_article') ? 'article-sa-fullscreen' : '' )
     if article.get('hero_section').background_url
@@ -64,14 +58,8 @@ mixin fullscreen(article)
               != article.get('hero_section').intro
 
 mixin callout(section)
-  - var calloutArticle = calloutArticles.findWhere({id: section.article})
-  if calloutArticle
-    .article-section-callout
-      .related-title Related Article
-      a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
-        if !section.hide_image
-          img( src= crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 180, height: 120 }) )
-        .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
+  .article-section-callout(data-id=section.article)
+    include ./callout
 
 mixin pullquote(section)
   .article-section-callout
@@ -109,6 +97,21 @@ mixin embed(section)
   .article-embed-container
     iframe(src=section.url height=section.height data-d-height=section.height data-m-height=section.mobile_height scrolling='no' frameborder='0')
 
+mixin imageCollection(images)
+  ul
+    for image, i in images
+      if image.type == 'artwork'
+        +artwork(image)
+      else
+        +image(image)
+
+mixin image(image)
+  li
+    figure
+      img( src=resize(image.url, { width: 1100 }) )
+      if image.caption
+        figcaption!= image.caption
+
 mixin printArtistName(artist)
   if artist.slug
     a(href='/artist/' + artist.slug )= artist.name
@@ -127,7 +130,7 @@ mixin artwork(artwork)
 mixin artwork_caption(artwork)
   figcaption.artwork-item-caption
     p.artwork-item-artist.artwork-item-overflow
-      if artwork.artists
+      if artwork.artists && artwork.artists.length > 0
         for artist, i in artwork.artists
           +printArtistName(artist)
       else if artwork.artist && artwork.artist.name

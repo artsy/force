@@ -5,15 +5,14 @@ block head
 
 append locals
   - assetPackage = 'home'
-  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
-  - bodyClass = bodyClass + (heroUnits.length && heroUnits.first().get('menu_color_class') == 'black' ? '-white' : '')
+  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header' + (heroUnits.length && heroUnits[0].mode.match('LIGHT') ? '-white' : '')
 
 block body
   include hero_units
   #home-foreground
     #home-hero-units-controls( data-length= heroUnits.length )
       ul#home-hero-unit-dots
-        for x, i in heroUnits.models
+        for x, i in heroUnits
           li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
 
     #home-layout-container.responsive-layout-container

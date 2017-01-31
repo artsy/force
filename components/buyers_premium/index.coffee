@@ -23,10 +23,9 @@ module.exports = (auction, callback) ->
             <li>
               <div class='buyers-premium-pre'>
                 On the hammer price up to and including \
-                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}
+                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}:
+                #{sortedSchedule[idx].percent * 100}%
               </div>
-              <div class='buyers-premium-dots'></div>
-              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
             </li>
             """
           else if idx == sortedSchedule.length - 1
@@ -34,10 +33,9 @@ module.exports = (auction, callback) ->
             <li>
               <div class='buyers-premium-pre'>
                 On the portion of the hammer price in excess of \
-                #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)}
+                #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)}:
+                #{sortedSchedule[idx].percent * 100}%
               </div>
-              <div class='buyers-premium-dots'></div>
-              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
             </li>
             """
           else
@@ -47,10 +45,9 @@ module.exports = (auction, callback) ->
                 On the hammer price in excess of \
                 #{formatMoney(sortedSchedule[idx].min_amount_cents / 100, symbol, 0)} \
                 up to and including \
-                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)} \
+                #{formatMoney(sortedSchedule[idx+1].min_amount_cents / 100, symbol, 0)}: \
+                #{sortedSchedule[idx].percent * 100}%
               </div>
-              <div class='buyers-premium-dots'></div>
-              <div class='buyers-premium-perc'>#{sortedSchedule[idx].percent * 100}%</div>
             </li>
             """
 
@@ -59,7 +56,7 @@ module.exports = (auction, callback) ->
             #{schedule.join('')}
           </ul>
           """
-      
+
       fullyRenderedHtml = """
         <div class='buyers-premium'>
           <div class='buyers-premium-page markdown-content'>
@@ -67,5 +64,5 @@ module.exports = (auction, callback) ->
             #{buyersPremiumHtml}
           </div>
         </div>
-      """    
+      """
       callback null, fullyRenderedHtml

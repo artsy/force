@@ -22,6 +22,7 @@ analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 JumpView = require '../../jump/view.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
 relatedTemplate = -> require('../templates/related.jade') arguments...
+calloutTemplate = -> require('../templates/callout.jade') arguments...
 
 DATA =
   sort: '-published_at'
@@ -50,10 +51,11 @@ module.exports = class ArticleView extends Backbone.View
     @previousHref = options.previousHref
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
+    @$articleContainer = $(".article-container[data-id=#{@article.get('id')}] .article-content")
 
     # Render sections
     @renderSlideshow()
-    @resizeArtworks()
+    @resizeImages(@doneResizingImages)
     @setupFooterArticles()
     @setupStickyShare()
     @setupMobileShare()
@@ -62,6 +64,7 @@ module.exports = class ArticleView extends Backbone.View
     @resetImageSetPreview()
     if @article.attributes.channel?.id == sd.GALLERY_INSIGHTS_CHANNEL
       @setupMarketoStyles()
+    @renderCalloutSections()
 
     # Resizing
     @sizeVideo()
@@ -78,45 +81,14 @@ module.exports = class ArticleView extends Backbone.View
     @checkEditable()
 
   maybeFinishedLoading: ->
-    if @loadedArtworks and not @loadedImageHeights
+    if @loadedArtworks and @loadedCallouts and not @loadedImageHeights
       @setupMaxImageHeights()
-    else if @loadedArtworks and @loadedImageHeights
+    else if @loadedArtworks and @loadedCallouts and @loadedImageHeights
       @addReadMore() if @gradient
       @setupWaypointUrls() if @waypointUrls and not @gradient
 
-  setupMaxImageHeights: ->
-    @$(".article-section-artworks[data-layout=overflow] img, .article-section-container[data-section-type=image] img")
-      .each (i, img) ->
-        $(img).parent().css('max-width', '')
-        optimizedHeight = window.innerHeight * 0.9
-        newWidth = ((img.width * optimizedHeight) / img.height)
-        # image is narrower than container
-        if newWidth < 580
-          $(img).parent().css('max-width', 580)
-        # image is taller than window
-        else if img.height > optimizedHeight
-          $(img).parent().css('max-width', newWidth)
-    @$('.article-section-artworks, .article-section-container[data-section-type=image]').addClass 'images-loaded'
-    @loadedImageHeights = true
-    @maybeFinishedLoading()
-
   renderSlideshow: =>
     initCarousel @$('.js-article-carousel'), imagesLoaded: true
-
-  resizeArtworks: =>
-    artworkSections = _.filter @article.get('sections'), (section) ->
-      section.type is 'artworks' and section.layout is 'overflow_fillwidth'
-    Q.all( _.map artworkSections, (section) =>
-      $el = @$("[data-layout=overflow_fillwidth]" +
-        " li[data-id=#{section.artworks[0].id}]").parent()
-      if $el.children().length == 1
-        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
-        $el.addClass('single')
-      else
-        Q.nfcall @fillwidth, $el
-    ).done =>
-      @loadedArtworks = true
-      @maybeFinishedLoading()
 
   embedMobileHeight: =>
     $('.article-section-container[data-section-type=embed]').each (i, embed) =>
@@ -178,49 +150,78 @@ module.exports = class ArticleView extends Backbone.View
     name = $(e.currentTarget).attr('href').substring(1)
     @jump.scrollToPosition @$(".is-jump-link[name=#{name}]").offset().top
 
-  fillwidth: (el, cb) =>
-    if @$(el).length < 1 or @windowWidth < 550
-      @$(el).parent().removeClass('is-loading')
-      return cb()
-    $list = @$(el)
-    if @windowHeight > 700
-      newHeight = @windowHeight * .8
-    $list.fillwidthLite
-      gutterSize: 30
-      targetHeight: newHeight || 600
-      apply: (img) ->
-        img.$el.closest('li').width(img.width)
-      done: (imgs) =>
-        # Make sure the captions line up in case rounding off skewed things
-        tallest = _.max _.map imgs, (img) -> img.height
-        $list.find('.artwork-item-image-container').each -> $(this).height tallest
-        # Account for screens that are both wide & short
-        if !@imgsFillContainer(imgs, $list, 30).isFilled
-          $list.css({'display':'flex', 'justify-content':'center'})
-        # Remove loading state
-        $list.parent().removeClass('is-loading')
-        cb()
+  resizeImages: (cb=->) =>
+    imageSections = $('.article-section-image-collection ul')
+    for section in imageSections
+      $el = $(section)
+      if $el.children().length < 2 or $el.closest('.article-section-image-collection').data('layout') is 'column_width'
+        $el.addClass('portrait') if $el.find('img').width() < $el.find('img').height()
+        $el.addClass('single') if $el.children().length is 1
+        @setupMaxImageHeights $el
+      else
+        Q.nfcall @fillwidth, $el
+    cb()
+
+  doneResizingImages: =>
+    @loadedImageHeights = true
+    @loadedArtworks = true
+    @maybeFinishedLoading()
+
+  setupMaxImageHeights: (el) ->
+    $(el).find('img')
+      .each (i, img) ->
+        $(img).parent().css('max-width', '')
+        optimizedHeight = window.innerHeight * 0.9
+        newWidth = ((img.width * optimizedHeight) / img.height)
+        if newWidth < 580 and !$(img).closest('ul').hasClass('portrait')
+          $(img).closest('li').css('max-width', 580)
+        else
+          $(img).closest('li').css('max-width', newWidth)
+    $(el).closest('.article-section-image-collection').addClass 'images-loaded'
+
+  fillwidth: (el) =>
+    if @windowWidth < 550
+      @removeFillwidth el
+      @setupMaxImageHeights el
+    else
+      $list = $(el)
+      if @windowHeight > 700
+        newHeight = @windowHeight * .8
+      $list.fillwidthLite
+        gutterSize: 30
+        targetHeight: newHeight || 600
+        apply: (img) ->
+          img.$el.closest('li').width(img.width)
+        done: (imgs) =>
+          # Make sure the captions line up in case rounding off skewed things
+          tallest = _.max _.map imgs, (img) -> img.height
+          $list.find('.artwork-item-image-container').each -> $(this).height tallest
+          # Account for screens that are both wide & short
+          if !@imgsFillContainer(imgs, $list, 30).isFilled
+            $list.css({'display':'flex', 'justify-content':'center'})
+          # Remove loading state
+          $list.closest('.article-section-image-collection').addClass 'images-loaded'
+
 
   imgsFillContainer: (imgs, $container, gutter) =>
     getWidth = _.map imgs, (img) -> img.width
     imgsWidth = _.reduce(getWidth, (a, b) ->
                 return a + b
               , 0) + (($container.children().length - 1) * gutter)
-    isFilled = $container.width() - 15 > imgsWidth
+    isFilled = $container.width() - 15 < imgsWidth
     return {imgsWidth: imgsWidth, isFilled: isFilled}
+
+  removeFillwidth: (imgs) ->
+    $(imgs).find('li').css({'width' : '', 'max-width' : ''})
+    $(imgs).find('.artwork-item-image-container').css('height', '')
 
   refreshWindowSize: =>
     @windowWidth = $(window).width()
     @windowHeight = $(window).height()
+    @resizeImages()
     @resetImageSetPreview()
-    @setupMaxImageHeights()
     @embedMobileHeight()
     @addReadMore() if @gradient
-    #Reset Artworks size
-    $(".article-section-artworks ul").each (i, imgs) =>
-      if $(imgs).children().length > 1
-        @parentWidth = $(imgs).width()
-        @fillwidth imgs, ->
 
   resetImageSetPreview: =>
     $('.article-section-image-set__images').each (i, container) =>
@@ -380,3 +381,23 @@ module.exports = class ArticleView extends Backbone.View
         # Update Edit button
         $('.article-edit-container a').attr 'href', editUrl
     , { offset: 'bottom-in-view' }
+
+  renderCalloutSections: =>
+    calloutSections = _.filter @article.get('sections'), (section) -> section.type is 'callout'
+    ids = _.pluck(calloutSections, 'article')
+
+    if sd.ARTICLE?.id is @article.get('id') or not ids.length
+      @loadedCallouts = true
+      @maybeFinishedLoading()
+      return
+
+    new Articles().fetch
+      data: ids: ids
+      success: (articles) =>
+        for section in calloutSections
+          @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
+            section: section
+            calloutArticles: articles
+            crop: crop
+        @loadedCallouts = true
+        @maybeFinishedLoading()
