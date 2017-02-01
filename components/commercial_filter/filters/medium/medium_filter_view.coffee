@@ -19,7 +19,7 @@ module.exports = class MediumFilterView extends Backbone.View
   setMedium: (e) ->
     medium = $(e.currentTarget).data('value')
     if medium is @params.get('medium')
-      @params.clear(silent: true).set _.defaults medium: medium, @params.defaults
+      @params.clear(silent: true).set _.defaults medium: medium, @params.initialParams()
     else
       @params.unset 'gene_id', silent: true
       @params.set { medium: medium, page: 1 }, silent: true

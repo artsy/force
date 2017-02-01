@@ -196,7 +196,7 @@ module.exports = class Article extends Backbone.Model
       else if section.type is 'image'
         section.caption = replaceTagWith(section.caption, 'p', 'h1') if section.caption
         section
-      else if section.type is 'image_set'
+      else if section.type in ['image_set', 'image_collection']
         section.images = _.map section.images, (image) ->
           if image.type is 'image'
             image.caption = replaceTagWith(image.caption, 'p', 'h1') if image.caption

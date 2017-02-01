@@ -8,6 +8,7 @@ module.exports = class Params extends Backbone.Model
     'medium'
     'color',
     'price_range',
+    'estimate_range',
     'width',
     'height',
     'gene_id',
@@ -15,8 +16,10 @@ module.exports = class Params extends Backbone.Model
     'major_periods',
     'partner_cities',
     'sale_id',
-    'gene_ids'
+    'gene_ids',
+    'artist_ids'
   ]
+
   defaults:
     size: 50
     page: 1
@@ -24,7 +27,8 @@ module.exports = class Params extends Backbone.Model
     major_periods: []
     partner_cities: []
     gene_ids: []
-    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS', 'MERCHANDISABLE_ARTISTS']
+    artist_ids: []
+    aggregations: ['TOTAL', 'COLOR', 'MEDIUM', 'MAJOR_PERIOD', 'PARTNER_CITY', 'FOLLOWED_ARTISTS', 'MERCHANDISABLE_ARTISTS', 'ARTIST']
     ranges:
       price_range:
         min: 50.00
@@ -36,7 +40,10 @@ module.exports = class Params extends Backbone.Model
         min: 1
         max: 120
 
-  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations }) ->
+  initialize: (attributes, { @categoryMap, @fullyQualifiedLocations, @customDefaults }) ->
+
+  initialParams: ->
+    @customDefaults || @defaults
 
   current: ->
     if @categoryMap

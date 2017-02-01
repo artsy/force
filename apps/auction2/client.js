@@ -12,8 +12,8 @@ import Filter from '../../components/commercial_filter/models/filter.coffee'
 import TotalView from '../../components/commercial_filter/views/total/total_view.coffee'
 import SortView from '../../components/commercial_filter/views/sort/sort_view.coffee'
 import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
-import MediumFilterView from '../../components/commercial_filter/filters/medium/medium_filter_view.coffee'
-// import GeneIdsFilterView from '../../components/commercial_filter/filters/gene_ids/gene_ids_filter_view.coffee'
+import RangeFilterView from '../../components/commercial_filter/filters/range_slider/range_filter_view.coffee'
+import CheckBoxesFilterView from '../../components/commercial_filter/filters/check_boxes/check_boxes_filter_view.coffee'
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
@@ -31,6 +31,29 @@ const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 const clock = new ClockView({modelName: 'Auction', model: auction, el: $('.auction2-clock')})
 clock.start()
 
+const customSortMap = {
+  "lot_number": "Lot Number (asc.)",
+  "-lot_number": "Lot Number (desc.)",
+  "-searchable_estimate": "Most Expensive",
+  "searchable_estimate": "Least Expensive"
+}
+
+const defaultParams = {
+  size: 20,
+  page: 1,
+  aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
+  sale_id: sd.AUCTION.id,
+  sort: 'lot_number',
+  gene_ids: [],
+  artist_ids: [],
+  ranges: {
+    estimate_range: {
+      min: 50,
+      max: 50000
+    }
+  }
+}
+
 if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
   const activeBids = new MyActiveBids({
     user: user,
@@ -42,10 +65,10 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 }
 
 // Commercial filtering
-const params = new Params({sale_id: sd.AUCTION.id, size: 20}, {
-  fullyQualifiedLocations: fullyQualifiedLocations
+const params = new Params(defaultParams, {
+  customDefaults: defaultParams
 })
-const filter = new Filter({params: params})
+const filter = new Filter({ params: params })
 
 // Main Artworks view
 filter.artworks.on('reset', () => {
@@ -64,27 +87,37 @@ const totalView = new TotalView({
 
 const sortView = new SortView({
   el: $('.cf-total-sort__sort'),
-  params: params
+  params: params,
+  customSortMap: customSortMap
 })
 
 // Sidebar
-const mediumFilterView = new MediumFilterView({
-  el: $('.cf-sidebar__mediums'),
+const rangeFilterView = new RangeFilterView({
+  el: $('.cf-sidebar__estimate-range'),
   params: params,
-  aggregations: filter.aggregations
+  rangeType: 'estimate_range'
 })
 
-// TODO: replace when backend supports this kind of query
-// const genesView = new GeneIdsFilterView({
-//   el: $('.cf-sidebar__genes'),
-//   params: params,
-//   aggregations: filter.aggregations
-// })
+const mediumFilterView = new CheckBoxesFilterView({
+  el: $('.cf-sidebar__mediums'),
+  params: params,
+  aggregations: filter.aggregations,
+  itemType: 'medium',
+  paramName: 'gene_ids'
+})
 
 const followedArtistsView = new FollowedArtistFilterView({
   el: $('.cf-sidebar__followed_artists'),
   params: params,
   filter: filter
+})
+
+const aggregatedArtistsView = new CheckBoxesFilterView({
+  el: $('.cf-sidebar__aggregated_artists'),
+  params: params,
+  aggregations: filter.aggregations,
+  itemType: 'artist',
+  paramName: 'artist_ids'
 })
 
 // bottom

@@ -5,6 +5,7 @@ Artworks = require '../../../collections/artworks.coffee'
 Artists = require '../../../collections/artists.coffee'
 User = require '../../../models/user.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
+_ = require 'underscore'
 
 module.exports = class Filter extends Backbone.Model
   defaults:
@@ -33,6 +34,18 @@ module.exports = class Filter extends Backbone.Model
     else
       ''
 
+  merchandisableArtists: ->
+    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+      require '../queries/merchandisable_artists.coffee'
+    else
+      ''
+
+  artistFragment: ->
+    if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
+      require '../queries/artist.coffee'
+    else
+      ''
+
   query: ->
     query = """
       query filterArtworks(
@@ -44,8 +57,10 @@ module.exports = class Filter extends Backbone.Model
         $size: Int,
         $color: String,
         $price_range: String,
+        $estimate_range: String,
         $gene_id: String,
         $gene_ids: [String],
+        $artist_ids: [String],
         $sale_id: ID,
         $medium: String,
         $sort: String,
@@ -64,8 +79,10 @@ module.exports = class Filter extends Backbone.Model
           height: $height,
           color: $color,
           price_range: $price_range,
+          estimate_range: $estimate_range,
           gene_id: $gene_id,
           gene_ids: $gene_ids,
+          artist_ids: $artist_ids,
           sale_id: $sale_id,
           medium: $medium,
           sort: $sort,
@@ -81,13 +98,11 @@ module.exports = class Filter extends Backbone.Model
           hits {
             ... artwork
           }
-          merchandisable_artists {
-            ... artist
-          }
+          #{@merchandisableArtists()}
         }
       }
       #{require '../queries/artwork.coffee'}
-      #{require '../queries/artist.coffee'}
+      #{@artistFragment()}
       #{@aggregationFragment()}
     """
 
