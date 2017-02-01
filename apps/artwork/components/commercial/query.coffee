@@ -7,6 +7,7 @@ module.exports = """
     is_purchasable
     is_in_auction
     sale_message
+    availability
     is_price_range
     price
     artists {
