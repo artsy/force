@@ -94,6 +94,24 @@ describe 'metaphysics', ->
       .catch (err) ->
         err.message.should.equal 'some error'
 
+    it 'includes the data', ->
+      @request.end.yields null,
+        body:
+          errors: [message: 'some error']
+          data: foo: 'bar'
+
+      metaphysics
+        variables: id: 'foo-bar'
+        query: '
+          query artist($id: String!) {
+            artist(id: $id) {
+              id
+            }
+          }
+        '
+      .catch (err) ->
+        err.data.foo.should.equal 'bar'
+
   describe 'partial error', ->
     it 'rejects with the errors', ->
       @request.end.yields null, ok: true, body:
