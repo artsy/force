@@ -1,9 +1,11 @@
 FlashMessage = require '../flash/index.coffee'
 Errors = require '../form/errors.coffee'
-rg4js = require 'raygun4js'
+sd = require('sharify').data
 
 module.exports = (error) ->
-  rg4js 'send', error
+  if sd.RAYGUN_KEY
+    rg4js ?= require 'raygun4js'
+    rg4js 'send', error
 
   parser = new Errors $('<form></form>')
 
