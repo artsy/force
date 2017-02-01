@@ -1,16 +1,25 @@
 mixin amp_hero_section(hero)
   case hero.type
     when 'image'
-      amp-img(src=crop(hero.background_image_url, {width: 600, height: 400}) layout="responsive" width="600", height="400")
-      figcaption= hero.caption
+      +amp_hero_image(hero.url, hero.caption)
     when 'fullscreen'
       if hero.background_url
-        video(loop=true)
-          source(src=hero.background_url type='video/mp4')
+        .amp-video-container
+          amp-video(src=hero.background_url width="400" height="300" autoplay loop)
       else
-        amp-img(src=crop(hero.background_image_url, { width: 600, height: 400 }) layout="responsive" width="600", height="400")
+        +amp_hero_image(hero.background_image_url, null)
     when 'video'
       +amp_video(hero)
+
+mixin amp_hero_image(image, caption)
+  amp-img(src=crop(image, { width: 600, height: 400 }) layout="responsive" width="600", height="400")
+  if caption
+    figcaption= caption
+
+mixin amp_text(section)
+  .article-section-container.responsive-layout-container
+    .article-section-text
+      != section.body
 
 mixin amp_artwork(section)
   .amp-artwork
@@ -18,7 +27,7 @@ mixin amp_artwork(section)
     +artwork_caption(section)
 
 mixin amp_image(section)
-  .amp-img
+  .amp-image
     amp-img(src=resize(section.url, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
     if section.caption && section.caption.length > 0
       figcaption
@@ -26,29 +35,38 @@ mixin amp_image(section)
 
 mixin amp_image_collection(section)
   .amp-image-collection.article-section-container
-    each image in section.images
-      if image.type === 'artwork'
-        +amp_artwork(image)
-      else if image.type = 'image'
-        +amp_image(image)
+    .article-section-image-collection
+      each image in section.images
+        if image.type === 'artwork'
+          +amp_artwork(image)
+        else if image.type = 'image'
+          +amp_image(image)
 
 mixin amp_image_set(section)
-  amp-carousel(height="400" type="slides" loop)
-    each item in section.images
-      if item.type === 'image'
-        +amp_image(item)
-      else if item.type === 'artwork'
-        +amp_artwork(item)
+  .article-section-container.responsive-layout-container
+    .article-section-image-set
+      amp-carousel(height="400" type="slides" loop)
+        each item in section.images
+          if item.type === 'image'
+            +amp_image(item)
+          else if item.type === 'artwork'
+            +amp_artwork(item)
 
 mixin amp_video(section)
   .article-section-container.responsive-layout-container
-    .article-section-video
-      if section.url.match('youtube')
-        amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
-      else if section.url.match('vimeo')
-        amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+    if section.url.match('youtube')
+      amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+    else if section.url.match('vimeo')
+      amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
 
 mixin amp_embed(section)
   .article-section-container.responsive-layout-container
     .article-section-embed
       amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
+
+mixin amp_callout(section)
+  .article-section-container.responsive-layout-container(data-section-type="callout")
+    if section.article && section.article.length > 0
+      +callout(section)
+    else if section.text && section.text.length > 0
+      +pullquote(section)

@@ -27,6 +27,7 @@ html(amp)
     script(async='', src='https://cdn.ampproject.org/v0.js')
 
   body.body-article.body-responsive.body-amp
+    .amp-header: i.icon-logotype
     if article.get('hero_section')
       +amp_hero_section(article.get('hero_section'))
     .article-container: .article-content
@@ -42,9 +43,7 @@ html(amp)
       for section in article.get('sections')
         case section.type
           when 'text'
-            .article-section-container.responsive-layout-container
-              .article-section-text
-                != section.body
+            +amp_text(section)
           when 'image_collection'
             +amp_image_collection(section)
           when 'video'
@@ -52,13 +51,8 @@ html(amp)
           when 'embed'
             +amp_embed(section)
           when 'callout'
-            .article-section-container.responsive-layout-container(data-section-type="callout")
-              if section.article && section.article.length > 0
-                +callout(section)
-              else if section.text && section.text.length > 0
-                +pullquote(section)
+            +amp_callout(section)
           when 'image_set'
-            .article-section-container.responsive-layout-container
-              .article-section-image-set
-                +amp_image_set(section)
+            +amp_image_set(section)
+    include ../../../components/main_layout/footer/template
     include amp_analytics

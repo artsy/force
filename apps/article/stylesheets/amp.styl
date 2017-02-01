@@ -1,18 +1,32 @@
+- amp-header-height = 54px
+
 .body-amp
   max-width 580px
 
-  .amp-artwork
-    figcaption
-      margin-top 10px
-      a
-        text-decoration none
-
-  .amp-artwork, .amp-image
-    margin-bottom 20px
+  .amp-header
+    height amp-header-height
+    border-bottom 1px solid gray-lighter-color
+    display flex
+    align-items center
+    i
+      margin-left 20px
 
   .article-header
     margin-top 50px
 
+  // Video
+  amp-video video
+    object-fit cover
+
+  // Image
+  .amp-artwork, .amp-image
+    margin-bottom 20px
+    figcaption
+      margin 10px 20px
+      a
+        text-decoration none
+
+  // Social buttons
   amp-social-share
     background-color transparent
     background-image none
@@ -25,3 +39,6 @@
       color white
     &:first-child
       border-right none
+
+  footer
+    margin-top 80px
