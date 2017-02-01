@@ -8,6 +8,7 @@ module.exports = """
     is_in_auction
     sale_message
     availability
+    contact_message
     is_price_range
     price
     artists {
@@ -19,7 +20,6 @@ module.exports = """
       name
       type
       is_pre_qualify
-      contact_message
     }
     fair {
       id
