@@ -61,7 +61,6 @@ setupRaygun = ->
   if sd.RAYGUN_KEY
     rg4js 'enableCrashReporting', true 
     rg4js 'apiKey', sd.RAYGUN_KEY
-    rg4js 'send', new Error()
 
 setupJquery = ->
   require 'typeahead.js/dist/typeahead.bundle.min.js'
