@@ -49,12 +49,8 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
     error: res.backboneError
     success: (data) ->
       if req.params.slug isnt data.article.get('slug')
-        return res.redirect "/article/#{data.get('slug')}/amp"
-      if data.partner
-        return res.redirect "/#{data.partner.get('default_profile_id')}/article/#{data.article.get('slug')}"
+        return res.redirect "/article/#{data.article.get('slug')}/amp"
       return next() unless data.article.hasAMP()
-      unless data.article.get('featured') and data.article.get('published')
-        return next()
       data.article = data.article.prepForAMP()
       res.render 'amp_article', _.extend data,
         resize: resize

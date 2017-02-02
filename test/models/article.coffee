@@ -270,3 +270,28 @@ describe "Article", ->
     it 'returns false if article is a super article', ->
       @article.set 'is_super_article', true
       @article.isEOYSubArticle(['12','23', '1213'], id: '1234').should.be.false()
+
+  describe 'AMP methods', ->
+
+    it 'returns true if article has an AMP page', ->
+      @article.set sections: [ type: 'text' ], published: true, featured: true
+      @article.hasAMP().should.be.true()
+
+    it 'returns false if article does not have an AMP page artworks', ->
+      @article.set sections: [ type: 'artworks' ]
+      @article.hasAMP().should.be.false()
+
+    it 'returns false if article does not have an AMP page image', ->
+      @article.set sections: [ type: 'image' ]
+      @article.hasAMP().should.be.false()
+
+    it 'preps article for AMP', ->
+      @article.set sections: [
+        type: 'text',
+        body: '<a class="jump-link"></a><p>Preparing the article for AMP.</p>'
+      ]
+      @article.prepForAMP()
+      @article.get('sections')[0].body.should.not.containEql '<a class="jump-link></a>"'
+
+    it 'returns the full AMP href', ->
+      @article.ampHref().should.containEql '/amp'

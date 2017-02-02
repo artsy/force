@@ -23,34 +23,37 @@ mixin amp_text(section)
 
 mixin amp_artwork(section)
   .amp-artwork
-    amp-img(src=resize(section.image, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
+    +amp_image_tag(section.image, section)
     +artwork_caption(section)
 
 mixin amp_image(section)
   .amp-image
-    amp-img(src=resize(section.url, { width: 800 }) layout="responsive" width="800" height=((800 * section.height) / section.width))
+    +amp_image_tag(section.url, section)
     if section.caption && section.caption.length > 0
       figcaption
         != section.caption
 
+mixin amp_image_tag(url, section)
+  amp-img(src=resize(url, { width: 600 }) layout="responsive" width="600" height=((600 * section.height) / section.width))
+
 mixin amp_image_collection(section)
   .amp-image-collection.article-section-container
     .article-section-image-collection
-      each image in section.images
-        if image.type === 'artwork'
-          +amp_artwork(image)
-        else if image.type = 'image'
-          +amp_image(image)
+      each item in section.images
+        if item.type === 'image'
+          +amp_image(item)
+        else if item.type === 'artwork'
+          +amp_artwork(item)
 
 mixin amp_image_set(section)
-  .article-section-container.responsive-layout-container
+  .article-section-container
     .article-section-image-set
       amp-carousel(height="400" type="slides" loop)
         each item in section.images
-          if item.type === 'image'
-            +amp_image(item)
-          else if item.type === 'artwork'
+          if item.type === 'artwork'
             +amp_artwork(item)
+          else if item.type = 'image'
+            +amp_image(item)
 
 mixin amp_video(section)
   .article-section-container.responsive-layout-container
@@ -70,3 +73,46 @@ mixin amp_callout(section)
       +callout(section)
     else if section.text && section.text.length > 0
       +pullquote(section)
+
+mixin amp_analytics
+  amp-analytics(type="segment")
+    script(type="application/json").
+      {
+        "vars": {
+          "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
+          "name": "#{article.get('thumbnail_title')}"
+        },
+        "extraUrlParams": {
+          "properties.type": "NewsArticle",
+          "properties.creator": "#{article.getAuthorArray()}",
+          "properties.keywords": "#{article.get('tags')}",
+          "properties.dateCreated": "#{article.get('published_at')}",
+          "properties.articleSection": "#{article.getParselySection()}",
+          "properties.thumbnailUrl": "#{article.get('thumbnail_image')}",
+          "properties.url": "#{article.fullHref()}",
+          "properties.headline": "#{article.get('thumbnail_title')}"
+        }
+      }
+
+mixin amp_head
+  meta(charset='utf-8')
+  title= article.get('search_title') || article.get('thumbnail_title')
+  link(rel='canonical', href=article.fullHref())
+  link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
+  link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+  link( type='text/css', rel='stylesheet', href=asset('/assets/article.css') )
+  meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
+  script(type='application/ld+json')=article.toJSONLD()
+  script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
+  <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
+  <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+  style(amp-boilerplate='').
+    body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+  noscript
+    style(amp-boilerplate='').
+      body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
+  script(async='', src='https://cdn.ampproject.org/v0.js')

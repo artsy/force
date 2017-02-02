@@ -224,8 +224,8 @@ module.exports = class Article extends Backbone.Model
     # AMP requires that images provide a width and height
     # Articles that have been converted to ImageCollections will have this info
     for section in @get('sections')
-      return false if section.type in ['artwork', 'image']
-    return true
+      return false if section.type in ['artworks', 'image']
+    return @get('featured') and @get('published')
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
     for id in @get('super_article').related_articles

@@ -12,7 +12,7 @@ describe 'Article routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: {} }
+    @req = { params: { slug: 'foo' } }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     sinon.stub Article.prototype, 'fetchWithRelated'
@@ -52,3 +52,29 @@ describe 'Article routes', ->
       @req.url = 'post/foo'
       routes.redirectPost @req, @res, @next
       @res.redirect.args[0][1].should.containEql 'article/foo'
+
+  describe '#ampArticle', ->
+
+    it 'redirects the article if the slug does not match', ->
+      routes.ampArticle @req, @res
+      Article::fetchWithRelated.args[0][0].success
+        article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
+      @res.redirect.args[0][0].should.equal '/article/bar/amp'
+
+    it 'nexts if the article does not have AMP support', ->
+      routes.ampArticle @req, @res, @next
+      Article::fetchWithRelated.args[0][0].success
+        article: new Article(_.extend {}, fixtures.article, slug: 'foo')
+      @next.callCount.should.equal 1
+
+    it 'renders the article with expected args', ->
+      routes.ampArticle @req, @res, @next
+      Article::fetchWithRelated.args[0][0].success
+        article: new Article(_.extend {}, fixtures.article,
+          published: true
+          featured: true
+          slug: 'foo'
+          sections: [ type: 'text', body: 'body text' ]
+        )
+      @res.render.args[0][1].article.get('sections')[0].type.should.equal 'text'
+      @res.render.args[0][1].article.get('sections')[0].body.should.equal 'body text'
