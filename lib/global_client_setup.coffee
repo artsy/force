@@ -9,6 +9,7 @@ Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
+rg4js = require 'raygun4js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
@@ -26,6 +27,7 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
+  setupRaygun()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -54,6 +56,11 @@ setupReferrerTracking = ->
   if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0
     Cookies.set 'force-referrer', document.referrer
     Cookies.set 'force-session-start', window.location.href
+
+setupRaygun = ->
+  if sd.RAYGUN_KEY
+    rg4js 'enableCrashReporting', true 
+    rg4js 'apiKey', sd.RAYGUN_KEY
 
 setupJquery = ->
   require 'typeahead.js/dist/typeahead.bundle.min.js'

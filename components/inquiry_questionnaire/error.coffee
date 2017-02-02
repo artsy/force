@@ -1,10 +1,15 @@
 FlashMessage = require '../flash/index.coffee'
 Errors = require '../form/errors.coffee'
+sd = require('sharify').data
 
-module.exports = (xhr) ->
+module.exports = (error) ->
+  if sd.RAYGUN_KEY
+    rg4js = require 'raygun4js'
+    rg4js 'send', error
+
   parser = new Errors $('<form></form>')
 
-  message = parser.parse xhr
+  message = parser.parse error
 
   subject = encodeURIComponent 'Problem with sending inquiry'
 
