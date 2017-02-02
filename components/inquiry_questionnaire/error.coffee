@@ -4,7 +4,7 @@ sd = require('sharify').data
 
 module.exports = (error) ->
   if sd.RAYGUN_KEY
-    rg4js ?= require 'raygun4js'
+    rg4js = require 'raygun4js'
     rg4js 'send', error
 
   parser = new Errors $('<form></form>')
