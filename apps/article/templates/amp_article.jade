@@ -7,7 +7,7 @@ html(amp)
     +amp_head
   body.body-article.body-responsive.body-amp
     +amp_analytics
-    .amp-header: i.icon-logotype
+    .amp-header: a.icon-logotype(href="#{sd.APP_URL}")
     if article.get('hero_section')
       +amp_hero_section(article.get('hero_section'))
     .article-container: .article-content

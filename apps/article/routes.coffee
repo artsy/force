@@ -45,7 +45,6 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 @ampArticle = (req, res, next) ->
   article = new Article id: req.params.slug
   article.fetchWithRelated
-    accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (data) ->
       if req.params.slug isnt data.article.get('slug')

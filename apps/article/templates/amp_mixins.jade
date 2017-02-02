@@ -80,7 +80,7 @@ mixin amp_analytics
       {
         "vars": {
           "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
-          "name": "#{article.get('thumbnail_title')}"
+          "name": "#{article.href()}"
         },
         "extraUrlParams": {
           "properties.type": "NewsArticle",
