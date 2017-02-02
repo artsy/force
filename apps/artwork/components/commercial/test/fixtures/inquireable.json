@@ -7,12 +7,12 @@
       "is_inquireable": true,
       "is_in_auction": false,
       "sale_message": "Contact for price",
+      "contact_message": "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?",
       "partner": {
         "id": "bitforms-gallery",
         "name": "bitforms gallery",
         "type": "Gallery",
-        "is_pre_qualify": false,
-        "contact_message": "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?"
+        "is_pre_qualify": false
       },
       "fair": null,
       "edition_sets": [

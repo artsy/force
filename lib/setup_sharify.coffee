@@ -83,6 +83,7 @@ sharify.data = _.extend _.pick(config,
   'MARKETING_SIGNUP_MODAL_SLUG'
   'EOY_2016'
   'EOY_2016_ARTICLE'
+  'RAYGUN_KEY'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

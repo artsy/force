@@ -25,6 +25,17 @@ describe 'defaultMessage', ->
           .should.equal 'Hi, I’m interested in purchasing this work. ' +
             'Could you please provide more information about the piece?'
 
+      it 'returns a cusotm message when the artwork is sold', ->
+        @artwork.set availability: 'sold'
+        defaultMessage @artwork, @partner
+          .should.equal 'Hi, I’m interested in similar works by this artist. ' +
+            'Could you please let me know if you have anything available?'
+
+      it 'returns nothing when the artwork is not for sale', ->
+        @artwork.set availability: 'not for sale'
+        (typeof defaultMessage @artwork, @partner)
+          .should.equal 'undefined'
+
     describe 'of Auction type', ->
       beforeEach ->
         @partner.set 'type', 'Auction'
