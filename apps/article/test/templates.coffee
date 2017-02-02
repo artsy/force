@@ -90,7 +90,6 @@ describe 'amp template', ->
       embed: ->
       asset: ->
       sd: {}
-    console.log fixtures.article
     html.should.containEql 'icon-logotype'
     html.should.containEql '<h1 class="large-garamond-header">Top Ten Booths</h1>'
     html.should.containEql 'Just before the lines start forming'
