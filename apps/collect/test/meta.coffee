@@ -8,7 +8,7 @@ describe 'Meta tags', ->
       @file = "#{path.resolve __dirname, '../'}/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(),
         sd:
-          CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
+          MOBILE_URL: 'http://m.localhost:5000'
           MOBILE_MEDIA_QUERY: 'mobile-media-query'
           APP_URL: 'http://localhost:5000'
         asset: (->)

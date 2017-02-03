@@ -9,15 +9,13 @@ module.exports =
   APPLICATION_NAME: 'force-staging'
   NODE_ENV: 'development'
   PORT: 3004
-  PROXY_API_URL: null
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   FUSION_URL: null
   REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
-  MOBILE_URL: 'http://localhost:3333'
-  CANONICAL_MOBILE_URL: 'https://m.artsy.net'
+  MOBILE_URL: 'https://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'
   GENOME_URL: 'https://helix.artsy.net'
@@ -35,50 +33,34 @@ module.exports =
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   S3_KEY: null
   S3_SECRET: null
-  NEW_RELIC_LICENSE_KEY: null
-  NEW_RELIC_APP_NAME: 'force-staging'
-  NEW_RELIC_ERROR_COLLECTOR_IGNORE_ERROR_CODES: '400,401,403,404,405,416'
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   FACEBOOK_APP_NAMESPACE: "artsyinc"
   DEFAULT_CACHE_TIME: 3600
   SECURE_IMAGES_URL: null
-  IMAGES_URL_PREFIX: 'http://static%d.artsy.net'
-  GOOGLE_ANALYTICS_ID: null
   COOKIE_DOMAIN: null
   OPENREDIS_URL: null
   GOOGLE_MAPS_API_KEY: null
-  REVEAL_ERRORS: 'production' != process.env['NODE_ENV']
-  DELTA_HOST: 'delta.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   DISABLE_IMAGE_PROXY: false
   IMAGE_PROXY: 'GEMINI'
-  SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
-  ENABLE_AB_TEST: true
   MAX_SOCKETS: -1
-  EMPTY_COLLECTION_SET_ID: null
   GEMINI_S3_ACCESS_KEY: null
   GEMINI_APP: 'http://localhost:3004'
   GEMINI_ACCOUNT_KEY: 'force-staging'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
-  GEMINI_LOAD_RATIO: 10
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
-  SENTRY_DSN: null
   IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   TWILIO_NUMBER: null
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   SENTRY_PUBLIC_DSN: null
   SEGMENT_WRITE_KEY: null
-  SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
-  POST_TO_ARTICLE_SLUGS: []
-  CHECK_FOR_AUCTION_REMINDER: false
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly,kana'
   STRIPE_PUBLISHABLE_KEY: null
   GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
-  GALLERY_INSIGHTS_LIST: null
   GALAXY_URL: null
   GALAXY_PUBLISHABLE_TOKEN: null
   GALAXY_TOKEN: null
@@ -86,7 +68,6 @@ module.exports =
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   SAILTHRU_KEY: null
   SAILTHRU_SECRET: null
-  GALLERY_INSIGHTS_SECTION_ID: '55550be07b8a750300db8430'
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
   CONSIGNMENTS_APP_URL: null
@@ -103,7 +84,6 @@ module.exports =
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
   CRITEO_ARTWORKS_ACCOUNT_NUMBER: '35250'
   APPLY_URL: 'http://apply.artsy.net'
-  PERSONALIZED_HOMEPAGE_BUCKETS: ''
   PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
   LOGGER_FORMAT: 'combined'
