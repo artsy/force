@@ -4,7 +4,7 @@ mixin amp_hero_section(hero)
       +amp_hero_image(hero.url, hero.caption)
     when 'fullscreen'
       if hero.background_url
-        .amp-video-container
+        .amp-article__video-container
           amp-video(src=hero.background_url width="400" height="300" autoplay loop)
       else
         +amp_hero_image(hero.background_image_url, null)
@@ -22,12 +22,12 @@ mixin amp_text(section)
       != section.body
 
 mixin amp_artwork(section)
-  .amp-artwork
+  .amp-article__artwork
     +amp_image_tag(section.image, section)
     +artwork_caption(section)
 
 mixin amp_image(section)
-  .amp-image
+  .amp-article__image
     +amp_image_tag(section.url, section)
     if section.caption && section.caption.length > 0
       figcaption
@@ -37,7 +37,7 @@ mixin amp_image_tag(url, section)
   amp-img(src=resize(url, { width: 600 }) layout="responsive" width="600" height=((600 * section.height) / section.width))
 
 mixin amp_image_collection(section)
-  .amp-image-collection.article-section-container
+  .article-section-container
     .article-section-image-collection
       each item in section.images
         if item.type === 'image'
@@ -48,7 +48,7 @@ mixin amp_image_collection(section)
 mixin amp_image_set(section)
   .article-section-container
     .article-section-image-set
-      amp-carousel(height="400" type="slides" loop)
+      amp-carousel.amp-article__carousel(height="400" type="slides" loop)
         each item in section.images
           if item.type === 'artwork'
             +amp_artwork(item)

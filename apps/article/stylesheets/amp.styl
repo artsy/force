@@ -3,53 +3,53 @@
 .body-amp
   max-width 580px
 
-  .amp-header
-    height amp-header-height
-    border-bottom 1px solid gray-lighter-color
-    display flex
-    align-items center
-    a
-      margin-left 20px
-
-  .article-header
-    margin-top 50px
-
-  amp-carousel
-    amp-img
-      height 350px
-      img
-        object-fit contain
-        object-position bottom
-    figcaption
-      garamond-size('m-caption')
-      color gray-darker-color
-      height 150px
-
-  // Video
-  amp-video video
-    object-fit cover
-
-  // Image
-  .amp-artwork, .amp-image
-    margin-bottom 20px
-    figcaption
-      margin 10px 20px
+  .amp-article
+    &__logo-header
+      height amp-header-height
+      border-bottom 1px solid gray-lighter-color
+      display flex
+      align-items center
       a
-        text-decoration none
+        margin-left 20px
 
-  // Social buttons
-  amp-social-share
-    background-color transparent
-    background-image none
+    &__header
+      margin-top 50px
 
-  .share-item
-    display flex
-    justify-content center
-    align-items center
-    &:hover
-      color white
-    &:first-child
-      border-right none
+    &__video-container
+      amp-video video
+        object-fit cover
+
+    &__artwork, &__image
+      margin-bottom 20px
+      figcaption
+        margin 10px 20px
+        a
+          text-decoration none
+
+    &__social
+      amp-social-share
+        background-color transparent
+        background-image none
+
+      .share-item
+        display flex
+        justify-content center
+        align-items center
+        &:hover
+          color white
+        &:first-child
+          border-right none
+
+    &__carousel
+      amp-img
+        height 350px
+        img
+          object-fit contain
+          object-position bottom
+      figcaption
+        garamond-size('m-caption')
+        color gray-darker-color
+        height 150px
 
   footer
     margin-top 80px
