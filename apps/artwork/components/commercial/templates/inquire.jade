@@ -24,13 +24,14 @@ if artwork.is_inquireable
       )
 
     unless artwork.partner.is_pre_qualify
-      textarea.bordered-input(
-        rows='4'
-        name='message'
-        required
-      )
-        = artwork.contact_message
-        = ' '
+      if artwork.contact_message
+        textarea.bordered-input(
+          rows='4'
+          name='message'
+          required
+        )
+          = artwork.contact_message
+          = ' '
 
     if fair
       .artsy-checkbox

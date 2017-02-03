@@ -1,0 +1,118 @@
+mixin amp_hero_section(hero)
+  case hero.type
+    when 'image'
+      +amp_hero_image(hero.url, hero.caption)
+    when 'fullscreen'
+      if hero.background_url
+        .amp-article__video-container
+          amp-video(src=hero.background_url width="400" height="300" autoplay loop)
+      else
+        +amp_hero_image(hero.background_image_url, null)
+    when 'video'
+      +amp_video(hero)
+
+mixin amp_hero_image(image, caption)
+  amp-img(src=crop(image, { width: 600, height: 400 }) layout="responsive" width="600", height="400")
+  if caption
+    figcaption= caption
+
+mixin amp_text(section)
+  .article-section-container.responsive-layout-container
+    .article-section-text
+      != section.body
+
+mixin amp_artwork(section)
+  .amp-article__artwork
+    +amp_image_tag(section.image, section)
+    +artwork_caption(section)
+
+mixin amp_image(section)
+  .amp-article__image
+    +amp_image_tag(section.url, section)
+    if section.caption && section.caption.length > 0
+      figcaption
+        != section.caption
+
+mixin amp_image_tag(url, section)
+  amp-img(src=resize(url, { width: 600 }) layout="responsive" width="600" height=((600 * section.height) / section.width))
+
+mixin amp_image_collection(section)
+  .article-section-container
+    .article-section-image-collection
+      each item in section.images
+        if item.type === 'image'
+          +amp_image(item)
+        else if item.type === 'artwork'
+          +amp_artwork(item)
+
+mixin amp_image_set(section)
+  .article-section-container
+    .article-section-image-set
+      amp-carousel.amp-article__carousel(height="400" type="slides" loop)
+        each item in section.images
+          if item.type === 'artwork'
+            +amp_artwork(item)
+          else if item.type = 'image'
+            +amp_image(item)
+
+mixin amp_video(section)
+  .article-section-container.responsive-layout-container
+    if section.url.match('youtube')
+      amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+    else if section.url.match('vimeo')
+      amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+
+mixin amp_embed(section)
+  .article-section-container.responsive-layout-container
+    .article-section-embed
+      amp-iframe(src=section.url height="#{section.mobile_height || section.height}" width="300" layout="responsive" sandbox="allow-scripts allow-same-origin")
+
+mixin amp_callout(section)
+  .article-section-container.responsive-layout-container(data-section-type="callout")
+    if section.article && section.article.length > 0
+      +callout(section)
+    else if section.text && section.text.length > 0
+      +pullquote(section)
+
+mixin amp_analytics
+  amp-analytics(type="segment")
+    script(type="application/json").
+      {
+        "vars": {
+          "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
+          "name": "#{article.href()}"
+        },
+        "extraUrlParams": {
+          "properties.type": "NewsArticle",
+          "properties.creator": "#{article.getAuthorArray()}",
+          "properties.keywords": "#{article.get('tags')}",
+          "properties.dateCreated": "#{article.get('published_at')}",
+          "properties.articleSection": "#{article.getParselySection()}",
+          "properties.thumbnailUrl": "#{article.get('thumbnail_image')}",
+          "properties.url": "#{article.fullHref()}",
+          "properties.headline": "#{article.get('thumbnail_title')}"
+        }
+      }
+
+mixin amp_head
+  meta(charset='utf-8')
+  title= article.get('search_title') || article.get('thumbnail_title')
+  link(rel='canonical', href=article.fullHref())
+  link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
+  link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+  link( type='text/css', rel='stylesheet', href=asset('/assets/article.css') )
+  meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
+  script(type='application/ld+json')=article.toJSONLD()
+  script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
+  <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
+  <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+  style(amp-boilerplate='').
+    body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+  noscript
+    style(amp-boilerplate='').
+      body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}
+  script(async='', src='https://cdn.ampproject.org/v0.js')

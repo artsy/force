@@ -169,6 +169,33 @@ moment = require 'moment'
       type: 'video',
       url: 'http://youtu.be/yYjLrJRuMnY'
     }
+    {
+      type: 'image_collection'
+      images: [
+        {
+          type: 'artwork'
+          id: '5321b71c275b24bcaa0001a5'
+          slug: "govinda-sah-azad-in-between-2",
+          date: "2015",
+          title: "In Between 2",
+          image: "https://d32dm0rphc51dk.cloudfront.net/zjr8iMxGUQAVU83wi_oXaQ2/larger.jpg",
+          partner: {
+            name: "October Gallery",
+            slug: "october-gallery"
+          },
+          artists: {
+            name: "Govinda Sah 'Azad'",
+            slug: "govinda-sah-azad"
+          }
+        },
+        {
+          type: 'image'
+          url: 'http://img.jpg'
+          caption: '<p>Courtesy of Guggenheim.</p>'
+        }
+      ]
+      layout: 'overflow_fillwidth'
+    }
   ]
   featured_artist_ids: ['5086df098523e60002000012']
   featured_artwork_ids: ['5321b71c275b24bcaa0001a5']

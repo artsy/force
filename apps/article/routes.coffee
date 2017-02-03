@@ -4,7 +4,7 @@ sd = require('sharify').data
 Article = require '../../models/article'
 embed = require 'particle'
 request = require 'superagent'
-{ crop } = require '../../components/resizer'
+{ crop, resize } = require '../../components/resizer'
 { SAILTHRU_KEY, SAILTHRU_SECRET, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
@@ -41,6 +41,20 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
             crop: crop
             lushSignup: true
       return
+
+@ampArticle = (req, res, next) ->
+  article = new Article id: req.params.slug
+  article.fetchWithRelated
+    error: res.backboneError
+    success: (data) ->
+      if req.params.slug isnt data.article.get('slug')
+        return res.redirect "/article/#{data.article.get('slug')}/amp"
+      return next() unless data.article.hasAMP()
+      data.article = data.article.prepForAMP()
+      res.render 'amp_article', _.extend data,
+        resize: resize
+        crop: crop
+        embed: embed
 
 setupEmailSubscriptions = (user, article, cb) ->
   return cb({ editorial: false }) unless user?.email
