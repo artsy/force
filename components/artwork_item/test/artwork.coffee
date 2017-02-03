@@ -133,7 +133,7 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')
         artwork: @artwork
         sd: {}
-      $('.artwork-item-availability').text().should.equal 'On hold - $5,200'
+      $('.artwork-item-sale-price').text().should.equal '$5,200, on hold'
 
   describe 'nopin', ->
     beforeEach ->

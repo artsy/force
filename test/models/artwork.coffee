@@ -14,15 +14,24 @@ describe 'Artwork', ->
     Backbone.sync.restore()
 
   describe '#saleMessage', ->
-    it 'formats sold sale message', ->
-      @artwork.set sale_message: '$6,000 - Sold', price: '$6,000'
-      @artwork.saleMessage().should.equal "Sold - $6,000"
-      @artwork.set sale_message: '$6,000'
-      @artwork.saleMessage().should.equal '$6,000'
+    it 'returns sold when artwork is sold (w/ or w/o price)', ->
+      @artwork.set sale_message: '$6,000 - Sold'
+      @artwork.saleMessage().should.equal 'Sold'
+      @artwork.set sale_message: 'Sold'
+      @artwork.saleMessage().should.equal 'Sold'
 
-    describe 'sale_message is "Contact for Price"', ->
+    it 'returns the price when on hold', ->
+      @artwork.set availability: 'on hold', price: '$420'
+      @artwork.saleMessage().should.equal '$420, on hold'
+      @artwork.unset 'price'
+      @artwork.saleMessage().should.equal 'On hold'
+
+    describe 'sale_message is "Contact for Price" or availability is "not for sale"', ->
       it 'returns undefined', ->
         @artwork.set sale_message: 'Contact For Price', price: '$6,000'
+        _.isUndefined(@artwork.saleMessage()).should.be.true()
+        @artwork.unset 'sale_message', 'price'
+        @artwork.set availability: 'not for sale'
         _.isUndefined(@artwork.saleMessage()).should.be.true()
 
   describe '#downloadableFilename', ->
