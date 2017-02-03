@@ -119,6 +119,9 @@ module.exports = class Article extends Backbone.Model
   fullHref: ->
     "#{APP_URL}/article/#{@get('slug')}"
 
+  ampHref: ->
+    "#{APP_URL}/article/#{@get('slug')}/amp"
+
   authorHref: ->
     if @get('author') then "/#{@get('author').profile_handle}" else @href()
 
@@ -205,6 +208,24 @@ module.exports = class Article extends Backbone.Model
       else
         section
     @set 'sections', sections
+
+  prepForAMP: ->
+    sections =  _.map @get('sections'), (section) ->
+      if section.type is 'text'
+        $ = cheerio.load(section.body)
+        $('a:empty').remove()
+        section.body = $.html()
+        section
+      else
+        section
+    @set 'sections', sections
+
+  hasAMP: ->
+    # AMP requires that images provide a width and height
+    # Articles that have been converted to ImageCollections will have this info
+    for section in @get('sections')
+      return false if section.type in ['artworks', 'image']
+    return @get('featured') and @get('published')
 
   fetchSuperSubArticles: (superSubArticles, accessToken = '') ->
     for id in @get('super_article').related_articles

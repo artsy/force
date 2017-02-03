@@ -125,29 +125,32 @@ mixin artwork(artwork)
         a.artwork-item-image-link( href='/artwork/' + artwork.slug )
           .artwork-item-image
             img( src=artwork.image )
-      figcaption.artwork-item-caption
-        p.artwork-item-artist.artwork-item-overflow
-          if artwork.artists && artwork.artists.length > 0
-            for artist, i in artwork.artists
-              +printArtistName(artist)
-          else if artwork.artist && artwork.artist.name
-            +printArtistName(artwork.artist)
-        if artwork.title
-          p.artwork-item-title.artwork-item-overflow
-            if artwork.slug
-              a(href='/artwork/' + artwork.slug)
-                em= artwork.title
-                if artwork.date
-                  | ,&nbsp
-                  = artwork.date
-            else
-              em= artwork.title
-              if artwork.date
-                | ,&nbsp
-                = artwork.date
-        if artwork.partner && artwork.partner.name
-          p.artwork-item-partner.artwork-item-overflow
-            if artwork.partner.slug
-              a(href='/' + artwork.partner.slug)= artwork.partner.name
-            else
-              = artwork.partner.name
+      +artwork_caption(artwork)
+
+mixin artwork_caption(artwork)
+  figcaption.artwork-item-caption
+    p.artwork-item-artist.artwork-item-overflow
+      if artwork.artists && artwork.artists.length > 0
+        for artist, i in artwork.artists
+          +printArtistName(artist)
+      else if artwork.artist && artwork.artist.name
+        +printArtistName(artwork.artist)
+    if artwork.title
+      p.artwork-item-title.artwork-item-overflow
+        if artwork.slug
+          a(href='/artwork/' + artwork.slug)
+            em= artwork.title
+            if artwork.date
+              | ,&nbsp
+              = artwork.date
+        else
+          em= artwork.title
+          if artwork.date
+            | ,&nbsp
+            = artwork.date
+    if artwork.partner && artwork.partner.name
+      p.artwork-item-partner.artwork-item-overflow
+        if artwork.partner.slug
+          a(href='/' + artwork.partner.slug)= artwork.partner.name
+        else
+          = artwork.partner.name
