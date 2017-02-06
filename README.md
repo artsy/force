@@ -61,6 +61,4 @@ You can find more documentation in [this repository's /doc directory](/doc).
 License
 -------
 
-Copyright (c) 2013-2017 Art.sy, Inc.
-
 MIT License. See [LICENSE](LICENSE).
