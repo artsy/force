@@ -96,6 +96,7 @@ module.exports =
   MARKETING_SIGNUP_MODAL_COPY: 'For early access'
   MARKETING_SIGNUP_MODAL_IMG: 'http://placekitten.com/700/1000'
   MARKETING_SIGNUP_MODAL_SLUG: 'miami'
+  MARKETING_SIGNUP_MODAL_PHOTO_CREDIT: 'Photo by Artsy'
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
   RAYGUN_KEY: null
