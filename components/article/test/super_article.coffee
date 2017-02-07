@@ -29,7 +29,7 @@ describe 'SuperArticleView', ->
       benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
-        article: @article = new Article _.extend fixtures.article,
+        article: @article = new Article _.extend {}, fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: []
           super_article: new Article fixtures.article

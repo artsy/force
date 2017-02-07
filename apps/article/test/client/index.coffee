@@ -18,7 +18,7 @@ describe 'ArticleIndexView', ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      @model = new Article _.extend fixtures.article,
+      @model = new Article _.extend {}, fixtures.article,
         sections: [
           { type: 'text', body: 'Foo' }
           {
@@ -28,7 +28,7 @@ describe 'ArticleIndexView', ->
             artworks: []
           }
         ]
-      @channel = new Channel _.extend fixtures.channel,
+      @channel = new Channel _.extend {}, fixtures.channel,
         type: 'team'
       @options = {
         sd: _.extend sd, {
@@ -106,7 +106,7 @@ describe 'ArticleIndexView', ->
       @view.params.get('is_super_article').should.be.false()
 
     it 'renders the next page on #render', ->
-      articles = [_.extend fixtures.article, { id: '343', sections: [{ type: 'text', body: 'FooLa' }] } ]
+      articles = [_.extend {}, fixtures.article, { id: '343', sections: [{ type: 'text', body: 'FooLa' }] } ]
       @view.render(@view.collection, results: articles )
       $('.article-container').length.should.equal 2
 
