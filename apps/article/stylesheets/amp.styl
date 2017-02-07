@@ -10,32 +10,6 @@
 
 global-reset()
 
-*,
-*:before,
-*:after
-  box-sizing border-box
-html[data-useragent*="Firefox"]
-  overflow-x hidden
-html, body
-  height 100%
-body
-  garamond()
-  font-size default-garamond-font-size
-  line-height 1.4em
-  text-rendering optimizeLegibility
-  min-width body-min-width
-  -webkit-tap-highlight-color rgba(0, 0, 0, 0);
-a
-  color black
-  cursor pointer
-  -webkit-tap-highlight-color rgba(26, 26, 26, 0.301961);
-b, strong
-  font-weight bold
-em
-  font-style italic
-img
-  display block
-
 .body-amp
   garamond()
   font-size default-garamond-font-size
@@ -44,10 +18,25 @@ img
   -webkit-tap-highlight-color rgba(0, 0, 0, 0);
   min-width inherit
   max-width 580px
+
+  // *,
+  // *:before,
+  // *:after
+  //   box-sizing border-box
+  // html[data-useragent*="Firefox"]
+  //   overflow-x hidden
+  // html, body
+  //   height 100%
   a
     color black
     cursor pointer
     -webkit-tap-highlight-color rgba(26, 26, 26, 0.301961);
+  b, strong
+    font-weight bold
+  em
+    font-style italic
+  img
+    display block
 
   .large-garamond-header
     garamond()
