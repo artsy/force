@@ -28,8 +28,8 @@ describe 'Article routes', ->
       @req.params.slug = 'foo'
       routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
-        article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
-        footerArticles: new Articles([_.extend fixtures.article, title: 'Bar'])
+        article: new Article(_.extend {}, fixtures.article, title: 'Foo', slug: 'bar')
+        footerArticles: new Articles([_.extend {}, fixtures.article, title: 'Bar'])
       )
       @res.redirect.args[0][0].should.equal '/article/bar'
 
@@ -38,8 +38,8 @@ describe 'Article routes', ->
       routes.articleItem = new Article
       routes.article @req, @res
       Article::fetchWithRelated.args[0][0].success(
-        article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
-        superArticles: new Articles([_.extend fixtures.article, title: 'Super'])
+        article: new Article(_.extend {}, fixtures.article, title: 'Foo', slug: 'bar')
+        superArticles: new Articles([_.extend {}, fixtures.article, title: 'Super'])
       )
       @res.render.args[0][0].should.equal 'article'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
@@ -58,7 +58,7 @@ describe 'Article routes', ->
     it 'redirects the article if the slug does not match', ->
       routes.ampArticle @req, @res
       Article::fetchWithRelated.args[0][0].success
-        article: new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
+        article: new Article(_.extend {}, fixtures.article, title: 'Foo', slug: 'bar')
       @res.redirect.args[0][0].should.equal '/article/bar/amp'
 
     it 'nexts if the article does not have AMP support', ->

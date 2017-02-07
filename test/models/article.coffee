@@ -287,11 +287,21 @@ describe "Article", ->
 
     it 'preps article for AMP', ->
       @article.set sections: [
-        type: 'text',
-        body: '<a class="jump-link"></a><p>Preparing the article for AMP.</p>'
+        {
+          type: 'text',
+          body: '<a class="jump-link"></a><p>Preparing the article for AMP.</p>'
+        }
+        {
+          type: 'image_collection'
+          images: [
+            type: 'image'
+            caption: '<p isrender=true style="background-color:black;">A caption is <i isrender=true>really</i> important</p>'
+          ]
+        }
       ]
       @article.prepForAMP()
       @article.get('sections')[0].body.should.not.containEql '<a class="jump-link></a>"'
+      @article.get('sections')[1].images[0].caption.should.equal '<p>A caption is <i>really</i> important</p>'
 
     it 'returns the full AMP href', ->
       @article.ampHref().should.containEql '/amp'
