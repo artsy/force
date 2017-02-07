@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 qs = require 'querystring'
 sd = require('sharify').data
+_ = require('underscore')
 FlashMessage = require '../flash/index.coffee'
 modalize = require '../modalize/index.coffee'
 mediator = require '../../lib/mediator.coffee'
@@ -13,8 +14,11 @@ class MarketingSignupModalInner extends Backbone.View
     'submit form': 'submit'
     'click .marketing-signup-modal-have-account a': 'openLogin'
 
+  initialize: ({@data}) ->
+
   render: ->
-    @$el.html template()
+    @$el.html template
+      modal: @data
     this
 
   openLogin: (e) ->
@@ -47,20 +51,19 @@ class MarketingSignupModalInner extends Backbone.View
 module.exports = class MarketingSignupModal extends Backbone.View
 
   initialize: ->
+    slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
+    modalData = _.findWhere(sd.MARKETING_SIGNUP_MODALS, { slug: slug })
     @inner = new MarketingSignupModalInner
+      data: modalData
+
     width = if sd.IS_MOBILE then '100%' else '900px'
     @modal = modalize @inner, backdropCloses: false, dimensions: width: width
+
     @modal.view.$el.addClass 'marketing-signup-modal-container'
     @inner.on 'close', => @modal.close()
-    @maybeOpen()
 
-  maybeOpen: ->
-    slug = qs.parse(location.search.replace /^\?/, '')?['m-id']
-
-    linkedFromCampaign = slug is sd.MARKETING_SIGNUP_MODAL_SLUG
     loggedOut = not sd.CURRENT_USER?
-
-    setTimeout @open, 2000 if loggedOut and linkedFromCampaign
+    setTimeout @open, 2000 if loggedOut and modalData?
 
   open: =>
     @modal.open()

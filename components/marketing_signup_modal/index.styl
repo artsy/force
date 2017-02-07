@@ -11,7 +11,7 @@ divider-height = 40px
   display flex
   align-items stretch
   &-left
-    background-size cover
+    background-size 100% 100%
     background-position center right
 
     @media screen and (max-width 900px)
@@ -21,13 +21,6 @@ divider-height = 40px
     width 50%
     img
       width 100%
-
-  &-left__photo-credit
-    garamond-size('l-caption')
-    color gray-lighter-color
-    position absolute
-    bottom 3px
-    left 6px
 
   &-right
     padding 30px
@@ -39,12 +32,10 @@ divider-height = 40px
     &__logo
       margin-top 10px
 
-  &-h1
-    garamond-size('headline')
-    margin 10px 0 20px 0
-
   &-h2
+    margin-top 20px
     margin-bottom 20px
+    garamond-size('headline')
 
   &-divider
     width 100%
