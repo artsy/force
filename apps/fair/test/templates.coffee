@@ -26,7 +26,7 @@ render = (templateName) ->
   sd =
     APP_URL: 'http://localhost:5000'
     API_URL: 'http://localhost:5000'
-    CANONICAL_MOBILE_URL: 'http://localhost:5000'
+    MOBILE_URL: 'http://localhost:5000'
     NODE_ENV: 'test'
   jade.compile(
     fs.readFileSync(filename),
@@ -39,7 +39,7 @@ describe 'Fair', ->
     before (done) ->
       sd =
         APP_URL: 'http://localhost:5000'
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
+        MOBILE_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         CURRENT_PATH: '/cool-fair'

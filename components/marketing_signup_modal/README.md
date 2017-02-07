@@ -14,6 +14,7 @@ Examples:
 MARKETING_SIGNUP_MODAL_SLUG=miami
 MARKETING_SIGNUP_MODAL_COPY=Sign up for early access
 MARKETING_SIGNUP_MODAL_IMG=http://placekitten.com/200/200
+MARKETING_SIGNUP_MODAL_PHOTO_CREDIT= Photo by Artsy
 ````
 
 If this expirment results in a worthwhile amount of collector acquistion then eventually the idea is we will replace this config data with a tool we give Marketing to manage themselves.

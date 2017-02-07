@@ -70,7 +70,14 @@ mixin amp_embed(section)
 mixin amp_callout(section)
   .article-section-container.responsive-layout-container(data-section-type="callout")
     if section.article && section.article.length > 0
-      +callout(section)
+      .article-section-callout.amp-article__callout(data-id=section.article)
+        - var calloutArticle = calloutArticles.findWhere({id: section.article})
+        if calloutArticle
+          .related-title Related Article
+          a(class=(section.hide_image ? 'no-image' : '') href=(calloutArticle.href()))
+            if !section.hide_image
+              amp-img(width="120" height="80" src=crop(section.thumbnail_url ? section.thumbnail_url : calloutArticle.get('thumbnail_image'), { width: 120, height: 80 }))
+            .article-section-callout__title= section.text ? section.text : calloutArticle.get('thumbnail_title')
     else if section.text && section.text.length > 0
       +pullquote(section)
 
@@ -98,9 +105,7 @@ mixin amp_head
   meta(charset='utf-8')
   title= article.get('search_title') || article.get('thumbnail_title')
   link(rel='canonical', href=article.fullHref())
-  link(type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
-  link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
-  link( type='text/css', rel='stylesheet', href=asset('/assets/article.css') )
+  link(type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
   meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
   script(type='application/ld+json')=article.toJSONLD()
   script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
@@ -109,9 +114,10 @@ mixin amp_head
   <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
   <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
   <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-  <script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
   style(amp-boilerplate='').
     body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+  style(amp-custom)
+    include ../../../public/assets/amp.css
   noscript
     style(amp-boilerplate='').
       body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}

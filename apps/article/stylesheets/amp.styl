@@ -1,7 +1,35 @@
+@require '../../../components/stylus_lib'
+@require '../../../components/main_layout/stylesheets/embedded'
+@require '../../../components/main_layout/stylesheets/faux_underline'
+@require '../../../components/main_layout/stylesheets/icons'
+@require '../../../components/main_layout/stylesheets/typography'
+@require '../../../components/artwork_item/stylesheets'
+@require '../../../components/article/stylesheets/content'
+
 - amp-header-height = 54px
 
+global-reset()
+
 .body-amp
+  garamond()
+  font-size default-garamond-font-size
+  line-height 1.4em
+  text-rendering optimizeLegibility
+  min-width inherit
   max-width 580px
+  a
+    color black
+    cursor pointer
+
+  .large-garamond-header
+    garamond()
+    text-align left
+    display block
+    font-size 30px
+
+  figcaption, figcaption a
+    garamond-size('m-caption')
+    color gray-darker-color
 
   .amp-article
     &__logo-header
@@ -46,10 +74,14 @@
         img
           object-fit contain
           object-position bottom
-      figcaption
-        garamond-size('m-caption')
-        color gray-darker-color
-        height 150px
+        figcaption
+          height 150px
+
+    &__callout
+      a amp-img
+        min-width 120px
 
   footer
     margin-top 80px
+
+@require '../../../components/main_layout/footer'

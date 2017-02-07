@@ -5,7 +5,7 @@ include ../../../components/article/templates/mixins
 html(amp)
   head
     +amp_head
-  body.body-article.body-responsive.body-amp
+  body.body-article.body-amp
     +amp_analytics
     .amp-article__logo-header: a.icon-logotype(href="#{sd.APP_URL}")
     if article.get('hero_section')

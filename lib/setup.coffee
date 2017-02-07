@@ -17,7 +17,6 @@
   COOKIE_DOMAIN,
   AUTO_GRAVITY_LOGIN,
   SESSION_COOKIE_KEY,
-  SENTRY_DSN,
   API_REQUEST_TIMEOUT,
   FUSION_URL,
   IP_BLACKLIST,
@@ -39,7 +38,6 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
-proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 ensureSSL = require './middleware/ensure_ssl'
 ensureWWW = require './middleware/ensure_www'
@@ -171,7 +169,6 @@ module.exports = (app) ->
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
   app.use downcase
-  app.use proxySitemaps.app unless FUSION_URL
   app.use hardcodedRedirects
   app.use redirectMobile
   app.use proxyReflection

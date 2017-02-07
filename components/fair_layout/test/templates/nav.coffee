@@ -24,7 +24,7 @@ describe 'Header template', ->
 
     before (done) ->
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
+        MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
@@ -54,7 +54,7 @@ describe 'Header template', ->
   describe 'logged out', ->
     before (done) ->
       sd =
-        CANONICAL_MOBILE_URL: 'http://localhost:5000'
+        MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
         CSS_EXT: '.css.gz'

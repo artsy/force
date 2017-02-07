@@ -214,7 +214,21 @@ module.exports = class Article extends Backbone.Model
       if section.type is 'text'
         $ = cheerio.load(section.body)
         $('a:empty').remove()
+        $('p').each ->
+          $(this).removeAttr 'isrender'
         section.body = $.html()
+        section
+      else if section.type in ['image_set', 'image_collection']
+        section.images = _.map section.images, (image) ->
+          if image.type is 'image' and image.caption
+            $ = cheerio.load(image.caption)
+            $('p, i').each ->
+              $(this).removeAttr 'isrender'
+              $(this).removeAttr 'style'
+            image.caption = $.html()
+            image
+          else
+            image
         section
       else
         section

@@ -34,7 +34,7 @@ describe 'ArticleView', ->
       @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
-        article: @article = new Article _.extend fixtures.article,
+        article: @article = new Article _.extend {}, fixtures.article,
           author_id: '4d8cd73191a5c50ce210002a'
           sections: [
             { type: 'text', body: '<p><a class="is-follow-link">Damon Zucconi</a><a class="artist-follow" data-id="damon-zucconi"></a></p>' }
