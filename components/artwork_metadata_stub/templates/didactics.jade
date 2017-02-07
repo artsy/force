@@ -22,6 +22,6 @@ else
   a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.partner.href )
     = artwork.partner.name
 
-if artwork.sale_message && artwork.sale_message != 'Contact For Price'
+if artwork.sale_message && artwork.sale_message != 'Contact For Price' && !(artwork.sale && artwork.sale.is_auction)
   .artwork-metadata-stub__sale-message.artwork-metadata-stub__line
     = artwork.sale_message
