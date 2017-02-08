@@ -1,11 +1,9 @@
 .marketing-signup-modal-left(
-  style="background-image: url(#{sd.MARKETING_SIGNUP_MODAL_IMG})"
+  style="background-image: url(#{modal.image})"
 )
-  .marketing-signup-modal-left__photo-credit= sd.MARKETING_SIGNUP_MODAL_PHOTO_CREDIT
 .marketing-signup-modal-right
   .marketing-signup-modal-right__logo.icon-logotype
-  h1.marketing-signup-modal-h1= sd.MARKETING_SIGNUP_MODAL_HEADER
-  h2.marketing-signup-modal-h2= sd.MARKETING_SIGNUP_MODAL_COPY
+  h2.marketing-signup-modal-h2= modal.copy
   form
     input.bordered-input(
       name='name'
@@ -24,7 +22,7 @@
     .marketing-signup-modal-error
   .marketing-signup-modal-divider Or
   a.avant-garde-button-black.marketing-signup-modal-fb(
-    href=sd.AP.facebookPath + '?acquisition_initiative=' + sd.MARKETING_SIGNUP_MODAL_SLUG
+    href=sd.AP.facebookPath + '?acquisition_initiative=' + modal.slug
   )
     i.icon-facebook
     | Continue with Facebook

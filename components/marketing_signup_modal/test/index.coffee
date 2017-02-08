@@ -15,13 +15,13 @@ describe 'MarketingSignupModal', ->
       @MarketingSignupModal.__set__ 'sd', @sd =
         APP_URL: 'http://artsy.net'
         CURRENT_USER: null
-        MARKETING_SIGNUP_MODAL_SLUG: 'foo'
+        MARKETING_SIGNUP_MODALS: [{slug: 'ca1', copy: 'This is a cool modal', image: 'img.jpg', }]
         AP: { signupPagePath: 'signuppath' }
       benv.expose sd: @sd
       @MarketingSignupModal.__set__ 'modalize', @modalize = sinon.stub()
       @modalize.returns @modal = view: new Backbone.View
       @modal.open = sinon.stub()
-      @MarketingSignupModal.__set__ 'location', @location = search: '?m-id=foo'
+      @MarketingSignupModal.__set__ 'location', @location = search: '?m-id=ca1'
       @MarketingSignupModal.__set__ 'setTimeout', @setTimeout = sinon.stub()
       @setTimeout.callsArg 0
       done()
@@ -33,17 +33,17 @@ describe 'MarketingSignupModal', ->
   beforeEach ->
     @view = new @MarketingSignupModal
 
-  describe '#maybeOpen', ->
+  describe '#initialize', ->
     beforeEach ->
       @view.modal.open = sinon.stub()
 
     it 'opens if from a campaign url and logged out', ->
-      @view.maybeOpen()
+      @view.initialize()
       @view.modal.open.called.should.be.ok()
 
     it 'doesnt open if from a non marketing url', ->
       @location.search = '?foo=bar'
-      @view.maybeOpen()
+      @view.initialize()
       @view.modal.open.called.should.not.be.ok()
 
   describe '#submit', ->
