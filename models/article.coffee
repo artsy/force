@@ -275,3 +275,35 @@ module.exports = class Article extends Backbone.Model
       "creator": @getAuthorArray()
       "keywords": @get('tags')
     }
+
+  toJSONLDAmp: ->
+    compactObject {
+      "@context": "http://schema.org"
+      "@type": "NewsArticle"
+      "headline": @get('thumbnail_title')
+      "url": @fullHref()
+      "thumbnailUrl": @get('thumbnail_image')
+      "datePublished": @get('published_at')
+      "dateCreated": @get('published_at')
+      "dateModified": @get('updated_at')
+      "articleSection": @getParselySection()
+      "creator": @getAuthorArray()
+      "keywords": @get('tags')
+      "mainEntityOfPage": @fullHref()
+      "author": {
+        "name": "Artsy Editorial"
+      }
+      "publisher": {
+        "name": "Artsy"
+        "logo": {
+          "url": sd.APP_URL + "/images/full_logo.png"
+          "height": 103
+          "width": 300
+        }
+      }
+      "image": {
+        "url": crop(@get('thumbnail_image'), width: 800, height: 600)
+        "width": 800
+        "height": 600
+      }
+    }
