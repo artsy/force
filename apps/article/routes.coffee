@@ -51,6 +51,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
         return res.redirect "/article/#{data.article.get('slug')}/amp"
       return next() unless data.article.hasAMP()
       data.article = data.article.prepForAMP()
+      res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
       res.render 'amp_article', _.extend data,
         resize: resize
         crop: crop

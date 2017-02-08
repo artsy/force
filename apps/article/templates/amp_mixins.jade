@@ -107,7 +107,8 @@ mixin amp_head
   link(rel='canonical', href=article.fullHref())
   link(type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.css")
   meta(name='viewport', content='width=device-width,minimum-scale=1,initial-scale=1')
-  script(type='application/ld+json')=article.toJSONLD()
+  script(type='application/ld+json')
+    != [jsonLD]
   script(async='', custom-element='amp-carousel', src='https://cdn.ampproject.org/v0/amp-carousel-0.1.js')
   <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
   <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
