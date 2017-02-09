@@ -2,6 +2,10 @@ moment = require 'moment'
 clock = require '../clock/index.coffee'
 
 module.exports =
+  showCountdown: (startAt, liveStartAt) ->
+    return false if liveStartAt and moment(liveStartAt).isBefore()
+    true
+
   countdownLabel: (startAt, liveStartAt) ->
     if liveStartAt and moment(startAt).isBefore()
       'Live bidding opening in'
