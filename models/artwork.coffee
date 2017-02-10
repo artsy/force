@@ -18,7 +18,7 @@ module.exports = class Artwork extends Backbone.Model
   _.extend @prototype, ArtworkHelpers
 
   urlRoot: ->
-    "#{sd.FUSION_URL or sd.API_URL}/api/v1/artwork"
+    "#{sd.API_URL}/api/v1/artwork"
 
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
