@@ -13,11 +13,12 @@ if myActiveBids && myActiveBids.length
               )
                 img.auction-mab-img( src=bid.sale_artwork.artwork.image.url )
                 .auction-mab-artist-artwork
-                  h3= bid.sale_artwork.artwork.artist.name
-                  .auction-mab-title
-                    em= bid.sale_artwork.artwork.title
-                    | ,&nbsp;
-                    = bid.sale_artwork.artwork.date
+                  .auction-mab-artwork-metadata
+                    h3= bid.sale_artwork.artwork.artist.name
+                    .auction-mab-title
+                      em= bid.sale_artwork.artwork.title
+                      | ,&nbsp;
+                      = bid.sale_artwork.artwork.date
             td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>

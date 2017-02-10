@@ -11,7 +11,8 @@ if myActiveBids && myActiveBids.length
             img( src=bid.sale_artwork.artwork.image.url )
             .my-active-bids-item-details
               h4 Lot #{bid.sale_artwork.lot_number}
-              strong= bid.sale_artwork.artwork.artist.name
+              .my-active-bids-item-artist
+                strong= bid.sale_artwork.artwork.artist.name
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
           if bid.sale_artwork.sale.is_live_open
             a.avant-garde-button-black.my-active-bids-bid-live-button(
