@@ -18,6 +18,7 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     'click': 'fullScreenOverlay'
     'submit .artist-page-cta-overlay__register': 'submit'
     'click .auth-toggle': 'triggerLoginModal'
+    'keydown': 'keyAction'
 
   initialize: ({ artist }) ->
     @artist = artist
@@ -55,6 +56,10 @@ module.exports = class ArtistPageCTAView extends Backbone.View
     @$('.artist-page-cta-overlay__close').on 'click', @closeOverlay
     analyticsHooks.trigger 'artist_page:cta:shown'
     setTimeout (=> @disableScroll()), 400
+
+  keyAction: (e) =>
+    if e.keyCode == 27 || e.which == 27
+      @closeOverlay(e)
 
   disableScroll: ->
     @$body.addClass('is-scrolling-disabled')
