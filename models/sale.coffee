@@ -157,23 +157,35 @@ module.exports = class Sale extends Backbone.Model
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
 
+  zone: (time) ->
+    moment(time).tz('America/New_York')
+
   event: ->
+    timeFormat = 'YYYY-MM-DD[T]HH:mm:ss'
+    if @get('live_start_at')
+      start = @get('live_start_at') or moment()
+      end  = moment(@get('live_start_at')).add(4, 'hours')
+    else
+      start = @get('start_at') or moment()
+      end = @get('end_at') or moment()
+
     event = new Backbone.Model
-      start_at: @get('live_start_at') or @get('start_at') or moment()
-      end_at: @get('end_at') or moment()
+      start_at: @zone(start).format(timeFormat)
+      end_at: @zone(end).format(timeFormat)
       name: @get('name')
+
     _.extend event, CalendarUrls({ title: 'name' })
     event
 
   upcomingLabel: ->
-    zone = (attr) => moment(@get attr).tz('America/New_York').format 'MMM D h:mm:ssA z'
+    timeFormat = 'MMM D h:mm:ssA z'
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
-      "Live bidding begins #{zone 'live_start_at'}"
+      "Live bidding begins #{@zone(@get('live_start_at')).format(timeFormat)}"
     else if @get('live_start_at')
       "Live bidding now open"
     else if @isPreviewState()
-      "Auction opens #{zone 'start_at'}"
+      "Auction opens #{@zone(@get('start_at')).format(timeFormat)}"
     else
-      "Bidding closes #{zone 'end_at'}"
+      "Bidding closes #{@zone(@get('end_at')).format(timeFormat)}"

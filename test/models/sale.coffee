@@ -330,38 +330,59 @@ describe 'Sale', ->
         @sale.get('offsetStartAtMoment').unix().should.eql moment(@sale.get('start_at')).unix()
         @sale.get('offsetEndAtMoment').unix().should.eql moment(@sale.get('end_at')).unix()
 
-    describe '#upcomingLabel', ->
+  describe '#event', ->
+    it 'returns an event in the correct timezone for an online sale', ->
+      time = moment('2017-02-11T17:00:00+00:00').utc()
+      @sale.set
+        start_at: moment('2017-02-11T17:00:00+00:00')
+        end_at: moment('2017-02-13T17:00:00+00:00')
+      @sale.event().get('start_at').should
+        .eql '2017-02-11T12:00:00'
+      @sale.event().get('end_at').should
+        .eql '2017-02-13T12:00:00'
 
-      it 'renders the correct opening label when EDT', ->
-        time = moment('2016-11-02 12:00:00').utc()
-        @sale.isPreviewState = -> true
-        @sale.set
-          start_at: time
-          end_at: time.add(2, 'days')
-        @sale.upcomingLabel().should
-          .containEql 'Auction opens Nov 4'
-        @sale.upcomingLabel().should
-          .containEql 'EDT'
+    it 'returns an event in the correct timezone for a live sale', ->
+      time = moment('2017-02-11T17:00:00+00:00').utc()
+      @sale.set
+        start_at: moment('2017-02-09T17:00:00+00:00')
+        live_start_at: moment('2017-02-11T17:00:00+00:00')
+        end_at: moment('2017-02-13T17:00:00+00:00')
+      @sale.event().get('start_at').should
+        .eql '2017-02-11T12:00:00'
+      @sale.event().get('end_at').should
+        .eql '2017-02-11T16:00:00'
 
-      it 'renders the correct opening label when EST', ->
-        time = moment('2016-1-02 12:00:00').utc()
-        @sale.isPreviewState = -> true
-        @sale.set
-          start_at: time
-          end_at: time.add(2, 'days')
-        @sale.upcomingLabel().should
-          .containEql 'Auction opens Jan 4'
-        @sale.upcomingLabel().should
-          .containEql 'EST'
+  describe '#upcomingLabel', ->
+    it 'renders the correct opening label when EDT', ->
+      time = moment('2016-11-02 12:00:00').utc()
+      @sale.isPreviewState = -> true
+      @sale.set
+        start_at: time
+        end_at: time.add(2, 'days')
+      @sale.upcomingLabel().should
+        .containEql 'Auction opens Nov 4'
+      @sale.upcomingLabel().should
+        .containEql 'EDT'
 
-    describe '#sortableDate', ->
-      it 'returns the live_start_at if it exists', ->
-        @sale.set
-          end_at: moment().add 2, 'days'
-          live_start_at: moment().add 1, 'days'
-        @sale.sortableDate().should.eql @sale.get('live_start_at')
+    it 'renders the correct opening label when EST', ->
+      time = moment('2016-1-02 12:00:00').utc()
+      @sale.isPreviewState = -> true
+      @sale.set
+        start_at: time
+        end_at: time.add(2, 'days')
+      @sale.upcomingLabel().should
+        .containEql 'Auction opens Jan 4'
+      @sale.upcomingLabel().should
+        .containEql 'EST'
 
-      it 'returns the end_at if no live_start_at exists', ->
-        @sale.set
-          end_at: moment().add 2, 'days'
-        @sale.sortableDate().should.eql @sale.get('end_at')
+  describe '#sortableDate', ->
+    it 'returns the live_start_at if it exists', ->
+      @sale.set
+        end_at: moment().add 2, 'days'
+        live_start_at: moment().add 1, 'days'
+      @sale.sortableDate().should.eql @sale.get('live_start_at')
+
+    it 'returns the end_at if no live_start_at exists', ->
+      @sale.set
+        end_at: moment().add 2, 'days'
+      @sale.sortableDate().should.eql @sale.get('end_at')
