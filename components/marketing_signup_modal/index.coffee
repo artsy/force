@@ -56,10 +56,10 @@ module.exports = class MarketingSignupModal extends Backbone.View
     @inner = new MarketingSignupModalInner
       data: modalData
 
-    width = if sd.IS_MOBILE then '100%' else '900px'
-    @modal = modalize @inner, backdropCloses: false, dimensions: width: width
-
-    @modal.view.$el.addClass 'marketing-signup-modal-container'
+    @modal = modalize @inner, backdropCloses: false, dimensions: width: ''
+    className = 'marketing-signup-modal-container'
+    className += '-mobile' if sd.IS_MOBILE
+    @modal.view.$el.addClass className
     @inner.on 'close', => @modal.close()
 
     loggedOut = not sd.CURRENT_USER?
