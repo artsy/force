@@ -60,6 +60,9 @@ if artwork.banner
           when 'ArtworkContextSale'
             | Explore Sale
           when 'ArtworkContextAuction'
-            | Explore Auction
+            if banner.is_live_open
+              | Join Live Auction
+            else
+              | Explore Auction
           when 'ArtworkContextPartnerShow'
             | Explore #{banner.type}
