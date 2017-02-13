@@ -44,12 +44,12 @@ if artwork.banner
         a( href= banner.href )
           = banner.name
 
-      if banner.end_at
+      if helpers.banner.showCountdown(banner.start_at, banner.live_start_at)
         .artwork-banner__countdown(
           class='js-artwork-banner__countdown'
         )
-          - var label = helpers.banner.countdownLabel(banner.start_at)
-          - var countdown = helpers.banner.countdownClock(banner.start_at, banner.end_at)
+          - var label = helpers.banner.countdownLabel(banner.start_at, banner.live_start_at)
+          - var countdown = helpers.banner.countdownClock(banner.start_at, banner.end_at, banner.live_start_at)
           include ../clock/index
 
     .artwork-banner__jump
@@ -60,6 +60,9 @@ if artwork.banner
           when 'ArtworkContextSale'
             | Explore Sale
           when 'ArtworkContextAuction'
-            | Explore Auction
+            if banner.is_live_open
+              | Join Live Auction
+            else
+              | Explore Auction
           when 'ArtworkContextPartnerShow'
             | Explore #{banner.type}

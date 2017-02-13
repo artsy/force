@@ -9,6 +9,7 @@ module.exports = """
         end_at
         live_start_at
         is_auction
+        is_live_open
       }
       ... on ArtworkContextSale {
         name

@@ -90,7 +90,6 @@ module.exports = ->
 
       view = new ArtworkBrickRailView options
         
-
       view.on 'post-render', ->
 
         setupFollowButton

@@ -11,8 +11,9 @@ divider-height = 40px
   display flex
   align-items stretch
   &-left
-    background-size 100% 100%
-    background-position center right
+    background-size cover
+    background-position-x right
+    background-position-y calc(100% \+ 1px)
 
     @media screen and (max-width 900px)
       display none
