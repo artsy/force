@@ -5,13 +5,17 @@ divider-height = 40px
     @media screen and (max-width 768px)
       width 450px
     width 900px
+  &-mobile
+    .modalize-dialog
+      max-width 100%
+      max-height 100%
 
 .marketing-signup-modal
   text-align center
   display flex
   align-items stretch
   &-left
-    flex 0 1 450px
+    flex 0 2 450px
     background-size cover
     background-position-x right
     background-position-y calc(100% \+ 1px)
@@ -25,7 +29,7 @@ divider-height = 40px
 
   &-right
     padding 30px
-    flex 0 0 450px
+    flex 0 1 450px
 
     &__logo
       margin-top 10px
