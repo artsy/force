@@ -96,6 +96,8 @@ module.exports =
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
   RAYGUN_KEY: null
+  FORCE_MERGE_URL: 'https://merged.artsy.net'
+  FORCE_MERGE_WEIGHT: 0
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

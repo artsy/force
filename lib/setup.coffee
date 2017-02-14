@@ -38,6 +38,7 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
+proxyToMerged = require './middleware/proxy_to_merged'
 localsMiddleware = require './middleware/locals'
 ensureSSL = require './middleware/ensure_ssl'
 ensureWWW = require './middleware/ensure_www'
@@ -123,14 +124,7 @@ module.exports = (app) ->
       next()
     app.use "/__gravity", require("antigravity").server
 
-  # Body parser has to be after proxy middleware for
-  # node-http-proxy to work with POST/PUT/DELETE
-  app.all '/api*', proxyGravity.api
-
-  # Setup Passport middleware for authentication along with the
-  # body/cookie parsing middleware needed for that.
-  app.use bodyParser.json()
-  app.use bodyParser.urlencoded(extended: true)
+  # Cookie and session middleware
   app.use cookieParser()
   app.use session
     cookie: secure: true
@@ -142,11 +136,21 @@ module.exports = (app) ->
     # secureProxy just sets secure=true
     secureProxy: "production" is NODE_ENV or "staging" is NODE_ENV
 
+  # Body parser has to be after proxy middleware for
+  # node-http-proxy to work with POST/PUT/DELETE
+  app.all '/api*', proxyGravity.api
+  app.use proxyToMerged
+  app.use proxyReflection
+
+  # Setup Passport middleware for authentication along with the
+  # body/cookie parsing middleware needed for that.
+  app.use bodyParser.json()
+  app.use bodyParser.urlencoded(extended: true)
+
   # We want the user to be able to log-in to force via the microgravity subdomain
   # the initial use case being the professional buyer application
   # (this is specific to responsive pages that require log-in)
   app.use cors origin: [APP_URL, MOBILE_URL, /\.artsy\.net$/]
-
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     ARTSY_URL: API_URL
@@ -166,12 +170,10 @@ module.exports = (app) ->
   app.use express.static(path.resolve __dirname, '../public')
   app.use '/(.well-known/)?apple-app-site-association', artsyEigenWebAssociation
 
-  # Proxy / redirect requests before they even have to deal with Force routing
-  # (This must be after the auth middleware to be able to proxy auth routes)
+  # Redirect requests before they even have to deal with Force routing
   app.use downcase
   app.use hardcodedRedirects
   app.use redirectMobile
-  app.use proxyReflection
   app.use ensureSSL
   app.use ensureWWW
 
