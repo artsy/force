@@ -26,7 +26,7 @@ describe 'proxy to merged', ->
     @proxy.web.args[0][2].target.should.equal 'https://merged.artsy.net'
 
   it 'regardless of the session will not proxy if the weight is 0', ->
-    proxyToMerged.__set__ 'FORCE_MERGE_WEIGHT', '0'
+    proxyToMerged.__set__ 'weight', 0
     @req.session.inMergedForce = true
     proxyToMerged @req, @res, @next
     @next.called.should.be.ok()
