@@ -138,16 +138,14 @@ module.exports = (app) ->
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE
-  app.all '/api*', proxyGravity.api
   app.use proxyToMerged
+  app.use '/api', proxyGravity.api
   app.use proxyReflection
-
-  # Setup Passport middleware for authentication along with the
-  # body/cookie parsing middleware needed for that.
   app.use bodyParser.json()
   app.use bodyParser.urlencoded(extended: true)
 
-  # We want the user to be able to log-in to force via the microgravity subdomain
+  # Passport middleware for authentication. CORS middleware above that because
+  # we want the user to be able to log-in to force via the microgravity subdomain
   # the initial use case being the professional buyer application
   # (this is specific to responsive pages that require log-in)
   app.use cors origin: [APP_URL, MOBILE_URL, /\.artsy\.net$/]
