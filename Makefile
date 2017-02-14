@@ -54,7 +54,6 @@ ssd:
 
 # Run all of the project-level tests, followed by app-level tests
 test:
-    $(info DANGER_GITHUB_API_TOKEN is $(DANGER_GITHUB_API_TOKEN))
 	$(BIN)/ezel-assets
 	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
