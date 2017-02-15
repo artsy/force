@@ -44,7 +44,7 @@ if artwork.banner
         a( href= banner.href )
           = banner.name
 
-      if helpers.banner.showCountdown(banner.start_at, banner.live_start_at)
+      if banner.is_auction && helpers.banner.showCountdown(banner.start_at, banner.live_start_at)
         .artwork-banner__countdown(
           class='js-artwork-banner__countdown'
         )
