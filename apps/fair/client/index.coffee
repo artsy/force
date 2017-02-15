@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-MarketingSignupModal = require '../../../components/marketing_signup_modal/index.coffee'
 initFairLayout = require '../../../components/fair_layout/client/index.coffee'
 FairBrowseRouter = require '../components/browse/router.coffee'
 FairArticlesView = require './articles.coffee'
