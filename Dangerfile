@@ -25,6 +25,7 @@ if github.branch_for_base == 'release'
   # Get all PR info
   pr_info = {}
   prs.each do |pr|
+    next if pr.length == 0
     pr_json = github.api.pull_request('artsy/force', pr)
     pr_info[pr] = {}
     pr_info[pr][:title] = pr_json.title
