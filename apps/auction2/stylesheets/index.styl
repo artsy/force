@@ -7,7 +7,7 @@
 @require '../../../components/bordered_pulldown'
 @require '../../../components/stylus_lib'
 @require '../../../components/commercial_filter/stylesheets'
-@require '../components/auction_grid/index'
+@require '../components/auction_artworks/index'
 @require '../components/auction_grid_artwork/index'
 @require '../components/bid_status/index'
 @require './banner'
@@ -39,3 +39,27 @@
   .cf-sidebar__info
     color #9b9b9b
     font-style italic
+
+  .cf-view-options
+    &__grid, &__list
+      display inline-block
+      border 2px solid gray-lighter-color
+      padding 2px
+      cursor pointer
+      svg
+        fill gray-lighter-color
+        width 32px
+        height 32px
+
+    &__grid
+      border-right none
+
+    &[data-state='grid']
+      .cf-view-options__grid
+        svg
+          fill black
+
+    &[data-state='list']
+      .cf-view-options__list
+        svg
+          fill black

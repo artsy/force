@@ -20,7 +20,7 @@ import PaginatorView from '../../components/commercial_filter/filters/paginator/
 
 import React from 'react';
 import { render } from 'react-dom';
-import AuctionGrid from './components/auction_grid/index.js'
+import AuctionArtworks from './components/auction_artworks/index.js'
 
 const { fullyQualifiedLocations } = require('../../components/commercial_filter/filters/location/location_map.coffee')
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -39,7 +39,7 @@ const customSortMap = {
 }
 
 const defaultParams = {
-  size: 20,
+  size: 50,
   page: 1,
   aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
   sale_id: sd.AUCTION.id,
@@ -73,7 +73,7 @@ const filter = new Filter({ params: params })
 // Main Artworks view
 filter.artworks.on('reset', () => {
   render(
-    <AuctionGrid artworks={filter.artworks.models} />,
+    <AuctionArtworks artworks={filter.artworks.models} display={'grid'} />,
     document.getElementById('cf-artworks')
   );
 })
@@ -135,3 +135,14 @@ const urlHandler = new UrlHandler({
 Backbone.history.start({pushState: true})
 
 params.trigger('change')
+
+// Listen for grid/artwork toggle
+$('.cf-view-options__grid').click(() => {
+  console.log('hayyyy')
+  $('.cf-view-options').attr('data-state', 'grid')
+})
+
+$('.cf-view-options__list').click(() => {
+  console.log('oyyyyy')
+  $('.cf-view-options').attr('data-state', 'list')
+})
