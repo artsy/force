@@ -36,7 +36,7 @@ if github.branch_for_base == 'release'
   # Format message
   message = "### This deploy contains the following PRs:\n\n"
   pr_info.each do |pr_id, info|
-    message << "#{info[:title]} (#{info[:href]})\n"
+    message << "- #{info[:title]} (#{info[:href]})\n"
   end
   markdown message
 end
