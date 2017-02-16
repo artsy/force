@@ -5,12 +5,17 @@ const initialState = {
   listView: false
 }
 
-function auctionsReducer(state = initialState, action) {
+function auctionArtworks(state = initialState, action) {
   switch (action.type) {
   case 'UPDATE_ARTWORKS':
     return {
       ...state,
       artworks: action.artworks
+    }
+  case 'TOGGLE_LIST_VIEW':
+    return {
+      ...state,
+      listView: action.listView
     }
   default:
     return state
@@ -18,7 +23,7 @@ function auctionsReducer(state = initialState, action) {
 }
 
 const auctions = combineReducers({
-  auctions: auctionsReducer
+  auctionArtworks
 })
 
 export default auctions

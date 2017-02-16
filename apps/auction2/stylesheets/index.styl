@@ -9,7 +9,9 @@
 @require '../../../components/commercial_filter/stylesheets'
 @require '../components/auction_artworks/index'
 @require '../components/auction_grid_artwork/index'
+@require '../components/auction_list_artwork/index'
 @require '../components/bid_status/index'
+@require '../components/header/index'
 @require './banner'
 @require './header'
 @require './my_active_bids'
@@ -21,6 +23,14 @@
 .auction2-commercial-filter
   margin-top 20px
   border-top 1px solid gray-lighter-color
+
+  .cf-right
+    position relative
+
+    .cf-bottom-right-part
+      position absolute
+      top 0
+      margin-top 15px
 
   .cf-sidebar-title__mediums, .cf-sidebar-title__artists
     padding-top 20px
@@ -40,26 +50,5 @@
     color #9b9b9b
     font-style italic
 
-  .cf-view-options
-    &__grid, &__list
-      display inline-block
-      border 2px solid gray-lighter-color
-      padding 2px
-      cursor pointer
-      svg
-        fill gray-lighter-color
-        width 32px
-        height 32px
-
-    &__grid
-      border-right none
-
-    &[data-state='grid']
-      .cf-view-options__grid
-        svg
-          fill black
-
-    &[data-state='list']
-      .cf-view-options__list
-        svg
-          fill black
+  .cf-total-sort__sort
+    padding-right 120px

@@ -1,16 +1,15 @@
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import AuctionGridArtwork from '../auction_grid_artwork/index'
+import AuctionListArtwork from '../auction_list_artwork/index'
 
-export default function AuctionArtworks ({ artworks, dispatch }) {
+function AuctionArtworks({ artworks, listView }) {
+  const DisplayComponent = listView ? AuctionListArtwork : AuctionGridArtwork
   return (
     <div className={'auction2-artworks'}>
-      <div className={'auction2-artworks__display-type'}>
-
-      </div>
       {
         artworks.map((artwork) => (
-          <AuctionGridArtwork key={artwork.get('_id')} artwork={artwork} />
+          <DisplayComponent key={artwork.get('_id')} artwork={artwork} />
         ))
       }
     </div>
@@ -19,4 +18,18 @@ export default function AuctionArtworks ({ artworks, dispatch }) {
 
 AuctionArtworks.propTypes = {
   artworks: PropTypes.array.isRequired,
-};
+  listView: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = (state) => {
+  return {
+    artworks: state.auctionArtworks.artworks,
+    listView: state.auctionArtworks.listView
+  }
+}
+
+const ArtworksContainer = connect(
+  mapStateToProps
+)(AuctionArtworks)
+
+export default ArtworksContainer

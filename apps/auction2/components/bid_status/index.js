@@ -5,15 +5,15 @@ export default function BidStatus({ artwork }, _) {
 
   let bidLabel
   if (saleArtwork && saleArtwork.counts && saleArtwork.counts.bidder_positions > 0) {
-    bidLabel = `<b>Current Bid:</b> (${saleArtwork.counts.bidder_positions} Bids)`
+    bidLabel = `(${saleArtwork.counts.bidder_positions} Bids)`
   } else {
-    bidLabel = `<b>Starting Bid</b>`
+    bidLabel = ''
   }
 
   return (
     <div className='auction2-bid-status'>
-      <span className='auction2-bid-status__bid-label' dangerouslySetInnerHTML={{ __html: bidLabel }}></span>
       <span className='auction2-bid-status__bid-amount'>{ saleArtwork.current_bid.display }</span>
+      <span className='auction2-bid-status__bid-label'>{ bidLabel }</span>
     </div>
   );
 }

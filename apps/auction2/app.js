@@ -1,9 +1,11 @@
 import React from 'react'
-import Container from './container'
+import ArtworksContainer from './components/auction_artworks'
+import HeaderContainer from './components/header'
 
 const App = () => (
   <div>
-    <Container />
+    <HeaderContainer />
+    <ArtworksContainer />
   </div>
 )
 

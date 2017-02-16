@@ -17,6 +17,7 @@
       "stage-3"
     ],
     "plugins": [
+      "inline-react-svg",
       "transform-runtime"
     ]
   },
@@ -46,6 +47,7 @@
     "body-parser": "^1.14.1",
     "bucket-assets": "^1.0.2",
     "cheerio": "^0.22.0",
+    "classnames": "^2.2.5",
     "coffee-script": "^1.10.0",
     "connect-flash": "^0.1.1",
     "connect-timeout": "^1.7.0",
@@ -102,6 +104,7 @@
     "annyang": "git://github.com/mzikherman/annyang.git",
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
+    "babel-plugin-inline-react-svg": "^0.2.0",
     "background-check": "git://github.com/kennethcachia/background-check",
     "benv": "^3.2.0",
     "blueimp-file-upload": "^9.14.0",

@@ -18,9 +18,7 @@ import FollowedArtistFilterView from '../../components/commercial_filter/filters
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
 
-
-
-
+// For react/redux
 import React from 'react';
 import { render } from 'react-dom';
 import { combineReducers, createStore } from 'redux'
@@ -29,12 +27,6 @@ import auctions from './reducers'
 import App from './app'
 import * as actions from './actions'
 
-
-
-
-
-
-const { fullyQualifiedLocations } = require('../../components/commercial_filter/filters/location/location_map.coffee')
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
 
 const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at'))
@@ -82,16 +74,7 @@ const params = new Params(defaultParams, {
 })
 const filter = new Filter({ params: params })
 
-
-
-
-////////////////////////////////////////////////
-//////////////// REDUX /////////////////////////
-////////////////////////////////////////////////
-
-
-
-// create redux store
+// REDUX
 const store = createStore(auctions)
 render(
   <Provider store={store}>
@@ -100,20 +83,9 @@ render(
   document.getElementById('cf-artworks')
 );
 
-
-// on filter artworks reset... have an action to update the artworks
-
 filter.artworks.on('reset', () => {
   store.dispatch(actions.updateArtworks(filter.artworks.models))
 })
-
-
-////////////////////////////////////////////////
-//////////////// END REDUX /////////////////////
-////////////////////////////////////////////////
-
-
-
 
 // Header
 const totalView = new TotalView({
@@ -172,14 +144,3 @@ const urlHandler = new UrlHandler({
 Backbone.history.start({pushState: true})
 
 params.trigger('change')
-
-// Listen for grid/artwork toggle
-$('.cf-view-options__grid').click(() => {
-  console.log('hayyyy')
-  $('.cf-view-options').attr('data-state', 'grid')
-})
-
-$('.cf-view-options__list').click(() => {
-  console.log('oyyyyy')
-  $('.cf-view-options').attr('data-state', 'list')
-})
