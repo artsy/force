@@ -67,9 +67,10 @@ downcase = require './middleware/downcase'
 ipfilter = require('express-ipfilter').IpFilter
 
 module.exports = (app) ->
+  # Blacklist IPs
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
 
-  # rate limited
+  # Rate limited
   if OPENREDIS_URL
     limiter = require('express-limiter')(app, cache.client)
     limiter
@@ -82,7 +83,13 @@ module.exports = (app) ->
         console.log 'Rate limit exceeded for', req.headers['x-forwarded-for']
         next()
 
+  # Blank page apparently used by Eigen?
   app.use require '../apps/blank'
+
+  # Make sure we're on https://www
+  app.use hstsMiddleware
+  app.use ensureSSL
+  app.use ensureWWW
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
@@ -172,8 +179,6 @@ module.exports = (app) ->
   app.use downcase
   app.use hardcodedRedirects
   app.use redirectMobile
-  app.use ensureSSL
-  app.use ensureWWW
 
   # General helpers and express middleware
   app.use bucketAssets()
@@ -182,7 +187,6 @@ module.exports = (app) ->
   app.use localsMiddleware
   app.use artsyError.helpers
   app.use sameOriginMiddleware
-  app.use hstsMiddleware
   app.use escapedFragmentMiddleware
   app.use logger LOGGER_FORMAT
   app.use unsupportedBrowserCheck
