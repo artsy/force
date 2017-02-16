@@ -41,7 +41,6 @@ proxyReflection = require './middleware/proxy_to_reflection'
 proxyToMerged = require './middleware/proxy_to_merged'
 localsMiddleware = require './middleware/locals'
 ensureSSL = require './middleware/ensure_ssl'
-ensureWWW = require './middleware/ensure_www'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
 sameOriginMiddleware = require './middleware/same_origin'
 hstsMiddleware = require './middleware/hsts'
@@ -86,8 +85,7 @@ module.exports = (app) ->
   # Blank page apparently used by Eigen?
   app.use require '../apps/blank'
 
-  # Make sure we're on https://www
-  app.use ensureWWW
+  # Make sure we're using SSL
   app.use ensureSSL
   app.use hstsMiddleware
 
