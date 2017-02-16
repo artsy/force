@@ -43,8 +43,7 @@ class MarketingSignupModalInner extends Backbone.View
         @$('.marketing-signup-modal-error').show().text err
       success: =>
         @trigger 'close'
-        flash = new FlashMessage message: 'Thank you for joining Artsy'
-        flash.$el.on 'transitionend', -> setTimeout (-> location.reload()), 500
+        flash = new FlashMessage message: 'Thank you for joining Artsy', href: '/personalize'
       complete: =>
         @$('form button').removeClass 'is-loading'
 
