@@ -51,7 +51,6 @@ module.exports = class CTABarView extends Backbone.View
     this
 
   transitionIn: (cb) ->
-    debugger
     @__transition__ 'in', cb
     analyticsHooks.trigger 'artist_page:cta:shown'
 
