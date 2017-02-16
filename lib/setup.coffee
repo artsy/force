@@ -91,7 +91,6 @@ module.exports = (app) ->
   app.use ensureSSL
   app.use hstsMiddleware
 
-
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
   if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
