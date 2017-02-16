@@ -87,9 +87,10 @@ module.exports = (app) ->
   app.use require '../apps/blank'
 
   # Make sure we're on https://www
-  app.use hstsMiddleware
-  app.use ensureSSL
   app.use ensureWWW
+  app.use ensureSSL
+  app.use hstsMiddleware
+
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
