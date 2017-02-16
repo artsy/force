@@ -30,3 +30,9 @@ describe 'proxy to merged', ->
     @req.session.inMergedForce = true
     proxyToMerged @req, @res, @next
     @next.called.should.be.ok()
+
+  it 'sets the host header as the target host to appease Heroku routing', ->
+    proxyToMerged.__set__ 'weight', 1
+    @req.session.inMergedForce = true
+    proxyToMerged @req, @res, @next
+    @proxy.web.args[0][2].headers.host.should.equal 'merged.artsy.net'
