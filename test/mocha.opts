@@ -1,4 +1,4 @@
 --require should
 --ui bdd
 --timeout 30000
---compilers coffee:coffee-script/register,js:babel-core/register
+--compilers coffee:coffee-script/register
