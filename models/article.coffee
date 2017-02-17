@@ -99,7 +99,7 @@ module.exports = class Article extends Backbone.Model
             superSubArticles.orderByIds(superArticle.get('super_article').related_articles) if superArticle and superSubArticles?.length
             @set('channel', channel) if channel
             @set('partner', partner) if partner
-            options.success(
+            options.success?(
               article: this
               slideshowArtworks: slideshowArtworks
               superArticle: superArticle
