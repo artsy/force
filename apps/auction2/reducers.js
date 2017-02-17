@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import u from 'updeep'
 
 const initialState = {
   artworks: [],
@@ -9,13 +8,15 @@ const initialState = {
 function auctionArtworks(state = initialState, action) {
   switch (action.type) {
   case 'UPDATE_ARTWORKS':
-    return u({
+    return {
+      ...state,
       artworks: action.payload.artworks
-    }, state)
+    }
   case 'TOGGLE_LIST_VIEW':
-    return u({
+    return {
+      ...state,
       isListView: action.payload.isListView
-    }, state)
+    }
   default:
     return state
   }
