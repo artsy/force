@@ -61,15 +61,17 @@ describe 'FixedCellsCountCarousel', ->
         _.isFunction(@view.fetch().then).should.be.ok()
 
       it 'fetches and returns collection', ->
-        fetched = new PartnerShows [fabricate 'show']
+        shows = [fabricate('show'), fabricate('show'), fabricate('show')]
+        console.log shows
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', fetched.models
+          .yieldsTo 'success', shows
+          .returns Promise.resolve shows
 
         @view.fetch().then (collection) =>
-          collection.length.should.equal 1
-          collection.models.should.eql fetched.models
-          collection.models.should.eql @collection.models
+          collection.length.should.equal 3
+          _.pluck(collection.models, 'attributes').should.deepEqual shows
+          collection.models.should.deepEqual @collection.models
 
     describe 'with multiple fetch', ->
       beforeEach ->
@@ -96,20 +98,23 @@ describe 'FixedCellsCountCarousel', ->
         _.isFunction(@view.fetch().then).should.be.ok()
 
       it 'fetches and returns collection', ->
-        fetched1 = new PartnerShows [fabricate 'show']
+        shows1 = [fabricate('show'), fabricate('show'), fabricate('show')]
+        shows2 = [fabricate('show'), fabricate('show')]
         Backbone.sync
           .onCall 0
-          .yieldsTo 'success', fetched1.models
+          .yieldsTo 'success', shows1
+          .returns Promise.resolve shows1
 
-        fetched2 = new PartnerShows [fabricate('show'), fabricate('show')]
         Backbone.sync
           .onCall 1
-          .yieldsTo 'success', fetched2.models
+          .yieldsTo 'success', shows2
+          .returns Promise.resolve shows2
 
         @view.fetch().then (collection) =>
-          collection.length.should.equal 3
-          collection.models.should.eql fetched1.models.concat fetched2.models
-          collection.models.should.eql @collection.models
+          collection.length.should.equal 5
+          _.pluck(collection.models, 'attributes').should.deepEqual shows1.concat shows2
+          collection.models.should.deepEqual @collection.models
+
 
   describe '#consolidate', ->
     beforeEach ->
