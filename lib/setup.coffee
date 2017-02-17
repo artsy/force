@@ -236,6 +236,7 @@ module.exports = (app) ->
   app.use require "../apps/rss"
   app.use require '../apps/dev'
   app.use require "../apps/article"
+  app.use require "../apps/artsy_primer"
 
   # Non-profile dynamic vanity url apps
   app.use require "../apps/galleries_institutions"

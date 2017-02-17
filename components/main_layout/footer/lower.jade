@@ -1,0 +1,14 @@
+.mlf-lower: .main-layout-container
+  nav#main-layout-footer-internal
+    a#main-layout-footer-logo.icon-logo( href='/' )
+    span.mlf-links
+      span &copy; #{(new Date).getFullYear()} Artsy
+      a( href='/terms' ) Terms of Use
+      a( href='/privacy' ) Privacy Policy
+      a( href='/security' ) Security
+  nav#main-layout-footer-external
+    a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
+    a.mlf-social.icon-facebook-f( href='http://www.facebook.com/artsy', target='_blank')
+    a.mlf-social.icon-snapchat( href="http://snapchat.com/add/artsy.net" target='_blank')
+      include ../public/icons/snapchat.svg
+    a.mlf-social.icon-instagram( href='http://www.instagram.com/artsy', target='_blank')
