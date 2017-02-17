@@ -6992,6 +6992,18 @@
       "from": "untildify@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/untildify/-/untildify-2.1.0.tgz"
     },
+    "updeep": {
+      "version": "1.0.0",
+      "from": "updeep@latest",
+      "resolved": "https://registry.npmjs.org/updeep/-/updeep-1.0.0.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "4.17.4",
+          "from": "lodash@>=4.2.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz"
+        }
+      }
+    },
     "url": {
       "version": "0.11.0",
       "from": "url@>=0.11.0 <0.12.0",

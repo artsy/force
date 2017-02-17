@@ -6,13 +6,17 @@ export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export function updateArtworks(artworks) {
   return {
     type: UPDATE_ARTWORKS,
-    artworks
+    payload: {
+      artworks
+    }
   }
 }
 
-export function toggleListView(listView) {
+export function toggleListView(isListView) {
   return {
     type: TOGGLE_LIST_VIEW,
-    listView
+    payload: {
+      isListView
+    }
   }
 }

@@ -12,8 +12,8 @@ function displayButtonClass(buttonType, displayType) {
   )
 }
 
-function Header({ listView, dispatch }) {
-  const displayType = listView ? 'list' : 'grid'
+function Header({ isListView, dispatch }) {
+  const displayType = isListView ? 'list' : 'grid'
 
   return (
     <div className={'auction2-artworks-header'}>
@@ -28,11 +28,11 @@ function Header({ listView, dispatch }) {
 }
 
 Header.propTypes = {
-  listView: PropTypes.bool.isRequired,
+  isListView: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => {
-  return { listView: state.auctionArtworks.listView }
+  return { isListView: state.auctionArtworks.isListView }
 }
 
 const HeaderContainer = connect(
