@@ -24,7 +24,7 @@ import { render } from 'react-dom';
 import { combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import auctions from './reducers'
-import App from './app'
+import Works from './works'
 import * as actions from './actions'
 
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -78,7 +78,7 @@ const filter = new Filter({ params: params })
 const store = createStore(auctions)
 render(
   <Provider store={store}>
-    <App />
+    <Works />
   </Provider>,
   document.getElementById('cf-artworks')
 );
