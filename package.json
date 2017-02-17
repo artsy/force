@@ -17,6 +17,7 @@
       "stage-3"
     ],
     "plugins": [
+      "inline-react-svg",
       "transform-runtime"
     ]
   },
@@ -46,6 +47,7 @@
     "body-parser": "^1.14.1",
     "bucket-assets": "^1.0.2",
     "cheerio": "^0.22.0",
+    "classnames": "^2.2.5",
     "coffee-script": "^1.10.0",
     "connect-flash": "^0.1.1",
     "connect-timeout": "^1.7.0",
@@ -83,7 +85,9 @@
     "raygun4js": "^2.5.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
     "redis": "^2.2.3",
+    "redux": "^3.6.0",
     "referer-parser": "0.0.3",
     "sailthru-client": "^3.0.0",
     "serve-favicon": "^2.3.0",
@@ -94,12 +98,14 @@
     "ua-parser": "^0.3.5",
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
+    "updeep": "^1.0.0",
     "xss-filters": "^1.2.6"
   },
   "devDependencies": {
     "annyang": "git://github.com/mzikherman/annyang.git",
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
+    "babel-plugin-inline-react-svg": "^0.2.0",
     "background-check": "git://github.com/kennethcachia/background-check",
     "benv": "^3.2.0",
     "blueimp-file-upload": "^9.14.0",

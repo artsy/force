@@ -18,11 +18,15 @@ import FollowedArtistFilterView from '../../components/commercial_filter/filters
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
 
+// For react/redux
 import React from 'react';
 import { render } from 'react-dom';
-import AuctionGrid from './components/auction_grid/index.js'
+import { combineReducers, createStore } from 'redux'
+import { Provider } from 'react-redux'
+import auctions from './reducers'
+import Works from './works'
+import * as actions from './actions'
 
-const { fullyQualifiedLocations } = require('../../components/commercial_filter/filters/location/location_map.coffee')
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
 
 const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at'))
@@ -39,7 +43,7 @@ const customSortMap = {
 }
 
 const defaultParams = {
-  size: 20,
+  size: 50,
   page: 1,
   aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
   sale_id: sd.AUCTION.id,
@@ -70,12 +74,17 @@ const params = new Params(defaultParams, {
 })
 const filter = new Filter({ params: params })
 
-// Main Artworks view
+// REDUX
+const store = createStore(auctions)
+render(
+  <Provider store={store}>
+    <Works />
+  </Provider>,
+  document.getElementById('cf-artworks')
+);
+
 filter.artworks.on('reset', () => {
-  render(
-    <AuctionGrid artworks={filter.artworks.models} />,
-    document.getElementById('cf-artworks')
-  );
+  store.dispatch(actions.updateArtworks(filter.artworks.models))
 })
 
 // Header

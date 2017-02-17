@@ -1,5 +1,16 @@
 .auction2-bid-status
   position relative
 
-.auction2-bid-status__bid-amount
-  float right
+  &__bid-amount
+    padding-right 5px
+
+    &:before
+      display inline-block
+      background-image url('/images/paddle.png')
+      background-repeat no-repeat
+      background-position 0 5px
+      background-size 63%
+      padding-right 15px
+      height 17px
+      content ''
+
