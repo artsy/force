@@ -1,0 +1,40 @@
+extends ../../../components/layout/templates/main
+
+mixin artworkColumnsTemplate(artworkColumns)
+  include ../../../components/artwork_columns/template.jade
+
+append locals
+  - assetPackage = 'mobile_show'
+
+block head
+  title #{show.get('name')} | #{show.get('partner').name} | Artsy
+
+block content
+  if installShots.length && !show.has('fair')
+    include carousel
+  #show-page
+    if show.has('fair')
+      include header/fair
+    else
+      include header/show
+
+    if show.related().showEvents.length
+      include events
+
+    if artworks.length
+      include artworks
+
+    if show.get('description')
+      include description
+
+    #show-page-related-articles-container
+      //- rendered client side
+
+    if show.related().artists.length
+      #show-page-follow-artists
+        - artists = show.related().artists.models
+        include ../components/follow_artists/template
+
+    if show.get('press_release')
+      include press_release
+

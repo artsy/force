@@ -1,0 +1,13 @@
+if modules
+  each module, index in modules
+    - title = module.title
+    - railId = module.key
+    if (module.context)
+      - viewAllUrl = viewHelpers.viewAllUrl(module)
+    .responsive-layout-container
+      .main-layout-container
+        div(id="hpm-#{railId}-#{index}").abrv-container
+          include ../../../components/artwork_brick_rail/templates/index
+    //- if we are on the third or last rail, show artists_to_follow
+    if index == 3
+      include ../components/artists_to_follow/templates/index

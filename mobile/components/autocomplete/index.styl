@@ -1,0 +1,64 @@
+@import '../stylus_lib'
+
+.autocomplete
+  > form
+    position relative
+  .loading-spinner
+    margin 50px auto
+
+  &.is-active
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color white
+    overflow-y scroll
+    -webkit-overflow-scrolling touch
+    z-index z-modal-top
+
+    .autocomplete-close
+      display block
+    .autocomplete-input-shield
+      display none
+    .autocomplete-input
+      background-color white
+      border-bottom 2px solid light-gray-border-color
+    .autocomplete-results
+      display block
+
+.autocomplete-search-bar-icon
+  position absolute
+  color light-gray-text-color
+  font-size 16px
+  top 9px
+  left 10px
+  opacity .5
+
+.autocomplete-input
+  background-color #eee
+  border none
+  padding-left 32px
+
+.autocomplete-input-shield
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+.autocomplete-close
+  display none
+  position absolute
+  top 50%
+  right 0
+  padding 10px
+  transform translateY(-50%)
+  line-height 0
+  avant-garde()
+  font-size 11px
+  color light-gray-text-color
+  text-decoration none
+
+.autocomplete-results
+  display none

@@ -1,0 +1,11 @@
+- var disabled = !user.isLoggedIn()
+.artsy-checkbox.cf-followed_artists__checkbox(data-is-logged-in=disabled ? 'false' : 'true')
+  .artsy-checkbox--checkbox
+    input( type='checkbox', id='followed-artists-filter', checked=selected, disabled=disabled )
+    label( for='followed-artists-filter' )
+  label.artsy-checkbox--label( for='followed-artists-filter' ) Artists You Follow
+    if count > 0
+      span.cf-followed_artists__total.garamond-m-caption &nbsp; (#{numberFormat(count)})
+if !user.isLoggedIn()
+  .cf-followed_artists__cta.avant-garde-button-white
+    | Sign Up

@@ -1,0 +1,64 @@
+mixin showItem(show, trailingText)
+  .artwork-artist-module__content__exhibition-highlights__item
+    .artwork-artist-module__content__exhibition-highlights__item__date= helpers.date(show.start_at).year()
+    .artwork-artist-module__content__exhibition-highlights__item__text
+      a(href=show.href)= show.name
+      if trailingText
+        | #{!!show.name ? ', ' : ''}#{trailingText}
+
+- var artists = artwork.artists;
+
+if artists.length
+  .artwork-section-separator
+  .main-side-margin
+    .artwork-artist-module
+      .artwork-artist-module__section-title
+        - var artistsLabel = artists.length > 1 ? "Artists" : "Artist"
+        | About the #{artistsLabel}
+      for artist in artists
+        - var totalWorks = artist.counts.artworks
+        - var forSaleWorks = artist.counts.for_sale_artworks
+        .artwork-artist-module__about-artist
+
+          .artwork-artist-module__label__follow-container
+            a.artwork-artist-module__label(href=artist.href)
+              h2.artwork-artist-name= artist.name
+              if totalWorks == forSaleWorks
+                .artwork-artist-works
+                  = forSaleWorks + (forSaleWorks == 1 ? ' work for sale' : ' works for sale')
+              else
+                .artwork-artist-works
+                  = totalWorks + (totalWorks == 1 ? ' work' : ' works' )
+                  if forSaleWorks
+                    | , #{forSaleWorks} for sale
+
+            .artwork-artist-module__follow
+              a.avant-garde-box-button.is-small.aama_follow.follow-button.js-artwork-artist-module-follow(data-artist-id=artist.id)
+
+          if artist.carousel.images
+            a.artwork-artist-module__images(href=artist.href)
+              - var images = artist.carousel.images.slice(0,3)
+              for image in images
+                .artwork-artist-module__images-item
+                  img(src=image.resized.url)
+
+        .artwork-artist-module__accordion
+          .aama-content.chevron-nav-list
+            if artist.bio
+              a.aama-overview-title.js-aama-accordion-link.is-active(data-id="overview-#{artist.id}") Overview
+              .aama-tab-content.js-aama-content.is-active(data-id="overview-#{artist.id}")  #{artist.bio.replace('born', 'b.')}
+            if artist.biography_blurb && artist.biography_blurb.partner_id == artwork.partner.id
+              a.aama-biography-title.js-aama-accordion-link(data-id="biography-#{artist.id}") Biography
+              .aama-tab-content.js-aama-content(data-id="biography-#{artist.id}")
+                != artist.biography_blurb.text
+                if artist.biography_blurb.credit
+                  .aama-biography-credit &mdash; #{artist.biography_blurb.credit}
+            else if artist.blurb
+              a.aama-biography-title.js-aama-accordion-link(data-id="biography-#{artist.id}") Biography
+              .aama-tab-content.js-aama-content(data-id="biography-#{artist.id}")!= artist.blurb
+
+        .artwork-artist-module__accordion
+          if artist.exhibition_highlights && artist.exhibition_highlights.length <= 15
+            include exhibition
+          else if artist.exhibition_highlights && artist.exhibition_highlights.length > 15
+            include highlights

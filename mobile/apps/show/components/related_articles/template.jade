@@ -1,0 +1,19 @@
+#show-page-related-articles
+  .show-related-articles-title
+    | Related Articles
+  for article in articles
+    .show-related-article
+      .show-related-article-image-container
+        a(href="/article/#{article.get('slug')}")
+          img.show-related-article-image(
+            src= crop(article.get('thumbnail_image'), { width: 220, height: 165 })
+            alt= article.get('title')
+          )
+      .show-related-article-info
+        a(href="/article/#{article.get('slug')}")
+          .show-related-article-title= article.get('thumbnail_title')
+        a.show-related-article-author(href="/#{article.get('author').profile_handle}")
+          | By #{article.get('author').name}
+  if remaining > 0
+    .related-articles-show-all.avant-garde-button-white.is-block
+      | Show More Related Articles (#{remaining})

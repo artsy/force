@@ -1,0 +1,10 @@
+section#show-installation-shot-carousel
+  .aspect-ratio
+  #carousel-track
+    for installShot in installShots.models
+      figure.carousel-track__image
+        img(
+          src= installShot.imageUrlForRatio()
+          alt= installShot.get('caption')
+          title= installShot.get('caption')
+        )

@@ -1,0 +1,25 @@
+.mlf.mlf__mobile
+  .mlf-upper-column
+    a( href='/' ) Home
+    a( href='/institutions' ) Museums
+    a( href='/artists' ) Artists
+    a( href='/art-fairs' ) Fairs
+    a( href='/shows' ) Shows
+    a( href='/auctions' ) Auctions
+    a( href='/galleries' ) Galleries
+    a( href='/articles' ) Magazine
+  if user
+    .mlf-user-column
+      h4= user.get('name')
+      a( href='/works-for-you' ) Works For You
+      a( href='/user/edit' ) Account
+  else
+    .mlf-login-signup
+      a.mlf-signup.avant-garde-button-dark( href='/sign_up' ) Sign up
+      a.mlf-login.avant-garde-button-dark( href='/log_in' ) Log in
+  .mlf-lower
+      nav#main-layout-footer-internal
+        span.mlf-links
+          a( href='/about' ) About Artsy
+          a( href='/terms' ) Terms of Use
+          a( href='/privacy' ) Privacy Policy

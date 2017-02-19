@@ -1,0 +1,14 @@
+extends ../../../components/layout/templates/main
+
+append locals
+  - assetPackage = 'mobile_articles'
+
+block content
+
+  #article-body-container
+    include ../../../components/article/templates/index
+
+  .article-fixed-share.js--article-fixed-share
+    //- Rendered on client
+
+  include ../../../components/layout/templates/json_ld

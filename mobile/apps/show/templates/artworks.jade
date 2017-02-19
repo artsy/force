@@ -1,0 +1,7 @@
+#show-page-artworks(data-height = 640 ,class = artworks.length > 8 ? 'with-slider' : 'without-slider' )
+  .show-page-artworks-title
+    | #{artworks.length} Works
+  +artworkColumnsTemplate(artworks.groupByColumnsInOrder())
+  .loading-spinner
+if artworks.length > 8
+  include ../../../components/show_more_works/template

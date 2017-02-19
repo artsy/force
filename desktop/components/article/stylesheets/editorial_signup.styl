@@ -1,0 +1,106 @@
+.articles-insights-show
+  display none
+  width 100%
+  padding 60px 0
+
+.article-subscribe-container
+  display block
+  position relative
+  height 160px
+
+.article-subscribe-mainheader
+  garamond-size('headline')
+
+.article-subscribe-subheader
+  garamond-size('l-body')
+  margin-top 10px
+
+.article-subscribe-thanks
+  position absolute
+  display none
+
+.article-subscribe-header
+  position absolute
+  width 100%
+
+.article-subscribe
+  &__es
+    width 570px
+    padding 60px 0px 30px 0px
+    border-top 1px solid gray-lighter-color
+    .article-subscribe-form
+      display flex
+      margin-top 30px
+      input
+        width 380px
+        display inline
+        margin-right 20px
+      button
+        avant-garde-size('body')
+        display inline
+        width 170px
+        height 50px
+  @media (max-width: 550px)
+    &__es
+      width 100%
+      padding 60px 20px
+      .article-subscribe-form button
+        avant-garde-size('s-headline')
+        padding 15px
+    &-mainheader
+      garamond-size('s-headline')
+    &-subheader
+      garamond-size('s-body')
+  &__gi
+    border 1px solid gray-lighter-color
+    padding 60px 30px 30px 30px
+    text-align center
+
+
+    .article-subscribe-mainheader
+      avant-garde-size('m-headline')
+
+    .articles-insights-marketo-form
+      width 450px
+      position relative
+      margin 30px auto
+      label
+        display none
+      .mktoFieldWrap
+        min-width 100%
+        float none
+        input
+          width 100%
+          margin-right 0
+          padding 15px 10px !important
+          border-width 1px
+      .mktoButtonWrap button
+        border-radius 5%
+        width inherit
+        position absolute
+        right 10px
+        top 10px
+        height 32px
+        width 90px
+        avant-garde-size('s-headline')
+      .mktoButtonWrap button::after
+        top 10px
+
+    @media (min-width: 1600px)
+      max-width 1600px
+      margin 0 auto
+    @media (max-width: 550px)
+      &.responsive-layout-container
+        margin 0 20px
+      .article-subscribe-container
+        height auto
+      .articles-insights-marketo-form
+        max-width 100%
+        .mktoButtonRow
+          position relative
+          button
+            width 100%
+            position relative
+            right 0
+      .article-subscribe-header
+        position relative

@@ -1,0 +1,17 @@
+extends ../../../components/layout/templates/main
+
+append locals
+  - assetPackage = 'mobile_artists'
+
+block head
+  title Browse Artists on Artsy | Modern and Contemporary Artists
+
+block content
+  .main-side-margin
+    header.avant-garde-header-center.artists-page-header Artists
+
+    nav.chevron-nav-list.artists-chevron-nav-list
+      each gene in genes
+        a.nav-image-item( href="/gene/#{gene.get('id')}/artists")
+          img.artists-nav-item-nav-image( src="#{gene.imageUrl()}")
+          p.artists-page-nav-item-label= gene.get('name')

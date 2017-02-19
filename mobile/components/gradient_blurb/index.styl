@@ -1,0 +1,36 @@
+@import '../stylus_lib'
+
+.gradient-blurb
+  position relative
+  overflow hidden
+  transition max-height 0.5s
+  &:after
+    display block
+    position absolute
+    content ''
+    right 0
+    bottom 0
+    left 0
+    height 125px
+    background-image linear-gradient(to bottom, rgba(255,255,255,0), white 100px)
+
+  &.is-expanded:after
+    display none
+
+.gradient-blurb-read-more
+  display block
+  position absolute
+  bottom 0
+  left 0
+  avant-garde('s-headline')
+  z-index 1
+  text-decoration none
+
+.gradient-blurb
+  &.article
+    &:after
+      height 150px
+    .gradient-blurb-read-more
+      text-decoration underline
+      margin-left 50%
+      transform translate(-50%,0)

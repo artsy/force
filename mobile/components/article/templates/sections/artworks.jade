@@ -1,0 +1,35 @@
+mixin printArtistName(artist)
+  if artist.slug
+    a(href='/artist/' + artist.slug )= artist.name
+  else
+    |= artist.name
+
+.article-section.article-section-artworks( data-ids= artworks.ids )
+  for artwork in artworks.artworks
+    .artwork-columns-artwork
+      a( href='/artwork/' + artwork.slug )
+        img( src=artwork.image data-id=artwork.id )
+
+      .artwork-columns-artwork-details
+
+        p.artwork-item-artist
+          if artwork.artists
+            for artist, i in artwork.artists
+              +printArtistName(artist)
+          else if artwork.artist && artwork.artist.name
+            +printArtistName(artwork.artist)
+
+        if artwork.title
+          p.artwork-item-title
+            a(href='/artwork/' + artwork.slug)
+              em= artwork.title
+              if artwork.date
+                | ,&nbsp
+                = artwork.date
+
+        if artwork.partner && artwork.partner.name
+          p.artwork-item-partner
+            if artwork.partner.slug
+              a(href='/' + artwork.partner.slug)= artwork.partner.name
+            else
+              = artwork.partner.name

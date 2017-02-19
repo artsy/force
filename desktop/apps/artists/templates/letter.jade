@@ -1,0 +1,35 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/util/activator
+include ../../../../node_modules/artsy-ezel-components/pagination/paginator
+
+block head
+  include letter_meta
+  +paginateHead(artists.state.currentPage, artists.state.totalPages, sd.APP_URL + sd.CURRENT_PATH + "?")
+
+append locals
+  - assetPackage = 'artists_artworks'
+
+block body
+  #artists-page.main-layout-container
+    nav.alphabetical-index
+      .alphabetical-index-label
+        | Browse 40,000 artists
+      .alphabetical-index-range
+        for letter in letterRange
+          - var href = '/artists/artists-starting-with-' + letter;
+          a( href=href, class=activeClass(href) )= letter
+
+    #letter-page
+      h1.avant-garde-header-center
+        | Artists &ndash; #{letter}
+
+      a.contextual-return-link( href='/artists' )
+        i.icon-chevron-small-left
+        | Back to featured artists
+
+      .artists-columns
+        for artist in artists.models
+          a.highlight-link( href="/artist/#{artist.id}" )
+            = artist.get('name')
+
+      +paginate(artists.state.currentPage, artists.state.totalPages)

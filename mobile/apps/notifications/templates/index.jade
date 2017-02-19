@@ -1,0 +1,13 @@
+extends ../../../components/layout/templates/main
+
+append locals
+  - assetPackage = 'mobile_notifications'
+
+block content
+  #notifications-page.main-side-margin
+    h1.notifications-header.avant-garde-header-center
+      |Works by
+      br
+      |Artists You Follow
+    #notifications-published-artworks
+    #notifications-published-artworks-spinner: .loading-spinner

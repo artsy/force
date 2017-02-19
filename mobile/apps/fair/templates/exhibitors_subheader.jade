@@ -1,0 +1,13 @@
+.fair-page-subheader
+  if displayToggle
+    .a-z-feed-exhibitor-count
+      | Showing #{fair.get('partner_shows_count')} exhibitors
+    .a-z-feed-toggle-container
+      a.a-z-page-toggle(
+        class=(setToggle == 'grid' ? 'is-active' : '')
+        href="/#{fair.get('default_profile_id')}/browse/booths"
+      ) Show as Grid
+      a.a-z-page-toggle(
+        class=(setToggle == 'a-z' ? 'is-active' : '')
+        href="/#{fair.get('default_profile_id')}/browse/exhibitors"
+      ) Show as A-Z list

@@ -1,0 +1,42 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title Preview Top Art Fairs on Artsy | Artsy
+
+block content
+  #art-fairs-page
+    header.art-fairs-header.garamond-header(
+      style= !currentFairs.length ? "background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/fairs-header-img.jpg')" : ""
+      class= !currentFairs.length ? "art-fairs-header--background-image" : ""
+    )
+      h1 Collect from leading
+        br
+        | art fairs on Artsy
+
+    #art-fairs-content.main-side-margin
+
+      if !user
+        .art-fairs-content--sign-up-container
+          .art-fairs-content--sign-up-container__label Get notified when fair previews open
+          a.avant-garde-box-button.avant-garde-box-button-gray( href='/sign_up' ) Sign up
+
+      include ../../../components/avant_garde_tabs/nav
+
+      .avant-garde-tabs-list.current-fairs.avant-garde-tabs-list--active(data-list="current")
+        if currentFairs
+          for fair in currentFairs
+            .current-art-fairs
+              a.fairs-link(href=fair.href)
+                .current-art-fairs__image(style="background-image: url(#{fair.image.url})")
+                include fair-details
+
+      .avant-garde-tabs-list(data-list="upcoming" class= currentFairs && currentFairs.length ? '' : 'avant-garde-tabs-list--active')
+        if upcomingFairs
+          for fair in upcomingFairs
+            .avant-garde-tabs-list__upcoming-name
+              strong.avant-garde-tabs-list__upcoming-title= fair.name
+              .avant-garde-tabs-list__upcoming-date= Helpers.formatDates(fair)
+
+      .avant-garde-tabs-list.past-fairs(data-list="past" class= upcomingFairs && upcomingFairs.length ? '' : 'avant-garde-tabs-list--active')
+        if pastFairs
+          include past-fairs

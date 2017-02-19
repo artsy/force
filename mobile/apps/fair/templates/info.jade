@@ -1,0 +1,12 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-page-info.main-side-margin
+    h1.fair-page-module-heading Visitor Information
+    .fair-page-info-location
+      if location.has('coordinates')
+        a( target="_blank", href=location.gmapLink() )
+          img.fair-page-info-map( src=location.gmapImageUrl('600x300') )
+      if location.has('summary')
+        .fair-page-info-location-summary.formatted-markdown!= location.mdToHtml('summary')
+    .fair-page-info-content.formatted-markdown!= fair.mdToHtml('about')

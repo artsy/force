@@ -1,0 +1,11 @@
+extends ../../../../components/layout/templates/main
+
+block content
+  #fair-programming.main-side-margin
+    .fair-programming-event
+      h1.fair-page-module-heading= event.getEventGroups()
+      h2.fair-page-module-subheading!= event.getTime()
+      h3.fair-programming-event-name= event.get('name')
+      h3.fair-programming-event-venue= event.get('venue')
+      .fair-programming-event-details!= event.getDetailDescriptionHtml()
+      .fair-programming-event-group-details!= event.getGroupDetailsHtml()

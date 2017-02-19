@@ -1,0 +1,9 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #auth-page
+    h1.avant-garde-header-center Just one more step
+    form( method='post', action='/users/auth/twitter/email?redirect-to=/personalize/collect' )
+      input( type="hidden" name="_csrf" value=csrfToken )
+      input.bordered-input( type='email', placeholder='Email', autofocus='autofocus', name='email' )
+      button.avant-garde-box-button.avant-garde-box-button-black Join Artsy

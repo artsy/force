@@ -1,0 +1,8 @@
+- var associatedSale = auction.related().sale
+
+if associatedSale.id
+  .auction-info-section
+    h3 Related Sale
+    p
+      a( href= associatedSale.href() )
+        = associatedSale.get('name')

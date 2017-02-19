@@ -1,0 +1,31 @@
+header.submit-inquiry-form-artwork-header
+  img( src=artwork.image.url )
+  #sifah-details
+    h3= artwork.artists.map(function(artist) {return artist.name}).join(', ')
+    h4= artwork.title
+      if artwork.date
+        | ,&nbsp;
+        = artwork.date
+form.submit-inquiry-form
+  if !user
+    input.bordered-input.submit-inquiry-name(
+      placeholder='Your full name', type='text', name='name'
+    )
+    input.bordered-input.submit-inquiry-email(
+      placeholder='Your email address', type='text', name='email'
+    )
+
+  textarea.bordered-input.submit-inquiry-message(
+    placeholder='Your message...', name='message'
+    style=(user ? 'height: 6em; margin-top: 15px' : '')
+  )
+
+  if user
+    .submit-inquiry-prefilled
+      span.submit-inquiry-name From: #{user.get('name')}&nbsp;
+      span.submit-inquiry-email (#{user.get('email')})
+
+  .submit-inquiry-errors
+  button.avant-garde-box-button.avant-garde-box-button-black.submit-inquiry-button( type='submit' )
+    | Send
+    .loading-spinner

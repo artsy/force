@@ -1,0 +1,32 @@
+extends ../../../components/layout/templates/main
+
+mixin artworkColumnsTemplate(artworkColumns)
+  include ../../../components/artwork_columns/template.jade
+
+block content
+  #fair-artist.main-side-margin( data-artist-id=artist.get('id') )
+    h1.fair-page-module-heading
+      | #{artist.get('name')}
+      br
+      | at #{fair.get('name')}
+    h2.fair-artist-info
+      = artist.get('hometown')
+      if artist.get('years') && artist.get('hometown')
+        | ,
+      = artist.get('years')
+
+    a.follow-button.fair-artist-follow.avant-garde-box-button( href="", data-action='follow', data-state='unfollowed' ) &nbsp;Artist
+
+    ul.fair-booths-with-artist
+      for show in shows.models
+        li.fair-exhibitors-show
+          header
+            h3
+              a( href=show.href() )= show.get('partner').name
+            h4= show.formattedLocation()
+              span.fair-exhibitors-show-updated  Updated #{show.fromNow('updated_at')}
+          .home-page-current-shows-artworks
+            +artworkColumnsTemplate(show.artworks().groupByColumnsInOrder())
+
+    nav.chevron-nav-list.fair-artist-on-artsy-link
+      a( href="/artist/#{artist.get('id')}" ) #{artist.get('name')} on Artsy

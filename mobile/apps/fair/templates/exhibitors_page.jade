@@ -1,0 +1,12 @@
+extends ../../../components/layout/templates/main
+
+block content
+  .main-side-margin.mobile-app-top-padding
+    .fair-page-header
+      if title
+        h1.fair-page-az-header.avant-garde-header-center!= title
+    include exhibitors_subheader
+    ul#fair-exhibitors
+      include exhibitors
+    if scrolling
+      #fair-exhibitors-spinner.loading-spinner

@@ -1,0 +1,15 @@
+.artist-carousel-container
+  .artist-carousel.js-artist-carousel.mgr-horizontal-nav
+    .mgr-cells.js-mgr-cells
+      for image in carousel.images
+        .mgr-cell.js-mgr-cell
+          a( href= image.href )
+            img(
+              src= image.resized.url
+              alt= image.title
+              height= '300px'
+            )
+
+    - length = carousel.images.length
+    if length > 1
+      include ../../../../components/merry_go_round/templates/horizontal_navigation

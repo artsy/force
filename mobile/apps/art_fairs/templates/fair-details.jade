@@ -1,0 +1,9 @@
+.art-fairs--fair-details.past-art-fairs--border-bottom
+  .fair-logo
+    if fair.profile && fair.profile.icon
+      img(src="#{fair.profile.icon.url}")
+
+  .fair-details
+    h5.fair-name= fair.name
+    p.fair-content.fair-content__location= Helpers.cityStateAndCountry(fair.location)
+    p.fair-content.fair-content__dates= Helpers.formatDates(fair)

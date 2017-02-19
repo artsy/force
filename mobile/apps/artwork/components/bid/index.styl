@@ -1,0 +1,201 @@
+.artwork-auction-bid-module__bid-status-title
+.artwork-auction-bid-module__bid-status-amount
+  garamond-size('s-body', true)
+  display inline
+
+.artwork-auction-bid-module__bid-status-amount
+  float right
+
+.artwork-auction-bid-module__bid-status__count-user-status
+  .artwork-auction-bid-module__bid-status-count
+    garamond-size('m-caption', true)
+    color gray-darker-color
+    display inline
+    float left
+  .bid-status-message
+    p
+      display inline-block
+      float right
+      color red-color
+      avant-garde()
+      avant-garde-size('s-headline', true)
+      margin-top 2px
+    &__is-winning p
+      color green-color
+    &__is-winning-reserve-not-met p
+      color reserve-yellow-color
+    &__is-losing p
+      color red-color
+    &__arrow-up, &__arrow-down
+      position relative
+      fill currentColor
+      padding-left 3px
+      svg
+        margin-left 4px
+        height .8em
+    &__arrow-up svg
+      transform rotate(180deg)
+    &__arrow-down svg
+      transform rotate(0deg)
+
+.auction-avant-garde-black-button
+  avant-garde-size('body', true)
+  height 40px
+  width 100%
+  background-color black
+  margin 10px 0 5px
+  color #fff
+  border-style none
+  &.is-disabled
+    background-color transparent
+    border 1px solid gray-lighter-color
+    color gray-lighter-color
+
+.artwork-auction-buyers-premium
+  garamond-size('m-caption', true)
+  color gray-darker-color
+  margin-top 20px
+  text-align center
+  a
+    text-decoration underline
+    garamond-size('m-caption', true)
+    color gray-darker-color
+
+.artwork-auction-bid-module__auction-links
+  margin 25px 0px
+  &.chevron-nav-list a
+    margin-left -20px
+    margin-right -20px
+    padding-left 20px
+    &::after
+      background black
+      right 5px
+
+.artwork-auction-bid-module__closed
+  padding-bottom 10px
+  border-bottom 1px solid gray-lighter-color
+  margin-bottom 20px
+  margin-left -20px
+  margin-right -20px
+  padding-left 20px
+
+
+// Styles for the contact a gallery and ask a specialist page,
+// when clicking "Chat with Artsy Specialist" or "Contact Gallery".
+//
+
+@import '../../../components/stylus_lib'
+
+.ask-specialist-header
+  display table
+  width 100%
+  margin 15px 0 15px 0
+  border-bottom 1px solid light-gray-border-color
+  padding-bottom 15px
+  & > img
+    float right
+    max-width 50px
+    max-height 50px
+    border-radius 50%
+
+.submit-inquiry-form
+  margin-bottom 80px
+  & > .loading-spinner
+    margin 100px auto
+  input
+    margin 7px 0
+  textarea
+    min-height 0
+
+#contact-gallery-page-to
+  margin 20px 0 15px 0
+  padding-bottom 10px
+  border-bottom 1px solid light-gray-border-color
+
+.submit-inquiry-prefilled
+  margin 20px 0
+  overflow ellipsis
+  & > .submit-inquiry-email
+    color dark-gray-text-color
+
+.submit-inquiry-confirmation
+  margin 80px 0
+  h2
+    text-align center
+    margin-bottom 60px
+  a
+    margin-bottom 10px
+
+.submit-inquiry-message
+  min-height 100px
+
+.submit-inquiry-errors
+  color bad-red-color
+  margin 7px 0
+
+.submit-inquiry-form-artwork-header
+  img
+    max-width 60px
+    max-height 38px
+    display inline-block
+    margin-right 15px
+
+#sifah-details
+  display inline-block
+
+#contact-gallery-form .submit-inquiry-form
+  margin-top 15px
+
+// Accomdate Eigen back button
+.layout-artsy-mobile-app
+  #contact-gallery-page
+    margin-top 80px
+
+//
+// Styles for the artwork inquiry area, such as the contact gallery button
+// and listed edition sets.
+//
+
+#artwork-page-not-for-sale-label
+#artwork-page-price-label
+  padding 10px 0
+  border-top 1px dotted light-gray-border-color
+  border-bottom @border-top
+  margin-top 10px
+
+#artwork-page-price-label
+  clearfix()
+  p
+    float left
+  #artwork-page-sold
+    avant-garde()
+    color bad-red-color
+    font-size avant-garde-font-size
+  #artwork-page-price
+    float right
+
+#artwork-page-inquiry-microcopy
+  text-align center
+  letter-spacing 1px
+  text-transform uppercase
+  font-size 12px
+  margin 10px 0 5px 0
+
+#artwork-page-edition-sets
+  margin 10px 0
+  font-size 14px
+  li
+    position relative
+    border-bottom 1px dotted black
+    padding 10px 0
+    &:first-child
+      border-top @border-bottom
+  .artwork-page-edition-set-sale-message
+    position absolute
+    top 10px
+    right 0
+  .artwork-page-edition-set-total
+    color dark-gray-text-color
+  input[type=radio]
+    float left
+    margin-right 7px

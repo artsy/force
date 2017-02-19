@@ -1,0 +1,23 @@
+@require '../components/checkbox'
+
+.settings-linked-accounts
+  &__service
+    block-margins(gutter)
+
+    &__name
+      avant-garde-size('body')
+      margin-bottom 5px
+
+    &__description
+      garamond-size('s-body')
+
+    &__toggle
+      &:after
+        content 'Connect'
+      &[data-connected='connected']
+        &:after
+          content 'Connected'
+        &:hover
+          color red-color
+          &:after
+            content 'Disconnect'

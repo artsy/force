@@ -1,0 +1,79 @@
+//
+// Styles for the bid page when clicking "Bid" on an artwork in an auction
+//
+
+@import '../components/stylus_lib'
+@import '../components/bid_numbers'
+
+#auction-registration-page
+  margin 20px
+  h2
+    margin-bottom: 15px
+    font-size: 26px
+    padding: 0px 30px
+    line-height: 137%
+
+  h3
+    font-size 20px
+    margin-bottom 15px
+
+  .note, .bidding-note
+    color light-gray-text-color
+    a
+      color light-gray-text-color
+
+  .note
+    font-style italic
+
+  .bidding-note
+    margin-top 15px
+    text-align center
+
+  .registration-form-header
+    margin-top 15px
+    text-align center
+    text-transform uppercase
+    letter-spacing 2px
+
+  label
+    display block
+    avant-garde()
+    font-size 12px
+
+  .credit-card-input-section
+    margin-top 10px
+  .card-expiration
+    .month, .year
+      width 49%
+      display inline-block
+      vertical-align top
+   .month
+     margin-right 2%
+
+  .registration-form-section
+    margin-top 20px
+
+  .card-expiration.credit-card-input-section, .card-security-code.credit-card-input-section, .postal-code.credit-card-input-section, .region.credit-card-input-section
+    display inline-block
+    vertical-align top
+
+  .postal-code.credit-card-input-section, .region.credit-card-input-section
+    width 49%
+
+  .card-expiration.credit-card-input-section, .region.credit-card-input-section
+    margin-right 2%
+
+  .avant-garde-box-button
+    margin-top 15px
+
+  .error
+    color bad-red-color
+
+.card-expiration
+  width 62%
+
+#auction-registration-page .card-security-code.credit-card-input-section
+  width 36%
+  display block
+  input
+    padding 10px 0 11px 0

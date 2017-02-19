@@ -1,0 +1,120 @@
+#fair-info
+  .fair-page-module-heading
+    border-bottom none
+    padding-bottom 0
+
+.fair-info-event-nav
+  margin-bottom 36px
+  text-align center
+
+.fair-info-event-nav-item
+  avant-garde()
+  border 2px solid light-gray-border-color
+  color light-gray-border-color
+  display inline-block
+  text-align center
+  text-decoration none
+  margin 0 8px
+  width calc(25% - 16px)
+  margin-bottom 20px
+  span
+    display block
+  &.is-active
+    color black
+    border-color black
+    .fair-info-event-nav-day-abbr
+      border-color black
+
+.fair-info-event-nav-day-abbr
+  border-bottom 2px solid light-gray-border-color
+  font-size 12px
+  line-height 1
+  padding-top 2px
+
+.fair-info-event-nav-day-num
+  font-size 28px
+  line-height 1.25
+  padding-top 5px
+
+.fair-info-events-for-day
+  display none
+  &.is-active
+    display block
+
+.fair-info-event-list-item
+  margin-bottom 30px
+.fair-info-event-list-item-link
+  text-decoration none
+.fair-info-event-item-image
+  margin 0
+  img
+    max-width 100%
+  figcaption
+    garamond-size('l-caption')
+    color gray-dark-color
+    margin-bottom 20px
+.fair-info-event-group-name
+  garamond-size('l-body', true)
+  font-style italic
+  display inline
+  &:after
+    content ': '
+.fair-info-event-name
+  garamond-size('l-body', true)
+  margin-bottom 15px
+.fair-info-event-venue
+  avant-garde-size('s-headline', true)
+  margin-bottom 30px
+.fair-info-event-details
+.fair-info-event-description
+  margin-bottom 12px
+  garamond-size('s-body', true)
+  p
+    margin-bottom 15px
+.fair-info-event-details
+  margin-bottom 30px
+
+.fair-info-event-subheader
+  border-top 1px solid light-gray-border-color
+  border-bottom 1px solid light-gray-border-color
+  margin-bottom 20px
+  padding 6px 0 4px
+.fair-info-event-time
+  avant-garde-size('m-headline', true)
+  color black
+.fair-info-event-plus-symbol
+  avant-garde-size('m-headline', true)
+  vertical-align text-top
+.fair-event-add-to-cal
+  garamond-size('s-body', true)
+  display block
+  color light-gray-border-color
+  letter-spacing 0
+  text-decoration none
+  color gray-dark-color
+  float right
+
+.fair-page-heading-add-to-ical
+  @extends .fair-event-add-to-cal
+  margin-top 10px
+  float none
+  text-transform none
+
+.fair-info-event-page
+  margin-bottom 60px
+  .fair-info-event-venue
+    margin-bottom 10px
+
+.fair-info-event-map
+  margin-left 15px
+  display inline-block
+  garamond-size('s-body', true)
+  text-transform none
+  letter-spacing 0
+  text-decoration none
+  border-bottom none
+  .icon-circle-chevron
+    vertical-align middle
+
+.fair-info-event-show-more
+  avant-garde-size('body', true)

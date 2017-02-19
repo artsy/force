@@ -1,0 +1,17 @@
+extends ../../../../components/layout/templates/main.jade
+
+mixin eventListItem(event)
+  include ./list_item.jade
+
+block content
+  #fair-programming.main-side-margin.mobile-app-top-padding
+    .fair-programming-event-list
+      h1.fair-page-module-heading Programming
+
+      nav.fair-programming-nav
+        include ./nav.jade
+
+      each events, day in eventsByDay
+        .fair-programming-events-for-day( data-day=day )
+          each event in events
+            +eventListItem(event)

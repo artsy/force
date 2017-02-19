@@ -1,0 +1,25 @@
+- size = size || tall
+- imageUrl = artwork.defaultImageUrl(size) ? artwork.defaultImageUrl(size) : artwork.get('image').url
+.artwork-columns-artwork
+  a( href='/artwork/' + artwork.get('id') )
+    img( src=imageUrl data-id=artwork.get('_id') )
+  .artwork-columns-artwork-details
+    if artwork.get('sale_artwork') && artwork.get('sale_artwork').lot_number
+      p.artwork-columns-artwork-details__auction-lot-number
+        | Lot #{artwork.get('sale_artwork').lot_number}
+
+    if artwork.get('artist')
+      p= artwork.get('artist').name
+    p
+      em= artwork.get('title')
+      if artwork.get('date')
+        | ,
+        = artwork.get('date')
+      p= artwork.partnerName()
+
+    if artwork.get('sale')
+      .artwork-columns-artwork-details__bid-now
+        if artwork.get('sale').is_open
+          p.bid-now-link Bid now
+        else
+          p.bid-now-link Auction closed

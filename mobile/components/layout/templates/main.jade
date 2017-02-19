@@ -1,0 +1,32 @@
+extends ./scaffold
+include ./login-signup
+
+block body
+  #content
+    if showMarketingSignupModal
+      include ../../marketing_signup_modal/index
+    else
+      mixin login-signup
+
+    header#main-header
+      nav.main-dropdown-menu.js-main-dropdown-menu
+        include ../../main_dropdown_menu/template
+
+      nav.main-header-nav
+        a#main-header-logo( href= '/' )
+          #main-header-logo-icon
+        a#main-header-menu( href= '#' )
+          #main-header-menu-icon
+        form#main-header-search-form( action='/search', method='GET' )
+          input#main-header-search-box(
+            placeholder='Search',
+            name='term',
+            value=mainHeaderSearchBoxValue,
+            type='search'
+          )
+          button#main-header-search-button.avant-garde-box-button Search
+
+    main
+      block content
+
+    include footer

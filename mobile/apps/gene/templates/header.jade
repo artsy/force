@@ -1,0 +1,11 @@
+header#gene-page-header
+  h1.gene-page-large-header.avant-garde-header-center= gene.get('name')
+  .gene-follow-button-container
+    .follow-button.avant-garde-box-button
+  h2
+    .gene-description
+      .gene-description-text
+        p!= gene.mdToHtml('description')
+        p.gene-read-more-fade
+      .gene-read-more.avant-garde-subheader
+        a.gene-read-more-button(href="#") READ MORE

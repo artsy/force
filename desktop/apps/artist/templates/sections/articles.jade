@@ -1,0 +1,34 @@
+.artist-page-section-block#artist-related-articles-section
+  h2.artist-section-header Articles on Artsy
+  #artist-related-articles-content
+    if articles && articles.length
+      for article in articles
+        .article-list-item
+          a.article-list-item__image.hoverable-image-link( href= article.href )
+            - var image = article.thumbnail_image
+            - var cropped = image ? image.cropped : false
+            - var imageUrl = cropped ? cropped.url : false
+            .hoverable-image.is-four-three.is-cropped(
+              alt= article.title
+              style= imageUrl && 'background-image: url(#{imageUrl})'
+            )
+          .article-list-item__blurb
+            if article.thumbnail_title
+              a( href= article.href )
+                h3.article-list-item__title= article.thumbnail_title
+            if article.author
+              .article-list-item__author
+                | #{article.author.name}
+
+            if article.thumbnail_teaser
+              a( href= article.href )
+                - if (!teaserLimit) { var teaserLimit = 230 }
+                .article-list-item__summary
+                  = _s.prune(article.thumbnail_teaser, teaserLimit)
+                  | &nbsp
+                  span.article-list-item__go Read more
+    else
+      .loading-spinner
+
+.artist-rail.artist-artworks-rail.arv-container
+  include ../../../../components/artwork_rail/templates/index

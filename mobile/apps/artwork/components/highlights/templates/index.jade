@@ -1,0 +1,20 @@
+mixin highlight-image-module(href, type, url, width, height)
+  a(href=href data-type=type)
+    img(
+      data-type=type
+      src=url
+      width=width
+      height=height
+    )
+if artwork.highlights.length
+  .artwork-section-separator
+  .main-side-margin
+    .artwork-highlights-module
+      for highlight in artwork.highlights
+        case highlight.__typename
+          when 'HighlightedShow'
+            .artwork-highlight-module__show
+              include ./show.jade
+          when 'HighlightedArticle'
+            .artwork-highlight-module__article
+              include ./article.jade

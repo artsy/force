@@ -1,0 +1,24 @@
+doctype xml
+urlset(
+  xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
+)
+  - slugs = _.pluck(models, 'id')
+  for slug in slugs
+    url
+      loc=sd.APP_URL + '/' + slug
+      priority='0.75'
+    url
+      loc=sd.APP_URL + '/' + slug + '/shows'
+    url
+      loc=sd.APP_URL + '/' + slug + '/artists'
+    url
+      loc=sd.APP_URL + '/' + slug + '/posts'
+    url
+      loc=sd.APP_URL + '/' + slug + '/contact'
+    url
+      loc=sd.APP_URL + '/' + slug + '/shop'
+    url
+      loc=sd.APP_URL + '/' + slug + '/collection'
+    url
+      loc=sd.APP_URL + '/' + slug + '/about'
+    

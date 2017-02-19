@@ -1,0 +1,49 @@
+//- Temporarily move artwork paths for auction promos: https://github.com/artsy/microgravity/issues/818
+a.auction-artwork-list-item( href= auction.isAuctionPromo() ? ('/auction-artwork/' + artwork.id) : artwork.href() )
+  .auction-artwork-list-img-container
+    img( src= artwork.defaultImageUrl() )
+
+  .auction-artwork-list-details
+    section
+      if artwork.related().saleArtwork.get('lot_number')
+        .aali-lot-number
+          | Lot #{artwork.related().saleArtwork.get('lot_number')}
+
+      if artwork.related().artists.length
+        h3.aali-artist-name
+          = artwork.related().artists.toSentence()
+      else if artwork.related().artist
+        h3.aali-artist-name
+          = artwork.related().artist.get('name')
+
+      h3.aali-title
+        em= artwork.get('title')
+        if artwork.get('date')
+          | , #{artwork.get('date')}
+
+    section
+      if artwork.related().saleArtwork.estimate()
+        .aali-estimate
+          | #{artwork.related().saleArtwork.estimateLabel()}: #{artwork.related().saleArtwork.estimate()}
+
+      unless auction.isAuctionPromo()
+        unless artwork.get('sold')
+          .aali-current-bid
+            if auction.get('auction_state') == 'closed'
+              | Online Bidding Closed
+            else
+              strong
+                = artwork.related().saleArtwork.bidLabel()
+                = ': '
+              span
+                = artwork.related().saleArtwork.currentBid()
+          unless auction.isClosed()
+            .aali-bid-count
+              | #{artwork.related().saleArtwork.formatBidCount()}
+
+          if artwork.get('acquireable') && artwork.saleMessage()
+            .aali-buy-now
+              | Buy Now: #{artwork.saleMessage()}
+        else
+          .aali-sold
+            = artwork.saleMessage()

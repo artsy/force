@@ -1,0 +1,10 @@
+include ../../../components/filter/dropdown_mixin.jade
+
+.feature-artwork-filter
+  +filter-dropdown('Sort By','sort', {
+    'Artist A-Z': 'artist-a-to-z',
+    'Most Bids': 'most-bids',
+    'Least Bids': 'least-bids',
+    'Highest Current Bid': 'highest-current-bid',
+    'Lowest Current Bid': 'lowest-current-bid'
+  }, true)

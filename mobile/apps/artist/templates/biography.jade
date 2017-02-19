@@ -1,0 +1,10 @@
+extends ../../../components/layout/templates/main
+
+block content
+  include header
+  #artist-biography-page.main-side-margin
+    if artist.biography_blurb && artist.biography_blurb.text
+      != artist.biography_blurb.text
+      if artist.biography_blurb.credit
+        .artist-biography-page-credit
+          | &mdash; #{artist.biography_blurb.credit}

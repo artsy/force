@@ -1,0 +1,8 @@
+.eoy-artist-item(data-slug=artist.slug data-id=artist._id)
+  .eoy-artist-item__thumbnail
+    a(href="/artist/#{artist.slug}"): img(src="/search/image/artist/#{artist.slug}")
+  
+  .eoy-artist-item__name
+    a.eoy-artist-item__name__link(href="/artist/#{artist.slug}")= artist.name
+    .eoy-artist-item__name__follow-button.entity-follow.artist-follow(data-id=artist.slug)
+      //- Rendered on the client

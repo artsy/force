@@ -1,0 +1,19 @@
+extends ../../../components/layout/templates/main
+include ../../../components/filter/dropdown_mixin.jade
+
+block content
+  #fair-page-main-content.fair-artworks.mobile-app-top-padding
+    h1.fair-artworks-header.fair-page-az-header.avant-garde-header-center Works
+
+    unless Object.keys(sd.PARAMS || {}).length
+      .main-side-margin
+        .fairs-artworks-categories.chevron-nav-list
+          a( href='#{fair.href()}/browse/artworks?filter=true' )
+            | All Works
+
+          for gene in fair.get('filter_genes')
+            a( href='#{fair.href()}/browse/artworks?related_gene=#{gene.id}' )
+              = gene.name
+
+    else
+      #fair-artworks-page-content--inner.artwork-filter-content

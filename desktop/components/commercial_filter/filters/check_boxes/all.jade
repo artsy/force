@@ -1,0 +1,7 @@
+.artsy-checkbox.cf-items__checkbox
+  .artsy-checkbox--checkbox
+    - hasParams = selected && selected.length > 0
+    - allAttr = itemType + '-all'
+    input( type='checkbox', id=allAttr, checked=!hasParams )
+    label( for=allAttr )
+  label.artsy-checkbox--label( for=allAttr ) All

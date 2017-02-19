@@ -1,0 +1,20 @@
+h2.artwork-header Mentioned In
+
+.artwork-highlight-module__container
+  if highlight.image
+    .artwork-highlight-module__image
+      +highlight-image-module(
+        highlight.href,
+        highlight.__typename,
+        highlight.image.thumb.url,
+        highlight.image.thumb.width,
+        highlight.image.thumb.height
+      )
+
+  .artwork-highlight-module__details
+    .title__author
+      .artwork-highlight-module__details__title
+        a(href=highlight.href)= highlight.title
+
+      .artwork-highlight-module__details__author
+        | #{highlight.author.name}

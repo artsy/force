@@ -1,0 +1,23 @@
+.auth-page-divider
+  small  Log in using
+#auth-page-login-social
+  a.auth-page-facebook.avant-garde-box-button.avant-garde-box-button-black(
+    href='/users/auth/facebook'
+  ) Facebook
+  a.auth-page-twitter.avant-garde-box-button.avant-garde-box-button-black(
+    href='/users/auth/twitter'
+  ) Twitter
+.auth-page-divider
+  small Or
+form( action=sd.AP.loginPagePath, method='POST' )
+
+  input.bordered-input( name='email', type='email', placeholder='Email', value=email ? email : '' )
+  input.bordered-input( name='password', type='password', placeholder='Password' )
+  input( type='hidden', name='redirect-to', value=(redirectTo ? redirectTo : '/') )
+  input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+  button.avant-garde-box-button.avant-garde-box-button-black( type='submit' )
+    | Log in
+    .loading-spinner
+  .auth-page-center
+    a#auth-page-forgot-password( href='/forgot_password' ) Forgot password?
+    a#auth-page-sign-up( href=('/sign_up' + (redirectTo ? "?redirect-to=#{redirectTo}" : '')) ) Sign up for Artsy

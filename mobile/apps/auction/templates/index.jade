@@ -1,0 +1,21 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{auction.get('name')} | Artsy
+
+block content
+  if auction.hasImage('wide')
+    .auction-banner(class="auction-banner--#{auction.id}" style="background-image: url('#{auction.imageUrl('wide')}')")
+
+  .auction-page.main-side-margin( class= auction.hasImage('wide') ? 'has-image' : 'has-no-image' )
+    if auction.has('profile')
+      .auction-icon
+        img( src= auction.related().profile.icon().imageUrl() )
+
+    h1.auction-title.avant-garde-header
+      = auction.get('name')
+
+    if auction.isPreview() && !auction.isAuctionPromo()
+      include preview
+    else
+      include auction

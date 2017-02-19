@@ -14,10 +14,10 @@ Meta
 * __Production:__ [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
 * __Staging:__ [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
 * __Github:__ [https://github.com/artsy/force](https://github.com/artsy/force)
-* __CI:__ [Semaphore](https://semaphoreci.com/artsy-it/force); merged PRs to artsy/force#master are automatically deployed to staging; merged PRs to artsy/force#release are automatically deployed to production. Make all PRs from feature branches to master to deploy them to staging. Create a PR from master to release to deploy a set of changes to production.
+* __CI:__ [CircleCi][circleci]; merged PRs to `artsy/volt#master` are automatically deployed to staging; PRs from `master` to `release` are automatically deployed to production.
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe), [@1aurabrown](https://github.com/1aurabrown), 
 
-[![Build Status](https://semaphoreci.com/api/v1/artsy-it/force/branches/master/badge.svg)](https://semaphoreci.com/artsy-it/force)
+[![Build Status](https://circleci.com/gh/artsy/force-merge.svg?style=svg)](https://circleci.com/gh/artsy/force-merge)
 
 History
 -------

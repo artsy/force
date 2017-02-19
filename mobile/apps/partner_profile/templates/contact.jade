@@ -1,0 +1,44 @@
+extends ../../../components/layout/templates/main
+
+block content
+  .main-side-margin
+    nav.slash-breadcrumbs
+      a( href='/' + profile.get('id') )= partner.get('name')
+      span Contact
+
+    if profile.isGallery() && partner.has('email')
+      h1.partner-profile-contact-email
+        | Are you interested in purchasing works from #{partner.get('name')}?
+        br
+        a(
+          data-partner-id=partner.get('_id'),
+          data-partner-slug=partner.get('id'),
+          href=partner.getMailTo()
+        ) Contact gallery via email.
+
+    if partner.has('website')
+      h2.partner-profile-contact-website
+        a(
+          data-partner-id=partner.get('_id'),
+          data-partner-slug=partner.get('id'),
+          href=partner.get('website'),
+          target='_blank'
+        )= partner.getSimpleWebsite()
+
+
+    for locations, city in locationGroups
+      h2.partner-profile-location-group-header= city
+      ul.partner-profile-locations
+        for location in locations
+          li
+            img( src=location.gmapImageUrl() )
+            p= location.get('address')
+            p #{location.get('city')}, #{location.get('state')} #{location.get('postal_code')}
+            p= location.get('country')
+            if location.get('phone')
+              p Tel: #{location.get('phone')}
+              br
+              p: a.avant-garde-box-button( href="tel:#{location.get('phone')}" ) Call #{partner.get('type')}
+            br
+
+    a.partner-back-link( href='/' + profile.get('id') ) Go to #{partner.get('name')}

@@ -1,0 +1,7 @@
+extends ../../../components/layout/templates/scaffold
+
+block body
+  #auth-page
+    .artsy-logo-large
+    .auth-page-error-message= error || ""
+    include login_form
