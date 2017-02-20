@@ -34,11 +34,12 @@ module.exports.index = (req, res, next) ->
   artworks.comparator = (artwork) ->
     (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
 
-  Q.all([
+  promise = Q.all([
     auction.fetch(cache: true)
     saleArtworks.fetchUntilEndInParallel(cache: true)
     setupUser(req.user, auction)
-  ]).catch(next).done ->
+  ]).catch(next)
+  promise.done ->
     if auction.isLiveOpen()
       return res.redirect(
         "#{PREDICTION_URL}/#{auction.get 'id'}" +
@@ -55,6 +56,7 @@ module.exports.index = (req, res, next) ->
         artworks: artworks
         saleArtworks: saleArtworks
       }, nav()
+  return promise
 
 module.exports.subscribe = (req, res, next) ->
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')

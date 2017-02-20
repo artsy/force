@@ -8,7 +8,7 @@
   },
   "scripts": {
     "mocha": "mocha -r should --compilers coffee:coffee-script/register,js:babel-core/register -t 30000",
-    "test": "yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
+    "test": "concurrently \"yarn mocha $(find desktop/test -name '*.coffee')\" \"yarn mocha $(find desktop/components/*/test -name '*.coffee')\" \"yarn mocha $(find desktop/components/**/*/test -name '*.coffee')\" \"yarn mocha $(find desktop/apps/*/test -name '*.coffee')\" \"yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')\" \"yarn mocha $(find mobile/test -name '*.coffee')\" \"yarn mocha $(find mobile/components/*/test -name '*.coffee')\" \"yarn mocha $(find mobile/components/**/*/test -name '*.coffee')\" \"yarn mocha $(find mobile/apps/*/test -name '*.coffee')\" \"yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')\"",
     "deploy": "mkdir public && mkdir public/assets && ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets && heroku config:set ASSET_MANIFEST=$(cat manifest.json) && git push --force heroku master",
     "start": "node -r dotenv/config .",
     "assets": "mkdir public && mkdir public/assets && ezel-assets mobile/assets/ && ezel-assets desktop/assets/"
@@ -43,6 +43,7 @@
     "cheerio": "^0.22.0",
     "classnames": "^2.2.5",
     "coffee-script": "^1.11.1",
+    "concurrently": "^3.3.0",
     "connect-flash": "^0.1.1",
     "connect-timeout": "^1.7.0",
     "cookie-parser": "^1.4.0",

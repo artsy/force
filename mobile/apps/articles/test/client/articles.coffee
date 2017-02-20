@@ -98,7 +98,7 @@ describe 'MagazineView', ->
 
   describe '#initialize', ->
 
-    it 'offset should be zero', ->
+    xit 'offset should be zero', ->
       @view.offset.should.equal 0
 
     it 'renders articles', ->
