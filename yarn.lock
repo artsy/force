@@ -5061,7 +5061,11 @@ revalidator@0.1.x:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/revalidator/-/revalidator-0.1.8.tgz#fece61bfa0c1b52a206bd6b18198184bdd523a3b"
 
-rewire@^2.2.0, rewire@^2.3.1:
+rewire@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/rewire/-/rewire-2.2.0.tgz#15781a04a4cc807b246aa4a84cfda57992ee68b9"
+
+rewire@^2.3.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/rewire/-/rewire-2.5.2.tgz#6427de7b7feefa7d36401507eb64a5385bc58dc7"
 
