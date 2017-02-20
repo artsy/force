@@ -16,9 +16,9 @@ describe 'ArtworkInquiry', ->
       Backbone.sync.restore()
 
     it 'sends the inquiry immediately', ->
-      @inquiry.set(id: 'foo').send(null, success: ->
-        true.should.be.true()
-      ).then ->
+      success = sinon.spy()
+      @inquiry.set(id: 'foo').send(null, success: success).then ->
+        success.called.should.be.ok()
         Backbone.sync.args[0][2].url
           .should.containEql '/api/v1/me/artwork_inquiry_request/foo/send'
 
