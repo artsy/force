@@ -102,6 +102,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
     "validator": "^6.1.0",
+    "mailcheck": "^1.1.1",
     "xss-filters": "^1.2.6"
   },
   "devDependencies": {
@@ -137,7 +138,6 @@
     "jquery.iframe-transport": "^1.0.0",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
     "konami-js": "0.0.2",
-    "mailcheck": "^1.1.1",
     "mocha": "^3.1.2",
     "node-inspector": "^0.12.5",
     "openseadragon": "^2.2.1",
