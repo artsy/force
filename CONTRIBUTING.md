@@ -38,12 +38,6 @@ Copy the `.env.oss` file to a `.env` file.
 cp .env.oss .env
 ```
 
-Artsy developers should paste in the sensitive configuration from staging using the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
-
-```sh
-heroku config --app=force-staging
-```
-
 Start the server.
 
 ```sh
@@ -64,7 +58,7 @@ git checkout -b my-feature-branch
 
 ## Write Tests
 
-Write tests for all new features and fixes. Run tests with `yarn test`.
+Write tests for all new features and fixes. Run tests with `yarn test`. To speed up your workflow try watching an individual file for changes, e.g. `yarn mocha -- --watch desktop/components/foo/test.coffee`
 
 We definitely appreciate pull requests that highlight or reproduce a problem, even without a fix.
 

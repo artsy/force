@@ -132,14 +132,13 @@ module.exports = (app) ->
   # Cookie and session middleware
   app.use cookieParser()
   app.use session
-    cookie: secure: true
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    key: SESSION_COOKIE_KEY
-    maxage: SESSION_COOKIE_MAX_AGE
+    name: SESSION_COOKIE_KEY
+    maxAge: SESSION_COOKIE_MAX_AGE
     # secure uses req.connection.encrypted, but heroku has nginx terminating SSL
     # secureProxy just sets secure=true
-    secureProxy: "production" is NODE_ENV or "staging" is NODE_ENV
+    secure: "production" is NODE_ENV or "staging" is NODE_ENV
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE
