@@ -5,7 +5,18 @@ deployment:
   staging:
     branch: master
     commands:
-      - DEPLOY_ENV=staging yarn deploy
+      - |
+        cat >~/.netrc <<EOF
+        machine api.heroku.com
+          login $HEROKU_EMAIL
+          password $HEROKU_TOKEN
+        machine git.heroku.com
+          login $HEROKU_EMAIL
+          password $HEROKU_TOKEN
+        EOF
+      - chmod 600 ~/.netrc
+      - DEPLOY_ENV=staging yarn deploy-assets
+      - git push git@heroku.com:force-$DEPLOY_ENV.git $CIRCLE_SHA1:refs/heads/master
 dependencies:
   override:
     - yarn
