@@ -35,8 +35,9 @@ deployment:
       - DEPLOY_ENV=production yarn deploy-assets
       - git push git@heroku.com:force-production.git $CIRCLE_SHA1:refs/heads/master
 dependencies:
-  override:
+  pre:
     - rvm install 2.3.1
+  override:
     - yarn install
 test:
   override:
