@@ -74,11 +74,11 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    maxage: SESSION_COOKIE_MAX_AGE
-    key: SESSION_COOKIE_KEY
+    maxAge: SESSION_COOKIE_MAX_AGE
+    name: SESSION_COOKIE_KEY
     # secure uses req.connection.encrypted, but heroku has nginx terminating SSL
     # secureProxy just sets secure=true
-    secureProxy: "production" is NODE_ENV or "staging" is NODE_ENV
+    secure: "production" is NODE_ENV or "staging" is NODE_ENV
   app.use artsyPassport
     FACEBOOK_ID: config.FACEBOOK_APP_ID
     FACEBOOK_SECRET: config.FACEBOOK_APP_SECRET

@@ -38,12 +38,6 @@ Copy the `.env.oss` file to a `.env` file.
 cp .env.oss .env
 ```
 
-Artsy developers should paste in the sensitive configuration from staging using the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
-
-```sh
-heroku config --app=force-staging
-```
-
 Start the server.
 
 ```sh
