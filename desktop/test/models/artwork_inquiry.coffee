@@ -10,13 +10,19 @@ describe 'ArtworkInquiry', ->
     beforeEach ->
       sinon.stub Backbone, 'sync'
         .yieldsTo 'success'
+        .returns Promise.resolve()
 
     afterEach ->
       Backbone.sync.restore()
 
-    it 'sends the inquiry immediately', (done) ->
-      @inquiry.send null, success: ->
+    it 'sends the inquiry immediately', ->
+      @inquiry.set(id: 'foo').send(null, success: ->
         true.should.be.true()
-        done()
-      Backbone.sync.args[0][2].url
-        .should.containEql '/api/v1/me/artwork_inquiry_request/send'
+      ).then ->
+        Backbone.sync.args[0][2].url
+          .should.containEql '/api/v1/me/artwork_inquiry_request/foo/send'
+
+    it 'saves the inquiry first if its new', ->
+      @inquiry.save = sinon.stub().returns Promise.resolve()
+      @inquiry.send()
+      @inquiry.save.called.should.be.ok()
