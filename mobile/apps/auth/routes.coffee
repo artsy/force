@@ -36,8 +36,9 @@ module.exports.submitForgotPassword = (req, res, next) ->
     url: "#{sd.API_URL}/api/v1/users/send_reset_password_instructions?email=#{req.body.email}"
     success: ->
       res.render 'forgot_password_confirmation'
-    error: (m, response) ->
-      res.render 'forgot_password', error: response.body.error
+    error: (m, { response }) ->
+      msg = response?.body?.error or 'Failed to reset password, try again.'
+      res.render 'forgot_password', error: msg
 
 module.exports.resetPassword = (req, res) ->
   res.render 'reset_password'
