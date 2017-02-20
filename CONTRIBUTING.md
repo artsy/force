@@ -25,10 +25,11 @@ nvm install 6
 nvm alias default 6
 ```
 
-Install node modules.
+Install node modules with Yarn.
 
 ```sh
-npm install
+npm i yarn -g
+yarn install
 ```
 
 Copy the `.env.oss` file to a `.env` file.
