@@ -47,7 +47,7 @@ heroku config --app=force-staging
 Start the server.
 
 ```sh
-npm start
+yarn start
 ```
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
@@ -64,7 +64,7 @@ git checkout -b my-feature-branch
 
 ## Write Tests
 
-Write tests for all new features and fixes. Run tests with `npm test`.
+Write tests for all new features and fixes. Run tests with `yarn test`.
 
 We definitely appreciate pull requests that highlight or reproduce a problem, even without a fix.
 
