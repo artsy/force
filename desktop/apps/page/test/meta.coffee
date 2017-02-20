@@ -71,8 +71,7 @@ describe 'Meta tags', ->
         sd: @sd
         asset: (->)
 
-    it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/security"
+    it 'includes canonical, twitter card and og tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/security"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/security"

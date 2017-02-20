@@ -23,7 +23,7 @@ describe 'Meta tags', ->
         sd: @sd
         asset: (->)
 
-    it 'includes mobile alternate, canonical, twitter card and og tags', ->
+    it 'includes canonical, twitter card and og tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
