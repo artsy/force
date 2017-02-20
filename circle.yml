@@ -5,8 +5,7 @@ deployment:
   staging:
     branch: master
     commands:
-      - git remote add heroku git@heroku.com:force-staging.git
-      - yarn deploy
+      - DEPLOY_ENV=staging yarn deploy
 dependencies:
   override:
     - yarn
