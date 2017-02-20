@@ -12,4 +12,16 @@ dependencies:
     - yarn
 test:
   override:
-    - yarn test
+    - yarn mocha:
+      parallel: true
+      files:
+        - desktop/test/*.coffee
+        - desktop/components/*/test/*.coffee
+        - desktop/components/**/*/test/*.coffee
+        - desktop/apps/*/test/*.coffee
+        - desktop/apps/*/**/*/test/*.coffee
+        - mobile/test/*.coffee
+        - mobile/components/*/test/*.coffee
+        - mobile/components/**/*/test/*.coffee
+        - mobile/apps/*/test/*.coffee
+        - mobile/apps/*/**/*/test/*.coffee
