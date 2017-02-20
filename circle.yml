@@ -7,3 +7,9 @@ deployment:
     commands:
       - git remote add heroku git@heroku.com:force-staging.git
       - npm run deploy
+dependencies:
+  override:
+    - yarn
+test:
+  override:
+    - yarn test
