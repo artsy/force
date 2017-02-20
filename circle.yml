@@ -12,13 +12,6 @@ dependencies:
     - yarn
 test:
   override:
-    - yarn mocha:
+    - case $CIRCLE_NODE_INDEX in 0) yarn mocha $(find desktop/test -name '*.coffee') ;; 1) yarn mocha $(find desktop/components/*/test -name '*.coffee') ;; 2) yarn mocha $(find desktop/components/**/*/test -name '*.coffee') ;; 3) yarn mocha $(find desktop/apps/*/test -name '*.coffee') ;; 4) yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') ;; 5) yarn mocha $(find mobile/test -name '*.coffee') ;; 6) yarn mocha $(find mobile/components/*/test -name '*.coffee') ;; 7) yarn mocha $(find mobile/components/**/*/test -name '*.coffee') ;; 8) yarn mocha $(find mobile/apps/*/test -name '*.coffee') ;; 9) yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee'):
         parallel: true
-        files:
-          - desktop/test/**/*.{coffee,js}
-          - desktop/components/**/test/**/*.{coffee,js}
-          - desktop/apps/**/test/**/*.{coffee,js}
-          - mobile/test/**/*.{coffee,js}
-          - mobile/components/**/test/**/*.{coffee,js}
-          - mobile/apps/**/test/**/*.{coffee,js}
 
