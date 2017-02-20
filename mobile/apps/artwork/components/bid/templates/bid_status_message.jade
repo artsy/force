@@ -1,0 +1,20 @@
+mixin bidStatusMessage(lotStanding, saleArtwork)
+  - leadingBidder = lotStanding.is_leading_bidder
+  - reserveNotMet = saleArtwork.reserve_status === 'reserve_not_met'
+  .bid-status-message
+    if leadingBidder && !reserveNotMet
+      .bid-status-message__is-winning
+        p Highest Bidder
+          i.bid-status-message__arrow-up
+            include ../../../public/icons/bid-status-arrow.svg
+    else
+      if leadingBidder && reserveNotMet
+        .bid-status-message__is-winning-reserve-not-met
+          p Highest Bidder
+            i.bid-status-message__arrow-up
+              include ../../../public/icons/bid-status-arrow.svg
+      else
+        .bid-status-message__is-losing
+          p Outbid
+            i.bid-status-message__arrow-down
+              include ../../../public/icons/bid-status-arrow.svg

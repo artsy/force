@@ -1,0 +1,14 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{artwork.to_s} | Artsy
+
+block content
+
+  include ../components/image/templates/index.jade
+  include ../components/meta_data/templates/index.jade
+  include ../components/tabs/templates/index.jade
+  include ../components/highlights/templates/index.jade
+  include ../components/artist/templates/index.jade
+  include ../components/partner/index.jade
+  section.artwork-related-artworks

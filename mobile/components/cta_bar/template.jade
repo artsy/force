@@ -1,0 +1,21 @@
+.vam-outer: .vam-inner
+
+  if mode === 'email'
+    .cta-bar-container
+      .cta-bar-email
+        .cta-bar-header
+          h2= headline
+        .cta-bar-defer: a( href='#' )
+          | Close
+        .cta-bar-email-form
+          button.avant-garde-box-button.avant-garde-box-button-gray.js-articles-insights-click Subscribe
+          .cta-bar-email-input
+              input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
+              .js-articles-insights-subscribe
+                include ../../public/images/chevron_submit.svg
+      .cta-bar-thanks
+        .cta-bar-header
+          h2 Thank you.
+          h3 You are now subscribed to Artsy Insights for Galleries
+  else if mode === 'editorial-signup'
+    include ./editorial_signup

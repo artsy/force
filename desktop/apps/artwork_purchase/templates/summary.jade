@@ -1,0 +1,37 @@
+.ap-summary
+  .ap-summary__split
+    .ap-summary__section
+      .ap-summary__row.ap-summary__top
+        img.artwork-purchase__artwork-image( src= artwork.image.url )
+        .ap-summary__meta
+          .ap-summary__artist= artwork.artist_names
+          .ap-summary__title= artwork.title
+          .ap-summary__partner= 'Offered by ' + artwork.partner.name
+    .ap-summary__section
+      .ap-summary__row.ap-summary__price
+        .ap-summary__left Price
+        b.ap-summary__right= artwork.sale_message
+    .ap-summary__section
+      .ap-summary__row.ap-summary__shipping
+        .ap-summary__left Shipping
+        .ap-summary__right Quoted by seller
+      .ap-summary__row.ap-summary__tax
+        .ap-summary__left Tax
+        .ap-summary__right Quoted by seller
+    .ap-summary__section.ap-summary__total
+      .ap-summary__row
+        .ap-summary__left Total
+        .ap-summary__right Quoted by seller
+      button.js-ap-summary-submit.avant-garde-button-black.is-block(
+        href= '#',
+        data-state= 'ok',
+        type= 'submit',
+        value= 'Sumbit'
+      ) Send Request
+      if !user
+        .ap-summary__fine-print
+          = 'By signing up, you agree to our '
+          a.fine-faux-underline( href='/terms', target='_blank' ) Terms of Use
+          = ' and '
+          a.fine-faux-underline( href='/privacy', target='_blank' ) Privacy Policy
+          | .

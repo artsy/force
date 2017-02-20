@@ -1,0 +1,13 @@
+extends ../../../components/layout/templates/bare
+
+block content
+    .auction-subscribed-thank-you
+      .auction-subscribed-logo.icon-logotype
+      h1 Thank you.
+      p We'll notify you when the auction begins. Until then, you may also register to bid.
+      a.avant-garde-box-button.avant-garde-box-button-black.auction-subscribed-register(
+        href="/sign_up?email=1&prefill=#{encodeURIComponent(email)}&redirect-to=/auction-registration/#{auctionId}"
+      ) Register to bid
+      a.auction-subscribed-skip(
+        href="/sign_up?email=1&prefill=#{encodeURIComponent(email)}"
+      ) Skip

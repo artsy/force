@@ -1,0 +1,24 @@
+extends ../../../components/layout/templates/main
+
+block content
+  if feature.hasImage() && feature.imageUrl()
+    #feature-page-image( style="background-image: url(#{feature.imageUrl()})" )
+
+  if feature.imageUrl('wide')
+    #feature-banner(
+      style= "background-image: url(#{feature.imageUrl('wide')})"
+    )
+
+  .main-side-margin
+    h1#feature-page-name
+      = feature.get('name')
+
+    if feature.get('description')
+      #feature-page-description
+        != feature.mdToHtml('description')
+
+    .feature-auction-section.js-feature-auction-section
+      //- Rendered separately
+
+    #feature-page-items
+      .loading-spinner

@@ -1,0 +1,8 @@
+if item.imageUrl
+  img( src=item.imageUrl )
+if item.title || item.subtitle
+  .featured-items-details
+    if item.title
+      h2!= item.title
+    if item.subtitle
+      h3!= item.subtitle

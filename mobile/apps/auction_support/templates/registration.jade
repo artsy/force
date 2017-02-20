@@ -1,0 +1,15 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #auction-registration-page
+    .bid-registration-form.credit-card-form
+      .bid-registration-form-header
+        h2.avant-garde-header-center Register to bid on Artsy
+        h3.bid-section-header= sd.BIDDER_H1_COPY
+        p.note= sd.BIDDER_H2_COPY
+      .bid-registration-form-contents
+        include ./registration-form
+      .registration-form-content
+        .avant-garde-box-button.avant-garde-box-button-black
+          | Register
+          .loading-spinner

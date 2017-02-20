@@ -1,0 +1,12 @@
+.notifications-list-item
+  a.notifications-artist-link( href=artist.href() )= artist.get('name')
+  span.notifications-publish-date= publishedAt
+  .notifications-works-added
+    = count + ' '
+    if count == 1
+      | work added
+    else
+      | works added
+  .notifications-published-artworks
+  .notifications-see-more
+    a.chevron-arrow-button( href=artist.href() + '?sort=-published_at' ) See More

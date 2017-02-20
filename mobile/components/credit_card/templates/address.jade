@@ -1,0 +1,27 @@
+- var address = address || {}
+- var phone = phone || ''
+
+.street.credit-card-input-section
+  label Address
+  input.bordered-input.street( name=('address[street]'), type='text', value=(address.street || ''), autocomplete='street-address' )
+
+.country.credit-card-input-section
+  label Country
+  select.bordered-select.country( name=('address[country]'), autocomplete='country' )
+    include ./country_options
+
+.city.credit-card-input-section
+  label City
+  input.bordered-input.city( name=('address[city]'), type='text', value=(address.city || ''), autocomplete='locality' )
+
+.region.credit-card-input-section
+  label State
+  input.bordered-input.region( name=('address[region]'), type='text', value=(address.region || ''), autocomplete='region' )
+
+.postal-code.credit-card-input-section
+  label Zip code
+  input.bordered-input.postal-code( name=('address[postal_code]'), type='text', value=(address.postal_code || ''), autocomplete='postal-code', novalidate=true, pattern="\d*" )
+
+.telephone.credit-card-input-section
+  label Telephone
+  input.bordered-input.telephone( type='tel', name='telephone', value=(telephone || ''), autocomplete='tel', pattern="\d*" )

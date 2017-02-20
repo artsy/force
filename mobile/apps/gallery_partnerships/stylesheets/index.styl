@@ -1,0 +1,208 @@
+container-width = 100%
+container-margin = 30px
+container-padding = 20px
+section-margin-top = 50px
+
+//
+// Page Container
+//
+.gallery-partnerships-container
+  width container-width
+  margin container-margin auto
+  padding 0 container-padding
+  font-size 18px
+  line-height 28px
+
+//
+// Hero Units
+//
+.gallery-partnerships-hero-unit-header
+  margin-bottom 20px
+  .grid-item
+    vertical-align baseline
+
+.gallery-partnerships-hero-unit-content
+  position relative
+
+.gallery-partnerships-hero-unit-images-placeholder
+  > img
+    width 100%
+
+.gallery-partnerships-hero-unit-images
+  position absolute
+  width 100%
+  top 0
+
+.gallery-partnerships-hero-unit-image
+  position absolute
+  width 100%
+  transition opacity 1.5s
+  opacity 0
+  &.is-active
+    transition opacity 1s
+    opacity 1
+  > img
+    width 100%
+
+//
+// Sections
+//
+.gallery-partnerships-section
+  padding-top section-margin-top
+
+//
+// Section Header
+//
+.gallery-partnerships-section-header
+  margin-bottom 30px
+  &.apply
+    text-align center
+    h3
+      margin-bottom 50px
+    .apply-button
+      display inline-block
+      font-size 26px
+      width auto
+      padding 15px 40px
+      margin 30px auto
+  .grid-item
+    vertical-align top
+
+//
+// Content of Each Section
+//
+.gallery-partnerships-section-content
+  //
+  // Network
+  //
+  .grid
+    font-size 0
+  .grid-item
+    display inline-block
+    vertical-align top
+    width 50%
+    &:nth-child(odd)
+      padding-right 15px
+    &:nth-child(even)
+      padding-left 15px
+  .network-gallery-image > img
+    width 100%
+  .support-liaison
+  .network-gallery-info
+    avant-garde()
+    text-align center
+    line-height 1.5em
+    font-size 12px
+    margin 0 0 20px 0
+  .support-liaison-location
+  .network-gallery-location
+    color gray
+
+  //
+  // Audience
+  //
+  .audience-map
+    overflow hidden
+    > img
+      width 130%
+      margin-left -15%
+
+  //
+  // Support
+  //
+  .support-liaisons
+    text-align center
+    font-size 0
+  .support-liaison
+    font-size 10px
+    display inline-block
+    vertical-align top
+    width 25%
+    margin 4%
+    img
+      width 100%
+      margin-bottom 10px
+
+  //
+  // Brwoser Images Slideshow
+  //
+  .browser-images-container
+    position relative
+    width 100%
+    margin 0 auto
+  .browser-frame, .browser-images
+    &, img
+      width 100%
+  .browser-images
+    position absolute
+    top 0
+  .browser-image
+    position absolute
+    left 0
+    right 0
+    padding 3% 0.5% 0.5% 0.5%
+    transition opacity 1.5s
+    opacity 0
+    &.is-active
+      transition opacity 1s
+      opacity 1
+
+  //
+  // iPad/iPhone images Slideshos (override the Browser's)
+  //
+  .ipad-images-container
+  .iphone-images-container
+    margin-bottom 30px
+  .ipad-images-container
+    width 100%
+  .iphone-images-container
+    margin-left auto
+    margin-right auto
+    width 40%
+  .ipad-image
+    padding 4.5% 9%
+  .iphone-image
+    padding 25% 6.6%
+
+  // Quotes
+  .quote
+    &:before
+      content ''
+      width 40%
+      border-top 2px solid black
+      display inline-block
+  .quote-text
+    &:before
+      content "\201C"
+    &:after
+      content "\201D"
+  .quote-author
+    margin-top 10px
+    font-style italic
+    &:before
+      content "\2013"
+
+//
+// Page specific
+//
+#gallery-partnerships
+  h1
+    font-size 34px
+    line-height 1.15em
+    margin-bottom 15px
+  h2, h3
+    font-size 30px
+    line-height 1.1em
+  h2
+    font-style italic
+    &:after
+      content: "\2014"
+  h3
+    margin-bottom 10px
+  #main-layout-header
+    position absolute
+  #main-layout-container
+    margin-top 0 !important
+    height 100% !important
+  #main-layout-footer
+    display none

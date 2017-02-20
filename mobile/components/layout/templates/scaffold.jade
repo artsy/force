@@ -1,0 +1,46 @@
+//- Override any locals with `append locals`
+block locals
+  - assetPackage = 'mobile_all'
+  //- Hacky way of dealing with specs that depend on this template
+  - if (!asset) asset = function(u) { return u }
+
+doctype html
+html( class=htmlClass )
+  head
+    block head
+    include head
+  body
+    block body
+
+    #scripts
+      //- Segment.io
+      script( type="text/javascript" ).
+        !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+        analytics.load("#{sd.SEGMENT_WRITE_KEY}");
+        }}();
+
+      //-Quantcast
+
+
+      //- Fonts + Mixpanel, Quantcast, Google analytics script
+      if sd.NODE_ENV != 'test'
+        include ./quantcast.html
+        if sd.GOOGLE_ANALYTICS_ID
+          include ./ga.html
+
+      //- Sharify
+      if sharify
+        != sharify.script()
+
+      //- Add Google's jQuery
+      script( src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" )
+
+      //- Include asset package's javascript
+      script( src=asset('/assets/' + assetPackage + '.js') )
+      script( src=asset('/assets/mobile_analytics.js'))
+
+      //- Stripe
+      script( type="text/javascript", src="https://js.stripe.com/v2/" )
+
+      //- Include any scripts into the scripts block
+      block scripts

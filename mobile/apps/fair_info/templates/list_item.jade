@@ -1,0 +1,16 @@
+.fair-info-event-list-item
+  .fair-info-event-subheader
+    span.fair-info-event-time!= event.getTime()
+    a.fair-event-add-to-cal(href=event.icsHref())
+      span.fair-info-event-plus-symbol +
+      span.fair-event-add-to-cal-copy Add to Cal
+  a.fair-info-event-list-item-link( href=event.href() )
+    if event.get('image_url')
+      figure.fair-info-event-item-image
+        img( src=event.get('image_url') )
+        if event.get('caption')
+          figcaption= event.get('caption')
+    .fair-info-event-name #{event.get('name')}
+    .fair-info-event-venue= event.get('venue')
+  .fair-info-event-description!= event.mdToHtml('description')
+  a.fair-info-event-show-more( href=event.href() ) Show More

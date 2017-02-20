@@ -1,0 +1,10 @@
+.carousel(class=extraClasses ? extraClasses : '')
+  if images && images.length > 0
+    .carousel-figures-clip
+      #carousel-track.carousel-track
+        for image in images
+          if image.hasImage('medium')
+            figure.carousel-track__image
+              img( src=image.get('image_url').replace(':version', 'medium') )
+              if image.get('caption')
+                figcaption.carousel-caption= image.get('caption')

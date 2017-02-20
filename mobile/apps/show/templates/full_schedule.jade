@@ -1,0 +1,5 @@
+#show-page-hours
+  .show-page-hours-today
+    p= location && location.related().daySchedules.hoursToday() + " today"
+  .show-page-hours-full
+    a.chevron-arrow-button(href="#{show.href()}/hours") FULL HOURS

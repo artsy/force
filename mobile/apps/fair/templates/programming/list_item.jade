@@ -1,0 +1,7 @@
+.fair-programming-event-list-item
+  .fair-programming-event-time!= event.getTime()
+  a.fair-programming-event-list-item-link( href=event.href() )
+    .fair-programming-event-group-name.chevron-arrow-button= event.getEventGroups()
+    .fair-programming-event-name= event.get('name')
+    .fair-programming-event-venue= event.get('venue')
+  .fair-programming-event-description!= event.mdToHtml('description')

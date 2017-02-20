@@ -1,0 +1,8 @@
+.cf-popular_artists
+  .cf-popular_artists__title.avant-garde-s-headline Popular Artists
+  each artist in artists
+    .cf-popular_artists__row(data-href=artist.get('href'))
+      a(href=artist.get('href'))
+        img(src=artist.get('image').thumb.url, width=30)
+        div.avant-garde-body= artist.get('name')
+        i.icon-chevron-small-right

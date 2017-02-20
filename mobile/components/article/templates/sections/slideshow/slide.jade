@@ -1,0 +1,7 @@
+figure.article-carousel-figure.carousel-figure
+  img.article-carousel-figure-image(
+    src= figure.get('url')
+  )
+  if figure.get('caption')
+    figcaption
+      = figure.get('caption')

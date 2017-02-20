@@ -1,0 +1,65 @@
+@import '../stylus_lib'
+
+height = 75px
+close-button-width = 30px
+logo-size = (height - 30px)
+
+.app-banner
+  position absolute
+  top 0
+  right 0
+  left 0
+  height height
+  background-color black
+  z-index z-app-banner
+  border-bottom 1px solid #333
+  color white
+
+.app-banner-close-button
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  width close-button-width
+  font-size 22px
+  color dark-gray-text-color
+  text-align center
+  line-height height
+
+.app-banner-open-area
+  position absolute
+  color white
+  display block
+  height height
+  right 0
+  left close-button-width
+
+.app-banner-icon
+  position absolute
+  left 0
+  top 0
+  bottom 0
+  > i
+    font-size logo-size
+    line-height height
+
+.app-banner-description
+  position absolute
+  left logo-size
+  top 50%
+  transform translateY(-50%)
+  bottom 0
+  padding-left 20px
+  line-height 1
+
+.app-banner-view-text
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  padding 0 20px
+  line-height height
+  avant-garde()
+  color white
+  font-size 12px
+  text-decoration none

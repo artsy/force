@@ -1,0 +1,5 @@
+figure.article-section.article-section-image
+  img( src= resize(image.url, { width: 1080 }), alt= image.caption )
+  if image.caption
+    figcaption
+      != image.caption

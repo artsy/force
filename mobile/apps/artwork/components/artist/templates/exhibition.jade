@@ -1,0 +1,20 @@
+.aama-content.chevron-nav-list
+  a.aama-highlights-title.js-aama-accordion-link(data-id="shows-#{artist.id}") Exhibition History On Artsy
+
+- var shows = helpers.groupBy(artist.exhibition_highlights.slice(0,15), 'kind')
+
+.aama-tab-content.js-aama-content(data-id="shows-#{artist.id}")
+  if shows.solo && shows.solo.length
+    .artwork-artist-module__content__exhibition-highlights__title Solo Shows on Artsy
+    for show in helpers.sortExhibitions(shows.solo)
+      +showItem(show, show.partner.name)
+
+  if shows.group && shows.group.length
+    .artwork-artist-module__content__exhibition-highlights__title Group Shows on Artsy
+    for show in helpers.sortExhibitions(shows.group)
+      +showItem(show, show.partner.name)
+
+  if shows.fair && shows.fair.length
+    .artwork-artist-module__content__exhibition-highlights__title Fair History on Artsy
+    for show in helpers.sortExhibitions(shows.fair)
+      +showItem(show, show.partner.name)

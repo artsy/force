@@ -1,0 +1,10 @@
+mixin article-figure(article, width, showDate)
+  figure.article-figure
+    a.article-figure-container( href='/article/' + article.get('slug') )
+      .article-figure-img( style="background-image: url('#{article.get('thumbnail_image')}')" )
+      figcaption
+        if showDate
+          time.article-figure-date= article.formatDate()
+        .article-figure-title= article.get('thumbnail_title')
+        //- TODO: Hack for now, we need to save author data on the article.
+        .article-figure-author Artsy Editorial

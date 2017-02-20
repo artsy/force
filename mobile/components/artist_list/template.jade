@@ -1,0 +1,11 @@
+ul.artist-list
+  for artist in artists
+    li
+      if partnerArtist && partner
+        a( href="/#{partner.get('default_profile_id')}/artist/#{artist.get('id')}" )
+          img( src=artist.defaultImageUrl() )
+          h4= artist.get('name')
+      else
+        a( href="/artist/#{artist.get('id')}" )
+          img( src=artist.defaultImageUrl() )
+          h4= artist.get('name')

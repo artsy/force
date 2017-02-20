@@ -1,0 +1,24 @@
+.auction-info-section
+  h3 Auction Note
+
+  if auction.isAuctionPromo()
+    p: strong
+      | This is a sale preview. Bidding for this auction does not take place on Artsy.
+    if auction.has('profile')
+      p
+        | Please contact #{auction.related().profile.displayName()} if you would like to participate.
+
+  else
+    if auction.isPreliminaryAuction()
+      p
+        | When online bidding closes the current high bid will be transferred to the live auction and executed against other bidders.
+        | Wining bidders will be notified by email after the sale.
+
+    if auction.has('buyers_premium')
+      p
+        | This auction has a
+        = ' '
+        a( href= auction.buyersPremiumUrl() )
+          | buyer&rsquo;s premium
+    else
+      p This auction does not have a buyer&rsquo;s premium

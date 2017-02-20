@@ -1,0 +1,75 @@
+@import '../../components/stylus_lib'
+
+#shows-page
+  .shows-header
+    background-sizing cover
+    background-position center
+    padding 0
+    padding-bottom 56%
+    margin-bottom 30px
+
+  #shows-page-content
+    margin-bottom 30px
+
+
+#shows-city-page
+  .shows-city-header
+    font-size 18px
+    padding 40px 0 30px 0
+
+  .shows-city-sub-header
+    padding-bottom 5px
+
+  .shows-page-featured-empty
+    border-top 1px solid #ccc
+    font-size large-font-size
+    line-height 1.2
+    padding 40px 0
+
+.shows-page-list
+
+  &:before, &:after
+    content ""
+    display table
+
+  .shows-page-list__item
+    padding 15px 0
+    border-top 1px solid #ccc
+
+  .shows-page-list__item:last-child
+    border-bottom 1px solid #ccc
+    margin-bottom 20px
+
+  .shows-page-list__item__image
+    display inline-block
+    vertical-align top
+    padding-right 15px
+    width 105px
+
+    img
+      width 100%
+
+  .shows-page-list__item__details
+    display inline-block
+    vertical-align top
+    width alt-calc(100% \- 105px)
+    serif()
+
+  .shows-page-list__item__details-partner-name
+    font-size 14px
+    avant-garde()
+
+  .shows-page-list__item__details-show-name
+    max-width 100%
+    text-overflow ellipsis
+    white-space nowrap
+    overflow hidden
+
+  .shows-page-list__item__details-address, .shows-page-list__item__details-dates, .shows-page-list__item__details-closing-date
+    color light-gray-text-color
+
+  .is-warning
+    color bad-red-color
+
+#all-cities-page
+  padding 30px 0

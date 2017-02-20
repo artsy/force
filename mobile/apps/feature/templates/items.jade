@@ -1,0 +1,21 @@
+for item, i in items
+  .feature-page-items-container
+    if item.get('name') || item.get('title')
+      h2.avant-garde-header-center.feature-page-header
+        = item.mdToHtmlToText('name') || item.mdToHtmlToText('title')
+
+    if item.get('description')
+      .feature-page-items-description
+        != item.mdToHtml('description')
+
+    case item.get('type')
+      when 'artworks'
+        if isAuction
+          include ./filter.jade
+          != auctionArtworksTemplate({ artworks: item.get('data').models, auction: sale })
+        else
+          != artworkListTemplate({ artworks: item.get('data').models })
+      when 'featured links'
+        != featuredItemsTemplate({ items: item.get('data').models })
+      when 'video'
+        != videoTemplate({ items: item.get('data').models })

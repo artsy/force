@@ -1,0 +1,8 @@
+.show-artists-title
+  | Follow Artists In This Show
+#show-follow-artists
+  for artist in artists
+    .entity-with-follow
+      a.entity-link( href= artist.href() )
+        = artist.get('name')
+      a.artist-follow.follow-button.avant-garde-box-button.avant-garde-box-button-black( data-id= artist.id )

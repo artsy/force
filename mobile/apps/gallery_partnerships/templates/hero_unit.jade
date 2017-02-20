@@ -1,0 +1,16 @@
+.gallery-partnerships-hero-unit-header
+  .grid-2-up
+    .grid-item
+      h1!= hero.heading
+    .grid-item
+      .preamble!= hero.preamble
+
+.gallery-partnerships-hero-unit-content
+  .gallery-partnerships-hero-unit-images-placeholder
+    img( src=hero.images[0].src )
+  ul.gallery-partnerships-hero-unit-images
+    for image, i in hero.images
+      li.gallery-partnerships-hero-unit-image(
+        class=(i === 0 ? 'is-active' : undefined)
+      )
+        img( src=image.src )

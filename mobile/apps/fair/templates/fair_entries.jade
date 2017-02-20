@@ -1,0 +1,13 @@
+for entry in entries
+  .fair-feed__entry
+    .main-side-margin
+      .fair-feed__entry__attribution
+        .fair_feed__entry__avatar: img(src="#{entry.get('user').profile_picture}")
+        .fair-feed__entry__names
+          .fair-feed__entry__names__author-name: a(href="instagram://user?username=#{entry.get('user').username}", target="_blank")= entry.get('user').full_name
+          .fair-feed__entry__names__username: a(href="instagram://user?username=#{entry.get('user').username}", target="_blank") @#{entry.get('user').username}
+        .fair-feed__entry__date= entry.formatDate()
+      a(href="instagram://media?id=#{entry.id}", target="_blank")
+        .fair-feed__entry__content__image: img(src="#{entry.get('images').standard_resolution.url}", alt="")
+      if entry.has('caption')
+        .fair-feed__entry__content__caption!= entry.get('caption').text

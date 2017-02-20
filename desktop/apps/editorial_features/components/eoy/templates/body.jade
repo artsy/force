@@ -1,0 +1,89 @@
+include ../../../../../components/article/templates/share
+
+section.article-body__intro(data-section=0)
+  .article-body__intro-header
+    .col
+  footer
+.article-body__content
+  for section, i in curation.get('sections')
+
+    if i == 0
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-f-lotus-placeholder.png'
+    if i == 1
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-virtualreality-poster.png'
+    if i == 7
+      - poster = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/eoy-gg-poster.png'
+
+    section(data-section='#{i + 1}')
+      a(name='section-#{i + 1}')
+      .article-body--section
+        header
+          if i == 4 || i == 5
+            .spacer--article
+          .article-body--section__title
+            h2=section.headline
+            .spacer
+          .article-body--section__cover-image
+            .spacer
+            .spacer
+            .spacer
+            .image
+              if i != 8
+                if section.image.indexOf('mp4') > -1
+                  video(autoplay=true, controls=false, muted=true, playsinline=true poster= poster).video
+                    source(src=section.image type='video/mp4')
+                  .video-controls
+                    .video-play-button
+                  .caption!= markdown(section.caption)
+                else
+                  img(src=resize(section.image, { width: 800 }))
+                  .caption!= markdown(section.caption)
+              else
+                .img
+                  img(src=resize(section.image, { width: 800 }))
+                  .caption!= markdown(section.caption)
+                .img
+                  img(src=resize(section.image_second, { width: 800 }))
+                  .caption!= markdown(section.caption_second)
+        article
+          if i == 2 || i == 3 || i == 6 || i == 8 || i == 9
+            .spacer--article
+          .article-body--section__text!= markdown(section.body)
+            .share
+              +share((article.get('social_description') ? article.get('social_description') : article.get('description') || article.get('social_title') ? article.get('social_title') : article.get('thumbnail_title')), article.get('social_image') ? article.get('social_image') : article.get('thumbnail_image'), (url + '/2016-year-in-art'))
+            if i == 4 || i == 5
+              .spacer
+
+          .article-body--section__sub-text
+            .image
+              if section.image_second.indexOf('mp4') > -1
+                video(autoplay=true, controls=false, muted=true, playsinline=true poster= poster).video
+                  source(src=section.image_second type='video/mp4')
+                .video-controls
+                  .video-play-button
+                .caption!= markdown(section.caption_second)
+              else if i == 3
+                include ./carousel
+              else if i == 8
+                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/schenck-high-line-art-wanderlust-2016_07_12-dsc_5823.jpg', { width: 800 }))
+                .caption Barbara Kruger, <em>Untitled (Blind Idealism Is...)</em>, 2016. A High Line Commission, New York. Photo: Timothy Schenck. Courtesy of Friends of the High Line.
+              else
+                img(src=resize(section.image_second, { width: 800 }))
+                .caption!= markdown(section.caption_second)
+
+            .spacer
+            .callout
+              if i != 2
+                p=section.callout
+              else
+                img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-540076468.jpg', { width: 800 }))
+                .caption Installation view of <em>The Passing Winter</em>, 2005 by Yayoi Kusama in the Switch House extension of the Tate Modern, London, 2014. Photo: DANIEL LEAL-OLIVAS/AFP/Getty Images
+
+          if i == 0
+            .article-body--section__sub-image
+              img(src=resize('https://artsy-vanity-files-production.s3.amazonaws.com/images/gettyimages-595247584.jpg', { width: 800 }))
+              .caption Photo: Guillaume Pinon/NurPhoto/Getty Images
+              .spacer
+            .spacer--article
+        footer
+section

@@ -1,0 +1,155 @@
+@import 'hours.styl'
+@import '../../../components/stylus_lib'
+@import '../components/related_articles/index.styl'
+@import '../components/follow_artists/index.styl'
+@import '../../../components/follow_button/index.styl'
+@import '../../../components/flickity/index.styl'
+@import '../../../components/show_more_works/index.styl'
+
+main
+  margin-bottom 44px
+  font-size 16px
+
+#show-page
+  margin 0 20px
+  line-height 1.4em
+  a
+    text-decoration none
+
+#show-page-header
+  .show-page-title
+    padding 22px 0
+    font-size 20px
+
+  .show-page-meta
+    padding-bottom 22px
+    border-bottom 1px solid light-gray-border-color
+  .show-page-modal-button
+  .show-page-meta-left
+    display inline-block
+    vertical-align top
+    box-sizing border-box
+  .show-page-meta-left
+    width 70%
+  .show-page-modal-button
+    avant-garde()
+    width 30%
+    vertical-align bottom
+    padding-left 30px
+    text-align right
+  .show-page-partner
+    avant-garde()
+    font-size 15px
+    padding-bottom 12px
+    a
+      height auto
+    & .chevron-arrow-button::after
+      background-color light-gray-border-color
+      height 17px
+      margin-left 8px
+      margin-top 2px
+      position absolute
+      width 17px
+
+  .show-page-location
+    padding 12px 0
+    border-bottom 1px solid light-gray-border-color
+  .show-page-location-map
+  .show-page-location-address
+    display inline-block
+    box-sizing border-box
+    vertical-align middle
+  .show-page-location-address
+    width 73%
+  .show-page-location-map
+    avant-garde()
+    width 27%
+    padding-left 15px
+    padding-right 17px
+    text-align right
+    a
+      font-size 10px
+      color light-gray-text-color
+    & .chevron-arrow-button::after
+      background-color light-gray-text-color
+      height 17px
+      margin-left 8px
+      margin-top 3px
+      position absolute
+      width 17px
+
+#show-page-press-release
+#show-page-description
+  padding 22px 0px
+  border-bottom 1px solid light-gray-border-color
+  .show-page-description-title
+    margin-top 20px
+  .show-page-press-release-title, .show-page-description-title
+    avant-garde()
+    font-size 15px
+    padding-bottom 12px
+
+#show-page-events
+  padding 22px 0px
+  border-bottom 1px solid light-gray-border-color
+
+#show-page-artworks
+  position relative
+  overflow hidden
+  border-bottom 1px solid light-gray-border-color
+  .show-page-artworks-title
+    avant-garde()
+    font-size 15px
+    padding 22px 0
+  // Loading spinner when fetching page 2 client side
+  .artwork-columns
+    &.is-loading + .loading-spinner
+      display block
+  .artwork-columns + .loading-spinner
+    display none
+.with-slider
+  max-height 640px
+
+#show-installation-shot-carousel
+  display inline-block
+  position relative
+  width 100%
+  margin-bottom 34px
+
+.aspect-ratio
+  padding-bottom 66.66% // 6:4 aspect-ratio
+
+figure.carousel-track__image
+  height 100%
+  position absolute
+  img
+    top 0
+    bottom 0
+    left 0
+    right 0
+    margin auto
+    position absolute
+
+#carousel-track
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  right 0
+
+.flickity-viewport
+  overflow hidden
+  position relative
+  height 100%
+
+.flickity-page-dots
+  position relative
+  bottom -12px
+  margin-bottom 22px
+  .dot
+    background black
+    width 6px
+    height 6px
+    margin 0 6px
+    &:is-selected
+      opacity 1

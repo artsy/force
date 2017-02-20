@@ -1,0 +1,59 @@
+extends ../../../components/layout/templates/scaffold
+include ../../../components/layout/templates/login-signup
+
+block body
+  #content
+    mixin login-signup
+    header#fair-header
+      form#fair-header-search-form( action="#{profile.get('id')}/search", method='GET' )
+        input#fair-search-input.bordered-input(
+          placeholder='Search exhibitors & artists',
+          name='term',
+          value=term,
+          type='search'
+        )
+    #search-page-results
+      .fair-search-results
+        if fairResults.length > 0
+          .search-page-result-header
+            if term
+              | Search results for
+              em
+                | &ldquo;
+                span#search-term= term 
+                | &rdquo;
+              | at 
+              = fair.get('name')
+          for result in fairResults
+            include ../../../components/search_results/result
+        else
+          .search-page-result-header
+            | Sorry, no results for 
+            em
+              | &ldquo;
+              span#search-term= term
+              | &rdquo; 
+            | at 
+            = fair.get('name')
+
+      .artsy-search-results
+        if results.length > 0
+          .search-page-result-header
+            if term
+              | Search results for
+              em
+                | &ldquo;
+                span#search-term= term
+                | &rdquo; 
+              | on Artsy
+          for result in results
+            include ../../../components/search_results/result
+        else
+          .garamond-header-center
+            | Sorry, no results for 
+            em
+              | &ldquo;
+              span#search-term= term
+              | &rdquo; 
+            | on Artsy
+    mixin login-signup

@@ -1,0 +1,168 @@
+/*! Flickity v1.0.0
+http//flickity.metafizzy.co
+---------------------------------------------- */
+
+.flickity-enabled
+  position relative
+
+.flickity-enabledfocus
+  outline none
+
+.flickity-viewpor
+  overflow hidden
+  position relative
+  height 100%
+
+.flickity-slider
+  position absolute
+  width 100%
+  height 100%
+
+/* draggable */
+.flickity-enabled.is-draggable
+  -webkit-user-select none
+     -moz-user-select none
+      -ms-user-select none
+          user-select none
+
+.flickity-enabled.is-draggable .flickity-viewport
+  cursor move
+  cursor -webkit-grab
+  cursor grab
+
+.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down
+  cursor -webkit-grabbing
+  cursor grabbing
+
+/* ---- previous/next buttons ---- */
+.flickity-prev-next-button
+  position absolute
+  top 50%
+  width 44px
+  height 44px
+  border none
+  border-radius 50%
+  background white
+  background hsla(0, 0%, 100%, 0.75)
+  cursor pointer
+  /* vertically center */
+  -webkit-transform translateY(-50%)
+      -ms-transform translateY(-50%)
+          transform translateY(-50%)
+
+.flickity-prev-next-buttonhover
+  background white
+
+.flickity-prev-next-buttonfocus
+  outline none
+  box-shadow 0 0 0 5px #09F
+
+
+.flickity-prev-next-buttonactive
+  opacity 0.6
+
+.flickity-prev-next-button.previous
+  left 10px
+.flickity-prev-next-button.next
+  right 10px
+
+/* right to left */
+.flickity-rtl .flickity-prev-next-button.previous
+  left auto
+  right 10px
+
+.flickity-rtl .flickity-prev-next-button.next
+  right auto
+  left 10px
+
+.flickity-prev-next-buttondisabled
+  opacity 0.3
+  cursor auto
+
+.flickity-prev-next-button svg
+  position absolute
+  left 20%
+  top 20%
+  width 60%
+  height 60%
+
+.flickity-prev-next-button .arrow
+  fill #333
+
+/* color & size if no SVG - IE8 and Android 2.3 */
+.flickity-prev-next-button.no-svg
+  color #333
+  font-size 26px
+
+/* ---- page dots ---- */
+.flickity-page-dots
+  position absolute
+  width 100%
+  bottom 10px
+  padding 0
+  margin 0
+  list-style none
+  text-align center
+  line-height 1
+
+.flickity-rtl .flickity-page-dots { direction rtl }
+
+.flickity-page-dots .dot
+  display inline-block
+  width 8px
+  height 8px
+  margin 0 8px
+  background #fff
+  border-radius 50%
+  opacity 0.25
+  cursor pointer
+
+.flickity-page-dots .dot.is-selected
+  opacity 1
+
+//
+// artsy specific styles
+//
+.carousel
+  clear both
+  width 100%
+
+.carousel-track__image
+  margin 0
+  display inline-block
+  vertical-align top
+  width 100%
+  text-align center
+
+  img
+    max-width 100%
+    max-height 100%
+
+.carousel-track
+  position relative
+  white-space nowrap
+  -webkit-backface-visibility hidden
+  -webkit-perspective 1000
+  -webkit-transform-style preserve-3d
+
+ .carousel-figures-clip
+  margin 0
+  opacity 1
+  overflow hidden
+  top 0
+
+figure.carousel-track__image
+  height 250px
+
+.carousel--bottom-nav
+  margin-bottom 60px
+
+  .carousel-figures-clip
+    overflow visible
+
+  .flickity-page-dots
+    bottom -37px
+
+  .dot
+    background #000
+

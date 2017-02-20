@@ -1,0 +1,21 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-page-info.main-side-margin
+    .fair-info2-body
+      h2.fair-info2-page-header Fair Information
+      .fair-info2-nav.chevron-nav-list
+        a(href="/#{sd.PROFILE.id}/info/visitors") visitors
+        if infoMenu.events
+          a(href="/#{sd.PROFILE.id}/info/events") events
+        a(target="_blank", href=location.gmapLink()) map
+        if fair.get('floorplan_url')
+          a(href=fair.get('floorplan_url')) floorplan (pdf)
+        if infoMenu.programming
+          a(href="/#{sd.PROFILE.id}/info/programming") programming
+        if infoMenu.artsyAtTheFair
+          a(href="/#{sd.PROFILE.id}/info/artsy-at-the-fair") artsy at the fair
+        a(href="/#{sd.PROFILE.id}/info/about-the-fair") about the fair
+
+        if sd.PROFILE.id == 'the-armory-show-2016'
+          a(href="/#{sd.PROFILE.id}/info/armory-arts-week") armory arts week

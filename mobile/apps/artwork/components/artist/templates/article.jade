@@ -1,0 +1,15 @@
+.aama-article
+  a.aama-article-link(href=article.href)
+    .aama-article__image
+      img(
+        src= article.image.thumb.url
+        width=article.image.thumb.width
+        height=article.image.thumb.height
+      )
+
+    .aama-article__details
+      .artwork-article-module__details__title
+        = article.title
+
+      .artwork-article-module__details__author
+          | By #{article.author.name}

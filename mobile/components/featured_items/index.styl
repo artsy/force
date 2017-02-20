@@ -1,0 +1,38 @@
+//
+// Styling for the featured links at the top of the hompepage
+//
+
+@import '../stylus_lib'
+
+.featured-items li
+  margin-bottom 20px
+  padding-bottom @margin-bottom
+  border-bottom 1px solid light-gray-border-color
+  > a
+    display block
+  &:first-child
+    border-top 1px solid light-gray-border-color
+    padding-top @margin-bottom
+  img, .featured-items-details
+    width 50%
+    display inline-block
+    vertical-align top
+  img
+    padding-right 10px
+  .avant-garde-box-button
+    margin-top: 10px
+  &.full
+    .featured-items-details, img
+      padding-left: 0px
+      padding-right: 0px
+      width: 100%
+
+.featured-items-details
+  padding-left 10px
+  line-height 1.2em
+  h2
+    font-size large-font-size
+    line-height 1.2em
+  h3
+    avant-garde()
+    font-size 11px

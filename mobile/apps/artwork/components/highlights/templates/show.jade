@@ -1,0 +1,32 @@
+h2.artwork-header
+  case highlight.status
+    when 'upcoming'
+      | In Upcoming Show
+    when 'running'
+      | In Current Show
+    when 'closed'
+      | In Past Show
+
+.artwork-highlight-module__container
+  if highlight.images.length
+    .artwork-highlight-module__image
+      +highlight-image-module(
+        highlight.href,
+        highlight.__typename,
+        highlight.images[0].thumb.url,
+        highlight.images[0].thumb.width,
+        highlight.images[0].thumb.height
+      )
+
+  .artwork-highlight-module__details
+    .title__date
+      .artwork-highlight-module__details__partner= highlight.partner.name
+      h2.artwork-highlight-module__details__exhibit
+      .artwork-highlight-module__details__title
+        a(href=highlight.href)=highlight.name
+
+      if highlight.location && highlight.location.city
+        .artwork-highlight-module__details__location-date
+          | #{highlight.location.city},
+          if highlight.start_at && highlight.end_at
+            <span> #{highlight.start_at} &ndash; #{highlight.end_at}</span>

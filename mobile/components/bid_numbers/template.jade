@@ -1,0 +1,10 @@
+.bid-numbers
+  .bid-numbers-left
+    .bid-numbers-bid-label
+      = saleArtwork.bidLabel()
+      | :
+    .bid-numbers-count-reserve
+      = saleArtwork.formatBidsAndReserve()
+
+  .bid-numbers-right
+    = saleArtwork.currentBid()

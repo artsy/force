@@ -7,13 +7,16 @@ lib-cov
 *.pid
 *.gz
 *.projectile
+*.DS_Store
 .env
 pids
 logs
 results
 npm-debug.log
 .DS_Store
-public/assets
+desktop/public/assets
+mobile/public/assets
 dump.rdb
 /node_modules
 coffeelint.json
+manifest.json

@@ -1,0 +1,11 @@
+extends ../../../components/layout/templates/scaffold
+
+block body
+  #auth-page
+    h1.avant-garde-header-center Sign up using
+    if error
+      .auth-page-error-message= error
+    include signup_buttons
+    include signup_append
+    p.auth-page-nevermind Already have an account?
+      a( href='/log_in' + (redirectTo ? '?redirectTo=#{redirectTo}' : '' )) Log in

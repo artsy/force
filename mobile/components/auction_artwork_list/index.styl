@@ -1,0 +1,61 @@
+.auction-artwork-list
+  //
+
+.auction-artwork-list-items
+  //
+
+.auction-artwork-list-item
+  display table
+  width 100%
+  table-layout fixed
+  text-decoration none
+  border-bottom 1px solid light-gray-border-color
+  &:first-child
+    border-top 1px solid light-gray-border-color
+
+.auction-artwork-list-img-container
+.auction-artwork-list-details
+  display table-cell
+  vertical-align top
+  padding 15px 0
+.auction-artwork-list-img-container
+  width 75px
+  height @width
+  > img
+    display block
+    margin 0 auto
+    max-width 100%
+    max-height @width
+.auction-artwork-list-details
+  padding-left 15px
+  > section
+    margin 10px 0
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0
+    > *
+      ellipsis()
+      line-height 1.5
+      vertical-align middle
+
+.aali-title
+.aali-estimate
+.aali-bid-count
+.aali-current-bid
+  font-size 14px
+
+.aali-lot-number
+.aali-buy-now
+.aali-sold
+  avant-garde()
+  font-size 10px
+
+.aali-current-bid
+  > span
+    avant-garde()
+    font-size 12px
+
+.aali-artist-name
+  avant-garde()
+  font-size 12px

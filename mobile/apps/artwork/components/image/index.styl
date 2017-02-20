@@ -1,0 +1,90 @@
+@require '../../../../components/deep_zoom/index.styl'
+
+#artwork-carousel
+  display inline-block
+  position relative
+  width 100%
+  margin-bottom 23px
+
+#artwork-carousel__track
+  height 65vh
+  &.flickity-enabled .artwork-carousel__track__image:not(:first-child)
+    visibility visible
+
+  .flickity-viewport
+    overflow hidden
+    position relative
+    height 100%
+
+  .artwork-carousel__track__image
+    margin auto
+    height 100%
+    width 100%
+    &:not(:first-child)
+      visibility hidden
+    img
+      top 0
+      bottom 0
+      left 0
+      right 0
+      margin auto
+      position absolute
+      max-width 100%
+      max-height 100%
+
+  .flickity-page-dots
+    bottom -22px
+    & .dot
+      background-color gray-darker-color
+
+.artwork-image-module__outer
+  height auto
+  margin-bottom 13px
+  .artwork-image-module__inner
+    margin auto
+    text-align center
+    height 100%
+    img
+      margin auto
+      max-height 100%
+      max-width 100%
+
+.artwork-image-module__label-icons
+  display flex
+  margin-bottom 14px
+
+.artwork-image-module__artwork-label
+  width 100%
+  .artist-name
+    avant-garde-size('body', true)
+    display inline-block
+    text-decoration none
+  .artwork-display
+    garamond-size('s-body', true)
+    clear right
+.artwork-meta-data-module .artwork-meta-data-price
+  garamond-size('s-body', true)
+
+.artwork-header-module
+  height 30px
+  width 85px
+  text-align right
+
+.artwork-favorites-container
+  display inline-block
+.artwork-header-module__share-button
+  display inline-block
+  .circle-border-icon-button
+    border-style none
+    line-height 16px
+    width 100%
+    height 30px
+  .share-menu-modal
+  .share-menu
+    z-index 6
+
+.artwork-header-module__favorite
+  text-decoration none
+  &[data-state='saved']
+    border-color #6a00cc
+    color #6a00cc

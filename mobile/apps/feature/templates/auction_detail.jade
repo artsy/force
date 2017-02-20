@@ -1,0 +1,8 @@
+#feature-page-auction-clock
+  include ../../../components/auction_clock/template
+
+  unless sale.isAuctionPromo()
+    a#feature-page-auction-register-link.avant-garde-box-button.avant-garde-box-button-black
+      | Register to Bid
+    a#feature-page-auction-bidding-information-link( href='/auction-info' )
+      | How bidding works

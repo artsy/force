@@ -1,0 +1,105 @@
+.artwork-artist-module
+  &__about-artist
+    margin-bottom 20px
+  &__section-title
+    garamond-size('l-body', true)
+    margin 17px 0px 10px 0px
+
+  &__label__follow-container
+    display flex
+  &__label
+    width 70%
+    text-decoration none
+    margin-right 5px
+    .artwork-artist-name
+      avant-garde-size('body', true)
+    .artwork-artist-works
+      garamond-size('s-body', true)
+      color gray-darker-color
+  &__follow
+    width 40%
+  &__images
+    display flex
+    margin-top 12px
+  &__content
+    &__exhibition-highlights
+      &__title
+        avant-garde()
+        font-size avant-garde-font-size
+      &__item
+        display flex
+        flex-direction row
+        margin 5px 0
+        &__text
+          margin-left 13px
+  .artwork-artist-module__images-item img
+    height auto
+    max-width 100%
+
+  .artwork-artist-module__images-item:nth-child(2)
+    margin 0 5px
+
+  .artwork-artist-module__accordion
+    margin-bottom 40px
+  .aama-content.chevron-nav-list a:last-child
+    border-bottom-style none
+
+  .aama-content.chevron-nav-list a::after
+    background black
+    transform rotate(90deg)
+    margin-top 3px
+    right 2px
+  a.js-aama-accordion-link.is-active::after
+    transform rotate(270deg)
+    margin-top -10px
+    right 2px
+
+  .aama-tab-content
+    margin-bottom 20px
+    display none
+    p a
+      border-style none
+      display inline
+      text-decoration underline
+      garamond-size('l-caption', true)
+      text-transform none
+      letter-spacing normal
+      &::after
+        mask-image url('') !important
+    &.is-active
+      display block
+
+.aama-tab-content[data-id='overview']::first-letter
+  text-transform capitalize
+
+.aama-show
+  display flex
+  .aama-show__year
+    margin-right 15px
+  .aama-show__details
+    garamond-size('l-caption', true)
+
+.aama-show-group-title
+  avant-garde-size('body', true)
+.aama-solo-shows
+.aama-group-shows
+.aama-fair-shows
+  margin-bottom 20px
+
+.aama-biography-credit
+  font-style italic
+
+.aama-article
+  a.aama-article-link
+    border-top-style none
+    display flex
+    .aama-article__image
+      margin-right 15px
+  a.aama-article-link::after
+      mask-image url('') !important
+
+  .artwork-article-module__details__title
+    garamond-size('l-caption', true)
+    text-transform none
+  .artwork-article-module__details__author
+    avant-garde-size('s-headline', true)

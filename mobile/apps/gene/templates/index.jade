@@ -1,0 +1,21 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{gene.get('name')} | Artsy
+
+block content
+  #gene-content.main-side-margin
+    include header
+    if gene.isSubjectMatter()
+      .gene-artworks
+        .gene-artworks-filters
+          #gene-artists-spinner.loading-spinner
+          //- client-side rendering
+    else
+      .gene-artists
+      #gene-artists-list
+        #gene-artists-container
+          //- client-side rending
+        #gene-artists-show-more.avant-garde-box-button.is-hidden.is-show-more-button Show More
+        #gene-artists-spinner.loading-spinner
+        #gene-artists-empty-message No artists matched

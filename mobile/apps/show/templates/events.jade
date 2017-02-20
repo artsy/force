@@ -1,0 +1,9 @@
+#show-page-events
+  for showEvent in show.related().showEvents.models
+    .show-page-event
+      | #{showEvent.eventType()}:
+      = ' '
+      if showEvent.get('title')
+        em #{showEvent.get('title')},
+        = ' '
+      = showEvent.formatDateRange('start_at', 'end_at', 'MMM Do, h')

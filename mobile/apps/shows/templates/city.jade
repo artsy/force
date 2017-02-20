@@ -1,0 +1,40 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{city.name} Art Gallery Shows and Museum Exhibitions | Artsy
+
+block content
+  #shows-city-page
+    header.shows-city-header.avant-garde-header-center= city.name
+
+    #shows-city-content.main-side-margin
+      if opening.length
+        .avant-garde-header.shows-city-sub-header.shows-city--opening-shows Opening this week
+        - var shows = opening
+        include show-list
+
+      if upcoming.length
+        .avant-garde-header.shows-city-sub-header.shows-city--upcoming-shows Upcoming Shows
+        - var shows = upcoming
+        include show-list
+
+      if current.length
+        .avant-garde-header.shows-city-sub-header.shows-city--current-shows Current Shows
+        - var shows = current
+        include show-list
+
+      if (opening.length + upcoming.length + current.length) === 0
+        .avant-garde-header.shows-city-sub-header Current Shows in #{city.name}
+        .shows-page-featured-empty
+          | There are currently no shows in #{city.name} on Artsy
+
+      if (opening.length + upcoming.length + current.length) < 6 && past.length
+        .avant-garde-header.shows-city-sub-header.shows-city--past-shows Past Shows
+        - var shows = past
+        include show-list
+      
+      if (current.length) >= size
+        #shows-city__show-more.avant-garde-box-button.is-show-more-button.is-hidden Show More 
+        #shows-city-spinner.loading-spinner
+        #shows-city-empty-message No more current shows in #{city.name} on Artsy
+        

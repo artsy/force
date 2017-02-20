@@ -1,0 +1,8 @@
+header.personalize-header
+  h2.avant-garde-subheader 60 second sign up:
+  h1.avant-garde-header-center Do you buy art?
+
+nav.chevron-nav-list
+  for level, i in state.levels
+    a( data-value=(state.levels.length - i), href='#' )
+      = level

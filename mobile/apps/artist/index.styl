@@ -1,0 +1,72 @@
+@import '../../components/stylus_lib'
+@import './auction_results'
+
+#artist-page-header
+  margin 20px 0
+  h1
+    margin 0
+  h2
+    text-align center
+
+.artist-actions-container
+  margin-top 15px
+  margin-bottom 20px
+  text-align center
+  .artist-action
+    margin 0 5px
+
+#artist-page-artworks
+  margin-bottom 20px
+  .artist-page-artworks-tab
+    border 0
+    border-top 2px solid
+    border-bottom @border-top
+    border-color light-gray-border-color
+    color dark-gray-text-color
+    display inline-block
+    width 50%
+    &.artist-page-artworks-tab-active
+      pointer-events none
+      color black
+      border-color black
+    &:active, &:focus
+      background transparent
+
+.artist-page-artwork-see-more-container
+  height 20px
+.artist-page-artwork-see-more
+  &.loading-spinner
+    padding 0
+    margin 0 auto
+
+#artist-page-artworks-list
+  margin-top 20px
+
+.artist-page-large-header
+  margin 35px 0 15px 0
+  font-size default-font-size !important
+
+.artist-page-artworks-default-text
+  avant-garde()
+  line-height 50px
+  text-align center
+  font-size avant-garde-font-size
+
+#artist-biography-page
+  margin-bottom 20px
+
+.artist-biography-page-credit
+  font-style italic
+
+#artist-content
+  position relative
+
+.artist-follow
+  &[data-state='following']
+    background-color #6a00cc
+    border-color #6a00cc
+    color #fff
+
+#artist-page-sort
+  margin-top 18px
+  text-align right

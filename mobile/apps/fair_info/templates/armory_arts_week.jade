@@ -1,0 +1,19 @@
+extends ../../../components/layout/templates/main.jade
+
+mixin eventListItem(event)
+  include ./list_item.jade
+
+block content
+  #fair-info.main-side-margin.mobile-app-top-padding
+    .fair-info-event-list
+      h1.fair-page-module-heading Armory Arts Week
+
+      nav.fair-info-event-nav
+        include ./event_nav.jade
+
+      each events, day in eventsByDay
+        .fair-info-events-for-day( data-day=day )
+          each event in events
+            +eventListItem(event)
+
+      h1.fair-page-module-heading: a(href="armory-arts-week/all") See all Armory Arts Week Events

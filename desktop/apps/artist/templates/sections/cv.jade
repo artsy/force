@@ -1,0 +1,30 @@
+include ./cv_item
+
+.artist-page-section-block#artist-cv-section
+  h2.artist-section-header Curriculum Vitae
+  #artist-cv-content
+    .thirty-seventy-bisected-header
+      .bisected-header-cell
+        if artistMetadata && artistMetadata.length
+          .bisected-header-cell-section
+            = artistMetadata
+
+        .artist-cv-note.bisected-header-cell-section
+          | Note: Artist CVs are assembled using
+          |  exhibition data available on Artsy;
+          |  they reflect partial exhibition histories.
+
+      .bisected-header-cell
+        include ./show_groupings
+
+        if articles && articles.length
+          .bisected-header-cell-section
+            h2 Articles on Artsy
+            for article in articles
+              .artist-cv-link
+                .artist-cv-link__year= new Date(article.published_at).getFullYear()
+                .artist-cv-link__text
+                  a(href= article.href)= article.thumbnail_title
+
+.artist-rail.artist-artworks-rail.arv-container
+  include ../../../../components/artwork_rail/templates/index

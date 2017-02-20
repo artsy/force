@@ -1,0 +1,39 @@
+// Overwrites Google's styling for Place Autocomplete results
+
+@import '../stylus_lib'
+
+.pac-container
+  box-shadow none
+  border-top 0
+  border-radius 0
+
+  // Google logo
+  &:after
+    padding 10px 0
+    background-position 100% 50%
+    margin-right 10px
+
+.pac-item
+  padding 10px
+  border-color light-gray-border-color
+
+  &:first-child
+    border-top none
+
+  &:last-child
+    border-bottom 1px solid light-gray-border-color
+
+  &:hover
+    background-color #fff
+
+  &.pac-item-selected
+    border-color transparent
+    background-color #000
+
+    & > .pac-item-query
+      color #fff
+
+.pac-item,
+.pac-item-query
+  serif()
+  font-size default-font-size
