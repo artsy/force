@@ -15,10 +15,10 @@ test:
     - yarn mocha:
         parallel: true
         files:
-          - desktop/test/*.{coffee,js}
-          - desktop/components/**/test/*.{coffee,js}
-          - desktop/apps/**/test/*.{coffee,js}
-          - mobile/test/*.{coffee,js}
-          - mobile/components/**/test/*.{coffee,js}
-          - mobile/apps/**/test/*.{coffee,js}
+          - desktop/test/**/*.{coffee,js}
+          - desktop/components/**/test/**/*.{coffee,js}
+          - desktop/apps/**/test/**/*.{coffee,js}
+          - mobile/test/**/*.{coffee,js}
+          - mobile/components/**/test/**/*.{coffee,js}
+          - mobile/apps/**/test/**/*.{coffee,js}
 
