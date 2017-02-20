@@ -1,0 +1,41 @@
+@require '../../../components/stylus_lib'
+@require '../../../components/article/stylesheets'
+
+.artsy-primer
+
+  &-h2, &-h3, &-user
+    display inline-block
+    vertical-align baseline
+
+  &-logo
+    width 190px
+    display inline-block
+    vertical-align middle
+
+  &-header
+    position fixed
+    top 0
+    border-bottom 1px solid gray-lighter-color
+    width 100%
+    background white
+    z-index 2
+    padding 26px 0 20px
+
+  &-h2
+    margin-left 20px
+    font-style italic
+    color #000
+    font-size 30px
+    line-height 1.25
+    text-decoration none
+
+  &-h3
+    margin-left 30px
+
+  &-user
+    float right
+    border-right 1px solid gray-lighter-color
+
+  &-article
+    padding-top 190px
+    min-height calc(100vh \- 133px)

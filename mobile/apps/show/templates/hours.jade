@@ -1,0 +1,17 @@
+extends ../../../components/layout/templates/main
+
+append locals
+  - assetPackage = 'mobile_show'
+
+block content
+  #show-page-hours-page
+    .show-page-hours-header
+      | FULL HOURS
+    .show-page-hours
+      for dayGroup in location && location.related().daySchedules.formattedDays()
+        .show-page-hours-day-schedule
+          if dayGroup['day_end']
+            p= dayGroup['day_start'] + " — " + dayGroup['day_end']
+          else
+            p= dayGroup['day_start']
+          p= dayGroup['hours']

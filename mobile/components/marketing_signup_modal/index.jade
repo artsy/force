@@ -1,0 +1,15 @@
+section.marketing-signup-modal
+  .marketing-signup-modal-inner
+    img.marketing-signup-modal-img( src=modal.image )
+    h1.marketing-signup-modal-copy= modal.copy
+    a.avant-garde-box-button.avant-garde-box-button-gray.marketing-signup-modal-signup(
+      href='/sign_up?email=1&acquisition_initiative=' + modal.slug
+    ) Sign up
+    a.avant-garde-box-button.marketing-signup-modal-fb(
+      href=sd.AP.facebookPath + '?acquisition_initiative=' + modal.slug
+    )
+      i.icon-facebook
+      | Continue with Facebook
+    p Already have an account?&nbsp;
+      a( href='/log_in' ) Log in
+    p.marketing-signup-modal-photo-credit= modal.photoCredit

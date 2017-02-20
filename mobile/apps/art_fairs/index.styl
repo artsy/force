@@ -1,0 +1,101 @@
+@import '../../components/stylus_lib'
+@import '../../components/avant_garde_tabs/index'
+
+#art-fairs-page
+  min-height 600px
+
+  .art-fairs-header--background-image.garamond-header
+    background-size cover
+    background-position center
+    height 200px
+    color white
+    margin-bottom 30px
+
+    h1
+      font-size 30px
+      position relative
+      top 50%
+      transform translateY(-50%)
+
+  .art-fairs-content--sign-up-container
+    padding-bottom 30px
+    text-align center
+
+    .avant-garde-box-button
+      background #000
+      margin-top 20px
+
+    .art-fairs-content--sign-up-container__label
+      serif()
+      font-size 18px
+
+  #art-fairs-content
+    font-size 18px
+
+    h1
+      avant-garde()
+
+  .current-fairs.avant-garde-tabs-list--active
+    display table
+    width 100%
+
+  .past-fairs.avant-garde-tabs-list--active
+    display table
+    width 100%
+
+  .art-fairs--fair-details
+    margin-bottom 10px
+    padding 10px 0
+    position relative
+
+  .past-art-fairs--border-bottom
+    border-bottom 1px solid light-gray-border-color
+
+  a.fairs-link
+    display block
+    vertical-align middle
+    text-decoration none
+
+  .fair-logo
+    display table-cell
+    padding-right 15px
+
+  .fair-details
+    display table-cell
+    vertical-align middle
+
+  .fair-logo img
+    width 50px
+    height 50px
+
+  .fair-details h5.fair-name
+    avant-garde-size('s-headline', true)
+    margin-bottom 4px
+
+  .fair-details p.fair-content
+    garamond-size('l-caption')
+
+  .fair-content__location
+    max-width 90%
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+  .art-fairs--fair-details::after
+    font-family 'artsy-icons'
+    content "\e607"
+    font-size 24px
+    color light-gray-border-color
+    position absolute
+    margin-top -8px
+    right 0px
+    top 50%
+
+  #paginate-past-fairs
+    margin-top 20px
+
+  .current-art-fairs__image
+    width 100%
+    height 180px
+    background-size cover
+    background-repeat none

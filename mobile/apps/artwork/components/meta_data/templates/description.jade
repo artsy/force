@@ -1,0 +1,24 @@
+.artwork-meta-data-module__description
+  if artwork.description || artwork.additional_information || artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
+    h2.artwork-header About the Work
+
+  if artwork.description
+    != artwork.description
+
+  if artwork.additional_information
+    .artwork-meta-data-module__description-additional-info
+      != artwork.additional_information
+
+  if artwork.signature || artwork.manufacturer || artwork.publisher || artwork.series
+    .artwork-meta-data-module__description_sub-section
+      if artwork.signature
+        p Signature: #{artwork.signature}
+
+      if artwork.manufacturer
+        p Manufacturer: #{artwork.manufacturer}
+
+      if artwork.publisher
+        p Publisher: #{artwork.publisher}
+
+      if artwork.series
+        p= artwork.series

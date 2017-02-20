@@ -1,0 +1,24 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{fair.get('name')} | Artsy
+
+block content
+  #fair-page-main-content
+    if fair.has('banner_image_urls')
+      #fair-page-img.mobile-fair-cover( style="background-image: url('#{fair.get('banner_image_urls')['mobile-fair-cover']}')" )
+    else if fair.imageUrl('large_rectangle')
+      #fair-page-img.mobile-large-rectangle( style="background-image: url(#{fair.imageUrl('large_rectangle')})" )
+    .main-side-margin
+      if profile.hasIcon() && !fair.has('banner_image_urls')
+        .fair-page-profile-icon( style="background-image: url(#{profile.iconUrl()})" )
+      h1#fair-page-title= fair.title()
+      h2#fair-page-subtitle!= fair.subtitle()
+
+      - placeholder = 'Find exhibitors & artists'
+      include ../../../components/autocomplete/templates/index
+
+      #fair-page-primary-featured-links
+
+      #fair-page-featured-links
+        .loading-spinner

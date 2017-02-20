@@ -1,0 +1,22 @@
+.card-name.credit-card-input-section
+  label( for='card_name' ) Name on Card
+  input.bordered-input( type='text', name='card_name', value=name, autocomplete='cc-name' )
+
+.card-number.credit-card-input-section
+  label( for='card_number' ) Credit Card Number
+  input.bordered-input( type='tel', name='card_number', value=number, autocomplte="cc-number", novalidate=true, pattern="\d*" )
+
+.card-expiration.credit-card-input-section
+  label( for='card_expiration' ) Expiration
+  .month
+    select.bordered-select( name='card_expiration_month', autocomplete="cc-exp-month" )
+      each month in monthRange
+        option( value=month )!= month
+  .year
+    select.bordered-select( name='card_expiration_year', autocomplete="cc-exp-year" )
+      each year in yearRange
+        option( value=year )!= year
+
+.card-security-code.credit-card-input-section
+  label( for='card_security_code' ) Security Code
+  input.bordered-input( type='tel', name='card_security_code', value=security_code, autocomplte="cc-csc", novalidate=true, pattern="\d*" )

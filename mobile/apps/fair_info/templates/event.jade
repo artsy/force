@@ -1,0 +1,20 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-info.main-side-margin
+    .fair-info-event-page
+      .fair-page-module-heading
+        .fair-page-heading-date!=event.getDate()
+        .fair-page-heading-time!=event.getTime()
+        a.fair-page-heading-add-to-ical(href=event.icsHref())
+          span.fair-info-event-plus-symbol +
+          span.fair-event-add-to-cal-copy Add to Cal
+      .fair-info-event-name= event.get('name')
+      .fair-info-event-venue
+        | #{event.get('venue')}
+        if event.has('venue_address')
+          a.fair-info-event-map(href=event.gmapLink())
+            | Map
+            i.icon-circle-chevron
+      .fair-info-event-details!= event.mdToHtml('description')
+      .fair-info-event-group-details!= event.getGroupDetailsHtml()

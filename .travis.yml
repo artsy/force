@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - '6'
-before_install:
-  - rvm install 2.3.1
-script:
-  - "rvm use 2.3.1 && gem install danger  --version '~> 4.0' && danger"

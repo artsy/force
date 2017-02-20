@@ -1,0 +1,159 @@
+@import './main_page'
+@import './exhibitors'
+@import './exhibitors_az'
+@import './info'
+@import './for_you'
+@import './artist'
+@import './trending'
+@import './programming'
+@import './search_results'
+@import './feed'
+@import './artworks'
+
+#fair-artworks-header
+  .fair-works-by h1
+    margin 30px 0
+    font-size 20px !important
+
+#fair-header
+  #fair-search-input
+    margin 10px
+    width calc(100% - 20px)
+
+#fair-page-img
+  width 100%
+  height 150px
+  background-size cover
+  background-position center
+  margin-bottom 20px
+
+.fair-page-module-heading
+  avant-garde()
+  border-bottom 1px solid light-gray-border-color
+  font-size 16px
+  padding 36px 50px 24px
+  text-align center
+  margin-bottom 24px
+
+.fair-page-module-subheading
+  color light-gray-text-color
+  font-size 20px
+  font-style italic
+  text-align center
+
+.fair-page-heading-serif-left
+  font-size 24px
+  padding-bottom 12px
+
+.fair-nav-item
+  border-bottom none
+  &:first-child > .fair-nav-item-link
+    border-top none
+  &:last-child
+    border-bottom 1px solid light-gray-border-color
+    margin-bottom 50px
+  .fair-nav-item-link
+    border-bottom none
+    cursor pointer
+    display block
+    overflow hidden
+    padding 12px 0
+    width 100%
+    &::after
+      margin-top 32px
+    &:last-child
+      border-bottom none
+
+.fair-nav-item-position
+  display inline-block
+  vertical-align top
+  margin-right 6px
+  margin-top 32px
+
+.fair-nav-item-image
+  background-position center center
+  background-repeat no-repeat
+  background-size contain
+  display inline-block
+  vertical-align top
+  height 80px
+  width 80px
+
+.fair-nav-item-label
+  display inline-block
+  margin-left 18px
+  margin-top 20px
+  vertical-align top
+  letter-spacing 0px
+  width calc(67% - 24px)
+
+.fair-nav-item-label-padding
+  height 14px
+
+.fair-nav-item-label-subtitle:empty ~ .fair-nav-item-label-title
+  margin-top 200px
+
+.fair-nav-item-label-title
+  avant-garde-size('body', true)
+  margin-bottom 3px
+
+.fair-nav-item-label-subtitle
+  avant-garde-size('s-headline', true)
+  color light-gray-text-color
+
+.fair-nav-item
+  &.curator-fair-ordered-set
+    .fair-nav-item-image
+      border-radius 50px
+    .fair-nav-item-label
+      margin-top 10px
+  &.editorial-fair-ordered-set
+    .fair-nav-item-label
+      margin-top 0px
+    .fair-nav-item-image--curator
+      border-radius 50px
+  &.explore-fair-ordered-set
+    width 50%
+    display inline-block
+    vertical-align top
+    height auto
+    &:first-child, &:nth-child(2)
+      border-top 1px solid light-gray-border-color
+    &:last-child
+      border-bottom 0px solid light-gray-border-color
+    a.fair-nav-item-link
+      height auto
+      border 0px solid
+      &::after
+        display none
+    .fair-nav-item-label
+      width 100%
+      margin 0
+      .fair-nav-item-label-title
+        avant-garde()
+        text-align center
+        font-size 14px
+      .fair-nav-item-label-subtitle
+        display none
+    .fair-nav-item-image
+      height 120px
+      width 100%
+
+#fair-artworks-empty-message, #fair-feed__empty-message
+  display none
+  font-size 20px
+  font-style italic
+  padding 100px 10px
+  text-align center
+
+#fair-page-main-content.fair-artworks
+  .fair-artworks-header
+    margin 30px 0 !important
+    border-bottom none !important
+
+.fair-artworks-filters, .fair-artworks-count
+  padding-bottom 20px
+
+.fair-artworks-count
+  color light-gray-text-color
+  font-style italic

@@ -1,0 +1,11 @@
+.chevron-nav-list.fair-nav-item
+  a.fair-nav-item-link( href=href )
+    if position
+      .fair-nav-item-position= position
+    .fair-nav-item-image( style="background-image: url(#{imgSrc})" )
+    .fair-nav-item-label
+      if !labelInfo
+        .fair-nav-item-label-padding
+      .fair-nav-item-label-title!= labelTitle
+      if labelInfo
+        .fair-nav-item-label-subtitle!= labelInfo

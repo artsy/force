@@ -1,0 +1,52 @@
+.marketing-signup-modal
+  z-index 3
+  background black
+  position relative
+  overflow hidden
+  height 85vh
+  display flex
+  position relative
+
+  &-inner
+    background black
+    padding 30px
+    color white
+    text-align center
+    position fixed
+    width 100%
+    z-index -1
+    align-self center
+
+  &-copy
+    garamond-size('l-body', true)
+    margin-top 10px
+
+  &-img
+    height 100px
+    width @height
+    border-radius @height
+
+  &-fb, &-signup
+    avant-garde-size('body')
+
+  &-signup
+    margin-top 20px
+
+  &-fb
+    background-color #39439C
+    color white
+    margin 15px 0 20px 0
+    border-color @background-color
+    display flex
+    justify-content center
+
+  .icon-facebook
+    margin -13px 0
+
+  a
+    color white
+
+  &-photo-credit
+    garamond-size('s-caption')
+    color gray-color
+    margin-top 5px

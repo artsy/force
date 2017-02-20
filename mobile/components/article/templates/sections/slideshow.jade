@@ -1,0 +1,27 @@
+//- Some slideshows are empty Array
+if section.items.length > 0
+  //- Some slideshows have a single item
+  //- Render it as if it were not a slideshow
+  if section.items.length === 1
+    - item = section.items[0]
+    case item.type
+      when 'image'
+        - image = item
+        include ../sections/image
+      when 'artwork'
+        - artworks = { ids: [item.id] }
+        include ../sections/artworks
+      when 'video'
+        - video = item
+        include ../sections/video
+  else
+    //- Render the actual slideshow sans any video
+    .article-section.article-section-slideshow( data-items= section.items )
+      //- Rendered client-side ../../client/templates/carousel
+      .loading-spinner
+
+    //- Pull out any videos and render those normally
+    for item in section.items
+      if item.type === 'video'
+        - video = item
+        include ../sections/video

@@ -1,0 +1,133 @@
+@import '../../../components/stylus_lib'
+@import './bid'
+
+#feature-page-image
+  height 150px
+  background-position center center
+  background-size cover
+
+#feature-page-name
+  font-size 32px
+  padding-bottom 15px
+  text-align center
+  line-height 1.2em
+  margin 20px 0
+
+#feature-page-description
+  padding 20px 0
+  border-top 1px solid light-gray-border-color
+  text-align center
+
+.feature-page-items-description
+  padding 20px 0
+  border-bottom 1px solid light-gray-border-color
+  text-align center
+
+.feature-page-header
+  margin 40px 0 10px 0
+
+.feature-page-items-container
+  &:first-child
+    .feature-page-header
+      margin-top: 10px
+  &:last-child
+    .featured-items li
+      border-bottom: 0px solid
+
+.feature-auction-section
+  text-align center
+  a
+    color dark-gray-text-color
+    margin-top 10px
+    display inline-block
+  .avant-garde-box-button-black
+    color white
+
+.auction-artwork-list
+  margin-top 55px
+
+#feature-page-auction-clock
+  background white
+  position relative
+  top -1px
+  padding-bottom 15px
+  clearfix()
+  &.feature-auction-section-unregistered
+    .auction-clock
+      width 55%
+      display inline-block
+    .avant-garde-box-button
+      display inline-block
+      vertical-align top
+      width 45%
+      border-left white 5px solid
+      border-top 1px
+      border-bottom 1px
+      margin: 2px 0
+      font-size: 11px
+  .avant-garde-box-button
+    display none
+  .auction-clock
+    vertical-align top
+    width 100%
+    display block
+    float left
+    padding-right 5px
+    small
+      font-size 8px
+      margin -5px 0
+    h2
+      font-size 10px
+      margin -3px 0
+      letter-spacing: 1px
+    .auction-clock-value
+      font-size 17px
+      margin 0
+
+#feature-page-items
+  padding 20px 0
+  border-top 1px solid light-gray-border-color
+  video
+    width 100%
+    margin 20px 0
+  .featured-items-details
+    h1
+      font-size 22px
+      line-height 1.2em
+      margin-bottom 9px
+    h3
+      color dark-gray-text-color
+      serif()
+      text-transform none
+      letter-spacing 0px
+      line-height 142%
+      font-size 14px
+  .featured-items
+    li:first-child
+      padding-top 0px
+      border-top 0px
+    li.half
+      &:first-child
+        margin-bottom 0px
+      .featured-items-details, img
+        width 100%
+        padding-left 0px
+        padding-right 0px
+      img
+        margin-bottom 16px
+
+#feature-auction-logo
+  background top center no-repeat
+  width 100%
+  height 40px //- Hack for LAMA to work around profile icons only being square
+  margin-top 20px
+
+#feature-banner
+  width 100%
+  height 140px
+  background center center
+  background-size cover
+
+.feature-artwork-filter
+  position absolute
+  right 0

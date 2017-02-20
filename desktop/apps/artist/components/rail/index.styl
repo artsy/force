@@ -1,0 +1,41 @@
+// Overview Section Rails
+.artist-related-rail
+  fade-in()
+  padding-top 15px
+  margin 10px 0 60px 0
+  border-top 1px solid gray-lighter-color
+
+  .hoverable-image-link
+    width 100%
+
+  &__header
+    margin-bottom 30px
+    position relative
+    h1
+      garamond-size('headline', true)
+
+  &__view-all
+    faux-underline(black)
+    position absolute !important
+    right 0
+    top 0
+
+  &:hover
+    .mgr-navigation
+      opacity 1
+
+  &:not([data-id='artists'])
+    mgr-n-up(4, 30px, (3/4), true)
+    .view-all-rail-cell
+      height 100%
+      &__inner
+        padding-bottom 75%
+
+  &[data-id='artists']
+    mgr-n-up(4, 30px, (3/4), false)
+    .view-all-rail-cell
+      border 1px solid gray-lighter-color
+      height 100%
+      &__inner
+        height 100%
+        border 0

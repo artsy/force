@@ -1,0 +1,8 @@
+.carousel.mgr-horizontal-nav
+  .mgr-cells.js-mgr-cells
+    for item in curation.get('carousel')
+      .mgr-cell.js-mgr-cell
+        img(src=crop(item.image, { width: 600, height: 400 }))
+        .carousel-caption!= markdown(item.caption)
+  nav.mgr-navigation.js-mgr-navigation
+    include ../../../../../components/merry_go_round/templates/horizontal_navigation

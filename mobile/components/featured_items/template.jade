@@ -1,0 +1,9 @@
+ul.featured-items
+  for model in items
+    - item = model.toFeaturedItem(items.length)
+    li( class= model.layoutStyle(items.length) )
+      if item.href
+        a( href=item.href )
+          include contents
+      else
+        include contents

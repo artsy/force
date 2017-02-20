@@ -1,0 +1,5 @@
+nav.chevron-nav-list.gene-page-artist-chevron-nav-list
+  each artist in artists
+    a.nav-image-item( href="/artist/#{artist.get('id')}")
+      img.gene-page-artist-nav-image( src="#{artist.defaultImageUrl()}")
+      p.gene-page-artist-nav-item-label= artist.get('name')

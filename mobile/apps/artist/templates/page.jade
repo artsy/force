@@ -1,0 +1,41 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title #{artist.get('name')} - #{artist.get('published_artworks_count')} Artworks, Bio & Shows on Artsy
+
+block content
+  include header
+  #artist-content
+    .artist-actions-container
+      a.artist-action.artist-follow.circle-border-icon-button( data-state='unfollowed' )
+        i.icon-heart
+      a.artist-share
+    #artist-page-artworks.main-side-margin
+      button.avant-garde-box-button.artist-page-artworks-tab
+        | #{artist.get('published_artworks_count')} artworks
+      button.avant-garde-box-button.artist-page-artworks-tab.artist-page-artworks-tab-for-sale
+        | #{artist.get('forsale_artworks_count')} for sale
+      #artist-page-sort
+        label.garamond-select: select( dir="rtl" )
+          for val, label in { "Recently Updated": "-partner_updated_at", "Recently added": '-published_at', "Artwork year - asc": "year" , "Artwork year - desc": '-year' }
+            option( value=val, selected=(sort == val) || undefined )= label
+      #artist-page-artworks-list
+        .loading-spinner
+      .artist-page-artwork-see-more-container
+        button.avant-garde-underline-button.artist-page-artwork-see-more
+          | See more
+    if artist.get('blurb')
+      nav.chevron-nav-list.main-side-margin
+        a( href="/artist/#{artist.get('id')}/biography" ) Biography
+        if showAuctionLink
+          a( href="/artist/#{artist.get('id')}/auction-results" ) Auction Results
+    else
+      if showAuctionLink
+        nav.chevron-nav-list.main-side-margin
+          a( href="/artist/#{artist.get('id')}/auction-results" ) Auction Results
+    h3#artist-page-featured-articles-header.artist-page-large-header.avant-garde-header-center Featured Articles
+    #artist-page-featured-articles.main-side-margin
+      .loading-spinner
+    h3#artist-page-suggested-artists-header.artist-page-large-header.avant-garde-header-center Suggested Artists
+    #artist-page-suggested-artists.main-side-margin
+      .loading-spinner

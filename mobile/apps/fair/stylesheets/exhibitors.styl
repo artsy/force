@@ -1,0 +1,77 @@
+//
+// The list of booths at the fair with the artwork columns underneath them.
+//
+
+@import '../../../components/stylus_lib'
+@import '../../../components/avant_garde_tabs/index'
+@import '../../../components/show_more_works/index.styl'
+
+#fair-exhibitors-az-link
+  text-align right
+  margin 20px 0
+  display block
+  text-decoration none
+
+.fair-page-header
+  position relative
+  margin-top 30px
+
+#fair-exhibitors .fair-exhibitors-list
+  margin-top 0px
+  a
+    text-decoration none
+  > header
+    margin 30px 0
+  header
+    margin 42px 0 30px
+
+.fair-exhibitiors-list
+  &__partner-view-all-title
+    display flex
+    p
+      width 22%
+      margin-left 10px
+      padding-top 1px
+      text-decoration underline
+      garamond-size('l-caption', true)
+
+.fair-exhibitors-show
+  &:last-child
+    border-bottom @border-top
+  h3
+    font-size 24px
+    margin-bottom 10px
+    width 88%
+    a
+      text-decoration none
+  h4
+    margin-bottom 20px
+    color light-gray-text-color
+  .fair-exhibitors-show-updated
+    avant-garde()
+    font-size 11px
+    color dark-gray-text-color
+    margin-left 10px
+
+.a-z-feed-toggle-container
+  position absolute
+  top 20px
+  right 0px
+  avant-garde()
+  a
+    display inline-block
+    vertical-align top
+    margin-left 10px
+    opacity 0.5
+    text-decoration none
+    &.is-active
+      opacity 1
+
+#fair-page-browse-filter
+  display none
+
+.fair-exhibit-with-slider
+  max-height 500px
+  position relative
+  overflow hidden
+  border-bottom 1px solid light-gray-border-color

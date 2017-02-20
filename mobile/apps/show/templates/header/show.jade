@@ -1,0 +1,19 @@
+header#show-page-header
+  .show-page-title
+    = show.get('name')
+  .show-page-meta
+    .show-page-meta-left
+      .show-page-partner
+        a.chevron-arrow-button(href="#{show.partnerProfileHref()}")= show.partnerName()
+      .show-page-running-dates
+        p #{show.date('start_at').format('MMM Do')} – #{show.date('end_at').format('MMM Do, YYYY')}
+    .show-page-modal-button
+  if location
+    .show-page-location
+      .show-page-location-address
+        p= show.formattedStreetAddress()
+        p= location.get('city')
+      .show-page-location-map
+        a.chevron-arrow-button(href="#{show.mapsUrl()}") MAP
+  if location && location.related().daySchedules.length
+    include ../full_schedule

@@ -1,0 +1,14 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #unsubscribe-content.main-side-margin
+    h1.avant-garde-header-center
+      | Unsubscribe me from the following:
+    each emailDisplay, emailType in emailTypes
+      .unsubscribe-email
+        label #{emailDisplay}
+          input( name="#{emailType}", type='checkbox' )
+    .unsubscribe-check-all
+      label Select All
+        input( name='selectAll', type='checkbox' )
+    button.submit Submit Preferences

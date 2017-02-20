@@ -1,0 +1,30 @@
+@import '../../../components/stylus_lib'
+
+#auth-call-to-action-header
+  text-align center
+  font-size large-font-size
+  margin-bottom 20px
+
+#auth-call-to-action-tabs
+  margin-bottom 20px
+  text-align center
+  border-bottom 1px solid light-gray-border-color
+  a
+    avant-garde()
+    font-size 14px
+    border 1px solid light-gray-border-color
+    padding 10px 25px
+    display inline-block
+    position relative
+    top 1px
+    text-decoration none
+    &:first-child
+      margin-right 10px
+    &.auth-call-to-action-tabs-active
+      border-bottom 1px solid white
+
+#auth-call-to-action-forms
+  li
+    display none
+    &.auth-call-to-action-form-active
+      display block

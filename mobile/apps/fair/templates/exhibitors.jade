@@ -1,0 +1,16 @@
+mixin artworkColumnsTemplate(artworkColumns)
+  include ../../../components/artwork_columns/template
+
+.fair-exhibitors-list.avant-garde-tabs-list--active
+  for show in shows.models
+    .fair-exhibitors-show.avant-garde-tabs-list__item
+      a( href=show.href() )
+        header.avant-garde-tabs-list__chevron-name
+          .fair-exhibitiors-list__partner-view-all-title
+            h3= show.get('partner').name
+            p View All
+          h4= show.formattedLocation()
+      .home-page-current-shows-artworks(data-height = 500 ,class = show.artworks().length > 6 ? 'fair-exhibit-with-slider' : 'without-slider' )
+        +artworkColumnsTemplate(show.artworks().groupByColumnsInOrder())
+      if show.artworks().length > 6
+        include ../../../components/show_more_works/template

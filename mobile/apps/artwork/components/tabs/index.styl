@@ -1,0 +1,30 @@
+.artwork-tabs-module__accordion
+  margin 30px 0px
+
+.chevron-nav-list a.artwork-tab-link::after
+  background black
+  transform rotate(90deg)
+  margin-top 3px
+  right 2px
+
+.chevron-nav-list a.artwork-tab-link
+  border-bottom-style none
+.chevron-nav-list a.artwork-tab-link.is-active::after
+    transform rotate(270deg)
+    margin-top -10px
+    right 2px
+  .artwork-tab
+    display none
+    margin-bottom 20px
+    padding-top 20px
+    &.is-active
+      display block
+    p a
+      &:last-child
+        border-style none
+        display inline
+        &::after
+          mask-image url('') !important
+          display inline
+        p
+          display inline

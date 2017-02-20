@@ -1,0 +1,6 @@
+for fair in pastFairs
+  a.fairs-link(href=fair.href)
+    include fair-details
+if remainingPastFairs.length > 0
+  button#paginate-past-fairs.avant-garde-box-button.avant-garde-box-button-white( href='#', data-state='ok' )
+    | Load More

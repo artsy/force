@@ -1,0 +1,27 @@
+extends ../../../components/layout/templates/main
+
+block content
+  h1.fair-info2-page-header All Armory Arts Week Events
+  .fair-info-aaw-menu.main-side-margin
+    each neighborhood in neighborhoods
+      .fair-info-aaw-neightborhood-nav: a(href="##{neighborhood.name}") #{neighborhood.name}
+  .fair-info-aaw-neigborhoods
+    each neighborhood in neighborhoods
+      .fair-info-aaw-neigborhood(id="#{neighborhood.name}")
+        - article = neighborhood.article
+        .fair-info-article-content-wrapper.main-side-margin
+          h1.fair-info2-page-header= article.get('title')
+          .fair-info-article-body
+            for section, i in article.get('sections')
+              if section.type == 'image'
+                img.fair-info-article-section-image(src=section.url)
+                if section.caption
+                  .fair-info-article-image-caption!= section.caption
+              if section.type == 'text'
+                .fair-info-article-section-text!= section.body
+              if section.type == 'artworks'
+                .article-section-artworks.is-loading( data-layout=section.layout )
+                  .loading-spinner
+                  ul
+                    for id in section.ids
+                      li( data-id=id )

@@ -1,0 +1,26 @@
+- var bidder = me
+if artwork.auction
+  .js-artwork-auction-container
+    .artwork-auction-bid-module
+      if artwork.auction.is_open
+        .artwork-auction-bid-module__current-bid
+          include ./templates/bid.jade
+
+        .artwork-auction-bid-module__bid-form
+          include ./templates/bid_button.jade
+
+        if artwork.auction.is_with_buyers_premium
+          .artwork-auction-buyers-premium This work has a&nbsp;
+            a( href='/how-auctions-work-buyers-premium-taxes-and-fees') buyer's premium
+
+        .artwork-auction-bid-module__clock
+          include ../../../../components/auction_clock/template
+
+        .artwork-auction-bid-module__auction-links.chevron-nav-list
+          a.js-auction-multipage(data-id="auction-faqs") AUCTION FAQ
+          a.conditions-of-sale(href='/conditions-of-sale') Conditions of Sale
+          a.ask-a-specialist(href="/artwork/#{artwork.id}/ask_specialist") Ask a Specialist
+
+      else
+        .artwork-auction-bid-module__closed
+          | Auction Closed

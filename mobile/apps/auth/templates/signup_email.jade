@@ -1,0 +1,10 @@
+extends ../../../components/layout/templates/scaffold
+
+block body
+  #auth-page
+    h1.avant-garde-header-center Create Your Account
+    .auth-page-error-message
+      if error
+        = error
+    include signup_form
+    include signup_append

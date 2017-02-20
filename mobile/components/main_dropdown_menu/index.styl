@@ -1,0 +1,38 @@
+@import '../stylus_lib'
+
+.main-dropdown-menu
+  position absolute
+  top header-height
+  left 0
+  right 0
+  background-color black
+  visibility hidden
+  // initally retracted
+  transform translate3d(0, -100%,  0)
+
+  &.is-active
+    visibility visible
+
+.nav-menu__inner
+  padding 20px
+  clearfix()
+.nav-menu__link
+  color white
+  display block
+  width 50%
+  float left
+  font-size 20px
+  text-decoration none
+  line-height 2
+.nav-menu-avant-garde-name
+  display block
+  avant-garde()
+  font-size 14
+  color white
+.nav-menu-logged-in
+  border-top 1px solid #333
+
+main
+footer
+.main-dropdown-menu
+  transition transform 0.2s @ease-out-cubic

@@ -1,0 +1,65 @@
+//
+// The main index page of the fair that has all the featured links and navigation
+//
+
+@import '../../../components/stylus_lib'
+
+featured-link-margin = 16px
+header-margin = 40px 0 11px 0
+
+.fair-page-profile-icon
+  background-position left center
+  background-repeat no-repeat
+  background-size contain
+  display block
+  height 50px
+
+#fair-page-subtitle
+#fair-page-title
+  text-align left
+
+#fair-page-title
+  avant-garde-size('body', true)
+  margin-top 20px
+
+#fair-page-subtitle
+  garamond-size('l-caption', true)
+  color light-gray-text-color
+  margin-bottom 18px
+
+#fair-page-main-content
+  input.autocomplete-input
+    font-size 12px
+
+#fair-page-primary-featured-links
+  margin-top 20px
+
+.fair-page-nav-sections
+  &.fair-sections
+    margin-bottom 50px
+    .fair-page-nav-section-item:first-child
+      border-top: 0px solid
+
+  .fair-page-nav-section-item
+    padding-right 16px
+    ellipsis()
+
+.fair-page-nav-exhibitor-count
+  margin 0 10px
+  color dark-gray-text-color
+  serif()
+  font-size default-font-size
+  text-transform capitalize
+
+.fair-page-featured-links-title
+  margin header-margin
+
+#fair-page-articles-header
+  margin header-margin
+
+#fair-page-articles-see-all
+  margin-bottom 40px
+
+.fair-works-by
+  display none
+  margin 20px 0

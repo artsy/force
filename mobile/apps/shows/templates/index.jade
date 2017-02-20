@@ -1,0 +1,16 @@
+extends ../../../components/layout/templates/main
+
+block head
+  title Art Gallery Shows and Museum Exhibitions | Artsy
+
+block content
+  #shows-page
+    if featuredShow
+      a(href="#{featuredShow.href()}")
+        header.shows-header.garamond-header(style="background-image: url(#{featuredShow.imageUrl()})")
+
+    #shows-page-content.main-side-margin
+      nav.chevron-nav-list.shows-page-featured-cities
+        for city in featuredCities
+          a(href="/shows/#{city.slug}")= city.name
+        a(href="/all-cities") All Cities...

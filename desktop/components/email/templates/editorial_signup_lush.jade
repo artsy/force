@@ -1,0 +1,36 @@
+.articles-es-cta(
+  class= articlePage ? 'is-article-page' : ''
+  data-signup="#{isSignup}"
+)
+  .articles-es-cta__background-cover
+  ul.articles-es-cta__background
+    if images
+      for image in images
+        li.articles-es-cta__images(style="background-image: url(#{crop(image.src, { width: 1250, height: 380 } )})")
+  .articles-es-cta__container
+    .articles-es-cta__header
+      h3 The Daily Editorial Newsletter
+      h2 The latest art-world news and stories in your inbox
+    .articles-es-cta__form
+      #js--mail-hint
+      input.bordered-input( id ="articles-es-cta__form-input" placeholder='Enter your email address', type='email', name='email', required value="#{email}")
+      button.avant-garde-button-dark.js-article-es(data-type='lush') Subscribe
+  .articles-es-cta__social
+    .articles-es-cta__header
+      h2 Follow Artsy
+    .articles-es-cta__table
+      .articles-es-cta__row
+        a.articles-es-cta__social-item(href="http://facebook.com/artsy" target='_blank')
+          i.icon-facebook
+          | Facebook
+        a.articles-es-cta__social-item(href="http://twitter.com/artsy" target='_blank')
+          i.icon-twitter
+          | Twitter
+      .articles-es-cta__row
+        a.articles-es-cta__social-item(href="http://instagram.com/artsy" target='_blank')
+          i.icon-instagram
+          | Instagram
+        a.articles-es-cta__social-item(href="http://snapchat.com/add/artsy.net" target='_blank')
+          i.icon-snapchat
+            include ../../../components/main_layout/public/icons/snapchat.svg
+          | Snapchat

@@ -1,0 +1,16 @@
+.main-side-margin
+  .artwork-tabs-module__accordion
+    .artwork-tabs.js-artwork-tabs
+      .artwork-tabs__items.chevron-nav-list
+        if artwork.exhibition_history
+          .artwork-tab-item
+            a.artwork-tab-link(data-id='exhibition_history' class='js-artwork-tab-link') Exhibition History
+            .artwork-tab(data-id='exhibition_history' class='js-artwork-item')!= artwork.exhibition_history
+        if artwork.bibliography
+          .artwork-tab-item
+            a.artwork-tab-link(data-id='bibliography' class='js-artwork-tab-link') bibliography
+            .artwork-tab(data-id='bibliography' class='js-artwork-item')!= artwork.bibliography
+        if artwork.provenance
+          .artwork-tab-item
+            a.artwork-tab-link(data-id='provenance' class='js-artwork-tab-link')  provenance
+            .artwork-tab(data-id='provenance' class='js-artwork-item')!= artwork.provenance

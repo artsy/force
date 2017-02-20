@@ -1,0 +1,27 @@
+mixin option(value, label)
+  option(
+    value= value
+    selected=(state.isActive({ sort: value }) ? 'selected' : undefined)
+  )= label
+
+header.auction-artworks-list-header
+  .aal-amount
+    | #{artworks.length} Lots
+  .aal-filter
+    label.garamond-select: select.js-auction-artwork-list-sort( dir='rtl' )
+      - qualifier = (auction.get('auction_state') === 'preview') ? 'Starting' : ''
+      +option('default', 'Default')
+      +option('name_asc', 'Artists A–Z')
+      if auction.isAuctionPromo()
+        +option('estimate_desc', 'Highest Estimate')
+        +option('estimate_asc', 'Lowest Estimate')
+      else
+        unless auction.get('auction_state') === 'preview'
+          +option('bids_desc', 'Most Bids')
+          +option('bids_asc', 'Least Bids')
+        +option('amount_desc', 'Highest ' + qualifier + ' Bid')
+        +option('amount_asc', 'Lowest ' + qualifier + ' Bid')
+
+.auction-artwork-list-items
+  for artwork in artworks
+    include ./artwork

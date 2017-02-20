@@ -1,0 +1,17 @@
+.nav-menu__inner
+  a.nav-menu__link( href='/' ) Home
+  a.nav-menu__link( href='/institutions' ) Museums
+  a.nav-menu__link( href='/artists' ) Artists
+  a.nav-menu__link( href='/art-fairs' ) Fairs
+  a.nav-menu__link( href='/shows' ) Shows
+  a.nav-menu__link( href='/auctions' ) Auctions
+  a.nav-menu__link( href='/galleries' ) Galleries
+  a.nav-menu__link( href='/articles' ) Magazine
+
+if user
+  .nav-menu__inner.nav-menu-logged-in
+    a.nav-menu-avant-garde-name
+      = user.get('name')
+    a.nav-menu__link( href='/works-for-you' ) Works for You
+    a.nav-menu__link( href='/user/edit' ) Account
+

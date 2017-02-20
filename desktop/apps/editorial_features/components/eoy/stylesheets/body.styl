@@ -1,0 +1,1326 @@
+flex-display(justify = space-between, align = center)
+  display flex
+  justify-content justify
+  align-items align
+
+body
+  width 100vw
+
+video::-webkit-media-controls
+  display none !important
+
+img
+  max-width 90vw
+
+.article-body
+  display none
+  padding 0 40px
+  color black
+  background-color white
+  width 100vw
+  overflow-x hidden
+  section
+    opacity 0
+    transition all 1s
+    footer
+      position fixed
+      bottom 0
+      left 0
+      right 0
+      height 20px
+      background-color white
+      display none
+    &.footer
+      opacity 1
+      .caption
+        color gray-color
+        garamond-size('s-body')
+        margin 30px auto
+        max-width 1250px
+        margin-top -80px
+    &.active
+      opacity 1
+      img
+        opacity 1
+      footer
+        display block !important
+  &__content
+    max-width 1750px
+    margin 0 auto
+    p a
+      fine-faux-underline()
+      &:hover
+        color purple-color
+  &--section
+    width calc(85vw \- 80px)
+    max-width 1250px
+
+  // introduction paragraph
+  &__intro
+    opacity 1 !important
+    margin 0 auto
+    &-header
+      width 30vw
+      height 30vh
+      margin-bottom 20px
+      z-index 1000
+      .col
+        border-right 1px solid
+        height 100%
+
+// single page sections
+.article-body--section
+  padding-bottom 350px
+  &__title
+    flex-display(flex-end, flex-end)
+    h2
+      font-size 72px
+      line-height 1.35em
+      padding 100px 20px
+      width 100%
+      z-index 100
+  &__cover-image
+    width 100%
+    padding 70px 20px
+    position relative
+    flex-display()
+    .image
+      width 100%
+      z-index 100
+      img
+        height auto
+        width 75%
+        max-width 100%
+        transition all 4s ease-out
+        opacity 0
+    .caption
+      max-width 75%
+      margin-left auto
+  &__sub-text
+    .image
+      position relative
+      z-index 100
+  .caption
+    margin-top 15px
+    garamond-size('s-body')
+    color gray-color
+    margin-right 25%
+    text-align right
+    z-index 100
+  .callout
+    garamond-size('headline')
+    z-index 100
+    padding 40px
+  &__text
+    padding 70px 20px
+    z-index 100
+    p
+      font-size 22px
+      line-height 1.6em
+      padding-bottom 40px
+      max-width 750px
+      z-index 100
+      position relative
+    p:last-child
+      padding-bottom 30px
+    .share
+      max-width 750px
+      margin 0 auto
+      width 100%
+      .share-item:first-child
+        margin-left -10px
+
+  video
+    max-width 100%
+    z-index 100
+  .video-controls
+    position absolute
+    top 60px
+    left 20px
+    bottom 82px
+    right 110px
+    z-index 100
+    &.active
+      opacity 0
+    .video-play-button
+      position absolute
+      border-top 20px solid transparent
+      border-bottom 20px solid transparent
+      border-left 30px solid white
+      left calc(50% \- 15px)
+      top calc(50% \- 15px)
+
+[data-section='1']
+  .article-body--section
+    padding-bottom 0
+    &__title
+      justify-content flex-end
+      position relative
+      .spacer
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 0
+        transition all 3s
+        border-bottom 1px solid
+    &__cover-image
+      border-bottom 1px solid
+      justify-content flex-end
+      .spacer
+        position absolute
+        border-right 1px solid
+        top 20px
+        left 0
+        bottom 0
+        height 0
+        transition all 3s
+        max-height calc(100% \- 40px)
+      .image
+        flex-display(space-between, flex-end)
+        flex-direction column
+      .caption
+        margin-right 0
+    article
+      display flex
+      position relative
+      margin-top 20px
+      flex-direction column
+      padding-bottom 350px
+    &__text
+      order 2
+      border-top 1px solid
+      margin-top 20px
+      margin-right 20px
+      border-bottom 1px solid
+      p
+        margin 0 auto
+    &__sub-text
+      order 1
+      flex-display(space-between, center)
+      position relative
+      .image
+        width 60%
+        padding 60px 110px 60px 20px
+        .caption
+          margin-right 0px
+      .callout
+        flex 1
+        text-align center
+      .spacer
+        position absolute
+        top 0
+        bottom 0
+        height 100%
+        border-right 1px solid
+        left 60%
+    &__sub-image
+      order 3
+      padding 70px 20px
+      position relative
+      z-index 100
+      img
+        width 85%
+      .caption
+        margin-right 15%
+      .spacer
+        border-bottom 1px solid
+        position absolute
+        bottom 0
+        left 0
+        right 20px
+    .spacer--article
+      border-right 1px solid
+      position absolute
+      right 0
+      top 0
+      height 100%
+      max-height 100%
+  &.active
+    .article-body--section__cover-image
+      .spacer
+        height 100%
+    .article-body--section__title
+      .spacer
+        width 100%
+
+[data-section='2']
+  .article-body--section
+    margin 0 auto
+    &__title h2
+      min-width 100%
+    &__cover-image
+      .image
+        img
+          width 85%
+          margin-right 15%
+          margin-left auto
+      .caption
+        margin-right 15%
+        text-align right
+      .spacer
+        border-top 1px solid
+        position absolute
+        width 0
+        left 0
+        right 20px
+        transition all 3s
+        margin-right 0
+        margin-left auto
+        &:first-child
+          top 0
+        &:nth-child(2)
+          bottom 0
+        &:nth-child(3)
+          right 0
+          height 0
+          bottom 0
+          border-right 1px solid
+    &__text
+      border-right 1px solid
+      p
+        margin 0 auto
+    &__sub-text
+      border-top 1px solid
+      border-bottom 1px solid
+      margin-top 20px
+      padding-top 20px
+      display flex
+      flex-direction row-reverse
+      justify-content space-between
+      position relative
+      .image
+        padding 30px 20px 40px 0
+        width 60%
+        .video-controls
+          top 30px
+          left 0
+          right 20px
+          bottom 62px
+        .caption
+          margin-right 0
+      .spacer
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 20%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        height calc(100% \+ 320px)
+      .callout
+        display none
+  &.active
+    .article-body--section__cover-image
+      .spacer
+        width calc(100% \- 20px)
+        &:nth-child(3)
+          width 1px
+          height 100%
+
+[data-section='3']
+  .article-body--section
+    margin-left auto
+    margin-right 0
+    &__title
+      position relative
+      overflow hidden
+      .spacer
+        position absolute
+        top 100%
+        bottom 0
+        right 0
+        border-right 1px solid
+        transition all 3s
+    &__cover-image
+      border-bottom 1px solid
+      .spacer
+        &:nth-child(1)
+          top 0
+          left 0
+          right 0
+          border-top 1px solid
+          width 0
+          position absolute
+          transition all 3s
+          margin-right 20px
+          margin-left auto
+    article
+      margin-top 20px
+      display flex
+      flex-direction column-reverse
+      position relative
+      .spacer--article
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        height calc(100% \+ 350px)
+        border-right 1px solid
+    &__text
+      border-bottom 1px solid
+      margin-bottom -20px
+      margin-right 10px
+      p
+        margin 0 auto
+    &__sub-text
+      display flex
+      justify-content space-between
+      position relative
+      border-bottom 1px solid
+      margin-right 20px
+      padding-bottom 20px
+      .image, .callout
+        width calc(50% \- 20px)
+        padding 70px 20px
+        align-self flex-start
+        img
+          width 100%
+        .caption
+          margin-right 0px
+      .spacer
+        border-right 1px solid
+        max-height 100%
+        height calc(100% \- 20px)
+        position absolute
+        top 0
+        bottom 0
+        left 50%
+  &.active
+    header
+      .spacer
+        top 0
+    .spacer:nth-child(1)
+      width calc(100% \- 20px)
+
+[data-section='4']
+  .article-body--section
+    margin 0 auto
+    padding-bottom 0
+    &__title
+      h2
+        margin-right 20px
+        text-align right
+    &__cover-image
+      border-top 1px solid
+      border-bottom 1px solid
+      .spacer:first-child
+        position absolute
+        top 20px
+        right 0
+        bottom 0
+        height 100%
+        max-height calc(100% \- 40px)
+        border-right 1px solid
+    article
+      position relative
+      padding-bottom 350px
+      .spacer--article
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 15%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        max-height calc(100% \- 120px)
+    &__text
+      display flex
+      justify-content flex-end
+      border-bottom 1px solid
+      flex-direction column
+      padding-left calc(15vw \+ 40px)
+      padding-right 50px
+      align-items flex-end
+      .share
+        margin-right 0
+    &__sub-text
+      border-bottom 1px solid
+      .image
+        padding-left calc(20% \+ 100px)
+        display flex
+        flex-direction column
+        align-items flex-end
+        padding-top 70px
+        padding-bottom 70px
+        padding-right 40px
+        img
+          width 100%
+          height auto
+      .callout
+        display none
+  .carousel
+    max-height 600px
+    .mgr-cell.js-mgr-cell
+      width 100%
+      height 100%
+      display flex
+      align-items flex-start
+      justify-content center
+      flex-direction column
+      min-height 600px
+    .carousel-caption
+      margin-top 10px
+      color gray-color
+      garamond-size('s-body')
+      white-space normal
+      padding 0px 10px
+      max-height 3em
+    &.mgr-horizontal-nav
+      width 100%
+      .mgr-navigation
+        opacity 1
+      .mgr-arrow-icon
+        margin-bottom 1.5em
+
+[data-section='5']
+  .article-body--section
+    margin-left 0
+    header
+      position relative
+      .spacer--article
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        height 100%
+        max-height 100%
+        border-right 1px solid
+    &__title
+      position relative
+      .spacer
+        position absolute
+        left 0
+        right 20px
+        bottom 0
+        border-bottom 1px solid
+        width 0
+        margin-right 0
+        margin-left auto
+        transition all 4s
+    &__cover-image
+      padding 0
+      .image
+        border-bottom 1px solid
+        margin-right 20px
+        padding 70px 20px
+    &__text
+      margin 20px 0
+      position relative
+      z-index initial
+      p
+        margin-right 0
+        margin-left auto
+      .share
+        margin-right 0
+      .spacer
+        position absolute
+        top 0
+        left 0
+        bottom 0
+        height 100%
+        max-height 100%
+        border-right 1px solid
+    &__sub-text
+      display flex
+      border-top 1px solid
+      padding 20px 0
+      position relative
+      .image
+        width 50%
+        order 3
+        margin-left 10px
+        padding 40px 20px 60px
+        border-bottom 1px solid
+        img, .caption
+          max-width 75%
+          margin-left auto
+          margin-right 0
+      .spacer
+        position absolute
+        border-right 1px solid
+        left 50%
+        top 20px
+        bottom 0
+        height calc(100% \+ 260px)
+      .callout
+        flex-display()
+        width 50%
+        margin-right 10px
+        order 1
+        border-bottom 1px solid
+        padding-left 0
+        p
+          border-left 1px solid
+          padding-left 20px
+          garamond-size('l-headline')
+  &.active
+    .article-body--section__title .spacer
+      width calc(100% \- 20px)
+
+[data-section='6']
+  .article-body--section
+    margin 0 auto
+    header
+      position relative
+      overflow hidden
+      .spacer--article
+        border-right 1px solid
+        position absolute
+        left 0
+        top 0
+        height 100%
+    &__title
+      position relative
+      h2
+        margin-left 20px
+        padding-left 25%
+      .spacer
+        position absolute
+        left 20px
+        right 0
+        bottom 0
+        border-top 1px solid
+        width 0
+        transition all 3s
+    &__cover-image
+      padding 0 20px 0 0
+      .image
+        margin-left 20px
+        border-bottom 1px solid
+        flex-display(space-between, flex-end)
+        flex-direction column
+        padding 70px 0
+      .caption
+        margin-right 0
+    &__text
+      position relative
+      z-index initial
+      .share
+        margin-left 0
+      .spacer
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        height 100%
+        max-height 100%
+        border-right 1px solid
+    &__sub-text
+      margin-top 20px
+      padding-top 20px
+      border-top 1px solid
+      display flex
+      justify-content space-between
+      position relative
+      border-bottom 1px solid
+      .image
+        width 60%
+        padding 70px 0 70px 20px
+        img
+          max-width 100%
+          max-height 700px
+          width auto
+          height auto
+        .caption
+          text-align left
+      .callout
+        width 40%
+        flex-display(center, center)
+      .spacer
+        left calc(60% \- 10px)
+        top 20px
+        height calc(100% \+ 360px)
+        bottom 0
+        position absolute
+        width 21px
+        background-color black
+        border-right 10px solid white
+        border-left 10px solid white
+  &.active
+    .article-body--section__title .spacer
+      width calc(100% \- 20px)
+
+[data-section='7']
+  .article-body--section
+    margin 0 auto
+    &__title
+      position relative
+      .spacer
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 0
+        margin 0 auto
+        border-bottom 1px solid
+        transition all 4s ease-out
+    &__cover-image
+      .image
+        img
+          margin-right 0
+          margin-left auto
+        .caption
+          margin-right 0
+          margin-left 25%
+      .spacer:first-child
+        position absolute
+        left 0
+        top 20px
+        bottom 0
+        height 0
+        margin auto 0
+        transition all 3.5s ease-out
+        border-right 1px solid
+      .spacer:nth-child(2)
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        width 100%
+        border-bottom 1px solid
+    &__text
+      .share
+        margin-left 0
+    article
+      position relative
+      .spacer--article
+        position absolute
+        top 20px
+        right 0
+        bottom 0
+        height calc(100% \+ 280px)
+        border-right 1px solid
+    &__sub-text
+      margin-right 20px
+      border-top 1px solid
+      padding 60px 0
+      .image
+        width 75%
+        margin 0 auto
+        img
+          width 100%
+        .caption
+          text-align left
+          width 100%
+      .callout
+        display none
+      .spacer
+        position absolute
+        bottom 0
+        left 0
+        right 20px
+        border-bottom 1px solid
+        width calc(100% \- 20px)
+  &.active
+    .article-body--section__title .spacer
+      width 100%
+    .article-body--section__cover-image .spacer:first-child
+      height calc(100% \- 40px)
+
+[data-section='8']
+  .article-body--section
+    margin-right 0
+    margin-left auto
+    &__title
+      h2
+        border-right 1px solid
+        padding-right 20px
+        text-align center
+    &__cover-image
+      border-right 1px solid
+      .spacer
+        position absolute
+        left 0
+        right 0
+        bottom 0
+        border-top 1px solid
+        width calc(100% \-20px)
+        &:first-child
+          top 0
+      .image
+        width 85%
+        position relative
+        .caption
+          min-width 100%
+        video
+          width 100%
+        .video-controls
+          width 100%
+          top 0
+          left 0
+          bottom calc(1em \+ 30px)
+          right 0
+    &__text
+      border-right 1px solid
+      margin-bottom 20px
+      .share
+        margin-left 0
+    &__sub-text
+      border-top 1px solid
+      display flex
+      border-bottom 1px solid
+      position relative
+      .image
+        padding 70px 20px
+        width 75%
+        margin 20px 0
+        img
+          width 75%
+      .callout
+        display none
+      .spacer
+        position absolute
+        top 20px
+        bottom 0
+        right 25%
+        height calc(100% \+ 280px)
+        width 21px
+        background-color black
+        border-right 10px solid white
+        border-left 10px solid white
+
+[data-section='9']
+  .article-body--section
+    margin-left 0
+    margin-right auto
+    &__title
+      position relative
+      text-align right
+      .spacer
+        height 0
+        position absolute
+        bottom 0
+        left 0
+        top 0
+        border-right 1px solid
+        transition all 3s
+    &__cover-image
+      .spacer:first-child
+        position absolute
+        top 0
+        left 0
+        right 0
+        width 0
+        margin-left 50%
+        transition all 3s
+        border-top 1px solid
+      .spacer:nth-child(2)
+        position absolute
+        bottom 0
+        left 50%
+        top 20px
+        height calc(100% \- 40px)
+        border-right 1px solid
+      .spacer:nth-child(3)
+        position absolute
+        bottom 0
+        right 0
+        top 20px
+        height calc(100% \- 20px)
+        border-right 1px solid
+      .image
+        display flex
+        .img
+          padding 0 60px
+          width 50%
+          img
+            width 100%
+        .caption
+          margin-right 0
+          min-width 100%
+          text-align left
+    article
+      position relative
+      .spacer--article
+        position absolute
+        top 0
+        left 0
+        right 0
+        border-top 1px solid
+        width calc(100% \- 20px)
+    &__text
+      border-right 1px solid
+      .share
+        margin-left 0
+    &__sub-text
+      margin-top 20px
+      .image
+        padding 60px 20px
+        border-top 1px solid
+        border-bottom 1px solid
+        img
+          margin-right 0
+          margin-left 25%
+          width 75%
+        .caption
+          margin-right 0
+          margin-left 25%
+          text-align left
+      .callout
+        display none
+  &.active
+    header .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
+      margin-left 0
+
+[data-section='10']
+  .article-body--section
+    margin 0 auto
+    padding-bottom 0
+    &__title
+      position relative
+      .spacer
+        position absolute
+        top 0
+        right 0
+        bottom 20px
+        height 0
+        border-right 1px solid
+        margin-top auto
+        transition all 3.5s ease-out
+    &__cover-image
+      .image
+        img
+          margin 0 auto
+        .caption
+          margin-left auto
+          margin-right auto
+          text-align left
+      .spacer:first-child
+        position absolute
+        top 0
+        left 0
+        right 0
+        width 0
+        border-top 1px solid
+        transition all 4s ease-out
+        margin-left auto
+      .spacer:nth-child(2)
+        position absolute
+        bottom 0
+        left 0
+        right 0
+        width 100%
+        border-top 1px solid
+    &__text
+      display flex
+      align-items flex-end
+      flex-direction column
+      margin-left 15%
+      .share
+        margin-right 0
+    article
+      position relative
+      padding-bottom 350px
+      .spacer--article
+        border-right 10px solid white
+        border-left 10px solid white
+        position absolute
+        left 7.5%
+        top 20px
+        bottom 0
+        background black
+        width 21px
+        max-height calc(100% \+ 350px)
+    &__sub-text
+      border-bottom 1px solid
+      border-top 1px solid
+      .image
+        padding 60px 20px
+        img
+          margin-right 0
+          margin-left auto
+          width 75%
+        .caption
+          margin-left 25%
+          margin-right 0
+      .callout
+        display none
+  &.active
+    .article-body--section__title .spacer
+      height calc(100% \- 20px)
+    .article-body--section__cover-image .spacer:first-child
+      width 100%
+@media screen and (max-width: 1280px)
+  .article-body--section
+    &__title h2
+      font-size 60px
+
+@media screen and (max-width: 1200px)
+  .article-body--section
+    width 100%
+    &__title
+      min-width 100%
+    &__cover-image
+      .image img
+        width 85%
+      .caption
+        max-width 85%
+        margin-right 15%
+
+@media screen and (max-width: 900px)
+  .article-body--section
+    &__title h2
+      font-size 45px
+
+@media screen and (max-width: 550px)
+  .article-body
+    padding 0 10px
+    &__intro-inner
+      h3
+        min-width 100%
+        garamond-size('l-body')
+        line-height 30px
+        margin-left 0
+        padding 30px 10px
+    &__intro-inner.active
+      .spacer:nth-child(3), .spacer:first-child
+        width 100%
+        left 0
+      .spacer:last-child
+        display none
+  .article-body--section
+    padding-bottom 200px
+    &__title h2
+      padding 30px 0
+      font-size 40px
+    &__cover-image
+      padding 30px 0
+      img
+        min-width 85%
+    .caption
+      min-width 85%
+      garamond-size('m-caption')
+      text-align left
+      margin-top 10px
+    &__text
+      margin-right 10px
+      padding-left 10px
+      padding-right 0
+      padding-bottom 40px
+      p
+        font-size 20px
+        line-height 30px
+    &__sub-text
+      flex-direction column
+      .spacer--article
+        display none
+      .callout
+        garamond-size('s-headline')
+  .article-body__intro-inner
+    width 100%
+
+  [data-section='1']
+    .article-body--section
+      &__title
+        text-align right
+      &__cover-image .spacer
+        top 10px
+        max-height calc(100% \- 20px)
+      article
+        margin-top 10px
+        padding-bottom 200px
+        .spacer--article
+          max-height calc(100% \- 200px)
+      &__text
+        margin-top 0
+      &__sub-text
+        .image
+          width calc(100% \- 10px)
+          padding 25px 35px 25px 40px
+          border-bottom 1px solid
+          border-right none
+          margin-right 10px
+          .video-controls
+            top 25px
+            left 40px
+            bottom 32px
+            right 35px
+        .callout
+          padding 60px 40px
+          width 100%
+        .spacer
+          display none
+      &__sub-image
+        padding 30px 0
+        .spacer
+          right 10px
+      &__text
+        margin-right 10px
+
+  [data-section='2']
+    .article-body--section
+      &__cover-image
+        .caption
+          margin-left 0
+          text-align left
+        .spacer:first-child,
+        .spacer:nth-child(2)
+          min-width calc(100% \- 10px)
+          right 10px
+      &__text
+        margin-right 0
+        padding-right 10px
+        border-right none
+      &__sub-text
+        .spacer
+          display none
+        .image
+          width 85%
+          padding-right 0
+
+  [data-section='3']
+    .article-body--section
+      &__title
+        h2
+          margin-left 10px
+        .spacer
+          bottom 10px
+      &__cover-image
+        padding 30px 10px
+        border-bottom none
+        .spacer:first-child
+          margin-right 0
+          min-width 100%
+        .image img, .caption
+          min-width 100%
+      article
+        margin-top 0
+      .spacer--article
+        display none
+      &__sub-text
+        margin 0
+        padding 0
+        .spacer
+          display none
+        .image, .callout
+          border-top 1px solid
+          min-width 100%
+          padding 40px 10px
+          img
+            min-width 100%
+
+  [data-section='4']
+    .article-body--section
+      &__title h2
+        margin-right 0
+      &__cover-image
+        padding 30px 0 30px 10px
+        .spacer:first-child
+          top 10px
+          max-height calc(100% \- 20px)
+        .caption
+          margin-left 0
+      article
+        padding-bottom 200px
+      .spacer--article
+        display none
+      &__text
+        padding-left 10px
+        padding-right 10px
+        margin-right 0
+      &__sub-text
+        .image
+          padding 40px 20px
+        .mgr-arrow-icon
+          font-size 15px
+        .flickity-viewport
+          max-height 350px
+          .mgr-cell.js-mgr-cell
+            max-height 330px
+            min-height 330px
+            .carousel-caption
+              garamond-size('l-caption')
+
+  [data-section='5']
+    .article-body--section
+      &__title
+        h2
+          margin-left 10px
+        .spacer
+          min-width calc(100% \- 10px)
+          right 10px
+      &__cover-image
+        .image
+          padding 30px 20px 30px 10px
+          margin-right 10px
+        img
+          width 100%
+        .caption
+          margin-left 0
+      &__text
+        margin 0
+        padding-right 10px
+        padding-bottom 30px
+        .spacer
+          display none
+      &__sub-text
+        padding 10px 0
+        .spacer
+          display none
+        .callout
+          display block
+          width 100%
+          border-right 1px solid
+          padding 70px 40px
+          border-bottom none
+          text-align center
+          p
+            padding 0
+            border none
+            garamond-size('s-headline')
+        .image
+          width 100%
+          margin 10px 0
+          border-top 1px solid
+          padding 40px 10px
+          img
+            min-width 85%
+
+  [data-section='6']
+    .article-body--section
+      &__title h2
+        margin-left 10px
+        padding-left 20px
+      &__cover-image
+        padding-right 0px
+        .image
+          margin-left 10px
+          padding 30px 0
+          img, .caption
+            width calc(100% \- 20px)
+            margin-right auto
+            margin-left 10px
+      &__text
+        margin-right 0
+        .spacer
+          display none
+      &__sub-text
+        margin-top 0
+        padding 10px 0
+        border-bottom 1px solid
+        .spacer
+          display none
+        .image
+          width 85%
+          padding-right 30%
+          border-right 1px solid
+          border-bottom none
+        .callout
+          display none
+    &.active
+      .article-body--section__title .spacer
+        left 10px
+        width calc(100% \- 10px)
+
+  [data-section='7']
+    .article-body--section
+      &__cover-image
+        .image
+          margin-right 10px
+          .caption
+            width 85%
+            margin-left 15%
+        .spacer:first-child
+          top 10px
+          height calc(100% \- 20px)
+      article .spacer--article
+        display none
+      &__sub-text
+        margin-right 10px
+        padding 30px 0 30px 10px
+        position relative
+        border-bottom 1px solid
+        .spacer
+          left calc(100% \+ 10px)
+          height 100%
+          width 0
+          top 0
+          border-right 1px solid
+
+  [data-section='8']
+    .article-body--section
+      &__cover-image
+        .image
+          margin-right 10px
+          width calc(100% \- 10px)
+          padding 0
+          margin-left 10px
+          margin-right 15%
+        .spacer
+          width calc(100% \- 10px)
+      &__text
+        border-right 0
+        margin-bottom 0
+      &__sub-text
+        padding 30px 0
+        .image
+          min-width 100%
+          margin 10px 0
+          padding 0 0 0 10px
+        .spacer
+          right 0
+          top 10px
+          height calc(100% \- 20px)
+          border-right 0
+          width 11px
+
+  [data-section='9']
+    .article-body--section
+      &__title h2
+        padding-right 10px
+      &__cover-image
+        padding 0
+        .spacer:nth-child(2)
+          left 0
+          right 10px
+          width calc(100% \- 10px)
+          height 0
+          border-bottom 1px solid
+          top 50%
+        .spacer:nth-child(3)
+          width calc(100% \- 10px)
+          top 10px
+        .image
+          flex-direction column
+          .img
+            width 100%
+            padding 30px 60px
+      article .spacer--article
+        width 100%
+      &__text
+        border-right none
+      &__sub-text
+        margin-top 0
+        .image
+          padding 30px 10px
+          img, .caption
+            width 85%
+            margin-left 15%
+    &.active
+      header .spacer
+        height calc(100% \- 10px)
+
+  [data-section='10']
+    .article-body--section
+      .spacer--article
+        display none
+      &__title
+        .spacer
+          height calc(100% \- 10px)
+      article
+        padding-bottom 200px
+      &__text
+        margin-left 0
+      &__sub-text
+        padding 30px 10px
+        .image
+          padding 0
+          img, .caption
+            width 85%
+            margin-left 15%

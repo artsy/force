@@ -1,0 +1,25 @@
+ul(id="#{shows[0].get('status')}").shows-page-list 
+  for show in shows
+    li.shows-page-list__item
+      a(href="#{show.href()}")
+        .shows-page-list__item__image
+          img(src="#{show.imageUrl('square')}")
+
+        .shows-page-list__item__details
+          .shows-page-list__item__details-partner-name= show.partnerName()
+          .shows-page-list__item__details-show-name= show.get('name')
+          .shows-page-list__item__details-address= show.formattedStreetAddress()
+          if show.get('status') === 'upcoming'
+            .shows-page-list__item__details-dates
+              if show.isOpeningToday()
+                | Opening today
+              else
+                | Opening #{show.date('start_at').format('MMM DD')}
+          if show.get('status') === 'closed'
+            .shows-page-list__item__details-dates
+              | #{show.date('start_at').format('MMM DD')} – #{show.date('end_at').format('MMM DD, YYYY')}
+
+          if show.isEndingSoon()
+            .shows-page-list__item__details-dates.is-warning Closes #{show.endingIn()}
+          else if show.get('status') === 'running'
+            .shows-page-list__item__details-closing-date Closes #{show.formattedEndAt()}

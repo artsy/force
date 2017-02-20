@@ -1,0 +1,10 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-page-main-content.main-side-margin.mobile-app-top-padding
+    .fair-page-az-header.avant-garde-header-center Exhibitors
+    nav.chevron-nav-list.fair-page-nav-sections.fair-sections
+      a( href="/#{fair.get('default_profile_id')}/browse/booths" ) All Exhibitors
+      for section in sections
+        if section.get('section') && section.get('section').length > 0
+          a( href="/#{fair.get('default_profile_id')}/browse/booths/section/#{section.get('section')}" )= section.get('section')

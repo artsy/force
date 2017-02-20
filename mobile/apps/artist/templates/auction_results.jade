@@ -1,0 +1,25 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #artist-auction-results-page.main-side-margin
+    #artist-auction-results-note
+      em Note:
+      = ' '
+      | Auction results are an experimental feature with limited data.
+    h1#artist-auction-results-header.avant-garde-header-center
+      | Auction Results For
+    #artist-auction-results-artist-name
+      = artist.get('name')
+    #artist-auction-results-info
+      #artist-auction-results-count
+        | Displaying #{totalCount} results
+      #artist-auction-results-sort
+        label.garamond-select: select( dir='rtl' )
+          for val, label in { "Sale Price": '-price_realized_dollar,-auction_date', "Most Recent": 'date,-auction_date', "Estimate": '-high_estimate_dollar,-auction_date' }
+            option( value=val, selected=(sort == val) || undefined )
+              = label
+
+    ul#artist-auction-results
+      for result in auctionResults
+        include ./auction_result
+    .loading-spinner

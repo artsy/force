@@ -1,0 +1,8 @@
+.artsy-checkbox.cf-periods__checkbox(data-has-results=agg ? 'true' : 'false')
+  .artsy-checkbox--checkbox
+    input( type='checkbox', id=majorPeriod, checked=isSelected, disabled=!agg )
+    label( for=majorPeriod )
+  label.artsy-checkbox--label( for=majorPeriod ) #{majorPeriod}
+    if agg
+      | &nbsp;
+      span.cf-periods__total.garamond-m-caption (#{numberFormat(agg.count)})

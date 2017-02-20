@@ -1,0 +1,30 @@
+.auction-reminder__close.js-dismiss
+  i.icon-close.js-dismiss
+
+if auction.isWithHeaderImage()
+  .auction-reminder__image
+     img(
+      width='80'
+      height='60'
+      src= auction.cropUrlFor({ width: 80, height: 60 })
+      alt= auction.get('name')
+    )
+else
+  .auction-reminder__image
+
+.auction-reminder__metadata
+  case auction.reminderStatus()
+    when 'live_open'
+      h4.auction-reminder__metadata__title.green Live Bidding Now Open
+      h3.auction-reminder__metadata__desc= auction.get('name')
+      h4.auction-reminder__metadata__action Bid Now
+    when 'live_open_soon'
+      h4.auction-reminder__metadata__title.black Live Bidding Opens Soon
+      h3.auction-reminder__metadata__desc= auction.get('name')
+      h4.auction-reminder__metadata__action.time-msg #{timeMessage}
+    when 'closing_soon'
+      h4.auction-reminder__metadata__title.red.time-msg #{timeMessage}
+      h3.auction-reminder__metadata__desc= auction.get('name')
+      h4.auction-reminder__metadata__action Bid Now
+    default
+      - throw new Error('unhandled reminder type: ' + auction.reminderStatus())

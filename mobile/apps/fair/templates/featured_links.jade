@@ -1,0 +1,20 @@
+mixin navItemImage(link)
+  if key == 'curator'
+    - image_url = link.imageUrl('small_square')
+  else
+    - image_url = link.imageUrl('small_rectangle')
+
+  .fair-nav-item-image(class="fair-nav-item-image--#{key}" style="background-image: url(#{image_url})" )
+
+if title
+  h3.avant-garde-header-center.fair-page-featured-links-title= title
+.chevron-nav-list-group
+  for featuredLink in featuredLinks
+    .chevron-nav-list.fair-nav-item( class=key + "-fair-ordered-set" )
+      a.fair-nav-item-link( href=featuredLink.get('href') )
+        +navItemImage(featuredLink)
+        .fair-nav-item-label
+          if featuredLink.get('title')
+            .fair-nav-item-label-title!= featuredLink.get('title')
+          if featuredLink.get('subtitle')
+            .fair-nav-item-label-subtitle!= featuredLink.get('subtitle')

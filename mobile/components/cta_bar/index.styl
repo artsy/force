@@ -1,0 +1,113 @@
+@import '../stylus_lib'
+
+.cta-bar.editorial-signup
+  padding 0
+  background none transparent
+  background linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.25))
+  display flex
+  align-items flex-end
+  height 225px
+  .vam-outer
+    background-color white
+    color black
+    padding 10px 20px
+    margin 10px
+    width 100%
+    border 1px solid gray-lighter-color
+    .cta-bar-header-editorial
+      margin 10px 0 15px 0
+      > h2
+        garamond-size('s-headline')
+        text-align left
+        line-height 1.25
+    .cta-bar-defer a
+      font-size 22px
+      color gray-color
+      text-decoration none
+    .cta-bar-form-editorial
+      position relative
+      .bordered-input
+        border-width 1px
+        garamond-size('s-body')
+      > button
+        padding 9px
+        height 30px
+        border-radius 2px
+        position absolute
+        top 10px
+        right 10px
+        avant-garde-size('s-headline', true)
+        line-height 1em
+      .subscribed
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+        background-color gray-color
+        color white
+        avant-garde-size('s-headline', true)
+        display none
+        justify-content center
+        align-items center
+      .subscribed.active
+        display flex
+
+.cta-bar.email
+  background-color black
+  color white
+.cta-bar
+  z-index z-cta
+  position fixed
+  right 0
+  bottom -1px
+  left 0
+  padding 15px 0px 20px 0px
+  text-align center
+  transform translateY(100%)
+  transition transform 0.5s
+  > *
+    opacity 0
+    transition 1s
+  &[data-state='in']
+    transform translateY(0%)
+    > *
+      opacity 1
+.cta-bar-defer
+  display inline-block
+  float right
+  > a
+    color gray-dark-color
+    garamond-size('s-body')
+.cta-bar-email
+  width 100%
+.cta-bar-header
+  float left
+  display inline-block
+  text-align left
+  > h2
+    garamond-size('s-body')
+.cta-bar-email-form
+  display inline-block
+  width 100%
+  margin-top 15px
+  > button
+    display block
+    width 100%
+.cta-bar-email-input
+  display none
+  > input
+    height 36px
+    width calc(100% - 50px)
+    float left
+    background-color white
+    border none
+  svg
+    height 36px
+    margin-left 10px
+    float right
+.cta-bar-thanks
+  width 100%
+  display none
+.cta-bar-container
+  margin 0 20px

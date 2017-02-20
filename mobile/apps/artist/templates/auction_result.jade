@@ -1,0 +1,19 @@
+li
+  .artist-auction-results-img-container
+    img( src= result.get('image_urls') && result.get('image_urls').thumbnail )
+  .artist-auction-results-details
+    p
+      em= result.get('title')
+    p= result.get('medium_text')
+    if result.get('dimensions')
+      p= result.get('dimensions').in
+      p= result.get('dimensions').cm
+    p= result.get('dates_text')
+    p Auction Date:&nbsp;
+      = result.get('auction_dates_text')
+    if user || sd.USER_AGENT.match('Artsy-Mobile')
+      p Est.: #{result.get('estimate_text')}
+      p Sale: #{result.get('price_realized_text')}
+    else
+      p
+        a( href='/sign_up?action=auction-results' ) Sign up to view auction results

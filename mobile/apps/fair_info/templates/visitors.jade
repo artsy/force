@@ -1,0 +1,30 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-page-info.main-side-margin
+    h1.fair-info2-page-header Visitors
+    .fair-info-visitor-info
+      if location.get('coordinates')
+        a( target="_blank", href=location.gmapLink() )
+          img.fair-info2-map( src=location.gmapImageUrl('600x300') )
+      if location.get('summary')
+        .fair-info-visitor-info__section
+          h1.fair-info2-header Location
+          .fair-page-info-location-summary.formatted-markdown!= location.mdToHtml('summary')
+      if fair.get('hours')
+        .fair-info-visitor-info__section
+          h1.fair-info2-header Hours
+          .fair-info-hours.formatted-markdown!= fair.mdToHtml('hours')
+      if fair.get('tickets') || fair.get('tickets_link')
+        .fair-info-visitor-info__section
+          h1.fair-info2-header Tickets
+          .fair-info-tickets!= fair.mdToHtml('tickets')
+          a.fair-info-heavy-link(href=fair.get('tickets_link')) Buy Tickets
+      if fair.get('contact')
+        .fair-info-visitor-info__section
+          h1.fair-info2-header Contact
+          .fair-info-contact.formatted-markdown!= fair.mdToHtml('contact')
+      if fair.get('links')
+        .fair-info-visitor-info__section
+          h1.fair-info2-header Links
+          .fair-info-link.formatted-markdown!= fair.mdToHtml('links')

@@ -1,0 +1,5 @@
+.artist-suggestion-row
+  img(src=artist.imageUrl() width=30 height=30)
+  a.artist-suggestion-name(href=artist.href())
+    = artist.get('name')
+  a.follow-button.avant-garde-button-underlined(data-state='follow' data-artist-slug=artist.get('id') data-artist-id=artist.get('_id'))

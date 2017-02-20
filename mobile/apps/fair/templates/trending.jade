@@ -1,0 +1,20 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-trending.main-side-margin
+    h1.fair-page-module-heading.fair-trending-heading Live at #{fair.get('name')}
+
+    section.fair-trending-exhibitors
+      h2.fair-page-module-heading Trending Exhibitors
+      .fair-trending-items
+        .loading-spinner
+
+    section.fair-trending-artists
+      h2.fair-page-module-heading Trending Artists
+      .fair-trending-items
+        .loading-spinner
+
+    section.fair-trending-followed-exhibitors
+      h2.fair-page-module-heading Most Followed Exhibitors
+      .fair-trending-items
+        .loading-spinner

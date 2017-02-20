@@ -1,0 +1,18 @@
+extends ../../../components/layout/templates/main
+
+block content
+  #fair-page-main-content.main-side-margin.mobile-app-top-padding
+    .fair-page-header
+      .fair-page-az-header.avant-garde-header-center= title
+    include exhibitors_subheader
+    ul#fair-page-az-list
+      for models, letter in groups
+        ul
+          h2= letter
+          for model in models
+            li
+              if model.get('artworks_count') > 0
+                a( href=model.href() )= model.get('name')
+              else
+                span= model.get('name')
+

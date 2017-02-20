@@ -1,0 +1,24 @@
+extends ../../../components/layout/templates/main
+
+block content
+  if article
+    .fair-info-article.main-side-margin
+      .fair-info-article-content-wrapper
+        h1.fair-info2-page-header= article.get('title')
+        .fair-info-article-body
+          for section, i in article.get('sections')
+            if section.type == 'image'
+              img.fair-info-article-section-image(src=section.url)
+              if section.caption
+                .fair-info-article-image-caption!= section.caption
+            if section.type == 'text'
+              .fair-info-article-section-text!= section.body
+            if section.type == 'artworks'
+              .article-section-artworks.is-loading( data-layout=section.layout )
+                .loading-spinner
+                ul
+                  for id in section.ids
+                    li( data-id=id )
+  else
+    h1.fair-info2-page-header About The Fair
+    include ./about_fair.jade

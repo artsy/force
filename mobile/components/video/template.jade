@@ -1,0 +1,8 @@
+for video in items
+  if video.get('lr_video_url')
+    video(
+      controls='controls',
+      preload='auto',
+      poster=video.posterUrl()
+    )
+      source( src=video.get('lr_video_url') + '.mp4' )

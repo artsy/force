@@ -1,0 +1,17 @@
+if artwork.edition_sets.length > 1
+  ul#artwork-page-edition-sets
+    for edition_set, i in artwork.edition_sets
+      li.artwork-edition-set
+        if edition_set.is_acquireable
+          .artwork-edition-set__radio
+            input.artwork-edition-set__radio-button(
+              type= 'radio'
+              name= 'edition_set_id'
+              value= edition_set.id
+              checked=(i === 0 ? true : undefined)
+            )
+
+        p.amd-imperial= edition_set.dimensions.in
+        p.amd-metric= edition_set.dimensions.cm
+        p.artwork-page-edition-set-total= edition_set.edition_of
+        p.artwork-page-edition-set-sale-message= edition_set.price

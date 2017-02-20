@@ -1,0 +1,16 @@
+.autocomplete.js-autocomplete.mobile-app-top-padding
+  form
+    input.bordered-input.autocomplete-input(
+      placeholder= placeholder || 'Search'
+      name='term'
+      autocomplete='off'
+    )
+    .autocomplete-search-bar-icon.icon-search
+    .autocomplete-input-shield.js-autocomplete-input-shield
+      //- Overlays input + traps taps
+
+    a.autocomplete-close.js-autocomplete-close( href='javascript:void(0)' )
+      | Close
+
+  .autocomplete-results.js-autocomplete-results
+    //- Rendered separately

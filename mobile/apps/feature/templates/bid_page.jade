@@ -1,0 +1,73 @@
+extends ../../../components/layout/templates/scaffold
+
+block body
+  if saleArtwork.get('reserve_status') == 'reserve_not_met'
+    - message = 'Reserve not met.'
+    include ../../../components/alert/template
+
+  #feature-bid-page-container.mobile-app-top-padding
+    h1.feature-bid-page-h1 Confirm your bid
+
+    #feature-bid-page-detail
+      img( src=artwork.defaultImageUrl() )
+      h2
+        .feature-bid-page-lot-num Lot #{saleArtwork.get('lot_number')}
+        if artwork.get('artist')
+          = artwork.get('artist').name
+          br
+        em= artwork.get('title')
+
+    include ../../../components/bid_numbers/template
+
+    if registered && !qualified
+      a#feature-bid-page-register-button.avant-garde-box-button.is-disabled(
+        disabled=true
+      ) Registration Pending
+      #feature-bid-page-register-button-info
+        | Reviewing Submitted Information
+
+    else if !registered
+      if auction.isRegistrationEnded()
+        a#feature-bid-page-register-button.avant-garde-box-button.is-disabled(
+          disabled=true
+        ) Registration Closed
+
+      else
+        a#feature-bid-page-register-button.avant-garde-box-button(
+          href=registerUrl
+        ) Register to bid
+
+    .feature-bid-page-max-bid
+      unless (registered && qualified)
+        .feature-bid-page-max-bid-overlay
+      .feature-bid-page-max-bid-headers
+        h2 Set your max bid
+        h3
+          | Set the maximum amount you would like Artsy to bid up to on your behalf
+
+      form
+        input( type='hidden', name='artwork_id', value=artwork.get('id') )
+        input( type='hidden', name='sale_id', value=auction.get('id') )
+        - increments = bidIncrements.filter(function(i) { return i > (myLastMaxBid || 0) })
+        select.bordered-select.feature-bid-page-max-bid-select( name='bid_ammount' )
+          for val in increments
+            - display = accounting.formatMoney(val / 100, saleArtwork.get('symbol'), 0)
+            option(
+              value=val
+              data-display=display
+              selected=(maxBid === val)
+            )= display
+        - next = increments[0]
+        #feature-bid-page-errors
+          if error
+            = error.message
+        button.avant-garde-box-button.avant-garde-box-button-black.feature-bid-page-button(
+          disabled=registered ? undefined : 'disabled'
+        )
+          | Bid #{accounting.formatMoney(next / 100, saleArtwork.get('symbol'), 0)}
+          .loading-spinner
+        .feature-bid-page-conditions
+          | *By placing your bid you agree to Artsy's&nbsp;
+          a( href="/conditions-of-sale" ) Conditions of Sale
+    #feature-clock-container.js-auction-clock
+      include ../../../components/auction_clock/template

@@ -1,0 +1,22 @@
+unless artwork.auction || artwork.partner.type == 'Auction House'
+  - var partner = artwork.partner;
+  .artwork-section-separator
+  .main-side-margin
+    .artwork-partner-module
+      .artwork-partner-module__section-title
+        | About the #{partner.type}
+
+      .artwork-partner-module__label__follow-container
+        .artwork-partner-module__label
+          a(href=partner.href)
+            h2.artwork-partner-name= partner.name
+          if partner.locations.length > 0
+            .artwork-partner-location
+              //- renders client-side
+
+        if partner.profile && partner.profile.id
+          .artwork-partner-module__follow
+            a.avant-garde-box-button.apm-follow.is-small.follow-button
+
+      if partner.profile && partner.profile.bio
+        .artwork-partner-module__bio= partner.profile.bio

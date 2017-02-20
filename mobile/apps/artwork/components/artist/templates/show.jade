@@ -1,0 +1,14 @@
+.aama-show
+  .aama-show__year
+    if show.year
+      | #{show.year}
+
+  .aama-show__details
+    .aama-show__details__vertically-center
+      span.aama-show__details__name #{show.name}
+      | &nbsp;
+      span.aama-show__details__partner #{show.partner.name}
+      | &nbsp;
+      if show.location && show.location.city
+        span.aama-show__details__city-date
+          |, #{show.location.city}

@@ -1,0 +1,21 @@
+.artwork-related-artworks-module-wrapper(data-type=type)
+  .artwork-section-separator
+  .main-side-margin
+    .js-artwork-related-artworks-container
+      .artwork-related-artworks-module
+        #artwork-related-artworks-module__artist-artworks
+          .artwork-related-artworks-module__section-title.works-section-title
+            | #{title}
+          .artwork-related-artworks-module__related-artworks-list(data-artworks=type)
+            .loading-spinner
+
+          if isArtist
+            .view-all-links-container
+              a.artwork-related-artworks__view-all-link(href=sd.ARTWORK.artist.href)
+                | View All #{sd.ARTWORK.artist.counts.artworks} works
+                .icon
+          if isPartner
+            .view-all-links-container
+              a.artwork-related-artworks__view-all-link(href=sd.ARTWORK.partner.href)
+                | View All #{sd.ARTWORK.partner.counts.artworks} works
+                .icon

@@ -1,0 +1,18 @@
+.fairs__promo.js-fairs-promo-carousel
+  .fairs__promo__cta
+    .fairs__promo__cta__inner
+      if user
+        h1 Preview and collect from the world's leading art fairs
+      else
+        h1 Sign up to follow fairs and be the first to preview them on Artsy
+        a.fairs__promo__sign-up.avant-garde-button-white(href="/sign_up") Sign Up
+      - length = featuredFairs.length
+      include ../../../components/merry_go_round/templates/bottom_navigation
+  section.fairs__promo__slideshow
+    .mgr-cells.js-mgr-cells
+      for slide in featuredFairs
+        .mgr-cell.js-mgr-cell
+          img( src= slide.image.url, alt= slide.title)
+          .mgr-cell__caption
+            .mgr-cell__title= slide.title
+            .mgr-cell__subtitle= slide.subtitle

@@ -1,0 +1,8 @@
+form
+  input( type='hidden', name='redirect-to', value=(redirectTo ? redirectTo : '/personalize/collect') )
+  input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+  input.bordered-input( name='name', placeholder="Full Name", required)
+  input.bordered-input( name='email', type="email" placeholder="Email", value=prefill, required)
+  input.bordered-input( name='password', type="password" placeholder="Password", required)
+  input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+  button.avant-garde-box-button.avant-garde-box-button-black( type='submit' ) Join Artsy
