@@ -131,6 +131,7 @@ module.exports = (app) ->
 
   # Cookie and session middleware
   app.use cookieParser()
+  app.set 'trust proxy', true
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
