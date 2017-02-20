@@ -15,7 +15,7 @@ deployment:
           password $HEROKU_TOKEN
         EOF
       - chmod 600 ~/.netrc
-      - DEPLOY_ENV=staging yarn deploy-assets
+      - DEPLOY_ENV=staging yarn deploy-assets:
           parallel: true
       - git push git@heroku.com:force-staging.git $CIRCLE_SHA1:refs/heads/master
   production:
@@ -31,7 +31,7 @@ deployment:
           password $HEROKU_TOKEN
         EOF
       - chmod 600 ~/.netrc
-      - DEPLOY_ENV=production yarn deploy-assets
+      - DEPLOY_ENV=production yarn deploy-assets:
           parallel: true
       - git push git@heroku.com:force-production.git $CIRCLE_SHA1:refs/heads/master
 dependencies:
