@@ -20,3 +20,4 @@ dump.rdb
 /node_modules
 coffeelint.json
 manifest.json
+public
