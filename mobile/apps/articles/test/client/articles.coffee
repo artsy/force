@@ -11,7 +11,7 @@ request = require 'superagent'
 
 describe 'MagazineView', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
@@ -66,35 +66,30 @@ describe 'MagazineView', ->
           ]
         }
       ]
+      benv.render path.resolve(__dirname, '../../templates/articles.jade'),
+        sd: {}
+        asset: (->)
+        articles: @articles
+        crop: ->
+        toSentence: ->
+        pluck: ->
+      , =>
+        filename = path.resolve(__dirname, '../../client/articles.coffee')
+        { MagazineView } = module = benv.requireWithJadeify filename, ['articleTemplate']
+        sinon.stub request, 'post'
+          .returns
+            send: sinon.stub().returns
+              end: sinon.stub().yields(null, body: data: articles: @articles)
 
-      done()
-
-  after ->
-    benv.teardown()
-
-  beforeEach ->
-    benv.render path.resolve(__dirname, '../../templates/articles.jade'),
-      sd: {}
-      asset: (->)
-      articles: @articles
-      crop: ->
-      toSentence: ->
-      pluck: ->
-    , =>
-      filename = path.resolve(__dirname, '../../client/articles.coffee')
-      { MagazineView } = module = benv.requireWithJadeify filename, ['articleTemplate']
-      sinon.stub request, 'post'
-        .returns
-          send: sinon.stub().returns
-            end: sinon.stub().yields(null, body: data: articles: @articles)
-
-      @view = new MagazineView
-        el: $ 'body'
-        collection: @articles
-        offset: 0
+        @view = new MagazineView
+          el: $ 'body'
+          collection: @articles
+          offset: 0
+        done()
 
   afterEach ->
     request.post.restore()
+    benv.teardown()
 
   describe '#initialize', ->
 
