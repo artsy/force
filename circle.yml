@@ -16,6 +16,7 @@ deployment:
         EOF
       - chmod 600 ~/.netrc
       - DEPLOY_ENV=staging yarn deploy-assets
+          parallel: true
       - git push git@heroku.com:force-staging.git $CIRCLE_SHA1:refs/heads/master
 dependencies:
   override:
