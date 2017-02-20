@@ -22,7 +22,7 @@ describe 'FavoritesView', ->
 
   beforeEach ->
     sinon.stub(Backbone, 'sync').yieldsTo 'success', [fabricate 'artwork']
-
+    sinon.stub CurrentUser::, 'initialize'
     @user = new CurrentUser fabricate 'user', collector_level: 2
     @state = new PersonalizeState user: @user
     @view = new FavoritesView state: @state, user: @user
@@ -30,6 +30,7 @@ describe 'FavoritesView', ->
     @view.render()
 
   afterEach ->
+    CurrentUser::initialize.restore()
     Backbone.sync.restore()
 
   describe '#render', ->

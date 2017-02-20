@@ -20,12 +20,14 @@ describe 'CollectView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub CurrentUser::, 'initialize'
     @user = new CurrentUser fabricate 'user'
     @state = new PersonalizeState user: @user
     @view = new @CollectView(state: @state, user: @user)
     @view.render()
 
   afterEach ->
+    CurrentUser::initialize.restore()
     Backbone.sync.restore()
 
   describe '#setCollectorLevel', ->

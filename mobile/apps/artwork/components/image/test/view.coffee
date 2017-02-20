@@ -64,6 +64,7 @@ describe 'ArtworkImageView', ->
     describe 'with a user', ->
       beforeEach ->
         @view.user = new CurrentUser fabricate 'user'
+        @view.user.initializeDefaultArtworkCollection()
         @view.$('.artwork-header-module__favorite').attr('data-action', 'save')
         @view.savedArtwork(@e)
 
