@@ -2489,12 +2489,11 @@ eyes@0.1.x, eyes@~0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/eyes/-/eyes-0.1.8.tgz#62cf120234c683785d902348a800ef3e0cc20bc0"
 
-ezel-assets@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ezel-assets/-/ezel-assets-1.1.0.tgz#91566f6575f479fb723e0bb0ba2f59ceb039e5a9"
+ezel-assets@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ezel-assets/-/ezel-assets-1.0.3.tgz#f3f6c1e0a282a68d326147a5e7aab14d45fc5e5d"
   dependencies:
     async "^1.5.0"
-    babel-runtime "^6.23.0"
     uglify-js "^2.6.2"
 
 fast-levenshtein@~2.0.4:
