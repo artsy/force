@@ -30,7 +30,12 @@ describe '/auction routes', ->
   describe 'without user', ->
     describe '#index', ->
       it 'fetches everything and renders', (done) ->
-        routes.index @req, @res
+        routes.index(@req, @res).then =>
+          @res.locals.sd.AUCTION.id.should.equal 'foobar-auction'
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].auction.id.should.equal 'foobar-auction'
+          done()
+
 
         Backbone.sync.callCount.should.equal 2
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/sale/foobar-auction'
@@ -39,12 +44,6 @@ describe '/auction routes', ->
 
         Backbone.sync.args[0][2].success fabricate 'sale', id: 'foobar-auction'
         Backbone.sync.args[1][2].success {}
-
-        _.defer => _.defer =>
-          @res.locals.sd.AUCTION.id.should.equal 'foobar-auction'
-          @res.render.args[0][0].should.equal 'index'
-          @res.render.args[0][1].auction.id.should.equal 'foobar-auction'
-          done()
 
       it 'redirects when live starts', (done) ->
         routes.index @req, @res

@@ -25,10 +25,11 @@ nvm install 6
 nvm alias default 6
 ```
 
-Install node modules.
+Install node modules with Yarn.
 
 ```sh
-npm install
+npm i yarn -g
+yarn install
 ```
 
 Copy the `.env.oss` file to a `.env` file.
@@ -46,7 +47,7 @@ heroku config --app=force-staging
 Start the server.
 
 ```sh
-npm start
+yarn start
 ```
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
@@ -63,7 +64,7 @@ git checkout -b my-feature-branch
 
 ## Write Tests
 
-Write tests for all new features and fixes. Run tests with `npm test`.
+Write tests for all new features and fixes. Run tests with `yarn test`.
 
 We definitely appreciate pull requests that highlight or reproduce a problem, even without a fix.
 
