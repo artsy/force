@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
 Cookies = require '../components/cookies/index.coffee'
+Promise = require 'bluebird-q'
 
 module.exports = class ArtworkInquiry extends Backbone.Model
   urlRoot: "#{API_URL}/api/v1/me/artwork_inquiry_request"
@@ -12,5 +13,5 @@ module.exports = class ArtworkInquiry extends Backbone.Model
     landing_url: Cookies.get('force-session-start')
 
   send: (attributes, options = {}) ->
-    @save attributes, _.extend options,
-      url: "#{@url()}/send"
+    (if @isNew() then @save({}, error: options.error) else Promise.resolve())
+      .then => @save attributes, _.extend options, url: "#{@url()}/send"

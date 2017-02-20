@@ -29,8 +29,7 @@ describe 'Meta tags', ->
         viewHelpers: helpers
         nav: @nav
 
-    it 'includes mobile alternate, canonical, twitter card, og tags, next/prev links', ->
-      @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/artist/jeff-koons-1"
+    it 'includes canonical, twitter card, og tags, next/prev links', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/jeff-koons-1"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/jeff-koons-1"
