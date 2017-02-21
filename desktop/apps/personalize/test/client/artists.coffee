@@ -26,7 +26,6 @@ describe 'ArtistsView', ->
     sinon.stub Backbone, 'sync'
     sinon.stub @ArtistsView::, 'setupSearch'
     sinon.spy @ArtistsView::, 'initializeBookmarkedArtists'
-    sinon.stub CurrentUser::, 'initialize'
     $.fn.imagesLoaded = (cb) -> cb()
 
     @user = new CurrentUser fabricate 'user', collector_level: 2
@@ -36,7 +35,6 @@ describe 'ArtistsView', ->
     @view.render()
 
   afterEach ->
-    CurrentUser::initialize.restore()
     Backbone.sync.restore()
     @view.setupSearch.restore()
     @view.initializeBookmarkedArtists.restore()

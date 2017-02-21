@@ -23,10 +23,6 @@ describe 'ArtworkCollection', ->
     sinon.stub Backbone, 'sync'
 
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
-
-    Backbone.sync.restore()
-    sinon.stub Backbone, 'sync'
-
     sd.API_URL = "http://localhost:5000/__api"
     sd.NODE_ENV = 'test'
     @artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
