@@ -28,7 +28,9 @@ module.exports = class FixedCellsCountCarousel extends Backbone.View
     Q.allSettled(
       _.map @fetchOptions, (options) =>
         @collection.fetch data: options, remove: false
-    ).then =>
+    ).then (values) =>
+      objects = [].concat.apply [], _.pluck values, 'value'
+      @collection.reset objects
       @collection
 
   # Only keep the first cellsCountPerPage * pagesCount items.
