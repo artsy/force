@@ -5,6 +5,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 SaleArtwork = require '../../../../models/sale_artwork'
 Artwork = require '../../../../models/artwork'
+Auction = require '../../../../models/auction'
 Sale = require '../../../../models/sale'
 CurrentUser = require '../../../../models/current_user'
 { resolve } = require 'path'
@@ -34,6 +35,7 @@ describe 'BidPageView', ->
           el: 'body'
           saleArtwork: saleArtwork
           user: new CurrentUser
+          auction: new Auction fabricate 'auction'
         done()
 
   afterEach ->
@@ -83,7 +85,7 @@ describe 'BidPageView', ->
 
     it 'renders an unqualified message for `qualified_for_bidding = false`', ->
       @BidPageView::renderUnqualifiedWarning.restore()
-      @view.saleArtwork.set sale: id: 'foo-bar-auction'
+      @view.auction.set id: 'foo-bar-auction'
       @view.renderUnqualifiedWarning()
       _.last(Backbone.sync.args)[2].success [{
         id: 'foo'

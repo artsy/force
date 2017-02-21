@@ -22,7 +22,7 @@ ArtworkCollection = require '../desktop/models/artwork_collection.coffee'
 SaleArtwork = require '../mobile/models/sale_artwork.coffee'
 Location = require '../mobile/models/location.coffee'
 
-module.exports = class MergedUser extends Backbone.Model
+module.exports = class CurrentUser extends Backbone.Model
   _.extend @prototype, User.prototype
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
 
@@ -221,14 +221,17 @@ module.exports = class MergedUser extends Backbone.Model
   fetchBidderForAuction: (auction, options) ->
     new Backbone.Collection().fetch
       url: "#{@url()}/bidders"
-      data: access_token: @get('accessToken'), sale_id: auction.get('id')
+      data:
+        access_token: @get('accessToken')
+        sale_id: auction.get('id')
       error: options.error
       success: (bidders) =>
         bidder = bidders.find (b) -> b.get('sale').id is auction.get('id')
         return options.success null unless bidder
         bidder.fetch
           url: "#{sd.API_URL}/api/v1/bidder/#{bidder.id}"
-          data: access_token: @get('accessToken')
+          data:
+            access_token: @get('accessToken')
           error: options.error
           success: options.success
 
