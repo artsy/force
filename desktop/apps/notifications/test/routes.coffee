@@ -40,6 +40,7 @@ describe 'Notification Routing', ->
       @req.user = new CurrentUser fabricate 'user',
         followingArtists: sinon.stub().yieldsTo 'success'
         fetchAndMarkNotifications: sinon.stub().yieldsTo 'success'
+        accessToken: 'foo-token'
       routes.worksForYou @req, @res
       Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/follow/artists'
       Backbone.sync.args[0][2].success [fabricate('artist')]
