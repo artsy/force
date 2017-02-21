@@ -21,7 +21,7 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
 
   initialize: (options) ->
-    { @saleArtwork, @user, @window } = options
+    { @saleArtwork, @user, @window, @auction } = options
     @renderUnqualifiedWarning()
 
   inputValCents: ->
@@ -85,7 +85,7 @@ module.exports.BidPageView = class BidPageView extends Backbone.View
       error: options.error
 
   renderUnqualifiedWarning: ->
-    @user.fetchBidderForAuction @saleArtwork.get('sale').id, success: (bidder) =>
+    @user.fetchBidderForAuction @auction, success: (bidder) =>
       return unless bidder and not bidder.get 'qualified_for_bidding'
       if @$('.alert').length
         $el = @$('.alert')
@@ -111,6 +111,7 @@ module.exports.init = ->
   new BidPageView
     el: $('body')
     saleArtwork: new SaleArtwork sd.SALE_ARTWORK
+    auction: new Auction sd.AUCTION
     user: new CurrentUser
     window: window
 

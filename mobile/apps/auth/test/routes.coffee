@@ -23,6 +23,22 @@ describe '#submitForgotPassword', ->
     Backbone.sync.args[0][2].success { success: true }
     renderStub.args[0][0].should.equal 'forgot_password_confirmation'
 
+  it 'bubbles error', ->
+    routes.submitForgotPassword(
+      { body: email: 'foo@bar.com' }
+      { render: renderStub = sinon.stub() }
+    )
+    Backbone.sync.args[0][2].error response: body: error: 'Fail whale'
+    renderStub.args[0][1].error.should.equal 'Fail whale'
+
+  it 'doesnt choke on errors without bodies', ->
+    routes.submitForgotPassword(
+      { body: email: 'foo@bar.com' }
+      { render: renderStub = sinon.stub() }
+    )
+    Backbone.sync.args[0][2].error response: text: 'Whomp'
+    renderStub.args[0][1].error.should.containEql 'try again'
+
 describe '#resetPassword', ->
   it 'renders the reset form', ->
     routes.resetPassword {}, render: renderStub = sinon.stub()

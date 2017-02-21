@@ -14,11 +14,13 @@ module.exports.init = ->
   bootstrap()
   artworkTabsView()
   artwork = new Artwork sd.ARTWORK
+  user = CurrentUser.orNull()
+  user.initializeDefaultArtworkCollection()
 
   new ArtworkImageView
     artwork: sd.ARTWORK
     el: $ 'body'
-    user: CurrentUser.orNull()
+    user: user
 
   new MetaDataView
     model: artwork
@@ -27,7 +29,7 @@ module.exports.init = ->
   new BidView
     artwork: sd.ARTWORK
     el: $('.artwork-auction-bid-module')
-    user: CurrentUser.orNull()
+    user: user
 
   new ArtworkArtistView
     artwork: sd.ARTWORK
