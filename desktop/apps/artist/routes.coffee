@@ -5,7 +5,7 @@ fs = require 'fs'
 request = require 'superagent'
 Backbone = require 'backbone'
 ReferrerParser = require 'referer-parser'
-{ APPLICATION_NAME, NODE_ENV } = require '../../config'
+{ APPLICATION_NAME, NODE_ENV, APP_URL } = require '../../config'
 cache = require '../../lib/cache'
 Artist = require '../../models/artist'
 Nav = require './nav'
@@ -40,7 +40,7 @@ sd = require('sharify').data
           res.locals.sd.ARTIST = artist
           res.locals.sd.TAB = tab
           res.locals.sd.CURRENT_ITEM = currentItem
-          res.locals.sd.ON_ARTIST_PAGE = true
+          res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !(res.locals.sd.CURRENT_USER? || res.locals.sd.REFERRER?.includes(APP_URL))
 
           res.render 'index',
             viewHelpers: helpers
