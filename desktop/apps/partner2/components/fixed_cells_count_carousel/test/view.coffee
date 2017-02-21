@@ -62,7 +62,6 @@ describe 'FixedCellsCountCarousel', ->
 
       it 'fetches and returns collection', ->
         shows = [fabricate('show'), fabricate('show'), fabricate('show')]
-        console.log shows
         Backbone.sync
           .onCall 0
           .yieldsTo 'success', shows
@@ -115,6 +114,18 @@ describe 'FixedCellsCountCarousel', ->
           _.pluck(collection.models, 'attributes').should.deepEqual shows1.concat shows2
           collection.models.should.deepEqual @collection.models
 
+      it 'preserves order', ->
+        shows1 = [fabricate('show'), fabricate('show'), fabricate('show')]
+        shows2 = [fabricate('show'), fabricate('show')]
+        promise = @view.fetch().then (collection) =>
+          collection.length.should.equal 5
+          _.pluck(collection.models, 'attributes').should.deepEqual shows1.concat shows2
+          collection.models.should.deepEqual @collection.models
+        resolveFirst = -> Backbone.sync.args[0][2].success shows1
+        resolveSecond = -> Backbone.sync.args[1][2].success shows2
+        resolveSecond()
+        resolveFirst()
+        return promise
 
   describe '#consolidate', ->
     beforeEach ->
