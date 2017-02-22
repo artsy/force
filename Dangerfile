@@ -15,28 +15,17 @@ if github.branch_for_base == 'release'
   commit_shas = git.commits.map(&:sha)
 
   # Get all PR's in this deploy (from commits)
-  prs = []
-  commit_shas.each do |sha|
-    pr_command = `git log --merges --ancestry-path --oneline "#{sha}"..master | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2-`
-    prs << pr_command.strip
-  end
-  prs.uniq!
+  pr_numbers = commit_shas.map do |sha|
+    `git log --merges --ancestry-path --oneline "#{sha}"..master | grep 'pull request' | tail -n1 | awk '{print $5}' | cut -c2-`.strip
+  end.uniq
 
-  # Get all PR info
-  pr_info = {}
-  prs.each do |pr|
-    next if pr.length == 0
-    pr_json = github.api.pull_request('artsy/force', pr)
-    pr_info[pr] = {}
-    pr_info[pr][:title] = pr_json.title
-    pr_info[pr][:id] = pr
-    pr_info[pr][:href] = "https://github.com/artsy/force/#{pr}"
-  end
+  prs = pr_numbers.compact.reject(&:empty?).map{|n| github.api.pull_request('artsy/force', n) }
 
-  # Format message
-  message = "### This deploy contains the following PRs:\n\n"
-  pr_info.each do |pr_id, info|
-    message << "- #{info[:title]} (#{info[:href]})\n"
+  if prs.any?
+    message = "### This deploy contains the following PRs:\n\n"
+    prs.each do |pr|
+      message << "- #{pr.title} ([##{pr.number}](#{pr.html_url}) by @#{pr.user.login})\n"
+    end
+    markdown message
   end
-  markdown message
 end
