@@ -10,7 +10,7 @@ footer = -> require('./footer.jade') arguments...
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
-  auction_artworks: require '../components/auction_artworks/helpers.coffee'
+  auction_artworks: require '../components/auction_artworks2/helpers.coffee'
   partner: require '../components/partner/helpers.coffee'
   related_artworks: require '../components/related_artworks/helpers.coffee'
   show_artworks: require '../components/show_artworks/helpers.coffee'
@@ -44,7 +44,7 @@ module.exports =
           }
           #{require '../../../components/artwork_brick/query.coffee'}
           #{require '../components/partner/query.coffee'}
-          #{require '../components/auction_artworks/query.coffee'}
+          #{require '../components/auction_artworks2/query.coffee'}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
@@ -53,7 +53,7 @@ module.exports =
 
       init: compact [
           require '../components/partner/index.coffee'
-          require '../components/auction_artworks/index.coffee' unless context.is_closed
+          require '../components/auction_artworks2/index.coffee' unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'
@@ -155,4 +155,3 @@ module.exports =
       .then (data) ->
         renderTemplates(data)
         exec init
-
