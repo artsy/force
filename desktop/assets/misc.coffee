@@ -36,5 +36,7 @@ routes =
 
   '/search': require('../apps/search/client/index.coffee').init
 
+  '/artsy-primer/.*': require('../apps/artsy_primer/client.js').default
+
 for path, init of routes
   $(init) if location.pathname.match path
