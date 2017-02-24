@@ -69,6 +69,7 @@ bootstrap = ->
   inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
+      return next() unless data.artwork?
       data.fair = new Fair data.artwork.fair if data.artwork.fair
       data.inPurchaseTestGroup = inPurchaseTestGroup
       extend res.locals.helpers, helpers

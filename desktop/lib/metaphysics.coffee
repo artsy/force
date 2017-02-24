@@ -3,6 +3,7 @@ qs = require 'qs'
 request = require 'superagent'
 { extend, some } = require 'underscore'
 { METAPHYSICS_ENDPOINT } = require('sharify').data
+newrelic = require 'newrelic'
 
 metaphysics = ({ method, query, variables, req } = {}) ->
   method ?= 'get'
@@ -28,11 +29,11 @@ metaphysics = ({ method, query, variables, req } = {}) ->
       if err?
         return reject err
 
+      # Allow errors in resolving GraphQL data to not affect resolving the whole promise.
+      # However, notify NewRelic.
       if response.body.errors?
         error = new Error JSON.stringify response.body.errors
-        error.status = 404 if some(response.body.errors, ({ message }) -> message.match /Not Found/)
-        error.data = response.body.data
-        return reject error
+        newrelic.noticeError(error, { crash: true })
 
       resolve response.body.data
 
