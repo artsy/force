@@ -22,19 +22,16 @@ export default function AuctionGridArtwork({ artwork }, _) {
           </div>
         </div>
       </div>
-      <div className='auction2-grid-artwork__primary-information'>
+      <div className='auction2-grid-artwork__lot-information'>
         <div className='auction2-grid-artwork__lot-number'>
           Lot {artwork.sale_artwork && artwork.sale_artwork.lot_number}
         </div>
-        <div className='auction2-grid-artwork__artists'>
-          {artistDisplay}
-        </div>
-        <div className='auction2-grid-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork) }}></div>
-        <div className='auction2-grid-artwork__sale'>
-          { artwork.sale && artwork.sale.name }
-        </div>
+        <div>{ bidStatus }</div>
       </div>
-      { bidStatus }
+      <div className='auction2-grid-artwork__artists'>
+        {artistDisplay}
+      </div>
+      <div className='auction2-grid-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork) }}></div>
     </div>
   );
 }
