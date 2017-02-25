@@ -6,15 +6,15 @@ import { invoke, isArray, isEmpty } from 'underscore'
 
 export default function backboneComponent(config) {
   const {
-    backboneViews,
+    views,
     shouldMount = false
   } = config
 
-  const isValid = isArray(backboneViews) && !isEmpty(backboneViews)
+  const isValid = isArray(views) && !isEmpty(views)
 
   invariant(isValid,
     '(future/path/to/lib.jsx) ' +
-    'Error creating <BackboneViewComponent />: an array of `backboneViews` must' +
+    'Error creating <BackboneViewComponent />: an array of `views` must' +
     'be provided.'
   )
 
@@ -31,7 +31,7 @@ export default function backboneComponent(config) {
 
       componentWillMount() {
         this.setState({
-          views: backboneViews.reduce((classMap, view) => {
+          views: views.reduce((classMap, view) => {
             return {
               ...classMap,
               [view.name]: class extends Component {

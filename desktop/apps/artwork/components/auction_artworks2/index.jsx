@@ -1,4 +1,4 @@
-import ArtworkBrickBackboneView from '../../../../components/artwork_brick/view.coffee'
+import ArtworkBrickView from '../../../../components/artwork_brick/view.coffee'
 import React, { Component, PropTypes } from 'react'
 import artworkBrickViewTemplate from '../../../../components/artwork_brick/index.jade'
 import backboneComponent from './backbone_component.jsx'
@@ -64,8 +64,8 @@ AuctionArtworks.defaultProps = {
   }
 }
 
-module.exports = backboneComponent({
-  backboneViews: [ArtworkBrickBackboneView],
+export default backboneComponent({
+  views: [ArtworkBrickView],
   shouldMount: true
 })(AuctionArtworks)
 

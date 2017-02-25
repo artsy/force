@@ -147,8 +147,7 @@ module.exports =
       $(".js-artwork-#{key}")
         .html template bootstrapData
 
-    auctionArtworks.mountReactComponent('.react-mount-auction-artworks', bootstrapData)
-
+    auctionArtworks.default.mountReactComponent('.react-mount-auction-artworks', bootstrapData)
 
   init: ->
     setCookie(CLIENT._id)

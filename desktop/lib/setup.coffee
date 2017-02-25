@@ -126,8 +126,7 @@ module.exports = (app) ->
       ]
       insertGlobals: true
 
-      # FIXME: Follow up with Craig regarding this
-      # Enables sourcemaps
+      # FIXME: Follow up with Craig re sourcemaps
       debug: true
 
   if "test" is NODE_ENV
