@@ -3190,7 +3190,7 @@ interact-js@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/interact-js/-/interact-js-0.4.6.tgz#afa098e7b83eeec5ede0b92a825645abc25c946d"
 
-invariant@^2.0.0, invariant@^2.2.0:
+invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:

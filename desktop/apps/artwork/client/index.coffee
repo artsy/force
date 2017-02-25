@@ -7,6 +7,9 @@ exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
+# FIXME Additions
+auctionArtworks = require '../components/auction_artworks2/index.jsx'
+
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
@@ -136,11 +139,16 @@ module.exports =
         ]
 
   renderTemplates: renderTemplates = (data) ->
+    bootstrapData = extend data,
+      helpers: helpers
+      user: CurrentUser.orNull()
+
     for key, template of { fold: fold, footer: footer }
       $(".js-artwork-#{key}")
-        .html template extend data,
-          helpers: helpers
-          user: CurrentUser.orNull()
+        .html template bootstrapData
+
+    auctionArtworks.mountReactComponent('.react-mount-auction-artworks', bootstrapData)
+
 
   init: ->
     setCookie(CLIENT._id)
@@ -151,6 +159,7 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
+
     metaphysics query: query, variables: extend { id: CLIENT.id }, variables
       .then (data) ->
         renderTemplates(data)

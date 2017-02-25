@@ -67,6 +67,7 @@
     "graceful-fs": "^4.1.2",
     "helmet": "^2.3.0",
     "http-proxy": "^1.11.2",
+    "invariant": "^2.2.2",
     "jade": "^1.11.0",
     "jquery-fillwidth-lite": "^1.0.8",
     "jquery-touch-events": "git+https://github.com/benmajor/jQuery-Touch-Events.git",
