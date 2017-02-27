@@ -1,3 +1,5 @@
 express = require('express')
 module.exports = app = express()
-app.listen(process.env.PORT, -> process.send? 'listening') if module is require.main
+if module is require.main
+  require('./lib/setup') app
+  app.listen(process.env.PORT, -> process.send? 'listening')
