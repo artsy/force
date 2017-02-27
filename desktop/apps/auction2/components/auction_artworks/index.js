@@ -9,7 +9,7 @@ function AuctionArtworks({ artworks, isListView }) {
     <div className={'auction2-artworks'}>
       {
         artworks.map((artwork) => (
-          <DisplayComponent key={artwork.get('_id')} artwork={artwork} />
+          <DisplayComponent key={artwork._id} artwork={artwork} />
         ))
       }
     </div>

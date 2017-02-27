@@ -5945,6 +5945,12 @@ untildify@^2.0.0:
   dependencies:
     os-homedir "^1.0.0"
 
+updeep@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/updeep/-/updeep-1.0.0.tgz#e5f49d933308fb02730fd4f321cb3e36bf04b0f0"
+  dependencies:
+    lodash "^4.2.0"
+
 url-parse@1.0.x:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.0.5.tgz#0854860422afdcfefeb6c965c662d4800169927b"

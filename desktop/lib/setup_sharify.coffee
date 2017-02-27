@@ -71,6 +71,7 @@ sharify.data = _.extend _.pick(config,
   'EOY_2016_ARTICLE'
   'RAYGUN_KEY'
   'API_REQUEST_TIMEOUT'
+  'PARSELY_KEY'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

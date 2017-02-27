@@ -74,7 +74,7 @@ module.exports =
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   ACTIVE_BIDS_POLL_INTERVAL: 5000
   MAX_POLLS_FOR_MAX_BIDS: 20
-  PARSELY_KEY: null
+  PARSELY_KEY: 'artsy.net'
   PARSELY_SECRET: null
   PREDICTION_URL: 'https://live.artsy.net'
   SEGMENT_WRITE_KEY_MICROGRAVITY: null

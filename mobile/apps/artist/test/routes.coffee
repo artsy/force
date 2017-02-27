@@ -29,30 +29,30 @@ describe '#index', ->
     Backbone.sync.restore()
 
   it 'renders the page template', ->
-    routes.index(@req, @res, @next)
-    _.defer => _.defer =>
+    routes.index(@req, @res, @next).then =>
       @res.render.args[0][0].should.equal 'page'
 
   it 'fetches the correct artist', ->
-    routes.index(@req, @res, @next)
-    _.defer => _.defer =>
+    routes.index(@req, @res, @next).then =>
       @res.locals.sd.ARTIST.should.exist
-      @res.render.args[0][1].artist.name.should.equal 'Oliver'
       @res.locals.sd.ARTIST.name.should.equal 'Oliver'
 
   it 'fetches the correct artworks', ->
-    routes.index(@req, @res, @next)
-    _.defer => _.defer =>
+    routes.index(@req, @res, @next).then =>
       @res.locals.sd.ARTWORKS.length.should.equal 2
       @res.locals.sd.ARTWORKS[0].title.should.equal 'A Great Painting'
 
 describe "#biography", ->
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     artist = fabricate 'artist', id: 'damien-hershey'
     routes.__set__ 'metaphysics', => Q.resolve { artist: artist }
     @req = { params: {} }
     @res = render: sinon.stub(), locals: sd: sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
 
   it 'renders the biography page', ->
     routes.biography @req, @res
