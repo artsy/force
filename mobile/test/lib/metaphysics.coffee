@@ -8,6 +8,7 @@ describe 'metaphysics', ->
     @__request__ = metaphysics.__get__ 'request'
 
     @request = {}
+    @request.timeout = sinon.stub().returns @request
     @request.set = sinon.stub().returns @request
     @request.get = sinon.stub().returns @request
     @request.query = sinon.stub().returns @request

@@ -232,11 +232,11 @@ artsy-gemini-upload@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/artsy-gemini-upload/-/artsy-gemini-upload-0.0.6.tgz#ff228ff04a66beb9eb2dd251587c2c3446e26abd"
 
-artsy-newrelic@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/artsy-newrelic/-/artsy-newrelic-1.1.0.tgz#26d6166cc95d101b2db0f9d3d875ce83781c66b4"
+artsy-newrelic@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/artsy-newrelic/-/artsy-newrelic-1.2.0.tgz#ceadf8712fe6acd6bd33cb4a49c097f28f24f6c4"
   dependencies:
-    jade "^1.11.0"
+    connect-timeout "^1.8.0"
     newrelic "^1.22.1"
 
 artsy-passport@^1.6.1:
@@ -1220,7 +1220,7 @@ browserify-des@^1.0.0:
     des.js "^1.0.0"
     inherits "^2.0.1"
 
-browserify-dev-middleware@^1.0.0:
+browserify-dev-middleware@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/browserify-dev-middleware/-/browserify-dev-middleware-1.0.0.tgz#f8239bf522bd9240df14715a93ee84ca47246ade"
   dependencies:
@@ -1746,7 +1746,7 @@ connect-flash@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/connect-flash/-/connect-flash-0.1.1.tgz#d8630f26d95a7f851f9956b1e8cc6732f3b6aa30"
 
-connect-timeout@^1.7.0:
+connect-timeout@^1.7.0, connect-timeout@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/connect-timeout/-/connect-timeout-1.8.0.tgz#4b74c58ad0303e069e4f417af388a058cfa3b839"
   dependencies:

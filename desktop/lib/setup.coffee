@@ -70,7 +70,7 @@ module.exports = (app) ->
   app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
 
   # Rate limited
-  if OPENREDIS_URL
+  if OPENREDIS_URL and cache.client
     limiter = require('express-limiter')(app, cache.client)
     limiter
       path: '*'
@@ -118,7 +118,11 @@ module.exports = (app) ->
       dest: path.resolve(__dirname, "../public")
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
-      transforms: [require("jadeify"), require('caching-coffeeify'), require('babelify')]
+      transforms: [
+        require("jadeify"),
+        require('caching-coffeeify'),
+        require('babelify')
+      ]
       insertGlobals: true
   if "test" is NODE_ENV
     app.use (req, res, next) ->
@@ -266,8 +270,3 @@ module.exports = (app) ->
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
-
-  # Finally 404 and error handling middleware when the request wasn't handled
-  # successfully by anything above.
-  artsyError.handlers app,
-    template: path.resolve(__dirname, '../components/main_layout/templates/error.jade')
