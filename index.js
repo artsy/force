@@ -93,7 +93,6 @@ cache.setup(() => {
   // Setup apps
   setupDesktop(desktop)
   setupMobile(mobile)
-  console.log(cache)
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
