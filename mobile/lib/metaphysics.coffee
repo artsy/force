@@ -2,13 +2,14 @@ Q = require 'bluebird-q'
 qs = require 'qs'
 request = require 'superagent'
 { extend } = require 'underscore'
-{ METAPHYSICS_ENDPOINT } = require('sharify').data
+{ METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT } = require('sharify').data
 
 metaphysics = ({ query, variables, req } = {}) ->
   Q.promise (resolve, reject) ->
     get = request
       .get METAPHYSICS_ENDPOINT
       .set 'Accept', 'application/json'
+      .timeout API_REQUEST_TIMEOUT
 
     if (token = req?.user?.get 'accessToken')?
       get.set 'X-ACCESS-TOKEN': token

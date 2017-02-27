@@ -18,7 +18,6 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 artsyError = require 'artsy-error-handler'
 artsyXapp = require 'artsy-xapp'
 localsMiddleware = require './middleware/locals'
-redirectToGravity = require './middleware/redirect_to_gravity'
 redirectExternalLinks = require './middleware/redirect_external_links.coffee'
 marketingSignupModal = require '../components/marketing_signup_modal/middleware'
 artsyPassport = require 'artsy-passport'
@@ -58,7 +57,6 @@ module.exports = (app) ->
 
   # Add upfront middleware
   app.use redirectExternalLinks
-  app.use redirectToGravity.forDesktopBrowser unless app.get('env') is 'test'
   app.use sharify
   app.use ensureSSL
   app.use hsts unless app.get('env') is 'test'
@@ -170,10 +168,3 @@ module.exports = (app) ->
   app.use '/apple-app-site-association', artsyEigenWebAssociation
   # Support requests for the .well-known subdirectory as well.
   app.use '/(.well-known/)?apple-app-site-association', artsyEigenWebAssociation
-
-  # 404 redirects to Force
-  app.get '*', redirectToGravity.forUnsupportedRoute
-
-  # error handling middleware
-  artsyError.handlers app,
-    template: path.resolve(__dirname, '../components/layout/templates/error.jade'),
