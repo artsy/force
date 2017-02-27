@@ -73,7 +73,7 @@ describe 'Html class from user agent', ->
 
   it 'adds the hide header/footer artsy-mobile class to the html tag', (done) ->
     browser = new Browser(userAgent: 'Artsy-Mobile')
-    browser.visit 'http://localhost:5000/artwork/foo', ->
+    browser.visit 'http://localhost:5000', ->
       browser.wait ->
         browser.querySelector('html').className.should.containEql 'layout-artsy-mobile-app'
         done()

@@ -16,11 +16,14 @@ const newrelic = require('artsy-newrelic')
 const artsyXapp = require('artsy-xapp')
 const artsyPassport = require('artsy-passport')
 const glob = require('glob')
+const setupDesktop = require('./desktop/lib/setup')
+const setupMobile = require('./mobile/lib/setup')
 const desktop = require('./desktop')
 const mobile = require('./mobile')
 const mobileMiddleware = require('./desktop/lib/middleware/redirect_mobile.coffee')
 const cache = require('./lib/cache')
 const MergedUser = require('./lib/current_user')
+const artsyError = require('artsy-error-handler')
 
 const app = express()
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, NODE_ENV } = process.env
@@ -51,10 +54,6 @@ const routeApp = (req, res, next) => {
   req.isMobile ? mobile(req, res, next) : desktop(req, res, next)
 }
 
-const routeErr = (err, req, res, next) => {
-  req.isMobile ? mobile(err, req, res, next) : desktop(err, req, res, next)
-}
-
 // Mount static assets first so responsive pages don't get confused
 if (NODE_ENV === 'development') {
   app.use(require('stylus').middleware({
@@ -82,10 +81,18 @@ glob.sync('desktop/**/public/')
 app.use(newrelic)
 app.use(determineDevice)
 app.use(routeApp)
-app.use(routeErr)
+artsyError.handlers(app, {
+  template: path.resolve(
+    __dirname,
+    'desktop/components/main_layout/templates/error.jade'
+  )
+})
 
 // Connect to Redis
 cache.setup(() => {
+  // Setup apps
+  setupDesktop(desktop)
+  setupMobile(mobile)
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
