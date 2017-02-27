@@ -17,6 +17,7 @@ import CheckBoxesFilterView from '../../components/commercial_filter/filters/che
 import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
 import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
+import JumpView from '../../components/jump/view.coffee'
 
 // For react/redux
 import React from 'react';
@@ -24,7 +25,8 @@ import { render } from 'react-dom';
 import { combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import auctions from './reducers'
-import Works from './works'
+import ArtworksContainer from './components/auction_artworks'
+import HeaderContainer from './components/header'
 import * as actions from './actions'
 
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -78,13 +80,21 @@ const filter = new Filter({ params: params })
 const store = createStore(auctions)
 render(
   <Provider store={store}>
-    <Works />
+    <HeaderContainer />
+  </Provider>,
+  document.getElementById('cf-view-filter')
+);
+
+render(
+  <Provider store={store}>
+    <ArtworksContainer />
   </Provider>,
   document.getElementById('cf-artworks')
 );
 
+
 filter.artworks.on('reset', () => {
-  store.dispatch(actions.updateArtworks(filter.artworks.models))
+  store.dispatch(actions.updateArtworks(filter.artworks.toJSON()))
 })
 
 // Header
@@ -142,5 +152,27 @@ const urlHandler = new UrlHandler({
 })
 
 Backbone.history.start({pushState: true})
+
+// Whenever params change, scroll to the top
+params.on('change', () => {
+  if (_.keys(params.changedAttributes())[0] in ['artists']) {
+    delayedScroll()
+  } else {
+    $('html,body').animate( {scrollTop: 0 }, 400)
+  }
+})
+
+// 1 second delay for checkbox selections
+let timer = null
+function delayedScroll() {
+  clearTimeout(timer)
+  timer = setTimeout($('html,body').animate( { scrollTop: 0 }, 400), 1000)
+}
+
+// jump view
+const jump = new JumpView({ threshold: $(window).height(), direction: 'bottom' })
+$('body').append(jump.$el)
+
+jump.scrollToPosition(0)
 
 params.trigger('change')

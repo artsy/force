@@ -1,5 +1,3 @@
-require('babel-core/register')
-require('coffee-script/register')
 import moment from 'moment'
 import _ from 'underscore'
 import benv from 'benv'
