@@ -1,10 +1,12 @@
 import { default as React, PropTypes } from 'react';
 import BidStatus from '../bid_status/index'
 import { titleAndYear } from '../../utils/artwork'
+import { get } from 'lodash'
 
 export default function AuctionGridArtwork({ artwork }, _) {
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
+  const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
 
   let bidStatus
   if (artwork.sale_artwork) {
@@ -17,7 +19,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
         <div className='vam-outer'>
           <div className='vam-inner'>
             <a className='auction2-grid-artwork__image' href={`/artwork/${artwork._id}`}>
-              <img src={artwork.images[0].image_url} alt={artwork.title}></img>
+              <img src={artworkImage} alt={artwork.title}></img>
             </a>
           </div>
         </div>

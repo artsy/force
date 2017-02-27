@@ -1,5 +1,3 @@
-require('babel-core/register')
-require('coffee-script/register')
 import { titleAndYear } from '../utils/artwork'
 
 describe('titleAndYear', () => {
@@ -10,17 +8,17 @@ describe('titleAndYear', () => {
     titleAndYear('', null).should.equal('')
   })
 
-  it('renders correctly with just a date', => {
+  it('renders correctly with just a date', () => {
     titleAndYear(null, '1905').should.equal('1905')
     titleAndYear('', '1905').should.equal('1905')
   })
 
-  it('renders correctly with just a title', => {
+  it('renders correctly with just a title', () => {
     titleAndYear('My Artwork', null).should.equal('<em>My Artwork</em>')
     titleAndYear('My Artwork', '').should.equal('<em>My Artwork</em>')
   })
 
-  it('renders correctly with both title and date', => {
+  it('renders correctly with both title and date', () => {
     titleAndYear('My Artwork', '1905').should.equal('<em>My Artwork</em>, 1905')
   })
 })
