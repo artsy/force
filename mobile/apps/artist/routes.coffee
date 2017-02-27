@@ -32,7 +32,6 @@ module.exports.index = (req, res, next) ->
     res.render 'page', artist: artist, sort: req.query?.sort, showAuctionLink: showAuctionLink
   .catch (error) ->
     next()
-  .done()
 
 module.exports.biography = (req, res, next) ->
   metaphysics query: query, variables: req.params, req: req
