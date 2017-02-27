@@ -31,7 +31,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
       <div className='auction2-grid-artwork__artists'>
         {artistDisplay}
       </div>
-      <div className='auction2-grid-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork) }}></div>
+      <div className='auction2-grid-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork.title, artwork.date) }}></div>
     </div>
   );
 }

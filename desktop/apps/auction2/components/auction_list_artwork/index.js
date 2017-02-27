@@ -20,7 +20,7 @@ export default function AuctionGridArtwork({ artwork }, _) {
       </div>
       <div className='auction2-list-artwork__metadata'>
         {artistDisplay}
-        <div className='auction2-list-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork) }}></div>
+        <div className='auction2-list-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork.title, artwork.date) }}></div>
       </div>
       <div className='auction2-list-artwork__lot-number'>
         Lot {artwork.sale_artwork && artwork.sale_artwork.lot_number}
