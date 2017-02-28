@@ -1,13 +1,34 @@
 import ArtworkBrickView from '../../../../components/artwork_brick/view.coffee'
 import React, { Component, PropTypes } from 'react'
 import artworkBrickViewTemplate from '../../../../components/artwork_brick/index.jade'
-import backboneComponent from './backbone_component.jsx'
+import backboneReactView from '../../lib/backbone_react_view/index.jsx'
 import classNames from 'classnames'
 
 class AuctionArtworks extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.onRenderArtworkBrickView = this.onRenderArtworkBrickView.bind(this)
+  }
+
+  onRenderArtworkBrickView(views) {
+    const {
+      artworkBrickView
+    } = views
+
+    if (this.props.user) {
+      artworkBrickView.instance.postRender()
+    }
+  }
+
+  onRemoveArtworkBrickView(views) {
+    // const { artworkBrickView } = views
+  }
+
   render() {
     const {
+      Views,
       artwork: {
         auction
       }
@@ -34,16 +55,23 @@ class AuctionArtworks extends Component {
           </a>
         </header>
 
-        <div className='auction-artwork-brick'>
+        <div>
           {artworks.map((artwork, index) => {
             return (
-              <div key={index}>
-                {/* <TemplateRenderer
-                  data={{ artwork }}
-                  template={artworkBrickViewTemplate}
-                  onRender={this.renderArtworkBrickView.bind(this)}
-                /> */}
-              </div>
+              <Views.ArtworkBrickView
+                className='auction-artwork-brick'
+                data={{ artwork }}
+                key={index}
+                onRender={this.onRenderArtworkBrickView}
+                onRemove={this.onRemoveArtworkBrickView}
+                template={artworkBrickViewTemplate}
+                viewProps={{
+                  context_page: '',
+                  context_module: '',
+                  id: artwork.id,
+                  user: {}
+                }}
+              />
             )
           })}
         </div>
@@ -64,32 +92,7 @@ AuctionArtworks.defaultProps = {
   }
 }
 
-export default backboneComponent({
+export default backboneReactView({
   views: [ArtworkBrickView],
   shouldMount: true
 })(AuctionArtworks)
-
-
-// WIP
-
-/*
-renderArtworkBrickView({ template }) {
-  const {
-    user
-  } = this.props
-
-  const view = new ArtworkBrickBackboneView({
-    el: template,
-    id: $(template).data('id'),
-    user
-  })
-
-  view.render()
-
-  if (user) {
-    view.postRender()
-  }
-
-  this.backboneViews.push(view)
-}
-*/

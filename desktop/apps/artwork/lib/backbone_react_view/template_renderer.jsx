@@ -1,25 +1,26 @@
-import $ from 'jquery'
 import React, { Component, PropTypes } from 'react'
+import { uniqueId } from 'underscore'
 
 export default class TemplateRenderer extends Component {
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
+
     const {
       data,
       template
     } = this.props
+
+    this.__id = uniqueId('template-')
 
     this.state = {
       renderedTemplate: template(data)
     }
   }
 
-  componentDidMount() {
-    const { renderedTemplate } = this.state
-
+  componentWillMount() {
     this.props.onRender({
-      _raw: renderedTemplate,
-      template: $.parseHTML(renderedTemplate)
+      template: this.state.renderedTemplate
     })
   }
 
@@ -27,7 +28,10 @@ export default class TemplateRenderer extends Component {
     return (
       <div
         className={this.props.className}
-        dangerouslySetInnerHTML={{__html: this.state.renderedTemplate }}
+        id={this.__id}
+
+        // TODO: Implement SSR templates
+        // _dangerouslySetInnerHTML={{__html: this.state.renderedTemplate }}
       />
     )
   }
@@ -36,6 +40,7 @@ export default class TemplateRenderer extends Component {
 TemplateRenderer.propTypes = {
   className: PropTypes.string,
   data: PropTypes.object,
+  enableSSR: PropTypes.bool,
   onRender: PropTypes.func,
   template: PropTypes.func.isRequired
 }
@@ -43,5 +48,6 @@ TemplateRenderer.propTypes = {
 TemplateRenderer.defaultProps = {
   className: '',
   data: {},
+  enableSSR: false,
   onRender: x => x
 }

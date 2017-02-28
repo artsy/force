@@ -143,11 +143,15 @@ module.exports =
       helpers: helpers
       user: CurrentUser.orNull()
 
-    for key, template of { fold: fold, footer: footer }
-      $(".js-artwork-#{key}")
-        .html template bootstrapData
+    # FIXME: Remove
+    # for key, template of { fold: fold, footer: footer }
+    #   $(".js-artwork-#{key}")
+    #     .html template bootstrapData
 
-    auctionArtworks.default.mountReactComponent('.react-mount-auction-artworks', bootstrapData)
+    auctionArtworks.default.mountReactComponent(
+      '.react-mount-auction-artworks',
+      bootstrapData
+    )
 
   init: ->
     setCookie(CLIENT._id)
