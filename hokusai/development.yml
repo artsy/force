@@ -1,0 +1,17 @@
+---
+version: '2'
+services:
+  force:
+    command: node index.js
+    environment:
+    - NODE_ENV=development
+    - REDIS_URL=redis://redis:6379/0
+    extends:
+      file: common.yml
+      service: force
+    ports:
+    - 5000:5000
+  redis:
+    image: redis:3.2-alpine
+    ports:
+    - 6379:6379

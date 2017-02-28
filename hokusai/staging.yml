@@ -1,0 +1,77 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: force
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: force
+      name: force
+      namespace: default
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: staging
+        - name: REDIS_URL
+          value: redis://force-redis:6379/0
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
+        imagePullPolicy: Always
+        name: force
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force
+  name: force
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: force
+  sessionAffinity: None
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: force-redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: force-redis
+      name: force-redis
+      namespace: default
+    spec:
+      containers:
+      - image: redis:3.2-alpine
+        name: force-redis
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force-redis
+  name: force-redis
+  namespace: default
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: force-redis
+  type: ClusterIP

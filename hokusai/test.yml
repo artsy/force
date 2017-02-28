@@ -1,0 +1,13 @@
+---
+version: '2'
+services:
+  force:
+    command: npm test
+    environment:
+    - NODE_ENV=test
+    - REDIS_URL=redis://redis:6379/1
+    extends:
+      file: common.yml
+      service: force
+  redis:
+    image: redis:3.2-alpine
