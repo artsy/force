@@ -18,10 +18,7 @@ RUN cp -a /tmp/node_modules /app/
 ADD . /app
 WORKDIR /app
 
-# TODO environment in config
-# RUN cp .env.oss .env
-
 ENV PORT 5000
 EXPOSE 5000
 
-CMD node index.js
+CMD yarn start
