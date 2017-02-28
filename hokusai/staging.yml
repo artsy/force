@@ -31,9 +31,12 @@ metadata:
     app: force
   name: force
   namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:iam::585031190124:server-certificate/2016-01-19_artsy-net-wildcard"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
 spec:
   ports:
-  - port: 80
+  - port: 443
     protocol: TCP
     targetPort: 5000
   selector:
