@@ -6,8 +6,8 @@ import { isArray, isEmpty } from 'underscore'
 
 export default function backboneReactView(config) {
   const {
-    views,
-    shouldMount = false
+    shouldMount = false,
+    views
   } = config
 
   const isValid = isArray(views) && !isEmpty(views)
@@ -21,13 +21,13 @@ export default function backboneReactView(config) {
   return (Container) => {
     class BackboneViewWrapper extends Component {
 
-      constructor(props) {
-        super(props)
-
-        this.state = {
-          Views: []
-        }
+      state = {
+        Views: []
       }
+
+      /** Don't update instantiable Backbone.View classes within the render cycle */
+      shouldComponentUpdate = () => false
+
 
       componentWillMount() {
         this.setState({

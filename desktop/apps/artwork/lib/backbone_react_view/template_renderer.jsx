@@ -3,24 +3,43 @@ import { uniqueId } from 'underscore'
 
 export default class TemplateRenderer extends Component {
 
-  constructor(props) {
-    super(props)
+  static propTypes = {
+    className: PropTypes.string,
+    data: PropTypes.object,
+    enableSSR: PropTypes.bool,
+    onRender: PropTypes.func,
+    template: PropTypes.func.isRequired
+  }
 
+  static defaultProps = {
+    className: '',
+    data: {},
+    enableSSR: false,
+    onRender: x => x
+  }
+
+  state = {
+    renderedTemplate: undefined
+  }
+
+  __id = uniqueId('react-backbone-template-')
+
+  componentWillMount() {
     const {
       data,
+      onRender,
       template
     } = this.props
 
-    this.__id = uniqueId('template-')
+    const renderedTemplate = template(data)
 
-    this.state = {
-      renderedTemplate: template(data)
-    }
-  }
+    this.setState({
+      renderedTemplate
+    })
 
-  componentWillMount() {
-    this.props.onRender({
-      template: this.state.renderedTemplate
+    onRender({
+      __id: this.__id,
+      template: renderedTemplate
     })
   }
 
@@ -35,19 +54,4 @@ export default class TemplateRenderer extends Component {
       />
     )
   }
-}
-
-TemplateRenderer.propTypes = {
-  className: PropTypes.string,
-  data: PropTypes.object,
-  enableSSR: PropTypes.bool,
-  onRender: PropTypes.func,
-  template: PropTypes.func.isRequired
-}
-
-TemplateRenderer.defaultProps = {
-  className: '',
-  data: {},
-  enableSSR: false,
-  onRender: x => x
 }

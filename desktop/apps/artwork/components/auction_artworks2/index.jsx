@@ -6,24 +6,42 @@ import classNames from 'classnames'
 
 class AuctionArtworks extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.onRenderArtworkBrickView = this.onRenderArtworkBrickView.bind(this)
+  static propTypes = {
+    artwork: PropTypes.object.isRequired
   }
 
-  onRenderArtworkBrickView(views) {
-    const {
-      artworkBrickView
-    } = views
-
-    if (this.props.user) {
-      artworkBrickView.instance.postRender()
+  static defaultProps = {
+    artwork: {
+      auction: {
+        artworks: []
+      }
     }
   }
 
-  onRemoveArtworkBrickView(views) {
-    // const { artworkBrickView } = views
+  onRenderArtworkBrickView = ({ artworkBrickView }) => {
+    artworkBrickView.instance.postRender()
+  }
+
+  componentDidMount() {
+    this.selectSavedArtworks()
+  }
+
+  selectSavedArtworks() {
+    const {
+      artwork: {
+        auction: {
+          artworks
+        }
+      },
+      user
+    } = this.props
+
+    const artworkIds = artworks.map(artwork => artwork.id)
+
+    user
+      .related()
+      .savedArtworks
+      .check(artworkIds)
   }
 
   render() {
@@ -31,7 +49,8 @@ class AuctionArtworks extends Component {
       Views,
       artwork: {
         auction
-      }
+      },
+      user
     } = this.props
 
     const {
@@ -43,6 +62,8 @@ class AuctionArtworks extends Component {
       'artwork-auction-artworks',
       'js-artwork-auction-artworks'
     )
+
+    const temp = artworks.slice(0, 3)
 
     return (
       <section className={classes}>
@@ -56,20 +77,20 @@ class AuctionArtworks extends Component {
         </header>
 
         <div>
-          {artworks.map((artwork, index) => {
+          {temp.map((artwork, index) => {
             return (
               <Views.ArtworkBrickView
                 className='auction-artwork-brick'
                 data={{ artwork }}
                 key={index}
                 onRender={this.onRenderArtworkBrickView}
-                onRemove={this.onRemoveArtworkBrickView}
+                onRemove={x => x}
                 template={artworkBrickViewTemplate}
                 viewProps={{
-                  context_page: '',
-                  context_module: '',
+                  context_page: 'Artwork Page',
+                  context_module: 'Artwork auction module',
                   id: artwork.id,
-                  user: {}
+                  user
                 }}
               />
             )
@@ -77,18 +98,6 @@ class AuctionArtworks extends Component {
         </div>
       </section>
     )
-  }
-}
-
-AuctionArtworks.propTypes = {
-  artwork: PropTypes.object.isRequired
-}
-
-AuctionArtworks.defaultProps = {
-  artwork: {
-    auction: {
-      artworks: []
-    }
   }
 }
 

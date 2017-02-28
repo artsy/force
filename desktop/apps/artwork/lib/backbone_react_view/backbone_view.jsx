@@ -11,28 +11,79 @@ export function createBackboneView(View) {
   )
 
   class BackboneView extends Component {
-    constructor(props) {
-      super(props)
 
-      this.backboneView = undefined
-      this.node = undefined
-      this.onTemplateRender = this.onTemplateRender.bind(this)
+    static propTypes = {
+      className: PropTypes.string,
+      data: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object
+      ]),
+      onRender: PropTypes.func,
+      onRemove: PropTypes.func,
+      template: PropTypes.func.isRequired,
+      viewProps: PropTypes.object
     }
 
-    componentDidMount() {
-      const { __id, template } = this.renderedTemplate
+    static defaultProps =  {
+      className: '',
+      data: {},
+      onRender: x => x,
+      onRemove: x => x,
+      viewProps: {}
+    }
 
-      // If a user doesn't provide an explicit ID, fallback to uniq
-      const fallbackId = __id
+    /**
+     * Ref to instantiated Backbone view
+     * @type {Backbone.View}
+     */
+    backboneView = undefined
+
+    /**
+     * Ref to node instantiated Backbone view is mounted to
+     * @type {Element}
+     */
+    node = undefined
+
+    /**
+     * Template that should be rendered into Backbone view. Contains an
+     *   __id: String - unique identifier
+     *   template: String - compiled template string to me bounted
+     * @type {Object}
+     */
+    renderedTemplate = undefined
+
+    onTemplateRender = (template) => {
+      this.renderedTemplate = template
+    }
+
+    /** Don't update instantiable Backbone.View classes within the render cycle */
+    shouldComponentUpdate = () => false
+
+    /**
+     * Render Backbone view now that DOM is accessible
+     */
+    componentDidMount = () => this.renderBackboneView()
+    componentWillUnmount = () => this.removeBackboneView()
+
+
+    renderBackboneView() {
+      const {
+        __id,
+        template
+      } = this.renderedTemplate
 
       const {
-        id = fallbackId,
+        id = __id,// If a user doesn't provide an ID, fallback to uniq
         onRender,
         viewProps
       } = this.props
 
       try {
-        this.backboneView = new View({ ...viewProps, id, instantiated: true })
+        this.backboneView = new View({
+          id,
+          ...viewProps
+        })
+
         this.backboneView.$el.html(template)
         this.backboneView.render()
         this.node = ReactDOM.findDOMNode(this)
@@ -53,7 +104,7 @@ export function createBackboneView(View) {
       }
     }
 
-    componentWillUnmount() {
+    removeBackboneView() {
       this.backboneView.remove()
 
       this.props.onRemove({
@@ -62,10 +113,6 @@ export function createBackboneView(View) {
           node: this.node
         }
       })
-    }
-
-    onTemplateRender(template) {
-      this.renderedTemplate = template
     }
 
     get instanceName() {
@@ -84,24 +131,6 @@ export function createBackboneView(View) {
         />
       )
     }
-  }
-
-  BackboneView.propTypes = {
-    className: PropTypes.string,
-    data: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    onRender: PropTypes.func,
-    template: PropTypes.func.isRequired,
-    viewProps: PropTypes.object
-  }
-
-  BackboneView.defaultProps =  {
-    className: '',
-    data: {},
-    onRender: x => x,
-    viewProps: {}
   }
 
   return BackboneView
