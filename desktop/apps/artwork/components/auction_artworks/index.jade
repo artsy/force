@@ -9,6 +9,9 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
 
       a.artwork-artist-artworks__header__jump( href= auction.href )
         | View All
+        
+    .artwork-auction-artworks__auction-name
+      | #{auction.name}
 
-    - var columns = helpers.artist_artworks.masonry(auction.artworks).columns
+    - var columns = helpers.auction_artworks.masonry(auction.artworks).columns
     include ../../../../components/artwork_masonry/index
