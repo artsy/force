@@ -8,7 +8,7 @@ fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
 # FIXME Additions (experiment)
-auctionArtworks = require '../components/auction_artworks2/index.jsx'
+auctionArtworks = require '../components/auction_artworks/index.jsx'
 
 helpers = extend [
   {}
