@@ -1,4 +1,5 @@
 ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+gradient = require '../../../../components/gradient_blurb/index.coffee'
 
 module.exports = ->
   $el = $('.js-artwork-auction-artworks')
@@ -17,3 +18,5 @@ module.exports = ->
   masonryView
     .reset artworks
     .postRender()
+
+  gradient($el, limit: 940, showGradient: false) if $el.length
