@@ -102,3 +102,11 @@ describe 'Shows routes', ->
         _.last(@res.render.args[0][1].past).should.equal showEndingFirst
 
         done()
+
+  describe '#redirectFromCity', ->
+    it 'redirects to /shows/... path', ->
+      req = { url: 'localhost:5000/city/new-york-ny-usa' }
+      res = { render: sinon.stub(), redirect: sinon.stub() }
+      routes.redirectFromCity req, res
+      res.redirect.args[0][0].should.equal 302
+      res.redirect.args[0][1].should.equal 'localhost:5000/shows/new-york-ny-usa'
