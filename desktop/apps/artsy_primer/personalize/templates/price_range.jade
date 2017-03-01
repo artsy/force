@@ -1,0 +1,13 @@
+header.artsy-primer-personalize-header
+  h1 What price range are you considering?
+
+section.artsy-primer-personalize-step( data-step='price_range' )
+  for bucket in user.priceBuckets
+    .flipper( data-value= bucket.value )
+      .flipper-card
+        .flipper-face.is-front: span= bucket.display
+        .flipper-face.is-back: span= bucket.display
+  aside
+    | This information will be used to customize recommendations for you on Artsy.
+    | You can change your answer later if your preferences change.
+    | We won't share your answer with others.

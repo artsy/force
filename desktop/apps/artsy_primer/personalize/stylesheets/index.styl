@@ -1,0 +1,68 @@
+#artsy-primer-personalize-page
+  transition opacity 0.25s
+  &[data-state='fade-in']
+    opacity 1
+  &[data-state='fade-out']
+    opacity 0
+  &[data-state='loading']
+    > *
+      opacity 0.125
+      pointer-events none
+    &:after
+      display block
+      content ''
+      spinner()
+
+.artsy-primer-personalize-frame
+  padding 40px
+  background-color white
+  transition opacity 0.25s
+
+.artsy-primer-personalize-initial-logotype
+  display block
+  text-align center
+  font-size 50px
+  line-height 1
+
+.artsy-primer-personalize-header
+  text-align center
+  margin 140px 0 40px 0
+  > h2
+    avant-garde()
+    font-size 13px
+    letter-spacing 1px
+  > h1
+    avant-garde()
+    margin 10px 0
+    font-size 20px
+    line-height 1
+  > aside
+    color gray-darker-color
+    max-width 692px
+    margin 30px auto 0 auto
+
+.artsy-primer-personalize-step
+  width 400px
+  margin auto
+  > aside
+    margin 20px 0
+    font-size 22px
+
+.artsy-primer-personalize-continue
+  margin-top 10px
+
+.artsy-primer-personalize-skip
+  position fixed
+  z-index 1
+  top 80px
+  right 100px
+  force-hardware-acceleration()
+  &, &:hover
+    background-color white
+
+@require './followable'
+@require './suggestible'
+@require './price_range'
+@require './categories'
+@require './favorites'
+@require './introduction'
