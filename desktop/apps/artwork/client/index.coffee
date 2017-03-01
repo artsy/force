@@ -7,13 +7,13 @@ exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
-# FIXME Additions
+# FIXME Additions (experiment)
 auctionArtworks = require '../components/auction_artworks2/index.jsx'
 
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'
-  auction_artworks: require '../components/auction_artworks2/helpers.coffee'
+  auction_artworks: require '../components/auction_artworks/helpers.coffee'
   partner: require '../components/partner/helpers.coffee'
   related_artworks: require '../components/related_artworks/helpers.coffee'
   show_artworks: require '../components/show_artworks/helpers.coffee'
@@ -47,7 +47,7 @@ module.exports =
           }
           #{require '../../../components/artwork_brick/query.coffee'}
           #{require '../components/partner/query.coffee'}
-          #{require '../components/auction_artworks2/query.coffee'}
+          #{require '../components/auction_artworks/query.coffee'}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
@@ -56,8 +56,7 @@ module.exports =
 
       init: compact [
           require '../components/partner/index.coffee'
-          # FIXME
-          # require '../components/auction_artworks2/index.coffee' unless context.is_closed
+          require '../components/auction_artworks/index.coffee' unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'
@@ -140,19 +139,11 @@ module.exports =
         ]
 
   renderTemplates: renderTemplates = (data) ->
-    bootstrapData = extend data,
-      helpers: helpers
-      user: CurrentUser.orNull()
-
-    # FIXME: Remove
-    # for key, template of { fold: fold, footer: footer }
-    #   $(".js-artwork-#{key}")
-    #     .html template bootstrapData
-
-    auctionArtworks.default.mountReactComponent(
-      '.react-mount-auction-artworks',
-      bootstrapData
-    )
+    for key, template of { fold: fold, footer: footer }
+      $(".js-artwork-#{key}")
+        .html template extend data,
+          helpers: helpers
+          user: CurrentUser.orNull()
 
   init: ->
     setCookie(CLIENT._id)
@@ -163,7 +154,6 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
-
     metaphysics query: query, variables: extend { id: CLIENT.id }, variables
       .then (data) ->
         renderTemplates(data)

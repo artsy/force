@@ -2,9 +2,7 @@ Backbone = require 'backbone'
 { invoke } = require 'underscore'
 User = require '../../models/user.coffee'
 masonry = require './index.coffee'
-BrickView =
-  artwork: require '../artwork_brick/view.coffee'
-  auction_artwork: require '../auction_artwork_brick/view.coffee'
+BrickView = require '../artwork_brick/view.coffee'
 template = -> require('./index.jade') arguments...
 columnTemplate = -> require('./column.jade') arguments...
 
@@ -19,7 +17,7 @@ module.exports = class ArtworkMasonryView extends Backbone.View
     @subViews.push artworks.map ({ id }) =>
       $el = @$(".js-artwork-brick[data-id='#{id}']")
 
-      view = new BrickView[$el.data('type') or 'artwork']
+      view = new BrickView
         el: $el
         id: id
         user: @user
