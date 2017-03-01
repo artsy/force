@@ -20,7 +20,7 @@ module.exports = class CVView extends Backbone.View
       variables:
         artist_id: @model.get('id')
         articles: @statuses.articles
-        shows: @statuses.shows
+        shows: @statuses.shows || @statuses.cv
     .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
   postRender: ->

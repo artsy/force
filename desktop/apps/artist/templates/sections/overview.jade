@@ -15,7 +15,7 @@ mixin rail(title, viewAllUrl, section)
     - var artistMeta = viewHelpers.artistMeta(artist)
 
     - var hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
-    - var hasShows = statuses.shows
+    - var hasShows = statuses.shows || statuses.cv
 
     .bisected-header-cell.js-artist-overview-header-left
       if hasMeta
