@@ -9,5 +9,5 @@ for fair in pastFairs
         .entity-follow.profile-follow( data-id= fair.profile.id )
     .fairs__past-fair__cell.fairs__past-fair__cell--info
       .fairs-fair__info #{ViewHelpers.formatDates(fair)}
-      if fair.location && fair.location.city
-        .fairs-fair__info= fair.location.city
+      if fair.location && (fair.location.city || fair.location.country)
+        .fairs-fair__info= fair.location.city ? fair.location.city : fair.location.country
