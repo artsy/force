@@ -1,4 +1,4 @@
-ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry_4_column/view.coffee'
 gradient = require '../../../../components/gradient_blurb/index.coffee'
 
 module.exports = ->
