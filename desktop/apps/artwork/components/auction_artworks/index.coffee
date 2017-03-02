@@ -27,8 +27,8 @@ module.exports = ->
     </div>
   """
 
-  if ($el.length)
-    gradient $el,
-      $button: $revealButton,
-      limit: 940,
-      showGradient: false
+  # FIXME: Stub out `components/reveal` and alias to gradient
+  gradient $el,
+    $button: $revealButton,
+    limit: 940,
+    showGradient: false

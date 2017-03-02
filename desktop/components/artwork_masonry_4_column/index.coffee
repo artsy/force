@@ -1,8 +1,8 @@
 { min, each } = require 'underscore'
 
-module.exports = (artworks, heights = [0, 0, 0]) ->
+module.exports = (artworks, heights = [0, 0, 0, 0]) ->
   columns = [
-    [], [], []
+    [], [], [], []
   ]
 
   valid = ({ image }) ->

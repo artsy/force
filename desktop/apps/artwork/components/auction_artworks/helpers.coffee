@@ -1,4 +1,4 @@
-masonry = require '../../../../components/artwork_masonry/index.coffee'
+masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
 _ = require 'underscore'
 
 NUMBER_OF_ARTWORKS = 25
