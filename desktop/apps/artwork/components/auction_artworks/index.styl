@@ -8,8 +8,8 @@
   extra-padding = 2px
 
   &__header
-    display flex
     align-items center
+    display flex
     justify-content space-between
     margin-bottom extra-padding
 
@@ -22,3 +22,34 @@
     color #747474
     margin-bottom gutter + extra-padding
     serif('l-body')
+
+  // Reveal more auction artworks button
+  button-size = 45px
+
+  .reveal
+    width 100%
+    height button-size
+
+    &::before
+      border-bottom 1px solid gray-lighter-color
+      bottom 50%
+      content ''
+      left 0
+      position absolute
+      right 0
+
+    &__button
+      background-color white
+      border 1px solid gray-lighter-color
+      border-radius button-size
+      height button-size
+      left 50%
+      padding 7px 9px
+      position absolute
+      top 50%
+      transform translate(-50%, -50%)
+      width button-size
+
+      // Icon: icon-chevron-small-down
+      > span
+        font-size 26px

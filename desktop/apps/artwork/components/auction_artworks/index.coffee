@@ -19,4 +19,16 @@ module.exports = ->
     .reset artworks
     .postRender()
 
-  gradient($el, limit: 940, showGradient: false) if $el.length
+  $revealButton = $ """
+    <div class='reveal'>
+      <a class='reveal__button' href='#'>
+        <span class='icon-chevron-small-down' />
+      </a>
+    </div>
+  """
+
+  if ($el.length)
+    gradient $el,
+      $button: $revealButton,
+      limit: 940,
+      showGradient: false
