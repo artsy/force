@@ -27,6 +27,7 @@ module.exports = '''
       }
       location {
         city
+        country
       }
       profile {
         id
