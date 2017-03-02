@@ -1,5 +1,7 @@
 { min, each } = require 'underscore'
 
+# TODO: UPDATE WITH n COLUMNS
+
 module.exports = (artworks, heights = [0, 0, 0]) ->
   columns = [
     [], [], []
