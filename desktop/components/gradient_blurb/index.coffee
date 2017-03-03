@@ -3,37 +3,16 @@ _ = require 'underscore'
 module.exports = ($el, options = {}) ->
   return unless $el.length
 
-  options = _.defaults options,
-    $button: undefined
-
-    heightBreakOffset: 0
-    label: 'Read More'
-    limit: 300
-    showGradient: true
+  options = _.defaults options, heightBreakOffset: 0, limit: 300, label: 'Read More'
 
   $el.imagesLoaded =>
-    # Optional heightBreakOffset will cause the blurb to expand if height is
-    # within a certain range of the limit. Prevents collapsing of elements that
-    # are just a few pixels over the limit, but will not affect the max-height
-    # for the collapsed state.
+    # Optional heightBreakOffset will cause the blurb to expand if height is within a certain
+    # range of the limit. Prevents collapsing of elements that are just a few pixels over the limit,
+    # but will not affect the max-height for the collapsed state.
 
     return unless (height = $el.outerHeight()) > (options.limit + options.heightBreakOffset)
 
-    if options.$button
-      $button = options.$button
-    else
-      $button = $ """
-        <div class='gradient-blurb-read-more-container'>
-          <a class='gradient-blurb-read-more' href='#'>
-            #{options.label}
-          </a>
-        </div>
-      """
-
-    if options.showGradient
-      $el.addClass 'mask-gradient'
-    else
-      $el.addClass 'mask-block'
+    $button = $("<div class='gradient-blurb-read-more-container'><a class='gradient-blurb-read-more' href='#'>#{options.label}</a></div>")
 
     $el
       .addClass 'gradient-blurb'

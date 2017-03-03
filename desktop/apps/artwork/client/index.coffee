@@ -155,3 +155,4 @@ module.exports =
       .then (data) ->
         renderTemplates(data)
         exec init
+
