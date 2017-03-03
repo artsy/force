@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-PersonalizeState = require '../../../client/state'
+PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
@@ -13,7 +13,7 @@ describe 'FavoritesView', ->
     benv.setup =>
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      FavoritesView = benv.requireWithJadeify resolve(__dirname, '../../../client/views/favorites'), ['template']
+      FavoritesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/favorites'), ['template']
       FavoritesView.__set__ 'ArtworkColumnsView', Backbone.View
       done()
 
@@ -31,11 +31,6 @@ describe 'FavoritesView', ->
 
   afterEach ->
     Backbone.sync.restore()
-
-  describe '#render', ->
-    it 'renders the template', ->
-      @view.$el.html().should.containEql 'Add works to your favorites'
-      @view.$('#artsy-primer-personalize-favorites-container').length.should.equal 1
 
   describe '#fetchArtworks', ->
     it 'fetches the artworks set', ->

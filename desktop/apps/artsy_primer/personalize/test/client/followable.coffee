@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Artist = require '../../../../../models/artist.coffee'
-PersonalizeState = require '../../../client/state'
+PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../../models/current_user.coffee'
 { Following } = require '../../../../../components/follow_button/index.coffee'
 { resolve } = require 'path'
@@ -16,7 +16,7 @@ describe 'Followable', ->
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
-      Followable = benv.requireWithJadeify resolve(__dirname, '../../../client/mixins/followable'), ['followedTemplate']
+      Followable = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
       class TestView extends Backbone.View
         _.extend @prototype, Followable
 
