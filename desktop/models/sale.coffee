@@ -178,7 +178,7 @@ module.exports = class Sale extends Backbone.Model
     event
 
   upcomingLabel: ->
-    timeFormat = 'MMM D h:mm A z'
+    timeFormat = 'MMM D h:mm:ssA z'
     if @isClosed()
       "Auction Closed"
     else if @get('live_start_at') and not @isLiveOpen()
