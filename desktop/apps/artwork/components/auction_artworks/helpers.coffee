@@ -17,12 +17,12 @@ module.exports =
     masonry take shuffle(artworks), ARTWORK_DISPLAY_NUM
 
   upcomingLabel: (start_at, end_at, live_start_at, status) ->
-    timeFormat = 'MMM D h:mm A z'
+    timeFormat = 'MMM D, h:mm A z'
 
     if live_start_at and not isLiveOpen(status, live_start_at)
-      "bidding begins #{zone(live_start_at).format(timeFormat)}"
+      "opens for live bidding #{zone(live_start_at).format(timeFormat)}"
     else if live_start_at
-      "bidding now open"
+      "open for live bidding"
     else if isPreviewState(status)
       "opens #{zone(start_at).format(timeFormat)}"
     else

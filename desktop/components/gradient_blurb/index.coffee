@@ -1,16 +1,3 @@
-###
-  Component used for revealing masked content via button
-
-  @example
-  $contentToMask = $.find '.some-long-div'
-  gradient($contentToMask, limit: 175)
-
-  @note
-  This component is aliased by `components/reveal`. Q: Should we relocate this
-  into there and refactor existing import paths? Technically, this can reveal
-  any kind of content, and the gradient is only added as a sensible default.
-###
-
 _ = require 'underscore'
 
 module.exports = ($el, options = {}) ->
