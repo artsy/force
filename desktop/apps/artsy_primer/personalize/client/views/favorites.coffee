@@ -25,7 +25,6 @@ module.exports = class FavoritesView extends StepView
         @artworks.reset collection.shuffle()
         @setupFavorites()
         @renderArtworks()
-        @onFavorited()
 
   setupFavorites: ->
     @user.initializeDefaultArtworkCollection()
@@ -69,6 +68,7 @@ module.exports = class FavoritesView extends StepView
     _.delay =>
       _.each $buttonColumns, (buttonColumn, i) ->
         _.delay (=> $(buttonColumn).css 'opacity', 1), (i + 1) * 50
+      @onFavorited()
     , 1000
 
   saveArtwork: (e) ->
