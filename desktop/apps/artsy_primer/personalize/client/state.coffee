@@ -31,12 +31,12 @@ module.exports = class PersonalizeState extends Backbone.Model
     # goes somewhere we'll want to get smart about it again.
     #
     __steps__:
-      new_1: ['categories', 'collect', 'favorites', 'artists', 'price_range']
-      new_2: ['categories', 'collect', 'favorites', 'artists', 'price_range']
-      new_3: ['categories', 'collect', 'favorites', 'artists', 'price_range']
-      existing_1: ['categories', 'collect', 'favorites', 'artists', 'price_range']
-      existing_2: ['categories', 'collect', 'favorites', 'artists', 'price_range']
-      existing_3: ['categories', 'collect', 'favorites', 'artists', 'price_range']
+      new_1: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
+      new_2: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
+      new_3: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
+      existing_1: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
+      existing_2: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
+      existing_3: ['categories', 'collect', 'favorites', 'artists', 'price_range', 'thank_you']
 
 
   initialize: (options = {}) ->
@@ -79,6 +79,9 @@ module.exports = class PersonalizeState extends Backbone.Model
 
   almostDone: ->
     (@currentStepIndex() + 1) is @steps().length
+
+  percentDone: ->
+    "#{Math.round (@currentStepIndex() + 1) / (@steps().length - 1) * 100}%"
 
   next: ->
     if @currentStepIndex() + 1 >= @steps().length

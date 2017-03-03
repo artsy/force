@@ -3,13 +3,10 @@ Backbone = require 'backbone'
 StepView = require './step.coffee'
 Artworks = require '../../../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../../../components/artwork_columns/view.coffee'
-{ setSkipLabel } = require '../mixins/followable.coffee'
 { API_URL } = require('sharify').data
 template = -> require('../../templates/favorites.jade') arguments...
 
 module.exports = class FavoritesView extends StepView
-  setSkipLabel: setSkipLabel
-
   suggestedArtworksSetId: '53c554ec72616961ab9a2000'
 
   events:
@@ -28,12 +25,18 @@ module.exports = class FavoritesView extends StepView
         @artworks.reset collection.shuffle()
         @setupFavorites()
         @renderArtworks()
+        @onFavorited()
 
   setupFavorites: ->
     @user.initializeDefaultArtworkCollection()
     @favorites = @user.defaultArtworkCollection()
     @favoriteArtworks = @favorites.get 'artworks'
-    @listenTo @favoriteArtworks, 'add remove', @setSkipLabel, this
+    @listenTo @favoriteArtworks, 'add remove', @onFavorited, this
+
+  onFavorited: =>
+    artworks = @artworks.filter (artwork) =>
+      artwork.id in @favoriteArtworks.pluck('id')
+    @user.trigger 'personalize:favorite', artworks
 
   renderArtworks: ->
     @artworks.reset @artworks.shuffle(), silent: true
