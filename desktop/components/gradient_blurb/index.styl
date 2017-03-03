@@ -4,15 +4,25 @@
   position relative
   overflow hidden
   transition max-height 0.5s
-  &:after
-    display block
-    position absolute
-    content ''
-    right 0
-    bottom 0
-    left 0
-    height 125px
-    background-image linear-gradient(to bottom, rgba(255,255,255,0), white 100px)
+
+  &.mask-block, &.mask-gradient
+    &:after
+      display block
+      position absolute
+      content ''
+      right 0
+      bottom 0
+      left 0
+
+  &.mask-block
+    &:after
+      height 24px
+      background white
+
+  &.mask-gradient
+    &:after
+      height 125px
+      background-image linear-gradient(to bottom, rgba(255,255,255,0), white 100px)
 
   &.is-expanded:after
     display none
@@ -28,3 +38,18 @@
   avant-garde-size('body')
   text-decoration none
   display block
+
+/**
+ * TODO: Update per `components/reveal`
+ */
+.reveal
+  display block
+  position absolute
+  bottom 0
+  left 0
+  z-index 1
+
+  &__button
+    avant-garde-size('body')
+    text-decoration none
+    display block

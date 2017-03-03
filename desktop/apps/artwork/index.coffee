@@ -1,3 +1,5 @@
+require('babel-core/register')
+
 express = require 'express'
 routes = require './routes'
 
