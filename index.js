@@ -70,7 +70,7 @@ if (NODE_ENV === 'development') {
   }))
   app.use(require('browserify-dev-middleware')({
     src: path.resolve(__dirname, 'mobile'),
-    transforms: [require('jadeify'), require('caching-coffeeify')]
+    transforms: [require('jadeify'), require('caching-coffeeify'), require('babelify')]
   }))
 }
 glob.sync('desktop/**/public/')
