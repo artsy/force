@@ -35,7 +35,7 @@ PAGE_SIZE = 50
 @partnerUpdates = (req, res, next) ->
   new Articles().fetch
     data:
-      channel_id: sd.ARTSY_PARTNER_UPDATES_CHANNEL
+      channel_id: sd.GALLERY_PARTNER_UPDATES_CHANNEL
       published: true
       sort: '-published_at'
       limit: PAGE_SIZE
