@@ -1,0 +1,18 @@
+extends ../../../components/main_layout/templates/blank
+
+block head
+  title Personalize | Artsy
+
+append locals
+  - assetPackage = 'misc'
+
+block body
+  include header
+  .artsy-primer-next-step
+    .artsy-primer-next-step-progress
+      .artsy-primer-next-step-progress-inner
+    h3.artsy-primer-next-step-header
+    p.artsy-primer-next-step-label
+    .artsy-primer-next-step-artworks
+    button.avant-garde-button.artsy-primer-next-step-button Next step
+  #artsy-primer-personalize-page
