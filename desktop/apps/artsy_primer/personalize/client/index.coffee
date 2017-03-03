@@ -8,6 +8,7 @@ CurrentUser = require '../../../../models/current_user.coffee'
 Transition = require '../../../../components/mixins/transition.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
+NextStepView = require './views/next_step.coffee'
 views =
   CollectView: require './views/collect.coffee'
   ArtistsView: require './views/artists.coffee'
@@ -15,6 +16,7 @@ views =
   CategoriesView: require './views/categories.coffee'
   BookmarksView: require './views/bookmarks.coffee'
   FavoritesView: require './views/favorites.coffee'
+  ThankYouView: require './views/thank_you.coffee'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:
@@ -22,7 +24,6 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
   initialize: ({ @user, @reonboarding, @force }) ->
     @$el = $('#artsy-primer-personalize-page')
-    $('.artsy-primer-next-step').click => @view.advance?()
 
     @state = new PersonalizeState user: @user, reonboarding: @reonboarding
     @state.set 'current_step', @force, silent: true if @force?
@@ -44,7 +45,14 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
         message: "Starting Personalize #{@state.currentStepLabel()}"
         label: "User:#{@user.id}"
 
-      @view = new views["#{_s.classify(step)}View"] state: @state, user: @user
+      @view = new views["#{_s.classify(step)}View"]
+        state: @state
+        user: @user
+      @nextStep ?= new NextStepView
+        el: $('.artsy-primer-next-step')
+        state: @state
+        view: @view
+
       @$el.html @view.render().$el
 
   next: ->
