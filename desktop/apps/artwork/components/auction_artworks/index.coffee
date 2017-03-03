@@ -1,5 +1,5 @@
 ArtworkMasonryView = require '../../../../components/artwork_masonry_4_column/view.coffee'
-gradient = require '../../../../components/gradient_blurb/index.coffee'
+reveal = require '../../../../components/reveal/index.coffee'
 
 module.exports = ->
   $el = $('.js-artwork-auction-artworks')
@@ -28,7 +28,7 @@ module.exports = ->
   """
 
   # FIXME: Stub out `components/reveal` and alias to gradient
-  gradient $el,
+  reveal $el,
     $button: $revealButton,
     limit: 940,
     showGradient: false

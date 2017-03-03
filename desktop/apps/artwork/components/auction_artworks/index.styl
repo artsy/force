@@ -2,6 +2,7 @@
 @require '../../../../components/auction_artwork_brick'
 @require '../../../../components/artwork_metadata_stub'
 @require '../../../../components/artwork_masonry_4_column'
+@require '../../../../components/reveal'
 
 .artwork-auction-artworks
   //
@@ -27,9 +28,10 @@
   // Reveal more auction artworks button
   button-size = 45px
 
+  // Masked, expandable area
   .reveal
     width 100%
-    height button-size
+    height button-size + 3px
 
     &::before
       border-bottom 1px solid gray-lighter-color

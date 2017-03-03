@@ -1,6 +1,12 @@
 if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.length
+  - var upcomingLabel = helpers.auction_artworks.upcomingLabel
   - var auction = artwork.auction
-  - console.log(auction)
+  - var start_at = auction.start_at 
+  - var end_at = auction.end_at
+  - var live_start_at = auction.live_start_at
+  - var status = auction.status
+  
+  - var auctionLabel = upcomingLabel(start_at, end_at, live_start_at, status)
 
   section.artwork-section.artwork-auction-artworks( class='js-artwork-auction-artworks' )
     header.artwork-auction-artworks__header
@@ -11,7 +17,7 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
         | View All
         
     .artwork-auction-artworks__auction-name
-      | #{auction.name}
+      | #{auction.name} #{auctionLabel}
 
     - var columns = helpers.auction_artworks.masonry(auction.artworks).columns
     include ../../../../components/artwork_masonry_4_column/index

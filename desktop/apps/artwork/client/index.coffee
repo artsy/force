@@ -7,9 +7,6 @@ exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
-# FIXME Additions (experiment)
-auctionArtworks = require '../components/auction_artworks/index.jsx'
-
 helpers = extend [
   {}
   artist_artworks: require '../components/artist_artworks/helpers.coffee'

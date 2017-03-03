@@ -1,5 +1,8 @@
 { min, each } = require 'underscore'
 
+# TODO: Refactor this and artwork_masonry to support a dynamic number of columns
+# and then remove this folder.
+
 module.exports = (artworks, heights = [0, 0, 0, 0]) ->
   columns = [
     [], [], [], []
