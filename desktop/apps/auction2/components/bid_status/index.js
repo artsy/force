@@ -18,7 +18,3 @@ export default function BidStatus({ artwork }, _) {
     </div>
   );
 }
-
-BidStatus.propTypes = {
-  artwork: PropTypes.object.isRequired,
-};

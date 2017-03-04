@@ -12,27 +12,34 @@ function displayButtonClass(buttonType, displayType) {
   )
 }
 
-function Header({ isListView, dispatch }) {
+function Header({ isListView, total, dispatch }) {
   const displayType = isListView ? 'list' : 'grid'
+  const totalLabel = (total && total > 0)
+    ? `${total} Artworks for sale`
+    : 'Your search returned 0 results. Try removing some filters.'
 
   return (
     <div className={'auction2-artworks-header'}>
-      <div className={displayButtonClass('grid', displayType)} onClick={() => dispatch(toggleListView(false))}>
-        <Grid />
+      <div className={'auction2-artworks-header__total'}>
+        { totalLabel }
       </div>
-      <div className={displayButtonClass('list', displayType)} onClick={() => dispatch(toggleListView(true))}>
-        <List />
+      <div className={'auction2-artworks-header__switch'}>
+        <div className={displayButtonClass('grid', displayType)} onClick={() => dispatch(toggleListView(false))}>
+          <Grid />
+        </div>
+        <div className={displayButtonClass('list', displayType)} onClick={() => dispatch(toggleListView(true))}>
+          <List />
+        </div>
       </div>
     </div>
   )
 }
 
-Header.propTypes = {
-  isListView: PropTypes.bool.isRequired,
-}
-
 const mapStateToProps = (state) => {
-  return { isListView: state.auctionArtworks.isListView }
+  return {
+    isListView: state.auctionArtworks.isListView,
+    total: state.auctionArtworks.total
+  }
 }
 
 const HeaderContainer = connect(

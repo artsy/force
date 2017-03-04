@@ -31,7 +31,3 @@ export default function AuctionGridArtwork({ artwork }, _) {
     </div>
   );
 }
-
-AuctionGridArtwork.propTypes = {
-  artwork: PropTypes.object.isRequired,
-};

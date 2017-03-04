@@ -55,8 +55,7 @@ describe "#biography", ->
     Backbone.sync.restore()
 
   it 'renders the biography page', ->
-    routes.biography @req, @res
-    _.defer => _.defer =>
+    routes.biography(@req, @res).then =>
       @res.render.args[0][0].should.equal 'biography'
       @res.render.args[0][1].artist.id.should.equal 'damien-hershey'
 

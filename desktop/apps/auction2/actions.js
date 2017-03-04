@@ -1,8 +1,35 @@
+import metaphysics from '../../lib/metaphysics.coffee'
+import { filterQuery } from './filter_query'
+import { filter } from 'underscore'
+
 // Action types
-export const UPDATE_ARTWORKS = 'UPDATE_ARTWORKS'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
+export const UPDATE_ARTWORKS = 'UPDATE_ARTWORKS'
+export const UPDATE_TOTAL = 'UPDATE_TOTAL'
+export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
+export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
+export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 
 // Action creators
+
+export function toggleListView(isListView) {
+  return {
+    type: TOGGLE_LIST_VIEW,
+    payload: {
+      isListView
+    }
+  }
+}
+
+export function updateTotal(total) {
+  return {
+    type: UPDATE_TOTAL,
+    payload: {
+      total
+    }
+  }
+}
+
 export function updateArtworks(artworks) {
   return {
     type: UPDATE_ARTWORKS,
@@ -12,11 +39,55 @@ export function updateArtworks(artworks) {
   }
 }
 
-export function toggleListView(isListView) {
+export function updateAggregatedArtists(aggregatedArtists) {
   return {
-    type: TOGGLE_LIST_VIEW,
+    type: UPDATE_AGGREGATED_ARTISTS,
     payload: {
-      isListView
+      aggregatedArtists
     }
+  }
+}
+
+export function updateAggregatedMediums(aggregatedMediums) {
+  return {
+    type: UPDATE_AGGREGATED_MEDIUMS,
+    payload: {
+      aggregatedMediums
+    }
+  }
+}
+
+export function updateArtistParams(artistId) {
+  return (dispatch) => {
+    dispatch(updateArtistId(artistId))
+    dispatch(fetchArtworks())
+  }
+}
+
+export function updateArtistId(artistId) {
+  return {
+    type: UPDATE_ARTIST_ID,
+    payload: {
+      artistId
+    }
+  }
+}
+
+export function fetchArtworks() {
+  return (dispatch, getState) => {
+    const { auctionArtworks: { filterParams } } = getState()
+    return metaphysics({ query: filterQuery, variables: filterParams, req: { user: sd.CURRENT_USER } })
+      .then(({ filter_artworks }) => {
+        const aggregations = filter_artworks.aggregations
+        const artistAggregation = _.filter(aggregations, (agg) => { return agg.slice == 'ARTIST' })
+        const mediumAggregation = _.filter(aggregations, (agg) => { return agg.slice == 'MEDIUM' })
+        dispatch(updateAggregatedArtists(artistAggregation[0].counts))
+        dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
+        dispatch(updateTotal(filter_artworks.total))
+        if (filter_artworks.hits.length) {
+          dispatch(updateArtworks(filter_artworks.hits))
+        }
+      })
+      .catch((error) => console.error('error!', error))
   }
 }

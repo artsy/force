@@ -16,11 +16,6 @@ function AuctionArtworks({ artworks, isListView }) {
   )
 }
 
-AuctionArtworks.propTypes = {
-  artworks: PropTypes.array.isRequired,
-  isListView: PropTypes.bool.isRequired
-}
-
 const mapStateToProps = (state) => {
   return {
     artworks: state.auctionArtworks.artworks,
