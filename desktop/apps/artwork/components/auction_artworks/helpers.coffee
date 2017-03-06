@@ -1,7 +1,7 @@
 masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
 moment = require 'moment'
 { ARTWORK_DISPLAY_NUM } = require './config.coffee'
-{ include, shuffle, take } = require 'underscore'
+{ include, partition, pluck, shuffle, take } = require 'underscore'
 
 isLiveOpen = (status, live_start_at) ->
   status == 'open' and moment().isAfter(live_start_at)
@@ -13,8 +13,16 @@ zone = (time) ->
   moment(time).tz('America/New_York')
 
 module.exports =
-  masonry: (artworks) ->
-    masonry take shuffle(artworks), ARTWORK_DISPLAY_NUM
+  masonry: (artworks, followed_artist_ids) ->
+    followIds = pluck followed_artist_ids.hits, 'id'
+
+    # Find followed artists and prepare to prepend to results array
+    [followed, rest] = partition artworks, (artwork) =>
+      followIds.some (id) =>
+        artwork.id == id
+
+    displayArtworkResults = take shuffle(followed).concat(shuffle(rest)), ARTWORK_DISPLAY_NUM
+    masonry displayArtworkResults
 
   upcomingLabel: (start_at, end_at, live_start_at, status) ->
     timeFormat = 'MMM D, h:mm A z'
