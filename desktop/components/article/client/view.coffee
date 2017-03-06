@@ -136,7 +136,6 @@ module.exports = class ArticleView extends Backbone.View
     else
       startIndex = $($current).data('index')
     section = @article.get('sections')[$($parent).data('index')]
-    debugger
     imageSet = new ImageSetView
       items: section.images
       user: @user
