@@ -8,6 +8,7 @@ export const article = async (req, res, next) => {
   await article.fetchWithRelated({
     accessToken: req.user && req.user.get('accessToken')
   })
+  res.locals.sd.ARTICLE = article.toJSON()
   res.render('article', { embed, crop, article, lushSignup: true })
 }
 

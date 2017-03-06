@@ -116,6 +116,7 @@ module.exports = (app) ->
     app.use require("stylus").middleware
       src: path.resolve(__dirname, "../")
       dest: path.resolve(__dirname, "../public")
+
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
       transforms: [
@@ -124,6 +125,10 @@ module.exports = (app) ->
         require('babelify')
       ]
       insertGlobals: true
+
+      # FIXME: Follow up with Craig re sourcemaps
+      debug: true
+
   if "test" is NODE_ENV
     app.use (req, res, next) ->
       return next() unless req.query['test-login']

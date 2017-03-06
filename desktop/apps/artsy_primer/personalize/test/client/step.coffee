@@ -1,8 +1,8 @@
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-StepView = require '../../../client/views/step'
-PersonalizeState = require '../../../client/state'
+StepView = require '../../client/views/step'
+PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../../models/current_user'
 
 describe 'StepView', ->

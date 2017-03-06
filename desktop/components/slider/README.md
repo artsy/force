@@ -4,7 +4,7 @@
 
 ## Example
 
-Add the `createSlider` function
+Add the `createSlider` function and hook into the `set` event.
 
 ````coffeescript
 @slider = createSlider
@@ -23,11 +23,7 @@ Add the `createSlider` function
       "#{formatMoney(val, { precision: 0 })}"
     else
       "#{formatMoney(val, { symbol: "", precision: 0 })}"
-````
 
-Bind to the update
-
-```coffescript
 @slider.on 'set', ([formatted, _, range]) ->
   console.log "I like #{range[0]} to #{range[1]} prices"
-```
+````

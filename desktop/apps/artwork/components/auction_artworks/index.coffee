@@ -1,4 +1,5 @@
-ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry_4_column/view.coffee'
+reveal = require '../../../../components/reveal/index.coffee'
 
 module.exports = ->
   $el = $('.js-artwork-auction-artworks')
@@ -17,3 +18,17 @@ module.exports = ->
   masonryView
     .reset artworks
     .postRender()
+
+  $revealButton = $ """
+    <div class='reveal'>
+      <a class='reveal__button' href='#'>
+        <span class='icon-chevron-small-down' />
+      </a>
+    </div>
+  """
+
+  # FIXME: Stub out `components/reveal` and alias to gradient
+  reveal $el,
+    $button: $revealButton,
+    limit: 940,
+    showGradient: false

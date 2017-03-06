@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-PersonalizeState = require '../../../client/state'
+PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../../models/current_user.coffee'
 Artist = require '../../../../../models/artist.coffee'
 { fabricate } = require 'antigravity'
@@ -21,7 +21,7 @@ describe 'ArtistsView', ->
     benv.teardown()
 
   beforeEach ->
-    @ArtistsView = benv.requireWithJadeify resolve(__dirname, '../../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
+    @ArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
     @ArtistsView.__set__ 'imagesLoaded', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub @ArtistsView::, 'setupSearch'
@@ -119,16 +119,6 @@ describe 'ArtistsView', ->
     describe 'collector_level 2', ->
       it 'renders the template with the correct copy', ->
         @view.$el.html().should.containEql 'Follow artists you are interested in'
-
-    describe 'collector_level 3', ->
-      beforeEach ->
-        @user.set 'collector_level', 3
-        @view.render()
-
-      it 'renders the template with the correct copy', ->
-        html = @view.$el.html()
-        html.should.containEql 'Follow artists to get alerts about new works for sale'
-        html.should.containEql 'Get alerts for new works from Artsy’s 2,000+ galleries, art fairs, and auctions'
 
   describe 'GeneArtists', ->
     describe '#initializeGeneArtists', ->

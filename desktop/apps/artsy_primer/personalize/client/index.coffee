@@ -28,6 +28,12 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     @state = new PersonalizeState user: @user, reonboarding: @reonboarding
     @state.set 'current_step', @force, silent: true if @force?
 
+    @nextStep = new NextStepView
+      el: '.artsy-primer-next-step'
+      state: @state
+      user: @user
+    @nextStep.on 'advance', => @view.advance?()
+
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
 
@@ -48,25 +54,34 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       @view = new views["#{_s.classify(step)}View"]
         state: @state
         user: @user
-      @nextStep ?= new NextStepView
-        el: $('.artsy-primer-next-step')
-        state: @state
-        view: @view
 
-      @$el.html @view.render().$el
+      @$el.html(@view.render().$el)
 
   next: ->
     @navigate "/artsy-primer-personalize/#{@state.get('current_step')}", trigger: true
 
+  # Check the cookie for a possible post-sign up destination;
+  # ensure the cookie is cleared; return a location to redirect to
+  #
+  # @return {String} destination or root path
+  redirectLocation: ->
+    destination = Cookies.get 'destination'
+    Cookies.expire 'destination' if destination
+    destination or '/'
+
   done: ->
     analyticsHooks.trigger 'personalize:finished', label: "User:#{@user.id}"
-    @user.save()
-    # Thank you page
-    alert 'done thanks'
+
+    @$el.attr 'data-state', 'loading'
+
+    $.when.apply(null, [
+      @user.save()
+      $.post('/flash', message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.')
+    ]).always =>
+      location.assign @redirectLocation()
 
 module.exports.init = ->
   { force, reonboarding, email, name } = qs.parse location.search.slice(1)
-
   # If there's no user, open the auth modal
   unless user = CurrentUser.orNull()
     mediator.once 'open:auth', -> _.defer ->

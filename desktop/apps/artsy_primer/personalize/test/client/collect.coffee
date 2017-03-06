@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-PersonalizeState = require '../../../client/state'
+PersonalizeState = require '../../client/state'
 CurrentUser = require '../../../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
@@ -12,7 +12,7 @@ describe 'CollectView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @CollectView = benv.requireWithJadeify resolve(__dirname, '../../../client/views/collect'), ['template']
+      @CollectView = benv.requireWithJadeify resolve(__dirname, '../../client/views/collect'), ['template']
       done()
 
   after ->

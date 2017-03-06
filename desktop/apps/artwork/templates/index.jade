@@ -10,6 +10,13 @@ block body
   .artwork-page.main-layout-container
     section.artwork
       .artwork__main
+        .artwork__main__metadata(
+          class= inPurchaseTestGroup && artwork.is_purchasable ? 'purchase-flow' : ''
+        )
+          include ../components/metadata/index
+          include ../components/commercial/index
+          include ../components/auction/index
+
         .artwork__main__overview
           include ../components/banner/index
           include ../components/images/index
@@ -17,15 +24,8 @@ block body
           include ../components/additional_info/index
           include ../components/artists/index
 
-          .artwork__main__overview__fold( class='js-artwork-fold' )
-            include ../client/fold
-
-        .artwork__main__metadata(
-          class= inPurchaseTestGroup && artwork.is_purchasable ? 'purchase-flow' : ''
-        )
-          include ../components/metadata/index
-          include ../components/commercial/index
-          include ../components/auction/index
+        .artwork__main__overview__fold( class='js-artwork-fold' )
+          include ../client/fold
 
       .artwork__footer( class='js-artwork-footer' )
         include ../client/footer
