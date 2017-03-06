@@ -9,6 +9,8 @@ export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
 export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
+export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
+export const UPDATE_SORT = 'UPDATE_SORT'
 
 // Action creators
 
@@ -69,6 +71,38 @@ export function updateArtistId(artistId) {
     type: UPDATE_ARTIST_ID,
     payload: {
       artistId
+    }
+  }
+}
+
+export function updateMediumParams(mediumId) {
+  return (dispatch) => {
+    dispatch(updateMediumId(mediumId))
+    dispatch(fetchArtworks())
+  }
+}
+
+export function updateMediumId(mediumId) {
+  return {
+    type: UPDATE_MEDIUM_ID,
+    payload: {
+      mediumId
+    }
+  }
+}
+
+export function updateSort(sort) {
+  return (dispatch) => {
+    dispatch(updateSortParam(sort))
+    dispatch(fetchArtworks())
+  }
+}
+
+export function updateSortParam(sort) {
+  return {
+    type: UPDATE_SORT,
+    payload: {
+      sort
     }
   }
 }

@@ -2,16 +2,19 @@ import { combineReducers } from 'redux'
 import u from 'updeep'
 import { contains } from 'underscore'
 import { data as sd } from 'sharify'
-
-// Reducer saves the default params
-// When a checkbox is clicked, the default params change
-// On change of params... it refetches the artworks
+import * as actions from './actions'
 
 const initialState = {
   artworks: [],
   total: 0,
   isListView: false,
   isFetchingArtworks: false,
+  sortMap: {
+    "lot_number": "Lot Number (asc.)",
+    "-lot_number": "Lot Number (desc.)",
+    "-searchable_estimate": "Most Expensive",
+    "searchable_estimate": "Least Expensive"
+  },
   aggregatedArtists: [],
   aggregatedMediums: [],
   filterParams: {
@@ -19,7 +22,7 @@ const initialState = {
     page: 1,
     sale_id: sd.AUCTION.id,
     aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
-    sort: 'lot_number',
+    sort: '-lot_number',
     gene_ids: [],
     artist_ids: [],
     ranges: {
@@ -37,27 +40,33 @@ function addItem(list, item) {
 
 function auctionArtworks(state = initialState, action) {
   switch (action.type) {
-  case 'UPDATE_ARTWORKS':
+  case actions.UPDATE_ARTWORKS:
     return u({
       artworks: action.payload.artworks
     }, state)
-  case 'TOGGLE_LIST_VIEW':
+  case actions.TOGGLE_LIST_VIEW:
     return u({
       isListView: action.payload.isListView
     }, state)
-  case 'UPDATE_TOTAL':
+  case actions.UPDATE_TOTAL:
     return u({
       total: action.payload.total
     }, state)
-  case 'UPDATE_AGGREGATED_ARTISTS':
+  case actions.UPDATE_SORT:
+    return u({
+      filterParams: {
+        sort: action.payload.sort
+      }
+    }, state)
+  case actions.UPDATE_AGGREGATED_ARTISTS:
     return u({
       aggregatedArtists: action.payload.aggregatedArtists
     }, state)
-  case 'UPDATE_AGGREGATED_MEDIUMS':
+  case actions.UPDATE_AGGREGATED_MEDIUMS:
     return u({
       aggregatedMediums: action.payload.aggregatedMediums
     }, state)
-  case 'UPDATE_ARTIST_ID':
+  case actions.UPDATE_ARTIST_ID:
     const artistId = action.payload.artistId
     if (artistId == 'artists-all') {
       return u({
@@ -75,6 +84,27 @@ function auctionArtworks(state = initialState, action) {
       return u({
         filterParams: {
           artist_ids: state.filterParams.artist_ids.concat(artistId)
+        }
+      }, state)
+    }
+  case actions.UPDATE_MEDIUM_ID:
+    const mediumId = action.payload.mediumId
+    if (mediumId == 'mediums-all') {
+      return u({
+        filterParams: {
+          gene_ids: []
+        }
+      }, state)
+    } else if (contains(state.filterParams.gene_ids, mediumId)) {
+      return u({
+        filterParams: {
+          gene_ids: u.reject((mm) => { return mm == mediumId })
+        }
+      }, state)
+    } else {
+      return u({
+        filterParams: {
+          gene_ids: state.filterParams.gene_ids.concat(mediumId)
         }
       }, state)
     }
