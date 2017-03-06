@@ -13,7 +13,7 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     @$body = $('body')
     @channel = new Channel sd.CHANNEL
     @gridArticles = new Articles
-    @gridArticles.url = "#{@gridArticles.url}/?&published=true&limit=12&sort=-published_at&channel_id=#{@channel.get('id')}"
+    @gridArticles.url = "#{@gridArticles.url}/?&published=true&limit=12&sort=-published_at&channel_id=#{@channel.get('id')}&count=true"
     @renderGrid()
     @renderFeatured()
     @nav = new TeamChannelNavView
