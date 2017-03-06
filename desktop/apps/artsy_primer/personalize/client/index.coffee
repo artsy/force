@@ -65,9 +65,22 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     alert 'done thanks'
 
 module.exports.init = ->
-  { force, reonboarding } = qs.parse location.search.slice(1)
+  { force, reonboarding, email, name } = qs.parse location.search.slice(1)
+
+  # If there's no user, open the auth modal
   unless user = CurrentUser.orNull()
-    mediator.trigger 'open:auth', mode: 'login'
+    mediator.once 'open:auth', -> _.defer ->
+
+      # Prefill the email and name query params
+      $('.auth-register [name=email]').val email if email
+      $('.auth-register [name=name]').val name if name
+
+      # Don't let the user close out by hacking the close points
+      $('.modal-close').hide()
+      $('.modal-backdrop').click (e) -> e.stopPropagation()
+    mediator.trigger 'open:auth', mode: 'register'
+
+  # Init the personalize flow
   else
     user.approximateLocation success: -> user.save()
     new PersonalizeRouter user: user, reonboarding: reonboarding?, force: force
