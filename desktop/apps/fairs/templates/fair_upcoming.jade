@@ -4,5 +4,5 @@
   else
     .fairs-fair__name #{fair.name}
   .fairs-fair__info #{ViewHelpers.formatDates(fair)}
-  if fair.location && fair.location.city
-    .fairs-fair__info= fair.location.city
+  if fair.location && (fair.location.city || fair.location.country)
+    .fairs-fair__info= fair.location.city ? fair.location.city : fair.location.country

@@ -12,8 +12,8 @@ mixin current-fair-figure(fair)
           .fairs-fair__name= fair.name
           .fairs-fair__info
             | #{ViewHelpers.formatDates(fair)}
-            if fair.location && fair.location.city
-              | , #{fair.location.city}
+            if fair.location && (fair.location.city || fair.location.country)
+              | , #{fair.location.city ? fair.location.city : fair.location.country}
 
 each row in currentFairRows
   .fairs__current-fair-row(class="fairs__current-fair-row--#{row.type}")

@@ -27,6 +27,7 @@
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-inline-react-svg": "^0.2.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
@@ -68,6 +69,7 @@
     "graceful-fs": "^4.1.2",
     "helmet": "^2.3.0",
     "http-proxy": "^1.11.2",
+    "invariant": "^2.2.2",
     "jade": "^1.11.0",
     "jquery-fillwidth-lite": "^1.0.8",
     "jquery-touch-events": "git+https://github.com/benmajor/jQuery-Touch-Events.git",
@@ -168,7 +170,8 @@
     ],
     "plugins": [
       "inline-react-svg",
-      "transform-runtime"
+      "transform-runtime",
+      "transform-class-properties"
     ]
   },
   "optionalDependencies": {
