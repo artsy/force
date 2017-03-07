@@ -14,9 +14,9 @@ describe '/rss', ->
   describe 'partner_updates', ->
     it 'renders metadata', ->
       rendered = partnerUpdatesTemplate(sd: sd, articles: new Articles)
-      rendered.should.containEql '<title>Artsy Partner Updates</title>'
+      rendered.should.containEql '<title>Gallery Partner Updates</title>'
       rendered.should.containEql '<atom:link href="http://localhost/rss/partner-updates" rel="self" type="application/rss+xml">'
-      rendered.should.containEql '<description>Artsy articles featured for Artsy Partner Updates.</description>'
+      rendered.should.containEql '<description>Artsy articles featured for Gallery Partner Updates.</description>'
 
     it 'renders articles', ->
       articles = new Articles [
@@ -24,9 +24,9 @@ describe '/rss', ->
         new Article(thumbnail_title: 'World', published_at: new Date().toISOString(), contributing_authors: [])
       ]
       rendered = partnerUpdatesTemplate(sd: sd, articles: articles, moment: moment)
-      rendered.should.containEql '<title>Artsy Partner Updates</title>'
+      rendered.should.containEql '<title>Gallery Partner Updates</title>'
       rendered.should.containEql '<atom:link href="http://localhost/rss/partner-updates" rel="self" type="application/rss+xml">'
-      rendered.should.containEql '<description>Artsy articles featured for Artsy Partner Updates.</description>'
+      rendered.should.containEql '<description>Artsy articles featured for Gallery Partner Updates.</description>'
       rendered.should.containEql '<item><title>Hello</title>'
       rendered.should.containEql '<item><title>World</title>'
 
