@@ -1,17 +1,29 @@
-_ = require 'underscore'
-masonry = require '../../../../components/artwork_masonry/index.coffee'
+masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
+moment = require 'moment'
+{ ARTWORK_DISPLAY_NUM } = require './config.coffee'
+{ include, shuffle, take } = require 'underscore'
 
-reduceArray = (artworks, rows) ->
-  elements = artworks.splice(0,3)
-  rows.push(elements)
+isLiveOpen = (status, live_start_at) ->
+  status == 'open' and moment().isAfter(live_start_at)
 
-  if artworks.length > 0
-    reduceArray(artworks, rows)
-  rows
+isPreviewState = (status) ->
+  include(['preview'], status)
+
+zone = (time) ->
+  moment(time).tz('America/New_York')
 
 module.exports =
-  masonry: masonry
+  masonry: (artworks) ->
+    masonry take shuffle(artworks), ARTWORK_DISPLAY_NUM
 
-  auctionArtworkRows: (artworks) ->
-    rows = []
-    reduceArray(artworks, rows)
+  upcomingLabel: (start_at, end_at, live_start_at, status) ->
+    timeFormat = 'MMM D, h:mm A z'
+
+    if live_start_at and not isLiveOpen(status, live_start_at)
+      "opens for live bidding #{zone(live_start_at).format(timeFormat)}"
+    else if live_start_at
+      "open for live bidding"
+    else if isPreviewState(status)
+      "opens #{zone(start_at).format(timeFormat)}"
+    else
+      "closes #{zone(end_at).format(timeFormat)}"

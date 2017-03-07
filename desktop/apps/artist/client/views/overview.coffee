@@ -31,7 +31,7 @@ module.exports = class OverviewView extends Backbone.View
         artist_id: @model.get('id')
         artists: @statuses.artists
         articles: @statuses.articles
-        shows: @statuses.shows
+        shows: @statuses.shows || @statuses.cv
     .then ({ artist }) => @trigger 'artist:overview:sync', artist
 
   setupBlurb: ->
@@ -67,7 +67,7 @@ module.exports = class OverviewView extends Backbone.View
       renderRail _.extend $el: $el.find('.js-artist-rail'), { section, count, items, following, baseHref }
 
   renderExhibitionHighlights: ({shows, counts}) ->
-    return if not @statuses.shows
+    return unless @statuses.shows || @statuses.cv
     $el = @$('.artist-overview-header .artist-exhibition-highlights')
     # If there are more than 15 shows, take ten and show a 'see more' link
     # If there are less than 15 shows, show them all, grouped by kind of show.
@@ -105,7 +105,7 @@ module.exports = class OverviewView extends Backbone.View
     @listenTo subView.collection, 'sync', =>
       artist = @model.toJSON()
       hasGenes = subView.collection.length
-      hasShows = @statuses.shows
+      hasShows = @statuses.shows || @statuses.cv
       hasMeta = viewHelpers.hasOverviewHeaderMeta(artist)
 
       if not (hasGenes or hasShows or hasMeta)

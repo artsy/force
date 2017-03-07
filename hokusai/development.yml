@@ -1,0 +1,40 @@
+---
+version: '2'
+services:
+  force:
+    command: yarn start
+    environment:
+    - NODE_ENV=development
+    - REDIS_URL=redis://redis:6379/0
+    - PORT=5000
+    - API_URL=https://stagingapi.artsy.net
+    - POSITRON_URL=https://writer.artsy.net
+    - PREDICTION_URL=https://live.artsy.net
+    - APP_URL=http://localhost:5000
+    - FORCE_URL=http://localhost:5000
+    - ARTSY_ID=e750db60ac506978fc70
+    - ARTSY_SECRET=3a33d2085cbd1176153f99781bbce7c6
+    - CLIENT_ID=e750db60ac506978fc70
+    - CLIENT_SECRET=3a33d2085cbd1176153f99781bbce7c6
+    - API_REQUEST_TIMEOUT=10000
+    - ADMIN_URL=http://admin.artsy.net
+    - CMS_URL=http://cms.artsy.net
+    - CONSIGNMENTS_APP_URL=https://sell.artsy.net/
+    - FUSION_URL=https://fusion.artsy.net
+    - GALAXY_URL=https://galaxy-production.herokuapp.com
+    - GEMINI_ACCOUNT_KEY=force
+    - GEMINI_CLOUDFRONT_URL=https://d7hftxdivxxvm.cloudfront.net
+    - GENOME_URL=https://helix.artsy.net
+    - METAPHYSICS_ENDPOINT=https://metaphysics-staging.artsy.net
+    - MOBILE_URL=https://m.artsy.net
+    - REFLECTION_URL=http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/47f98474592f66f9
+    - SECURE_IMAGES_URL=https://d1ycxz9plii3tb.cloudfront.net
+    extends:
+      file: common.yml
+      service: force
+    ports:
+    - 5000:5000
+  redis:
+    image: redis:3.2-alpine
+    ports:
+    - 6379:6379

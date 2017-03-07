@@ -77,6 +77,7 @@ module.exports = class PartnerView extends Backbone.View
       partner_id: @partner.get('_id')
       published: true
       limit: 1
+      count: true
 
     Q.allSettled([@partner.fetch(), articles.fetch(data: articlesFetchData)])
       .then => @partnerArticlesCount = articles.count
