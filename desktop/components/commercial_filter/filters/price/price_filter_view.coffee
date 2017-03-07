@@ -46,7 +46,6 @@ module.exports = class PriceFilterView extends Backbone.View
           "#{formatMoney(val, { precision: 0 })}"
         else
           "#{formatMoney(val, { symbol: "", precision: 0 })}"
-
     @slider.on 'set', @updateParams
 
   updateParams: (values) =>

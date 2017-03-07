@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/blank
+
+block head
+  title Personalize | Artsy
+
+append locals
+  - assetPackage = 'misc'
+
+block body
+  #artsy-primer-personalize-page
+    .artsy-primer-next-step.artsy-primer-personalize-skip
+      .artsy-primer-next-step-progress
+        .artsy-primer-next-step-progress-inner
+      h3 Select categories
+      p Select as many as you like.
+      button.avant-garde-button-dark Next step

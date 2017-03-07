@@ -5,8 +5,6 @@ import { data as sd } from 'sharify'
 export default () => {
   return new ArticleView({
     el: document.body,
-    article: new Article(sd.ARTICLE),
-    waypointUrls: true,
-    lushSignup: true
+    article: new Article(sd.ARTICLE)
   })
 }

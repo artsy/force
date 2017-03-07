@@ -1,0 +1,105 @@
+category-size = 400px
+
+#artsy-primer-personalize-categories
+  max-width 950px
+  margin 20px auto
+  text-align center
+  h2
+  h3
+    margin 20px 0
+    avant-garde()
+    font-size 15px
+  img
+    max-width 100%
+
+#artsy-primer-personalize-categories
+  position relative
+  min-height 200px
+  max-width (category-size * 2) + 80px
+
+.artsy-primer-personalize-category
+  margin 20px
+  display inline-block
+  width category-size
+
+.artsy-primer-personalize-category-image-link
+  margin 20px 20px
+
+.artsy-primer-personalize-category-image
+  width category-size
+  height @width
+
+.artsy-primer-personalize-category-metadata
+  position relative
+  padding 20px 0
+  > .follow-button
+    position absolute
+    top 50%
+    right 0
+    transform translateY(-50%)
+
+.artsy-primer-personalize-secondary-category
+  display table
+  width 100%
+  padding 20px 0
+  border-bottom 1px solid gray-lighter-color
+  &:first-child
+    padding-top 0
+  > .artsy-primer-personalize-category-image
+  > .artsy-primer-personalize-category-metadata
+    display table-cell
+    height 100%
+    vertical-align middle
+    text-align left
+    padding 0
+  > .artsy-primer-personalize-category-image
+    width 150px
+  > .artsy-primer-personalize-category-metadata
+    padding 0 20px
+    > h3
+      margin 0
+
+.artsy-primer-personalize-following-overlay
+  display none
+  position relative
+  .artsy-primer-personalize-following-darkbg
+    position absolute
+    width 400px
+    height 400px
+    background-color black
+    opacity 0.5
+  .artsy-primer-personalize-following-icon
+    position absolute
+    width 400px
+    height 400px
+    padding-top 45%
+  .artsy-primer-personalize-following-text
+    avant-garde()
+    display block
+    color white
+    font-size 20px
+    padding-top 75px
+  &.is-clicked
+    display block
+    .icon-with-white-circle
+      font-size 60px
+      border 2px transparent
+      padding 40px
+      border-radius 50%
+      background white
+      color gray-darker-color
+    .artsy-primer-personalize-following-text:before
+      content 'Following'
+
+.artsy-primer-personalize-category-image-link:hover
+  .artsy-primer-personalize-following-overlay:not(.is-clicked)
+    display block
+    .icon-with-white-circle
+      color white
+      fill white
+      font-size 60px
+      border 2px solid
+      padding 40px
+      border-radius 50%
+    .artsy-primer-personalize-following-text:before
+      content 'Follow'

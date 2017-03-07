@@ -1,0 +1,15 @@
+i.icon-logotype.artsy-primer-personalize-initial-logotype
+
+header.artsy-primer-personalize-header
+  if state.get('reonboarding')
+    h2 Personalize your Artsy experience:
+  else
+    h2 60-Second Sign Up:
+  h1 Do you buy art?
+
+section.artsy-primer-personalize-step
+  nav.stacked-button-menu
+    for level, i in state.get('levels')
+      a.avant-garde-button-black(
+        data-value=(state.get('levels').length - i)
+      )= level
