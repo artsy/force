@@ -1,0 +1,30 @@
+{
+  "header": {
+    "headline": "An art collection for every budget",
+    "image": "http://files.artsy.net/images/buy_art_header.png"
+  },
+  "sections": [
+    {
+      "id": "TODO-change",
+      "headline": "All the world's art in one place",
+      "sub_headline": "Buy directly from galleries and bid in auction",
+      "stats": [
+        {
+          "desktop_type": "Galleries & action houses",
+          "mobile_type": "Galleries",
+          "number": "40,000"
+        },
+        {
+          "desktop_type": "Artists & designers",
+          "mobile_type": "Artists",
+          "number": "70,000"
+        },
+        {
+          "desktop_type": "Artworks",
+          "mobile_type": "Artworks",
+          "number": "550,000"
+        }
+      ]
+    }
+  ]
+}
