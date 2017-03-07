@@ -13,7 +13,7 @@ function displayButtonClass(buttonType, displayType) {
   )
 }
 
-function Header({ isListView, total, sortMap, filterParams, updateSort, dispatch }) {
+function Header({ isListView, total, sortMap, filterParams, updateSort, toggleListView }) {
   const displayType = isListView ? 'list' : 'grid'
   const totalLabel = (total && total > 0)
     ? `${total} Artworks for sale`
@@ -28,10 +28,10 @@ function Header({ isListView, total, sortMap, filterParams, updateSort, dispatch
         <FilterSort sortMap={sortMap} filterParams={filterParams} onClick={updateSort} />
       </div>
       <div className='auction2-artworks-header__switch'>
-        <div className={displayButtonClass('grid', displayType)} onClick={() => dispatch(toggleListView(false))}>
+        <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListView(false)}>
           <Grid />
         </div>
-        <div className={displayButtonClass('list', displayType)} onClick={() => dispatch(toggleListView(true))}>
+        <div className={displayButtonClass('list', displayType)} onClick={() => toggleListView(true)}>
           <List />
         </div>
       </div>
@@ -50,7 +50,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSort: (sort) => dispatch(updateSort(sort))
+    updateSort: (sort) => dispatch(updateSort(sort)),
+    toggleListView: (isListView) => dispatch((isListView))
   }
 }
 

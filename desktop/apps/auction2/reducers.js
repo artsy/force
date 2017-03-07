@@ -5,6 +5,8 @@ import { data as sd } from 'sharify'
 import * as actions from './actions'
 
 const initialState = {
+  minEstimateRangeDisplay: 50,
+  maxEstimateRangeDisplay: 50000,
   artworks: [],
   total: 0,
   isListView: false,
@@ -22,9 +24,10 @@ const initialState = {
     page: 1,
     sale_id: sd.AUCTION.id,
     aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
-    sort: '-lot_number',
+    sort: 'lot_number',
     gene_ids: [],
     artist_ids: [],
+    estimate_range: '',
     ranges: {
       estimate_range: {
         min: 50,
@@ -32,10 +35,6 @@ const initialState = {
       }
     }
   }
-}
-
-function addItem(list, item) {
-  return [].concat(list, [item])
 }
 
 function auctionArtworks(state = initialState, action) {
@@ -65,6 +64,18 @@ function auctionArtworks(state = initialState, action) {
   case actions.UPDATE_AGGREGATED_MEDIUMS:
     return u({
       aggregatedMediums: action.payload.aggregatedMediums
+    }, state)
+  case actions.UPDATE_ESTIMATE_RANGE:
+    return u({
+      filterParams: {
+        estimate_range: `${action.payload.min * 100}-${action.payload.max * 100}`
+      }
+    }, state)
+  case actions.UPDATE_ESTIMATE_DISPLAY:
+    console.log("reducing!")
+    return u({
+      minEstimateRangeDisplay: action.payload.min,
+      maxEstimateRangeDisplay: action.payload.max
     }, state)
   case actions.UPDATE_ARTIST_ID:
     const artistId = action.payload.artistId

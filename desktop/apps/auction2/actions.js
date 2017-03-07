@@ -11,6 +11,8 @@ export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
 export const UPDATE_SORT = 'UPDATE_SORT'
+export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
+export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 
 // Action creators
 
@@ -107,6 +109,34 @@ export function updateSortParam(sort) {
   }
 }
 
+export function updateEstimateDisplay(min, max) {
+  console.log('eeeeep')
+  return {
+    type: UPDATE_ESTIMATE_DISPLAY,
+    payload: {
+      min,
+      max
+    }
+  }
+}
+
+export function updateEstimateRange(min, max) {
+  return (dispatch) => {
+    dispatch(updateEstimateRangeParams(min, max))
+    dispatch(fetchArtworks())
+  }
+}
+
+export function updateEstimateRangeParams(min, max) {
+  return {
+    type: UPDATE_ESTIMATE_RANGE,
+    payload: {
+      min,
+      max
+    }
+  }
+}
+
 export function fetchArtworks() {
   return (dispatch, getState) => {
     const { auctionArtworks: { filterParams } } = getState()
@@ -118,9 +148,7 @@ export function fetchArtworks() {
         dispatch(updateAggregatedArtists(artistAggregation[0].counts))
         dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
         dispatch(updateTotal(filter_artworks.total))
-        if (filter_artworks.hits.length) {
-          dispatch(updateArtworks(filter_artworks.hits))
-        }
+        dispatch(updateArtworks(filter_artworks.hits))
       })
       .catch((error) => console.error('error!', error))
   }

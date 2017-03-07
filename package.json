@@ -89,6 +89,7 @@
     "popover": "^2.4.0",
     "qs": "^6.3.0",
     "raygun4js": "^2.5.1",
+    "rc-slider": "^6.1.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
