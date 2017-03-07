@@ -15,7 +15,6 @@ export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 
 // Action creators
-
 export function toggleListView(isListView) {
   return {
     type: TOGGLE_LIST_VIEW,
@@ -110,7 +109,6 @@ export function updateSortParam(sort) {
 }
 
 export function updateEstimateDisplay(min, max) {
-  console.log('eeeeep')
   return {
     type: UPDATE_ESTIMATE_DISPLAY,
     payload: {

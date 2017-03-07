@@ -6,8 +6,8 @@ import RangeSliderContainer from '../range_slider/index'
 
 export default function Sidebar() {
   return (
-    <div className={'auction2-artworks-sidebar'}>
-      <div className={'auction2-artworks-sidebar__artist-filter'}>
+    <div className='auction2-artworks-sidebar'>
+      <div className='auction2-artworks-sidebar__artist-filter'>
         <RangeSliderContainer />
         <MediumFilterContainer />
         <ArtistFilterContainer />

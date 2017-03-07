@@ -9,8 +9,8 @@ function ArtistFilter({ aggregatedArtists, filterParams, updateArtistParamsActio
   const allArtists = { id: 'artists-all', name: 'All' }
   const allArtistsSelected = artistIds.length == 0
   return (
-    <div className={'auction2-artist-checkboxes'}>
-      <div className={'auction2-artist-checkboxes__title'}>Artists</div>
+    <div className='auction2-artist-checkboxes'>
+      <div className='auction2-artist-checkboxes__title'>Artists</div>
       <BasicCheckbox
         key={allArtists.id}
         item={allArtists}

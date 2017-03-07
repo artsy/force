@@ -2,9 +2,9 @@ import { default as React, PropTypes } from 'react';
 
 export default function BasicCheckbox({ item, onClickAction, checked, onClick }) {
   return (
-    <div className={'auction2-basic-checkbox'}>
-      <div className={'artsy-checkbox'} onClick={() => onClick(item.id)}>
-        <div className={'artsy-checkbox--checkbox'}>
+    <div className='auction2-basic-checkbox'>
+      <div className='artsy-checkbox' onClick={() => onClick(item.id)}>
+        <div className='artsy-checkbox--checkbox'>
           <input
             type='checkbox'
             name='artistAggregation'
@@ -14,8 +14,9 @@ export default function BasicCheckbox({ item, onClickAction, checked, onClick })
           />
           <label htmlFor={item.id} />
         </div>
-        <label className={'artsy-checkbox--label'} htmlFor={item.id}>
+        <label className='artsy-checkbox--label' htmlFor={item.id}>
           { item.name }
+          { item.count && <span className='artsy-checkbox--count'>({item.count})</span> }
         </label>
       </div>
     </div>

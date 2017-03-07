@@ -72,7 +72,6 @@ function auctionArtworks(state = initialState, action) {
       }
     }, state)
   case actions.UPDATE_ESTIMATE_DISPLAY:
-    console.log("reducing!")
     return u({
       minEstimateRangeDisplay: action.payload.min,
       maxEstimateRangeDisplay: action.payload.max

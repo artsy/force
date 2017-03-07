@@ -9,8 +9,8 @@ function MediumFilter({ aggregatedMediums, filterParams, updateMediumParamsActio
   const allMediums = { id: 'mediums-all', name: 'All' }
   const allMediumsSelected = mediumIds.length == 0
   return (
-    <div className={'auction2-medium-checkboxes'}>
-      <div className={'auction2-medium-checkboxes__title'}>Medium</div>
+    <div className='auction2-medium-checkboxes'>
+      <div className='auction2-medium-checkboxes__title'>Medium</div>
       <BasicCheckbox
         key={allMediums.id}
         item={allMediums}

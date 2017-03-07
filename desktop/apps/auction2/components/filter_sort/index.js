@@ -1,8 +1,9 @@
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import _ from 'underscore'
+import { updateSort } from '../../actions'
 
-export default function FilterSort({ sortMap, filterParams, onClick }) {
+function FilterSort({ sortMap, filterParams, updateSortAction }) {
   const selectedSort = filterParams.sort
   return (
     <div className='auction2-filter-sort'>
@@ -22,7 +23,7 @@ export default function FilterSort({ sortMap, filterParams, onClick }) {
                 href='#'
                 className={ selected ? 'borderd-pulldown-active' : '' }
                 key={sort}
-                onClick={() => onClick(sort)}
+                onClick={() => updateSortAction(sort)}
               >{sortName}</a>
             })
           }
@@ -31,3 +32,23 @@ export default function FilterSort({ sortMap, filterParams, onClick }) {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    sortMap: state.auctionArtworks.sortMap,
+    filterParams: state.auctionArtworks.filterParams
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSortAction: (sort) => dispatch(updateSort(sort))
+  }
+}
+
+const FilterSortContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FilterSort)
+
+export default FilterSortContainer

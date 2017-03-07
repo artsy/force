@@ -7,16 +7,7 @@ import _ from 'underscore'
 import MyActiveBids from '../../components/my_active_bids/view.coffee'
 import Backbone from 'backbone'
 
-// import Params from '../../components/commercial_filter/models/params.coffee'
-// import Filter from '../../components/commercial_filter/models/filter.coffee'
-// import TotalView from '../../components/commercial_filter/views/total/total_view.coffee'
-// import SortView from '../../components/commercial_filter/views/sort/sort_view.coffee'
-// import PriceFilterView from '../../components/commercial_filter/filters/price/price_filter_view.coffee'
-// import RangeFilterView from '../../components/commercial_filter/filters/range_slider/range_filter_view.coffee'
-// import CheckBoxesFilterView from '../../components/commercial_filter/filters/check_boxes/check_boxes_filter_view.coffee'
-// import FollowedArtistFilterView from '../../components/commercial_filter/filters/followed_artists/followed_artist_filter_view.coffee'
-import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
-import PaginatorView from '../../components/commercial_filter/filters/paginator/paginator_view.coffee'
+// import UrlHandler from '../../components/commercial_filter/url_handler.coffee'
 import JumpView from '../../components/jump/view.coffee'
 
 // For react/redux
@@ -74,12 +65,6 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 }
 
 // Commercial filtering
-// const params = new Params(defaultParams, {
-//   customDefaults: defaultParams
-// })
-// const filter = new Filter({ params: params })
-
-// REDUX
 const loggerMiddleware = createLogger()
 
 const store = createStore(
@@ -114,75 +99,6 @@ render(
 
 store.dispatch(actions.fetchArtworks())
 
-// filter.artworks.on('reset', () => {
-//   store.dispatch(actions.updateArtworks(filter.artworks.toJSON()))
-// })
-
-// Header
-// const totalView = new TotalView({
-//   el: $('.cf-total-sort__total'),
-//   filter: filter,
-//   artworks: filter.artworks
-// })
-
-// const sortView = new SortView({
-//   el: $('.cf-total-sort__sort'),
-//   params: params,
-//   customSortMap: customSortMap
-// })
-
-// Sidebar
-// const rangeFilterView = new RangeFilterView({
-//   el: $('.cf-sidebar__estimate-range'),
-//   params: params,
-//   rangeType: 'estimate_range'
-// })
-
-// const mediumFilterView = new CheckBoxesFilterView({
-//   el: $('.cf-sidebar__mediums'),
-//   params: params,
-//   aggregations: filter.aggregations,
-//   itemType: 'medium',
-//   paramName: 'gene_ids'
-// })
-
-// const followedArtistsView = new FollowedArtistFilterView({
-//   el: $('.cf-sidebar__followed_artists'),
-//   params: params,
-//   filter: filter
-// })
-
-// const aggregatedArtistsView = new CheckBoxesFilterView({
-//   el: $('.cf-sidebar__aggregated_artists'),
-//   params: params,
-//   aggregations: filter.aggregations,
-//   itemType: 'artist',
-//   paramName: 'artist_ids'
-// })
-
-// bottom
-// const paginatorView = new PaginatorView({
-//   el: $('.cf-pagination'),
-//   params: params,
-//   filter: filter
-// })
-
-// Update url when routes change
-// const urlHandler = new UrlHandler({
-//   params: params
-// })
-
-// Backbone.history.start({pushState: true})
-
-// Whenever params change, scroll to the top
-// params.on('change', () => {
-//   if (_.keys(params.changedAttributes())[0] in ['artists']) {
-//     delayedScroll()
-//   } else {
-//     $('html,body').animate( {scrollTop: 0 }, 400)
-//   }
-// })
-
 // 1 second delay for checkbox selections
 let timer = null
 function delayedScroll() {
@@ -195,5 +111,3 @@ const jump = new JumpView({ threshold: $(window).height(), direction: 'bottom' }
 $('body').append(jump.$el)
 
 jump.scrollToPosition(0)
-
-// params.trigger('change')

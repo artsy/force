@@ -2,6 +2,7 @@ import { default as React, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Slider, { Range } from 'rc-slider'
 import { updateEstimateRange, updateEstimateDisplay } from '../../actions'
+import { formatMoney } from 'accounting'
 
 function RangeSlider(props) {
   const {
@@ -11,17 +12,22 @@ function RangeSlider(props) {
     updateEstimateRangeAction,
     updateEstimateDisplayAction
   } = props
-  const currency = '$' // TODO get currency from sale
+
+  const minEstimate = filterParams.ranges.estimate_range.min
+  const maxEstimate = filterParams.ranges.estimate_range.max
+  // TODO: Get currency from sale!
+  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { precision: 0 })
+  const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
   return (
     <div className='auction2-range-slider'>
       <div className='auction2-range-slider__metadata'>
         <div className='auction2-range-slider__title'>Price</div>
-        <div className='auction2-range-slider__caption'>{`${currency}${minEstimateRangeDisplay} - ${currency}${maxEstimateRangeDisplay}`}</div>
+        <div className='auction2-range-slider__caption'>{`${formattedMinDisplay} - ${formattedMaxDisplay}`}</div>
       </div>
       <Range
         allowCross={false}
-        min={50}
-        max={50000}
+        min={minEstimate}
+        max={maxEstimate}
         step={50}
         defaultValue={[minEstimateRangeDisplay, maxEstimateRangeDisplay]}
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}

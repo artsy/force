@@ -6,7 +6,7 @@ import AuctionListArtwork from '../auction_list_artwork/index'
 function AuctionArtworks({ artworks, isListView }) {
   const DisplayComponent = isListView ? AuctionListArtwork : AuctionGridArtwork
   return (
-    <div className={'auction2-artworks'}>
+    <div className='auction2-artworks'>
       {
         artworks.map((artwork) => (
           <DisplayComponent key={artwork._id} artwork={artwork} />

@@ -3,7 +3,7 @@ import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import Grid from '../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../components/main_layout/public/icons/list.svg'
-import FilterSort from '../filter_sort/index'
+import FilterSortContainer from '../filter_sort/index'
 import { toggleListView, updateSort } from '../../actions'
 
 function displayButtonClass(buttonType, displayType) {
@@ -13,7 +13,7 @@ function displayButtonClass(buttonType, displayType) {
   )
 }
 
-function Header({ isListView, total, sortMap, filterParams, updateSort, toggleListView }) {
+function Header({ isListView, total, toggleListViewAction }) {
   const displayType = isListView ? 'list' : 'grid'
   const totalLabel = (total && total > 0)
     ? `${total} Artworks for sale`
@@ -25,13 +25,13 @@ function Header({ isListView, total, sortMap, filterParams, updateSort, toggleLi
         { totalLabel }
       </div>
       <div className='auction2-artworks-header__sort'>
-        <FilterSort sortMap={sortMap} filterParams={filterParams} onClick={updateSort} />
+        <FilterSortContainer />
       </div>
       <div className='auction2-artworks-header__switch'>
-        <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListView(false)}>
+        <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
           <Grid />
         </div>
-        <div className={displayButtonClass('list', displayType)} onClick={() => toggleListView(true)}>
+        <div className={displayButtonClass('list', displayType)} onClick={() => toggleListViewAction(true)}>
           <List />
         </div>
       </div>
@@ -43,15 +43,12 @@ const mapStateToProps = (state) => {
   return {
     isListView: state.auctionArtworks.isListView,
     total: state.auctionArtworks.total,
-    sortMap: state.auctionArtworks.sortMap,
-    filterParams: state.auctionArtworks.filterParams
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSort: (sort) => dispatch(updateSort(sort)),
-    toggleListView: (isListView) => dispatch((isListView))
+    toggleListViewAction: (isListView) => dispatch(toggleListView(isListView))
   }
 }
 
