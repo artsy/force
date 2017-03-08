@@ -5,7 +5,7 @@
   },
   "sections": [
     {
-      "id": "TODO-change",
+      "id": "introduction",
       "headline": "All the world's art in one place",
       "sub_headline": "Buy directly from galleries and bid in auction",
       "stats": [
@@ -25,6 +25,46 @@
           "number": "550,000"
         }
       ]
+    },
+    {
+      "id": "benefits",
+      "headline": "Used by the most experienced collectors",
+      "benefits": [
+        {
+          "title": "Timely Alerts",
+          "content": "Get notified when new works are available by your favorite artists"
+        },
+        {
+          "title": "Comprehensive Data",
+          "content": "Consule our database of artists, exhibitors, auction results, and market news"
+        },
+        {
+          "title": "Smart Recommendation",
+          "content": "Get artwork recommendations based on your taste and budget"
+        }
+      ]
+    },
+    {
+      "id": "faqs",
+      "headline": "Frequently asked questions",
+      "faqs": [
+        {
+          "title": "Why buy on Artsy?",
+          "content": "Powered by industry-leading technology, Artsy enables collectors to buy more efficiently and confidently from the largest network of trusted galleries, auction houses, and art fairs."
+        },
+        {
+          "title": "How do I buy art on Artsy?",
+          "content": "Message galleries via Artsy to learn more about your favorite artists and purchase their works. You can also use Artsy to place bids in top auctions worldwide."
+        },
+        {
+          "title": "Does Artsy take a commission on sales?",
+          "content": "Artsy does not take a commission on the sale of artworks, neither from the collector nor the gallery partner."
+        }
+      ]
     }
-  ]
+  ],
+  "footer": {
+    "headline": "Start buying art by your favorite artists on Artsy",
+    "image": "http://example.com"
+  }
 }
