@@ -1,0 +1,23 @@
+.artsy-primer-personalize-suggestions-set( data-id= suggestionSet.id )
+  header.artsy-primer-personalize-suggestions-set-header
+    = suggestionSet.get('name')
+
+  for artist in suggestionSet.get('suggestions').models
+    .artsy-primer-personalize-suggestion.is-artist
+      img.artsy-primer-personalize-suggestion-thumbnail(
+        src= artist.imageUrl('square')
+        alt= artist.get('name')
+        onerror='this.src="/images/missing_image.png";'
+      )
+      .artsy-primer-personalize-suggestion-name
+        = artist.get('name')
+      .artsy-primer-personalize-suggestion-info
+        if artist.get('nationality') && artist.get('years')
+          | #{artist.get('nationality')}, #{artist.get('years')}
+        else
+          | &nbsp;
+
+      a.avant-garde-follow-button-black.follow-button(
+        data-id= artist.id
+        data-analytics-label= suggestionSet.get('analyticsLabel')
+      )

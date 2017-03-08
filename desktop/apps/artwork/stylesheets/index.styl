@@ -34,10 +34,13 @@ artwork-page = {
   //
 
   &__main
+    display flex
+    align-items stretch
+
     &__metadata
-      float right
-      z-index 1
+      position relative
       width: artwork-page.metadata.width
+      z-index 1
 
     &__overview
       width calc('100% - %s' % (artwork-page.metadata.width + gutter))

@@ -1,0 +1,6 @@
+ul.artsy-primer-next-step-artworks-inner
+  for artwork in artworks
+    li.artsy-primer-next-step-artwork.artwork-item
+      img.artsy-primer-next-step-artwork-img( src= artwork.imageUrl() )
+      .overlay-container
+        .overlay-button-save( data-state='saved' data-id=artwork.id )
