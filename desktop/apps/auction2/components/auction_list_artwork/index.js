@@ -1,9 +1,9 @@
-import { default as React, PropTypes } from 'react';
-import BidStatus from '../bid_status/index'
-import { titleAndYear } from '../../utils/artwork'
+import BidStatus from '../bid_status'
 import { get } from 'lodash'
+import { default as React, PropTypes } from 'react';
+import { titleAndYear } from '../../utils/artwork'
 
-export default function AuctionGridArtwork({ artwork }, _) {
+export default function AuctionGridArtwork({ artwork }) {
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
   const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')

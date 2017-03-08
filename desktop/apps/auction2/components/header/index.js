@@ -1,10 +1,10 @@
+import { toggleListView, updateSort } from '../../actions'
 import classNames from 'classnames'
-import { default as React, PropTypes } from 'react';
-import { connect } from 'react-redux'
 import Grid from '../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../components/main_layout/public/icons/list.svg'
-import FilterSortContainer from '../filter_sort/index'
-import { toggleListView, updateSort } from '../../actions'
+import FilterSort from '../filter_sort'
+import { default as React, PropTypes } from 'react';
+import { connect } from 'react-redux'
 
 function displayButtonClass(buttonType, displayType) {
   return classNames(
@@ -13,7 +13,12 @@ function displayButtonClass(buttonType, displayType) {
   )
 }
 
-function Header({ isListView, total, toggleListViewAction }) {
+function Header(props) {
+  const {
+    isListView,
+    toggleListViewAction,
+    total
+  } = props
   const displayType = isListView ? 'list' : 'grid'
   const totalLabel = (total && total > 0)
     ? `${total} Artworks for sale`
@@ -25,7 +30,7 @@ function Header({ isListView, total, toggleListViewAction }) {
         { totalLabel }
       </div>
       <div className='auction2-artworks-header__sort'>
-        <FilterSortContainer />
+        <FilterSort />
       </div>
       <div className='auction2-artworks-header__switch'>
         <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
@@ -46,15 +51,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleListViewAction: (isListView) => dispatch(toggleListView(isListView))
-  }
+const mapDispatchToProps = {
+  toggleListViewAction: toggleListView
 }
 
-const HeaderContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Header)
-
-export default HeaderContainer

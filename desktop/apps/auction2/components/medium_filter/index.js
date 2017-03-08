@@ -1,10 +1,15 @@
+import { updateMediumParams } from '../../actions'
+import BasicCheckbox from '../basic_checkbox'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import BasicCheckbox from '../basic_checkbox/index'
 import { map, contains } from 'underscore'
-import { updateMediumParams } from '../../actions'
 
-function MediumFilter({ aggregatedMediums, filterParams, updateMediumParamsAction }) {
+function MediumFilter(props) {
+  const {
+    aggregatedMediums,
+    filterParams,
+    updateMediumParamsAction
+  } = props
   const mediumIds = filterParams.gene_ids
   const allMediums = { id: 'mediums-all', name: 'All' }
   const allMediumsSelected = mediumIds.length == 0
@@ -34,10 +39,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateMediumParamsAction: (mediumId) => dispatch(updateMediumParams(mediumId))
-  }
+const mapDispatchToProps = {
+  updateMediumParamsAction: updateMediumParams
 }
 
 const MediumFilterContainer = connect(

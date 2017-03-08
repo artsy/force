@@ -1,7 +1,7 @@
+import AuctionGridArtwork from '../auction_grid_artwork'
+import AuctionListArtwork from '../auction_list_artwork'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import AuctionGridArtwork from '../auction_grid_artwork/index'
-import AuctionListArtwork from '../auction_list_artwork/index'
 
 function AuctionArtworks({ artworks, isListView }) {
   const DisplayComponent = isListView ? AuctionListArtwork : AuctionGridArtwork
@@ -23,8 +23,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ArtworksContainer = connect(
+export default connect(
   mapStateToProps
 )(AuctionArtworks)
-
-export default ArtworksContainer

@@ -1,9 +1,14 @@
+import { updateSort } from '../../actions'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { updateSort } from '../../actions'
 
-function FilterSort({ sortMap, filterParams, updateSortAction }) {
+function FilterSort(props) {
+  const {
+    filterParams,
+    sortMap,
+    updateSortAction
+  } = props
   const selectedSort = filterParams.sort
   return (
     <div className='auction2-filter-sort'>
@@ -40,15 +45,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateSortAction: (sort) => dispatch(updateSort(sort))
-  }
+const mapDispatchToProps = {
+  updateSortAction: updateSort
 }
 
-const FilterSortContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(FilterSort)
-
-export default FilterSortContainer

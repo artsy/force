@@ -1,8 +1,8 @@
+import { formatMoney } from 'accounting'
+import { updateEstimateRange, updateEstimateDisplay } from '../../actions'
+import Slider, { Range } from 'rc-slider'
 import { default as React, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Slider, { Range } from 'rc-slider'
-import { updateEstimateRange, updateEstimateDisplay } from '../../actions'
-import { formatMoney } from 'accounting'
 
 function RangeSlider(props) {
   const {
@@ -46,16 +46,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateEstimateRangeAction: (min, max) => dispatch(updateEstimateRange(min, max)),
-    updateEstimateDisplayAction: (min, max) => dispatch(updateEstimateDisplay(min, max))
-  }
+const mapDispatchToProps = {
+  updateEstimateRangeAction: updateEstimateRange,
+  updateEstimateDisplayAction: updateEstimateDisplay
 }
 
-const RangeSliderContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(RangeSlider)
-
-export default RangeSliderContainer

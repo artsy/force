@@ -1,10 +1,15 @@
+import { updateArtistParams } from '../../actions'
+import BasicCheckbox from '../basic_checkbox'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import BasicCheckbox from '../basic_checkbox/index'
 import { map, contains } from 'underscore'
-import { updateArtistParams } from '../../actions'
 
-function ArtistFilter({ aggregatedArtists, filterParams, updateArtistParamsAction }) {
+function ArtistFilter(props) {
+  const {
+    aggregatedArtists,
+    filterParams,
+    updateArtistParamsAction
+  } = props
   const artistIds = filterParams.artist_ids
   const allArtists = { id: 'artists-all', name: 'All' }
   const allArtistsSelected = artistIds.length == 0
@@ -34,15 +39,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateArtistParamsAction: (artistId) => dispatch(updateArtistParams(artistId))
-  }
+const mapDispatchToProps = {
+  updateArtistParamsAction: updateArtistParams
 }
 
-const ArtistFilterContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ArtistFilter)
-
-export default ArtistFilterContainer

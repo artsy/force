@@ -18,9 +18,7 @@ import createLogger from 'redux-logger'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import auctions from './reducers'
-import ArtworksContainer from './components/auction_artworks'
-import HeaderContainer from './components/header'
-import SidebarContainer from './components/sidebar'
+import CommercialFilter from './components/commercial_filter'
 import * as actions from './actions'
 
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -77,25 +75,10 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <HeaderContainer />
-  </Provider>,
-  document.getElementById('cf-view-filter')
-)
-
-render(
-  <Provider store={store}>
-    <SidebarContainer />
-  </Provider>,
-  document.getElementById('cf-sidebar')
-)
-
-render(
-  <Provider store={store}>
-    <ArtworksContainer />
+    <CommercialFilter />
   </Provider>,
   document.getElementById('cf-artworks')
 )
-
 
 store.dispatch(actions.fetchArtworks())
 

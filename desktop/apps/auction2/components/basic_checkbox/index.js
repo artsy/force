@@ -1,6 +1,13 @@
 import { default as React, PropTypes } from 'react';
 
-export default function BasicCheckbox({ item, onClickAction, checked, onClick }) {
+export default function BasicCheckbox(props) {
+  const {
+    checked,
+    item,
+    onClick,
+    onClickAction
+  } = props
+
   return (
     <div className='auction2-basic-checkbox'>
       <div className='artsy-checkbox' onClick={() => onClick(item.id)}>
