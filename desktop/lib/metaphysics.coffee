@@ -5,7 +5,7 @@ request = require 'superagent'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT } = require('sharify').data
 
 metaphysics = ({ method, query, variables, req } = {}) ->
-  method ?= 'get'
+  method ?= 'post'
 
   Q.promise (resolve, reject) ->
     r = request[method] METAPHYSICS_ENDPOINT
