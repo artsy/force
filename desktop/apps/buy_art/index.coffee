@@ -8,7 +8,7 @@ app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
 landing = new JSONPage
-  name: 'buy-art/landing',
+  name: 'buy-art',
   paths:
     show: '/buy-art'
     edit: '/buy-art/edit'
