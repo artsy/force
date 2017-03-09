@@ -10,6 +10,7 @@ module.exports.auction_artworks = """
         start_at
         live_start_at
         end_at
+        eligible_sale_artworks_count
 
         artworks(size: #{ARTWORK_DISPLAY_NUM}, exclude: [$id]) {
           ... auction_artwork_brick
