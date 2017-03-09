@@ -1,4 +1,4 @@
-import metaphysics from '../../lib/metaphysics.coffee'
+import metaphysics from '../../../lib/metaphysics.coffee'
 import { filterQuery } from './filter_query'
 
 // Action types

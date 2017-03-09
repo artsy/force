@@ -14,7 +14,7 @@ const initialState = {
     estimate_range: '',
     gene_ids: [],
     page: 1,
-    sale_id: sd.AUCTION.id,
+    sale_id: sd.AUCTION && sd.AUCTION.id,
     size: 50,
     ranges: {
       estimate_range: {
@@ -132,8 +132,6 @@ function auctionArtworks(state = initialState, action) {
   }
 }
 
-const auctions = combineReducers({
+export default combineReducers({
   auctionArtworks
 })
-
-export default auctions

@@ -64,7 +64,6 @@ if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
 
 // Commercial filtering
 const loggerMiddleware = createLogger()
-
 const store = createStore(
   auctions,
   applyMiddleware(

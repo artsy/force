@@ -43,9 +43,7 @@ const mapDispatchToProps = {
   updateMediumParamsAction: updateMediumParams
 }
 
-const MediumFilterContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MediumFilter)
-
-export default MediumFilterContainer

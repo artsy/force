@@ -14,7 +14,7 @@ export default function BasicCheckbox(props) {
         <div className='artsy-checkbox--checkbox'>
           <input
             type='checkbox'
-            name='artistAggregation'
+            name='aggregation'
             value={item.id}
             checked={checked}
             onChange={() => {}} // necessary to get around warning
