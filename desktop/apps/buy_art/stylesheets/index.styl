@@ -104,8 +104,7 @@ figure
   height 0
 
 .buy-art-buttons
-  @extends .avant-garde-button
-  width 235px
+  width 270px
   height 45px
   padding 15px
   box-sizing border-box
@@ -113,6 +112,8 @@ figure
     margin-left 0
 
 .buy-art-header
+  background-position: center;
+  background-repeat: no-repeat;
   background-size cover
   height 700px
   color white
@@ -135,9 +136,17 @@ figure
     margin-top 35px
     font-weight bold
     .bah__email-signup-button
+      @extends .avant-garde-button
       @extends .buy-art-buttons
       margin-right 30px
       background-color #ffffff
     .bah__facebook-signup-button
       @extends .buy-art-buttons
       background-color #586DB8
+      color white
+      avant-garde-size('body')
+      text-decoration none
+      line-height 1
+      > i
+        line-height 0
+        vertical-align -8px
