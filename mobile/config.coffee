@@ -57,6 +57,7 @@ module.exports =
   CRITEO_ARTWORKS_ACCOUNT_NUMBER: 35250
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/small-modal-interior-a.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/small-modal-interior-a.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca3","copy":"An art collection for every budget","image":"http://files.artsy.net/images/small-modal-interior-b.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca4","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/small-modal-interior-b.jpg","photoCredit":"Photo by Emily Johnson"}]'
   FAIR_CHANNEL_ID: '5759e4f3b5989e6f98f77998'
+  S3_BUCKET: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

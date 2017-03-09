@@ -44,3 +44,4 @@ sharify.data = _.pick config,
   'MARKETING_SIGNUP_MODALS'
   'FAIR_CHANNEL_ID'
   'API_REQUEST_TIMEOUT'
+  'S3_BUCKET'

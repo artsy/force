@@ -4,7 +4,7 @@ JSONPage = require './index'
 sd = require('sharify').data
 
 [name, environment, path] = process.argv.slice 2
-bucket = sd.APPLICATION_NAME
+bucket = sd.S3_BUCKET
 
 try
   data = require path

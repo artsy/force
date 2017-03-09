@@ -6,7 +6,7 @@ JSONPage = rewire '../index'
 JSONPage.__set__
   S3_KEY: 'test_key'
   S3_SECRET: 'test_secret'
-  APPLICATION_NAME: 'test_name'
+  S3_BUCKET: 'test_name'
 
 describe 'JSONPage', ->
   beforeEach ->
