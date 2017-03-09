@@ -111,9 +111,19 @@ figure
   > i
     margin-left 0
 
+.buy-art-signup-button
+  avant-garde-size('body')
+  display inline-block
+  width 190px
+  height 45px
+  line-height 45px
+  background-color #6e1fff
+  color white
+  text-align center
+
 .buy-art-header
-  background-position: center;
-  background-repeat: no-repeat;
+  background-position center
+  background-repeat no-repeat
   background-size cover
   height 700px
   color white
@@ -150,3 +160,45 @@ figure
       > i
         line-height 0
         vertical-align -8px
+
+.buy-art-intro
+  background-position center
+  background-repeat no-repeat
+  background-size cover
+  height 800px
+  display flex
+  &__content
+    margin 220px auto
+  &__title
+    garamond-size('xl-headline')
+    width 387px
+    margin 0 auto
+    text-align center
+    margin-bottom 20px
+  &__subtitle
+    garamond-size('s-headline')
+    text-align center
+  &__stat_container
+    display flex
+    margin-top 20px
+  &__stat
+    flex 1
+    display flex
+    flex-direction column
+    justify-content center
+    height 100px
+    text-align center
+    border-right 1px solid gray-lighter-color
+    &:last-child
+      border none
+  &__stat-number
+    garamond-size('l-headline')
+  &__desktop-type
+    avant-garde-size('s-headline')
+    min-width 250px
+    font-weight bold
+  &__mobile-type
+    display none
+  &__signup-button-container
+    margin-top 25px
+    text-align center

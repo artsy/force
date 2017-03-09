@@ -15,3 +15,17 @@ include meta
       )
         i.icon-facebook
         | Sign up with Facebook
+
+.buy-art-intro( style="background-image: url(#{sections[0].image});" )
+  .buy-art-intro__content
+    .buy-art-intro__title= sections[0].headline
+    .buy-art-intro__subtitle= sections[0].sub_headline
+    .buy-art-intro__stat_container
+      each stat in sections[0].stats
+        .buy-art-intro__stat
+          .buy-art-intro__stat-number= stat.number
+          .buy-art-intro__desktop-type= stat.desktop_type
+          .buy-art-intro__mobile-type= stat.mobile_type
+    .buy-art-intro__signup-button-container
+      a.buy-art-signup-button
+        | Sign up
