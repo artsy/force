@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 aggregationsMap = require '../aggregations_map.coffee'
 query = require '../queries/counts.coffee'
 

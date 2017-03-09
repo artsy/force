@@ -1,7 +1,7 @@
 { extend, map, compact } = require 'underscore'
 { CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
 fold = -> require('./fold.jade') arguments...

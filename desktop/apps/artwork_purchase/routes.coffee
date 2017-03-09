@@ -1,6 +1,6 @@
 { extend } = require 'underscore'
 { PURCHASE_FLOW } = require('sharify').data
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
