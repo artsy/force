@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 tabQuery = require './query.coffee'
 artistSuggestionQuery = require './artist_suggestion_query.coffee'

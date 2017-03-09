@@ -35,29 +35,9 @@ describe 'metaphysics', ->
         }
       '
     .then =>
-      @request.post.called.should.be.false()
-      @request.send.called.should.be.false()
-      @request.get.args[0][0].should.equal 'https://metaphysics.test'
       @request.set.args.should.eql [
         ['Accept', 'application/json']
       ]
-      @request.query.args[0][0].query.should.equal query
-      @request.query.args[0][0].variables.should.equal '{"id":"foo-bar","size":3}'
-
-  it 'optionally can make POST requests', ->
-    @request.end.yields null, ok: true, body: data: artist: id: 'foo-bar'
-
-    metaphysics
-      method: 'post'
-      variables: variables = id: 'foo-bar', size: 3
-      query: query = '
-        query artist($id: String!) {
-          artist(id: $id) {
-            id
-          }
-        }
-      '
-    .then =>
       @request.get.called.should.be.false()
       @request.post.args[0][0].should.equal 'https://metaphysics.test'
       @request.send.args[0][0].query.should.equal query

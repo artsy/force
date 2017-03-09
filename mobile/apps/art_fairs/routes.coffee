@@ -3,7 +3,7 @@ Q = require 'bluebird-q'
 OrderedSets = require '../../collections/ordered_sets'
 Fairs = require '../../collections/fairs'
 query = require './query.coffee'
-metaphysics = require '../../lib/metaphysics.coffee'
+metaphysics = require '../../../lib/metaphysics.coffee'
 Helpers = require './helpers.coffee'
 
 module.exports.index = (req, res, next) ->

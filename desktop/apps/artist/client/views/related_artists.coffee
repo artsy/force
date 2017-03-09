@@ -5,7 +5,7 @@ ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 { FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 template = -> require('../../templates/sections/related_artists.jade') arguments...
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/artists.coffee'
 
 module.exports = class RelatedArtistsView extends Backbone.View

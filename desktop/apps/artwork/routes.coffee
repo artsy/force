@@ -1,5 +1,5 @@
 { extend } = require 'underscore'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
 request = require 'superagent'

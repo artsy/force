@@ -1,6 +1,6 @@
 { NODE_ENV } = require '../../config'
 _ = require 'underscore'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 ViewHelpers = require './helpers/view_helpers.coffee'
 query = require './query.coffee'
 
