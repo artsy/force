@@ -5,9 +5,10 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
   - var end_at = auction.end_at
   - var live_start_at = auction.live_start_at
   - var status = auction.status
+  - var totalArtworks = auction.eligible_sale_artworks_count
   
   - var auctionLabel = upcomingLabel(start_at, end_at, live_start_at, status)
-
+  
   section.artwork-section.artwork-auction-artworks( class='js-artwork-auction-artworks' )
     header.artwork-auction-artworks__header
       h3.artwork-auction-artworks__header__name
@@ -19,11 +20,11 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
     .artwork-auction-artworks__auction-name
       | #{auction.name} #{auctionLabel}
 
-    - var columns = helpers.auction_artworks.masonry(auction.artworks).columns
+    - var columns = helpers.auction_artworks.masonry(auction.artworks, followed_artist_ids).columns
     include ../../../../components/artwork_masonry_4_column/index
     
     .artwork-auction-artworks__view-all
       .artwork-auction-artworks__view-all__mask
       .artwork-auction-artworks__view-all__button
         a( href= auction.href )
-          | View All Lots
+          | View (#{totalArtworks}) Lots
