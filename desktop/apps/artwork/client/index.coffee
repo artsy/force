@@ -50,7 +50,7 @@ module.exports =
           #{require '../../../components/artwork_brick/query.coffee'}
           #{require '../components/partner/query.coffee'}
           #{require('../components/auction_artworks/query.coffee').auction_artworks}
-          #{require('../components/auction_artworks/query.coffee').followed_artist_ids}
+          #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """

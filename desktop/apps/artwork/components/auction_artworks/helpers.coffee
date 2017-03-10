@@ -17,9 +17,9 @@ module.exports =
     followIds = pluck followed_artist_ids.hits, 'id'
 
     # Find followed artists and prepare to prepend to results array
-    [followed, rest] = partition artworks, (artwork) =>
-      followIds.some (id) =>
-        artwork.id == id
+    [followed, rest] = partition artworks,
+      (artwork) =>
+        followIds.some (id) => id == artwork.id
 
     displayArtworkResults = take shuffle(followed).concat(shuffle(rest)), ARTWORK_DISPLAY_NUM
     masonry displayArtworkResults
