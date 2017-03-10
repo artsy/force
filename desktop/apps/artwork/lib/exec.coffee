@@ -1,6 +1,6 @@
-module.exports = (fns) ->
+module.exports = (fns, data) ->
   for fn in fns
     try
-      fn()
+      fn(data)
     catch err
       console.error err
