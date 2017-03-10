@@ -14,9 +14,9 @@ describe 'Artwork Client', ->
       benv.expose
         $: benv.require('jquery'),
         jQuery: benv.require('jquery')
-        location:
-          search: '?auction_id=test-auction'
         sd:
+          AUCTION:
+            id: 'test-auction'
           CLIENT:
             artists: []
 

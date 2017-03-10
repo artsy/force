@@ -120,7 +120,7 @@ describe 'auction templates', ->
 
       it 'shows a timer for when live bidding opens', ->
         $('.auction-callout').text().should.containEql 'Live bidding begins'
-        $('.auction-callout').text().should.containEql 'EST'
+        $('.auction-callout').text().should.containEql 'EDT'
 
     describe 'live auction that is open for live bidding', ->
       before (done) ->
@@ -136,7 +136,7 @@ describe 'auction templates', ->
 
       it 'says live bidding now open', ->
         $('.auction-callout').text().should.containEql 'Live bidding now open'
-        $('.auction-callout').text().should.not.containEql 'EST'
+        $('.auction-callout').text().should.not.containEql 'EDT'
 
   describe 'open auction with no user', ->
     before (done) ->
@@ -201,4 +201,3 @@ describe 'auction templates', ->
     it 'shows Registration closed', ->
       $('.auction-header-metadata').text().should.containEql 'Registration closed'
       $('.auction-header-metadata').text().should.containEql 'Registration required to bid'
-

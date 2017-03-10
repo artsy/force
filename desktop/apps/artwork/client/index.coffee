@@ -4,7 +4,6 @@
 metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 exec = require '../lib/exec.coffee'
-qs = require 'qs'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
@@ -34,8 +33,6 @@ sharedInit = [
 module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
-      queryParams = qs.parse(location.search.replace(/^\?/, ''))
-
       query: """
           query artwork($id: String!, $isClosed: Boolean!, $auctionId: ID) {
             artwork(id: $id) {
@@ -56,7 +53,7 @@ module.exports =
         """
       variables:
         isClosed: context.is_closed
-        auctionId: queryParams.auction_id
+        auctionId: sd.AUCTION.id
 
       init: compact [
           require '../components/partner/index.coffee'
