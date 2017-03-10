@@ -1,7 +1,7 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 query = require './query.coffee'
-metaphysics = require '../../lib/metaphysics.coffee'
+metaphysics = require '../../../lib/metaphysics.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 template = -> require('./template.jade') arguments...
 ViewHelpers = require('./helpers.coffee')

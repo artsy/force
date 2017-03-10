@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 template = -> require('../../templates/sections/shows.jade') arguments...
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/shows.coffee'
 
 module.exports = class ShowsView extends Backbone.View

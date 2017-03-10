@@ -1,5 +1,5 @@
 Cookies = require '../cookies/index.coffee'
-metaphysics = require '../../lib/metaphysics.coffee'
+metaphysics = require '../../../lib/metaphysics.coffee'
 query = require './artwork_query.coffee'
 _ = require 'underscore'
 CurrentUser = require '../../models/current_user.coffee'

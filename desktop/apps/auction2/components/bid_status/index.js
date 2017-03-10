@@ -1,6 +1,6 @@
 import { default as React, PropTypes } from 'react';
 
-export default function BidStatus({ artwork }, _) {
+export default function BidStatus({ artwork }) {
   const saleArtwork = artwork.sale_artwork
 
   let bidLabel
@@ -18,7 +18,3 @@ export default function BidStatus({ artwork }, _) {
     </div>
   );
 }
-
-BidStatus.propTypes = {
-  artwork: PropTypes.object.isRequired,
-};

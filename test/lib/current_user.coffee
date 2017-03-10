@@ -3,7 +3,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../lib/current_user'
+CurrentUser = require '../../lib/current_user'
 
 describe 'CurrentUser', ->
 

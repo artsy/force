@@ -2,7 +2,7 @@ _ = require 'underscore'
 { Cities } = require 'places'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 DateHelpers = require '../../../../components/util/date_helpers.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require './query.coffee'
 template = -> require('./template.jade') arguments...
 
