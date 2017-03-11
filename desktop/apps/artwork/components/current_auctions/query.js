@@ -1,4 +1,4 @@
-module.exports = `
+export default `
   fragment current_auctions on Sale {
     name
     href

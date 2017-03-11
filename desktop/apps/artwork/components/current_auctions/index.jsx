@@ -1,47 +1,18 @@
-import React, { PropTypes } from 'react'
+import CurrentAuctions from './current_auctions.jsx'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import classNames from 'classnames'
+import { isEmpty } from 'underscore'
 
-export default function mount(data) {
-  function CurrentAuctions ({ sales }) {
-    const classes = classNames(
-      'artwork-section',
-      'current-auctions'
-    )
+export default function mount (data) {
+  const {
+    sales
+  } = data
 
-    return (
-      <section className={classes}>
-        {sales.map((sale, index) => {
-          const {
-            cover_image: {
-              cropped: {
-                url
-              }
-            },
-            href,
-            name
-          } = sale
+  const hasSales = !isEmpty(sales)
 
-          return (
-            <div key={index}>
-              <a href={href}>
-                <img src={url} />
-                {name}
-              </a>
-            </div>
-          )
-        })}
-      </section>
-    )
-  }
-
-  CurrentAuctions.propTypes = {
-    sales: PropTypes.array.isRequired
-  }
-
-  if (data.sales.length) {
+  if (hasSales) {
     ReactDOM.render(
-      <CurrentAuctions sales={data.sales} />,
+      <CurrentAuctions sales={sales} />,
       document.getElementById('react-mount-current-auctions')
     )
   }

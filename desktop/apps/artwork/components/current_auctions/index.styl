@@ -1,0 +1,31 @@
+.artwork-current-auctions
+  spacing = 15px
+
+  h3
+    margin-top gutter
+    margin-bottom gutter
+    serif('headline')
+
+  .sales
+    display flex
+
+    .sale-item
+      border 1px solid gray-lighter-color
+      margin spacing
+      width 260px
+
+      a
+        text-decoration none
+
+      .label-container
+        padding spacing
+
+        .name, .status
+          overflow hidden
+          serif('m-caption')
+          text-overflow ellipsis
+          width 230px
+          white-space nowrap
+
+        .status
+          color gray-darker-color
