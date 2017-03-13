@@ -99,6 +99,7 @@ module.exports =
   FORCE_MERGE_URL: 'https://merged.artsy.net'
   FORCE_MERGE_WEIGHT: 0
   S3_BUCKET: null
+  SEGMENT_AMP_WRITE_KEY: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
