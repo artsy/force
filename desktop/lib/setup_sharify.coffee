@@ -73,6 +73,7 @@ sharify.data = _.extend _.pick(config,
   'API_REQUEST_TIMEOUT'
   'PARSELY_KEY'
   'S3_BUCKET'
+  'SEGMENT_AMP_WRITE_KEY'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"
