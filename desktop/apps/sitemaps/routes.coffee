@@ -254,6 +254,7 @@ resultToBingJSON = (result) ->
     Disallow: ?from-show-guide=
     Sitemap: #{APP_URL}/sitemap.xml
     Sitemap: #{APP_URL}/images_sitemap.xml
+
   """
   res.send switch NODE_ENV
     when 'production'

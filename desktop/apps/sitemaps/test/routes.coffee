@@ -31,11 +31,17 @@ describe 'Sitemaps', ->
       @res.send.args[0][0]
         .should.equal  'User-agent: *\nNoindex: /'
 
-    it 'renders the normal robots with sitemap in production', ->
-      routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
-      routes.robots null, @res
-      @res.send.args[0][0]
-        .should.containEql  'User-agent: *\nNoindex: ?sort=\nNoindex: ?dimension_range=\nDisallow: ?dns_source=\nDisallow: ?microsite=\nDisallow: ?from-show-guide=\nSitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml'
+    describe 'production', ->
+      beforeEach ->
+        routes.__set__ NODE_ENV: 'production', APP_URL: 'https://www.artsy.net'
+        routes.robots null, @res
+
+      it 'renders the normal robots with sitemap in production', ->
+        @res.send.args[0][0]
+          .should.containEql  'User-agent: *\nNoindex: ?sort=\nNoindex: ?dimension_range=\nDisallow: ?dns_source=\nDisallow: ?microsite=\nDisallow: ?from-show-guide=\nSitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml'
+
+      it 'includes a CR/LF at the end of robots.txt', ->
+        @res.send.args[0][0].slice(-1).should.eql('\n')
 
   describe '#news_sitemap', ->
 
