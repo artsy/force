@@ -58,8 +58,8 @@ include meta
                 .col-xs-12.col-lg-10
                   .buy-art-benefits__info-subtitle= benefit.title
                   .buy-art-benefits__info-content= benefit.content
-        .col-xs-12.col-lg-6.buy-art-benefits__image-section(style="background-image: url(#{sections[1].image});")
-          // no-op...
+        .col-xs-12.col-lg-6.buy-art-benefits__image-section
+          img( src=sections[1].image )
 
 .buy-art-faqs
   .buy-art-responsive-layout-container
