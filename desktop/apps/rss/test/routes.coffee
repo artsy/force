@@ -40,27 +40,6 @@ describe 'RSS', ->
       routes.news(@req, @res)
       Backbone.sync.args[0][2].data.featured.should.be.true()
 
-  describe '#instantArticles', ->
-
-    it 'renders the rss feed for instant articles', ->
-      routes.instantArticles(@req, @res)
-
-      Backbone.sync.args[0][2].success {
-        total: 16088,
-        count: 2,
-        results: [
-          fabricate('article', { published_at: new Date().toISOString() })
-          fabricate('article', { published_at: new Date().toISOString() })
-        ]
-      }
-
-      @res.render.args[0][0].should.equal('instant_articles')
-      @res.render.args[0][1].articles.length.should.equal(2)
-
-    it 'only displays articles that are featured', ->
-      routes.news(@req, @res)
-      Backbone.sync.args[0][2].data.featured.should.be.true()
-
   describe '#partnerUpdates', ->
 
     beforeEach ->
