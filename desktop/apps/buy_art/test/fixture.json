@@ -1,7 +1,8 @@
 {
   "header": {
     "headline": "An art collection for every budget",
-    "image": "http://files.artsy.net/images/buy_art_header.png"
+    "image": "http://files.artsy.net/images/buy_art_header.png",
+    "email_icon": "http://files.artsy.net/images/email-icon.svg"
   },
   "sections": [
     {
