@@ -121,13 +121,28 @@ figure
   color white
   text-align center
 
+.ba__email-signup-button
+  @extends .avant-garde-button
+  @extends .buy-art-buttons
+  margin-right 30px
+  background-color #ffffff
+.ba__facebook-signup-button
+  @extends .buy-art-buttons
+  background-color #586DB8
+  color white
+  avant-garde-size('body')
+  text-decoration none
+  line-height 1
+  > i
+    line-height 0
+    vertical-align -8px
+
 .buy-art-header
   background-position center
   background-repeat no-repeat
   background-size cover
   height 700px
   color white
-  display flex
   position relative
   .icon-logotype
     font-size 35px
@@ -135,31 +150,26 @@ figure
     top 30px
     left 30px
   &__content
-    align-self center
     width 580px
     margin-left 120px
+    position absolute
+    top 50%
+    transform translateY(-50%)
   &__title
     garamond-size('xxl-headline', true)
-    letter-spacing -1px
   &__signup-buttons
     display inline-block
     margin-top 35px
     font-weight bold
-    .bah__email-signup-button
-      @extends .avant-garde-button
-      @extends .buy-art-buttons
-      margin-right 30px
-      background-color #ffffff
-    .bah__facebook-signup-button
-      @extends .buy-art-buttons
-      background-color #586DB8
-      color white
-      avant-garde-size('body')
-      text-decoration none
-      line-height 1
-      > i
-        line-height 0
-        vertical-align -8px
+  &__chevron
+    position absolute
+    bottom 20px
+    width 100%
+    text-align center
+    transform rotate(90deg)
+    opacity 0.5
+    i
+      font-size 46px
 
 .buy-art-intro
   background-position center
