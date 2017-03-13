@@ -2,6 +2,7 @@ import metaphysics from '../../../lib/metaphysics.coffee'
 import { filterQuery } from './filter_query'
 
 // Action types
+export const TOGGLE_FETCHING_ARTWORKS = 'TOGGLE_FETCHING_ARTWORKS'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
 export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
@@ -10,6 +11,7 @@ export const UPDATE_ARTWORKS = 'UPDATE_ARTWORKS'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
 export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
+export const UPDATE_PAGE = 'UPDATE_PAGE'
 export const UPDATE_SORT = 'UPDATE_SORT'
 export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 
@@ -18,11 +20,13 @@ export function fetchArtworks() {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
-        filterParams
+        filterParams,
+        isFetchingArtworks
       }
     } = getState()
 
     try {
+      dispatch(toggleFetchingArtworks(true))
       const { filter_artworks } = await metaphysics({
         query: filterQuery,
         variables: filterParams,
@@ -39,8 +43,46 @@ export function fetchArtworks() {
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
       dispatch(updateTotal(filter_artworks.total))
       dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(toggleFetchingArtworks(false))
     } catch(error) {
+      dispatch(toggleFetchingArtworks(false))
       console.error('error!', error)
+    }
+  }
+}
+
+export function fetchMoreArtworks() {
+  return async (dispatch, getState) => {
+    const {
+      auctionArtworks: {
+        filterParams,
+        isFetchingArtworks
+      }
+    } = getState()
+
+    try {
+      dispatch(toggleFetchingArtworks(true))
+      const { filter_artworks } = await metaphysics({
+        query: filterQuery,
+        variables: filterParams,
+        req: {
+          user: sd.CURRENT_USER
+        }
+      })
+      dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(toggleFetchingArtworks(false))
+    } catch(error) {
+      dispatch(toggleFetchingArtworks(false))
+      console.error('error!', error)
+    }
+  }
+}
+
+export function toggleFetchingArtworks(isFetchingArtworks) {
+  return {
+    type: TOGGLE_FETCHING_ARTWORKS,
+    payload: {
+      isFetchingArtworks
     }
   }
 }
@@ -84,7 +126,7 @@ export function updateArtistId(artistId) {
 export function updateArtistParams(artistId) {
   return (dispatch) => {
     dispatch(updateArtistId(artistId))
-    dispatch(fetchArtworks())
+    dispatch(resetArtworks())
   }
 }
 
@@ -110,7 +152,7 @@ export function updateEstimateDisplay(min, max) {
 export function updateEstimateRange(min, max) {
   return (dispatch) => {
     dispatch(updateEstimateRangeParams(min, max))
-    dispatch(fetchArtworks())
+    dispatch(resetArtworks())
   }
 }
 
@@ -136,14 +178,56 @@ export function updateMediumId(mediumId) {
 export function updateMediumParams(mediumId) {
   return (dispatch) => {
     dispatch(updateMediumId(mediumId))
-    dispatch(fetchArtworks())
+    dispatch(resetArtworks())
+  }
+}
+
+
+
+export function resetArtworks() {
+  return (dispatch, getState) => {
+    const {
+      auctionArtworks: {
+        isFetchingArtworks
+      }
+    } = getState()
+    if (!isFetchingArtworks) {
+      dispatch(updatePage(true))
+      dispatch(fetchArtworks())
+    }
+  }
+}
+
+
+export function infiniteScroll() {
+  return (dispatch, getState) => {
+    const {
+      auctionArtworks: {
+        isFetchingArtworks
+      }
+    } = getState()
+    if (!isFetchingArtworks) {
+      dispatch(updatePage(false))
+      dispatch(fetchMoreArtworks())
+    }
+  }
+}
+
+
+
+export function updatePage(reset) {
+  return {
+    type: UPDATE_PAGE,
+    payload: {
+      reset
+    }
   }
 }
 
 export function updateSort(sort) {
   return (dispatch) => {
     dispatch(updateSortParam(sort))
-    dispatch(fetchArtworks())
+    dispatch(resetArtworks())
   }
 }
 
