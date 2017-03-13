@@ -28,8 +28,6 @@ b, strong
   font-weight bold
 em
   font-style italic
-img
-  display block
 .small-caps
   small-caps()
 input
@@ -112,11 +110,28 @@ figure
   .buy-art-main-layout-container
     margin 0 auto
     max-width 1250px
-  margin 0 55px
+  margin 0 20px
+  @media screen and (min-width: 768px)
+    margin 0 55px
   @media screen and (min-width: 1440px)
     margin 0 150px
   @media screen and (min-width: 1660px)
     margin 0 200px
+
+.buy-art-show-on-mobile
+  display none
+  @media screen and (max-width: 768px)
+    display inherit
+
+.buy-art-show-on-desktop
+  display inherit
+  @media screen and (max-width: 768px)
+    display none
+
+.buy-art-text-center-on-mobile
+  text-align inherit
+  @media screen and (max-width: 768px)
+    text-align center
 
 .buy-art-signup-button
   avant-garde-size('body')
@@ -157,12 +172,12 @@ figure
     top 30px
     left 30px
   &__content
-    width 580px
     position absolute
     top 50%
     transform translateY(-50%)
   &__title
     garamond-size('xxl-headline', true)
+    max-width 580px
   &__signup-buttons
     display inline-block
     margin-top 35px
@@ -170,6 +185,7 @@ figure
   &__chevron
     position absolute
     bottom 20px
+    left 0
     width 100%
     text-align center
     transform rotate(90deg)
@@ -187,7 +203,7 @@ figure
     margin 220px auto
   &__title
     garamond-size('xl-headline')
-    width 387px
+    max-width 387px
     margin 0 auto
     text-align center
     margin-bottom 20px
@@ -216,17 +232,19 @@ figure
     avant-garde-size('s-headline')
     min-width 250px
     font-weight bold
+    justify-content center
   &__mobile-type
-    display none
+    avant-garde-size('s-headline')
+    min-width 110px
+    font-weight bold
+    justify-content center
   &__signup-button-container
     margin-top 25px
     text-align center
 
 .buy-art-benefits
   background-color gray-lightest-color
-  &__content-section
-    width 50%
-    padding-top 50px
+  padding-top 50px
   &__title
     garamond-size('xl-headline')
     margin-bottom 35px
@@ -245,25 +263,24 @@ figure
   &__info-content
     garamond-size('l-body')
   &__image-section
-    width 50%
     background-repeat no-repeat
     background-position left bottom
 
 .buy-art-faqs
+  padding-top 25px
   margin-bottom 30px
   &__image-banner
+    text-align center
     img
-      padding-top 25px
-      margin 0 auto
+      max-width 100%
   &__title
     garamond-size('xl-headline')
     padding-top 70px
-    width 500px
+    max-width 500px
   &__items-container
     padding-top 55px
   &__item-grid
-    @media screen and (min-width: 768px)
-      margin-right 70px
+    margin-right 70px
   &__item-title
     garamond-size('headline')
     margin-bottom 12px
@@ -280,9 +297,12 @@ figure
   position relative
   &__title
     garamond-size('l-headline')
-    width 430px
+    max-width 430px
     margin-bottom 27px
   .icon-logo
     position absolute
     bottom 20px
     left 20px
+
+@require './mobile'
+
