@@ -1,6 +1,7 @@
 @require '../../../components/stylus_lib'
 @require './fonts'
 @require './buttons'
+@require './grid_styles'
 
 global-reset()
 
@@ -212,3 +213,70 @@ figure
   &__signup-button-container
     margin-top 25px
     text-align center
+
+.buy-art-benefits
+  height 660px
+  display flex
+  background-color gray-lightest-color
+  &__content-section
+    width 50%
+    padding-top 50px
+    padding-left 150px
+  &__title
+    garamond-size('xl-headline')
+    margin-bottom 35px
+  &__benefits-container
+    width 365px
+  &__items
+    display flex
+    margin 45px 0
+    .buy-art-benefits__icon
+      margin-right 20px
+  &__info-subtitle
+    avant-garde-size('m-headline')
+    font-weight bold
+    margin-bottom 5px
+  &__info-content
+    garamond-size('l-body')
+  &__image-section
+    width 50%
+    background-repeat no-repeat
+    background-position left bottom
+
+.buy-art-faqs
+  height 700px
+  &__image-banner
+    img
+      padding-top 25px
+      margin 0 auto
+  &__title
+    garamond-size('xl-headline')
+    padding-left 150px
+    padding-top 70px
+    width 500px
+  &__items-container
+    padding-left 150px
+    padding-top 55px
+  &__item-title
+    garamond-size('headline')
+    margin-bottom 12px
+  &__item-content
+    garamond-size('l-body')
+    margin-bottom 55px
+
+.buy-art-footer
+  background-position center
+  background-repeat no-repeat
+  background-size cover
+  height 390px
+  padding-top 110px
+  padding-left 150px
+  position relative
+  &__title
+    garamond-size('l-headline')
+    width 430px
+    margin-bottom 27px
+  .icon-logo
+    position absolute
+    bottom 20px
+    left 20px

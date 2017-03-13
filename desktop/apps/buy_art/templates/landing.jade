@@ -34,18 +34,46 @@ include meta
 
 .buy-art-benefits
   .buy-art-benefits__content-section
-    .buy-art-benefits__title
-      | Hi!
+    .buy-art-benefits__title= sections[1].headline
     a.buy-art-signup-button
       | Sign up
-    each benefit in sections[0].benefits
-      .buy-art-benefits__icon
-      .buy-art-benefits__info
+    .buy-art-benefits__benefits-container
+      each benefit in sections[1].benefits
+        .buy-art-benefits__items
+          .buy-art-benefits__icon
+            img(src=benefit.image)
+          .buy-art-benefits__info
+            .buy-art-benefits__info-subtitle= benefit.title
+            .buy-art-benefits__info-content= benefit.content
 
-  .buy-art-benefits__image-section
+  .buy-art-benefits__image-section(style="background-image: url(#{sections[1].image});")
 
+.buy-art-faqs
+  .buy-art-faqs__image-banner
+    img(src=sections[2].image)
+  .buy-art-faqs__title=sections[2].headline
+  .buy-art-faqs__items-container.collector-marketing
+    .row
+      each faq in sections[2].faqs
+        .col-xs-12.col-sm-6
+          .buy-art-faqs__itemgri
+            .buy-art-faqs__item-title= faq.title
+            .buy-art-faqs__item-content= faq.content
+      .col-xs-12.col-sm-6
+        a.buy-art-signup-button
+          | Sign up
 
-
-
-
-
+.buy-art-footer(style="background-image: url(http://files.artsy.net/images/desktop-footer1x.jpg);")
+  .buy-art-footer__title= footer.headline
+  .buy-art-footer__signup-buttons
+      a.ba__email-signup-button(
+        href='#'
+      )
+        i.icon-mail
+        | Sign up using email
+      a.ba__facebook-signup-button(
+        href='#'
+      )
+        i.icon-facebook
+        | Sign up with Facebook
+  i.icon-logo

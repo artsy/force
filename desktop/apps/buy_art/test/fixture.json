@@ -30,16 +30,20 @@
     {
       "id": "benefits",
       "headline": "Used by the most experienced collectors",
+      "image": "http://files.artsy.net/images/devices1x.png",
       "benefits": [
         {
+          "image": "http://files.artsy.net/images/alerts.svg",
           "title": "Timely Alerts",
           "content": "Get notified when new works are available by your favorite artists"
         },
         {
+          "image": "http://files.artsy.net/images/data.svg",
           "title": "Comprehensive Data",
           "content": "Consule our database of artists, exhibitors, auction results, and market news"
         },
         {
+          "image": "http://files.artsy.net/images/recommendations.svg",
           "title": "Smart Recommendation",
           "content": "Get artwork recommendations based on your taste and budget"
         }
@@ -48,6 +52,7 @@
     {
       "id": "faqs",
       "headline": "Frequently asked questions",
+      "image": "http://files.artsy.net/images/logos1x.jpg",
       "faqs": [
         {
           "title": "Why buy on Artsy?",
@@ -66,6 +71,6 @@
   ],
   "footer": {
     "headline": "Start buying art by your favorite artists on Artsy",
-    "image": "http://example.com"
+    "image": "http://files.artsy.net/images/desktop-footer1x.jpg"
   }
 }
