@@ -25,7 +25,10 @@ include meta
       .buy-art-header__chevron
         i.icon-chevron-right
 
-.buy-art-intro( style="background-image: url(#{sections[0].image});" )
+.buy-art-intro
+  .buy-art-intro__mobile-background-image.buy-art-show-on-mobile( style="background-image: url(#{sections[0].mobile_image});" )
+  .buy-art-intro__desktop-background-image.buy-art-show-on-desktop( style="background-image: url(#{sections[0].image});" )
+
   .buy-art-intro__content
     .buy-art-intro__title= sections[0].headline
     .buy-art-intro__subtitle= sections[0].sub_headline
@@ -75,7 +78,10 @@ include meta
             a.buy-art-signup-button
               | Sign up
 
-.buy-art-footer(style="background-image: url(http://files.artsy.net/images/desktop-footer1x.jpg);")
+.buy-art-footer
+  .buy-art-footer__mobile-background-image.buy-art-show-on-mobile( style="background-image: url(#{footer.mobile_image});" )
+  .buy-art-footer__desktop-background-image.buy-art-show-on-desktop( style="background-image: url(#{footer.image});" )
+
   .buy-art-responsive-layout-container
     .buy-art-main-layout-container.buy-art-text-center-on-mobile
       .buy-art-footer__title= footer.headline

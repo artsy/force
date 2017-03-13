@@ -10,6 +10,7 @@
       "headline": "All the world's art in one place",
       "sub_headline": "Buy directly from galleries and bid in auction",
       "image": "http://files.artsy.net/images/buy_art_background.jpg",
+      "mobile_image": "http://files.artsy.net/images/mobile-background2x.jpg",
       "stats": [
         {
           "desktop_type": "Galleries & action houses",
@@ -72,6 +73,7 @@
   ],
   "footer": {
     "headline": "Start buying art by your favorite artists on Artsy",
-    "image": "http://files.artsy.net/images/desktop-footer1x.jpg"
+    "image": "http://files.artsy.net/images/desktop-footer1x.jpg",
+    "mobile_image": "http://files.artsy.net/images/mobile-footer2x.jpg"
   }
 }

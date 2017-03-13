@@ -193,13 +193,27 @@ figure
       font-size 46px
 
 .buy-art-intro
-  background-position center
-  background-repeat no-repeat
-  background-size cover
   height 800px
   display flex
-  &__content
-    margin 220px auto
+  align-items center
+  justify-content center
+  position relative
+  &__desktop-background-image
+    background-position center
+    background-repeat no-repeat
+    background-size cover
+    height 800px
+    width 100%
+    position absolute
+    z-index -1
+  &__mobile-background-image
+    background-position center
+    background-repeat no-repeat
+    background-size cover
+    height 560px
+    width 100%
+    position absolute
+    z-index -1
   &__title
     garamond-size('xl-headline')
     max-width 387px
@@ -215,12 +229,12 @@ figure
     margin-left auto
     margin-right auto
     width 750px
+    height 100px
   &__stat
     flex 1
     display flex
     flex-direction column
     justify-content center
-    height 100px
     text-align center
     border-right 1px solid gray-lighter-color
     &:last-child
@@ -229,12 +243,10 @@ figure
     garamond-size('l-headline')
   &__desktop-type
     avant-garde-size('s-headline')
-    min-width 250px
     font-weight bold
     justify-content center
   &__mobile-type
     avant-garde-size('s-headline')
-    min-width 110px
     font-weight bold
     justify-content center
   &__signup-button-container
@@ -292,10 +304,26 @@ figure
   background-repeat no-repeat
   background-size cover
   height 390px
-  padding-top 110px
   position relative
+  &__desktop-background-image
+    background-position center
+    background-repeat no-repeat
+    background-size cover
+    height 390px
+    width 100%
+    position absolute
+    z-index -1
+  &__mobile-background-image
+    background-position center
+    background-repeat no-repeat
+    background-size cover
+    height 390px
+    width 100%
+    position absolute
+    z-index -1
   &__title
     garamond-size('l-headline')
+    padding-top 110px
     max-width 430px
     margin-bottom 27px
   .icon-logo
