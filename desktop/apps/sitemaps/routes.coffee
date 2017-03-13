@@ -48,7 +48,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     (cb) ->
       request
         .get(POSITRON_URL + '/api/articles')
-        .query(published: true, limit: 1)
+        .query(published: true, limit: 1, count: true)
         .end (err, sres) ->
           return cb(err) if err
           totalCount = Math.ceil sres.body.count / PAGE_SIZE
