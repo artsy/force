@@ -108,14 +108,15 @@ figure
   vertical-align middle
   margin-right 10px
 
-.buy-art-container
-  margin 0 auto
-  @media screen and (min-width: 768px)
-    width 648px
-  @media screen and (min-width: 960px)
-    width 840px
-  @media screen and (min-width: 1425px)
-    width 1125px
+.buy-art-responsive-layout-container
+  .buy-art-main-layout-container
+    margin 0 auto
+    max-width 1250px
+  margin 0 55px
+  @media screen and (min-width: 1440px)
+    margin 0 150px
+  @media screen and (min-width: 1660px)
+    margin 0 200px
 
 .buy-art-signup-button
   avant-garde-size('body')
@@ -222,23 +223,21 @@ figure
     text-align center
 
 .buy-art-benefits
-  height 660px
-  display flex
   background-color gray-lightest-color
   &__content-section
     width 50%
     padding-top 50px
-    padding-left 150px
   &__title
     garamond-size('xl-headline')
     margin-bottom 35px
   &__benefits-container
-    width 365px
+    max-width 365px
+    margin-top 45px
+    padding-bottom 45px
   &__items
-    display flex
-    margin 45px 0
-    .buy-art-benefits__icon
-      margin-right 20px
+    margin 0 0 45px
+    &:last-child
+      margin-bottom 0
   &__info-subtitle
     avant-garde-size('m-headline')
     font-weight bold
@@ -262,6 +261,9 @@ figure
     width 500px
   &__items-container
     padding-top 55px
+  &__item-grid
+    @media screen and (min-width: 768px)
+      margin-right 70px
   &__item-title
     garamond-size('headline')
     margin-bottom 12px

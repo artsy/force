@@ -1,84 +1,87 @@
 include meta
 
-.buy-art-container
 .buy-art-header( style="background-image: url(#{header.image});" )
-  .buy-art-container
-    i.icon-logotype
-    .buy-art-header__content
-      .buy-art-header__title= header.headline
-      .buy-art-header__signup-buttons
-        a.ba__email-signup-button(
-          href='#'
-        )
-          img.buy-art__svg-icon(src=header.email_icon)
-          | Sign up using email
-        a.ba__facebook-signup-button(
-          href='#'
-        )
-          i.icon-facebook
-          | Sign up with Facebook
-    .buy-art-header__chevron
-      i.icon-chevron-right
+  .buy-art-responsive-layout-container
+    .buy-art-main-layout-container
+      i.icon-logotype
+      .buy-art-header__content
+        .buy-art-header__title= header.headline
+        .buy-art-header__signup-buttons
+          a.ba__email-signup-button(
+            href='#'
+          )
+            img.buy-art__svg-icon(src=header.email_icon)
+            | Sign up using email
+          a.ba__facebook-signup-button(
+            href='#'
+          )
+            i.icon-facebook
+            | Sign up with Facebook
+      .buy-art-header__chevron
+        i.icon-chevron-right
 
 .buy-art-intro( style="background-image: url(#{sections[0].image});" )
-  .buy-art-container
-    .buy-art-intro__content
-      .buy-art-intro__title= sections[0].headline
-      .buy-art-intro__subtitle= sections[0].sub_headline
-      .buy-art-intro__stat_container
-        each stat in sections[0].stats
-          .buy-art-intro__stat
-            .buy-art-intro__stat-number= stat.number
-            .buy-art-intro__desktop-type= stat.desktop_type
-            .buy-art-intro__mobile-type= stat.mobile_type
-      .buy-art-intro__signup-button-container
-        a.buy-art-signup-button
-          | Sign up
+  .buy-art-intro__content
+    .buy-art-intro__title= sections[0].headline
+    .buy-art-intro__subtitle= sections[0].sub_headline
+    .buy-art-intro__stat_container
+      each stat in sections[0].stats
+        .buy-art-intro__stat
+          .buy-art-intro__stat-number= stat.number
+          .buy-art-intro__desktop-type= stat.desktop_type
+          .buy-art-intro__mobile-type= stat.mobile_type
+    .buy-art-intro__signup-button-container
+      a.buy-art-signup-button
+        | Sign up
 
 .buy-art-benefits
-  .buy-art-benefits__content-section
-    .buy-art-benefits__title= sections[1].headline
-    a.buy-art-signup-button
-      | Sign up
-    .buy-art-benefits__benefits-container
-      each benefit in sections[1].benefits
-        .buy-art-benefits__items
-          .buy-art-benefits__icon
-            img(src=benefit.image)
-          .buy-art-benefits__info
-            .buy-art-benefits__info-subtitle= benefit.title
-            .buy-art-benefits__info-content= benefit.content
+  .buy-art-responsive-layout-container
+    .buy-art-main-layout-container
+      .buy-art-benefits__content-section
+        .buy-art-benefits__title= sections[1].headline
+        a.buy-art-signup-button
+          | Sign up
+        .buy-art-benefits__benefits-container.collector-marketing
+          each benefit in sections[1].benefits
+            .buy-art-benefits__items.row
+              .col-xs-12.col-lg-2
+                img(src=benefit.image)
+              .col-xs-12.col-lg-10
+                .buy-art-benefits__info-subtitle= benefit.title
+                .buy-art-benefits__info-content= benefit.content
 
-  .buy-art-benefits__image-section(style="background-image: url(#{sections[1].image});")
+      .buy-art-benefits__image-section(style="background-image: url(#{sections[1].image});")
 
 .buy-art-faqs
-  .buy-art-container
-    .buy-art-faqs__image-banner
-      img(src=sections[2].image)
-    .buy-art-faqs__title=sections[2].headline
-    .buy-art-faqs__items-container.collector-marketing
-      .row
-        each faq in sections[2].faqs
+  .buy-art-responsive-layout-container
+    .buy-art-main-layout-container
+      .buy-art-faqs__image-banner
+        img(src=sections[2].image)
+      .buy-art-faqs__title=sections[2].headline
+      .buy-art-faqs__items-container.collector-marketing
+        .row
+          each faq in sections[2].faqs
+            .col-xs-12.col-lg-6
+              .buy-art-faqs__item-grid
+                .buy-art-faqs__item-title= faq.title
+                .buy-art-faqs__item-content= faq.content
           .col-xs-12.col-lg-6
-            .buy-art-faqs__itemgri
-              .buy-art-faqs__item-title= faq.title
-              .buy-art-faqs__item-content= faq.content
-        .col-xs-12.col-lg-6
-          a.buy-art-signup-button
-            | Sign up
+            a.buy-art-signup-button
+              | Sign up
 
 .buy-art-footer(style="background-image: url(http://files.artsy.net/images/desktop-footer1x.jpg);")
-  .buy-art-container
-    .buy-art-footer__title= footer.headline
-    .buy-art-footer__signup-buttons
-        a.ba__email-signup-button(
-          href='#'
-        )
-          i.icon-mail
-          | Sign up using email
-        a.ba__facebook-signup-button(
-          href='#'
-        )
-          i.icon-facebook
-          | Sign up with Facebook
-    i.icon-logo
+  .buy-art-responsive-layout-container
+    .buy-art-main-layout-container
+      .buy-art-footer__title= footer.headline
+      .buy-art-footer__signup-buttons
+          a.ba__email-signup-button(
+            href='#'
+          )
+            i.icon-mail
+            | Sign up using email
+          a.ba__facebook-signup-button(
+            href='#'
+          )
+            i.icon-facebook
+            | Sign up with Facebook
+      i.icon-logo
