@@ -17,21 +17,6 @@ PAGE_SIZE = 50
       res.set('Content-Type', 'application/rss+xml')
       res.render('news', articles: articles, pretty: true)
 
-@instantArticles = (req, res, next) ->
-  new Articles().fetch
-    data:
-      featured: true
-      published: true
-      sort: '-published_at'
-      limit: PAGE_SIZE
-    error: res.backboneError
-    success: (articles) ->
-      articles.each (article) -> article.prepForInstant()
-      res.set('Content-Type', 'application/rss+xml')
-      res.render 'instant_articles',
-        articles: articles
-        pretty: true
-
 @partnerUpdates = (req, res, next) ->
   new Articles().fetch
     data:

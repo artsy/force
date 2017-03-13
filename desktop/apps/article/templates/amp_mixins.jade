@@ -86,7 +86,7 @@ mixin amp_analytics
     script(type="application/json").
       {
         "vars": {
-          "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
+          "writeKey": "#{sd.SEGMENT_AMP_WRITE_KEY}",
           "name": "#{article.href()}"
         },
         "extraUrlParams": {
