@@ -34,22 +34,26 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-          query artwork($id: String!, $isClosed: Boolean!) {
+          query artwork($id: String!, $isClosed: Boolean!, $auctionId: ID) {
             artwork(id: $id) {
               ... partner
               ... auction_artworks @skip(if: $isClosed)
               ... artist_artworks @include(if: $isClosed)
               ... related_artworks @include(if: $isClosed)
             }
+
+            ... followed_artist_ids @skip(if: $isClosed)
           }
           #{require '../../../components/artwork_brick/query.coffee'}
           #{require '../components/partner/query.coffee'}
-          #{require '../components/auction_artworks/query.coffee'}
+          #{require('../components/auction_artworks/query.coffee').auction_artworks}
+          #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
       variables:
         isClosed: context.is_closed
+        auctionId: sd.AUCTION.id
 
       init: compact [
           require '../components/partner/index.coffee'
@@ -151,7 +155,11 @@ module.exports =
 
     return unless query? and init?
     variables ?= {}
-    metaphysics query: query, variables: extend { id: CLIENT.id }, variables
+    metaphysics {
+      query: query,
+      variables: extend { id: CLIENT.id }, variables
+      req: user: CurrentUser.orNull()
+    }
       .then (data) ->
         renderTemplates(data)
         exec init
