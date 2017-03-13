@@ -73,15 +73,6 @@ figure
   max-width default-max-page-width
   margin auto
 
-.responsive-layout-container
-  margin 0px 55px
-  @media screen and (min-width: 1440px)
-    margin 0px 150px
-  @media screen and (min-width: 1660px)
-    margin 0px 200px
-  @media screen and (max-width: 768px)
-    margin 0px
-
 #blank-layout-container
   height 100%
 
@@ -111,6 +102,15 @@ figure
   box-sizing border-box
   > i
     margin-left 0
+
+.buy-art-container
+  margin 0 auto
+  @media screen and (min-width: 768px)
+    width 648px
+  @media screen and (min-width: 960px)
+    width 840px
+  @media screen and (min-width: 1425px)
+    width 1125px
 
 .buy-art-signup-button
   avant-garde-size('body')
@@ -152,7 +152,6 @@ figure
     left 30px
   &__content
     width 580px
-    margin-left 120px
     position absolute
     top 50%
     transform translateY(-50%)
@@ -192,6 +191,9 @@ figure
   &__stat_container
     display flex
     margin-top 20px
+    margin-left auto
+    margin-right auto
+    width 750px
   &__stat
     flex 1
     display flex
@@ -251,11 +253,9 @@ figure
       margin 0 auto
   &__title
     garamond-size('xl-headline')
-    padding-left 150px
     padding-top 70px
     width 500px
   &__items-container
-    padding-left 150px
     padding-top 55px
   &__item-title
     garamond-size('headline')
@@ -270,7 +270,6 @@ figure
   background-size cover
   height 390px
   padding-top 110px
-  padding-left 150px
   position relative
   &__title
     garamond-size('l-headline')
