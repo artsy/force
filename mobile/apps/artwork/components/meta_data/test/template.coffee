@@ -165,7 +165,6 @@ describe 'Artwork metadata templates', ->
 
         $ = cheerio.load(html)
         $('.artwork-meta-data__partner .artwork-header').text().should.equal ""
-        $('.artwork-meta-data-black__contact-button').length.should.equal 0
 
       it 'should display collecting institution as link text', ->
         html = render('partner')(
