@@ -3,13 +3,13 @@ import AuctionListArtwork from '../auction_list_artwork'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 
-function AuctionArtworks({ allFetched, artworks, isFetchingArtworks, isListView }) {
+function AuctionArtworks({ allFetched, isFetchingArtworks, isListView, saleArtworks }) {
   const DisplayComponent = isListView ? AuctionListArtwork : AuctionGridArtwork
   return (
     <div className='auction2-artworks'>
       {
-        artworks.map((artwork) => (
-          <DisplayComponent key={artwork._id} artwork={artwork} />
+        saleArtworks.map((saleArtwork) => (
+          <DisplayComponent key={saleArtwork.id} saleArtwork={saleArtwork} />
         ))
       }
       { isFetchingArtworks && <div className='loading-spinner'></div> }
@@ -20,9 +20,9 @@ function AuctionArtworks({ allFetched, artworks, isFetchingArtworks, isListView 
 const mapStateToProps = (state) => {
   return {
     allFetched: state.auctionArtworks.allFetched,
-    artworks: state.auctionArtworks.artworks,
     isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
-    isListView: state.auctionArtworks.isListView
+    isListView: state.auctionArtworks.isListView,
+    saleArtworks: state.auctionArtworks.saleArtworks
   }
 }
 

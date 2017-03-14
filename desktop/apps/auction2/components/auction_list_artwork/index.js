@@ -3,15 +3,14 @@ import { get } from 'lodash'
 import { default as React, PropTypes } from 'react';
 import { titleAndYear } from '../../utils/artwork'
 
-export default function AuctionGridArtwork({ artwork }) {
+export default function AuctionGridArtwork({ saleArtwork }) {
+  const artwork = saleArtwork.artwork
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
   const artworkImage = get(artwork, 'images.0.image_url', '/images/missing_image.png')
 
   let bidStatus
-  if (artwork.sale_artwork) {
-    bidStatus = <BidStatus artwork={artwork} />
-  }
+  bidStatus = <BidStatus saleArtwork={saleArtwork} />
 
   return (
     <div className='auction2-list-artwork' key={artwork._id}>
@@ -25,7 +24,7 @@ export default function AuctionGridArtwork({ artwork }) {
         <div className='auction2-list-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork.title, artwork.date) }}></div>
       </div>
       <div className='auction2-list-artwork__lot-number'>
-        Lot {artwork.sale_artwork && artwork.sale_artwork.lot_number}
+        Lot {saleArtwork.lot_number}
       </div>
       { bidStatus }
     </div>

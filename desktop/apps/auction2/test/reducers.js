@@ -49,25 +49,25 @@ describe('Reducers', () => {
       describe('#updateAllFetched', () => {
         it('updates allFetched to true if the total matches the number of artworks', () => {
           initialResponse.auctionArtworks.allFetched.should.eql(false)
-          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.saleArtworks.should.eql([])
           initialResponse.auctionArtworks.total.should.eql(0)
-          const newArtworks = auctions(initialResponse, actions.updateArtworks(['artwork1', 'artwork2', 'artwork3']))
+          const newArtworks = auctions(initialResponse, actions.updateSaleArtworks(['artwork1', 'artwork2', 'artwork3']))
           const newTotal = auctions(newArtworks, actions.updateTotal(3))
           const allArtworksFetched = auctions(newTotal, actions.updateAllFetched())
           allArtworksFetched.auctionArtworks.allFetched.should.eql(true)
-          allArtworksFetched.auctionArtworks.artworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
+          allArtworksFetched.auctionArtworks.saleArtworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
           allArtworksFetched.auctionArtworks.total.should.eql(3)
         })
 
         it('updates allFetched to false if the total does not match the number of artworks', () => {
           initialResponse.auctionArtworks.allFetched.should.eql(false)
-          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.saleArtworks.should.eql([])
           initialResponse.auctionArtworks.total.should.eql(0)
-          const newArtworks = auctions(initialResponse, actions.updateArtworks(['artwork1', 'artwork2', 'artwork3']))
+          const newArtworks = auctions(initialResponse, actions.updateSaleArtworks(['artwork1', 'artwork2', 'artwork3']))
           const newTotal = auctions(newArtworks, actions.updateTotal(10))
           const notAllArtworksFetched = auctions(newTotal, actions.updateAllFetched())
           notAllArtworksFetched.auctionArtworks.allFetched.should.eql(false)
-          notAllArtworksFetched.auctionArtworks.artworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
+          notAllArtworksFetched.auctionArtworks.saleArtworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
           notAllArtworksFetched.auctionArtworks.total.should.eql(10)
         })
       })
@@ -98,24 +98,24 @@ describe('Reducers', () => {
 
       describe('#updateArtworks', () => {
         it('resets the artworks if the page does not change', () => {
-          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.saleArtworks.should.eql([])
           const newArtworks = [{ id: 'artwork-1' }, { id: 'artwork-2' }]
-          const updatedArtworks = auctions(initialResponse, actions.updateArtworks(newArtworks))
-          updatedArtworks.auctionArtworks.artworks.should.eql(newArtworks)
+          const updatedArtworks = auctions(initialResponse, actions.updateSaleArtworks(newArtworks))
+          updatedArtworks.auctionArtworks.saleArtworks.should.eql(newArtworks)
           const resetArtworks = [{ id: 'artwork-3' }]
-          const resettedArtworks = auctions(updatedArtworks, actions.updateArtworks(resetArtworks))
-          resettedArtworks.auctionArtworks.artworks.should.eql(resetArtworks)
+          const resettedArtworks = auctions(updatedArtworks, actions.updateSaleArtworks(resetArtworks))
+          resettedArtworks.auctionArtworks.saleArtworks.should.eql(resetArtworks)
         })
 
         it('concatenates the artworks if the page is above 1', () => {
-          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.saleArtworks.should.eql([])
           const newArtworks = [{ id: 'artwork-1' }, { id: 'artwork-2' }]
-          const updatedArtworks = auctions(initialResponse, actions.updateArtworks(newArtworks))
-          updatedArtworks.auctionArtworks.artworks.should.eql(newArtworks)
+          const updatedArtworks = auctions(initialResponse, actions.updateSaleArtworks(newArtworks))
+          updatedArtworks.auctionArtworks.saleArtworks.should.eql(newArtworks)
           const newPage = auctions(updatedArtworks, actions.updatePage(false))
           const concatArtworks = [{ id: 'artwork-3' }]
-          const concatenatedArtworks = auctions(newPage, actions.updateArtworks(concatArtworks))
-          concatenatedArtworks.auctionArtworks.artworks.should.eql([
+          const concatenatedArtworks = auctions(newPage, actions.updateSaleArtworks(concatArtworks))
+          concatenatedArtworks.auctionArtworks.saleArtworks.should.eql([
             { id: 'artwork-1' },
             { id: 'artwork-2' },
             { id: 'artwork-3' }
@@ -126,7 +126,7 @@ describe('Reducers', () => {
       describe('#updateEstimateDisplay', () => {
         it('updates the estimate display', () => {
           initialResponse.auctionArtworks.maxEstimateRangeDisplay.should.eql(50000)
-          initialResponse.auctionArtworks.minEstimateRangeDisplay.should.eql(50)
+          initialResponse.auctionArtworks.minEstimateRangeDisplay.should.eql(0)
           const updatedEstimateDisplay = auctions(initialResponse, actions.updateEstimateDisplay(100, 20000))
           updatedEstimateDisplay.auctionArtworks.maxEstimateRangeDisplay.should.eql(20000)
           updatedEstimateDisplay.auctionArtworks.minEstimateRangeDisplay.should.eql(100)
@@ -179,9 +179,9 @@ describe('Reducers', () => {
 
       describe('#updateSortParam', () => {
         it('updates the sort param', () => {
-          initialResponse.auctionArtworks.filterParams.sort.should.eql('lot_number')
-          const updatedSort = auctions(initialResponse, actions.updateSortParam('-lot_number'))
-          updatedSort.auctionArtworks.filterParams.sort.should.eql('-lot_number')
+          initialResponse.auctionArtworks.filterParams.sort.should.eql('position')
+          const updatedSort = auctions(initialResponse, actions.updateSortParam('-position'))
+          updatedSort.auctionArtworks.filterParams.sort.should.eql('-position')
         })
       })
 

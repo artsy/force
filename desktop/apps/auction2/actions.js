@@ -2,21 +2,43 @@ import metaphysics from '../../../lib/metaphysics.coffee'
 import { filterQuery } from './filter_query'
 
 // Action types
-export const TOGGLE_FETCHING_ARTWORKS = 'TOGGLE_FETCHING_ARTWORKS'
+export const GET_ARTWORKS_FAILURE = 'GET_ARTWORKS_FAILURE'
+export const GET_ARTWORKS_REQUEST = 'GET_ARTWORKS_REQUEST'
+export const GET_ARTWORKS_SUCCESS = 'GET_ARTWORKS_SUCCESS'
+export const TOGGLE_ARTISTS_YOU_FOLLOW = 'TOGGLE_ARTISTS_YOU_FOLLOW'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
 export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
 export const UPDATE_ALL_FETCHED = 'UPDATE_ALL_FETCHED'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
-export const UPDATE_ARTWORKS = 'UPDATE_ARTWORKS'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
 export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
+export const UPDATE_NUM_ARTISTS_YOU_FOLLOW = 'UPDATE_NUM_ARTISTS_YOU_FOLLOW'
 export const UPDATE_PAGE = 'UPDATE_PAGE'
+export const UPDATE_SALE_ARTWORKS = 'UPDATE_SALE_ARTWORKS'
 export const UPDATE_SORT = 'UPDATE_SORT'
 export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 
 // Action creators
+export function getArtworksFailure() {
+  return {
+    type: GET_ARTWORKS_FAILURE
+  }
+}
+
+export function getArtworksRequest() {
+  return {
+    type: GET_ARTWORKS_REQUEST
+  }
+}
+
+export function getArtworksSuccess() {
+  return {
+    type: GET_ARTWORKS_SUCCESS
+  }
+}
+
 export function fetchArtworks() {
   return async (dispatch, getState) => {
     const {
@@ -26,8 +48,8 @@ export function fetchArtworks() {
     } = getState()
 
     try {
-      dispatch(toggleFetchingArtworks(true))
-      const { filter_artworks } = await metaphysics({
+      dispatch(getArtworksRequest())
+      const { filter_sale_artworks } = await metaphysics({
         query: filterQuery,
         variables: filterParams,
         req: {
@@ -35,18 +57,19 @@ export function fetchArtworks() {
         }
       })
 
-      const aggregations = filter_artworks.aggregations
+      const aggregations = filter_sale_artworks.aggregations
       const artistAggregation = aggregations.filter((agg) => agg.slice == 'ARTIST')
       const mediumAggregation = aggregations.filter((agg) => agg.slice == 'MEDIUM')
 
       dispatch(updateAggregatedArtists(artistAggregation[0].counts))
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
-      dispatch(updateTotal(filter_artworks.total))
-      dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(updateTotal(filter_sale_artworks.counts.total))
+      dispatch(updateNumArtistsYouFollow(filter_sale_artworks.counts.followed_artists))
+      dispatch(updateSaleArtworks(filter_sale_artworks.hits))
       dispatch(updateAllFetched())
-      dispatch(toggleFetchingArtworks(false))
+      dispatch(getArtworksSuccess())
     } catch(error) {
-      dispatch(toggleFetchingArtworks(false))
+      dispatch(getArtworksFailure())
       console.error('error!', error)
     }
   }
@@ -61,19 +84,19 @@ export function fetchMoreArtworks() {
     } = getState()
 
     try {
-      dispatch(toggleFetchingArtworks(true))
-      const { filter_artworks } = await metaphysics({
+      dispatch(getArtworksRequest())
+      const { filter_sale_artworks } = await metaphysics({
         query: filterQuery,
         variables: filterParams,
         req: {
           user: sd.CURRENT_USER
         }
       })
-      dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(updateSaleArtworks(filter_sale_artworks.hits))
       dispatch(updateAllFetched())
-      dispatch(toggleFetchingArtworks(false))
+      dispatch(getArtworksSuccess())
     } catch(error) {
-      dispatch(toggleFetchingArtworks(false))
+      dispatch(getArtworksFailure())
       console.error('error!', error)
     }
   }
@@ -108,12 +131,9 @@ export function resetArtworks() {
   }
 }
 
-export function toggleFetchingArtworks(isFetchingArtworks) {
+export function toggleArtistsYouFollow() {
   return {
-    type: TOGGLE_FETCHING_ARTWORKS,
-    payload: {
-      isFetchingArtworks
-    }
+    type: TOGGLE_ARTISTS_YOU_FOLLOW
   }
 }
 
@@ -166,12 +186,10 @@ export function updateArtistParams(artistId) {
   }
 }
 
-export function updateArtworks(artworks) {
-  return {
-    type: UPDATE_ARTWORKS,
-    payload: {
-      artworks
-    }
+export function updateArtistsYouFollowParam(includeFollowedArtists) {
+  return (dispatch) => {
+    dispatch(toggleArtistsYouFollow())
+    dispatch(resetArtworks())
   }
 }
 
@@ -218,11 +236,29 @@ export function updateMediumParams(mediumId) {
   }
 }
 
+export function updateNumArtistsYouFollow(numArtistsYouFollow) {
+  return {
+    type: UPDATE_NUM_ARTISTS_YOU_FOLLOW,
+    payload: {
+      numArtistsYouFollow
+    }
+  }
+}
+
 export function updatePage(reset) {
   return {
     type: UPDATE_PAGE,
     payload: {
       reset
+    }
+  }
+}
+
+export function updateSaleArtworks(saleArtworks) {
+  return {
+    type: UPDATE_SALE_ARTWORKS,
+    payload: {
+      saleArtworks
     }
   }
 }

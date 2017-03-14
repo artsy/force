@@ -6,6 +6,7 @@ export default function SaleQuery(id) {
           url
         }
       }
+      currency
       description
       end_at
       id

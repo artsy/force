@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Grid from '../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../components/main_layout/public/icons/list.svg'
 import FilterSort from '../filter_sort'
-import { default as React, PropTypes } from 'react';
+import { default as React, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 function displayButtonClass(buttonType, displayType) {
