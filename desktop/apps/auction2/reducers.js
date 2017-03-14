@@ -60,6 +60,17 @@ function auctionArtworks(state = initialState, action) {
         aggregatedMediums: action.payload.aggregatedMediums
       }, state)
     }
+    case actions.UPDATE_ALL_FETCHED: {
+      if (state.artworks.length === state.total) {
+        return u({
+          allFetched: true
+        }, state)
+      } else {
+        return u({
+          allFetched: false
+        }, state)
+      }
+    }
     case actions.UPDATE_ARTIST_ID: {
       const artistId = action.payload.artistId
       if (artistId === 'artists-all') {

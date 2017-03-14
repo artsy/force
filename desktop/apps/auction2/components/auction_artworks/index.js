@@ -3,7 +3,7 @@ import AuctionListArtwork from '../auction_list_artwork'
 import { default as React, PropTypes } from 'react';
 import { connect } from 'react-redux'
 
-function AuctionArtworks({ artworks, isFetchingArtworks, isListView }) {
+function AuctionArtworks({ allFetched, artworks, isFetchingArtworks, isListView }) {
   const DisplayComponent = isListView ? AuctionListArtwork : AuctionGridArtwork
   return (
     <div className='auction2-artworks'>
@@ -19,6 +19,7 @@ function AuctionArtworks({ artworks, isFetchingArtworks, isListView }) {
 
 const mapStateToProps = (state) => {
   return {
+    allFetched: state.auctionArtworks.allFetched,
     artworks: state.auctionArtworks.artworks,
     isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
     isListView: state.auctionArtworks.isListView

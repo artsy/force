@@ -6,6 +6,7 @@ export const TOGGLE_FETCHING_ARTWORKS = 'TOGGLE_FETCHING_ARTWORKS'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
 export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
+export const UPDATE_ALL_FETCHED = 'UPDATE_ALL_FETCHED'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTWORKS = 'UPDATE_ARTWORKS'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
@@ -20,8 +21,7 @@ export function fetchArtworks() {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
-        filterParams,
-        isFetchingArtworks
+        filterParams
       }
     } = getState()
 
@@ -43,6 +43,7 @@ export function fetchArtworks() {
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
       dispatch(updateTotal(filter_artworks.total))
       dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(updateAllFetched())
       dispatch(toggleFetchingArtworks(false))
     } catch(error) {
       dispatch(toggleFetchingArtworks(false))
@@ -55,8 +56,7 @@ export function fetchMoreArtworks() {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
-        filterParams,
-        isFetchingArtworks
+        filterParams
       }
     } = getState()
 
@@ -70,6 +70,7 @@ export function fetchMoreArtworks() {
         }
       })
       dispatch(updateArtworks(filter_artworks.hits))
+      dispatch(updateAllFetched())
       dispatch(toggleFetchingArtworks(false))
     } catch(error) {
       dispatch(toggleFetchingArtworks(false))
@@ -82,10 +83,11 @@ export function infiniteScroll() {
   return (dispatch, getState) => {
     const {
       auctionArtworks: {
+        allFetched,
         isFetchingArtworks
       }
     } = getState()
-    if (!isFetchingArtworks) {
+    if (!isFetchingArtworks && !allFetched) {
       dispatch(updatePage(false))
       dispatch(fetchMoreArtworks())
     }
@@ -139,6 +141,12 @@ export function updateAggregatedMediums(aggregatedMediums) {
     payload: {
       aggregatedMediums
     }
+  }
+}
+
+export function updateAllFetched() {
+  return {
+    type: UPDATE_ALL_FETCHED
   }
 }
 

@@ -46,6 +46,32 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#updateAllFetched', () => {
+        it('updates allFetched to true if the total matches the number of artworks', () => {
+          initialResponse.auctionArtworks.allFetched.should.eql(false)
+          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.total.should.eql(0)
+          const newArtworks = auctions(initialResponse, actions.updateArtworks(['artwork1', 'artwork2', 'artwork3']))
+          const newTotal = auctions(newArtworks, actions.updateTotal(3))
+          const allArtworksFetched = auctions(newTotal, actions.updateAllFetched())
+          allArtworksFetched.auctionArtworks.allFetched.should.eql(true)
+          allArtworksFetched.auctionArtworks.artworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
+          allArtworksFetched.auctionArtworks.total.should.eql(3)
+        })
+
+        it('updates allFetched to false if the total does not match the number of artworks', () => {
+          initialResponse.auctionArtworks.allFetched.should.eql(false)
+          initialResponse.auctionArtworks.artworks.should.eql([])
+          initialResponse.auctionArtworks.total.should.eql(0)
+          const newArtworks = auctions(initialResponse, actions.updateArtworks(['artwork1', 'artwork2', 'artwork3']))
+          const newTotal = auctions(newArtworks, actions.updateTotal(10))
+          const notAllArtworksFetched = auctions(newTotal, actions.updateAllFetched())
+          notAllArtworksFetched.auctionArtworks.allFetched.should.eql(false)
+          notAllArtworksFetched.auctionArtworks.artworks.should.eql(['artwork1', 'artwork2', 'artwork3'])
+          notAllArtworksFetched.auctionArtworks.total.should.eql(10)
+        })
+      })
+
       describe('#updateArtistId', () => {
         it('updates the artist id', () => {
           initialResponse.auctionArtworks.filterParams.artist_ids.should.eql([])
@@ -71,11 +97,29 @@ describe('Reducers', () => {
       })
 
       describe('#updateArtworks', () => {
-        it('updates the artworks', () => {
+        it('resets the artworks if the page does not change', () => {
           initialResponse.auctionArtworks.artworks.should.eql([])
           const newArtworks = [{ id: 'artwork-1' }, { id: 'artwork-2' }]
           const updatedArtworks = auctions(initialResponse, actions.updateArtworks(newArtworks))
           updatedArtworks.auctionArtworks.artworks.should.eql(newArtworks)
+          const resetArtworks = [{ id: 'artwork-3' }]
+          const resettedArtworks = auctions(updatedArtworks, actions.updateArtworks(resetArtworks))
+          resettedArtworks.auctionArtworks.artworks.should.eql(resetArtworks)
+        })
+
+        it('concatenates the artworks if the page is above 1', () => {
+          initialResponse.auctionArtworks.artworks.should.eql([])
+          const newArtworks = [{ id: 'artwork-1' }, { id: 'artwork-2' }]
+          const updatedArtworks = auctions(initialResponse, actions.updateArtworks(newArtworks))
+          updatedArtworks.auctionArtworks.artworks.should.eql(newArtworks)
+          const newPage = auctions(updatedArtworks, actions.updatePage(false))
+          const concatArtworks = [{ id: 'artwork-3' }]
+          const concatenatedArtworks = auctions(newPage, actions.updateArtworks(concatArtworks))
+          concatenatedArtworks.auctionArtworks.artworks.should.eql([
+            { id: 'artwork-1' },
+            { id: 'artwork-2' },
+            { id: 'artwork-3' }
+          ])
         })
       })
 
