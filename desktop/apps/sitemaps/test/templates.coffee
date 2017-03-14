@@ -88,7 +88,7 @@ describe 'gene sitemap template', ->
       models: [fabricate 'gene']
       _: _
       sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql 'www.artsy.net/gene/pop-art9'
+    xml.should.containEql 'www.artsy.net/gene/pop-art'
 
 describe 'image sitemap template', ->
 
@@ -177,14 +177,14 @@ describe 'partners sitemap template', ->
       models: [fabricate 'partner']
       _: _
       sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql '<loc>www.artsy.net/gagosian44</loc>'
-    xml.should.containEql 'www.artsy.net/gagosian44/shows'
-    xml.should.containEql 'www.artsy.net/gagosian44/artists'
-    xml.should.containEql 'www.artsy.net/gagosian44/articles'
-    xml.should.containEql 'www.artsy.net/gagosian44/contact'
-    xml.should.containEql 'www.artsy.net/gagosian44/shop'
-    xml.should.containEql 'www.artsy.net/gagosian44/collection'
-    xml.should.containEql 'www.artsy.net/gagosian44/about'
+    xml.should.containEql '<loc>www.artsy.net/gagosian'
+    xml.should.containEql '/shows'
+    xml.should.containEql '/artists'
+    xml.should.containEql '/articles'
+    xml.should.containEql '/contact'
+    xml.should.containEql '/shop'
+    xml.should.containEql '/collection'
+    xml.should.containEql '/about'
 
 describe 'profiles sitemap template', ->
 
@@ -202,7 +202,7 @@ describe 'shows sitemap template', ->
       models: [fabricate 'show']
       _: _
       sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql 'www.artsy.net/show/gagosian-gallery-inez-and-vinoodh45'
+    xml.should.containEql 'www.artsy.net/show/gagosian-gallery-inez-and-vinoodh'
 
 describe 'video sitemap template', ->
 
