@@ -7,6 +7,7 @@ import u from 'updeep'
 const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
+  allFetched: false,
   artworks: [],
   filterParams: {
     aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
@@ -39,6 +40,11 @@ const initialState = {
 
 function auctionArtworks(state = initialState, action) {
   switch (action.type) {
+    case actions.TOGGLE_FETCHING_ARTWORKS: {
+      return u({
+        isFetchingArtworks: action.payload.isFetchingArtworks
+      }, state)
+    }
     case actions.TOGGLE_LIST_VIEW: {
       return u({
         isListView: action.payload.isListView
@@ -53,6 +59,17 @@ function auctionArtworks(state = initialState, action) {
       return u({
         aggregatedMediums: action.payload.aggregatedMediums
       }, state)
+    }
+    case actions.UPDATE_ALL_FETCHED: {
+      if (state.artworks.length === state.total) {
+        return u({
+          allFetched: true
+        }, state)
+      } else {
+        return u({
+          allFetched: false
+        }, state)
+      }
     }
     case actions.UPDATE_ARTIST_ID: {
       const artistId = action.payload.artistId
@@ -77,9 +94,15 @@ function auctionArtworks(state = initialState, action) {
       }
     }
     case actions.UPDATE_ARTWORKS: {
-      return u({
-        artworks: action.payload.artworks
-      }, state)
+      if (state.filterParams.page > 1) {
+        return u({
+          artworks: state.artworks.concat(action.payload.artworks)
+        }, state)
+      } else {
+        return u({
+          artworks: action.payload.artworks
+        }, state)
+      }
     }
     case actions.UPDATE_ESTIMATE_DISPLAY: {
       return u({
@@ -112,6 +135,23 @@ function auctionArtworks(state = initialState, action) {
         return u({
           filterParams: {
             gene_ids: state.filterParams.gene_ids.concat(mediumId)
+          }
+        }, state)
+      }
+    }
+    case actions.UPDATE_PAGE: {
+      const reset = action.payload.reset
+      if (reset === true) {
+        return u({
+          filterParams: {
+            page: 1
+          }
+        }, state)
+      } else {
+        const currentPage = state.filterParams.page
+        return u({
+          filterParams: {
+            page: currentPage + 1
           }
         }, state)
       }

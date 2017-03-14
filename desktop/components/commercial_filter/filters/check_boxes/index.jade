@@ -1,6 +1,0 @@
-.aggregated-items(class="aggregated-#{itemType}")
-  include ./all.jade
-
-  each item in counts
-    - isSelected = _.contains(selected, item.id)
-    include ./item.jade

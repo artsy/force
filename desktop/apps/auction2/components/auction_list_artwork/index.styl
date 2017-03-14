@@ -1,5 +1,7 @@
 .auction2-list-artwork
-  display table
+  display flex
+  justify-content space-between
+  align-items center
   height 200px
   text-align left
   width 100%
@@ -8,24 +10,24 @@
   a
     text-decoration none
 
-  &__image-container, &__metadata, &__lot-number
-    display table-cell
-    vertical-align middle
-    width 25%
+  &__image-container
+    width 250px
 
   &__image > img
     max-height 150px
     max-width 200px
     margin auto
 
+  &__metadata
+    width 30%
+    text-align left
+
   &__lot-number
     avant-garde()
-    font-size 13px
+    font-size 11px
     color black
     margin-bottom 2px
     text-align center
 
   .auction2-bid-status
-    display table-cell
-    vertical-align middle
     text-align right

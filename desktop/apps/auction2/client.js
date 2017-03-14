@@ -26,31 +26,12 @@ const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
 const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at'))
 const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 
-const clock = new ClockView({modelName: 'Auction', model: auction, el: $('.auction2-clock')})
+const clock = new ClockView({
+  modelName: 'Auction',
+  model: auction,
+  el: $('.auction2-clock')
+})
 clock.start()
-
-const customSortMap = {
-  "lot_number": "Lot Number (asc.)",
-  "-lot_number": "Lot Number (desc.)",
-  "-searchable_estimate": "Most Expensive",
-  "searchable_estimate": "Least Expensive"
-}
-
-const defaultParams = {
-  size: 50,
-  page: 1,
-  aggregations: ['TOTAL', 'MEDIUM', 'FOLLOWED_ARTISTS', 'ARTIST'],
-  sale_id: sd.AUCTION.id,
-  sort: 'lot_number',
-  gene_ids: [],
-  artist_ids: [],
-  ranges: {
-    estimate_range: {
-      min: 50,
-      max: 50000
-    }
-  }
-}
 
 if (sd.AUCTION && sd.AUCTION.is_live_open == false) {
   const activeBids = new MyActiveBids({
@@ -89,7 +70,22 @@ function delayedScroll() {
 }
 
 // jump view
-const jump = new JumpView({ threshold: $(window).height(), direction: 'bottom' })
+const jump = new JumpView({
+  threshold: $(window).height(),
+  direction: 'bottom',
+  position: $('#cf-artworks').offset().top - $('.mlh-navbar').height()
+})
 $('body').append(jump.$el)
 
 jump.scrollToPosition(0)
+
+// infinite scroll
+function infiniteScroll() {
+  const threshold = $(window).height() + $(window).scrollTop()
+  const artworksEl = $('.auction2-artworks')
+  const shouldFetch = artworksEl.height() > 0
+    && threshold > artworksEl.offset().top + artworksEl.height()
+  if (shouldFetch) { store.dispatch(actions.infiniteScroll()) }
+}
+
+$(window).on('scroll.auction2-artworks', _.throttle(infiniteScroll, 200))

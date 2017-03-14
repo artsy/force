@@ -15,14 +15,14 @@ function RangeSlider(props) {
 
   const minEstimate = filterParams.ranges.estimate_range.min
   const maxEstimate = filterParams.ranges.estimate_range.max
-  // TODO: Get currency from sale!
+  // TODO: Get currency from sale!!!!!
   const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { precision: 0 })
   const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
   return (
     <div className='auction2-range-slider'>
       <div className='auction2-range-slider__metadata'>
         <div className='auction2-range-slider__title'>Price</div>
-        <div className='auction2-range-slider__caption'>{`${formattedMinDisplay} - ${formattedMaxDisplay}`}</div>
+        <div className='auction2-range-slider__caption'>{`${formattedMinDisplay} - ${formattedMaxDisplay}+`}</div>
       </div>
       <Range
         allowCross={false}
