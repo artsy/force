@@ -21,23 +21,27 @@ function Header(props) {
   } = props
   const displayType = isListView ? 'list' : 'grid'
   const totalLabel = (total && total > 0)
-    ? `${total} Artworks for sale`
+    ? `${total} Artworks`
     : 'Your search returned 0 results. Try removing some filters.'
 
   return (
     <div className='auction2-artworks-header'>
-      <div className='auction2-artworks-header__total'>
-        { totalLabel }
-      </div>
-      <div className='auction2-artworks-header__sort'>
-        <FilterSort />
-      </div>
-      <div className='auction2-artworks-header__switch'>
-        <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
-          <Grid />
+      <div className='auction2-artworks-header__left'>
+        <div className='auction2-artworks-header__total'>
+          { totalLabel }
         </div>
-        <div className={displayButtonClass('list', displayType)} onClick={() => toggleListViewAction(true)}>
-          <List />
+      </div>
+      <div className='auction2-artworks-header__right'>
+        <div className='auction2-artworks-header__sort'>
+          <FilterSort />
+        </div>
+        <div className='auction2-artworks-header__switch'>
+          <div className={displayButtonClass('grid', displayType)} onClick={() => toggleListViewAction(false)}>
+            <Grid />
+          </div>
+          <div className={displayButtonClass('list', displayType)} onClick={() => toggleListViewAction(true)}>
+            <List />
+          </div>
         </div>
       </div>
     </div>

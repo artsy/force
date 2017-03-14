@@ -78,6 +78,34 @@ export function fetchMoreArtworks() {
   }
 }
 
+export function infiniteScroll() {
+  return (dispatch, getState) => {
+    const {
+      auctionArtworks: {
+        isFetchingArtworks
+      }
+    } = getState()
+    if (!isFetchingArtworks) {
+      dispatch(updatePage(false))
+      dispatch(fetchMoreArtworks())
+    }
+  }
+}
+
+export function resetArtworks() {
+  return (dispatch, getState) => {
+    const {
+      auctionArtworks: {
+        isFetchingArtworks
+      }
+    } = getState()
+    if (!isFetchingArtworks) {
+      dispatch(updatePage(true))
+      dispatch(fetchArtworks())
+    }
+  }
+}
+
 export function toggleFetchingArtworks(isFetchingArtworks) {
   return {
     type: TOGGLE_FETCHING_ARTWORKS,
@@ -181,39 +209,6 @@ export function updateMediumParams(mediumId) {
     dispatch(resetArtworks())
   }
 }
-
-
-
-export function resetArtworks() {
-  return (dispatch, getState) => {
-    const {
-      auctionArtworks: {
-        isFetchingArtworks
-      }
-    } = getState()
-    if (!isFetchingArtworks) {
-      dispatch(updatePage(true))
-      dispatch(fetchArtworks())
-    }
-  }
-}
-
-
-export function infiniteScroll() {
-  return (dispatch, getState) => {
-    const {
-      auctionArtworks: {
-        isFetchingArtworks
-      }
-    } = getState()
-    if (!isFetchingArtworks) {
-      dispatch(updatePage(false))
-      dispatch(fetchMoreArtworks())
-    }
-  }
-}
-
-
 
 export function updatePage(reset) {
   return {

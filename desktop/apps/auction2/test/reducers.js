@@ -121,6 +121,18 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#updatePage', () => {
+        it('updates the page param', () => {
+          initialResponse.auctionArtworks.filterParams.page.should.eql(1)
+          const incrementedPage = auctions(initialResponse, actions.updatePage(false))
+          incrementedPage.auctionArtworks.filterParams.page.should.eql(2)
+          const furtherIncrementedPage = auctions(incrementedPage, actions.updatePage(false))
+          furtherIncrementedPage.auctionArtworks.filterParams.page.should.eql(3)
+          const resetPage = auctions(furtherIncrementedPage, actions.updatePage(true))
+          resetPage.auctionArtworks.filterParams.page.should.eql(1)
+        })
+      })
+
       describe('#updateSortParam', () => {
         it('updates the sort param', () => {
           initialResponse.auctionArtworks.filterParams.sort.should.eql('lot_number')
