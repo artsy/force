@@ -62,22 +62,29 @@ render(
 
 store.dispatch(actions.fetchArtworks())
 
-// 1 second delay for checkbox selections
-let timer = null
-function delayedScroll() {
-  clearTimeout(timer)
-  timer = setTimeout($('html,body').animate( { scrollTop: 0 }, 400), 1000)
+// scroll up if you select a checkbox or sort
+function scrollToTop() {
+  $('html,body').animate( {
+    scrollTop: $('.auction2-my-active-bids').offset().top - $('.mlh-navbar').height()
+  }, 400)
 }
+
+$('body').on('click', '.artsy-checkbox', () => scrollToTop())
+$('body').on('click', '.bordered-pulldown-options a', (e) => {
+  e.preventDefault()
+  $('.bordered-pulldown-options').hidehover()
+  scrollToTop()
+})
 
 // jump view
 const jump = new JumpView({
   threshold: $(window).height(),
   direction: 'bottom',
-  position: $('#cf-artworks').offset().top - $('.mlh-navbar').height()
+  position: $('.auction2-my-active-bids').offset().top - $('.mlh-navbar').height()
 })
 $('body').append(jump.$el)
 
-jump.scrollToPosition(0)
+jump.scrollToPosition($('.mlh-navbar').offset().top)
 
 // infinite scroll
 function infiniteScroll() {

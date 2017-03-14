@@ -8,41 +8,64 @@ const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
   allFetched: false,
-  artworks: [],
+  currency: sd.AUCTION && sd.AUCTION.currency,
   filterParams: {
     aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
     artist_ids: [],
     estimate_range: '',
     gene_ids: [],
+    include_artworks_by_followed_artists: false,
     page: 1,
     sale_id: sd.AUCTION && sd.AUCTION.id,
     size: 50,
     ranges: {
       estimate_range: {
-        min: 50,
+        min: 0,
         max: 50000
       }
     },
-    sort: 'lot_number'
+    sort: 'position'
   },
   isFetchingArtworks: false,
   isListView: false,
   maxEstimateRangeDisplay: 50000,
-  minEstimateRangeDisplay: 50,
+  minEstimateRangeDisplay: 0,
+  numArtistsYouFollow: 0,
+  saleArtworks: [],
   sortMap: {
-    "lot_number": "Lot Number (asc.)",
-    "-lot_number": "Lot Number (desc.)",
+    "bidder_positions_count": "Number of Bids (asc.)",
+    "-bidder_positions_count": "Number of Bids (desc.)",
+    "position": "Lot Number (asc.)",
+    "-position": "Lot Number (desc.)",
     "-searchable_estimate": "Most Expensive",
     "searchable_estimate": "Least Expensive"
   },
-  total: 0
+  total: 0,
+  user: sd.CURRENT_USER
 }
 
 function auctionArtworks(state = initialState, action) {
   switch (action.type) {
-    case actions.TOGGLE_FETCHING_ARTWORKS: {
+    case actions.GET_ARTWORKS_FAILURE: {
       return u({
-        isFetchingArtworks: action.payload.isFetchingArtworks
+        isFetchingArtworks: false
+      }, state)
+    }
+    case actions.GET_ARTWORKS_REQUEST: {
+      return u({
+        isFetchingArtworks: true
+      }, state)
+    }
+    case actions.GET_ARTWORKS_SUCCESS: {
+      return u({
+        isFetchingArtworks: false
+      }, state)
+    }
+    case actions.TOGGLE_ARTISTS_YOU_FOLLOW: {
+      return u({
+        filterParams: {
+          include_artworks_by_followed_artists: !state.filterParams.include_artworks_by_followed_artists
+        }
       }, state)
     }
     case actions.TOGGLE_LIST_VIEW: {
@@ -61,7 +84,7 @@ function auctionArtworks(state = initialState, action) {
       }, state)
     }
     case actions.UPDATE_ALL_FETCHED: {
-      if (state.artworks.length === state.total) {
+      if (state.saleArtworks.length === state.total) {
         return u({
           allFetched: true
         }, state)
@@ -90,17 +113,6 @@ function auctionArtworks(state = initialState, action) {
           filterParams: {
             artist_ids: state.filterParams.artist_ids.concat(artistId)
           }
-        }, state)
-      }
-    }
-    case actions.UPDATE_ARTWORKS: {
-      if (state.filterParams.page > 1) {
-        return u({
-          artworks: state.artworks.concat(action.payload.artworks)
-        }, state)
-      } else {
-        return u({
-          artworks: action.payload.artworks
         }, state)
       }
     }
@@ -139,6 +151,11 @@ function auctionArtworks(state = initialState, action) {
         }, state)
       }
     }
+    case actions.UPDATE_NUM_ARTISTS_YOU_FOLLOW: {
+      return u({
+        numArtistsYouFollow: action.payload.numArtistsYouFollow
+      }, state)
+    }
     case actions.UPDATE_PAGE: {
       const reset = action.payload.reset
       if (reset === true) {
@@ -153,6 +170,17 @@ function auctionArtworks(state = initialState, action) {
           filterParams: {
             page: currentPage + 1
           }
+        }, state)
+      }
+    }
+    case actions.UPDATE_SALE_ARTWORKS: {
+      if (state.filterParams.page > 1) {
+        return u({
+          saleArtworks: state.saleArtworks.concat(action.payload.saleArtworks)
+        }, state)
+      } else {
+        return u({
+          saleArtworks: action.payload.saleArtworks
         }, state)
       }
     }
