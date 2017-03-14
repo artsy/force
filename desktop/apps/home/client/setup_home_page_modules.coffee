@@ -96,6 +96,7 @@ module.exports = ->
           $el: $el.find(".abrv-follow-button")
           module: module
           user: user
+          modelName: options.category ? 'gene' : 'artist'
 
          if contexts[module.key]?
             html = contexts[module.key](module)
