@@ -17,3 +17,6 @@ sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
 
 @signUp = (req, res) ->
   res.render 'sign_up'
+
+@logIn = (req, res) ->
+  res.render 'log_in'
