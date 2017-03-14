@@ -59,10 +59,13 @@ describe 'Sitemaps', ->
       @res.render.args[0][0].should.equal('news_sitemap')
       @res.render.args[0][1].articles.length.should.equal(1)
 
-    it 'only displays articles from Artsy Editorial', ->
-      routes.__set__ 'ARTSY_EDITORIAL_CHANNEL', '123'
+    it 'fetches with correct news data', ->
       routes.articles(@req, @res)
-      Backbone.sync.args[0][2].data.channel_id.should.equal '123'
+      Backbone.sync.args[0][2].data.featured.should.be.true()
+      Backbone.sync.args[0][2].data.published.should.be.true()
+      Backbone.sync.args[0][2].data.sort.should.equal '-published_at'
+      Backbone.sync.args[0][2].data.exclude_google_news.should.be.false()
+      Backbone.sync.args[0][2].data.limit.should.equal 100
 
   describe '#artworks', ->
 
