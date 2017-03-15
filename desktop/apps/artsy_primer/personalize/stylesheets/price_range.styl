@@ -7,6 +7,12 @@
       padding 0 40px
       color gray-darker-color
       font-size 16px
+    @media screen and (max-width: 768px)
+      width auto
+      aside
+        margin 0
+        padding 0 20px
+        text-align left
 
 .artsy-primer-personalize-category-anything-else
   border-top 1px solid gray-lighter-color
@@ -26,7 +32,23 @@
     font-size 20px
   img
     max-width 100%
+  @media screen and (max-width: 768px)
+    padding 0 20px 300px 20px
+    h2
+      margin 20px 0 0 0
+      padding 0
+      garamond()
+      serif('s-body')
+      text-align left
+      text-transform none
+      letter-spacing 0
+    aside
+      margin-top 1em
 
 .artsy-primer-personalize-slider
   margin 30px auto 90px auto
   width 600px
+  @media screen and (max-width: 768px)
+    margin 60px 0 90px 0
+    width 100%
+    padding 0 20px
