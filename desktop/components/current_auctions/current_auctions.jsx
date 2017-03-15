@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
+import upcomingLabel from './utils/upcoming_label'
 import { partition, take } from 'underscore'
-import { upcomingLabel } from '../../lib/auction_label'
 
 export default function CurrentAuctions ({ auctionContextId, sales }) {
   const sortedSales = sortSales(sales, auctionContextId)
@@ -28,6 +28,7 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
             end_at,
             href,
             id,
+            is_live_open,
             name,
             live_start_at,
             start_at,
@@ -35,7 +36,8 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
           } = sale
 
           const statusLabel = 'Auction ' + upcomingLabel(start_at, end_at,
-                                                         live_start_at, status)
+                                                         live_start_at, is_live_open,
+                                                         status)
           return (
             <div className='artwork-current-auctions__sale-item' key={id}>
               <a href={href}>

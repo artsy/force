@@ -1,7 +1,6 @@
 import 'moment-timezone'
 import CurrentAuctions from '../current_auctions'
 import React from 'react'
-import { expect } from 'chai'
 import { shallow } from 'enzyme'
 
 describe('apps/artwork/components/current_auctions', () => {
@@ -11,6 +10,7 @@ describe('apps/artwork/components/current_auctions', () => {
       name: 'Climate Mobilization: Benefit Auction 2017',
       href: '/auction/climate-mobilization-benefit-auction-2017',
       status: 'open',
+      is_live_open: false,
       start_at: '2017-03-02T17:00:00+00:00',
       end_at:  '2017-03-16T22:00:00+00:00',
       live_start_at:null,
@@ -25,6 +25,7 @@ describe('apps/artwork/components/current_auctions', () => {
       name: 'Heritage Auctions: East Meets West',
       href: '/auction/heritage-auctions-east-meets-west',
       status: 'open',
+      is_live_open: false,
       start_at: '2017-03-01T17:00:00+00:00',
       end_at:  '2017-03-15T00:00:00+00:00',
       live_start_at:null,
@@ -39,6 +40,7 @@ describe('apps/artwork/components/current_auctions', () => {
       name: 'Forum Auctions: Editions and Works on Paper',
       href: '/auction/forum-auctions-editions-and-works-on-paper',
       status: 'open',
+      is_live_open: false,
       start_at: '2017-03-07T17:00:00+00:00',
       end_at: null,
       live_start_at: '2017-03-21T12:00:00+00:00',
@@ -53,6 +55,7 @@ describe('apps/artwork/components/current_auctions', () => {
       name: 'Los Angeles Modern Auctions - March 2015',
       href: '/auction/los-angeles-modern-auctions-march-2015',
       status: 'open',
+      is_live_open: true,
       start_at: '2017-03-15T10:00:00+00:00',
       end_at:  '2017-03-15T23:59:00+00:00',
       live_start_at: '2017-03-15T10:05:00+00:00',
@@ -67,6 +70,7 @@ describe('apps/artwork/components/current_auctions', () => {
       name: 'San Francisco Modern Auctions - March 2016',
       href: '/auction/san-francisco-modern-auctions-march-2015',
       status: 'open',
+      is_live_open: false,
       start_at: '2017-03-15T10:00:00+00:00',
       end_at:  '2017-03-15T23:59:00+00:00',
       live_start_at: '2017-03-15T10:05:00+00:00',
@@ -85,7 +89,7 @@ describe('apps/artwork/components/current_auctions', () => {
       />
     )
 
-    expect(component.find('.artwork-current-auctions__sale-item')).to.have.length(4)
+    component.find('.artwork-current-auctions__sale-item').length.should.eql(4)
   })
 
   it('If auctionContextId is provided it renders first in the list', () => {
@@ -96,8 +100,7 @@ describe('apps/artwork/components/current_auctions', () => {
       />
     )
 
-    expect(
-      component.find('.artwork-current-auctions__sale-item').first().text()
-    ).to.contain('San Francisco Modern Auctions')
+    component.find('.artwork-current-auctions__sale-item').first().text()
+      .should.containEql('San Francisco Modern Auctions')
   })
 })

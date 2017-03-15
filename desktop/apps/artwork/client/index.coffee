@@ -39,7 +39,7 @@ module.exports =
             $isClosed: Boolean!,
             $auctionId: ID,
             $saleSize: Int = 4,
-            $saleSort: SaleSorts = CREATED_AT_ASC
+            $saleSort: SaleSorts = TIMELY_AT_NAME_ASC
           ) {
             artwork(id: $id) {
               ... partner
@@ -58,19 +58,18 @@ module.exports =
           #{require '../components/partner/query.coffee'}
           #{require('../components/auction_artworks/query.coffee').auction_artworks}
           #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-          #{require('../components/current_auctions/query.js').default}
+          #{require('../../../components/current_auctions/query.js').default}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
       variables:
         isClosed: context.is_closed
-        auctionId: sd.AUCTION.id,
-
+        auctionId: sd.AUCTION.id
 
       init: compact [
           require '../components/partner/index.coffee'
           require '../components/auction_artworks/index.coffee' unless context.is_closed
-          require('../components/current_auctions/index.jsx').default unless context.is_closed
+          require('../../../components/current_auctions/index.jsx').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'
