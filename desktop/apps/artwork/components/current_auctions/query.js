@@ -1,5 +1,6 @@
 export default `
   fragment current_auctions on Sale {
+    id
     name
     href
     status

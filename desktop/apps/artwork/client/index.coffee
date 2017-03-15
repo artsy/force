@@ -34,7 +34,13 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-          query artwork($id: String!, $isClosed: Boolean!, $auctionId: ID) {
+          query artwork(
+            $id: String!,
+            $isClosed: Boolean!,
+            $auctionId: ID,
+            $saleSize: Int = 4,
+            $saleSort: SaleSorts = CREATED_AT_ASC
+          ) {
             artwork(id: $id) {
               ... partner
               ... auction_artworks @skip(if: $isClosed)
@@ -44,7 +50,7 @@ module.exports =
 
             ... followed_artist_ids @skip(if: $isClosed)
 
-            sales(size: 4) {
+            sales(size: $saleSize, sort: $saleSort) {
               ... current_auctions
             }
           }
@@ -52,13 +58,14 @@ module.exports =
           #{require '../components/partner/query.coffee'}
           #{require('../components/auction_artworks/query.coffee').auction_artworks}
           #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-          #{require '../components/current_auctions/query.js' }
+          #{require('../components/current_auctions/query.js').default}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
       variables:
         isClosed: context.is_closed
-        auctionId: sd.AUCTION.id
+        auctionId: sd.AUCTION.id,
+
 
       init: compact [
           require '../components/partner/index.coffee'
