@@ -67,7 +67,7 @@ ipfilter = require('express-ipfilter').IpFilter
 
 module.exports = (app) ->
   # Blacklist IPs
-  # app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
+  app.use ipfilter([IP_BLACKLIST.split(',')], log: false, mode: 'deny')
 
   # Rate limited
   if OPENREDIS_URL and cache.client
