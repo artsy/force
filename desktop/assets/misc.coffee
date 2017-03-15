@@ -40,7 +40,5 @@ routes =
 
   '/artsy-primer-personalize': require('../apps/artsy_primer/personalize/client/index.coffee').init
 
-  # '/login': require('../apps/auth/client/log_in.coffee').init
-
 for path, init of routes
   $(init) if location.pathname.match path
