@@ -1,46 +1,5 @@
-@require '../../../components/main_layout/stylesheets/buttons'
-@require '../../../components/main_layout/stylesheets/icons'
+@require '../../../components/main_layout/stylesheets/index'
 @require './grid_styles'
-
-@font-face
-  font-family 'artsy-icons'
-  src url('/fonts/artsy-icons.eot?uo9ko')
-  src url('/fonts/artsy-icons.eot?#iefixuo9ko') format('embedded-opentype'),
-    url('/fonts/artsy-icons.woff2?uo9ko') format('woff2'),
-    url('/fonts/artsy-icons.ttf?uo9ko') format('truetype'),
-    url('/fonts/artsy-icons.woff?uo9ko') format('woff'),
-    url('/fonts/artsy-icons.svg?uo9ko#artsy-icons') format('svg')
-  font-weight normal
-  font-style normal
-
-global-reset()
-
-// General tag styles
-*,
-*:before,
-*:after
-  box-sizing border-box
-html[data-useragent*="Firefox"]
-  overflow-x hidden
-html, body
-  height 100%
-body
-  garamond()
-  font-size default-garamond-font-size
-  line-height 1.4em
-  text-rendering optimizeLegibility
-  -webkit-tap-highlight-color rgba(0, 0, 0, 0);
-a
-  color black
-  cursor pointer
-  -webkit-tap-highlight-color rgba(26, 26, 26, 0.301961);
-b, strong
-  font-weight bold
-em
-  font-style italic
-button, input
-  margin 0
-  outline none
 
 .buy-art-buttons
   width 270px
