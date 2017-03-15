@@ -12,4 +12,6 @@ app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
 app.get '/reset_password', routes.resetPassword
+app.get '/signup', routes.signUp
+app.get '/login', routes.logIn
 app.get twitterLastStepPath, routes.twitterLastStep
