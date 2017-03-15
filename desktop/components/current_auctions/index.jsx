@@ -1,11 +1,15 @@
 import CurrentAuctions from './current_auctions.jsx'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { data as sd } from 'sharify'
 import { isEmpty } from 'underscore'
+
+export {
+  CurrentAuctions
+}
 
 export default function mount (data) {
   const {
+    auctionContextId,
     sales
   } = data
 
@@ -14,7 +18,7 @@ export default function mount (data) {
   if (hasSales) {
     ReactDOM.render(
       <CurrentAuctions
-        auctionContextId={sd.AUCTION.id}
+        auctionContextId={auctionContextId}
         sales={sales}
       />,
       document.getElementById('react-mount-current-auctions')

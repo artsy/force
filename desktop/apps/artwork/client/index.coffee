@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ CLIENT } = require('sharify').data
+{ AUCTION, CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -172,5 +172,8 @@ module.exports =
       req: user: CurrentUser.orNull()
     }
       .then (data) ->
-        renderTemplates(data)
+        renderTemplates(extend data, {
+          auctionContextId: AUCTION.id
+        })
+
         exec init, data
