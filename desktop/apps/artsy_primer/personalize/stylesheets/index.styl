@@ -27,6 +27,9 @@
   padding 40px
   background-color white
   transition opacity 0.25s
+  @media screen and (max-width: 768px)
+    padding 0
+    overflow hidden
 
 .artsy-primer-personalize-initial-logotype
   display block
@@ -50,6 +53,13 @@
     color gray-darker-color
     max-width 692px
     margin 30px auto 0 auto
+  @media screen and (max-width: 768px)
+    padding 0 20px
+    margin 100px 0 0 0
+    > h1
+      line-height 28px
+    > aside
+      text-align left
 
 .artsy-primer-personalize-step
   width 400px
