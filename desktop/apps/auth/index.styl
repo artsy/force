@@ -17,3 +17,36 @@
   text-align left
   a
     color red-color
+
+.standard-auth-signup-page
+  &__facebook
+    background-color #4e65b1
+    &:hover
+      background-color #4e65b1
+  &__divider
+    position relative
+    &-text
+      avant-garde-size('s-headline')
+      background-color white
+      display inline-block
+      z-index 100
+      padding 10px
+    &:before
+      content ''
+      position absolute
+      bottom 50%
+      left 0
+      right 0
+      border-bottom 1px solid #e5e5e5
+      z-index -1
+
+#auth-footer.standard-auth-signup-page__footer
+  color gray-darker-color
+  a
+    color gray-darker-color
+  aside
+    garamond-size('s-caption')
+
+.standard-auth-login-page
+  &__checkbox
+    vertical-align bottom
