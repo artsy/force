@@ -18,7 +18,7 @@ import createLogger from 'redux-logger'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import auctions from './reducers'
-import CommercialFilter from './components/commercial_filter'
+import AuctionPage from './components/auction_page'
 import * as actions from './actions'
 
 const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
@@ -55,12 +55,15 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <CommercialFilter />
+    <AuctionPage />
   </Provider>,
   document.getElementById('cf-artworks')
 )
 
 store.dispatch(actions.fetchArtworks())
+if (sd.CURRENT_USER) {
+  store.dispatch(actions.fetchArtworksByFollowedArtists())
+}
 
 // scroll up if you select a checkbox or sort
 function scrollToTop() {

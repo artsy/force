@@ -9,6 +9,7 @@ const initialState = {
   aggregatedMediums: [],
   allFetched: false,
   currency: sd.AUCTION && sd.AUCTION.currency,
+  displayFollowedArtistsRail: false,
   filterParams: {
     aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
     artist_ids: [],
@@ -26,12 +27,18 @@ const initialState = {
     },
     sort: 'position'
   },
+  followedArtistRailMax: 50,
+  followedArtistRailPage: 1,
+  followedArtistRailSize: 4,
   isFetchingArtworks: false,
+  isLastFollowedArtistsPage: false,
   isListView: false,
   maxEstimateRangeDisplay: 50000,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,
   saleArtworks: [],
+  saleArtworksByFollowedArtists: [],
+  saleArtworksByFollowedArtistsTotal: 0,
   sortMap: {
     "bidder_positions_count": "Number of Bids (asc.)",
     "-bidder_positions_count": "Number of Bids (desc.)",
@@ -46,6 +53,14 @@ const initialState = {
 
 function auctionArtworks(state = initialState, action) {
   switch (action.type) {
+    case actions.DECREMENT_FOLLOWED_ARTISTS_PAGE: {
+      const currentPage = state.followedArtistRailPage
+      if (!(currentPage === 1)) {
+        return u({
+          followedArtistRailPage: currentPage - 1
+        }, state)
+      }
+    }
     case actions.GET_ARTWORKS_FAILURE: {
       return u({
         isFetchingArtworks: false
@@ -60,6 +75,14 @@ function auctionArtworks(state = initialState, action) {
       return u({
         isFetchingArtworks: false
       }, state)
+    }
+    case actions.INCREMENT_FOLLOWED_ARTISTS_PAGE: {
+      const currentPage = state.followedArtistRailPage
+      if (!state.isLastFollowedArtistsPage) {
+        return u({
+          followedArtistRailPage: currentPage + 1
+        }, state)
+      }
     }
     case actions.TOGGLE_ARTISTS_YOU_FOLLOW: {
       return u({
@@ -116,6 +139,11 @@ function auctionArtworks(state = initialState, action) {
         }, state)
       }
     }
+    case actions.SHOW_FOLLOWED_ARTISTS_RAIL: {
+      return u({
+        displayFollowedArtistsRail: true
+      }, state)
+    }
     case actions.UPDATE_ESTIMATE_DISPLAY: {
       return u({
         minEstimateRangeDisplay: action.payload.min,
@@ -128,6 +156,18 @@ function auctionArtworks(state = initialState, action) {
           estimate_range: `${action.payload.min * 100}-${action.payload.max * 100}`
         }
       }, state)
+    }
+    case actions.UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE: {
+      if (state.followedArtistRailPage >
+        (state.saleArtworksByFollowedArtistsTotal / state.followedArtistRailSize)) {
+        return u({
+          isLastFollowedArtistsPage: true
+        }, state)
+      } else {
+        return u({
+          isLastFollowedArtistsPage: false
+        }, state)
+      }
     }
     case actions.UPDATE_MEDIUM_ID: {
       const mediumId = action.payload.mediumId
@@ -183,6 +223,16 @@ function auctionArtworks(state = initialState, action) {
           saleArtworks: action.payload.saleArtworks
         }, state)
       }
+    }
+    case actions.UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS: {
+      return u({
+        saleArtworksByFollowedArtists: action.payload.saleArtworks
+      }, state)
+    }
+    case actions.UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS_TOTAL: {
+      return u({
+        saleArtworksByFollowedArtistsTotal: action.payload.total
+      }, state)
     }
     case actions.UPDATE_SORT: {
       return u({
