@@ -6,7 +6,6 @@ sd = require('sharify').data
 
 module.exports.init = ->
   articles = new Articles sd.ARTICLES
-  articles.count = sd.ARTICLES_COUNT + 4
   articles.reset articles.feed()
   feedView = new ArticlesFeedView
     el: $('.articles-articles-feed')

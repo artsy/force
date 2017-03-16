@@ -1,11 +1,11 @@
 Q = require 'bluebird-q'
 knox = require 'knox'
 request = require 'superagent'
-{ S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config'
+{ S3_KEY, S3_SECRET, S3_BUCKET } = require '../../config'
 
 module.exports = class JSONPage
   constructor: ({ @name, @paths, @bucket }) ->
-    @bucket ?= APPLICATION_NAME
+    @bucket ?= S3_BUCKET
     throw new Error 'Requires a `name`' unless @name?
 
   path: ->

@@ -14,7 +14,7 @@ gradient = require '../../../../components/gradient_blurb/index.coffee'
 template = -> require('../../templates/sections/overview.jade') arguments...
 showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlights.jade') arguments...
 renderRail = require '../../components/rail/index.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 query = require '../../queries/overview.coffee'
 
 module.exports = class OverviewView extends Backbone.View

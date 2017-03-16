@@ -14,3 +14,9 @@ sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
 
 @twitterLastStep = (req, res) ->
   res.render 'twitter_email'
+
+@signUp = (req, res) ->
+  res.render 'sign_up'
+
+@logIn = (req, res) ->
+  res.render 'log_in'

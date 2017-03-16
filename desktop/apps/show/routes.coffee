@@ -1,7 +1,7 @@
 { NODE_ENV } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json'
 PartnerShow = require '../../models/partner_show'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 

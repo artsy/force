@@ -90,14 +90,16 @@ module.exports =
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
   EOY_2016: '5829db77b5989e6f98f779a5'
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
-  ARTSY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
-  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/artsy-partner-updates$'
+  GALLERY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
+  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca3","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca4","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"}]'
   EOY_2016_ARTICLE: null
   EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
   RAYGUN_KEY: null
   FORCE_MERGE_URL: 'https://merged.artsy.net'
   FORCE_MERGE_WEIGHT: 0
+  S3_BUCKET: null
+  SEGMENT_AMP_WRITE_KEY: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

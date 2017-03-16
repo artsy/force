@@ -20,8 +20,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
-      # id for "Artsy Editorial" (exclude partner posts)
-      channel_id: ARTSY_EDITORIAL_CHANNEL
+      featured: true
       published: true
       sort: '-published_at'
       exclude_google_news: false
@@ -48,7 +47,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
     (cb) ->
       request
         .get(POSITRON_URL + '/api/articles')
-        .query(published: true, limit: 1)
+        .query(published: true, limit: 1, count: true)
         .end (err, sres) ->
           return cb(err) if err
           totalCount = Math.ceil sres.body.count / PAGE_SIZE
@@ -254,6 +253,7 @@ resultToBingJSON = (result) ->
     Disallow: ?from-show-guide=
     Sitemap: #{APP_URL}/sitemap.xml
     Sitemap: #{APP_URL}/images_sitemap.xml
+
   """
   res.send switch NODE_ENV
     when 'production'

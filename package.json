@@ -8,7 +8,7 @@
   },
   "scripts": {
     "mocha": "mocha -r should --compilers coffee:coffee-script/register,js:babel-core/register -t 30000",
-    "test": "yarn mocha test && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
+    "test": "yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
     "deploy-assets": "mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
     "start": "node -r dotenv/config --max_old_space_size=960 ."
@@ -27,6 +27,7 @@
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-inline-react-svg": "^0.2.0",
+    "babel-plugin-rewire": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.22.0",
@@ -56,6 +57,7 @@
     "dotenv": "^4.0.0",
     "embed-video": "^1.2.0",
     "embedly-view-helpers": "git://github.com/artsy/embedly-view-helpers.git",
+    "enzyme": "^2.7.1",
     "express": "^4.13.3",
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
@@ -64,6 +66,7 @@
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "geolib": "^2.0.18",
     "glob": "^7.1.1",
+    "global": "^4.3.1",
     "google-maps-api": "^2.0.0",
     "graceful-fs": "^4.1.2",
     "helmet": "^2.3.0",
@@ -88,16 +91,22 @@
     "popover": "^2.4.0",
     "qs": "^6.3.0",
     "raygun4js": "^2.5.1",
+    "rc-slider": "^6.1.2",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
+    "redux-logger": "^2.8.2",
+    "redux-mock-store": "^1.2.2",
+    "redux-thunk": "^2.2.0",
     "referer-parser": "0.0.3",
     "sailthru-client": "^3.0.0",
     "serve-favicon": "^2.3.0",
     "sharify": "^0.1.6",
     "spark-md5": "^2.0.2",
+    "standard": "^9.0.0",
     "stylus": "^0.54.5",
     "superagent": "^2.3.0",
     "twilio": "^2.5.1",
@@ -169,7 +178,8 @@
     "plugins": [
       "inline-react-svg",
       "transform-runtime",
-      "transform-class-properties"
+      "transform-class-properties",
+      "babel-plugin-rewire"
     ]
   },
   "optionalDependencies": {

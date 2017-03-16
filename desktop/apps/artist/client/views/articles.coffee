@@ -5,7 +5,7 @@ ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffe
 template = -> require('../../templates/sections/articles.jade') arguments...
 sd = require('sharify').data
 query = require '../../queries/articles.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 
 module.exports = class ArticlesView extends Backbone.View
 

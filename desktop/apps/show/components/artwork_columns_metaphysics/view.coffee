@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 template = -> require('./template.jade') arguments...
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 setupSaveControls = require '../save_artworks/index.coffee'
 

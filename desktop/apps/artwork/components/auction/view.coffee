@@ -8,7 +8,7 @@ AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkAuctionView extends Backbone.View

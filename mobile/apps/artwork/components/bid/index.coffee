@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { ARTWORK, CURRENT_USER } = require('sharify').data
 CurrentUser = require '../../../../models/current_user.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 template = -> require('./templates/bid.jade') arguments...
 
 query = """

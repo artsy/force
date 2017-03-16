@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
 helpers = require './helpers.coffee'
 template = -> require('./templates/masonry.jade') arguments...

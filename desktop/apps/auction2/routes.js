@@ -1,4 +1,4 @@
-import metaphysics from '../../lib/metaphysics'
+import metaphysics from '../../../lib/metaphysics'
 import Auction from '../../models/auction.coffee'
 import SaleQuery from './queries/sale'
 import MeQuery from './queries/me'

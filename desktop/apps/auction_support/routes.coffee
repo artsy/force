@@ -6,7 +6,7 @@ Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
 BidderPositions = require '../../collections/bidder_positions.coffee'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards

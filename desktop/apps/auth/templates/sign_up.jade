@@ -1,0 +1,64 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'misc'
+
+block body
+  .auth-signup__text-align-center
+    #auth-page.vam-outer
+      .vam-inner
+        header#auth-header
+          #auth-header-logo.icon-logotype
+          aside
+            | Start buying art by your favorite artists on Artsy
+
+        section#auth-body
+          .auth-register
+            form.auth-form(
+              action=sd.AP.signupPagePath + '?redirect-to=/'
+              method='POST'
+              data-action="signup"
+              data-after-auth="/personalize"
+            )
+              .auth-errors
+              input#js-mailcheck-input-modal.bordered-input.is-block(
+                name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus
+              )
+              #js-mailcheck-hint-modal
+              input.bordered-input.is-block(
+                name= 'password'
+                type= 'password'
+                value= password
+                placeholder= 'Password'
+                autocomplete= 'on'
+                pattern= '.{6,}'
+                title= '6 characters minimum'
+                required
+              )
+              input.bordered-input.is-block(
+                name='name', type='text', placeholder='Full Name', value= name, required
+              )
+              input( type="hidden" name="_csrf" value=sd.CSRF_TOKEN )
+              button#auth-submit.avant-garde-button-black.is-block Sign up
+
+            .standard-auth-signup-page__divider
+              .standard-auth-signup-page__divider-text
+                | or
+
+            a.auth-signup-facebook.avant-garde-button-black.is-block.standard-auth-signup-page__facebook(
+              href='/users/auth/facebook?redirect-to=/personalize'
+            )
+              i.icon-facebook
+              | Sign up with Facebook
+
+        footer#auth-footer.standard-auth-signup-page__footer
+          p
+            | Already have an account?&nbsp;
+            a.faux-underline.auth-toggle( href='/login', data-mode='login' ) Log in
+
+          aside
+            | By signing up, you agree to our&nbsp;
+            a.faux-underline( href='/terms' ) Terms of Use
+            | &nbsp;and&nbsp;
+            a.faux-underline( href='/privacy' ) Privacy Policy
+            | .

@@ -1,0 +1,123 @@
+.artsy-primer-personalize-step
+  @media screen and (max-width: 768px)
+    &[data-step='artists']
+      padding 20px
+
+#artsy-primer-personalize-suggestions-container
+  max-width 1080px
+  margin 90px auto
+  text-align center
+  prevent-content-shift()
+  @media screen and (max-width: 768px)
+    margin 0 20px
+    padding 0
+  > .artsy-primer-personalize-suggestions-more-container
+    display none
+  &[data-state='loaded']
+    > .artsy-primer-personalize-suggestions-more-container
+      display block
+    .loading-spinner
+      display none
+  &[data-state='loading']
+    opacity 0.5
+    .loading-spinner
+      display block
+  > aside
+    width 50%
+    margin 20px auto
+    text-align center
+    font-size 18px
+    > a
+      white-space nowrap
+      color gray-dark-color
+      &:before
+        border-bottom-color gray-color
+
+#artsy-primer-personalize-suggestions
+  position relative
+  text-align center
+  min-height 200px
+  .grid-item
+    margin-bottom 20px
+
+#artsy-primer-personalize-suggestions-unfollow-all
+  display block
+  position absolute
+  font-size 16px
+  top 0
+  right 0
+
+.artsy-primer-personalize-suggestions-set
+  margin 20px auto
+  border-bottom 1px solid gray-lighter-color
+  fade-in()
+  &:last-child
+    border-bottom none
+
+.artsy-primer-personalize-suggestions-header
+  position relative
+  font-size 20px
+  margin 90px auto 40px
+
+.artsy-primer-personalize-suggestions-set-header
+  @extends .artsy-primer-personalize-suggestions-header
+  margin 40px 0
+
+.pss-unfollow-all
+  position absolute
+  right 20px
+  color gray-dark-color
+  &:before
+    border-color gray-lighter-color
+
+.artsy-primer-personalize-suggestion-row
+  @extends .artsy-primer-personalize-suggestions-set
+  margin-bottom 0
+
+.artsy-primer-personalize-suggestion
+  display inline-block
+  position relative
+  &.is-artist
+    width 20%
+    margin 0 0 30px 0
+    @media screen and (max-width: 768px)
+      width 50%
+      .avant-garde-follow-button-black
+        width calc(100% \- 20px)
+    > .artsy-primer-personalize-suggestion-thumbnail
+      width 90%
+      height @width
+
+.artsy-primer-personalize-suggestion-thumbnail
+  margin 0 auto
+  line-height @height
+  background-color gray-lightest-color
+  > img
+    max-width 100%
+    max-height 100%
+    vertical-align middle
+    display inline-block
+
+.artsy-primer-personalize-suggestion-name
+  margin-top 10px
+  avant-garde()
+  font-size 13px
+  overflow ellipsis
+
+.artsy-primer-personalize-popover-name
+  avant-garde()
+  font-size 13px
+
+.artsy-primer-personalize-suggestion-location
+  overflow ellipsis
+
+.artsy-primer-personalize-suggestion-info
+  margin-bottom 10px
+  color gray-darker-color
+  overflow ellipsis
+
+.artsy-primer-personalize-suggestions-more-container
+  margin-top 20px
+  padding-top 20px
+  text-align center
+  border-top 1px solid gray-lighter-color

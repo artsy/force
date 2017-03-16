@@ -60,9 +60,24 @@ describe 'Artwork metadata templates', ->
       $('.artwork-meta-data-black__contact-button').hasClass('is-disabled').should.equal false
       $('.artwork-meta-data-black__contact-button').attr('href').should.containEql '/inquiry/skull'
 
+  describe 'button not shown for artworks that are not contactable', ->
+    before ->
+      @artwork.is_inquireable = false
+
+      @html = render('inquiry')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+    it 'does not display contact button', ->
+      $ = cheerio.load @html
+      $('.artwork-meta-data-black__contact-button').length.should.equal 0
+
   describe 'contact gallery button - sold', ->
     before ->
       @artwork.is_sold = true
+      @artwork.is_inquireable = true
       @artwork.partner = { type: 'Gallery' }
 
       @html = render('inquiry')(

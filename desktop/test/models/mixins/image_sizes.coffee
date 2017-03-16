@@ -88,15 +88,15 @@ describe 'Image Sizes Mixin', ->
   describe '#imageUrlForMaxSize', ->
     it 'picks the last size in the list', ->
       @model.set { image_versions: ['small', 'large'] }
-      @model.imageUrlForMaxSize().should.equal @model.imageUrlFor('large.jpg')
+      @model.imageUrlForMaxSize().should.equal '/bitty/large'
 
     it 'ignores the normalized (private) size', ->
       @model.set { image_versions: ['small', 'large', 'normalized'] }
-      @model.imageUrlForMaxSize().should.equal @model.imageUrlFor('large.jpg')
+      @model.imageUrlForMaxSize().should.equal '/bitty/large'
 
     it 'favors the largest size', ->
       @model.set { image_versions: ['larger', 'large', 'tall'] }
-      @model.imageUrlForMaxSize().should.equal @model.imageUrlFor('larger.jpg')
+      @model.imageUrlForMaxSize().should.equal '/bitty/larger'
 
   describe '#aspectRatio', ->
     it 'returns the image aspect ratio', ->

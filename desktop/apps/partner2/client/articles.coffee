@@ -21,7 +21,7 @@ module.exports = class ArticlesAdapter
 
   renderArticlesGrid: ->
     @collection = new Articles
-    @collection.url = "#{@collection.url}/?partner_id=#{@partner.get('_id')}&published=true&limit=12&sort=-published_at"
+    @collection.url = "#{@collection.url}/?partner_id=#{@partner.get('_id')}&published=true&limit=12&sort=-published_at&count=true"
     view = new ArticlesGridView
       el: @el
       collection: @collection

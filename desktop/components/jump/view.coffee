@@ -19,7 +19,9 @@ module.exports = class JumpView extends Backbone.View
       @threshold,
       @frequency,
       @direction,
-      @position
+      @position,
+      @element, # element to jump to, height evaluated after JumpView is mounted
+      @offset # offset of that element
     } = _.defaults options, @defaults
 
     @$el.addClass "from-#{@direction}"
@@ -65,7 +67,13 @@ module.exports = class JumpView extends Backbone.View
   # and hides the jump navigation
   scrollToTop: ->
     @shouldBe 'hidden'
-    @scrollToPosition @position
+    if @element?.length > 0
+      if @offset?.length > 0
+        @scrollToPosition @element.offset().top - @offset.height()
+      else
+        @scrollToPosition @element.offset().top
+    else
+      @scrollToPosition @position
     analyticsHooks.trigger 'jump:scroll-to-top'
 
   remove: ->

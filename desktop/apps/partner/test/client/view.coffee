@@ -149,7 +149,7 @@ describe 'PartnerView', ->
         requests = _.last(Backbone.sync.args, 2)
         requests[0][1].url().should.endWith "/api/v1/partner/#{@partner.get('id')}"
         requests[1][1].url.should.endWith '/api/articles'
-        requests[1][2].data.should.eql partner_id: @partner.get('_id'), limit: 1, published: true
+        requests[1][2].data.should.eql partner_id: @partner.get('_id'), limit: 1, published: true, count: true
 
       it 'fetches and returns partner and articles and sets articles count', ->
         nextSyncCall = Backbone.sync.args.length

@@ -28,6 +28,10 @@ routes =
 
   '/reset_password': require('../apps/auth/client/index.coffee').init
 
+  '/signup': require('../apps/auth/client/auth.coffee').init
+
+  '/login': require('../apps/auth/client/auth.coffee').init
+
   '/works-for-you': require('../apps/notifications/client/index.coffee').init
 
   '/profile/.*': require('../apps/user/client/index.coffee').init
@@ -37,6 +41,8 @@ routes =
   '/search': require('../apps/search/client/index.coffee').init
 
   '/artsy-primer/.*': require('../apps/artsy_primer/client.js').default
+
+  '/artsy-primer-personalize': require('../apps/artsy_primer/personalize/client/index.coffee').init
 
 for path, init of routes
   $(init) if location.pathname.match path
