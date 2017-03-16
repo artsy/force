@@ -28,6 +28,10 @@ routes =
 
   '/reset_password': require('../apps/auth/client/index.coffee').init
 
+  '/signup': require('../apps/auth/client/auth.coffee').init
+
+  '/login': require('../apps/auth/client/auth.coffee').init
+
   '/works-for-you': require('../apps/notifications/client/index.coffee').init
 
   '/profile/.*': require('../apps/user/client/index.coffee').init
