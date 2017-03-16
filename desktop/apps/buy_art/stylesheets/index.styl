@@ -1,0 +1,240 @@
+@require '../../../components/main_layout/stylesheets/index'
+@require './grid_styles'
+
+.buy-art-buttons
+  width 270px
+  height 45px
+  padding 15px
+  box-sizing border-box
+  > i
+    margin-left 0
+
+.buy-art__svg-icon
+  display inline
+  vertical-align middle
+  margin-right 10px
+
+.buy-art-responsive-layout-container
+  .buy-art-main-layout-container
+    margin 0 auto
+    max-width 1250px
+  margin 0 20px
+  @media screen and (min-width: 768px)
+    margin 0 55px
+  @media screen and (min-width: 1440px)
+    margin 0 150px
+  @media screen and (min-width: 1660px)
+    margin 0 200px
+
+.buy-art-show-on-mobile
+  display none
+  @media screen and (max-width: 768px)
+    display inherit
+
+.buy-art-show-on-desktop
+  display inherit
+  @media screen and (max-width: 768px)
+    display none
+
+.buy-art-text-center-on-mobile
+  text-align inherit
+  @media screen and (max-width: 768px)
+    text-align center
+
+.buy-art-signup-button
+  avant-garde-size('body')
+  display inline-block
+  width 190px
+  height 45px
+  line-height 45px
+  background-color #6e1fff
+  color white
+  text-align center
+  text-decoration none
+
+.ba__email-signup-button
+  @extends .avant-garde-button
+  @extends .buy-art-buttons
+  margin-right 30px
+  background-color #ffffff
+.ba__facebook-signup-button
+  @extends .buy-art-buttons
+  background-color #586DB8
+  color white
+  avant-garde-size('body')
+  text-decoration none
+  line-height 1
+  > i
+    line-height 0
+    vertical-align -8px
+
+background-size-cover()
+  background-position center
+  background-repeat no-repeat
+  background-size cover
+
+.buy-art-header
+  background-size-cover()
+  height 700px
+  color white
+  display flex
+  align-items center
+  position relative
+  .icon-logotype
+    font-size 35px
+    position absolute
+    top 30px
+    left 30px
+  &__content
+  &__title
+    garamond-size('xxl-headline', true)
+    max-width 580px
+  &__signup-buttons
+    display inline-block
+    margin-top 35px
+    font-weight bold
+  &__chevron
+    position absolute
+    bottom 20px
+    left 0
+    width 100%
+    text-align center
+    transform rotate(90deg)
+    opacity 0.5
+    i
+      font-size 46px
+
+.buy-art-intro
+  height 800px
+  display flex
+  align-items center
+  justify-content center
+  position relative
+  &__desktop-background-image
+    background-size-cover()
+    height 800px
+    width 100%
+    position absolute
+    z-index -1
+  &__mobile-background-image
+    background-size-cover()
+    height 560px
+    width 100%
+    position absolute
+    z-index -1
+  &__title
+    garamond-size('xl-headline')
+    max-width 387px
+    margin 0 auto
+    text-align center
+    margin-bottom 20px
+  &__subtitle
+    garamond-size('s-headline')
+    text-align center
+  &__stat_container
+    display flex
+    margin-top 20px
+    margin-left auto
+    margin-right auto
+    width 750px
+    height 100px
+  &__stat
+    flex 1
+    display flex
+    flex-direction column
+    justify-content center
+    text-align center
+    border-right 1px solid gray-lighter-color
+    &:last-child
+      border none
+  &__stat-number
+    garamond-size('l-headline')
+  &__desktop-type
+    avant-garde-size('s-headline')
+    font-weight bold
+    justify-content center
+  &__mobile-type
+    avant-garde-size('s-headline')
+    font-weight bold
+    justify-content center
+  &__signup-button-container
+    margin-top 25px
+    text-align center
+
+.buy-art-benefits
+  background-color gray-lightest-color
+  padding-top 50px
+  &__title
+    garamond-size('xl-headline')
+    margin-bottom 35px
+  &__benefits-container
+    max-width 365px
+    margin-top 45px
+    padding-bottom 45px
+  &__items
+    margin 0 0 45px
+    &:last-child
+      margin-bottom 0
+  &__info-subtitle
+    avant-garde-size('m-headline')
+    font-weight bold
+    margin-bottom 5px
+  &__info-content
+    garamond-size('l-body')
+  &__image-section
+    position relative
+    img
+      position absolute
+      left 0
+      bottom 0
+
+.buy-art-faqs
+  padding-top 25px
+  margin-bottom 30px
+  &__image-banner
+    text-align center
+    img
+      max-width 100%
+  &__title
+    garamond-size('xl-headline')
+    padding-top 70px
+    max-width 500px
+  &__items-container
+    padding-top 55px
+  &__item-grid
+    margin-right 70px
+  &__item-title
+    garamond-size('headline')
+    margin-bottom 12px
+  &__item-content
+    garamond-size('l-body')
+    margin-bottom 55px
+
+.buy-art-footer
+  background-size-cover()
+  height 390px
+  position relative
+  &__desktop-background-image
+    background-size-cover()
+    height 390px
+    width 100%
+    position absolute
+    z-index -1
+  &__mobile-background-image
+    background-size-cover()
+    height 390px
+    width 100%
+    position absolute
+    z-index -1
+  &__title
+    garamond-size('l-headline')
+    padding-top 110px
+    max-width 430px
+    margin-bottom 27px
+  .icon-logo
+    position absolute
+    bottom 20px
+    left 20px
+
+@require './mobile'
+

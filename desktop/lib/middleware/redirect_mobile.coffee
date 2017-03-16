@@ -39,6 +39,7 @@ router.get '/professional-buyer*', isResponsive
 router.get '/2016-year-in-art*', isResponsive
 router.get '/article/*', isResponsive
 router.get '/about/*', isResponsive
+router.get '/buy-art', isResponsive
 router.get '/artsy-primer*', isResponsive
 router.get TEAM_BLOGS, isResponsive
 router.use redirect

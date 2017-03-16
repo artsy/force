@@ -1,0 +1,79 @@
+{
+  "header": {
+    "headline": "An art collection for every budget",
+    "image": "http://files.artsy.net/images/buy_art_header.png",
+    "email_icon": "http://files.artsy.net/images/email-icon.svg"
+  },
+  "sections": [
+    {
+      "id": "introduction",
+      "headline": "All the world's art in one place",
+      "sub_headline": "Buy directly from galleries and bid in auction",
+      "image": "http://files.artsy.net/images/buy_art_background.jpg",
+      "mobile_image": "http://files.artsy.net/images/mobile-background2x.jpg",
+      "stats": [
+        {
+          "desktop_type": "Galleries & action houses",
+          "mobile_type": "Galleries",
+          "number": "4,000"
+        },
+        {
+          "desktop_type": "Artists & designers",
+          "mobile_type": "Artists",
+          "number": "70,000"
+        },
+        {
+          "desktop_type": "Artworks",
+          "mobile_type": "Artworks",
+          "number": "550,000"
+        }
+      ]
+    },
+    {
+      "id": "benefits",
+      "headline": "Used by the most experienced collectors",
+      "image": "http://files.artsy.net/images/devices1x.png",
+      "benefits": [
+        {
+          "image": "http://files.artsy.net/images/alerts.svg",
+          "title": "Timely Alerts",
+          "content": "Get notified when new works are available by your favorite artists"
+        },
+        {
+          "image": "http://files.artsy.net/images/data.svg",
+          "title": "Comprehensive Data",
+          "content": "Consule our database of artists, exhibitors, auction results, and market news"
+        },
+        {
+          "image": "http://files.artsy.net/images/recommendations.svg",
+          "title": "Smart Recommendation",
+          "content": "Get artwork recommendations based on your taste and budget"
+        }
+      ]
+    },
+    {
+      "id": "faqs",
+      "headline": "Frequently asked questions",
+      "image": "http://files.artsy.net/images/logos1x.jpg",
+      "faqs": [
+        {
+          "title": "Why buy on Artsy?",
+          "content": "Powered by industry-leading technology, Artsy enables collectors to buy more efficiently and confidently from the largest network of trusted galleries, auction houses, and art fairs."
+        },
+        {
+          "title": "How do I buy art on Artsy?",
+          "content": "Message galleries via Artsy to learn more about your favorite artists and purchase their works. You can also use Artsy to place bids in top auctions worldwide."
+        },
+        {
+          "title": "Does Artsy take a commission on sales?",
+          "content": "Artsy does not take a commission on the sale of artworks, neither from the collector nor the gallery partner."
+        }
+      ]
+    }
+  ],
+  "footer": {
+    "headline": "Start buying art by your favorite artists on Artsy",
+    "image": "http://files.artsy.net/images/desktop-footer1x.jpg",
+    "mobile_image": "http://files.artsy.net/images/mobile-footer2x.jpg"
+  }
+}

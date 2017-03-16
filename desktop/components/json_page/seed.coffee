@@ -1,6 +1,7 @@
 _ = require 'underscore'
 inquirer = require 'inquirer'
 JSONPage = require './index'
+require('../../lib/setup_sharify')
 sd = require('sharify').data
 
 [name, environment, path] = process.argv.slice 2
