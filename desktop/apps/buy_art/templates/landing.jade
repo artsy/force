@@ -7,14 +7,14 @@ include meta
         .buy-art-header__title.buy-art-text-center-on-mobile= header.headline
         .buy-art-show-on-desktop
           .buy-art-header__signup-buttons
-            a.ba__email-signup-button( href='emaillink' )
+            a.ba__email-signup-button( href='/signup' )
               img.buy-art__svg-icon(src=header.email_icon)
               | Sign up using email
-            a.ba__facebook-signup-button( href='fblink' )
+            a.ba__facebook-signup-button( href='/users/auth/facebook' )
               i.icon-facebook
               | Sign up with Facebook
         .buy-art-show-on-mobile.buy-art-text-center-on-mobile
-          a.buy-art-signup-button( href='emaillink' )
+          a.buy-art-signup-button( href='/signup' )
             | Sign up
 
       i.icon-logotype
@@ -35,7 +35,7 @@ include meta
           .buy-art-intro__desktop-type.buy-art-show-on-desktop= stat.desktop_type
           .buy-art-intro__mobile-type.buy-art-show-on-mobile= stat.mobile_type
     .buy-art-intro__signup-button-container
-      a.buy-art-signup-button( href='emaillink' )
+      a.buy-art-signup-button( href='/signup' )
         | Sign up
 
 .buy-art-benefits
@@ -44,7 +44,7 @@ include meta
       .row
         .col-xs-12.col-lg-6
           .buy-art-benefits__title.buy-art-text-center-on-mobile= sections[1].headline
-          a.buy-art-signup-button( href='emaillink' )
+          a.buy-art-signup-button( href='/signup' )
             | Sign up
           .buy-art-benefits__benefits-container.collector-marketing
             each benefit in sections[1].benefits
@@ -71,7 +71,7 @@ include meta
                 .buy-art-faqs__item-title= faq.title
                 .buy-art-faqs__item-content= faq.content
           .col-xs-12.col-lg-6.buy-art-text-center-on-mobile
-            a.buy-art-signup-button( href='emaillink' )
+            a.buy-art-signup-button( href='/signup' )
               | Sign up
 
 .buy-art-footer
@@ -83,13 +83,13 @@ include meta
       .buy-art-footer__title= footer.headline
       .buy-art-show-on-desktop
         .buy-art-footer__signup-buttons
-          a.ba__email-signup-button( href='emaillink' )
+          a.ba__email-signup-button( href='/signup' )
             img.buy-art__svg-icon(src=header.email_icon)
             | Sign up using email
-          a.ba__facebook-signup-button( href='fblink' )
+          a.ba__facebook-signup-button( href='/users/auth/facebook' )
             i.icon-facebook
             | Sign up with Facebook
       .buy-art-show-on-mobile
-        a.buy-art-signup-button( href='emaillink' )
+        a.buy-art-signup-button( href='/signup' )
           | Sign up
       i.icon-logo
