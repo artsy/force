@@ -8,10 +8,10 @@ app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
 landing = new JSONPage
-  name: 'buy-art',
+  name: 'collect-art',
   paths:
-    show: '/buy-art'
-    edit: '/buy-art/edit'
+    show: '/collect-art'
+    edit: '/collect-art/edit'
 
 { data, edit, upload } = require('../../components/json_page/routes')(landing)
 
