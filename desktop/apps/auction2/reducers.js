@@ -84,13 +84,6 @@ function auctionArtworks(state = initialState, action) {
         }, state)
       }
     }
-    case actions.TOGGLE_ARTISTS_YOU_FOLLOW: {
-      return u({
-        filterParams: {
-          include_artworks_by_followed_artists: !state.filterParams.include_artworks_by_followed_artists
-        }
-      }, state)
-    }
     case actions.TOGGLE_LIST_VIEW: {
       return u({
         isListView: action.payload.isListView
@@ -122,19 +115,29 @@ function auctionArtworks(state = initialState, action) {
       if (artistId === 'artists-all') {
         return u({
           filterParams: {
-            artist_ids: []
+            artist_ids: [],
+            include_artworks_by_followed_artists: false
+          }
+        }, state)
+      } else if (artistId === 'artists-you-follow') {
+        return u({
+          filterParams: {
+            artist_ids: [],
+            include_artworks_by_followed_artists: true
           }
         }, state)
       } else if (contains(state.filterParams.artist_ids, artistId)) {
         return u({
           filterParams: {
-            artist_ids: u.reject((aa) => aa === artistId)
+            artist_ids: u.reject((aa) => aa === artistId),
+            include_artworks_by_followed_artists: false
           }
         }, state)
       } else {
         return u({
           filterParams: {
-            artist_ids: state.filterParams.artist_ids.concat(artistId)
+            artist_ids: state.filterParams.artist_ids.concat(artistId),
+            include_artworks_by_followed_artists: false
           }
         }, state)
       }

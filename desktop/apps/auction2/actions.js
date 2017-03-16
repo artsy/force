@@ -9,7 +9,6 @@ export const GET_ARTWORKS_REQUEST = 'GET_ARTWORKS_REQUEST'
 export const GET_ARTWORKS_SUCCESS = 'GET_ARTWORKS_SUCCESS'
 export const INCREMENT_FOLLOWED_ARTISTS_PAGE = 'INCREMENT_FOLLOWED_ARTISTS_PAGE'
 export const SHOW_FOLLOWED_ARTISTS_RAIL = 'SHOW_FOLLOWED_ARTISTS_RAIL'
-export const TOGGLE_ARTISTS_YOU_FOLLOW = 'TOGGLE_ARTISTS_YOU_FOLLOW'
 export const TOGGLE_LIST_VIEW = 'TOGGLE_LIST_VIEW'
 export const UPDATE_AGGREGATED_ARTISTS = 'UPDATE_AGGREGATED_ARTISTS'
 export const UPDATE_AGGREGATED_MEDIUMS = 'UPDATE_AGGREGATED_MEDIUMS'
@@ -200,12 +199,6 @@ export function resetArtworks() {
   }
 }
 
-export function toggleArtistsYouFollow() {
-  return {
-    type: TOGGLE_ARTISTS_YOU_FOLLOW
-  }
-}
-
 export function toggleListView(isListView) {
   return {
     type: TOGGLE_LIST_VIEW,
@@ -251,13 +244,6 @@ export function updateArtistId(artistId) {
 export function updateArtistParams(artistId) {
   return (dispatch) => {
     dispatch(updateArtistId(artistId))
-    dispatch(resetArtworks())
-  }
-}
-
-export function updateArtistsYouFollowParam(includeFollowedArtists) {
-  return (dispatch) => {
-    dispatch(toggleArtistsYouFollow())
     dispatch(resetArtworks())
   }
 }
