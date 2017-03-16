@@ -4,7 +4,7 @@ resizer = require '../../components/resizer'
 markdown = require '../../components/util/markdown'
 Items = require '../../collections/items'
 
-landing = new JSONPage name: 'buy-art'
+landing = new JSONPage name: 'collect-art'
 
 @landing = (req, res, next) ->
   landing.get()
