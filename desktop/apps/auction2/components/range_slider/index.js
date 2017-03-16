@@ -1,7 +1,7 @@
 import { formatMoney } from 'accounting'
 import { updateEstimateRange, updateEstimateDisplay } from '../../actions'
 import Slider, { Range } from 'rc-slider'
-import { default as React, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 function RangeSlider(props) {

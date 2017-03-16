@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 
 export default function BidStatus({ saleArtwork }) {
   let bidLabel
