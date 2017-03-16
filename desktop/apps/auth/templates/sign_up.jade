@@ -22,10 +22,10 @@ block body
             )
               .auth-errors
               input.bordered-input.is-block(
-                name='name', type='text', placeholder='Full Name', value= name, required
+                name='name', type='text', placeholder='Full Name', value= name, autofocus="autofocus", required
               )
               input#js-mailcheck-input-modal.bordered-input.is-block(
-                name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus
+                name='email', type='email', placeholder='Email', value= email, required
               )
               #js-mailcheck-hint-modal
               input.bordered-input.is-block(
