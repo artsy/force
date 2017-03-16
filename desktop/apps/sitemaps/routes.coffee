@@ -20,8 +20,7 @@ buckets = _.times moment().diff(epoch(), 'months'), (i) ->
 @articles = (req, res, next) ->
   new Articles().fetch
     data:
-      # id for "Artsy Editorial" (exclude partner posts)
-      channel_id: ARTSY_EDITORIAL_CHANNEL
+      featured: true
       published: true
       sort: '-published_at'
       exclude_google_news: false

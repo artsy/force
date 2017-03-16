@@ -12,6 +12,8 @@
     width 236px
     display inline-block
     vertical-align middle
+    @media screen and (max-width: 768px)
+      width 136px
 
   &-header
     position fixed
@@ -22,6 +24,8 @@
     background white
     z-index 2
     padding 26px 0 20px
+    @media screen and (max-width: 768px)
+      padding 15px 0 10px 0
 
   &-h2
     margin-left 20px
@@ -30,6 +34,11 @@
     font-size 30px
     line-height 1.25
     text-decoration none
+    @media screen and (max-width: 768px)
+      font-size 15px
+      position absolute
+      right 20px
+      margin-top 5px
 
   &-h3
     margin-left 30px
@@ -37,6 +46,8 @@
   &-user
     float right
     border-right 1px solid gray-lighter-color
+    @media screen and (max-width: 768px)
+      display none
 
   &-article
     padding-top 190px

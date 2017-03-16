@@ -1,5 +1,5 @@
 import { updateSort } from '../../actions'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import _ from 'underscore'
 
@@ -10,6 +10,10 @@ function FilterSort(props) {
     updateSortAction
   } = props
   const selectedSort = filterParams.sort
+  const itemHeight = 37
+  const itemIndex = Object.keys(sortMap).indexOf(selectedSort)
+  const optionsOffset = (itemIndex) * itemHeight
+
   return (
     <div className='auction2-filter-sort'>
       <span className='auction2-filter-sort__label bordered-pulldown-label'>Sort by:</span>
@@ -20,7 +24,7 @@ function FilterSort(props) {
             <span className='caret'></span>
           </div>
         </a>
-        <div className='bordered-pulldown-options'>
+        <div className='bordered-pulldown-options' style={ { top: -optionsOffset } }>
           {
             _.map(sortMap, (sortName, sort) => {
               const selected = sort == selectedSort

@@ -4,10 +4,11 @@ if artwork.auction && artwork.auction.artworks && artwork.auction.artworks.lengt
   - var start_at = auction.start_at 
   - var end_at = auction.end_at
   - var live_start_at = auction.live_start_at
-  - var status = auction.status
+  - var is_live_open = auction.is_live_open
+  - var is_preview = auction.is_preview
   - var totalArtworks = auction.eligible_sale_artworks_count
   
-  - var auctionLabel = upcomingLabel(start_at, end_at, live_start_at, status)
+  - var auctionLabel = upcomingLabel(start_at, end_at, live_start_at, is_live_open, is_preview)
   
   section.artwork-section.artwork-auction-artworks( class='js-artwork-auction-artworks' )
     header.artwork-auction-artworks__header

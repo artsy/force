@@ -21,6 +21,13 @@ category-size = 400px
   margin 20px
   display inline-block
   width category-size
+  @media screen and (max-width: 768px)
+    margin 0
+    // TODO: Fix the category-size variable to use percentages so we don't have
+    // to cheat by scaling this down an abitrary amount to compromise on the
+    // responsive UI.
+    transform scale(0.9)
+    transform-origin top center
 
 .artsy-primer-personalize-category-image-link
   margin 20px 20px

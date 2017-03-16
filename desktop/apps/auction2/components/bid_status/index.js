@@ -1,10 +1,8 @@
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 
-export default function BidStatus({ artwork }) {
-  const saleArtwork = artwork.sale_artwork
-
+export default function BidStatus({ saleArtwork }) {
   let bidLabel
-  if (saleArtwork && saleArtwork.counts && saleArtwork.counts.bidder_positions > 0) {
+  if (saleArtwork.counts && saleArtwork.counts.bidder_positions > 0) {
     const bidOrBids = saleArtwork.counts.bidder_positions > 1 ? 'Bids' : 'Bid'
     bidLabel = `(${saleArtwork.counts.bidder_positions} ${bidOrBids})`
   } else {

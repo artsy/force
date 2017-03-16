@@ -1,4 +1,4 @@
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 
 export default function BasicCheckbox(props) {
   const {
@@ -23,7 +23,7 @@ export default function BasicCheckbox(props) {
         </div>
         <label className='artsy-checkbox--label' htmlFor={item.id}>
           { item.name }
-          { item.count && <span className='artsy-checkbox--count'>({item.count})</span> }
+          { item.count !== undefined && <span className='artsy-checkbox--count'>({item.count})</span> }
         </label>
       </div>
     </div>

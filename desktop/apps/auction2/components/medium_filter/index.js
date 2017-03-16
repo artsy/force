@@ -1,6 +1,6 @@
 import { updateMediumParams } from '../../actions'
 import BasicCheckbox from '../basic_checkbox'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import { map, contains } from 'underscore'
 

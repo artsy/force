@@ -6,9 +6,11 @@ PersonalizeState = require './state.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Transition = require '../../../../components/mixins/transition.coffee'
+AuthModalView = require '../../../../components/auth_modal/view.coffee'
 analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 NextStepView = require './views/next_step.coffee'
+
 views =
   CollectView: require './views/collect.coffee'
   ArtistsView: require './views/artists.coffee'
@@ -82,9 +84,10 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
 module.exports.init = ->
   { force, reonboarding, email, name } = qs.parse location.search.slice(1)
+
   # If there's no user, open the auth modal
   unless user = CurrentUser.orNull()
-    mediator.once 'open:auth', -> _.defer ->
+    mediator.once 'modal:opened', -> _.defer ->
 
       # Prefill the email and name query params
       $('.auth-register [name=email]').val email if email
@@ -93,7 +96,10 @@ module.exports.init = ->
       # Don't let the user close out by hacking the close points
       $('.modal-close').hide()
       $('.modal-backdrop').click (e) -> e.stopPropagation()
-    mediator.trigger 'open:auth', mode: 'register'
+    new AuthModalView
+      mode: 'register'
+      redirectTo: location.href
+      width: 500
 
   # Init the personalize flow
   else
