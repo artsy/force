@@ -44,7 +44,7 @@ if (user && sd.AUCTION && sd.AUCTION.is_open && sd.AUCTION.is_live_open === fals
     user: user,
     el: $('.auction2-my-active-bids'),
     template: myActiveBidsTemplate,
-    saleId: auction.get('_id')
+    saleId: sd.AUCTION.id
   })
   activeBids.start()
 }
