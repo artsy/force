@@ -55,7 +55,8 @@ export function fetchArtworks() {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
-        filterParams
+        filterParams,
+        user
       }
     } = getState()
 
@@ -65,7 +66,7 @@ export function fetchArtworks() {
         query: filterQuery,
         variables: filterParams,
         req: {
-          user: sd.CURRENT_USER
+          user
         }
       })
 
@@ -93,7 +94,8 @@ export function fetchArtworksByFollowedArtists() {
       auctionArtworks: {
         followedArtistRailMax,
         followedArtistRailPage,
-        filterParams
+        filterParams,
+        user
       }
     } = getState()
 
@@ -108,7 +110,7 @@ export function fetchArtworksByFollowedArtists() {
         query: worksByFollowedArtists,
         variables: inputVars,
         req: {
-          user: sd.CURRENT_USER
+          user
         }
       })
       if (filter_sale_artworks.hits.length > 0) {
@@ -127,7 +129,8 @@ export function fetchMoreArtworks() {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
-        filterParams
+        filterParams,
+        user
       }
     } = getState()
 
@@ -137,7 +140,7 @@ export function fetchMoreArtworks() {
         query: filterQuery,
         variables: filterParams,
         req: {
-          user: sd.CURRENT_USER
+          user
         }
       })
       dispatch(updateSaleArtworks(filter_sale_artworks.hits))

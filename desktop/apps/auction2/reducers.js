@@ -82,6 +82,8 @@ function auctionArtworks(state = initialState, action) {
         return u({
           followedArtistRailPage: currentPage + 1
         }, state)
+      } else {
+        return state
       }
     }
     case actions.TOGGLE_LIST_VIEW: {
