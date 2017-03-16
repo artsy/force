@@ -4,17 +4,18 @@ module.exports.auction_artworks = """
   fragment auction_artworks on Artwork {
     auction: context {
       ... on ArtworkContextAuction {
-        name
-        status
-        href
-        start_at
-        live_start_at
-        end_at
-        eligible_sale_artworks_count
-
         artworks(size: #{ARTWORK_DISPLAY_NUM}, exclude: [$id]) {
           ... auction_artwork_brick
         }
+        eligible_sale_artworks_count
+        end_at
+        href
+        is_live_open
+        is_preview
+        live_start_at
+        name
+        start_at
+        status
       }
     }
   }

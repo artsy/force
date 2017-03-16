@@ -1,6 +1,6 @@
 masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
+upcomingLabel = require('../../../../components/current_auctions/utils/upcoming_label').default
 { ARTWORK_DISPLAY_NUM } = require './config.coffee'
-{ upcomingLabel } = require('../../lib/auction_label')
 { partition, pluck, shuffle, take } = require 'underscore'
 
 module.exports =

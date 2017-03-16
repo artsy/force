@@ -20,28 +20,29 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
       <div className='artwork-current-auctions__sales'>
         {sortedSales.map((sale) => {
           const {
-            cover_image: {
-              cropped: {
-                url
-              }
-            },
+            cover_image,
             end_at,
             href,
             id,
             is_live_open,
+            is_preview,
             name,
             live_start_at,
-            start_at,
-            status
+            start_at
           } = sale
+
+          const image = (cover_image &&
+                        cover_image.cropped &&
+                        cover_image.cropped.url) ||
+                        '/images/missing_image.png'
 
           const statusLabel = 'Auction ' + upcomingLabel(start_at, end_at,
                                                          live_start_at, is_live_open,
-                                                         status)
+                                                         is_preview)
           return (
             <div className='artwork-current-auctions__sale-item' key={id}>
               <a href={href}>
-                <img src={url} alt={name} />
+                <img src={image} alt={name} />
 
                 <div className='artwork-current-auctions__label-container'>
                   <div className='artwork-current-auctions__name'>
@@ -78,7 +79,7 @@ CurrentAuctions.defaultProps = {
 // Helpers
 // -------
 
-function sortSales(sales, auctionContextId = '', CAP = 4) {
+function sortSales (sales, auctionContextId = '', CAP = 4) {
   const [ currentSale, rest ] = partition(sales, (sale) => sale.id === auctionContextId)
   const sorted = take(currentSale.concat(rest), CAP)
   return sorted

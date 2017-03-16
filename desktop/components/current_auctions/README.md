@@ -20,7 +20,7 @@ class Page extends Component {
 }
 ```
 
-If using within a non-React context, `index.jsx` will automatically mount provided there is a `react-mount-current-auctions` ID somewhere present in the DOM:
+If used within a non-React context, `index.jsx` will automatically mount provided there is a default `#react-mount-current-auctions` somewhere present in the DOM:
 
 ```jade
 .container
@@ -30,7 +30,7 @@ If using within a non-React context, `index.jsx` will automatically mount provid
 ```coffeescript
 mountCurrentAuctions = require 'components/current_auctions'
 
-class CurrentAuctionsContainer extends Backbone.Component
+class CurrentAuctionsContainer extends Backbone.View
   render: ->
     mountCurrentAuctions({
       sales: [
@@ -38,6 +38,8 @@ class CurrentAuctionsContainer extends Backbone.Component
       ]
     })
 ```
+
+(**NOTE**: You can pass in a selector as a second argument to mount to a custom location.)
 
 ### API
 

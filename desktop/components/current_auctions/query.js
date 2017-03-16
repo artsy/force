@@ -9,9 +9,9 @@ export default `
     href
     id
     is_live_open
+    is_preview
     live_start_at
     name
     start_at
-    status
   }
 `
