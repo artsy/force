@@ -8,7 +8,7 @@ include meta
         .collect-art-show-on-desktop
           .collect-art-header__signup-buttons
             a.ba__email-signup-button( href='/signup' )
-              img.collect-art__svg-icon(src=header.email_icon)
+              .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
               | Sign up using email
             a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize' )
               i.icon-facebook
@@ -84,7 +84,7 @@ include meta
       .collect-art-show-on-desktop
         .collect-art-footer__signup-buttons
           a.ba__email-signup-button( href='/signup' )
-            img.collect-art__svg-icon(src=header.email_icon)
+            .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
             | Sign up using email
           a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize' )
             i.icon-facebook
