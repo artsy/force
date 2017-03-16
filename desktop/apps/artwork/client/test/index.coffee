@@ -6,6 +6,7 @@ _ = require 'underscore'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
+
 describe 'Artwork Client', ->
   before ->
     global.OpenSeadragon = {}
