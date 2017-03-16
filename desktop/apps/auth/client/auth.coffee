@@ -4,6 +4,8 @@ Backbone = require 'backbone'
 { parse } = require 'url'
 { API_URL } = require('sharify').data
 Form = require '../../../components/mixins/form.coffee'
+Mailcheck = require '../../../components/mailcheck/index.coffee'
+mediator = require '../../../lib/mediator.coffee'
 LoggedOutUser = require '../../../models/logged_out_user.coffee'
 
 module.exports.SignUpView = class SignUpView extends Backbone.View
@@ -14,6 +16,10 @@ module.exports.SignUpView = class SignUpView extends Backbone.View
 
   initialize: ->
     @user = new LoggedOutUser
+    @initializeMailcheck()
+
+  initializeMailcheck: ->
+    Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   onRegisterSuccess: =>
     window.location.href = @afterAuthHref
