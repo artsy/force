@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import AuctionGridArtwork from '../auction_grid_artwork'
 import ChevronLeft from '../../../../components/main_layout/public/icons/chevron-left.svg'
 import ChevronRight from '../../../../components/main_layout/public/icons/chevron-right.svg'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 
 function WorksByFollowedArtists(props) {

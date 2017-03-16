@@ -1,6 +1,6 @@
 import { updateArtistParams } from '../../actions'
 import BasicCheckbox from '../basic_checkbox'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import { map, contains } from 'underscore'
 
@@ -15,7 +15,7 @@ function ArtistFilter(props) {
   } = props
   const artistIds = filterParams.artist_ids
   const allArtists = { id: 'artists-all', name: 'All' }
-  const allArtistsSelected = artistIds.length == 0 && !filterParams.include_artworks_by_followed_artists
+  const allArtistsSelected = artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
   const artistsYouFollow = {
     id: 'artists-you-follow',
     count: numArtistsYouFollow,

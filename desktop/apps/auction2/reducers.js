@@ -55,7 +55,7 @@ function auctionArtworks(state = initialState, action) {
   switch (action.type) {
     case actions.DECREMENT_FOLLOWED_ARTISTS_PAGE: {
       const currentPage = state.followedArtistRailPage
-      if (!(currentPage === 1)) {
+      if (currentPage !== 1) {
         return u({
           followedArtistRailPage: currentPage - 1
         }, state)

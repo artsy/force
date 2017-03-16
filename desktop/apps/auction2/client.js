@@ -38,7 +38,7 @@ const calendar = new AddToCalendar({
 
 // Render my active bids if a user is present and
 // the auction is open and not in live integration mode
-if (user && sd.AUCTION && sd.AUCTION.is_open && sd.AUCTION.is_live_open == false) {
+if (user && sd.AUCTION && sd.AUCTION.is_open && sd.AUCTION.is_live_open === false) {
   const myActiveBidsTemplate = require('./templates/my_active_bids.jade')
   const activeBids = new MyActiveBids({
     user: user,

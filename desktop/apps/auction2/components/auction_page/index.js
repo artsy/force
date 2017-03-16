@@ -1,6 +1,6 @@
 import CommercialFilter from '../commercial_filter'
 import WorksByFollowedArtists from '../works_by_followed_artists'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 
 function AuctionPage({ displayFollowedArtistsRail }) {

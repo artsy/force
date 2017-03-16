@@ -1,6 +1,6 @@
 import BidStatus from '../bid_status'
 import { get } from 'lodash'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { titleAndYear } from '../../utils/artwork'
 
 export default function AuctionGridArtwork({ saleArtwork }) {

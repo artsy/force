@@ -1,6 +1,6 @@
 import AuctionGridArtwork from '../auction_grid_artwork'
 import AuctionListArtwork from '../auction_list_artwork'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 
 function AuctionArtworks({ allFetched, isFetchingArtworks, isListView, saleArtworks }) {

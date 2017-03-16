@@ -1,5 +1,5 @@
 import { updateSort } from '../../actions'
-import { default as React, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import _ from 'underscore'
 

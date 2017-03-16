@@ -2,7 +2,7 @@ import ArtistFilter from '../artist_filter'
 import BasicCheckbox from '../basic_checkbox'
 import MediumFilter from '../medium_filter'
 import RangeSlider from '../range_slider'
-import { default as React, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 export default function Sidebar() {
