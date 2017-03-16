@@ -212,7 +212,7 @@ module.exports = (app) ->
   app.use require "../apps/artwork_purchase"
   app.use require "../apps/artwork"
   app.use require "../apps/about"
-  app.use require "../apps/buy_art"
+  app.use require "../apps/collect_art"
   app.use require "../apps/collect"
   app.use require "../apps/categories"
   app.use require "../apps/categories2"

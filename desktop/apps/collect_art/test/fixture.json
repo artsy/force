@@ -1,15 +1,15 @@
 {
   "header": {
     "headline": "An art collection for every budget",
-    "image": "http://files.artsy.net/images/buy_art_header.png",
-    "email_icon": "http://files.artsy.net/images/email-icon.svg"
+    "image": "http://files.artsy.net/images/collect_art_header.png",
+    "email_icon": "http://files.artsy.net/images/email-sprite.svg"
   },
   "sections": [
     {
       "id": "introduction",
-      "headline": "All the world's art in one place",
+      "headline": "All the world’s art in one place",
       "sub_headline": "Buy directly from galleries and bid in auction",
-      "image": "http://files.artsy.net/images/buy_art_background.jpg",
+      "image": "http://files.artsy.net/images/collect_art_background.jpg",
       "mobile_image": "http://files.artsy.net/images/mobile-background2x.jpg",
       "stats": [
         {
@@ -42,7 +42,7 @@
         {
           "image": "http://files.artsy.net/images/data.svg",
           "title": "Comprehensive Data",
-          "content": "Consule our database of artists, exhibitors, auction results, and market news"
+          "content": "Consult our database of artists, exhibitors, auction results, and market news"
         },
         {
           "image": "http://files.artsy.net/images/recommendations.svg",
