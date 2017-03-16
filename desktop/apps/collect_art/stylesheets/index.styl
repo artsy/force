@@ -51,12 +51,25 @@
   color white
   text-align center
   text-decoration none
+  transition background-color 0.5s ease-out
+  &:hover
+    background-color black
 
 .ba__email-signup-button
   @extends .avant-garde-button
   @extends .collect-art-buttons
   margin-right 20px
   background-color #ffffff
+  transition background-color 0.5s ease-out
+  .collect-art__svg-icon
+    width 23px
+    height 17px
+    display inline-block
+  &:hover
+    .collect-art__svg-icon
+      background-position 0 17px
+    color white
+    background-color #6e1fff
 .ba__facebook-signup-button
   @extends .collect-art-buttons
   background-color #586DB8
@@ -64,6 +77,9 @@
   avant-garde-size('body')
   text-decoration none
   line-height 1
+  transition background-color 0.5s ease-out
+  &:hover
+    background-color purple-color
   > i
     line-height 0
     vertical-align -8px
