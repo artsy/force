@@ -97,7 +97,8 @@ mixin amp_analytics
           "properties.articleSection": "#{article.getParselySection()}",
           "properties.thumbnailUrl": "#{article.get('thumbnail_image')}",
           "properties.url": "#{article.fullHref()}",
-          "properties.headline": "#{article.get('thumbnail_title')}"
+          "properties.headline": "#{article.get('thumbnail_title')}",
+          "properties.library": "amp"
         }
       }
   amp-analytics(type="parsely")
