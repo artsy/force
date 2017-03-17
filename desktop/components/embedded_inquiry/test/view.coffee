@@ -11,10 +11,7 @@ EmbeddedInquiryView = null
 describe 'EmbeddedInquiryView', ->
   before (done) ->
     benv.setup ->
-      benv.expose
-        $: benv.require('jquery')
-        jQuery: benv.require('jquery')
-        Cookies: benv.require('cookies-js')
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       EmbeddedInquiryView = benv.requireWithJadeify require.resolve('../view'), [
         'template'
         'confirmation'
@@ -28,6 +25,7 @@ describe 'EmbeddedInquiryView', ->
   beforeEach ->
     @questionnaire = sinon.stub()
       .returns view: new Backbone.View
+
     EmbeddedInquiryView.__set__ 'openInquiryQuestionnaireFor', @questionnaire
 
   describe 'logged in', ->
