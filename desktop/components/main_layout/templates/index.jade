@@ -2,11 +2,13 @@
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
 
+- sd.CURRENT_USER = {}
+
 doctype html
 html(
   data-useragent=userAgent
   data-user-type=sd.CURRENT_USER && sd.CURRENT_USER.type
-  data-lab-features=sd.CURRENT_USER && sd.CURRENT_USER.lab_features.join(',')
+  data-lab-features=sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.join(',')
 )
   head
     include head

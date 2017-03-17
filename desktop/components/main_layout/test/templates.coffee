@@ -21,6 +21,12 @@ describe 'Main layout template', ->
       asset: ((p) -> p)
     ).should.not.containEql '/assets/analytics.js'
 
+  it 'can render the page when CURRENT_USER is missing', ->
+    console.log render('../templates/index.jade')(
+      sd: CURRENT_USER: {}
+      asset: ((p) -> p)
+    )
+
 describe 'Head template', ->
   describe 'IS_RESPONSIVE', ->
     it 'renders whether or not there is a user agent', ->
