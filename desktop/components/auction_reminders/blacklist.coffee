@@ -6,6 +6,8 @@ module.exports =
     '^/personalize'
     '^/artsy-primer'
     '^/collect-art'
+    '^/signup'
+    '^/login'
     '^/user/edit'
     '^/sale/.*'
     '^/auction/.*'
