@@ -91,18 +91,6 @@ describe '#login', ->
     routes.login req, res
     @render.args[0][1].redirectTo.should.equal '%2Ffollowing%2Fprofiles'
 
-
-  it 'passes the redirect query param to the template', ->
-    req =
-      query: { 'redirect_uri': '%2Ffollowing%2Fprofiles' }
-      body: {}
-      params: {}
-      get: (-> false)
-    res = { render: @render = sinon.stub() }
-
-    routes.login req, res
-    @render.args[0][1].redirectTo.should.equal '%2Ffollowing%2Fprofiles'
-
   it 'ignores malicious redirects', ->
     req =
       query: { 'redirect-to': 'http://www.iamveryverysorry.com/' }

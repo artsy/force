@@ -10,7 +10,6 @@ sanitizeRedirect = require '../../components/sanitize_redirect'
 redirectUrl = (req) ->
   url = req.body['redirect-to'] or
   req.query['redirect-to'] or
-  req.query['redirect_uri'] or
   req.params['redirect_uri'] or
 
   if (referrer = req.get('Referrer')) && (referrer.indexOf('/log_in') > -1) and (referrer.indexOf('/sign_up') > -1)
