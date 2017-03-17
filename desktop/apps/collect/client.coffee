@@ -62,9 +62,11 @@ module.exports.init = ->
     categoryMap: sd.CATEGORIES
 
   # Main Artworks view
-  keywordView = new KeywordFilterView
-    el: $('.cf-keyword')
-    params: params
+  if @user?.hasLabFeature('Keyword Search')
+    keywordView = new KeywordFilterView
+      el: $('.cf-keyword')
+      params: params
+      aggregations: filter.aggregations
 
   filter.artworks.on 'reset', ->
     artworkView = new ArtworkColumnsView
