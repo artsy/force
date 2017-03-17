@@ -5,6 +5,7 @@ module.exports =
   patterns: [
     '^/personalize'
     '^/artsy-primer'
+    '^/collect-art'
     '^/user/edit'
     '^/sale/.*'
     '^/auction/.*'
