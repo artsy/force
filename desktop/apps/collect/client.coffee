@@ -16,6 +16,7 @@ PopularArtistsView = require '../../components/commercial_filter/views/popular_a
 PriceFilterView = require '../../components/commercial_filter/filters/price/price_filter_view.coffee'
 ColorFilterView = require '../../components/commercial_filter/filters/color/color_filter_view.coffee'
 SizeFilterView = require '../../components/commercial_filter/filters/size/size_filter_view.coffee'
+KeywordFilterView = require '../../components/commercial_filter/filters/keyword/keyword_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
 scrollFrame = require 'scroll-frame'
@@ -61,6 +62,10 @@ module.exports.init = ->
     categoryMap: sd.CATEGORIES
 
   # Main Artworks view
+  keywordView = new KeywordFilterView
+    el: $('.cf-keyword')
+    params: params
+
   filter.artworks.on 'reset', ->
     artworkView = new ArtworkColumnsView
       collection: filter.artworks
