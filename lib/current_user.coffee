@@ -9,6 +9,7 @@ Backbone = require 'backbone'
 request = require 'superagent'
 Q = require 'bluebird-q'
 ABM = require 'artsy-backbone-mixins'
+Cookies = require 'cookies-js'
 { API_URL, CURRENT_USER, EDITORIAL_ADMINS } = sd = require('sharify').data
 Following = require '../desktop/components/follow_button/collection.coffee'
 Artists = require '../desktop/collections/artists.coffee'

@@ -28,6 +28,7 @@ module.exports = ->
   listenForBounce()
   confirmation.check()
   setupRaygun()
+  setupSessionCookie()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -57,9 +58,15 @@ setupReferrerTracking = ->
     Cookies.set 'force-referrer', document.referrer
     Cookies.set 'force-session-start', window.location.href
 
+setupSessionCookie = ->
+  # Used by Marketo to link inquiries to anonymous users
+  if Cookies.get('force-session-id') and Cookies.get('force-session-id') isnt SESSION_ID
+    Cookes.expire 'force-session-id'
+  Cookies.set('force-session-id', SESSION_ID) if !Cookies.get('force-session-id')
+
 setupRaygun = ->
   if sd.RAYGUN_KEY
-    rg4js 'enableCrashReporting', true 
+    rg4js 'enableCrashReporting', true
     rg4js 'apiKey', sd.RAYGUN_KEY
 
 setupJquery = ->
