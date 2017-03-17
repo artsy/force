@@ -8,8 +8,20 @@ $(document).on(
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
   function() {
     $(document).one('ajaxComplete', function(e, xhr, options) {
+      var getUrlParameter = function(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      };
+
+      var acquisition_initiative = getUrlParameter('m-id');
+      if (_.isEmpty(acquisition_initiative)) {
+        acquisition_initiative = getUrlParameter('acquisition_initiative');
+      }
+
       analytics.track('Created account', {
-        acquisition_initiative: location.search.replace('?m-id=', ''),
+        acquisition_initiative: acquisition_initiative,
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
         context: options.context
@@ -25,10 +37,22 @@ $(document).on(
   'click',
   '.auth-signup-facebook, .marketing-signup-modal-fb',
   function(e) {
+    var getUrlParameter = function(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    var acquisition_initiative = getUrlParameter('m-id');
+    if (_.isEmpty(acquisition_initiative)) {
+      acquisition_initiative = getUrlParameter('acquisition_initiative');
+    }
+
     // 2. Store some data in cookies before being redirected everywhere
     Cookies.set('analytics-signup', JSON.stringify({
       service: 'facebook',
-      acquisition_initiative: location.search.replace('?m-id=', ''),
+      acquisition_initiative: acquisition_initiative,
       context: $(e.currentTarget).data('context')
     }))
   }

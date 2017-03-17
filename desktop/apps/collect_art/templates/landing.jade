@@ -13,14 +13,14 @@ block body
           .collect-art-header__title.collect-art-text-center-on-mobile= header.headline
           .collect-art-show-on-desktop
             .collect-art-header__signup-buttons
-              a.ba__email-signup-button( href='/signup' )
+              a.ba__email-signup-button( href='/signup?acquisition_initiative=collector_marketing', data-section='header' )
                 .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
                 | Sign up using email
-              a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize' )
+              a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize&acquisition_initiative=collector_marketing', data-section='header' )
                 i.icon-facebook
                 | Sign up with Facebook
           .collect-art-show-on-mobile.collect-art-text-center-on-mobile
-            a.collect-art-signup-button( href='/signup' )
+            a.collect-art-signup-button( href='/signup', data-section='header' )
               | Sign up
 
         i.icon-logotype
@@ -41,7 +41,7 @@ block body
             .collect-art-intro__desktop-type.collect-art-show-on-desktop= stat.desktop_type
             .collect-art-intro__mobile-type.collect-art-show-on-mobile= stat.mobile_type
       .collect-art-intro__signup-button-container
-        a.collect-art-signup-button( href='/signup' )
+        a.collect-art-signup-button( href='/signup?acquisition_initiative=collector_marketing', data-section='intro' )
           | Sign up
 
   .collect-art-benefits
@@ -50,7 +50,7 @@ block body
         .row
           .col-xs-12.col-lg-6
             .collect-art-benefits__title.collect-art-text-center-on-mobile= sections[1].headline
-            a.collect-art-signup-button( href='/signup' )
+            a.collect-art-signup-button( href='/signup?acquisition_initiative=collector_marketing', data-section='benefits' )
               | Sign up
             .collect-art-benefits__benefits-container.collector-marketing
               each benefit in sections[1].benefits
@@ -77,7 +77,7 @@ block body
                   .collect-art-faqs__item-title= faq.title
                   .collect-art-faqs__item-content= faq.content
             .col-xs-12.col-lg-6.collect-art-text-center-on-mobile
-              a.collect-art-signup-button( href='/signup' )
+              a.collect-art-signup-button( href='/signup?acquisition_initiative=collector_marketing', data-section='faqs' )
                 | Sign up
 
   .collect-art-footer
@@ -89,13 +89,13 @@ block body
         .collect-art-footer__title= footer.headline
         .collect-art-show-on-desktop
           .collect-art-footer__signup-buttons
-            a.ba__email-signup-button( href='/signup' )
+            a.ba__email-signup-button( href='/signup?acquisition_initiative=collector_marketing', data-section='footer' )
               .collect-art__svg-icon( style="background-image: url(#{header.email_icon});" )
               | Sign up using email
-            a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize' )
+            a.ba__facebook-signup-button( href='/users/auth/facebook?redirect-to=/personalize&acquisition_initiative=collector_marketing', data-section='footer' )
               i.icon-facebook
               | Sign up with Facebook
         .collect-art-show-on-mobile
-          a.collect-art-signup-button( href='/signup' )
+          a.collect-art-signup-button( href='/signup?acquisition_initiative=collector_marketing',data-section='footer' )
             | Sign up
         i.icon-logo
