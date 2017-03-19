@@ -21,11 +21,27 @@ describe 'Main layout template', ->
       asset: ((p) -> p)
     ).should.not.containEql '/assets/analytics.js'
 
+  it 'renders user agent, user type, and lab features as a data attribute', ->
+    html = render('../templates/index.jade')(
+      sd: CURRENT_USER: { lab_features: ['microsite'], type: 'Admin' }
+      asset: ((p) -> p)
+      userAgent: 'foo'
+    )
+    html.should.containEql 'data-lab-features="microsite"'
+    html.should.containEql 'data-useragent="foo"'
+    html.should.containEql 'data-user-type="Admin"'
+
   it 'can render the page when CURRENT_USER is missing', ->
-    console.log render('../templates/index.jade')(
+    render('../templates/index.jade')(
+      sd: {}
+      asset: ((p) -> p)
+    ).should.containEql '<html>'
+
+  it 'can render the page when attrs are missing from CURRENT_USER', ->
+    render('../templates/index.jade')(
       sd: CURRENT_USER: {}
       asset: ((p) -> p)
-    )
+    ).should.containEql '<html>'
 
 describe 'Head template', ->
   describe 'IS_RESPONSIVE', ->
