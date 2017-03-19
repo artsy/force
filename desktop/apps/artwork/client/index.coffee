@@ -173,7 +173,7 @@ module.exports =
     }
       .then (data) ->
         renderTemplates(extend data, {
-          auctionContextId: AUCTION.id
+          auctionContextId: AUCTION && AUCTION.id
         })
 
         exec init, data
