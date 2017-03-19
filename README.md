@@ -29,11 +29,6 @@ Set-Up
 
 See [CONTRIBUTING](CONTRIBUTING.md).
 
-Docs
-----
-
-You can find more documentation in [this repository's /doc directory](/doc).
-
 ````
                   ._,.
             ."..-..pf
