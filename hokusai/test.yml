@@ -20,7 +20,6 @@ services:
     - ADMIN_URL=http://admin.artsy.net
     - CMS_URL=http://cms.artsy.net
     - CONSIGNMENTS_APP_URL=https://sell.artsy.net/
-    - FUSION_URL=https://fusion.artsy.net
     - GALAXY_URL=https://galaxy-production.herokuapp.com
     - GEMINI_ACCOUNT_KEY=force
     - GEMINI_CLOUDFRONT_URL=https://d7hftxdivxxvm.cloudfront.net

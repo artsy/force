@@ -39,7 +39,17 @@ describe 'Sitemaps', ->
 
       it 'renders the normal robots with sitemap in production', ->
         @res.send.args[0][0]
-          .should.containEql  'User-agent: *\nNoindex: ?sort=\nNoindex: ?dimension_range=\nDisallow: ?dns_source=\nDisallow: ?microsite=\nDisallow: ?from-show-guide=\nSitemap: https://www.artsy.net/sitemap.xml\nSitemap: https://www.artsy.net/images_sitemap.xml'
+          .should.containEql """
+User-agent: *
+Noindex: ?sort=
+Noindex: ?dimension_range=
+Disallow: ?dns_source=
+Disallow: ?microsite=
+Disallow: ?from-show-guide=
+Sitemap: https://www.artsy.net/sitemap.xml
+Sitemap: https://www.artsy.net/sitemap-artworks.xml
+Sitemap: https://www.artsy.net/sitemap-images.xml
+"""
 
       it 'includes a CR/LF at the end of robots.txt', ->
         @res.send.args[0][0].slice(-1).should.eql('\n')
@@ -68,26 +78,24 @@ describe 'Sitemaps', ->
       Backbone.sync.args[0][2].data.exclude_google_news.should.be.false()
       Backbone.sync.args[0][2].data.limit.should.equal 100
 
-  describe '#imagesIndex', ->
-
-    it 'displays the correct image sitemap URLs for each bucket', ->
-      routes.__set__ 'request', get: -> query: -> end: (cb) ->
-        cb(null, { body: count: 400000 })
-      routes.imagesIndex(@req, @res)
-      @res.render.args[0][1].artworkBuckets[0].startDate.should.equal '2010-09-01'
-      @res.render.args[0][1].artworkBuckets[0].pages.should.equal 80
-      @res.render.args[0][1].artworkBuckets[1].startDate.should.equal '2010-10-01'
-      @res.render.args[0][1].artworkBuckets[1].pages.should.equal 80
+  describe '#artworks and #images', ->
+    it 'proxies sitemaps to s3', ->
+      @req =
+        headers: {}
+      proxy = { web: sinon.stub() }
+      routes.__set__ 'sitemapProxy', proxy
+      routes.__set__ 'SITEMAP_BASE_URL', 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
+      @proxy = routes.__get__ 'sitemapProxy'
+      routes.sitemaps @req, @res
+      @proxy.web.args[0][0].headers['host'].should.equal 'artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
 
   describe '#index', ->
 
     it 'renders index with data', ->
-      routes.__set__ 'async', parallel: sinon.stub().yields null, [[{ startDate: '2010-09-01', pages: 80 }], 5, 10]
+      routes.__set__ 'async', parallel: sinon.stub().yields null, [5, 10]
       routes.index(@req, @res)
       @res.render.args[0][1].articlePages.should.equal 5
       @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].artworkBuckets[0].startDate.should.equal '2010-09-01'
-      @res.render.args[0][1].artworkBuckets[0].pages.should.equal 80
       @res.render.args[0][1].resources.length.should.equal 6
 
   describe '#misc', ->
@@ -104,19 +112,6 @@ describe 'Sitemaps', ->
       @res.render.args[0][1].citySlugs.length.should.equal 2
       @res.render.args[0][1].citySlugs[0].should.containEql 'new-york-city'
       @res.render.args[0][1].citySlugs[1].should.containEql 'tokyo'
-
-  describe '#artworksPage', ->
-
-    it 'displays the correct artwork URLs in the sitemap', ->
-      routes.__set__ 'request', get: -> query: -> end: (cb) ->
-        cb(null, { body: results: [fabricate 'artwork', { id: 'foo'}] })
-      @req =
-        params:
-          date: '2012-01-01'
-          page: 3
-      routes.artworksPage('artworks')(@req, @res)
-      @res.render.args[0][0].should.equal('artworks')
-      @res.render.args[0][1].models[0].id.should.equal('foo')
 
   describe '#articlesPage', ->
 
@@ -144,16 +139,6 @@ describe 'Sitemaps', ->
       routes.resourcePage req, @res
       @res.render.args[0][1].models[0].id.should.equal 'gene-1'
       @res.render.args[0][1].models[1].id.should.equal 'gene-2'
-
-  describe '#bingNew', ->
-
-    it 'only displays artworks published in the past week', ->
-      routes.__set__ 'request', get: -> query: (query) ->
-        moment(query.published_at_since).isAfter(moment().subtract(8, 'days')).should.be.true()
-        end: (cb) ->
-          cb(null, { body: results: [fabricate 'artwork', { id: 'foo', title: 'bar' }] })
-      routes.bingNew(@req, @res)
-      @res.send.args[0][0][0].name.should.equal('bar')
 
   describe '#video', ->
 
