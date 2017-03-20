@@ -17,7 +17,8 @@ module.exports = class Params extends Backbone.Model
     'partner_cities',
     'sale_id',
     'gene_ids',
-    'artist_ids'
+    'artist_ids',
+    'keyword'
   ]
 
   defaults:
