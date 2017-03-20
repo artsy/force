@@ -3,7 +3,8 @@ extends ../../../components/main_layout/templates/blank
 append locals
   - assetPackage = 'collect_art'
 
-include meta
+block head
+  include meta
 
 block body
   .collect-art-header( style="background-image: url(#{header.image});" )
