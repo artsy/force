@@ -221,6 +221,7 @@ module.exports = (app) ->
   app.use require "../apps/gene"
   app.use require "../apps/geo"
   app.use require "../apps/jobs"
+  app.use require "../apps/loyalty"
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
