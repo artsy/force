@@ -19,6 +19,7 @@ SizeFilterView = require '../../components/commercial_filter/filters/size/size_f
 KeywordFilterView = require '../../components/commercial_filter/filters/keyword/keyword_filter_view.coffee'
 PillboxView = require '../../components/commercial_filter/views/pillbox/pillbox_view.coffee'
 ArtworkColumnsView = require '../../components/artwork_columns/view.coffee'
+CurrentUser = require '../../models/current_user.coffee'
 scrollFrame = require 'scroll-frame'
 sd = require('sharify').data
 { fullyQualifiedLocations } = require '../../components/commercial_filter/filters/location/location_map.coffee'
@@ -62,7 +63,7 @@ module.exports.init = ->
     categoryMap: sd.CATEGORIES
 
   # Main Artworks view
-  if @user?.hasLabFeature('Keyword Search')
+  if CurrentUser.orNull()?.hasLabFeature('Keyword Search')
     keywordView = new KeywordFilterView
       el: $('.cf-keyword')
       params: params

@@ -20,6 +20,4 @@ module.exports = class KeywordFilterView extends Backbone.View
 
   render: ->
     @$el.html template
-
-    if @params.get('keyword')
-      $('input[name=keyword]').val(@params.get('keyword'))
+      keyword: @params.get('keyword')
