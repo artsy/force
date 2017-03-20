@@ -79,8 +79,8 @@ module.exports = (app) ->
     # secureProxy just sets secure=true
     secure: "production" is NODE_ENV or "staging" is NODE_ENV
   app.use artsyPassport
-    FACEBOOK_ID: config.FACEBOOK_APP_ID
-    FACEBOOK_SECRET: config.FACEBOOK_APP_SECRET
+    FACEBOOK_ID: config.FACEBOOK_ID
+    FACEBOOK_SECRET: config.FACEBOOK_SECRET
     TWITTER_KEY: config.TWITTER_CONSUMER_KEY
     TWITTER_SECRET: config.TWITTER_CONSUMER_SECRET
     ARTSY_ID: config.CLIENT_ID
