@@ -80,6 +80,15 @@ describe 'gene sitemap template', ->
       sd: APP_URL: 'www.artsy.net'
     xml.should.containEql 'www.artsy.net/gene/pop-art'
 
+describe 'feature sitemap template', ->
+
+  it 'renders the correct feature URLs', ->
+    xml = render('features')
+      models: [fabricate 'feature']
+      _: _
+      sd: APP_URL: 'www.artsy.net'
+    xml.should.containEql 'www.artsy.net/feature/bitty-the-cat'
+
 describe 'misc sitemap template', ->
 
   it 'renders the correct misc URLs', ->
