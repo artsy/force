@@ -8,7 +8,6 @@ moment = require 'moment'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 Artwork = require '../../../models/artwork'
-Artworks = require '../../../collections/artworks'
 Section = require '../../../models/section'
 
 render = (templateName) ->
@@ -42,15 +41,6 @@ describe 'artists template', ->
     xml.should.containEql 'www.artsy.net/artist/roy-lichtenstein/shows'
     xml.should.containEql 'www.artsy.net/artist/roy-lichtenstein/related-artists'
     xml.should.containEql 'www.artsy.net/artist/roy-lichtenstein/auction-results'
-
-describe 'artwork template', ->
-
-  it 'renders the correct artwork URLs', ->
-    xml = render('artworks')
-      models: new Artworks([fabricate 'artwork', id: 'foobar']).models
-      _: _
-      sd: {}
-    xml.should.containEql '/artwork/foobar'
 
 describe 'cities sitemap template', ->
 
@@ -89,57 +79,6 @@ describe 'gene sitemap template', ->
       _: _
       sd: APP_URL: 'www.artsy.net'
     xml.should.containEql 'www.artsy.net/gene/pop-art'
-
-describe 'image sitemap template', ->
-
-  it 'renders the correct image URLs', ->
-    xml = render('images')
-      models: new Artworks([fabricate('artwork', {
-        images:
-          [{image_urls: {
-            medium: 'https://d32dm0rphc51dk.cloudfront.net/foo.jpg'
-            small: 'baz.jpg'
-            }
-          }]
-        })
-      ]).models
-      _: _
-      sd: {}
-    xml.should.containEql 'https://d32dm0rphc51dk.cloudfront.net/foo.jpg'
-
-  it 'renders the correct caption data', ->
-    xml = render('images')
-       models: new Artworks([fabricate 'artwork', title: 'Moo']).models
-      _: _
-      sd: {}
-    xml.should.containEql 'Moo'
-
-  it 'does not include images for which imageUrl() is undefined', ->
-    xml = render('images')
-       models: new Artworks([fabricate 'artwork', id: 'james', images: undefined]).models
-      _: _
-      sd: {}
-    xml.should.not.containEql 'james'
-
-describe 'images index sitemap template', ->
-
-  it 'renders the correct image page URLs', ->
-    xml = render('images_index')
-      artworkBuckets: [{ pages: 2, startDate: '2010-09-01' }, { pages: 2, startDate: '2010-10-01' }]
-      sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql 'www.artsy.net/sitemap-images-1-2010-09-01.xml'
-    xml.should.containEql 'www.artsy.net/sitemap-images-2-2010-09-01.xml'
-    xml.should.containEql 'www.artsy.net/sitemap-images-1-2010-10-01.xml'
-    xml.should.containEql 'www.artsy.net/sitemap-images-2-2010-10-01.xml'
-
-describe 'index sitemap template', ->
-
-  it 'renders the correct feature URLs', ->
-    xml = render('features')
-      models: [fabricate 'feature']
-      _: _
-      sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql 'www.artsy.net/feature/bitty-the-cat'
 
 describe 'misc sitemap template', ->
 
