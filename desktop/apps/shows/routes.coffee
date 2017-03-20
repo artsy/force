@@ -24,6 +24,9 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 @redirectShow = (req, res) ->
   res.redirect 301, req.url.replace 'show', 'shows'
 
+@redirectFromCity = (req, res) ->
+  res.redirect 302, req.url.replace '/city/', '/shows/'
+
 @city = (req, res, next) ->
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()

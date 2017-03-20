@@ -4,7 +4,7 @@ Aggregations = require '../collections/aggregations.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Artists = require '../../../collections/artists.coffee'
 User = require '../../../models/user.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 _ = require 'underscore'
 
 module.exports = class Filter extends Backbone.Model
@@ -68,7 +68,8 @@ module.exports = class Filter extends Backbone.Model
         $major_periods: [String],
         $partner_cities: [String],
         $aggregation_partner_cities: [String],
-        $include_artworks_by_followed_artists: Boolean
+        $include_artworks_by_followed_artists: Boolean,
+        $keyword: String
       ){
         filter_artworks(
           aggregations: $aggregations,
@@ -90,7 +91,8 @@ module.exports = class Filter extends Backbone.Model
           major_periods: $major_periods,
           partner_cities: $partner_cities,
           aggregation_partner_cities: $aggregation_partner_cities,
-          include_artworks_by_followed_artists: $include_artworks_by_followed_artists
+          include_artworks_by_followed_artists: $include_artworks_by_followed_artists,
+          keyword: $keyword
         ){
           total
           followed_artists_total

@@ -4,6 +4,10 @@ blacklist = require '../../lib/blacklist.coffee'
 module.exports =
   patterns: [
     '^/personalize'
+    '^/artsy-primer'
+    '^/collect-art'
+    '^/signup'
+    '^/login'
     '^/user/edit'
     '^/sale/.*'
     '^/auction/.*'

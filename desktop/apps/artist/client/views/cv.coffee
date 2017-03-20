@@ -3,7 +3,7 @@ template = -> require('../../templates/sections/cv.jade') arguments...
 sd = require('sharify').data
 ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
 query = require '../../queries/cv.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 showHelpers = require '../../../../components/show_cell/helpers.coffee'
 artistHelpers = require '../../view_helpers.coffee'
 
@@ -20,7 +20,7 @@ module.exports = class CVView extends Backbone.View
       variables:
         artist_id: @model.get('id')
         articles: @statuses.articles
-        shows: @statuses.shows
+        shows: @statuses.shows || @statuses.cv
     .then ({ artist }) => @trigger 'artist:cv:sync', artist
 
   postRender: ->

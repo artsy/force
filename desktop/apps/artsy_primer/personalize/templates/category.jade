@@ -1,0 +1,11 @@
+.artsy-primer-personalize-category
+  h3= category.get('title')
+  if category.get('image_versions')
+    a.artsy-primer-personalize-category-image-link
+      .artsy-primer-personalize-following-overlay
+        .artsy-primer-personalize-following-darkbg
+        .artsy-primer-personalize-following-icon
+          i.icon-with-white-circle.icon-check
+          .artsy-primer-personalize-following-text
+      img.artsy-primer-personalize-category-image( src=category.imageUrl('large_square'), width='400', height='400' )
+  a.avant-garde-follow-button-black.is-block.follow-button( data-id="#{category.get('gene_id')}" )

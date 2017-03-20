@@ -6,7 +6,7 @@ Sale = require '../../models/sale'
 Artwork = require '../../models/artwork'
 { API_URL } = require '../../config'
 sanitizeRedirect = require '../../components/sanitize_redirect'
-metaphysics = require '../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics'
 
 module.exports.index = (req, res, next) ->
   new Feature(id: req.params.id).fetch

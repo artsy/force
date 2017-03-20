@@ -59,3 +59,4 @@ $ -> analytics.ready ->
   require '../analytics/embedded_inquiry.js'
   require '../analytics/inquiry_questionnaire.js'
   require '../analytics/editorial_features.js'
+  require '../analytics/collect_art.js'

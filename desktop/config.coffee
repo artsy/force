@@ -11,7 +11,6 @@ module.exports =
   PORT: 3004
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
-  FUSION_URL: null
   REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
@@ -70,6 +69,7 @@ module.exports =
   SAILTHRU_SECRET: null
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
+  SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   CONSIGNMENTS_APP_URL: null
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   ACTIVE_BIDS_POLL_INTERVAL: 5000
@@ -90,14 +90,15 @@ module.exports =
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
   EOY_2016: '5829db77b5989e6f98f779a5'
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
-  ARTSY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
-  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$|^\/artsy-partner-updates$'
+  GALLERY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
+  TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca3","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca4","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"}]'
   EOY_2016_ARTICLE: null
-  EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
   RAYGUN_KEY: null
   FORCE_MERGE_URL: 'https://merged.artsy.net'
   FORCE_MERGE_WEIGHT: 0
+  S3_BUCKET: null
+  SEGMENT_AMP_WRITE_KEY: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

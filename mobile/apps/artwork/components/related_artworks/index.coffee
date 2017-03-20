@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { ARTWORK } = require('sharify').data
 Artworks = require '../../../../collections/artworks.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics.coffee'
 { displayRelatedWorks } = require './display_related_works.coffee'
 
 module.exports = ->

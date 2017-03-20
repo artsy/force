@@ -12,6 +12,7 @@ module.exports = class ArticlesAdapter
         fair_id: fair.get('_id')
         sort: '-published_at'
         limit: 5
+        count: true
     el.html '<div class="loading-spinner"></div>'
     el.addClass view.className
     collection.fetch
@@ -20,4 +21,5 @@ module.exports = class ArticlesAdapter
         fair_id: fair.get('_id')
         sort: '-published_at'
         limit: 5
+        count: true
     view

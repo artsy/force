@@ -1,0 +1,18 @@
+- collector = user.isCollector()
+
+header.artsy-primer-personalize-header
+  h1
+    | Follow artists you are interested in
+  aside
+    | If there are artists whose work you like, enter their names here. Your Artsy Specialist can use this information to find works by these artists that suit your need or can recommend relevant artwork from other artists you may not yet be familiar with.
+
+section.artsy-primer-personalize-step( data-step='artists' )
+  #artsy-primer-personalize-search-container.autocomplete-input-container.is-block
+    input#artsy-primer-personalize-search.bordered-input(
+      type='text', placeholder='Type your favorite artist’s name', autofocus=autofocus
+    )
+    .autocomplete-loading-indicator: .loading-spinner-small
+
+  #artsy-primer-personalize-followed
+
+#artsy-primer-personalize-suggestions-container: #artsy-primer-personalize-suggestions

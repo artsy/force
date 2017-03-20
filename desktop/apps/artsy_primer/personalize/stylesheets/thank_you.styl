@@ -1,0 +1,21 @@
+.artsy-primer-personalize-thank-you
+
+  &-h1, &-p
+    font-size 30px
+    line-height 35px
+    max-width 600px
+    margin 40px auto
+
+  &-p
+    @media screen and (max-width: 768px)
+      serif('s-body')
+      color gray-darker-color
+
+  &-button
+    width 455px
+    @media screen and (max-width: 768px)
+      position fixed
+      bottom 20px
+      left 20px
+      width calc(100% \- 40px)
+      background-color purple-color

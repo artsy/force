@@ -209,7 +209,7 @@ describe 'Sale', ->
 
     it 'fetches the sale artworks', ->
       @sale.fetchArtworks()
-      Backbone.sync.args[0][1].url.should.match /// /api/v1/sale/.*/sale_artworks ///
+      Backbone.sync.args[0][1].url().should.match /// /api/v1/sale/.*/sale_artworks ///
 
   describe '#registerUrl', ->
 

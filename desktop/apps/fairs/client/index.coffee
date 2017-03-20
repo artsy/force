@@ -6,7 +6,7 @@ mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Profile = require '../../../models/profile.coffee'
 initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
 

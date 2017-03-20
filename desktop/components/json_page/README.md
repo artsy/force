@@ -44,7 +44,7 @@ Ensure you have the .env vars: `S3_KEY`, `S3_SECRET` set.
 To sync data with the bucket:
 
 ```
-> foreman run node_modules/.bin/coffee components/json_page/seed.coffee your_page_name staging ../some/path/to/your/data.json
+> foreman run node_modules/.bin/coffee ./desktop/components/json_page/seed.coffee your_page_name staging ../../../some/path/to/your/data.json
 > ? Update `your_page_name` in the bucket `force-staging` with data from `../../apps/your_app/test/fixture.json`? Yes
 > Updated `https://force-staging.s3.amazonaws.com/json/your_page_name.json`.
 ```

@@ -16,8 +16,10 @@ followableObject =
 module.exports = ({ module, user, $el }) ->
   return unless followableObject[module.key]?
 
-  kind = if module.key is 'related_artists' or 'followed_artist' then 'artist' else 'gene'
-  Model = if module.key is 'related_artists' or 'followed_artist' then Artist else Gene
+  artistRelated = module.key is 'related_artists' or module.key is 'followed_artist'
+
+  kind = if artistRelated then 'artist' else 'gene'
+  Model = if artistRelated then Artist else Gene
   followable = followableObject[module.key](module)
 
   model = new Model followable

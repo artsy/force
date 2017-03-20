@@ -86,7 +86,7 @@ mixin amp_analytics
     script(type="application/json").
       {
         "vars": {
-          "writeKey": "#{sd.SEGMENT_WRITE_KEY}",
+          "writeKey": "#{sd.SEGMENT_AMP_WRITE_KEY}",
           "name": "#{article.href()}"
         },
         "extraUrlParams": {
@@ -97,7 +97,8 @@ mixin amp_analytics
           "properties.articleSection": "#{article.getParselySection()}",
           "properties.thumbnailUrl": "#{article.get('thumbnail_image')}",
           "properties.url": "#{article.fullHref()}",
-          "properties.headline": "#{article.get('thumbnail_title')}"
+          "properties.headline": "#{article.get('thumbnail_title')}",
+          "properties.library": "amp"
         }
       }
   amp-analytics(type="parsely")

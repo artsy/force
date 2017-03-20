@@ -1,10 +1,10 @@
 doctype xml
 rss(version='2.0', xmlns:atom='http://www.w3.org/2005/Atom')
   channel
-    title Artsy Partner Updates
+    title Gallery Partner Updates
     link= sd.APP_URL
     atom:link(href='#{sd.APP_URL}/rss/partner-updates', rel='self', type='application/rss+xml')
-    description Artsy articles featured for Artsy Partner Updates.
+    description Artsy articles featured for Gallery Partner Updates.
     language en-US
     if articles.length
       lastBuildDate= new Date(articles.first().get('published_at')).toUTCString()

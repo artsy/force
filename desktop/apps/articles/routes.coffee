@@ -60,7 +60,6 @@ setupEmailSubscriptions = (user, cb) ->
         error: res.backboneError
         success: (articles) ->
           res.locals.sd.ARTICLES = articles.toJSON()
-          res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.SECTION = section.toJSON()
           res.render 'section', section: section, articles: articles
 

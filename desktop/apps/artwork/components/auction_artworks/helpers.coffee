@@ -1,17 +1,18 @@
-_ = require 'underscore'
-masonry = require '../../../../components/artwork_masonry/index.coffee'
-
-reduceArray = (artworks, rows) ->
-  elements = artworks.splice(0,3)
-  rows.push(elements)
-
-  if artworks.length > 0
-    reduceArray(artworks, rows)
-  rows
+masonry = require '../../../../components/artwork_masonry_4_column/index.coffee'
+upcomingLabel = require('../../../../components/current_auctions/utils/upcoming_label').default
+{ ARTWORK_DISPLAY_NUM } = require './config.coffee'
+{ partition, pluck, shuffle, take } = require 'underscore'
 
 module.exports =
-  masonry: masonry
+  masonry: (artworks, followed_artist_ids) ->
+    followIds = pluck followed_artist_ids.hits, 'id'
 
-  auctionArtworkRows: (artworks) ->
-    rows = []
-    reduceArray(artworks, rows)
+    # Find followed artists and prepare to prepend to results array
+    [followed, rest] = partition artworks,
+      (artwork) =>
+        followIds.some (id) => id == artwork.id
+
+    displayArtworkResults = take shuffle(followed).concat(shuffle(rest)), ARTWORK_DISPLAY_NUM
+    masonry displayArtworkResults
+
+  upcomingLabel: upcomingLabel

@@ -7,6 +7,7 @@
 @require '../components/auction/index'
 @require '../components/auction_artworks/index'
 @require '../components/banner/index'
+@require '../../../components/current_auctions'
 @require '../components/deep_zoom/index'
 @require '../components/doge/index'
 @require '../components/images/index'
@@ -37,13 +38,10 @@ artwork-page = {
     display flex
     align-items stretch
 
-    &__overview
     &__metadata
-      //
-
-    &__metadata
-      z-index 1
+      position relative
       width: artwork-page.metadata.width
+      z-index 1
 
     &__overview
       width calc('100% - %s' % (artwork-page.metadata.width + gutter))
@@ -66,3 +64,5 @@ artwork-page = {
       text-decoration none
       border-top 1px solid gray-lighter-color
 
+#react-mount-current-auctions
+  margin-top -(gutter * 2)

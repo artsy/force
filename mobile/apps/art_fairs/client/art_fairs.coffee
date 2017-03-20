@@ -5,7 +5,7 @@ pastFairsTemplate = -> require('../templates/past-fairs.jade') arguments...
 sd = require('sharify').data
 Backbone = require 'backbone'
 query = require '../query.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics.coffee'
 
 module.exports.FairsView = class FairsView extends Backbone.View
   events:

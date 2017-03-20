@@ -18,8 +18,7 @@ module.exports = class FooterView extends Backbone.View
     @listenTo mediator, 'infinite:scroll:start', @hide
     @listenTo mediator, 'infinite:scroll:end', @show
     @$recentlyViewedArtworks = $('#recently-viewed-artworks')
-
-    if shouldShowRVARail()
+    if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
       setupRail @$recentlyViewedArtworks
       @$('.mlf-upper').css('border', 'none')
 
@@ -28,7 +27,7 @@ module.exports = class FooterView extends Backbone.View
 
   show: ->
     @$el.show()
-    reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail()
+    reInitRVARail(@$recentlyViewedArtworks) if shouldShowRVARail() && @$recentlyViewedArtworks.length > 0
 
   openFeedback: (e) ->
     e.preventDefault()

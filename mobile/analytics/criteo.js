@@ -28,7 +28,7 @@ if (pathSplit[1] === "auctions") {
     // https://www.artsy.net/auction/:auction_id/bid - (AUCTIONS trackTransaction)
     //              0          1          2       3
     analyticsHooks.on("confirm:bid", function(bidderPosition) {
-      price = bidderPosition.get("max_bid_amount_cents") ? bidderPosition.get("max_bid_amount_cents") / 100 : null;
+      var price = bidderPosition.get("max_bid_amount_cents") ? bidderPosition.get("max_bid_amount_cents") / 100 : null;
       window.criteo_q.push(
         { event: "setAccount", account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
         { event: "setSiteType", type: "m" },

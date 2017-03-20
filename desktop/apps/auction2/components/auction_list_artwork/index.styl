@@ -1,31 +1,47 @@
 .auction2-list-artwork
-  display table
-  height 200px
+  padding-left 10px
+  text-decoration none
+  display flex
+  justify-content flex-start
+  align-items center
+  height 140px
   text-align left
   width 100%
   border-bottom 1px solid gray-lighter-color
   garamond-size('s-body')
+  color gray-darker-color
   a
     text-decoration none
 
-  &__image-container, &__metadata, &__lot-number
-    display table-cell
-    vertical-align middle
-    width 25%
+  &__image-container
+    min-width 200px
 
   &__image > img
-    max-height 150px
+    max-height 100px
     max-width 200px
     margin auto
 
+  &__metadata
+    overflow hidden
+    width 45%
+    margin-left 10%
+    text-align left
+    font-size 15px
+    padding-right 20px
+
+    > *
+      overflow ellipsis
+
+  &__artists
+    font-weight 600
+
   &__lot-number
+    width 25%
     avant-garde()
-    font-size 13px
-    color black
+    font-size 11px
     margin-bottom 2px
-    text-align center
+    text-align left
 
   .auction2-bid-status
-    display table-cell
-    vertical-align middle
-    text-align right
+    text-align left
+    width 20%

@@ -13,11 +13,6 @@ sitemapindex(
       sitemap
         loc=sd.APP_URL + '/sitemap-' + resource + '-' + (j + 1) + '.xml'
 
-  for bucket in artworkBuckets
-    for n, i in new Array(bucket.pages)
-      sitemap
-        loc=sd.APP_URL  + '/sitemap-artworks-' + (i + 1) + '-' + bucket.startDate + '.xml'
-
   for n, i in new Array(articlePages)
     sitemap
       loc=sd.APP_URL + '/sitemap-articles-' + i + '.xml'

@@ -12,5 +12,6 @@ app.locals.crop = crop
 app.locals.toSentence = toSentence
 
 app.get('/artsy-primer/:id', routes.article)
+app.get('/artsy-primer-personalize*', routes.personalize)
 
 export default app
