@@ -43,7 +43,6 @@ sharify.data = _.extend _.pick(config,
   'STRIPE_PUBLISHABLE_KEY'
   'SEGMENT_WRITE_KEY'
   'GALLERY_INSIGHTS_SLUG'
-  'FUSION_URL'
   'GALAXY_URL'
   'GALAXY_PUBLISHABLE_TOKEN'
   'METAPHYSICS_ENDPOINT'
@@ -74,6 +73,7 @@ sharify.data = _.extend _.pick(config,
   'PARSELY_KEY'
   'S3_BUCKET'
   'SEGMENT_AMP_WRITE_KEY'
+  'SITEMAP_BASE_URL'
 ), {
   JS_EXT: if config.NODE_ENV in ["production", "staging"] then \
     ".min.js.cgz" else ".js"

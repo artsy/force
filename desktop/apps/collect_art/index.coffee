@@ -15,7 +15,7 @@ landing = new JSONPage
 
 { data, edit, upload } = require('../../components/json_page/routes')(landing)
 
-app.get landing.paths.show, adminOnly, routes.landing
-app.get landing.paths.show + '/data', adminOnly, data
+app.get landing.paths.show, routes.landing
+app.get landing.paths.show + '/data', data
 app.get landing.paths.edit, adminOnly, edit
 app.post landing.paths.edit, adminOnly, upload
