@@ -38,7 +38,6 @@ module.exports = class NextStepView extends StepView
     @user.removeArtwork $(e.target).attr('data-id')
 
   render: =>
-    console.log('favorites', @favorites)
     if @state.get('current_step') is 'thank_you'
       return @$el.hide()
     else
