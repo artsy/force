@@ -1,10 +1,11 @@
 mixin add-to-calendar(event)
   .add-to-calendar
-    a.add-to-calendar-event-item-date__add-to-calender(href='#') + Add to Calendar
-    .add-to-calendar-event-calendar-wrapper
-      .add-to-calendar-event-arrow-up
-      .add-to-calendar-event-calendar-container
-        a.outlook( href= event.icsCalendarUrl() ) Outlook
-        a.google( href= event.googleCalendarUrl() target= '_blank' ) Google
-        a.yahoo( href= event.yahooCalendarUrl() target= '_blank' ) Yahoo!
-        a.ical( href= event.icsCalendarUrl()) iCal
+    .add-to-calendar__wrapper
+      a.add-to-calendar-event-item-date__add-to-calender(href='#') + Add to Calendar
+      .add-to-calendar-event-calendar-wrapper
+        .add-to-calendar-event-arrow-up
+        .add-to-calendar-event-calendar-container
+          a.outlook( href= event.icsCalendarUrl() ) Outlook
+          a.google( href= event.googleCalendarUrl() target= '_blank' ) Google
+          a.yahoo( href= event.yahooCalendarUrl() target= '_blank' ) Yahoo!
+          a.ical( href= event.icsCalendarUrl()) iCal
