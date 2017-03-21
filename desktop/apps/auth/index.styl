@@ -1,4 +1,3 @@
-@require '../../components/main_layout/stylesheets'
 @require '../../components/stylus_lib'
 
 #auth-page
@@ -18,6 +17,18 @@
   text-align left
   a
     color red-color
+
+.auth-signup
+  &__logo
+    height 40px
+    font-size 40px !important
+    line-height 40px !important
+  &__title
+    margin 20px
+    garamond-size('l-headline')
+  @media screen and (max-width: 768px)
+    &__title
+      garamond-size('headline')
 
 .standard-auth-signup-page
   &__facebook

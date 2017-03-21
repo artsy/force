@@ -11,6 +11,7 @@ export default function SaleQuery(id) {
       end_at
       id
       is_live_open
+      is_open
       live_start_at
       name
       start_at

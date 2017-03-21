@@ -18,7 +18,6 @@
   AUTO_GRAVITY_LOGIN,
   SESSION_COOKIE_KEY,
   API_REQUEST_TIMEOUT,
-  FUSION_URL,
   IP_BLACKLIST,
   REQUEST_LIMIT,
   REQUEST_EXPIRE_MS,
@@ -212,6 +211,7 @@ module.exports = (app) ->
   app.use require "../apps/artwork_purchase"
   app.use require "../apps/artwork"
   app.use require "../apps/about"
+  app.use require "../apps/collect_art"
   app.use require "../apps/collect"
   app.use require "../apps/categories"
   app.use require "../apps/categories2"

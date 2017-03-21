@@ -1,5 +1,5 @@
 { extend, map, compact } = require 'underscore'
-{ CLIENT } = require('sharify').data
+{ AUCTION, CLIENT } = require('sharify').data
 { setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
 metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -34,7 +34,13 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-          query artwork($id: String!, $isClosed: Boolean!, $auctionId: ID) {
+          query artwork(
+            $id: String!,
+            $isClosed: Boolean!,
+            $auctionId: ID,
+            $saleSize: Int = 4,
+            $saleSort: SaleSorts = TIMELY_AT_NAME_ASC
+          ) {
             artwork(id: $id) {
               ... partner
               ... auction_artworks @skip(if: $isClosed)
@@ -43,11 +49,16 @@ module.exports =
             }
 
             ... followed_artist_ids @skip(if: $isClosed)
+
+            sales(size: $saleSize, sort: $saleSort) {
+              ... current_auctions
+            }
           }
           #{require '../../../components/artwork_brick/query.coffee'}
           #{require '../components/partner/query.coffee'}
           #{require('../components/auction_artworks/query.coffee').auction_artworks}
           #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
+          #{require('../../../components/current_auctions/query.js').default}
           #{require '../components/artist_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
@@ -58,6 +69,7 @@ module.exports =
       init: compact [
           require '../components/partner/index.coffee'
           require '../components/auction_artworks/index.coffee' unless context.is_closed
+          require('../../../components/current_auctions/index.jsx').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
           require '../components/related_artists/index.coffee'
@@ -105,7 +117,6 @@ module.exports =
           #{require '../components/partner_artworks/query.coffee'}
           #{require '../components/related_artworks/query.coffee'}
         """
-
       init: [
           require '../components/partner/index.coffee'
           require '../components/show_artworks/index.coffee'
@@ -161,5 +172,8 @@ module.exports =
       req: user: CurrentUser.orNull()
     }
       .then (data) ->
-        renderTemplates(data)
-        exec init
+        renderTemplates(extend data, {
+          auctionContextId: AUCTION && AUCTION.id
+        })
+
+        exec init, data

@@ -1,8 +1,12 @@
 import AuctionGridArtwork from '../components/auction_grid_artwork'
 import AuctionListArtwork from '../components/auction_list_artwork'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { renderToString } from 'react-dom/server'
 import auctions from '../reducers'
 import * as actions from '../actions'
+import { __RewireAPI__ as ActionsRewireApi } from '../actions'
+import sinon from 'sinon'
 
 describe('Reducers', () => {
   describe('auctions', () => {
@@ -20,6 +24,80 @@ describe('Reducers', () => {
 
       beforeEach(() => {
         initialResponse = auctions(undefined, {})
+      })
+
+      describe('#decrementFollowedArtistsPage', () => {
+        it('decrements the followed artists page', () => {
+          initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+          const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
+          incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
+          const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
+          decrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+        })
+        it('does not decrement if you are already at the first page', () => {
+          initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+          const decrementedResponse = auctions(initialResponse, actions.decrementFollowedArtistsPage())
+          decrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+        })
+      })
+
+      describe('#fetchArtworksByFollowedArtists', () => {
+        let store
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore(initialResponse)
+          ActionsRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(
+            {
+              filter_sale_artworks: {
+                hits: [
+                  { id: 'artwork1' }, { id: 'artwork2' }
+                ],
+                counts: {
+                  total: 123
+                }
+              }
+            }
+          )));
+        })
+        it('calls the correct actions', () => {
+          const expectedActions = [
+            {
+              type: 'UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS',
+              payload: { saleArtworks: [{ id: 'artwork1' }, { id: 'artwork2' }] }
+            },
+            {
+              type: 'UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS_TOTAL',
+              payload: { total: 123 }
+            },
+            { type: 'UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE' },
+            { type: 'SHOW_FOLLOWED_ARTISTS_RAIL' }
+          ]
+          store.dispatch(actions.fetchArtworksByFollowedArtists()).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+      })
+
+      describe('#incrementFollowedArtistsPage', () => {
+        it('increments the followed artists page', () => {
+          initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+          const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
+          incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
+        })
+
+        it('does not increment if you are already at the final page', () => {
+          initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
+          const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
+          incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
+          const totalResponse = auctions(incrementedResponse, actions.updateSaleArtworksByFollowedArtistsTotal(7))
+          const updatedIsLastPage = auctions(totalResponse, actions.updateIsLastFollowedArtistsPage())
+          updatedIsLastPage.auctionArtworks.isLastFollowedArtistsPage.should.eql(true)
+          const anotherIncrement = auctions(updatedIsLastPage, actions.incrementFollowedArtistsPage())
+          anotherIncrement.auctionArtworks.followedArtistRailPage.should.eql(2)
+        })
       })
 
       describe('#toggleListView', () => {
@@ -93,6 +171,18 @@ describe('Reducers', () => {
           twoArtists.auctionArtworks.filterParams.artist_ids.should.eql(['artist1', 'artist2'])
           const allArtists = auctions(twoArtists, actions.updateArtistId('artists-all'))
           allArtists.auctionArtworks.filterParams.artist_ids.should.eql([])
+        })
+
+        it('updates the artist ids to none when artists-you-follow is passed, but changes a param', () => {
+          initialResponse.auctionArtworks.filterParams.artist_ids.should.eql([])
+          initialResponse.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(false)
+          const oneArtist = auctions(initialResponse, actions.updateArtistId('artist1'))
+          oneArtist.auctionArtworks.filterParams.artist_ids.should.eql(['artist1'])
+          const twoArtists = auctions(oneArtist, actions.updateArtistId('artist2'))
+          twoArtists.auctionArtworks.filterParams.artist_ids.should.eql(['artist1', 'artist2'])
+          const allArtists = auctions(twoArtists, actions.updateArtistId('artists-you-follow'))
+          allArtists.auctionArtworks.filterParams.artist_ids.should.eql([])
+          allArtists.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(true)
         })
       })
 

@@ -11,7 +11,6 @@ module.exports =
   PORT: 3004
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
-  FUSION_URL: null
   REQUEST_LIMIT: 120
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   APP_URL: 'http://localhost:3004'
@@ -70,6 +69,7 @@ module.exports =
   SAILTHRU_SECRET: null
   SAILTHRU_MASTER_LIST: 'Master List'
   SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
+  SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   CONSIGNMENTS_APP_URL: null
   GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
   ACTIVE_BIDS_POLL_INTERVAL: 5000
@@ -94,7 +94,6 @@ module.exports =
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca3","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca4","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"}]'
   EOY_2016_ARTICLE: null
-  EOY_2016_TEASER: 'https://artsy-vanity-files-production.s3.amazonaws.com/documents/year-in-art-teaser.html'
   RAYGUN_KEY: null
   FORCE_MERGE_URL: 'https://merged.artsy.net'
   FORCE_MERGE_WEIGHT: 0
