@@ -1,5 +1,4 @@
 { pick, extend } = require 'underscore'
-{ PURCHASE_FLOW } = require('sharify').data
 Backbone = require 'backbone'
 User = require '../../../../models/user.coffee'
 Artwork = require '../../../../models/artwork.coffee'
@@ -27,11 +26,6 @@ module.exports = class ArtworkCommercialView extends Backbone.View
   initialize: ({ @data }) ->
     { artwork } = @data
 
-    if artwork.is_purchasable
-      splitTest('purchase_flow').view()
-
-    inPurchaseTestGroup = PURCHASE_FLOW is 'purchase'
-    @usePurchaseFlow = inPurchaseTestGroup and artwork.is_purchasable
     @artwork = new Artwork artwork
 
   acquire: (e) ->
@@ -82,7 +76,7 @@ module.exports = class ArtworkCommercialView extends Backbone.View
           .html confirmation()
 
   inquire: (e) =>
-    return @contactGallery(e) if @usePurchaseFlow
+    return @contactGallery(e) if @artwork.is_purchasable
     e.preventDefault()
     @inquiry = new ArtworkInquiry notification_delay: 600
 

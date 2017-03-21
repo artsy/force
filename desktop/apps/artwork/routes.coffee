@@ -66,11 +66,9 @@ bootstrap = ->
   send = method: 'post', query: query, variables: req.params
 
   return if metaphysics.debug req, res, send
-  inPurchaseTestGroup = res.locals.sd.PURCHASE_FLOW is 'purchase'
   metaphysics send
     .then (data) ->
       data.fair = new Fair data.artwork.fair if data.artwork.fair
-      data.inPurchaseTestGroup = inPurchaseTestGroup
       extend res.locals.helpers, helpers
       bootstrap res.locals.sd, data
       res.locals.sd.PARAMS = req.params

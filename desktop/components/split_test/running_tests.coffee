@@ -14,11 +14,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports =
-
-  purchase_flow:
-    key: 'purchase_flow'
-    edge: 'purchase'
-    outcomes:
-      default: 50
-      purchase: 50
+module.exports = {}
