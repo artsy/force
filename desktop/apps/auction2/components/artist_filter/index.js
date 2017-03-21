@@ -16,9 +16,10 @@ function ArtistFilter(props) {
   const artistIds = filterParams.artist_ids
   const allArtists = { id: 'artists-all', name: 'All' }
   const allArtistsSelected = artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
+  const countDisplay = numArtistsYouFollow > 0 ? numArtistsYouFollow : undefined
   const artistsYouFollow = {
     id: 'artists-you-follow',
-    count: numArtistsYouFollow,
+    count: countDisplay,
     name: 'Artists You Follow'
   }
 
@@ -33,6 +34,7 @@ function ArtistFilter(props) {
             item={artistsYouFollow}
             onClick={updateArtistParamsAction}
             checked={filterParams.include_artworks_by_followed_artists}
+            disabled={numArtistsYouFollow === 0}
           />
         </div>
       }

@@ -3,8 +3,13 @@ Backbone = require 'backbone'
 module.exports = class AddToCalendar extends Backbone.View
 
   events:
-    'click .add-to-calendar-event-item-date__add-to-calender': 'toggleCalenderOptions'
+    'mouseover .add-to-calendar-event-item-date__add-to-calender': 'showCalenderOptions'
+    'mouseleave .add-to-calendar__wrapper': 'hideCalenderOptions'
 
-  toggleCalenderOptions: (e) ->
+  showCalenderOptions: (e) ->
     e.preventDefault()
-    $(e.currentTarget).next().toggle()
+    $(e.currentTarget).next().show()
+
+  hideCalenderOptions: (e) ->
+    e.preventDefault()
+    $(e.currentTarget).children('.add-to-calendar-event-calendar-wrapper').hide()

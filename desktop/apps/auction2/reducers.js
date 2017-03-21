@@ -2,6 +2,7 @@ import * as actions from './actions'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'
+import mediumMap from '../../components/commercial_filter/filters/medium/medium_map.coffee'
 import u from 'updeep'
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   isLastFollowedArtistsPage: false,
   isListView: false,
   maxEstimateRangeDisplay: 50000,
+  mediumMap,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,
   saleArtworks: [],
@@ -163,7 +165,7 @@ function auctionArtworks(state = initialState, action) {
       }, state)
     }
     case actions.UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE: {
-      if (state.followedArtistRailPage >
+      if (state.followedArtistRailPage >=
         (state.saleArtworksByFollowedArtistsTotal / state.followedArtistRailSize)) {
         return u({
           isLastFollowedArtistsPage: true
