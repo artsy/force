@@ -2,7 +2,7 @@ import { updateMediumParams } from '../../actions'
 import BasicCheckbox from '../basic_checkbox'
 import React from 'react';
 import { connect } from 'react-redux'
-import { contains, map, find } from 'underscore'
+import _, { contains, find } from 'underscore'
 
 function MediumFilter(props) {
   const {
