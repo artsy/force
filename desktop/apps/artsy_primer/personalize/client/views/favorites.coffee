@@ -7,6 +7,7 @@ ArtworkColumnsView = require '../../../../../components/artwork_columns/view.cof
 template = -> require('../../templates/favorites.jade') arguments...
 
 module.exports = class FavoritesView extends StepView
+  favorites: []
   suggestedArtworksSetId: '53c554ec72616961ab9a2000'
 
   events:
@@ -30,12 +31,24 @@ module.exports = class FavoritesView extends StepView
     @user.initializeDefaultArtworkCollection()
     @favorites = @user.defaultArtworkCollection()
     @favoriteArtworks = @favorites.get 'artworks'
-    @listenTo @favoriteArtworks, 'add remove', @onFavorited, this
+    @listenTo @favoriteArtworks, 'add', @onFavoriteAdd, this
+    @listenTo @favoriteArtworks, 'remove', @onFavoriteRemove, this
 
-  onFavorited: =>
+  loadFavorites: =>
     artworks = @artworks.filter (artwork) =>
       artwork.id in @favoriteArtworks.pluck('id')
-    @user.trigger 'personalize:favorite', artworks
+    @favorites = artworks
+    @user.trigger 'personalize:favorite', @favorites
+
+  onFavoriteAdd: (item) =>
+    artwork = @artworks.get item.id
+    @favorites.unshift artwork
+    @user.trigger 'personalize:favorite', @favorites
+
+  onFavoriteRemove: (item) =>
+    artwork = @artworks.get item.id
+    @favorites = _.without(@favorites, artwork)
+    @user.trigger 'personalize:favorite', @favorites
 
   renderArtworks: ->
     @artworks.reset @artworks.shuffle(), silent: true
@@ -68,7 +81,7 @@ module.exports = class FavoritesView extends StepView
     _.delay =>
       _.each $buttonColumns, (buttonColumn, i) ->
         _.delay (=> $(buttonColumn).css 'opacity', 1), (i + 1) * 50
-      @onFavorited()
+      @loadFavorites()
     , 1000
 
   saveArtwork: (e) ->
