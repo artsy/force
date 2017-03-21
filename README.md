@@ -14,7 +14,7 @@ Meta
 * __Production:__ [https://www.artsy.net](https://www.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
 * __Staging:__ [https://staging.artsy.net](https://staging.artsy.net) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
 * __Github:__ [https://github.com/artsy/force](https://github.com/artsy/force)
-* __CI:__ [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `master` to `release` are automatically deployed to production.
+* __CI/Deploys:__ [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `master` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...master?expand=1)
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
 
 [![Build Status](https://circleci.com/gh/artsy/force-merge.svg?style=svg)](https://circleci.com/gh/artsy/force-merge)
