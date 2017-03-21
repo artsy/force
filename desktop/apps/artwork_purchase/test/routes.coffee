@@ -23,8 +23,7 @@ describe 'Artist routes', ->
       redirect: sinon.stub()
       send: sinon.stub()
       type: sinon.stub()
-      locals: sd:
-        PURCHASE_FLOW: 'purchase'
+      locals: sd: {}
 
   describe 'with a work that is not purchasable', ->
     beforeEach ->
