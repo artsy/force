@@ -28,14 +28,16 @@ function MediumFilter(props) {
       {
         _.map(mediumMap, (name, id) => {
           const mediumSelected = contains(mediumIds, id)
-          const includedMedium = aggregatedMediums.find((agg) => { return agg.id === id })
-          return <BasicCheckbox
-                    key={id}
-                    item={{id, name, count: includedMedium && includedMedium.count}}
-                    onClick={updateMediumParamsAction}
-                    checked={mediumSelected}
-                    disabled={includedMedium === undefined}
-                  />
+          const includedMedium = aggregatedMediums.find((agg) => agg.id === id)
+          return (
+            <BasicCheckbox
+              key={id}
+              item={{id, name, count: includedMedium && includedMedium.count}}
+              onClick={updateMediumParamsAction}
+              checked={mediumSelected}
+              disabled={includedMedium === undefined}
+            />
+          )
         })
       }
     </div>
