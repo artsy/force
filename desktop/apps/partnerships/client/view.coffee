@@ -4,10 +4,12 @@ imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 { jump } = require '../../../components/jump/view.coffee'
+analyticsHooks = require '../../../lib/mediator.coffee'
 
 module.exports = class PartnershipsView extends Backbone.View
   events:
     'click .partnerships-nav-link.internal': 'intercept'
+    'click #mktoForm_1238 .mktoButtonRow': 'trackPartner'
 
   initialize: ->
     @$window = $(window)
@@ -121,3 +123,9 @@ module.exports = class PartnershipsView extends Backbone.View
       @["#{name}Frame"] + 1
     else
       0
+
+  trackPartner: (e) ->
+    e.preventDefault()
+    email = $("#Email").val()
+    analyticsHooks.trigger 'marketo:partner-apply', email: email
+    window.location.replace('http://apply.artsy.net/galleries-2.html')
