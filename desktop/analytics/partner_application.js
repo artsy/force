@@ -19,6 +19,5 @@ if (location.pathname.match('/gallery-partnerships')) {
     analytics.identify(
       {session_id: sd.SESSION_ID, email: options.email }
     );
-    console.log(`${session_id} ${email}`);
   })
 }
