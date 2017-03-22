@@ -1,0 +1,10 @@
+extends ../../../components/main_layout/templates/index
+
+append locals
+  - assetPackage = 'categories'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .categories2-page
+    .main-layout-container.responsive-layout-container
+      #categories2-app

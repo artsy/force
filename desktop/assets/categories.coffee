@@ -9,7 +9,7 @@ routes =
 
   '''
   /categories2
-  ''': require('../apps/categories2/client/index.coffee').init
+  ''': -> require('../apps/categories2/client.js').default
 
   '''
   /tag
@@ -18,6 +18,7 @@ routes =
   '''
   /gene/.*
   ''': require('../apps/gene/client.coffee').init
+
 
 for paths, init of routes
   for path in paths.split('\n')
