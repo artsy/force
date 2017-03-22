@@ -110,6 +110,7 @@ body.body-article
   h2
     font-size 28px
     line-height 1.2em
+    min-height 1em
     @media screen and (max-width 550px)
       garamond-size('s-headline')
   h3
@@ -119,10 +120,12 @@ body.body-article
     text-decoration none
     medium-faux-underline()
     padding-bottom 3px
+  li
+    margin-bottom 10px
   ul li
-    list-style disc inside
+    list-style disc outside
   ol li
-    list-style decimal inside
+    list-style decimal outside
 
 .article-date
   avant-garde()

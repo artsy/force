@@ -21,38 +21,38 @@ describe('React components', () => {
   })
 
   describe('AuctionArtwork', () => {
-    let artwork
+    let saleArtwork
 
     beforeEach(() => {
-      artwork = {
-        _id: '123',
-        title: 'My Artwork',
-        date: '2002',
-        artists: {
-          name: 'Andy Warhol'
+      saleArtwork = {
+        lot_number: 2,
+        current_bid: {
+          display: '$100'
         },
-        sale_artwork: {
-          lot_number: 2,
-          current_bid: {
-            display: '$100'
+        counts: {
+          bidder_positions: 2
+        },
+        artwork: {
+          _id: '123',
+          title: 'My Artwork',
+          date: '2002',
+          artists: {
+            name: 'Andy Warhol'
           },
-          counts: {
-            bidder_positions: 2
-          }
-        },
-        images: [{
-          image_url: 'my_image.jpg'
-        }]
+          images: [{
+            image_url: 'my_image.jpg'
+          }]
+        }
       }
     })
 
     it('renders an auction grid artwork component', () => {
-      const renderedArtwork = renderToString(AuctionGridArtwork({ artwork }))
+      const renderedArtwork = renderToString(AuctionGridArtwork({ saleArtwork }))
       renderedArtwork.should.containEql('<em>My Artwork</em>, 2002')
     })
 
     it('renders an auction list artwork component', () => {
-      const renderedArtwork = renderToString(AuctionListArtwork({ artwork }))
+      const renderedArtwork = renderToString(AuctionListArtwork({ saleArtwork }))
       renderedArtwork.should.containEql('<em>My Artwork</em>, 2002')
     })
   })
@@ -110,9 +110,9 @@ describe('React components', () => {
 
     beforeEach(() => {
       aggregatedMediums = [
-        { id: 'gene-1', name: 'Gene 1', count: 23 },
-        { id: 'gene-2', name: 'Gene 2', count: 44 },
-        { id: 'gene-3', name: 'Gene 3', count: 57 }
+        { id: 'painting', count: 23 },
+        { id: 'work-on-paper', count: 44 },
+        { id: 'design', count: 57 }
       ]
     })
 
@@ -123,12 +123,12 @@ describe('React components', () => {
           <Provider><MediumFilter store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
+        rendered.find('.artsy-checkbox').length.should.eql(9)
         const renderedText = rendered.text()
         renderedText.should.containEql('All')
-        renderedText.should.containEql('Gene 1(23)')
-        renderedText.should.containEql('Gene 2(44)')
-        renderedText.should.containEql('Gene 3(57)')
+        renderedText.should.containEql('Painting(23)')
+        renderedText.should.containEql('Works on Paper(44)')
+        renderedText.should.containEql('Design(57)')
         rendered.find('input[value="mediums-all"]:checked').length.should.eql(1)
       })
     })
@@ -136,19 +136,19 @@ describe('React components', () => {
     describe('some mediums selected', () => {
       it('checks the correct medium boxes', () => {
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
-        initialStore.dispatch(actions.updateMediumId('gene-1'))
+        initialStore.dispatch(actions.updateMediumId('painting'))
         const wrapper = shallow(
           <Provider><MediumFilter store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(4)
+        rendered.find('.artsy-checkbox').length.should.eql(9)
         const renderedText = rendered.text()
         renderedText.should.containEql('All')
-        renderedText.should.containEql('Gene 1(23)')
-        renderedText.should.containEql('Gene 2(44)')
-        renderedText.should.containEql('Gene 3(57)')
+        renderedText.should.containEql('Painting(23)')
+        renderedText.should.containEql('Works on Paper(44)')
+        renderedText.should.containEql('Design(57)')
         rendered.find('input[value="mediums-all"]:checked').length.should.eql(0)
-        rendered.find('input[value="gene-1"]:checked').length.should.eql(1)
+        rendered.find('input[value="painting"]:checked').length.should.eql(1)
       })
     })
   })

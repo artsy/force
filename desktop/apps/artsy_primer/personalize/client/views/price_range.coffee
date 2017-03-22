@@ -4,11 +4,19 @@ createSlider = require '../../../../../components/slider/index.coffee'
 template = -> require('../../templates/price_range.jade') arguments...
 
 module.exports = class PriceRangeView extends StepView
+
+  events: 
+    'keyup #anything-else' : 'updateNotes'
+
   formatter: (val, index) ->
     if index is 0
       "#{formatMoney(val, { precision: 0 })}"
     else
       "#{formatMoney(val, { symbol: "", precision: 0 })}"
+
+  updateNotes: ->
+    val = @$('#anything-else').val()
+    @user.set notes: val
 
   onSetSlider: (_, __, [min, max]) =>
     @user.set price_range_min: min, price_range_max: max
