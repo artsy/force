@@ -77,9 +77,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
     @$el.attr 'data-state', 'loading'
 
-    Q.all [
-      $.post('/artsy-primer/set-sailthru')
-    ]
+    Q($.post('/artsy-primer/set-sailthru'))
     .then =>
       Q.all [
         @user.save()
