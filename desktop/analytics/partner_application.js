@@ -12,9 +12,12 @@ if (location.pathname.match('/gallery-partnerships')) {
     )
   })
 
-  $('#mktoForm_1238 .mktoButtonRow').click(function (e) {
+  analyticsHooks.on('marketo:partner-apply', function (options) {
     analytics.track('Clicked bottom apply on gallery partnerships',
       {session_id: sd.SESSION_ID}
-    )
+    );
+    analytics.identify(
+      {session_id: sd.SESSION_ID, email: options.email }
+    );
   })
 }
