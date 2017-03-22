@@ -13,7 +13,7 @@ module.exports = class FlashMessage extends Backbone.View
     autoclose: true
     autoopen: true
     backdrop: true
-    visibleDuration: 2000
+    visibleDuration: 5000
 
   events:
     'click': 'close'
