@@ -17,4 +17,12 @@ if (location.pathname.match('/gallery-partnerships')) {
       {session_id: sd.SESSION_ID}
     )
   })
+
+  $('#mktoForm_1238 .mktoButtonRow').click(function (e) {
+     var emails = $("#Email").val();
+     var session_id = (typeof session_id === '') ? session_id : sd.SESSION_ID;
+     analytics.identify(
+       {session_id: sd.SESSION_ID, email: email }
+     );
+   })
 }
