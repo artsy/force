@@ -13,11 +13,12 @@ if (location.pathname.match('/gallery-partnerships')) {
   })
 
   analyticsHooks.on('marketo:partner-apply', function (options) {
+    console.log(`${email} working`)
     analytics.track('Clicked bottom apply on gallery partnerships',
       {session_id: sd.SESSION_ID}
-    );
+    )
     analytics.identify(
       {session_id: sd.SESSION_ID, email: options.email }
-    );
+    )
   })
 }
