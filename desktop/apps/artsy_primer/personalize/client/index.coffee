@@ -1,7 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 qs = require 'qs'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PersonalizeState = require './state.coffee'
 mediator = require '../../../../lib/mediator.coffee'
@@ -77,13 +76,10 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
     @$el.attr 'data-state', 'loading'
 
-    Q($.post('/artsy-primer/set-sailthru'))
-    .then =>
-      Q.all [
-        @user.save()
-        $.post('/flash', message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.')
-      ]
-    .finally =>
+    $.when.apply(null, [
+      @user.save()
+      $.post('/flash', message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.')
+    ]).always =>
       location.assign @redirectLocation()
 
 module.exports.init = ->
@@ -108,10 +104,6 @@ module.exports.init = ->
   # Init the personalize flow
   else
     user.approximateLocation success: -> user.save()
-    user.set receive_personalized_email: false
-    new PersonalizeRouter 
-      user: user
-      reonboarding: reonboarding?
-      force: force
+    new PersonalizeRouter user: user, reonboarding: reonboarding?, force: force
     Backbone.history.start pushState: true
     require('./analytics.coffee')(user)

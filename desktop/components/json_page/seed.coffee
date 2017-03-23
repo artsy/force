@@ -15,12 +15,13 @@ catch error
 
 display = ['..'].concat(_.last path.split('/'), 2).join '/'
 
-inquirer.prompt([
+inquirer.prompt [
   type: 'confirm'
   name: 'confirm'
   message: "Update `#{name}` in the bucket `#{bucket}` with data from `#{display}`?"
-]).then ({ confirm }) ->
+], ({ confirm }) ->
   if confirm
+
     page = new JSONPage name: name, bucket: bucket
     page.set data, (err, { req }) ->
       return console.log(err) if err?
