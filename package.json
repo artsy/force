@@ -96,6 +96,7 @@
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
+    "reaction-force": "git+https://github.com/artsy/reaction-force.git",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",
