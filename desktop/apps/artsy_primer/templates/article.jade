@@ -4,6 +4,9 @@ append locals
   - assetPackage = 'misc'
   - bodyClass = bodyClass + ' body-article'
 
+block head
+  meta( name='robots', content='noindex' )
+
 block body
   include header.jade
 
