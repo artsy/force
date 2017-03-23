@@ -231,6 +231,21 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#updateInitialMediumMap', () => {
+        it('sets the initial medium map the first time', () => {
+          initialResponse.auctionArtworks.initialMediumMap.should.eql([])
+          const updatedMap = [
+            { count: 1, name: 'Prints', id: 'prints' },
+            { count: 2, name: 'Painting', id: 'painting' },
+            { count: 2, name: 'Works On Paper', id: 'works-on-paper' }
+          ]
+          const updatedInitialMediumMap = auctions(initialResponse, actions.updateInitialMediumMap(updatedMap))
+          updatedInitialMediumMap.auctionArtworks.initialMediumMap.should.eql(updatedMap)
+          const updatedAgain = auctions(updatedInitialMediumMap, actions.updateInitialMediumMap([]))
+          updatedAgain.auctionArtworks.initialMediumMap.should.eql(updatedMap)
+        })
+      })
+
       describe('#updateMediumId', () => {
         it('updates the medium id', () => {
           initialResponse.auctionArtworks.filterParams.gene_ids.should.eql([])
