@@ -110,20 +110,21 @@ describe('React components', () => {
 
     beforeEach(() => {
       aggregatedMediums = [
-        { id: 'painting', count: 23 },
-        { id: 'work-on-paper', count: 44 },
-        { id: 'design', count: 57 }
+        { id: 'painting', name: 'Painting', count: 23 },
+        { id: 'work-on-paper', name: 'Works on Paper', count: 44 },
+        { id: 'design', name: 'Design', count: 57 }
       ]
     })
 
     describe('no mediums selected', () => {
       it('checks the mediums-all box', () => {
+        initialStore.dispatch(actions.updateInitialMediumMap(aggregatedMediums))
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
         const wrapper = shallow(
           <Provider><MediumFilter store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(9)
+        rendered.find('.artsy-checkbox').length.should.eql(4)
         const renderedText = rendered.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Painting(23)')
@@ -135,13 +136,14 @@ describe('React components', () => {
 
     describe('some mediums selected', () => {
       it('checks the correct medium boxes', () => {
+        initialStore.dispatch(actions.updateInitialMediumMap(aggregatedMediums))
         initialStore.dispatch(actions.updateAggregatedMediums(aggregatedMediums))
         initialStore.dispatch(actions.updateMediumId('painting'))
         const wrapper = shallow(
           <Provider><MediumFilter store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
-        rendered.find('.artsy-checkbox').length.should.eql(9)
+        rendered.find('.artsy-checkbox').length.should.eql(4)
         const renderedText = rendered.text()
         renderedText.should.containEql('All')
         renderedText.should.containEql('Painting(23)')

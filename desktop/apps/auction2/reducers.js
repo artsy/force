@@ -31,11 +31,11 @@ const initialState = {
   followedArtistRailMax: 50,
   followedArtistRailPage: 1,
   followedArtistRailSize: 4,
+  initialMediumMap: [],
   isFetchingArtworks: false,
   isLastFollowedArtistsPage: false,
   isListView: false,
   maxEstimateRangeDisplay: 50000,
-  mediumMap,
   minEstimateRangeDisplay: 0,
   numArtistsYouFollow: 0,
   saleArtworks: [],
@@ -163,6 +163,15 @@ function auctionArtworks(state = initialState, action) {
           estimate_range: `${action.payload.min * 100}-${action.payload.max * 100}`
         }
       }, state)
+    }
+    case actions.UPDATE_INITIAL_MEDIUM_MAP: {
+      if (state.initialMediumMap.length === 0) {
+        return u({
+          initialMediumMap: action.payload.initialMediumMap
+        }, state)
+      } else {
+        return state
+      }
     }
     case actions.UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE: {
       if (state.followedArtistRailPage >=

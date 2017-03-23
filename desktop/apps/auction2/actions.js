@@ -16,6 +16,7 @@ export const UPDATE_ALL_FETCHED = 'UPDATE_ALL_FETCHED'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ESTIMATE_DISPLAY = 'UPDATE_ESTIMATE_DISPLAY'
 export const UPDATE_ESTIMATE_RANGE = 'UPDATE_ESTIMATE_RANGE'
+export const UPDATE_INITIAL_MEDIUM_MAP = 'UPDATE_INITIAL_MEDIUM_MAP'
 export const UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE = 'UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE'
 export const UPDATE_MEDIUM_ID = 'UPDATE_MEDIUM_ID'
 export const UPDATE_NUM_ARTISTS_YOU_FOLLOW = 'UPDATE_NUM_ARTISTS_YOU_FOLLOW'
@@ -76,6 +77,7 @@ export function fetchArtworks() {
 
       dispatch(updateAggregatedArtists(artistAggregation[0].counts))
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
+      dispatch(updateInitialMediumMap(mediumAggregation[0].counts))
       dispatch(updateTotal(filter_sale_artworks.counts.total))
       dispatch(updateNumArtistsYouFollow(filter_sale_artworks.counts.followed_artists))
       dispatch(updateSaleArtworks(filter_sale_artworks.hits))
@@ -280,6 +282,15 @@ export function updateEstimateRangeParams(min, max) {
     payload: {
       min,
       max
+    }
+  }
+}
+
+export function updateInitialMediumMap(initialMediumMap) {
+  return {
+    type: UPDATE_INITIAL_MEDIUM_MAP,
+    payload: {
+      initialMediumMap
     }
   }
 }
