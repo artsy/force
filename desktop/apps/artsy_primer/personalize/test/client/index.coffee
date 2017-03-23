@@ -55,17 +55,7 @@ describe 'PersonalizeRouter', ->
       @router.redirectLocation().should.equal '/foo/bar'
 
   describe '#done', ->
-    beforeEach ->
-      sinon.stub Backbone, 'sync'
-      Backbone.sync.yields {}
-      
-      sinon.stub $, 'post'
-
-    afterEach ->
-      Backbone.sync.restore()
-      $.post.restore()
-
-    it 'sets the $el state to loading, saves the user, redirects', (done)->
+    it 'sets the $el state to loading, saves the user, redirects', ->
       @router.user = save: sinon.stub()
       @router.$el.attr = sinon.stub()
       @router.state.trigger 'done'
@@ -73,8 +63,6 @@ describe 'PersonalizeRouter', ->
       @router.$el.attr.args[0][0].should.equal 'data-state'
       @router.$el.attr.args[0][1].should.equal 'loading'
 
-      _.delay =>
-        @router.user.save.called.should.be.ok()
-        location.assign.args[0][0].should.equal @router.redirectLocation()
-        done()
-      , 10
+      @router.user.save.called.should.be.ok()
+
+      location.assign.args[0][0].should.equal @router.redirectLocation()

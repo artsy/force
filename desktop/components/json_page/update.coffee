@@ -14,11 +14,11 @@ catch
 
 display = ['..'].concat(_.last path.split('/'), 2).join '/'
 
-inquirer.prompt([
+inquirer.prompt [
   type: 'confirm'
   name: 'confirm'
   message: "Update `#{display}` with data from `#{name}` in the bucket `#{bucket}`?"
-]).then ({ confirm }) ->
+], ({ confirm }) ->
   if confirm
 
     page = new JSONPage name: name, bucket: bucket
