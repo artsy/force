@@ -8,7 +8,6 @@ module.exports = class Params extends Backbone.Model
     'medium'
     'color',
     'price_range',
-    'estimate_range',
     'width',
     'height',
     'gene_id',

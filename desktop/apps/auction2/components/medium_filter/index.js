@@ -8,7 +8,7 @@ function MediumFilter(props) {
   const {
     aggregatedMediums,
     filterParams,
-    mediumMap,
+    initialMediumMap,
     updateMediumParamsAction
   } = props
   const mediumIds = filterParams.gene_ids
@@ -26,13 +26,13 @@ function MediumFilter(props) {
         checked={allMediumsSelected}
       />
       {
-        _.map(mediumMap, (name, id) => {
-          const mediumSelected = contains(mediumIds, id)
-          const includedMedium = aggregatedMediums.find((agg) => agg.id === id)
+        _.map(initialMediumMap, (initialAgg) => {
+          const mediumSelected = contains(mediumIds, initialAgg.id)
+          const includedMedium = aggregatedMediums.find((agg) => agg.id === initialAgg.id)
           return (
             <BasicCheckbox
-              key={id}
-              item={{id, name, count: includedMedium && includedMedium.count}}
+              key={initialAgg.id}
+              item={{id: initialAgg.id, name: initialAgg.name, count: includedMedium && includedMedium.count}}
               onClick={updateMediumParamsAction}
               checked={mediumSelected}
               disabled={includedMedium === undefined}
@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
   return {
     aggregatedMediums: state.auctionArtworks.aggregatedMediums,
     filterParams: state.auctionArtworks.filterParams,
-    mediumMap: state.auctionArtworks.mediumMap
+    initialMediumMap: state.auctionArtworks.initialMediumMap
   }
 }
 
