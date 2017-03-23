@@ -4,7 +4,6 @@ imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 { jump } = require '../../../components/jump/view.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 module.exports = class PartnershipsView extends Backbone.View
   events:
