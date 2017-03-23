@@ -395,9 +395,10 @@ module.exports = class ArticleView extends Backbone.View
       data: ids: ids
       success: (articles) =>
         for section in calloutSections
-          @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
-            section: section
-            calloutArticles: articles
-            crop: crop
+          if section.article
+            @$articleContainer.find(".article-section-callout[data-id=#{section.article}]").html calloutTemplate
+              section: section
+              calloutArticles: articles
+              crop: crop
         @loadedCallouts = true
         @maybeFinishedLoading()
