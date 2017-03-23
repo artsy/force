@@ -1,33 +1,10 @@
 extends ../../../components/main_layout/templates/index
 
-block head
-  include meta
-
 append locals
   - assetPackage = 'categories'
+  - bodyClass = bodyClass + ' body-no-margins'
 
 block body
-  .l-categories2-page.main-layout-container
-
-    .l-categories2-page__nav
-      | Categories sticky nav TK
-
-    .l-categories2-page__content
-
-      h1.categories2-page__header
-        | The Art Genome Project
-
-      p.categories2-page__blurb
-        | The Art Genome Project is the classification system and technological framework that powers Artsy.
-        | It maps the characteristics (we call them &ldquo;genes&rdquo;) that connect artists, artworks, architecture, and design objects across history.
-        | There are currently over 1,000 characteristics in The Art Genome Project, including art historical movements, subject matter, and formal qualities.
-
-      .categories2-list
-          each family in geneFamilies
-            .categories2-list__family
-              .categories2-list__family__name
-                = family.name
-              .categories2-list__family__genes
-                each gene in family.genes
-                  .categories2-list__family__genes__gene
-                    a( href = gene.href() )= gene.get('name')
+  .categories2-page
+    .main-layout-container.responsive-layout-container
+      #categories2-app
