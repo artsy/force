@@ -22,7 +22,7 @@ function Header(props) {
   const displayType = isListView ? 'list' : 'grid'
   const totalLabel = (total && total > 0)
     ? `${total} Artworks`
-    : 'Your search returned 0 results. Try removing some filters.'
+    : 'Loading results.'
 
   return (
     <div className='auction2-artworks-header'>

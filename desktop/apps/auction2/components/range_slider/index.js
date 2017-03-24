@@ -6,17 +6,17 @@ import { connect } from 'react-redux'
 
 function RangeSlider(props) {
   const {
-    currency,
     filterParams,
     minEstimateRangeDisplay,
     maxEstimateRangeDisplay,
+    symbol,
     updateEstimateRangeAction,
     updateEstimateDisplayAction
   } = props
 
   const minEstimate = filterParams.ranges.estimate_range.min
   const maxEstimate = filterParams.ranges.estimate_range.max
-  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol: currency, precision: 0 })
+  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol: symbol, precision: 0 })
   const formattedMaxDisplay = formatMoney(maxEstimateRangeDisplay, { symbol: '', precision: 0 })
   return (
     <div className='auction2-range-slider'>
@@ -40,10 +40,10 @@ function RangeSlider(props) {
 
 const mapStateToProps = (state) => {
   return {
-    currency: state.auctionArtworks.currency,
     filterParams: state.auctionArtworks.filterParams,
     minEstimateRangeDisplay: state.auctionArtworks.minEstimateRangeDisplay,
-    maxEstimateRangeDisplay: state.auctionArtworks.maxEstimateRangeDisplay
+    maxEstimateRangeDisplay: state.auctionArtworks.maxEstimateRangeDisplay,
+    symbol: state.auctionArtworks.symbol
   }
 }
 

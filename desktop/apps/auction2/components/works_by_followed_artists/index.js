@@ -11,7 +11,7 @@ function WorksByFollowedArtists(props) {
     followedArtistRailPage,
     followedArtistRailSize,
     nextPageOfFollowedArtistArtworksAction,
-    isLastFollowedArtistsPage,
+    numArtistsYouFollow,
     previousPageOfFollowedArtistArtworksAction,
     saleArtworksByFollowedArtists
   } = props
@@ -21,6 +21,7 @@ function WorksByFollowedArtists(props) {
     initialSlice,
     initialSlice + followedArtistRailSize
   )
+  const isOnlyFollowedArtistsPage = numArtistsYouFollow <= followedArtistRailSize
 
   const leftPageClasses = classNames(
     'auction2-works-by-followed-artists__page-left',
@@ -29,7 +30,7 @@ function WorksByFollowedArtists(props) {
 
   const rightPageClasses = classNames(
     'auction2-works-by-followed-artists__page-right',
-    { disabled: isLastFollowedArtistsPage }
+    { disabled: isOnlyFollowedArtistsPage }
   )
 
   return (
@@ -66,7 +67,7 @@ const mapStateToProps = (state) => {
   return {
     followedArtistRailPage: state.auctionArtworks.followedArtistRailPage,
     followedArtistRailSize: state.auctionArtworks.followedArtistRailSize,
-    isLastFollowedArtistsPage: state.auctionArtworks.isLastFollowedArtistsPage,
+    numArtistsYouFollow: state.auctionArtworks.numArtistsYouFollow,
     saleArtworksByFollowedArtists: state.auctionArtworks.saleArtworksByFollowedArtists
   }
 }
