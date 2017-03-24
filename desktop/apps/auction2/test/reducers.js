@@ -184,6 +184,17 @@ describe('Reducers', () => {
           allArtists.auctionArtworks.filterParams.artist_ids.should.eql([])
           allArtists.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(true)
         })
+
+        it('updates the artist ids to all when artists-you-follow is already checked', () => {
+          initialResponse.auctionArtworks.filterParams.artist_ids.should.eql([])
+          initialResponse.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(false)
+          const artistsYouFollow = auctions(initialResponse, actions.updateArtistId('artists-you-follow'))
+          artistsYouFollow.auctionArtworks.filterParams.artist_ids.should.eql([])
+          artistsYouFollow.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(true)
+          const noArtistsYouFollow = auctions(artistsYouFollow, actions.updateArtistId('artists-you-follow'))
+          noArtistsYouFollow.auctionArtworks.filterParams.artist_ids.should.eql([])
+          noArtistsYouFollow.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(false)
+        })
       })
 
       describe('#updateArtworks', () => {

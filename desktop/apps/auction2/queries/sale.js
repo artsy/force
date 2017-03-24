@@ -18,6 +18,7 @@ export default function SaleQuery(id) {
       name
       start_at
       status
+      symbol
     }
   }`
 }

@@ -9,7 +9,6 @@ const initialState = {
   aggregatedArtists: [],
   aggregatedMediums: [],
   allFetched: false,
-  currency: sd.AUCTION && sd.AUCTION.currency,
   displayFollowedArtistsRail: false,
   filterParams: {
     aggregations: ['ARTIST', 'FOLLOWED_ARTISTS', 'MEDIUM', 'TOTAL'],
@@ -49,6 +48,7 @@ const initialState = {
     "-searchable_estimate": "Most Expensive",
     "searchable_estimate": "Least Expensive"
   },
+  symbol: sd.AUCTION && sd.AUCTION.symbol,
   total: 0,
   user: sd.CURRENT_USER
 }
@@ -80,12 +80,14 @@ function auctionArtworks(state = initialState, action) {
     }
     case actions.INCREMENT_FOLLOWED_ARTISTS_PAGE: {
       const currentPage = state.followedArtistRailPage
-      if (!state.isLastFollowedArtistsPage) {
+      if (state.isLastFollowedArtistsPage) {
+        return u({
+          followedArtistRailPage: 1
+        }, state)
+      } else {
         return u({
           followedArtistRailPage: currentPage + 1
         }, state)
-      } else {
-        return state
       }
     }
     case actions.TOGGLE_LIST_VIEW: {
@@ -124,12 +126,21 @@ function auctionArtworks(state = initialState, action) {
           }
         }, state)
       } else if (artistId === 'artists-you-follow') {
-        return u({
-          filterParams: {
-            artist_ids: [],
-            include_artworks_by_followed_artists: true
-          }
-        }, state)
+        if (state.filterParams.include_artworks_by_followed_artists === true) {
+          return u({
+            filterParams: {
+              artist_ids: [],
+              include_artworks_by_followed_artists: false
+            }
+          }, state)
+        } else {
+          return u({
+            filterParams: {
+              artist_ids: [],
+              include_artworks_by_followed_artists: true
+            }
+          }, state)
+        }
       } else if (contains(state.filterParams.artist_ids, artistId)) {
         return u({
           filterParams: {
