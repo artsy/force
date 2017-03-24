@@ -1,12 +1,13 @@
 sinon = require 'sinon'
 rewire = require 'rewire'
-setup = rewire '../../lib/setup/index'
+setup = rewire '../../lib/setup'
 express = require 'express'
 
-describe 'index', ->
+describe 'setup', ->
 
   beforeEach ->
     setup.__set__
+      ipfilter = @ipfilter = sinon.stub()
       setupAuth: @setupAuth = sinon.stub()
       setupEnv: @setupEnv = sinon.stub()
       session: @session = sinon.stub().returns((req, res, next) -> next())
@@ -21,8 +22,33 @@ describe 'index', ->
     sinon.spy @app, 'set'
     setup @app
 
-  it 'sets up a /system/up route', ->
+  it 'blacklists ips', ->
     @app.get.args[0][0].should.equal '/system/up'
+
+  it 'rate limits', ->
+
+  it 'uses ssl', ->
+
+  it 'increases max sockets', ->
+
+  it 'overrides Backbone sync', ->
+
+  it 'uses sharify', ->
+
+  it 'mounts development middleware', ->
+
+  it 'mounts test middleware', ->
+
+  it 'mounts cookie and session middleware', ->
+
+  it 'proxies gravity api', ->
+
+  it 'mounts bodyparser', ->
+
+  it 'mounts passport', ->
+
+  it ''
+
 
   it 'mounts generic middleware', ->
     @setupEnv.called.should.be.true()

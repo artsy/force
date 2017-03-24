@@ -94,10 +94,9 @@ module.exports = (app) ->
     XAPP_TOKEN: artsyXapp.token
 
   # General settings
-  if NODE_ENV is 'prod'
+  if NODE_ENV is 'development'
     app.use logger 'dev'
   else
-    logger.token 'type', (req, res) -> 'MOBILE'
     app.use logger logFormat
   app.use localsMiddleware
   app.use artsyError.helpers

@@ -194,10 +194,9 @@ module.exports = (app) ->
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use escapedFragmentMiddleware
-  if NODE_ENV is 'prod'
+  if NODE_ENV is 'development'
     app.use logger 'dev'
   else
-    logger.token 'type', (req, res) -> 'DESKTOP'
     app.use logger logFormat
   app.use unsupportedBrowserCheck
   app.use splitTestMiddleware
