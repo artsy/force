@@ -7,15 +7,17 @@ describe 'setup', ->
 
   beforeEach ->
     setup.__set__
-      ipfilter = @ipfilter = sinon.stub()
-      setupAuth: @setupAuth = sinon.stub()
-      setupEnv: @setupEnv = sinon.stub()
+      ipfilter: @ipfilter = sinon.stub().returns((req, res, next) -> next())
+      artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
       session: @session = sinon.stub().returns((req, res, next) -> next())
-      morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
       bodyParser:
         json: @json = sinon.stub().returns((req, res, next) -> next())
         urlencoded: @urlencoded = sinon.stub().returns((req, res, next) -> next())
       bucketAssets: @bucketAssets = sinon.stub().returns((req, res, next) -> next())
+      cors: @cors = sinon.stub().returns((req, res, next) -> next())
+      artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
+      flash: @flash = sinon.stub().returns((req, res, next) -> next())
+      logger: @logger = sinon.stub().returns((req, res, next) -> next())
     @app = express()
     sinon.spy @app, 'use'
     sinon.spy @app, 'get'
@@ -23,96 +25,91 @@ describe 'setup', ->
     setup @app
 
   it 'blacklists ips', ->
-    @app.get.args[0][0].should.equal '/system/up'
+    @ipfilter.args[0][1].log.should.be.false()
+    @ipfilter.args[0][1].mode.should.equal 'deny'
 
-  it 'rate limits', ->
+  xit 'rate limits requests', ->
 
-  it 'uses ssl', ->
+  xit 'increases max sockets', ->
 
-  it 'increases max sockets', ->
-
-  it 'overrides Backbone sync', ->
-
-  it 'uses sharify', ->
-
-  it 'mounts development middleware', ->
-
-  it 'mounts test middleware', ->
+  xit 'overrides Backbone sync', ->
+    sync = (setup.__get__ 'Backbone').sync
+    console.log sync()
 
   it 'mounts cookie and session middleware', ->
+    @app.use.args[7][0].name.should.equal 'cookieParser'
+    @app.set.args[3][0].should.equal 'trust proxy'
+    @app.set.args[3][1].should.be.true()
+    @session.args[0][0].secret.should.equal 'change-me'
+    @session.args[0][0].name.should.equal 'force.sess'
+    @session.args[0][0].maxAge.should.equal 31536000000
+    @session.args[0][0].secure.should.equal false
 
   it 'proxies gravity api', ->
+    @app.use.args[10][0].should.equal '/api'
 
   it 'mounts bodyparser', ->
+    @json.callCount.should.equal 1
+    @urlencoded.callCount.should.equal 1
+    @urlencoded.args[0][0].extended.should.be.true()
 
-  it 'mounts passport', ->
+  it 'uses cors', ->
+    @cors.callCount.should.equal 1
+    @cors.args[0][0].origin[0].should.equal 'http://localhost:3004'
+    @cors.args[0][0].origin[1].should.equal 'https://m.artsy.net'
 
-  it ''
-
+  it 'mounts passport with extended config', ->
+    @artsyPassport.callCount.should.equal 1
+    @artsyPassport.args[0][0].userKeys.length.should.equal 10
+    @artsyPassport.args[0][0].ARTSY_URL.should.equal 'http://localhost:3000'
+    @artsyPassport.args[0][0].CurrentUser.should.be.ok()
 
   it 'mounts generic middleware', ->
-    @setupEnv.called.should.be.true()
-    @app.use.args[1][0].name.should.containEql 'cookieParser'
-    @json.args[0][0].limit.should.equal '5mb'
-    @json.args[0][0].extended.should.be.true()
-    @urlencoded.args[0][0].limit.should.equal '5mb'
-    @urlencoded.args[0][0].extended.should.be.true()
     @bucketAssets.called.should.be.true()
-    @setupAuth.called.should.be.true()
+    @flash.called.should.be.true()
+    @logger.called.should.be.true()
+    @logger.args[0][0].should.equal 'dev'
 
-  it 'sets morgan logs to custom mode', ->
-    tokens =
-      status: -> 200
-      method: -> 'GET'
-      url: -> 'https://writer.artsy.net'
-      'response-time': -> 1000
-      'remote-addr': -> '0.0.0.0'
-      'user-agent': -> 'Mozilla'
-    @morgan.args[0][0](tokens, {}, {}).should.equal '\u001b[33mCLIENT:\u001b[39m \u001b[34mGET\u001b[39m \u001b[32mhttps://writer.artsy.net 200\u001b[39m \u001b[36m1000ms\u001b[39m \u001b[37m0.0.0.0\u001b[39m "\u001b[37mMozilla\u001b[39m"'
+  it 'sets up system time', ->
+    @app.get.args[1][0].should.equal '/system/time'
 
-describe 'development environment', ->
+  it 'sets up system up', ->
+    @app.get.args[2][0].should.equal '/system/up'
+    console.log @app.get.args[2][1]
 
-  beforeEach ->
-    setup.__set__
-      NODE_ENV: 'development'
-      setupAuth: @setupAuth = sinon.stub()
-      setupEnv: @setupEnv = sinon.stub()
-      session: @session = sinon.stub().returns((req, res, next) -> next())
-      morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
-    @app = express()
-    sinon.spy @app, 'use'
-    sinon.spy @app, 'get'
-    sinon.spy @app, 'set'
-    setup @app
+# describe 'development environment', ->
 
-  it 'sets morgan logs to dev mode', ->
-    @morgan.args[0][0].should.equal 'dev'
+#   beforeEach ->
+#     setup.__set__
+#       NODE_ENV: 'development'
+#       setupAuth: @setupAuth = sinon.stub()
+#       setupEnv: @setupEnv = sinon.stub()
+#       session: @session = sinon.stub().returns((req, res, next) -> next())
+#       morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
+#     @app = express()
+#     sinon.spy @app, 'use'
+#     sinon.spy @app, 'get'
+#     sinon.spy @app, 'set'
+#     setup @app
 
-describe 'production environment', ->
+#   it 'sets morgan logs to dev mode', ->
+#     @morgan.args[0][0].should.equal 'dev'
 
-  beforeEach ->
-    setup.__set__
-      NODE_ENV: 'production'
-      setupAuth: @setupAuth = sinon.stub()
-      setupEnv: @setupEnv = sinon.stub()
-      session: @session = sinon.stub().returns((req, res, next) -> next())
-      morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
-    @app = express()
-    sinon.spy @app, 'use'
-    sinon.spy @app, 'get'
-    sinon.spy @app, 'set'
-    setup @app
+#   it 'mounts development middleware', ->
 
-  it 'sets morgan logs to custom mode', ->
-    tokens =
-      status: -> 200
-      method: -> 'GET'
-      url: -> 'https://writer.artsy.net'
-      'response-time': -> 1000
-      'remote-addr': -> '0.0.0.0'
-      'user-agent': -> 'Mozilla'
-    @morgan.args[0][0](tokens, {}, {}).should.equal '\u001b[33mCLIENT:\u001b[39m \u001b[34mGET\u001b[39m \u001b[32mhttps://writer.artsy.net 200\u001b[39m \u001b[36m1000ms\u001b[39m \u001b[37m0.0.0.0\u001b[39m "\u001b[37mMozilla\u001b[39m"'
+# describe 'test environment', ->
 
-  it 'sets SSL options', ->
-    @app.set.args[3][0].should.equal 'forceSSLOptions'
-    @app.set.args[3][1].trustXFPHeader.should.be.true()
+#   beforeEach ->
+#     setup.__set__
+#       NODE_ENV: 'production'
+#       setupAuth: @setupAuth = sinon.stub()
+#       setupEnv: @setupEnv = sinon.stub()
+#       session: @session = sinon.stub().returns((req, res, next) -> next())
+#       morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
+#     @app = express()
+#     sinon.spy @app, 'use'
+#     sinon.spy @app, 'get'
+#     sinon.spy @app, 'set'
+#     setup @app
+
+#   it 'mounts test middleware', ->
