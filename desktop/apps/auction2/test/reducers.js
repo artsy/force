@@ -88,7 +88,7 @@ describe('Reducers', () => {
           incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
         })
 
-        it('does not increment if you are already at the final page', () => {
+        it('brings you to the first page if you were at the last', () => {
           initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
           const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
           incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
@@ -96,7 +96,7 @@ describe('Reducers', () => {
           const updatedIsLastPage = auctions(totalResponse, actions.updateIsLastFollowedArtistsPage())
           updatedIsLastPage.auctionArtworks.isLastFollowedArtistsPage.should.eql(true)
           const anotherIncrement = auctions(updatedIsLastPage, actions.incrementFollowedArtistsPage())
-          anotherIncrement.auctionArtworks.followedArtistRailPage.should.eql(2)
+          anotherIncrement.auctionArtworks.followedArtistRailPage.should.eql(1)
         })
       })
 
