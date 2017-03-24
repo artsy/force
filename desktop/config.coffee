@@ -86,7 +86,6 @@ module.exports =
   APPLY_URL: 'http://apply.artsy.net'
   PC_ARTSY_CHANNEL: '5759e508b5989e6f98f77999'
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
-  LOGGER_FORMAT: 'combined'
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
   EOY_2016: '5829db77b5989e6f98f779a5'
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'

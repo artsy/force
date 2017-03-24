@@ -28,6 +28,7 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
+logFormat = require '../../lib/logger_format'
 helmet = require 'helmet'
 cache = require './cache'
 bucketAssets = require 'bucket-assets'
@@ -93,7 +94,11 @@ module.exports = (app) ->
     XAPP_TOKEN: artsyXapp.token
 
   # General settings
-  app.use logger('dev')
+  if NODE_ENV is 'prod'
+    app.use logger 'dev'
+  else
+    logger.token 'type', (req, res) -> 'MOBILE'
+    app.use logger logFormat
   app.use localsMiddleware
   app.use artsyError.helpers
 

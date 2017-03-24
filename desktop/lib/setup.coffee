@@ -21,7 +21,6 @@
   IP_BLACKLIST,
   REQUEST_LIMIT,
   REQUEST_EXPIRE_MS,
-  LOGGER_FORMAT,
   OPENREDIS_URL
 } = config = require "../config"
 { parse, format } = require 'url'
@@ -51,6 +50,7 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
+logFormat = require '../../lib/logger_format'
 artsyXapp = require 'artsy-xapp'
 fs = require 'fs'
 artsyError = require 'artsy-error-handler'
@@ -194,7 +194,11 @@ module.exports = (app) ->
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use escapedFragmentMiddleware
-  app.use logger LOGGER_FORMAT
+  if NODE_ENV is 'prod'
+    app.use logger 'dev'
+  else
+    logger.token 'type', (req, res) -> 'DESKTOP'
+    app.use logger logFormat
   app.use unsupportedBrowserCheck
   app.use splitTestMiddleware
 
