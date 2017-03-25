@@ -60,8 +60,8 @@ module.exports = (app) ->
   app.use redirectExternalLinks
   app.use sharify
   app.use ensureSSL
-  app.use hsts unless app.get('env') is 'test'
-  app.use helmet.frameguard() unless app.get('env') is 'test'
+  app.use hsts unless NODE_ENV is 'test'
+  app.use helmet.frameguard() unless NODE_ENV is 'test'
   app.use bucketAssets()
   app.use marketingSignupModal
 
@@ -102,12 +102,12 @@ module.exports = (app) ->
   app.use artsyError.helpers
 
   # Test settings
-  if app.get('env') is 'test'
+  if NODE_ENV is 'test'
     app.use '/__gravity', require('antigravity').server
     app.use '/__positron', require('antigravity').positronServer
 
   # Development settings
-  if app.get('env') is 'development'
+  if NODE_ENV is 'development'
     app.use require("stylus").middleware
       src: path.resolve(__dirname, "../")
       dest: path.resolve(__dirname, "../public")

@@ -3,10 +3,12 @@ rewire = require 'rewire'
 setup = rewire '../../lib/setup'
 express = require 'express'
 
-describe 'setup', ->
+describe 'setup production environment', ->
 
   beforeEach ->
     setup.__set__
+      NODE_ENV: 'production'
+      MAX_SOCKETS: 10
       ipfilter: @ipfilter = sinon.stub().returns((req, res, next) -> next())
       artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
       session: @session = sinon.stub().returns((req, res, next) -> next())
@@ -18,6 +20,7 @@ describe 'setup', ->
       artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
       flash: @flash = sinon.stub().returns((req, res, next) -> next())
       logger: @logger = sinon.stub().returns((req, res, next) -> next())
+      http: @http = globalAgent: {}
     @app = express()
     sinon.spy @app, 'use'
     sinon.spy @app, 'get'
@@ -28,25 +31,24 @@ describe 'setup', ->
     @ipfilter.args[0][1].log.should.be.false()
     @ipfilter.args[0][1].mode.should.equal 'deny'
 
-  xit 'rate limits requests', ->
+  it 'increases max sockets', ->
+    @http.globalAgent.maxSockets.should.equal 10
 
-  xit 'increases max sockets', ->
-
-  xit 'overrides Backbone sync', ->
+  it 'overrides Backbone sync', ->
     sync = (setup.__get__ 'Backbone').sync
-    console.log sync()
+    sync.toString().should.containEql "options.headers['X-XAPP-TOKEN']"
 
   it 'mounts cookie and session middleware', ->
-    @app.use.args[7][0].name.should.equal 'cookieParser'
+    @app.use.args[5][0].name.should.equal 'cookieParser'
     @app.set.args[3][0].should.equal 'trust proxy'
     @app.set.args[3][1].should.be.true()
     @session.args[0][0].secret.should.equal 'change-me'
     @session.args[0][0].name.should.equal 'force.sess'
     @session.args[0][0].maxAge.should.equal 31536000000
-    @session.args[0][0].secure.should.equal false
+    @session.args[0][0].secure.should.equal true
 
   it 'proxies gravity api', ->
-    @app.use.args[10][0].should.equal '/api'
+    @app.use.args[8][0].should.equal '/api'
 
   it 'mounts bodyparser', ->
     @json.callCount.should.equal 1
@@ -67,49 +69,62 @@ describe 'setup', ->
   it 'mounts generic middleware', ->
     @bucketAssets.called.should.be.true()
     @flash.called.should.be.true()
+
+  it 'sets up logger with custom format', ->
     @logger.called.should.be.true()
-    @logger.args[0][0].should.equal 'dev'
+    tokens =
+      status: -> 200
+      method: -> 'GET'
+      url: -> 'https://artsy.net'
+      'response-time': -> 1000
+      'remote-addr': -> '0.0.0.0'
+      'user-agent': -> 'Mozilla'
+    @logger.args[0][0](tokens, {}, {}).should.equal '\u001b[34mGET\u001b[39m \u001b[32mhttps://artsy.net 200\u001b[39m \u001b[36m1000ms\u001b[39m \u001b[37m0.0.0.0\u001b[39m "\u001b[37mMozilla\u001b[39m"'
 
   it 'sets up system time', ->
     @app.get.args[1][0].should.equal '/system/time'
 
   it 'sets up system up', ->
     @app.get.args[2][0].should.equal '/system/up'
-    console.log @app.get.args[2][1]
+    @app.get.args[2][1]
 
-# describe 'development environment', ->
+describe 'development environment', ->
 
-#   beforeEach ->
-#     setup.__set__
-#       NODE_ENV: 'development'
-#       setupAuth: @setupAuth = sinon.stub()
-#       setupEnv: @setupEnv = sinon.stub()
-#       session: @session = sinon.stub().returns((req, res, next) -> next())
-#       morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
-#     @app = express()
-#     sinon.spy @app, 'use'
-#     sinon.spy @app, 'get'
-#     sinon.spy @app, 'set'
-#     setup @app
+  beforeEach ->
+    setup.__set__
+      NODE_ENV: 'development'
+      MAX_SOCKETS: -1
+      http: @http = globalAgent: {}
+      session: @session = sinon.stub().returns((req, res, next) -> next())
+      logger: @logger = sinon.stub().returns((req, res, next) -> next())
+    @app = express()
+    sinon.spy @app, 'use'
+    sinon.spy @app, 'get'
+    sinon.spy @app, 'set'
+    setup @app
 
-#   it 'sets morgan logs to dev mode', ->
-#     @morgan.args[0][0].should.equal 'dev'
+  it 'sets morgan logs to dev mode', ->
+    @logger.args[0][0].should.equal 'dev'
 
-#   it 'mounts development middleware', ->
+  it 'mounts cookie and session middleware', ->
+    @session.args[0][0].secure.should.equal false
 
-# describe 'test environment', ->
+  it 'mounts stylus', ->
+    @app.use.args[5][0].name.should.equal 'stylus'
 
-#   beforeEach ->
-#     setup.__set__
-#       NODE_ENV: 'production'
-#       setupAuth: @setupAuth = sinon.stub()
-#       setupEnv: @setupEnv = sinon.stub()
-#       session: @session = sinon.stub().returns((req, res, next) -> next())
-#       morgan: @morgan = sinon.stub().returns((req, res, next) -> next())
-#     @app = express()
-#     sinon.spy @app, 'use'
-#     sinon.spy @app, 'get'
-#     sinon.spy @app, 'set'
-#     setup @app
+  it 'uses a default max socket value', ->
+    @http.globalAgent.maxSockets.should.equal Number.MAX_VALUE
 
-#   it 'mounts test middleware', ->
+describe 'test environment', ->
+
+  beforeEach ->
+    setup.__set__
+      NODE_ENV: 'test'
+    @app = express()
+    sinon.spy @app, 'use'
+    sinon.spy @app, 'get'
+    sinon.spy @app, 'set'
+    setup @app
+
+  it 'mounts test middleware', ->
+    @app.use.args[6][0].should.equal '/__gravity'

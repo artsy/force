@@ -21,7 +21,8 @@
   IP_BLACKLIST,
   REQUEST_LIMIT,
   REQUEST_EXPIRE_MS,
-  OPENREDIS_URL
+  OPENREDIS_URL,
+  MAX_SOCKETS
 } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
@@ -90,10 +91,11 @@ module.exports = (app) ->
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
-  if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
-    http.globalAgent.maxSockets = MAX_SOCKETS
-  else
-    http.globalAgent.maxSockets = Number.MAX_VALUE
+  # console.log typeof MAX_SOCKETS
+  # if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
+  #   http.globalAgent.maxSockets = MAX_SOCKETS
+  # else
+  #   http.globalAgent.maxSockets = Number.MAX_VALUE
 
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
