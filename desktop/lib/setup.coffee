@@ -91,11 +91,10 @@ module.exports = (app) ->
 
   # Increase max sockets. The goal of this is to improve app -> api
   # performance but the downside is it limits client connection reuse with keep-alive
-  # console.log typeof MAX_SOCKETS
-  # if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
-  #   http.globalAgent.maxSockets = MAX_SOCKETS
-  # else
-  #   http.globalAgent.maxSockets = Number.MAX_VALUE
+  if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
+    http.globalAgent.maxSockets = MAX_SOCKETS
+  else
+    http.globalAgent.maxSockets = Number.MAX_VALUE
 
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
