@@ -132,6 +132,13 @@ describe 'ArticleView', ->
               text: '',
               title: ''
               hide_image: false
+            },
+            {
+              type: 'callout',
+              article: null,
+              text: 'This is a text only callout',
+              title: ''
+              hide_image: false
             }
           ]
         author: new Backbone.Model fabricate 'user'
@@ -235,7 +242,10 @@ describe 'ArticleView', ->
 
   describe '#renderCalloutSections', ->
 
-    it 'renders callouts', ->
+    it 'renders callouts without articles', ->
+      @view.$el.html().should.containEql 'This is a text only callout'
+
+    it 'renders callouts with articles', ->
       articles = [_.extend({}, fixtures.article, { thumbnail_title: 'callout article' })]
       Backbone.sync.args[0][2].success results: articles
       @view.$el.html().should.containEql 'callout article'

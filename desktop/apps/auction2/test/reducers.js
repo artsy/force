@@ -88,7 +88,7 @@ describe('Reducers', () => {
           incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
         })
 
-        it('does not increment if you are already at the final page', () => {
+        it('brings you to the first page if you were at the last', () => {
           initialResponse.auctionArtworks.followedArtistRailPage.should.eql(1)
           const incrementedResponse = auctions(initialResponse, actions.incrementFollowedArtistsPage())
           incrementedResponse.auctionArtworks.followedArtistRailPage.should.eql(2)
@@ -96,7 +96,7 @@ describe('Reducers', () => {
           const updatedIsLastPage = auctions(totalResponse, actions.updateIsLastFollowedArtistsPage())
           updatedIsLastPage.auctionArtworks.isLastFollowedArtistsPage.should.eql(true)
           const anotherIncrement = auctions(updatedIsLastPage, actions.incrementFollowedArtistsPage())
-          anotherIncrement.auctionArtworks.followedArtistRailPage.should.eql(2)
+          anotherIncrement.auctionArtworks.followedArtistRailPage.should.eql(1)
         })
       })
 
@@ -183,6 +183,17 @@ describe('Reducers', () => {
           const allArtists = auctions(twoArtists, actions.updateArtistId('artists-you-follow'))
           allArtists.auctionArtworks.filterParams.artist_ids.should.eql([])
           allArtists.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(true)
+        })
+
+        it('updates the artist ids to all when artists-you-follow is already checked', () => {
+          initialResponse.auctionArtworks.filterParams.artist_ids.should.eql([])
+          initialResponse.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(false)
+          const artistsYouFollow = auctions(initialResponse, actions.updateArtistId('artists-you-follow'))
+          artistsYouFollow.auctionArtworks.filterParams.artist_ids.should.eql([])
+          artistsYouFollow.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(true)
+          const noArtistsYouFollow = auctions(artistsYouFollow, actions.updateArtistId('artists-you-follow'))
+          noArtistsYouFollow.auctionArtworks.filterParams.artist_ids.should.eql([])
+          noArtistsYouFollow.auctionArtworks.filterParams.include_artworks_by_followed_artists.should.eql(false)
         })
       })
 

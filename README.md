@@ -17,7 +17,7 @@ Meta
 * __CI/Deploys:__ [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `master` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...master?expand=1)
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
 
-[![Build Status](https://circleci.com/gh/artsy/force-merge.svg?style=svg)](https://circleci.com/gh/artsy/force-merge)
+[![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
 
 History
 -------
