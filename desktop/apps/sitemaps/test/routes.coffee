@@ -47,6 +47,8 @@ Disallow: ?dns_source=
 Disallow: ?microsite=
 Disallow: ?from-show-guide=
 Sitemap: https://www.artsy.net/sitemap.xml
+Sitemap: https://www.artsy.net/sitemap-artists.xml
+Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
 """
@@ -96,7 +98,7 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
       routes.index(@req, @res)
       @res.render.args[0][1].articlePages.should.equal 5
       @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].resources.length.should.equal 6
+      @res.render.args[0][1].resources.length.should.equal 4
 
   describe '#misc', ->
 
@@ -131,14 +133,14 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
 
     it 'fetches and displays a resource page', ->
       routes.__set__ 'request', get: -> set: -> query: -> end: (cb) ->
-        cb null, { body: [{ id: 'gene-1' }, {id: 'gene-2'}] }
+        cb null, { body: [{ id: 'partner-1' }, {id: 'partner-2'}] }
       req =
         params:
           page: 1
-          resource: 'genes'
+          resource: 'partners'
       routes.resourcePage req, @res
-      @res.render.args[0][1].models[0].id.should.equal 'gene-1'
-      @res.render.args[0][1].models[1].id.should.equal 'gene-2'
+      @res.render.args[0][1].models[0].id.should.equal 'partner-1'
+      @res.render.args[0][1].models[1].id.should.equal 'partner-2'
 
   describe '#video', ->
 
