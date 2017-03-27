@@ -1,31 +1,38 @@
 sinon = require 'sinon'
 rewire = require 'rewire'
-setup = rewire '../../lib/setup'
+benv = require 'benv'
 express = require 'express'
+path = require 'path'
 
 describe 'setup production environment', ->
 
-  beforeEach ->
-    setup.__set__
-      NODE_ENV: 'production'
-      MAX_SOCKETS: 10
-      ipfilter: @ipfilter = sinon.stub().returns((req, res, next) -> next())
-      artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
-      session: @session = sinon.stub().returns((req, res, next) -> next())
-      bodyParser:
-        json: @json = sinon.stub().returns((req, res, next) -> next())
-        urlencoded: @urlencoded = sinon.stub().returns((req, res, next) -> next())
-      bucketAssets: @bucketAssets = sinon.stub().returns((req, res, next) -> next())
-      cors: @cors = sinon.stub().returns((req, res, next) -> next())
-      artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
-      flash: @flash = sinon.stub().returns((req, res, next) -> next())
-      logger: @logger = sinon.stub().returns((req, res, next) -> next())
-      http: @http = globalAgent: {}
-    @app = express()
-    sinon.spy @app, 'use'
-    sinon.spy @app, 'get'
-    sinon.spy @app, 'set'
-    setup @app
+  beforeEach (done) ->
+    benv.setup =>
+      @setup = rewire '../../lib/setup'
+      @setup.__set__
+        NODE_ENV: 'production'
+        MAX_SOCKETS: 10
+        ipfilter: @ipfilter = sinon.stub().returns((req, res, next) -> next())
+        artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
+        session: @session = sinon.stub().returns((req, res, next) -> next())
+        bodyParser:
+          json: @json = sinon.stub().returns((req, res, next) -> next())
+          urlencoded: @urlencoded = sinon.stub().returns((req, res, next) -> next())
+        bucketAssets: @bucketAssets = sinon.stub().returns((req, res, next) -> next())
+        cors: @cors = sinon.stub().returns((req, res, next) -> next())
+        artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
+        flash: @flash = sinon.stub().returns((req, res, next) -> next())
+        logger: @logger = sinon.stub().returns((req, res, next) -> next())
+        http: @http = globalAgent: {}
+      @app = express()
+      sinon.stub @app, 'use'
+      sinon.stub @app, 'get'
+      sinon.stub @app, 'set'
+      @setup @app
+      done()
+
+  afterEach ->
+    benv.teardown()
 
   it 'blacklists ips', ->
     @ipfilter.args[0][1].log.should.be.false()
@@ -35,7 +42,7 @@ describe 'setup production environment', ->
     @http.globalAgent.maxSockets.should.equal 10
 
   it 'overrides Backbone sync', ->
-    sync = (setup.__get__ 'Backbone').sync
+    sync = (@setup.__get__ 'Backbone').sync
     sync.toString().should.containEql "options.headers['X-XAPP-TOKEN']"
 
   it 'mounts cookie and session middleware', ->
@@ -90,18 +97,25 @@ describe 'setup production environment', ->
 
 describe 'development environment', ->
 
-  beforeEach ->
-    setup.__set__
-      NODE_ENV: 'development'
-      MAX_SOCKETS: -1
-      http: @http = globalAgent: {}
-      session: @session = sinon.stub().returns((req, res, next) -> next())
-      logger: @logger = sinon.stub().returns((req, res, next) -> next())
-    @app = express()
-    sinon.spy @app, 'use'
-    sinon.spy @app, 'get'
-    sinon.spy @app, 'set'
-    setup @app
+  beforeEach (done) ->
+    benv.setup =>
+      setup = rewire '../../lib/setup'
+      setup.__set__
+        NODE_ENV: 'development'
+        MAX_SOCKETS: -1
+        http: @http = globalAgent: {}
+        session: @session = sinon.stub().returns((req, res, next) -> next())
+        logger: @logger = sinon.stub().returns((req, res, next) -> next())
+        sharify: sinon.stub().returns((req, res, next) -> next())
+      @app = express()
+      sinon.spy @app, 'use'
+      sinon.spy @app, 'get'
+      sinon.spy @app, 'set'
+      setup @app
+      done()
+
+  afterEach ->
+    benv.teardown()
 
   it 'sets morgan logs to dev mode', ->
     @logger.args[0][0].should.equal 'dev'
@@ -117,14 +131,18 @@ describe 'development environment', ->
 
 describe 'test environment', ->
 
-  beforeEach ->
-    setup.__set__
-      NODE_ENV: 'test'
-    @app = express()
-    sinon.spy @app, 'use'
-    sinon.spy @app, 'get'
-    sinon.spy @app, 'set'
-    setup @app
+  beforeEach (done) ->
+    benv.setup =>
+      setup = rewire '../../lib/setup'
+      setup.__set__
+        NODE_ENV: 'test'
+        sharify: sinon.stub().returns((req, res, next) -> next())
+      @app = express()
+      sinon.spy @app, 'use'
+      sinon.spy @app, 'get'
+      sinon.spy @app, 'set'
+      setup @app
+      done()
 
   it 'mounts test middleware', ->
     @app.use.args[6][0].should.equal '/__gravity'
