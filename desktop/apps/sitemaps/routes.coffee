@@ -27,7 +27,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
 
 @index = (req, res, next) ->
-  resources = ['artists', 'genes', 'partners', 'features', 'shows', 'fairs']
+  resources = ['partners', 'features', 'shows', 'fairs']
   async.parallel [
     # Get articles counts
     (cb) ->
@@ -120,6 +120,8 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Disallow: ?microsite=
     Disallow: ?from-show-guide=
     Sitemap: #{APP_URL}/sitemap.xml
+    Sitemap: #{APP_URL}/sitemap-artists.xml
+    Sitemap: #{APP_URL}/sitemap-genes.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
     Sitemap: #{APP_URL}/sitemap-images.xml
 
