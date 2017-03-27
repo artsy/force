@@ -264,18 +264,14 @@ module.exports = class ArticleView extends Backbone.View
   sizeVideo: =>
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
-    calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) ->
-      ratio = Math.min maxWidth / srcWidth, maxHeight / srcHeight
-      { width: srcWidth*ratio, height: srcHeight*ratio }
-
     resizeVideo = ->
       newHeight = @windowheight - 100
       $videos.each ->
         $el = $(this)
         $parent = $el.parent()
-        c_width = $parent.outerWidth()
-        c_height = $parent.outerHeight()
-        maxHeight = if (newHeight < c_height) then newHeight else (c_width * .5625)
+        parentWidth = $parent.outerWidth()
+        parentHeight = $parent.outerHeight()
+        maxHeight = if (newHeight < parentHeight) then newHeight else (parentWidth * .5625)
         $($parent).height(maxHeight)
 
     $(window).resize(_.debounce(resizeVideo, 100))
