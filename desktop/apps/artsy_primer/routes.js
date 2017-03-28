@@ -8,6 +8,10 @@ import { SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } from '../../confi
 const sailThruClient = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 export const article = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/log_in?redirect_uri=' + req.url)
+  }
+
   const article = new Article({id: req.params.id})
   await article.fetchWithRelated({
     accessToken: req.user && req.user.get('accessToken')
