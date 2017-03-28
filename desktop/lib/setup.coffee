@@ -37,7 +37,6 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
-proxyToMerged = require './middleware/proxy_to_merged'
 localsMiddleware = require './middleware/locals'
 ensureSSL = require './middleware/ensure_ssl'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
@@ -152,7 +151,6 @@ module.exports = (app) ->
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE
-  app.use proxyToMerged
   app.use '/api', proxyGravity.api
   app.use proxyReflection
   app.use bodyParser.json()

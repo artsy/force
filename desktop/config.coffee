@@ -94,8 +94,6 @@ module.exports =
   MARKETING_SIGNUP_MODALS: '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-a-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca3","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"},{"slug":"ca4","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-interior-b-credited.jpg","photoCredit":"Photo by Emily Johnson"}]'
   EOY_2016_ARTICLE: null
   RAYGUN_KEY: null
-  FORCE_MERGE_URL: 'https://merged.artsy.net'
-  FORCE_MERGE_WEIGHT: 0
   S3_BUCKET: null
   SEGMENT_AMP_WRITE_KEY: null
 
