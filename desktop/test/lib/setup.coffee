@@ -22,7 +22,6 @@ describe 'setup', ->
           urlencoded: @urlencoded = sinon.stub().returns((req, res, next) -> next())
         bucketAssets: @bucketAssets = sinon.stub().returns((req, res, next) -> next())
         cors: @cors = sinon.stub().returns((req, res, next) -> next())
-        artsyPassport: @artsyPassport = sinon.stub().returns((req, res, next) -> next())
         flash: @flash = sinon.stub().returns((req, res, next) -> next())
         logger: @logger = sinon.stub().returns((req, res, next) -> next())
         http: @http = globalAgent: {}
