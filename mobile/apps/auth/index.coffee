@@ -20,6 +20,9 @@ app.get '/forgot_password', routes.forgotPassword
 app.post '/forgot_password', routes.submitForgotPassword
 app.get '/reset_password', routes.resetPassword
 
+console.log 'loginPagePath', loginPagePath
+
 # Login and signup pages
+app.get '/log_in', routes.login
 app.get loginPagePath, routes.login
 app.get signupPagePath, routes.signUp
