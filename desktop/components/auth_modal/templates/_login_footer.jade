@@ -2,5 +2,6 @@ footer#auth-footer
   p
     | Don&rsquo;t have an account?&nbsp;
     a.faux-underline.small-caps.auth-toggle(
-      href='/sign_up', data-mode='signup'
+      data-mode='signup',
+      href='/sign_up?redirect-to=' + redirectTo 
     ) Sign up
