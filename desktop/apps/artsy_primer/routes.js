@@ -1,5 +1,6 @@
 import embed from 'particle'
 import _ from 'underscore'
+import moment from 'moment'
 import Article from '../../models/article'
 import { crop } from '../../components/resizer'
 
@@ -7,6 +8,10 @@ import { SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } from '../../confi
 const sailThruClient = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 export const article = async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect('/log_in?redirect_uri=' + req.url)
+  }
+
   const article = new Article({id: req.params.id})
   await article.fetchWithRelated({
     accessToken: req.user && req.user.get('accessToken')
@@ -31,7 +36,7 @@ export const setSailthruData = async (req, res) => {
     },
     vars: {
       artsy_primer: true,
-      artsy_primer_sign_up_date: new Date()
+      artsy_primer_sign_up_time: moment().format('X')
     }  
   }, (err, response) => {
     if (response.ok) {
