@@ -34,34 +34,35 @@ module.exports =
   setup: setup = (context = {}) ->
     if context.__typename is 'ArtworkContextAuction'
       query: """
-          query artwork(
-            $id: String!,
-            $isClosed: Boolean!,
-            $auctionId: ID,
-            $saleSize: Int = 4,
-            $saleSort: SaleSorts = TIMELY_AT_NAME_ASC
-          ) {
-            artwork(id: $id) {
-              ... partner
-              ... auction_artworks @skip(if: $isClosed)
-              ... artist_artworks @include(if: $isClosed)
-              ... related_artworks @include(if: $isClosed)
-            }
-
-            ... followed_artist_ids @skip(if: $isClosed)
-
-            sales(size: $saleSize, sort: $saleSort) {
-              ... current_auctions
-            }
+        query artwork(
+          $id: String!,
+          $isClosed: Boolean!,
+          $auctionId: ID,
+          $saleSize: Int = 4,
+          $saleSort: SaleSorts = TIMELY_AT_NAME_ASC
+        ) {
+          artwork(id: $id) {
+            ... partner
+            ... auction_artworks @skip(if: $isClosed)
+            ... artist_artworks @include(if: $isClosed)
+            ... related_artworks @include(if: $isClosed)
           }
-          #{require '../../../components/artwork_brick/query.coffee'}
-          #{require '../components/partner/query.coffee'}
-          #{require('../components/auction_artworks/query.coffee').auction_artworks}
-          #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
-          #{require('../../../components/current_auctions/query.js').default}
-          #{require '../components/artist_artworks/query.coffee'}
-          #{require '../components/related_artworks/query.coffee'}
-        """
+
+          ... followed_artist_ids @skip(if: $isClosed)
+
+          sales(size: $saleSize, sort: $saleSort) {
+            ... current_auctions
+          }
+        }
+        #{require '../../../components/artwork_brick/query.coffee'}
+        #{require '../components/partner/query.coffee'}
+        #{require('../components/auction_artworks/query.coffee').auction_artworks}
+        #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
+        #{require('../../../components/current_auctions/query.js').default}
+        #{require '../components/artist_artworks/query.coffee'}
+        #{require '../components/related_artworks/query.coffee'}
+      """
+
       variables:
         isClosed: context.is_closed
         auctionId: sd.AUCTION.id
@@ -72,8 +73,19 @@ module.exports =
           require('../../../components/current_auctions/index.jsx').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
-          require '../components/related_artists/index.coffee'
+          require '../components/related_artists/index.coffee',
         ]
+
+      # Make some Auctions-only layout tweaks. See https://github.com/artsy/auctions/issues/360#event-1017559326
+      # for more info.
+      postInit: ->
+        $currentAuctions = $ '.artwork-current-auctions'
+        $relatedRail = $ '.artwork-artist-related-rail'
+        paddingTop = if $currentAuctions.length then '42px' else '31px'
+
+        $relatedRail
+          .css('border-top', 0)
+          .css('padding-top', paddingTop)
 
     else if context.__typename is 'ArtworkContextFair'
       query: """
@@ -162,7 +174,7 @@ module.exports =
     exec sharedInit
 
     context = CLIENT.context or {}
-    { query, init, variables } = setup(context)
+    { query, init, postInit, variables } = setup(context)
 
     return unless query? and init?
     variables ?= {}
@@ -177,3 +189,4 @@ module.exports =
         })
 
         exec init, data
+        postInit() if postInit
