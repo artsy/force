@@ -32,7 +32,7 @@ export const setSailthruData = async (req, res) => {
     },
     vars: {
       artsy_primer: true,
-      artsy_primer_sign_up_date: moment().format()
+      artsy_primer_sign_up_date: moment().format('X')
     }  
   }, (err, response) => {
     if (response.ok) {
