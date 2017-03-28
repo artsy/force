@@ -1,5 +1,6 @@
 import embed from 'particle'
 import _ from 'underscore'
+import moment from 'moment'
 import Article from '../../models/article'
 import { crop } from '../../components/resizer'
 
@@ -31,7 +32,7 @@ export const setSailthruData = async (req, res) => {
     },
     vars: {
       artsy_primer: true,
-      artsy_primer_sign_up_date: new Date()
+      artsy_primer_sign_up_time: moment().format('X')
     }  
   }, (err, response) => {
     if (response.ok) {
