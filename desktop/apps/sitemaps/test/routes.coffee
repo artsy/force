@@ -39,7 +39,7 @@ describe 'Sitemaps', ->
 
       it 'renders the normal robots with sitemap in production', ->
         @res.send.args[0][0]
-          .should.containEql """
+          .should.eql """
 User-agent: *
 Noindex: ?sort=
 Noindex: ?dimension_range=
@@ -51,6 +51,8 @@ Sitemap: https://www.artsy.net/sitemap-artists.xml
 Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
+Sitemap: https://www.artsy.net/sitemap-partners.xml
+
 """
 
       it 'includes a CR/LF at the end of robots.txt', ->
@@ -98,7 +100,7 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
       routes.index(@req, @res)
       @res.render.args[0][1].articlePages.should.equal 5
       @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].resources.length.should.equal 4
+      @res.render.args[0][1].resources.length.should.equal 3
 
   describe '#misc', ->
 
@@ -133,14 +135,14 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
 
     it 'fetches and displays a resource page', ->
       routes.__set__ 'request', get: -> set: -> query: -> end: (cb) ->
-        cb null, { body: [{ id: 'partner-1' }, {id: 'partner-2'}] }
+        cb null, { body: [{ id: 'feature-1' }, {id: 'feature-2'}] }
       req =
         params:
           page: 1
-          resource: 'partners'
+          resource: 'features'
       routes.resourcePage req, @res
-      @res.render.args[0][1].models[0].id.should.equal 'partner-1'
-      @res.render.args[0][1].models[1].id.should.equal 'partner-2'
+      @res.render.args[0][1].models[0].id.should.equal 'feature-1'
+      @res.render.args[0][1].models[1].id.should.equal 'feature-2'
 
   describe '#video', ->
 

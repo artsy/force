@@ -27,7 +27,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
       res.render('news_sitemap', { pretty: true, articles: recentArticles })
 
 @index = (req, res, next) ->
-  resources = ['partners', 'features', 'shows', 'fairs']
+  resources = ['features', 'shows', 'fairs']
   async.parallel [
     # Get articles counts
     (cb) ->
@@ -124,6 +124,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-genes.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
     Sitemap: #{APP_URL}/sitemap-images.xml
+    Sitemap: #{APP_URL}/sitemap-partners.xml
 
   """
   res.send switch NODE_ENV
