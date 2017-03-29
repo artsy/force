@@ -57,7 +57,7 @@ describe('#redirectLive', () => {
     })
   })
 
-  it('does not redirect if bidder is not qualified', () => {
+  it('does not redirect if bidder is not qualified', async () => {
     const auctionQueries = {
       sale: {
         id: 'foo',
@@ -77,12 +77,12 @@ describe('#redirectLive', () => {
     }
 
     RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
-    routes.redirectLive(req, res, next)
+    await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()
   })
 
-  it('does not redirect if the auction is not live', () => {
+  it('does not redirect if the auction is not live', async () => {
     const auctionQueries = {
       sale: {
         id: 'foo',
@@ -102,7 +102,7 @@ describe('#redirectLive', () => {
     }
 
     RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
-    routes.redirectLive(req, res, next)
+    await routes.redirectLive(req, res, next)
     res.redirect.called.should.not.be.ok()
     next.called.should.be.ok()
   })

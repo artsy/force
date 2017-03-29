@@ -21,9 +21,9 @@ export const redirectLive = async (req, res, next) => {
     if (me && me.bidders && me.bidders.length > 0 && me.bidders[0].qualified_for_bidding) {
       res.redirect(liveUrl)
     } else {
-      return next()
+      next()
     }
   } else {
-    return next()
+    next()
   }
 }
