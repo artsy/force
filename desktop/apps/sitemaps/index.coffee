@@ -18,4 +18,5 @@ app.get ['/sitemap-genes.xml', '/sitemap-genes-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-partners.xml', '/sitemap-partners-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-articles.xml', '/sitemap-articles-:timestamp.xml'], routes.sitemaps  # archive of all articles (for main sitemap, not news-specific sitemap)
 app.get ['/sitemap-shows.xml', '/sitemap-shows-:timestamp.xml'], routes.sitemaps
+app.get ['/sitemap-fairs.xml', '/sitemap-fairs-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-:resource-:page.xml', routes.resourcePage
