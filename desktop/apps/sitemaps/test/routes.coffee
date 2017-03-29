@@ -39,7 +39,7 @@ describe 'Sitemaps', ->
 
       it 'renders the normal robots with sitemap in production', ->
         @res.send.args[0][0]
-          .should.containEql """
+          .should.eql """
 User-agent: *
 Noindex: ?sort=
 Noindex: ?dimension_range=
@@ -47,10 +47,13 @@ Disallow: ?dns_source=
 Disallow: ?microsite=
 Disallow: ?from-show-guide=
 Sitemap: https://www.artsy.net/sitemap.xml
+Sitemap: https://www.artsy.net/sitemap-articles.xml
 Sitemap: https://www.artsy.net/sitemap-artists.xml
 Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
+Sitemap: https://www.artsy.net/sitemap-partners.xml
+
 """
 
       it 'includes a CR/LF at the end of robots.txt', ->
@@ -94,11 +97,10 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
   describe '#index', ->
 
     it 'renders index with data', ->
-      routes.__set__ 'async', parallel: sinon.stub().yields null, [5, 10]
+      routes.__set__ 'async', parallel: sinon.stub().yields null, [10]
       routes.index(@req, @res)
-      @res.render.args[0][1].articlePages.should.equal 5
       @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].resources.length.should.equal 4
+      @res.render.args[0][1].resources.length.should.equal 3
 
   describe '#misc', ->
 
@@ -115,32 +117,18 @@ Sitemap: https://www.artsy.net/sitemap-images.xml
       @res.render.args[0][1].citySlugs[0].should.containEql 'new-york-city'
       @res.render.args[0][1].citySlugs[1].should.containEql 'tokyo'
 
-  describe '#articlesPage', ->
-
-    it 'fetches articles and displays slugs', ->
-      articles = [{slug: 'artsy-editorial-slug-1'}, {slug: 'artsy-editorial-slug-2'}]
-      request = get: -> query: -> end: (cb) ->
-        cb null, { body: results: articles}
-      routes.__set__ 'request', request
-      req =
-        params:
-          page: 1
-      routes.articlesPage(req, @res)
-      @res.render.args[0][1].slugs[0].should.equal 'artsy-editorial-slug-1'
-      @res.render.args[0][1].slugs[1].should.equal 'artsy-editorial-slug-2'
-
   describe '#resourcePage', ->
 
     it 'fetches and displays a resource page', ->
       routes.__set__ 'request', get: -> set: -> query: -> end: (cb) ->
-        cb null, { body: [{ id: 'partner-1' }, {id: 'partner-2'}] }
+        cb null, { body: [{ id: 'feature-1' }, {id: 'feature-2'}] }
       req =
         params:
           page: 1
-          resource: 'partners'
+          resource: 'features'
       routes.resourcePage req, @res
-      @res.render.args[0][1].models[0].id.should.equal 'partner-1'
-      @res.render.args[0][1].models[1].id.should.equal 'partner-2'
+      @res.render.args[0][1].models[0].id.should.equal 'feature-1'
+      @res.render.args[0][1].models[1].id.should.equal 'feature-2'
 
   describe '#video', ->
 

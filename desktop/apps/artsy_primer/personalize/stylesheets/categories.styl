@@ -28,6 +28,7 @@ category-size = 400px
     // responsive UI.
     transform scale(0.9)
     transform-origin top center
+    width auto
 
 .artsy-primer-personalize-category-image-link
   margin 20px 20px
@@ -35,6 +36,9 @@ category-size = 400px
 .artsy-primer-personalize-category-image
   width category-size
   height @width
+  @media screen and (max-width: 768px)
+    width 100%
+    height 100vw
 
 .artsy-primer-personalize-category-metadata
   position relative
@@ -50,6 +54,7 @@ category-size = 400px
   width 100%
   padding 20px 0
   border-bottom 1px solid gray-lighter-color
+  position relative
   &:first-child
     padding-top 0
   > .artsy-primer-personalize-category-image
@@ -75,11 +80,17 @@ category-size = 400px
     height 400px
     background-color black
     opacity 0.5
+    @media screen and (max-width: 768px)
+      width 100%
+      height 100vw
   .artsy-primer-personalize-following-icon
     position absolute
     width 400px
     height 400px
     padding-top 45%
+    @media screen and (max-width: 768px)
+      width 100%
+      height 100%
   .artsy-primer-personalize-following-text
     avant-garde()
     display block
