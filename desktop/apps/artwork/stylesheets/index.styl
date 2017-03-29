@@ -48,7 +48,9 @@ artwork-page = {
       margin-right: gutter
 
 .artwork-section
-  margin (gutter /3) 0 (gutter * 2) 0
+  space-for-expand-button = 20px
+  margin-top gutter / 3
+  margin-bottom gutter * 2 - space-for-expand-button
   padding-top distance(25px, 'garamond-s-headline')
   garamond-size('s-body')
   border-top 1px solid gray-lighter-color
@@ -63,6 +65,3 @@ artwork-page = {
       padding distance(20px) 45px 0 0
       text-decoration none
       border-top 1px solid gray-lighter-color
-
-#react-mount-current-auctions
-  margin-top -(gutter * 2)

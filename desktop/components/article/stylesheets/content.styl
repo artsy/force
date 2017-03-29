@@ -5,7 +5,6 @@ gutter-size = 30px
 overflow-width = 1100px
 body-width = 580px
 gutter-size = 30px
-play-button-size = 30px
 column-width = 580px
 fixed-share-padding = 89px
 
@@ -223,16 +222,6 @@ body.body-article
     margin auto
     width 100%
 
-.article-section-video
-  width body-width
-  margin auto
-  margin-bottom 1em
-  position relative
-  iframe
-    margin auto
-    width body-width
-    height (9 / 16 * body-width)
-
 .responsive-layout-container.article-section-container
   margin-top 45px
   margin-bottom 45px
@@ -282,46 +271,10 @@ body.body-article
         .article-embed-container
           width 100%
           margin auto
-      &[data-section-type="video"]
-        max-width 100vw
-        iframe
-          max-width 100%
-          width 100%
-          height 100%
-        @media screen and (max-width 1250px)
-          margin 45px 0
-        .article-section-video
-          width 100%
-          padding 40px 75px
-          @media screen and (max-width 900px)
-            padding 40px 0
-          &.article-video-background-black
-            width 100%
-            background black
-          .article-video-container
-            width body-width + 200
-            position relative
-            margin auto
-            @media screen and (max-width 1250px)
-              width 100%
 
 .article-carousel
   img
     height 350px
-
-.article-large-format-video-container .article-video
-  position relative
-  max-width 1250px
-  margin-bottom 50px
-
-  iframe
-    width 100%
-    height 100%
-    max-width 100%
-    max-height ((default-max-page-width * .5625) - 50)
-
-.article-large-format-video-container
-  position relative
 
 .article-large-format-image
   max-width 1250px
@@ -332,38 +285,6 @@ body.body-article
     width 100%
   li
     list-style none
-
-.article-video-cover-image
-  background center center
-  background-size cover
-  width 100%
-  height 100%
-  position absolute
-  top 0
-  left 0
-  z-index 1
-
-.article-video-play-button
-  background white
-  width play-button-size + 40px
-  height @width
-  position absolute
-  top "calc(50% - %s)" % (@width / 2)
-  left "calc(50% - %s)" % (@width / 2)
-  z-index 2
-  cursor pointer
-  border 0
-  outline 0
-
-.article-video-play-button-caret
-  width 0
-  height 0
-  top 14px
-  left 22px
-  position absolute
-  border-top (play-button-size - 10) solid transparent
-  border-bottom (play-button-size - 10) solid transparent
-  border-left play-button-size solid black
 
 .article-edit-container
   position fixed
