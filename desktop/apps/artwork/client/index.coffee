@@ -76,17 +76,6 @@ module.exports =
           require '../components/related_artists/index.coffee'
         ]
 
-      # Make some Auctions-only layout tweaks. See https://github.com/artsy/auctions/issues/360#event-1017559326
-      # for more info.
-      postInit: ->
-        $currentAuctions = $ '.artwork-current-auctions'
-        $relatedRail = $ '.artwork-artist-related-rail'
-        paddingTop = if $currentAuctions.length then '42px' else '31px'
-
-        $relatedRail
-          .css('border-top', 0)
-          .css('padding-top', paddingTop)
-
     else if context.__typename is 'ArtworkContextFair'
       query: """
           query artwork($id: String!) {
@@ -174,7 +163,7 @@ module.exports =
     exec sharedInit
 
     context = CLIENT.context or {}
-    { query, init, postInit, variables } = setup(context)
+    { query, init, variables } = setup(context)
 
     return unless query? and init?
     variables ?= {}
@@ -189,4 +178,3 @@ module.exports =
         })
 
         exec init, data
-        postInit() if postInit
