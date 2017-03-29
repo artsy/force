@@ -7,3 +7,4 @@ app.set('view engine', 'jade')
 app.set('views', `${__dirname}/templates`)
 
 app.get('/auction2/:id', adminOnly, routes.index)
+app.get('/auction2/:id/confirm-registration', routes.redirectLive, routes.index)

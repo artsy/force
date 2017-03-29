@@ -3,7 +3,9 @@ import Artist from '../../models/artist.coffee'
 import Auction from '../../models/auction.coffee'
 import Backbone from 'backbone'
 import ClockView from '../../components/clock/view.coffee'
+import ConfirmRegistrationModal from '../../components/credit_card/client/confirm_registration.coffee'
 import CurrentUser from '../../models/current_user.coffee'
+import mediator from '../../lib/mediator.coffee'
 import MyActiveBids from '../../components/my_active_bids/view.coffee'
 import { data as sd } from 'sharify'
 import _ from 'underscore'
@@ -24,6 +26,12 @@ import * as actions from './actions'
 
 const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at'))
 const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
+
+// If we are on the confirm-registration path then pop up a modal
+// Page is otherwise unchanged
+if (window.location.pathname.match('/confirm-registration') && user) {
+  new ConfirmRegistrationModal({ auction: auction })
+}
 
 const clock = new ClockView({
   modelName: 'Auction',
@@ -103,3 +111,15 @@ function infiniteScroll() {
   if (shouldFetch) { store.dispatch(actions.infiniteScroll()) }
 }
 $(window).on('scroll.auction2-artworks', _.throttle(infiniteScroll, 200))
+
+
+// ask people to log in before registering
+$('body').on('click', '.js-register-button', (e) => {
+  if (!user) {
+    e.preventDefault()
+    mediator.trigger(
+      'open:auth',
+      { mode: 'register', redirectTo: $(e.target).attr('href') }
+    )
+  }
+})
