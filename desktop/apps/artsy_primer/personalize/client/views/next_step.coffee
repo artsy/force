@@ -12,7 +12,7 @@ module.exports = class NextStepView extends StepView
   copy: [
     {
       header: 'Select Categories'
-      label: 'Select as many as you like'
+      label: 'Select as many as you like.'
     }
     {
       header: 'Select appealing works'
