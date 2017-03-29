@@ -73,7 +73,7 @@ module.exports =
           require('../../../components/current_auctions/index.jsx').default unless context.is_closed
           require '../components/artist_artworks/index.coffee' if context.is_closed
           require '../components/related_artworks/index.coffee' if context.is_closed
-          require '../components/related_artists/index.coffee',
+          require '../components/related_artists/index.coffee'
         ]
 
       # Make some Auctions-only layout tweaks. See https://github.com/artsy/auctions/issues/360#event-1017559326
