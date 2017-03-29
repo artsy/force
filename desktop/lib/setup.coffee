@@ -21,8 +21,8 @@
   IP_BLACKLIST,
   REQUEST_LIMIT,
   REQUEST_EXPIRE_MS,
-  LOGGER_FORMAT,
-  OPENREDIS_URL
+  OPENREDIS_URL,
+  MAX_SOCKETS
 } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
@@ -37,7 +37,6 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
-proxyToMerged = require './middleware/proxy_to_merged'
 localsMiddleware = require './middleware/locals'
 ensureSSL = require './middleware/ensure_ssl'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
@@ -51,6 +50,7 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
+logFormat = require '../../lib/logger_format'
 artsyXapp = require 'artsy-xapp'
 fs = require 'fs'
 artsyError = require 'artsy-error-handler'
@@ -59,7 +59,7 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
-require './setup_sharify.coffee'
+require('./setup_sharify.coffee')
 CurrentUser = require '../models/current_user'
 downcase = require './middleware/downcase'
 ipfilter = require('express-ipfilter').IpFilter
@@ -151,7 +151,6 @@ module.exports = (app) ->
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE
-  app.use proxyToMerged
   app.use '/api', proxyGravity.api
   app.use proxyReflection
   app.use bodyParser.json()
@@ -194,7 +193,10 @@ module.exports = (app) ->
   app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use escapedFragmentMiddleware
-  app.use logger LOGGER_FORMAT
+  if NODE_ENV is 'development'
+    app.use logger 'dev'
+  else
+    app.use logger logFormat
   app.use unsupportedBrowserCheck
   app.use splitTestMiddleware
 
