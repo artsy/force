@@ -29,16 +29,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
 @index = (req, res, next) ->
   resources = ['features', 'shows', 'fairs']
   async.parallel [
-    # Get articles counts
-    (cb) ->
-      request
-        .get(POSITRON_URL + '/api/articles')
-        .query(published: true, limit: 1, count: true)
-        .end (err, sres) ->
-          return cb(err) if err
-          totalCount = Math.ceil sres.body.count / PAGE_SIZE
-          cb null, totalCount
-    # Get the rest of the resource counts
+    # Get the resource counts
     (cb) ->
       async.map resources, ((resource, cb) ->
         request
@@ -50,12 +41,11 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
         return cb(err) if err
         allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / PAGE_SIZE
         cb null, allPages
-  ], (err, [articlePages, allPages]) ->
+  ], (err, [allPages]) ->
     return next(err) if err
     res.set 'Content-Type', 'text/xml'
     res.render('index', {
       pretty: true
-      articlePages: articlePages
       allPages: allPages
       resources: resources
     })
@@ -70,16 +60,6 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     success: ->
       res.set 'Content-Type', 'text/xml'
       res.render 'cities', pretty: true, citySlugs: partnerFeaturedCities.pluck('slug')
-
-@articlesPage = (req, res, next) ->
-  request
-    .get(POSITRON_URL + '/api/articles')
-    .query(offset: req.params.page * PAGE_SIZE, limit: PAGE_SIZE, published: true)
-    .end (err, sres) ->
-      return next err if err
-      slugs = _.pluck(sres.body.results, 'slug')
-      res.set 'Content-Type', 'text/xml'
-      res.render('articles', pretty: true, slugs: slugs)
 
 @resourcePage = (req, res, next) ->
   request
@@ -120,6 +100,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Disallow: ?microsite=
     Disallow: ?from-show-guide=
     Sitemap: #{APP_URL}/sitemap.xml
+    Sitemap: #{APP_URL}/sitemap-articles.xml
     Sitemap: #{APP_URL}/sitemap-artists.xml
     Sitemap: #{APP_URL}/sitemap-genes.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
