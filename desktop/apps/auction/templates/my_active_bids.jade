@@ -19,7 +19,7 @@ if myActiveBids && myActiveBids.length
                       em= bid.sale_artwork.artwork.title
                       | ,&nbsp;
                       = bid.sale_artwork.artwork.date
-            td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_number}
+            td.auction-mab-lot-number Lot #{bid.sale_artwork.lot_label}
             td.auction-mab-current-bid
               strong Current Bid: <em>#{bid.sale_artwork.highest_bid.display}</em>
             td.auction-mab-bid-num (#{bid.sale_artwork.counts.bidder_positions} Bids)

@@ -10,7 +10,7 @@ if myActiveBids && myActiveBids.length
           a( href=bid.sale_artwork.artwork.href )
             img( src=bid.sale_artwork.artwork.image.url )
             .my-active-bids-item-details
-              h4 Lot #{bid.sale_artwork.lot_number}
+              h4 Lot #{bid.sale_artwork.lot_label}
               .my-active-bids-item-artist
                 strong= bid.sale_artwork.artwork.artist.name
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)

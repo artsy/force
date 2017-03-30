@@ -231,7 +231,7 @@ describe 'Artwork Item template', ->
     it 'displays lot numbers', ->
       @artwork = new Artwork fabricate 'artwork'
       @artwork.set 'sale_artwork', fabricate 'sale_artwork',
-        { low_estimate_cents: 300000, high_estimate_cents: 700000, lot_number: 10 }
+        { low_estimate_cents: 300000, high_estimate_cents: 700000, lot_label: 10 }
       $ = cheerio.load render('artwork')
         artwork: @artwork
         isAuction: true

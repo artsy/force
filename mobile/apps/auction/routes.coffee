@@ -32,7 +32,7 @@ module.exports.index = (req, res, next) ->
   saleArtworks = new SaleArtworks [], id: id
   artworks = new Artworks
   artworks.comparator = (artwork) ->
-    (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
+    (saleArtwork = artwork.related().saleArtwork).get('lot_label') or saleArtwork.id
 
   promise = Q.all([
     auction.fetch(cache: true)

@@ -8,9 +8,9 @@
 
   .aga-metadata
     a( href= href )
-      if saleArtwork.has('lot_number')
+      if saleArtwork.has('lot_label')
         .aga-lot-number
-          | Lot #{saleArtwork.get('lot_number')}
+          | Lot #{saleArtwork.get('lot_label')}
 
       .aga-primary-information
         h4.aga-artist

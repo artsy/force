@@ -25,7 +25,7 @@ describe('React components', () => {
 
     beforeEach(() => {
       saleArtwork = {
-        lot_number: 2,
+        lot_label: 2,
         current_bid: {
           display: '$100'
         },
