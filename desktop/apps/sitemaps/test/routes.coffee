@@ -53,6 +53,7 @@ Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
+Sitemap: https://www.artsy.net/sitemap-shows.xml
 
 """
 
@@ -100,7 +101,7 @@ Sitemap: https://www.artsy.net/sitemap-partners.xml
       routes.__set__ 'async', parallel: sinon.stub().yields null, [10]
       routes.index(@req, @res)
       @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].resources.length.should.equal 3
+      @res.render.args[0][1].resources.length.should.equal 2
 
   describe '#misc', ->
 
