@@ -46,25 +46,28 @@ Noindex: ?dimension_range=
 Disallow: ?dns_source=
 Disallow: ?microsite=
 Disallow: ?from-show-guide=
-Sitemap: https://www.artsy.net/sitemap.xml
 Sitemap: https://www.artsy.net/sitemap-articles.xml
 Sitemap: https://www.artsy.net/sitemap-artists.xml
-Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
+Sitemap: https://www.artsy.net/sitemap-cities.xml
+Sitemap: https://www.artsy.net/sitemap-fairs.xml
+Sitemap: https://www.artsy.net/sitemap-features.xml
+Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
+Sitemap: https://www.artsy.net/sitemap-misc.xml
+Sitemap: https://www.artsy.net/sitemap-news.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
 Sitemap: https://www.artsy.net/sitemap-shows.xml
-Sitemap: https://www.artsy.net/sitemap-fairs.xml
+Sitemap: https://www.artsy.net/sitemap-video.xml
 
 """
 
       it 'includes a CR/LF at the end of robots.txt', ->
         @res.send.args[0][0].slice(-1).should.eql('\n')
 
-  describe '#articles', ->
-
-    it 'displays the sitemap for articles < 2 days old', ->
-      routes.articles(@req, @res)
+  describe '#news', ->
+    it 'displays the sitemap for news that are articles < 2 days old', ->
+      routes.news(@req, @res)
       Backbone.sync.args[0][2].success {
         total: 16088,
         count: 12,
@@ -74,18 +77,18 @@ Sitemap: https://www.artsy.net/sitemap-fairs.xml
         ]
 
       }
-      @res.render.args[0][0].should.equal('news_sitemap')
+      @res.render.args[0][0].should.equal('news')
       @res.render.args[0][1].articles.length.should.equal(1)
 
     it 'fetches with correct news data', ->
-      routes.articles(@req, @res)
+      routes.news(@req, @res)
       Backbone.sync.args[0][2].data.featured.should.be.true()
       Backbone.sync.args[0][2].data.published.should.be.true()
       Backbone.sync.args[0][2].data.sort.should.equal '-published_at'
       Backbone.sync.args[0][2].data.exclude_google_news.should.be.false()
       Backbone.sync.args[0][2].data.limit.should.equal 100
 
-  describe '#artworks and #images', ->
+  describe 'cinder sitemaps', ->
     it 'proxies sitemaps to s3', ->
       @req =
         headers: {}
@@ -96,22 +99,12 @@ Sitemap: https://www.artsy.net/sitemap-fairs.xml
       routes.sitemaps @req, @res
       @proxy.web.args[0][0].headers['host'].should.equal 'artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
 
-  describe '#index', ->
-
-    it 'renders index with data', ->
-      routes.__set__ 'async', parallel: sinon.stub().yields null, [10]
-      routes.index(@req, @res)
-      @res.render.args[0][1].allPages.should.equal 10
-      @res.render.args[0][1].resources.length.should.equal 1
-
   describe '#misc', ->
-
     it 'renders the misc template', ->
       routes.misc(@req, @res)
       @res.render.args[0][0].should.equal 'misc'
 
   describe '#cities', ->
-
     it 'fetches and displays city slugs', ->
       routes.cities(@req, @res)
       Backbone.sync.args[0][2].success [{ slug: 'new-york-city' }, { slug: 'tokyo' }]
@@ -119,21 +112,8 @@ Sitemap: https://www.artsy.net/sitemap-fairs.xml
       @res.render.args[0][1].citySlugs[0].should.containEql 'new-york-city'
       @res.render.args[0][1].citySlugs[1].should.containEql 'tokyo'
 
-  describe '#resourcePage', ->
-
-    it 'fetches and displays a resource page', ->
-      routes.__set__ 'request', get: -> set: -> query: -> end: (cb) ->
-        cb null, { body: [{ id: 'feature-1' }, {id: 'feature-2'}] }
-      req =
-        params:
-          page: 1
-          resource: 'features'
-      routes.resourcePage req, @res
-      @res.render.args[0][1].models[0].id.should.equal 'feature-1'
-      @res.render.args[0][1].models[1].id.should.equal 'feature-2'
 
   describe '#video', ->
-
     it 'only displays articles that are featured AND has_video', ->
       routes.video(@req, @res)
       Backbone.sync.args[0][2].data.featured.should.be.true()
