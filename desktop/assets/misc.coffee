@@ -42,6 +42,8 @@ routes =
 
   '/artsy-primer/.*': require('../apps/artsy_primer/client.js').default
 
+  '/primer-digest/.*': require('../apps/artsy_primer/client.js').default
+
   '/artsy-primer-personalize': require('../apps/artsy_primer/personalize/client/index.coffee').init
 
 for path, init of routes
