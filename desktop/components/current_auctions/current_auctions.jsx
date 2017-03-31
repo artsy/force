@@ -21,6 +21,7 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
         {sortedSales.map((sale) => {
           return (
             <AuctionBlock
+              key={sale.id}
               sale={sale}
             />
           )

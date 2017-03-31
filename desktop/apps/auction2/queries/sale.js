@@ -3,20 +3,7 @@ export default function SaleQuery(id) {
     sale(id: "${id}") {
       _id
       associated_sale {
-        cover_image {
-          cropped(width: 260, height: 110) {
-            url
-          }
-        }
-        end_at
-        href
-        id
-        is_closed
-        is_live_open
-        is_preview
-        live_start_at
-        name
-        start_at
+        ${require('../../../components/auction_block/query.js').default}
       }
       auction_state
       cover_image {
