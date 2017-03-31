@@ -24,6 +24,10 @@ const mobileMiddleware = require('./desktop/lib/middleware/redirect_mobile.coffe
 const cache = require('./lib/cache')
 const MergedUser = require('./lib/current_user')
 const artsyError = require('artsy-error-handler')
+const memoryProfiler = require('./lib/memory_profiler')
+
+// Enable memory profiling
+memoryProfiler()
 
 const app = express()
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, NODE_ENV } = process.env
