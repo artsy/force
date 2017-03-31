@@ -1,5 +1,4 @@
 extends ../../../components/main_layout/templates/index
-
 append locals
   - assetPackage = 'auctions'
   - bodyClass = bodyClass + ' body-no-margins'
@@ -13,3 +12,5 @@ block body
 
       .auction2-my-active-bids
       #cf-artworks
+      if articles && articles.length > 0 || auction.get('eligible_sale_artworks_count') === 0
+        include footer

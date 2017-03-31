@@ -1,4 +1,4 @@
-import { updateArtistParams } from '../../actions'
+import { updateArtistParams } from '../../client/actions'
 import BasicCheckbox from '../basic_checkbox'
 import React from 'react'
 import { connect } from 'react-redux'

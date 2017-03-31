@@ -13,6 +13,7 @@ export default function SaleQuery(id) {
       }
       currency
       description
+      eligible_sale_artworks_count
       end_at
       id
       is_live_open
