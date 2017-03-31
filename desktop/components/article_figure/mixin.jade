@@ -2,6 +2,8 @@
 include ../share/mixin
 
 mixin article-figure(article, width, showDate, showShare)
+  //- If the article data comes from metaphysics, it is already cropped
+  //- so we can just reference the url property
   if article.get('thumbnail_image') && article.get('thumbnail_image').url
     - var imgUrl = article.get('thumbnail_image').url
   else
