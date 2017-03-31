@@ -19,4 +19,4 @@ app.get '/sitemap-misc.xml', routes.misc
 app.get '/sitemap-news.xml', routes.news
 app.get ['/sitemap-partners.xml', '/sitemap-partners-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-shows.xml', '/sitemap-shows-:timestamp.xml'], routes.sitemaps
-app.get '/sitemap-video.xml', routes.video
+app.get ['/sitemap-videos.xml', '/sitemap-videos-:timestamp.xml'], routes.sitemaps

@@ -54,17 +54,3 @@ describe 'news sitemap template', ->
     xml.should.containEql '<news:name>Artsy</news:name>'
     xml.should.containEql '2014-09-24T23:24:54.000Z'
     xml.should.containEql 'On The Heels of A Stellar Year in the West, Sterling Ruby Makes His Vivid Mark on Asia'
-
-describe 'video sitemap template', ->
-
-  it 'renders the correct video info', ->
-    xml = render('video')
-      articles: new Articles fabricate 'article', published_at: '2014-09-02', sections: [
-        type: 'video'
-        url: 'http://youtube.com/video'
-      ]
-      sd: APP_URL: 'www.artsy.net'
-      moment: moment
-    xml.should.containEql 'www.artsy.net/article/editorial-on-the-heels-of-a-stellar-year'
-    xml.should.containEql '<video:player_loc>http://youtube.com/video</video:player_loc>'
-    xml.should.containEql '2014-09-02'
