@@ -18,10 +18,6 @@
       .article-figure-figcaption
         padding-right 30px
 
-  &__auction-app-promo-wrapper
-    padding-left 20px
-    border-left 1px solid gray-lighter-color
-
   &__auction-app-promo
     display table
     width 75%
@@ -41,3 +37,13 @@
     garamond-size('headline')
   &__auction-app-promo-subtitle
     font-style italic
+
+.has-articles
+  .auction2-footer__auction-app-promo-wrapper
+    padding-left 20px
+    border-left 1px solid gray-lighter-color
+.has-no-articles
+  .auction2-footer__auction-app-promo-image > img
+    margin auto
+  .auction2-footer__auction-app-promo-wrapper
+    text-align center

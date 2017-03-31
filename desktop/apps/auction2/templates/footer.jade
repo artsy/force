@@ -1,7 +1,8 @@
-footer.auction2-footer.auction2-page-section
-  .auction2-footer__auction-articles
-    for article in articles.models
-      include ../../../components/article_figure/template
+footer.auction2-footer.auction2-page-section( class= articles.length ? 'has-articles' : 'has-no-articles' )
+  if articles.length
+    .auction2-footer__auction-articles
+      for article in articles.models
+        include ../../../components/article_figure/template
 
   if footerItems && footerItems.length > 0 && !auction.isAuctionPromo()
     - var item = footerItems[0]

@@ -16,6 +16,7 @@ describe('auction templates', () => {
       sd: {},
       asset: () => {},
       auction: new Auction(),
+      footerItems: footerItems,
       me: null
     }
   })
@@ -236,6 +237,57 @@ describe('auction templates', () => {
     })
   })
 
+  describe('auction with no artworks', () => {
+    describe('an auction promo', () => {
+      before((done) => {
+        benv.setup(() => {
+          benv.expose({$: benv.require('jquery')})
+          const data = _.extend({}, baseData,
+            {
+              auction: new Auction(fabricate('sale', { name: 'An Auction', sale_type: 'auction promo', eligible_sale_artworks_count: 0 })),
+              articles: new Articles([])
+            }
+          )
+          benv.render(resolve(__dirname, '../templates/index.jade'), data, () => done())
+        })
+      })
+
+      after(() => {
+        benv.teardown()
+      })
+
+      it('does not show the footer at all', () => {
+        $('.auction2-footer__auction-app-promo-wrapper').length.should.eql(0)
+      })
+    })
+
+    describe('not an auction promo', () => {
+      before((done) => {
+        benv.setup(() => {
+          benv.expose({$: benv.require('jquery')})
+          const data = _.extend({}, baseData,
+            {
+              auction: new Auction(fabricate('sale', { name: 'An Auction', eligible_sale_artworks_count: 0 })),
+              articles: new Articles([])
+            }
+          )
+          benv.render(resolve(__dirname, '../templates/index.jade'), data, () => done())
+        })
+      })
+
+      after(() => {
+        benv.teardown()
+      })
+
+      it('shows just the promo part of the footer', () => {
+        $('.auction2-footer').length.should.eql(1)
+        $('.auction2-footer__auction-app-promo-wrapper').length.should.equal(1)
+        $('.auction2-footer__auction-app-promo-title').text().should.containEql('Bid from your phone')
+        $('.auction2-footer .article-figure-title').length.should.eql(0)
+      })
+    })
+  })
+
   describe('footer', () => {
     let article
     beforeEach(() => {
@@ -283,7 +335,7 @@ describe('auction templates', () => {
       })
 
       it('does not show the footer at all', () => {
-        $('.auction2-footer').text().should.equal('')
+        $('.auction2-footer').length.should.eql(0)
       })
     })
 
