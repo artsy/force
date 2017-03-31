@@ -1,6 +1,6 @@
 # Auction Block
 
-A React component that displays a single auction block. For use on its own (as in the "associated sale" component on the auction page), or in a series (as in the "current_auctions" component).
+A React component that displays a single auction block. For use on its own (as in the "associated sale" component on the auction page), or in a series (as in the "current auctions" component on the artwork page).
 
 ## Usage
 
@@ -13,8 +13,8 @@ class Page extends Component {
   render() {
     return (
       <AuctionBlock
-        cover_image={cover_image}
-        ...
+        relatedAuction={relatedAuction}
+        sale={sale}
       />
     )
   }
@@ -34,8 +34,8 @@ mountAuctionBlock = require 'components/auction_block'
 class AuctionBlockContainer extends Backbone.View
   render: ->
     mountAuctionBlock({
-      cover_image: cover_image
-      ...
+      relatedAuction: true
+      sale: sale
     })
 ```
 
@@ -43,20 +43,11 @@ class AuctionBlockContainer extends Backbone.View
 
 ### API
 
-Most of these fields come directly from the `sale` model. `relatedAuction` indicates whether or not the "Related Auction" should appear in the block.
+The necessary fields to render this object come from a `sale`. `relatedAuction` indicates whether or not the "Related Auction" subtitle should appear in the block.
 
 ```javascript
 AuctionBlock.propTypes = {
-    cover_image: Object,
-    end_at: String,
-    href: String,
-    id: String,
-    is_closed: Boolean,
-    is_live_open: Boolean,
-    is_preview: Boolean,
-    name: String,
-    live_start_at: String,
     relatedAuction: Boolean,
-    start_at: String
+    sale: Object
 }
 ```

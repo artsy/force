@@ -3,6 +3,11 @@ import upcomingLabel from './utils/upcoming_label'
 
 export default function AuctionBlock (props) {
   const {
+    relatedAuction,
+    sale
+  } = props
+
+  const {
     cover_image,
     end_at,
     href,
@@ -10,11 +15,10 @@ export default function AuctionBlock (props) {
     is_closed,
     is_live_open,
     is_preview,
-    name,
     live_start_at,
-    relatedAuction,
+    name,
     start_at
-  } = props
+  } = sale
 
   const image = (cover_image &&
                 cover_image.cropped &&
@@ -45,17 +49,8 @@ export default function AuctionBlock (props) {
 }
 
 AuctionBlock.propTypes = {
-  cover_image: PropTypes.object,
-  end_at: PropTypes.string,
-  href: PropTypes.string,
-  id: PropTypes.string,
-  is_closed: PropTypes.bool,
-  is_live_open: PropTypes.bool,
-  is_preview: PropTypes.bool,
-  name: PropTypes.string,
-  live_start_at: PropTypes.string,
   relatedAuction: PropTypes.bool,
-  start_at: PropTypes.string
+  sale: PropTypes.object
 }
 
 AuctionBlock.defaultProps = {

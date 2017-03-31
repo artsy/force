@@ -49,17 +49,8 @@ const calendar = new AddToCalendar({
 if (auction.get('associated_sale')) {
   const associatedSale = auction.get('associated_sale')
   mountAuctionBlock({
-    cover_image: associatedSale.cover_image,
-    end_at: associatedSale.end_at,
-    href: associatedSale.href,
-    id: associatedSale.id,
-    is_closed: associatedSale.is_closed,
-    is_live_open: associatedSale.is_live_open,
-    is_preview: associatedSale.is_preview,
-    name: associatedSale.name,
-    live_start_at: associatedSale.live_start_at,
     relatedAuction: true,
-    start_at: associatedSale.start_at
+    sale: associatedSale
   }, '#associated-sale')
 }
 

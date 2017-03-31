@@ -19,30 +19,9 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
 
       <div className='artwork-current-auctions__sales'>
         {sortedSales.map((sale) => {
-          const {
-            cover_image,
-            end_at,
-            href,
-            id,
-            is_live_open,
-            is_preview,
-            name,
-            live_start_at,
-            start_at
-          } = sale
-
           return (
             <AuctionBlock
-              key={id}
-              cover_image={cover_image}
-              end_at={end_at}
-              href={href}
-              id={id}
-              is_live_open={is_live_open}
-              is_preview={is_preview}
-              name={name}
-              live_start_at={live_start_at}
-              start_at={start_at}
+              sale={sale}
             />
           )
         })}
