@@ -1,6 +1,7 @@
 import AddToCalendar from '../../components/add_to_calendar/index.coffee'
 import Artist from '../../models/artist.coffee'
 import Auction from '../../models/auction.coffee'
+import mountAuctionBlock from '../../components/auction_block/index.jsx'
 import Backbone from 'backbone'
 import ClockView from '../../components/clock/view.coffee'
 import ConfirmRegistrationModal from '../../components/credit_card/client/confirm_registration.coffee'
@@ -24,7 +25,7 @@ import auctions from './reducers'
 import AuctionPage from './components/auction_page'
 import * as actions from './actions'
 
-const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at'))
+const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at', 'associated_sale'))
 const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 
 // If we are on the confirm-registration path then pop up a modal
@@ -43,6 +44,24 @@ clock.start()
 const calendar = new AddToCalendar({
   el: $('.auction2-callout')
 })
+
+// render the associated auction if there is one
+if (auction.get('associated_sale')) {
+  const associatedSale = auction.get('associated_sale')
+  mountAuctionBlock({
+    cover_image: associatedSale.cover_image,
+    end_at: associatedSale.end_at,
+    href: associatedSale.href,
+    id: associatedSale.id,
+    is_closed: associatedSale.is_closed,
+    is_live_open: associatedSale.is_live_open,
+    is_preview: associatedSale.is_preview,
+    name: associatedSale.name,
+    live_start_at: associatedSale.live_start_at,
+    relatedAuction: true,
+    start_at: associatedSale.start_at
+  }, '#associated-sale')
+}
 
 // Render my active bids if a user is present and
 // the auction is open and not in live integration mode

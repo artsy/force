@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import upcomingLabel from './utils/upcoming_label'
 import { partition, take } from 'underscore'
+import AuctionBlock from '../auction_block/auction_block.jsx'
 
 export default function CurrentAuctions ({ auctionContextId, sales }) {
   const sortedSales = sortSales(sales, auctionContextId)
@@ -31,30 +31,19 @@ export default function CurrentAuctions ({ auctionContextId, sales }) {
             start_at
           } = sale
 
-          const image = (cover_image &&
-                        cover_image.cropped &&
-                        cover_image.cropped.url) ||
-                        '/images/missing_image.png'
-
-          const statusLabel = 'Auction ' + upcomingLabel(start_at, end_at,
-                                                         live_start_at, is_live_open,
-                                                         is_preview)
           return (
-            <div className='artwork-current-auctions__sale-item' key={id}>
-              <a href={href}>
-                <img src={image} alt={name} />
-
-                <div className='artwork-current-auctions__label-container'>
-                  <div className='artwork-current-auctions__name'>
-                    {name}
-                  </div>
-
-                  <div className='artwork-current-auctions__status'>
-                    {statusLabel}
-                  </div>
-                </div>
-              </a>
-            </div>
+            <AuctionBlock
+              key={id}
+              cover_image={cover_image}
+              end_at={end_at}
+              href={href}
+              id={id}
+              is_live_open={is_live_open}
+              is_preview={is_preview}
+              name={name}
+              live_start_at={live_start_at}
+              start_at={start_at}
+            />
           )
         })}
       </div>
