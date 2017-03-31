@@ -43,19 +43,6 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
   req.headers['host'] = parse(SITEMAP_BASE_URL).host
   sitemapProxy.web req, res
 
-@video = (req, res) ->
-  new Articles().fetch
-    data:
-      featured: true
-      published: true
-      sort: '-published_at'
-      has_video: true
-      exclude_google_news: false
-    error: res.backboneError
-    success: (articles) ->
-      res.set 'Content-Type', 'text/xml'
-      res.render('video', { pretty: true, articles: articles, moment: moment })
-
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
   robotsText = """
@@ -77,7 +64,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-news.xml
     Sitemap: #{APP_URL}/sitemap-partners.xml
     Sitemap: #{APP_URL}/sitemap-shows.xml
-    Sitemap: #{APP_URL}/sitemap-video.xml
+    Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """
   res.send switch NODE_ENV

@@ -58,7 +58,7 @@ Sitemap: https://www.artsy.net/sitemap-misc.xml
 Sitemap: https://www.artsy.net/sitemap-news.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
 Sitemap: https://www.artsy.net/sitemap-shows.xml
-Sitemap: https://www.artsy.net/sitemap-video.xml
+Sitemap: https://www.artsy.net/sitemap-videos.xml
 
 """
 
@@ -111,10 +111,3 @@ Sitemap: https://www.artsy.net/sitemap-video.xml
       @res.render.args[0][1].citySlugs.length.should.equal 2
       @res.render.args[0][1].citySlugs[0].should.containEql 'new-york-city'
       @res.render.args[0][1].citySlugs[1].should.containEql 'tokyo'
-
-
-  describe '#video', ->
-    it 'only displays articles that are featured AND has_video', ->
-      routes.video(@req, @res)
-      Backbone.sync.args[0][2].data.featured.should.be.true()
-      Backbone.sync.args[0][2].data.has_video.should.be.true()
