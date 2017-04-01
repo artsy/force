@@ -5,7 +5,7 @@ import ClockView from '../../../components/clock/view.coffee'
 import ConfirmRegistrationModal from '../../../components/credit_card/client/confirm_registration.coffee'
 import CurrentUser from '../../../models/current_user.coffee'
 import mediator from '../../../lib/mediator.coffee'
-import mountAuctionBlock from '../../../components/auction_block/index.jsx's
+import mountAuctionBlock from '../../../components/auction_block/index.jsx'
 import MyActiveBids from '../../../components/my_active_bids/view.coffee'
 import { setupCommercialFilter } from './commercial_filter'
 import { data as sd } from 'sharify'
