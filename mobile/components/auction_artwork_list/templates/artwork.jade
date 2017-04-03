@@ -5,9 +5,9 @@ a.auction-artwork-list-item( href= auction.isAuctionPromo() ? ('/auction-artwork
 
   .auction-artwork-list-details
     section
-      if artwork.related().saleArtwork.get('lot_number')
+      if artwork.related().saleArtwork.get('lot_label')
         .aali-lot-number
-          | Lot #{artwork.related().saleArtwork.get('lot_number')}
+          | Lot #{artwork.related().saleArtwork.get('lot_label')}
 
       if artwork.related().artists.length
         h3.aali-artist-name

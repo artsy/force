@@ -11,7 +11,7 @@ if myActiveBids && myActiveBids.length
           )
             img.auction2-my-active-bids__img( src=bid.sale_artwork.artwork.image.url )
         .auction2-my-active-bids__artwork
-          .auction2-my-active-bids__lot-number Lot #{bid.sale_artwork.lot_number}
+          .auction2-my-active-bids__lot-number Lot #{bid.sale_artwork.lot_label}
           h3= bid.sale_artwork.artwork.artist.name
           .auction2-my-active-bids__title
             em= bid.sale_artwork.artwork.title
