@@ -3,9 +3,9 @@ import AuctionListArtwork from '../components/auction_list_artwork'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { renderToString } from 'react-dom/server'
-import auctions from '../reducers'
-import * as actions from '../actions'
-import { __RewireAPI__ as ActionsRewireApi } from '../actions'
+import auctions from '../client/reducers'
+import * as actions from '../client/actions'
+import { __RewireAPI__ as ActionsRewireApi } from '../client/actions'
 import sinon from 'sinon'
 
 describe('Reducers', () => {

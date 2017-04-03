@@ -1104,6 +1104,10 @@ binary-extensions@^1.0.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.8.0.tgz#48ec8d16df4377eae5fa5884682480af4d95c774"
 
+bindings@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
+
 bl@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/bl/-/bl-1.1.2.tgz#fdca871a99713aa00d19e3bbba41c44787a65398"
@@ -3517,6 +3521,10 @@ headless@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/headless/-/headless-0.1.7.tgz#6e62fae668947f88184d5c156ede7c5695a7e9c8"
 
+heapdump@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/heapdump/-/heapdump-0.3.7.tgz#f50df2b140e5cde7656638f4c384d683b0143298"
+
 helmet-csp@1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/helmet-csp/-/helmet-csp-1.2.2.tgz#085c0307d57fc96cd97337f170ab8bfea99e5df7"
@@ -4568,6 +4576,13 @@ math-js@^0.0.4:
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
+
+memwatch-ng@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/memwatch-ng/-/memwatch-ng-1.2.0.tgz#b5a457a7c46b1db813b45a11ccfe09e8bd7fccfa"
+  dependencies:
+    bindings "^1.2.1"
+    nan "^2.3.2"
 
 meow@^3.1.0:
   version "3.7.0"
@@ -7176,7 +7191,7 @@ uuid@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.0.0:
+uuid@^3.0.0, uuid@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 

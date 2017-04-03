@@ -26,7 +26,7 @@ export default function AuctionGridArtwork({ saleArtwork }) {
         <div className='auction2-list-artwork__title' dangerouslySetInnerHTML={{ __html: titleAndYear(artwork.title, artwork.date) }}></div>
       </div>
       <div className='auction2-list-artwork__lot-number'>
-        Lot {saleArtwork.lot_number}
+        Lot {saleArtwork.lot_label}
       </div>
       { bidStatus }
     </a>

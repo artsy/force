@@ -1,6 +1,6 @@
 import AuctionArtworks from '../auction_artworks'
 import Header from '../header'
-import React from 'react';
+import React from 'react'
 import Sidebar from '../sidebar'
 
 export default function CommercialFilter() {

@@ -13,7 +13,7 @@ block body
         .auction-support-artwork
           img.auction-support-artwork-img( src=artwork.defaultImageUrl() )
           .auction-support-details
-            .auction-support-lot-num Lot #{saleArtwork.get('lot_number')}
+            .auction-support-lot-num Lot #{saleArtwork.get('lot_label')}
             p!= artwork.titleAndYear()
             if artwork.get('artist')
               p= artwork.artistName()

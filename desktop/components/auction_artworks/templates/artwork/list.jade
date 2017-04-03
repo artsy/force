@@ -17,9 +17,9 @@
       h3.ala-title
         != artwork.titleAndYear()
 
-  if saleArtwork.has('lot_number')
+  if saleArtwork.has('lot_label')
     .ala-lot-number: a( href= href )
-      | Lot #{saleArtwork.get('lot_number')}
+      | Lot #{saleArtwork.get('lot_label')}
 
   if auction.isOpen() && !auction.isAuctionPromo()
     .ala-bid-status: a( href= href )

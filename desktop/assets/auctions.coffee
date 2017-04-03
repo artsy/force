@@ -31,7 +31,7 @@ routes =
 
   '''
   /auction2/.*
-  ''': -> require('../apps/auction2/client.js').default
+  ''': -> require('../apps/auction2/client/index.js').default
 
 for paths, init of routes
   for path in paths.split('\n')

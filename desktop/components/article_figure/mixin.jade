@@ -2,7 +2,12 @@
 include ../share/mixin
 
 mixin article-figure(article, width, showDate, showShare)
-  - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.5), quality: 95 })
+  //- If the article data comes from metaphysics, it is already cropped
+  //- so we can just reference the url property
+  if article.get('thumbnail_image') && article.get('thumbnail_image').url
+    - var imgUrl = article.get('thumbnail_image').url
+  else
+    - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.5), quality: 95 })
   figure.article-figure: .article-figure-container
     a.article-figure-img-container( href= article.href() )
       .article-figure-img( style="background-image: url(#{imgUrl})" )
@@ -16,11 +21,11 @@ mixin article-figure(article, width, showDate, showShare)
         = article.get('thumbnail_title')
 
       .article-figure-author-section
-        if article.get('contributing_authors').length === 0 || article.get('channel_id') !== sd.ARTSY_EDITORIAL_CHANNEL || sd.CURRENT_PATH !== '/articles'
-          .article-figure-author(class = article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
+        if article.get('contributing_authors') && article.get('contributing_authors').length === 0 || article.get('channel_id') !== sd.ARTSY_EDITORIAL_CHANNEL || sd.CURRENT_PATH !== '/articles'
+          .article-figure-author(class = article.get('contributing_authors') && article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
             = article.get('author') ? article.get('author').name : ''
 
-        if article.get('contributing_authors').length > 0
+        if article.get('contributing_authors') && article.get('contributing_authors').length > 0
           .article-figure-contributing-name= "By " + article.byline()
 
       if showShare

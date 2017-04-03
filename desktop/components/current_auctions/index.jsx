@@ -1,4 +1,5 @@
 import CurrentAuctions from './current_auctions.jsx'
+import invariant from 'invariant'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { isEmpty, isString } from 'underscore'
@@ -14,6 +15,10 @@ export default function mount (data, selector = '#react-mount-current-auctions')
   } = data
 
   const shouldMount = !isEmpty(sales) && isString(selector)
+
+  invariant(shouldMount,
+    `Error mounting <CurrentAuctions />: sales (${sales.map((s) => s.id)}) or selector (${selector}) is invalid.`
+  )
 
   if (shouldMount) {
     const mountPoint = document.querySelector(selector)

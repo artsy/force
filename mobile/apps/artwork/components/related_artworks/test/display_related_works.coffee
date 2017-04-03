@@ -31,8 +31,8 @@ describe 'Render Related Artworks', ->
 
     it 'render related auction artworks', ->
       artwork1 = fabricate 'artwork', {
-        sale_artwork: lot_number: '24'
-        sale: { sale_artwork: lot_number: '24' }
+        sale_artwork: lot_label: '24'
+        sale: { sale_artwork: lot_label: '24' }
       }
       artwork2 = fabricate 'artwork'
       artwork3 = fabricate 'artwork', title: 'Funkadelic'
