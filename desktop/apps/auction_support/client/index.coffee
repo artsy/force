@@ -8,7 +8,7 @@ BidderPosition = require '../../../models/bidder_position.coffee'
 BidderPositions = require '../../../collections/bidder_positions.coffee'
 RegistrationForm = require './registration_form.coffee'
 BidForm = require './bid_form.coffee'
-setupClocks = require '../../auction/client/clocks.coffee'
+setupClocks = require './clocks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
 

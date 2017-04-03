@@ -263,7 +263,6 @@ module.exports = (app) ->
   app.use require "../apps/fair"
   app.use require "../apps/fair_info"
   app.use require "../apps/fair_organizer"
-  app.use require "../apps/auction"
   app.use require "../apps/auction2"
   app.use require "../apps/auction_support"
   app.use require "../apps/feature"
