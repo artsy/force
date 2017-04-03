@@ -43,6 +43,9 @@ const isResponsive = (url) => {
 
 const determineDevice = (req, res, next) => {
   const ua = req.get('user-agent')
+  if (!ua) {
+    return next()
+  }
   const isPhone = Boolean(
     (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
     (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
