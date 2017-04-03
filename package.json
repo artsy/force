@@ -118,6 +118,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
     "updeep": "^1.0.0",
+    "uuid": "^3.0.1",
     "validator": "^6.1.0",
     "xss-filters": "^1.2.6"
   },
