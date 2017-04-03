@@ -11,7 +11,7 @@ import { setupCommercialFilter } from './commercial_filter'
 import { data as sd } from 'sharify'
 import _ from 'underscore'
 
-const auction = new Auction(_.pick(sd.AUCTION, 'start_at', 'live_start_at', 'end_at', 'associated_sale'))
+const auction = new Auction(sd.AUCTION)
 const user = sd.CURRENT_USER ? new CurrentUser(sd.CURRENT_USER) : null
 
 // If we are on the confirm-registration path then pop up a modal
