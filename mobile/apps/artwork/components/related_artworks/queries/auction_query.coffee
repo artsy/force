@@ -8,7 +8,7 @@ module.exports = """
       is_open
       artworks(all: true, size: 50, exclude: [$id]) {
         sale_artwork {
-          lot_number
+          lot_label
         }
         #{require('./index.coffee')}
       }

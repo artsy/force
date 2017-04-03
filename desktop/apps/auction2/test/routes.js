@@ -2,10 +2,63 @@ import { fabricate } from 'antigravity'
 import Backbone from 'backbone'
 import Auction from '../../../models/auction.coffee'
 import CurrentUser from '../../../models/current_user.coffee'
+import footerItems from '../footer_items'
 import * as routes from '../routes'
 import { __RewireAPI__ as RoutesRewireApi } from '../routes'
 import sinon from 'sinon'
 
+describe('#index', () => {
+  let req
+  let res
+  let next
+
+  beforeEach(() => {
+    sinon.stub(Backbone, 'sync')
+    req = {
+      body: {},
+      params: { id: 'foobar' },
+      user: new CurrentUser(fabricate('user'))
+    }
+    res = {
+      redirect: sinon.stub(),
+      render: sinon.stub(),
+      locals: { sd: {} }
+    }
+    next = sinon.stub()
+  })
+
+  afterEach(() => {
+    Backbone.sync.restore()
+  })
+
+  it('renders the index with the correct variables', () => {
+    const auctionQueries = {
+      sale: {
+        id: 'foo',
+        is_auction: true,
+        auction_state: 'open',
+        is_live_open: true
+      },
+      me: {
+        bidders: [{
+          id: 'me',
+          qualified_for_bidding: true,
+          sale: {
+            id: 'foo'
+          }
+        }]
+      }
+    }
+
+    RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
+    routes.index(req, res, next).then(() => {
+      res.render.args[0][1].articles.length.should.eql(0)
+      res.render.args[0][1].auction.get('id').should.eql('foo')
+      res.render.args[0][1].footerItems.should.eql(footerItems)
+      res.render.args[0][1].me.should.eql(auctionQueries.me)
+    })
+  })
+})
 
 describe('#redirectLive', () => {
   let req

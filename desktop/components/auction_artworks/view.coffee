@@ -26,7 +26,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
   sorts: (artwork) ->
     { saleArtwork, artist } = artwork.related()
 
-    default: saleArtwork.get('lot_number') or saleArtwork.get('position') or saleArtwork.id
+    default: saleArtwork.get('position') or saleArtwork.id
     name_asc: artist.get('sortable_id')
     bids_desc: -(saleArtwork.get('bidder_positions_count'))
     bids_asc: saleArtwork.get('bidder_positions_count')

@@ -1,4 +1,4 @@
-import { toggleListView, updateSort } from '../../actions'
+import { toggleListView, updateSort } from '../../client/actions'
 import classNames from 'classnames'
 import Grid from '../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../components/main_layout/public/icons/list.svg'

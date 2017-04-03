@@ -24,7 +24,7 @@ module.exports = """
     is_downloadable
     is_inquireable
     sale_artwork {
-      lot_number
+      lot_label
     }
   }
 """

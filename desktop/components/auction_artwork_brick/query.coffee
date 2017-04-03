@@ -7,7 +7,7 @@ module.exports = """
     sale_message
 
     sale_artwork {
-      lot_number
+      lot_label
       symbol
       estimate
 

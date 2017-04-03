@@ -8,7 +8,7 @@ module.exports = """
         is_leading_bidder
         sale_artwork {
           id
-          lot_number
+          lot_label
           reserve_status
           counts {
             bidder_positions

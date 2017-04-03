@@ -5,7 +5,7 @@ module.exports = [
     "is_leading_bidder": false,
     "sale_artwork": {
       "id": "imhuge-brillo-condensed-soap",
-      "lot_number": "2",
+      "lot_label": "2",
       "reserve_status": "no_reserve",
       "counts": {
         "bidder_positions": 1
@@ -36,7 +36,7 @@ module.exports = [
     "is_leading_bidder": false,
     "sale_artwork": {
       "id": "mr-brainwash-tomato-spray-25",
-      "lot_number": "1",
+      "lot_label": "1",
       "reserve_status": "no_reserve",
       "counts": {
         "bidder_positions": 1

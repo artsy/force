@@ -16,7 +16,7 @@ export const worksByFollowedArtists = `
       }
       hits {
         id
-        lot_number
+        lot_label
         counts {
           bidder_positions
         }

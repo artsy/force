@@ -26,7 +26,7 @@ export default function AuctionGridArtwork({ saleArtwork }) {
       <div className='auction2-grid-artwork__metadata'>
         <div className='auction2-grid-artwork__lot-information'>
           <div className='auction2-grid-artwork__lot-number'>
-            Lot {saleArtwork.lot_number}
+            Lot {saleArtwork.lot_label}
           </div>
           <div>{ bidStatus }</div>
         </div>
