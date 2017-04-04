@@ -11,7 +11,7 @@ routes =
   '''
   /sale/.*
   ^/auction/[^/]+/?$
-  ''': -> require('../apps/auction2/client/index.js').default
+  ''': require('../apps/auction2/client/index.js').default
 
   '''
   /artist/.*/auction-results
