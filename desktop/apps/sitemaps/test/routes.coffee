@@ -59,6 +59,7 @@ Sitemap: https://www.artsy.net/sitemap-misc.xml
 Sitemap: https://www.artsy.net/sitemap-news.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
 Sitemap: https://www.artsy.net/sitemap-shows.xml
+Sitemap: https://www.artsy.net/sitemap-tags.xml
 Sitemap: https://www.artsy.net/sitemap-videos.xml
 
 """

@@ -65,6 +65,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-news.xml
     Sitemap: #{APP_URL}/sitemap-partners.xml
     Sitemap: #{APP_URL}/sitemap-shows.xml
+    Sitemap: #{APP_URL}/sitemap-tags.xml
     Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """
