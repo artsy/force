@@ -14,7 +14,7 @@ Each component consists of a few files:
 
 Component template. If there is data being accessed here that data should be defined in `query.coffee`, even if you know for a fact that data is being queried by some other component. This is not enforced. Please behave.
 
-For sanity, break complex pieces of DOM structure up into sub-templates nested in a `templates` directory. The sub-templates should contain their own conditions for rendering, where resonable.
+For sanity, break complex pieces of DOM structure up into sub-templates nested in a `templates` directory. The sub-templates should contain their own conditions for rendering, where reasonable.
 
 ```jade
 include ./foo
