@@ -17,6 +17,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
+    @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
@@ -91,6 +92,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               reject "Registration submission error: #{xhr.responseJSON?.message}"
     .then (bidder) =>
       analyticsHooks.trigger 'registration:success', bidder_id: bidder.id
+      @undelegateEvents() if @comboForm
+      @$('.auction-registration-form input, .auction-registration-form select').attr('disabled', true)
       @success()
 
   savePhoneNumber: ->
