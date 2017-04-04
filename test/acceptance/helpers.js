@@ -48,7 +48,6 @@ export const setup = async () => {
       .goto(`${APP_URL}${path}`)
       .evaluate(() => document.documentElement.innerHTML)
       .then(cheerio.load)
-      .catch((err) => console.error(err) && Promise.reject(err))
   return { force, gravity, metaphysics, positron, browser }
 }
 
@@ -60,6 +59,12 @@ export const teardown = () => {
     console.warn(e)
   }
 }
+
+// Convenience Promise wrapped timeout use via `await sleep(1000)`
+export const sleep = (ms) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 
 const startForce = (port) =>
   new Promise((resolve, reject) => {
@@ -93,3 +98,6 @@ const startApp = (port) =>
       else resolve(app)
     }))
   })
+
+// Make sure if we teardown if tests are quit
+// process.on('exit', () => teardown())
