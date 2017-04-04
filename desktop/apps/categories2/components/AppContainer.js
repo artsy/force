@@ -5,6 +5,7 @@ import React from 'react'
 import Intro from './Intro'
 import Sidebar from './Sidebar'
 import Content from './Content'
+import GeneFamilies from './GeneFamilies'
 
 class AppContainer extends React.Component {
   constructor(props){
@@ -35,6 +36,7 @@ class AppContainer extends React.Component {
         <Sidebar data={this.state.data} css={this.sidebarStyles()}/>
         <Content css={this.contentStyles()}>
           <Intro />
+          <GeneFamilies data={this.state.data} />
         </Content>
       </div>
     )
