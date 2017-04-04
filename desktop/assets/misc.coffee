@@ -16,7 +16,7 @@ routes =
 
   '/personalize': require('../apps/personalize/client/index.coffee').init
 
-  '/professional-buyer': -> require('../apps/pro_buyer/client/index.coffee')
+  '/professional-buyer': require('../apps/pro_buyer/client/index.coffee')
 
   '/style-guide': require('../apps/style_guide/client/index.coffee').init
 
