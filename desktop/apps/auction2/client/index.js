@@ -33,11 +33,11 @@ export default () => {
   })
 
   // render the associated auction if there is one
-  if (auction.get('associated_sale')) {
-    const associatedSale = auction.get('associated_sale')
+  const sale = auction.get('associated_sale')
+  if (sale) {
     mountAuctionBlock({
       relatedAuction: true,
-      sale: associatedSale
+      sale
     }, '#associated-sale')
   }
 
