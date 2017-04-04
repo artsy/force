@@ -8,7 +8,7 @@ routes =
 
   '''
   /sale/.*
-  /auction/.*
+  ^/auction/[^/]+/?$
   ''': require('../apps/auction/client/index.coffee').init
 
   '''
