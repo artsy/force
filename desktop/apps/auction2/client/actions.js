@@ -1,6 +1,6 @@
-import metaphysics from '../../../lib/metaphysics.coffee'
-import { filterQuery } from './queries/filter'
-import { worksByFollowedArtists } from './queries/works_by_followed_artists'
+import metaphysics from '../../../../lib/metaphysics.coffee'
+import { filterQuery } from '../queries/filter'
+import { worksByFollowedArtists } from '../queries/works_by_followed_artists'
 
 // Action types
 export const DECREMENT_FOLLOWED_ARTISTS_PAGE = 'DECREMENT_FOLLOWED_ARTISTS_PAGE'

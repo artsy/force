@@ -1,7 +1,7 @@
 require('babel-core/register')
 require('coffee-script/register')
-import * as actions from '../actions'
-import auctions from '../reducers'
+import * as actions from '../client/actions'
+import auctions from '../client/reducers'
 import ArtistFilter from '../components/artist_filter'
 import AuctionGridArtwork from '../components/auction_grid_artwork'
 import AuctionListArtwork from '../components/auction_list_artwork'
@@ -25,7 +25,7 @@ describe('React components', () => {
 
     beforeEach(() => {
       saleArtwork = {
-        lot_number: 2,
+        lot_label: '2',
         current_bid: {
           display: '$100'
         },

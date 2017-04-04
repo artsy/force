@@ -1,5 +1,5 @@
 import { formatMoney } from 'accounting'
-import { updateEstimateRange, updateEstimateDisplay } from '../../actions'
+import { updateEstimateRange, updateEstimateDisplay } from '../../client/actions'
 import Slider, { Range } from 'rc-slider'
 import React from 'react'
 import { connect } from 'react-redux'

@@ -29,7 +29,7 @@ const memoryProfiler = require('./lib/memory_profiler')
 // Enable memory profiling
 memoryProfiler()
 
-const app = express()
+const app = module.exports = express()
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, NODE_ENV } = process.env
 
 // Combine user models from desktop and mobile
@@ -43,6 +43,9 @@ const isResponsive = (url) => {
 
 const determineDevice = (req, res, next) => {
   const ua = req.get('user-agent')
+  if (!ua) {
+    return next()
+  }
   const isPhone = Boolean(
     (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
     (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
@@ -100,8 +103,8 @@ cache.setup(() => {
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
-    app.listen(PORT, () => {
-      console.log(`Force listening on port ${PORT}`)
-    })
+    if (module === require.main) {
+      app.listen(PORT, () => console.log(`Force listening on port ${PORT}`))
+    }
   })
 })

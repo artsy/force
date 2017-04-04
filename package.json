@@ -8,9 +8,11 @@
   },
   "scripts": {
     "mocha": "mocha -r should --compilers coffee:coffee-script/register,js:babel-core/register -t 30000",
-    "test": "yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
+    "acceptance": "mocha -r dotenv/config -r babel-core/register -r should -t 300000 test/acceptance dotenv_config_path=.env.test",
+    "test": "yarn acceptance && yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
-    "deploy-assets": "mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
+    "assets": "mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/",
+    "deploy-assets": "yarn assets && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
     "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
   },
   "dependencies": {
@@ -87,6 +89,7 @@
     "moment-twitter": "^0.2.0",
     "morgan": "^1.6.1",
     "nib": "^1.1.2",
+    "nightmare": "^2.10.0",
     "node-uuid": "^1.4.3",
     "nouislider": "^9.0.0",
     "particle": "git://github.com/artsy/particle.git",
@@ -118,6 +121,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
     "updeep": "^1.0.0",
+    "uuid": "^3.0.1",
     "validator": "^6.1.0",
     "xss-filters": "^1.2.6"
   },
@@ -179,22 +183,7 @@
     "zombie": "^5.0.4"
   },
   "license": "MIT",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-3"
-    ],
-    "plugins": [
-      "inline-react-svg",
-      "transform-runtime",
-      "transform-class-properties",
-      "babel-plugin-rewire"
-    ]
-  },
   "optionalDependencies": {
     "fsevents": "*"
-  },
-  "description": "",
-  "main": "index.js"
+  }
 }

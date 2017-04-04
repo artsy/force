@@ -8,7 +8,7 @@ fixture = -> [
     "id": "56ba482e8b3b8167d7000000",
     "sale_artwork": {
       "id": "ed-ruscha-cockroaches-from-insects-portfolio",
-      "lot_number": "10",
+      "lot_label": "10",
       "counts": {
         "bidder_positions": 5,
       },

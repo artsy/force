@@ -9,9 +9,9 @@
   include ../artwork_brick/templates/auction_image
 
   .artwork-metadata-stub
-    if sale_artwork.lot_number
+    if sale_artwork.lot_label
       .artwork-metadata-stub__lot-number
-        | Lot #{sale_artwork.lot_number}
+        | Lot #{sale_artwork.lot_label}
 
     include ../artwork_metadata_stub/templates/didactics
     include ./templates/bid_status

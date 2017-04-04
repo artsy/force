@@ -2,7 +2,6 @@ import * as actions from './actions'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'
-import mediumMap from '../../components/commercial_filter/filters/medium/medium_map.coffee'
 import u from 'updeep'
 
 const initialState = {

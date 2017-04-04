@@ -48,7 +48,6 @@ setupUser = (user, auction) ->
 
   artworks.comparator = (artwork) ->
     saleArtwork = artwork.related().saleArtwork
-    saleArtwork.get('lot_number') or
     saleArtwork.get('position') or
     saleArtwork.id
 

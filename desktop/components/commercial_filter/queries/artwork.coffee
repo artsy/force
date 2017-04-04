@@ -48,7 +48,7 @@ module.exports = """
       is_live_open
     }
     sale_artwork {
-      lot_number
+      lot_label
       counts {
         bidder_positions
       }
