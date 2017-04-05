@@ -10,31 +10,14 @@ import GeneFamilies from './GeneFamilies'
 class AppContainer extends React.Component {
   constructor(props){
     super(props)
-    this.contentStyles = this.contentStyles.bind(this)
     this.state = {data}
-  }
-
-  contentStyles(){
-    return {
-      backgroundColor: 'pink',
-      padding: '1em',
-      margin: '0.25em'
-    }
-  }
-
-  sidebarStyles(){
-    return {
-      backgroundColor: 'orange',
-      padding: '1em',
-      margin: '0.25em'
-    }
   }
 
   render(){
     return (
-      <div>
-        <Sidebar data={this.state.data} css={this.sidebarStyles()}/>
-        <Content css={this.contentStyles()}>
+      <div className='categories2-app-container'>
+        <Sidebar data={this.state.data}/>
+        <Content>
           <Intro />
           <GeneFamilies data={this.state.data} />
         </Content>

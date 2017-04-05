@@ -3,7 +3,7 @@ import React from 'react'
 export default class Content extends React.Component {
   render(){
     return (
-      <div style={this.props.css}>
+      <div className="categories2-content">
         {this.props.children}
       </div>
     )

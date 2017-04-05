@@ -2,7 +2,7 @@ import React from 'react'
 
 const Intro = (props) => {
   return (
-    <div>
+    <div className='categories2-intro'>
       <h2>The Art Genome Project</h2>
       <p>The Art Genome Project is the classification system and technological framework that powers Artsy.</p>
       <p>It maps the characteristics (we call them “genes”) that connect artists, artworks, architecture, and design objects across history.</p>
