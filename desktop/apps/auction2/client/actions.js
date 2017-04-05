@@ -1,3 +1,4 @@
+import analyticsHooks from '../../../lib/analytics_hooks.coffee'
 import metaphysics from '../../../../lib/metaphysics.coffee'
 import { filterQuery } from '../queries/filter'
 import { worksByFollowedArtists } from '../queries/works_by_followed_artists'
@@ -70,6 +71,13 @@ export function fetchArtworks() {
           user
         }
       })
+
+      if (filter_sale_artworks.hits && filter_sale_artworks.hits.length) {
+        analyticsHooks.trigger(
+          'auction:artworks:loaded',
+          { data: filter_sale_artworks.hits.map((sale_artwork) => sale_artwork.artwork._id) }
+        )
+      }
 
       const aggregations = filter_sale_artworks.aggregations
       const artistAggregation = aggregations.filter((agg) => agg.slice == 'ARTIST')
