@@ -5,7 +5,7 @@ module.exports = """
       href
       type
       artworks(all: true, size: 50, exclude: [$id]) {
-        #{require('./index.coffee')}
+        #{require('./index')}
       }
     }
   }

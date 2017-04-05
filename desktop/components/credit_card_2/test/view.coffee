@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
-CreditCardView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
+CreditCardView = benv.requireWithJadeify require.resolve('../view'), ['template']
 stripe = CreditCardView.__get__ 'stripe'
 CreditCardView.__set__ 'jQueryPayment', sinon.stub()
 

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-MobileDropdownMenu = require './mobile_dropdown_menu.coffee'
+MobileDropdownMenu = require './mobile_dropdown_menu'
 
 module.exports = class MobileHeaderView extends Backbone.View
   events:

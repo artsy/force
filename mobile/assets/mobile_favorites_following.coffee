@@ -3,4 +3,4 @@
 #
 
 require 'jquery'
-$ require('../apps/favorites_following/client/index.coffee')
+$ require('../apps/favorites_following/client/index')

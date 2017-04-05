@@ -1,5 +1,5 @@
-modalize = require '../../../../components/modalize/index.coffee'
-MapModalView = require './view.coffee'
+modalize = require '../../../../components/modalize/index'
+MapModalView = require './view'
 
 module.exports = (options = {}) ->
   view = new MapModalView options

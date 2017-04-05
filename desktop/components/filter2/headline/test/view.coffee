@@ -4,9 +4,9 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate, fabricate2 } = require 'antigravity'
-Fair = require '../../../../models/fair.coffee'
-Gene = require '../../../../models/gene.coffee'
-FilterArtworks = require '../../../../collections/filter_artworks.coffee'
+Fair = require '../../../../models/fair'
+Gene = require '../../../../models/gene'
+FilterArtworks = require '../../../../collections/filter_artworks'
 
 describe 'Filter / Headline', ->
 

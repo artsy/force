@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-Partner = require '../../models/partner.coffee'
+ContactView = require './view'
+analyticsHooks = require '../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
+Partner = require '../../models/partner'
 Cookies = require 'cookies-js'
-Form = require '../mixins/form.coffee'
-defaultMessage = require './default_message.coffee'
+Form = require '../mixins/form'
+defaultMessage = require './default_message'
 
 { SESSION_ID, API_URL } = require('sharify').data
 

@@ -1,8 +1,8 @@
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-mediator = require '../../../lib/mediator.coffee'
-JumpView = require '../view.coffee'
+mediator = require '../../../lib/mediator'
+JumpView = require '../view'
 { resolve } = require 'path'
 
 describe 'JumpView', ->

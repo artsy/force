@@ -3,4 +3,4 @@
 #
 
 require 'jquery'
-$ require('../apps/notifications/client/index.coffee')
+$ require('../apps/notifications/client/index')

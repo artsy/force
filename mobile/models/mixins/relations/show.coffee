@@ -5,11 +5,11 @@ module.exports   =
   related: ->
     return @__related__ if @__related__?
 
-    Articles = require '../../../collections/articles.coffee'
-    Artists = require '../../../collections/artists.coffee'
-    ShowEvents = require '../../../collections/show_events.coffee'
-    InstallShots = require '../../../collections/install_shots.coffee'
-    Fair = require '../../fair.coffee'
+    Articles = require '../../../collections/articles'
+    Artists = require '../../../collections/artists'
+    ShowEvents = require '../../../collections/show_events'
+    InstallShots = require '../../../collections/install_shots'
+    Fair = require '../../fair'
 
     articles = new Articles
     articles.url = "#{POSITRON_URL}/api/articles?show_id=#{@get '_id'}&published=true"

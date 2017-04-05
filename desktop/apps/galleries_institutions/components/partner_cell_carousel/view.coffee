@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Profile = require '../../../../models/profile.coffee'
-PartnerCellView = require '../partner_cell/view.coffee'
-FollowButtonView = require '../../../../components/follow_button/view.coffee'
-ViewHelpers = require '../partner_cell/view_helpers.coffee'
+Profile = require '../../../../models/profile'
+PartnerCellView = require '../partner_cell/view'
+FollowButtonView = require '../../../../components/follow_button/view'
+ViewHelpers = require '../partner_cell/view_helpers'
 template = -> require('./template.jade') arguments...
-initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr'
 
 module.exports = class PartnerCellCarouselView extends Backbone.View
   className: 'partner-category-carousel'

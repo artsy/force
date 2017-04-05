@@ -4,12 +4,12 @@ Q = require 'bluebird-q'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
-Section = require './section.coffee'
-Partner = require './partner.coffee'
-Fair = require './fair.coffee'
-{ crop, resize } = require '../components/resizer/index.coffee'
-{ compactObject } = require './mixins/compact_object.coffee'
+Artworks = require '../collections/artworks'
+Section = require './section'
+Partner = require './partner'
+Fair = require './fair'
+{ crop, resize } = require '../components/resizer/index'
+{ compactObject } = require './mixins/compact_object'
 
 module.exports = class Article extends Backbone.Model
 
@@ -49,7 +49,7 @@ module.exports = class Article extends Backbone.Model
     @get('fair_ids')?.length > 0 and @get('channel_id') is sd.FAIR_CHANNEL_ID
 
   fetchRelated: (options) ->
-    Articles = require '../collections/articles.coffee'
+    Articles = require '../collections/articles'
     dfds = []
     channel_id = @get('channel_id') or @get('partner_channel_id') or sd.ARTSY_EDITORIAL_ID
     dfds.push (footerArticles = new Articles).fetch

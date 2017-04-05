@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
 _ = require 'underscore'
-FeaturedLink = require '../models/featured_link.coffee'
+FeaturedLink = require '../models/featured_link'
 { Fetch } = require 'artsy-backbone-mixins'
 
 module.exports = class FeaturedLinks extends Backbone.Collection

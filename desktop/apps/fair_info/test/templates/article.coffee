@@ -5,7 +5,7 @@ sinon = require 'sinon'
 Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 Article = require '../../../../models/article'
-InfoMenu = require '../../../../components/info_menu/index.coffee'
+InfoMenu = require '../../../../components/info_menu/index'
 template = require('jade').compileFile(require.resolve '../../templates/article.jade')
 testStubs =
   asset: (->)

@@ -3,11 +3,11 @@
 { API_URL } = require('sharify').data
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
-Artist = require '../../../../models/artist.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
-Match = require '../../../../collections/match.coffee'
-{ Following } = require '../../../../components/follow_button/index.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks'
+Artist = require '../../../../models/artist'
+CurrentUser = require '../../../../models/current_user'
+Match = require '../../../../collections/match'
+{ Following } = require '../../../../components/follow_button/index'
 itemTemplate = -> require('./templates/result.jade') arguments...
 resultsTemplate = -> require('./templates/results.jade') arguments...
 

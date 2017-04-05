@@ -10,7 +10,7 @@ module.exports = """
         sale_artwork {
           lot_label
         }
-        #{require('./index.coffee')}
+        #{require('./index')}
       }
     }
   }

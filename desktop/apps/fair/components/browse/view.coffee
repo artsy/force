@@ -1,12 +1,12 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-BoothsView = require '../booths/view.coffee'
-{ setupFilter } = require '../../../../components/filter2/index.coffee'
-deslugify = require '../../../../components/deslugify/index.coffee'
+BoothsView = require '../booths/view'
+{ setupFilter } = require '../../../../components/filter2/index'
+deslugify = require '../../../../components/deslugify/index'
 humanize = require('underscore.string').humanize
 { API_URL, SECTION } = require('sharify').data
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 module.exports = class FairBrowseView extends Backbone.View
 

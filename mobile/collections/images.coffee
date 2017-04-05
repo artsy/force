@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Image = require '../models/image.coffee'
+Image = require '../models/image'
 
 module.exports = class Images extends Backbone.Collection
 

@@ -1,6 +1,6 @@
 { extend, invoke } = require 'underscore'
-GenericFormView = require '../generic_form/view.coffee'
-LocationSearchView = require '../../../../components/location_search/index.coffee'
+GenericFormView = require '../generic_form/view'
+LocationSearchView = require '../../../../components/location_search/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class AboutYouView extends GenericFormView

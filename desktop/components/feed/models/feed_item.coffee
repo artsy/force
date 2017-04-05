@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artwork = require '../../../models/artwork.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-PartnerShow = require '../../../models/partner_show.coffee'
-underscore = require('../../util/string.coffee').underscore
+Artwork = require '../../../models/artwork'
+Artworks = require '../../../collections/artworks'
+PartnerShow = require '../../../models/partner_show'
+underscore = require('../../util/string').underscore
 DOMPurify = require 'dompurify'
 
 module.exports = class FeedItem extends Backbone.Model

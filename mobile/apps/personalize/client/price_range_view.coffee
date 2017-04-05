@@ -1,4 +1,4 @@
-StepView = require './step_view.coffee'
+StepView = require './step_view'
 template = -> require('../templates/price_range.jade') arguments...
 
 class PriceRangeView extends StepView

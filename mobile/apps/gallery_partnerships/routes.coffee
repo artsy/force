@@ -1,6 +1,6 @@
 _       = require 'underscore'
 request = require 'superagent'
-{ APPLICATION_NAME } = require '../../config.coffee'
+{ APPLICATION_NAME } = require '../../config'
 
 CONTENT_PATH = '/gallery-partnerships/content.json'
 

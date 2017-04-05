@@ -1,10 +1,10 @@
 _ = require 'underscore'
-views = require '../../../components/inquiry_questionnaire/map/views.coffee'
+views = require '../../../components/inquiry_questionnaire/map/views'
 views = _.extend {}, views,
-  confirmation: require './views/confirmation.coffee'
-  done: require './views/done.coffee'
+  confirmation: require './views/confirmation'
+  done: require './views/done'
 
 module.exports =
-  decisions: require '../../../components/inquiry_questionnaire/map/decisions.coffee'
-  steps: require '../../../components/inquiry_questionnaire/map/steps.coffee'
+  decisions: require '../../../components/inquiry_questionnaire/map/decisions'
+  steps: require '../../../components/inquiry_questionnaire/map/steps'
   views: views

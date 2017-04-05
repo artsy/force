@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Introduction = require '../../../../components/introduction/index.coffee'
+Introduction = require '../../../../components/introduction/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class GalleryIntroView extends Backbone.View

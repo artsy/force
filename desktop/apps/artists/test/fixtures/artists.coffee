@@ -1,5 +1,5 @@
 _ = require 'underscore'
-artistFixture = require '../../../../components/artist_cell/fixture.coffee'
+artistFixture = require '../../../../components/artist_cell/fixture'
 artistArray = [artistFixture, artistFixture, artistFixture, artistFixture]
 
 module.exports = {

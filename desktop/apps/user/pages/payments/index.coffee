@@ -1,6 +1,6 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-PaymentMethodsView = require '../../components/payment_methods/view.coffee'
+PaymentMethodsView = require '../../components/payment_methods/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class PaymentsView extends Backbone.View

@@ -1,12 +1,12 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Partner = require '../../../models/partner.coffee'
-Artist = require '../../../models/artist.coffee'
-PartnerArtists = require '../../../collections/partner_artists.coffee'
-ArtistView = require './artists_artist.coffee'
-ArtistsListView = require './artists_list.coffee'
+CurrentUser = require '../../../models/current_user'
+Partner = require '../../../models/partner'
+Artist = require '../../../models/artist'
+PartnerArtists = require '../../../collections/partner_artists'
+ArtistView = require './artists_artist'
+ArtistsListView = require './artists_list'
 template = -> require('../templates/artists.jade') arguments...
 
 module.exports = class PartnerArtistsView extends Backbone.View

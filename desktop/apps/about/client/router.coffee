@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-AboutView = require './view.coffee'
-JumpView = require '../../../components/jump/view.coffee'
+AboutView = require './view'
+JumpView = require '../../../components/jump/view'
 
 module.exports = class AboutRouter extends Backbone.Router
   routes:

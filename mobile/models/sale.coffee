@@ -3,8 +3,8 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
 { Fetch, Markdown, Image } = require 'artsy-backbone-mixins'
-Relations = require './mixins/relations/sale.coffee'
-Eventable = require './mixins/eventable.coffee'
+Relations = require './mixins/relations/sale'
+Eventable = require './mixins/eventable'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Relations

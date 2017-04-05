@@ -6,10 +6,10 @@ sd = require('sharify').data
 Items = require '../../collections/items'
 Articles = require '../../collections/articles'
 { client } = require '../../lib/cache'
-metaphysics = require '../../../lib/metaphysics.coffee'
-viewHelpers = require './view_helpers.coffee'
+metaphysics = require '../../../lib/metaphysics'
+viewHelpers = require './view_helpers'
 welcomeHero = require './welcome'
-browseCategories = require './browse_categories.coffee'
+browseCategories = require './browse_categories'
 query = require './queries/initial'
 
 getRedirectTo = (req) ->

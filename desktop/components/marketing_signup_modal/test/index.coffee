@@ -9,7 +9,7 @@ describe 'MarketingSignupModal', ->
       Backbone.$ = $
       sinon.stub $, 'ajax'
       @MarketingSignupModal = benv.requireWithJadeify(
-        require.resolve '../index.coffee'
+        require.resolve '../index'
         ['template']
       )
       @MarketingSignupModal.__set__ 'sd', @sd =

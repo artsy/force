@@ -1,11 +1,11 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-FilterView = require './filter.coffee'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
-Feature = require '../../../models/feature.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-Profile = require '../../../models/profile.coffee'
+FilterView = require './filter'
+bootstrap = require '../../../components/layout/bootstrap'
+AuctionClockView = require '../../../components/auction_clock/view'
+Feature = require '../../../models/feature'
+CurrentUser = require '../../../models/current_user'
+Profile = require '../../../models/profile'
 itemsTemplate = -> require('../templates/items.jade') arguments...
 artworkListTemplate = -> require('../../../components/artwork_list/template.jade') arguments...
 featuredItemsTemplate = -> require('../../../components/featured_items/template.jade') arguments...

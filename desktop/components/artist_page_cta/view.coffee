@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 qs = require 'qs'
 _ = require 'underscore'
-Form = require '../mixins/form.coffee'
-Mailcheck = require '../mailcheck/index.coffee'
-mediator = require '../../lib/mediator.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
-AuthModalView = require '../auth_modal/view.coffee'
+Form = require '../mixins/form'
+Mailcheck = require '../mailcheck/index'
+mediator = require '../../lib/mediator'
+LoggedOutUser = require '../../models/logged_out_user'
+AuthModalView = require '../auth_modal/view'
 template = -> require('./templates/index.jade') arguments...
 overlayTemplate = -> require('./templates/overlay.jade') arguments...
 

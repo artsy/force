@@ -1,10 +1,10 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-mediator = require '../../../../lib/mediator.coffee'
-ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
-AuctionLotsView = require '../../../../components/auction_lots/client/view.coffee'
-AuctionLotDetailView = require '../../../../components/auction_lots/client/detail.coffee'
+mediator = require '../../../../lib/mediator'
+ArtworkRailView = require '../../../../components/artwork_rail/client/view'
+AuctionLotsView = require '../../../../components/auction_lots/client/view'
+AuctionLotDetailView = require '../../../../components/auction_lots/client/detail'
 template = -> require('../../templates/sections/auction_lots.jade') arguments...
 
 module.exports = class ArtistAuctionResultsView extends Backbone.View

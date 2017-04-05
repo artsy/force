@@ -1,8 +1,8 @@
 sd = require('sharify').data
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-{ setupFilter } = require '../../../components/filter2/index.coffee'
-aggregationParams = require '../aggregations.coffee'
-Fair = require '../../../models/fair.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+{ setupFilter } = require '../../../components/filter2/index'
+aggregationParams = require '../aggregations'
+Fair = require '../../../models/fair'
 
 module.exports.init = ->
   bootstrap()

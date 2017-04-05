@@ -5,7 +5,7 @@ qs = require 'qs'
 Backbone = require 'backbone'
 Gene = require '../../models/gene'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 @index = (req, res, next) ->
   gene = new Gene id: req.params.id

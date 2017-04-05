@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-FlashMessage = require '../../flash/index.coffee'
+FlashMessage = require '../../flash/index'
 
 module.exports = class Confirmation extends Backbone.View
   initialize: ({ @modal, @state }) ->

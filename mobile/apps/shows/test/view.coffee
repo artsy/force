@@ -2,8 +2,8 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 path = require 'path'
-PartnerShows = require '../../../collections/partner_shows.coffee'
-Show = require '../../../models/show.coffee'
+PartnerShows = require '../../../collections/partner_shows'
+Show = require '../../../models/show'
 { fabricate } = require 'antigravity'
 
 describe 'ShowCityView', ->
@@ -28,7 +28,7 @@ describe 'ShowCityView', ->
         current: [new Show(fabricate 'show').set 'status', 'running']
         past: []
       , =>
-        { ShowCityView } = mod = benv.requireWithJadeify path.resolve(__dirname, '../client/shows.coffee'), ['showTemplate']
+        { ShowCityView } = mod = benv.requireWithJadeify path.resolve(__dirname, '../client/shows'), ['showTemplate']
         @view = new ShowCityView
           collection: partnerShows
           el: $ 'body'

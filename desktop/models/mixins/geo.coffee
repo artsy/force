@@ -1,6 +1,6 @@
 _ = require 'underscore'
-geo = require '../../components/geo/index.coffee'
-Location = require '../location.coffee'
+geo = require '../../components/geo/index'
+Location = require '../location'
 GeoFormatter = require 'geoformatter'
 
 module.exports =

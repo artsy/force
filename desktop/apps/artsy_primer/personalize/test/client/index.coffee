@@ -5,7 +5,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../../../models/current_user.coffee'
+CurrentUser = require '../../../../../models/current_user'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -58,7 +58,7 @@ describe 'PersonalizeRouter', ->
     beforeEach ->
       sinon.stub Backbone, 'sync'
       Backbone.sync.yields {}
-      
+
       sinon.stub $, 'post'
 
     afterEach ->

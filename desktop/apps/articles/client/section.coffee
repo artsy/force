@@ -1,7 +1,7 @@
 _ = require 'underscore'
-Articles = require '../../../collections/articles.coffee'
-ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
-GalleryInsightsView = require '../../../components/email/client/gallery_insights.coffee'
+Articles = require '../../../collections/articles'
+ArticlesFeedView = require '../../../components/articles_feed/view'
+GalleryInsightsView = require '../../../components/email/client/gallery_insights'
 sd = require('sharify').data
 
 module.exports.init = ->

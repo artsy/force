@@ -67,4 +67,4 @@ for key, val of module.exports
   module.exports[key] = try JSON.parse(val) catch then val
 
 # Warn if this file is included client-side
-alert("WARNING: Do not require config.coffee, please require('sharify').data instead.") if window?
+alert("WARNING: Do not require config, please require('sharify').data instead.") if window?

@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Notifications = require '../../../collections/notifications.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-Artist = require '../../../models/artist.coffee'
-DateHelpers = require '../../../components/util/date_helpers.coffee'
+Notifications = require '../../../collections/notifications'
+Artworks = require '../../../collections/artworks'
+Artist = require '../../../models/artist'
+DateHelpers = require '../../../components/util/date_helpers'
 { API_URL } = require('sharify').data
 artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 template = -> require('../templates/artist.jade') arguments...

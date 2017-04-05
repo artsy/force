@@ -7,7 +7,7 @@ module.exports = class SearchResults extends Backbone.Collection
   url: -> sd.API_URL + '/api/v1/match'
 
   initialize: ->
-    @model = require '../models/search_result.coffee'
+    @model = require '../models/search_result'
 
   updateLocationsForFair: (fair) ->
     @map (result) -> result.updateForFair fair

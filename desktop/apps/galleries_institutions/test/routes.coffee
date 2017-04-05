@@ -5,7 +5,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 routes = rewire '../routes'
-Profile = require '../../../models/profile.coffee'
+Profile = require '../../../models/profile'
 
 describe 'galleries_institutions routes', ->
 

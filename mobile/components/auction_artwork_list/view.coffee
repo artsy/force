@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-State = require './state.coffee'
+State = require './state'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworkListView extends Backbone.View

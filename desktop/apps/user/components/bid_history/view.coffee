@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require '../../../../components/my_active_bids/query.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require '../../../../components/my_active_bids/query'
 template = -> require('./index.jade') arguments...
 
 module.exports = class BidHistoryView extends Backbone.View

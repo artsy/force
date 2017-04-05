@@ -1,14 +1,14 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-Form = require '../../../components/mixins/form.coffee'
-mediator = require '../../../lib/mediator.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+Form = require '../../../components/mixins/form'
+mediator = require '../../../lib/mediator'
+analyticsHooks = require '../../../lib/analytics_hooks'
+CurrentUser = require '../../../models/current_user'
 sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
-Mailcheck = require '../../../components/mailcheck/index.coffee'
+Mailcheck = require '../../../components/mailcheck/index'
 Cookies = require 'cookies-js'
-LoggedOutUser = require '../../../models/logged_out_user.coffee'
+LoggedOutUser = require '../../../models/logged_out_user'
 
 module.exports = class PurchaseSignupForm extends Backbone.View
   _.extend @prototype, Form

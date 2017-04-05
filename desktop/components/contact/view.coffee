@@ -2,12 +2,12 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
-ModalView = require '../modal/view.coffee'
-mediator = require '../../lib/mediator.coffee'
-Form = require '../mixins/form.coffee'
-CurrentUser = require '../../models/current_user.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-FlashMessage = require '../flash/index.coffee'
+ModalView = require '../modal/view'
+mediator = require '../../lib/mediator'
+Form = require '../mixins/form'
+CurrentUser = require '../../models/current_user'
+analyticsHooks = require '../../lib/analytics_hooks'
+FlashMessage = require '../flash/index'
 
 template = -> require('./templates/index.jade') arguments...
 

@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { CLIENT } = require('sharify').data
-initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
+CurrentUser = require '../../../../models/current_user'
 artistsTemplate = -> require('./artists.jade') arguments...
 
 setupFollowButtons = ({ $el, relatedArtists, kind }) =>

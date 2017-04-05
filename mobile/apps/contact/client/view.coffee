@@ -1,11 +1,11 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
-openMultiPage = require '../../../components/multi_page/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
-ModalView = require '../../../components/modal/view.coffee'
-Representatives = require '../../../collections/representatives.coffee'
-openSpecialistModal = require '../../../components/specialist_modal/index.coffee'
+openMultiPage = require '../../../components/multi_page/index'
+mediator = require '../../../lib/mediator'
+ModalView = require '../../../components/modal/view'
+Representatives = require '../../../collections/representatives'
+openSpecialistModal = require '../../../components/specialist_modal/index'
 
 module.exports = class ContactView extends Backbone.View
 

@@ -2,15 +2,15 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-Profile = require '../../../models/profile.coffee'
-initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
-ViewHelpers = require '../helpers/view_helpers.coffee'
-query = require '../query.coffee'
+mediator = require '../../../lib/mediator'
+CurrentUser = require '../../../models/current_user'
+Profile = require '../../../models/profile'
+initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr'
+metaphysics = require '../../../../lib/metaphysics'
+ViewHelpers = require '../helpers/view_helpers'
+query = require '../query'
 
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 
 pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...
 

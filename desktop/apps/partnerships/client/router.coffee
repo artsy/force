@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-View = require './view.coffee'
-Jump = require '../../../components/jump/view.coffee'
+View = require './view'
+Jump = require '../../../components/jump/view'
 
 module.exports = class PartnershipsRouter extends Backbone.Router
   routes:

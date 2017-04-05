@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Tag = require '../../models/tag.coffee'
+Tag = require '../../models/tag'
 sinon = require 'sinon'
 
 describe "Tag", ->

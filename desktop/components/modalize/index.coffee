@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Modalize = require './view.coffee'
+Modalize = require './view'
 
 module.exports = (subView, options = {}) ->
   subView.modal = modal =

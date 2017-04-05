@@ -1,5 +1,5 @@
-ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
-Articles = require '../../../collections/articles.coffee'
+ArticlesFeedView = require '../../../components/articles_feed/view'
+Articles = require '../../../collections/articles'
 
 module.exports = class ArticlesAdapter
   constructor: ({ model, fair, el }) ->

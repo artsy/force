@@ -4,10 +4,10 @@ should = require 'should'
 sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 Backbone = require 'backbone'
-CurrentUser = require '../../models/current_user.coffee'
-FollowProfile = require '../../models/follow_profile.coffee'
-FollowProfiles = require '../../collections/follow_profiles.coffee'
-Profile = require '../../models/profile.coffee'
+CurrentUser = require '../../models/current_user'
+FollowProfile = require '../../models/follow_profile'
+FollowProfiles = require '../../collections/follow_profiles'
+Profile = require '../../models/profile'
 
 describe 'FollowProfiles', ->
 

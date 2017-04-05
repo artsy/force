@@ -1,16 +1,16 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-PersonalizeState = require './personalize_state.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+PersonalizeState = require './personalize_state'
+CurrentUser = require '../../../models/current_user'
+analyticsHooks = require '../../../lib/analytics_hooks'
 
 views =
-  CollectView: require('./collect_view.coffee').CollectView
-  LocationView: require('./location_view.coffee').LocationView
-  ArtistsView: require('./artists_view.coffee').ArtistsView
-  PriceRangeView: require('./price_range_view.coffee').PriceRangeView
+  CollectView: require('./collect_view').CollectView
+  LocationView: require('./location_view').LocationView
+  ArtistsView: require('./artists_view').ArtistsView
+  PriceRangeView: require('./price_range_view').PriceRangeView
 
 PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:

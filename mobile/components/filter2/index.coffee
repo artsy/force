@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'qs'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
-FilterView = require './view.coffee'
+FilterArtworks = require '../../collections/filter_artworks'
+FilterView = require './view'
 { FILTER_ROOT } = require('sharify').data
 
 module.exports =

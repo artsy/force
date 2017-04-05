@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ isTouchDevice } = require '../util/device.coffee'
+{ isTouchDevice } = require '../util/device'
 Stickyfill = require('stickyfill')()
 
 module.exports = class Sticky

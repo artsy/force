@@ -17,7 +17,7 @@ describe 'auction', ->
 
   beforeEach ->
     @ArtworkAuctionView = benv.requireWithJadeify(
-      require.resolve('../view.coffee'),
+      require.resolve('../view'),
       ['template']
     )
     @data =

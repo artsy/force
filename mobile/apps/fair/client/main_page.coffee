@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
-Fair = require '../../../models/fair.coffee'
-AutoCompleteView = require '../../../components/autocomplete/view.coffee'
+Fair = require '../../../models/fair'
+AutoCompleteView = require '../../../components/autocomplete/view'
 featuredLinksTemplate = -> require('../templates/featured_links.jade') arguments...
 imageNavItemTemplate = -> require('../templates/image_nav_item.jade') arguments...
 primarySetTemplate = -> require('../templates/primary_set.jade') arguments...

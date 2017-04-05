@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 isExisty = _.negate _.isEmpty
-utilities = require './utilities.coffee'
+utilities = require './utilities'
 
 module.exports = class Messenger
   constructor: ({ @$form, @$errors }) ->

@@ -8,10 +8,10 @@ sd = require('sharify').data
 hash =
 
   '^/user/.*': ->
-    require('../apps/user/client/view.coffee').init()
+    require('../apps/user/client/view').init()
 
   '^/profile/.*': ->
-    require('../apps/user/client/view.coffee').init()
+    require('../apps/user/client/view').init()
 
 # On DOM load iterate through the hash and load that app's JS
 $ ->

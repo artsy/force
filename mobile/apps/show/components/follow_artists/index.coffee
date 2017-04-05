@@ -1,7 +1,7 @@
 _ = require 'underscore'
-CurrentUser = require '../../../../models/current_user.coffee'
-FollowButtonView = require '../../../../components/follow_button/view.coffee'
-FollowArtists = require '../../../../collections/follow_artists.coffee'
+CurrentUser = require '../../../../models/current_user'
+FollowButtonView = require '../../../../components/follow_button/view'
+FollowArtists = require '../../../../collections/follow_artists'
 
 module.exports = (artists) ->
   user = CurrentUser.orNull()

@@ -1,16 +1,16 @@
 _ = require 'underscore'
 sd = require('sharify').data
 qs = require 'querystring'
-bootstrap = require '../../components/layout/bootstrap.coffee'
+bootstrap = require '../../components/layout/bootstrap'
 Backbone = require 'backbone'
-Gene = require '../../models/gene.coffee'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
-Artists = require '../../collections/artists.coffee'
-PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view.coffee'
-{ setupFilter } = require '../../components/filter2/index.coffee'
-FollowGene = require '../../collections/follow_genes.coffee'
-FollowButtonView = require '../../components/follow_button/view.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+Gene = require '../../models/gene'
+FilterArtworks = require '../../collections/filter_artworks'
+Artists = require '../../collections/artists'
+PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view'
+{ setupFilter } = require '../../components/filter2/index'
+FollowGene = require '../../collections/follow_genes'
+FollowButtonView = require '../../components/follow_button/view'
+CurrentUser = require '../../models/current_user'
 artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
 artistTemplate = -> require('./templates/artist_list.jade') arguments...
 

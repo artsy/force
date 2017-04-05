@@ -3,8 +3,8 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { Markdown } = require 'artsy-backbone-mixins'
-Artwork = require './artwork.coffee'
-Sale = require './sale.coffee'
+Artwork = require './artwork'
+Sale = require './sale'
 
 MAX_POLL_TIMES = 7
 POLL_DELAY = 1000

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Errors = require './errors.coffee'
-Serializer = require './serializer.coffee'
-Validator = require './validator.coffee'
+Errors = require './errors'
+Serializer = require './serializer'
+Validator = require './validator'
 
 module.exports = class Form
   _.extend @prototype, Backbone.Events

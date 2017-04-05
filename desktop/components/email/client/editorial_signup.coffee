@@ -1,15 +1,15 @@
 _ = require 'underscore'
 sd = require('sharify').data
-CTABarView = require '../../cta_bar/view.coffee'
+CTABarView = require '../../cta_bar/view'
 Backbone = require 'backbone'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 editorialCTABannerTemplate = -> require('../templates/editorial_cta_banner.jade') arguments...
 editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jade') arguments...
-Cycle = require '../../cycle/index.coffee'
-{ crop } = require '../../resizer/index.coffee'
-mailcheck = require '../../mailcheck/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
-FlashMessage = require '../../flash/index.coffee'
+Cycle = require '../../cycle/index'
+{ crop } = require '../../resizer/index'
+mailcheck = require '../../mailcheck/index'
+mediator = require '../../../lib/mediator'
+FlashMessage = require '../../flash/index'
 qs = require 'querystring'
 
 module.exports = class EditorialSignupView extends Backbone.View

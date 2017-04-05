@@ -1,5 +1,5 @@
 _ = require 'underscore'
-StepView = require '../../../../components/inquiry_questionnaire/views/step.coffee'
+StepView = require '../../../../components/inquiry_questionnaire/views/step'
 
 module.exports = class Done extends StepView
   className: 'iqm-alert'

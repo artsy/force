@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-BorderedPulldown = require '../../../bordered_pulldown/view.coffee'
-defaultSortMap = require './sort_map.coffee'
+BorderedPulldown = require '../../../bordered_pulldown/view'
+defaultSortMap = require './sort_map'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SortView extends Backbone.View

@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
-ViewHelpers = require '../../helpers/view_helpers.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr'
+ViewHelpers = require '../../helpers/view_helpers'
 template = -> require('../../templates/carousel.jade') arguments...
-FlickityZoomSequence = require './index.coffee'
+FlickityZoomSequence = require './index'
 
 module.exports = class InstallShotsView extends Backbone.View
 

@@ -1,5 +1,5 @@
 Profile = require '../../models/profile'
-Following = require '../../components/follow_button/collection.coffee'
+Following = require '../../components/follow_button/collection'
 
 @follow = (req, res) ->
   return res.redirect "/#{req.params.id}" unless req.user

@@ -1,8 +1,8 @@
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
+CurrentUser = require '../../../models/current_user'
 MODELS =
-  artist: require '../../../models/artist.coffee'
-  profile: require '../../../models/profile.coffee'
+  artist: require '../../../models/artist'
+  profile: require '../../../models/profile'
 
 module.exports = ($els) ->
   following = null

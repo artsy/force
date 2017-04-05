@@ -3,8 +3,8 @@ sd = require('sharify').data
 qs = require 'querystring'
 scrollFrame = require 'scroll-frame'
 Backbone = require 'backbone'
-Partner = require '../../../models/partner.coffee'
-{ setupFilter } = require '../../../components/filter2/index.coffee'
+Partner = require '../../../models/partner'
+{ setupFilter } = require '../../../components/filter2/index'
 
 template = -> require('../templates/artworks_filter.jade') arguments...
 

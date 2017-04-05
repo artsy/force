@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-metaphysics = require '../../../../lib/metaphysics.coffee'
-aggregationsMap = require '../aggregations_map.coffee'
-query = require '../queries/counts.coffee'
+metaphysics = require '../../../../lib/metaphysics'
+aggregationsMap = require '../aggregations_map'
+query = require '../queries/counts'
 
 module.exports = class Counts extends Backbone.Model
   initialize: ({ @params }) ->

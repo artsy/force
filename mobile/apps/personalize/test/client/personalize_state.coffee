@@ -1,5 +1,5 @@
 _ = require 'underscore'
-PersonalizeState = require '../../client/personalize_state.coffee'
+PersonalizeState = require '../../client/personalize_state'
 fabricate = require '../../../../test/helpers/fabricate'
 
 describe 'PersonalizeState', ->

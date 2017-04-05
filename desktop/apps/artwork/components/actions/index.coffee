@@ -1,9 +1,9 @@
 { ACTIONS } = require('sharify').data
-Artwork = require '../../../../models/artwork.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
-SaveButton = require '../../../../components/save_button/view.coffee'
-openShareModal = require '../../../../components/share/index.coffee'
-ViewInRoomView = require '../../../../components/view_in_room/view.coffee'
+Artwork = require '../../../../models/artwork'
+CurrentUser = require '../../../../models/current_user'
+SaveButton = require '../../../../components/save_button/view'
+openShareModal = require '../../../../components/share/index'
+ViewInRoomView = require '../../../../components/view_in_room/view'
 
 module.exports = ->
   artwork = new Artwork ACTIONS.save

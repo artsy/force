@@ -14,7 +14,7 @@ query = require './queries/partner_categories_query'
 partnerTypes = require './queries/partner_types'
 mergeBuckets = require './components/partner_cell_carousel/merge_buckets'
 fetchPrimaryCarousel = require './components/primary_carousel/fetch'
-facetDefaults = require './components/filter_facet/facet_defaults.coffee'
+facetDefaults = require './components/filter_facet/facet_defaults'
 
 mapType =
   galleries: 'gallery'

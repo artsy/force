@@ -7,7 +7,7 @@ Backbone = require 'backbone'
 Fair = require '../../../../models/fair'
 PartnerLocation = require '../../../../models/partner_location'
 Profile = require '../../../../models/profile'
-InfoMenu = require '../../info_menu.coffee'
+InfoMenu = require '../../info_menu'
 { fabricate } = require 'antigravity'
 
 describe 'Visitors', ->

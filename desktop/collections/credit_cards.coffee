@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-CreditCard = require '../models/credit_card.coffee'
+CreditCard = require '../models/credit_card'
 
 module.exports = class CreditCards extends Backbone.Collection
   model: CreditCard

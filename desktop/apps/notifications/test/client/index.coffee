@@ -5,11 +5,11 @@ rewire = require 'rewire'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-Notifications = require '../../../../collections/notifications.coffee'
-Artworks = require '../../../../collections/artworks.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
-Artist = require '../../../../models/artist.coffee'
-Artists = require '../../../../collections/artists.coffee'
+Notifications = require '../../../../collections/notifications'
+Artworks = require '../../../../collections/artworks'
+CurrentUser = require '../../../../models/current_user'
+Artist = require '../../../../models/artist'
+Artists = require '../../../../collections/artists'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 SidebarView = null
 RecentlyAddedWorksView = null
@@ -22,9 +22,9 @@ describe 'NotificationsView', ->
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
       Backbone.$ = $
-      SidebarView = require '../../client/sidebar.coffee'
-      RecentlyAddedWorksView = require '../../client/recently_added_works.coffee'
-      ArtistWorksView = require '../../client/artist_works.coffee'
+      SidebarView = require '../../client/sidebar'
+      RecentlyAddedWorksView = require '../../client/recently_added_works'
+      ArtistWorksView = require '../../client/artist_works'
       done()
 
   after ->

@@ -9,7 +9,7 @@ Articles = require '../../collections/articles'
 Section = require '../../models/section'
 Sections = require '../../collections/sections'
 embed = require 'embed-video'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 module.exports.article = (req, res, next) ->

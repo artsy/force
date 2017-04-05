@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-View = require './view.coffee'
+View = require './view'
 
 module.exports = class GalleryPartnershipsRouter extends Backbone.Router
   routes:

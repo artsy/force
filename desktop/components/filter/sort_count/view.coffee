@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-BorderedPulldown = require '../../bordered_pulldown/view.coffee'
+BorderedPulldown = require '../../bordered_pulldown/view'
 
 module.exports = class FilterSortCount extends Backbone.View
 

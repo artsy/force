@@ -1,8 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Genes = require '../../../collections/genes.coffee'
-RelatedLinksView = require '../view.coffee'
+Genes = require '../../../collections/genes'
+RelatedLinksView = require '../view'
 
 module.exports = class RelatedGenesLinksView extends RelatedLinksView
   headerTemplate: _.template '<h2>Related Categories</h2>'

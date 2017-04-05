@@ -1,4 +1,4 @@
-AppBanner = require './app_banner.coffee'
+AppBanner = require './app_banner'
 
 module.exports = ->
   return unless AppBanner.shouldDisplay()

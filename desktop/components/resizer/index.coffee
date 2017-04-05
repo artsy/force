@@ -1,7 +1,7 @@
-config = require './config.coffee'
+config = require './config'
 SERVICES =
-  EMBEDLY: require './services/embedly.coffee'
-  GEMINI: require './services/gemini.coffee'
+  EMBEDLY: require './services/embedly'
+  GEMINI: require './services/gemini'
 
 service = ->
   SERVICES[config.proxy]

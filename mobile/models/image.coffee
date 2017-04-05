@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-DeepZoom = require '../components/deep_zoom/mixin.coffee'
+DeepZoom = require '../components/deep_zoom/mixin'
 
 module.exports = class Image extends Backbone.Model
   _.extend @prototype, DeepZoom(sd.SECURE_IMAGES_URL)

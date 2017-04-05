@@ -4,8 +4,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Artists = require '../../../../../collections/artists.coffee'
-SearchArtistsView = benv.requireWithJadeify require.resolve('../search_artists_view.coffee'), ['itemTemplate', 'resultsTemplate']
+Artists = require '../../../../../collections/artists'
+SearchArtistsView = benv.requireWithJadeify require.resolve('../search_artists_view'), ['itemTemplate', 'resultsTemplate']
 
 describe 'SearchArtistsView', ->
   before (done) ->

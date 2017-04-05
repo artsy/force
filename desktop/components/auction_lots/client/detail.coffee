@@ -1,6 +1,6 @@
 _ = require 'underscore'
-ModalView = require '../../../components/modal/view.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+ModalView = require '../../../components/modal/view'
+CurrentUser = require '../../../models/current_user'
 template = -> require('../templates/modal.jade') arguments...
 imagesLoaded = require 'imagesloaded'
 

@@ -5,8 +5,8 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-artists = require './artists_fixture.coffee'
-CurrentUser = require '../../../../../models/current_user.coffee'
+artists = require './artists_fixture'
+CurrentUser = require '../../../../../models/current_user'
 
 describe 'Client', ->
 

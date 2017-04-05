@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-JumpView = require '../../jump/view.coffee'
+JumpView = require '../../jump/view'
 
 module.exports = class FilterFixedHeader extends Backbone.View
 

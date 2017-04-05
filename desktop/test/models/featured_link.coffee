@@ -1,7 +1,7 @@
 _ = require 'underscore'
 should = require 'should'
 Backbone = require 'backbone'
-FeaturedLink = require '../../models/featured_link.coffee'
+FeaturedLink = require '../../models/featured_link'
 { fabricate } = require 'antigravity'
 
 describe 'FeaturedLink', ->

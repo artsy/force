@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-PartnerShow = require '../../../../models/partner_show.coffee'
-PartnerShows = require '../../../../collections/partner_shows.coffee'
-PartnerShowEvents = require '../../../../collections/partner_show_events.coffee'
-initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+PartnerShow = require '../../../../models/partner_show'
+PartnerShows = require '../../../../collections/partner_shows'
+PartnerShowEvents = require '../../../../collections/partner_show_events'
+initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr'
 template = -> require('./index.jade') arguments...
 { API_URL } = require('sharify').data
 

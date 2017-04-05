@@ -1,4 +1,4 @@
-Sale = require './sale.coffee'
+Sale = require './sale'
 
 module.exports = class Auction extends Sale
   # Deprecated

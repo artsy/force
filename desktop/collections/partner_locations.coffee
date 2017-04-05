@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-PartnerLocation = require '../models/partner_location.coffee'
+PartnerLocation = require '../models/partner_location'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
 

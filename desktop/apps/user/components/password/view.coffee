@@ -1,7 +1,7 @@
 { API_URL } = require('sharify').data
 { extend, delay } = require 'underscore'
 Backbone = require 'backbone'
-GenericFormView = require '../generic_form/view.coffee'
+GenericFormView = require '../generic_form/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SettingsPasswordView extends GenericFormView

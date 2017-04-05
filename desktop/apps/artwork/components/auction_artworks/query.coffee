@@ -1,4 +1,4 @@
-{ ARTWORK_DISPLAY_NUM } = require './config.coffee'
+{ ARTWORK_DISPLAY_NUM } = require './config'
 
 module.exports.auction_artworks = """
   fragment auction_artworks on Artwork {
@@ -19,7 +19,7 @@ module.exports.auction_artworks = """
       }
     }
   }
-  #{require '../../../../components/auction_artwork_brick/query.coffee'}
+  #{require '../../../../components/auction_artwork_brick/query'}
 """
 
 module.exports.followed_artist_ids = (CurrentUser) =>

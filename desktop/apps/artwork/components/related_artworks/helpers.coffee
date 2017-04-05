@@ -1,4 +1,4 @@
-masonry = require '../../../../components/artwork_masonry/index.coffee'
+masonry = require '../../../../components/artwork_masonry/index'
 _ = require 'underscore'
 
 module.exports =

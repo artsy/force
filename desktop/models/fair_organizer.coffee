@@ -2,11 +2,11 @@ sd = require('sharify').data
 _ = require 'underscore'
 Backbone = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
-OrderedSets = require '../collections/ordered_sets.coffee'
-DateHelpers = require '../components/util/date_helpers.coffee'
-Clock = require './mixins/clock.coffee'
+OrderedSets = require '../collections/ordered_sets'
+DateHelpers = require '../components/util/date_helpers'
+Clock = require './mixins/clock'
 moment = require 'moment'
-Profile = require './profile.coffee'
+Profile = require './profile'
 
 module.exports = class FairOrganizer extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)

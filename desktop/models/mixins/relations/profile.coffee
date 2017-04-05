@@ -6,19 +6,19 @@ module.exports =
     return @__related__ if @__related__?
 
     if @isPartner()
-      Partner = require '../../partner.coffee'
+      Partner = require '../../partner'
       owner = new Partner(@get('owner'))
 
     if @isFairOrganizer()
-      FairOrganizer = require '../../fair_organizer.coffee'
+      FairOrganizer = require '../../fair_organizer'
       owner = new FairOrganizer(@get('owner'))
 
     if @isFair()
-      Fair = require '../../fair.coffee'
+      Fair = require '../../fair'
       owner = new Fair(@get('owner'))
 
     if @isUser()
-      User = require '../../user.coffee'
+      User = require '../../user'
       owner = new User(@get('owner'))
 
     @__related__ =

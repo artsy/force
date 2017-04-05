@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
-Artists = require '../../../../collections/artists.coffee'
-{ Following } = require '../../../../components/follow_button/index.coffee'
-QuasiInfiniteView = require '../quasi_infinite/view.coffee'
-ArtistFillwidthListView = require '../../../../components/artist_fillwidth_list/view.coffee'
+Artists = require '../../../../collections/artists'
+{ Following } = require '../../../../components/follow_button/index'
+QuasiInfiniteView = require '../quasi_infinite/view'
+ArtistFillwidthListView = require '../../../../components/artist_fillwidth_list/view'
 
 module.exports = class ArtistsView extends QuasiInfiniteView
   className: 'settings-artists'

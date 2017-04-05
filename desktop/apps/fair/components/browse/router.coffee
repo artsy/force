@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
-FairBrowseView = require './view.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+FairBrowseView = require './view'
+mediator = require '../../../../lib/mediator'
 { humanize } = require 'underscore.string'
-{ signupSuccess, validActions } = require '../capture_signup/index.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+{ signupSuccess, validActions } = require '../capture_signup/index'
+CurrentUser = require '../../../../models/current_user'
 
 module.exports = class BrowseRouter extends Backbone.Router
 

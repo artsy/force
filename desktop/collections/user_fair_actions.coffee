@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-UserFairAction = require '../models/user_fair_action.coffee'
+UserFairAction = require '../models/user_fair_action'
 
 module.exports = class UserFairActions extends Backbone.Collection
   model: UserFairAction

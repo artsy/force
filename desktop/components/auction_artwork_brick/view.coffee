@@ -1,8 +1,8 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
-AuthModalView = require '../auth_modal/view.coffee'
-ArtworkSaveView = require '../artwork_save/view.coffee'
+AuthModalView = require '../auth_modal/view'
+ArtworkSaveView = require '../artwork_save/view'
 
 module.exports = class AuctionArtworkBrickView extends Backbone.View
   subViews: []

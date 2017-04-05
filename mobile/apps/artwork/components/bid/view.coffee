@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-openMultiPage = require '../../../../components/multi_page/index.coffee'
-ModalView = require '../../../../components/modal/view.coffee'
-Sale = require '../../../../models/sale.coffee'
-AuctionClockView = require '../../../../components/auction_clock/view.coffee'
-Artwork = require '../../../../models/artwork.coffee'
-SaleArtwork = require '../../../../models/sale_artwork.coffee'
-updateCurrentBid = require './index.coffee'
+openMultiPage = require '../../../../components/multi_page/index'
+ModalView = require '../../../../components/modal/view'
+Sale = require '../../../../models/sale'
+AuctionClockView = require '../../../../components/auction_clock/view'
+Artwork = require '../../../../models/artwork'
+SaleArtwork = require '../../../../models/sale_artwork'
+updateCurrentBid = require './index'
 
 module.exports = class ArtworkBidView extends Backbone.View
 

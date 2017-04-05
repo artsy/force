@@ -23,7 +23,7 @@ describe 'Artwork tabs templates', ->
       sd: ARTWORK: @artwork
       asset: (->)
     }, =>
-      @accordionFunction = require('../index.coffee')
+      @accordionFunction = require('../index')
 
       done()
 

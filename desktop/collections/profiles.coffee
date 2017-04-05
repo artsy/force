@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Profile = require '../models/profile.coffee'
+Profile = require '../models/profile'
 { API_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 

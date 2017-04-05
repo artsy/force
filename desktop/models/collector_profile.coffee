@@ -2,7 +2,7 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-Relations = require './mixins/relations/collector_profile.coffee'
+Relations = require './mixins/relations/collector_profile'
 
 module.exports = class CollectorProfile extends Backbone.Model
   _.extend @prototype, Relations

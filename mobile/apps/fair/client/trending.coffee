@@ -1,12 +1,12 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Fair = require '../../../models/fair.coffee'
-Profile = require '../../../models/profile.coffee'
-Show = require '../../../models/show.coffee'
-ShowsFeed = require '../../../collections/shows_feed.coffee'
-{ FairTrendArtist, FairTrendPartner } = require '../../../models/fair_trend.coffee'
+Fair = require '../../../models/fair'
+Profile = require '../../../models/profile'
+Show = require '../../../models/show'
+ShowsFeed = require '../../../collections/shows_feed'
+{ FairTrendArtist, FairTrendPartner } = require '../../../models/fair_trend'
 imageNavItemTemplate = -> require('../templates/image_nav_item.jade') arguments...
 
 module.exports.TrendingView = class TrendingView extends Backbone.View

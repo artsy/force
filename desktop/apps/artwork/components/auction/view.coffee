@@ -1,14 +1,14 @@
 { defer, extend, before } = require 'underscore'
 Backbone = require 'backbone'
 { AUCTION, CURRENT_USER } = require('sharify').data
-Form = require '../../../../components/form/index.coffee'
-openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
-openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
-inquire = require '../../lib/inquire.coffee'
-acquire = require '../../lib/acquire.coffee'
-helpers = require './helpers.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+Form = require '../../../../components/form/index'
+openMultiPageModal = require '../../../../components/multi_page_modal/index'
+openBuyersPremiumModal = require './components/buyers_premium/index'
+AuthModalView = require '../../../../components/auth_modal/view'
+inquire = require '../../lib/inquire'
+acquire = require '../../lib/acquire'
+helpers = require './helpers'
+metaphysics = require '../../../../../lib/metaphysics'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkAuctionView extends Backbone.View
@@ -120,7 +120,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
             ... auction
           }
         }
-        #{require './query.coffee'}
+        #{require './query'}
       """
       variables: id: AUCTION.artwork_id, sale_id: AUCTION.id
       req: user: CURRENT_USER

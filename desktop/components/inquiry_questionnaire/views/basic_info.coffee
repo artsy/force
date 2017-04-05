@@ -1,6 +1,6 @@
-StepView = require './step.coffee'
-Form = require '../../form/index.coffee'
-LocationSearch = require '../../location_search/index.coffee'
+StepView = require './step'
+Form = require '../../form/index'
+LocationSearch = require '../../location_search/index'
 template = -> require('../templates/basic_info.jade') arguments...
 
 module.exports = class BasicInfo extends StepView

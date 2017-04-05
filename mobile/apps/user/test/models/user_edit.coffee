@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-UserEdit = require '../../models/user_edit.coffee'
+UserEdit = require '../../models/user_edit'
 fabricate = require('antigravity').fabricate
 sinon = require 'sinon'
 

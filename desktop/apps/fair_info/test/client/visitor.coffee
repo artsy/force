@@ -4,10 +4,10 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../../models/fair.coffee'
-Profile = require '../../../../models/profile.coffee'
-FairInfoVisitorsView = require '../../client/visitors.coffee'
-InfoMenu = require '../../../../components/info_menu/index.coffee'
+Fair = require '../../../../models/fair'
+Profile = require '../../../../models/profile'
+FairInfoVisitorsView = require '../../client/visitors'
+InfoMenu = require '../../../../components/info_menu/index'
 
 describe 'FairInfoVisitorsView', ->
 

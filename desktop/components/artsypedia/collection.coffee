@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Item = require './model.coffee'
+Item = require './model'
 
 module.exports = class Items extends Backbone.Collection
   model: Item

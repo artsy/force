@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Article = require '../models/article.coffee'
+Article = require '../models/article'
 sd = require('sharify').data
 
 module.exports = class Articles extends Backbone.Collection

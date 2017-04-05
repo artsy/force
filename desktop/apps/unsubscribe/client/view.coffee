@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-FlashMessage = require '../../../components/flash/index.coffee'
+FlashMessage = require '../../../components/flash/index'
 
 module.exports = class UnsubscribeView extends Backbone.View
   events:

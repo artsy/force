@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { ARTWORK } = require('sharify').data
-Artworks = require '../../../../collections/artworks.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-{ displayRelatedWorks } = require './display_related_works.coffee'
+Artworks = require '../../../../collections/artworks'
+metaphysics = require '../../../../../lib/metaphysics'
+{ displayRelatedWorks } = require './display_related_works'
 
 module.exports = ->
   isArtist = false
@@ -18,9 +18,9 @@ module.exports = ->
           ... related_artworks @skip(if: $isOpen)
         }
       }
-      #{require './queries/auction_query.coffee'}
-      #{require './queries/artist_query.coffee'}
-      #{require './queries/related_query.coffee'}
+      #{require './queries/auction_query'}
+      #{require './queries/artist_query'}
+      #{require './queries/related_query'}
     """
   else if context.__typename is 'ArtworkContextFair'
     query = """
@@ -32,10 +32,10 @@ module.exports = ->
           ... related_artworks
         }
       }
-      #{require './queries/fair_query.coffee'}
-      #{require './queries/artist_query.coffee'}
-      #{require './queries/partner_query.coffee'}
-      #{require './queries/related_query.coffee'}
+      #{require './queries/fair_query'}
+      #{require './queries/artist_query'}
+      #{require './queries/partner_query'}
+      #{require './queries/related_query'}
     """
   else if context.__typename is 'ArtworkContextPartnerShow'
     query = """
@@ -47,10 +47,10 @@ module.exports = ->
           ... related_artworks
         }
       }
-      #{require './queries/show_query.coffee'}
-      #{require './queries/artist_query.coffee'}
-      #{require './queries/partner_query.coffee'}
-      #{require './queries/related_query.coffee'}
+      #{require './queries/show_query'}
+      #{require './queries/artist_query'}
+      #{require './queries/partner_query'}
+      #{require './queries/related_query'}
     """
   else
     query = """
@@ -61,9 +61,9 @@ module.exports = ->
           ... related_artworks
         }
       }
-      #{require './queries/artist_query.coffee'}
-      #{require './queries/partner_query.coffee'}
-      #{require './queries/related_query.coffee'}
+      #{require './queries/artist_query'}
+      #{require './queries/partner_query'}
+      #{require './queries/related_query'}
     """
 
   metaphysics

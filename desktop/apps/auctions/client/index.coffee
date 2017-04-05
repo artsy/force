@@ -1,10 +1,10 @@
 { CURRENT_AUCTIONS, UPCOMING_AUCTIONS } = require('sharify').data
-Auctions = require '../../../collections/auctions.coffee'
-Clock = require '../../../components/clock/view.coffee'
-ModalPageView = require '../../../components/modal/page.coffee'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
-MyActiveBids = require '../../../components/my_active_bids/view.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+Auctions = require '../../../collections/auctions'
+Clock = require '../../../components/clock/view'
+ModalPageView = require '../../../components/modal/page'
+AuthModalView = require '../../../components/auth_modal/view'
+MyActiveBids = require '../../../components/my_active_bids/view'
+CurrentUser = require '../../../models/current_user'
 myActiveBidsTemplate = -> require('../templates/my_active_bids.jade') arguments...
 
 setupClocks = ($clocks, auctions) ->

@@ -11,15 +11,15 @@
 _ = require 'underscore'
 sd = require('sharify').data
 { Image } = require 'artsy-backbone-mixins'
-Artworks = require '../collections/artworks.coffee'
+Artworks = require '../collections/artworks'
 Backbone = require 'backbone'
-FeaturedLinks = require '../collections/featured_links.coffee'
-FeaturedSet = require './featured_set.coffee'
-Sale = require './sale.coffee'
-ImageSizes = require './mixins/image_sizes.coffee'
-{ smartTruncate } = require "../components/util/string.coffee"
+FeaturedLinks = require '../collections/featured_links'
+FeaturedSet = require './featured_set'
+Sale = require './sale'
+ImageSizes = require './mixins/image_sizes'
+{ smartTruncate } = require '../components/util/string'
 ABM = require 'artsy-backbone-mixins'
-MetaOverrides = require './mixins/meta_overrides.coffee'
+MetaOverrides = require './mixins/meta_overrides'
 
 module.exports = class Feature extends Backbone.Model
 

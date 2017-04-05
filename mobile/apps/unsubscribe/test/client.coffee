@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 benv = require 'benv'
 sinon = require 'sinon'
 { resolve } = require 'path'
-emailTypes = require '../email_types.coffee'
+emailTypes = require '../email_types'
 
 describe 'Unsubscribe View', ->
 

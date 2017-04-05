@@ -1,5 +1,5 @@
-openMultiPageModal = require '../../../components/multi_page_modal/index.coffee'
-openFeedbackModal = require '../../../components/feedback_modal/index.coffee'
+openMultiPageModal = require '../../../components/multi_page_modal/index'
+openFeedbackModal = require '../../../components/feedback_modal/index'
 
 module.exports.init = ->
   $('.js-contact-feedback').click (e) ->

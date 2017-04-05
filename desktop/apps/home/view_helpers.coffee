@@ -1,4 +1,4 @@
-{ timespanInWords } = require '../../components/util/date_helpers.coffee'
+{ timespanInWords } = require '../../components/util/date_helpers'
 
 module.exports =
   viewAllUrl: (module) ->

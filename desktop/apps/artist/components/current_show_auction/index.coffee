@@ -1,5 +1,5 @@
 _ = require 'underscore'
-helpers = require '../../view_helpers.coffee'
+helpers = require '../../view_helpers'
 
 current = (type, artist) ->
   currentItems = artist[type]

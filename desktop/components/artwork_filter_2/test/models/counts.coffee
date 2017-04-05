@@ -4,10 +4,10 @@ rewire = require 'rewire'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Counts = rewire '../../models/counts.coffee'
-mappedAggregations = require '../fixtures/mapped_aggregations.coffee'
-query = require '../../queries/counts.coffee'
+mappedAggregations = require '../fixtures/mapped_aggregations'
+query = require '../../queries/counts'
 response = require '../fixtures/metaphysics_counts_response.json'
-mappedAggregations = require '../fixtures/mapped_aggregations.coffee'
+mappedAggregations = require '../fixtures/mapped_aggregations'
 
 describe 'FiltersView', ->
 

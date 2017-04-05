@@ -1,8 +1,8 @@
 _ = require 'lodash'
 Backbone = require 'backbone'
-FollowProfile = require '../../../../collections/follow_profiles.coffee'
-FollowButtonView = require '../../../../components/follow_button/view.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+FollowProfile = require '../../../../collections/follow_profiles'
+FollowButtonView = require '../../../../components/follow_button/view'
+CurrentUser = require '../../../../models/current_user'
 
 module.exports = class ArtworkPartnerView extends Backbone.View
 

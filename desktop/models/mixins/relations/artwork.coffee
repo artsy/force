@@ -5,16 +5,16 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    Artist = require '../../artist.coffee'
-    SaleArtwork = require '../../sale_artwork.coffee'
-    AdditionalImages = require '../../../collections/additional_images.coffee'
-    Partner = require '../../partner.coffee'
+    Artist = require '../../artist'
+    SaleArtwork = require '../../sale_artwork'
+    AdditionalImages = require '../../../collections/additional_images'
+    Partner = require '../../partner'
 
-    Sales = require '../../../collections/sales.coffee'
-    Features = require '../../../collections/features.coffee'
-    Fairs = require '../../../collections/fairs.coffee'
-    Shows = require '../../../collections/partner_shows.coffee'
-    Artists = require '../../../collections/artists.coffee'
+    Sales = require '../../../collections/sales'
+    Features = require '../../../collections/features'
+    Fairs = require '../../../collections/fairs'
+    Shows = require '../../../collections/partner_shows'
+    Artists = require '../../../collections/artists'
 
     artist = new Artist @get('artist')
     saleArtwork = new SaleArtwork @get('sale_artwork')

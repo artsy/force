@@ -1,12 +1,12 @@
 Backbone = require 'backbone'
-FairInfoVisitorsView = require './visitors.coffee'
-FairInfoEventsView = require './events.coffee'
-initFairLayout = require '../../../components/fair_layout/client/index.coffee'
-Fair = require '../../../models/fair.coffee'
-FairEvent = require '../../../models/fair_event.coffee'
-Profile = require '../../../models/profile.coffee'
-Article = require '../../../models/article.coffee'
-ArticleView = require '../../../components/article/client/view.coffee'
+FairInfoVisitorsView = require './visitors'
+FairInfoEventsView = require './events'
+initFairLayout = require '../../../components/fair_layout/client/index'
+Fair = require '../../../models/fair'
+FairEvent = require '../../../models/fair_event'
+Profile = require '../../../models/profile'
+Article = require '../../../models/article'
+ArticleView = require '../../../components/article/client/view'
 sd = require('sharify').data
 
 module.exports = class FairInfoRouter extends Backbone.Router

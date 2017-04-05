@@ -1,7 +1,7 @@
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
-Cycle = require '../index.coffee'
+Cycle = require '../index'
 
 describe 'Cycle', ->
   before (done) ->

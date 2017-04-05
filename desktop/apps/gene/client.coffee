@@ -1,16 +1,16 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Gene = require '../../models/gene.coffee'
+Gene = require '../../models/gene'
 scrollFrame = require 'scroll-frame'
-CurrentUser = require '../../models/current_user.coffee'
-blurb = require '../../components/gradient_blurb/index.coffee'
-ShareView = require '../../components/share/view.coffee'
-ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
-RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
-{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
+CurrentUser = require '../../models/current_user'
+blurb = require '../../components/gradient_blurb/index'
+ShareView = require '../../components/share/view'
+ArtistFillwidthList = require '../../components/artist_fillwidth_list/view'
+RelatedGenesView = require '../../components/related_links/types/gene_genes'
+{ Following, FollowButton } = require '../../components/follow_button/index'
 { GENE, CURRENT_USER, API_URL, MODE } = sd = require('sharify').data
-{ setupFilter } = require '../../components/filter2/index.coffee'
-aggregationParams = require './aggregations.coffee'
+{ setupFilter } = require '../../components/filter2/index'
+aggregationParams = require './aggregations'
 
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
 

@@ -2,9 +2,9 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    PartnerLocations = require '../../../collections/partner_locations.coffee'
-    Shows = require '../../../collections/partner_shows.coffee'
-    Profile = require '../../../models/profile.coffee'
+    PartnerLocations = require '../../../collections/partner_locations'
+    Shows = require '../../../collections/partner_shows'
+    Profile = require '../../../models/profile'
 
     locations = new PartnerLocations
     locations.url = "#{@url()}/locations?size=20"

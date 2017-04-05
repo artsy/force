@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { API_URL } = require('sharify').data
-Sales = require './sales.coffee'
-Auction = require '../models/auction.coffee'
+Sales = require './sales'
+Auction = require '../models/auction'
 
 module.exports = class Auctions extends Sales
   model: Auction

@@ -4,8 +4,8 @@ express = require 'express'
 sinon = require 'sinon'
 request = require 'supertest'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Profile = require '../../../models/profile.coffee'
+CurrentUser = require '../../../models/current_user'
+Profile = require '../../../models/profile'
 
 newLayoutPartnerProfiles = _.map ['gallery_one', 'gallery_two', 'gallery_three' ], (layout) ->
   new Profile fabricate 'partner_profile', owner: fabricate 'partner', profile_layout: layout

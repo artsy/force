@@ -6,7 +6,7 @@ describe 'AcquireArtwork Component', ->
 
   before (done) ->
     benv.setup =>
-      @acquireArtwork = require('../view.coffee').acquireArtwork
+      @acquireArtwork = require('../view').acquireArtwork
       @_location = global.location
       global.location = {}
       benv.expose { $: benv.require 'jquery' }

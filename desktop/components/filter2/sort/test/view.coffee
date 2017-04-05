@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate2 } = require 'antigravity'
-FilterArtworks = require '../../../../collections/filter_artworks.coffee'
+FilterArtworks = require '../../../../collections/filter_artworks'
 
 describe 'Filter / Sort', ->
 

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
-helpers = require './helpers.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+ArtworkMasonryView = require '../../../../components/artwork_masonry/view'
+helpers = require './helpers'
 template = -> require('./templates/masonry.jade') arguments...
 
 layerQuery = """
@@ -17,7 +17,7 @@ layerQuery = """
       }
     }
   }
-  #{require '../../../../components/artwork_brick/query.coffee'}
+  #{require '../../../../components/artwork_brick/query'}
 """
 
 relatedQuery = """
@@ -28,7 +28,7 @@ relatedQuery = """
       }
     }
   }
-  #{require '../../../../components/artwork_brick/query.coffee'}
+  #{require '../../../../components/artwork_brick/query'}
 """
 
 module.exports = class ArtworkRelatedArtworksView extends Backbone.View

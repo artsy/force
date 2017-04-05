@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-FlashMessage = require '../../../../components/flash/index.coffee'
-Form = require '../../../../components/form/index.coffee'
+FlashMessage = require '../../../../components/flash/index'
+Form = require '../../../../components/form/index'
 
 module.exports = class GenericFormView extends Backbone.View
   events:

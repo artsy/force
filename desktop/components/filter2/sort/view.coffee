@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-BorderedPulldown = require '../../bordered_pulldown/view.coffee'
+BorderedPulldown = require '../../bordered_pulldown/view'
 
 module.exports = class SortView extends Backbone.View
 

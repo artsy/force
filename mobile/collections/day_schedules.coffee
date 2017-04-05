@@ -1,7 +1,7 @@
 _ = require 'underscore'
 moment = require 'moment'
 Backbone = require 'backbone'
-DaySchedule = require '../models/day_schedule.coffee'
+DaySchedule = require '../models/day_schedule'
 
 module.exports = class DaySchedules extends Backbone.Collection
 

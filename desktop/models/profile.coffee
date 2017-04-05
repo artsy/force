@@ -2,12 +2,12 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CoverImage = require './cover_image.coffee'
-Icon = require './icon.coffee'
-Artworks = require '../collections/artworks.coffee'
+CoverImage = require './cover_image'
+Icon = require './icon'
+Artworks = require '../collections/artworks'
 { Markdown } = require 'artsy-backbone-mixins'
-{ compactObject } = require './mixins/compact_object.coffee'
-Relations = require './mixins/relations/profile.coffee'
+{ compactObject } = require './mixins/compact_object'
+Relations = require './mixins/relations/profile'
 
 module.exports = class Profile extends Backbone.Model
   _.extend @prototype, Relations

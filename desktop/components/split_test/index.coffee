@@ -1,5 +1,5 @@
-runningTests = require './running_tests.coffee'
-SplitTest = require './split_test.coffee'
+runningTests = require './running_tests'
+SplitTest = require './split_test'
 
 module.exports = (key) ->
   return unless (config = runningTests[key])?

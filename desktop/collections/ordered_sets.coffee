@@ -2,8 +2,8 @@ Q = require 'bluebird-q'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-FeaturedLink = require '../models/featured_link.coffee'
-OrderedSet = require '../models/ordered_set.coffee'
+FeaturedLink = require '../models/featured_link'
+OrderedSet = require '../models/ordered_set'
 
 class OrderedSets extends Backbone.Collection
   url: "#{sd.API_URL}/api/v1/sets"

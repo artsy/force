@@ -5,9 +5,9 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../../models/fair.coffee'
-Profile = require '../../../../models/profile.coffee'
-FeedItem = require '../../../../components/feed/models/feed_item.coffee'
+Fair = require '../../../../models/fair'
+Profile = require '../../../../models/profile'
+FeedItem = require '../../../../components/feed/models/feed_item'
 
 describe 'ForYouView', ->
 
@@ -22,7 +22,7 @@ describe 'ForYouView', ->
       sinon.stub Backbone, 'sync'
       Backbone.$ = $
 
-      @ForYouView = benv.require resolve(__dirname, '../../client/for_you.coffee')
+      @ForYouView = benv.require resolve(__dirname, '../../client/for_you')
 
       @ArtworkColumnsView = sinon.stub()
       @ArtworkColumnsView.render = sinon.stub()

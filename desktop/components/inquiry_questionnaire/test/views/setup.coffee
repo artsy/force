@@ -7,7 +7,7 @@ CurrentUser = require '../../../../models/current_user'
 LoggedOutUser = require '../../../../models/logged_out_user'
 Artwork = require '../../../../models/artwork'
 ArtworkInquiry = require '../../../../models/artwork_inquiry'
-State = require '../../../branching_state/index.coffee'
+State = require '../../../branching_state/index'
 StepView = require '../../views/step'
 
 module.exports = (cb) -> _.wrap cb, (cb) ->

@@ -1,10 +1,10 @@
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-CurrentUser = require '../../../../models/current_user.coffee'
-Artworks = require '../../../../collections/artworks.coffee'
-Partner = require '../../../../models/partner.coffee'
-Profile = require '../../../../models/profile.coffee'
+CurrentUser = require '../../../../models/current_user'
+Artworks = require '../../../../collections/artworks'
+Partner = require '../../../../models/partner'
+Profile = require '../../../../models/profile'
 _ = require 'underscore'
 fixtures = require '../../../../test/helpers/fixtures'
 
@@ -18,7 +18,7 @@ describe 'PartnerRouter', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @PartnerRouter = benv.require resolve(__dirname, '../../client/router.coffee')
+      @PartnerRouter = benv.require resolve(__dirname, '../../client/router')
       done()
 
   after ->

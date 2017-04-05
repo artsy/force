@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-FairEvent = require '../../models/fair_event.coffee'
+FairEvent = require '../../models/fair_event'
 { fabricate } = require 'antigravity'
 moment = require 'moment'
 

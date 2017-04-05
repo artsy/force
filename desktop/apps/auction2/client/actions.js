@@ -1,4 +1,4 @@
-import metaphysics from '../../../../lib/metaphysics.coffee'
+import metaphysics from '../../../../lib/metaphysics'
 import { filterQuery } from '../queries/filter'
 import { worksByFollowedArtists } from '../queries/works_by_followed_artists'
 

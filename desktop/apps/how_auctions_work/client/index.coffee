@@ -1,5 +1,5 @@
-multiPageView = require '../../../components/multi_page/index.coffee'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
+multiPageView = require '../../../components/multi_page/index'
+AuthModalView = require '../../../components/auth_modal/view'
 
 module.exports.init = ->
   view = multiPageView 'auction-faqs'

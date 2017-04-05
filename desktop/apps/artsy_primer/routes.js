@@ -7,7 +7,7 @@ import {
   SAILTHRU_KEY,
   SAILTHRU_SECRET,
   SAILTHRU_MASTER_LIST
-} from '../../config.coffee'
+} from '../../config'
 
 const sailThruClient = require('sailthru-client')
   .createSailthruClient(SAILTHRU_KEY, SAILTHRU_SECRET)

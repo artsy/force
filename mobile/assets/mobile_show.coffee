@@ -7,7 +7,7 @@ require 'jquery'
 hash =
 
   '^/show/.*': ->
-    require('../apps/show/client/index.coffee').init()
+    require('../apps/show/client/index').init()
 
 # On DOM load iterate through the hash and load that app's JS
 $ ->

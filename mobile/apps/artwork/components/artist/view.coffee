@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FollowArtists = require '../../../../collections/follow_artists.coffee'
-FollowButtonView = require '../../../../components/follow_button/view.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+FollowArtists = require '../../../../collections/follow_artists'
+FollowButtonView = require '../../../../components/follow_button/view'
+CurrentUser = require '../../../../models/current_user'
 jqueryFillwidthLite = require 'jquery-fillwidth-lite'
 imagesLoaded = require 'imagesloaded'
 

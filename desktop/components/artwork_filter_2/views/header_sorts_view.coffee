@@ -1,5 +1,5 @@
 _ = require 'underscore'
-BorderedPulldown = require '../../bordered_pulldown/view.coffee'
+BorderedPulldown = require '../../bordered_pulldown/view'
 template = -> require('../templates/header_sorts_view.jade') arguments...
 
 

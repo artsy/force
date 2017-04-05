@@ -1,4 +1,4 @@
-DateHelpers = require '../../../components/util/date_helpers.coffee'
+DateHelpers = require '../../../components/util/date_helpers'
 _ = require 'underscore'
 
 module.exports =

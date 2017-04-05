@@ -1,5 +1,5 @@
-modalize = require '../../../../components/modalize/index.coffee'
-EventsModalView = require './view.coffee'
+modalize = require '../../../../components/modalize/index'
+EventsModalView = require './view'
 
 module.exports = (options = {}) ->
   view = new EventsModalView options

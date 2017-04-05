@@ -1,10 +1,10 @@
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { defer } = require 'underscore'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-FillwidthView = require '../../../../components/fillwidth_row/view.coffee'
-Profiles = require '../../../../collections/profiles.coffee'
-QuasiInfiniteView = require '../quasi_infinite/view.coffee'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
+FillwidthView = require '../../../../components/fillwidth_row/view'
+Profiles = require '../../../../collections/profiles'
+QuasiInfiniteView = require '../quasi_infinite/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class GalleriesInstitutionsView extends QuasiInfiniteView

@@ -10,7 +10,7 @@ module.exports = class Artists extends Backbone.Collection
   _.extend @prototype, Fetch(sd.API_URL)
 
   initialize: ->
-    @model = require '../models/artist.coffee'
+    @model = require '../models/artist'
 
   toSentence: ->
     toSentence @pluck('name')

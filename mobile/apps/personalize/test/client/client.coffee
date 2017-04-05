@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-PersonalizeState = require '../../client/personalize_state.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+PersonalizeState = require '../../client/personalize_state'
+CurrentUser = require '../../../../models/current_user'
 benv = require 'benv'
 { resolve } = require 'path'
 
@@ -74,7 +74,7 @@ describe 'LocationView', ->
   describe '#update', ->
     before ->
       # Mock response of New York
-      @location = require './location.coffee'
+      @location = require './location'
 
     it 'sets the location on the user', ->
       @view.update @location

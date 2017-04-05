@@ -5,11 +5,11 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 moment = require 'moment'
 routes = rewire '../routes'
-CurrentUser = require '../../../models/current_user.coffee'
-Fair = require '../../../models/fair.coffee'
-Fairs = require '../../../collections/fairs.coffee'
-FairOrganizer = require '../../../models/fair_organizer.coffee'
-Profile = require '../../../models/profile.coffee'
+CurrentUser = require '../../../models/current_user'
+Fair = require '../../../models/fair'
+Fairs = require '../../../collections/fairs'
+FairOrganizer = require '../../../models/fair_organizer'
+Profile = require '../../../models/profile'
 
 describe 'Fair Organization routes', ->
 

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-markdown = require '../util/markdown.coffee'
-Page = require '../../models/page.coffee'
-mediator = require '../../lib/mediator.coffee'
+markdown = require '../util/markdown'
+Page = require '../../models/page'
+mediator = require '../../lib/mediator'
 template = -> require('./template.jade') arguments...
 
 module.exports = class MultiPageView extends Backbone.View

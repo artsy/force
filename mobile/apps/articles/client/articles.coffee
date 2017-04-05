@@ -1,12 +1,12 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Articles = require '../../../collections/articles.coffee'
-EditorialSignupView = require './editorial_signup.coffee'
+Articles = require '../../../collections/articles'
+EditorialSignupView = require './editorial_signup'
 articleTemplate = -> require('../templates/articles_feed.jade') arguments...
 request = require 'superagent'
-{ crop } = require '../../../components/resizer/index.coffee'
+{ crop } = require '../../../components/resizer/index'
 { toSentence } = require 'underscore.string'
 
 module.exports.MagazineView = class MagazineView extends Backbone.View

@@ -1,6 +1,6 @@
 { DATA, PATHS } = require('sharify').data
 
-JSONPageEditor = require '../components/json_page/client/editor.coffee'
+JSONPageEditor = require '../components/json_page/client/editor'
 
 require('backbone').$ = $
 $ ->

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Order = require '../../models/order.coffee'
+Order = require '../../models/order'
 
 fetchPendingOrder = (req, res, options) ->
   new Order().fetchPendingOrder _.extend(

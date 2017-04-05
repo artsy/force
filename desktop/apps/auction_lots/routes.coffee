@@ -6,7 +6,7 @@ Artwork = require '../../models/artwork'
 Artworks = require '../../collections/artworks'
 AuctionLot = require '../../models/auction_lot'
 AuctionLots = require '../../collections/auction_lots'
-totalCount = require '../../../node_modules/artsy-ezel-components/pagination/total_count'
+totalCount = require 'artsy-ezel-components/pagination/total_count'
 
 randomPage = (total, pageSize) ->
   Math.floor(Math.random() * (total / pageSize)) + 1

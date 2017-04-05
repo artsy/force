@@ -9,7 +9,7 @@ Backbone = require 'backbone'
 Search = require '../../../collections/search'
 SearchResult = require '../../../models/search_result'
 sinon = require 'sinon'
-fixture = require '../../../test/helpers/fixtures.coffee'
+fixture = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"

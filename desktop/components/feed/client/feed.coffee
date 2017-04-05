@@ -1,15 +1,15 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../models/artwork.coffee'
+Artworks = require '../../../models/artwork'
 sd = require('sharify').data
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-mediator = require '../../../lib/mediator.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-FeedItems = require '../collections/feed_items.coffee'
-Profile = require '../../../models/profile.coffee'
-FollowProfiles = require '../../../collections/follow_profiles.coffee'
-FeedItem = require '../models/feed_item.coffee'
-FeedItemView = require('./feed_item.coffee').FeedItemView
+analyticsHooks = require '../../../lib/analytics_hooks'
+mediator = require '../../../lib/mediator'
+CurrentUser = require '../../../models/current_user'
+FeedItems = require '../collections/feed_items'
+Profile = require '../../../models/profile'
+FollowProfiles = require '../../../collections/follow_profiles'
+FeedItem = require '../models/feed_item'
+FeedItemView = require('./feed_item').FeedItemView
 feedItemsTemplate = -> require('../templates/feed_items.jade') arguments...
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 

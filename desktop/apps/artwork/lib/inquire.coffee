@@ -1,8 +1,8 @@
 Promise = require 'bluebird-q'
-User = require '../../../models/user.coffee'
-Artwork = require '../../../models/artwork.coffee'
-ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-openInquiryQuestionnaireFor = require '../../../components/inquiry_questionnaire/index.coffee'
+User = require '../../../models/user'
+Artwork = require '../../../models/artwork'
+ArtworkInquiry = require '../../../models/artwork_inquiry'
+openInquiryQuestionnaireFor = require '../../../components/inquiry_questionnaire/index'
 
 module.exports = (id) ->
   user = User.instantiate()

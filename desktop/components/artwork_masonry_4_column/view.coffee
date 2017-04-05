@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 { invoke } = require 'underscore'
-User = require '../../models/user.coffee'
-masonry = require './index.coffee'
-BrickView = require '../artwork_brick/view.coffee'
+User = require '../../models/user'
+masonry = require './index'
+BrickView = require '../artwork_brick/view'
 template = -> require('./index.jade') arguments...
 columnTemplate = -> require('./column.jade') arguments...
 

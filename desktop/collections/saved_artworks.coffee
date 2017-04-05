@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 { stringify } = require 'qs'
 { map, groupBy, toArray, without } = require 'underscore'
 { API_URL, CURRENT_USER } = require('sharify').data
-SavedArtwork = require '../models/saved_artwork.coffee'
+SavedArtwork = require '../models/saved_artwork'
 
 chunk = (array, size = 1) ->
   chunks = groupBy array, (x, i) -> Math.floor i / size

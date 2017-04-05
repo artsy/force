@@ -4,9 +4,9 @@ FairEvent = require '../../models/fair_event'
 FairEvents = require '../../collections/fair_events'
 Q = require 'bluebird-q'
 embed = require 'particle'
-{ resize } = require '../../components/resizer/index.coffee'
+{ resize } = require '../../components/resizer/index'
 Article = require '../../models/article'
-InfoMenu = require '../../components/info_menu/index.coffee'
+InfoMenu = require '../../components/info_menu/index'
 Articles = require '../../collections/articles'
 
 @assignFair = (req, res, next) ->

@@ -5,7 +5,7 @@ rewire = require 'rewire'
 Q = require 'bluebird-q'
 { fabricate } = require 'antigravity'
 routes = rewire '../routes'
-ViewHelpers = require '../helpers/view_helpers.coffee'
+ViewHelpers = require '../helpers/view_helpers'
 
 describe 'Fairs routes', ->
   beforeEach ->

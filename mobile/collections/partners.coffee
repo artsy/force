@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { AToZ, Fetch } = require 'artsy-backbone-mixins'
-Partner = require '../models/partner.coffee'
+Partner = require '../models/partner'
 
 module.exports = class Partners extends Backbone.Collection
   _.extend @prototype, AToZ

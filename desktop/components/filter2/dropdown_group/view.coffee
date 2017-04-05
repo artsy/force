@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-DropdownView = require '../dropdown/view.coffee'
+DropdownView = require '../dropdown/view'
 
 module.exports = class DropdownGroupView extends Backbone.View
   subViews: {}

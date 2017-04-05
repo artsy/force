@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-PartnerLocation = require '../models/partner_location.coffee'
+PartnerLocation = require '../models/partner_location'
 
 module.exports = class PartnerLocations extends Backbone.Collection
   model: PartnerLocation

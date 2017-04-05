@@ -3,7 +3,7 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 { parse } = require 'url'
 { API_URL } = require('sharify').data
-Form = require '../../../components/mixins/form.coffee'
+Form = require '../../../components/mixins/form'
 
 module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
   _.extend @prototype, Form

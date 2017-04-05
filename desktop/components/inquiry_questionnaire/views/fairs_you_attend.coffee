@@ -1,4 +1,4 @@
-Affiliated = require './affiliated.coffee'
+Affiliated = require './affiliated'
 
 module.exports = class FairsYouAttend extends Affiliated
   title: 'What fairs do you attend?'

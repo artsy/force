@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 s = require 'underscore.string'
-mediumMap = require '../../filters/medium/medium_map.coffee'
+mediumMap = require '../../filters/medium/medium_map'
 { formatMoney } = require 'accounting'
 
 template = -> require('./index.jade') arguments...

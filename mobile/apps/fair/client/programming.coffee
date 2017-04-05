@@ -1,5 +1,5 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 moment = require 'moment'
 Backbone = require 'backbone'
 sd = require('sharify').data

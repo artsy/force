@@ -15,7 +15,7 @@ Item = require '../../../models/item'
 Items = require '../../../collections/items'
 OrderedSet = require '../../../models/ordered_set'
 OrderedSets = require '../../../collections/ordered_sets'
-fixtures = require '../../../test/helpers/fixtures.coffee'
+fixtures = require '../../../test/helpers/fixtures'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
 

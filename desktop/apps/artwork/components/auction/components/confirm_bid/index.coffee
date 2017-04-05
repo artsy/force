@@ -1,5 +1,5 @@
 { PARAMS, CURRENT_USER } = require('sharify').data
-modalize = require '../../../../../../components/modalize/index.coffee'
+modalize = require '../../../../../../components/modalize/index'
 { history } = require 'backbone'
 
 module.exports = (number) ->

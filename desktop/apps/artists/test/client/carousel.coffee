@@ -28,7 +28,7 @@ describe 'CarouselView', ->
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
-      @CarouselView = require '../../client/carousel.coffee'
+      @CarouselView = require '../../client/carousel'
       done()
 
   after ->

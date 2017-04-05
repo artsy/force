@@ -1,8 +1,8 @@
 { Router } = require 'backbone'
 { COLLECTOR_PROFILE } = require('sharify').data
-User = require '../../../models/user.coffee'
-ProfessionalBuyerLandingView = require '../pages/landing/client/view.coffee'
-ProfessionalBuyerCompleteView = require '../pages/complete/client/view.coffee'
+User = require '../../../models/user'
+ProfessionalBuyerLandingView = require '../pages/landing/client/view'
+ProfessionalBuyerCompleteView = require '../pages/complete/client/view'
 
 module.exports = class ProfessionalBuyerRouter extends Router
   routes:

@@ -1,5 +1,5 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-NotificationsView = require './view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+NotificationsView = require './view'
 
 module.exports = ->
   bootstrap()

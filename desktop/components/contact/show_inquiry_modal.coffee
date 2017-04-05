@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-FlashMessage = require '../flash/index.coffee'
-openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
-User = require '../../models/user.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-Partner = require '../../models/partner.coffee'
+ContactView = require './view'
+analyticsHooks = require '../../lib/analytics_hooks'
+FlashMessage = require '../flash/index'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index'
+User = require '../../models/user'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
+Partner = require '../../models/partner'
 { SESSION_ID, API_URL } = require('sharify').data
 
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-initCarousel = require './index.coffee'
+initCarousel = require './index'
 template = -> require('./templates/bottom_navigation.jade') arguments...
 
 module.exports = ($el, options = {}, callback) ->

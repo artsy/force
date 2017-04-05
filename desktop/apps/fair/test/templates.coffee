@@ -16,7 +16,7 @@ Item = require '../../../models/item'
 Items = require '../../../collections/items'
 OrderedSet = require '../../../models/ordered_set'
 OrderedSets = require '../../../collections/ordered_sets'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
+FilterArtworks = require '../../../collections/filter_artworks'
 FeedItem = require '../../../components/feed/models/feed_item'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
@@ -210,7 +210,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
@@ -245,7 +245,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
@@ -286,7 +286,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
@@ -311,7 +311,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
@@ -335,7 +335,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
       $.html().should.containEql 'fair-overview-curator'
@@ -355,7 +355,7 @@ describe 'Fair', ->
         _: _
         counts: @collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map'
         _s: _s
         infoMenu: {events: true, programming: true, artsyAtTheFair: true}
 
@@ -435,7 +435,7 @@ describe 'Fair', ->
           params: params
           profile: profile
           counts: filterArtworks.counts
-          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map'
           _: _
           _s: _s
           asset: (->)
@@ -463,7 +463,7 @@ describe 'Fair', ->
           params: params
           profile: profile
           counts: filterArtworks.counts
-          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map'
           _: _
           _s: _s
           asset: (->)
@@ -491,7 +491,7 @@ describe 'Fair', ->
           params: params
           profile: profile
           counts: filterArtworks.counts
-          filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
+          filterLabelMap: require '../../../components/filter2/dropdown/label_map'
           _: _
           _s: _s
           asset: (->)

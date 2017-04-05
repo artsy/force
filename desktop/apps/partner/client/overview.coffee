@@ -1,12 +1,12 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Partner = require '../../../models/partner.coffee'
-PartnerArtists = require '../../../collections/partner_artists.coffee'
-PartnerShowsGrid = require './shows_grid.coffee'
-PartnerLocations = require '../../../collections/partner_locations.coffee'
-ArtistsListView = require './artists_list.coffee'
+CurrentUser = require '../../../models/current_user'
+Partner = require '../../../models/partner'
+PartnerArtists = require '../../../collections/partner_artists'
+PartnerShowsGrid = require './shows_grid'
+PartnerLocations = require '../../../collections/partner_locations'
+ArtistsListView = require './artists_list'
 template = -> require('../templates/overview.jade') arguments...
 artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 

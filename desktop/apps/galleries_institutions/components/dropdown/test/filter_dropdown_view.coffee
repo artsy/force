@@ -3,9 +3,9 @@ fs = require 'fs'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-FilterDropdownView = require '../filter_dropdown_view.coffee'
-PartnerFilterFacet = require '../../filter_facet/partner_filter_facet.coffee'
-FilterParams = require '../../parameters/filter_params.coffee'
+FilterDropdownView = require '../filter_dropdown_view'
+PartnerFilterFacet = require '../../filter_facet/partner_filter_facet'
+FilterParams = require '../../parameters/filter_params'
 
 describe 'FilterDropdownView', ->
   before (done) ->

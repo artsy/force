@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artist = require './artist.coffee'
+Artist = require './artist'
 
 module.exports.FairTrend = class FairTrend extends Backbone.Model
 

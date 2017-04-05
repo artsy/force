@@ -1,13 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../models/artwork.coffee'
+Artworks = require '../../../models/artwork'
 sd = require('sharify').data
-ShareView = require '../../share/view.coffee'
-AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
-SaveControls = require '../../artwork_item/save_controls.coffee'
-ContactPartnerView = require '../../contact/contact_partner.coffee'
+ShareView = require '../../share/view'
+AcquireArtwork = require('../../acquire/view').acquireArtwork
+SaveControls = require '../../artwork_item/save_controls'
+ContactPartnerView = require '../../contact/contact_partner'
 artworkColumns = -> require('../../artwork_columns/template.jade') arguments...
-Artwork = require('../../../models/artwork.coffee')
+Artwork = require('../../../models/artwork')
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 

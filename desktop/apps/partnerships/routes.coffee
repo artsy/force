@@ -3,7 +3,7 @@ knox = require 'knox'
 url = require 'url'
 request = require 'superagent'
 client = null
-{ S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
+{ S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config'
 { crop } = require '../../components/resizer'
 
 getJSON = (subject, callback) ->

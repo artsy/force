@@ -1,6 +1,6 @@
 { GEMINI_CLOUDFRONT_URL } = require('sharify').data
-config = require '../config.coffee'
-resizer = require './index.coffee'
+config = require '../config'
+resizer = require './index'
 
 module.exports = gemini =
   endpoint: GEMINI_CLOUDFRONT_URL

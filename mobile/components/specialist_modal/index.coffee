@@ -1,6 +1,6 @@
-SpecialistsView = require './client/specialist_view.coffee'
-Representatives = require '../../collections/representatives.coffee'
-ModalView = require '../modal/view.coffee'
+SpecialistsView = require './client/specialist_view'
+Representatives = require '../../collections/representatives'
+ModalView = require '../modal/view'
 
 module.exports = ($el)->
   collection = new Representatives

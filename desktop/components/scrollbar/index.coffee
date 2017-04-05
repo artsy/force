@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Device = require '../util/device.coffee'
+Device = require '../util/device'
 
 module.exports = class Scrollbar
   constructor: ->

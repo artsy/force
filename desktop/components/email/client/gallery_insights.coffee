@@ -1,8 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
-CTABarView = require '../../cta_bar/view.coffee'
+CTABarView = require '../../cta_bar/view'
 Backbone = require 'backbone'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 marketoForm = -> require('../templates/marketo_form.jade') arguments...
 qs = require 'querystring'
 

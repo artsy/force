@@ -1,6 +1,6 @@
-StepView = require './step.coffee'
+StepView = require './step'
 template = -> require('../../templates/collect.jade') arguments...
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../../lib/analytics_hooks'
 
 module.exports = class CollectView extends StepView
   events:

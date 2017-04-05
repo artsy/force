@@ -1,14 +1,14 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artist = require '../models/artist.coffee'
-Icon = require '../models/icon.coffee'
-Profile = require '../models/profile.coffee'
-Artists = require '../collections/artists.coffee'
-PartnerLocations = require '../collections/partner_locations.coffee'
-PartnerShows = require '../collections/partner_shows.coffee'
+Artist = require '../models/artist'
+Icon = require '../models/icon'
+Profile = require '../models/profile'
+Artists = require '../collections/artists'
+PartnerLocations = require '../collections/partner_locations'
+PartnerShows = require '../collections/partner_shows'
 fetchUntilEnd = require('artsy-backbone-mixins').Fetch().fetchUntilEnd
-Relations = require './mixins/relations/partner.coffee'
+Relations = require './mixins/relations/partner'
 
 module.exports = class Partner extends Backbone.Model
   _.extend @prototype, Relations

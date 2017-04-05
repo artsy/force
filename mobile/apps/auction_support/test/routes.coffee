@@ -3,7 +3,7 @@ routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 moment = require 'moment'
 openSale = fabricate 'sale',
   name: 'Awesome Sale'

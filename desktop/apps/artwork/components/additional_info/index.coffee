@@ -1,5 +1,5 @@
-tabs = require '../../../../components/side_tabs/index.coffee'
-gradient = require '../../../../components/gradient_blurb/index.coffee'
+tabs = require '../../../../components/side_tabs/index'
+gradient = require '../../../../components/gradient_blurb/index'
 
 module.exports = ->
   tabs $('.js-artwork-additional-info')

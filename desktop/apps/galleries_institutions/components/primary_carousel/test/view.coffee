@@ -1,7 +1,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-Profiles = require '../../../../../collections/profiles.coffee'
+Profiles = require '../../../../../collections/profiles'
 rewire = require 'rewire'
 PrimaryCarousel = rewire '../view.coffee'
 { fabricate } = require 'antigravity'

@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-Form = require '../form.coffee'
+Form = require '../form'
 errorResponses = require './error_responses'
 
 class FormView extends Backbone.View

@@ -1,5 +1,5 @@
 sinon = require 'sinon'
-redirectExternalLinks = require '../../../lib/middleware/redirect_external_links.coffee'
+redirectExternalLinks = require '../../../lib/middleware/redirect_external_links'
 
 describe 'redirectExternalLinks', ->
 

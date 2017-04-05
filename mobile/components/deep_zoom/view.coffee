@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-getScript = require '../../lib/get_script.coffee'
+getScript = require '../../lib/get_script'
 { SEADRAGON_URL }  = require('sharify').data
 template = -> require('./template.jade') arguments...
 

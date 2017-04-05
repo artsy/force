@@ -2,9 +2,9 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 mainTemplate = -> require('./templates/main.jade') arguments...
 listTemplate = -> require('./templates/list.jade') arguments...
-Artists = require '../../collections/artists.coffee'
-FillwidthView = require '../fillwidth_row/view.coffee'
-{ Following, FollowButton } = require '../follow_button/index.coffee'
+Artists = require '../../collections/artists'
+FillwidthView = require '../fillwidth_row/view'
+{ Following, FollowButton } = require '../follow_button/index'
 
 module.exports = class ArtistFillwidthList extends Backbone.View
   subViews: []

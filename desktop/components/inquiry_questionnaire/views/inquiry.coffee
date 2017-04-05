@@ -1,11 +1,11 @@
 Q = require 'bluebird-q'
 _ = require 'underscore'
-StepView = require './step.coffee'
-Form = require '../../form/index.coffee'
-defaultMessage = require '../../contact/default_message.coffee'
-ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-alertable = require '../../alertable_input/index.coffee'
-hasSeen = require '../../has_seen/index.coffee'
+StepView = require './step'
+Form = require '../../form/index'
+defaultMessage = require '../../contact/default_message'
+ArtworkInquiry = require '../../../models/artwork_inquiry'
+alertable = require '../../alertable_input/index'
+hasSeen = require '../../has_seen/index'
 template = -> require('../templates/inquiry.jade') arguments...
 
 module.exports = class Inquiry extends StepView

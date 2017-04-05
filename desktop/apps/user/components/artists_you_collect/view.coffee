@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-UserInterestsView = require '../../../../components/user_interests/view.coffee'
+UserInterestsView = require '../../../../components/user_interests/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ArtistsYouCollectView extends Backbone.View

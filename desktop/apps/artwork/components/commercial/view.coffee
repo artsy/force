@@ -1,15 +1,15 @@
 { pick, extend } = require 'underscore'
 Backbone = require 'backbone'
-User = require '../../../../models/user.coffee'
-Artwork = require '../../../../models/artwork.coffee'
-Fair = require '../../../../models/fair.coffee'
-ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
-Form = require '../../../../components/form/index.coffee'
-PendingOrder = require '../../../../models/pending_order.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
-openMultiPageModal = require '../../../../components/multi_page_modal/index.coffee'
-openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index.coffee'
-splitTest = require '../../../../components/split_test/index.coffee'
+User = require '../../../../models/user'
+Artwork = require '../../../../models/artwork'
+Fair = require '../../../../models/fair'
+ArtworkInquiry = require '../../../../models/artwork_inquiry'
+Form = require '../../../../components/form/index'
+PendingOrder = require '../../../../models/pending_order'
+analyticsHooks = require '../../../../lib/analytics_hooks'
+openMultiPageModal = require '../../../../components/multi_page_modal/index'
+openInquiryQuestionnaireFor = require '../../../../components/inquiry_questionnaire/index'
+splitTest = require '../../../../components/split_test/index'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 
@@ -125,8 +125,8 @@ module.exports = class ArtworkCommercialView extends Backbone.View
     html = template extend @data, { fair },
       helpers: extend [
         {}
-        commercial: require './helpers.coffee'
-        partner_stub: require '../partner_stub/helpers.coffee'
+        commercial: require './helpers'
+        partner_stub: require '../partner_stub/helpers'
       ]...
     @$el.html $(html)
     this

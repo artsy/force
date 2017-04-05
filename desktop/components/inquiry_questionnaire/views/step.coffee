@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-form = require '../../form/utilities.coffee'
+form = require '../../form/utilities'
 
 module.exports = class StepView extends Backbone.View
   __events__: null

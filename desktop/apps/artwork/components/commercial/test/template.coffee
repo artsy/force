@@ -5,7 +5,7 @@ path = require 'path'
 fs = require 'fs'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-helpers = require '../helpers.coffee'
+helpers = require '../helpers'
 inquireableArtwork = require './fixtures/inquireable.json'
 
 render = (templateName) ->

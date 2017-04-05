@@ -26,12 +26,12 @@ module.exports = """
       }
     }
   }
-  #{require '../../../components/artwork_brick/query.coffee'}
-  #{require '../components/auction_context/query.coffee'}
-  #{require '../components/fair_context/query.coffee'}
-  #{require '../components/popular_artists_context/query.coffee'}
-  #{require '../components/followed_artists/query.coffee'}
-  #{require '../components/gene_context/query.coffee'}
-  #{require '../components/related_artists_context/query.coffee'}
-  #{require '../components/followed_artist_context/query.coffee'}
+  #{require '../../../components/artwork_brick/query'}
+  #{require '../components/auction_context/query'}
+  #{require '../components/fair_context/query'}
+  #{require '../components/popular_artists_context/query'}
+  #{require '../components/followed_artists/query'}
+  #{require '../components/gene_context/query'}
+  #{require '../components/related_artists_context/query'}
+  #{require '../components/followed_artist_context/query'}
 """

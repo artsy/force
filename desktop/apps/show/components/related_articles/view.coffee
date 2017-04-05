@@ -1,6 +1,6 @@
 _ = require 'underscore'
 template = -> require('./template.jade') arguments...
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
 Backbone = require 'backbone'
 module.exports = class RelatedArticlesView extends Backbone.View
 

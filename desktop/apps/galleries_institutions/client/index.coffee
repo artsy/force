@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-PartnersView = require './routes/index.coffee'
-FilterParams = require '../components/parameters/filter_params.coffee'
+PartnersView = require './routes/index'
+FilterParams = require '../components/parameters/filter_params'
 qs = require 'qs'
 url = require 'url'
 

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { numberFormat } = require 'underscore.string'
-User = require '../../../../models/user.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+User = require '../../../../models/user'
+mediator = require '../../../../lib/mediator'
 template = -> require('./index.jade') arguments...
 
 module.exports = class FollowedArtistsFilterView extends Backbone.View

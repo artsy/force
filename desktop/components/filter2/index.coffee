@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
-FilterView = require './view.coffee'
-FilterRouter = require './router/index.coffee'
+FilterArtworks = require '../../collections/filter_artworks'
+FilterView = require './view'
+FilterRouter = require './router/index'
 
 module.exports =
 

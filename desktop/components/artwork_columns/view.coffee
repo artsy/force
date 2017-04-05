@@ -1,11 +1,11 @@
 _ = require 'underscore'
-AdditionalImage = require '../../models/additional_image.coffee'
+AdditionalImage = require '../../models/additional_image'
 Backbone = require 'backbone'
-CurrentUser = require '../../models/current_user.coffee'
-User = require '../../models/user.coffee'
-ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
-openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
-SaveControls = require '../artwork_item/save_controls.coffee'
+CurrentUser = require '../../models/current_user'
+User = require '../../models/user'
+ArtworkInquiry = require '../../models/artwork_inquiry'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index'
+SaveControls = require '../artwork_item/save_controls'
 artworkColumns = -> require('./template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
 

@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-AuthModalView = require '../auth_modal/view.coffee'
-State = require './models/state.coffee'
-mediator = require '../../lib/mediator.coffee'
-ContactPartnerView = require '../contact/contact_partner.coffee'
-{ acquireArtwork } = require '../acquire/view.coffee'
+AuthModalView = require '../auth_modal/view'
+State = require './models/state'
+mediator = require '../../lib/mediator'
+ContactPartnerView = require '../contact/contact_partner'
+{ acquireArtwork } = require '../acquire/view'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View

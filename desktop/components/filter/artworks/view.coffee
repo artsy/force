@@ -1,13 +1,13 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
-FilterSortCount = require '../sort_count/view.coffee'
-ArtworkColumnsView = require '../../artwork_columns/view.coffee'
-FilterArtworksNav = require '../artworks_nav/view.coffee'
-FilterFixedHeader = require '../fixed_header/view.coffee'
-FilterRouter = require '../router/index.coffee'
-FilterNav = require '../nav/view.coffee'
+Artworks = require '../../../collections/artworks'
+FilterSortCount = require '../sort_count/view'
+ArtworkColumnsView = require '../../artwork_columns/view'
+FilterArtworksNav = require '../artworks_nav/view'
+FilterFixedHeader = require '../fixed_header/view'
+FilterRouter = require '../router/index'
+FilterNav = require '../nav/view'
 COLUMN_WIDTH = 300
 
 humanize = require('underscore.string').humanize

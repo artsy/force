@@ -1,18 +1,18 @@
 { ARTIST, IS_PAYOFF, CURRENT_USER, INITIAL_ARTISTS } = sd = require('sharify').data
 Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
-Artist = require '../../../models/artist.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-ArtistRouter = require './router.coffee'
-FollowedArtistsRailView = require '../../home/components/followed_artists/view.coffee'
+Artist = require '../../../models/artist'
+CurrentUser = require '../../../models/current_user'
+ArtistRouter = require './router'
+FollowedArtistsRailView = require '../../home/components/followed_artists/view'
 
 module.exports.init = ->
   if IS_PAYOFF
     view = new FollowedArtistsRailView
       $el: $('.payoff-content__content')
       user: CURRENT_USER
-      module: 
-        context: 
+      module:
+        context:
           artists: INITIAL_ARTISTS
           counts:
             artists: INITIAL_ARTISTS.length

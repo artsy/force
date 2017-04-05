@@ -1,8 +1,8 @@
 { extend } = require 'underscore'
 Backbone = require 'backbone'
 { Countries } = require 'places'
-Form = require '../form/index.coffee'
-stripe = require '../stripe/index.coffee'
+Form = require '../form/index'
+stripe = require '../stripe/index'
 jQueryPayment = -> require 'jquery.payment'
 template = -> require('./index.jade') arguments...
 

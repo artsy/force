@@ -7,7 +7,7 @@ cheerio = require 'cheerio'
 { fabricate } = require 'antigravity'
 FeedItem = require '../models/feed_item'
 FeedItems = require '../collections/feed_items'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
 
 render = (templateName) ->

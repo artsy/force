@@ -1,10 +1,10 @@
 { extend } = require 'underscore'
 { View } = require 'backbone'
 { SHOW_PATH } = require('sharify').data
-Form = require '../../../../../components/form/index.coffee'
-scrollTo = require '../../../../../components/smooth_scroll/index.coffee'
-AuthModalView = require '../../../../../components/auth_modal/view.coffee'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
+Form = require '../../../../../components/form/index'
+scrollTo = require '../../../../../components/smooth_scroll/index'
+AuthModalView = require '../../../../../components/auth_modal/view'
+analyticsHooks = require '../../../../../lib/analytics_hooks'
 template = -> require('../templates/page.jade') arguments...
 
 module.exports = class ProfessionalBuyerIndexView extends View

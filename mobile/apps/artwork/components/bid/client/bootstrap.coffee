@@ -3,11 +3,11 @@
 # view setting body as the el, and loading the artwork from sharify data.
 #
 
-bootstrap = require '../../../../../components/layout/bootstrap.coffee'
-Artwork = require '../../../../../models/artwork.coffee'
-SubmitInquiryView = require './ask_specialist.coffee'
+bootstrap = require '../../../../../components/layout/bootstrap'
+Artwork = require '../../../../../models/artwork'
+SubmitInquiryView = require './ask_specialist'
 sd = require('sharify').data
-CurrentUser = require '../../../../../models/current_user.coffee'
+CurrentUser = require '../../../../../models/current_user'
 
 module.exports = () ->
   bootstrap()

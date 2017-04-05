@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Scrollbar = require '../scrollbar/index.coffee'
+Scrollbar = require '../scrollbar/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View

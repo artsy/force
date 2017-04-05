@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate2 } = require 'antigravity'
-FilterArtworks = require '../../../../collections/filter_artworks.coffee'
+FilterArtworks = require '../../../../collections/filter_artworks'
 
 describe 'Filter / Dropdown', ->
 
@@ -13,7 +13,7 @@ describe 'Filter / Dropdown', ->
       benv.expose
         $: benv.require 'jquery'
         _s: require('underscore.string')
-        filterLabelMap: require '../label_map.coffee'
+        filterLabelMap: require '../label_map'
       Backbone.$ = $
       DropdownView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
       @view = new DropdownView

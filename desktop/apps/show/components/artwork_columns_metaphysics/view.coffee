@@ -1,9 +1,9 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 template = -> require('./template.jade') arguments...
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-ViewHelpers = require '../../helpers/view_helpers.coffee'
-setupSaveControls = require '../save_artworks/index.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+ViewHelpers = require '../../helpers/view_helpers'
+setupSaveControls = require '../save_artworks/index'
 
 module.exports = class ArtworkColumnsView extends Backbone.View
   initialize: (options = {}) ->

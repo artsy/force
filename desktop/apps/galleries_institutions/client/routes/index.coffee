@@ -2,14 +2,14 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 _s = require 'underscore.string'
 { MAIN_PROFILES, CURRENT_USER } = require('sharify').data
-{ Following } = require '../../../../components/follow_button/index.coffee'
-Profiles = require '../../../../collections/profiles.coffee'
-LandingCarouselView = require './landing.coffee'
-PrimaryCarousel = require '../../components/primary_carousel/view.coffee'
-SearchResultsView = require '../../components/search_results/view.coffee'
-FilterDropdownView = require '../../components/dropdown/filter_dropdown_view.coffee'
-FetchFilterPartners = require '../../components/parameters/fetch_filter_partners.coffee'
-initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
+{ Following } = require '../../../../components/follow_button/index'
+Profiles = require '../../../../collections/profiles'
+LandingCarouselView = require './landing'
+PrimaryCarousel = require '../../components/primary_carousel/view'
+SearchResultsView = require '../../components/search_results/view'
+FilterDropdownView = require '../../components/dropdown/filter_dropdown_view'
+FetchFilterPartners = require '../../components/parameters/fetch_filter_partners'
+initFacets = require '../../components/filter_facet/init_filter_facets'
 
 module.exports = class PartnersView extends Backbone.View
 

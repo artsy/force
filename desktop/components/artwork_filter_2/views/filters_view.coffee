@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-Sticky = require '../../sticky/index.coffee'
-aggregationsMap = require '../aggregations_map.coffee'
+Sticky = require '../../sticky/index'
+aggregationsMap = require '../aggregations_map'
 template = -> require('../templates/filters.jade') arguments...
 
 module.exports = class ArtworkFiltersView extends Backbone.View

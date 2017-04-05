@@ -1,8 +1,8 @@
 _ = require 'underscore'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+mediator = require '../../../../lib/mediator'
 template = -> require('./index.jade') arguments...
-query = require './query.coffee'
+query = require './query'
 sd = require('sharify').data
 
 module.exports = ->

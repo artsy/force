@@ -3,6 +3,6 @@ module.exports = """
     ... artwork_metadata_stub_didactics
     ... artwork_metadata_stub_contact
   }
-  #{require './queries/didactics.coffee'}
-  #{require './queries/contact.coffee'}
+  #{require './queries/didactics'}
+  #{require './queries/contact'}
 """

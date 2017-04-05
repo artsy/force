@@ -8,7 +8,7 @@ Artworks = require '../../../../collections/artworks'
 Videos = require '../../../../collections/videos'
 FeaturedLinks = require '../../../../collections/featured_links'
 SaleArtwork = require '../../../../models/sale_artwork'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 benv = require 'benv'
 { resolve } = require 'path'
 

@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-{ acquireArtwork } = require('../../../../components/acquire/view.coffee')
+{ acquireArtwork } = require('../../../../components/acquire/view')
 
 module.exports = class MetaDataView extends Backbone.View
 

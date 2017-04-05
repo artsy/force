@@ -1,8 +1,8 @@
 sd = require('sharify').data
 Q = require 'bluebird-q'
 moment = require 'moment'
-Show = require '../../models/show.coffee'
-Location = require '../../models/location.coffee'
+Show = require '../../models/show'
+Location = require '../../models/location'
 
 
 module.exports.index = (req, res, next) ->

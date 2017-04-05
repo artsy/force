@@ -1,6 +1,6 @@
 { CLIENT } = require('sharify').data
-Sticky = require '../../../../components/sticky/index.coffee'
-ArtworkRelatedArtworksView = require './view.coffee'
+Sticky = require '../../../../components/sticky/index'
+ArtworkRelatedArtworksView = require './view'
 
 module.exports = ->
   $el = $('.js-artwork-related-artworks')

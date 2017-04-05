@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Form = require '../mixins/form.coffee'
-AuthModalView = require '../auth_modal/view.coffee'
-Cookies = require '../cookies/index.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+Form = require '../mixins/form'
+AuthModalView = require '../auth_modal/view'
+Cookies = require '../cookies/index'
+analyticsHooks = require '../../lib/analytics_hooks'
+CurrentUser = require '../../models/current_user'
 template = -> require('./template.jade') arguments...
 
 module.exports = class CTABarView extends Backbone.View

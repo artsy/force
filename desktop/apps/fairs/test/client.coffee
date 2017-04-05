@@ -5,10 +5,10 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-{ FairsView } = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
+{ FairsView } = benv.requireWithJadeify resolve(__dirname, '../client/index'), [
   'pastFairsTemplate'
 ]
-ViewHelpers = require '../helpers/view_helpers.coffee'
+ViewHelpers = require '../helpers/view_helpers'
 moment = require 'moment'
 
 describe 'FairsView', ->

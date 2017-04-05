@@ -1,7 +1,7 @@
-require '../lib/analytics_hooks.coffee'
-mediator = require '../lib/mediator.coffee'
-setupSplitTests = require '../components/split_test/setup.coffee'
-route = require '../lib/route_helpers.coffee'
+require '../lib/analytics_hooks'
+mediator = require '../lib/mediator'
+setupSplitTests = require '../components/split_test/setup'
+route = require '../lib/route_helpers'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
 

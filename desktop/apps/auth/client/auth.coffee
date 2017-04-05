@@ -3,10 +3,10 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 { parse } = require 'url'
 { API_URL } = require('sharify').data
-Form = require '../../../components/mixins/form.coffee'
-Mailcheck = require '../../../components/mailcheck/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
-LoggedOutUser = require '../../../models/logged_out_user.coffee'
+Form = require '../../../components/mixins/form'
+Mailcheck = require '../../../components/mailcheck/index'
+mediator = require '../../../lib/mediator'
+LoggedOutUser = require '../../../models/logged_out_user'
 
 module.exports.SignUpView = class SignUpView extends Backbone.View
   _.extend @prototype, Form

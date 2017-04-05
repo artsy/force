@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-TeamChannelNavView = require '../view.coffee'
+TeamChannelNavView = require '../view'
 sd = require('sharify').data
 
 describe 'TeamChannelView', ->

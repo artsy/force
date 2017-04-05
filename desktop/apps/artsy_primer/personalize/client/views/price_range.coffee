@@ -1,11 +1,11 @@
 { formatMoney } = require 'accounting'
-StepView = require './step.coffee'
-createSlider = require '../../../../../components/slider/index.coffee'
+StepView = require './step'
+createSlider = require '../../../../../components/slider/index'
 template = -> require('../../templates/price_range.jade') arguments...
 
 module.exports = class PriceRangeView extends StepView
 
-  events: 
+  events:
     'keyup #anything-else' : 'updateNotes'
 
   formatter: (val, index) ->

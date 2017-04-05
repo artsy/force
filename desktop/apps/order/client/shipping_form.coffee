@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
-ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
-{ isTouchDevice } = require '../../../components/util/device.coffee'
+ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form')
+analyticsHooks = require '../../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers'
+{ isTouchDevice } = require '../../../components/util/device'
 
 module.exports = class ShippingForm extends ErrorHandlingForm
 

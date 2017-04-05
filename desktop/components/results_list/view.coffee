@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-ResultsView = require './views/results.coffee'
-device = require '../util/device.coffee'
+ResultsView = require './views/results'
+device = require '../util/device'
 
 module.exports = class ResultsListView extends Backbone.View
   className: 'results-list-typeahead'

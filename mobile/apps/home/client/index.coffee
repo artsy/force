@@ -1,5 +1,5 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-HomePageView = require './view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+HomePageView = require './view'
 
 $ ->
   bootstrap()

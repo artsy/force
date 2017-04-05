@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 qs = require 'querystring'
-TypeaheadView = require '../../../components/typeahead/view.coffee'
+TypeaheadView = require '../../../components/typeahead/view'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 
 module.exports = class SidebarView extends Backbone.View

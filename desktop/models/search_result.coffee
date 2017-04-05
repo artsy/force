@@ -4,7 +4,7 @@ sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
-PartnerShow = require './partner_show.coffee'
+PartnerShow = require './partner_show'
 
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)

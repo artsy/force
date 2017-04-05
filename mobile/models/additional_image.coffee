@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
-ImageSizes = require './mixins/image_sizes.coffee'
+ImageSizes = require './mixins/image_sizes'
 { SECURE_IMAGES_URL } = require('sharify').data
 
 module.exports = class AdditionalImage extends Backbone.Model

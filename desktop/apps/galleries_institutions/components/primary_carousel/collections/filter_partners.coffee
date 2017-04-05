@@ -1,9 +1,9 @@
 _ = require 'underscore'
 qs = require 'qs'
 Backbone = require 'backbone'
-Partners = require '../../../../../collections/partners.coffee'
+Partners = require '../../../../../collections/partners'
 { API_URL } = require('sharify').data
-{ Cities } = require '../../../../../components/partner_cities/index.coffee'
+{ Cities } = require '../../../../../components/partner_cities/index'
 
 module.exports = class FilterPartners extends Partners
 

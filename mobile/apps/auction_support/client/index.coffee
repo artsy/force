@@ -1,11 +1,11 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-Sale = require '../../../models/sale.coffee'
-SaleArtwork = require '../../../models/sale_artwork.coffee'
-RegistrationForm = require './registration_form.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+CurrentUser = require '../../../models/current_user'
+Sale = require '../../../models/sale'
+SaleArtwork = require '../../../models/sale_artwork'
+RegistrationForm = require './registration_form'
 
 module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
 

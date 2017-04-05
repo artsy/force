@@ -1,4 +1,4 @@
-UserInterests = require '../../../../collections/user_interests.coffee'
+UserInterests = require '../../../../collections/user_interests'
 
 module.exports =
   initializeBookmarkedArtists: ->

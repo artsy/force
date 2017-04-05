@@ -1,9 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Partner = require '../../../models/partner.coffee'
-overviewLayoutFactory = require './overview_layout_factory.coffee'
+CurrentUser = require '../../../models/current_user'
+Partner = require '../../../models/partner'
+overviewLayoutFactory = require './overview_layout_factory'
 template = -> require('../templates/overview.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View

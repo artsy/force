@@ -1,9 +1,9 @@
-FairHeaderView = require './header.coffee'
-globalClientSetup = require '../../../lib/global_client_setup.coffee'
-FooterView = require '../../main_layout/footer/view.coffee'
-lightDetector = require '../../light_detector/index.coffee'
-FairNavView = require './nav.coffee'
-MarketingSignupModal = require '../../marketing_signup_modal/index.coffee'
+FairHeaderView = require './header'
+globalClientSetup = require '../../../lib/global_client_setup'
+FooterView = require '../../main_layout/footer/view'
+lightDetector = require '../../light_detector/index'
+FairNavView = require './nav'
+MarketingSignupModal = require '../../marketing_signup_modal/index'
 
 module.exports = (options) =>
   globalClientSetup()

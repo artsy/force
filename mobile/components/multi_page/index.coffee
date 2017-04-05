@@ -1,5 +1,5 @@
-MultiPageView = require './view.coffee'
-config = require './config.coffee'
+MultiPageView = require './view'
+config = require './config'
 
 module.exports = (key) ->
   new MultiPageView config[key]

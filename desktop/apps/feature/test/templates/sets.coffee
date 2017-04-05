@@ -3,8 +3,8 @@ path = require 'path'
 fs = require 'fs'
 benv = require 'benv'
 { fabricate } = require 'antigravity'
-FeaturedSet = require '../../../../models/featured_set.coffee'
-FeaturedLinks = require '../../../../collections/featured_links.coffee'
+FeaturedSet = require '../../../../models/featured_set'
+FeaturedLinks = require '../../../../collections/featured_links'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"

@@ -16,7 +16,7 @@ describe 'BlurbView', ->
     benv.teardown()
 
   beforeEach ->
-    BlurbView = require '../view.coffee'
+    BlurbView = require '../view'
     $('body').append '<div class="blurb"></div>'
     @view = new BlurbView el: $('.blurb')
     @view.detachEllipsis = sinon.stub()

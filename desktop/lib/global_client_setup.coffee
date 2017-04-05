@@ -11,13 +11,13 @@ Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
 rg4js = require 'raygun4js'
 sd = require('sharify').data
-mediator = require './mediator.coffee'
-templateModules = require './template_modules.coffee'
-setupAuctionReminder = require '../components/auction_reminders/index.coffee'
-setupSplitTests = require '../components/split_test/setup.coffee'
-listenForInvert = require '../components/eggs/invert/index.coffee'
-listenForBounce = require '../components/eggs/bounce/index.coffee'
-confirmation = require '../components/confirmation/index.coffee'
+mediator = require './mediator'
+templateModules = require './template_modules'
+setupAuctionReminder = require '../components/auction_reminders/index'
+setupSplitTests = require '../components/split_test/setup'
+listenForInvert = require '../components/eggs/invert/index'
+listenForBounce = require '../components/eggs/bounce/index'
+confirmation = require '../components/confirmation/index'
 
 module.exports = ->
   setupJquery()
@@ -59,7 +59,7 @@ setupReferrerTracking = ->
 
 setupRaygun = ->
   if sd.RAYGUN_KEY
-    rg4js 'enableCrashReporting', true 
+    rg4js 'enableCrashReporting', true
     rg4js 'apiKey', sd.RAYGUN_KEY
 
 setupJquery = ->
@@ -70,7 +70,7 @@ setupJquery = ->
   require 'jquery-on-infinite-scroll'
   require 'jquery-waypoints/waypoints.js'
   require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
-  require '../../node_modules/jquery-touch-events/src/jquery.mobile-events.min.js'
+  require 'jquery-touch-events/src/jquery.mobile-events.min.js'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)
   # For drop down menus that appear on hover you may want that menu to close

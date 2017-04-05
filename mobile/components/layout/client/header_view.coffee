@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-appBanner = require '../../app_banner/index.coffee'
-MainDropdownMenu = require '../../main_dropdown_menu/index.coffee'
+appBanner = require '../../app_banner/index'
+MainDropdownMenu = require '../../main_dropdown_menu/index'
 
 module.exports = class HeaderView extends Backbone.View
   events:

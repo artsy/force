@@ -1,5 +1,5 @@
-StepView = require './step.coffee'
-Form = require '../../form/index.coffee'
+StepView = require './step'
+Form = require '../../form/index'
 template = -> require('../templates/institutional_affiliations.jade') arguments...
 
 module.exports = class InstitutionalAffiliations extends StepView

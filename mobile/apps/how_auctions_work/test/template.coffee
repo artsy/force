@@ -1,8 +1,8 @@
 _ = require 'underscore'
 learnMoreTemplate = require('jade').compileFile(require.resolve '../templates/learn_more.jade')
 fixture = require '../fixtures/data.json'
-markdown = require '../../../components/util/markdown.coffee'
-bidIncrements = require '../bid_increments.coffee'
+markdown = require '../../../components/util/markdown'
+bidIncrements = require '../bid_increments'
 benv = require 'benv'
 { resolve } = require 'path'
 

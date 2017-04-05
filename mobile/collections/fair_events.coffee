@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
-FairEvent = require '../models/fair_event.coffee'
+FairEvent = require '../models/fair_event'
 { Fetch } = require 'artsy-backbone-mixins'
 
 module.exports = class FairEvents extends Backbone.Collection

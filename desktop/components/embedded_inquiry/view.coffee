@@ -1,11 +1,11 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-Form = require '../form/index.coffee'
-User = require '../../models/user.coffee'
-ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
-defaultMessage = require '../contact/default_message.coffee'
-openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
+Form = require '../form/index'
+User = require '../../models/user'
+ArtworkInquiry = require '../../models/artwork_inquiry'
+defaultMessage = require '../contact/default_message'
+openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index'
 template = -> require('./templates/index.jade') arguments...
 confirmation = -> require('./templates/confirmation.jade') arguments...
 

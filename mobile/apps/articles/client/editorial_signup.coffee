@@ -2,11 +2,11 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 editorialSignupLushTemplate = -> require('../templates/editorial_signup_lush.jade') arguments...
-Cycle = require '../../../components/cycle/index.coffee'
-{ resize } = require '../../../components/resizer/index.coffee'
-CTABarView = require '../../../components/cta_bar/view.coffee'
-cookies = require '../../../components/cookies/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+Cycle = require '../../../components/cycle/index'
+{ resize } = require '../../../components/resizer/index'
+CTABarView = require '../../../components/cta_bar/view'
+cookies = require '../../../components/cookies/index'
+analyticsHooks = require '../../../lib/analytics_hooks'
 imagesLoaded = require 'imagesloaded'
 
 module.exports = class EditorialSignupView extends Backbone.View

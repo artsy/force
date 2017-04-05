@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Introduction = require './model.coffee'
+Introduction = require './model'
 
 module.exports = class IntroductionView extends Backbone.View
   initialize: ->

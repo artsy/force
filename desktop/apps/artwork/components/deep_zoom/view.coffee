@@ -2,7 +2,7 @@ require 'openseadragon'
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./index.jade') arguments...
-Transition = require '../../../../components/mixins/transition.coffee'
+Transition = require '../../../../components/mixins/transition'
 
 module.exports = class DeepZoomView extends Backbone.View
   className: 'deep-zoom'

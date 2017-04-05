@@ -1,16 +1,16 @@
 _ = require 'underscore'
 sd = require('sharify').data
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-Show = require '../../../models/show.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
-PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+Show = require '../../../models/show'
+PartnerShows = require '../../../collections/partner_shows'
+PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view'
 {Cities, FeaturedCities} = require 'places'
 showTemplate = -> require('../templates/show-list.jade') arguments...
 
 module.exports.ShowCityView = class ShowCityView extends PoliteInfiniteScrollView
 
   initialize: (options) ->
-    @page = 1 
+    @page = 1
     super
 
   onInfiniteScroll: ->

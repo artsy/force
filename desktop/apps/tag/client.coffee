@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Tag = require '../../models/tag.coffee'
+Tag = require '../../models/tag'
 scrollFrame = require 'scroll-frame'
-ShareView = require '../../components/share/view.coffee'
+ShareView = require '../../components/share/view'
 { TAG } = sd = require('sharify').data
-{ setupFilter } = require '../../components/filter2/index.coffee'
-aggregationParams = require './aggregations.coffee'
+{ setupFilter } = require '../../components/filter2/index'
+aggregationParams = require './aggregations'
 
 module.exports.init = ->
   tag = new Tag TAG

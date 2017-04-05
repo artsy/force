@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artworks = require '../collections/artworks.coffee'
-FilteredArtworks = require '../collections/filter_artworks.coffee'
-Artists = require '../collections/artists.coffee'
+Artworks = require '../collections/artworks'
+FilteredArtworks = require '../collections/filter_artworks'
+Artists = require '../collections/artists'
 _ = require 'underscore'
 { Markdown } = require 'artsy-backbone-mixins'
 

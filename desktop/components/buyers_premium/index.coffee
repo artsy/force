@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { formatMoney } = require 'accounting'
-Page = require '../../models/page.coffee'
+Page = require '../../models/page'
 
 module.exports = (auction, callback) ->
   page = new Page id: 'buyers-premium'     # TODO: support multiple concurrent buyer's premiums

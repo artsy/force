@@ -2,14 +2,14 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
+Artworks = require '../collections/artworks'
 { Markdown, Image, Fetch } = require 'artsy-backbone-mixins'
-{ smartTruncate } = require '../components/util/string.coffee'
+{ smartTruncate } = require '../components/util/string'
 { SECURE_IMAGES_URL, API_URL } = require('sharify').data
-{ compactObject } = require './mixins/compact_object.coffee'
-Relations = require './mixins/relations/artist.coffee'
-MetaOverrides = require './mixins/meta_overrides.coffee'
-ImageSizes = require './mixins/image_sizes.coffee'
+{ compactObject } = require './mixins/compact_object'
+Relations = require './mixins/relations/artist'
+MetaOverrides = require './mixins/meta_overrides'
+ImageSizes = require './mixins/image_sizes'
 
 module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Markdown

@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
-ShareView = require '../../../components/share/view.coffee'
-SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+Artworks = require '../../../collections/artworks'
+ShareView = require '../../../components/share/view'
+SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork'
+ArtworkColumnsView = require '../../../components/artwork_columns/view'
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate = -> require('../templates/sets.jade') arguments...
 

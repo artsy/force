@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-mappedAggregations = require '../fixtures/mapped_aggregations.coffee'
+mappedAggregations = require '../fixtures/mapped_aggregations'
 
 describe 'HeaderCountsView', ->
 

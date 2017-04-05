@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 qs = require 'querystring'
-aggregationsMap = require '../aggregations_map.coffee'
+aggregationsMap = require '../aggregations_map'
 
 module.exports = class Params extends Backbone.Model
 

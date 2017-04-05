@@ -1,9 +1,9 @@
 _ = require 'underscore'
-activatePulldowns = require '../../../components/hover_pulldown/index.coffee'
-ResultsListView = require '../../../components/results_list/view.coffee'
-TypeaheadView = require '../../../components/typeahead/view.coffee'
-User = require '../../../models/user.coffee'
-stage = require './stage.coffee'
+activatePulldowns = require '../../../components/hover_pulldown/index'
+ResultsListView = require '../../../components/results_list/view'
+TypeaheadView = require '../../../components/typeahead/view'
+User = require '../../../models/user'
+stage = require './stage'
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->

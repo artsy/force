@@ -1,13 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-Partner = require '../../../../models/partner.coffee'
-Profile = require '../../../../models/profile.coffee'
-Articles = require '../../../../collections/articles.coffee'
+Partner = require '../../../../models/partner'
+Profile = require '../../../../models/profile'
+Articles = require '../../../../collections/articles'
 benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-fixtures = require '../../../../test/helpers/fixtures.coffee'
+fixtures = require '../../../../test/helpers/fixtures'
 
 describe 'ArticlesAdapter', ->
 

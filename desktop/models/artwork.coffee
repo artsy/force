@@ -3,12 +3,12 @@ _s = require 'underscore.string'
 Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Edition = require './edition.coffee'
-Partner = require './partner.coffee'
-AdditionalImage = require './additional_image.coffee'
-{ compactObject } = require './mixins/compact_object.coffee'
+Edition = require './edition'
+Partner = require './partner'
+AdditionalImage = require './additional_image'
+{ compactObject } = require './mixins/compact_object'
 { Dimensions, Markdown, ArtworkHelpers } = require 'artsy-backbone-mixins'
-Relations = require './mixins/relations/artwork.coffee'
+Relations = require './mixins/relations/artwork'
 
 module.exports = class Artwork extends Backbone.Model
 
@@ -23,7 +23,7 @@ module.exports = class Artwork extends Backbone.Model
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
-    Articles = require '../collections/articles.coffee'
+    Articles = require '../collections/articles'
     @relatedArticles = new Articles
     @relatedArticles.url += "?artwork_id=#{@get '_id'}&published=true"
 

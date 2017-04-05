@@ -4,7 +4,7 @@ isCreditCard = require('validator').isCreditCard
 xssFilters = require 'xss-filters'
 isEmail = require('validator').isEmail
 
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 
 module.exports = class ErrorHandlingForm extends Backbone.View
 

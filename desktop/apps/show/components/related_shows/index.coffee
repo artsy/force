@@ -1,9 +1,9 @@
 _ = require 'underscore'
 { Cities } = require 'places'
-ViewHelpers = require '../../helpers/view_helpers.coffee'
-DateHelpers = require '../../../../components/util/date_helpers.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require './query.coffee'
+ViewHelpers = require '../../helpers/view_helpers'
+DateHelpers = require '../../../../components/util/date_helpers'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require './query'
 template = -> require('./template.jade') arguments...
 
 module.exports = (type, show) ->

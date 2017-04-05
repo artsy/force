@@ -3,7 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
-Shortcut = require '../../../models/shortcut.coffee'
+Shortcut = require '../../../models/shortcut'
 
 describe 'Shortcut routes', ->
 

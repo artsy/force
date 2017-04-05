@@ -5,14 +5,14 @@ Backbone = require 'backbone'
 moment = require 'moment'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 request = require 'superagent'
-Artwork = require '../models/artwork.coffee'
-Artworks = require '../collections/artworks.coffee'
-Partner = require '../models/partner.coffee'
-Channel = require '../models/channel.coffee'
-{ crop, resize } = require '../components/resizer/index.coffee'
-Relations = require './mixins/relations/article.coffee'
+Artwork = require '../models/artwork'
+Artworks = require '../collections/artworks'
+Partner = require '../models/partner'
+Channel = require '../models/channel'
+{ crop, resize } = require '../components/resizer/index'
+Relations = require './mixins/relations/article'
 { stripTags } = require 'underscore.string'
-{ compactObject } = require './mixins/compact_object.coffee'
+{ compactObject } = require './mixins/compact_object'
 cheerio = require 'cheerio'
 
 module.exports = class Article extends Backbone.Model
@@ -25,7 +25,7 @@ module.exports = class Article extends Backbone.Model
 
   fetchWithRelated: (options = {}) ->
     # Deferred require
-    Articles = require '../collections/articles.coffee'
+    Articles = require '../collections/articles'
     superArticles = new Articles
     Q.allSettled([
       @fetch(

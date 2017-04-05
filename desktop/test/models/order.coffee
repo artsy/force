@@ -2,7 +2,7 @@ _ = require 'underscore'
 should = require 'should'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Order = require '../../models/order.coffee'
+Order = require '../../models/order'
 sinon = require 'sinon'
 
 shippingInfo =

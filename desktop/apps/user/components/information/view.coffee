@@ -1,5 +1,5 @@
 { extend } = require 'underscore'
-GenericFormView = require '../generic_form/view.coffee'
+GenericFormView = require '../generic_form/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class InformationView extends GenericFormView

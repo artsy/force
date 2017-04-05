@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Genes = require '../../../../collections/genes.coffee'
-{ Following } = require '../../../../components/follow_button/index.coffee'
+Genes = require '../../../../collections/genes'
+{ Following } = require '../../../../components/follow_button/index'
 
 module.exports =
   initializeGenes: (options = { size: 5 }) ->

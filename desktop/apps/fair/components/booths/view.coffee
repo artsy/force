@@ -1,13 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-FeedItems = require '../../../../components/feed/collections/feed_items.coffee'
-ShowsFeed = require '../../../../components/feed/client/shows_feed.coffee'
-BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee'
+FeedItems = require '../../../../components/feed/collections/feed_items'
+ShowsFeed = require '../../../../components/feed/client/shows_feed'
+BorderedPulldown = require '../../../../components/bordered_pulldown/view'
 qs = require 'querystring'
-FilterNav = require '../../../../components/filter/nav/view.coffee'
-deslugify = require '../../../../components/deslugify/index.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+FilterNav = require '../../../../components/filter/nav/view'
+deslugify = require '../../../../components/deslugify/index'
+mediator = require '../../../../lib/mediator'
 
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 

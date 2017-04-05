@@ -1,7 +1,7 @@
 _ = require 'underscore'
 moment = require 'moment'
 Backbone = require 'backbone'
-{ crop, resize } = require '../resizer/index.coffee'
+{ crop, resize } = require '../resizer/index'
 
 module.exports = class Item extends Backbone.Model
   imgAttr: 'image_url'

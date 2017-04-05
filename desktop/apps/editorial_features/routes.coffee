@@ -1,12 +1,12 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-Curation = require '../../models/curation.coffee'
-Article = require '../../models/article.coffee'
-Channel = require '../../models/channel.coffee'
-Articles = require '../../collections/articles.coffee'
-markdown = require '../../components/util/markdown.coffee'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+Curation = require '../../models/curation'
+Article = require '../../models/article'
+Channel = require '../../models/channel'
+Articles = require '../../collections/articles'
+markdown = require '../../components/util/markdown'
+{ stringifyJSONForWeb } = require '../../components/util/json'
 Q = require 'bluebird-q'
 
 @eoy = (req, res, next) ->

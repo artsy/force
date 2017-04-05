@@ -59,7 +59,7 @@ timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
 splitTestMiddleware = require '../components/split_test/middleware'
 hardcodedRedirects = require './routers/hardcoded_redirects'
-require('./setup_sharify.coffee')
+require('./setup_sharify')
 CurrentUser = require '../models/current_user'
 downcase = require './middleware/downcase'
 ipfilter = require('express-ipfilter').IpFilter

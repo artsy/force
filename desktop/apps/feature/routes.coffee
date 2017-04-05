@@ -1,4 +1,4 @@
-Feature = require '../../models/feature.coffee'
+Feature = require '../../models/feature'
 
 @index = (req, res) ->
   new Feature(id: req.params.id).fetch

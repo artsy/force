@@ -11,10 +11,10 @@ request = require 'superagent'
 { crop } = require '../../components/resizer'
 { SAILTHRU_KEY, SAILTHRU_SECRET, GALLERY_INSIGHTS_SECTION_ID, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ topParselyArticles } = require '../../components/util/parsely.coffee'
-positronql = require '../../lib/positronql.coffee'
-query = require './queries/editorial_articles.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
+{ topParselyArticles } = require '../../components/util/parsely'
+positronql = require '../../lib/positronql'
+query = require './queries/editorial_articles'
 
 @articles = (req, res, next) ->
   send =

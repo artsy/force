@@ -1,7 +1,7 @@
 sd = require('sharify').data
 qs = require 'querystring'
 Backbone = require "backbone"
-bootstrap = require "../../../components/layout/bootstrap.coffee"
+bootstrap = require '../../../components/layout/bootstrap'
 
 module.exports.SignUpView = class SignUpView extends Backbone.View
 

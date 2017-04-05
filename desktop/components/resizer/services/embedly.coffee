@@ -1,5 +1,5 @@
 { EMBEDLY_KEY } = require('sharify').data
-resizer = require './index.coffee'
+resizer = require './index'
 
 module.exports = embedly =
   endpoint: 'https://i.embed.ly/1/display'

@@ -1,11 +1,11 @@
 _ = require 'underscore'
-{ compactObject } = require '../../models/mixins/compact_object.coffee'
+{ compactObject } = require '../../models/mixins/compact_object'
 moment = require 'moment'
-Artist = require '../../models/artist.coffee'
-{ timespanInWords } = require '../../components/util/date_helpers.coffee'
+Artist = require '../../models/artist'
+{ timespanInWords } = require '../../components/util/date_helpers'
 { capitalize, numberFormat } = require 'underscore.string'
 { APP_URL } = require('sharify').data
-showHelpers = require '../../components/show_cell/helpers.coffee'
+showHelpers = require '../../components/show_cell/helpers'
 
 module.exports =
   capitalize: capitalize

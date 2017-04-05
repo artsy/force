@@ -4,8 +4,8 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-Notifications = require '../../../../collections/notifications.coffee'
-Artworks = require '../../../../collections/artworks.coffee'
+Notifications = require '../../../../collections/notifications'
+Artworks = require '../../../../collections/artworks'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'RecentlyAddedWorksView', ->

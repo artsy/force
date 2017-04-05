@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-Relations = require './mixins/relations/user_interest.coffee'
+Relations = require './mixins/relations/user_interest'
 
 module.exports = class UserInterest extends Backbone.Model
   _.extend @prototype, Relations

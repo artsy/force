@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = require './templates/index.coffee'
-Scrollbar = require '../scrollbar/index.coffee'
+template = require './templates/index'
+Scrollbar = require '../scrollbar/index'
 
 module.exports = class Modalize extends Backbone.View
   className: 'modalize'

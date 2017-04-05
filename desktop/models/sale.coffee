@@ -5,10 +5,10 @@ tz = require 'moment-timezone'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
 
-Clock = require './mixins/clock.coffee'
-Relations = require './mixins/relations/sale.coffee'
-ImageSizes = require './mixins/image_sizes.coffee'
-Eventable = require './mixins/eventable.coffee'
+Clock = require './mixins/clock'
+Relations = require './mixins/relations/sale'
+ImageSizes = require './mixins/image_sizes'
+Eventable = require './mixins/eventable'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock

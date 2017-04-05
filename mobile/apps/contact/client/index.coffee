@@ -1,6 +1,6 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-ContactView = require './view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+ContactView = require './view'
 
 
 module.exports.init = ->

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Gene = require '../models/gene.coffee'
+Gene = require '../models/gene'
 { API_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 

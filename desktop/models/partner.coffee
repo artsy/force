@@ -1,9 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Icon = require './icon.coffee'
-PartnerLocations = require '../collections/partner_locations.coffee'
-Relations = require './mixins/relations/partner.coffee'
+Icon = require './icon'
+PartnerLocations = require '../collections/partner_locations'
+Relations = require './mixins/relations/partner'
 
 module.exports = class Partner extends Backbone.Model
   _.extend @prototype, Relations

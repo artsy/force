@@ -7,14 +7,14 @@ module.exports =
 
     @on 'sync', @rebuild
 
-    Articles = require '../../../collections/articles.coffee'
-    Artworks = require '../../../collections/artworks.coffee'
-    Artists = require '../../../collections/artists.coffee'
-    InstallShots = require '../../../collections/install_shots.coffee'
-    ShowEvents = require '../../../collections/partner_show_events.coffee'
-    Partner = require '../../partner.coffee'
-    Fair = require '../../fair.coffee'
-    Profile = require '../../profile.coffee'
+    Articles = require '../../../collections/articles'
+    Artworks = require '../../../collections/artworks'
+    Artists = require '../../../collections/artists'
+    InstallShots = require '../../../collections/install_shots'
+    ShowEvents = require '../../../collections/partner_show_events'
+    Partner = require '../../partner'
+    Fair = require '../../fair'
+    Profile = require '../../profile'
 
     artworks = new Artworks
     artworks.url = => "#{@url()}/artworks?published=true"

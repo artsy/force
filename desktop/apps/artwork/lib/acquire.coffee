@@ -1,6 +1,6 @@
 Promise = require 'bluebird-q'
-PendingOrder = require '../../../models/pending_order.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+PendingOrder = require '../../../models/pending_order'
+analyticsHooks = require '../../../lib/analytics_hooks'
 redirectTo = (path) -> location.assign path
 
 module.exports = (artwork_id, edition_set_id) ->

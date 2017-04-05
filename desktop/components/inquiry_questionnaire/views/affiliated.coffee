@@ -1,9 +1,9 @@
 _ = require 'underscore'
-Form = require '../../form/index.coffee'
-Galaxy = require '../../../lib/galaxy.coffee'
-TypeaheadView = require '../../typeahead/view.coffee'
-ResultsListView = require '../../results_list/view.coffee'
-StepView = require './step.coffee'
+Form = require '../../form/index'
+Galaxy = require '../../../lib/galaxy'
+TypeaheadView = require '../../typeahead/view'
+ResultsListView = require '../../results_list/view'
+StepView = require './step'
 template = -> require('../templates/affiliated.jade') arguments...
 
 module.exports = class Affiliated extends StepView

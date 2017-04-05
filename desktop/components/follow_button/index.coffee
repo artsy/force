@@ -1,2 +1,2 @@
-module.exports.Following = require './collection.coffee'
-module.exports.FollowButton = require './view.coffee'
+module.exports.Following = require './collection'
+module.exports.FollowButton = require './view'

@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-Partners = require '../../../../collections/partners.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-partnerTypes = require '../../queries/partner_types.coffee'
-query = require '../../queries/location_carousel_query.coffee'
-mergeBuckets = require '../partner_cell_carousel/merge_buckets.coffee'
+Partners = require '../../../../collections/partners'
+metaphysics = require '../../../../../lib/metaphysics'
+partnerTypes = require '../../queries/partner_types'
+query = require '../../queries/location_carousel_query'
+mergeBuckets = require '../partner_cell_carousel/merge_buckets'
 
 module.exports = (type) ->
 

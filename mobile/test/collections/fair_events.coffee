@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FairEvent = require '../../models/fair_event.coffee'
-Fair = require '../../models/fair.coffee'
-FairEvents = require '../../collections/fair_events.coffee'
+FairEvent = require '../../models/fair_event'
+Fair = require '../../models/fair'
+FairEvents = require '../../collections/fair_events'
 { fabricate } = require 'antigravity'
 
 describe 'FairEvents', ->

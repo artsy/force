@@ -6,10 +6,10 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    CollectorProfile = require '../../collector_profile.coffee'
-    Location = require '../../location.coffee'
-    CreditCards = require '../../../collections/credit_cards.coffee'
-    SavedArtworks = require '../../../collections/saved_artworks.coffee'
+    CollectorProfile = require '../../collector_profile'
+    Location = require '../../location'
+    CreditCards = require '../../../collections/credit_cards'
+    SavedArtworks = require '../../../collections/saved_artworks'
 
     collectorProfile = new CollectorProfile
 

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
-FilterSuggest = require './filter_suggest.coffee'
+Artworks = require '../collections/artworks'
+FilterSuggest = require './filter_suggest'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Tag extends Backbone.Model

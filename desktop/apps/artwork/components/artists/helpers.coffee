@@ -1,5 +1,5 @@
 { groupBy, sortBy } = require 'underscore'
-showHelpers = require '../../../../components/show_cell/helpers.coffee'
+showHelpers = require '../../../../components/show_cell/helpers'
 
 module.exports =
   groupBy: groupBy

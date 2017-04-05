@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-mediator = require '../../../lib/mediator.coffee'
+mediator = require '../../../lib/mediator'
 qs = require 'querystring'
 
 module.exports = class HomeAuthRouter extends Backbone.Router

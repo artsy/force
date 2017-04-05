@@ -30,8 +30,8 @@ module.exports =
       }
     }
   }
-  #{require './article_fragment.coffee'}
-  #{require '../../../components/artist_cell/query.coffee'}
-  #{require './show_fragment.coffee'}
-  #{require './related_show_image.coffee'}
+  #{require './article_fragment'}
+  #{require '../../../components/artist_cell/query'}
+  #{require './show_fragment'}
+  #{require './related_show_image'}
   """

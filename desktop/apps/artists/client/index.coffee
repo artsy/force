@@ -1,7 +1,7 @@
 { CURRENT_USER } = require('sharify').data
-Artist = require '../../../models/artist.coffee'
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-CarouselView = require './carousel.coffee'
+Artist = require '../../../models/artist'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
+CarouselView = require './carousel'
 
 module.exports.init = ->
   if CURRENT_USER?

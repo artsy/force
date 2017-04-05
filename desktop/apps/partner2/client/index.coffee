@@ -1,9 +1,9 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-Profile = require '../../../models/profile.coffee'
-Partner = require '../../../models/partner.coffee'
-PartnerRouter = require './router.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
+Profile = require '../../../models/profile'
+Partner = require '../../../models/partner'
+PartnerRouter = require './router'
 
 module.exports.init = ->
   profile = new Profile sd.PROFILE

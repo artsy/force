@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Inquiry = require '../../../../../models/inquiry.coffee'
+Inquiry = require '../../../../../models/inquiry'
 formTemplate = -> require('../templates/inquiry_form.jade') arguments...
 confirmationTemplate = -> require('../templates/inquiry_confirmation.jade') arguments...
-analytics = require '../../../../../lib/analytics.coffee'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
+analytics = require '../../../../../lib/analytics'
+analyticsHooks = require '../../../../../lib/analytics_hooks'
 Cookies = require 'cookies-js'
 
 module.exports = class SubmitInquiryView extends Backbone.View

@@ -1,5 +1,5 @@
-StepView = require './step_view.coffee'
-LocationSearchView = require('../../../components/location_search/index.coffee').LocationSearchView
+StepView = require './step_view'
+LocationSearchView = require('../../../components/location_search/index').LocationSearchView
 GeoFormatter = require 'geoformatter'
 template = -> require('../templates/location.jade') arguments...
 

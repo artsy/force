@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-AdditionalImage = require '../models/additional_image.coffee'
+AdditionalImage = require '../models/additional_image'
 
 module.exports = class AdditionalImages extends Backbone.Collection
   model: AdditionalImage

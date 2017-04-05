@@ -1,6 +1,6 @@
 { PARTNER } = require('sharify').data
-inquire = require '../../lib/inquire.coffee'
-follow = require '../../lib/follow.coffee'
+inquire = require '../../lib/inquire'
+follow = require '../../lib/follow'
 
 module.exports = (data) ->
   $el = $('.js-artwork-partner')

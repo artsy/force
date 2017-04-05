@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PartnerShow = require '../../../models/partner_show'
 Partner = require '../../../models/partner'
-MapModalView = require '../view.coffee'
+MapModalView = require '../view'
 template = require('jade').compileFile(require.resolve './fixtures/template.jade')
 
 describe 'MapModalView', ->

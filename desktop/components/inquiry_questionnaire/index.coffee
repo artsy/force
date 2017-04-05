@@ -1,13 +1,13 @@
 _ = require 'underscore'
-modalize = require '../modalize/index.coffee'
-FlashMessage = require '../flash/index.coffee'
-State = require '../branching_state/index.coffee'
-StateView = require '../branching_state/view.coffee'
-Logger = require '../logger/index.coffee'
-Trail = require './trail.coffee'
-analytics = require './analytics.coffee'
-openErrorFlash = require './error.coffee'
-{ steps, decisions, views } = require './map.coffee'
+modalize = require '../modalize/index'
+FlashMessage = require '../flash/index'
+State = require '../branching_state/index'
+StateView = require '../branching_state/view'
+Logger = require '../logger/index'
+Trail = require './trail'
+analytics = require './analytics'
+openErrorFlash = require './error'
+{ steps, decisions, views } = require './map'
 
 module.exports = ({ user, artwork, inquiry, bypass, state_attrs }) ->
   { collectorProfile } = user.related()

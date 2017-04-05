@@ -2,8 +2,8 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { SESSION_ID } = require('sharify').data
-Geo = require './mixins/geo.coffee'
-Relations = require './mixins/relations/user.coffee'
+Geo = require './mixins/geo'
+Relations = require './mixins/relations/user'
 
 # Base User model for shared functionality between
 # CurrentUser and LoggedOutUser
@@ -56,8 +56,8 @@ module.exports = class User extends Backbone.Model
     @related().account.id?
 
   @instantiate: (attributes = {}) ->
-    CurrentUser = require './current_user.coffee'
-    LoggedOutUser = require './logged_out_user.coffee'
+    CurrentUser = require './current_user'
+    LoggedOutUser = require './logged_out_user'
 
     CurrentUser.orNull() or
     new LoggedOutUser attributes

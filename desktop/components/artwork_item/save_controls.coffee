@@ -1,1 +1,1 @@
-module.exports = require './save_controls/view.coffee'
+module.exports = require './save_controls/view'

@@ -1,5 +1,5 @@
 moment = require 'moment'
-clock = require '../clock/index.coffee'
+clock = require '../clock/index'
 
 module.exports =
   showCountdown: (startAt, liveStartAt) ->

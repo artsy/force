@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-mediator = require '../../../lib/mediator.coffee'
+mediator = require '../../../lib/mediator'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'EditorialSignupView', ->

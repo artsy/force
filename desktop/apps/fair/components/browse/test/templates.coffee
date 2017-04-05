@@ -33,7 +33,7 @@ describe 'Browse templates', ->
       fair = new Fair (fabricate 'fair', about: 'about the fair')
       profile = new Profile (fabricate 'fair_profile')
       collection = new FilterArtworks fabricate2('filter_artworks'), parse: true
-      
+
       @template = render('template')
         sd: {}
         fair: fair
@@ -43,7 +43,7 @@ describe 'Browse templates', ->
         _s: _s
         counts: collection.counts
         params: new Backbone.Model
-        filterLabelMap: require '../../../../../components/filter2/dropdown/label_map.coffee'
+        filterLabelMap: require '../../../../../components/filter2/dropdown/label_map'
 
     it 'renders without errors', ->
       $ = cheerio.load @template

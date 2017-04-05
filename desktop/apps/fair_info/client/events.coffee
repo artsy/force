@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-BlurbView = require '../../../components/blurb/view.coffee'
-geo = require '../../../components/geo/index.coffee'
-openMapModal = require '../../../components/map_modal/index.coffee'
-AddToCalendarView = require '../../../components/add_to_calendar/index.coffee'
-FairEvents = require '../../../collections/fair_events.coffee'
+BlurbView = require '../../../components/blurb/view'
+geo = require '../../../components/geo/index'
+openMapModal = require '../../../components/map_modal/index'
+AddToCalendarView = require '../../../components/add_to_calendar/index'
+FairEvents = require '../../../collections/fair_events'
 template = -> require('../templates/map_modal.jade') arguments...
 
 module.exports = class FairInfoEvents extends Backbone.View

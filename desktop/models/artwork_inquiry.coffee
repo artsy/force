@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
-Cookies = require '../components/cookies/index.coffee'
+Cookies = require '../components/cookies/index'
 Promise = require 'bluebird-q'
 
 module.exports = class ArtworkInquiry extends Backbone.Model

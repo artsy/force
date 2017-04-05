@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
 sd = require('sharify').data
 querystring = require 'querystring'

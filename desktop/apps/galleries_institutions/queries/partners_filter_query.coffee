@@ -20,5 +20,5 @@ module.exports =
     }
   }
 
-  #{require './partner_fragment.coffee'}
+  #{require './partner_fragment'}
   """

@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-mediator = require '../../../../lib/mediator.coffee'
-tabQuery = require './query.coffee'
-artistSuggestionQuery = require './artist_suggestion_query.coffee'
-initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+mediator = require '../../../../lib/mediator'
+tabQuery = require './query'
+artistSuggestionQuery = require './artist_suggestion_query'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
 
 cellsTemplate = -> require('./templates/_cells.jade') arguments...
 resultsTemplate = -> require('./templates/results.jade') arguments...

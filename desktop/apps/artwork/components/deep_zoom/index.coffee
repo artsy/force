@@ -1,6 +1,6 @@
 { DEEP_ZOOM } = require('sharify').data
 { findWhere } = require 'underscore'
-DeepZoomView = require './view.coffee'
+DeepZoomView = require './view'
 
 module.exports = (id) ->
   { deep_zoom } = findWhere DEEP_ZOOM.images, id: id

@@ -1,6 +1,6 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+AvantGardeTabsView = require '../../../components/avant_garde_tabs/view'
 
 module.exports.init = ->
   bootstrap()

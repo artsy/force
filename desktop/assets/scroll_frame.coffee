@@ -1,1 +1,1 @@
-require('../../node_modules/scroll-frame/scroll-frame-head.js')
+require('scroll-frame/scroll-frame-head.js')

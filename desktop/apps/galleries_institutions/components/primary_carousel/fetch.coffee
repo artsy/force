@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
-Profile = require '../../../../models/profile.coffee'
-Profiles = require '../../../../collections/profiles.coffee'
-OrderedSets = require '../../../../collections/ordered_sets.coffee'
-FilterPartners = require './collections/filter_partners.coffee'
+Profile = require '../../../../models/profile'
+Profiles = require '../../../../collections/profiles'
+OrderedSets = require '../../../../collections/ordered_sets'
+FilterPartners = require './collections/filter_partners'
 
 key =
   gallery: 'galleries:carousel-galleries' # https://admin.artsy.net/set/5638fdfb7261690296000031

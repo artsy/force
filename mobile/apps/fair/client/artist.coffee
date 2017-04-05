@@ -1,11 +1,11 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
-FollowArtists = require '../../../collections/follow_artists.coffee'
-FollowButtonView = require '../../../components/follow_button/view.coffee'
+Artist = require '../../../models/artist'
+FollowArtists = require '../../../collections/follow_artists'
+FollowButtonView = require '../../../components/follow_button/view'
 
 module.exports.FairArtistView = class FairArtistView extends Backbone.View
 

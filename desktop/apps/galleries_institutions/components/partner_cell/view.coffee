@@ -1,9 +1,9 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-{ Cities } = require '../../../../components/partner_cities/index.coffee'
-FollowButtonView = require '../../../../components/follow_button/view.coffee'
-ViewHelpers = require './view_helpers.coffee'
-Profile = require '../../../../models/profile.coffee'
+{ Cities } = require '../../../../components/partner_cities/index'
+FollowButtonView = require '../../../../components/follow_button/view'
+ViewHelpers = require './view_helpers'
+Profile = require '../../../../models/profile'
 template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerCellView extends Backbone.View

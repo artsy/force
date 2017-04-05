@@ -1,8 +1,8 @@
 _ = require 'underscore'
 require 'hulk-editor'
-GeminiForm = require '../../../components/gemini_form/view.coffee'
+GeminiForm = require '../../../components/gemini_form/view'
 { DATA } = sd = require('sharify').data
-{ crop } = require '../../../components/resizer/index.coffee'
+{ crop } = require '../../../components/resizer/index'
 template =-> require('../templates/content.jade') arguments...
 
 hulkCallback = (data) ->

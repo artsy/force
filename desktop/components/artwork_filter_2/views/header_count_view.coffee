@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-aggregationsMap = require '../aggregations_map.coffee'
+aggregationsMap = require '../aggregations_map'
 template = -> require('../templates/header_count_view.jade') arguments...
 
 module.exports = class ArtworkFilterCountView extends Backbone.View

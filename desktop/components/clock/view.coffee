@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
-mediator = require '../../lib/mediator.coffee'
+mediator = require '../../lib/mediator'
 
 UNIT_MAP =
   'months': 'mos'

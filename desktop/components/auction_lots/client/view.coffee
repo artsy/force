@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
-zoom = require '../../../components/zoom/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-{ isTouchDevice } = require '../../../components/util/device.coffee'
-FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+zoom = require '../../../components/zoom/index'
+mediator = require '../../../lib/mediator'
+CurrentUser = require '../../../models/current_user'
+{ isTouchDevice } = require '../../../components/util/device'
+FillwidthView = require '../../../components/fillwidth_row/view'
 
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 
 module.exports = class AuctionResultsView extends Backbone.View
   events:

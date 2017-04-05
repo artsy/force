@@ -15,5 +15,5 @@ module.exports = """
     ... video
   }
 
-  #{require '../video/query.coffee'}
+  #{require '../video/query'}
 """

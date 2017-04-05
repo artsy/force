@@ -1,15 +1,15 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
-Fair = require '../../../models/fair.coffee'
-Artist = require '../../../models/artist.coffee'
-Artwork = require '../../../models/artwork.coffee'
-Profile = require '../../../models/profile.coffee'
-Profiles = require '../../../collections/profiles.coffee'
-Artists = require '../../../collections/artists.coffee'
-ShowsFeed = require '../../../collections/shows_feed.coffee'
+Fair = require '../../../models/fair'
+Artist = require '../../../models/artist'
+Artwork = require '../../../models/artwork'
+Profile = require '../../../models/profile'
+Profiles = require '../../../collections/profiles'
+Artists = require '../../../collections/artists'
+ShowsFeed = require '../../../collections/shows_feed'
 imageNavItemTemplate = -> require('../templates/image_nav_item.jade') arguments...
 
 module.exports.ForYouView = class ForYouView extends Backbone.View

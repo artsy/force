@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-query = require '../queries/filter_artworks.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../queries/filter_artworks'
+metaphysics = require '../../../../lib/metaphysics'
 
 module.exports = class ArtworkFilter extends Backbone.Model
 

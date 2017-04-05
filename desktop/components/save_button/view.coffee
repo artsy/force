@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
+mediator = require '../../lib/mediator'
+analyticsHooks = require '../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
 
 module.exports = class SaveButton extends Backbone.View
   events:

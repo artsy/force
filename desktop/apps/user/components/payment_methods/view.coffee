@@ -1,8 +1,8 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-openCreditCardModal = require '../../../../components/credit_card_2/modal/index.coffee'
+openCreditCardModal = require '../../../../components/credit_card_2/modal/index'
 template = -> require('./index.jade') arguments...
-CreditCardView = require '../../../../components/credit_card_2/view.coffee'
+CreditCardView = require '../../../../components/credit_card_2/view'
 
 module.exports = class PaymentMethodsView extends Backbone.View
   subViews: []

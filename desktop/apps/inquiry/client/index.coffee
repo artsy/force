@@ -7,9 +7,9 @@ class Router extends Backbone.Router
     'inquiry/:artwork': 'inquiry'
     'inquiry/:id/user_outcome': 'user_outcome'
 
-  development: require './routes/development.coffee'
-  inquiry: require './routes/inquiry.coffee'
-  user_outcome: require './routes/user_outcome.coffee'
+  development: require './routes/development'
+  inquiry: require './routes/inquiry'
+  user_outcome: require './routes/user_outcome'
 
 module.exports = ->
   router = new Router

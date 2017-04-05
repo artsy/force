@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 template = -> require('../../templates/sections/cv.jade') arguments...
 sd = require('sharify').data
-ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
-query = require '../../queries/cv.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-showHelpers = require '../../../../components/show_cell/helpers.coffee'
-artistHelpers = require '../../view_helpers.coffee'
+ArtworkRailView = require '../../../../components/artwork_rail/client/view'
+query = require '../../queries/cv'
+metaphysics = require '../../../../../lib/metaphysics'
+showHelpers = require '../../../../components/show_cell/helpers'
+artistHelpers = require '../../view_helpers'
 
 module.exports = class CVView extends Backbone.View
 

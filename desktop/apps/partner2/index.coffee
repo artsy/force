@@ -1,5 +1,5 @@
 express = require 'express'
-routes = require './routes.coffee'
+routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-scrollTo = require '../../../../components/smooth_scroll/index.coffee'
-Sticky = require '../../../../components/sticky/index.coffee'
+scrollTo = require '../../../../components/smooth_scroll/index'
+Sticky = require '../../../../components/sticky/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SettingsSectionsView extends Backbone.View

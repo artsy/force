@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artist = require '../../../models/artist.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+Artist = require '../../../models/artist'
+Artworks = require '../../../collections/artworks'
+ArtworkColumnsView = require '../../../components/artwork_columns/view'
 artistHeaderTemplate = -> require('../templates/artist_header.jade') arguments...
 
 module.exports = class ArtistWorksView extends Backbone.View

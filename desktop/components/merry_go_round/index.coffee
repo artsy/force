@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-MerryGoRoundNavView = require './view.coffee'
-MerryGoRoundFlickity = require './wrapper.coffee'
+MerryGoRoundNavView = require './view'
+MerryGoRoundFlickity = require './wrapper'
 
 setup = ($el, options = {}, callback) ->
   $viewport = $el.find options.selector or '.js-mgr-cells'

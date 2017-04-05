@@ -1,14 +1,14 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Q = require 'bluebird-q'
-Profile = require '../../models/profile.coffee'
-Fair = require '../../models/fair.coffee'
-PartnerLocation = require '../../models/partner_location.coffee'
-FairEvent = require '../../models/fair_event.coffee'
-FairEvents = require '../../collections/fair_events.coffee'
-InfoMenu = require './info_menu.coffee'
-Articles = require '../../collections/articles.coffee'
-Article = require '../../models/article.coffee'
+Profile = require '../../models/profile'
+Fair = require '../../models/fair'
+PartnerLocation = require '../../models/partner_location'
+FairEvent = require '../../models/fair_event'
+FairEvents = require '../../collections/fair_events'
+InfoMenu = require './info_menu'
+Articles = require '../../collections/articles'
+Article = require '../../models/article'
 
 module.exports.assignFair = (req, res, next) ->
   return next() unless req.profile?.isFair()

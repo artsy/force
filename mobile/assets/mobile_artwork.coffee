@@ -6,7 +6,7 @@ require 'jquery'
 
 hash =
   '^/artwork/.*/ask_specialist': ->
-    require('../apps/artwork/components/bid/client/bootstrap.coffee')()
+    require('../apps/artwork/components/bid/client/bootstrap')()
 
   '^/artwork/.*/auction-results': ->
 

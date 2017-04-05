@@ -1,9 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../models/current_user.coffee'
-FollowProfile = require '../models/follow_profile.coffee'
-analyticsHooks = require '../lib/analytics_hooks.coffee'
+CurrentUser = require '../models/current_user'
+FollowProfile = require '../models/follow_profile'
+analyticsHooks = require '../lib/analytics_hooks'
 
 #
 # FollowProfiles

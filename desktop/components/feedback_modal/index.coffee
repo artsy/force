@@ -1,11 +1,11 @@
-modalize = require '../modalize/index.coffee'
-State = require '../branching_state/index.coffee'
-StateView = require '../branching_state/view.coffee'
-openMultiPageModal = require '../multi_page_modal/index.coffee'
-openFeedback = require '../simple_contact/feedback.coffee'
+modalize = require '../modalize/index'
+State = require '../branching_state/index'
+StateView = require '../branching_state/view'
+openMultiPageModal = require '../multi_page_modal/index'
+openFeedback = require '../simple_contact/feedback'
 views =
-  how_can_we_help: require './views/how_can_we_help.coffee'
-  press: require './views/press.coffee'
+  how_can_we_help: require './views/how_can_we_help'
+  press: require './views/press'
 
 module.exports = ->
   state = new State

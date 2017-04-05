@@ -1,6 +1,6 @@
 _ = require 'underscore'
-StepView = require './step.coffee'
-LocationSearchView = require '../../../../../components/location_search/index.coffee'
+StepView = require './step'
+LocationSearchView = require '../../../../../components/location_search/index'
 template = -> require('../../templates/next_step_artworks.jade') arguments...
 
 module.exports = class NextStepView extends StepView

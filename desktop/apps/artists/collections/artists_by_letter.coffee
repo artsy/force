@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
-PageableCollection = require '../../../components/pageable_collection/index.coffee'
+Artist = require '../../../models/artist'
+PageableCollection = require '../../../components/pageable_collection/index'
 
 module.exports = class ArtistsByLetter extends PageableCollection
   url: ->

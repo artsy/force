@@ -2,14 +2,14 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
-SaleArtwork = require '../models/sale_artwork.coffee'
+SaleArtwork = require '../models/sale_artwork'
 
 module.exports = class Artworks extends Backbone.Collection
 
   _.extend @prototype, Fetch(sd.API_URL)
 
   initialize: ->
-    @model = require '../models/artwork.coffee'
+    @model = require '../models/artwork'
 
   # Maps each artwork's images into an array of image { width, height } hashes meant to be
   # passed into fillwidth.

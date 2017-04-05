@@ -1,10 +1,10 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Partner = require '../../../models/partner.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
-PartnerShowsGrid = require './shows_grid.coffee'
+CurrentUser = require '../../../models/current_user'
+Partner = require '../../../models/partner'
+PartnerShows = require '../../../collections/partner_shows'
+PartnerShowsGrid = require './shows_grid'
 template = -> require('../templates/shows.jade') arguments...
 
 module.exports = class PartnerShowsView extends Backbone.View

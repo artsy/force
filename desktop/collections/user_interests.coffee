@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-UserInterest = require '../models/user_interest.coffee'
+UserInterest = require '../models/user_interest'
 
 module.exports = class UserInterests extends Backbone.Collection
   model: UserInterest

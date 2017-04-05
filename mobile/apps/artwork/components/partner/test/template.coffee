@@ -5,7 +5,7 @@ path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-partner = require './fixture.coffee'
+partner = require './fixture'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"

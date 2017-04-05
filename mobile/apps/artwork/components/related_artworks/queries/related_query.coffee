@@ -3,7 +3,7 @@ module.exports = """
     layer(id: "main") {
       name
       artworks {
-        #{require('./index.coffee')}
+        #{require('./index')}
       }
     }
   }

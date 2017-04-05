@@ -4,7 +4,7 @@ Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
-splitTest = require '../../components/split_test/index.coffee'
+splitTest = require '../../components/split_test/index'
 
 query = """
   query artwork($id: String!) {

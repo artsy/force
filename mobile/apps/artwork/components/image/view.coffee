@@ -2,10 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 Flickity = require 'flickity'
-Artwork = require '../../../../models/artwork.coffee'
-ShareView = require '../../../../components/share/view.coffee'
-DeepZoomView = require '../../../../components/deep_zoom/view.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+Artwork = require '../../../../models/artwork'
+ShareView = require '../../../../components/share/view'
+DeepZoomView = require '../../../../components/deep_zoom/view'
+analyticsHooks = require '../../../../lib/analytics_hooks'
 
 module.exports = class ArtworkImageView extends Backbone.View
   events:

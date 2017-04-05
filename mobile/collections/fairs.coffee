@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 moment = require 'moment'
-Fair = require '../models/fair.coffee'
+Fair = require '../models/fair'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
 

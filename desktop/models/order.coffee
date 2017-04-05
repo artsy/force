@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artwork = require './artwork.coffee'
-Partner = require './partner.coffee'
-PartnerLocation = require './partner_location.coffee'
+Artwork = require './artwork'
+Partner = require './partner'
+PartnerLocation = require './partner_location'
 xssFilters = require 'xss-filters'
 { API_URL, SESSION_ID } = require('sharify').data
 

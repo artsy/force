@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
 { each } = require 'underscore'
-User = require '../../models/user.coffee'
-initCarousel = require '../merry_go_round/horizontal_nav_mgr.coffee'
-ArtworkBrickView = require '../artwork_brick/view.coffee'
+User = require '../../models/user'
+initCarousel = require '../merry_go_round/horizontal_nav_mgr'
+ArtworkBrickView = require '../artwork_brick/view'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class ArtworkBrickRailView extends Backbone.View

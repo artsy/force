@@ -1,7 +1,7 @@
 _ = require 'underscore'
 qs = require 'qs'
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
+Artworks = require '../collections/artworks'
 { API_URL } = require('sharify').data
 
 module.exports = class FilterArtworks extends Artworks

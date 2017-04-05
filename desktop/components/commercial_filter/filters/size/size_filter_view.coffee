@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-createSlider = require '../../../slider/index.coffee'
+createSlider = require '../../../slider/index'
 
 template = -> require('./index.jade') arguments...
 

@@ -1,4 +1,4 @@
 module.exports =
-  views: require './map/views.coffee'
-  decisions: require './map/decisions.coffee'
-  steps: require './map/steps.coffee'
+  views: require './map/views'
+  decisions: require './map/decisions'
+  steps: require './map/steps'

@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-ProfessionalBuyerRouter = require './router.coffee'
+ProfessionalBuyerRouter = require './router'
 
 module.exports = ->
   router = new ProfessionalBuyerRouter

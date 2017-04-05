@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-Items = require '../collections/items.coffee'
-LayoutSyle = require './mixins/layout_style.coffee'
+Items = require '../collections/items'
+LayoutSyle = require './mixins/layout_style'
 
 module.exports = class OrderedSet extends Backbone.Model
   _.extend @prototype, LayoutSyle

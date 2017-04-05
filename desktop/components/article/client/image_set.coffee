@@ -1,13 +1,13 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
+Artist = require '../../../models/artist'
 template = -> require('../templates/image_set.jade') arguments...
-{ Following, FollowButton } = Follow = require '../../follow_button/index.coffee'
+{ Following, FollowButton } = Follow = require '../../follow_button/index'
 imagesLoaded = require 'imagesloaded'
-{ resize } = require '../../resizer/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
+{ resize } = require '../../resizer/index'
+analyticsHooks = require '../../../lib/analytics_hooks'
+initCarousel = require '../../merry_go_round/horizontal_nav_mgr'
 
 module.exports = class ImageSetView extends Backbone.View
 

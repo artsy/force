@@ -4,7 +4,7 @@ cheerio = require 'cheerio'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
-artists = require './artists_fixture.coffee'
+artists = require './artists_fixture'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../index.jade"

@@ -4,9 +4,9 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
-Artwork = require '../../../models/artwork.coffee'
+Artwork = require '../../../models/artwork'
 PartnerLocations = rewire '../index'
-PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_phone_number/view.coffee'), [
+PartnerPhoneNumberView = benv.requireWithJadeify require.resolve('../../partner_phone_number/view'), [
   'template'
 ]
 

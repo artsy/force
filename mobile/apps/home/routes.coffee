@@ -1,4 +1,4 @@
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../lib/metaphysics'
 
 query = """
   query {

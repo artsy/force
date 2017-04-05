@@ -1,15 +1,15 @@
 _ = require 'underscore'
 sd = require('sharify').data
-SaleArtwork = require '../../../models/sale_artwork.coffee'
+SaleArtwork = require '../../../models/sale_artwork'
 Backbone = require 'backbone'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
-openSpecialistModal = require '../../../components/specialist_modal/index.coffee'
-Auction = require '../../../models/sale.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-mediator = require '../../../lib/mediator.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+AuctionClockView = require '../../../components/auction_clock/view'
+openSpecialistModal = require '../../../components/specialist_modal/index'
+Auction = require '../../../models/sale'
+CurrentUser = require '../../../models/current_user'
+mediator = require '../../../lib/mediator'
 accounting = require 'accounting'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 
 module.exports.BidPageView = class BidPageView extends Backbone.View
 

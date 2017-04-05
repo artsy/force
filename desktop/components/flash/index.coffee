@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+mediator = require '../../lib/mediator'
 safe = _.template "<span><%- message %></span>"
 unsafe = _.template "<span><%= message %></span>"
 

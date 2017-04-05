@@ -1,6 +1,6 @@
 Mailcheck.js
 
-1. Require this component. eg: `Mailcheck = require '../../../components/mailcheck/index.coffee'`
+1. Require this component. eg: `Mailcheck = require '../../../components/mailcheck/index'`
 2. Add a unique ID such as `\#js-mailcheck-input` to your input element
 3. Add a `div` with unique ID such as `\#js-mailcheck-hint` directly after the input element
 4. Initialize the component with `Mailcheck.run('#js-mailcheck-input', '#js-mailcheck-hint', false)`

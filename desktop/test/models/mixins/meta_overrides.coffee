@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-MetaOverrides = require '../../../models/mixins/meta_overrides.coffee'
+MetaOverrides = require '../../../models/mixins/meta_overrides'
 _ = require 'underscore'
 
 class Model extends Backbone.Model

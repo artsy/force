@@ -1,4 +1,4 @@
-ArtworkMasonryView = require '../../../../components/artwork_masonry/view.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry/view'
 
 module.exports = ->
   $el = $('.js-artwork-artist-artworks')

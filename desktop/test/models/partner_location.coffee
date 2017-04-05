@@ -5,7 +5,7 @@ sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'
 PartnerLocation = require '../../models/partner_location'
-{ getDirections } = require "../../components/util/google_maps.coffee"
+{ getDirections } = require '../../components/util/google_maps'
 
 describe 'PartnerLocation', ->
 

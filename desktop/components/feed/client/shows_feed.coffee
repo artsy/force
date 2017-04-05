@@ -1,6 +1,6 @@
 _ = require 'underscore'
-FeedView = require('./feed.coffee')
-PartnerShowButtons = require '../../partner_buttons/show_buttons.coffee'
+FeedView = require('./feed')
+PartnerShowButtons = require '../../partner_buttons/show_buttons'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class ShowsFeed extends FeedView

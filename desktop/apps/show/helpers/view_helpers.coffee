@@ -1,8 +1,8 @@
 _ = require 'underscore'
 { slugify } = require 'underscore.string'
 moment = require 'moment'
-DateHelpers = require '../../../components/util/date_helpers.coffee'
-{ compactObject } = require '../../../models/mixins/compact_object.coffee'
+DateHelpers = require '../../../components/util/date_helpers'
+{ compactObject } = require '../../../models/mixins/compact_object'
 sd = require('sharify').data
 
 module.exports =

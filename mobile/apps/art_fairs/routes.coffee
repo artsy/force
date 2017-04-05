@@ -2,9 +2,9 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 OrderedSets = require '../../collections/ordered_sets'
 Fairs = require '../../collections/fairs'
-query = require './query.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
-Helpers = require './helpers.coffee'
+query = require './query'
+metaphysics = require '../../../lib/metaphysics'
+Helpers = require './helpers'
 
 module.exports.index = (req, res, next) ->
   metaphysics

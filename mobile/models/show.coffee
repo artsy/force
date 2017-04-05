@@ -1,15 +1,15 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artworks = require '../collections/artworks.coffee'
-FairLocation = require './fair_location.coffee'
-PartnerLocation = require './partner_location.coffee'
+Artworks = require '../collections/artworks'
+FairLocation = require './fair_location'
+PartnerLocation = require './partner_location'
 _ = require 'underscore'
 moment = require 'moment'
-dateMixin = require './mixins/date.coffee'
-Relations = require './mixins/relations/show.coffee'
-AdditionalImage = require './additional_image.coffee'
+dateMixin = require './mixins/date'
+Relations = require './mixins/relations/show'
+AdditionalImage = require './additional_image'
 { Fetch, Markdown } = require 'artsy-backbone-mixins'
-DateHelpers = require '../components/util/date_helpers.coffee'
+DateHelpers = require '../components/util/date_helpers'
 { fetchUntilEnd } = Fetch(sd.API_URL)
 
 module.exports = class Show extends Backbone.Model

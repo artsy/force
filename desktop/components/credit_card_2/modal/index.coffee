@@ -1,5 +1,5 @@
-modalize = require '../../modalize/index.coffee'
-CreditCardView = require './view.coffee'
+modalize = require '../../modalize/index'
+CreditCardView = require './view'
 
 module.exports = ({ collection } = {}) ->
   view = new CreditCardView collection: collection

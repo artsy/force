@@ -2,7 +2,7 @@
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-ArtworkCommercialView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template', 'confirmation']
+ArtworkCommercialView = benv.requireWithJadeify require.resolve('../view'), ['template', 'confirmation']
 
 describe 'ArtworkCommercialView', ->
   before (done) ->

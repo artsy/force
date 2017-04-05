@@ -1,5 +1,5 @@
 
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 
 module.exports = (user) ->
   user.on 'change:name', (model, value, options) ->

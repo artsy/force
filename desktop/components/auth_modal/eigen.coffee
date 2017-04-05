@@ -1,5 +1,5 @@
 { EIGEN } = require('sharify').data
-{ urlMap } = require './maps.coffee'
+{ urlMap } = require './maps'
 
 module.exports =
   path: ->

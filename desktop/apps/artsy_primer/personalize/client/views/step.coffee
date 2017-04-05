@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
-device = require '../../../../../components/util/device.coffee'
+analyticsHooks = require '../../../../../lib/analytics_hooks'
+device = require '../../../../../components/util/device'
 
 module.exports = class StepView extends Backbone.View
   className: 'artsy-primer-personalize-frame'

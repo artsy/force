@@ -1,6 +1,6 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Messenger = require './messenger.coffee'
+Messenger = require './messenger'
 
 module.exports = class Validator
   constructor: ({ @$form, @$errors }) ->

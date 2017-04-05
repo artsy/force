@@ -1,7 +1,7 @@
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
 
-require '../lib/analytics_hooks.coffee'
+require '../lib/analytics_hooks'
 require '../analytics/before_ready.js'
 $ -> analytics.ready ->
 

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require "backbone"
-bootstrap = require "../../../components/layout/bootstrap.coffee"
+bootstrap = require '../../../components/layout/bootstrap'
 qs = require 'querystring'
 _s = require 'underscore.string'
 

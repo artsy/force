@@ -6,8 +6,8 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 rewire = require 'rewire'
 routes = rewire '../routes'
-fixtures = require '../../../test/helpers/fixtures.coffee'
-articlesJSON = require './fixtures.coffee'
+fixtures = require '../../../test/helpers/fixtures'
+articlesJSON = require './fixtures'
 Q = require 'bluebird-q'
 
 describe 'Articles routes', ->

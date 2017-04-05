@@ -3,23 +3,23 @@ _s = require 'underscore.string'
 qs = require 'qs'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-PersonalizeState = require './state.coffee'
-mediator = require '../../../../lib/mediator.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
-Transition = require '../../../../components/mixins/transition.coffee'
-AuthModalView = require '../../../../components/auth_modal/view.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+PersonalizeState = require './state'
+mediator = require '../../../../lib/mediator'
+CurrentUser = require '../../../../models/current_user'
+Transition = require '../../../../components/mixins/transition'
+AuthModalView = require '../../../../components/auth_modal/view'
+analyticsHooks = require '../../../../lib/analytics_hooks'
 Cookies = require 'cookies-js'
-NextStepView = require './views/next_step.coffee'
+NextStepView = require './views/next_step'
 
 views =
-  CollectView: require './views/collect.coffee'
-  ArtistsView: require './views/artists.coffee'
-  PriceRangeView: require './views/price_range.coffee'
-  CategoriesView: require './views/categories.coffee'
-  BookmarksView: require './views/bookmarks.coffee'
-  FavoritesView: require './views/favorites.coffee'
-  ThankYouView: require './views/thank_you.coffee'
+  CollectView: require './views/collect'
+  ArtistsView: require './views/artists'
+  PriceRangeView: require './views/price_range'
+  CategoriesView: require './views/categories'
+  BookmarksView: require './views/bookmarks'
+  FavoritesView: require './views/favorites'
+  ThankYouView: require './views/thank_you'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:
@@ -109,9 +109,9 @@ module.exports.init = ->
   else
     user.approximateLocation success: -> user.save()
     user.set receive_personalized_email: false
-    new PersonalizeRouter 
+    new PersonalizeRouter
       user: user
       reonboarding: reonboarding?
       force: force
     Backbone.history.start pushState: true
-    require('./analytics.coffee')(user)
+    require('./analytics')(user)

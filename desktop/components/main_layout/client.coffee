@@ -1,7 +1,7 @@
-globalClientSetup = require '../../lib/global_client_setup.coffee'
-HeaderView = require './header/view.coffee'
-FooterView = require './footer/view.coffee'
-MarketingSignupModal = require '../marketing_signup_modal/index.coffee'
+globalClientSetup = require '../../lib/global_client_setup'
+HeaderView = require './header/view'
+FooterView = require './footer/view'
+MarketingSignupModal = require '../marketing_signup_modal/index'
 
 module.exports = ->
   globalClientSetup()

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-Suggestion = require '../models/suggestion.coffee'
+Suggestion = require '../models/suggestion'
 
 module.exports = class Match extends Backbone.Collection
   model: Suggestion

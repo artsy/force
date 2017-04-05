@@ -1,17 +1,17 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 sd = require('sharify').data
-ShareView = require '../../../components/share/view.coffee'
-attachFollowArtists = require '../components/follow_artists/index.coffee'
-attachFollowProfile = require '../components/follow_profile/index.coffee'
-RelatedArticlesView = require '../components/related_articles/view.coffee'
-openMapModal = require '../components/map_modal/index.coffee'
-openShowEvents = require '../components/events_modal/index.coffee'
-blurb = require '../../../components/gradient_blurb/index.coffee'
-attachRelatedShows = require '../components/related_shows/index.coffee'
-FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.coffee'
-FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
-Profile = require '../../../models/profile.coffee'
+ShareView = require '../../../components/share/view'
+attachFollowArtists = require '../components/follow_artists/index'
+attachFollowProfile = require '../components/follow_profile/index'
+RelatedArticlesView = require '../components/related_articles/view'
+openMapModal = require '../components/map_modal/index'
+openShowEvents = require '../components/events_modal/index'
+blurb = require '../../../components/gradient_blurb/index'
+attachRelatedShows = require '../components/related_shows/index'
+FurtherArtworksView = require '../components/artwork_columns_metaphysics/view'
+FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view'
+Profile = require '../../../models/profile'
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
@@ -23,7 +23,7 @@ module.exports.init = ->
 
   if $('.js-show-installation-shot-carousel').length
     furtherInstallShotsEl = $('.js-show-installation-shot-carousel')
-    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl 
+    new FurtherInstallShotsView showId: bootstrappedShow._id, page: 2, installShots: bootstrappedShow.install_shots, el: furtherInstallShotsEl
 
   attachFollowArtists bootstrappedShow.artists
   attachFollowProfile new Profile id: bootstrappedShow.partner.default_profile_id

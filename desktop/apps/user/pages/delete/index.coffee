@@ -1,6 +1,6 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-DeleteMyAccountView = require '../../components/delete_my_account/view.coffee'
+DeleteMyAccountView = require '../../components/delete_my_account/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class DeleteView extends Backbone.View

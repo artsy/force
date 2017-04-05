@@ -1,13 +1,13 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
-{ formatShowDetail, nShowsByDate } = require '../../view_helpers.coffee'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
+CurrentUser = require '../../../../models/current_user'
+{ formatShowDetail, nShowsByDate } = require '../../view_helpers'
 artistsTemplate = -> require('./artists.jade') arguments...
 showsTemplate = -> require('./shows.jade') arguments...
 articlesTemplate = -> require('./articles.jade') arguments...
-showHelpers = require '../../../../components/show_cell/helpers.coffee'
+showHelpers = require '../../../../components/show_cell/helpers'
 
 setupFollowButtons = ({ $el, items, kind }) =>
   following = new Following(null, kind: kind) if CurrentUser.orNull()

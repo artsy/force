@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require './query.coffee'
-ArtistsToFollowView = require './view.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require './query'
+ArtistsToFollowView = require './view'
 
 class State extends Backbone.Model
 

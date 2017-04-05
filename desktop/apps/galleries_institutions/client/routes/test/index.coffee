@@ -4,7 +4,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 PartnersView = rewire '../index'
-Params = require '../../../components/parameters/filter_params.coffee'
+Params = require '../../../components/parameters/filter_params'
 
 describe 'PartnersView', ->
   before (done) ->

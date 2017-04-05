@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-Items = require '../collections/items.coffee'
+Items = require '../collections/items'
 
 module.exports = class OrderedSet extends Backbone.Model
 

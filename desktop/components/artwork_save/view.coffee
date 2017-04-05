@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-AuthModalView = require '../auth_modal/view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
+AuthModalView = require '../auth_modal/view'
+analyticsHooks = require '../../lib/analytics_hooks'
 
 module.exports = class ArtworkSaveView extends Backbone.View
   tagName: 'a'

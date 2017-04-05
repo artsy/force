@@ -8,8 +8,8 @@ Articles = require '../../collections/articles'
 Article = require '../../models/article'
 embed = require 'embed-video'
 Q = require 'bluebird-q'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ resize } = require '../../components/resizer/index.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
+{ resize } = require '../../components/resizer/index'
 
 partnerFromProfile = (req) ->
   if req.profile?.isPartner()

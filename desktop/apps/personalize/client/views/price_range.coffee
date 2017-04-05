@@ -1,5 +1,5 @@
 _ = require 'underscore'
-StepView = require './step.coffee'
+StepView = require './step'
 template = -> require('../../templates/price_range.jade') arguments...
 
 module.exports = class PriceRangeView extends StepView

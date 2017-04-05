@@ -1,4 +1,4 @@
-CurrentUser = require '../models/current_user.coffee'
+CurrentUser = require '../models/current_user'
 
 $ ->
-  require('../components/main_layout/client.coffee')()
+  require('../components/main_layout/client')()

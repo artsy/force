@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-Transition = require '../mixins/transition.coffee'
-{ isTouchDevice } = require '../util/device.coffee'
-Scrollbar = require '../scrollbar/index.coffee'
+mediator = require '../../lib/mediator'
+Transition = require '../mixins/transition'
+{ isTouchDevice } = require '../util/device'
+Scrollbar = require '../scrollbar/index'
 modalTemplate = -> require('./modal.jade') arguments...
 
 module.exports = class ModalView extends Backbone.View

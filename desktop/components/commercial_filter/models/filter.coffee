@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
-Aggregations = require '../collections/aggregations.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-Artists = require '../../../collections/artists.coffee'
-User = require '../../../models/user.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+Aggregations = require '../collections/aggregations'
+Artworks = require '../../../collections/artworks'
+Artists = require '../../../collections/artists'
+User = require '../../../models/user'
+metaphysics = require '../../../../lib/metaphysics'
 _ = require 'underscore'
 
 module.exports = class Filter extends Backbone.Model
@@ -24,25 +24,25 @@ module.exports = class Filter extends Backbone.Model
 
   aggregationSelector: ->
     if @includeAggregations()
-      require '../queries/aggregations_selector.coffee'
+      require '../queries/aggregations_selector'
     else
       ''
 
   aggregationFragment: ->
     if @includeAggregations()
-      require '../queries/aggregations.coffee'
+      require '../queries/aggregations'
     else
       ''
 
   merchandisableArtists: ->
     if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
-      require '../queries/merchandisable_artists.coffee'
+      require '../queries/merchandisable_artists'
     else
       ''
 
   artistFragment: ->
     if _.contains(@params.get('aggregations'), 'MERCHANDISABLE_ARTISTS')
-      require '../queries/artist.coffee'
+      require '../queries/artist'
     else
       ''
 
@@ -101,7 +101,7 @@ module.exports = class Filter extends Backbone.Model
           #{@merchandisableArtists()}
         }
       }
-      #{require '../queries/artwork.coffee'}
+      #{require '../queries/artwork'}
       #{@artistFragment()}
       #{@aggregationFragment()}
     """

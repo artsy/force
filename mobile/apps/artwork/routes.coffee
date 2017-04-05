@@ -81,11 +81,11 @@ query = (user) -> """
           partner_shows
         }
       }
-      #{require('./components/bid/query.coffee')}
-      #{require('./components/artist/query.coffee')}
-      #{require('./components/partner/query.coffee')}
-      #{require('./components/highlights/query.coffee')}
-      #{require('./components/tabs/query.coffee')}
+      #{require('./components/bid/query')}
+      #{require('./components/artist/query')}
+      #{require('./components/partner/query')}
+      #{require('./components/highlights/query')}
+      #{require('./components/tabs/query')}
     }
   }
 """

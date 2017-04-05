@@ -4,7 +4,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-{ artistsWithExhibitions, artistsWithoutExhibitions } = require './artist_fixure.coffee'
+{ artistsWithExhibitions, artistsWithoutExhibitions } = require './artist_fixure'
 
 describe 'Client', ->
 

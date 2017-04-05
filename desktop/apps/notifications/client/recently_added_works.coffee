@@ -3,11 +3,11 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
 { API_URL } = sd = require('sharify').data
-Notifications = require '../../../collections/notifications.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-Artist = require '../../../models/artist.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-DateHelpers = require '../../../components/util/date_helpers.coffee'
+Notifications = require '../../../collections/notifications'
+Artworks = require '../../../collections/artworks'
+Artist = require '../../../models/artist'
+ArtworkColumnsView = require '../../../components/artwork_columns/view'
+DateHelpers = require '../../../components/util/date_helpers'
 artistTemplate = -> require('../templates/artist.jade') arguments...
 emptyTemplate = -> require('../templates/empty.jade') arguments...
 

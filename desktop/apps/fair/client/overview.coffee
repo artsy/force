@@ -1,14 +1,14 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Clock = require '../../../components/clock/view.coffee'
-FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-FeedView = require '../../../components/feed/client/feed.coffee'
-Artists = require '../../../collections/artists.coffee'
-mediator = require '../../../lib/mediator.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-ForYouView = require './for_you.coffee'
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+Clock = require '../../../components/clock/view'
+FeedItems = require '../../../components/feed/collections/feed_items'
+FeedView = require '../../../components/feed/client/feed'
+Artists = require '../../../collections/artists'
+mediator = require '../../../lib/mediator'
+analyticsHooks = require '../../../lib/analytics_hooks'
+ForYouView = require './for_you'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
 fairOverviewTop = -> require('../templates/overview_top.jade')
 

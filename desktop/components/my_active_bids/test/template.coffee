@@ -1,7 +1,7 @@
 template = require('jade').compileFile(require.resolve '../template.jade')
 cheerio = require 'cheerio'
 moment = require 'moment'
-ViewHelpers = require('../helpers.coffee')
+ViewHelpers = require('../helpers')
 
 fixture = -> [
   {

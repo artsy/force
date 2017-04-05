@@ -1,4 +1,4 @@
-blacklist = require '../../lib/blacklist.coffee'
+blacklist = require '../../lib/blacklist'
 { TEAM_BLOGS } = require('sharify').data
 
 module.exports =

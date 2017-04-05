@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-Router   = require './router.coffee'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+Router   = require './router'
+bootstrap = require '../../../components/layout/bootstrap'
 
 module.exports.init = ->
   bootstrap()

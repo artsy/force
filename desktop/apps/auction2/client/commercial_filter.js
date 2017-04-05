@@ -1,5 +1,5 @@
 import { data as sd } from 'sharify'
-import JumpView from '../../../components/jump/view.coffee'
+import JumpView from '../../../components/jump/view'
 import React from 'react';
 import { render } from 'react-dom';
 import thunkMiddleware from 'redux-thunk'

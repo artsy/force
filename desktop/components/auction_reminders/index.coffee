@@ -1,13 +1,13 @@
 moment = require 'moment'
 Q = require 'bluebird-q'
 _ = require 'underscore'
-mediator = require '../../lib/mediator.coffee'
-Dismisser = require '../has_seen/dismisser.coffee'
-blacklist = require './blacklist.coffee'
-AuctionReminders = require './auction_reminders.coffee'
-AuctionReminderView = require './view.coffee'
-MyBidderPositions = require '../../collections/bidder_positions.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+mediator = require '../../lib/mediator'
+Dismisser = require '../has_seen/dismisser'
+blacklist = require './blacklist'
+AuctionReminders = require './auction_reminders'
+AuctionReminderView = require './view'
+MyBidderPositions = require '../../collections/bidder_positions'
+CurrentUser = require '../../models/current_user'
 
 # Attach the view to the dom and unhide it
 # @return {Q.Promise} that resolves after calculating offset time (for reminder time display)

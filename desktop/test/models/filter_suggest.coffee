@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-FilterSuggest = require '../../models/filter_suggest.coffee'
+FilterSuggest = require '../../models/filter_suggest'
 
 describe 'FilterSuggest', ->
 

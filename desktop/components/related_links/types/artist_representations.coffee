@@ -1,9 +1,9 @@
 _ = require 'underscore'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
-RelatedLinksView = require '../view.coffee'
-Partners = require '../../../collections/partners.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+RelatedLinksView = require '../view'
+Partners = require '../../../collections/partners'
+CurrentUser = require '../../../models/current_user'
 
 module.exports = class RelatedRepresentationsLinksView extends RelatedLinksView
   headerTemplate: _.template '<h2>Gallery Representation</h2>'

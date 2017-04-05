@@ -1,11 +1,11 @@
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
-Gene = require '../../../models/gene.coffee'
-Artwork = require '../../../models/artwork.coffee'
-{ crop } = require '../../../components/resizer/index.coffee'
+Artist = require '../../../models/artist'
+Gene = require '../../../models/gene'
+Artwork = require '../../../models/artwork'
+{ crop } = require '../../../components/resizer/index'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...

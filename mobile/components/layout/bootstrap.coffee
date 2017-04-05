@@ -11,10 +11,10 @@ Backbone.$ = $
 _ = require 'underscore'
 FastClick = require 'fastclick'
 sd = require('sharify').data
-analytics = require '../../lib/analytics.coffee'
+analytics = require '../../lib/analytics'
 Cookies = require 'cookies-js'
 { parse } = require 'url'
-HeaderView = require './client/header_view.coffee'
+HeaderView = require './client/header_view'
 doc = window.document
 
 module.exports = ->

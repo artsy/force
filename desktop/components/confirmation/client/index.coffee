@@ -1,5 +1,5 @@
-modalize = require '../../modalize/index.coffee'
-ConfirmationModal = require './view.coffee'
+modalize = require '../../modalize/index'
+ConfirmationModal = require './view'
 
 module.exports = (data) ->
   return unless data?

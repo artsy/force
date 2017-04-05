@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-mediator = require '../../../lib/mediator.coffee'
+mediator = require '../../../lib/mediator'
 
 module.exports = class HeroUnitView extends Backbone.View
   pauseLength: 6500

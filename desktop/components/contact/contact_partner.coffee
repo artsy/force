@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+ContactView = require './view'
+analyticsHooks = require '../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
+CurrentUser = require '../../models/current_user'
 Cookies = require 'cookies-js'
-defaultMessage = require './default_message.coffee'
+defaultMessage = require './default_message'
 { SESSION_ID, API_URL } = require('sharify').data
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...

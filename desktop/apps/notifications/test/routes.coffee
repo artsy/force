@@ -4,8 +4,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
-CurrentUser = require '../../../models/current_user.coffee'
-Artist = require '../../../models/artist.coffee'
+CurrentUser = require '../../../models/current_user'
+Artist = require '../../../models/artist'
 
 describe 'Notification Routing', ->
 

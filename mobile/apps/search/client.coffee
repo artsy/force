@@ -1,8 +1,8 @@
-bootstrap = require '../../components/layout/bootstrap.coffee'
+bootstrap = require '../../components/layout/bootstrap'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artwork = require '../../models/artwork.coffee'
+Artwork = require '../../models/artwork'
 
 resolvedImage = -> require('./templates/image.jade') arguments...
 

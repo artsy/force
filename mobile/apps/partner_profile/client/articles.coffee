@@ -1,5 +1,5 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-Articles = require '../../../collections/articles.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+Articles = require '../../../collections/articles'
 articleFigureTemplate = -> require('../../../components/article_figure/template.jade') arguments...
 
 $ ->

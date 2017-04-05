@@ -1,5 +1,5 @@
 _ = require 'underscore'
-PartnerShows = require '../../../../collections/partner_shows.coffee'
+PartnerShows = require '../../../../collections/partner_shows'
 
 module.exports =
   formatCity: (location) ->

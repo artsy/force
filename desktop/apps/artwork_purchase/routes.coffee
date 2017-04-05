@@ -3,9 +3,9 @@ metaphysics = require '../../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
-User = require '../../models/user.coffee'
-splitTest = require '../../components/split_test/index.coffee'
-Fair = require '../../models/fair.coffee'
+User = require '../../models/user'
+splitTest = require '../../components/split_test/index'
+Fair = require '../../models/fair'
 
 @index = (req, res, next) ->
   query = """

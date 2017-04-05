@@ -1,33 +1,33 @@
 { extend, map, compact } = require 'underscore'
 { AUCTION, CLIENT } = require('sharify').data
-{ setCookie } = require '../../../components/recently_viewed_artworks/index.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-exec = require '../lib/exec.coffee'
+{ setCookie } = require '../../../components/recently_viewed_artworks/index'
+metaphysics = require '../../../../lib/metaphysics'
+CurrentUser = require '../../../models/current_user'
+exec = require '../lib/exec'
 fold = -> require('./fold.jade') arguments...
 footer = -> require('./footer.jade') arguments...
 
 helpers = extend [
   {}
-  artist_artworks: require '../components/artist_artworks/helpers.coffee'
-  auction_artworks: require '../components/auction_artworks/helpers.coffee'
-  partner: require '../components/partner/helpers.coffee'
-  related_artworks: require '../components/related_artworks/helpers.coffee'
-  show_artworks: require '../components/show_artworks/helpers.coffee'
-  partner_artworks: require '../components/partner_artworks/helpers.coffee'
+  artist_artworks: require '../components/artist_artworks/helpers'
+  auction_artworks: require '../components/auction_artworks/helpers'
+  partner: require '../components/partner/helpers'
+  related_artworks: require '../components/related_artworks/helpers'
+  show_artworks: require '../components/show_artworks/helpers'
+  partner_artworks: require '../components/partner_artworks/helpers'
 ]...
 
 sharedInit = [
-  require '../components/actions/index.coffee'
-  require '../components/additional_info/index.coffee'
-  require '../components/auction/index.coffee'
-  require '../components/artists/index.coffee'
-  require '../components/banner/index.coffee'
-  require '../components/commercial/index.coffee'
-  require '../components/images/index.coffee'
-  require '../components/metadata/index.coffee'
-  require '../components/doge/index.coffee'
-  require '../components/skrillex/index.coffee'
+  require '../components/actions/index'
+  require '../components/additional_info/index'
+  require '../components/auction/index'
+  require '../components/artists/index'
+  require '../components/banner/index'
+  require '../components/commercial/index'
+  require '../components/images/index'
+  require '../components/metadata/index'
+  require '../components/doge/index'
+  require '../components/skrillex/index'
 ]
 
 module.exports =
@@ -54,13 +54,13 @@ module.exports =
             ... current_auctions
           }
         }
-        #{require '../../../components/artwork_brick/query.coffee'}
-        #{require '../components/partner/query.coffee'}
-        #{require('../components/auction_artworks/query.coffee').auction_artworks}
-        #{require('../components/auction_artworks/query.coffee').followed_artist_ids(CurrentUser.orNull())}
+        #{require '../../../components/artwork_brick/query'}
+        #{require '../components/partner/query'}
+        #{require('../components/auction_artworks/query').auction_artworks}
+        #{require('../components/auction_artworks/query').followed_artist_ids(CurrentUser.orNull())}
         #{require('../../../components/current_auctions/query.js').default}
-        #{require '../components/artist_artworks/query.coffee'}
-        #{require '../components/related_artworks/query.coffee'}
+        #{require '../components/artist_artworks/query'}
+        #{require '../components/related_artworks/query'}
       """
 
       variables:
@@ -68,12 +68,12 @@ module.exports =
         auctionId: sd.AUCTION.id
 
       init: compact [
-          require '../components/partner/index.coffee'
-          require '../components/auction_artworks/index.coffee' unless context.is_closed
+          require '../components/partner/index'
+          require '../components/auction_artworks/index' unless context.is_closed
           require('../../../components/current_auctions/index.jsx').default unless context.is_closed
-          require '../components/artist_artworks/index.coffee' if context.is_closed
-          require '../components/related_artworks/index.coffee' if context.is_closed
-          require '../components/related_artists/index.coffee'
+          require '../components/artist_artworks/index' if context.is_closed
+          require '../components/related_artworks/index' if context.is_closed
+          require '../components/related_artists/index'
         ]
 
     else if context.__typename is 'ArtworkContextFair'
@@ -86,18 +86,18 @@ module.exports =
               ... related_artworks
             }
           }
-          #{require '../../../components/artwork_brick/query.coffee'}
-          #{require '../components/fair_artworks/query.coffee'}
-          #{require '../components/partner/query.coffee'}
-          #{require '../components/artist_artworks/query.coffee'}
-          #{require '../components/related_artworks/query.coffee'}
+          #{require '../../../components/artwork_brick/query'}
+          #{require '../components/fair_artworks/query'}
+          #{require '../components/partner/query'}
+          #{require '../components/artist_artworks/query'}
+          #{require '../components/related_artworks/query'}
         """
       init: [
-          require '../components/fair_artworks/index.coffee'
-          require '../components/partner/index.coffee'
-          require '../components/artist_artworks/index.coffee'
-          require '../components/related_artworks/index.coffee'
-          require '../components/related_artists/index.coffee'
+          require '../components/fair_artworks/index'
+          require '../components/partner/index'
+          require '../components/artist_artworks/index'
+          require '../components/related_artworks/index'
+          require '../components/related_artists/index'
         ]
 
     else if context.__typename is 'ArtworkContextPartnerShow'
@@ -111,20 +111,20 @@ module.exports =
               ... related_artworks
             }
           }
-          #{require '../../../components/artwork_brick/query.coffee'}
-          #{require '../components/partner/query.coffee'}
-          #{require '../components/show_artworks/query.coffee'}
-          #{require '../components/artist_artworks/query.coffee'}
-          #{require '../components/partner_artworks/query.coffee'}
-          #{require '../components/related_artworks/query.coffee'}
+          #{require '../../../components/artwork_brick/query'}
+          #{require '../components/partner/query'}
+          #{require '../components/show_artworks/query'}
+          #{require '../components/artist_artworks/query'}
+          #{require '../components/partner_artworks/query'}
+          #{require '../components/related_artworks/query'}
         """
       init: [
-          require '../components/partner/index.coffee'
-          require '../components/show_artworks/index.coffee'
-          require '../components/artist_artworks/index.coffee'
-          require '../components/partner_artworks/index.coffee'
-          require '../components/related_artworks/index.coffee'
-          require '../components/related_artists/index.coffee'
+          require '../components/partner/index'
+          require '../components/show_artworks/index'
+          require '../components/artist_artworks/index'
+          require '../components/partner_artworks/index'
+          require '../components/related_artworks/index'
+          require '../components/related_artists/index'
         ]
 
     else
@@ -137,18 +137,18 @@ module.exports =
               ... related_artworks
             }
           }
-          #{require '../../../components/artwork_brick/query.coffee'}
-          #{require '../components/partner/query.coffee'}
-          #{require '../components/artist_artworks/query.coffee'}
-          #{require '../components/partner_artworks/query.coffee'}
-          #{require '../components/related_artworks/query.coffee'}
+          #{require '../../../components/artwork_brick/query'}
+          #{require '../components/partner/query'}
+          #{require '../components/artist_artworks/query'}
+          #{require '../components/partner_artworks/query'}
+          #{require '../components/related_artworks/query'}
         """
       init: [
-          require '../components/partner/index.coffee'
-          require '../components/artist_artworks/index.coffee'
-          require '../components/partner_artworks/index.coffee'
-          require '../components/related_artworks/index.coffee'
-          require '../components/related_artists/index.coffee'
+          require '../components/partner/index'
+          require '../components/artist_artworks/index'
+          require '../components/partner_artworks/index'
+          require '../components/related_artworks/index'
+          require '../components/related_artists/index'
         ]
 
   renderTemplates: renderTemplates = (data) ->

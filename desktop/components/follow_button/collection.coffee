@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
-Follow = require './model.coffee'
+Follow = require './model'
 
 module.exports = class Following extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)

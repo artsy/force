@@ -1,7 +1,7 @@
 _ = require 'underscore'
-DateHelpers = require '../../components/util/date_helpers.coffee'
+DateHelpers = require '../../components/util/date_helpers'
 
-module.exports = 
+module.exports =
 
   isCurrent: (fair) ->
     @isEligible(fair) and @isNotOver(fair)

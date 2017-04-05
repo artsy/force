@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+mediator = require '../../lib/mediator'
 template = -> require('./template.jade') arguments...
 
 module.exports = class ModalView extends Backbone.View

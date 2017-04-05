@@ -1,5 +1,5 @@
-Cookies = require '../cookies/index.coffee'
-open = require './client/index.coffee'
+Cookies = require '../cookies/index'
+open = require './client/index'
 
 module.exports =
   key: key = 'confirmation_modal'

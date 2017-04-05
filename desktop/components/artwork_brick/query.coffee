@@ -14,5 +14,5 @@ module.exports = """
     ... artwork_metadata_stub
   }
 
-  #{require '../artwork_metadata_stub/query.coffee'}
+  #{require '../artwork_metadata_stub/query'}
 """

@@ -3,11 +3,11 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 rewire = require 'rewire'
-FollowProfile = require '../../../../../collections/follow_profiles.coffee'
+FollowProfile = require '../../../../../collections/follow_profiles'
 CurrentUser = require '../../../../../models/current_user'
 { fabricate, fabricate2 } = require 'antigravity'
 { resolve } = require 'path'
-partner = require './fixture.coffee'
+partner = require './fixture'
 
 describe 'ArtworkPartnerView', ->
 

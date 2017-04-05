@@ -1,8 +1,8 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
-ArtistPageView = require './view.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+Artist = require '../../../models/artist'
+ArtistPageView = require './view'
+CurrentUser = require '../../../models/current_user'
 
 $ ->
   bootstrap()

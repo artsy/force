@@ -5,7 +5,7 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 fixtures = require '../../../../../test/helpers/fixtures'
 Articles = require '../../../../../collections/articles'
-ShowRelatedArticlesView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
+ShowRelatedArticlesView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 xdescribe 'ShowRelatedArticlesView', ->
 

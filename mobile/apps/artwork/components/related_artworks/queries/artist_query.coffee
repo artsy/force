@@ -7,7 +7,7 @@ module.exports = """
         artworks(format: "0,0")
       }
       artworks(filter: [IS_FOR_SALE], exclude: [$id], size: 20, sort: partner_updated_at_desc) {
-        #{require('./index.coffee')}
+        #{require('./index')}
       }
     }
   }

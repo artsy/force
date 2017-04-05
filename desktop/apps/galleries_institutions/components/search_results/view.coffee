@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerCellView = require '../partner_cell/view.coffee'
+PartnerCellView = require '../partner_cell/view'
 
 module.exports = class ResultsView extends Backbone.View
 

@@ -1,7 +1,7 @@
-CurrentUser = require '../../models/current_user.coffee'
-mediator = require '../../lib/mediator.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
+CurrentUser = require '../../models/current_user'
+mediator = require '../../lib/mediator'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
+analyticsHooks = require '../../lib/analytics_hooks'
 
 module.exports =
   acquireArtwork: (artwork, $target, editionSetId) ->

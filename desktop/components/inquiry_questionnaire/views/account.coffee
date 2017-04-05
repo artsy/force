@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-StepView = require './step.coffee'
-Form = require '../../form/index.coffee'
+StepView = require './step'
+Form = require '../../form/index'
 templates =
   register: -> require('../templates/account/register.jade') arguments...
   login: -> require('../templates/account/login.jade') arguments...

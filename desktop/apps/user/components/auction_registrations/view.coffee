@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require './query.coffee'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require './query'
 template = -> require('./index.jade') arguments...
 
 module.exports = class AuctionRegistrationsView extends Backbone.View

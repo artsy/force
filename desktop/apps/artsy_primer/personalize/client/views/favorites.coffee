@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-StepView = require './step.coffee'
-Artworks = require '../../../../../collections/artworks.coffee'
-ArtworkColumnsView = require '../../../../../components/artwork_columns/view.coffee'
+StepView = require './step'
+Artworks = require '../../../../../collections/artworks'
+ArtworkColumnsView = require '../../../../../components/artwork_columns/view'
 { API_URL } = require('sharify').data
 template = -> require('../../templates/favorites.jade') arguments...
 

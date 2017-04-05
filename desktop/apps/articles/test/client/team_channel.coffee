@@ -6,9 +6,9 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 fixtures = require '../../../../test/helpers/fixtures'
 { fabricate } = require 'antigravity'
-Articles = require '../../../../collections/articles.coffee'
-Article = require '../../../../models/article.coffee'
-Channel = require '../../../../models/channel.coffee'
+Articles = require '../../../../collections/articles'
+Article = require '../../../../models/article'
+Channel = require '../../../../models/channel'
 sd = require('sharify').data
 { resize, crop } = require '../../../../components/resizer'
 

@@ -2,18 +2,18 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'
-PersonalizeState = require './state.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-Transition = require '../../../components/mixins/transition.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+PersonalizeState = require './state'
+CurrentUser = require '../../../models/current_user'
+Transition = require '../../../components/mixins/transition'
+analyticsHooks = require '../../../lib/analytics_hooks'
 Cookies = require 'cookies-js'
 views =
-  CollectView: require './views/collect.coffee'
-  ArtistsView: require './views/artists.coffee'
-  PriceRangeView: require './views/price_range.coffee'
-  CategoriesView: require './views/categories.coffee'
-  BookmarksView: require './views/bookmarks.coffee'
-  FavoritesView: require './views/favorites.coffee'
+  CollectView: require './views/collect'
+  ArtistsView: require './views/artists'
+  PriceRangeView: require './views/price_range'
+  CategoriesView: require './views/categories'
+  BookmarksView: require './views/bookmarks'
+  FavoritesView: require './views/favorites'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:
@@ -74,4 +74,4 @@ module.exports.init = ->
   user.approximateLocation success: -> user.save()
   new PersonalizeRouter user: user, reonboarding: reonboarding?, force: force
   Backbone.history.start pushState: true
-  require('./analytics.coffee')(user)
+  require('./analytics')(user)

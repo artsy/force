@@ -21,5 +21,5 @@ module.exports = """
       }
     }
   }
-  #{require '../../queries/show_fragment.coffee'}
+  #{require '../../queries/show_fragment'}
 """

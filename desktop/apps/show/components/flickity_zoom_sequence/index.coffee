@@ -1,5 +1,5 @@
 _ = require 'underscore'
-zoom = require '../../../../components/zoom/index.coffee'
+zoom = require '../../../../components/zoom/index'
 
 module.exports = class FlickityZoomSequence
   zoom: zoom

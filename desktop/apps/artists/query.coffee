@@ -32,5 +32,5 @@ module.exports = """
       }
     }
   }
-  #{require '../../components/artist_cell/query.coffee'}
+  #{require '../../components/artist_cell/query'}
 """

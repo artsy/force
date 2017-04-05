@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-deepZoom = require '../deep_zoom/index.coffee'
+deepZoom = require '../deep_zoom/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class ArtworkImagesView extends Backbone.View

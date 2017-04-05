@@ -1,16 +1,16 @@
 { fabricate } = require 'antigravity'
-fixtures = require '../../../test/helpers/fixtures.coffee'
+fixtures = require '../../../test/helpers/fixtures'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 moment = require 'moment'
 routes = rewire '../routes'
-CurrentUser = require '../../../models/current_user.coffee'
-FairOrganizer = require '../../../models/fair_organizer.coffee'
-Fair = require '../../../models/fair.coffee'
-Fairs = require '../../../collections/fairs.coffee'
-Profile = require '../../../models/profile.coffee'
+CurrentUser = require '../../../models/current_user'
+FairOrganizer = require '../../../models/fair_organizer'
+Fair = require '../../../models/fair'
+Fairs = require '../../../collections/fairs'
+Profile = require '../../../models/profile'
 
 class OrderedSetsFixture extends Backbone.Collection
   fetchAll: -> then: (cb) -> cb()

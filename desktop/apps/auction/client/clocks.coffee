@@ -1,5 +1,5 @@
 _ = require 'underscore'
-ClockView = require '../../../components/clock/view.coffee'
+ClockView = require '../../../components/clock/view'
 
 startClock = (sale) ->
   clock = new ClockView

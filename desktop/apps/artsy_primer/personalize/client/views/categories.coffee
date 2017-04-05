@@ -1,9 +1,9 @@
 _ = require 'underscore'
-StepView = require './step.coffee'
-Items = require '../../../../../collections/items.coffee'
-Gene = require '../../../../../models/gene.coffee'
-{ setSkipLabel } = require '../mixins/followable.coffee'
-{ FollowButton, Following } = require '../../../../../components/follow_button/index.coffee'
+StepView = require './step'
+Items = require '../../../../../collections/items'
+Gene = require '../../../../../models/gene'
+{ setSkipLabel } = require '../mixins/followable'
+{ FollowButton, Following } = require '../../../../../components/follow_button/index'
 template = -> require('../../templates/categories.jade') arguments...
 categoryTemplate = -> require('../../templates/category.jade') arguments...
 

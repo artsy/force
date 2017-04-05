@@ -1,4 +1,4 @@
-follow = require '../../lib/follow.coffee'
+follow = require '../../lib/follow'
 
 module.exports = ->
   $el = $('.js-artwork-metadata')

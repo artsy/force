@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
-ArtistSuggestions = require './artist_suggestions.coffee'
+mediator = require '../../lib/mediator'
+analyticsHooks = require '../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
+ArtistSuggestions = require './artist_suggestions'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
 
 module.exports = class FollowButton extends Backbone.View

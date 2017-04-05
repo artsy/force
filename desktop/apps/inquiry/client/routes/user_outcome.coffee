@@ -1,7 +1,7 @@
 { INQUIRY } = require('sharify').data
-InquiryOutcome = require '../../../../models/inquiry_outcome.coffee'
-Form = require '../../../../components/form/index.coffee'
-FlashMessage = require '../../../../components/flash/index.coffee'
+InquiryOutcome = require '../../../../models/inquiry_outcome'
+Form = require '../../../../components/form/index'
+FlashMessage = require '../../../../components/flash/index'
 
 module.exports = ->
   inquiry = new InquiryOutcome INQUIRY
@@ -18,6 +18,6 @@ module.exports = ->
     form.submit e,
       success: ->
         new FlashMessage message: 'Thank you for your feedback.', autoclose: false, href: '/' #redirect to homepage
-      
+
       error: (model, response) =>
         new FlashMessage message: form.errors.parse response

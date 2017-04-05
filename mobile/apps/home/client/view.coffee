@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FeaturedLinks = require '../../../collections/featured_links.coffee'
-ShowsFeed = require '../../../collections/shows_feed.coffee'
-PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
+FeaturedLinks = require '../../../collections/featured_links'
+ShowsFeed = require '../../../collections/shows_feed'
+PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view'
 Flickity = require 'flickity'
-{ seeMoreArtworks } = require '../../../components/show_more_works/index.coffee'
+{ seeMoreArtworks } = require '../../../components/show_more_works/index'
 
 featuredItemsTemplate = -> require('../../../components/featured_items/template.jade') arguments...
 currentShowsTemplate = -> require('../templates/current_shows.jade') arguments...
@@ -15,7 +15,7 @@ module.exports = class HomePageView extends PoliteInfiniteScrollView
   el: 'body'
   heroDelay: 10000   # 10s
 
-  events: 
+  events:
     'click .show-more-works__artworks-slider' : seeMoreArtworks
 
   initialize: ->

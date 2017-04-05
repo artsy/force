@@ -1,5 +1,5 @@
-ArtworkMasonryView = require '../../../../components/artwork_masonry_4_column/view.coffee'
-reveal = require '../../../../components/reveal/index.coffee'
+ArtworkMasonryView = require '../../../../components/artwork_masonry_4_column/view'
+reveal = require '../../../../components/reveal/index'
 
 module.exports = ->
   $el = $('.js-artwork-auction-artworks')

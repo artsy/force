@@ -18,7 +18,7 @@ artsyEigenWebAssociation = require 'artsy-eigen-web-association'
 artsyError = require 'artsy-error-handler'
 artsyXapp = require 'artsy-xapp'
 localsMiddleware = require './middleware/locals'
-redirectExternalLinks = require './middleware/redirect_external_links.coffee'
+redirectExternalLinks = require './middleware/redirect_external_links'
 marketingSignupModal = require '../components/marketing_signup_modal/middleware'
 artsyPassport = require 'artsy-passport'
 ensureSSL = require './middleware/ensure_ssl'
@@ -34,7 +34,7 @@ cache = require './cache'
 bucketAssets = require 'bucket-assets'
 sharify = require 'sharify'
 
-require './setup_sharify.coffee'
+require './setup_sharify'
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->

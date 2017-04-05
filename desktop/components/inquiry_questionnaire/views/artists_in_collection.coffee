@@ -1,5 +1,5 @@
-StepView = require './step.coffee'
-UserInterestsView = require '../../user_interests/view.coffee'
+StepView = require './step'
+UserInterestsView = require '../../user_interests/view'
 template = -> require('../templates/artists_in_collection.jade') arguments...
 
 module.exports = class ArtistsInCollection extends StepView

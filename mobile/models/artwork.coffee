@@ -2,13 +2,13 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 { Dimensions, Markdown, ArtworkHelpers } = require 'artsy-backbone-mixins'
-Artworks = require '../collections/artworks.coffee'
-EditionSets = require '../collections/edition_sets.coffee'
-Sale = require './sale.coffee'
-SaleArtwork = require './sale_artwork.coffee'
-Images = require '../collections/images.coffee'
-AdditionalImage = require './additional_image.coffee'
-Relations = require './mixins/relations/artwork.coffee'
+Artworks = require '../collections/artworks'
+EditionSets = require '../collections/edition_sets'
+Sale = require './sale'
+SaleArtwork = require './sale_artwork'
+Images = require '../collections/images'
+AdditionalImage = require './additional_image'
+Relations = require './mixins/relations/artwork'
 
 module.exports = class Artwork extends Backbone.Model
 

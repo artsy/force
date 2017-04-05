@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
-IS_TEST_ENV = require '../../lib/is_test_env.coffee'
+IS_TEST_ENV = require '../../lib/is_test_env'
 
 # These need to be set up individually before using. Read this non-sense:
 # https://developers.google.com/analytics/devguides/platform/customdimsmets

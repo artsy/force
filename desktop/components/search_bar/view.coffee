@@ -2,10 +2,10 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Search = require './collections/search.coffee'
-mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
+Search = require './collections/search'
+mediator = require '../../lib/mediator'
+analyticsHooks = require '../../lib/analytics_hooks'
+{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 

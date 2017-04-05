@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-CurrentUser = require '../../../../models/current_user.coffee'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+CurrentUser = require '../../../../models/current_user'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
 
 module.exports = (artists) ->
   user = CurrentUser.orNull()

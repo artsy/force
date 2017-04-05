@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require '../cookies/index.coffee'
+Cookies = require '../cookies/index'
 template = -> require('./template.jade') arguments...
 
 module.exports = class CTABarView extends Backbone.View

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediumMap = require './medium_map.coffee'
+mediumMap = require './medium_map'
 
 template = -> require('./index.jade') arguments...
 

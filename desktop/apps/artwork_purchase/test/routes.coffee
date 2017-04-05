@@ -4,9 +4,9 @@ rewire = require 'rewire'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 routes = rewire '../routes'
-artworkJSON = require './artwork_json.coffee'
+artworkJSON = require './artwork_json'
 
 describe 'Artist routes', ->
   beforeEach ->

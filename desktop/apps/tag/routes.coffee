@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 @index = (req, res, next) ->
   tag = new Tag(id: req.params.id)

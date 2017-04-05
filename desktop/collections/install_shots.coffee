@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-InstallShot = require '../models/install_shot.coffee'
+InstallShot = require '../models/install_shot'
 { Fetch } = require 'artsy-backbone-mixins'
 { API_URL } = require('sharify').data
 

@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
-Partners = require '../../../../collections/partners.coffee'
-Profile = require '../../../../models/profile.coffee'
-fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
+Partners = require '../../../../collections/partners'
+Profile = require '../../../../models/profile'
+fetchLocationCarousel = require '../../components/location_carousel/index'
 carouselTemplate = -> require('../../components/partner_cell_carousel/template.jade') arguments...
-PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
-facetDefaults = require '../../components/filter_facet/facet_defaults.coffee'
+PartnerCellCarouselView = require '../../components/partner_cell_carousel/view'
+facetDefaults = require '../../components/filter_facet/facet_defaults'
 Q = require 'bluebird-q'
 
 module.exports = class LandingCarouselView extends Backbone.View

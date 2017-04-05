@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sinon = require 'sinon'
-PartnerArtists = require '../../../../collections/partner_artists.coffee'
+PartnerArtists = require '../../../../collections/partner_artists'
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'

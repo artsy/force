@@ -2,14 +2,14 @@ _ = require 'underscore'
 qs = require 'querystring'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Artist = require '../../../models/artist.coffee'
-Partner = require '../../../models/partner.coffee'
-PartnerArtistArtworks = require '../../../collections/partner_artist_artworks.coffee'
-FollowArtists = require '../../../collections/follow_artists.coffee'
-FollowButtonView = require '../../../components/follow_button/view.coffee'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-ShareView = require '../../../components/share/view.coffee'
+CurrentUser = require '../../../models/current_user'
+Artist = require '../../../models/artist'
+Partner = require '../../../models/partner'
+PartnerArtistArtworks = require '../../../collections/partner_artist_artworks'
+FollowArtists = require '../../../collections/follow_artists'
+FollowButtonView = require '../../../components/follow_button/view'
+bootstrap = require '../../../components/layout/bootstrap'
+ShareView = require '../../../components/share/view'
 
 artworksTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 

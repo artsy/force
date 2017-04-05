@@ -1,10 +1,10 @@
 _ = require 'underscore'
 qs = require 'querystring'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
-Artist = require '../../../models/artist.coffee'
+Artist = require '../../../models/artist'
 auctionResultTemplate = -> require('../templates/auction_result.jade') arguments...
 
 module.exports.ArtistAuctionResultsView = class ArtistAuctionResultsView extends Backbone.View

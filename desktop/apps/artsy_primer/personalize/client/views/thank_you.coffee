@@ -1,4 +1,4 @@
-StepView = require './step.coffee'
+StepView = require './step'
 template = -> require('../../templates/thank_you.jade') arguments...
 
 module.exports = class CollectView extends StepView

@@ -1,8 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+analyticsHooks = require '../../../lib/analytics_hooks'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 

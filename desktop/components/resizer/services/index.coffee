@@ -1,7 +1,7 @@
 { NODE_ENV } = require('sharify').data
 qs = require 'qs'
 { compact } = require 'underscore'
-{ defaults, enabled } = require '../config.coffee'
+{ defaults, enabled } = require '../config'
 
 warn = (message) ->
   console.warn message if NODE_ENV is 'development'

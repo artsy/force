@@ -1,6 +1,6 @@
-Notice = require '../../notice/index.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-Dismisser = require '../../has_seen/dismisser.coffee'
+Notice = require '../../notice/index'
+CurrentUser = require '../../../models/current_user'
+Dismisser = require '../../has_seen/dismisser'
 
 pastCutoff = (user) ->
   userCreatedAt = new Date(user.get 'created_at').getTime()

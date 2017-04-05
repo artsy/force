@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-ModalPageView = require '../../../components/modal/page.coffee'
-BidderPosition = require '../../../models/bidder_position.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks'
+ModalPageView = require '../../../components/modal/page'
+BidderPosition = require '../../../models/bidder_position'
+CurrentUser = require '../../../models/current_user'
+ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form'
 { SESSION_ID } = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm

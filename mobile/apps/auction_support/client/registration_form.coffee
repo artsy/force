@@ -1,9 +1,9 @@
 sd = require('sharify').data
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
+analyticsHooks = require '../../../lib/analytics_hooks'
+CurrentUser = require '../../../models/current_user'
+ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form')
 
 { SESSION_ID, STRIPE_PUBLISHABLE_KEY } = require('sharify').data
 

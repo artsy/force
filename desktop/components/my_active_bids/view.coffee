@@ -1,10 +1,10 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-query = require './query.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+query = require './query'
+metaphysics = require '../../../lib/metaphysics'
+CurrentUser = require '../../models/current_user'
 template = -> require('./template.jade') arguments...
-ViewHelpers = require('./helpers.coffee')
+ViewHelpers = require('./helpers')
 
 module.exports = class MyActiveBids extends Backbone.View
 

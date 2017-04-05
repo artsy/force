@@ -1,15 +1,15 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 { ARTWORK, CURRENT_USER } = require('sharify').data
-Form = require '../../../components/mixins/form.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-PurchaseForm = require './purchase_form.coffee'
-SignupForm = require './purchase_signup_form.coffee'
+Form = require '../../../components/mixins/form'
+CurrentUser = require '../../../models/current_user'
+PurchaseForm = require './purchase_form'
+SignupForm = require './purchase_signup_form'
 successTemplate = ->require('../templates/success.jade') arguments...
-AuthModalView = require '../../../components/auth_modal/view.coffee'
-mediator = require '../../../lib/mediator.coffee'
-Cookies = require '../../../components/cookies/index.coffee'
-Sticky = require '../../../components/sticky/index.coffee'
+AuthModalView = require '../../../components/auth_modal/view'
+mediator = require '../../../lib/mediator'
+Cookies = require '../../../components/cookies/index'
+Sticky = require '../../../components/sticky/index'
 
 class PurchaseView extends Backbone.View
 

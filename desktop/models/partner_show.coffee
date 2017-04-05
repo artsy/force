@@ -4,13 +4,13 @@ sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
-DateHelpers = require '../components/util/date_helpers.coffee'
-{ compactObject } = require './mixins/compact_object.coffee'
-FairLocation = require './fair_location.coffee'
-PartnerLocation = require './partner_location.coffee'
-Artworks = require '../collections/artworks.coffee'
-ImageSizes = require './mixins/image_sizes.coffee'
-Relations = require './mixins/relations/partner_show.coffee'
+DateHelpers = require '../components/util/date_helpers'
+{ compactObject } = require './mixins/compact_object'
+FairLocation = require './fair_location'
+PartnerLocation = require './partner_location'
+Artworks = require '../collections/artworks'
+ImageSizes = require './mixins/image_sizes'
+Relations = require './mixins/relations/partner_show'
 
 module.exports = class PartnerShow extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)

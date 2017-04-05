@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { toSentence } = require 'underscore.string'
 Backbone = require 'backbone'
-Artist = require '../models/artist.coffee'
+Artist = require '../models/artist'
 { API_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 

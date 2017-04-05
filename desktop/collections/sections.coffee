@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Section = require '../models/section.coffee'
+Section = require '../models/section'
 moment = require 'moment'
 
 module.exports = class Sections extends Backbone.Collection

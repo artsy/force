@@ -6,7 +6,7 @@ Fair = require '../../../../models/fair'
 FairEvent = require '../../../../models/fair_event'
 FairEvents = require '../../../../collections/fair_events'
 template = require('jade').compileFile(require.resolve '../../templates/events.jade')
-InfoMenu = require '../../../../components/info_menu/index.coffee'
+InfoMenu = require '../../../../components/info_menu/index'
 data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info/events'}, markdown: (->)
 
 render = (moreData) ->

@@ -3,10 +3,10 @@ benv = require 'benv'
 sinon = require 'sinon'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Fair = require '../../../../../models/fair.coffee'
+Fair = require '../../../../../models/fair'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../../../models/current_user.coffee'
+CurrentUser = require '../../../../../models/current_user'
 capture = rewire '../index.coffee'
 
 describe 'captureSignup', ->

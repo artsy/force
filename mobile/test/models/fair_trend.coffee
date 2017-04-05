@@ -1,7 +1,7 @@
-Artwork = require '../../models/artwork.coffee'
+Artwork = require '../../models/artwork'
 Backbone = require 'backbone'
-Fair = require '../../models/fair.coffee'
-{ FairTrendArtist, FairTrendPartner } = require '../../models/fair_trend.coffee'
+Fair = require '../../models/fair'
+{ FairTrendArtist, FairTrendPartner } = require '../../models/fair_trend'
 fabricate = require 'antigravity'
 sinon = require 'sinon'
 

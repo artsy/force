@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require '../cookies/index.coffee'
-ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
+Cookies = require '../cookies/index'
+ContactView = require './view'
+analyticsHooks = require '../../lib/analytics_hooks'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 { SESSION_ID, API_URL } = sd = require('sharify').data
 

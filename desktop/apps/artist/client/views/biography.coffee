@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
-ArticleView = require '../../../../components/article/client/view.coffee'
+ArticleView = require '../../../../components/article/client/view'
 template = -> require('../../../../components/article/templates/index.jade') arguments...
 sd = require('sharify').data
-{ resize } = require '../../../../components/resizer/index.coffee'
+{ resize } = require '../../../../components/resizer/index'
 embed = require 'particle'
 moment = require 'moment'
 

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
+initCarousel = require '../../merry_go_round/horizontal_nav_mgr'
 sd = require('sharify').data
 
 module.exports = class SuperArticleView extends Backbone.View

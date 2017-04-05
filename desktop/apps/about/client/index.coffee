@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-AboutRouter = require './router.coffee'
+AboutRouter = require './router'
 
 module.exports.init = ->
   new AboutRouter

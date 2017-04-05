@@ -5,7 +5,7 @@ cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Helpers = require '../helpers.coffee'
+Helpers = require '../helpers'
 
 describe 'Art fairs template', ->
 

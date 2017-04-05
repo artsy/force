@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
-AuctionLot = require '../models/auction_lot.coffee'
-PageableCollection = require '../components/pageable_collection/index.coffee'
+AuctionLot = require '../models/auction_lot'
+PageableCollection = require '../components/pageable_collection/index'
 
 module.exports = class AuctionLots extends PageableCollection
   model: AuctionLot

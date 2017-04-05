@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require './artworks.coffee'
+Artworks = require './artworks'
 qs = require 'querystring'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'

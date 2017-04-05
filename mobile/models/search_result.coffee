@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 _s = require 'underscore.string'
-PartnerShow = require './show.coffee'
+PartnerShow = require './show'
 moment = require 'moment'
 module.exports = class SearchResult extends Backbone.Model
 

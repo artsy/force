@@ -2,7 +2,7 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    Profile = require '../../../models/profile.coffee'
+    Profile = require '../../../models/profile'
 
     profile_id = @get('default_profile_id') || @get('organizer')?.profile_id
 

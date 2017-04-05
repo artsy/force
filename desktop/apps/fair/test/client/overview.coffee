@@ -6,7 +6,7 @@ sinon = require 'sinon'
 moment = require 'moment'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../../models/fair.coffee'
+Fair = require '../../../../models/fair'
 
 xdescribe 'ForYouView', ->
 
@@ -19,7 +19,7 @@ xdescribe 'ForYouView', ->
       sd.NODE_ENV = "test"
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      @OverviewView = require '../../client/overview.coffee'
+      @OverviewView = require '../../client/overview'
       Backbone.$ = $
 
       @fair = new Fair fabricate 'fair'

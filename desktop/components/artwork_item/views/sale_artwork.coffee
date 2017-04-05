@@ -1,9 +1,9 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
-ContactPartnerView = require '../../contact/contact_partner.coffee'
-mediator = require '../../../lib/mediator.coffee'
+AcquireArtwork = require('../../acquire/view').acquireArtwork
+ContactPartnerView = require '../../contact/contact_partner'
+mediator = require '../../../lib/mediator'
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:

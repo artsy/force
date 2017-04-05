@@ -6,7 +6,7 @@ Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
 rewire = require 'rewire'
 routes = rewire '../routes'
-fixtures = require '../../../test/helpers/fixtures.coffee'
+fixtures = require '../../../test/helpers/fixtures'
 
 describe 'EOY route', ->
 

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-CurrentUser = require '../../../../models/current_user.coffee'
-PasswordEdit = require '../../models/password_edit.coffee'
+CurrentUser = require '../../../../models/current_user'
+PasswordEdit = require '../../models/password_edit'
 fabricate = require('antigravity').fabricate
 
 describe 'PasswordEdit', ->

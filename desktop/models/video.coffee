@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-FeaturedLink = require './featured_link.coffee'
+FeaturedLink = require './featured_link'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 { SECURE_IMAGES_URL } = require('sharify').data
 

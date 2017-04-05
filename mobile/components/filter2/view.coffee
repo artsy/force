@@ -3,11 +3,11 @@ _s = require 'underscore.string'
 qs = require 'querystring'
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-bootstrap = require '../../components/layout/bootstrap.coffee'
-PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view.coffee'
-DropdownView = require './dropdown/view.coffee'
-HeadlineView = require './headline/view.coffee'
+mediator = require '../../lib/mediator'
+bootstrap = require '../../components/layout/bootstrap'
+PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view'
+DropdownView = require './dropdown/view'
+HeadlineView = require './headline/view'
 template = -> require('./template.jade') arguments...
 artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
 

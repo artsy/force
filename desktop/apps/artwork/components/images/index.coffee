@@ -1,5 +1,5 @@
-ArtworkImagesView = require './view.coffee'
-ArtworkVideoView = require '../video/view.coffee'
+ArtworkImagesView = require './view'
+ArtworkVideoView = require '../video/view'
 
 module.exports = ->
   view = new ArtworkImagesView el: $('.js-artwork-images')

@@ -1,7 +1,7 @@
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
-Form = require '../../../../components/form/index.coffee'
-FlashMessage = require '../../../../components/flash/index.coffee'
+Form = require '../../../../components/form/index'
+FlashMessage = require '../../../../components/flash/index'
 template = -> require('./index.jade') arguments...
 
 module.exports = class DeleteMyAccountView extends Backbone.View

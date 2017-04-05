@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Artworks = require './artworks.coffee'
+Artworks = require './artworks'
 
 module.exports = class PartnerArtistArtworks extends Artworks
 

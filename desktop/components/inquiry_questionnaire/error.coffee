@@ -1,5 +1,5 @@
-FlashMessage = require '../flash/index.coffee'
-Errors = require '../form/errors.coffee'
+FlashMessage = require '../flash/index'
+Errors = require '../form/errors'
 sd = require('sharify').data
 
 module.exports = (error) ->

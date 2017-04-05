@@ -21,6 +21,6 @@ module.exports =
     }
   }
 
-  #{require './show_fragment.coffee'}
-  #{require './related_show_image.coffee'}
+  #{require './show_fragment'}
+  #{require './related_show_image'}
   """

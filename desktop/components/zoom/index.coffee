@@ -1,4 +1,4 @@
-modalize = require '../modalize/index.coffee'
+modalize = require '../modalize/index'
 
 module.exports = (src) ->
   (img = new Image).src = src

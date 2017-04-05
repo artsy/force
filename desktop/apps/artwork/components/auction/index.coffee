@@ -1,5 +1,5 @@
 { extend } = require 'underscore'
-ArtworkAuctionView = require './view.coffee'
+ArtworkAuctionView = require './view'
 
 module.exports = ->
   $el = $('.js-artwork-auction-container')

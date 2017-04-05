@@ -6,8 +6,8 @@ rewire = require 'rewire'
 CurrentUser = require '../../../../../models/current_user'
 { fabricate, fabricate2 } = require 'antigravity'
 { resolve } = require 'path'
-artists = require './fixture.coffee'
-Helpers = require '../../../helpers.coffee'
+artists = require './fixture'
+Helpers = require '../../../helpers'
 
 describe 'ArtworkArtistView', ->
 

@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-track = require('../../../lib/analytics.coffee').track
+track = require('../../../lib/analytics').track
 
 StepView = class StepView extends Backbone.View
   initialize: (options) ->

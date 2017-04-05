@@ -1,9 +1,9 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-Icon = require './icon.coffee'
+Icon = require './icon'
 { Image } = require 'artsy-backbone-mixins'
-ImageSizes = require './mixins/image_sizes.coffee'
+ImageSizes = require './mixins/image_sizes'
 
 module.exports = class Icon extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)

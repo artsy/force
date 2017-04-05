@@ -2,7 +2,7 @@ _ = require 'underscore'
 qs = require 'querystring'
 Q = require 'bluebird-q'
 { humanize } = require 'underscore.string'
-FlashMessage = require '../../../../components/flash/index.coffee'
+FlashMessage = require '../../../../components/flash/index'
 
 module.exports =
   validActions: validActions =

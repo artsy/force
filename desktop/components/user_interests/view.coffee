@@ -1,11 +1,11 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-Following = require '../follow_button/collection.coffee'
-UserInterests = require '../../collections/user_interests.coffee'
-TypeaheadView = require '../typeahead/view.coffee'
-ResultsListView = require '../results_list/view.coffee'
+analyticsHooks = require '../../lib/analytics_hooks'
+Following = require '../follow_button/collection'
+UserInterests = require '../../collections/user_interests'
+TypeaheadView = require '../typeahead/view'
+ResultsListView = require '../results_list/view'
 
 module.exports = class UserInterestsView extends Backbone.View
   defaults:

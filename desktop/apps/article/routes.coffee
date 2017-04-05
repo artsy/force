@@ -7,8 +7,8 @@ request = require 'superagent'
 { crop, resize } = require '../../components/resizer'
 { SAILTHRU_KEY, SAILTHRU_SECRET, PARSELY_KEY, PARSELY_SECRET } = require '../../config'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ topParselyArticles } = require '../../components/util/parsely.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
+{ topParselyArticles } = require '../../components/util/parsely'
 
 @article = (req, res, next) ->
   articleItem = new Article id: req.params.slug

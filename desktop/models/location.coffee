@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ compactObject } = require './mixins/compact_object.coffee'
+{ compactObject } = require './mixins/compact_object'
 
 module.exports = class Location extends Backbone.Model
   defaults: ->

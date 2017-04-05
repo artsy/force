@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-Form = require '../../form/index.coffee'
-form = require '../../form/utilities.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+Form = require '../../form/index'
+form = require '../../form/utilities'
+CurrentUser = require '../../../models/current_user'
 
 module.exports = class ContactView extends Backbone.View
   className: 'scontact'

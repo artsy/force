@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
-{ crop } = require '../../../../components/resizer/index.coffee'
+{ crop } = require '../../../../components/resizer/index'
 
 module.exports = class RelatedArticlesView extends Backbone.View
 

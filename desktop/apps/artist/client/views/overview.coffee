@@ -1,21 +1,21 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../../../lib/mediator.coffee'
+mediator = require '../../../../lib/mediator'
 # Sub-header
-RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
+RelatedGenesView = require '../../../../components/related_links/types/artist_genes'
 # Bottom sections
-RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
-RelatedShowsView = require '../../../../components/related_shows/view.coffee'
-ArtworkFilterView = require '../../../../components/artwork_filter_2/view.coffee'
-FollowButton = require '../../../../components/follow_button/view.coffee'
-splitTest = require '../../../../components/split_test/index.coffee'
-viewHelpers = require '../../view_helpers.coffee'
-gradient = require '../../../../components/gradient_blurb/index.coffee'
+RelatedArticlesView = require '../../../../components/related_articles/view'
+RelatedShowsView = require '../../../../components/related_shows/view'
+ArtworkFilterView = require '../../../../components/artwork_filter_2/view'
+FollowButton = require '../../../../components/follow_button/view'
+splitTest = require '../../../../components/split_test/index'
+viewHelpers = require '../../view_helpers'
+gradient = require '../../../../components/gradient_blurb/index'
 template = -> require('../../templates/sections/overview.jade') arguments...
 showHighlightsTemplate = -> require('../../templates/sections/exhibition_highlights.jade') arguments...
-renderRail = require '../../components/rail/index.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require '../../queries/overview.coffee'
+renderRail = require '../../components/rail/index'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require '../../queries/overview'
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []

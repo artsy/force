@@ -1,8 +1,8 @@
 { COMMERCIAL } = require('sharify').data
-ArtworkCommercialView = require './view.coffee'
-Sticky = require '../../../../components/sticky/index.coffee'
-initPartnerStub = require '../partner_stub/index.coffee'
-ZigZagBanner = require '../../../../components/zig_zag_banner/index.coffee'
+ArtworkCommercialView = require './view'
+Sticky = require '../../../../components/sticky/index'
+initPartnerStub = require '../partner_stub/index'
+ZigZagBanner = require '../../../../components/zig_zag_banner/index'
 
 shouldStick = ->
   COMMERCIAL.artwork.is_acquireable or

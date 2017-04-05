@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 qs = require 'querystring'
 _ = require 'underscore'
-facetDefaults = require '../filter_facet/facet_defaults.coffee'
+facetDefaults = require '../filter_facet/facet_defaults'
 
 module.exports = class PartnersFilterParams extends Backbone.Model
 

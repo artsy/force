@@ -1,6 +1,6 @@
 { BANNER } = require('sharify').data
-ClockView = require '../clock/view.coffee'
-{ countdownLabel, countdownTimestamp } = require './helpers.coffee'
+ClockView = require '../clock/view'
+{ countdownLabel, countdownTimestamp } = require './helpers'
 
 module.exports = ->
   if { start_at, end_at, live_start_at } = BANNER

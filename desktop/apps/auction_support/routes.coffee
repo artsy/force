@@ -1,11 +1,11 @@
 _ = require 'underscore'
-Feature = require '../../models/feature.coffee'
-Sale = require '../../models/sale.coffee'
-Order = require '../../models/order.coffee'
-Artwork = require '../../models/artwork.coffee'
-SaleArtwork = require '../../models/sale_artwork.coffee'
-BidderPositions = require '../../collections/bidder_positions.coffee'
-buyersPremium = require '../../components/buyers_premium/index.coffee'
+Feature = require '../../models/feature'
+Sale = require '../../models/sale'
+Order = require '../../models/order'
+Artwork = require '../../models/artwork'
+SaleArtwork = require '../../models/sale_artwork'
+BidderPositions = require '../../collections/bidder_positions'
+buyersPremium = require '../../components/buyers_premium/index'
 metaphysics = require '../../../lib/metaphysics'
 
 registerOrRender = (sale, req, res, next) ->

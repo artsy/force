@@ -1,6 +1,6 @@
 _ = require 'underscore'
-Sale = require '../../models/sale.coffee'
-Order = require '../../models/order.coffee'
+Sale = require '../../models/sale'
+Order = require '../../models/order'
 sanitizeRedirect = require '../../components/sanitize_redirect'
 
 registerOrRender = (sale, req, res, next) ->

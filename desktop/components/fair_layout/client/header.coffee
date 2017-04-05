@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Profile = require '../../../models/profile.coffee'
-Fair = require '../../../models/fair.coffee'
-mediator = require '../../../lib/mediator.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-AuthModalView = require '../../auth_modal/view.coffee'
-FlashMessage = require '../../flash/index.coffee'
+Profile = require '../../../models/profile'
+Fair = require '../../../models/fair'
+mediator = require '../../../lib/mediator'
+CurrentUser = require '../../../models/current_user'
+AuthModalView = require '../../auth_modal/view'
+FlashMessage = require '../../flash/index'
 
 module.exports = class FairHeaderView extends Backbone.View
 

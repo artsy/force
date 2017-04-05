@@ -1,5 +1,5 @@
-modalize = require '../modalize/index.coffee'
-multiPageView = require '../multi_page/index.coffee'
+modalize = require '../modalize/index'
+multiPageView = require '../multi_page/index'
 
 module.exports = (key, defaultPageId = null, cb = null) ->
   view = multiPageView key, defaultPageId

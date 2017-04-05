@@ -21,7 +21,7 @@ describe 'SaleArtworks', ->
         artwork: @artwork
         displayPurchase: true
       }, =>
-        SaleArtworkView = benv.require resolve(__dirname, '../views/sale_artwork.coffee')
+        SaleArtworkView = benv.require resolve(__dirname, '../views/sale_artwork')
         sinon.spy SaleArtworkView::, 'hideBuyNowButtons'
         sinon.spy SaleArtworkView::, 'hideBidStatuses'
         sinon.spy SaleArtworkView::, 'appendAuctionId'

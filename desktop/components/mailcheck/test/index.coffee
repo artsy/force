@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 benv = require 'benv'
 sinon = require 'sinon'
 
-Mailcheck = require '../index.coffee'
+Mailcheck = require '../index'
 
 describe 'Mailcheck', ->
 

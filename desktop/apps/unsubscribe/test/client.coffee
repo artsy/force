@@ -7,7 +7,7 @@ sd = require('sharify').data
 rewire = require 'rewire'
 UnsubscribeView = rewire '../client/view'
 UnsubscribeView.__set__ 'FlashMessage', flashStub = sinon.stub()
-emailTypes = require '../email_types.coffee'
+emailTypes = require '../email_types'
 
 describe 'Unsubscribe View', ->
 

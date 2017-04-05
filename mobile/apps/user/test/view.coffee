@@ -15,7 +15,7 @@ describe 'UserSettingsView', ->
       sinon.stub Backbone, 'sync'
       sinon.stub $, 'ajax'
       global.location = { assign: sinon.stub() }
-      UserSettingsView = require '../client/view.coffee'
+      UserSettingsView = require '../client/view'
       @view = new UserSettingsView.UserSettingsView
         el: $("<div id='settings'>
           <div id='#settings-generic-error'></div>

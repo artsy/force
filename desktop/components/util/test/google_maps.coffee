@@ -3,7 +3,7 @@ sd = require('sharify').data
 should = require 'should'
 Backbone = require 'backbone'
 benv = require 'benv'
-{ getMapImageSrc, getMapLink, getDirections } = require "../google_maps.coffee"
+{ getMapImageSrc, getMapLink, getDirections } = require '../google_maps'
 
 describe "PartnerLocation", ->
 

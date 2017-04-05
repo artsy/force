@@ -1,8 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Follows = require './follows.coffee'
-FollowGene = require '../models/follow_gene.coffee'
+Follows = require './follows'
+FollowGene = require '../models/follow_gene'
 
 #
 # FollowGenes

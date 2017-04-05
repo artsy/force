@@ -2,9 +2,9 @@ Backbone = require 'backbone'
 qs = require 'querystring'
 sd = require('sharify').data
 _ = require('underscore')
-FlashMessage = require '../flash/index.coffee'
-modalize = require '../modalize/index.coffee'
-mediator = require '../../lib/mediator.coffee'
+FlashMessage = require '../flash/index'
+modalize = require '../modalize/index'
+mediator = require '../../lib/mediator'
 template = -> require('./index.jade') arguments...
 
 class MarketingSignupModalInner extends Backbone.View

@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 qs = require 'querystring'
-SearchResult = require '../../../models/search_result.coffee'
+SearchResult = require '../../../models/search_result'
 
 module.exports = class GlobalSearchResults extends Backbone.Collection
   model: SearchResult

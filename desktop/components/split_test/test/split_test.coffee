@@ -12,7 +12,7 @@ runningTests =
 describe 'SplitTest', ->
   beforeEach (done) ->
     benv.setup =>
-      @SplitTest = require '../split_test.coffee'
+      @SplitTest = require '../split_test'
       @setStub = sinon.stub(@SplitTest::, 'set').returnsArg(0)
       done()
 

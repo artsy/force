@@ -3,8 +3,8 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
-Profile = require '../../../models/profile.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+Profile = require '../../../models/profile'
+CurrentUser = require '../../../models/current_user'
 
 describe 'Partner routes', ->
 

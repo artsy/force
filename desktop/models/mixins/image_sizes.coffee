@@ -1,6 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
-resizer = require '../../components/resizer/index.coffee'
+resizer = require '../../components/resizer/index'
 
 # requires the image mixin
 module.exports =

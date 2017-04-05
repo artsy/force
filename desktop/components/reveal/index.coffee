@@ -3,4 +3,4 @@
   See `components/gradient_blurb.coffee` for more info.
 ###
 
-module.exports = require '../gradient_blurb/index.coffee'
+module.exports = require '../gradient_blurb/index'

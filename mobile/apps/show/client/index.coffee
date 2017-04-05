@@ -1,13 +1,13 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 Flickity = require 'flickity'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-ArtworkColumns = require '../../../components/artwork_columns/view.coffee'
-ShareView = require '../../../components/share/view.coffee'
-{ seeMoreArtworks } = require '../../../components/show_more_works/index.coffee'
-RelatedArticlesView = require '../components/related_articles/view.coffee'
-attachFollowArtists = require '../components/follow_artists/index.coffee'
-Show = require '../../../models/show.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+ArtworkColumns = require '../../../components/artwork_columns/view'
+ShareView = require '../../../components/share/view'
+{ seeMoreArtworks } = require '../../../components/show_more_works/index'
+RelatedArticlesView = require '../components/related_articles/view'
+attachFollowArtists = require '../components/follow_artists/index'
+Show = require '../../../models/show'
 
 module.exports.ShowView = class ShowView extends Backbone.View
 

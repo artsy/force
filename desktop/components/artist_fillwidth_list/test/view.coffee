@@ -6,7 +6,7 @@ CurrentUser = require '../../../models/current_user'
 Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['mainTemplate', 'listTemplate']
+ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view'), ['mainTemplate', 'listTemplate']
 
 ArtistFillwidthList.__set__ 'FillwidthView', class FillwidthView
   render: sinon.stub()

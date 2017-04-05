@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
-PartnerView = require './view.coffee'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
-filterSettings = require './filter_settings.coffee'
+PartnerView = require './view'
+FilterArtworks = require '../../../collections/filter_artworks'
+filterSettings = require './filter_settings'
 _ = require 'underscore'
 sd = require('sharify').data
-mediator = require '../../../lib/mediator.coffee'
+mediator = require '../../../lib/mediator'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:

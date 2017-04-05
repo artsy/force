@@ -3,7 +3,7 @@ benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 moment = require 'moment'
-ViewHelpers = require '../helpers/view_helpers.coffee'
+ViewHelpers = require '../helpers/view_helpers'
 
 describe 'Fairs template', ->
   before ->

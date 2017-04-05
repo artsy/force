@@ -1,5 +1,5 @@
 _ = require 'underscore'
-IS_TEST_ENV = require '../../lib/is_test_env.coffee'
+IS_TEST_ENV = require '../../lib/is_test_env'
 
 module.exports = (remote = {}, options = {}) ->
   throw new Error 'requires `remote`' unless remote?

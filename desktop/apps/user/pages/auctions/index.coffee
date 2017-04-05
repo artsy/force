@@ -1,8 +1,8 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-MyActiveBids = require '../../../../components/my_active_bids/view.coffee'
-BidHistoryView = require '../../components/bid_history/view.coffee'
-AuctionRegistrationsView = require '../../components/auction_registrations/view.coffee'
+MyActiveBids = require '../../../../components/my_active_bids/view'
+BidHistoryView = require '../../components/bid_history/view'
+AuctionRegistrationsView = require '../../components/auction_registrations/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class AuctionsView extends Backbone.View

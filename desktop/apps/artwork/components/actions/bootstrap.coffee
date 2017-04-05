@@ -1,4 +1,4 @@
-{ description } = require './helpers.coffee'
+{ description } = require './helpers'
 
 module.exports = (sd, { artwork }) ->
   sd.ACTIONS =

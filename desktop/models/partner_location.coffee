@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Location = require './location.coffee'
-{ getMapImageSrc, getMapLink, getDirections } = require "../components/util/google_maps.coffee"
+Location = require './location'
+{ getMapImageSrc, getMapLink, getDirections } = require '../components/util/google_maps'
 { Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class PartnerLocation extends Location

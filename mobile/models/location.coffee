@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Relations = require './mixins/relations/location.coffee'
+Relations = require './mixins/relations/location'
 
 module.exports = class Location extends Backbone.Model
 

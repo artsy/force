@@ -1,7 +1,7 @@
-normalizeSynonyms = require '../../lib/normalizeSynonyms.coffee'
+normalizeSynonyms = require '../../lib/normalizeSynonyms'
 
 describe 'normalizeSynonyms', ->
-  
+
   it 'reduces each set of synonyms to the first one in the list', ->
     normalizeSynonyms([['st', 'saint']], 'saint ives').should.equal 'st ives'
 

@@ -2,14 +2,14 @@
 moment = require 'moment'
 tz = require 'moment-timezone'
 { USER_HOME_PAGE } = require('sharify').data
-User = require '../../../models/user.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
-query = require '../queries/module.coffee'
-MyActiveBids = require '../../../components/my_active_bids/view.coffee'
-ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
-{ viewAllUrl, timeSpan } = require '../view_helpers.coffee'
-FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
-setupFollowButton = require '../components/follow_button/index.coffee'
+User = require '../../../models/user'
+metaphysics = require '../../../../lib/metaphysics'
+query = require '../queries/module'
+MyActiveBids = require '../../../components/my_active_bids/view'
+ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view'
+{ viewAllUrl, timeSpan } = require '../view_helpers'
+FollowedArtistsRailView = require '../components/followed_artists/view'
+setupFollowButton = require '../components/follow_button/index'
 
 relatedArtistsAnnotation = -> require('../components/related_artists_context/annotation.jade') arguments ...
 popularArtistsTemplate = -> require('../components/popular_artists_context/templates/index.jade') arguments...

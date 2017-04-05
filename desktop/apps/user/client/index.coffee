@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-UserSettingsRouter = require './router.coffee'
+UserSettingsRouter = require './router'
 
 module.exports.init = ->
   new UserSettingsRouter

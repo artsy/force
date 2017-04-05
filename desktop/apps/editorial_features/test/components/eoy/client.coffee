@@ -4,11 +4,11 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 fixtures = require '../../../../../test/helpers/fixtures'
-Curation = require '../../../../../models/curation.coffee'
-Article = require '../../../../../models/article.coffee'
-Articles = require '../../../../../collections/articles.coffee'
+Curation = require '../../../../../models/curation'
+Article = require '../../../../../models/article'
+Articles = require '../../../../../collections/articles'
 { resize } = require '../../../../../components/resizer'
-markdown = require '../../../../../components/util/markdown.coffee'
+markdown = require '../../../../../components/util/markdown'
 
 
 sd = require('sharify').data

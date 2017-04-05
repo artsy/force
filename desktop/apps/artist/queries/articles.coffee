@@ -11,5 +11,5 @@ module.exports =
     }
   }
 
-  #{require './article_fragment.coffee'}
+  #{require './article_fragment'}
   """

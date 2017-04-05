@@ -2,7 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-GlobalSearchResults = require '../../collections/global_search_results.coffee'
+GlobalSearchResults = require '../../collections/global_search_results'
 
 describe 'GlobalSearchResults', ->
   describe '#parse', ->

@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-geo = require '../../../../components/geo/index.coffee'
+geo = require '../../../../components/geo/index'
 colors = require '../../../../components/stylus_lib/colors'
-{ getMapLink } = require '../../../../components/util/google_maps.coffee'
-ViewHelpers = require '../../helpers/view_helpers.coffee'
+{ getMapLink } = require '../../../../components/util/google_maps'
+ViewHelpers = require '../../helpers/view_helpers'
 template = -> require('./template.jade') arguments...
 
 module.exports = class MapModalView extends Backbone.View

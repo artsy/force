@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
 { CURRENT_ITEM } = require('sharify').data
-ShareView = require '../../../../components/share/view.coffee'
+ShareView = require '../../../../components/share/view'
 currentItemTemplate = -> require('../../components/current_item/index.jade') arguments...
-viewHelpers = require '../../view_helpers.coffee'
+viewHelpers = require '../../view_helpers'
 { numberFormat } = require 'underscore.string'
 
 module.exports = class ArtistHeaderView extends Backbone.View

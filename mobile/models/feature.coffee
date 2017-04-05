@@ -2,10 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 ABM = require 'artsy-backbone-mixins'
-FeaturedLinks = require '../collections/featured_links.coffee'
-FeaturedSet = require '../models/featured_set.coffee'
-Artworks = require '../collections/artworks.coffee'
-Sale = require '../models/sale.coffee'
+FeaturedLinks = require '../collections/featured_links'
+FeaturedSet = require '../models/featured_set'
+Artworks = require '../collections/artworks'
+Sale = require '../models/sale'
 
 module.exports = class Feature extends Backbone.Model
 

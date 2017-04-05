@@ -1,5 +1,5 @@
-modalize = require '../modalize/index.coffee'
-ShareView = require './view.coffee'
+modalize = require '../modalize/index'
+ShareView = require './view'
 
 module.exports = (options = {}) ->
   view = new ShareView options

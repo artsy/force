@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Eventable = require './mixins/eventable.coffee'
+Eventable = require './mixins/eventable'
 
 module.exports = class ShowEvent extends Backbone.Model
   _.extend @prototype, Eventable

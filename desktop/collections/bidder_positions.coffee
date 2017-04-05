@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-BidderPosition = require '../models/bidder_position.coffee'
+BidderPosition = require '../models/bidder_position'
 { API_URL } = require('sharify').data
 { formatMoney } = require 'accounting'
 

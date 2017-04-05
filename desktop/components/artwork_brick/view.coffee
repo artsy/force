@@ -1,6 +1,6 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-ArtworkSaveView = require '../artwork_save/view.coffee'
+ArtworkSaveView = require '../artwork_save/view'
 
 module.exports = class ArtworkBrickView extends Backbone.View
   subViews: []

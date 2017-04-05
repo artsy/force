@@ -3,7 +3,7 @@ _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-ArtistWorksView = require '../../client/artist_works.coffee'
+ArtistWorksView = require '../../client/artist_works'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'ArtistWorksView', ->

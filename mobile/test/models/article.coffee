@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 Article = rewire '../../models/article.coffee'
 sinon = require 'sinon'
-fixtures = require '../helpers/fixtures.coffee'
+fixtures = require '../helpers/fixtures'
 
 describe "Article", ->
   beforeEach ->

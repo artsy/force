@@ -5,19 +5,19 @@ routes =
   /categories$
   /category$
   /gene$
-  ''': require('../apps/categories/client.coffee').init
+  ''': require('../apps/categories/client').init
 
   '''
   /categories2
-  ''': require('../apps/categories2/client/index.coffee').init
+  ''': require('../apps/categories2/client/index').init
 
   '''
   /tag
-  ''': require('../apps/tag/client.coffee').init
+  ''': require('../apps/tag/client').init
 
   '''
   /gene/.*
-  ''': require('../apps/gene/client.coffee').init
+  ''': require('../apps/gene/client').init
 
 for paths, init of routes
   for path in paths.split('\n')

@@ -6,7 +6,7 @@ fs = require 'fs'
 moment = require 'moment'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-fixtures = require '../../../test/helpers/fixtures.coffee'
+fixtures = require '../../../test/helpers/fixtures'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"

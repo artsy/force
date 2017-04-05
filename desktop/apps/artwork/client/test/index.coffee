@@ -22,7 +22,7 @@ describe 'Artwork Client', ->
             artists: []
 
       Backbone.$ = $
-      @clientSetup = benv.requireWithJadeify require.resolve('../index.coffee'), ['fold', 'footer']
+      @clientSetup = benv.requireWithJadeify require.resolve('../index'), ['fold', 'footer']
 
   after ->
     benv.teardown()

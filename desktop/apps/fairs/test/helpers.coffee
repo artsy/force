@@ -1,4 +1,4 @@
-ViewHelpers = require '../helpers/view_helpers.coffee'
+ViewHelpers = require '../helpers/view_helpers'
 { fabricate } = require 'antigravity'
 
 describe 'Fairs', ->

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _.str = require 'underscore.string'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 
 { API_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 

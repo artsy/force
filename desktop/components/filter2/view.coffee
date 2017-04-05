@@ -1,14 +1,14 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
-ArtworkColumnsView = require '../artwork_columns/view.coffee'
-DropdownGroupView = require './dropdown_group/view.coffee'
-FilterFixedHeader = require './fixed_header/view.coffee'
-HeadlineView = require './headline/view.coffee'
-CountView = require './count/view.coffee'
-SortView = require './sort/view.coffee'
+FilterArtworks = require '../../collections/filter_artworks'
+analyticsHooks = require '../../lib/analytics_hooks'
+ArtworkColumnsView = require '../artwork_columns/view'
+DropdownGroupView = require './dropdown_group/view'
+FilterFixedHeader = require './fixed_header/view'
+HeadlineView = require './headline/view'
+CountView = require './count/view'
+SortView = require './sort/view'
 
 module.exports = class FilterView extends Backbone.View
   defaults:

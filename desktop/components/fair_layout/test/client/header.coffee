@@ -2,12 +2,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 benv = require 'benv'
 sd = require('sharify').data
-Profile = require '../../../../models/profile.coffee'
-Fair = require '../../../../models/fair.coffee'
+Profile = require '../../../../models/profile'
+Fair = require '../../../../models/fair'
 { resolve } = require 'path'
 sinon = require 'sinon'
-mediator = require '../../../../lib/mediator.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+mediator = require '../../../../lib/mediator'
+CurrentUser = require '../../../../models/current_user'
 { fabricate } = require 'antigravity'
 
 describe 'HeaderView', ->

@@ -1,6 +1,6 @@
 _ = require 'underscore'
-CurrentUser = require '../../../../models/current_user.coffee'
-SaveControls = require './../artwork_item_metaphysics/save_controls/view.coffee'
+CurrentUser = require '../../../../models/current_user'
+SaveControls = require './../artwork_item_metaphysics/save_controls/view'
 
 module.exports = (artworks) ->
   if user = CurrentUser.orNull()

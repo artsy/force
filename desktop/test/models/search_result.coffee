@@ -1,7 +1,7 @@
 fabricate = require('antigravity').fabricate
 rewire = require 'rewire'
 SearchResult = rewire '../../models/search_result.coffee'
-Fair = require '../../models/fair.coffee'
+Fair = require '../../models/fair'
 moment = require 'moment'
 
 describe 'SearchResult', ->

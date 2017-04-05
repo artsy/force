@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 fabricate = require '../../../../test/helpers/fabricate'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 benv = require 'benv'
 { resolve } = require 'path'
 

@@ -1,7 +1,7 @@
 _ = require 'underscore'
-Cycle = require '../../../components/cycle/index.coffee'
-Sticky = require '../../../components/sticky/index.coffee'
-{ isTouchDevice } = require '../../../components/util/device.coffee'
+Cycle = require '../../../components/cycle/index'
+Sticky = require '../../../components/sticky/index'
+{ isTouchDevice } = require '../../../components/util/device'
 
 module.exports.init = ->
   unless isTouchDevice()

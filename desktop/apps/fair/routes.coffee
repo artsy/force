@@ -2,19 +2,19 @@ _ = require 'underscore'
 Q = require 'bluebird-q'
 moment = require 'moment'
 Backbone = require 'backbone'
-Profile = require '../../models/profile.coffee'
-Fair = require '../../models/fair.coffee'
-Fairs = require '../../collections/fairs.coffee'
-FairOrganizer = require '../../models/fair_organizer.coffee'
-FollowProfile = require '../../models/follow_profile.coffee'
-Search = require '../../collections/search.coffee'
+Profile = require '../../models/profile'
+Fair = require '../../models/fair'
+Fairs = require '../../collections/fairs'
+FairOrganizer = require '../../models/fair_organizer'
+FollowProfile = require '../../models/follow_profile'
+Search = require '../../collections/search'
 cache = require '../../lib/cache'
 { crop, fill } = require '../../components/resizer'
-{ captureSignup, validActions } = require './components/capture_signup/index.coffee'
+{ captureSignup, validActions } = require './components/capture_signup/index'
 { parse, format } = require 'url'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './components/browse/aggregations.coffee'
-InfoMenu = require '../../components/info_menu/index.coffee'
+aggregationParams = require './components/browse/aggregations'
+InfoMenu = require '../../components/info_menu/index'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -222,8 +222,8 @@ InfoMenu = require '../../components/info_menu/index.coffee'
   microsite = res.locals.sd.MICROSITE =
     (qs = req.query).microsite? and qs.fair_id? and qs.fair_name? and qs.profile_id?
   if microsite
-    Profile = require '../../models/profile.coffee'
-    Fair = require '../../models/fair.coffee'
+    Profile = require '../../models/profile'
+    Fair = require '../../models/fair'
     fair = res.locals.micrositeFair = new Fair
       id: qs.fair_id
       name: qs.fair_name

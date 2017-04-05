@@ -1,5 +1,5 @@
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
-ArtistPageCTAView = require '../../../components/artist_page_cta/view.coffee'
+ArtistPageCTAView = require '../../../components/artist_page_cta/view'
 
 module.exports = (artist) ->
   return unless ARTIST_PAGE_CTA_ENABLED

@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Q = require 'bluebird-q'
 sd = require('sharify').data
-Artists = require '../../collections/artists.coffee'
+Artists = require '../../collections/artists'
 qs = require 'qs'
 
 @worksForYou = (req, res) ->

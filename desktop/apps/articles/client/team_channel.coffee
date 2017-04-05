@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-Articles = require '../../../collections/articles.coffee'
-Channel = require '../../../models/channel.coffee'
-ArticlesGridView = require '../../../components/articles_grid/view.coffee'
-TeamChannelNavView = require '../../../components/channel_nav/view.coffee'
-initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+Articles = require '../../../collections/articles'
+Channel = require '../../../models/channel'
+ArticlesGridView = require '../../../components/articles_grid/view'
+TeamChannelNavView = require '../../../components/channel_nav/view'
+initCarousel = require '../../../components/merry_go_round/horizontal_nav_mgr'
 sd = require('sharify').data
 
 module.exports.TeamChannelView = class TeamChannelView extends Backbone.View

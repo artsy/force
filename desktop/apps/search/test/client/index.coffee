@@ -1,10 +1,10 @@
 benv = require 'benv'
 Backbone = require 'backbone'
-fixture = require '../../../../test/helpers/fixtures.coffee'
+fixture = require '../../../../test/helpers/fixtures'
 { fabricate } = require 'antigravity'
 sinon = require 'sinon'
 path = require 'path'
-SearchResult = require '../../../../models/search_result.coffee'
+SearchResult = require '../../../../models/search_result'
 _s = require 'underscore.string'
 
 describe 'SearchResultsView', ->
@@ -21,7 +21,7 @@ describe 'SearchResultsView', ->
         benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
         Backbone.$ = $
         sinon.stub(Backbone, 'sync')
-        { SearchResultsView } = benv.requireWithJadeify path.resolve(__dirname, '../../client/index.coffee'), ['imageTemplate', 'resolvedImage']
+        { SearchResultsView } = benv.requireWithJadeify path.resolve(__dirname, '../../client/index'), ['imageTemplate', 'resolvedImage']
         @view = new SearchResultsView
           results: [fixture.searchResult]
         done()

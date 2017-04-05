@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('../../templates/sections/shows.jade') arguments...
-ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
-showHelpers = require '../../../../components/show_cell/helpers.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
-query = require '../../queries/shows.coffee'
+ArtworkRailView = require '../../../../components/artwork_rail/client/view'
+showHelpers = require '../../../../components/show_cell/helpers'
+metaphysics = require '../../../../../lib/metaphysics'
+query = require '../../queries/shows'
 
 module.exports = class ShowsView extends Backbone.View
   subViews: []

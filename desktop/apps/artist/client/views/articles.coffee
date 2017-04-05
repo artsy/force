@@ -1,11 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
-ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffee'
+RelatedArticlesView = require '../../../../components/related_articles/view'
+ArtworkRailView = require '../../../../components/artwork_rail/client/view'
 template = -> require('../../templates/sections/articles.jade') arguments...
 sd = require('sharify').data
-query = require '../../queries/articles.coffee'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+query = require '../../queries/articles'
+metaphysics = require '../../../../../lib/metaphysics'
 
 module.exports = class ArticlesView extends Backbone.View
 

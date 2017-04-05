@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
+mediator = require '../../../lib/mediator'
 template = -> require('../templates/select.jade') arguments...
 
 module.exports = class SelectView extends Backbone.View

@@ -2,7 +2,7 @@ _ = require 'underscore'
 routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
 
 describe '/user', ->

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Article = require '../models/article.coffee'
+Article = require '../models/article'
 
 module.exports = class Articles extends Backbone.Collection
   url: "#{sd.POSITRON_URL}/api/articles"

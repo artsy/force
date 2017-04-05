@@ -5,7 +5,7 @@ Profile = require '../../../../models/profile'
 Fair = require '../../../../models/fair'
 template = require('jade').compileFile(require.resolve '../../templates/visitors.jade')
 data = _.extend {}, asset: (->), sd: {CURRENT_PATH: '/info/visitors'}, markdown: (->)
-InfoMenu = require '../../../../components/info_menu/index.coffee'
+InfoMenu = require '../../../../components/info_menu/index'
 
 render = (moreData) ->
   template _.extend {}, data, moreData

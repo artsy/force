@@ -1,8 +1,8 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 Backbone = require 'backbone'
-FairEntries = require '../../../collections/fair_entries.coffee'
-PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view.coffee'
+FairEntries = require '../../../collections/fair_entries'
+PoliteInfiniteScrollView = require '../../../components/polite_infinite_scroll/client/view'
 sd = require('sharify').data
 
 fairEntriesTemplate = -> require('../templates/fair_entries.jade') arguments...

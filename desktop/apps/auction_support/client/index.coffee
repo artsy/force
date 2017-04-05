@@ -1,15 +1,15 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Sale = require '../../../models/sale.coffee'
-SaleArtwork = require '../../../models/sale_artwork.coffee'
-BidderPosition = require '../../../models/bidder_position.coffee'
-BidderPositions = require '../../../collections/bidder_positions.coffee'
-RegistrationForm = require './registration_form.coffee'
-BidForm = require './bid_form.coffee'
-setupClocks = require '../../auction/client/clocks.coffee'
-mediator = require '../../../lib/mediator.coffee'
+CurrentUser = require '../../../models/current_user'
+Sale = require '../../../models/sale'
+SaleArtwork = require '../../../models/sale_artwork'
+BidderPosition = require '../../../models/bidder_position'
+BidderPositions = require '../../../collections/bidder_positions'
+RegistrationForm = require './registration_form'
+BidForm = require './bid_form'
+setupClocks = require '../../auction/client/clocks'
+mediator = require '../../../lib/mediator'
 
 
 module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router

@@ -1,8 +1,8 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Partner = require '../../../models/partner.coffee'
-Artworks = require '../../../collections/artworks.coffee'
+Partner = require '../../../models/partner'
+Artworks = require '../../../collections/artworks'
 artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerArtworksView = class PartnerArtworksView extends Backbone.View

@@ -1,16 +1,16 @@
 _ = require 'underscore'
 attachFastClick = -> require('fastclick') arguments...
 { ARTWORK } = require('sharify').data
-User = require '../../../../models/user.coffee'
-Artwork = require '../../../../models/artwork.coffee'
-ArtworkInquiry = require '../../../../models/artwork_inquiry.coffee'
-State = require '../../../../components/branching_state/index.coffee'
-StateView = require '../../../../components/branching_state/view.coffee'
-openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
-Logger = require '../../../../components/logger/index.coffee'
-Trail = require '../../../../components/inquiry_questionnaire/trail.coffee'
-analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
-{ steps, decisions, views } = require '../map.coffee'
+User = require '../../../../models/user'
+Artwork = require '../../../../models/artwork'
+ArtworkInquiry = require '../../../../models/artwork_inquiry'
+State = require '../../../../components/branching_state/index'
+StateView = require '../../../../components/branching_state/view'
+openErrorFlash = require '../../../../components/inquiry_questionnaire/error'
+Logger = require '../../../../components/logger/index'
+Trail = require '../../../../components/inquiry_questionnaire/trail'
+analytics = require '../../../../components/inquiry_questionnaire/analytics'
+{ steps, decisions, views } = require '../map'
 
 module.exports = (id, bypass) ->
   attachFastClick document.body

@@ -3,7 +3,7 @@ rewire = require 'rewire'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
-mediator = require '../../../../lib/mediator.coffee'
+mediator = require '../../../../lib/mediator'
 CurrentUser = require '../../../../models/current_user'
 { fabricate } = require 'antigravity'
 
@@ -17,7 +17,7 @@ describe 'HeaderView', ->
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
       Backbone.$ = $
-      @Cookies = require '../../../cookies/index.coffee'
+      @Cookies = require '../../../cookies/index'
       done()
 
   after -> benv.teardown()

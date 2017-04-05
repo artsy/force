@@ -1,12 +1,12 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
-Artist = require '../../../models/artist.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-AuctionLot = require '../../../models/auction_lot.coffee'
-AuctionLots = require '../../../collections/auction_lots.coffee'
-AuctionResultsView = require './view.coffee'
-DetailView = require './detail.coffee'
+mediator = require '../../../lib/mediator'
+Artist = require '../../../models/artist'
+Artworks = require '../../../collections/artworks'
+AuctionLot = require '../../../models/auction_lot'
+AuctionLots = require '../../../collections/auction_lots'
+AuctionResultsView = require './view'
+DetailView = require './detail'
 
 module.exports = class AuctionResultsRouter extends Backbone.Router
   routes:

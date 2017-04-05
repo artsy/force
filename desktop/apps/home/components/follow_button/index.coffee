@@ -1,6 +1,6 @@
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
-Artist = require '../../../../models/artist.coffee'
-Gene = require '../../../../models/gene.coffee'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
+Artist = require '../../../../models/artist'
+Gene = require '../../../../models/gene'
 template = -> require('./template.jade') arguments...
 
 followableObject =

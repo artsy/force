@@ -1,8 +1,8 @@
 _ = require 'underscore'
-ModalView = require '../../modal/view.coffee'
-mediator = require '../../../lib/mediator.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+ModalView = require '../../modal/view'
+mediator = require '../../../lib/mediator'
+analyticsHooks = require '../../../lib/analytics_hooks'
+CurrentUser = require '../../../models/current_user'
 template = -> require('../templates/registration-confirmation.jade') arguments...
 
 module.exports = class ConfirmRegistrationModal extends ModalView

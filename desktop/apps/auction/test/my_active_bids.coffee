@@ -19,7 +19,7 @@ describe 'my active bids auction page template', ->
     benv.teardown()
 
   beforeEach ->
-    @MyActiveBidsView = benv.require(require.resolve('../../../components/my_active_bids/view.coffee'))
+    @MyActiveBidsView = benv.require(require.resolve('../../../components/my_active_bids/view'))
     @data = @baseData()
     @view = new @MyActiveBidsView(template: template)
 

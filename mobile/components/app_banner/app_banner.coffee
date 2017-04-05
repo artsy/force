@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 { USER_AGENT } = require('sharify').data
-excluded = require './excluded.coffee'
+excluded = require './excluded'
 
 module.exports = class AppBanner
   cookie: 'dismissed-app-banner'

@@ -8,7 +8,7 @@ Fair = require '../../../../models/fair'
 Profile = require '../../../../models/profile'
 Article = require '../../../../models/article'
 Articles = require '../../../../collections/articles'
-InfoMenu = require '../../info_menu.coffee'
+InfoMenu = require '../../info_menu'
 { fabricate } = require 'antigravity'
 
 describe 'Article template', ->

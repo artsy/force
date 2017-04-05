@@ -28,5 +28,5 @@ module.exports =
     }
   }
 
-  #{require '../../artwork_brick/query.coffee'}
+  #{require '../../artwork_brick/query'}
   """

@@ -3,8 +3,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Artist = require '../../../../models/artist.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+Artist = require '../../../../models/artist'
+CurrentUser = require '../../../../models/current_user'
 
 describe 'ArtistRouter', ->
   before (done) ->

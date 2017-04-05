@@ -1,8 +1,8 @@
 { RECENTLY_SOLD } = require('sharify').data
-Artworks = require '../../../collections/artworks.coffee'
-TypeaheadView = require '../../../components/typeahead/view.coffee'
-ArtworkRailView = require '../../../components/artwork_rail/client/view.coffee'
-multiPageView = require '../../../components/multi_page/index.coffee'
+Artworks = require '../../../collections/artworks'
+TypeaheadView = require '../../../components/typeahead/view'
+ArtworkRailView = require '../../../components/artwork_rail/client/view'
+multiPageView = require '../../../components/multi_page/index'
 
 # Overwrite 'Sorry, <term> not found' message
 TypeaheadView::templates.empty = ->

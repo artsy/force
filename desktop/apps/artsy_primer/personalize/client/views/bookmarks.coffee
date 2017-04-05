@@ -1,7 +1,7 @@
-StepView = require './step.coffee'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
-UserInterestsView = require '../../../../../components/user_interests/view.coffee'
-{ setSkipLabel } = require '../mixins/followable.coffee'
+StepView = require './step'
+analyticsHooks = require '../../../../../lib/analytics_hooks'
+UserInterestsView = require '../../../../../components/user_interests/view'
+{ setSkipLabel } = require '../mixins/followable'
 template = -> require('../../templates/bookmarks.jade') arguments...
 
 module.exports = class BookmarksView extends StepView

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-allSteps = _.keys(require './views.coffee')
+allSteps = _.keys(require './views')
 hasSeen = (steps...) -> ({ logger }) -> logger.hasLogged steps...
 hasSeenThisSession = (steps...) -> ({ logger }) -> logger.hasLoggedThisSession steps...
 

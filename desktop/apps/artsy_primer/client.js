@@ -1,5 +1,5 @@
-import Article from '../../models/article.coffee'
-import ArticleView from '../../components/article/client/view.coffee'
+import Article from '../../models/article'
+import ArticleView from '../../components/article/client/view'
 import { data as sd } from 'sharify'
 
 export default () => {

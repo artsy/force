@@ -1,4 +1,4 @@
-UnsubscribeView = require './view.coffee'
+UnsubscribeView = require './view'
 
 module.exports.init = ->
   new UnsubscribeView

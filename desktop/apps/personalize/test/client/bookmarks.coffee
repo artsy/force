@@ -4,7 +4,7 @@ rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PersonalizeState = require '../../client/state'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 UserInterestsView = null
 
 describe 'BookmarksView', ->

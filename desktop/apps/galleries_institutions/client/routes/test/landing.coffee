@@ -5,7 +5,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 Backbone = require 'backbone'
 LandingCarouselView = rewire '../landing'
-Params = require '../../../components/parameters/filter_params.coffee'
+Params = require '../../../components/parameters/filter_params'
 
 describe 'LandingCarouselView', ->
   before (done) ->
@@ -62,7 +62,7 @@ describe 'LandingCarouselView', ->
       profiles: []
       facets: []
       categories: [@category]
-      ViewHelpers: require '../../../components/partner_cell/view_helpers.coffee'
+      ViewHelpers: require '../../../components/partner_cell/view_helpers'
     }, =>
       @params = new Params type: 'gallery'
       @view = new LandingCarouselView params: @params, el: $('.js-partner-category-carousels')

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Artwork = require '../models/artwork.coffee'
+Artwork = require '../models/artwork'
 PageableCollection = require 'backbone-pageable'
 { API_URL } = require('sharify').data
 

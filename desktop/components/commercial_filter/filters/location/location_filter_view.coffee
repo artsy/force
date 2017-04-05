@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ fullyQualifiedLocations } = require './location_map.coffee'
+{ fullyQualifiedLocations } = require './location_map'
 { numberFormat } = require 'underscore.string'
-TypeaheadView = require '../../../../components/typeahead/view.coffee'
+TypeaheadView = require '../../../../components/typeahead/view'
 { GEOCODED_CITIES } = require('sharify').data
 { cleanDiacritics } = require 'underscore.string'
 template = -> require('./index.jade') arguments...

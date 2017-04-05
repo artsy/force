@@ -1,6 +1,6 @@
-modalize = require '../../../../../../components/modalize/index.coffee'
-Auction = require '../../../../../../models/auction.coffee'
-fetchBuyersPremium = require '../../../../../../components/buyers_premium/index.coffee'
+modalize = require '../../../../../../components/modalize/index'
+Auction = require '../../../../../../models/auction'
+fetchBuyersPremium = require '../../../../../../components/buyers_premium/index'
 
 module.exports = (auction_id) ->
   $el = $('<div></div>')

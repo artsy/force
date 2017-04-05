@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-AuctionResultsRouter = require './router.coffee'
+AuctionResultsRouter = require './router'
 
 module.exports.init = ->
   Backbone.history.start pushState: true

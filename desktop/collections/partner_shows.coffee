@@ -2,7 +2,7 @@ Q = require 'bluebird-q'
 _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
-PartnerShow = require '../models/partner_show.coffee'
+PartnerShow = require '../models/partner_show'
 
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data

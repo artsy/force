@@ -1,10 +1,10 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
-form = require '../form/utilities.coffee'
-Engine = require './bloodhound.coffee'
-Match = require '../../collections/match.coffee'
-device = require '../util/device.coffee'
+form = require '../form/utilities'
+Engine = require './bloodhound'
+Match = require '../../collections/match'
+device = require '../util/device'
 templates =
   index: -> require('./templates/index.jade') arguments...
   empty: -> require('./templates/empty.jade') arguments...

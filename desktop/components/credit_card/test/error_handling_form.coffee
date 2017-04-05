@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 sd = require('sharify').data
-ErrorHandlingForm = require '../client/error_handling_form.coffee'
+ErrorHandlingForm = require '../client/error_handling_form'
 
 describe 'FavoritesStatusModalView', ->
 

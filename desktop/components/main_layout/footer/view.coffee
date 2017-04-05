@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-openFeedbackModal = require '../../feedback_modal/index.coffee'
-openMultiPageModal = require '../../multi_page_modal/index.coffee'
-mediator = require '../../../lib/mediator.coffee'
-{ setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index.coffee'
+openFeedbackModal = require '../../feedback_modal/index'
+openMultiPageModal = require '../../multi_page_modal/index'
+mediator = require '../../../lib/mediator'
+{ setupRail, shouldShowRVARail, reInitRVARail } = require '../../recently_viewed_artworks/index'
 
 module.exports = class FooterView extends Backbone.View
   events:

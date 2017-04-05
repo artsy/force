@@ -1,9 +1,9 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-SavedArtworksView = require '../../components/saved_artworks/view.coffee'
-ArtistsView = require '../../components/artists/view.coffee'
-CategoriesView = require '../../components/categories/view.coffee'
-GalleriesInstitutions = require '../../components/galleries_institutions/view.coffee'
+SavedArtworksView = require '../../components/saved_artworks/view'
+ArtistsView = require '../../components/artists/view'
+CategoriesView = require '../../components/categories/view'
+GalleriesInstitutions = require '../../components/galleries_institutions/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SavesView extends Backbone.View

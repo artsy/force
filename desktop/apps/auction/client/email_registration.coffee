@@ -1,8 +1,8 @@
 sd = require('sharify').data
-ThankYouView = require './thank_you_view.coffee'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-modalize = require '../../../components/modalize/index.coffee'
+ThankYouView = require './thank_you_view'
+AuthModalView = require '../../../components/auth_modal/view'
+analyticsHooks = require '../../../lib/analytics_hooks'
+modalize = require '../../../components/modalize/index'
 Backbone = require 'backbone'
 
 module.exports = class EmailRegistrationView extends Backbone.View

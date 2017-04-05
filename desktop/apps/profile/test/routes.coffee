@@ -3,7 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
-Profile = require '../../../models/profile.coffee'
+Profile = require '../../../models/profile'
 
 describe 'Profile routes', ->
 

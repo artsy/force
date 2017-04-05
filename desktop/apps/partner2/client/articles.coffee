@@ -1,15 +1,15 @@
 _ = require 'underscore'
-ArticlesGridView = require '../../../components/articles_grid/view.coffee'
-ArticleView = require '../../../components/article/client/view.coffee'
-Articles = require '../../../collections/articles.coffee'
-Article = require '../../../models/article.coffee'
+ArticlesGridView = require '../../../components/articles_grid/view'
+ArticleView = require '../../../components/article/client/view'
+Articles = require '../../../collections/articles'
+Article = require '../../../models/article'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
 sd = require('sharify').data
-{ resize } = require '../../../components/resizer/index.coffee'
+{ resize } = require '../../../components/resizer/index'
 embed = require 'particle'
 moment = require 'moment'
 jsonldTemplate = -> require('../../../components/main_layout/templates/json_ld.jade') arguments...
-{ stringifyJSONForWeb } = require '../../../components/util/json.coffee'
+{ stringifyJSONForWeb } = require '../../../components/util/json'
 
 module.exports = class ArticlesAdapter
   constructor: ({ @profile, @partner, @cache, @el }) ->

@@ -1,14 +1,14 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-SuperArticleView = require '../../../../components/article/client/super_article.coffee'
-Article = require '../../../../models/article.coffee'
-Curation = require '../../../../models/curation.coffee'
-initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+SuperArticleView = require '../../../../components/article/client/super_article'
+Article = require '../../../../models/article'
+Curation = require '../../../../models/curation'
+initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr'
 bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
-markdown = require '../../../../components/util/markdown.coffee'
-{ resize, crop } = require '../../../../components/resizer/index.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
+markdown = require '../../../../components/util/markdown'
+{ resize, crop } = require '../../../../components/resizer/index'
+analyticsHooks = require '../../../../lib/analytics_hooks'
 
 module.exports.EoyView = class EoyView extends Backbone.View
 

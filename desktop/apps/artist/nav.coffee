@@ -1,5 +1,5 @@
 _ = require 'underscore'
-sections = require './sections.coffee'
+sections = require './sections'
 
 module.exports = class Nav
   constructor: ({ @artist }) -> #

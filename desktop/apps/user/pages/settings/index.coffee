@@ -1,9 +1,9 @@
 { invoke } = require 'underscore'
 Backbone = require 'backbone'
-PasswordView = require '../../components/password/view.coffee'
-InformationView = require '../../components/information/view.coffee'
-LinkedAccountsView = require '../../components/linked_accounts/view.coffee'
-EmailPreferencesView = require '../../components/email_preferences/view.coffee'
+PasswordView = require '../../components/password/view'
+InformationView = require '../../components/information/view'
+LinkedAccountsView = require '../../components/linked_accounts/view'
+EmailPreferencesView = require '../../components/email_preferences/view'
 template = -> require('./index.jade') arguments...
 
 module.exports = class SettingsView extends Backbone.View

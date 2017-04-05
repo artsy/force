@@ -4,11 +4,11 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair = require '../../../../models/fair.coffee'
-Profile = require '../../../../models/profile.coffee'
-FairEvent = require '../../../../models/fair_event.coffee'
-FairEvents = require '../../../../collections/fair_events.coffee'
-InfoMenu = require '../../../../components/info_menu/index.coffee'
+Fair = require '../../../../models/fair'
+Profile = require '../../../../models/profile'
+FairEvent = require '../../../../models/fair_event'
+FairEvents = require '../../../../collections/fair_events'
+InfoMenu = require '../../../../components/info_menu/index'
 
 describe 'FairInfoEventsView', ->
 

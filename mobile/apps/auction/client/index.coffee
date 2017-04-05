@@ -1,10 +1,10 @@
 { AUCTION, ARTWORKS } = require('sharify').data
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-Auction = require '../../../models/sale.coffee'
-Artworks = require '../../../collections/artworks.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
-AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'
-AuctionArtworkListView = require '../../../components/auction_artwork_list/view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+Auction = require '../../../models/sale'
+Artworks = require '../../../collections/artworks'
+AuctionClockView = require '../../../components/auction_clock/view'
+AvantGardeTabsView = require '../../../components/avant_garde_tabs/view'
+AuctionArtworkListView = require '../../../components/auction_artwork_list/view'
 
 module.exports.init = ->
   bootstrap()

@@ -1,9 +1,9 @@
 _ = require 'underscore'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-{ seeMoreArtworks } = require '../../../components/show_more_works/index.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+{ seeMoreArtworks } = require '../../../components/show_more_works/index'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Fair = require '../../../models/fair.coffee'
+Fair = require '../../../models/fair'
 exhibitorsTemplate = -> require('../templates/exhibitors.jade') arguments...
 artworkColumnTemplate = -> require('../../../components/artwork_columns/artwork.jade') arguments...
 artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...

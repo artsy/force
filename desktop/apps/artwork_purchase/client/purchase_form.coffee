@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 Q = require 'bluebird-q'
-Form = require '../../../components/mixins/form.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
-{ formatMessage } = require '../helpers.coffee'
-UserFairAction = require '../../../models/user_fair_action.coffee'
+Form = require '../../../components/mixins/form'
+CurrentUser = require '../../../models/current_user'
+ArtworkInquiry = require '../../../models/artwork_inquiry'
+{ formatMessage } = require '../helpers'
+UserFairAction = require '../../../models/user_fair_action'
 
 module.exports = class PurchaseForm extends Backbone.View
   _.extend @prototype, Form

@@ -1,11 +1,11 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'
-Helpers = require '../helpers.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+AvantGardeTabsView = require '../../../components/avant_garde_tabs/view'
+Helpers = require '../helpers'
 pastFairsTemplate = -> require('../templates/past-fairs.jade') arguments...
 sd = require('sharify').data
 Backbone = require 'backbone'
-query = require '../query.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+query = require '../query'
+metaphysics = require '../../../../lib/metaphysics'
 
 module.exports.FairsView = class FairsView extends Backbone.View
   events:

@@ -2,7 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Params = require '../filter_params.coffee'
+Params = require '../filter_params'
 
 describe 'FilterParams', ->
   beforeEach ->

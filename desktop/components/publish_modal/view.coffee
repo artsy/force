@@ -1,6 +1,6 @@
 _ = require 'underscore'
-ModalView = require '../modal/view.coffee'
-mediator = require '../../lib/mediator.coffee'
+ModalView = require '../modal/view'
+mediator = require '../../lib/mediator'
 template = -> require('./template.jade') arguments...
 Cookies = require 'cookies-js'
 

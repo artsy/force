@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-geo = require '../../../components/geo/index.coffee'
+geo = require '../../../components/geo/index'
 
 module.exports = class FairInfoVisitors extends Backbone.View
   events:

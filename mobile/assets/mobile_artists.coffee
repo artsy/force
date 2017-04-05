@@ -7,7 +7,7 @@ require 'jquery'
 hash =
 
   '^/artists.*': ->
-    require('../apps/artists/client.coffee').init()
+    require('../apps/artists/client').init()
 
 # On DOM load iterate through the hash and load that app's JS
 $ ->

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Order = require '../../models/order.coffee'
+Order = require '../../models/order'
 { ARTSY_URL } = require('sharify').data
 
 module.exports.resume = (req, res) ->

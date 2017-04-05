@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-dateMixin = require './mixins/date.coffee'
+dateMixin = require './mixins/date'
 querystring = require 'querystring'
 moment = require 'moment'
 { Markdown, CalendarUrls } = require 'artsy-backbone-mixins'

@@ -2,8 +2,8 @@ Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, CSRF_TOKEN, APP_URL } = require('sharify').data
-syncWithSessionId = require '../lib/sync_with_session_id.coffee'
-User = require './user.coffee'
+syncWithSessionId = require '../lib/sync_with_session_id'
+User = require './user'
 sd = require('sharify').data
 
 module.exports = class LoggedOutUser extends User

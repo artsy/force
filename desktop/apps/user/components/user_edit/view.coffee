@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-Form = require '../../../../components/form/index.coffee'
-FlashMessage = require '../../../../components/flash/index.coffee'
+Form = require '../../../../components/form/index'
+FlashMessage = require '../../../../components/flash/index'
 
 module.exports = class UserEditFormView extends Backbone.View
   className: 'grouped-section'

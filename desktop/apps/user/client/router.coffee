@@ -1,15 +1,15 @@
 { USER } = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-JumpView = require '../../../components/jump/view.coffee'
-SettingsTabsView = require '../components/tabs/view.coffee'
-SettingsSectionsView = require '../components/sections/view.coffee'
-SettingsView = require '../pages/settings/index.coffee'
-ProfileView = require '../pages/profile/index.coffee'
-DeleteView = require '../pages/delete/index.coffee'
-SavesView = require '../pages/saves/index.coffee'
-AuctionsView = require '../pages/auctions/index.coffee'
-PaymentsView = require '../pages/payments/index.coffee'
+CurrentUser = require '../../../models/current_user'
+JumpView = require '../../../components/jump/view'
+SettingsTabsView = require '../components/tabs/view'
+SettingsSectionsView = require '../components/sections/view'
+SettingsView = require '../pages/settings/index'
+ProfileView = require '../pages/profile/index'
+DeleteView = require '../pages/delete/index'
+SavesView = require '../pages/saves/index'
+AuctionsView = require '../pages/auctions/index'
+PaymentsView = require '../pages/payments/index'
 
 module.exports = class UserSettingsRouter extends Backbone.Router
   routes:

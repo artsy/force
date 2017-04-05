@@ -3,11 +3,11 @@ Promise = require 'bluebird-q'
 { invoke, pick, last } = require 'underscore'
 { startsWith } = require 'underscore.string'
 { View, Model } = require 'backbone'
-{ isPhoneLike } = require '../../../../../components/util/device.coffee'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
-Form = require '../../../../../components/form/index.coffee'
-LocationSearchView = require '../../../../../components/location_search/index.coffee'
-confirmation = require '../../../../../components/confirmation/index.coffee'
+{ isPhoneLike } = require '../../../../../components/util/device'
+analyticsHooks = require '../../../../../lib/analytics_hooks'
+Form = require '../../../../../components/form/index'
+LocationSearchView = require '../../../../../components/location_search/index'
+confirmation = require '../../../../../components/confirmation/index'
 templates =
   page: -> require('../templates/page.jade') arguments...
   profession: -> require('../templates/profession.jade') arguments...

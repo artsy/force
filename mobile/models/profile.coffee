@@ -1,8 +1,8 @@
 sd = require('sharify').data
 _ = require 'underscore'
 Backbone = require 'backbone'
-CoverImage = require './cover_image.coffee'
-Icon = require './icon.coffee'
+CoverImage = require './cover_image'
+Icon = require './icon'
 
 { Markdown } = require 'artsy-backbone-mixins'
 

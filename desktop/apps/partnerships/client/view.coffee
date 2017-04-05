@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-mediator = require '../../../lib/mediator.coffee'
-{ resize } = require '../../../components/resizer/index.coffee'
-{ jump } = require '../../../components/jump/view.coffee'
+mediator = require '../../../lib/mediator'
+{ resize } = require '../../../components/resizer/index'
+{ jump } = require '../../../components/jump/view'
 
 module.exports = class PartnershipsView extends Backbone.View
   events:

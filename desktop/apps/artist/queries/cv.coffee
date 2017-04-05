@@ -21,6 +21,6 @@ module.exports =
     }
   }
 
-  #{require './show_fragment.coffee'}
+  #{require './show_fragment'}
 
   """

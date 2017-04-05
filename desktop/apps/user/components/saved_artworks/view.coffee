@@ -1,9 +1,9 @@
 { API_URL } = require('sharify').data
 { defer } = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../../collections/artworks.coffee'
-QuasiInfiniteView = require '../quasi_infinite/view.coffee'
-ArtworkColumnsView = require '../../../../components/artwork_columns/view.coffee'
+Artworks = require '../../../../collections/artworks'
+QuasiInfiniteView = require '../quasi_infinite/view'
+ArtworkColumnsView = require '../../../../components/artwork_columns/view'
 
 module.exports = class SavedArtworksView extends QuasiInfiniteView
   className: 'settings-saved-artworks'

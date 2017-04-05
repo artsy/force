@@ -1,4 +1,4 @@
-SplitTest = require './server_split_test.coffee'
+SplitTest = require './server_split_test'
 runningTests = require './running_tests'
 qs = require 'qs'
 

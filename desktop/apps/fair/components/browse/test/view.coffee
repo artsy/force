@@ -19,7 +19,7 @@ describe 'FairBrowseView', ->
       sinon.stub Backbone, 'sync'
       collection = new FilterArtworks fabricate2('filter_artworks'), parse: true
       $.onInfiniteScroll = sinon.stub()
-      benv.render resolve(__dirname, '../template.jade'), { fair: @fair, sd: {}, _: _, counts: collection.counts, params: new Backbone.Model, _s: _s, filterLabelMap: require '../../../../../components/filter2/dropdown/label_map.coffee' }, =>
+      benv.render resolve(__dirname, '../template.jade'), { fair: @fair, sd: {}, _: _, counts: collection.counts, params: new Backbone.Model, _s: _s, filterLabelMap: require '../../../../../components/filter2/dropdown/label_map' }, =>
         FairBrowseView = benv.require resolve(__dirname, '../view')
         for klass in ['BoothsView']
           @[klass] = (opts) -> _.extend @, opts
