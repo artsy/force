@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@artsy/reaction-force@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.4.tgz#13995d1e795b996b94aa1644a8c81f89afb36712"
+  dependencies:
+    artsy-passport "^1.6.1"
+    artsy-xapp "^1.0.4"
+    backbone "^1.3.3"
+    body-parser "^1.17.1"
+    cookie-parser "^1.4.3"
+    express "^4.15.2"
+    express-session "^1.15.1"
+    isomorphic-relay "^0.7.4"
+    lodash "^4.17.4"
+    numeral "^2.0.4"
+    react "^15.4.2"
+    react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
+    styled-components "^1.4.3"
+
 JSONStream@^1.0.3:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.1.tgz#707f761e01dae9e16f1bcf93703b78c70966579a"
@@ -316,13 +334,13 @@ artsy-xapp@^1.0.4, "artsy-xapp@git://github.com/artsy/artsy-xapp.git":
   dependencies:
     superagent "^1.2.0"
 
-"asap@https://github.com/alloy/asap.git", asap@~2.0.3:
-  version "2.0.5"
-  resolved "https://github.com/alloy/asap.git#2d04541dcb564fb3617d24ec1e9167c41fb2512b"
-
 asap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/asap/-/asap-1.0.0.tgz#b2a45da5fdfa20b0496fc3768cc27c12fa916a7d"
+
+asap@~2.0.3:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
 
 asn1.js@^4.0.0:
   version "4.9.1"
@@ -4528,7 +4546,7 @@ lodash@^3.10.1, lodash@^3.5.0, lodash@~3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@~4.17.2:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@~4.17.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4941,6 +4959,10 @@ nth-check@~1.0.1:
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
+
+numeral@^2.0.4:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.6.tgz#4ad080936d443c2561aed9f2197efffe25f4e506"
 
 "nwmatcher@>= 1.3.7 < 2.0.0", "nwmatcher@>= 1.3.9 < 2.0.0":
   version "1.3.9"
@@ -5676,23 +5698,6 @@ react@^15.4.2:
     fbjs "^0.8.4"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
-
-"reaction-force@git+https://github.com/artsy/reaction-force.git":
-  version "0.1.0"
-  resolved "git+https://github.com/artsy/reaction-force.git#725d3bdee9c84c3a033e258bb680bb73510a259e"
-  dependencies:
-    artsy-passport "^1.6.1"
-    artsy-xapp "^1.0.4"
-    asap "https://github.com/alloy/asap.git"
-    backbone "^1.3.3"
-    body-parser "^1.17.1"
-    cookie-parser "^1.4.3"
-    express "^4.15.2"
-    express-session "^1.15.1"
-    isomorphic-relay "^0.7.4"
-    react "^15.4.2"
-    react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
-    styled-components "^1.4.3"
 
 read-only-stream@^2.0.0:
   version "2.0.0"
@@ -6761,7 +6766,7 @@ supertest@^2.0.1:
     methods "1.x"
     superagent "^2.0.0"
 
-supports-color@3.1.2, supports-color@^3.1.2:
+supports-color@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -6775,7 +6780,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.2.3:
+supports-color@^3.1.2, supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
