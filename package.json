@@ -11,7 +11,14 @@
     "test": "yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
     "deploy-assets": "mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
-    "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
+    "start": "npm run start:dev",
+    "start:dev": "npm run start:in-dir -- .",
+    "start:dist": "npm run start:in-dir -- ./dist",
+    "start:in-dir": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100",
+    "dist:dir": "coffee --compile --map --output dist/$npm_package_config_dir $npm_package_config_dir && babel --quiet --source-maps --out-dir dist/$npm_package_config_dir $npm_package_config_dir && rsync -am --include='*/' --include='*.json' --include='*.jade' --include='public/**' --exclude='*' $npm_package_config_dir/ dist/$npm_package_config_dir/",
+    "dist:index": "babel --quiet --source-maps --out-dir dist index.js",
+    "dist:unregister": "grep -rl \"/register'\" dist | grep -v \".map\" | xargs sed -E -i.bak \"s/require\\('[a-z-]+\\/register'\\);//g\" && find dist -type f -iname '*.bak' -exec rm \"{}\" +;",
+    "dist": "npm run dist:index && npm run dist:dir --force:dir=desktop && npm run dist:dir --force:dir=mobile && npm run dist:dir --force:dir=lib && npm run dist:unregister"
   },
   "dependencies": {
     "accounting": "^0.4.1",
@@ -23,7 +30,6 @@
     "artsy-passport": "^1.6.1",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^2.1.2",
-    "babel": "^6.5.2",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-inline-react-svg": "^0.2.0",
@@ -126,6 +132,7 @@
     "annyang": "git://github.com/mzikherman/annyang.git",
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
+    "babel-cli": "^6.24.0",
     "background-check": "git://github.com/kennethcachia/background-check",
     "benv": "^3.2.0",
     "blueimp-file-upload": "9.9.0",

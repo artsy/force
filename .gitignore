@@ -9,6 +9,7 @@ lib-cov
 *.projectile
 *.DS_Store
 .env
+dist
 pids
 logs
 results
