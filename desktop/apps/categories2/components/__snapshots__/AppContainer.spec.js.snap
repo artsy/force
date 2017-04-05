@@ -1,7 +1,109 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<h1>
-  The Art Genome Project
-</h1>
+<div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "orange",
+        "margin": "0.25em",
+        "padding": "1em",
+      }
+    }
+  >
+    <ul>
+      <li>
+        Materials
+      </li>
+      <li>
+        Medium and Techniques
+      </li>
+      <li>
+        Style or Movement
+      </li>
+    </ul>
+  </div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "pink",
+        "margin": "0.25em",
+        "padding": "1em",
+      }
+    }
+  >
+    <div>
+      <h2>
+        The Art Genome Project
+      </h2>
+      <p>
+        The Art Genome Project is the classification system and technological framework that powers Artsy.
+      </p>
+      <p>
+        It maps the characteristics (we call them “genes”) that connect artists, artworks, architecture, and design objects across history.
+      </p>
+      <p>
+        There are currently over 1,000 characteristics in The Art Genome Project, including art historical movements, subject matter, and formal qualities.
+      </p>
+    </div>
+    <div
+      className="gene-families"
+    >
+      <div
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderBottom": "1px solid #333",
+            "padding": "1em",
+          }
+        }
+      >
+        <h3>
+          Materials
+        </h3>
+        <div
+          className="description"
+        >
+          The physical materials that compose artworks, design objects and works of architecture.
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderBottom": "1px solid #333",
+            "padding": "1em",
+          }
+        }
+      >
+        <h3>
+          Medium and Techniques
+        </h3>
+        <div
+          className="description"
+        >
+          Includes methods and techniques used in painting, photography, printmaking, sculpture, filmmaking, performance and more.
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderBottom": "1px solid #333",
+            "padding": "1em",
+          }
+        }
+      >
+        <h3>
+          Style or Movement
+        </h3>
+        <div
+          className="description"
+        >
+          Historical groupings and art movements from the Renaissance to the present. These categories also include broad descriptions of styles, such as Abstract or Figurative art, as well as stylistic or conceptual tendencies in contemporary art.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
