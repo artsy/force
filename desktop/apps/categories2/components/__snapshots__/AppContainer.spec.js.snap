@@ -1,15 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div>
+<div
+  className="categories2-app-container"
+>
   <div
-    style={
-      Object {
-        "backgroundColor": "orange",
-        "margin": "0.25em",
-        "padding": "1em",
-      }
-    }
+    className="categories2-sidebar"
   >
     <ul>
       <li>
@@ -24,15 +20,11 @@ exports[`renders correctly 1`] = `
     </ul>
   </div>
   <div
-    style={
-      Object {
-        "backgroundColor": "pink",
-        "margin": "0.25em",
-        "padding": "1em",
-      }
-    }
+    className="categories2-content"
   >
-    <div>
+    <div
+      className="categories2-intro"
+    >
       <h2>
         The Art Genome Project
       </h2>
@@ -47,58 +39,40 @@ exports[`renders correctly 1`] = `
       </p>
     </div>
     <div
-      className="gene-families"
+      className="categories2-gene-families"
     >
       <div
-        style={
-          Object {
-            "backgroundColor": "white",
-            "borderBottom": "1px solid #333",
-            "padding": "1em",
-          }
-        }
+        className="categories2-gene-family"
       >
         <h3>
           Materials
         </h3>
         <div
-          className="description"
+          className="categories2-gene-family-description"
         >
           The physical materials that compose artworks, design objects and works of architecture.
         </div>
       </div>
       <div
-        style={
-          Object {
-            "backgroundColor": "white",
-            "borderBottom": "1px solid #333",
-            "padding": "1em",
-          }
-        }
+        className="categories2-gene-family"
       >
         <h3>
           Medium and Techniques
         </h3>
         <div
-          className="description"
+          className="categories2-gene-family-description"
         >
           Includes methods and techniques used in painting, photography, printmaking, sculpture, filmmaking, performance and more.
         </div>
       </div>
       <div
-        style={
-          Object {
-            "backgroundColor": "white",
-            "borderBottom": "1px solid #333",
-            "padding": "1em",
-          }
-        }
+        className="categories2-gene-family"
       >
         <h3>
           Style or Movement
         </h3>
         <div
-          className="description"
+          className="categories2-gene-family-description"
         >
           Historical groupings and art movements from the Renaissance to the present. These categories also include broad descriptions of styles, such as Abstract or Figurative art, as well as stylistic or conceptual tendencies in contemporary art.
         </div>
