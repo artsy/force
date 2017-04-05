@@ -6,7 +6,6 @@ benv = require 'benv'
 { resolve } = require 'path'
 sd = require('sharify').data
 servers = require '../../../test/helpers/servers'
-Browser = require 'zombie'
 rewire = require 'rewire'
 sinon = require 'sinon'
 
@@ -62,21 +61,6 @@ describe 'Layout init code', ->
     $.ajax.args[0][0].error()
     window.location.should.equal '/users/sign_out'
     sd.CURRENT_USER = null
-
-describe 'Html class from user agent', ->
-
-  before (done) ->
-    servers.setup -> done()
-
-  after ->
-    servers.teardown()
-
-  it 'adds the hide header/footer artsy-mobile class to the html tag', (done) ->
-    browser = new Browser(userAgent: 'Artsy-Mobile')
-    browser.visit 'http://localhost:5000', ->
-      browser.wait ->
-        browser.querySelector('html').className.should.containEql 'layout-artsy-mobile-app'
-        done()
 
 describe 'Canonical url', ->
 

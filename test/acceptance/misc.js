@@ -7,24 +7,17 @@ describe('Page', () => {
   before(async () => {
     ({ gravity, browser } = await setup())
     gravity.get('/api/v1/page/:id', (req, res) => {
-      res.send(require('./fixtures/page'))
+      res.send(require('./fixtures/gravity/page'))
     })
     gravity.get('/api/v1/tag/:id', (req, res) => {
-      res.send(require('./fixtures/tag'))
+      res.send(require('./fixtures/gravity/tag1'))
     })
     gravity.get('/api/v1/filter/artworks', (req, res) => {
-      res.send(require('./fixtures/filter-artworks'))
+      res.send(require('./fixtures/gravity/tag'))
     })
   })
 
   after(teardown)
-
-  xdescribe('/home', () => {
-    it('renders the homepage', async () => {
-      const $ = await browser.page('/')
-      $('body').html().should.containEql('Browse Works for Sale')
-    })
-  })
 
   describe('/terms', () => {
     it('renders a markdown page of terms and conditions', async () => {
@@ -46,7 +39,7 @@ describe('Page', () => {
     it('renders a blank page for Eigen', async () => {
       const $ = await browser.page('/dev/blank')
       $('body').html().should
-        .containEql('<main></main>')
+        .containEql('page intentionally left blank')
     })
   })
 

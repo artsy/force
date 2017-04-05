@@ -48,6 +48,7 @@ Disallow: ?microsite=
 Disallow: ?from-show-guide=
 Sitemap: https://www.artsy.net/sitemap-articles.xml
 Sitemap: https://www.artsy.net/sitemap-artists.xml
+Sitemap: https://www.artsy.net/sitemap-artist-images.xml
 Sitemap: https://www.artsy.net/sitemap-artworks.xml
 Sitemap: https://www.artsy.net/sitemap-cities.xml
 Sitemap: https://www.artsy.net/sitemap-fairs.xml
@@ -58,6 +59,7 @@ Sitemap: https://www.artsy.net/sitemap-misc.xml
 Sitemap: https://www.artsy.net/sitemap-news.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
 Sitemap: https://www.artsy.net/sitemap-shows.xml
+Sitemap: https://www.artsy.net/sitemap-tags.xml
 Sitemap: https://www.artsy.net/sitemap-videos.xml
 
 """

@@ -1,5 +1,8 @@
 require('coffee-script/register')
 
+// Use bluebird for performance
+global.Promise = require('bluebird')
+
 // Merge sharify data
 const sharify = require('sharify')
 require('./mobile/lib/setup_sharify')
@@ -62,7 +65,7 @@ const routeApp = (req, res, next) => {
 }
 
 // Mount static assets first so responsive pages don't get confused
-if (NODE_ENV === 'development') {
+if (NODE_ENV === 'development' || NODE_ENV === 'test') {
   app.use(require('stylus').middleware({
     src: path.resolve(__dirname, 'desktop'),
     dest: path.resolve(__dirname, 'desktop/public')

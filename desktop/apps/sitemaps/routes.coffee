@@ -54,6 +54,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Disallow: ?from-show-guide=
     Sitemap: #{APP_URL}/sitemap-articles.xml
     Sitemap: #{APP_URL}/sitemap-artists.xml
+    Sitemap: #{APP_URL}/sitemap-artist-images.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
     Sitemap: #{APP_URL}/sitemap-cities.xml
     Sitemap: #{APP_URL}/sitemap-fairs.xml
@@ -64,6 +65,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Sitemap: #{APP_URL}/sitemap-news.xml
     Sitemap: #{APP_URL}/sitemap-partners.xml
     Sitemap: #{APP_URL}/sitemap-shows.xml
+    Sitemap: #{APP_URL}/sitemap-tags.xml
     Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """

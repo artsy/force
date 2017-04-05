@@ -11,18 +11,12 @@ const {
   METAPHYSICS_ENDPOINT,
   POSITRON_URL
 } = process.env
-const [
-  FORCE_PORT,
-  GRAVITY_PORT,
-  METAPHYSICS_PORT,
-  POSITRON_PORT
-] = [
-  APP_URL,
-  API_URL,
-  METAPHYSICS_ENDPOINT,
-  POSITRON_URL
-].map((u) => url.parse(u).port)
+const FORCE_PORT = url.parse(APP_URL).port
+const GRAVITY_PORT = url.parse(API_URL).port
+const METAPHYSICS_PORT = url.parse(METAPHYSICS_ENDPOINT).port
+const POSITRON_PORT = url.parse(POSITRON_URL).port
 const TIMEOUT = Number(ACCEPTANCE_TIMEOUT)
+
 const servers = []
 let force, gravity, metaphysics, positron
 
@@ -48,6 +42,7 @@ export const setup = async () => {
       .goto(`${APP_URL}${path}`)
       .evaluate(() => document.documentElement.innerHTML)
       .then(cheerio.load)
+  process.on('exit', teardown)
   return { force, gravity, metaphysics, positron, browser }
 }
 
@@ -68,7 +63,7 @@ export const sleep = (ms) =>
 
 const startForce = (port) =>
   new Promise((resolve, reject) => {
-    const app = require('../../')
+    const app = require('../../../')
     servers.push(app.listen(port, (err) => {
       if (err) reject(err)
       else resolve(app)
@@ -98,6 +93,3 @@ const startApp = (port) =>
       else resolve(app)
     }))
   })
-
-// Make sure if we teardown if tests are quit
-// process.on('exit', () => teardown())

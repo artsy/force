@@ -51,6 +51,9 @@ hash =
   '^/log_in': ->
     require('../apps/auth/client/login.coffee').init()
 
+  '^/login': ->
+    require('../apps/auth/client/login.coffee').init()
+
   '^/reset_password': ->
     require('../apps/auth/client/reset_password.coffee').init()
 

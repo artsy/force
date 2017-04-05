@@ -7,7 +7,7 @@ AuthModalView = require '../../../../../components/auth_modal/view.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 template = -> require('../templates/page.jade') arguments...
 
-module.exports = class ProfessionalBuyerIndexView extends View
+module.exports = class ProfessionalBuyerLandingView extends View
   events:
     'click .js-move-to-cta': 'moveToCTA'
     'click .js-login': 'login'
