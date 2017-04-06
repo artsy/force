@@ -1,5 +1,8 @@
 require('coffee-script/register')
 
+// Use bluebird for performance
+global.Promise = require('bluebird')
+
 // Merge sharify data
 const sharify = require('sharify')
 require('./mobile/lib/setup_sharify')
