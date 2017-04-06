@@ -43,7 +43,7 @@ const GeneFamilies = (props) => {
   return (
     <div className="categories2-gene-families">
       {
-        props.data.map((value, index) => {
+        props.data.map((value) => {
           return (
             <GeneFamily
               key={value.id}
