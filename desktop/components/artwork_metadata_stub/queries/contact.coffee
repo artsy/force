@@ -4,6 +4,7 @@ module.exports = """
     href
     is_inquireable
     sale {
+      href
       is_auction
       is_live_open
       is_open
