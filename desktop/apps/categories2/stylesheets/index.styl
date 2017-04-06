@@ -1,22 +1,23 @@
 .categories2-app-container {
-	position relative
-	padding-bottom 3em
+	display flex
+	flex 0 1 auto
+	flex-flow row wrap
+	justify-content flex-end
 }
 
 .categories2-sidebar {
-	height 100%
+	flex 1
 	font-size 14px
 	color #333
-	left 0
-	padding 1em
-	position absolute
-	top 30px
+	padding 2em 1em
 	text-transform uppercase
-	width 300px
+	ul {
+		padding-top 2em
+	}
 }
 
 .categories2-content {
-  padding-left 300px
+	flex 4
 }
 
 .categories2-intro {
@@ -35,4 +36,16 @@
   	font-size 20px
   	line-height 30px
   }
+}
+
+.categories2-genes {
+	display flex
+	flex 0 1 auto
+	flex-flow row wrap
+	justify-content flex-end
+	padding: 1em 0
+}
+
+.categories2-genes-column {
+	flex 1
 }

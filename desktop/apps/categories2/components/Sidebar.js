@@ -8,7 +8,7 @@ const Sidebar = (props) => {
           props.data.map((value) => {
             return (
               <li key={`gene-${value.id}`}>
-                {value.name}
+                <a href={`#${value.id}`}>{value.name}</a>
               </li>
             )
           })
@@ -16,6 +16,10 @@ const Sidebar = (props) => {
       </ul>
     </div>
   )
+}
+
+Sidebar.propTypes = {
+  data: React.PropTypes.array
 }
 
 export default Sidebar
