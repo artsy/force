@@ -107,6 +107,7 @@
     "sharify": "^0.1.6",
     "spark-md5": "^2.0.2",
     "standard": "^9.0.0",
+    "styled-components": "^1.4.4",
     "stylus": "^0.54.5",
     "superagent": "^2.3.0",
     "twilio": "^2.5.1",
