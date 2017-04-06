@@ -1,35 +1,17 @@
 import React from 'react'
 
-function partitionArray(array) {
-  const parts = 3
-  const size = array.length / parts
-  const remainder = array.length % parts
-  return [
-    array.splice(0, size + remainder),
-    array.splice(0, size),
-    array
-  ]
-}
-
 const Genes = (props) => {
-  const columns = partitionArray(props.data)
   return (
     <div className="categories2-genes">
-      {
-        columns.map((column, index) => {
-          return (
-            <div key={`column-${index}`} className="categories2-genes-column">
-              <ul>
-                {
-                  column.map((gene) => {
-                    return <li key={gene.id}>{gene.name}</li>
-                  })
-                }
-              </ul>
-            </div>
-          )
-        })
-      }
+      <div className="categories2-genes-column">
+        <ul>
+          {
+            props.data.map((gene) => {
+              return <li key={gene.id}>{gene.name}</li>
+            })
+          }
+        </ul>
+      </div>
     </div>
   )
 }

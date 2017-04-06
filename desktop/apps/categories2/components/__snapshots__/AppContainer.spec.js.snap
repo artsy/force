@@ -84,12 +84,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Use of Ephemeral Materials
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Use of Common Materials
               </li>
@@ -99,12 +93,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Bronze
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Wood
               </li>
@@ -149,12 +137,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Performance Art
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Photography
               </li>
@@ -164,12 +146,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Work on Paper
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Collage
               </li>
@@ -214,12 +190,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Arte Povera
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Arts and Crafts Movement
               </li>
@@ -229,12 +199,6 @@ exports[`renders correctly 1`] = `
               <li>
                 Bad Painting
               </li>
-            </ul>
-          </div>
-          <div
-            className="categories2-genes-column"
-          >
-            <ul>
               <li>
                 Barbizon School
               </li>
