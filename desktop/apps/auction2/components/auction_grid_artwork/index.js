@@ -14,7 +14,7 @@ function AuctionGridArtwork({ isOpen, saleArtwork }) {
   bidStatus = <BidStatus saleArtwork={saleArtwork} />
 
   return (
-    <a className='auction2-grid-artwork' key={artwork._id} href={`/artwork/${artwork._id}`}>
+    <a className='auction2-grid-artwork' key={artwork._id} href={`/artwork/${artwork.id}`}>
       <div className='auction2-grid-artwork__image-container'>
         <div className='vam-outer'>
           <div className='vam-inner'>
@@ -29,7 +29,7 @@ function AuctionGridArtwork({ isOpen, saleArtwork }) {
           <div className='auction2-grid-artwork__lot-number'>
             Lot {saleArtwork.lot_label}
           </div>
-          <div>{ isOpen && bidStatus }</div>
+          { isOpen && bidStatus }
         </div>
         <div className='auction2-grid-artwork__artists'>
           {artistDisplay}

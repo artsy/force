@@ -20,7 +20,7 @@ function AuctionListArtwork({ isOpen, saleArtwork }) {
   bidStatus = <BidStatus saleArtwork={saleArtwork} />
 
   return (
-    <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork._id}`}>
+    <a className={auctionArtworkClasses} key={artwork._id} href={`/artwork/${artwork.id}`}>
       <div className='auction2-list-artwork__image-container'>
         <div className='auction2-list-artwork__image'>
           <img src={artworkImage} alt={artwork.title}></img>
