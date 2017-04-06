@@ -9,13 +9,25 @@ exports[`renders correctly 1`] = `
   >
     <ul>
       <li>
-        Materials
+        <a
+          href="#575ac46debad644c13000003"
+        >
+          Materials
+        </a>
       </li>
       <li>
-        Medium and Techniques
+        <a
+          href="#575ac46debad644c13000004"
+        >
+          Medium and Techniques
+        </a>
       </li>
       <li>
-        Style or Movement
+        <a
+          href="#575ac46debad644c13000005"
+        >
+          Style or Movement
+        </a>
       </li>
     </ul>
   </div>
@@ -43,6 +55,7 @@ exports[`renders correctly 1`] = `
     >
       <div
         className="categories2-gene-family"
+        id="575ac46debad644c13000003"
       >
         <h3>
           Materials
@@ -52,9 +65,62 @@ exports[`renders correctly 1`] = `
         >
           The physical materials that compose artworks, design objects and works of architecture.
         </div>
+        <div
+          className="categories2-genes"
+        >
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Glass as Material
+              </li>
+              <li>
+                Mosaics
+              </li>
+              <li>
+                Assemblage
+              </li>
+              <li>
+                Use of Ephemeral Materials
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Use of Common Materials
+              </li>
+              <li>
+                Found Objects
+              </li>
+              <li>
+                Bronze
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Wood
+              </li>
+              <li>
+                Plastic
+              </li>
+              <li>
+                Silver
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div
         className="categories2-gene-family"
+        id="575ac46debad644c13000004"
       >
         <h3>
           Medium and Techniques
@@ -64,9 +130,62 @@ exports[`renders correctly 1`] = `
         >
           Includes methods and techniques used in painting, photography, printmaking, sculpture, filmmaking, performance and more.
         </div>
+        <div
+          className="categories2-genes"
+        >
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Installation
+              </li>
+              <li>
+                Mixed-Media
+              </li>
+              <li>
+                Painting
+              </li>
+              <li>
+                Performance Art
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Photography
+              </li>
+              <li>
+                Sculpture
+              </li>
+              <li>
+                Work on Paper
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Collage
+              </li>
+              <li>
+                Comic/Cartoon
+              </li>
+              <li>
+                Kinetic Sculpture
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div
         className="categories2-gene-family"
+        id="575ac46debad644c13000005"
       >
         <h3>
           Style or Movement
@@ -75,6 +194,58 @@ exports[`renders correctly 1`] = `
           className="categories2-gene-family-description"
         >
           Historical groupings and art movements from the Renaissance to the present. These categories also include broad descriptions of styles, such as Abstract or Figurative art, as well as stylistic or conceptual tendencies in contemporary art.
+        </div>
+        <div
+          className="categories2-genes"
+        >
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Art Deco
+              </li>
+              <li>
+                Art Informel
+              </li>
+              <li>
+                Art Nouveau
+              </li>
+              <li>
+                Arte Povera
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Arts and Crafts Movement
+              </li>
+              <li>
+                Ashcan School
+              </li>
+              <li>
+                Bad Painting
+              </li>
+            </ul>
+          </div>
+          <div
+            className="categories2-genes-column"
+          >
+            <ul>
+              <li>
+                Barbizon School
+              </li>
+              <li>
+                Bauhaus
+              </li>
+              <li>
+                Body Art
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
