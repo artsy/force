@@ -30,6 +30,7 @@ const initialState = {
   followedArtistRailPage: 1,
   followedArtistRailSize: 4,
   initialMediumMap: [],
+  isOpen: sd.AUCTION && sd.AUCTION.is_open,
   isFetchingArtworks: false,
   isLastFollowedArtistsPage: false,
   isListView: false,
