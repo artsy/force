@@ -16,10 +16,12 @@ export default function SaleQuery(id) {
       eligible_sale_artworks_count
       end_at
       id
+      is_auction
       is_live_open
       is_open
       live_start_at
       name
+      registration_ends_at
       start_at
       status
       symbol

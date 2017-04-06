@@ -1,7 +1,6 @@
 //
 // Criteo tracking for auctions product feed and artworks product feed
 //
-
 window.criteo_q = window.criteo_q || []
 var pathSplit = location.pathname.split('/')
 var userEmail = function() {
@@ -19,11 +18,13 @@ if (pathSplit[1] === 'auctions') {
   if (!pathSplit[3]) {
     // https://www.artsy.net/auction/:auction_id - (AUCTIONS viewList)
     //              0          1          2
-    window.criteo_q.push(
-      { event: 'setAccount', account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
-      { event: 'setSiteType', type: 'd' },
-      { event: 'viewList', item: sd.ARTWORKS.map(function(a) { return a._id }) }
-    )
+    analyticsHooks.on('auction:artworks:loaded', function(artworks) {
+      window.criteo_q.push(
+        { event: 'setAccount', account: sd.CRITEO_AUCTIONS_ACCOUNT_NUMBER },
+        { event: 'setSiteType', type: 'd' },
+        { event: 'viewList', item: artworks }
+      )
+    })
   } else if (pathSplit[3] === 'bid') {
     // https://www.artsy.net/auction/:auction_id/bid - (AUCTIONS trackTransaction)
     //              0          1          2       3
@@ -48,7 +49,7 @@ if (pathSplit[1] === 'auctions') {
   }
 } else if (pathSplit[1] === 'artwork' && !pathSplit[3]) {
   // https://www.artsy.net/artwork/:artwork_id - (AUCTIONS & ARTWORKS viewItem)
-  //              0          1          2  
+  //              0          1          2
   //
   // We cannot send both ids on product pages, so, send the Auctions account ID
   // if the artwork is in an auction, otherwise send the Artworks account ID.
