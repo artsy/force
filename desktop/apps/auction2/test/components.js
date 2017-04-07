@@ -7,6 +7,7 @@ import AuctionGridArtwork from '../components/auction_grid_artwork'
 import AuctionListArtwork from '../components/auction_list_artwork'
 import FilterSort from '../components/filter_sort'
 import MediumFilter from '../components/medium_filter'
+import Sidebar from '../components/sidebar'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
@@ -47,13 +48,69 @@ describe('React components', () => {
     })
 
     it('renders an auction grid artwork component', () => {
-      const renderedArtwork = renderToString(AuctionGridArtwork({ saleArtwork }))
-      renderedArtwork.should.containEql('<em>My Artwork</em>, 2002')
+      const initialStoreOpenAuction = createStore(auctions, { auctionArtworks: { isOpen: true } })
+      const wrapper = shallow(
+        <Provider><AuctionGridArtwork store={initialStoreOpenAuction} saleArtwork={saleArtwork} /></Provider>
+      )
+      wrapper.render().html().should.containEql('$100')
+      wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
     })
 
     it('renders an auction list artwork component', () => {
-      const renderedArtwork = renderToString(AuctionListArtwork({ saleArtwork }))
-      renderedArtwork.should.containEql('<em>My Artwork</em>, 2002')
+      const initialStoreOpenAuction = createStore(auctions, { auctionArtworks: { isOpen: true } })
+      const wrapper = shallow(
+        <Provider><AuctionListArtwork store={initialStoreOpenAuction} saleArtwork={saleArtwork} /></Provider>
+      )
+      wrapper.render().html().should.containEql('$100')
+      wrapper.render().html().should.containEql('<em>My Artwork</em>, 2002')
+    })
+
+    it('renders an auction grid artwork component without a bid status if the auction is closed', () => {
+      const wrapper = shallow(
+        <Provider><AuctionGridArtwork store={initialStore} saleArtwork={saleArtwork} /></Provider>
+      )
+      wrapper.render().html().should.not.containEql('$100')
+    })
+
+    it('renders an auction list artwork component without a bid status if the auction is closed', () => {
+      const wrapper = shallow(
+        <Provider><AuctionListArtwork store={initialStore} saleArtwork={saleArtwork} /></Provider>
+      )
+      wrapper.render().html().should.not.containEql('$100')
+    })
+  })
+
+  describe('Sidebar', () => {
+    beforeEach(() => {
+      Sidebar.__Rewire__('ArtistFilter', React.createClass({ render: () => <div className='artist-filter'></div> }))
+      Sidebar.__Rewire__('MediumFilter', React.createClass({ render: () => <div className='medium-filter'></div> }))
+      Sidebar.__Rewire__('RangeSlider', React.createClass({ render: () => <div className='range-slider'></div> }))
+    })
+
+    afterEach(() => {
+      Sidebar.__ResetDependency__('ArtistFilter')
+      Sidebar.__ResetDependency__('MediumFilter')
+      Sidebar.__ResetDependency__('RangeSlider')
+    })
+
+    it('renders the range filter if the auction is open', () => {
+      const initialStoreOpenAuction = createStore(auctions, { auctionArtworks: { isOpen: true } })
+
+      const wrapper = shallow(
+        <Provider><Sidebar store={initialStoreOpenAuction} /></Provider>
+      )
+      wrapper.render().find('.medium-filter').length.should.eql(1)
+      wrapper.render().find('.artist-filter').length.should.eql(1)
+      wrapper.render().find('.range-slider').length.should.eql(1)
+    })
+
+    it('does not render the range filter if the auction is closed', () => {
+      const wrapper = shallow(
+        <Provider><Sidebar store={initialStore} /></Provider>
+      )
+      wrapper.render().find('.medium-filter').length.should.eql(1)
+      wrapper.render().find('.artist-filter').length.should.eql(1)
+      wrapper.render().find('.range-slider').length.should.eql(0)
     })
   })
 

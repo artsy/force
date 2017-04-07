@@ -24,6 +24,10 @@
     analytics.track('Clicked "New For You" on homepage')
   })
 
+  $(document).on('click', '#hpm-recommended_works-3 a', function () {
+    analytics.track('Clicked recommendation on homepage')
+  })
+
   // Artworks rail is rendered client-side
   var selectors = [
     '.js-homepage-featured-links[data-context="works by artists you follow"] a',

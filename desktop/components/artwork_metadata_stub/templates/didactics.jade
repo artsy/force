@@ -18,6 +18,9 @@ a.artwork-metadata-stub__title.artwork-metadata-stub__line( href= artwork.href )
 if artwork.collecting_institution
   .artwork-metadata-stub__partner.artwork-metadata-stub__line
     = artwork.collecting_institution
+else if artwork.sale && artwork.sale.is_auction
+  a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.sale.href )
+    = artwork.partner.name
 else
   a.artwork-metadata-stub__partner.artwork-metadata-stub__line( href= artwork.partner.href )
     = artwork.partner.name
