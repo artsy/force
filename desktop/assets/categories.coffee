@@ -13,7 +13,7 @@ routes =
 
   '''
   /tag
-  ''': require('../apps/tag/client.coffee').init
+  ''': require('../apps/tag/client.js').default
 
   '''
   /gene/.*

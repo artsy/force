@@ -14,6 +14,7 @@
     "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
   },
   "dependencies": {
+    "@artsy/reaction-force": "^0.1.4",
     "accounting": "^0.4.1",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
@@ -99,7 +100,6 @@
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
-    "reaction-force": "git+https://github.com/artsy/reaction-force.git",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",
