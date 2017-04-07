@@ -44,7 +44,7 @@ moment = require 'moment'
       items: [
         { type: 'artwork', id: '54276766fd4f50996aeca2b8' }
         { type: 'image', url: '', caption: '' }
-        { type: 'video', url: ''  }
+        { type: 'video', url: '', caption: '' }
       ]
     }
     {
@@ -82,7 +82,8 @@ moment = require 'moment'
     }
     {
       type: 'video',
-      url: 'http://youtu.be/yYjLrJRuMnY'
+      url: 'http://youtu.be/yYjLrJRuMnY',
+      caption: 'Doug and Claire get sucked into a marathon of Battlestar Galactica from Season 2 of Portlandia on IFC.'
     }
   ]
   featured_artist_ids: ['5086df098523e60002000012']
