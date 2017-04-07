@@ -1,9 +1,26 @@
 import React from 'react'
+import styled from 'styled-components'
 
-const Sidebar = (props) => {
+Sidebar.propTypes = {
+  data: React.PropTypes.array
+}
+
+const Ul = styled.ul`
+  padding-top: 2em
+`
+
+const Column = styled.div`
+  flex: 1
+  font-size: 14px
+  color: #333
+  padding: 2em 1em
+  text-transform: uppercase
+`
+
+function Sidebar(props){
   return (
-    <div className="categories2-sidebar">
-      <ul>
+    <Column>
+      <Ul>
         {
           props.data.map((value) => {
             return (
@@ -13,13 +30,9 @@ const Sidebar = (props) => {
             )
           })
         }
-      </ul>
-    </div>
+      </Ul>
+    </Column>
   )
-}
-
-Sidebar.propTypes = {
-  data: React.PropTypes.array
 }
 
 export default Sidebar

@@ -1,47 +1,25 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import styled from 'styled-components'
+import { media } from '../styles/style-utils';
 
-const Genes = (props) => {
-  return (
-    <div className="categories2-genes">
-      <div className="categories2-genes-column">
-        <ul>
-          {
-            props.data.map((gene) => {
-              return <li key={gene.id}>{gene.name}</li>
-            })
-          }
-        </ul>
-      </div>
-    </div>
-  )
-}
-
-Genes.propTypes = {
-  data: React.PropTypes.array
-}
-
-const GeneFamily = (props) => {
-  return (
-    <div id={props.id} className="categories2-gene-family">
-      <h3>{props.name}</h3>
-      <div className="categories2-gene-family-description">
-        {props.description}
-      </div>
-      <Genes data={props.genes}/>
-    </div>
-  )
+GeneFamilies.propTypes = {
+  data: PropTypes.array
 }
 
 GeneFamily.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string,
-  description: React.PropTypes.string,
-  genes: React.PropTypes.array
+  id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  genes: PropTypes.array
 }
 
-const GeneFamilies = (props) => {
+Genes.propTypes = {
+  data: PropTypes.array
+}
+
+function GeneFamilies(props){
   return (
-    <div className="categories2-gene-families">
+    <div>
       {
         props.data.map((value) => {
           return (
@@ -59,8 +37,47 @@ const GeneFamilies = (props) => {
   )
 }
 
-GeneFamilies.propTypes = {
-  data: React.PropTypes.array
+const GeneFamilyDiv = styled.div`
+  border-top: 1px solid #ccc
+  margin: 0 1em
+  padding: 1em 0
+`
+
+const Heading = styled.h3`
+  font-size: 20px
+  line-height: 30px
+`
+
+function GeneFamily(props){
+  return (
+    <GeneFamilyDiv id={props.id}>
+      <Heading>{props.name}</Heading>
+      <div>{props.description}</div>
+      <Genes data={props.genes}/>
+    </GeneFamilyDiv>
+  )
+}
+
+const MultiColumn = styled.div`
+  ${ media.mobile`
+    column-count: 3
+    column-gap: 1em
+    padding: 1em 0
+  ` }
+`
+
+function Genes(props){
+  return (
+    <MultiColumn>
+        <ul>
+          {
+            props.data.map((gene) => {
+              return <li key={gene.id}>{gene.name}</li>
+            })
+          }
+        </ul>
+    </MultiColumn>
+  )
 }
 
 export default GeneFamilies
