@@ -5,7 +5,7 @@ const StyledContent = styled.div`
   flex: 4
 `
 
-const Content = (props) => {
+function Content(props){
   return (
     <StyledContent className="categories2-content">
       {props.children}

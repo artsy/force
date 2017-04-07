@@ -10,7 +10,7 @@ const StyledH2 = styled.div`
   line-height: 64px
 `
 
-const Intro = (props) => {
+function Intro(props){
   return (
     <StyledIntro className='categories2-intro'>
       <StyledH2>The Art Genome Project</StyledH2>

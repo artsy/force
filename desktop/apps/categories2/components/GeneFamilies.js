@@ -1,49 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ThreeColumnDiv = styled.div`
-  column-count: 3
-  column-gap: 1em
-  padding: 1em 0
-`
-
-const Genes = (props) => {
-  return (
-    <ThreeColumnDiv>
-        <ul>
-          {
-            props.data.map((gene) => {
-              return <li key={gene.id}>{gene.name}</li>
-            })
-          }
-        </ul>
-    </ThreeColumnDiv>
-  )
-}
-
-Genes.propTypes = {
+GeneFamilies.propTypes = {
   data: React.PropTypes.array
-}
-
-const StyledGeneFamily = styled.div`
-  border-top: 1px solid #ccc
-  margin: 0 1em
-  padding: 1em 0
-`
-
-const StyledH3 = styled.h3`
-  font-size: 20px
-  line-height: 30px
-`
-
-const GeneFamily = (props) => {
-  return (
-    <StyledGeneFamily id={props.id}>
-      <StyledH3>{props.name}</StyledH3>
-      <div>{props.description}</div>
-      <Genes data={props.genes}/>
-    </StyledGeneFamily>
-  )
 }
 
 GeneFamily.propTypes = {
@@ -53,9 +12,13 @@ GeneFamily.propTypes = {
   genes: React.PropTypes.array
 }
 
-const GeneFamilies = (props) => {
+Genes.propTypes = {
+  data: React.PropTypes.array
+}
+
+function GeneFamilies(props){
   return (
-    <div className="categories2-gene-families">
+    <div>
       {
         props.data.map((value) => {
           return (
@@ -73,8 +36,45 @@ const GeneFamilies = (props) => {
   )
 }
 
-GeneFamilies.propTypes = {
-  data: React.PropTypes.array
+const StyledGeneFamily = styled.div`
+  border-top: 1px solid #ccc
+  margin: 0 1em
+  padding: 1em 0
+`
+
+const StyledH3 = styled.h3`
+  font-size: 20px
+  line-height: 30px
+`
+
+function GeneFamily(props){
+  return (
+    <StyledGeneFamily id={props.id}>
+      <StyledH3>{props.name}</StyledH3>
+      <div>{props.description}</div>
+      <Genes data={props.genes}/>
+    </StyledGeneFamily>
+  )
+}
+
+const ThreeColumnDiv = styled.div`
+  column-count: 3
+  column-gap: 1em
+  padding: 1em 0
+`
+
+function Genes(props){
+  return (
+    <ThreeColumnDiv>
+        <ul>
+          {
+            props.data.map((gene) => {
+              return <li key={gene.id}>{gene.name}</li>
+            })
+          }
+        </ul>
+    </ThreeColumnDiv>
+  )
 }
 
 export default GeneFamilies

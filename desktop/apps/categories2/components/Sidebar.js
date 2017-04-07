@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+Sidebar.propTypes = {
+  data: React.PropTypes.array
+}
+
 const Ul = styled.ul`
   padding-top: 2em
 `
@@ -13,7 +17,7 @@ const StyledSidebar = styled.div`
   text-transform: uppercase
 `
 
-const Sidebar = (props) => {
+function Sidebar(props){
   return (
     <StyledSidebar>
       <Ul>
@@ -29,10 +33,6 @@ const Sidebar = (props) => {
       </Ul>
     </StyledSidebar>
   )
-}
-
-Sidebar.propTypes = {
-  data: React.PropTypes.array
 }
 
 export default Sidebar
