@@ -16,4 +16,4 @@ describe 'Meta tags', ->
     it 'includes canonical, twitter card and og tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/collect"
-      @html.should.containEql "<meta property=\"og:title\" content=\"Browse | Artsy"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Collect | Artsy"
