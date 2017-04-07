@@ -9,7 +9,7 @@ const Ul = styled.ul`
   padding-top: 2em
 `
 
-const StyledSidebar = styled.div`
+const Column = styled.div`
   flex: 1
   font-size: 14px
   color: #333
@@ -19,7 +19,7 @@ const StyledSidebar = styled.div`
 
 function Sidebar(props){
   return (
-    <StyledSidebar>
+    <Column>
       <Ul>
         {
           props.data.map((value) => {
@@ -31,7 +31,7 @@ function Sidebar(props){
           })
         }
       </Ul>
-    </StyledSidebar>
+    </Column>
   )
 }
 

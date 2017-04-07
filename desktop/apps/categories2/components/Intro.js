@@ -12,7 +12,7 @@ const StyledH2 = styled.div`
 
 function Intro(props){
   return (
-    <StyledIntro className='categories2-intro'>
+    <StyledIntro>
       <StyledH2>The Art Genome Project</StyledH2>
       <p>The Art Genome Project is the classification system and technological framework that powers Artsy.</p>
       <p>It maps the characteristics (we call them “genes”) that connect artists, artworks, architecture, and design objects across history.</p>
