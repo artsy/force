@@ -1,0 +1,104 @@
+{
+  "hits": [
+
+  ],
+  "aggregations": {
+    "total": {
+      "value": 422131
+    },
+    "dimension_range": {
+      "*-24.0": {
+        "name": "Small",
+        "count": 182747
+      },
+      "24.0-48.0": {
+        "name": "Medium",
+        "count": 125189
+      },
+      "48.0-84.0": {
+        "name": "Large",
+        "count": 65505
+      },
+      "84.0-*": {
+        "name": "Very Large",
+        "count": 12583
+      }
+    },
+    "price_range": {
+      "*-*": {
+        "name": "for Sale",
+        "count": 220703
+      },
+      "1000-5000": {
+        "name": "between $1,000 & $5,000",
+        "count": 56497
+      },
+      "10000-50000": {
+        "name": "between $10,000 & $50,000",
+        "count": 30538
+      },
+      "5000-10000": {
+        "name": "between $5,000 & $10,000",
+        "count": 29489
+      },
+      "*-1000": {
+        "name": "Under $1,000",
+        "count": 17811
+      },
+      "50000-*": {
+        "name": "over $50,000",
+        "count": 5809
+      }
+    },
+    "for_sale": {
+      "name": "For Sale",
+      "count": 220703
+    },
+    "medium": {
+      "painting": {
+        "name": "Painting",
+        "count": 134485
+      },
+      "photography": {
+        "name": "Photography",
+        "count": 76360
+      },
+      "work-on-paper": {
+        "name": "Work on Paper",
+        "count": 66254
+      },
+      "sculpture": {
+        "name": "Sculpture",
+        "count": 53200
+      },
+      "prints": {
+        "name": "Prints",
+        "count": 50398
+      },
+      "drawing": {
+        "name": "Drawing",
+        "count": 15571
+      },
+      "design": {
+        "name": "Design",
+        "count": 14254
+      },
+      "installation": {
+        "name": "Installation",
+        "count": 11290
+      },
+      "film-slash-video": {
+        "name": "Film\/Video",
+        "count": 5630
+      },
+      "performance-art": {
+        "name": "Performance Art",
+        "count": 2184
+      },
+      "jewelry": {
+        "name": "Jewelry",
+        "count": 1602
+      }
+    }
+  }
+}

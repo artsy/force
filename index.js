@@ -32,7 +32,7 @@ const memoryProfiler = require('./lib/memory_profiler')
 // Enable memory profiling
 memoryProfiler()
 
-const app = express()
+const app = module.exports = express()
 const { API_URL, CLIENT_ID, CLIENT_SECRET, PORT, NODE_ENV } = process.env
 
 // Combine user models from desktop and mobile
@@ -65,7 +65,7 @@ const routeApp = (req, res, next) => {
 }
 
 // Mount static assets first so responsive pages don't get confused
-if (NODE_ENV === 'development') {
+if (NODE_ENV === 'development' || NODE_ENV === 'test') {
   app.use(require('stylus').middleware({
     src: path.resolve(__dirname, 'desktop'),
     dest: path.resolve(__dirname, 'desktop/public')
@@ -106,8 +106,8 @@ cache.setup(() => {
   // Get an xapp token
   artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET }, () => {
     // Start the server
-    app.listen(PORT, () => {
-      console.log(`Force listening on port ${PORT}`)
-    })
+    if (module === require.main) {
+      app.listen(PORT, () => console.log(`Force listening on port ${PORT}`))
+    }
   })
 })
