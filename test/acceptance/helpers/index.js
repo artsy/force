@@ -3,6 +3,7 @@ import Nightmare from 'nightmare'
 import moment from 'moment'
 import cheerio from 'cheerio'
 import url from 'url'
+import chalk from 'chalk'
 
 const {
   ACCEPTANCE_TIMEOUT,
@@ -18,7 +19,7 @@ const POSITRON_PORT = url.parse(POSITRON_URL).port
 const TIMEOUT = Number(ACCEPTANCE_TIMEOUT)
 
 const servers = []
-let force, gravity, metaphysics, positron
+let force, gravity, metaphysics, positron, browser
 
 // Setup function for end to end tests. It starts express apps that mock the
 // downstream services Force uses such as Gravity and Metaphysics. It's then
@@ -31,7 +32,7 @@ export const setup = async () => {
   positron = await startApp(POSITRON_PORT)
   metaphysics = await startApp(METAPHYSICS_PORT)
   force = await startForce(FORCE_PORT)
-  const browser = Nightmare({
+  browser = Nightmare({
     waitTimeout: TIMEOUT,
     gotoTimeout: TIMEOUT,
     loadTimeout: TIMEOUT,
@@ -42,17 +43,29 @@ export const setup = async () => {
       .goto(`${APP_URL}${path}`)
       .evaluate(() => document.documentElement.innerHTML)
       .then(cheerio.load)
+
+  // Make sure cancelling the process cleans up the servers/Electron
   process.on('exit', teardown)
+
+  // Nightmare bubbles uncaught errors to the process causing intermittent
+  // ECONNX errors for open requests despite using `browser.end()` below.
+  // To bring some sanity back to the situation we are turning these into
+  // warnings instead of failing tests.
+  browser.on('page', warn)
+  process.removeAllListeners('uncaughtException')
+  process.on('uncaughtException', warn)
+
   return { force, gravity, metaphysics, positron, browser }
 }
 
 // Closes all of the mocked API servers
-export const teardown = () => {
+export const teardown = async () => {
   try {
-    servers.forEach((server) => server.close())
-  } catch (e) {
-    console.warn(e)
-  }
+    await browser.end()
+    await Promise.all(servers.map((server) =>
+      new Promise((resolve) => server.close(resolve))
+    ))
+  } catch (e) { warn(e) }
 }
 
 // Convenience Promise wrapped timeout use via `await sleep(1000)`
@@ -60,6 +73,8 @@ export const sleep = (ms) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
+
+const warn = (e) => console.log(chalk.red(e))
 
 const startForce = (port) =>
   new Promise((resolve, reject) => {

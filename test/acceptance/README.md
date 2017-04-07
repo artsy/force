@@ -1,6 +1,10 @@
 # Acceptance Tests
 
-Force's acceptance test use [Nightmare](https://github.com/segmentio/nightmare) to simulate a browser by running [Chromium](https://www.chromium.org/Home) through [Electron](https://electron.atom.io/). These tests start a set of vanilla Express apps to mock the behavior of dependent APIs such as Gravity and Metaphysics. You will have to write your own code per test suite to mock the API behavior, which can be helped with the use of fixtures and recording (see below). A typical acceptance test will involve setting up these fake servers, running a nightmare instance to browse the website, and asserting the contents of the page using [Nightmare APIs](https://github.com/segmentio/nightmare#extract-from-the-page) or a small helper `$ = await browser.page('.selector')` to provide a convenient jQuery-like interface to the page's contents.
+Force's acceptance test use [Nightmare](https://github.com/segmentio/nightmare) to simulate a browser by running [Chromium](https://www.chromium.org/Home) through [Electron](https://electron.atom.io/). Use `yarn acceptance` to run.
+
+These tests start a set of vanilla Express apps to mock the behavior of dependent APIs such as Gravity and Metaphysics. You will have to write your own code per test suite to mock the API behavior, which can be helped with the use of fixtures and recording (see below).
+
+A typical acceptance test will involve setting up these fake servers, running a nightmare instance to browse the website, and asserting the contents of the page using [Nightmare APIs](https://github.com/segmentio/nightmare#extract-from-the-page) or a small helper `$ = await browser.page('.selector')` to provide a convenient jQuery-like interface to the page's contents.
 
 ````javascript
 /* eslint-env mocha */
@@ -49,3 +53,5 @@ before(async () => {
   })
 })
 ````
+
+**Note:** These fixtures are intended to be a convenient starting point and not an end-all solution. It's encouraged that you modify, create, or delete the fixtures as you see fit for each test to take control of test behavior.

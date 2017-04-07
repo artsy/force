@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 benv = require 'benv'
 { resolve } = require 'path'
 sd = require('sharify').data
-servers = require '../../../test/helpers/servers'
 rewire = require 'rewire'
 sinon = require 'sinon'
 

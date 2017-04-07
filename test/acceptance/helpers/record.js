@@ -46,12 +46,13 @@ const writeRecordings = debounce(() =>
       if (host === GRAVITY_HOST) {
         filename = filenameFor('gravity')
         contents = zlib.gunzipSync(Buffer.from(rec.response.join(''), 'hex'))
+        contents = JSON.stringify(JSON.parse(contents), null, 2)
       } else if (host === METAPHYSICS_HOST) {
         filename = filenameFor('metaphysics')
-        contents = JSON.stringify(rec.response)
+        contents = JSON.stringify(rec.response, null, 2)
       } else if (host === POSITRON_HOST) {
         filename = filenameFor('positron')
-        contents = JSON.stringify(rec.response)
+        contents = JSON.stringify(rec.response, null, 2)
       }
 
       // Write the fixture json file
