@@ -34,7 +34,7 @@ router.get '/jobs', isResponsive
 router.get '/press/*', isResponsive
 router.get '/ArtsySocialMediaToolkit.pdf', isResponsive
 router.get '/inquiry/*', isResponsive
-router.get '/consign', isResponsive
+router.get '/consign*', isResponsive
 router.get '/professional-buyer*', isResponsive
 router.get '/2016-year-in-art*', isResponsive
 router.get '/article/*', isResponsive
