@@ -1,9 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const Ul = styled.ul`
+  padding-top: 2em
+`
+
+const StyledSidebar = styled.div`
+  flex: 1
+  font-size: 14px
+  color: #333
+  padding: 2em 1em
+  text-transform: uppercase
+`
 
 const Sidebar = (props) => {
   return (
-    <div className="categories2-sidebar">
-      <ul>
+    <StyledSidebar>
+      <Ul>
         {
           props.data.map((value) => {
             return (
@@ -13,8 +26,8 @@ const Sidebar = (props) => {
             )
           })
         }
-      </ul>
-    </div>
+      </Ul>
+    </StyledSidebar>
   )
 }
 

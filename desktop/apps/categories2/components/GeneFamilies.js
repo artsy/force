@@ -1,9 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const ThreeColumnDiv = styled.div`
+  column-count: 3
+  column-gap: 1em
+  padding: 1em 0
+`
 
 const Genes = (props) => {
   return (
-    <div className="categories2-genes">
-      <div className="categories2-genes-column">
+    <ThreeColumnDiv>
         <ul>
           {
             props.data.map((gene) => {
@@ -11,8 +17,7 @@ const Genes = (props) => {
             })
           }
         </ul>
-      </div>
-    </div>
+    </ThreeColumnDiv>
   )
 }
 
@@ -20,15 +25,24 @@ Genes.propTypes = {
   data: React.PropTypes.array
 }
 
+const StyledGeneFamily = styled.div`
+  border-top: 1px solid #ccc
+  margin: 0 1em
+  padding: 1em 0
+`
+
+const StyledH3 = styled.h3`
+  font-size: 20px
+  line-height: 30px
+`
+
 const GeneFamily = (props) => {
   return (
-    <div id={props.id} className="categories2-gene-family">
-      <h3>{props.name}</h3>
-      <div className="categories2-gene-family-description">
-        {props.description}
-      </div>
+    <StyledGeneFamily id={props.id}>
+      <StyledH3>{props.name}</StyledH3>
+      <div>{props.description}</div>
       <Genes data={props.genes}/>
-    </div>
+    </StyledGeneFamily>
   )
 }
 
