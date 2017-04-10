@@ -31,6 +31,16 @@ const StyledFamilyList = styled(FamilyList)`
   text-transform: uppercase;
 `
 
+const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
+  ${ media.mobile`
+    ul {
+      column-count: 3;
+      column-gap: 1em;
+      padding: 1em 0;
+    }
+  `}
+`
+
 class AppContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -43,7 +53,7 @@ class AppContainer extends React.Component {
         <StyledFamilyList data={this.state.data} />
         <Content>
           <StyledIntro />
-          <FamilyAndGeneList data={this.state.data} />
+          <StyledFamilyAndGeneList data={this.state.data} />
         </Content>
       </Column>
     )
