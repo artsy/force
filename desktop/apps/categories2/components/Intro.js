@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Intro({className}){
+function Intro ({className}) {
   return (
     <div className={className}>
       <h2>The Art Genome Project</h2>
