@@ -1,0 +1,2296 @@
+{
+  "results": [
+    {
+      "_id": "58e6bb64ef9c920027ca767e",
+      "keywords": [
+        "podcast",
+        "art history"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "tier": 1,
+      "thumbnail_title": "The Artsy Podcast, No. 30: Why the Art World Fell in Love with the White Cube",
+      "tags": [
+        "podcast",
+        "art history"
+      ],
+      "title": "The Artsy Podcast, No. 30: Why the Art World Fell in Love with the White Cube",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "embed",
+          "url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/316465026&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true",
+          "layout": "column_width",
+          "height": "500",
+          "mobile_height": ""
+        },
+        {
+          "type": "text",
+          "body": "<p><em>You can find the <a href=\"https://itunes.apple.com/us/podcast/artsy/id1096194516?mt=2\">Artsy Podcast on iTunes</a>, Stitcher, Pocket Casts, or the podcasting app of your choice. Don’t forget to rate the show and leave us comments; we’d love to hear from you.</em></p><p>The term “white cube” is ubiquitous in today’s art world. But who invented that label? And when did this method of displaying art first appear? On this episode, we trace the <a href=\"https://www.artsy.net/article/artsy-editorial-white-cube-dominate-art\">evolution of the white cube</a> from the earliest public museums in Europe to 1930s New York.</p>"
+        },
+        {
+          "type": "callout",
+          "thumbnail_url": null,
+          "text": null,
+          "article": "58868b8d8a78c6001bce501e",
+          "hide_image": false,
+          "top_stories": false
+        },
+        {
+          "type": "text",
+          "body": "<p><em>This podcast is hosted by Artsy Associate Editor Isaac Kaplan, joined for this edition by Senior Editor Tess Thackara and Editorial Associate Abigail Cain. It was produced by Abigail Cain with assistance from Demie Kim.</em></p><p><em>Intro music: “Something Elated” by Broke For Free</em></p><p><em>Cover image: <a href=\"https://www.ar&lt;/em&gt;tsy.net/artwork/elmgreen-and-dragset-deutsche-museen\">Elmgreen &amp; Dragset, Deutsche Museen<em>, 2005</em></a>. Photo courtesy of Niels Borch Jensen Gallery and Editi</em>ons.</p>"
+        }
+      ],
+      "primary_featured_artist_ids": null,
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [],
+      "email_metadata": {
+        "headline": "The Artsy Podcast, No. 30: Why the Art World Fell in Love with the White Cube",
+        "author": "Artsy Editorial",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/GMGLntq4KbNfAmE14ojUbw%2Fpod.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "On this episode, we trace the evolution of the white cube from the earliest public museums in Europe to 1930s New York.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-06T22:18:59.888Z",
+      "lead_paragraph": "<p><em>Artsy’s team of editors takes you behind the scenes of the best stories in art.</em></p>",
+      "id": "58e6bb64ef9c920027ca767e",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/GMGLntq4KbNfAmE14ojUbw%2Fpod.jpg",
+      "published_at": "2017-04-06T22:17:47.590Z",
+      "slug": "artsy-editorial-artsy-podcast-30-art-fell-love-white-cube"
+    },
+    {
+      "_id": "58e5e98e8af4f300172552ed",
+      "keywords": [
+        "fairs",
+        "market",
+        "collecting",
+        "MG",
+        "Alfredo Volpi",
+        "Celina Portella",
+        "Dan Coopey",
+        "Ivan Grilo",
+        "Lucas Bambozzi",
+        "Marina Weffort"
+      ],
+      "author_id": "523783258b3b815f7100055a",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "523783258b3b815f7100055a"
+      },
+      "tier": 1,
+      "thumbnail_title": "15 Artists to Watch at SP-Arte",
+      "tags": [
+        "fairs",
+        "market",
+        "collecting",
+        "MG"
+      ],
+      "title": "15 Artists to Watch at SP-Arte",
+      "hero_section": null,
+      "primary_featured_artist_ids": [
+        "551c7bb67261692b67f21d00",
+        "536cbd4b275b246a8d0000fd",
+        "58d176c4a09a673b07e4f857",
+        "51fa18df8b3b81cc3300006c",
+        "58e00ea1cb4c274d541ad0c5",
+        "520c97fd139b21ea24000236",
+        "50625d69a9f1ad000200095b",
+        "53216d77275b243a89000069",
+        "50f02deb3f24d132e2000128",
+        "560adcf3726169661600010c",
+        "4f552b2e3b55524170000002",
+        "56e88076139b2157310005f6",
+        "562a63ab72616929aa0005bd"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [
+        "570bcb88b202a3657e000669"
+      ],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "523783258b3b815f7100055a",
+          "name": "Casey Lesser"
+        }
+      ],
+      "email_metadata": {
+        "headline": "15 Artists to Watch at SP-Arte",
+        "author": "Casey Lesser",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/kGep92AR37Z5H_H5abCn_w%2Fd7hftxdivxxvm.cloudfront-2+%281%29.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "SP-Arte opened the doors to its 2017 edition on Wednesday in São Paulo. We share 15 artists on view who are producing innovative and thoughtful work, from Brazil and beyond.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-07T01:10:17.324Z",
+      "lead_paragraph": "",
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/lvsH4i5nK_deGiHujt8Erg%2Fd7hftxdivxxvm.cloudfront-2+%281%29.jpg",
+              "type": "image",
+              "width": 900,
+              "height": 598,
+              "caption": "<p>Installation view of Alexandre Heberte’s work at SP-Arte, 2017. Photo by Mark Rosen.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>SP-Arte opened the doors to its 2017 edition on Wednesday in São Paulo. Now in its 12th year, the fair welcomes 159 galleries into the halls of Oscar Niemeyer’s iconic Pavilhão Ciccillo Matarazzo. The fair has grown considerably in its number of international exhibitors, which is up to 44 this year, spanning galleries from Europe, Central and South America, the U.S., and Japan. The audience of fairgoers, which is 95% Brazilian, has also grown (from 6,000 in 2009 to 27,000 in 2016).</p><p>Exhibitors to a great degree catered to that audience, presenting choice works by historic and contemporary Brazilian artists, from modernist <a href=\"https://www.artsy.net/artist/alfredo-volpi\">Alfredo Volpi</a>, to the recently deceased <a href=\"https://www.artsy.net/artist/tunga\">Tunga</a>, to <a href=\"https://www.artsy.net/artist/vik-muniz\">Vik Muniz</a>. The fair also represented the strong design history in the country, with 25 Brazilian design galleries exhibiting. More broadly, it placed greater emphasis on modern artists and the trajectory of contemporary art—a new curated sector, Repertório, is devoted to artists who have made integral contributions to contemporary art. Also notable this year is a curated exhibition of Japanese artists, in honor of the city’s new cultural center, the Japan House, which opens next month.</p><p>Ahead of the fair, SP-Arte director Fernanda Feitosa addressed the weight of the current economic crisis in Brazil. She said that while there is no good time for an art fair now, “we cannot live by expecting a good time or a better time.” In times of crisis, she said, galleries must tighten their business practices and tap into creativity in order to strengthen their programs. </p><p>“The art market is not immune to the ups and down of the economy, not in Brazil, not anywhere else,” Feitosa said, “but we have a different strength, we’re moved by passion, we are moved by a piece you really want to buy and these passions are not limited by prices.” This not to say that SP-Arte has been unaffected by the crisis. While the fair witnessed a decline in sales between the 2015 and 2016 editions, the director remains optimistic. “These are cycles, you have to be prepared.” </p><p>While blue-chip international galleries and Brazilian galleries primarily brought their most prominent and sought-after artists, there was a strong range in terms of medium. “The artistic language in Brazil is very broad,” Feitosa said, pointing to the country’s strong art-historical traditions in painting, photography, sculpture, <a href=\"https://www.artsy.net/gene/minimalism\">Minimalism</a>, <a href=\"https://www.artsy.net/gene/concrete-art\">concrete art</a>, and abstraction. Exhibitors, attuned to this history, focused on these more traditional mediums rather than digital and video works.</p><p>While the fair was flush with mid-career and established Brazilian artists, there were still discoveries to be made. Below we share 15 artists who are producing innovative and thoughtful work, from Brazil and beyond.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/joanna-piotrowska\" class=\"is-follow-link\">Joanna Piotrowska</a><a data-id=\"joanna-piotrowska\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1985, Warsaw • Lives and works in London</h3><h3>Madragoa • Solo Section, Booth SL11</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Vkg_b1zBqVnZ3acpmOxabQ%2F2489D004-58C8-444D-809F-B4D9D5CF2D56.JPG",
+              "type": "image",
+              "width": 1200,
+              "height": 800,
+              "caption": "<p>Installation view of Joanna Piotrowska’s work at Madragoa’s booth at SP-Arte, 2017. Courtesy of Madragoa.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>The Polish artist began a project last year in Lisbon (ahead of her show with Madragoa there), where she visited people in their homes and asked them to build shelters from their personal belongings. She then photographed the shelters with their creators, resulting in a series of somewhat dark though intriguing images of people confined (some appear trapped) within these structures. Drawing upon the childlike affinity for building forts, she chose to do this with adults, questioning how the act would change. As the photographs evidence, with adults, these makeshift structures become portraits of their creators—some sturdy and others precarious, some minimal and others elaborate—that reflect survival instincts and the basic need for shelter among impoverished peoples. Presented in brightly colored frames that might be found in a child’s room, and titled “Frantic,” the works are meant to surface the sensation of building these structures, from the excitement of a child to the anxieties of an adult. Piotrowska is currently continuing the project, now working with people living in Rio de Janeiro.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/andrea-rocco\" class=\"is-follow-link\">Andrea Rocco</a><a data-id=\"andrea-rocco\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1977, São Paulo • Lives and works in São Paulo</h3><h3>Galeria Rabieh • Main Section,Booth J12</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58d58cb7c9dc246c0ecded72",
+              "slug": "andrea-rocco-portrait-11",
+              "date": "2017",
+              "title": "Portrait ",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/OYL7pkkJEtSCVY1KhkQYUA/larger.jpg",
+              "partner": {
+                "name": "Galeria Rabieh",
+                "slug": "galeria-rabieh"
+              },
+              "artists": [
+                {
+                  "name": "Andrea Rocco",
+                  "slug": "andrea-rocco"
+                }
+              ],
+              "artist": {
+                "name": "Andrea Rocco",
+                "slug": "andrea-rocco"
+              },
+              "width": 950,
+              "height": 1280
+            },
+            {
+              "type": "artwork",
+              "id": "58d58cd5139b2147c757c6fe",
+              "slug": "andrea-rocco-portrait-18",
+              "date": "2017",
+              "title": "Portrait ",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/d2E1zp-HQkUORvJ250iioA/larger.jpg",
+              "partner": {
+                "name": "Galeria Rabieh",
+                "slug": "galeria-rabieh"
+              },
+              "artists": [
+                {
+                  "name": "Andrea Rocco",
+                  "slug": "andrea-rocco"
+                }
+              ],
+              "artist": {
+                "name": "Andrea Rocco",
+                "slug": "andrea-rocco"
+              },
+              "width": 952,
+              "height": 1280
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Rocco creates paintings and sculptures that include coy references to art history, infusing its principles and themes with her distinctly contemporary approach. At the fair she’s filled a wall with over 100 portraits—a diverse range of vibrant small canvases filled with joyous characters, all imagined, and created with various types of paints and materials, even an occasional dash of glitter. The works are part of a three-part research-driven project for which the artist is rethinking the historical frameworks of painting in art history: portraits, landscapes, and still lifes.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/matthew-lutz-kinoy\" class=\"is-follow-link\">Matthew Lutz-Kinoy</a><a data-id=\"matthew-lutz-kinoy\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1984, New York • Lives and works in Los Angeles</h3><h3>Mendes Wood DM • Main Section, Booth H1</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/fNNWQPydpRTN68jWb9CcQA%2F06+_MG_3028.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 804,
+              "caption": "<p>Installation view of Matthew Lutz-Kinoy’s work, courtesy of Mendes Wood DM.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Lutz-Kinoy makes playful ceramic sculptures and large-scale paintings that represent and respond to the human body. The New York-born, L.A.-based artist recently became represented by <a href=\"https://www.artsy.net/show/mendes-wood-dm-mendes-wood-dm-at-sp-arte-2017\">Mendes Wood DM</a>, where he just closed a large solo show. While his practice spans painting, sculpture, installation, and performance, many of the works on view at SP-Arte, created during a three-month-long residency in São Paulo, were made using a traditional Japanese kiln and techniques. Tapping into the strong Japanese culture present in the city, his works are, as the gallery’s Magê Abàtayguara describes, “in dialogue with traditional ways of creating vases and masks.”</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2>Alexandre Heberte</h2><h3>B. Juazeiro do Norte, Ceará • Lives and works in São Paulo</h3><h3>Projeto Melissa Meio-Fio • 2nd Floor</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/NEmdDdsZH1HgKpWm47u-Gw%2FFullSizeRender.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 797,
+              "caption": "<p>Installation view of Alexandre Heberte’s work at SP-Arte, 2017. Photo by Mark Rosen.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Heberte was hard at work at his loom for the duration of the fair’s first day, weaving enticing new textiles as part of his ongoing <em>Tramo São Paulo</em> project, which surrounded him like dozens of narrow curtains. The São Paulo-based artisan and weaver is a current student at Faculdade Paulista de Artes, and for this project, he researched the various regions of São Paulo where he has traveled. He spoke with people and culled together objects, ultimately choosing 33 regions to create a long woven panel to represent each one. Heberte uses brightly colored yarns as well as plastic, synthetic textiles—he even weaves objects, like watches, into his works. Drawn to weaving for its use throughout disparate time periods, he highlights its historic traditions and the medium’s ability to connect various groups of people. </p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/bel-barcellos\" class=\"is-follow-link\">Bel Barcellos</a><a data-id=\"bel-barcellos\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1966, Boston • Lives and works in Rio de Janeiro</h3><h3>Gabinete de Arte k²o • Main Section, Booth A4</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58d3d6dd139b210610435a46",
+              "slug": "bel-barcellos-serie-nos-1",
+              "date": "2016",
+              "title": "Série \"nós\" (1)",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/61IpDvuQOU3xAW7mBQMW2g/larger.jpg",
+              "partner": {
+                "name": "Gabinete de Arte k2o",
+                "slug": "gabinete-de-arte-k2o"
+              },
+              "artists": [
+                {
+                  "name": "Bel Barcellos",
+                  "slug": "bel-barcellos"
+                }
+              ],
+              "artist": {
+                "name": "Bel Barcellos",
+                "slug": "bel-barcellos"
+              },
+              "width": 1606,
+              "height": 2167
+            },
+            {
+              "type": "artwork",
+              "id": "58d3d6cccd530e4d479421ee",
+              "slug": "bel-barcellos-serie-aonde-esta-voce-3",
+              "date": "2016",
+              "title": "Série \"Aonde está você?\" (3)",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/LM4QDGjfcM6Fkr_-7dLEYQ/larger.jpg",
+              "partner": {
+                "name": "Gabinete de Arte k2o",
+                "slug": "gabinete-de-arte-k2o"
+              },
+              "artists": [
+                {
+                  "name": "Bel Barcellos",
+                  "slug": "bel-barcellos"
+                }
+              ],
+              "artist": {
+                "name": "Bel Barcellos",
+                "slug": "bel-barcellos"
+              },
+              "width": 1440,
+              "height": 2161
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>This Rio de Janeiro-based artist focuses entirely on embroidery, creating fine figurative scenes that she sews directly into the canvas. Last year, several of the artist’s works were acquired by esteemed collections, including that of Ella Fontanals-Cisneros and the <a href=\"https://www.artsy.net/museuarterio\">Museu de Arte do Rio</a>. For a past series, Barcellos was inspired by the <a href=\"https://www.artsy.net/gene/neo-concrete-art\">Neo-Concrete</a> movement, particularly the works of <a href=\"https://www.artsy.net/artist/lygia-pape\">Lygia Pape</a>, and created compositions where the figure appeared amid blocks of embroidery. More recent works have pictured couples and explored relationships; her latest series, titled “Enigma,” comprises somewhat surrealistic scenes of couples floating above or below blue embroidered waves.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/ana-elisa-egreja\" class=\"is-follow-link\">Ana Elisa Egreja</a><a data-id=\"ana-elisa-egreja\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1983, São Paulo • Lives and works in São Paulo</h3><h3>Galeria Leme • Main Section, Booth F7 </h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/TsQl_POVGcpkh46_LsB3Cg%2FAna+Elisa+Egreja_Escada+galinhas%2C2016_oil+on+canvas_190x290cm_Credit+Filipe+Berndt.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 800,
+              "caption": "<p>Ana Elisa Egreja, <em>Escada galinhas</em>, 2016. Courtesy of Galeria Leme.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/00Zt1qiygqsgYk3ctCDLTQ%2FAna+Elisa+Egreja_Banheiro+rosa+com+polvos%2C+2017_Oil+on+canvas_190x220cm_Credit+Filipe+Berndt.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 1015,
+              "caption": "<p>Ana Elisa Egreja, <em>Banheiro rosa com polvos</em>, 2017. Courtesy of Galeria Leme.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Currently featured at <a href=\"https://www.artsy.net/show/galeria-leme-galeria-leme-at-sp-arte-2017\">Leme’s</a> gallery space, Egreja is known for her realist paintings, and emerged among a group of likeminded painters, which formed in 2008. She creates large oil paintings that illustrate not only her deft abilities with paint, but also a thoughtful focus on interiors. The large-scale painting at the fair, picturing a kitchen with yellow cabinets and windows that look out on an idyllic vista, is part of the series featured in her current show, which documents her grandmother’s home. Egreja made the house into her studio, but it will soon be torn down. Ahead of this fate, she rented various types of animals and set them loose in rooms of the house, then photographed the bizarre scenes and painted them. The resulting images see octopi slithering across the bathroom, chickens perched on the stairs, and yellow birds flitting through a room she had covered in graffiti—among others.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/gabriel-abrantes\" class=\"is-follow-link\">Gabriel Abrantes</a><a data-id=\"gabriel-abrantes\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1984, North Carolina • Lives and works in Lisbon</h3><h3>Galeria Francisco Fino • Solo Section, Booth SL5</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58c17598139b2135840a1811",
+              "slug": "gabriel-abrantes-a-brief-history-of-princess-x",
+              "date": "2016",
+              "title": "\"A Brief History of Princess X\"",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/hgYGjNNcQL1GdC8vk_arMw/larger.jpg",
+              "partner": {
+                "name": "Francisco Fino",
+                "slug": "francisco-fino"
+              },
+              "artists": [
+                {
+                  "name": "Gabriel Abrantes",
+                  "slug": "gabriel-abrantes"
+                }
+              ],
+              "artist": {
+                "name": "Gabriel Abrantes",
+                "slug": "gabriel-abrantes"
+              },
+              "width": 1920,
+              "height": 817
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Following debuts of new works at the Venice Biennale, Berlinale, and the Locarno International Film Festival, the young American artist and filmmaker is building strong momentum. He’s becoming known for his sharp, well-produced videos—he writes, films, produces, and occasionally acts in them—which tackle historical narratives, politics, psychology, and social issues like gender and sex. At SP-Arte, <a href=\"https://www.artsy.net/show/francisco-fino-francisco-fino-at-sp-arte-2017?microsite=1&amp;profile_id=sp-arte-2017&amp;fair_id=sp-arte-slash-2017&amp;fair_name=SP-Arte/2017\">Francisco Fino</a> shows a video commission titled <em>A Brief History of Princess X </em>(2016), which Fino described as a “pseudo-documentary” meant to “cross video art and cinema.” The work is a tongue-in-cheek narrative based on the true story of <a href=\"https://www.artsy.net/artist/constantin-brancusi\">Brancusi</a> creating a distinctly phallic, and thus controversial, sculpture for Marie Bonaparte. It humorously delves into eroticism, female sexuality, and psychoanalysis, and imagines how these ideas played out during a notable chapter of modern art. An edition of five, the first edition was already sold to a museum, and the second was on offer for €11,000.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/pier-stockholm\" class=\"is-follow-link\">Pier Stockholm</a><a data-id=\"pier-stockholm\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1977, Lima, Peru • Lives and works in Paris</h3><h3>Galerie Lisa Kandlhofer • Solo Section, Booth SL10</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58d1094ecd530e4cac6288a1",
+              "slug": "pier-stockholm-by-endurance-we-conquer-number-3",
+              "date": "2016",
+              "title": " By Endurance we conquer #3",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/eoKpLuejpb3YR0xHdN-oEw/larger.jpg",
+              "partner": {
+                "name": "Galerie Lisa Kandlhofer",
+                "slug": "galerie-lisa-kandlhofer"
+              },
+              "artists": [
+                {
+                  "name": "Pier Stockholm",
+                  "slug": "pier-stockholm"
+                }
+              ],
+              "artist": {
+                "name": "Pier Stockholm",
+                "slug": "pier-stockholm"
+              },
+              "width": 895,
+              "height": 1280
+            },
+            {
+              "type": "artwork",
+              "id": "58d3c680cd530e4d479420a9",
+              "slug": "pier-stockholm-civilization-number-3",
+              "date": "2017",
+              "title": "Civilization # 3",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/2NLddV8Sh8Y2J_Pl9rbJ4A/larger.jpg",
+              "partner": {
+                "name": "Galerie Lisa Kandlhofer",
+                "slug": "galerie-lisa-kandlhofer"
+              },
+              "artists": [
+                {
+                  "name": "Pier Stockholm",
+                  "slug": "pier-stockholm"
+                }
+              ],
+              "artist": {
+                "name": "Pier Stockholm",
+                "slug": "pier-stockholm"
+              },
+              "width": 5178,
+              "height": 7265
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Stockholm is inspired by elements of architecture, the Age of Exploration, mountain-climbing, and the passage of time. At SP-Arte he presents a series of new sculptures, priced on the range of €3,200–€4,500, made from concrete and the blue foam commonly used to create architecture models. He calls these intimate sized works “civilizations.” Stockholm also shows a large, finely detailed drawing (priced at €9,000) and works on paper and collages (priced between €1,400–€3,500), which also include blue foam, though focus on photographs of the peak of Mount Everest—a recurring image in his work, as a symbol of a goal that is at once horizontal and vertical.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/marina-weffort\" class=\"is-follow-link\">Marina Weffort</a><a data-id=\"marina-weffort\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1978, São Paulo • Lives and works in São Paulo</h3><h3>Galeria Marília Razuk • Main Section, Booth J7</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "column_width",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/3a7aWGIKS11OcdhruT9Ukg%2F_MG_0745.JPG",
+              "type": "image",
+              "width": 800,
+              "height": 1200,
+              "caption": "<p>Work by Marina Weffort. Photo courtesy of Galerie Marília Razuk.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Among Weffort’s elegant textiles on view at the fair, certain works appear to comment on Brazil’s rich history of geometric abstraction, taking shape as monochromatic grids that embrace lightness and levity. Other works depart from squares and rectangles, utilizing the flexibility and movement of the diaphanous fabrics she employs. Weffort creates these works through a time-consuming process of cutting into swathes of fabric and pulling threads out one by one, to develop patterns and textures. Some works appear as taut rectangles, stretched in frames or attached to pins, while others hang loosely, allowing for the threads to drape and form dynamic shapes. The works are also kinetic—the fine threads softly sway with even the gentlest wind.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/dan-coopey\" class=\"is-follow-link\">Dan Coopey</a><a data-id=\"dan-coopey\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1981 • Lives and works in London </h3><h3>Kubikgallery • Main Section, Booth F16</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58d1772bc9dc2413f3839573",
+              "slug": "dan-coopey-untitled-potosi",
+              "date": "2015",
+              "title": "Untitled (Potosi)",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/EsEw4_9m4gS9BMaCvnp2cQ/larger.jpg",
+              "partner": {
+                "name": "Kubik Gallery",
+                "slug": "kubik-gallery"
+              },
+              "artists": [
+                {
+                  "name": "Dan Coopey",
+                  "slug": "dan-coopey"
+                }
+              ],
+              "artist": {
+                "name": "Dan Coopey",
+                "slug": "dan-coopey"
+              },
+              "width": 6000,
+              "height": 4000
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Ahead of his April solo show with Kubikgallery, which just recently began representing him, the London-based Goldsmiths grad is being exhibited in São Paulo for the first time at the fair. The artist is showing fine rattan sculptures that are suspended from the ceiling or mounted on a booth wall. Woven painstakingly by hand from fine strands of palm, the rounded, undulating forms are inspired by indigenous craft traditions and display a reverence for natural resources. Coopey leaves some works in their natural beige tone, while he dyes others with watercolors, rendering them in a pale rainbow of color that adds a hint of the contemporary to a medium that is often considered craft. Coopey began creating these works during a recent residency in São Paulo at Pivô, which is where the gallery first encountered his work.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/lucas-bambozzi-1\" class=\"is-follow-link\">Lucas Bambozzi</a><a data-id=\"lucas-bambozzi-1\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1965, São Paulo • Lives and works in São Paulo</h3><h3>Galeria Emma Thomas • Solo Section, Booth SL13</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58e0e817c9dc24357d37e131",
+              "slug": "lucas-bambozzi-sussurro-2",
+              "date": "2017",
+              "title": "Sussurro 2",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/zc3KwnmBODJHTQRqUt-aLA/larger.jpg",
+              "partner": {
+                "name": "Galeria Emma Thomas",
+                "slug": "emma-thomas"
+              },
+              "artists": [
+                {
+                  "name": "Lucas Bambozzi",
+                  "slug": "lucas-bambozzi-1"
+                }
+              ],
+              "artist": {
+                "name": "Lucas Bambozzi",
+                "slug": "lucas-bambozzi-1"
+              },
+              "width": 1260,
+              "height": 996
+            },
+            {
+              "type": "artwork",
+              "id": "58e0f5cca09a673aed6ab065",
+              "slug": "lucas-bambozzi-as-coisas-caindo",
+              "date": "2017",
+              "title": "As coisas caindo",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/uk_2XDV8dq5_9V9YI9sisw/larger.jpg",
+              "partner": {
+                "name": "Galeria Emma Thomas",
+                "slug": "emma-thomas"
+              },
+              "artists": [
+                {
+                  "name": "Lucas Bambozzi",
+                  "slug": "lucas-bambozzi-1"
+                }
+              ],
+              "artist": {
+                "name": "Lucas Bambozzi",
+                "slug": "lucas-bambozzi-1"
+              },
+              "width": 1861,
+              "height": 1037
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Bambozzi’s work addresses our smart-phone obsessed society. He focuses on the manufacturing cycle of phones, highlighting the disconnect between the desire to innovate and the wasted materials that come with that innovation. The new series at the fair, “Último sussurro” (“Last whisper”), includes a pile of hundreds of old phones and discarded malfunctioning parts; some flicker with videos, representing the short lifespan of a cell phone. In past works he’s captured the exploitative labor practices in the Congo that occur in order to mine the minerals needed for cell phones; and he even created a machine to crush discarded cell phones, in order to separate the parts and make them easier to recycle. In Brazil, phones must be sent abroad to be recycled due to lack of infrastructure; for his large installation of old phones and parts at SP-Arte, Bambozzi sourced broken phone parts from a local store that fixes phones, with a promise to ensure that the parts are recycled if the work is not sold.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/celina-portella\" class=\"is-follow-link\">Celina Portella</a><a data-id=\"celina-portella\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1977, Rio de Janeiro • Lives and works in Rio de Janeiro</h3><h3>Galeria Inox Arte Contemporânea • Showcase Section, Booth SC2</h3>"
+        },
+        {
+          "type": "text",
+          "body": "<p>A former dancer, Portella creates photographic works that include images of herself or parts of her body, which are placed in custom frames and often attached to mechanisms to emphasize strength, agility, and movement. “You see the relationship between the body, dance, and history,” says gallery director Guilherme Carneiro. Works on view at the fair include framed images of the artist grasping a rope, from which an actual rope extends that is attached to a pulley system.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/ivan-grilo\" class=\"is-follow-link\">Ivan Grilo</a><a data-id=\"ivan-grilo\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1986, Itatiba, Brazil • Lives and works in Itatiba</h3><h3>Casa Triângulo • Main Section, Booth H5</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "58dd47e4cd530e4d47dfe339",
+              "slug": "ivan-grilo-delirio-tropical-number-1-nao-existe-pecado-do-lado-de-baixo-do-equador",
+              "date": "2017",
+              "title": "Delírio Tropical #1 (Não existe pecado do lado de baixo do equador)",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/02FdIAC8yKDrFScoHkxZpA/larger.jpg",
+              "partner": {
+                "name": "Casa Triângulo",
+                "slug": "casa-triangulo"
+              },
+              "artists": [
+                {
+                  "name": "Ivan Grilo",
+                  "slug": "ivan-grilo"
+                }
+              ],
+              "artist": {
+                "name": "Ivan Grilo",
+                "slug": "ivan-grilo"
+              },
+              "width": 5000,
+              "height": 2908
+            },
+            {
+              "type": "artwork",
+              "id": "58dd47bdc9dc246aae2b5534",
+              "slug": "ivan-grilo-delirio-tropical-number-2-ainda-ha-chao",
+              "date": "2017",
+              "title": "Delírio Tropical #2 (Ainda há chão)",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/6O7mzd2iGL0HLncP613PNA/larger.jpg",
+              "partner": {
+                "name": "Casa Triângulo",
+                "slug": "casa-triangulo"
+              },
+              "artists": [
+                {
+                  "name": "Ivan Grilo",
+                  "slug": "ivan-grilo"
+                }
+              ],
+              "artist": {
+                "name": "Ivan Grilo",
+                "slug": "ivan-grilo"
+              },
+              "width": 3000,
+              "height": 2113
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>The young artist’s research-driven practice has for several years drawn the attention of Brazilian institutions, several of which, like Museu de Arte de São Paulo, have acquired his works. Grilo often addresses issues of immigration in Brazil through his works, which take shape as conceptual installations that combine found objects, texts, and images. The works on view at SP-Arte touch upon issues of inequality in Brazil. One work, <em>Delírio Tropical #1 (Não existe pecado do lado de baixo do equador) </em>(2017), documents the coast of Maranhão, Brazil, where the tides are so varied that the ocean recedes eight meters over the course of six hours. The work mirrors the gap in the distribution of wealth in Brazil, where in the same place, there can be people flush with wealth, and others in poverty. Another work, <em>Delírio Tropical #2 (Ainda há chão)</em> (2017),is a reflection of the subtropical region. It pairs two images of jubilant people in saturated colors with a glass of cheap liquor, responding to a study that found that the region is home to great poverty.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2><a href=\"https://www.artsy.net/artist/rodrigo-torres\" class=\"is-follow-link\">Rodrigo Torres</a><a data-id=\"rodrigo-torres\" class=\"entity-follow artist-follow\"></a></h2><h3>B. 1981, Rio de Janeiro • Lives and works in Rio de Janeiro</h3><h3>SIM Galeria • Main Section, Booth J8</h3>"
+        },
+        {
+          "type": "text",
+          "body": "<p>Though Torres has long been been creating cut-paper collage works—intricate, fantastical scenes created using currency—over the past two years he’s also begun to work with ceramics. On view at the fair are two vessel-like sculptures that draw on the history of Chinese porcelain, but rather than the pristine, decorative vases found throughout China, his works appear to be packaging for them. Beginning with real Chinese vessels, Torres creates clay forms that wrap around them, and paints them with acrylic to mimic the textures and materiality of cardboard and masking tape. Remarkably realistic, the works cleverly question porcelain traditions and the value of ceramics.</p><p><br></p><p><br></p>"
+        },
+        {
+          "type": "text",
+          "body": "<h2>Alberto Simon</h2><h3>B. 1961, São Paulo • Lives and works in São Paulo</h3><h3>Luciana Brito Galeria • Main Section, Booth G6</h3>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/alAvlthxvgxVwrxbaS7u5A%2F010967.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 880,
+              "caption": "<p>Alberto Simon, <em>Untitled</em>, 2017, mineral pigment on cotton canvas, 138 x 190 cm. On view at Lucianabrito Galeria at SP-Arte, 2017. Courtesy of SP-Arte.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Simon is showing with <a href=\"https://www.artsy.net/show/luciana-brito-galeria-luciana-brito-galeria-at-sp-arte-2017?microsite=1&amp;profile_id=sp-arte-2017&amp;fair_id=sp-arte-slash-2017&amp;fair_name=SP-Arte/2017\">Luciana Brito</a> for the first time at the fair, ahead of his inclusion in a group show at the gallery this summer. He presents a work from a new series of digital paintings printed on canvas, for which he simulates layers of brush strokes and daubs of paint, and intersperses them with digital, graphic motifs. While this painterly approach is new, the artist estimates he’s been working with the idea of “faking the medium” for some two decades. The work, <em>Untitled </em>(2017), is on offer for R$60,000 (approximately $19,000) and is one of the few digital works at the fair. “Digital hasn’t set foot in Brazil yet,” Simon said, which he suggested is due to conservative tastes. “People are not used to it, but if it’s on canvas it’s more acceptable.”</p><p><br></p><p>—Casey Lesser</p>"
+        }
+      ],
+      "id": "58e5e98e8af4f300172552ed",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/kGep92AR37Z5H_H5abCn_w%2Fd7hftxdivxxvm.cloudfront-2+%281%29.jpg",
+      "published_at": "2017-04-06T21:52:59.457Z",
+      "slug": "artsy-editorial-15-artists-watch-sp-arte"
+    },
+    {
+      "_id": "58e4d66e6f1320001710bb76",
+      "keywords": [
+        "visual culture",
+        "photography",
+        "CL",
+        "Tabitha Soren",
+        "Scott Indrisek"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "tier": 1,
+      "thumbnail_title": "A Former MTV Star’s Unexpected Second Act, behind the Camera",
+      "tags": [
+        "visual culture",
+        "photography",
+        "CL"
+      ],
+      "title": "A Former MTV Star’s Unexpected Second Act, behind the Camera",
+      "hero_section": null,
+      "primary_featured_artist_ids": [
+        "5419f1537261695255640300"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "58b09c9fb202a34cb7d11777",
+          "name": "Scott Indrisek"
+        }
+      ],
+      "email_metadata": {
+        "headline": "A Former MTV Star’s Unexpected Second Act, behind the Camera",
+        "author": "Scott Indrisek",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/GtVdbGfGciFegQVxdzHx6g%2Fd7hftxdivxxvm.cloudfront-29.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "You may know Tabitha Soren from her time as an MTV News reporter in ’90s, but since then she’s been quietly reinventing herself as a photographer.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-07T13:03:47.825Z",
+      "lead_paragraph": "",
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/XfX17vLUgClZ23x0KIXH7w%2FSoren_04+copy.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 728,
+              "caption": "<p>Tabitha Soren, <em>Modesto Nuts Bull pen, California</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>It’s the opening day of AIPAD’s Photography Show and <a href=\"https://www.artsy.net/artist/tabitha-soren\">Tabitha Soren</a> is telling me about the revelatory images <a href=\"https://www.artsy.net/artist/eadweard-muybridge\">Eadweard Muybridge</a> once took of naked baseball players. “They’re catching, and swinging—that seems obvious—but then he has a whole series of <em>errors</em>,” she explains. “I thought: This is what <em>my</em> project is about. We trip, we fall, we stumble—but we get up.” </p><p>The project Soren is referring to is an extensive <a href=\"https://www.artsy.net/gene/documentary-photography\">documentary series</a> she began in 2003, focusing on a group of players drafted by the Oakland Athletics the previous year. (Not coincidentally, the subject matter overlaps with a journalistic fixation of Soren’s husband, <em>Moneyball</em> author Michael Lewis.) A selection of those images are included in <em>Fantasy Life</em>, a recently released volume from Aperture, which spotlights Soren’s idiosyncratic outsider’s take on America’s favorite sport.</p><p>You most likely recall Soren from her stint as an on-camera MTV News journalist in the mid-90s, but since then, she has been quietly reinventing herself as an inventive fine-art photographer. For a series titled “Panic Beach,” she lugged a Hasselblad and a tripod to harsh coastal areas, standing precariously on rocks to capture crashing waves. The series was a way to sublimate her own visceral experience with an unexpected surge of anxiety attacks following her third pregnancy. For “Running,” she enlisted models to jog through moody landscapes, nodding to the carefully staged theatricality of major photographers like <a href=\"https://www.artsy.net/artist/gregory-crewdson\">Gregory Crewdson</a> or <a href=\"https://www.artsy.net/artist/philip-lorca-dicorcia\">Philip-Lorca diCorcia</a>.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "column_width",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/iKKLuIPc6X6sy3PRdj85og%2Fd7hftxdivxxvm.cloudfront-26.jpg",
+              "type": "image",
+              "width": 900,
+              "height": 700,
+              "caption": "<p>Portrait of Tabitha Soren by Todd Hido.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>For a more recent body of work, “Surface Tension,” Soren used a film camera with an 8-by-10-inch negative to shoot found images and paused video stills on iPad screens. (The series will be on view starting in May at Minnesota Street Project in San Francisco, and in late June at Kopeikin Gallery in Los Angeles.) She purposefully allowed fingerprints, sweat, and other human traces to remain on the surface, adding a ghostly, painterly layer to the resulting photographs, which contain such disparate subjects as Kim Gordon; riots in Ferguson, Missouri; Julian Assange; and Soren’s own teenage daughter. </p><p>Lately, she has also been working on images that she defaces, carves, or alters in some way—like a closely cropped photograph of a priest’s hands, the print punctured by a pellet gun, recently on view at the Whitney Houston Biennial, an alternative pop-up exhibition in New York.</p><p>Given this eclectic resume, Soren’s interest in baseball might seem a little, well…left-field. Initially, she approached the “Fantasy Life” series with an interest in straightforward documentary portraiture. She recalls seeing a 2011 retrospective of <a href=\"https://www.artsy.net/artist/rineke-dijkstra\">Rineke Dijkstra</a> at <a href=\"https://www.artsy.net/sfmoma\">SFMoMA</a>; it included a series in which the Dutch artist photographed Israeli women before and after their mandatory military service, as well as Spanish bullfighters before and after their bloody stadium bouts.</p><p>Soren initially wanted to capture something similar with the Oakland A’s 2002 draft class—a way to track the “physical transformations of time” on the players’ bodies, she says. Eventually, however, the project became less about the appearances, and more about the pitfalls and challenges of professional success. “I got much more interested in the fact that many of the players were going to be released” from the Oakland team, she says. “It was going to be a series about falling from grace.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/EbbzBgeRtJ51LWiFZeYiRw%2Fd7hftxdivxxvm.cloudfront-27.jpg",
+              "type": "image",
+              "width": 900,
+              "height": 1125,
+              "caption": "<p>Tabitha Soren, <em>Brian Stavisky, Rochester, New York</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Tm4fRMrrQzjSy0yTvlO6eg%2Fd7hftxdivxxvm.cloudfront-28.jpg",
+              "type": "image",
+              "width": 899,
+              "height": 1200,
+              "caption": "<p>Tabitha Soren, <em>Motel Pool, spring training, Scottsdale, Arizona</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            }
+          ]
+        },
+        {
+          "type": "image_set",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/DTLPb1JmOsqzVReLmsKXBQ%2FSoren_01.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 902,
+              "caption": "<p>Tabitha Soren, <em>Larry DiVito and groundskeeping crew for the Minnesota Twins, Minneapolis</em>, 2013. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/iuJqyw-naJfPfyD0u7n_aw%2FSoren_02.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 954,
+              "caption": "<p>Tabitha Soren, <em>Nick Swisher, Cleveland Indians first baseman</em>, 2013. Tintype. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/jatYiAZdamfo_p4Jg6duAQ%2FSoren_10.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 900,
+              "caption": "<p>Tabitha Soren, <em>Night on the Green fireworks, Oakland, California</em>, 2014. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/q_FmnDlJc1Zo6modAOjaVA%2FSoren_09.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 902,
+              "caption": "<p>Tabitha Soren, <em>Daniel Robertson, Stockton Ports dugout, Modesto, California</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/tuUpYyFPPMSCgMbyraELqQ%2FSoren_08.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 960,
+              "caption": "<p>Tabitha Soren, <em>Cliff Lee, Texas Rangers Pitcher, Fort Worth</em>, 2010. Tintype. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Ql3Ep0fjVqBAhQK1zhLmhA%2FSoren_02+copy.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 939,
+              "caption": "<p>Tabitha Soren, <em>Durham Bulls Athletic Park, North Carolina</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/aEMPH39tgix3-EubxjF7fw%2FSoren_08+copy.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 1200,
+              "caption": "<p>Tabitha Soren, <em>Record high temperatures, Riverview Stadium, Clinton, Iowa</em>, 2003. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>“Fantasy Life” also ended up being as much about architecture, light, and awkward moments as it is about the game of baseball, per se. The results have something in common with other sports images made by non-fans, like <a href=\"https://www.artsy.net/artist/catherine-opie\">Catherine Opie</a>’s “High School Football.” This was partially due to the fact that Soren didn’t want to revisit territory that has been amply and straightforwardly explored by generations of <a href=\"https://www.artsy.net/gene/photojournalism\">photojournalists</a>. “That material seemed covered,” she jokes. “It’s like, if I went on a safari, I couldn’t imagine trying to pick up a camera. Do we really need another picture of a lion? They should get a break!” </p><p>Soren’s wandering focus amused the players. She recalls, during one practice game, being distracted by an on-field door whose metal facade had been dented and dinged by season after season of foul balls. The composition had a bit of everything, she says: the reflective surface, which created an “abstract still life” of its own, with the colors of turf and sky; and the physical imprint of flubbed, out-of-bounds hits. “There’s a game going on behind me, and the guys thought I had lost my mind,” she laughs. “<em>She’s taking pictures of our equipment-room door for 20 minutes</em>!” </p><p>The players weren’t the only ones who were occasionally confused by Soren’s mission. “The baseball world scratched its head, wondering why I spent so much time on a game that I’m not in love with,” Soren admits. “And the art world scratched its head about why an artist would spend so much time on something so <em>mainstream</em>. But I wanted to tell a new story, and I used baseball as a device.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/7wmQ-uvtDCBmB3E__NUcTQ%2FJonathan-Joseph_0132+copy.jpg",
+              "type": "image",
+              "width": 914,
+              "height": 1200,
+              "caption": "<p>Tabitha Soren, <em>Jonathan Joseph. </em>©Tabitha Soren. Courtesy of Aperture.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/ZIxd_lga7MrGi0mFU6-vjQ%2FSoren_04.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 893,
+              "caption": "<p>Tabitha Soren, <em>Derek Jeter’s last game in Yankee Stadium, New York</em>, 2014. ©Tabitha Soren. Courtesy of Aperture.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Part of telling that new story involved exploiting some very old technology, including the tintype process—invented in the 1850s—which Soren experimented with for years in order to capture fast-motion action shots. The archaic technique presented challenges, as well as happy accidents. In one photograph of minor-leaguer Jonathan Joseph waiting to catch a fly ball, a too-thick area of emulsion added a ghostly cloud to the image. The player appears stunned by an almost holy aura lingering in the air. </p><p>“It’s like a religious ecstasy painting,” Soren says. “In any other circumstance, that’s a mess-up, but in this photograph it landed in the right place.” The aberrant tintype suited Soren’s idiosyncratic vision, but Joseph himself was not so easily won over. “He asked, don’t you have any of me <em>pitching</em>?”</p><p><br></p><p>—Scott Indrisek</p>"
+        }
+      ],
+      "id": "58e4d66e6f1320001710bb76",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/GtVdbGfGciFegQVxdzHx6g%2Fd7hftxdivxxvm.cloudfront-29.jpg",
+      "published_at": "2017-04-06T21:28:13.331Z",
+      "slug": "artsy-editorial-mtv-stars-unexpected-second-camera"
+    },
+    {
+      "_id": "58e69c1a0798fb0017f6e0e4",
+      "keywords": [
+        "politics",
+        "creativity",
+        "innovation",
+        "AC",
+        "Abigail Cain"
+      ],
+      "author_id": "568c2b46c9dc246198000000",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "568c2b46c9dc246198000000"
+      },
+      "tier": 1,
+      "thumbnail_title": "New Website Lets You Fax Art to Congress to Save the NEA",
+      "tags": [
+        "politics",
+        "creativity",
+        "innovation",
+        "AC"
+      ],
+      "title": "New Website Lets You Fax Art to Congress to Save the NEA",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/rEXB4X_IwjH6ffrdw7V0kA%2Ffax.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 706,
+              "caption": "<p>Artwork by Christopher DeLorenzo. Photo courtesy of Artifax.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>In the months since President Donald Trump took office, members of Congress have watched their phone lines reach capacity and their email inboxes overflow as constituents voice their displeasure with the administration’s policies and appointees. One Utah women, unable to reach her senator by phone, went so far as to order a pizza and have it delivered to his office with a note reading “vote NO on Betsy DeVos.”</p><p>Now, a new website is giving citizens a way to get artistic with their political grievances. <a href=\"https://artifax.us/\">Artifax</a> allows constituents to fax a work of art to their elected officials, in protest of Trump’s proposal to eliminate the National Endowment for the Arts.</p><p>Artifax is the brainchild of Los Angeles design studio Use All Five, which has worked with clients ranging from UCLA to the <a href=\"https://www.artsy.net/guggenheim\">Guggenheim</a>. Levi Brooks, who co-founded the studio in 2006, noted that the NEA’s precarious future felt particularly relevant because “a lot of our clients, friends, even some of our employees, are artists.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/mZbcYvULB3rjpkjSEjOykQ%2FScreen+Shot+2017-04-06+at+16.46.35.jpg",
+              "type": "image",
+              "width": 834,
+              "height": 638,
+              "caption": "<p>Artwork by Use All Five. Photo courtesy of Artifax.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/99c2y0MOeQbBJiJ-ubmI1Q%2FScreen+Shot+2017-04-06+at+16.45.10.jpg",
+              "type": "image",
+              "width": 834,
+              "height": 640,
+              "caption": "<p>Artwork by Pentagram. Photo courtesy of Artifax.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>The agency’s funding comprises a miniscule slice of the total federal budget—just 0.004% in 2016. But studies have shown that those dollars have an <a href=\"https://www.artsy.net/article/artsy-editorial-stands-lose-nea-eliminated\">outsized impact</a>, going to arts organizations in rural communities across America, not just those in coastal cities. And NEA funds are often crucial in soliciting additional private grants. </p><p>For Brooks and Use All Five, the question was: “Can we use our skill sets to do two things—educate the general public, as well as bring awareness to Congress and the Senate about the NEA?”</p><p>Use All Five began work on Artifax in early February. At that point, although there were rumors that the NEA was on the chopping block, there had been no official confirmation from the administration. But when Trump released his first budget blueprint on March 16th, sure enough, the agency was slotted for elimination. “Towards the end it was a mad dash, because we really wanted to release it about a week after Trump had submitted his budget,” Brooks explained.</p><p>The site launched last week and currently features work by 20 artists, designers, and studios. Visitors to the website first select a work of art and enter their zip code. Artifax then pulls up a list of elected officials for that district, and users can send a custom or auto-generated message to the representative of their choice. (You don’t have to print anything—the message is faxed digitally.)</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/GtrjA_pQTz2mxWNXOzcV2A%2FScreen+Shot+2017-04-06+at+16.47.10.jpg",
+              "type": "image",
+              "width": 834,
+              "height": 639,
+              "caption": "<p>Artwork by Isabel Urbina Peña. Photo courtesy of Artifax.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/4riiF5B8VeP_OlpZQMhz4g%2FScreen+Shot+2017-04-06+at+16.46.21.jpg",
+              "type": "image",
+              "width": 834,
+              "height": 640,
+              "caption": "<p>Artwork by Isa Beniston. Photo courtesy of Artifax.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>In the eight days since launch, Brooks said people have sent some 800 faxes in total; he’s optimistic they’ll hit the thousand mark by the end of the week. For his part, he has already sent several faxes to his local representatives in California.</p><p>Although many of the artists who have donated work thus far are friends of the studio, Brooks said, “We also tried to get an eclectic group that represented all walks of life in America, be it different ethnicities, different genders, or different points of views. We even included some designer friends of ours as well, creatives in different fields as well. I think that helps in diversifying the work as well.”</p><p>The artworks available on Artifax range from dreamy <a href=\"https://www.artsy.net/gene/abstract-art\">abstractions</a> to straightforward infographics. New York design studio Open, for example, offers a stark reminder of how the NEA’s minuscule budget compares to that of the federal government at large. “There’s something nice about giving the viewer the ability to choose,” Brooks said. “Maybe they want to send something that’s a little bit more on the emotional side versus something that’s a little bit more on the utilitarian side.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/65NZ54MPS-lizRswVtcXvA%2FScreen+Shot+2017-04-06+at+16.45.52.jpg",
+              "type": "image",
+              "width": 840,
+              "height": 644,
+              "caption": "<p>Artwork by Open. Photo courtesy of Artifax.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Brooks has also been impressed by the notes accompanying many of the faxed artworks. “The most gratifying part is the actual messages that people have written paired with the companion piece they selected,” he said. “They are really thoughtful, powerful messages.”</p><p>And using a fax machine—an antiquated mode of communication that many of Brooks’s younger employees had never actually used before—carries a certain weight.</p><p>“Its heyday was definitely the ’80s and ’90s, but I find it fascinating that it still hasn’t completely died,” Brooks explained. “I think the ability to actually see the artwork as it comes out of the fax machine, grainy with this interesting toner smell—it’s like, ‘Whoa what is this?’”</p><p><br></p><p>—Abigail Cain</p>"
+        }
+      ],
+      "primary_featured_artist_ids": null,
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "568c2b46c9dc246198000000",
+          "name": "Abigail Cain"
+        }
+      ],
+      "email_metadata": {
+        "headline": "New Website Lets You Fax Art to Congress to Save the NEA",
+        "author": "Abigail Cain",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/7uCuRBbiFRcv2eUtglmdRg%2Ffax.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "Artifax allows constituents to fax a work of art to their elected officials, in protest of Trump’s proposal to eliminate the National Endowment for the Arts.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-06T22:19:05.527Z",
+      "lead_paragraph": "<p></p>",
+      "id": "58e69c1a0798fb0017f6e0e4",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/7uCuRBbiFRcv2eUtglmdRg%2Ffax.jpg",
+      "published_at": "2017-04-06T20:52:32.435Z",
+      "slug": "artsy-editorial-new-website-fax-art-congress-save-nea"
+    },
+    {
+      "_id": "58e5489b1f12da00171bfc9b",
+      "keywords": [
+        "art",
+        "art history",
+        "MG",
+        "Donatello",
+        "Hank Willis Thomas",
+        "Juliana Huxtable",
+        "Michelangelo Buonarroti",
+        "Daniel Kunitz"
+      ],
+      "author_id": "50f4367051e7956b6e00045d",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "50f4367051e7956b6e00045d"
+      },
+      "tier": 1,
+      "thumbnail_title": "How Art Has Depicted the Ideal Male Body throughout History",
+      "tags": [
+        "art",
+        "art history",
+        "MG"
+      ],
+      "title": "How Art Has Depicted the Ideal Male Body throughout History",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "55688f90726169299d0d0000",
+              "slug": "michelangelo-buonarroti-david-4",
+              "date": "1501-1504",
+              "title": "David",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/OkOO5G9h_KRBl9TVM0wDjw/larger.jpg",
+              "partner": {
+                "name": "Galleria dell'Accademia",
+                "slug": "galleria-dellaccademia"
+              },
+              "artists": [
+                {
+                  "name": "Michelangelo Buonarroti",
+                  "slug": "michelangelo-buonarroti"
+                }
+              ],
+              "artist": {
+                "name": "Michelangelo Buonarroti",
+                "slug": "michelangelo-buonarroti"
+              },
+              "width": 962,
+              "height": 1701
+            },
+            {
+              "type": "artwork",
+              "id": "5421b0d67261692d6aca0000",
+              "slug": "giovanni-battista-moroni-gian-gerolamo-grumelli",
+              "date": "1555-1560",
+              "title": "Gian Gerolamo Grumelli",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/5PHRvDmkitnGARbdfogqdA/larger.jpg",
+              "partner": {
+                "name": "Royal Academy of Arts",
+                "slug": "royal-academy"
+              },
+              "artists": [
+                {
+                  "name": "Giovanni Battista Moroni",
+                  "slug": "giovanni-battista-moroni"
+                }
+              ],
+              "artist": {
+                "name": "Giovanni Battista Moroni",
+                "slug": "giovanni-battista-moroni"
+              },
+              "width": 2426,
+              "height": 4284
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>In the history of masculinity, it is money rather than muscle that tends to be articulated. Class or status has been the determining factor in the defining of male exemplars. Be it in the East or West, the epitome of a handsome man has generally been an idealized version of an upper-class individual, an archetype that has itself changed over time. </p><p>Because of this, people in many cultures have confronted muscle—today more commonly understood as a symbol of virile masculinity—as a problem. For much of history, muscles have been seen as vulgar, meaty indicators of labor; rather than strength they have suggested oafishness or, at best, potentially deviant self-regard. </p><p>Even today, we’re not clear on whether muscle is an indication of health or narcissism, menace or manliness. (And on women, <a href=\"https://www.artsy.net/article/artsy-editorial-how-art-has-shaped-female-beauty-ideals-history\">they present a whole other set of problems</a>.) The ideal man—the <em>gentle-man</em>—has no muscles because he does no physical work; he is also pale, because he has not toiled in the sun; and he is tall because he is well-nourished.</p><p>It’s a type that began to take shape in early 19th-century Europe, in England in particular, and held sway until very recently. Despite the more developed physiques found in <a href=\"http://c7.alamy.com/comp/AHY9J8/tarzan-the-ape-man-johnny-weissmuller-in-the-1932-film-AHY9J8.jpg\">Tarzan</a> or <a href=\"https://www.artsy.net/artwork/terry-oneill-scottish-actor-sean-connery-as-james-bond-taking-a-bath-during-the-filming-of-diamonds-are-forever-las-vegas-1971\">James Bond</a> films, athleticism has been far less esteemed throughout history than a body formed by ease, alcohol, and cigarettes. And while the first mass fitness revolution occurred in the early ’70s, the masculine figure it celebrated—the thin, jogger’s frame—remained aesthetically identical to the old upper-class ideal, if perhaps a bit less winded.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "51e9824f8b3b816d78001165",
+              "slug": "rome-italy-the-farnese-hercules-copy-of-the-weary-hercules-by-lysippos",
+              "date": "3rd century B.C.",
+              "title": "The Farnese Hercules, copy of The Weary Hercules by Lysippos",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/KGNCdaxOWnXyf_GDQ_kR-w/larger.jpg",
+              "partner": {
+                "name": "Naples National Archaeological Museum, Naples"
+              },
+              "artists": [
+                {}
+              ],
+              "artist": {},
+              "width": 2300,
+              "height": 4025
+            },
+            {
+              "type": "artwork",
+              "id": "56ba6761258faf0875000017",
+              "slug": "robert-mapplethorpe-arnold-schwarzenegger",
+              "date": "1976",
+              "title": "Arnold Schwarzenegger",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/BeWyFRZ8UXOaJ3Dd5wEtAw/larger.jpg",
+              "partner": {
+                "name": "\"Mapplethorpe + Munch\" at Munch Museum, Oslo",
+                "slug": "munch-museum"
+              },
+              "artists": [
+                {
+                  "name": "Robert Mapplethorpe",
+                  "slug": "robert-mapplethorpe"
+                }
+              ],
+              "artist": {
+                "name": "Robert Mapplethorpe",
+                "slug": "robert-mapplethorpe"
+              },
+              "width": 4460,
+              "height": 4474
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Things began to change only around 2000, with the proliferation of access to information about health via the internet. Today, the cost of access to the highest-quality food and gyms, as well as to the best information about how both ought to be used, has spiked. As a result, privilege is signified by figures with low body-fat percentages that showcase taught muscles, by the leisure to afford long workouts in expensive gyms, by eating regimens crafted by coaches and trainers, by tans that bespeak travel, and by fitted, expensive clothing that accentuates these advantages. The greatest attitude shift, however, has been toward beefcake.</p><p>The notion of muscularity was reintroduced to the world in the mid-16th century, with the discovery of what came to be known as the Farnese Hercules, a Roman copy of an ancient Greek sculpture. But, it had an extremely limited influence until the current era. Only after the myths surrounding muscle—that it contributed to heart disease, made one slow and inflexible, and was not something produced through training but was instead a God-given marker of a low caste—were debunked did it become a marker of health and prosperity. </p><p>Oddly enough, the withering of gender stereotypes was just as powerful a filter in changing how male bodies are seen. As the vilification of homosexuality became less intense, male bodies were increasingly sexualized—and men’s attention to their appearances became acceptable. All forms of male self-fashioning—from building muscle to sartorial extravagance to grooming—have become not just socially accepted but expected. </p><p><br></p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Ma30t8uO2KyKy2yuJtPPyA%2FDoryphoros_Pompe%CC%81i.jpg",
+              "type": "image",
+              "width": 654,
+              "height": 1200,
+              "caption": "<p>Polykleitos, <em>Doryphoros (Spear Bearer)</em>, Roman copy of 440 BCE Greek original. Archaeological Museum of Naples, Pompeii. Via Wikimedia Commons.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/BPg4or7ufwnyUG4W7ovIdQ%2FThree+Great+Wise+Men+of+the+Han+dynasty.jpg",
+              "type": "image",
+              "width": 1081,
+              "height": 1200,
+              "caption": "<p>Yashima Gakutei, <em>Three Great Wise Men of the Han Dynasty</em>, 19th Century. H. O. Havemeyer Collection, courtesy of The Metropolitan Museum of Art. </p>"
+            },
+            {
+              "type": "artwork",
+              "id": "515cf8ae769659e1fb001c13",
+              "slug": "andrea-di-bartolo-the-crucifixion-reverse",
+              "date": "ca. 1415",
+              "title": "The Crucifixion [reverse]",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/OIxLsTxZu6sTUhb-fj3o5A/larger.jpg",
+              "partner": {
+                "name": "National Gallery of Art, Washington D.C.",
+                "slug": "ngadc"
+              },
+              "artists": [
+                {
+                  "name": "Andrea di Bartolo",
+                  "slug": "andrea-di-bartolo"
+                }
+              ],
+              "artist": {
+                "name": "Andrea di Bartolo",
+                "slug": "andrea-di-bartolo"
+              },
+              "width": 1885,
+              "height": 3000
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<h2><em>Doryphoros</em>, Polykleitos, circa 440 B.C.</h2><p><br></p><p>Along with similar ancient Greek statues of warrior-athletes, the <em>Doryphoros</em>, or “Spear-Bearer,” established a standard of male beauty that abides today in the West: the muscular, athletic mesomorph. Although common in art—from <a href=\"https://www.artsy.net/artist/michelangelo-buonarroti\">Michelangelo</a>’s <em>David </em>(1501–1504) to <a href=\"https://www.artsy.net/artist/arnold-newman\">Arno Breker</a>’s fascist sculptures—the physique depicted was considered unattainable until very recently. &nbsp;</p><h2></h2><h2></h2><h2>Chinese aristocrats, Later Han Dynasty, A.D. 25–220</h2><p><br></p><p>In traditional Chinese paradigms of masculinity, the concept of <em>wen</em> (literary and cultural achievement) exists inseparably paired with <em>wu</em> (physical and martial acumen). Nonetheless, <em>wen</em> has been seen as more elite and has predominated since at least the middle of the Han Dynasty. The value of stillness superseded that of action, while physical activity was regarded as ungentlemanly.</p><h2></h2><h2></h2><h2>Andrea di Bartolo, <em>The Crucifixion [reverse]</em>, 1415</h2><p><br></p><p>The advent of Christianity in late antiquity saw a valorization of spiritual over worldly values. Emaciation signified a pious denigration of the flesh, and the rigors of attaining it made the devotee an “athlete for Christ.” That wasting, otherworldly aesthetic recurs somewhat cyclically, popping up, for instance, among hippies in the 1960s and in the heroin chic of the early 1990s.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "4eaf0cc176e78f000100bdc0",
+              "slug": "donatello-david",
+              "date": "1428-1432",
+              "title": "David",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/TwzrdD5yyuMV_nKZX3Bw4g/larger.jpg",
+              "partner": {
+                "name": "Museo Nazionale del Bargello, Florence"
+              },
+              "artists": [
+                {
+                  "name": "Donatello",
+                  "slug": "donatello"
+                }
+              ],
+              "artist": {
+                "name": "Donatello",
+                "slug": "donatello"
+              },
+              "width": 1066,
+              "height": 1600
+            },
+            {
+              "type": "artwork",
+              "id": "515b33ba9562c8fee2001a46",
+              "slug": "sir-joshua-reynolds-john-musters",
+              "date": "1777-c. 1780",
+              "title": "John Musters",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/P0uJQzuMSje-J_ouSIN2mQ/larger.jpg",
+              "partner": {
+                "name": "National Gallery of Art, Washington D.C.",
+                "slug": "ngadc"
+              },
+              "artists": [
+                {
+                  "name": "Sir Joshua Reynolds",
+                  "slug": "sir-joshua-reynolds"
+                }
+              ],
+              "artist": {
+                "name": "Sir Joshua Reynolds",
+                "slug": "sir-joshua-reynolds"
+              },
+              "width": 1816,
+              "height": 3000
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/1d54AfNu53PH6d-e8oHc7A%2FEugen-1+copy+2.jpg",
+              "type": "image",
+              "width": 961,
+              "height": 1200,
+              "caption": "<p>B.J. Falk, Eugen Sandow, <em>full-length nude portrait, standing by column, facing left</em>, 1894. Copyright by B.J. Falk, N.Y. Courtesy of The Library of Congress. </p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<h2>Donatello, <em>David, </em>1428–32</h2><p><br></p><p>Alongside, or perhaps in opposition to, the image of the hairy, testosterone-fueled muscleman stands a softer icon. As <a href=\"https://www.artsy.net/artist/donatello\">Donatello</a>’s sculpture argues, a male with feminine graces can be both heroic and beautiful. That more effeminate model has had its artistic champions throughout history, from the figure of <a href=\"https://artisticideas2011.files.wordpress.com/2011/03/the-sleep-of-endymion-1791-by-anne-louis-girodet-de-roussytrioson-17931.jpg\">Endymion</a> to androgynous rockers of the ’70s, to the photographs of <a href=\"https://www.artsy.net/artwork/ren-hang-ren-hang-untitled-27\">Ren Hang</a>.</p><h2></h2><h2></h2><h2>Sir Joshua Reynolds, <em>John Musters, </em>1777–c. 1780</h2><p><br></p><p>Masculine beauty in the 18th century, as in the 16th and 17th centuries, was expressed in adornments—an attractively patterned waistcoat, a finely coiffed wig—more than through physical attributes. However, there are exceptions. In the age of horseback riding, tight pants showed off well-turned legs and fine hips, for instance.</p><h2></h2><h2></h2><h2>B.J. Falk, <em>Eugen Sandow, full-length nude portrait, standing by column, facing left</em>, 1894</h2><p><br></p><p>A German strongman, Sandow uniquely became known more for his physique than for feats of strength. In 1894, he posed for one of the world’s first commercial film strips, which was produced by Thomas Edison, and in London seven years later he mounted the world’s first bodybuilding contest. It would, however, take some three-quarters of a century before male preening became acceptable to the wider culture.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "536a951dcb4c2781b600002b",
+              "slug": "slim-aarons-price-philip-receives-windsor-cup-at-ascot-polo-tournament",
+              "date": "1955",
+              "title": "Price Philip Receives Windsor Cup at Ascot Polo Tournament",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/_jPsdDcMPAfBe_OBgZGyeA/larger.jpg",
+              "partner": {
+                "name": "Staley-Wise Gallery",
+                "slug": "staley-wise-gallery"
+              },
+              "artists": [
+                {
+                  "name": "Slim Aarons",
+                  "slug": "slim-aarons"
+                }
+              ],
+              "artist": {
+                "name": "Slim Aarons",
+                "slug": "slim-aarons"
+              },
+              "width": 3600,
+              "height": 2438
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/HyGYBX8YxiKhejfVaSZQ_Q%2FRM+G-4+copy.jpg",
+              "type": "image",
+              "width": 796,
+              "height": 1200,
+              "caption": "<p>Robert Morris, Castelli-Sonnabend poster, 1974. Courtesy of Castelli Gallery.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<h2>Slim Aarons, <a href=\"https://www.artsy.net/artwork/slim-aarons-price-philip-receives-windsor-cup-at-ascot-polo-tournament\"><em>Prince Philip Receives Windsor Cup at Ascot Polo Tournament</em>,</a> 1955</h2><p><br></p><p>For more than two centuries, the traits associated with the European aristocratic man have been held up, whether consciously or not, as the sex’s most desirable. Thus, Humphrey Bogart, playing a down-and-out detective in the 1946 film noir <em>The Big Sleep</em>, looked more like a prince than a palooka. Here Prince Philip exemplifies the look: Thin, though hale, with the narrow chest and spindly arms of a man unaccustomed to lifting much more than a silver cigarette case. </p><h2></h2><h2></h2><h2>Robert Morris, 1974 poster for Castelli show</h2><p><br></p><p>The Castro clone look, which sprang up in mid-1970s San Francisco, valorized such working-class attributes as facial hair, blue jeans, leather jackets, and muscles. Although the clone look ought to be seen within the context of a growing, culture-wide appreciation of the working class at the time, it also marks an initial instance of public sexualizing of male bodies. &nbsp; &nbsp; </p><h2></h2><h2></h2><h2>Robert Mapplethorpe, <em>Arnold Schwarzenegger</em>, 1976</h2><p><br></p><p>Bodybuilding was brought to the broader public consciousness by Schwarzenegger and the 1977 film <em>Pumping Iron</em>. It offered an ideal of exaggerated musculature that was obviously unattainable, no matter how much effort one put in, without technological enhancement in the form of steroids and specialized weight machines.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "type": "artwork",
+              "id": "53066139c9dc24d17b000334",
+              "slug": "hank-willis-thomas-branded-chest-1",
+              "date": "2003",
+              "title": "Branded Chest",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/vvoBppfl2OlH6jbxpsjUVg/larger.jpg",
+              "partner": {
+                "name": "ClampArt",
+                "slug": "clampart"
+              },
+              "artists": [
+                {
+                  "name": "Hank Willis Thomas",
+                  "slug": "hank-willis-thomas"
+                }
+              ],
+              "artist": {
+                "name": "Hank Willis Thomas",
+                "slug": "hank-willis-thomas"
+              },
+              "width": 651,
+              "height": 980
+            },
+            {
+              "type": "artwork",
+              "id": "58b82265275b24738b2c6280",
+              "slug": "frank-benson-juliana-1",
+              "date": "2014-2015",
+              "title": "Juliana",
+              "image": "https://d32dm0rphc51dk.cloudfront.net/KESyTILclLsV72z-s-iBgA/larger.jpg",
+              "partner": {
+                "name": "Arken Museum of Modern Art",
+                "slug": "arken-museum-of-modern-art"
+              },
+              "artists": [
+                {
+                  "name": "Frank Benson",
+                  "slug": "frank-benson"
+                }
+              ],
+              "artist": {
+                "name": "Frank Benson",
+                "slug": "frank-benson"
+              },
+              "width": 3500,
+              "height": 2318
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<h2>Hank Willis Thomas, <em>Branded Chest</em>, 2003</h2><p><br></p><p>While today’s muscular ideal harkens back to the <em>Doryphoros</em>, with its athletic figure, it has expanded to include men of all skin colors, races, and ethnicities. But, as <a href=\"https://www.artsy.net/artist/hank-willis-thomas\">Thomas</a>’s work suggests, such bodies are increasingly branded—made dependent on various corporate entities, owned and exploited by them for the information the body contains, or objectified and marketed by us through social media, among other distribution systems.</p><h2></h2><h2></h2><h2>Frank Benson, <em>Juliana, </em>2014–15</h2><p><br></p><p>Does the penis make the man? Benson’s sculptural depiction of the trans artist <a href=\"https://www.artsy.net/artist/juliana-huxtable\">Juliana Huxtable</a> illustrates just how blurry the sharp distinction between male and female has become. While some traditionally male features remain, like confidence, alongside traditionally female ones, like grace and smoothness, the work suggests that agency, the power to create oneself, has become the supreme ideal.</p><p><br></p><p>—Daniel Kunitz</p>"
+        }
+      ],
+      "primary_featured_artist_ids": [
+        "4eaf0c6dec5cf6000100d84f",
+        "4fd651191bab5b000100030d",
+        "54ef6c3772616941cc150000",
+        "4d8b92834eb68a1b2c00019e"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": [
+        "536a951dcb4c2781b600002b",
+        "575781e69c18db5fb2000b44",
+        "562f32a972616970510000ab"
+      ],
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "57d99b4e8b3b81644d000a1f",
+          "name": "Daniel Kunitz"
+        }
+      ],
+      "email_metadata": {
+        "headline": "How Art Has Depicted the Ideal Male Body throughout History",
+        "author": "Daniel Kunitz",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/RCster3DObtQ9m50dEoi3Q%2Fmale-beauty.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "Masculinity hasn’t always meant Tarzan or James Bond. Here, we trace the evolution of the ideal male throughout art history.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-05T22:38:20.028Z",
+      "lead_paragraph": "",
+      "id": "58e5489b1f12da00171bfc9b",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/RCster3DObtQ9m50dEoi3Q%2Fmale-beauty.jpg",
+      "published_at": "2017-04-05T22:13:54.575Z",
+      "slug": "artsy-editorial-art-depicted-ideal-male-body-history"
+    },
+    {
+      "_id": "58e4c2dc7b181600179d7e6d",
+      "keywords": [
+        "market",
+        "art law",
+        "IK",
+        "Jessica Meiselman"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "tier": 1,
+      "thumbnail_title": "5 Pointz Graffiti Artists Score Major Win in Suit against Developers",
+      "tags": [
+        "market",
+        "art law",
+        "IK"
+      ],
+      "title": "5 Pointz Graffiti Artists’ Major Win in Suit against Developers, Explained",
+      "hero_section": null,
+      "primary_featured_artist_ids": null,
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "58e55fe78b0c145bb111241b",
+          "name": "Jessica Meiselman"
+        }
+      ],
+      "email_metadata": {
+        "headline": "5 Pointz Graffiti Artists Score Major Win in Suit against Developers",
+        "author": "Jessica Meiselman",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/EufE-wrWgsWX7t-3xVAHLw%2Fd7hftxdivxxvm.cloudfront-42.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "On Friday, a group of graffiti artists won a significant legal victory against the real estate developers who demolished the graffiti haven 5 Pointz in 2014.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-05T21:29:22.199Z",
+      "lead_paragraph": "",
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/qmdBD_JqylAf8t3isXpX6g%2F5675424160_e7e50092dc_o.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 800,
+              "caption": "<p>Photo by Pelle Sten, via Flickr.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>On Friday, a group of graffiti artists won a significant legal victory against the real estate developers who demolished the graffiti haven known as “5 Pointz” in 2014. In an unexpected turn, a Brooklyn judge ruled against the developers, who had made a final request to dismiss the case before trial. </p><p>The judge’s ruling breathes new life into the three-and-a-half-year-long lawsuit, originally stymied by earlier decisions which allowed the property owners to destroy the graffiti and redevelop the site. Today, luxury rentals now reside on the Queens lot where the warehouse once sat. </p><p>In their pending suit, the graffiti artists argue that the Visual Artists Rights Act (VARA)—which grants visual artists limited rights over work they created but do not own—entitles them to monetary damages for the destruction of their art. </p><p>The developers, meanwhile, asserted that such rights are narrow and inapplicable given that, while the artists are well-known, the works are not. As such, they aren’t covered by VARA. But in his ruling Friday, judge Frederic Block sided with the artists, stating that the evidence provided by both sides was sufficient to merit putting their VARA claims in front of a jury. </p><h2></h2><h2></h2><h2>Demolishing 5 Pointz</h2><p><br></p><p>The “aerosol” artists—as the court refers to them—are led by Jonathan Cohen, the most recent curator of the former graffiti mecca 5 Pointz. In the 1990s, while the building was mainly comprised of artist studios, the owner was asked to allow graffiti artists to work on the walls of the building. He agreed, and over time, the warehouse evolved into a living exhibition for local and international graffiti artists and fans alike. In the early 2000s, when Cohen assumed curative control, the building came to be known as 5 Pointz, named after the five boroughs of New York City. </p><p>Trouble began in 2013, when, after decades of this mutually beneficial arrangement, the owners voiced their intention to raze the warehouse and build a new housing development which would offer luxury rentals and a small selection of affordable units. The same year, Cohen and the others sued to prevent the destruction of their works which, at that time, still adorned the walls of the warehouse. </p><p>After initially delaying the development, the judge eventually denied the artists’ requests for permanent action in November 2013—though he left the door open for the artists to pursue monetary damages. The developers proceeded to whitewash the building overnight, allowing it to sit for months <a href=\"http://www.nytimes.com/2013/11/20/nyregion/5pointz-a-graffiti-mecca-in-queens-is-wiped-clean-overnight.html\">before</a> it was eventually razed. This quick, perhaps unnecessary, washing of the graffiti served as a gut-punch to the artists who had pursued legal action to save the walls they saw as an extension of themselves. </p><h2></h2><h2></h2><h2>VARA and Its Limits</h2><p><br></p><p>The 5 Pointz artists’s case against the developers stems from the Visual Artists Rights Act—or VARA for short. Passed in 1990, the law provides what are known as moral rights to artists behind qualifying works of visual art. Namely, it grants the rights to attribution and integrity. The right to <a href=\"https://www.law.cornell.edu/uscode/text/17/106A\">integrity</a>, as invoked in the 5 Pointz lawsuit, provides artists with the ability to “to prevent any destruction of a work of recognized stature” even if that work exists on property owned by someone else—in this case, the building’s developers.</p><p>But VARA provides narrow protection with limited application compared to European laws dealing with similar issues. VARA’s right to integrity is limited in applicability to original copies of qualified works of <em>visual</em> art (thereby excluding music and other non-visual art). Additionally, the rights last only for the life of the artist, and may also be waived by the artist.</p><p>A significant limitation of VARA, and one which lies at the core of this case, is that a work must be of a “recognized stature” in order to prevent its destruction under the statute. Additionally, though the text of the statute states the ability to “prevent destruction,” courts are often limited in their abilities to actually follow through with this remedy, since they are required to weigh competing interests, including that of the property owner.</p><h2></h2><h2></h2><h2>VARA and 5 Pointz</h2><p><br></p><p>In refusing to prohibit the destruction of the artwork of 5 Pointz in 2013, the judge employed a narrow reading of VARA. That is, he ruled the statute provides monetary recourse for the destruction of visual works of “recognized stature,” but not the ability to indefinitely preserve the works. Since moving the art in this case was not an option, the only way to preserve it would have been to preserve the entire building, perhaps as a tourist attraction or cultural landmark. Judge Block noted that such remedies were wholly outside of those that the court had authority to grant under the statute. </p><p>Instead, he considered that the a monetary reward would make the artists whole. While this hollow reading of the statute was disappointing, it allowed for artists to seek monetary damages remains after destruction—which they did. Though developers had sought to prevent even an economic reward, Judge Block’s ruling Friday allows the artists claim to monetary damages under VARA to proceed. </p><p>One of the earliest cases to consider this issue and provide an important precedent coincidentally also took place in Queens. In <em>Carter v. Helmsley Spear, Inc.</em>, a developer removed a sculpture in a building he was renovating. The artist sued, relying on VARA for monetary damages. The court held that whether a work was of “recognized stature” under VARA must consider <em>both</em> whether the art “was viewed as meritorious,” and also whether art critics, experts, and other members of the art community considered that the art was “recognized.” </p><h2></h2><h2></h2><h2>The Case Ahead</h2><p><br></p><p>This will be a critical issue in the 5 Pointz case. As the lawsuit proceeds to trial, each side will present art experts to voice their opinion on whether or not the work is important and well recognized. It will be up to the jury, based on the facts presented, to decide. </p><p>There is little doubt that Cohen and the other artists will be able to make a strong showing. 5 Pointz, both in life and in death, has been an institution for graffiti artists, widely acclaimed and discussed in both the local and international press. And a Brooklyn jury is likely to be sympathetic to the artists amid the constant churn of gentrifying landscapes. </p><p>The legal battle and eventual destruction of 5 Pointz also significantly raised its profile, which could have a positive impact on the damages, as the “stature” of the works is now exceptionally well-documented.</p><p>One potentially derailing factor, though, is that the court is of the view that each particular work should be considered separately. The judge has asked the artists to present a “final list” of all the works, so he may determine whether the claims will be managed by a single jury or multiple juries. &nbsp;</p><p>As moral rights in this country have evolved over the years, in some ways they have diverged from their original purpose. The emphasis on allowing artists to pursue monetary damages rather than a more holistic approach which protects the art for the public demonstrates the economic lens through which the United States views artists’ rights. Such a focus flies directly in the face of the purpose of moral rights. Still, one can understand the judicial need to assign financial value and rely on concrete evidence in these types of cases.</p><p>Regardless of how the 5 Pointz lawsuit plays out, it reflects a gaping hole in legislative protection of artists’ rights. In particular, putting a fixed economic value on a work’s destruction limits its value to the financial, failing to consider the work’s ineffable cultural contribution to the public writ large.</p><p><br></p><p>—Jessica Meiselman</p>"
+        }
+      ],
+      "id": "58e4c2dc7b181600179d7e6d",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/EufE-wrWgsWX7t-3xVAHLw%2Fd7hftxdivxxvm.cloudfront-42.jpg",
+      "published_at": "2017-04-05T21:27:14.168Z",
+      "slug": "artsy-editorial-5-pointz-graffiti-artists-score-major-win-suit-developers"
+    },
+    {
+      "_id": "58e550d61f12da00171bfc9d",
+      "keywords": [
+        "AS",
+        "market",
+        "market analysis",
+        "Anna Louie Sussman"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "tier": 1,
+      "thumbnail_title": "Keynes’s Art Collection Shows Why Art Investing Is Like the Lottery",
+      "tags": [
+        "AS",
+        "market",
+        "market analysis"
+      ],
+      "title": "Keynes’s Art Collection Shows Why Art Investing Is Like the Lottery",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "column_width",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/lFexE2F-lD7eAJf5ce0AjA%2FDeclan_in_20_years_2.jpg",
+              "type": "image",
+              "width": 535,
+              "height": 315,
+              "caption": "<p>John Maynard Keynes. Image via Wikimedia Commons.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>The famed early-20th-century economist John Maynard Keynes is perhaps best known for challenging the reigning orthodoxy that free markets generate full employment, arguing instead that the state has a role to play in helping moderate the swings of business cycle. His work—not just theoretical but practical, in the many roles he assumed on behalf of the British government—laid the foundation for modern macroeconomics. His ideas still influence policymakers today, especially those calling for government spending, or stimulus, in times of low economic growth.</p><p>But that was just one facet of this mustachioed polymath who often spent his mornings working in bed, propped up by pillows and surrounded by books and papers, and nights dashing about London with its famed Bloomsbury Group, a group of artists, writers and thinkers <a href=\"https://www.artsy.net/article/artsy-editorial-the-8-most-influential-artist-and-writer-duos-from-picasso-and-stein-to-rilke-and-rodin\">that included the likes of Virginia Woolf</a> and E.M. Forster. Keynes was an art lover and supporter, a friend of artists, and a canny art collector, whose collection of 135 works was bequeathed to Cambridge University’s King’s College. </p><p>It’s that slice of his extraordinary life that economists David Chambers, Elroy Dimson, and Christophe Spaenjers studied for their forthcoming paper, “Art Portfolios,” to better understand the long-run performance of art as an asset class. Keynes’s “portfolio,” or art collection, was amassed for less than £13,000. By 2013, it was valued at over £70 million, for an annualized real rate of return of 4.2% over the past half-century—virtually matching the performance of the total return on equities over the same period. So what does their analysis tell us about the art market?</p><p>By analyzing the performance of Keynes’s collection, and comparing it with the simulated performance of thousands of hypothetical art portfolios, they found that the art market was structured much like a lottery, with relatively few winners (artists and their collectors) reaping enormous gains, and the bulk of artists marginal to the overall value of the market. This will be entirely unsurprising to anyone who has stood on an Christie’s or Sotheby’s saleroom floor or perused the aisles of major art fairs like Art Basel or Frieze.</p><p>The art market has also largely eluded various attempts to estimate, measure, and index it. Historically, around half of transactions happen in the private market (in recent years that figure has crept higher), but publicly available auction records only include prices for works that successfully find a buyer. This can skew estimates of returns in auction-based indexes, although the exact nature of this bias is still being studied. In addition, consignors tend to sell works at auction when they expect a high return, meaning that auction-based indexes may overestimate returns due to this “selection bias.” </p><p>Keynes’s portfolio is somewhat unique in entirety avoiding these pitfalls, according to the authors. “It is one of only two complete, or near-complete, financial records of an art collection from initial purchase to final valuation,” they wrote, adding that it is the only one that also includes valuations at other intervening points in time. The other, the collection of Victor and Sally Ganz, auctioned at Christie’s in 1997, was noted for its “extraordinary financial value,” while Keynes’s collection, by contrast, had no particular renown. It also came with extensive documentation of the purchases and why he made them. </p><p>“To our knowledge this was the only one where we could really observe purchase decisions by an art portfolio, then track the value of the collection’s items over time,” said Spaenjers, an associate finance professor at the business school HEC Paris. “You see all these decisions being played out over many decades.…You can see how his purchase decisions changed with his personal fortune.”</p><p>And while it was not sold off, the collection has been valued over the years by insurers, auction houses, and finally through independent appraisals ordered by the study’s authors in 2013. </p><p>“In creating indexes, they’re always hypothetical,” said William Goetzmann, a Yale University finance professor who has previously collaborated with Spaenjers. “Lots of us have spent time trying to do indexes, but we really don’t know whether those represent the true return to investing…this has the special virtue that it’s an actual portfolio.”</p><p>Their analysis and comparison with hypothetical portfolios revealed several features of Keynes’s collection with implications for the broader market. One is the importance of the purchase channel. Keynes’s “winning lottery tickets”—in art world terms, paintings and drawings by the likes of <a href=\"https://www.artsy.net/artist/edgar-degas\">Degas</a>, <a href=\"https://www.artsy.net/artist/paul-cezanne\">Cezanne</a>, <a href=\"https://www.artsy.net/artist/pablo-picasso\">Picasso</a>, and <a href=\"https://www.artsy.net/artist/georges-braque\">Braque</a>—were largely purchased at auction, where Spaenjers guessed he was able to spot bargains. (Incidentally, Keynes was also known to be an excellent stock picker.) The works he acquired through other channels, through dealers and on the primary market, underperformed relative to his auction purchases. Of course, Keynes wasn’t simply lucky; he had what today’s <a href=\"http://www.npr.org/2017/02/07/513896351/black-edge-recounts-the-biggest-insider-trading-scandal-in-history\">hedge funders call “edge,”</a> insider tips shared through artist friends, including his one-time lover, the English painter <a href=\"https://www.artsy.net/artist/duncan-grant\">Duncan Grant</a>. Spaenjers said Keynes also appeared to time his purchases well, for example, buying works by <a href=\"https://www.artsy.net/artist/anthony-van-dyck\">van Dyck</a> at auction when prices were low, or buying in Paris after World War I when the market was likely depressed. </p><p>Another characteristic of Keynes’s portfolio is its high level of concentration, with 80% of his total art spend going to just 10 works. In 2013, the 10 most valuable works accounted for 91% of the portfolio’s total value. “Changes in the total value of the Keynes collection are largely driven by changes in the market value of a few artists, such as Braque, Cezanne, <a href=\"https://www.artsy.net/artist/henri-matisse\">Matisse</a>, Picasso and <a href=\"https://www.artsy.net/artist/georges-seurat\">Seurat</a>,” the authors concluded. “Conversely, what happens to all the lesser-known artists…is not an important driver of returns.” Keynes’s portfolio performance points to an enduring quality of the broader art market (and, increasingly, <a href=\"http://www.economist.com/news/special-report/21707838-dearth-competition-among-firms-helps-explain-wage-inequality-and-host-other\">the economy at large</a>), that it’s a “<a href=\"https://www.jstor.org/stable/1803469?seq=1#page_scan_tab_contents\">superstar economy</a>,” in which works by a few highly sought-after artists reap outsized returns. For example, the 20 best performing artists at auction have changed little over the past decade, <a href=\"https://www.artsy.net/article/artsy-editorial-art-basel-report-suggests-growing-inequality-endangering-art-market\">topped by perennial names</a> like <a href=\"https://www.artsy.net/artist/andy-warhol\">Andy Warhol</a>, <a href=\"https://www.artsy.net/artist/bruce-nauman\">Bruce Nauman</a>, and Pablo Picasso, according to The Art Market | 2017, a recently released <a href=\"https://www.artbasel.com/about/initiatives/the-art-market\">report</a> from Art Basel and UBS. </p><p>Savvy art investors, at this point, likely know that executing a “buy low, sell high” strategy is easier said than done, given that so few young artists go on to command serious prices at auction. But even a portfolio diversification strategy (the idea behind mutual funds that hold a wide array of equities) is hard to implement when it comes to art, as this study highlights. When so much of the value of Keynes’s portfolio lay in a handful of key works, and buying them required significant upfront investment, successful arts investment appears to be a game for the already well-capitalized. </p><p>Still, the opacity of the art market does leave potential for well-positioned and deeply informed insiders to take advantage of information asymmetries, such as knowing when a work might become available or where a willing buyer lies. And in the study’s simulated portfolios, constructed at random from a global database of auction transactions, roughly a third of even small portfolios outperformed the equity market, a function the wide range of performance (most of them significantly underperformed). The key variable, of course, was the presence or absence of one of the “lottery ticket” artists in the hypothetical portfolio. </p><p>“There’s such wide variation that you can’t really conclude [Keynes] was ‘skilled,’” said Spaenjers. “But what you do see from reading about his life and his decisions is that he was given advice by his artist friends. It’s the type of edge that probably still could today play a role, especially in the contemporary market.”</p><p><br></p><p>—Anna Louie Sussman</p>"
+        }
+      ],
+      "primary_featured_artist_ids": null,
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "5882874db202a36465000667",
+          "name": "Anna Louie Sussman"
+        }
+      ],
+      "email_metadata": {
+        "headline": "Keynes’s Art Collection Shows Why Art Investing Is Like the Lottery",
+        "author": "Anna Louie Sussman",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/A8O5S78Os8bwB3dotyKMzw%2FDeclan_in_20_years_2.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "The famed economist Keynes was an art lover and supporter, and his collection gives a surprising level of insight into the long-run performance of art as an asset class.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-05T21:29:23.468Z",
+      "lead_paragraph": "",
+      "id": "58e550d61f12da00171bfc9d",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/A8O5S78Os8bwB3dotyKMzw%2FDeclan_in_20_years_2.jpg",
+      "published_at": "2017-04-05T20:25:33.298Z",
+      "slug": "artsy-editorial-keyness-art-collection-art-investing-lottery"
+    },
+    {
+      "_id": "58e3443c48dd6d0027c81797",
+      "keywords": [
+        "art",
+        "art world",
+        "TT",
+        "Anselm Kiefer",
+        "Charlotte Jansen"
+      ],
+      "author_id": "4fa02a2940a1a500010003f3",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "4fa02a2940a1a500010003f3"
+      },
+      "tier": 1,
+      "thumbnail_title": "Anselm Kiefer on the Existential Crisis Facing Humanity",
+      "tags": [
+        "art",
+        "art world",
+        "TT"
+      ],
+      "title": "Anselm Kiefer on the Existential Crisis Facing Humanity",
+      "hero_section": null,
+      "primary_featured_artist_ids": [
+        "4d8b92ba4eb68a1b2c000448"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "featured": true,
+      "exclude_google_news": false,
+      "contributing_authors": [
+        {
+          "id": "56f97032275b247bf8003195",
+          "name": "Charlotte Jansen"
+        }
+      ],
+      "email_metadata": {
+        "headline": "Anselm Kiefer on the Existential Crisis Facing Humanity",
+        "author": "Charlotte Jansen",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/rPxO1asITKRODqseYTJhRQ%2Fak.jpg",
+        "custom_text": ""
+      },
+      "is_super_article": false,
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "send_body": false,
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "description": "As the world-renowned German artist opens a new exhibition of replica World War II-era bomber planes, he reflects on today’s turbulent political landscape. ",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "layout": "center",
+      "published": true,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-06T11:19:12.863Z",
+      "lead_paragraph": "",
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Z1yiC19BlNYsTI-uGVT9rw%2FCC5.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 720,
+              "caption": "<p>Anselm Kiefer, installation view of “For Louis-Ferdinand Céline: Voyage au bout de la nuit,” Copenhagen Contemporary 2016. Photo by Anders Sune Berg, courtesy of Copenhagen Contemporary.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p><a href=\"https://www.artsy.net/artist/anselm-kiefer\">Anselm Kiefer</a> is emphatically one of the world’s most successful and well-known living artists. His work has been described as “verging on the divine,” no less. But at 72, what does it all mean to Kiefer? </p><p>This past weekend, the German artist was in Copenhagen to open a new exhibition at a little-known art center, <a href=\"https://www.artsy.net/copenhagen-contemporary\">Copenhagen Contemporary</a> (CC), located on the city’s Paper Island—where, for decades, newsroll was stored in industrial halls. Four of Kiefer’s life-size replicas of 20th-century warplanes inhabit one of CC’s four former paper halls. &nbsp;</p><p>Two of these are modeled on the U.S. Army’s F-84F Thunderstreak, a snub-nosed plane used during the Korean War. A larger sculpture is based on the Boeing B-17 Flying Fortress, a heavy American bomber plane used on Germany during World War II. And a fourth sculpture, titled<em> Exodus, </em>is after the twin-engined Martin B-26 Marauder, first flown in 1940 and used by the British, French, U.S., and South African air forces.</p><p>The works—three of them built with Kiefer’s trademark material, lead, the other with zinc—have never before left Kiefer’s studio in France. Although planes have been a motif in his work since the 1980s, and the artist also collects decommissioned military jets, this is the first time so many of them have been seen at a single show. </p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "column_width",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/q01M_y7L57pWPHwcHlbp3A%2FPortrait+Anselm+Kiefer.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 801,
+              "caption": "<p>Portrait of Anselm Kiefer. Photography by Charles Duprat. Courtesy Gagosian.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>They are framed by a series of “desert paintings,” huge compositions that are based on Kiefer’s photographs of the Gobi desert and loaded with cosmic and alchemical symbolism. Looking at them, you can feel the process of his painting, the slashes of a blade against thick impastoed surfaces.</p><p>Though the paintings and sculptures represent two distinct bodies of work, together they form a barren landscape, as if the paintings’ dust and sand had been blown over the corpses of the planes. Piles of closed lead books, rocks, and resin-cast poppies rest on the planes’ wings—imagery of death and destruction so familiar in Kiefer’s work.</p><p>The atmosphere is elegiac and somber, a morose memorial to human innovation gone wrong. But for Kiefer, growing up in post-war Germany, such vestiges of conflict were also playgrounds. There is something exploratory in the rubble and wreckage—the possibility of regeneration amid chaos.</p><p>It might seem surprising that this little-known Copenhagen space has managed to draw a giant like Kiefer. But CC tends to focus its program on monumental installation works that attract a younger audience, and it was the venue’s founder, Jens Faurschou, that pursued the artist. </p><p>“He came to my studio with his family, and then, spontaneously, I said yes,” Kiefer told me at the exhibition’s opening event, where 300 guests gathered for food, drinks, and dancing. </p><p>According to Georges Armaos of Gagosian New York, who helped to coordinate the exhibition, the space closely resembles Kiefer’s warehouses in Croissy-Beaubourg. “My studio is a little bit higher and a little bit bigger!” Kiefer laughed.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/x68JDmzbGmAz0Na3kwJ6Sg%2FCC6.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 800,
+              "caption": "<p>Anselm Kiefer, installation view of “For Louis-Ferdinand Céline: Voyage au bout de la nuit,” Copenhagen Contemporary 2016. Photo by Anders Sune Berg, courtesy of Copenhagen Contemporary.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>The exhibition takes its title, “Voyage au bout de la nuit<em>,</em>” from the controversial French writer Louis-Ferdinand Céline’s 1932 novel of the same name. The book—which follows its protagonist Bardamu through his personal accounts of World War I, colonialism in Africa, and a Ford factory in Detroit—has influenced many artists, especially the male icons of modernist and existentialist writing, like Beckett, Barthes, and Bukowski. </p><p>“It’s one of the most astonishing books of the 20th century, but he was an asshole, yes,” Kiefer said, with trenchant humor that is not always obvious in his work. Indeed Céline’s legacy has been tainted by his anti-Semitic writing and support of the Axis powers during World War II. </p><p>After Kiefer’s appearance at the Venice Biennale in 1980, the artist was himself accused of neo-Nazism. So why reference someone like Céline now? “He was a horrible man, but a great writer,” said Kiefer. &nbsp;“You have to separate, you know. There can be bad characters who are great writers, or good artists, it happens.”</p><p>The book is what matters, Kiefer insists. <em>Voyage au bout de la nuit, </em>he said, “was nihilistic, but not in a negative way. He created an anti-world.” </p><p>War and humanity’s destitution have been at the center of Kiefer’s work for five decades. One can only imagine the artist has been ruminating on our current world, with mounting tensions in North Korea, talk of a second Cold War, and right-wing populism sweeping through the West.</p><p>“When I started to work in the 1960s, I said 1945 is not the beginning of a new time,” he explained. “I said all the morass is still there, it’s covered with a thin layer of democracy, but it’s still there. It can go up anytime. And now we live in a time that’s very dangerous. We have horrible things happening, because mankind is wrongly constructed.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/ASjs_q2OgII0p9YrJZ9PLQ%2FCC1.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 785,
+              "caption": "<p>Anselm Kiefer, installation view of “For Louis-Ferdinand Céline: Voyage au bout de la nuit,” Copenhagen Contemporary 2016. Photo by Anders Sune Berg, courtesy of Copenhagen Contemporary.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Art certainly can’t redeem the world, but Kiefer believes it has a role to play in helping us find a way to go on. “I don’t think there’s <em>no</em> hope,” Kiefer said. “You have to create hope, otherwise you cannot live.”</p><p>In <em>Remembering the Future</em>, a documentary film about the artist and his work, Kiefer says, “We don’t know why we are here, we don’t know where we go... it’s quite desperate. We have an intellect to find out and we cannot.” </p><p>It is what the French writer Albert Camus referred to as absurdism: the confrontation with our own inability to discover the true meaning of life, and our impulse to create in the face of it. </p><p>And despite having a somewhat diabolical outlook on the world, Kiefer has never stopped creating. “I work because I want to be surprised about myself,” he said. “Every day I do something that I didn’t expect.”</p><p><br></p><p>—Charlotte Jansen </p>"
+        }
+      ],
+      "id": "58e3443c48dd6d0027c81797",
+      "scheduled_publish_at": null,
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/rPxO1asITKRODqseYTJhRQ%2Fak.jpg",
+      "published_at": "2017-04-05T16:07:28.698Z",
+      "slug": "artsy-editorial-anselm-kiefer-existential-crisis-facing-humanity"
+    },
+    {
+      "_id": "58e419e17b181600179d7e6b",
+      "keywords": [
+        "creativity",
+        "inspiration",
+        "CL",
+        "Gail Norfleet",
+        "Casey Lesser"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "thumbnail_title": "The Artist Who Taught George W. Bush to Paint",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/a5lOeDDsjWPNG6jAMjQl-w%2FBush+Painting.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 797,
+              "caption": "<p>Former President Bush painting. Courtesy of President George W. Bush.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>One day in early 2012, Dallas-based artist <a href=\"https://www.artsy.net/artist/gail-norfleet\">Gail Norfleet</a> got an unexpected phone call from her friend, fellow artist Pamela Nelson. “She said ‘Gail, I have a student for you!’” Norfleet remembers.</p><p>Norfleet had been teaching on and off for years, ever since earning her MFA from Southern Methodist University in 1972. Usually these were courses at a local community college or, occasionally, private classes for small groups. But these would need to be one-on-one lessons, Nelson explained, because this was no ordinary student. Former president George W. Bush wanted to learn how to paint.</p><p>“I was speechless,” Norfleet says.</p><p>Nelson, a close friend of both Bush and his wife, made the introduction. Norfleet soon met the Bushes in person at their Dallas home, kicking off her two-year stint as an art teacher for the former political leader. The pair met for three hours each Monday, in a home office that had been transformed into a studio. “Laura Bush called it a man cave,” Norfleet says with a laugh.</p><p>In 2013, when Bush’s initial forays into painting were <a href=\"http://www.vanityfair.com/news/2013/02/nude-self-portrait-george-w-bush-critique\">revealed</a> via an email hack, his practice was suddenly thrust into the spotlight. These early works, including bizarre self-portraits of Bush in the bathtub and shower, spawned countless articles questioning the former president’s new hobby. Now, four years later, he’s again stirring up press with his portraits of veterans who were active in the wars in Iraq and Afghanistan—conflicts that Bush himself began during his presidency. </p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/uh7SuUM6yEC3dwbtYPuiJA%2FBush_Sergeant+First+Class+Ramon+Padilla.jpg",
+              "type": "image",
+              "width": 930,
+              "height": 1200,
+              "caption": "<p>George W. Bush, <em>Sergeant First Class Ramon Padilla, U.S. Army, 2000-2009</em>. Courtesy of President George W. Bush</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/q5iI9bb_NyBaq6lGacdWuw%2FBush_Lieutenant+Colonel+Kent+Graham+Solheim.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 1196,
+              "caption": "<p>George W. Bush, <em>Lieutenant Colonel Kent Graham Solheim, U.S. Army, 1994 - Present</em>. Courtesy of President George W. Bush. </p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/ytn8HsR9_Jktc0NovAghbQ%2FBush_Sergeant+Leslie+Zimmerman.jpg",
+              "type": "image",
+              "width": 994,
+              "height": 1200,
+              "caption": "<p>George W. Bush, <em>Sergeant Leslie Zimmerman, U.S. Army, 2001-2004</em>. Courtesy of President George W. Bush. </p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>In February, he embarked on a tour to promote <em>Portraits of Courage: A Commander in Chief’s Tribute to America’s Warriors</em>, an anthology of these veteran paintings. Along the way, Bush charmed audiences and joked with TV personalities on talk shows, waxing poetic about embracing his “inner <a href=\"https://www.artsy.net/artist/rembrandt-harmensz-van-rijn-1\">Rembrandt</a>.” </p><p>Journalists from various publications duly issued warnings about “normalizing” the former president. They reminded audiences that Bush’s current, painterly persona does nothing to redeem the actions he took while in office—something, they noted, that can feel particularly tempting in light of the current administration. </p><p>Within the art community, many have warily admitted that Bush has a way with paint. He’s developed his style over the years, working with a string of artist teachers including <a href=\"https://www.artsy.net/artist/jim-woodson\">Jim Woodson</a>, <a href=\"https://www.artsy.net/artist/sedrick-huckaby\">Sedrick Huckaby</a>, <a href=\"https://www.artsy.net/artist/roger-winter\">Roger Winter</a>, and Bonnie Flood.</p><p>It was Norfleet, however, who first introduced him to painting half a decade ago. “He was looking for a new project,” she recalls. Already an avid golfer and bike rider, as well as an active participant in the programming of the George W. Bush Presidential Library and Museum, Norfleet notes that “he needed a new challenge.”</p><p>She started him off just as she would any novice in a beginner painting class. “I am fairly traditional,” she says of her teaching style. Her classes begin with exercises to explore oil paint and brushes, before moving on to work with colors, transitions from light to shadow, and, finally, to painting still lifes.</p><p>Without fellow students, she worried that the former world leader might be irked by her hovering over his shoulder and critiquing his technique. On the contrary, he reminded her, “I’m used to scrutiny.”</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/_ziU3XWYMYUN1Eu1N1WAOw%2FBush_Sergeant+First+Class+Michael+R.+Rodriguez.jpg",
+              "type": "image",
+              "width": 781,
+              "height": 1200,
+              "caption": "<p>George W. Bush, <em>Sergeant First Class Michael R. Rodriguez, U.S. Army, 1992 - 2013</em>. Courtesy of President George W. Bush.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/Vb0ivtx9fx6RXNw12CPLJQ%2FBush_Sergeant+Michael+Joseph+Leonard+Politowicz.jpg",
+              "type": "image",
+              "width": 889,
+              "height": 1200,
+              "caption": "<p>George W. Bush, <em>Sergeant Michael Joseph Leonard Politowicz</em> <em>U.S. Marine Corps, 2010 - Present</em>. Courtesy of President George W. Bush.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/iyxbNssMkmfK_XOaZX09tw%2FBush_Sergeant+Daniel+Casara.jpg",
+              "type": "image",
+              "width": 938,
+              "height": 1200,
+              "caption": "<p>George W. Bush, <em>Sergeant Daniel Casara, U.S. Army, 1994 - 2008</em>. Courtesy of President George W. Bush. </p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Bush asked Norfleet how to improve, and she told him to keep painting—particularly the things around him that he found interesting. He did so, creating the paintings leaked in 2013; along with his feet poking out of the bathtub, these included several canine portraits and a bucolic church scene. “It kind of took off; he was very prolific right from the beginning.” </p><p>Interwoven in their lessons was art-historical context. “It&#x27;s important for an artist to know where they fit,” Norfleet explains. “At first he was a little bit reluctant to think about art history,” she adds, noting that it took a few months of lessons before he agreed to take an online course through the <a href=\"https://www.artsy.net/museum-of-modern-art\">Museum of Modern Art</a> exploring the development of painting from the 1800s through 1945. She introduced him to the work of <a href=\"https://www.artsy.net/artist/lucian-freud\">Lucian Freud</a>, who was at that time the subject of a retrospective at the <a href=\"https://www.artsy.net/themodernfw\">Modern Art Museum of Fort Worth</a>.</p><p>Bush’s competitive nature and confidence worked in his favor. “He was quick, he had a good memory,” Norfleet says. “Oil paint moves; you can put it down and then take it away, and he was not afraid to make marks that were wrong.”</p><p>At the time, Norfleet herself was creating figurative work, painting her students in the classroom, as well as people looking at art. “A figurative thing was going on in my head at the time; I was looking at so many different people, which made it fitting when we started the world figures series,” she explains.</p><p>Under Norfleet’s tutelage, Bush completed a series of more than 24 world leaders, from his father, George H.W. Bush, to the Dalai Lama. These works went on display at his presidential library in 2014. Since then, other teachers have inspired Bush to delve into new subject matter—most recently the controversial portraits of veterans.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/b4zsKQyhgApLxyLGHPGUeg%2FCNORG-20378.jpg",
+              "type": "image",
+              "width": 1199,
+              "height": 1200,
+              "caption": "<p>Gail Norfleet, <em>Spring #1</em>, 2015. Courtesy of Valley House Gallery.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/N_n-lXfSPBWCnO72JX0dGw%2FCNORG-20542.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 1200,
+              "caption": "<p>Gail Norfleet, <em>Spring #2</em>, 2015. Courtesy of Valley House Gallery.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/9DKTSjzJyvOTPxsMes-Jow%2FCNORG-20543.jpg",
+              "type": "image",
+              "width": 1198,
+              "height": 1200,
+              "caption": "<p>Gail Norfleet, <em>Spring #3</em>, 2015. Courtesy of Valley House Gallery.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Norfleet’s practice, too, has shifted since her time as Bush’s instructor. Rather than figurative paintings, Norfleet’s most recent works (which will be on view this week at <a href=\"https://www.artsy.net/dallas-art-fair-2017\">Dallas Art Fair</a> with <a href=\"https://www.artsy.net/show/valley-house-gallery-and-sculpture-garden-valley-house-gallery-and-sculpture-garden-at-dallas-art-fair-2017?microsite=1&amp;profile_id=dallas-art-fair-2017&amp;fair_id=dallas-art-fair-2017&amp;fair_name=Dallas%20Art%20Fair%202017\">Valley House Gallery</a>), are collages made with cut paper, photographs, and acrylic paint, which are applied to layers of lucite. These works are inspired by the wildflowers she’s seen while summering in Santa Fe. “I love to go out early in the morning and see what’s bloomed overnight,” she says, adding that her works often deal with the passage of time.</p><p>She has also continued to teach. Asked how Bush compared to her other pupils, Norfleet pauses for a moment. He wasn’t her most gifted student, she admits. But he was the most persistent.</p><p><br></p><p>—Casey Lesser</p>"
+        }
+      ],
+      "primary_featured_artist_ids": [
+        "551a0d7c72616908e6351800"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "contributing_authors": [
+        {
+          "id": "523783258b3b815f7100055a",
+          "name": "Casey Lesser"
+        }
+      ],
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "tier": 1,
+      "tags": [
+        "creativity",
+        "inspiration",
+        "CL"
+      ],
+      "layout": "center",
+      "published": true,
+      "featured": true,
+      "exclude_google_news": false,
+      "is_super_article": false,
+      "send_body": false,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-04T23:10:25.253Z",
+      "title": "The Artist Who Taught George W. Bush to Paint",
+      "lead_paragraph": "",
+      "id": "58e419e17b181600179d7e6b",
+      "scheduled_publish_at": null,
+      "email_metadata": {
+        "headline": "The Artist Who Taught George W. Bush to Paint",
+        "author": "Casey Lesser",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/uyHhvkwLClHwZpmj87_IuQ%2FBush+Painting.jpg",
+        "custom_text": ""
+      },
+      "description": "In 2012, Dallas-based artist Gail Norfleet got an unexpected phone call from a friend that kicked off a two-year stint as an art teacher for the former president.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/uyHhvkwLClHwZpmj87_IuQ%2FBush+Painting.jpg",
+      "published_at": "2017-04-04T23:09:26.573Z",
+      "slug": "artsy-editorial-artist-taught-george-bush-paint"
+    },
+    {
+      "_id": "58e4190a6f1320001710bb75",
+      "keywords": [
+        "CL",
+        "art",
+        "art world",
+        "Kevin Francis Gray",
+        "Abigail Cain"
+      ],
+      "author_id": "542b5e477261693a3d3d0200",
+      "author": {
+        "name": "Artsy Editorial",
+        "id": "542b5e477261693a3d3d0200"
+      },
+      "thumbnail_title": "What It’s Like to Sculpt from the Same Marble as Michelangelo",
+      "hero_section": null,
+      "sections": [
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/TUW_KaDE0u7fCa4PZX9XtA%2FKevin+working+47.jpg",
+              "type": "image",
+              "width": 1200,
+              "height": 800,
+              "caption": "<p>Portrait of Kevin Francis Gray courtesy of Pace Gallery.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p><a href=\"https://www.artsy.net/artist/michelangelo-buonarroti\">Michelangelo</a> first arrived in the Tuscan village of Pietrasanta in the 16th century. Since that time, generations of artists—from <a href=\"https://www.artsy.net/artist/henry-moore\">Henry Moore</a> to <a href=\"https://www.artsy.net/artist/isamu-noguchi\">Isamu Noguchi</a> to <a href=\"https://www.artsy.net/artist/damien-hirst\">Damien Hirst</a>—have followed in the <a href=\"https://www.artsy.net/gene/renaissance\">Renaissance</a> master’s footsteps, each employing the Italian region’s exquisite marble for their own works. </p><p>Irish sculptor <a href=\"https://www.artsy.net/artist/kevin-francis-gray\">Kevin Francis Gray</a> joined their ranks in 2006, when he first traveled to Pietrasanta in search of a workshop. He set up a meeting with the Giannoni family—marble artisans with a long history of replicating iconic Vatican sculptures. Gray, who was interested in slowing down production of his work, was drawn to their adherence to centuries-old, manual methods—rather than the mechanical processes now in use by many studios in the area. </p><p>At first, the Giannonis were hesitant about the idea of making contemporary work. The studio frequently turns down commissions; even today, they partner with just one other contemporary artist, the Italian sculptor <a href=\"https://www.artsy.net/artist/giuseppe-penone\">Giuseppe Penone</a>. But then Marco Giannoni, a fourth-generation artisan and current head of the studio, saw a resin cast of Gray’s work <em>Ghost Girl </em>(2007). Though it’s fashioned in a traditional style, the sculpture of a young girl, with her head bent and hands clasped behind her back, has flashes of modernity—slashed wrists and a long, beaded curtain of Swarovski crystals concealing her face. “Kevin already had such interesting ideas, even back then,” Giannoni <a href=\"https://www.wsj.com/articles/a-tuscan-marble-studio-honors-bygone-traditions-1490281994\">told</a> the <em>Wall Street Journal</em>. </p><p>Gray’s most recent body of work, on view now at <a href=\"https://www.artsy.net/pace-gallery\">Pace Gallery</a>, ventures even further from traditional sculpture. Although he’s concealed the identity of his subjects in much of his previous work—often through veils or draped cloth—in these works he does so in a markedly different manner. He’s created several busts and full-body nudes and then gouged and reshaped them with probing fingers—a vivid reminder of the sculptor’s hand at work. </p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/wIIgdyTGdbkIeYiLeeU_Pg%2FIMG_3731.jpg",
+              "type": "image",
+              "width": 900,
+              "height": 1200,
+              "caption": "<p>Work by Kevin Francis Gray in the studio. Photo courtesy of Pace Gallery.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/tEx--Azah3pJcdb5Av0RwQ%2FF01_3.jpg",
+              "type": "image",
+              "width": 846,
+              "height": 1200,
+              "caption": "<p>Work by Kevin Francis Gray in the studio. Photo courtesy of Pace Gallery.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>This technique emphasizes the materiality of each sculpture. Gray’s studio manager Anakena Paddon says they want to enhance that feeling with their decision to allow visitors to touch the works in the gallery. “It’s so enticing,” she says. “You want to put your hands where the artist’s hand has been. When you feel how hard the rock is, you also realize the amount of manual labor that’s gone into the production. It’s a really moving experience.” </p><p>The production of each sculpture is no small feat. First, Gray crafts a clay model in his London studio, which is then cast in plaster and sent to the marble workshop in Pietrasanta. There, it is translated from plaster to stone by a team of trained artisans. The block itself can take some two to three weeks to select; Gray relies on Giannoni’s intuition and experience to sense if there may be a hidden flaw in the stone. Then it takes months—six to nine for a bust, or up to a year for a full-length nude—to realize the final sculptures. </p><p>Although any work to come out of the studio will follow this process, the sculptures for the Pace show were particularly time-intensive. Before they began work on these sculptures, there were just three artisans staffing the studio. As the work progressed, the team swelled to eight; the 76-year-old Piero Quadrelli, a master at carving a rough form into the block of marble, even came out of retirement to pitch in. The work was unlike anything they’d done before, even the contemporary pieces they had crafted for Gray’s previous shows—many of which were based on Neoclassical sculpture. In total, seven works on view at Pace took three years to complete.</p>"
+        },
+        {
+          "type": "image_collection",
+          "layout": "overflow_fillwidth",
+          "images": [
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/rBkhXEjUM_0a1G7WEjNmzA%2FCave+Girl+medium+9+closed+lev.jpg",
+              "type": "image",
+              "width": 800,
+              "height": 1200,
+              "caption": "<p>Kevin Francis Gray, <em>Cave Girl</em>, 2016. Photo courtesy of Pace Gallery.</p>"
+            },
+            {
+              "url": "https://artsy-media-uploads.s3.amazonaws.com/J5AiXDcIHIIvTXM4wmKHAQ%2FIMG_9592.jpg",
+              "type": "image",
+              "width": 900,
+              "height": 1200,
+              "caption": "<p>Photo courtesy of Pace Gallery.</p>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "body": "<p>Many artists who commission sculptures from the marble workshops at Pietrasanta are not involved in the carving process themselves. Hirst, in fact, never visited the studio that produced his £1 million <em>Anatomy of an Angel </em>(2008) (he approved the work through photographs). But Gray visits Italy often, spending some 10 days each month in the studio. Not only is he there to supervise, but he actually handles the fine detailing of the sculptures himself.</p><p>It’s not easy work, he notes. Carving kicks up so much white marble dust that the artisans are jokingly referred to as the “ghosts of Pietrasanta.” Gray’s favorite part of the process is the end. “It’s so labor-intensive and so emotionally and physically attritional, it’s such a joy to walk away from a piece.”</p><p>Michelangelo’s presence in the town has been well documented; bronze plaques mark houses where, centuries ago, he may have slept, while a local cafe claims the distinction of serving as his workspace during a visit in 1518. But the connection is even more explicit in Gray’s Pace show. One piece, titled <em>Cave Girl </em>(2016), was carved from a block of marble extracted from the very same cave Michelangelo sourced for his marble back in the 1500s. </p><p>“They’re using the same techniques that <a href=\"https://www.artsy.net/artist/antonio-canova\">Canova</a> did, that Michelangelo’s studio did,” Paddon says of the Giannoni workshop. “It’s a way of work and life that is facing extinction because it’s obviously intensely laborious. But it’s a really beautiful process as well. It’s living history.”</p><p><br></p><p>—Abigail Cain</p>"
+        }
+      ],
+      "primary_featured_artist_ids": [
+        "4f5f64c13b555230ac00026d"
+      ],
+      "featured_artist_ids": null,
+      "featured_artwork_ids": null,
+      "partner_ids": null,
+      "show_ids": null,
+      "fair_ids": [],
+      "fair_programming_ids": [],
+      "fair_artsy_ids": [],
+      "fair_about_ids": [],
+      "auction_ids": [],
+      "section_ids": [],
+      "biography_for_artist_id": null,
+      "contributing_authors": [
+        {
+          "id": "568c2b46c9dc246198000000",
+          "name": "Abigail Cain"
+        }
+      ],
+      "super_article": {
+        "partner_link": "",
+        "partner_logo": "",
+        "partner_link_title": "",
+        "partner_logo_link": "",
+        "partner_fullscreen_header_logo": "",
+        "secondary_partner_logo": "",
+        "secondary_logo_text": "",
+        "secondary_logo_link": "",
+        "footer_blurb": "",
+        "related_articles": []
+      },
+      "channel_id": "5759e3efb5989e6f98f77993",
+      "partner_channel_id": null,
+      "tier": 1,
+      "tags": [
+        "CL",
+        "art",
+        "art world"
+      ],
+      "layout": "center",
+      "published": true,
+      "featured": true,
+      "exclude_google_news": false,
+      "is_super_article": false,
+      "send_body": false,
+      "daily_email": false,
+      "weekly_email": false,
+      "updated_at": "2017-04-04T23:10:26.533Z",
+      "title": "What It’s Like to Sculpt from the Same Marble as Michelangelo",
+      "lead_paragraph": "",
+      "id": "58e4190a6f1320001710bb75",
+      "scheduled_publish_at": null,
+      "email_metadata": {
+        "headline": "What It’s Like to Sculpt from the Same Marble as Michelangelo",
+        "author": "Abigail Cain",
+        "credit_line": "",
+        "credit_url": "",
+        "image_url": "https://artsy-media-uploads.s3.amazonaws.com/E4PP3fyQFX_Tek9gUgwvKw%2FIMG_3731.jpg",
+        "custom_text": ""
+      },
+      "description": "For a decade, Irish sculptor Kevin Francis Gray has worked with a Pietrasanta-based family of marble artisans with a long history of replicating iconic Vatican sculptures.",
+      "social_title": "",
+      "social_description": "",
+      "search_title": "",
+      "search_description": "",
+      "seo_keyword": "",
+      "thumbnail_image": "https://artsy-media-uploads.s3.amazonaws.com/E4PP3fyQFX_Tek9gUgwvKw%2FIMG_3731.jpg",
+      "published_at": "2017-04-04T23:00:36.254Z",
+      "slug": "artsy-editorial-sculpt-marble-michelangelo"
+    }
+  ]
+}

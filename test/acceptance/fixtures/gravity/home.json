@@ -1,0 +1,154 @@
+[
+  {
+    "created_by": {
+      "id": "568b1bfc7076d06f85000018",
+      "_id": "568b1bfc7076d06f85000018",
+      "name": "Lydia Epp Schmidt"
+    },
+    "id": "58db9daca09a6721649a5393",
+    "_id": "58db9daca09a6721649a5393",
+    "href": "/auction/phillips-new-now-3",
+    "title": "Featured Auction",
+    "subtitle": "Phillips: New Now",
+    "original_width": 1024,
+    "original_height": 858,
+    "image_url": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/:version.jpg",
+    "image_versions": [
+      "large_square",
+      "wide",
+      "large_rectangle",
+      "medium_rectangle",
+      "small_square",
+      "small_rectangle",
+      "medium_square"
+    ],
+    "image_urls": {
+      "large_square": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/large_square.jpg",
+      "wide": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/wide.jpg",
+      "large_rectangle": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/large_rectangle.jpg",
+      "medium_rectangle": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/medium_rectangle.jpg",
+      "small_square": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/small_square.jpg",
+      "small_rectangle": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/small_rectangle.jpg",
+      "medium_square": "https://d32dm0rphc51dk.cloudfront.net/Mrs4MfrqGv5NCFpT53qIvA/medium_square.jpg"
+    },
+    "display_on_desktop": true,
+    "display_on_mobile": true,
+    "display_on_martsy": true,
+    "created_at": "2017-03-29T11:42:36+00:00",
+    "updated_at": "2017-03-29T11:49:55+00:00"
+  },
+  {
+    "created_by": {
+      "id": "568b1bfc7076d06f85000018",
+      "_id": "568b1bfc7076d06f85000018",
+      "name": "Lydia Epp Schmidt"
+    },
+    "id": "58d3b200cd530e4d4bb06a3a",
+    "_id": "58d3b200cd530e4d4bb06a3a",
+    "href": "https://www.artsy.net/auction/phillips-photographs-1",
+    "title": "Featured Auction",
+    "subtitle": "Phillips: Photographs",
+    "original_width": 857,
+    "original_height": 542,
+    "image_url": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/:version.jpg",
+    "image_versions": [
+      "small_square",
+      "medium_square",
+      "medium_rectangle",
+      "small_rectangle",
+      "large_rectangle",
+      "large_square",
+      "wide"
+    ],
+    "image_urls": {
+      "small_square": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/small_square.jpg",
+      "medium_square": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/medium_square.jpg",
+      "medium_rectangle": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/medium_rectangle.jpg",
+      "small_rectangle": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/small_rectangle.jpg",
+      "large_rectangle": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/large_rectangle.jpg",
+      "large_square": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/large_square.jpg",
+      "wide": "https://d32dm0rphc51dk.cloudfront.net/6tHECxihuTAB96efsfeOaw/wide.jpg"
+    },
+    "display_on_desktop": true,
+    "display_on_mobile": true,
+    "display_on_martsy": true,
+    "created_at": "2017-03-23T11:31:12+00:00",
+    "updated_at": "2017-03-29T11:46:45+00:00"
+  },
+  {
+    "created_by": {
+      "id": "568b1bfc7076d06f85000018",
+      "_id": "568b1bfc7076d06f85000018",
+      "name": "Lydia Epp Schmidt"
+    },
+    "id": "58db9b629c18db6adee9db4a",
+    "_id": "58db9b629c18db6adee9db4a",
+    "href": "/miart-2017",
+    "title": "Featured Fair",
+    "subtitle": "miart",
+    "original_width": 768,
+    "original_height": 1024,
+    "image_url": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/:version.jpg",
+    "image_versions": [
+      "large_rectangle",
+      "small_square",
+      "small_rectangle",
+      "medium_rectangle",
+      "large_square",
+      "wide",
+      "medium_square"
+    ],
+    "image_urls": {
+      "large_rectangle": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/large_rectangle.jpg",
+      "small_square": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/small_square.jpg",
+      "small_rectangle": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/small_rectangle.jpg",
+      "medium_rectangle": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/medium_rectangle.jpg",
+      "large_square": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/large_square.jpg",
+      "wide": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/wide.jpg",
+      "medium_square": "https://d32dm0rphc51dk.cloudfront.net/wvWHTqSvuw2O0z5uUgIBXQ/medium_square.jpg"
+    },
+    "display_on_desktop": true,
+    "display_on_mobile": true,
+    "display_on_martsy": true,
+    "created_at": "2017-03-29T11:32:50+00:00",
+    "updated_at": "2017-03-29T11:48:13+00:00"
+  },
+  {
+    "created_by": {
+      "id": "568b1bfc7076d06f85000018",
+      "_id": "568b1bfc7076d06f85000018",
+      "name": "Lydia Epp Schmidt"
+    },
+    "id": "58d3b2a3cd530e4d4bb06a4e",
+    "_id": "58d3b2a3cd530e4d4bb06a4e",
+    "href": "https://www.artsy.net/aipad-2017",
+    "title": "Featured Fair",
+    "subtitle": "The Photography Show, Presented by AIPAD",
+    "original_width": 1024,
+    "original_height": 828,
+    "image_url": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/:version.jpg",
+    "image_versions": [
+      "medium_square",
+      "large_square",
+      "small_square",
+      "small_rectangle",
+      "medium_rectangle",
+      "large_rectangle",
+      "wide"
+    ],
+    "image_urls": {
+      "medium_square": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/medium_square.jpg",
+      "large_square": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/large_square.jpg",
+      "small_square": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/small_square.jpg",
+      "small_rectangle": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/small_rectangle.jpg",
+      "medium_rectangle": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/medium_rectangle.jpg",
+      "large_rectangle": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/large_rectangle.jpg",
+      "wide": "https://d32dm0rphc51dk.cloudfront.net/NCLzqSsPBlBf05_SBqFcMw/wide.jpg"
+    },
+    "display_on_desktop": true,
+    "display_on_mobile": true,
+    "display_on_martsy": true,
+    "created_at": "2017-03-23T11:33:55+00:00",
+    "updated_at": "2017-03-29T11:50:14+00:00"
+  }
+]

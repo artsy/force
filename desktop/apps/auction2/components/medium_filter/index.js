@@ -2,7 +2,7 @@ import { updateMediumParams } from '../../client/actions'
 import BasicCheckbox from '../basic_checkbox'
 import React from 'react';
 import { connect } from 'react-redux'
-import _, { contains, find } from 'underscore'
+import _, { contains } from 'underscore'
 
 function MediumFilter(props) {
   const {
@@ -28,7 +28,7 @@ function MediumFilter(props) {
       {
         _.map(initialMediumMap, (initialAgg) => {
           const mediumSelected = contains(mediumIds, initialAgg.id)
-          const includedMedium = aggregatedMediums.find((agg) => agg.id === initialAgg.id)
+          const includedMedium = _.find(aggregatedMediums, (agg) => agg.id === initialAgg.id)
           return (
             <BasicCheckbox
               key={initialAgg.id}

@@ -61,6 +61,9 @@ mixin amp_video(section)
       amp-youtube(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
     else if section.url.match('vimeo')
       amp-vimeo(data-videoid=embed.getId(section.url) layout="responsive" width="480" height="270")
+    if section.caption && section.caption.length > 0
+      figcaption
+        != section.caption
 
 mixin amp_embed(section)
   .article-section-container.responsive-layout-container
