@@ -1,37 +1,22 @@
 import React from 'react'
-import styled from 'styled-components'
 
 FamilyList.propTypes = {
   data: React.PropTypes.array
 }
 
-const Ul = styled.ul`
-  padding-top: 2em
-`
-
-const Column = styled.div`
-  flex: 1
-  font-size: 14px
-  color: #333
-  padding: 2em 1em
-  text-transform: uppercase
-`
-
-function FamilyList(props){
+function FamilyList({className, data}){
   return (
-    <Column>
-      <Ul>
+      <ul className={className}>
         {
-          props.data.map((value) => {
+          data.map((value) => {
             return (
-              <li key={`gene-${value.id}`}>
+              <li key={value.id}>
                 <a href={`#${value.id}`}>{value.name}</a>
               </li>
             )
           })
         }
-      </Ul>
-    </Column>
+      </ul>
   )
 }
 

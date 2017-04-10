@@ -26,6 +26,14 @@ const StyledIntro = styled(Intro)`
   }
 `
 
+const StyledFamilyList = styled(FamilyList)`
+  padding-top: 2em;
+  font-size: 14px;
+  color: #333;
+  padding: 2em 1em;
+  text-transform: uppercase;
+`
+
 class AppContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -35,7 +43,7 @@ class AppContainer extends React.Component {
   render () {
     return (
       <Column>
-        <FamilyList data={this.state.data} />
+        <StyledFamilyList data={this.state.data} />
         <Content>
           <StyledIntro />
           <GeneFamilies data={this.state.data} />
