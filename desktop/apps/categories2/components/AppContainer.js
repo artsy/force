@@ -8,7 +8,7 @@ import { media } from '../styles/style-utils'
 import Intro from './Intro'
 import FamilyList from './FamilyList'
 import Content from './Content'
-import GeneFamilies from './GeneFamilies'
+import FamilyAndGeneList from './FamilyAndGeneList'
 
 const Column = styled.div`
   ${media.mobile`
@@ -43,7 +43,7 @@ class AppContainer extends React.Component {
         <StyledFamilyList data={this.state.data} />
         <Content>
           <StyledIntro />
-          <GeneFamilies data={this.state.data} />
+          <FamilyAndGeneList data={this.state.data} />
         </Content>
       </Column>
     )
