@@ -37,7 +37,7 @@ function FamilyAndGeneList (props) {
 
 function GeneFamily (props) {
   return (
-    <div id={props.id}>
+    <div id={props.id} className='gene-family'>
       <h3>{props.name}</h3>
       <div>{props.description}</div>
       <Genes data={props.genes} />

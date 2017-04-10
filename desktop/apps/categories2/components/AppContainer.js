@@ -23,18 +23,22 @@ const StyledFamilyList = styled(FamilyList)`
 `
 
 const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
+  .gene-family {
+    border-top: 1px solid #ccc
+  }
+  h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
   ${media.mobile`
     ul {
       column-count: 3;
       column-gap: 1em;
-      padding: 1em 0;
     }
   `}
 `
 
 const Grid = styled.div`
-  outline: solid 1px red;
-  margin: auto;
   display: flex;
   flex-direction: column;
   ${media.mobile`
@@ -44,9 +48,6 @@ const Grid = styled.div`
 
 const Column = styled.div`
   flex: 0 0 ${props => props.width * (100.0 / 12)}%;
-  &:hover {
-    background: pink;
-  }
 `
 
 class AppContainer extends React.Component {
