@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-Sidebar.propTypes = {
+FamilyList.propTypes = {
   data: React.PropTypes.array
 }
 
@@ -17,7 +17,7 @@ const Column = styled.div`
   text-transform: uppercase
 `
 
-function Sidebar(props){
+function FamilyList(props){
   return (
     <Column>
       <Ul>
@@ -35,4 +35,4 @@ function Sidebar(props){
   )
 }
 
-export default Sidebar
+export default FamilyList

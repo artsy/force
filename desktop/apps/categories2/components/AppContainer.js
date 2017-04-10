@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { media } from '../styles/style-utils'
 
 import Intro from './Intro'
-import Sidebar from './Sidebar'
+import FamilyList from './FamilyList'
 import Content from './Content'
 import GeneFamilies from './GeneFamilies'
 
@@ -35,7 +35,7 @@ class AppContainer extends React.Component {
   render () {
     return (
       <Column>
-        <Sidebar data={this.state.data} />
+        <FamilyList data={this.state.data} />
         <Content>
           <StyledIntro />
           <GeneFamilies data={this.state.data} />
