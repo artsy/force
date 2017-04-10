@@ -4,10 +4,10 @@ FamilyList.propTypes = {
   data: React.PropTypes.array
 }
 
-function FamilyList({className, data}){
+function FamilyList ({className, data}) {
   return (
-      <ul className={className}>
-        {
+    <ul className={className}>
+      {
           data.map((value) => {
             return (
               <li key={value.id}>
@@ -16,7 +16,7 @@ function FamilyList({className, data}){
             )
           })
         }
-      </ul>
+    </ul>
   )
 }
 
