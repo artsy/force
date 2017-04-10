@@ -32,7 +32,7 @@ const StyledFamilyList = styled(FamilyList)`
 `
 
 const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
-  ${ media.mobile`
+  ${media.mobile`
     ul {
       column-count: 3;
       column-gap: 1em;

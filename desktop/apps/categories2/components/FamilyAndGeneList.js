@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react'
-import styled from 'styled-components'
-import { media } from '../styles/style-utils';
 
 FamilyAndGeneList.propTypes = {
   data: PropTypes.array
@@ -17,7 +15,7 @@ Genes.propTypes = {
   data: PropTypes.array
 }
 
-function FamilyAndGeneList(props){
+function FamilyAndGeneList (props) {
   return (
     <div className={props.className}>
       {
@@ -37,17 +35,17 @@ function FamilyAndGeneList(props){
   )
 }
 
-function GeneFamily(props){
+function GeneFamily (props) {
   return (
     <div id={props.id}>
       <h3>{props.name}</h3>
       <div>{props.description}</div>
-      <Genes data={props.genes}/>
+      <Genes data={props.genes} />
     </div>
   )
 }
 
-function Genes(props){
+function Genes (props) {
   return (
     <ul>
       {
