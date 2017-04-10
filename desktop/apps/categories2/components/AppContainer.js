@@ -10,8 +10,13 @@ import FamilyList from './FamilyList'
 import FamilyAndGeneList from './FamilyAndGeneList'
 
 const StyledIntro = styled(Intro)`
+  font-size: 20px;
+  line-height: 1.33em;
+  p {
+    margin: 1em 0;
+  }
   h2 {
-    font-size: 32px;
+    font-size: 50px;
     line-height: 100%;
   }
 `
@@ -24,11 +29,16 @@ const StyledFamilyList = styled(FamilyList)`
 
 const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
   .gene-family {
-    border-top: 1px solid #ccc
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 1em 0;
   }
   h3 {
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 25px;
+    line-height: 1.4em;
+  }
+  ul {
+    margin: 1em 0;
   }
   ${media.mobile`
     ul {
@@ -39,6 +49,7 @@ const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
 `
 
 const Grid = styled.div`
+  padding: 40px 0;
   display: flex;
   flex-direction: column;
   ${media.mobile`
@@ -48,6 +59,7 @@ const Grid = styled.div`
 
 const Column = styled.div`
   flex: 0 0 ${props => props.width * (100.0 / 12)}%;
+  padding: 0 0.5em;
 `
 
 class AppContainer extends React.Component {
