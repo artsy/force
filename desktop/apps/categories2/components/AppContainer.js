@@ -18,6 +18,14 @@ const Column = styled.div`
   ` }
 `
 
+const StyledIntro = styled(Intro)`
+  padding: 2em 1em;
+  h2 {
+    font-size: 32px;
+    line-height: 64px;
+  }
+`
+
 class AppContainer extends React.Component {
   constructor(props){
     super(props)
@@ -29,7 +37,7 @@ class AppContainer extends React.Component {
       <Column>
         <Sidebar data={this.state.data}/>
         <Content>
-          <Intro />
+          <StyledIntro />
           <GeneFamilies data={this.state.data} />
         </Content>
       </Column>
