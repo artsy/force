@@ -19,18 +19,15 @@ const Column = styled.div`
 `
 
 const StyledIntro = styled(Intro)`
-  padding: 2em 1em;
   h2 {
     font-size: 32px;
-    line-height: 64px;
+    line-height: 100%;
   }
 `
 
 const StyledFamilyList = styled(FamilyList)`
-  padding-top: 2em;
   font-size: 14px;
   color: #333;
-  padding: 2em 1em;
   text-transform: uppercase;
 `
 
