@@ -7,16 +7,7 @@ import { media } from '../styles/style-utils'
 
 import Intro from './Intro'
 import FamilyList from './FamilyList'
-import Content from './Content'
 import FamilyAndGeneList from './FamilyAndGeneList'
-
-const Column = styled.div`
-  ${media.mobile`
-    display: flex
-    flex: 0 1 auto
-    flex-flow: row wrap
-  `}
-`
 
 const StyledIntro = styled(Intro)`
   h2 {
@@ -41,6 +32,23 @@ const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
   `}
 `
 
+const Grid = styled.div`
+  outline: solid 1px red;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  ${media.mobile`
+    flex-direction: row;
+  `}
+`
+
+const Column = styled.div`
+  flex: 0 0 ${props => props.width * (100.0 / 12)}%;
+  &:hover {
+    background: pink;
+  }
+`
+
 class AppContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -49,13 +57,15 @@ class AppContainer extends React.Component {
 
   render () {
     return (
-      <Column>
-        <StyledFamilyList data={this.state.data} />
-        <Content>
+      <Grid>
+        <Column width={3}>
+          <StyledFamilyList data={this.state.data} />
+        </Column>
+        <Column width={9}>
           <StyledIntro />
           <StyledFamilyAndGeneList data={this.state.data} />
-        </Content>
-      </Column>
+        </Column>
+      </Grid>
     )
   }
 }
