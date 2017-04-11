@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Q = require 'bluebird-q'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 moment = require 'moment'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
@@ -17,10 +18,16 @@ module.exports = class AuctionReminderView extends Backbone.View
 
   click: (e) ->
     @dismisser.dismiss()
-
+    analyticsData = {
+      slug: @model.id,
+      auction_state: @model.reminderStatus()
+    }
     if $(e.target).hasClass 'js-dismiss'
       e.preventDefault()
+      analyticsHooks.trigger('auction_reminder:close', analyticsData)
       return @close()
+    else
+      analyticsHooks.trigger('auction_reminder:click', analyticsData)
 
   getOffsetTimesPromise: ->
     Q.promise (resolve, reject, notify) =>
