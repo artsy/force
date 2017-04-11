@@ -4,7 +4,7 @@ if myActiveBids && myActiveBids.length
   h2 Your Active Bids
   for bid in myActiveBids
     if bid.sale_artwork
-      .auction2-my-active-bids__active-bid
+      .auction2-my-active-bids__active-bid( data-artwork_id=bid.sale_artwork.id )
         .auction2-my-active-bids__artwork-container
           a(
             href=bid.sale_artwork.artwork.href
