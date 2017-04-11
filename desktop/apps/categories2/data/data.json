@@ -3,6 +3,18 @@
 	"name": "Materials",
 	"description": "The physical materials that compose artworks, design objects and works of architecture.",
 	"genes": [{
+		"id": "4da8aede6be1903a3e00020a",
+		"slug": "assemblage",
+		"name": "Assemblage"
+	}, {
+		"id": "506e389ed5ef4a0002000b06",
+		"slug": "bronze",
+		"name": "Bronze"
+	}, {
+		"id": "4f50f40ad9c50c027b1394b1",
+		"slug": "found-objects",
+		"name": "Found Objects"
+	}, {
 		"id": "4d90d18edcdd5f44a500000d",
 		"slug": "glass-as-material",
 		"name": "Glass as Material"
@@ -11,30 +23,6 @@
 		"slug": "mosaics",
 		"name": "Mosaics"
 	}, {
-		"id": "4da8aede6be1903a3e00020a",
-		"slug": "assemblage",
-		"name": "Assemblage"
-	}, {
-		"id": "4ddecc8482e98d0001006d5a",
-		"slug": "use-of-ephemeral-materials",
-		"name": "Use of Ephemeral Materials"
-	}, {
-		"id": "4e690c5052870200010ba672",
-		"slug": "use-of-common-materials",
-		"name": "Use of Common Materials"
-	}, {
-		"id": "4f50f40ad9c50c027b1394b1",
-		"slug": "found-objects",
-		"name": "Found Objects"
-	}, {
-		"id": "506e389ed5ef4a0002000b06",
-		"slug": "bronze",
-		"name": "Bronze"
-	}, {
-		"id": "507c48c4c9348a00020019ac",
-		"slug": "wood",
-		"name": "Wood"
-	}, {
 		"id": "507c4eb6177a7a0002001be2",
 		"slug": "plastic",
 		"name": "Plastic"
@@ -42,15 +30,39 @@
 		"id": "507c4f70623c020002001c5b",
 		"slug": "silver",
 		"name": "Silver"
+	}, {
+		"id": "4e690c5052870200010ba672",
+		"slug": "use-of-common-materials",
+		"name": "Use of Common Materials"
+	}, {
+		"id": "4ddecc8482e98d0001006d5a",
+		"slug": "use-of-ephemeral-materials",
+		"name": "Use of Ephemeral Materials"
+	}, {
+		"id": "507c48c4c9348a00020019ac",
+		"slug": "wood",
+		"name": "Wood"
 	}]
 }, {
 	"id": "575ac46debad644c13000004",
 	"name": "Medium and Techniques",
 	"description": "Includes methods and techniques used in painting, photography, printmaking, sculpture, filmmaking, performance and more.",
 	"genes": [{
+		"id": "4d90d18fdcdd5f44a500002a",
+		"slug": "collage",
+		"name": "Collage"
+	}, {
+		"id": "4d90d190dcdd5f44a500003c",
+		"slug": "comic-slash-cartoon",
+		"name": "Comic/Cartoon"
+	}, {
 		"id": "4d90d18edcdd5f44a500000e",
 		"slug": "installation",
 		"name": "Installation"
+	}, {
+		"id": "4d90d191dcdd5f44a5000050",
+		"slug": "kinetic-sculpture",
+		"name": "Kinetic Sculpture"
 	}, {
 		"id": "4d90d18edcdd5f44a500000f",
 		"slug": "mixed-media",
@@ -75,18 +87,6 @@
 		"id": "4d90d18fdcdd5f44a5000016",
 		"slug": "work-on-paper",
 		"name": "Work on Paper"
-	}, {
-		"id": "4d90d18fdcdd5f44a500002a",
-		"slug": "collage",
-		"name": "Collage"
-	}, {
-		"id": "4d90d190dcdd5f44a500003c",
-		"slug": "comic-slash-cartoon",
-		"name": "Comic/Cartoon"
-	}, {
-		"id": "4d90d191dcdd5f44a5000050",
-		"slug": "kinetic-sculpture",
-		"name": "Kinetic Sculpture"
 	}]
 }, {
 	"id": "575ac46debad644c13000005",
