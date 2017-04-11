@@ -69,34 +69,34 @@ exports[`renders correctly 1`] = `
         </div>
         <ul>
           <li>
+            Assemblage
+          </li>
+          <li>
+            Bronze
+          </li>
+          <li>
+            Found Objects
+          </li>
+          <li>
             Glass as Material
           </li>
           <li>
             Mosaics
           </li>
           <li>
-            Assemblage
+            Plastic
           </li>
           <li>
-            Use of Ephemeral Materials
+            Silver
           </li>
           <li>
             Use of Common Materials
           </li>
           <li>
-            Found Objects
-          </li>
-          <li>
-            Bronze
+            Use of Ephemeral Materials
           </li>
           <li>
             Wood
-          </li>
-          <li>
-            Plastic
-          </li>
-          <li>
-            Silver
           </li>
         </ul>
       </div>
@@ -112,7 +112,16 @@ exports[`renders correctly 1`] = `
         </div>
         <ul>
           <li>
+            Collage
+          </li>
+          <li>
+            Comic/Cartoon
+          </li>
+          <li>
             Installation
+          </li>
+          <li>
+            Kinetic Sculpture
           </li>
           <li>
             Mixed-Media
@@ -131,15 +140,6 @@ exports[`renders correctly 1`] = `
           </li>
           <li>
             Work on Paper
-          </li>
-          <li>
-            Collage
-          </li>
-          <li>
-            Comic/Cartoon
-          </li>
-          <li>
-            Kinetic Sculpture
           </li>
         </ul>
       </div>
