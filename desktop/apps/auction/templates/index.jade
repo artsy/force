@@ -1,0 +1,20 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'auctions'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .auction-page
+    include banner
+    .main-layout-container.responsive-layout-container
+      include header
+      #associated-sale
+
+      .auction-my-active-bids
+      #cf-artworks
+      if articles && articles.length > 0 || auction.get('eligible_sale_artworks_count') === 0
+        include footer
