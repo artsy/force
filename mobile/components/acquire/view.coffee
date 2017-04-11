@@ -1,6 +1,5 @@
 CurrentUser = require '../../models/current_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-analytics = require '../../lib/analytics.coffee'
 
 module.exports =
 
