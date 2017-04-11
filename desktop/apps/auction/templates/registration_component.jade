@@ -1,0 +1,33 @@
+if auction.isClosed()
+  = ''
+else if me && me.bidders && me.bidders.length > 0 && !me.bidders[0].qualified_for_bidding
+  .auction-registration-wrapper
+    button.avant-garde-button-black.is-block.is-disabled
+      | Registration pending
+    .auction-registration-small.auction-registration-small-warning Reviewing submitted information
+else if me && me.bidders && me.bidders.length > 0
+  .auction-registration-approved
+    span.icon-check
+    | Approved to Bid
+else if auction.isRegistrationEnded()
+  .auction-registration-wrapper
+    button.avant-garde-button-black.is-block.is-disabled
+      | Registration closed
+    .auction-registration-small Registration required to bid
+else
+  .auction-registration-wrapper
+    a.avant-garde-button-black.is-block.js-register-button(
+      href= auction.registerUrl()
+    ) Register to bid
+    .auction-registration-small Registration required to bid
+
+.auction-registration-how-to-bid
+  strong Questions?
+  br
+  a( href="/how-auctions-work" ) How to Bid on Artsy
+.auction-registration-question
+  strong Contact us
+  br
+  a( href='mailto:specialist@artsy.net' ) specialist@artsy.net
+  br
+  | +1.646.712.8154

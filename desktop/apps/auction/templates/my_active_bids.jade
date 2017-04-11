@@ -1,0 +1,34 @@
+include ../../../components/bid_status/index
+
+if myActiveBids && myActiveBids.length
+  h2 Your Active Bids
+  for bid in myActiveBids
+    if bid.sale_artwork
+      .auction-my-active-bids__active-bid( data-artwork_id=bid.sale_artwork.id )
+        .auction-my-active-bids__artwork-container
+          a(
+            href=bid.sale_artwork.artwork.href
+          )
+            img.auction-my-active-bids__img( src=bid.sale_artwork.artwork.image.url )
+        .auction-my-active-bids__artwork
+          .auction-my-active-bids__lot-number Lot #{bid.sale_artwork.lot_label}
+          h3= bid.sale_artwork.artwork.artist.name
+          .auction-my-active-bids__title
+            em= bid.sale_artwork.artwork.title
+            | ,&nbsp;
+            = bid.sale_artwork.artwork.date
+        .auction-my-active-bids__current-bid
+          - bidCount = bid.sale_artwork.counts.bidder_positions
+          <b>Current Bid:</b> #{bid.sale_artwork.highest_bid.display}
+        .auction-my-active-bids__bids-num (#{bidCount} Bid#{bidCount > 1 ? 's' : ''})
+        if bid.sale_artwork.sale.is_live_open
+          a.avant-garde-button-white.auction-my-active-bids__bid-live-button(
+              href=ViewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id)
+            ) Bid Live
+        else
+          .bid-status-cell
+            +bidStatus(bid, bid.sale_artwork)
+
+          a.avant-garde-button-white.auction-my-active-bids__bid-button(
+            href=bid.sale_artwork.artwork.href
+          ) Bid
