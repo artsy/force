@@ -94,8 +94,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               resolve()
             else
               reject "Registration submission error: #{xhr.responseJSON?.message}"
-    .then (bidder) ->
+    .then (bidder) =>
+      # Executes if registration is successful
       analyticsHooks.trigger 'registration:success', bidder_id: bidder.id
+      @disableForm() if @comboForm
+      @success()
 
   savePhoneNumber: ->
     # Always resolves; just delays until the process completes
@@ -107,14 +110,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       else
         resolve()
 
+  # Lock the form- action.finally() callback executes when form submission is complete regardless of success
   loadingLock: ($element, action) ->
     return if $element.hasClass('is-loading')
     $element.addClass 'is-loading'
-    action().finally =>
-      if @comboForm
-        @disableForm()
-      else
-        $element.removeClass 'is-loading'
+    action().finally => $element.removeClass 'is-loading' unless @comboForm
 
   onSubmit: =>
     analyticsHooks.trigger 'registration:submit-address'
@@ -125,5 +125,4 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @showError error
       .then =>
         @trigger('submitted')
-        @success()
 
