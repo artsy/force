@@ -30,6 +30,6 @@ export const landingPage = async (req, res, next) => {
   }
 
   catch(e) {
-    next()
+    next(e)
   }
 }

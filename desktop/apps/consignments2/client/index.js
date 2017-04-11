@@ -3,7 +3,7 @@ import Artworks from '../../../collections/artworks.coffee'
 import ArtworkRailView from '../../../components/artwork_rail/client/view.coffee'
 import multiPageView from '../../../components/multi_page/index.coffee'
 
-module.exports = ->
+export default {
   // 'Recently Sold' rail
   const artworks = new Artworks(RECENTLY_SOLD)
   const rail = new ArtworkRailView({
@@ -16,3 +16,5 @@ module.exports = ->
   const view = multiPageView 'consignment-faqs'
   view.collection.invoke('fetch')
   ($faq = $('.js-multi-page-embed')).html(view.render().$el)
+}
+
