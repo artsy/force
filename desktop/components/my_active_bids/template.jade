@@ -6,7 +6,7 @@ if myActiveBids && myActiveBids.length
       if bid.sale_artwork
         - leadingBidder = bid.is_leading_bidder
         - reserveNotMet = bid.sale_artwork.reserve_status === 'reserve_not_met'
-        li.my-active-bids-item( class= (!reserveNotMet && leadingBidder) ? ' my-active-bids-winning' : '' )
+        li.my-active-bids-item( data-artwork_id=bid.sale_artwork.id class= (!reserveNotMet && leadingBidder) ? ' my-active-bids-winning' : '' )
           a( href=bid.sale_artwork.artwork.href )
             img( src=bid.sale_artwork.artwork.image.url )
             .my-active-bids-item-details
