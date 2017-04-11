@@ -1,10 +1,28 @@
 Q = require 'bluebird-q'
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL, CSRF_TOKEN, APP_URL } = require('sharify').data
-syncWithSessionId = require '../lib/sync_with_session_id.coffee'
+{ API_URL, CSRF_TOKEN, APP_URL, SESSION_ID } = require('sharify').data
 User = require './user.coffee'
 sd = require('sharify').data
+IS_TEST_ENV = require('sharify').data.NODE_ENV is 'test'
+
+syncWithSessionId = ->
+  unless Backbone.__SESSION_SYNC_WRAPPED__ or IS_TEST_ENV
+    data = session_id: SESSION_ID
+
+    Backbone.__SESSION_SYNC_WRAPPED__ = true
+
+    Backbone.sync = _.wrap Backbone.sync, (sync, method, model, options = {}) ->
+      switch method
+        when 'read'
+          options.data = _.extend options.data or {}, data
+        when 'delete'
+          options.processData = true
+          options.data = data
+        else
+          @set data, silent: true
+
+      sync method, model, options
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false

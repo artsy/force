@@ -1,1 +1,1 @@
-require '../lib/vendor/openseadragon.js'
+require 'openseadragon'
