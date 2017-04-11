@@ -23,15 +23,15 @@ block body
     nav#auth-call-to-action-tabs
       a.auth-page-cta__signup-tab(
         href="#{sd.AP.signupPagePath}?action=#{action}" + (redirectTo ? "&redirect-to=#{redirectTo}" : '')
-        class=sd.CURRENT_PATH.includes('/sign_up') ? 'auth-call-to-action-tabs-active' : ''
+        class=sd.CURRENT_PATH.includes(sd.AP.signupPagePath) ? 'auth-call-to-action-tabs-active' : ''
       ) Sign Up
       a.auth-page-cta__login-tab(
         href="#{sd.AP.loginPagePath}?action=#{action}" + (redirectTo ? "&redirect-to=#{redirectTo}" : '')
-        class=sd.CURRENT_PATH.includes('/log_in') ? 'auth-call-to-action-tabs-active' : ''
+        class=sd.CURRENT_PATH.includes(sd.AP.loginPagePath) ? 'auth-call-to-action-tabs-active' : ''
       ) Log in
     ul#auth-call-to-action-forms
-      li(class=sd.CURRENT_PATH.includes('/sign_up') ? 'auth-call-to-action-form-active' : '')
+      li(class=sd.CURRENT_PATH.includes(sd.AP.signupPagePath) ? 'auth-call-to-action-form-active' : '')
         include signup_buttons
         include signup_append
-      li(class=sd.CURRENT_PATH.includes('/log_in') ? 'auth-call-to-action-form-active' : '')
+      li(class=sd.CURRENT_PATH.includes(sd.AP.loginPagePath) ? 'auth-call-to-action-form-active' : '')
         include login_form

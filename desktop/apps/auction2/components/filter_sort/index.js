@@ -1,5 +1,5 @@
-import { updateSort } from '../../actions'
-import React from 'react';
+import { updateSort } from '../../client/actions'
+import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 

@@ -1,3 +1,3 @@
-if artwork.sale && artwork.sale_artwork && artwork.sale_artwork.lot_number
+if artwork.sale && artwork.sale_artwork && artwork.sale_artwork.lot_label
   .artwork-metadata__lot-number
-    | Lot #{artwork.sale_artwork.lot_number}
+    | Lot #{artwork.sale_artwork.lot_label}

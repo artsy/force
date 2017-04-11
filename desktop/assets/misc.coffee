@@ -16,7 +16,7 @@ routes =
 
   '/personalize': require('../apps/personalize/client/index.coffee').init
 
-  '/professional-buyer': -> require('../apps/pro_buyer/client/index.coffee')
+  '/professional-buyer': require('../apps/pro_buyer/client/index.coffee')
 
   '/style-guide': require('../apps/style_guide/client/index.coffee').init
 
@@ -41,6 +41,8 @@ routes =
   '/search': require('../apps/search/client/index.coffee').init
 
   '/artsy-primer/.*': require('../apps/artsy_primer/client.js').default
+
+  '/primer-digest/.*': require('../apps/artsy_primer/client.js').default
 
   '/artsy-primer-personalize': require('../apps/artsy_primer/personalize/client/index.coffee').init
 

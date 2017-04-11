@@ -11,7 +11,7 @@ PAGE_SIZE = 100
 httpProxy = require 'http-proxy'
 sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
 
-@articles = (req, res, next) ->
+@news = (req, res, next) ->
   new Articles().fetch
     data:
       featured: true
@@ -24,31 +24,7 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
       recentArticles = articles.filter (article) ->
         moment(article.get 'published_at').isAfter(moment().subtract(2, 'days'))
       res.set 'Content-Type', 'text/xml'
-      res.render('news_sitemap', { pretty: true, articles: recentArticles })
-
-@index = (req, res, next) ->
-  resources = ['features']
-  async.parallel [
-    # Get the resource counts
-    (cb) ->
-      async.map resources, ((resource, cb) ->
-        request
-          .head(API_URL + '/api/v1/' + resource)
-          .set('X-XAPP-TOKEN': artsyXapp.token)
-          .query(total_count: 1)
-          .end(cb)
-      ), (err, results) ->
-        return cb(err) if err
-        allPages = results.map (sres) -> Math.ceil sres.headers['x-total-count'] / PAGE_SIZE
-        cb null, allPages
-  ], (err, [allPages]) ->
-    return next(err) if err
-    res.set 'Content-Type', 'text/xml'
-    res.render('index', {
-      pretty: true
-      allPages: allPages
-      resources: resources
-    })
+      res.render('news', { pretty: true, articles: recentArticles })
 
 @misc = (req, res, next) ->
   res.set 'Content-Type', 'text/xml'
@@ -61,34 +37,11 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
       res.set 'Content-Type', 'text/xml'
       res.render 'cities', pretty: true, citySlugs: partnerFeaturedCities.pluck('slug')
 
-@resourcePage = (req, res, next) ->
-  request
-    .get(API_URL + '/api/v1/' + req.params.resource)
-    .set('X-XAPP-TOKEN': artsyXapp.token)
-    .query(page: req.params.page, size: PAGE_SIZE)
-    .end (err, sres) ->
-      return next err if err
-      res.set 'Content-Type', 'text/xml'
-      res.render(req.params.resource, pretty: true, models: sres.body)
-
 # sitemaps for artworks and images are generated in Spark by Cinder and written to the artsy-sitemaps s3 bucket
 # see https://github.com/artsy/cinder/blob/master/doc/sitemaps.md for more information
 @sitemaps = (req, res, next) ->
   req.headers['host'] = parse(SITEMAP_BASE_URL).host
   sitemapProxy.web req, res
-
-@video = (req, res) ->
-  new Articles().fetch
-    data:
-      featured: true
-      published: true
-      sort: '-published_at'
-      has_video: true
-      exclude_google_news: false
-    error: res.backboneError
-    success: (articles) ->
-      res.set 'Content-Type', 'text/xml'
-      res.render('video', { pretty: true, articles: articles, moment: moment })
 
 @robots = (req, res) ->
   res.set 'Content-Type', 'text/plain'
@@ -99,15 +52,21 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
     Disallow: ?dns_source=
     Disallow: ?microsite=
     Disallow: ?from-show-guide=
-    Sitemap: #{APP_URL}/sitemap.xml
     Sitemap: #{APP_URL}/sitemap-articles.xml
     Sitemap: #{APP_URL}/sitemap-artists.xml
-    Sitemap: #{APP_URL}/sitemap-genes.xml
+    Sitemap: #{APP_URL}/sitemap-artist-images.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
+    Sitemap: #{APP_URL}/sitemap-cities.xml
+    Sitemap: #{APP_URL}/sitemap-fairs.xml
+    Sitemap: #{APP_URL}/sitemap-features.xml
+    Sitemap: #{APP_URL}/sitemap-genes.xml
     Sitemap: #{APP_URL}/sitemap-images.xml
+    Sitemap: #{APP_URL}/sitemap-misc.xml
+    Sitemap: #{APP_URL}/sitemap-news.xml
     Sitemap: #{APP_URL}/sitemap-partners.xml
     Sitemap: #{APP_URL}/sitemap-shows.xml
-    Sitemap: #{APP_URL}/sitemap-fairs.xml
+    Sitemap: #{APP_URL}/sitemap-tags.xml
+    Sitemap: #{APP_URL}/sitemap-videos.xml
 
   """
   res.send switch NODE_ENV

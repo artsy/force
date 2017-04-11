@@ -1,10 +1,13 @@
 import * as routes from './routes'
-import adminOnly from '../../lib/middleware/admin_only'
-const express = require('express')
+import express from 'express'
 
 const app = module.exports = express()
+
 app.set('view engine', 'jade')
 app.set('views', `${__dirname}/templates`)
 
-app.get('/auction2/:id', adminOnly, routes.index)
-app.get('/auction2/:id/confirm-registration', routes.redirectLive, routes.index)
+app.get('/sale/:id', routes.index)
+app.get('/sale/:id/confirm-registration', routes.index)
+
+app.get('/auction/:id', routes.index)
+app.get('/auction/:id/confirm-registration', routes.redirectLive, routes.index)

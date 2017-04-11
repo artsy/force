@@ -1,0 +1,768 @@
+{
+  "data": {
+    "artwork": {
+      "_id": "4d8b93ba4eb68a1b2c001c5b",
+      "is_shareable": false,
+      "is_hangable": true,
+      "dimensions": {
+        "cm": "335.3 \u00d7 381 cm",
+        "in": "132 \u00d7 150 in"
+      },
+      "articles": [
+
+      ],
+      "publisher": null,
+      "manufacturer": null,
+      "signature": null,
+      "provenance": null,
+      "description": null,
+      "additional_information": null,
+      "exhibition_history": null,
+      "bibliography": null,
+      "artists": [
+        {
+          "bio": "American, 1928-1987, Pittsburgh, Pennsylvania, based in New York, New York",
+          "name": "Andy Warhol",
+          "href": "\/artist\/andy-warhol",
+          "blurb": "<p>Obsessed with celebrity, consumer culture, and mechanical (re)production, <a href=\"\/gene\/pop-art\">Pop artist<\/a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art\u2014he variously mused that \u201cart is what you can get away with\u201d and \u201ceveryone will be famous for 15 minutes\u201d\u2014Warhol drew widely from popular culture and everyday subject matter, creating works like his <em>32 Campbell&#39;s Soup Cans<\/em> (1962), <a href=\"\/artwork\/andy-warhol-set-of-four-boxes-campbells-tomato-juice-del-monte-peach-halves-brillo-soap-pads-heinz-tomato-ketchup\">Brillo pad box sculptures<\/a>, and portraits of Marilyn Monroe, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls<\/em> (1966), Warhol was also a mentor to artists like <a href=\"\/artist\/keith-haring\">Keith Haring<\/a> and <a href=\"\/artist\/jean-michel-basquiat\">Jean-Michel Basquiat<\/a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href=\"\/artist\/richard-prince\">Richard Prince<\/a>, <a href=\"\/artist\/takashi-murakami\">Takashi Murakami<\/a>, and <a href=\"\/artist\/jeff-koons\">Jeff Koons<\/a>, among countless others.<\/p>\n",
+          "biography_blurb": {
+            "text": "<p>Obsessed with celebrity, consumer culture, and mechanical (re)production, <a href=\"\/gene\/pop-art\">Pop artist<\/a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art\u2014he variously mused that \u201cart is what you can get away with\u201d and \u201ceveryone will be famous for 15 minutes\u201d\u2014Warhol drew widely from popular culture and everyday subject matter, creating works like his <em>32 Campbell&#39;s Soup Cans<\/em> (1962), <a href=\"\/artwork\/andy-warhol-set-of-four-boxes-campbells-tomato-juice-del-monte-peach-halves-brillo-soap-pads-heinz-tomato-ketchup\">Brillo pad box sculptures<\/a>, and portraits of Marilyn Monroe, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls<\/em> (1966), Warhol was also a mentor to artists like <a href=\"\/artist\/keith-haring\">Keith Haring<\/a> and <a href=\"\/artist\/jean-michel-basquiat\">Jean-Michel Basquiat<\/a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href=\"\/artist\/richard-prince\">Richard Prince<\/a>, <a href=\"\/artist\/takashi-murakami\">Takashi Murakami<\/a>, and <a href=\"\/artist\/jeff-koons\">Jeff Koons<\/a>, among countless others.<\/p>\n",
+            "credit": null,
+            "partner_id": null
+          },
+          "exhibition_highlights": [
+            {
+              "kind": "solo",
+              "name": "Andy Warhol: Shadows",
+              "start_at": "2016-02-26T12:00:00+00:00",
+              "href": "\/show\/guggenheim-museum-bilbao-andy-warhol-shadows",
+              "partner": {
+                "name": "Guggenheim Museum Bilbao"
+              },
+              "city": "Bilbao"
+            },
+            {
+              "kind": "solo",
+              "name": "YES!YES!YES! WARHOLMANIA IN MUNICH",
+              "start_at": "2015-06-23T12:00:00+00:00",
+              "href": "\/show\/museum-brandhorst-yes-yes-yes-warholmania-in-munich",
+              "partner": {
+                "name": "Museum Brandhorst"
+              },
+              "city": "Munich"
+            },
+            {
+              "kind": "solo",
+              "name": "Andy Warhol: Little Red Book #178",
+              "start_at": "2015-05-16T12:00:00+00:00",
+              "href": "\/show\/frye-art-museum-andy-warhol-little-red-book-number-178",
+              "partner": {
+                "name": "Frye Art Museum"
+              },
+              "city": "Seattle"
+            },
+            {
+              "kind": "solo",
+              "name": "Warhol by the Book",
+              "start_at": "2015-03-07T12:00:00+00:00",
+              "href": "\/show\/williams-college-museum-of-art-warhol-by-the-book",
+              "partner": {
+                "name": "Williams College Museum of Art"
+              },
+              "city": "Williamstown"
+            },
+            {
+              "kind": "solo",
+              "name": "Andy Warhol",
+              "start_at": "2013-05-12T04:00:00+00:00",
+              "href": "\/show\/the-brant-foundation-andy-warhol",
+              "partner": {
+                "name": "Brant Foundation"
+              },
+              "city": null
+            },
+            {
+              "kind": "solo",
+              "name": "POP UP - WARHOL LICHTENSTEIN WESSELMANN",
+              "start_at": "2014-05-27T00:00:00+00:00",
+              "href": "\/show\/galerie-andrea-caratsch-pop-up-warhol-lichtenstein-wesselmann",
+              "partner": {
+                "name": "Galerie Andrea Caratsch"
+              },
+              "city": null
+            },
+            {
+              "kind": "solo",
+              "name": "Master Prints selected by Michael Craig-Martin",
+              "start_at": "2014-03-28T00:00:00+00:00",
+              "href": "\/show\/alan-cristea-gallery-master-prints-selected-by-michael-craig-martin",
+              "partner": {
+                "name": "Alan Cristea Gallery"
+              },
+              "city": "London"
+            },
+            {
+              "kind": "solo",
+              "name": "Made in Italy",
+              "start_at": "2011-05-27T04:00:00+00:00",
+              "href": "\/show\/gagosian-gallery-made-in-italy",
+              "partner": {
+                "name": "Gagosian Gallery"
+              },
+              "city": "Rome"
+            },
+            {
+              "kind": "group",
+              "name": "Los Angeles to New York: The Dwan Gallery, 1959-1971",
+              "start_at": "2016-09-30T12:00:00+00:00",
+              "href": "\/show\/national-gallery-of-art-washington-dc-los-angeles-to-new-york-the-dwan-gallery-1959-1971",
+              "partner": {
+                "name": "National Gallery of Art, Washington, D.C."
+              },
+              "city": "Washington"
+            },
+            {
+              "kind": "group",
+              "name": "Big Picture: Art After 1945",
+              "start_at": "2016-07-23T12:00:00+00:00",
+              "href": "\/show\/seattle-art-museum-big-picture-art-after-1945",
+              "partner": {
+                "name": "Seattle Art Museum"
+              },
+              "city": "Seattle"
+            },
+            {
+              "kind": "group",
+              "name": "Who Shot Sports: A Photographic History, 1843 to the Present",
+              "start_at": "2016-07-15T12:00:00+00:00",
+              "href": "\/show\/brooklyn-museum-who-shot-sports-a-photographic-history-1843-to-the-present",
+              "partner": {
+                "name": "Brooklyn Museum"
+              },
+              "city": "Brooklyn"
+            },
+            {
+              "kind": "group",
+              "name": "The Doris and Donald Fisher Collection",
+              "start_at": "2016-05-14T12:00:00+00:00",
+              "href": "\/show\/san-francisco-museum-of-modern-art-sfmoma-the-doris-and-donald-fisher-collection",
+              "partner": {
+                "name": "San Francisco Museum of Modern Art (SFMOMA)"
+              },
+              "city": "San Francisco"
+            },
+            {
+              "kind": "group",
+              "name": "Unfinished: Thoughts Left Visible",
+              "start_at": "2016-03-18T12:00:00+00:00",
+              "href": "\/show\/the-metropolitan-museum-of-art-unfinished-thoughts-left-visible",
+              "partner": {
+                "name": "The Metropolitan Museum of Art"
+              },
+              "city": "New York"
+            },
+            {
+              "kind": "group",
+              "name": "MashUp: The Birth of Modern Culture",
+              "start_at": "2016-02-20T12:00:00+00:00",
+              "href": "\/show\/vancouver-art-gallery-mashup-the-birth-of-modern-culture",
+              "partner": {
+                "name": "Vancouver Art Gallery"
+              },
+              "city": "Vancouver"
+            },
+            {
+              "kind": "group",
+              "name": "Andy Warhol | Ai Weiwei",
+              "start_at": "2015-12-11T12:00:00+00:00",
+              "href": "\/show\/national-gallery-of-victoria-andy-warhol-ai-weiwei",
+              "partner": {
+                "name": "National Gallery of Victoria"
+              },
+              "city": "Melbourne"
+            },
+            {
+              "kind": "group",
+              "name": "Warhol Unlimited",
+              "start_at": "2015-10-02T12:00:00+00:00",
+              "href": "\/show\/musee-dart-moderne-de-la-ville-de-paris-warhol-unlimited",
+              "partner": {
+                "name": "Mus\u00e9e d'Art Moderne de la Ville de Paris"
+              },
+              "city": "Paris"
+            },
+            {
+              "kind": "group",
+              "name": "Pearlstein, Warhol, Cantor: From Pittsburgh to New York",
+              "start_at": "2015-05-30T12:00:00+00:00",
+              "href": "\/show\/andy-warhol-museum-pearlstein-warhol-cantor-from-pittsburgh-to-new-york",
+              "partner": {
+                "name": "Andy Warhol Museum"
+              },
+              "city": "Pittsburgh"
+            },
+            {
+              "kind": "group",
+              "name": "China: Through the Looking Glass",
+              "start_at": "2015-05-07T12:00:00+00:00",
+              "href": "\/show\/the-metropolitan-museum-of-art-china-through-the-looking-glass",
+              "partner": {
+                "name": "The Metropolitan Museum of Art"
+              },
+              "city": "New York"
+            },
+            {
+              "kind": "group",
+              "name": "International Pop",
+              "start_at": "2015-04-11T12:00:00+00:00",
+              "href": "\/show\/walker-art-center-international-pop",
+              "partner": {
+                "name": "Walker Art Center"
+              },
+              "city": "Minneapolis"
+            },
+            {
+              "kind": "group",
+              "name": "Arts & Foods: Rituals since 1851",
+              "start_at": "2015-04-09T12:00:00+00:00",
+              "href": "\/show\/triennale-design-museum-arts-and-foods-rituals-since-1851",
+              "partner": {
+                "name": "Triennale Design Museum"
+              },
+              "city": "Milan"
+            }
+          ],
+          "articles": [
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0coAi_H35Q3Mt4OpemqhQA%252Fkids.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-your-kids-will-love-these-children-s-books-illustrated-by-famous-artists",
+              "title": "Your Kids Will Love These Children\u2019s Books Illustrated by Famous Artists",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FNBJyOTneDbTkR38FyEPTmA%252Fwarhol.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-the-7-most-expensive-works-at-next-week-s-new-york-auctions",
+              "title": "The Stories behind the 7 Works with the Highest Estimates at Next Week\u2019s New York Auctions",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FlSihpcPq8Hx5bAVVXbXgww%252Fe.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-how-warhol-rauschenberg-and-chamberlain-smuggled-art-onto-the-moon",
+              "title": "In 1969, Warhol, Rauschenberg, and Chamberlain Sent Their Art to the Moon",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FhQpyJMXo2Em3OLy9WGBT_A%252Flarger-29.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-from-designers-in-dresses-to-models-off-duty-11-iconic-fashion-photographs-from-the-past-three-decades",
+              "title": "From Designers in Dresses to Models Off Duty, 11 Iconic Fashion Photographs from the Past Three Decades",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F4JfYD1cUCrfTofIkIyjWvg%252Fliz.jpg"
+                }
+              },
+              "href": "\/article\/robin-rile-fine-art-andy-warhol-s-starlets",
+              "title": "Andy Warhol\u2019s Starlets",
+              "author": {
+                "name": "Robin Rile Fine Art"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F2_qk7N4U5nr_WE2T9o-FPw%252Fbilly.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-dead-at-76-billy-name-captured-warhol-s-factory-in-its-prime",
+              "title": "Storied Photographer of Warhol\u2019s Factory, Billy Name, Remembered through His Iconic Images",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FckZNheDgRz_00KLDDWO12w%252Ffrida.jpg"
+                }
+              },
+              "href": "\/article\/editorial-10-masters-of-the-self-portrait-in-their",
+              "title": "10 Masters of the Self-Portrait, in Their Own Words",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FF0HC3bT6juWiktmXohdxUw%252Flarger-22.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-what-does-it-take-to-capture-the-perfect-sports-moment",
+              "title": "The Stories behind Some of the Most Striking Sports Photographs of the Last Century",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FI5cHtRJhHafKVvgb73cKhA%252Flarger-31.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-5-things-to-know-about-investing-in-art-right-now",
+              "title": "5 Things to Know about Investing in Art Right Now",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            },
+            {
+              "thumbnail_image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=100&height=100&quality=95&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FqIfus0XKKVelxJPYXuON6w%252Flarger-25.jpg"
+                }
+              },
+              "href": "\/article\/artsy-editorial-iconic-artists-and-movements-of-the-1960s",
+              "title": "How the 1960s\u2019 Most Iconic Artists Made Art Contemporary",
+              "author": {
+                "name": "Artsy Editorial"
+              }
+            }
+          ],
+          "artists": [
+            {
+              "id": "james-rosenquist",
+              "name": "James Rosenquist",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F3VUm07DpKQNQdA_QfCrPcA%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1933",
+              "years": "born 1933",
+              "counts": {
+                "artworks": 151,
+                "for_sale_artworks": 118
+              },
+              "href": "\/artist\/james-rosenquist"
+            },
+            {
+              "id": "tom-wesselmann",
+              "name": "Tom Wesselmann",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8smV519M1L352CTihrfW7A%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1931\u20132004",
+              "years": "1931-2004",
+              "counts": {
+                "artworks": 241,
+                "for_sale_artworks": 184
+              },
+              "href": "\/artist\/tom-wesselmann"
+            },
+            {
+              "id": "robert-indiana",
+              "name": "Robert Indiana",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FxPV7zLtiKJPPxRVJTEtHIA%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1928",
+              "years": "born 1928",
+              "counts": {
+                "artworks": 280,
+                "for_sale_artworks": 203
+              },
+              "href": "\/artist\/robert-indiana"
+            },
+            {
+              "id": "roy-lichtenstein",
+              "name": "Roy Lichtenstein",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2For9oKva9F7V4VjrUKKx2iA%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1923\u20131997",
+              "years": "1923-1997",
+              "counts": {
+                "artworks": 464,
+                "for_sale_artworks": 290
+              },
+              "href": "\/artist\/roy-lichtenstein"
+            },
+            {
+              "id": "claes-oldenburg-and-coosje-van-bruggen",
+              "name": "Claes Oldenburg & Coosje van Bruggen",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FlnJopeqKO7np6fvqpegQpQ%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1929 and 1942",
+              "years": "1929 and 1942",
+              "counts": {
+                "artworks": 10,
+                "for_sale_artworks": 8
+              },
+              "href": "\/artist\/claes-oldenburg-and-coosje-van-bruggen"
+            },
+            {
+              "id": "jim-dine",
+              "name": "Jim Dine",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FLl4gMf_OsLMehbgv05H6mw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1935",
+              "years": "born 1935",
+              "counts": {
+                "artworks": 453,
+                "for_sale_artworks": 366
+              },
+              "href": "\/artist\/jim-dine"
+            },
+            {
+              "id": "mel-ramos",
+              "name": "Mel Ramos",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FzRIrcfojWmxXOleolo3nNw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1935",
+              "years": "born 1935",
+              "counts": {
+                "artworks": 250,
+                "for_sale_artworks": 217
+              },
+              "href": "\/artist\/mel-ramos"
+            },
+            {
+              "id": "wayne-thiebaud",
+              "name": "Wayne Thiebaud",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F1bKgwCv09hoThqSvodBiBw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1920",
+              "years": "born 1920",
+              "counts": {
+                "artworks": 147,
+                "for_sale_artworks": 113
+              },
+              "href": "\/artist\/wayne-thiebaud"
+            },
+            {
+              "id": "richard-hamilton",
+              "name": "Richard Hamilton",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCqLm5-pqOP2wlCcXoxTkhw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "British, 1922\u20132011",
+              "years": "1922-2011",
+              "counts": {
+                "artworks": 74,
+                "for_sale_artworks": 56
+              },
+              "href": "\/artist\/richard-hamilton"
+            },
+            {
+              "id": "marjorie-strider",
+              "name": "Marjorie Strider",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FFjy4sK_44VTNf3Q7Yz7VQw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1934\u20132014",
+              "years": "1934-2014",
+              "counts": {
+                "artworks": 29,
+                "for_sale_artworks": 13
+              },
+              "href": "\/artist\/marjorie-strider"
+            },
+            {
+              "id": "claes-oldenburg",
+              "name": "Claes Oldenburg",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F6q6LeyKvA_vpT5YzHRSNUA%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "Swedish, b. 1929",
+              "years": "born 1929",
+              "counts": {
+                "artworks": 70,
+                "for_sale_artworks": 44
+              },
+              "href": "\/artist\/claes-oldenburg"
+            },
+            {
+              "id": "jim-nutt",
+              "name": "Jim Nutt",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F-AIa43HixxWFVBOMx1KbXw%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1938",
+              "years": "born 1938",
+              "counts": {
+                "artworks": 9,
+                "for_sale_artworks": 2
+              },
+              "href": "\/artist\/jim-nutt"
+            },
+            {
+              "id": "richard-phillips",
+              "name": "Richard Phillips",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FPibzWeSAt4ZHGV_f1dgd1A%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, b. 1962",
+              "years": "born 1962",
+              "counts": {
+                "artworks": 92,
+                "for_sale_artworks": 15
+              },
+              "href": "\/artist\/richard-phillips"
+            },
+            {
+              "id": "sturtevant-1",
+              "name": "Sturtevant",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FVZ3u45lNAm7SL_0ncPoEag%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1924\u20132014",
+              "years": "1924-2014",
+              "counts": {
+                "artworks": 14,
+                "for_sale_artworks": 3
+              },
+              "href": "\/artist\/sturtevant-1"
+            },
+            {
+              "id": "duane-hanson",
+              "name": "Duane Hanson",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FvqmGCFGPFerXXKagG7udQA%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1925\u20131996",
+              "years": "1925-1996",
+              "counts": {
+                "artworks": 12,
+                "for_sale_artworks": 0
+              },
+              "href": "\/artist\/duane-hanson"
+            },
+            {
+              "id": "dennis-hopper",
+              "name": "Dennis Hopper",
+              "image": {
+                "cropped": {
+                  "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fill&width=400&height=300&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FTrFjIT_iogQEQtprbqkvpg%2Flarge.jpg"
+                }
+              },
+              "formatted_nationality_and_birthday": "American, 1936\u20132013",
+              "years": "1936-2013",
+              "counts": {
+                "artworks": 21,
+                "for_sale_artworks": 7
+              },
+              "href": "\/artist\/dennis-hopper"
+            }
+          ],
+          "is_consignable": true,
+          "_id": "4d8b92b34eb68a1b2c0003f4",
+          "id": "andy-warhol"
+        }
+      ],
+      "id": "andy-warhol-skull",
+      "href": "\/artwork\/andy-warhol-skull",
+      "sale_message": null,
+      "is_sold": false,
+      "is_buy_nowable": false,
+      "is_in_auction": false,
+      "sale": null,
+      "sale_artwork": null,
+      "banner": null,
+      "context": null,
+      "is_acquireable": false,
+      "is_inquireable": true,
+      "is_purchasable": false,
+      "availability": "not for sale",
+      "contact_message": null,
+      "is_price_range": false,
+      "price": "",
+      "partner": {
+        "id": "gagosian-gallery",
+        "name": "Gagosian Gallery",
+        "type": "Gallery",
+        "is_pre_qualify": true,
+        "_id": "4d8b92c44eb68a1b2c0004cb",
+        "is_linkable": true,
+        "href": "\/gagosian-gallery",
+        "locations": [
+          {
+            "city": "New York",
+            "phone": "+1 212 744 2313"
+          },
+          {
+            "city": "New York",
+            "phone": null
+          },
+          {
+            "city": "New York",
+            "phone": "+1 212 796 1228"
+          },
+          {
+            "city": "New York",
+            "phone": "+1 212 741 1111"
+          },
+          {
+            "city": "New York",
+            "phone": "+1 212 741 1717"
+          },
+          {
+            "city": "Beverly Hills",
+            "phone": "+1 310 271 9400"
+          },
+          {
+            "city": "San Francisco",
+            "phone": "+1 415 546 3990"
+          },
+          {
+            "city": "London",
+            "phone": "+44 207 841 9960"
+          },
+          {
+            "city": "London",
+            "phone": "+44 207 495 1500"
+          },
+          {
+            "city": "London",
+            "phone": "+44 207 493 3020"
+          },
+          {
+            "city": "Paris",
+            "phone": "+33 1 75 00 05 92"
+          },
+          {
+            "city": "Le Bourget",
+            "phone": "+33 1 48 16 16 47"
+          },
+          {
+            "city": "Rome",
+            "phone": "+39 06 4208 6498"
+          },
+          {
+            "city": "Geneva",
+            "phone": "+41 22 319 36 19"
+          },
+          {
+            "city": "Athens",
+            "phone": "+30 210 36 40 215"
+          },
+          {
+            "city": "Central, Hong Kong",
+            "phone": "+852 2151 0555"
+          }
+        ]
+      },
+      "fair": null,
+      "edition_sets": [
+
+      ],
+      "images": [
+        {
+          "deep_zoom": {
+            "Image": {
+              "xmlns": "http:\/\/schemas.microsoft.com\/deepzoom\/2008",
+              "Url": "https:\/\/d32dm0rphc51dk.cloudfront.net\/vAYXuDl0rYz7QR0Jx4MK2Q\/dztiles\/",
+              "Format": "jpg",
+              "TileSize": 512,
+              "Overlap": 0,
+              "Size": {
+                "Width": 1198,
+                "Height": 1050
+              }
+            }
+          },
+          "id": "4e68f259528702000104c329",
+          "url": "https:\/\/d32dm0rphc51dk.cloudfront.net\/vAYXuDl0rYz7QR0Jx4MK2Q\/larger.jpg",
+          "placeholder": {
+            "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fit&width=30&height=26&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FvAYXuDl0rYz7QR0Jx4MK2Q%2Fsmall.jpg"
+          },
+          "is_zoomable": true
+        }
+      ],
+      "title": "Skull",
+      "image_alt": "Andy Warhol, \u2018Skull\u2019, 1976, Gagosian Gallery",
+      "image_title": "Andy Warhol, \u2018Skull\u2019, 1976",
+      "is_embeddable_video": false,
+      "embed": null,
+      "meta_image": {
+        "resized": {
+          "width": 640,
+          "height": 560,
+          "url": "https:\/\/d7hftxdivxxvm.cloudfront.net\/?resize_to=fit&width=640&height=560&quality=95&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FvAYXuDl0rYz7QR0Jx4MK2Q%2Flarge.jpg"
+        }
+      },
+      "meta": {
+        "title": "Andy Warhol | Skull (1976) | Artsy",
+        "description": "From Gagosian Gallery, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 \u00d7 150 in",
+        "long_description": "From Gagosian Gallery, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 \u00d7 150 in"
+      },
+      "series": null,
+      "date": "1976",
+      "edition_of": null,
+      "cultural_maker": null,
+      "medium": "Synthetic polymer paint and silkscreen ink on canvas",
+      "website": "",
+      "image_rights": "\u00a9 2012 The Andy Warhol Foundation for the Visual Arts, Inc. \/ Artists Rights Society (ARS), New York",
+      "is_downloadable": false,
+      "collecting_institution": null,
+      "is_for_sale": false
+    }
+  }
+}

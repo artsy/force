@@ -1,48 +1,59 @@
 include ../../prevent_right_click/index
 != newRelicHead
-meta( charset='utf-8' )
-meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
-meta( property="al:ios:app_store_id" content='703796080' )
-meta( property="al:ios:app_name" content='Artsy' )
-meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
-meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
-link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
+link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
+link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
 link( rel='apple-touch-icon', sizes='120x120', href=asset('/images/icon-120.png') )
 link( rel='apple-touch-icon', sizes='152x152', href=asset('/images/icon-152.png') )
-link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
+link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
 link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=asset('/images/opensearch.xml'), title='Artsy' )
-script( src=asset('/assets/scroll_frame.js') )
-title= fair.toPageTitle()
-meta( property="og:title", content=fair.toPageTitle())
+meta( charset='utf-8' )
+meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 meta( name="description", content=fair.toPageDescription() )
+meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
+meta( name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1' )
+meta( property="al:ios:app_name" content='Artsy' )
+meta( property="al:ios:app_store_id" content='703796080' )
+meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 meta( property="og:description", content=fair.toPageDescription() )
-meta( property="twitter:description", content=fair.toPageDescription())
-link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
-meta( property="og:url", content=(sd.APP_URL + sd.CURRENT_PATH) )
-
-meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":exhibition" ) )
-meta( property="og:start_time", content=fair.get('start_at'))
 meta( property="og:end_time", content=fair.get('end_at'))
-if fair.get('location')
-  meta( property="og:location", content=fair.get('location').raw )
+meta( property="og:start_time", content=fair.get('start_at'))
+meta( property="og:title", content=fair.toPageTitle())
+meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":exhibition" ) )
+meta( property="og:url", content=(sd.APP_URL + sd.CURRENT_PATH) )
 meta( property="profile:type", content=profile.profileType() )
 meta( property="profile:username", content=profile.get('id') )
 meta( property="twitter:card", content="summary" )
+meta( property="twitter:description", content=fair.toPageDescription())
+script( src=asset('/assets/scroll_frame.js') )
+title= fair.toPageTitle()
+
+if fair.get('location')
+  meta( property="og:location", content=fair.get('location').raw )
+
 if profile.iconImageUrl()
   meta( property="og:image", content=profile.iconImageUrl() )
+
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )
-if sd.IS_RESPONSIVE && (userAgent && !userAgent.match('iPad'))
-  meta( name='viewport', content='width=device-width, initial-scale=1' )
-else
-  meta( name='viewport', content='user-scalable=1, width=1300' )
 
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   script( type='text/javascript', src='//fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js' )
 
 //- Sailthru Metatags
+meta( name='sailthru.author', content=fair.get('name') )
+meta( name='sailthru.date', content=fair.get('autopublish_artworks_at') )
+meta( name='sailthru.expire_date', content=fair.get('end_at') )
+meta( name='sailthru.image.full', content=fair.imageUrl('large_rectangle') )
+meta( name='sailthru.image.thumb' content=fair.imageUrl('square') )
+meta( name='sailthru.title' content=fair.get('name') )
+meta( name='sailthru_fair_end', content=fair.get('end_at') )
+meta( name='sailthru_fair_page', content='landing-page' )
+meta( name='sailthru_fair_partner_number' content=fair.get('partners_count') )
+meta( name='sailthru_fair_slug', content=fair.get('id') )
+meta( name='sailthru_fair_start', content=fair.get('start_at') )
+
 - var tags = ['fairs', fair.get('id')]
 if fair.get('location')
   if fair.get('location').city
@@ -50,10 +61,7 @@ if fair.get('location')
   if fair.get('location').country
     - tags = tags.concat([fair.get('location').country])
   meta( name='sailthru.tags', content=tags.join(', ') )
-meta( name='sailthru_fair_page', content='landing-page' )
-meta( name='sailthru.author', content=fair.get('name') )
-meta( name='sailthru.date', content=fair.get('autopublish_artworks_at') )
-meta( name='sailthru.expire_date', content=fair.get('end_at') )
+
 if fair.get('about')
   meta( name='sailthru.description', content=fair.mdToHtmlToText('about') )
 else if fair.get('summary')
@@ -62,16 +70,12 @@ else if fair.get('tagline')
   meta( name='sailthru.description', content=fair.get('tagline') )
 else
   meta( name='sailthru.description', content=fair.toPageDescription() )
-meta( name='sailthru.image.full', content=fair.imageUrl('large_rectangle') )
-meta( name='sailthru.image.thumb' content=fair.imageUrl('square') )
-meta( name='sailthru.title' content=fair.get('name') )
+
 if fair.get('location') && fair.get('location').coordinates && fair.get('location').display
   meta( name='sailthru_fair_location' content=fair.get('location').display )
-meta( name='sailthru_fair_start', content=fair.get('start_at') )
-meta( name='sailthru_fair_end', content=fair.get('end_at') )
-meta( name='sailthru_fair_partner_number' content=fair.get('partners_count') )
+
 if fair.get('hours')
   meta( name='sailthru_fair_hours' content=fair.mdToHtmlToText('hours') )
+
 if fair.get('tickets')
   meta( name='sailthru_fair_tickets' content=fair.mdToHtmlToText('tickets') )
-meta( name='sailthru_fair_slug', content=fair.get('id') )

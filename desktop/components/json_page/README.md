@@ -7,7 +7,7 @@ Deals with the fetching and editing of blobs of JSON on S3.
 ```coffeescript
 # index.coffee
 
-adminOnly = require '../../lib/middleware/admin_only'
+adminOnly = require '../../lib/admin_only'
 JSONPage = require '../../components/json_page'
 
 # Initialize a new page object

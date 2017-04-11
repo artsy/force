@@ -8,9 +8,11 @@
   },
   "scripts": {
     "mocha": "mocha -r should --compilers coffee:coffee-script/register,js:babel-core/register -t 30000",
-    "test": "yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
+    "acceptance-record": "node -r dotenv/config -r coffee-script/register -r babel-core/register test/acceptance/helpers/record",
+    "acceptance": "mocha --retries 5 --compilers coffee:coffee-script/register,js:babel-core/register -r dotenv/config -r should -t 300000 dotenv_config_path=.env.test test/acceptance/*.js",
+    "test": "yarn acceptance && yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
-    "deploy-assets": "mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
+    "deploy-assets": "NODE_ENV=production mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
     "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
   },
   "dependencies": {
@@ -53,6 +55,7 @@
     "cookie-session": "^2.0.0-alpha.1",
     "cookies-js": "^1.2.2",
     "cors": "^2.8.1",
+    "debug": "^2.6.3",
     "diacritics": "^1.2.2",
     "dompurify": "^0.8.4",
     "dotenv": "^4.0.0",
@@ -70,6 +73,7 @@
     "global": "^4.3.1",
     "google-maps-api": "^2.0.0",
     "graceful-fs": "^4.1.2",
+    "heapdump": "^0.3.7",
     "helmet": "^2.3.0",
     "http-proxy": "^1.11.2",
     "invariant": "^2.2.2",
@@ -80,11 +84,14 @@
     "jquery.payment": "^3.0.0",
     "knox": "^0.9.2",
     "mailcheck": "^1.1.1",
+    "memwatch-ng": "^1.2.0",
     "moment": "~2.16.0",
     "moment-timezone": "^0.5.5",
     "moment-twitter": "^0.2.0",
     "morgan": "^1.6.1",
     "nib": "^1.1.2",
+    "nightmare": "^2.10.0",
+    "nock": "^9.0.11",
     "node-uuid": "^1.4.3",
     "nouislider": "^9.0.0",
     "particle": "git://github.com/artsy/particle.git",
@@ -116,6 +123,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.2.2",
     "updeep": "^1.0.0",
+    "uuid": "^3.0.1",
     "validator": "^6.1.0",
     "xss-filters": "^1.2.6"
   },
@@ -173,26 +181,10 @@
     "uglify-js": "^2.5.0",
     "uglifyify": "^3.0.1",
     "validator": "^6.1.0",
-    "waypoints": "^4.0.0",
-    "zombie": "^5.0.4"
+    "waypoints": "^4.0.0"
   },
   "license": "MIT",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-3"
-    ],
-    "plugins": [
-      "inline-react-svg",
-      "transform-runtime",
-      "transform-class-properties",
-      "babel-plugin-rewire"
-    ]
-  },
   "optionalDependencies": {
     "fsevents": "*"
-  },
-  "description": "",
-  "main": "index.js"
+  }
 }

@@ -1,0 +1,17 @@
+footer.auction2-footer.auction2-page-section( class= articles.length ? 'has-articles' : 'has-no-articles' )
+  if articles.length
+    .auction2-footer__auction-articles
+      for article in articles.models
+        include ../../../components/article_figure/template
+
+  if footerItems && footerItems.length > 0 && !auction.isAuctionPromo()
+    - var item = footerItems[0]
+    .auction2-footer__auction-app-promo-wrapper
+      a.auction2-footer__auction-app-promo( href= item.href, target= item.target )
+        .auction2-footer__auction-app-promo-image
+          img( src= item.src, alt= item.alt )
+        .auction2-footer__auction-app-promo-metadata
+          .auction2-footer__auction-app-promo-title
+            = item.title
+          .auction2-footer__auction-app-promo-subtitle
+            = item.subtitle

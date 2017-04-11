@@ -1,29 +1,22 @@
 include ../../prevent_right_click/index
 != newRelicHead
-meta( charset='utf-8' )
-meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
-meta( property="al:ios:app_store_id" content='703796080' )
-meta( property="al:ios:app_name" content='Artsy' )
-meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
-meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
-meta( property="fb:pages" content="342443413406")
-meta( property="fb:admins" content="7961740")
-meta( property="fb:app_id" content="308278682573501")
-link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
+link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
 link( rel='apple-touch-icon', sizes='120x120', href=asset('/images/icon-120.png') )
 link( rel='apple-touch-icon', sizes='152x152', href=asset('/images/icon-152.png') )
-link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
+link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
 link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=asset('/images/opensearch.xml'), title='Artsy' )
+meta( charset='utf-8' )
+meta( name="apple-itunes-app" content="app-id=703796080, app-argument=#{sd.APP_URL}#{sd.CURRENT_PATH}" )
+meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
+meta( name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1' )
+meta( property="al:ios:app_name" content='Artsy' )
+meta( property="al:ios:app_store_id" content='703796080' )
+meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
+meta( property="fb:admins" content="7961740")
+meta( property="fb:app_id" content="308278682573501")
+meta( property="fb:pages" content="342443413406")
 script( src=asset('/assets/scroll_frame.js') )
-
-//- Set viewport size depending on if the page is responsive or not
-if sd.IS_RESPONSIVE && (userAgent && !userAgent.match('iPad')) && sd.IS_MOBILE
-  meta( name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' )
-else if sd.IS_RESPONSIVE && (userAgent && !userAgent.match('iPad'))
-  meta( name='viewport', content='width=device-width, initial-scale=1.0' )
-else
-  meta( name='viewport', content='user-scalable=1, width=1300' )
 
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'

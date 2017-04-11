@@ -35,7 +35,7 @@ export const filterQuery = `
       }
       hits {
         id
-        lot_number
+        lot_label
         counts {
           bidder_positions
         }
@@ -44,9 +44,10 @@ export const filterQuery = `
         }
         artwork {
           _id
+          id
+          date
           href
           title
-          date
           images {
             id
             image_url: url(version: ["tall"])
