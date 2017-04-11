@@ -2,16 +2,16 @@
 # Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).
 #
 
-uuid = require 'node-uuid'
-{ parse, format } = require 'url'
 _ = require 'underscore'
 _s = require 'underscore.string'
-moment = require 'moment'
-{ NODE_ENV } = require '../../config'
-helpers = require '../template_helpers'
-templateModules = require '../template_modules'
 artsyXapp = require 'artsy-xapp'
+moment = require 'moment'
 Referrer = require 'referer-parser'
+uuid = require 'node-uuid'
+{ parse, format } = require 'url'
+helpers = require '../template_helpers'
+templateModules = require '../../desktop/lib/template_modules'
+{ NODE_ENV } = require '../../config'
 
 module.exports = (req, res, next) ->
 
@@ -24,8 +24,9 @@ module.exports = (req, res, next) ->
   # Cache views if production or staging
   res.locals.cache = true if NODE_ENV is 'production' or NODE_ENV is 'staging'
 
-  # Pass the user agent into locals for data-useragent device detection
-  res.locals.userAgent = req.get('user-agent')
+  # HTML class middleware used by mobile
+  res.locals.htmlClass = if ua?.match(/Artsy-Mobile/) then 'layout-artsy-mobile-app' else ''
+  res.locals.htmlClass += ' layout-logged-in' if req.user?
 
   # Inject some project-wide sharify data such as the session id, the current path
   # and the xapp token.
@@ -38,5 +39,14 @@ module.exports = (req, res, next) ->
   res.locals.sd.REFLECTION = req.headers?['user-agent']?.match('PhantomJS')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT = req.cookies?['notification-count']
+  res.locals.sd.USER_AGENT = res.locals.userAgent = req.get('user-agent')
+  ua = req.get('user-agent')
+  res.locals.sd.IS_MOBILE = Boolean(
+    (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
+    (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
+    (ua.match(/Windows Phone/i)) ||
+    (ua.match(/BB10/i)) ||
+    (ua.match(/BlackBerry/i))
+  )
 
   next()

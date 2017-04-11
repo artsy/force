@@ -33,6 +33,7 @@ $ -> analytics.ready ->
   require '../analytics/show_page.js'
   require '../analytics/account_creation.js'
   require '../analytics/account_login.js'
+  require '../analytics/auction_reminder.js'
   require '../analytics/bidding.js'
   require '../analytics/collect.js'
   require '../analytics/criteo.js'

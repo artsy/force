@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-adminOnly = require '../../../lib/middleware/admin_only'
+adminOnly = require '../../lib/admin_only'
 
 describe 'adminOnly middleware', ->
   beforeEach ->
