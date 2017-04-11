@@ -1,6 +1,6 @@
 express = require 'express'
 routes = require './routes'
-adminOnly = require '../../lib/middleware/admin_only'
+adminOnly = require '../../lib/admin_only'
 JSONPage = require '../../components/json_page'
 
 app = module.exports = express()

@@ -2,7 +2,9 @@ url = require 'url'
 express = require 'express'
 router = express.Router()
 
-to = require '../to'
+to = (path) -> (req, res) ->
+  queryString = url.parse(req.url).search or ''
+  res.redirect 301, path + queryString
 
 # Want to permanently redirect a specific route or route pattern?
 # Put em' here:

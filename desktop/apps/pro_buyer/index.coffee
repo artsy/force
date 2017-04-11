@@ -1,5 +1,5 @@
 express = require 'express'
-adminOnly = require '../../lib/middleware/admin_only'
+adminOnly = require '../../lib/admin_only'
 JSONPage = require '../../components/json_page'
 
 app = module.exports = express()
