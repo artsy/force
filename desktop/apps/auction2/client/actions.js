@@ -64,6 +64,11 @@ export function fetchArtworks() {
 
     try {
       dispatch(getArtworksRequest())
+      analyticsHooks.trigger(
+        'auction:artworks:params:change',
+        filterParams
+      )
+
       const { filter_sale_artworks } = await metaphysics({
         query: filterQuery,
         variables: filterParams,
