@@ -8,7 +8,7 @@
 module.exports =
   APPLICATION_NAME: 'force-staging'
   NODE_ENV: 'development'
-  PORT: 3004
+  PORT: 3000
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   REQUEST_LIMIT: 120
@@ -97,7 +97,6 @@ module.exports =
   S3_BUCKET: null
   SEGMENT_AMP_WRITE_KEY: null
   WHITELISTED_VANITY_ASSETS: null
-  JWPLAYER_KEY: null
   VANITY_BUCKET: null
 
 # Override any values with env variables if they exist.

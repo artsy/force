@@ -13,10 +13,19 @@ app.locals.crop = crop
 
 app.get '/2016-year-in-art', routes.eoy
 
-app.get '/2017-venice-biennale', adminOnly, (req, res, next) ->
-  res.render 'components/venice_2017/templates/index'
+app.get '/2017-venice-biennale/jw', (req, res, next) ->
+  res.render 'components/venice_2017/templates/jw'
 
-app.get '/vanity/:type/:id', adminOnly, (req, res, next) ->
+app.get '/2017-venice-biennale/googlevr', (req, res, next) ->
+  res.render 'components/venice_2017/templates/googlevr'
+
+app.get '/2017-venice-biennale/images/loading.gif', (req, res, next) ->
+  res.send 'components/venice_2017/images/loading.gif'
+
+app.get '/2017-venice-biennale/aframe', (req, res, next) ->
+  res.render 'components/venice_2017/templates/aframe'
+
+app.get '/vanity/:type/:id', (req, res, next) ->
   whitelistedAssets = WHITELISTED_VANITY_ASSETS.split(',')
   return next() unless (req.params.type + '/' + req.params.id) in whitelistedAssets
 

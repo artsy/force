@@ -6,14 +6,13 @@ html
     div.inner#container(style="width:100%")
     div(id="error")
     script(type='text/javascript').
-      jwplayer.key = "#{sd.JWPLAYER_KEY}";
       var player = jwplayer('container').setup({
         primary: 'html5',
         hlshtml: true,
         playlist: [{
-            file: "#{sd.APP_URL}" + "vanity/videos/output4.mp4",
+            file: "#{sd.APP_URL}" + "/vanity/videos/output3.mp4",
             stereomode: 'monoscopic'
-        }]
+        }],
         plugins: {
             'https://ssl.p.jwpcdn.com/player/plugins/vr/vr.js': {}
         }

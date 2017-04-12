@@ -2642,6 +2642,10 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
+es6-promise@^3.0.2:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.3.1.tgz#a08cdde84ccdbf34d027a1451bc91d4bcd28a613"
+
 es6-promise@^4.0.5:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.0.tgz#dda03ca8f9f89bc597e689842929de7ba8cebdf0"
@@ -7485,6 +7489,12 @@ vm-browserify@~0.0.1:
 void-elements@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
+
+vrview@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vrview/-/vrview-0.2.0.tgz#0e6f13cfe48c024c90f3a5c082c3b9f0ec35df08"
+  dependencies:
+    es6-promise "^3.0.2"
 
 warning@^3.0.0:
   version "3.0.0"
