@@ -117,10 +117,12 @@ background-size-cover()
     left 0
     width 100%
     text-align center
-    transform rotate(90deg)
     opacity 0.5
     i
       font-size 46px
+      &::before
+        transform rotate(90deg)
+        display inline-block
 
 .collect-art-intro
   height 800px
