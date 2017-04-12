@@ -7,7 +7,7 @@ var AUCTION_ID = sd.AUCTION && sd.AUCTION.id
 var AUCTION_STATE = sd.AUCTION && sd.AUCTION.auction_state
 
 // Clicked "Register to bid" (context_type: 'auctions landing')
-$('.auction2-registration-wrapper .avant-garde-button-black').click(function () {
+$('.auction-registration-wrapper .avant-garde-button-black').click(function () {
   analytics.track('Clicked "Register to bid"', {
     context_type: 'auctions landing',
     auction_slug: AUCTION_ID,
@@ -59,7 +59,7 @@ analyticsHooks.on('creditcard:unqualified', function (data) {
 })
 
 // Clicked "Bid" (context_type: your active bids on auction page)
-$(document).on('click', '.auction2-my-active-bids__bid-button', function (e) {
+$(document).on('click', '.auction-my-active-bids__bid-button', function (e) {
   const artworkId = $(e.target).parent().data('artwork_id')
   analytics.track('Clicked "Bid"', {
     auction_slug: AUCTION_ID,
