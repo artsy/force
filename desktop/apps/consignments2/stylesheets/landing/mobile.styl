@@ -1,0 +1,85 @@
+@media (max-width: 640px)
+  .consignments2-header
+    height inherit
+    padding gutter
+
+    &__headline
+      garamond-size('l-headline')
+    &__subheadline
+      garamond-size('l-body')
+    &__cta
+      > h3
+        margin gutter 0
+        avant-garde-size('body')
+
+  .consignments2-sections
+    padding 0 (gutter / 2)
+
+  .consignments2-section
+    display block
+    padding gutter 0
+
+    &__about
+      &__headline
+        garamond-size('headline')
+
+    &--estimate
+    &--privacy
+      .consignments2-section__about
+        width 100%
+        padding 0
+      .consignments2-section__images
+        display none
+
+    &--logos
+      .consignments2-section__about
+      .consignments2-section__images
+        width 100%
+        padding 0
+      .consignments2-section__images
+        margin-bottom gutter
+        padding-bottom gutter
+        border-bottom 1px solid gray-lighter-color
+
+  .consignments2-steps
+    padding (gutter / 2) 0
+
+    &__headline
+      garamond-size('headline')
+    &__steps
+      display block
+      &__step
+        width 100%
+        clearfix()
+        &__image
+          display none
+        &__description
+          > p
+            padding-right 0
+
+  .consignments2-recently-sold
+    display none
+
+  .consignments2-in-demand
+    padding (gutter / 2) 0
+    h3
+      garamond-size('headline')
+
+  .consignments2-in-demand
+    &__artists
+      &__artist
+        width 48%
+        &__name
+          avant-garde-size('s-headline')
+        &__button
+          display none
+
+  .consignments2-footer
+    width 100%
+    padding gutter 0 (gutter * 2)
+    h3
+      garamond-size('headline')
+
+  .consignments2-credit
+    padding gutter 0
+    garamond-size('l-caption')
