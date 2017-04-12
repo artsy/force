@@ -13,7 +13,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   timesPolledForBidPlacement: 0
   maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
   errors:
-    "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
+    "Sale Closed to Bids": @saleClosedToBidsMessage # this doesn't attach to the correct `this`
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
 
@@ -26,9 +26,17 @@ module.exports = class BidForm extends ErrorHandlingForm
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
-
+    @errors["Sale Closed to Bids"] = @saleClosedToBidsMessage # This works :(
+    console.log(@errors["Sale Closed to Bids"])
     # extend form's errors with our own
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
+
+  saleClosedToBidsMessage: =>
+    @model.fetch()
+    if (@model.isLiveOpen())
+      return "The sale is live so you better get in there"
+    else
+      return "Sorry, your bid wasn't received before the auction closed."
 
   showBiddingDialog: (e) ->
     e.preventDefault()

@@ -84,6 +84,11 @@ describe 'BidForm', ->
       @view.showError 'description', { responseText: "{ \"error\": \"Sale Closed to Bids\"}" }
       @view.$('.error').text().should.equal "Sorry, your bid wasn't received before the auction closed."
 
+    it 'handles live sale errors', ->
+      sinon.stub(@view.model, 'isLiveOpen').returns(true)
+      @view.showError 'description', { responseText: "{ \"error\": \"Sale Closed to Bids\"}" }
+      @view.$('.error').text().should.equal "Sorry, your bid wasn't received before the auction closed."
+
     it 'validates against the bidder position min', ->
       @view.bidderPositions.first().set suggested_next_bid_cents: 100000, display_suggested_next_bid_dollars: '$1,000'
       @view.$('.max-bid').replaceWith('<input class="max-bid" value="$50.00">')
