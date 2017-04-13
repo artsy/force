@@ -287,6 +287,13 @@ artsy-gemini-upload@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/artsy-gemini-upload/-/artsy-gemini-upload-0.0.6.tgz#ff228ff04a66beb9eb2dd251587c2c3446e26abd"
 
+"artsy-morgan@git://github.com/artsy/artsy-morgan.git":
+  version "1.0.0"
+  resolved "git://github.com/artsy/artsy-morgan.git#88d2f59f2a1aaec240eb8fd9bf69ccbbec878dae"
+  dependencies:
+    chalk "^1.1.3"
+    morgan "^1.8.1"
+
 artsy-passport@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.6.1.tgz#82aad067999dfcdd929f3e33ed588ce1809762bd"
@@ -4783,7 +4790,7 @@ moment@~2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.4.0.tgz#06dd8dfbbfdb53a03510080ac788163c9490e75d"
 
-morgan@^1.6.1:
+morgan@^1.6.1, morgan@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.8.1.tgz#f93023d3887bd27b78dfd6023cea7892ee27a4b1"
   dependencies:
