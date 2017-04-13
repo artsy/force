@@ -35,6 +35,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
       new RegistrationForm
         el: $('#auction-registration-page')
         model: @sale
+        comboForm: true
         success: => @initBidForm(true)
 
   initBidForm: (submitImmediately=false) =>
