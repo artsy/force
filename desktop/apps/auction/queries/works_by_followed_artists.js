@@ -25,6 +25,7 @@ export const worksByFollowedArtists = `
         }
         artwork {
           _id
+          id
           href
           title
           date
