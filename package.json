@@ -13,10 +13,9 @@
     "test": "yarn acceptance && yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
     "deploy-assets": "NODE_ENV=production mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
-    "start": "node -r dotenv/config --max_old_space_size=1024 ."
+    "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
   },
   "dependencies": {
-    "@artsy/reaction-force": "git+https://github.com/artsy/reaction-force.git",
     "accounting": "^0.4.1",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
@@ -104,7 +103,6 @@
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
-    "reaction-force": "git+https://github.com/artsy/reaction-force.git",
     "redis": "^2.2.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",
