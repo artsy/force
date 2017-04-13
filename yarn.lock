@@ -2,22 +2,26 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.4.tgz#13995d1e795b996b94aa1644a8c81f89afb36712"
+"@artsy/reaction-force@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.10.tgz#aafe41689155095d4a1663fc3ca694edceec084e"
   dependencies:
     artsy-passport "^1.6.1"
     artsy-xapp "^1.0.4"
     backbone "^1.3.3"
     body-parser "^1.17.1"
     cookie-parser "^1.4.3"
+    cookie-session "^2.0.0-beta.1"
     express "^4.15.2"
-    express-session "^1.15.1"
     isomorphic-relay "^0.7.4"
     lodash "^4.17.4"
+    node-fetch "^1.6.3"
     numeral "^2.0.4"
     react "^15.4.2"
     react-relay "https://github.com/alloy/relay/releases/download/v0.9.3/react-relay-0.9.3.tgz"
+    react-styled-flexboxgrid "^1.0.2"
+    request "^2.81.0"
+    sharify "^0.1.6"
     styled-components "^1.4.3"
 
 JSONStream@^1.0.3:
@@ -1915,7 +1919,7 @@ cookie-parser@^1.4.0, cookie-parser@^1.4.3:
     cookie "0.3.1"
     cookie-signature "1.0.6"
 
-cookie-session@^2.0.0-alpha.1:
+cookie-session@^2.0.0-alpha.1, cookie-session@^2.0.0-beta.1:
   version "2.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/cookie-session/-/cookie-session-2.0.0-beta.1.tgz#d7fa15c629ee48032745b11f23f488a6e60b1dfd"
   dependencies:
@@ -1964,10 +1968,6 @@ cors@^2.8.1:
   dependencies:
     object-assign "^4"
     vary "^1"
-
-crc@3.4.4:
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/crc/-/crc-3.4.4.tgz#9da1e980e3bd44fc5c93bf5ab3da3378d85e466b"
 
 create-ecdh@^4.0.0:
   version "4.0.0"
@@ -2990,20 +2990,6 @@ express-ipfilter@0.2.1:
 express-limiter@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/express-limiter/-/express-limiter-1.6.0.tgz#142753588f785b731551603d214415bc79da697a"
-
-express-session@^1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.15.1.tgz#9abba15971beea7ad98da5a4d25ed92ba4a2984e"
-  dependencies:
-    cookie "0.3.1"
-    cookie-signature "1.0.6"
-    crc "3.4.4"
-    debug "2.6.1"
-    depd "~1.1.0"
-    on-headers "~1.0.1"
-    parseurl "~1.3.1"
-    uid-safe "~2.1.3"
-    utils-merge "1.0.0"
 
 express@*, express@^4.12.3, express@^4.13.3, express@^4.15.2:
   version "4.15.2"
@@ -4996,7 +4982,7 @@ nock@^9.0.11:
     propagate "0.4.0"
     qs "^6.0.2"
 
-node-fetch@^1.0.1:
+node-fetch@^1.0.1, node-fetch@^1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
   dependencies:
@@ -5122,7 +5108,7 @@ numeral@^2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.6.tgz#4ad080936d443c2561aed9f2197efffe25f4e506"
 
-"nwmatcher@>= 1.3.7 < 2.0.0", "nwmatcher@>= 1.3.9 < 2.0.0":
+"nwmatcher@>= 1.3.9 < 2.0.0":
   version "1.3.9"
   resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.3.9.tgz#8bab486ff7fa3dfd086656bbe8b17116d3692d2a"
 
@@ -5865,6 +5851,10 @@ react-static-container@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-static-container/-/react-static-container-1.0.1.tgz#694c0dd68a896b879519afb548399cc1989c9ab0"
 
+react-styled-flexboxgrid@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-styled-flexboxgrid/-/react-styled-flexboxgrid-1.0.2.tgz#61b2ed2240212753280746fdfd957654925b99f1"
+
 react@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
@@ -6165,7 +6155,7 @@ request@2.74.x:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
 
-request@^2.45.0, request@^2.75.0, request@^2.79.0:
+request@^2.45.0, request@^2.75.0, request@^2.79.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -6918,7 +6908,22 @@ superagent-retry@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
 
-superagent@*, superagent@^1.2.0:
+superagent@*, superagent@^2.0.0, superagent@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/superagent/-/superagent-2.3.0.tgz#703529a0714e57e123959ddefbce193b2e50d115"
+  dependencies:
+    component-emitter "^1.2.0"
+    cookiejar "^2.0.6"
+    debug "^2.2.0"
+    extend "^3.0.0"
+    form-data "1.0.0-rc4"
+    formidable "^1.0.17"
+    methods "^1.1.1"
+    mime "^1.3.4"
+    qs "^6.1.0"
+    readable-stream "^2.0.5"
+
+superagent@^1.2.0:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-1.8.5.tgz#1c0ddc3af30e80eb84ebc05cb2122da8fe940b55"
   dependencies:
@@ -6933,21 +6938,6 @@ superagent@*, superagent@^1.2.0:
     qs "2.3.3"
     readable-stream "1.0.27-1"
     reduce-component "1.0.1"
-
-superagent@^2.0.0, superagent@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/superagent/-/superagent-2.3.0.tgz#703529a0714e57e123959ddefbce193b2e50d115"
-  dependencies:
-    component-emitter "^1.2.0"
-    cookiejar "^2.0.6"
-    debug "^2.2.0"
-    extend "^3.0.0"
-    form-data "1.0.0-rc4"
-    formidable "^1.0.17"
-    methods "^1.1.1"
-    mime "^1.3.4"
-    qs "^6.1.0"
-    readable-stream "^2.0.5"
 
 superagent@^3.0.0:
   version "3.5.0"
@@ -7286,7 +7276,7 @@ uid-number@~0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-uid-safe@2.1.4, uid-safe@~2.1.3:
+uid-safe@2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/uid-safe/-/uid-safe-2.1.4.tgz#3ad6f38368c6d4c8c75ec17623fb79aa1d071d81"
   dependencies:
