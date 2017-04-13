@@ -88,7 +88,6 @@
     "moment": "~2.16.0",
     "moment-timezone": "^0.5.5",
     "moment-twitter": "^0.2.0",
-    "morgan": "^1.6.1",
     "nib": "^1.1.2",
     "nightmare": "^2.10.0",
     "nock": "^9.0.11",

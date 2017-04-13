@@ -4790,7 +4790,7 @@ moment@~2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.4.0.tgz#06dd8dfbbfdb53a03510080ac788163c9490e75d"
 
-morgan@^1.6.1, morgan@^1.8.1:
+morgan@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.8.1.tgz#f93023d3887bd27b78dfd6023cea7892ee27a4b1"
   dependencies:
