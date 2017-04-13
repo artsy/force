@@ -43,7 +43,7 @@ describe 'Sign up with a call to action', ->
     html = render('call_to_action')(
       action: 'artwork-save'
       redirectTo: 'artsy.net/artwork/some-artwork'
-      sd: { AP: {}, CURRENT_PATH: '/sign_up' }
+      sd: { AP: { signupPagePath: '/sign_up' }, CURRENT_PATH: '/sign_up' }
       asset: (->)
     )
 
@@ -69,7 +69,7 @@ describe 'Log in with call to action', ->
     html = render('call_to_action')(
       action: 'artwork-save'
       redirectTo: 'artsy.net/artwork/some-artwork'
-      sd: { AP: {}, CURRENT_PATH: '/log_in' }
+      sd: { AP: { loginPagePath: '/log_in' }, CURRENT_PATH: '/log_in' }
       asset: (->)
     )
 

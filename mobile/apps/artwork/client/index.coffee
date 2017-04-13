@@ -15,7 +15,7 @@ module.exports.init = ->
   artworkTabsView()
   artwork = new Artwork sd.ARTWORK
   user = CurrentUser.orNull()
-  user.initializeDefaultArtworkCollection()
+  user.initializeDefaultArtworkCollection() if user
 
   new ArtworkImageView
     artwork: sd.ARTWORK

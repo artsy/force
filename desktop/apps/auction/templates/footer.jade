@@ -1,17 +1,17 @@
 footer.auction-footer.auction-page-section( class= articles.length ? 'has-articles' : 'has-no-articles' )
   if articles.length
-    .auction-articles
+    .auction-footer__auction-articles
       for article in articles.models
         include ../../../components/article_figure/template
 
-  unless auction.isAuctionPromo()
-    - var item = footerItems[1];
-    .auction-app-promo-wrapper
-      a.auction-app-promo( href= item.href, target= item.target )
-        .auction-app-promo-image
+  if footerItems && footerItems.length > 0 && !auction.isAuctionPromo()
+    - var item = footerItems[0]
+    .auction-footer__auction-app-promo-wrapper
+      a.auction-footer__auction-app-promo( href= item.href, target= item.target )
+        .auction-footer__auction-app-promo-image
           img( src= item.src, alt= item.alt )
-        .auction-app-promo-metadata
-          .auction-app-promo-title
+        .auction-footer__auction-app-promo-metadata
+          .auction-footer__auction-app-promo-title
             = item.title
-          .auction-app-promo-subtitle
+          .auction-footer__auction-app-promo-subtitle
             = item.subtitle
