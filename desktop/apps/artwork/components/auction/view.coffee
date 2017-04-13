@@ -26,7 +26,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
-    @delayedUpdateBidLabel LOT_STANDING_MAX_POLLS
+    @updateBidLabel LOT_STANDING_MAX_POLLS
 
   openBuyersPremium: (e) ->
     e.preventDefault()
