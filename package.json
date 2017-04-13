@@ -54,7 +54,6 @@
     "cookie-session": "^2.0.0-alpha.1",
     "cookies-js": "^1.2.2",
     "cors": "^2.8.1",
-    "debug": "^2.6.3",
     "diacritics": "^1.2.2",
     "dompurify": "^0.8.4",
     "dotenv": "^4.0.0",
