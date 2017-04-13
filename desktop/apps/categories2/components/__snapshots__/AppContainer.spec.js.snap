@@ -9,11 +9,12 @@ exports[`renders correctly 1`] = `
     width={3}
   >
     <ul
-      className="hYeTRm"
+      className="jTryxg"
     >
       <li>
         <a
           href="#575ac46debad644c13000003"
+          onClick={[Function]}
         >
           Materials
         </a>
@@ -21,6 +22,7 @@ exports[`renders correctly 1`] = `
       <li>
         <a
           href="#575ac46debad644c13000004"
+          onClick={[Function]}
         >
           Medium and Techniques
         </a>
@@ -28,6 +30,7 @@ exports[`renders correctly 1`] = `
       <li>
         <a
           href="#575ac46debad644c13000005"
+          onClick={[Function]}
         >
           Style or Movement
         </a>

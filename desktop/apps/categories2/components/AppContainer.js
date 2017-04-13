@@ -22,9 +22,11 @@ const StyledIntro = styled(Intro)`
 `
 
 const StyledFamilyList = styled(FamilyList)`
-  font-size: 14px;
   color: #333;
+  font-size: 14px;
+  margin-bottom: 2em;
   text-transform: uppercase;
+  position: fixed;
 `
 
 const StyledFamilyAndGeneList = styled(FamilyAndGeneList)`
