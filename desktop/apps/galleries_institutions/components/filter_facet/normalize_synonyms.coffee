@@ -23,4 +23,3 @@ normalizeSynonyms = (allSynonyms, inputString) ->
   , inputString
 
 module.exports = normalizeSynonyms
-
