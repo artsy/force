@@ -78,13 +78,8 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     @$el.attr 'data-state', 'loading'
 
     Q($.post('/artsy-primer/set-sailthru'))
-    .then =>
-      Q.all [
-        @user.save()
-        $.post('/flash', message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.')
-      ]
-    .finally =>
-      location.assign @redirectLocation()
+    .then => @user.save()
+    .finally => location.assign @redirectLocation()
 
 module.exports.init = ->
   { force, reonboarding, email, name } = qs.parse location.search.slice(1)
@@ -109,7 +104,7 @@ module.exports.init = ->
   else
     user.approximateLocation success: -> user.save()
     user.set receive_personalized_email: false
-    new PersonalizeRouter 
+    new PersonalizeRouter
       user: user
       reonboarding: reonboarding?
       force: force
