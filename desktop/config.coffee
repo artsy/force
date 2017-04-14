@@ -8,7 +8,7 @@
 module.exports =
   APPLICATION_NAME: 'force-staging'
   NODE_ENV: 'development'
-  PORT: 3000
+  PORT: 3004
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   REQUEST_LIMIT: 120
