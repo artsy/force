@@ -26,7 +26,9 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
-    @updateBidLabel LOT_STANDING_MAX_POLLS
+    # Defer until next tick. This really just gets the sequence right for
+    # testing to work. This doesn't feel like a great justification, though.
+    setTimeout (=> @updateBidLabel LOT_STANDING_MAX_POLLS), 0
 
   openBuyersPremium: (e) ->
     e.preventDefault()
