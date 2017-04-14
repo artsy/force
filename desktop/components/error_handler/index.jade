@@ -5,11 +5,12 @@ html
     style
       include:stylus index.styl
   body.error-handler-body
-    //- TODO: Be fancier about conditionally rendering the full header:
-    //- https://github.com/artsy/force/pull/1217/files#diff-93f2189e436c245b56ccbe66976e06a6R11
-    a.error-handler-logo( href='/' )
-      include ../main_layout/public/icons/logo.svg
-
+    - try {
+      include ../main_layout/header/templates/index
+    - } catch (e) {
+      a.error-handler-logo( href='/' )
+        include ../main_layout/public/icons/logo.svg
+    - }
     #main-layout-container.responsive-layout-container.error-handler-layout
       .error-handler-container( data-code=code )
         h1.error-handler-headline

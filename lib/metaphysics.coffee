@@ -1,7 +1,6 @@
 Q = require 'bluebird-q'
 qs = require 'qs'
 request = require 'superagent'
-debug = require('debug') 'timeout'
 { extend, some } = require 'underscore'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT } = require('sharify').data
 
@@ -22,7 +21,6 @@ metaphysics = ({ query, variables, req } = {}) ->
         variables: variables
 
       .end (err, response) ->
-        debug err if err
         return reject err if err?
 
         if response.body.errors?
