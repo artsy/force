@@ -62,11 +62,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
     @$el.attr 'data-state', 'loading'
 
-    $.when.apply(null, [
-      @user.save()
-      $.post('/flash', message: 'Thank you for personalizing your profile')
-    ]).always =>
-      location.assign @redirectLocation()
+    @user.save().always => location.assign @redirectLocation()
 
 module.exports.init = ->
   { force, reonboarding } = qs.parse location.search.slice(1)

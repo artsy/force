@@ -13,7 +13,7 @@
     "test": "yarn acceptance && yarn mocha test/lib && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') && yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')",
     "deploy": "yarn deploy-assets && git push --force git@heroku.com:force-$DEPLOY_ENV.git master",
     "deploy-assets": "NODE_ENV=production mkdir public; mkdir public/assets; ezel-assets mobile/assets/ && ezel-assets desktop/assets/ && bucket-assets --bucket artsy-force-$DEPLOY_ENV && heroku config:set ASSET_MANIFEST=$(cat manifest.json) --app=force-$DEPLOY_ENV",
-    "start": "node -r dotenv/config --optimize_for_size --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 --gc_interval=100 ."
+    "start": "node -r dotenv/config --max_old_space_size=1024 ."
   },
   "dependencies": {
     "@artsy/reaction-force": "^0.1.12",
@@ -50,7 +50,6 @@
     "cheerio": "^0.22.0",
     "classnames": "^2.2.5",
     "coffee-script": "^1.11.1",
-    "connect-flash": "^0.1.1",
     "connect-timeout": "^1.8.0",
     "cookie-parser": "^1.4.0",
     "cookie-session": "^2.0.0-alpha.1",
@@ -66,7 +65,6 @@
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
     "foreman": "^2.0.0",
-    "forever": "^0.15.1",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "geolib": "^2.0.18",
     "glob": "^7.1.1",
