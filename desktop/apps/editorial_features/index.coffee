@@ -26,7 +26,7 @@ app.get '/vanity/*', (req, res, next) ->
   whitelistedAssets = WHITELISTED_VANITY_ASSETS.split(',')
   return next() unless req.params[0] in whitelistedAssets
   req.headers['host'] = VANITY_BUCKET
-  proxy.on 'error', (err) ->
-    res.redirect 301, '/articles'
   target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
-  proxy.web req, res, target: target
+  proxy.web req, res, target: target, (err) ->
+    res.redirect 301, '/articles' if err
+
