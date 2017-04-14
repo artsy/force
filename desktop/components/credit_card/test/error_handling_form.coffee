@@ -67,7 +67,17 @@ describe 'FavoritesStatusModalView', ->
       @errorHandlingForm.showError 'description', { status: 400, error: { additional: 'additional info'} }
       $('.error').text().should.equal 'Your card appears to be missing or malformed. Please try another card or contact support. additional info'
 
-    it 'handles errors that are a function', ->
-      animal = 'jackal'
-      @errorHandlingForm.showError () -> "Expected a breed of dog, you gave #{animal}"
-      $('.error').text().should.equal 'Expected a breed of dog, you gave jackal'
+    it 'handles @errors properties that are a function (that return an errors object)', ->
+      @errorHandlingForm.errors = -> {"Meow meow meow": 'Sorry, this endpoint is for cats'}
+      @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"param_error\", \"message\": \"Meow meow meow\" } " }
+      $('.error').text().should.equal 'Sorry, this endpoint is for cats'
+
+    it 'handles error messages returned from a function', ->
+      @errorHandlingForm.errors['Stolen Credit Card'] = () -> "Please hold, I need to check with my manager..."
+      @errorHandlingForm.showError 'foo', { responseText: "{ \"error\": \"Stolen Credit Card\"}" }
+      $('.error').text().should.equal "Please hold, I need to check with my manager..."
+
+    it 'handles error messages that are a string', ->
+      @errorHandlingForm.errors['Stolen Credit Card'] = "You have encountered an error."
+      @errorHandlingForm.showError 'foo', { responseText: "{ \"error\": \"Stolen Credit Card\"}" }
+      $('.error').text().should.equal "You have encountered an error."

@@ -39,6 +39,8 @@ module.exports = class Sale extends Backbone.Model
 
   bidUrl: (artwork) ->
     "#{@href()}/bid/#{artwork.id}"
+  
+  predictionUrl: -> "#{PREDICTION_URL}/#{@get('slug')}"
 
   redirectUrl: (artwork) ->
     if @isBidable() and artwork?

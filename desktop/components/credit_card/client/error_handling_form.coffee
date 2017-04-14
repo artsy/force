@@ -46,6 +46,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       field.el.val xssFilters.inHTMLData(field.el.val())
 
   showError: (description, response={}) =>
+    @errors = if (_.isFunction @errors) then @errors() else @errors
     if response.responseText? and (errorJson = try JSON.parse response.responseText)
       switch errorJson.type
         when 'payment_error'
@@ -58,9 +59,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       # we either want to override or fallback to the message sent from gravity
       if errorJson.error?
         message = @errors[errorJson.error] || errorJson.error
-
-        console.log('in error? block', typeof message)
-        message = message() if ( typeof message == 'function' )
+        message = message() if ( _.isFunction message)
     else if response.statusText == 'timeout'
       message = @errors.timeout
     else if response.status == 400 or response.status == 403
