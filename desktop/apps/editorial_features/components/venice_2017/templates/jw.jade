@@ -1,0 +1,42 @@
+html
+  head
+    meta(charset="UTF-8")
+    script(type='text/javascript' src="https://content.jwplatform.com/libraries/AsLHfkNf.js")
+  body
+    div.inner#container(style="width:100%")
+    div(id="error")
+    script(type='text/javascript').
+      var player = jwplayer('container').setup({
+        primary: 'html5',
+        hlshtml: true,
+        playlist: [{
+            file: "#{sd.APP_URL}" + "/vanity/videos/output3.mp4",
+            stereomode: 'monoscopic'
+        }],
+        plugins: {
+            'https://ssl.p.jwpcdn.com/player/plugins/vr/vr.js': {}
+        }
+      });
+      player.on('ready', function(){
+        video = player.getContainer().getElementsByTagName('video')[0];
+        video.defaultPlaybackRate = 1.0;
+        video.playbackRate = 1.0;
+      });
+
+      player.on('error', function (error) {
+        var errorDiv = document.querySelector("#error");
+        if (error.message == jwplayer.vr.events.UNSUPPORTED_BROWSER || error.message == jwplayer.vr.events.INITIALIZATION_ERROR) {
+          errorDiv.classList.add('active');
+          if (error.message == jwplayer.vr.events.UNSUPPORTED_BROWSER) {
+              errorDiv.innerHTML = error.message +
+                ' Please upgrade to a browser with <a href="https://get.webgl.org/">WebGL support</a>.';
+          } else {
+              errorDiv.innerHTML = error.message;
+          }
+        }
+        console.error('Error: ' + error.message);
+      });
+      // Retrieve the vr.js version
+      var xhr = new XMLHttpRequest();
+      xhr.open('HEAD', 'https://ssl.p.jwpcdn.com/player/plugins/vr/vr.js');
+      xhr.send();

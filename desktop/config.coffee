@@ -96,6 +96,8 @@ module.exports =
   RAYGUN_KEY: null
   S3_BUCKET: null
   SEGMENT_AMP_WRITE_KEY: null
+  WHITELISTED_VANITY_ASSETS: null
+  VANITY_BUCKET: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
