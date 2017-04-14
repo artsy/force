@@ -94,6 +94,7 @@
     "particle": "git://github.com/artsy/particle.git",
     "places": "git://github.com/artsy/places.git",
     "popover": "^2.4.0",
+    "prop-types": "^15.5.8",
     "qs": "^6.3.0",
     "raygun4js": "^2.5.1",
     "rc-slider": "^6.1.2",
