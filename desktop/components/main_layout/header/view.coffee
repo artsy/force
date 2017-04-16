@@ -41,7 +41,7 @@ module.exports = class HeaderView extends Backbone.View
 
     mediator.on 'open:auth', @openAuth, @
 
-    @checkForFlash()
+    @checkForPersonalizeFlash()
 
     activatePulldowns()
 
@@ -121,6 +121,8 @@ module.exports = class HeaderView extends Backbone.View
       error: (xhr, status, errorMessage) ->
         new FlashMessage message: errorMessage
 
-  checkForFlash: ->
-    if sd.FLASH
-      new FlashMessage message: sd.FLASH
+  checkForPersonalizeFlash: ->
+    if document.referrer.match '/personalize/'
+      new FlashMessage message: 'Thank you for personalizing your profile'
+    else if document.referrer.match '/artsy-primer-personalize/'
+      new FlashMessage message: 'Thank you. Please expect your personalized portfolio in the next 2 business days.'
