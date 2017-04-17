@@ -100,7 +100,7 @@ module.exports =
   TWITTER_KEY: null
   TWITTER_SECRET: null
   VANITY_BUCKET: null
-  WHITELISTED_VANITY_ASSETS: null
+  WHITELISTED_VANITY_ASSETS: ''
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
