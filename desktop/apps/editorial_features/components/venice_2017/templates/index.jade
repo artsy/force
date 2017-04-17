@@ -1,0 +1,32 @@
+extends ../../../../../components/main_layout/templates/blank.jade
+
+append locals
+  - assetPackage = 'editorial_features'
+
+block head
+  include head
+
+block body
+  .venice-feature
+    .venice-nav
+      .article-sa-sticky-header( class=('visible no-transition' ) )
+        .article-sa-sticky-left
+          .article-sa-primary-logos
+            a( href="/" ).article-sa-artsy-logo.icon-logotype
+
+        .article-sa-sticky-right
+          a.article-sa-magazine-link(href=sd.APP_URL + '/articles') Back to Magazine
+        .article-sa-sticky-hamburger.js-article-sa-sticky-hamburger
+          .article-sa-sticky-hamburger-icon
+          i.article-sa-sticky-close-icon.icon-close
+
+    .venice-header
+      div#vrvideo
+      div.venice-overlay
+        - title = 'Inside the Biennale'
+        - subtitle = 'CHRISTIAN MARCLAY'
+        - length = '3:54'
+        include ./cover
+
+    .venice-footer
+      //- TODO
