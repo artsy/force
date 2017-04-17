@@ -3,6 +3,7 @@ Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { SESSION_ID } = require('sharify').data
 Geo = require './mixins/geo.coffee'
+RavenClient = require 'raven-js'
 Relations = require './mixins/relations/user.coffee'
 
 # Base User model for shared functionality between
@@ -59,8 +60,16 @@ module.exports = class User extends Backbone.Model
     CurrentUser = require './current_user.coffee'
     LoggedOutUser = require './logged_out_user.coffee'
 
-    CurrentUser.orNull() or
-    new LoggedOutUser attributes
+    user = CurrentUser.orNull() or new LoggedOutUser attributes
+
+    if user instanceof CurrentUser
+      RavenClient.setUserContext
+        email: user.get('email'),
+        id: user.get('id')
+    else
+      RavenClient.setUserContext()
+
+    user
 
   prepareForInquiry: ->
     @findOrCreate silent: true

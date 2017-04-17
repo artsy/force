@@ -10,6 +10,7 @@ Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
 FastClick = require 'fastclick'
+RavenClient = require 'raven-js'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
@@ -34,6 +35,7 @@ module.exports = ->
   # removes 300ms delay
   FastClick document.body
 
+  setupErrorReporting()
   setupHeaderView()
   syncAuth()
 
@@ -74,3 +76,11 @@ setupAnalytics = ->
   analytics.registerCurrentUser()
 
 setupAnalytics()
+
+setupErrorReporting = ->
+  ravenDSN = if sd.NODE_ENV is 'staging'
+    sd.SENTRY_PUBLIC_DSN_STAGING
+  else if sd.NODE_ENV is 'production'
+    sd.SENTRY_PUBLIC_DSN_PRODUCTION
+
+  RavenClient.config(ravenDSN).install()

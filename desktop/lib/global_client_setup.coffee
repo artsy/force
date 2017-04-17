@@ -9,6 +9,7 @@ Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
+RavenClient = require 'raven-js'
 rg4js = require 'raygun4js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
@@ -20,6 +21,7 @@ listenForBounce = require '../components/eggs/bounce/index.coffee'
 confirmation = require '../components/confirmation/index.coffee'
 
 module.exports = ->
+  setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
   syncAuth()
@@ -59,7 +61,7 @@ setupReferrerTracking = ->
 
 setupRaygun = ->
   if sd.RAYGUN_KEY
-    rg4js 'enableCrashReporting', true 
+    rg4js 'enableCrashReporting', true
     rg4js 'apiKey', sd.RAYGUN_KEY
 
 setupJquery = ->
@@ -85,3 +87,11 @@ setupJquery = ->
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
   window[key] = helper for key, helper of templateModules
+
+setupErrorReporting = ->
+  ravenDSN = if sd.NODE_ENV is 'staging'
+    sd.SENTRY_PUBLIC_DSN_STAGING
+  else if sd.NODE_ENV is 'production'
+    sd.SENTRY_PUBLIC_DSN_PRODUCTION
+
+  RavenClient.config(ravenDSN).install()
