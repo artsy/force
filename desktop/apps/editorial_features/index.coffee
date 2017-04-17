@@ -9,6 +9,6 @@ app.set 'view engine', 'jade'
 app.locals.crop = crop
 
 app.get '/2016-year-in-art', routes.eoy
-app.get '/venice', adminOnly, routes.venice
-app.get '/venice/:id', adminOnly, routes.venice
+app.get '/venice-biennale', adminOnly, routes.venice
+app.get '/venice-biennale/:id', adminOnly, routes.venice
 app.get '/vanity/*', routes.vanity

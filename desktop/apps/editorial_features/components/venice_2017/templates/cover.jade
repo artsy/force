@@ -1,6 +1,12 @@
-.venice-overlay__title= title
-.venice-overlay__sub-title= subtitle
-.venice-overlay__play
-  .venice-overlay__play-button
-  .venice-overlay__play-text Play Video
-  .venice-overlay__play-length= length
+- title = 'Inside the Biennale'
+- subtitle = 'CHRISTIAN MARCLAY'
+- length = '3:54'
+- background = 'https://artsy-vanity-files-production.s3.amazonaws.com/images/unspecified2.jpg'
+
+.venice-overlay(style="background-image:url(#{background})")
+  .venice-overlay__title= title
+  .venice-overlay__sub-title= subtitle
+  .venice-overlay__play
+    .venice-overlay__play-button
+    .venice-overlay__play-text Play Video
+    .venice-overlay__play-length= length

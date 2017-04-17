@@ -2,6 +2,36 @@
   background-color black
   color white
 
+.venice-nav
+  position absolute
+  top 0
+  z-index 10
+  border-bottom 1px solid white
+  display flex
+  flex-direction row
+  justify-content space-between
+  align-items center
+  width 100vw
+  height 54px
+  a
+    color white
+    text-decoration none
+  &__sticky-right, &__sticky-left
+    margin 0px 20px
+  &__sticky-right
+    margin-right -1
+    avant-garde-size('body')
+  &__sticky-left
+    display flex
+    align-items center
+    .venice-nav__sticky-ubs-logo img
+      height 30px
+    .venice-nav__plus
+      transform rotate(45deg)
+      margin 10px
+      font-size 17px
+      font-smoothing antialiased
+
 .venice-header
   width 100vw
   height 100vh
@@ -33,6 +63,7 @@
     justify-content center
     align-items center
     transition background-color 0.5
+    cursor pointer
     &:hover
       background-color rgba(0,0,0,1)
     &-text
@@ -47,6 +78,9 @@
       border-style solid
       border-width 5px 0 5px 10px
       border-color transparent transparent transparent white
+
+.venice-overlay, .venice-nav
+  transition display 0.5s ease
 
 .venice-footer
   height 500px
