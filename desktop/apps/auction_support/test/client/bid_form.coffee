@@ -85,7 +85,7 @@ describe 'BidForm', ->
       @view.$('.error').text().should.equal "Sorry, your bid wasn't received before the auction closed."
 
     it 'handles live sale errors', ->
-      @view.showError 'description', { responseText: "{ \"error\": \"Live bidding has started. Please join the online auction room.\"}" }
+      @view.showError 'description', { responseText: "{ \"error\": \"Live Bidding has Started\"}" }
       @view.$('.error').text().should.containEql "Live bidding on this sale has begun."
 
     it 'validates against the bidder position min', ->
