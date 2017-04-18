@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
+noUiSlider = require 'nouislider'
 
 module.exports = class VeniceVideoView extends Backbone.View
 
@@ -26,7 +27,21 @@ module.exports = class VeniceVideoView extends Backbone.View
       width: '100%',
       height: '100%',
       loop: false
+    @vrView.on 'ready', @onVRViewReady
     @vrView.on 'timeupdate', @updateTime
+
+  updateTime: (e) =>
+    @scrubber.set(e.currentTime)
+
+  onVRViewReady: =>
+    @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
+      start: 0
+      behaviour: 'snap'
+      range:
+        min: 0
+        max: @vrView.getDuration()
+    @scrubber.on 'change', (value) =>
+      @vrView.setCurrentTime parseFloat(value[0])
 
   onTogglePlay: ->
     if @vrView.isPaused
@@ -41,11 +56,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     else
       @vrView.setVolume 0
     @$muteButton.toggleClass 'muted'
-
-  updateTime: (e) =>
-    $(@$scrubberTime).html @formatTime(e.currentTime)
-    percentComplete = (e.currentTime / e.duration) * 100
-    $(@$scrubberMarker).css { 'transform': "translateX(-#{100 - percentComplete}%)" }
 
   formatTime: (time) ->
     minutes = Math.floor(time / 60) % 60
