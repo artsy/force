@@ -5,11 +5,11 @@ import MediumFilter from '../medium_filter'
 import RangeSlider from '../range_slider'
 import React from 'react'
 
-function Sidebar({ isOpen }) {
+function Sidebar({ isClosed }) {
   return (
     <div className='auction-artworks-sidebar'>
       <div className='auction-artworks-sidebar__artist-filter'>
-        { isOpen && <RangeSlider /> }
+        { !isClosed && <RangeSlider /> }
         <MediumFilter />
         <ArtistFilter />
       </div>
@@ -19,7 +19,7 @@ function Sidebar({ isOpen }) {
 
 const mapStateToProps = (state) => {
   return {
-    isOpen: state.auctionArtworks.isOpen
+    isClosed: state.auctionArtworks.isClosed
   }
 }
 

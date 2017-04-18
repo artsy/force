@@ -5,7 +5,7 @@ import { get } from 'lodash'
 import React from 'react';
 import { titleAndYear } from '../../utils/artwork'
 
-function AuctionListArtwork({ isOpen, saleArtwork }) {
+function AuctionListArtwork({ isClosed, saleArtwork }) {
   const artwork = saleArtwork.artwork
   const artists = artwork.artists
   const artistDisplay = artists && artists.length > 0 ? artists.map((aa) => aa.name).join(', ') : null
@@ -13,7 +13,7 @@ function AuctionListArtwork({ isOpen, saleArtwork }) {
 
   const auctionArtworkClasses = classNames(
     'auction-page-list-artwork',
-    { 'auction-open': isOpen }
+    { 'auction-open': isClosed }
   )
 
   let bidStatus
@@ -35,14 +35,14 @@ function AuctionListArtwork({ isOpen, saleArtwork }) {
       <div className='auction-page-list-artwork__lot-number'>
         Lot {saleArtwork.lot_label}
       </div>
-      { isOpen && bidStatus }
+      { !isClosed && bidStatus }
     </a>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    isOpen: state.auctionArtworks.isOpen
+    isClosed: state.auctionArtworks.isClosed
   }
 }
 
