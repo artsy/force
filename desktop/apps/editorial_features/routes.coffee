@@ -37,9 +37,15 @@ Articles = require '../../collections/articles.coffee'
         markdown: markdown
 
 @venice = (req, res, next) ->
-  videoIndex = parseInt(req.params.id) or 1
-  res.render 'components/venice_2017/templates/index',
-    videoIndex: videoIndex
+  @curation = new Curation(id: sd.EF_VENICE)
+  @curation.fetch
+    success: (curation, response, options) ->
+      res.locals.sd.CURATION = @curation.toJSON()
+      videoIndex = parseInt(req.params.id) or 1
+      res.render 'components/venice_2017/templates/index',
+        videoIndex: videoIndex
+        curation: @curation
+    error: next
 
 @vanity = (req, res, next) ->
   proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)

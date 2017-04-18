@@ -1,0 +1,27 @@
+<svg width="55px" height="53px" viewBox="0 0 55 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-206.7%" y="-206.7%" width="513.3%" height="513.3%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="003" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Header-on-an-Article-Copy-50" transform="translate(-895.000000, -1489.000000)">
+            <g id="Group-26" transform="translate(162.000000, 1438.000000)">
+                <g id="Group-18" transform="translate(753.000000, 0.000000)">
+                    <g id="Group-2" filter="url(#filter-1)" transform="translate(0.000000, 70.000000)">
+                        <ellipse id="Oval" stroke="#FFFFFF" cx="7.48813291" cy="7.48813291" rx="7.48813291" ry="7.48813291"></ellipse>
+                        <polygon id="Rectangle-2" fill="#F8F8F8" transform="translate(6.366942, 7.518963) rotate(-315.000000) translate(-6.366942, -7.518963) " points="2.40790192 5.11211618 10.325983 3.55992236 8.77378918 11.4780034"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -88,6 +88,7 @@ module.exports =
   PC_AUCTION_CHANNEL: '5759e4d7b5989e6f98f77997'
   GALLERY_INSIGHTS_CHANNEL: '5759e4a6b5989e6f98f77995'
   EOY_2016: '5829db77b5989e6f98f779a5'
+  EF_VENICE: '58f1231fc88a280f5e9efa75'
   EDITORIAL_CTA_BANNER_IMG: 'http://files.artsy.net/images/iphone_email.png'
   GALLERY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'

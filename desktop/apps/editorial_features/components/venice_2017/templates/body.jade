@@ -1,0 +1,36 @@
+.venice-body--article
+  .venice-body__left
+    p article content
+  .venice-body__right
+    p share buttons
+
+.venice-body--series
+  .venice-body__left
+    .venice-body__about
+      h2 About the Series
+      p=curation.get('description')
+
+      a(href="https://www.ubs.com/global/en/about_ubs/contemporary-art.html").venice-body__partner
+        span Presented In Partnership with
+        img(src="https://artsy-media-uploads.s3.amazonaws.com/qp6GUcn5RkvscdYEBmqFXw%2FUBS_White.png")
+
+    .venice-body__help
+      p Having trouble viewing?
+      p
+        a(href='#') Read our 360 video guide
+
+  .venice-body__right
+    h2 Index
+    .venice-body__index
+      each section, i in curation.get('sections')
+        +index_item(section, i)
+
+
+mixin index_item(section, i)
+  .venice-body__index-item
+    a(href='#' class=section.published? 'published':undefined)
+      include ./icon_play.svg
+      span.chapter= '0' + (i + 1) + '. '
+      span.title=section.title
+      if !section.published && section.release_date
+        span='(' + moment(section.release_date).format('MMMM Do') + ')'
