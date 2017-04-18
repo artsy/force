@@ -84,13 +84,11 @@ module.exports =
   SEGMENT_AMP_WRITE_KEY: null
   SEGMENT_WRITE_KEY: null
   SEGMENT_WRITE_KEY_MICROGRAVITY: null
+  SENTRY_PRIVATE_DSN: null,
+  SENTRY_PUBLIC_DSN: null,
   SESSION_COOKIE_KEY: 'force.sess'
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_SECRET: 'change-me'
-  SENTRY_PRIVATE_DSN_STAGING: 'https://7470396d71fe45278fa624aae59505c8:b697285749b5484c81bf730b9e0dd485@sentry.io/159064'
-  SENTRY_PRIVATE_DSN_PRODUCTION: 'https://814ffa3a48684455a9fc500e18225403:0d14e90f25ec4bac96d475582504ecca@sentry.io/28316',
-  SENTRY_PUBLIC_DSN_STAGING: 'https://7470396d71fe45278fa624aae59505c8@sentry.io/159064'
-  SENTRY_PUBLIC_DSN_PRODUCTION: 'https://814ffa3a48684455a9fc500e18225403@sentry.io/28316'
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/gallery-insights$'

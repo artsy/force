@@ -62,6 +62,9 @@ syncAuth = module.exports.syncAuth = ->
           complete: ->
             window.location.reload()
 
+setupErrorReporting = ->
+  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
+
 # Show search button on focusing the search bar
 setupHeaderView = ->
   new HeaderView
@@ -76,11 +79,3 @@ setupAnalytics = ->
   analytics.registerCurrentUser()
 
 setupAnalytics()
-
-setupErrorReporting = ->
-  ravenDSN = if sd.NODE_ENV is 'staging'
-    sd.SENTRY_PUBLIC_DSN_STAGING
-  else if sd.NODE_ENV is 'production'
-    sd.SENTRY_PUBLIC_DSN_PRODUCTION
-
-  RavenClient.config(ravenDSN).install()

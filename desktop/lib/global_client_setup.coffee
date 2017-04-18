@@ -89,9 +89,4 @@ setupJquery = ->
   window[key] = helper for key, helper of templateModules
 
 setupErrorReporting = ->
-  ravenDSN = if sd.NODE_ENV is 'staging'
-    sd.SENTRY_PUBLIC_DSN_STAGING
-  else if sd.NODE_ENV is 'production'
-    sd.SENTRY_PUBLIC_DSN_PRODUCTION
-
-  RavenClient.config(ravenDSN).install()
+  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
