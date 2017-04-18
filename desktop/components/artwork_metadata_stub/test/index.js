@@ -7,7 +7,7 @@ function render(locals) {
   const filename = path.resolve(__dirname, '../index.jade')
   return jade.compile(
     fs.readFileSync(filename),
-    { filename: filename }
+    { filename }
   )(locals)
 }
 
