@@ -20,6 +20,7 @@ module.exports =
     TEAM_BLOGS or '^/test'
     '^/2016-year-in-art'
     '^/artist/.*'
+    '^/venice-biennale/.*'
   ]
 
   check: ->
