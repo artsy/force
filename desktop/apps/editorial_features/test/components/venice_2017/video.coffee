@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 
-describe 'Venice Biennale', ->
+describe 'Venice Video', ->
 
   before (done) ->
     benv.setup =>
@@ -17,9 +17,9 @@ describe 'Venice Biennale', ->
         asset: ->
         sd: APP_URL: 'localhost'
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
-        { VeniceView } = mod = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client'), []
+        { VeniceVideoView } = mod = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/video'), []
         mod.__set__ 'sd', APP_URL: 'localhost'
-        @view = new VeniceView
+        @view = new VeniceVideoView
           el: $('body')
           videoIndex: 1
         done()

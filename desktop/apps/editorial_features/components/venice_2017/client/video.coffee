@@ -2,10 +2,9 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
 
-module.exports.VeniceView = class VeniceView extends Backbone.View
+module.exports = class VeniceVideoView extends Backbone.View
 
   events:
-    'click .venice-overlay__play': 'playVideo'
     'click #toggleplay': 'onTogglePlay'
     'click #togglemute': 'onToggleMute'
 
@@ -29,9 +28,6 @@ module.exports.VeniceView = class VeniceView extends Backbone.View
       loop: false
     @vrView.on 'timeupdate', @updateTime
 
-  playVideo: ->
-    $('.venice-nav, .venice-overlay').fadeOut()
-
   onTogglePlay: ->
     if @vrView.isPaused
       @vrView.play()
@@ -49,7 +45,7 @@ module.exports.VeniceView = class VeniceView extends Backbone.View
   updateTime: (e) =>
     $(@$scrubberTime).html @formatTime(e.currentTime)
     percentComplete = (e.currentTime / e.duration) * 100
-    $(@$scrubberMarker).css { 'transform': "translateX(-(#{100 - percentComplete})%)" }
+    $(@$scrubberMarker).css { 'transform': "translateX(-#{100 - percentComplete}%)" }
 
   formatTime: (time) ->
     minutes = Math.floor(time / 60) % 60
@@ -62,6 +58,3 @@ module.exports.VeniceView = class VeniceView extends Backbone.View
 
   onResizeWindow: ->
     @scrubberWidth = $('.venice-video__scrubber').width()
-
-module.exports.init = ->
-  new VeniceView el: $('.venice-feature')
