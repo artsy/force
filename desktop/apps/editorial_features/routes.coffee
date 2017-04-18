@@ -1,13 +1,15 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
+Q = require 'bluebird-q'
+markdown = require '../../components/util/markdown.coffee'
+httpProxy = require 'http-proxy'
 Curation = require '../../models/curation.coffee'
 Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
-markdown = require '../../components/util/markdown.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-Q = require 'bluebird-q'
+{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -33,3 +35,17 @@ Q = require 'bluebird-q'
         article: @article,
         superSubArticles: @superSubArticles,
         markdown: markdown
+
+@venice = (req, res, next) ->
+  videoIndex = parseInt(req.params.id) or 1
+  res.render 'components/venice_2017/templates/index',
+    videoIndex: videoIndex
+
+@vanity = (req, res, next) ->
+  proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
+  whitelistedAssets = WHITELISTED_VANITY_ASSETS.split(',')
+  return next() unless req.params[0] in whitelistedAssets
+  req.headers['host'] = VANITY_BUCKET
+  target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
+  proxy.web req, res, target: target, (err) ->
+    res.redirect 301, '/articles' if err

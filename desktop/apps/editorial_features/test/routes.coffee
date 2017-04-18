@@ -41,3 +41,50 @@ describe 'EOY route', ->
       @res.render.args[0][1].article.get('title').should.equal 'Moo'
       @res.render.args[0][1].superSubArticles.length.should.equal 2
       done()
+
+describe 'Venice route', ->
+
+  beforeEach ->
+    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @next = sinon.stub()
+
+  it 'sets a video index', ->
+    @req = { params: { id: '3' } }
+    routes.venice(@req, @res, @next)
+    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+    @res.render.args[0][1].videoIndex.should.equal 3
+
+  it 'defaults to the first video', ->
+    @req = { params: { id: 'blah' } }
+    routes.venice(@req, @res, @next)
+    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+    @res.render.args[0][1].videoIndex.should.equal 1
+
+describe 'Vanity route', ->
+
+  beforeEach ->
+    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @next = sinon.stub()
+    routes.__set__ 'httpProxy',
+      createProxyServer: sinon.stub().returns
+        web: @web = sinon.stub()
+
+  it 'checks that the asset is whitelisted and sets up proxy', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/final-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @web.args[0][2].target.should.containEql '/videos/final-video.mp4'
+
+  it 'rejects assets that are not whitelisted', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/demo-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @next.called.should.be.true()
+
+  it 'redirects to articles page if there is a proxy error', ->
+    routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'
+    @req = { params: ['videos/final-video.mp4'], headers: host: '' }
+    routes.vanity @req, @res, @next
+    @web.args[0][3]('Error')
+    @res.redirect.args[0][0].should.equal 301
+    @res.redirect.args[0][1].should.equal '/articles'
