@@ -6,10 +6,9 @@ ArtworkRailView = require '../../../../components/artwork_rail/client/view.coffe
 AuctionLotsView = require '../../../../components/auction_lots/client/view.coffee'
 AuctionLotDetailView = require '../../../../components/auction_lots/client/detail.coffee'
 template = -> require('../../templates/sections/auction_lots.jade') arguments...
+ArtistArtworksView = require './artworks.coffee'
 
-module.exports = class ArtistAuctionResultsView extends Backbone.View
-  subViews: []
-
+module.exports = class ArtistAuctionResultsView extends ArtistArtworksView
   initialize: ({ @model, @user, @collection }) ->
     @originalPath = location.pathname
     mediator.on 'modal:closed', @return
@@ -29,31 +28,18 @@ module.exports = class ArtistAuctionResultsView extends Backbone.View
     window.history.back()
 
   postRender: ->
+    super
+
     @subViews.push new AuctionLotsView
       el: @$('#auction-results-section')
       artist: @model
       onDetailClick: (e) =>
         @auctionDetail(e)
 
-    @subViews.push rail = new ArtworkRailView
-      $el: @$(".artist-artworks-rail")
-      collection: @model.related().artworks
-      title: "Works by #{@model.get('name')}"
-      viewAllUrl: "#{@model.href()}/works"
-      imageHeight: 180
-      totalArtworksCount: @model.get('counts').artworks
-      viewAllCell: true
-
-    rail.collection.trigger 'sync'
-
     $el = @$('#artist-related-articles-section').show()
     _.defer -> $el.addClass 'is-fade-in'
 
   render: ->
     @$el.html template(artist: @model, auctionLots: @collection, user: @user)
-    _.defer => @postRender()
-    this
-
-  remove: ->
-    _.invoke @subViews, 'remove'
     super
+    this
