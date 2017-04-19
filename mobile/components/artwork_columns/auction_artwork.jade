@@ -17,9 +17,5 @@
         = artwork.get('date')
       p= artwork.partnerName()
 
-    if artwork.get('sale')
-      .artwork-columns-artwork-details__bid-now
-        if artwork.get('sale').is_open
-          p.bid-now-link Bid now
-        else
-          p.bid-now-link Auction closed
+    .artwork-columns-artwork-details__bid-now
+      p.bid-now-link Bid now
