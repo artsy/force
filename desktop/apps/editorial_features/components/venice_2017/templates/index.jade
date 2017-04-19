@@ -14,5 +14,9 @@ block body
       include ./video
       include ./cover
 
+    .venice-body
+      include ./body
+
     .venice-footer
-      //- TODO
+      if curation.get('sub_articles')
+        include ./footer
