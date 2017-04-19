@@ -47,7 +47,7 @@ describe 'Venice route', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    Backbone.sync.yieldsTo 'success', { name: 'Inside the Biennale' }
+    Backbone.sync.yieldsTo 'success', { name: 'Inside the Biennale', sections: [] }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123'}

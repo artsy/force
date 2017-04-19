@@ -45,7 +45,6 @@ Articles = require '../../collections/articles.coffee'
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
         curation: curation
-        section: curation.get('sections')[videoIndex - 1]
     error: next
 
 @vanity = (req, res, next) ->
