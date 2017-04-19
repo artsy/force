@@ -68,7 +68,7 @@ describe 'Canonical url', ->
     jade.compile(
       fs.readFileSync(filename),
       { filename: filename }
-    )(pathname: '/test', sd: { ARTSY_URL: 'http://artsy.net'}).should.containEql "link href=\"http://artsy.net/test\" rel=\"canonical\""
+    )(pathname: '/test', sd: { APP_URL: 'http://artsy.net'}).should.containEql "link href=\"http://artsy.net/test\" rel=\"canonical\""
 
 describe 'inquiry cookies', ->
 
