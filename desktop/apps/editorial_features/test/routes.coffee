@@ -46,24 +46,26 @@ describe 'EOY route', ->
 describe 'Venice route', ->
 
   beforeEach ->
-    Backbone.sync = sinon.stub().yieldsTo 'success', { name: 'Inside the Biennale' }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123'}
 
   it 'sets a video index', ->
+    Backbone.sync = sinon.stub().yieldsTo 'success', { name: 'Inside the Biennale' }
     @req = { params: { id: '3' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].videoIndex.should.equal 3
 
   it 'defaults to the first video', ->
+    Backbone.sync = sinon.stub().yieldsTo 'success', { name: 'Inside the Biennale' }
     @req = { params: { id: 'blah' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].videoIndex.should.equal 1
 
   it 'sets a curation', ->
+    Backbone.sync = sinon.stub().yieldsTo 'success', { name: 'Inside the Biennale' }
     @req = { params: { id: '3' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
