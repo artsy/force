@@ -2,6 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+Curation = require '../../../../../models/curation.coffee'
 { resolve } = require 'path'
 
 describe 'Venice Main', ->
@@ -15,6 +16,10 @@ describe 'Venice Main', ->
       @options =
         asset: ->
         sd: APP_URL: 'localhost'
+        videoIndex: 1
+        curation: new Curation
+          description: 'description'
+          sections: [ {description: 'description'} ]
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), []
         VeniceView.__set__ 'sd', APP_URL: 'localhost'
