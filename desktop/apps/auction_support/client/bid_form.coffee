@@ -14,7 +14,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
   errors: -> {
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
-    "Live Bidding has Started": => "Live bidding on this sale has begun. <br>To continue bidding, please <a href=\"#{@model.liveAuctionUrl()}\">join our Live Auction Room</a>."
+    "Live Bidding has Started": => "Sorry, your bid wasn't received before live bidding started. <br/>To continue bidding, please <a href=\"#{@model.liveAuctionUrl()}\">join the live auction</a>."
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
   }

@@ -86,7 +86,7 @@ describe 'BidForm', ->
 
     it 'handles live sale errors', ->
       @view.showError 'description', { responseText: "{ \"error\": \"Live Bidding has Started\"}" }
-      @view.$('.error').text().should.containEql "Live bidding on this sale has begun."
+      @view.$('.error').text().should.containEql "Sorry, your bid wasn't received before live bidding started."
 
     it 'validates against the bidder position min', ->
       @view.bidderPositions.first().set suggested_next_bid_cents: 100000, display_suggested_next_bid_dollars: '$1,000'
