@@ -1,3 +1,6 @@
+@require './video'
+@require '../../../../../components/slider'
+
 .venice-feature
   background-color black
   color white
@@ -7,7 +10,7 @@
   top 0
   left 0
   right 0
-  z-index 10
+  z-index 11
   border-bottom 1px solid white
   display flex
   flex-direction row
@@ -49,6 +52,7 @@
   color white
   background-size cover
   background-position center
+  z-index 10
   &__title
     garamond()
     font-size 80px
@@ -177,3 +181,4 @@
   &__articles
     padding-top 20px
     border-top 1px solid gray-color
+
