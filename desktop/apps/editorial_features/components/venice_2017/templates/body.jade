@@ -1,6 +1,7 @@
 .venice-body--article
   .venice-body__left
     +item_description(curation.get('sections')[videoIndex - 1])
+    +headset_prompt
   .venice-body__right
     +item_share(curation.get('sections')[videoIndex - 1])
 
@@ -64,3 +65,7 @@ mixin item_share(section)
         href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
         target='_blank'
       ): i.icon-twitter.icon-in-table
+
+mixin headset_prompt
+  .venice-body__headset-prompt
+    p For the most immersive experience, watch in Google Cardboard via the Youtube App.
