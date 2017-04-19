@@ -72,11 +72,6 @@ describe 'FavoritesStatusModalView', ->
       @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"param_error\", \"message\": \"Meow meow meow\" } " }
       $('.error').text().should.equal 'Sorry, this endpoint is for cats'
 
-    it 'handles error messages returned from a function', ->
-      @errorHandlingForm.errors['Stolen Credit Card'] = () -> "Please hold, I need to check with my manager..."
-      @errorHandlingForm.showError 'foo', { responseText: "{ \"error\": \"Stolen Credit Card\"}" }
-      $('.error').text().should.equal "Please hold, I need to check with my manager..."
-
     it 'handles error messages that are a string', ->
       @errorHandlingForm.errors['Stolen Credit Card'] = "You have encountered an error."
       @errorHandlingForm.showError 'foo', { responseText: "{ \"error\": \"Stolen Credit Card\"}" }
