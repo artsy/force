@@ -4,6 +4,7 @@ moment = require 'moment'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
+Curation = require '../../../models/curation'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
@@ -45,8 +46,10 @@ describe 'EOY route', ->
 describe 'Venice route', ->
 
   beforeEach ->
+    Backbone.sync = sinon.stub().yieldsTo 'success', { name: 'Inside the Biennale' }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
+    routes.__set__ 'sd', {EF_VENICE: '123'}
 
   it 'sets a video index', ->
     @req = { params: { id: '3' } }
@@ -59,6 +62,13 @@ describe 'Venice route', ->
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].videoIndex.should.equal 1
+
+  it 'sets a curation', ->
+    @req = { params: { id: '3' } }
+    routes.venice(@req, @res, @next)
+    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+    @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
+
 
 describe 'Vanity route', ->
 

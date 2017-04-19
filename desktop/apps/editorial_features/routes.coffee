@@ -39,12 +39,12 @@ Articles = require '../../collections/articles.coffee'
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
   @curation.fetch
-    success: (curation, response, options) ->
-      res.locals.sd.CURATION = @curation.toJSON()
+    success: (curation) ->
+      res.locals.sd.CURATION = curation.toJSON()
       videoIndex = parseInt(req.params.id) or 1
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
-        curation: @curation
+        curation: curation
     error: next
 
 @vanity = (req, res, next) ->
