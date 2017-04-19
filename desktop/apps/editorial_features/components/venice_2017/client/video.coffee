@@ -7,17 +7,10 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   events:
     'click #toggleplay': 'onTogglePlay'
-    'click #togglemute': 'onToggleMute'
 
   initialize: ->
     @$playButton = $('#toggleplay')
-    @$time = $('#time')
-    @$muteButton = $('#togglemute')
-    @scrubberWidth = $('.venice-video__scrubber').width()
-    @$scrubberMarker = $('.venice-video__scrubber-inner')
-    @$scrubberTime = $('.venice-video__scrubber-time')
     @setupVideo()
-    $(window).resize @onResizeWindow
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -34,6 +27,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @scrubber.set(e.currentTime)
 
   onVRViewReady: =>
+    @vrView.pause()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'
@@ -50,13 +44,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       @vrView.pause()
     @$playButton.toggleClass 'paused'
 
-  onToggleMute: ->
-    if @$muteButton.hasClass 'muted'
-      @vrView.setVolume 1
-    else
-      @vrView.setVolume 0
-    @$muteButton.toggleClass 'muted'
-
+  # Currently unused but will implement next
   formatTime: (time) ->
     minutes = Math.floor(time / 60) % 60
     seconds = Math.floor(time % 60)
@@ -65,6 +53,3 @@ module.exports = class VeniceVideoView extends Backbone.View
 
     result = (if minutes < 10 then '0' + minutes else minutes) + ':'
     result += if seconds < 10 then '0' + seconds else seconds
-
-  onResizeWindow: ->
-    @scrubberWidth = $('.venice-video__scrubber').width()

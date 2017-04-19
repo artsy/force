@@ -12,3 +12,4 @@ module.exports = class VeniceView extends Backbone.View
 
   fadeOutCover: ->
     $('.venice-nav, .venice-overlay').fadeOut()
+    @VeniceVideoView.vrView.play()
