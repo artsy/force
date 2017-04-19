@@ -6,11 +6,9 @@ template = -> require('../../templates/sections/articles.jade') arguments...
 sd = require('sharify').data
 query = require '../../queries/articles.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
+ArtistArtworksView = require './artworks.coffee'
 
-module.exports = class ArticlesView extends Backbone.View
-
-  subViews: []
-
+module.exports = class ArticlesView extends ArtistArtworksView
   initialize: ->
     @listenTo this, 'artist:articles:sync', @render
 
@@ -22,17 +20,7 @@ module.exports = class ArticlesView extends Backbone.View
     .then ({ artist }) => @trigger 'artist:articles:sync', artist
 
   postRender: ->
-    @subViews.push rail = new ArtworkRailView
-      $el: @$(".artist-artworks-rail")
-      collection: @model.related().artworks
-      title: "Works by #{@model.get('name')}"
-      viewAllUrl: "#{@model.href()}/works"
-      imageHeight: 180
-      totalArtworksCount: @model.get('counts').artworks
-      viewAllCell: true
-
-    rail.collection.trigger 'sync'
-
+    super
     $el = @$('#artist-related-articles-section').show()
     _.defer -> $el.addClass 'is-fade-in'
 
@@ -40,9 +28,7 @@ module.exports = class ArticlesView extends Backbone.View
     @$el.html template
       artist: @model
       articles: articles
-    _.defer => @postRender()
-    this
-
-  remove: ->
-    _.invoke @subViews, 'remove'
+    if articles?.length == 0
+      @$('#artist-related-articles-section').remove()
     super
+    this

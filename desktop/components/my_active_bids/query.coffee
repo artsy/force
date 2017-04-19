@@ -27,7 +27,7 @@ module.exports = """
             title
             date
             image {
-              url(version: "small")
+              url(version: "square")
             }
             artist {
               name

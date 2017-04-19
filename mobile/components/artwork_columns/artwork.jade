@@ -1,6 +1,6 @@
 - size = size || tall
 - imageUrl = artwork.defaultImageUrl(size) ? artwork.defaultImageUrl(size) : artwork.get('image').url
-- hasAuctionPartner = (artwork.get('partner') && (artwork.get('partner').type === 'Auction' || artwork.get('partner').type === 'Auction House')) || artwork.get('is_biddable')
+- hasAuctionPartner = (artwork.get('partner') && (artwork.get('partner').type === 'Auction' || artwork.get('partner').type === 'Auction House'))
 .artwork-columns-artwork
   a( href='/artwork/' + artwork.get('id') )
     img( src=imageUrl data-id=artwork.get('_id') )

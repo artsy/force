@@ -56,7 +56,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
   popLock: =>
     mainHeaderHeight = $('#main-layout-header').height()
     bottomOfMenu = @$window.scrollTop() + mainHeaderHeight
-    tabsOffset = @$('.artist-sticky-header').offset().top
+    tabsOffset = @$('.artist-sticky-header').offset()?.top
     if tabsOffset <= bottomOfMenu
       @$('.artist-sticky-header').addClass('artist-sticky-header-fixed')
       responsiveMargin = $('.main-layout-container').offset().left

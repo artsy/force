@@ -16,7 +16,7 @@
     "start": "forever -c 'node -r dotenv/config --max_old_space_size=1024' ."
   },
   "dependencies": {
-    "@artsy/reaction-force": "^0.1.13",
+    "@artsy/reaction-force": "^0.1.15",
     "accounting": "^0.4.1",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
@@ -97,6 +97,8 @@
     "popover": "^2.4.0",
     "prop-types": "^15.5.8",
     "qs": "^6.3.0",
+    "raven": "^1.2.1",
+    "raven-js": "^3.14.2",
     "raygun4js": "^2.5.1",
     "rc-slider": "^6.1.2",
     "react": "^15.4.2",
