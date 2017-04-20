@@ -2,28 +2,51 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
+initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+Curation = require '../../../../../models/curation.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
   events:
-    'click .venice-overlay__play': 'fadeOutCover'
-    'click .venice-body__left': 'swapVideo'
+    'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
 
   initialize: ->
+    @parser = new UAParser()
+    @curation = new Curation sd.CURATION
+    @section = @curation.get('sections')[sd.VIDEO_INDEX]
+    @setupCarousel()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
-      video: @getBestVideo()
-      # video: "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
+      video: @chooseVideoFile()
 
-  swapVideo: ->
-    @VeniceVideoView.trigger 'swapVideo', { video: "#{sd.APP_URL}/vanity/videos/output3.mp4" }
+  setupCarousel: ->
+    @carousel = initCarousel $('.venice-carousel'),
+      imagesLoaded: true
+      advanceBy: 1
+      wrapAround: true
+      initialIndex: sd.VIDEO_INDEX
+    , (carousel) =>
+      flickity = carousel.cells.flickity
+      flickity.on 'select', =>
+        @changeSection flickity.selectedIndex
 
-  fadeOutCover: ->
-    $('.venice-nav, .venice-overlay').fadeOut()
+  changeSection: (i) ->
+    @section = @curation.get('sections')[i]
+    # Push route
+    window.history.replaceState {}, i, @section.slug
+    # Swap video if it is published
+    @swapVideo() if @section.published
+
+  fadeOutCoverAndStartVideo: ->
+    $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
 
-  getBestVideo: (useragent) ->
-    parser = new UAParser()
-    # parser.get
+  swapVideo: ->
+    @VeniceVideoView.trigger 'swapVideo',
+      video: @chooseVideoFile()
 
-    "#{sd.APP_URL}/vanity/videos/scenic_mono_3.mp4"
+  chooseVideoFile: ->
+    if @parser.getBrowser().name is 'Safari'
+      "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
+    else
+      sd.APP_URL + @section.video_url

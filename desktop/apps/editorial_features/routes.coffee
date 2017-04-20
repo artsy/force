@@ -46,6 +46,7 @@ Articles = require '../../collections/articles.coffee'
         videoIndex = setVideoIndex(curation, req.params.slug)
         unless videoIndex or videoIndex is 0
           return res.redirect 301, '/venice-biennale'
+      res.locals.sd.VIDEO_INDEX = videoIndex
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
         curation: curation
