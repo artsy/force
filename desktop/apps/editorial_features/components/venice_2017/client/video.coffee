@@ -29,7 +29,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     @scrubber.set(e.currentTime)
 
   onVRViewReady: =>
-    @vrView.pause()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'

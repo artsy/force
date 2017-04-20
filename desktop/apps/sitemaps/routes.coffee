@@ -30,13 +30,6 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
   res.set 'Content-Type', 'text/xml'
   res.render('misc', pretty: true)
 
-@cities = (req, res, next) ->
-  partnerFeaturedCities = new PartnerFeaturedCities()
-  partnerFeaturedCities.fetch
-    success: ->
-      res.set 'Content-Type', 'text/xml'
-      res.render 'cities', pretty: true, citySlugs: partnerFeaturedCities.pluck('slug')
-
 # sitemaps for artworks and images are generated in Spark by Cinder and written to the artsy-sitemaps s3 bucket
 # see https://github.com/artsy/cinder/blob/master/doc/sitemaps.md for more information
 @sitemaps = (req, res, next) ->
