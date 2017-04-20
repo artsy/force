@@ -10,7 +10,6 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   initialize: (options) ->
     @video = options.video
-    console.log "Using video: " + @video
     @$playButton = $('#toggleplay')
     @setupVideo()
     @on 'swapVideo', @swapVideo
