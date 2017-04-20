@@ -11,7 +11,7 @@ app.get ['/sitemap-articles.xml', '/sitemap-articles-:timestamp.xml'], routes.si
 app.get ['/sitemap-artists.xml', '/sitemap-artists-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-artist-images.xml', '/sitemap-artist-images-:slug.xml'], routes.sitemaps
 app.get ['/sitemap-artworks.xml', '/sitemap-artworks-:timestamp.xml'], routes.sitemaps
-app.get '/sitemap-cities.xml', routes.cities
+app.get '/sitemap-cities.xml', routes.sitemaps
 app.get ['/sitemap-fairs.xml', '/sitemap-fairs-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-features.xml', '/sitemap-features-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-genes.xml', routes.sitemaps
