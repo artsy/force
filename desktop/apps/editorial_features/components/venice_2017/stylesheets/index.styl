@@ -1,6 +1,8 @@
 @require './video'
 @require '../../../../../components/slider'
 
+nav-height = 54px
+
 .venice-feature
   background-color black
   color white
@@ -16,10 +18,12 @@
   flex-direction row
   justify-content space-between
   align-items center
-  height 54px
+  height nav-height
   a
     color white
     text-decoration none
+  &__sticky-artsy-logo
+    font-size 26px
   &__sticky-right, &__sticky-left
     margin 0px 20px
   &__sticky-right
@@ -29,7 +33,7 @@
     display flex
     align-items center
     .venice-nav__sticky-ubs-logo img
-      height 30px
+      height 26px
     .venice-nav__plus
       transform rotate(45deg)
       margin 10px
@@ -44,15 +48,23 @@
   width 100%
   position absolute
 
+#vrvideo
+  height 100vh
+
 .venice-overlay
-  display flex
-  flex-direction column
-  justify-content center
-  align-items center
   color white
   background-size cover
   background-position center
   z-index 10
+  &__text
+    position absolute
+    bottom 0
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+    height calc(100vh \- nav-height)
+    width 100%
   &__title
     garamond()
     font-size 80px
@@ -60,10 +72,12 @@
   &__sub-title
     garamond-size('xl-headline')
     margin-bottom 30px
+    text-transform uppercase
   &__play
     width 180px
     height 50px
     border 1px solid white
+    border-radius 2px
     background-color rgba(0,0,0,0.5)
     display flex
     justify-content center
@@ -182,3 +196,23 @@
     padding-top 20px
     border-top 1px solid gray-color
 
+
+@media screen and (max-width: 650px)
+  .venice-overlay
+    &__title
+      garamond-size('xl-headline')
+    &__sub-title
+      garamond-size('headline')
+
+@media screen and (max-width: 550px)
+  .venice-nav
+    &__sticky-right
+      display none
+    &__sticky-left
+      margin 0px 15px
+
+  .venice-overlay
+    &__title
+      font-size 45px
+    &__sub-title
+      garamond-size('s-headline')
