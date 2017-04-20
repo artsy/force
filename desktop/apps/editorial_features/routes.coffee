@@ -41,7 +41,7 @@ Articles = require '../../collections/articles.coffee'
   @curation.fetch
     success: (curation) ->
       res.locals.sd.CURATION = curation.toJSON()
-      videoIndex = parseInt(req.params.id) or 1
+      videoIndex = setVideoIndex(curation, req.params.slug)
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
         curation: curation
@@ -55,3 +55,9 @@ Articles = require '../../collections/articles.coffee'
   target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
   proxy.web req, res, target: target, (err) ->
     res.redirect 301, '/articles' if err
+
+setVideoIndex = (curation, slug) ->
+  for section, i in curation.get 'sections'
+    if section.slug is slug
+      return i
+  return 0
