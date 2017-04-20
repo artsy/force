@@ -1,4 +1,5 @@
 @require './video'
+@require './body'
 @require '../../../../../components/slider'
 
 nav-height = 54px
@@ -102,86 +103,6 @@ nav-height = 54px
 .venice-overlay, .venice-nav
   transition display 0.5s ease
 
-.venice-body
-  max-width 1100px
-  width 100%
-  margin 65px auto
-  padding 0 2em
-  a
-    color white
-  h2
-    garamond-size('headline')
-    margin-bottom 20px
-  p
-    garamond-size('s-headline')
-    font-size 23px
-    line-height 28px
-  &--article, &--series
-    display flex
-    justify-content space-between
-  &--article
-    margin-bottom 180px
-  &--series
-    margin-bottom 160px
-    .venice-body__left
-      display flex
-      justify-content space-between
-      flex-direction column
-  &__left
-    width 50%
-  &__right
-    width 35%
-    min-width 365px
-  &__partner
-    text-decoration none
-    avant-garde-size('body')
-    display flex
-    margin 40px 0
-    span
-      width 135px
-      margin-right 20px
-    img
-      height 40px
-  &__index-item
-    garamond-size('l-body')
-    border-bottom 1px solid
-    a
-      display flex
-      align-items center
-      text-decoration none
-      height 60px
-      opacity .7
-      &.published
-        opacity 1
-    svg
-      margin-left -15px
-    &:first-child
-      border-top 1px solid
-    .chapter, .title
-      margin-right 10px
-  &__item-description
-    margin-bottom 40px
-  &__headset-prompt
-    p
-      font-style italic
-  &__item-share
-    display flex
-    align-items center
-    border 1px solid
-    height 50px
-    .share-item
-      width 33%
-      height 100%
-      &:first-child, &:nth-child(2)
-        border-right 1px solid
-    a
-      text-decoration none
-      display flex
-      justify-content center
-      align-items center
-      height 100%
-
-
 .venice-footer
   max-width 1100px
   width 100%
@@ -194,8 +115,13 @@ nav-height = 54px
       margin-bottom 40px
   &__articles
     padding-top 20px
-    border-top 1px solid gray-color
+    border-top 2px solid gray-color
 
+@media screen and (max-width: 800px)
+  .venice-footer
+    padding 0
+    &__articles
+      padding 20px 1em 0 1em
 
 @media screen and (max-width: 650px)
   .venice-overlay

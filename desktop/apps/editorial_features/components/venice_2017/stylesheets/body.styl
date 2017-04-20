@@ -1,0 +1,138 @@
+.venice-body
+  max-width 1100px
+  width 100%
+  margin 65px auto
+  padding 0 2em
+  a
+    color white
+    transition opacity .25s
+    &:hover
+      opacity .5
+  h2
+    garamond-size('headline')
+    margin-bottom 20px
+  p
+    garamond-size('s-headline')
+    font-size 23px
+    line-height 28px
+  &--article, &--series
+    display flex
+    justify-content space-between
+  &--article
+    margin-bottom 180px
+    .venice-body__right h2
+      display none
+  &--series
+    margin-bottom 160px
+    .venice-body__left
+      display flex
+      justify-content space-between
+      flex-direction column
+    .venice-body__right .venice-body__help
+      display none
+  &__left
+    width 50%
+  &__right
+    width 35%
+    min-width 365px
+  &__partner
+    text-decoration none
+    avant-garde-size('body')
+    display flex
+    margin 40px 0
+    span
+      width 135px
+      margin-right 20px
+    img
+      height 40px
+  &__index-item
+    garamond-size('l-body')
+    border-bottom 1px solid
+    a
+      display flex
+      align-items center
+      text-decoration none
+      height 60px
+      opacity .7
+      &.published
+        opacity 1
+        &:hover
+          opacity .5
+    svg
+      margin-left -15px
+    &:first-child
+      border-top 1px solid
+    .chapter, .title
+      margin-right 10px
+  &__item-description
+    margin-bottom 40px
+  &__headset-prompt
+    p
+      font-style italic
+  &__item-share
+    display flex
+    align-items center
+    border 1px solid
+    height 50px
+    .share-item
+      width 33.33%
+      height 100%
+      &:first-child, &:nth-child(2)
+        border-right 1px solid
+    a
+      text-decoration none
+      display flex
+      justify-content center
+      align-items center
+      height 100%
+      &:hover
+        background-color white
+        opacity 1
+        i
+          color black
+  .open-youtube
+    &:hover
+      opacity 1
+    button
+      margin-top 30px
+      background none transparent
+      border 2px solid gray-color
+      color white
+      font-size 11px
+      &:hover
+        background-color white
+        color black
+
+@media screen and (max-width: 800px)
+  .venice-body
+    padding 0 1em
+    p
+      font-size 20px
+    &__left, &__right
+      width 100%
+      min-width calc(100% \- 2em)
+    &--article
+      flex-direction column-reverse
+      margin-bottom 80px
+      .venice-body__right
+        display flex
+        justify-content space-between
+        h2
+          display block
+      .venice-body__left h2
+        display none
+    &--series
+      flex-direction column
+      .venice-body__left .venice-body__help
+        visibility hidden
+      .venice-body__right .venice-body__help
+        margin-top 40px
+        display block
+    &__item-share
+      border none
+      height inherit
+      align-items flex-start
+      .share-item
+        height inherit
+        &:first-child, &:nth-child(2)
+          border-right none
