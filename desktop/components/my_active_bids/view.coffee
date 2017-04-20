@@ -4,7 +4,7 @@ query = require './query.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 template = -> require('./template.jade') arguments...
-ViewHelpers = require('./helpers.coffee')
+{liveAuctionUrl} = require('../../utils/domain/auctions/urls')
 
 module.exports = class MyActiveBids extends Backbone.View
 
@@ -29,7 +29,7 @@ module.exports = class MyActiveBids extends Backbone.View
       @bidderPositions = data.me?.lot_standings
 
   render: =>
-    @$el.html @template myActiveBids: @bidderPositions, ViewHelpers: ViewHelpers
+    @$el.html @template myActiveBids: @bidderPositions, helpers: { auction: { liveAuctionUrl } }
     this
 
   remove: ->

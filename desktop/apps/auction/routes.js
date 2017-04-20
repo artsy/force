@@ -1,11 +1,11 @@
-import metaphysics from '../../../lib/metaphysics'
-import ArticlesQuery from './queries/articles'
 import Articles from '../../collections/articles.coffee'
+import ArticlesQuery from './queries/articles'
 import Auction from '../../models/auction.coffee'
-import footerItems from './footer_items'
-import SaleQuery from './queries/sale'
 import MeQuery from './queries/me'
-import { PREDICTION_URL } from '../../config'
+import SaleQuery from './queries/sale'
+import footerItems from './footer_items'
+import metaphysics from '../../../lib/metaphysics'
+import { liveAuctionUrl } from '../../utils/domain/auctions/urls'
 
 export const index = async (req, res) => {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
@@ -19,6 +19,7 @@ export const index = async (req, res) => {
     articles: auctionArticles,
     auction: newAuction,
     footerItems: footerItems,
+    helpers: { auction: { liveAuctionUrl } },
     me: me
   })
 }
@@ -26,10 +27,9 @@ export const index = async (req, res) => {
 export const redirectLive = async (req, res, next) => {
   const { sale } = await metaphysics({ query: SaleQuery(req.params.id) })
   if (sale && sale.is_live_open) {
-    const liveUrl = `${PREDICTION_URL}/${sale.id}/login`
     const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })
     if (me && me.bidders && me.bidders.length > 0 && me.bidders[0].qualified_for_bidding) {
-      res.redirect(liveUrl)
+      res.redirect(liveAuctionUrl(sale.id, {isLoggedIn: Boolean(me)}))
     } else {
       next()
     }
