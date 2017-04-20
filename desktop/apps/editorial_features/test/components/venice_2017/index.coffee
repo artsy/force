@@ -16,10 +16,15 @@ describe 'Venice Main', ->
       @options =
         asset: ->
         sd: APP_URL: 'localhost'
-        videoIndex: 1
+        videoIndex: 0
         curation: new Curation
           description: 'description'
-          sections: [ {description: 'description'} ]
+          sections: [
+            {
+              description: 'description'
+              cover_image: ''
+            }
+          ]
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), []
         VeniceView.__set__ 'sd', APP_URL: 'localhost'

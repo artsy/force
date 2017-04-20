@@ -17,15 +17,6 @@ render = (templateName) ->
     { filename: filename }
   )
 
-describe 'cities sitemap template', ->
-
-  it 'renders the correct city show URLs', ->
-    xml = render('cities')
-      citySlugs: ['new-york', 'tokyo']
-      sd: APP_URL: 'www.artsy.net'
-    xml.should.containEql 'www.artsy.net/shows/new-york'
-    xml.should.containEql 'www.artsy.net/shows/tokyo'
-
 describe 'misc sitemap template', ->
 
   it 'renders the correct misc URLs', ->

@@ -47,7 +47,7 @@ describe 'Venice route', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    Backbone.sync.yieldsTo 'success', { name: 'Inside the Biennale' }
+    Backbone.sync.yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}] }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123'}
@@ -56,19 +56,18 @@ describe 'Venice route', ->
     Backbone.sync.restore()
 
   it 'sets a video index', ->
-    @req = { params: { id: '3' } }
-    routes.venice(@req, @res, @next)
-    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
-    @res.render.args[0][1].videoIndex.should.equal 3
-
-  it 'defaults to the first video', ->
-    @req = { params: { id: 'blah' } }
+    @req = { params: { slug: 'venice-2' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].videoIndex.should.equal 1
 
+  it 'defaults to the first video', ->
+    @req = { params: { slug: 'blah' } }
+    routes.venice(@req, @res, @next)
+    @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
+
   it 'sets a curation', ->
-    @req = { params: { id: '3' } }
+    @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'

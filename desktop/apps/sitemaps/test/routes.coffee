@@ -105,11 +105,3 @@ Sitemap: https://www.artsy.net/sitemap-videos.xml
     it 'renders the misc template', ->
       routes.misc(@req, @res)
       @res.render.args[0][0].should.equal 'misc'
-
-  describe '#cities', ->
-    it 'fetches and displays city slugs', ->
-      routes.cities(@req, @res)
-      Backbone.sync.args[0][2].success [{ slug: 'new-york-city' }, { slug: 'tokyo' }]
-      @res.render.args[0][1].citySlugs.length.should.equal 2
-      @res.render.args[0][1].citySlugs[0].should.containEql 'new-york-city'
-      @res.render.args[0][1].citySlugs[1].should.containEql 'tokyo'

@@ -1,9 +1,11 @@
 .venice-body--article
   .venice-body__left
-    +item_description(curation.get('sections')[videoIndex - 1])
+    h2 About the Film
+    +item_description(section)
     +headset_prompt
   .venice-body__right
-    +item_share(curation.get('sections')[videoIndex - 1])
+    h2 About the Film
+    +item_share(section)
 
 .venice-body--series
   .venice-body__left
@@ -15,17 +17,14 @@
         span Presented In Partnership with
         img(src="https://artsy-media-uploads.s3.amazonaws.com/qp6GUcn5RkvscdYEBmqFXw%2FUBS_White.png")
 
-    .venice-body__help
-      p Having trouble viewing?
-      p
-        a(href='#') Read our 360 video guide
+    +help
 
   .venice-body__right
     h2 Index
     .venice-body__index
       each section, i in curation.get('sections')
         +index_item(section, i)
-
+    +help
 
 mixin index_item(section, i)
   .venice-body__index-item
@@ -69,3 +68,11 @@ mixin item_share(section)
 mixin headset_prompt
   .venice-body__headset-prompt
     p For the most immersive experience, watch in Google Cardboard via the Youtube App.
+    a(href='#').open-youtube
+      button.avant-garde-button Open in Youtube App
+
+mixin help
+  .venice-body__help
+    p Having trouble viewing?
+    p
+      a(href='#') Read our 360 video guide

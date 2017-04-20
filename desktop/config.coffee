@@ -31,7 +31,7 @@ module.exports =
   EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   EOY_2016_ARTICLE: null
   EOY_2016: '5829db77b5989e6f98f779a5'
-  EF_VENICE: '58f1231fc88a280f5e9efa75'
+  EF_VENICE: '58f5eb75faef6a3a8e7fe1ad'
   FACEBOOK_APP_NAMESPACE: "artsyinc"
   FACEBOOK_ID: null
   FACEBOOK_SECRET: null

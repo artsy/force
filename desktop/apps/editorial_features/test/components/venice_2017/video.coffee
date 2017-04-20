@@ -21,10 +21,15 @@ describe 'Venice Video', ->
       @options =
         asset: ->
         sd: APP_URL: 'localhost'
-        videoIndex: 1
+        videoIndex: 0
         curation: new Curation
           description: 'description'
-          sections: [ {description: 'description'} ]
+          sections: [
+            {
+              description: 'description'
+              cover_image: ''
+            }
+          ]
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []
         VeniceVideoView.__set__ 'sd', APP_URL: 'localhost'
@@ -57,4 +62,4 @@ describe 'Venice Video', ->
   it 'toggles pause', ->
     @view.vrView.isPaused = false
     @view.onTogglePlay()
-    @pause.callCount.should.equal 2 # one for init
+    @pause.callCount.should.equal 1
