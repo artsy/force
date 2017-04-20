@@ -64,11 +64,10 @@ describe 'Venice route', ->
   it 'defaults to the first video', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
-    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
-    @res.render.args[0][1].videoIndex.should.equal 0
+    @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
 
   it 'sets a curation', ->
-    @req = { params: {slug: 'venice'} }
+    @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
     @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
