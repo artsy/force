@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 
 describe 'auction', ->
   before (done) ->
-    sinon.stub global, 'setInterval'
+    sinon.stub global, 'setTimeout'
     benv.setup ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
@@ -13,7 +13,7 @@ describe 'auction', ->
 
   after ->
     benv.teardown()
-    global.setInterval.restore()
+    global.setTimeout.restore()
 
   beforeEach ->
     @ArtworkAuctionView = benv.requireWithJadeify(

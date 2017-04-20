@@ -7,12 +7,17 @@ block head
   include head
 
 block body
+  - section = curation.get('sections')[videoIndex - 1]
   .venice-feature
     include ./nav
 
     .venice-header
-      div#vrvideo
+      include ./video
       include ./cover
 
+    .venice-body
+      include ./body
+
     .venice-footer
-      //- TODO
+      if curation.get('sub_articles')
+        include ./footer

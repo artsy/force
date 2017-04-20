@@ -1,0 +1,61 @@
+#controls
+  position absolute
+  width 100vw
+  padding 30px
+  bottom 0
+  display flex
+  align-items center
+  svg
+    min-width 50px
+    min-height 50px
+    z-index 12
+
+#toggleplay
+  avant-garde-size('s-headline')
+  cursor pointer
+  display flex
+  justify-content center
+  align-items center
+  min-width 95px
+  height 50px
+  border 1px solid white
+  border-radius 2px
+  background-color rgba(0,0,0,0.5)
+  z-index 5
+  &__icon
+    width 9px
+    height 9px
+    border-right 3px solid white
+    border-left 3px solid white
+    border-top none
+    border-bottom none
+    margin-right 10px
+  &::after
+    content "Pause"
+  &.paused
+    #toggleplay__icon
+      border-top 5px solid transparent
+      border-left 9px solid white
+      border-bottom 5px solid transparent
+      border-right none
+    &::after
+      content "Play"
+  &:hover
+    background-color rgba(0,0,0,1)
+
+.venice-video__scrubber.noUi-target
+  width 100%
+  margin 0px 30px
+  position relative
+  display flex
+  align-items center
+  height 1px
+  .noUi-handle
+    top -7px
+
+@media screen and (max-width: 550px)
+  #controls
+    padding 15px
+
+  .venice-video__scrubber
+    margin 0px 15px

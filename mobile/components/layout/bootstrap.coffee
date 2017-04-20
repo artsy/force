@@ -10,6 +10,7 @@ Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
 FastClick = require 'fastclick'
+RavenClient = require 'raven-js'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
@@ -34,6 +35,7 @@ module.exports = ->
   # removes 300ms delay
   FastClick document.body
 
+  setupErrorReporting()
   setupHeaderView()
   syncAuth()
 
@@ -59,6 +61,9 @@ syncAuth = module.exports.syncAuth = ->
           url: '/users/sign_out'
           complete: ->
             window.location.reload()
+
+setupErrorReporting = ->
+  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
 
 # Show search button on focusing the search bar
 setupHeaderView = ->
