@@ -8,13 +8,15 @@ module.exports = class VeniceVideoView extends Backbone.View
   events:
     'click #toggleplay': 'onTogglePlay'
 
-  initialize: ->
+  initialize: (options) ->
+    @video = options.video
     @$playButton = $('#toggleplay')
     @setupVideo()
+    @on 'swapVideo', @swapVideo
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
-      video: "#{sd.APP_URL}/vanity/videos/scenic_mono_3.mp4",
+      video: @video,
       is_stereo: false,
       is_vr_off: false,
       width: '100%',
@@ -43,6 +45,21 @@ module.exports = class VeniceVideoView extends Backbone.View
     else
       @vrView.pause()
     @$playButton.toggleClass 'paused'
+
+  swapVideo: (options) ->
+    @vrView = new VRView.Player '#vrvideo',
+      video: options.video
+      is_stereo: false,
+      is_vr_off: false,
+      width: '100%',
+      height: '100%',
+      loop: false
+    # @vrView.iframe.src = @createIframeSrc options.video
+
+  createIframeSrc: (video) ->
+    'http://localhost:3004/vanity/vrview/index.html?video=' +
+    video +
+    '&is_stereo=false&is_vr_off=false&loop=false&'
 
   # Currently unused but will implement next
   formatTime: (time) ->
