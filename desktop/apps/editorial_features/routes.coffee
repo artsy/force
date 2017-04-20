@@ -49,8 +49,8 @@ Articles = require '../../collections/articles.coffee'
 
 @vanity = (req, res, next) ->
   proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
-  whitelistedAssets = WHITELISTED_VANITY_ASSETS.split(',')
-  return next() unless req.params[0] in whitelistedAssets
+  whitelistedAssets = WHITELISTED_VANITY_ASSETS
+  return next() unless req.params[0].match whitelistedAssets
   req.headers['host'] = VANITY_BUCKET
   target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
   proxy.web req, res, target: target, (err) ->

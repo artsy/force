@@ -11,6 +11,7 @@ module.exports = class VeniceView extends Backbone.View
   initialize: ->
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
+      # video: "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
       video: "#{sd.APP_URL}/vanity/videos/scenic_mono_3.mp4"
 
   swapVideo: ->
