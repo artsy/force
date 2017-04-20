@@ -21,7 +21,7 @@ describe 'Venice Video', ->
       @options =
         asset: ->
         sd: APP_URL: 'localhost'
-        videoIndex: 1
+        videoIndex: 0
         curation: new Curation
           description: 'description'
           sections: [
