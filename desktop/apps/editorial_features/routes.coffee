@@ -41,7 +41,11 @@ Articles = require '../../collections/articles.coffee'
   @curation.fetch
     success: (curation) ->
       res.locals.sd.CURATION = curation.toJSON()
-      videoIndex = setVideoIndex(curation, req.params.slug, res) or 0
+      videoIndex = 0
+      if req.params.slug
+        videoIndex = setVideoIndex(curation, req.params.slug)
+        unless videoIndex
+          return res.redirect 301, '/venice-biennale'
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
         curation: curation
@@ -56,8 +60,7 @@ Articles = require '../../collections/articles.coffee'
   proxy.web req, res, target: target, (err) ->
     res.redirect 301, '/articles' if err
 
-setVideoIndex = (curation, slug, res) ->
+setVideoIndex = (curation, slug) ->
   for section, i in curation.get 'sections'
     if section.slug is slug
       return i
-  return res.redirect 301, '/venice-biennale'
