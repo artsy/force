@@ -12,10 +12,12 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   timesPolledForBidPlacement: 0
   maxTimesPolledForBidPlacement: sd.MAX_POLLS_FOR_MAX_BIDS
-  errors:
+  errors: -> {
     "Sale Closed to Bids": "Sorry, your bid wasn't received before the auction closed."
+    "Live Bidding has Started": "Sorry, your bid wasn't received before live bidding started. <br/>To continue bidding, please <a href=\"#{@model.liveAuctionUrl()}\">join the live auction</a>."
     connection: "Your bid didn't make it to us. Please check your network connectivity and try again."
     "Bidder not qualified to bid on this auction.": "Sorry, we could not process your bid. <br>Please contact <a href='#' class='js-contact-specialist'>Artsy staff</a> for support."
+  }
 
   events:
     'click .registration-form-content .avant-garde-button-black': 'placeBid'
@@ -26,8 +28,6 @@ module.exports = class BidForm extends ErrorHandlingForm
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @placeBid() if @submitImmediately
     @$('.max-bid').focus() unless @submitImmediately
-
-    # extend form's errors with our own
     @errors = _.defaults @errors, ErrorHandlingForm.prototype.errors
 
   showBiddingDialog: (e) ->
