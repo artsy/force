@@ -1,12 +1,3 @@
-.venice-body--article
-  .venice-body__left
-    h2 About the Film
-    +item_description(section)
-    +headset_prompt
-  .venice-body__right
-    h2 About the Film
-    +item_share(section)
-
 .venice-body--series
   .venice-body__left
     .venice-body__about
@@ -16,7 +7,6 @@
       a(href="https://www.ubs.com/global/en/about_ubs/contemporary-art.html" target="_blank").venice-body__partner
         span Presented In Partnership with
         img(src="https://artsy-media-uploads.s3.amazonaws.com/qp6GUcn5RkvscdYEBmqFXw%2FUBS_White.png")
-
     +help
 
   .venice-body__right
@@ -34,42 +24,6 @@ mixin index_item(section, i)
       span.title=section.title
       if !section.published && section.release_date
         span='(' + moment(section.release_date).format('MMMM Do') + ')'
-
-mixin item_description(section, i)
-  .venice-body__item-description
-    p=section.description
-
-mixin item_share(section)
-  - url = encodeURIComponent(sd.APP_URL + sd.CURRENT_PATH)
-  - description = 'Inside the Biennale: ' + section.title
-
-  .venice-body__item-share
-    .share-item
-      a.share-to-facebook(
-        data-message='Post to Facebook',
-        data-service='facebook',
-        href="https://www.facebook.com/sharer/sharer.php?u=#{url}",
-        target='_blank'
-      ): i.icon-facebook-f.icon-in-table
-    .share-item
-      a.share-by-email(
-        data-message='Share via email',
-        data-service='email',
-        href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}"
-      ): i.icon-mail.icon-in-table
-    .share-item
-      a.share-to-twitter(
-        data-message='Share on Twitter',
-        data-service='twitter',
-        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
-        target='_blank'
-      ): i.icon-twitter.icon-in-table
-
-mixin headset_prompt
-  .venice-body__headset-prompt
-    p For the most immersive experience, watch in Google Cardboard via the Youtube App.
-    a(href='#').open-youtube
-      button.avant-garde-button Open in Youtube App
 
 mixin help
   .venice-body__help
