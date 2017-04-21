@@ -36,7 +36,7 @@ module.exports = class VeniceView extends Backbone.View
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
     # Push route
-    window.history.replaceState {}, i, @section.slug
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
 
