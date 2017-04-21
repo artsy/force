@@ -23,7 +23,7 @@
     "artsy-error-handler": "^1.0.2",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-morgan": "git://github.com/artsy/artsy-morgan.git",
-    "artsy-passport": "^1.6.1",
+    "artsy-passport": "^1.7.2",
     "artsy-xapp": "git://github.com/artsy/artsy-xapp.git",
     "async": "^2.1.2",
     "babel": "^6.5.2",
