@@ -2,12 +2,13 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.22":
-  version "0.1.22"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.22.tgz#fbc51916de5fed00633d8d8b00cd08095c75f877"
+"@artsy/reaction-force@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.24.tgz#d7f3598e3c26778aca93398c8a9fa9380cecb46f"
   dependencies:
     artsy-passport "^1.6.1"
     artsy-xapp "^1.0.4"
+    babel-polyfill "^6.23.0"
     backbone "^1.3.3"
     body-parser "^1.17.1"
     cookie-parser "^1.4.3"
@@ -15,7 +16,6 @@
     express "^4.15.2"
     isomorphic-relay "^0.7.4"
     lodash "^4.17.4"
-    longjohn "^0.2.12"
     node-fetch "^1.6.3"
     numeral "^2.0.4"
     react "^15.4.2"
@@ -317,26 +317,7 @@ artsy-gemini-upload@0.0.6:
     chalk "^1.1.3"
     morgan "^1.8.1"
 
-artsy-passport@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.6.1.tgz#82aad067999dfcdd929f3e33ed588ce1809762bd"
-  dependencies:
-    analytics-node "^2.1.0"
-    async "^1.5.0"
-    coffee-script "^1.9.2"
-    csurf "^1.8.3"
-    dotenv "^4.0.0"
-    express "^4.12.3"
-    mailcheck "^1.1.1"
-    passport "^0.2.1"
-    passport-facebook "^2.0.0"
-    passport-linkedin "^1.0.0"
-    passport-local "^1.0.0"
-    passport-twitter "^1.0.3"
-    superagent "^1.2.0"
-    underscore.string "^3.2.2"
-
-artsy-passport@^1.7.2:
+artsy-passport@^1.6.1, artsy-passport@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.2.tgz#d5ae66a1024b31f0b07a48cebe9cbad1e2aa3ed0"
   dependencies:
@@ -937,6 +918,14 @@ babel-plugin-transform-strict-mode@^6.24.1:
   dependencies:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
+
+babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
+  dependencies:
+    babel-runtime "^6.22.0"
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
 
 babel-preset-es2015@^6.22.0:
   version "6.24.1"
@@ -4681,12 +4670,6 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-longjohn@^0.2.12:
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/longjohn/-/longjohn-0.2.12.tgz#7ca7446b083655c377e7512213dc754d52a64a7e"
-  dependencies:
-    source-map-support "0.3.2 - 1.0.0"
-
 loose-envify@^1.0.0, loose-envify@^1.1.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
@@ -6632,7 +6615,7 @@ socks@~1.1.5:
     ip "^1.1.4"
     smart-buffer "^1.0.13"
 
-"source-map-support@0.3.2 - 1.0.0", source-map-support@^0.4.2:
+source-map-support@^0.4.2:
   version "0.4.14"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.14.tgz#9d4463772598b86271b4f523f6c1f4e02a7d6aef"
   dependencies:
@@ -7024,7 +7007,7 @@ supertest@^2.0.1:
     methods "1.x"
     superagent "^2.0.0"
 
-supports-color@3.1.2, supports-color@^3.1.2:
+supports-color@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -7038,7 +7021,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.2.3:
+supports-color@^3.1.2, supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
