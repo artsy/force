@@ -7,6 +7,7 @@ import AuctionGridArtwork from '../components/auction_grid_artwork'
 import AuctionListArtwork from '../components/auction_list_artwork'
 import FilterSort from '../components/filter_sort'
 import MediumFilter from '../components/medium_filter'
+import RangeSlider from '../components/range_slider'
 import Sidebar from '../components/sidebar'
 import { shallow } from 'enzyme'
 import React from 'react'
@@ -208,6 +209,38 @@ describe('React components', () => {
         rendered.find('input[value="mediums-all"]:checked').length.should.eql(0)
         rendered.find('input[value="painting"]:checked').length.should.eql(1)
       })
+    })
+  })
+
+  describe('RangeSlider', () => {
+    it('renders the range correctly initially', () => {
+      const wrapper = shallow(
+        <Provider><RangeSlider store={initialStore} /></Provider>
+      )
+      const rendered = wrapper.render()
+      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      const renderedText = rendered.text()
+      renderedText.should.containEql('$0 - 50,000+')
+    })
+    it('renders the range correctly for a middle bucket', () => {
+      initialStore.dispatch(actions.updateEstimateDisplay(200, 4000))
+      const wrapper = shallow(
+        <Provider><RangeSlider store={initialStore} /></Provider>
+      )
+      const rendered = wrapper.render()
+      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      const renderedText = rendered.text()
+      renderedText.should.containEql('$200 - 4,000')
+    })
+    it('renders the range correctly for an upper bucket', () => {
+      initialStore.dispatch(actions.updateEstimateDisplay(500, 50000))
+      const wrapper = shallow(
+        <Provider><RangeSlider store={initialStore} /></Provider>
+      )
+      const rendered = wrapper.render()
+      rendered.find('.auction-range-slider__caption').length.should.eql(1)
+      const renderedText = rendered.text()
+      renderedText.should.containEql('$500 - 50,000+')
     })
   })
 

@@ -161,9 +161,15 @@ function auctionArtworks(state = initialState, action) {
       }, state)
     }
     case actions.UPDATE_ESTIMATE_RANGE: {
+      let maxRange
+      if (action.payload.max === state.filterParams.ranges.estimate_range.max) {
+        maxRange = '*'
+      } else {
+        maxRange = action.payload.max * 100
+      }
       return u({
         filterParams: {
-          estimate_range: `${action.payload.min * 100}-${action.payload.max * 100}`
+          estimate_range: `${action.payload.min * 100}-${maxRange}`
         }
       }, state)
     }
