@@ -46,6 +46,7 @@ Articles = require '../../collections/articles.coffee'
         videoIndex = setVideoIndex(curation, req.params.slug)
         unless videoIndex or videoIndex is 0
           return res.redirect 301, '/venice-biennale'
+      res.locals.sd.VIDEO_INDEX = videoIndex
       res.render 'components/venice_2017/templates/index',
         videoIndex: videoIndex
         curation: curation
@@ -53,8 +54,8 @@ Articles = require '../../collections/articles.coffee'
 
 @vanity = (req, res, next) ->
   proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
-  whitelistedAssets = WHITELISTED_VANITY_ASSETS.split(',')
-  return next() unless req.params[0] in whitelistedAssets
+  whitelistedAssets = WHITELISTED_VANITY_ASSETS
+  return next() unless req.params[0].match whitelistedAssets
   req.headers['host'] = VANITY_BUCKET
   target = 'https://' + VANITY_BUCKET + '.s3.amazonaws.com' + '/' + req.params[0]
   proxy.web req, res, target: target, (err) ->

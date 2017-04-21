@@ -11,7 +11,6 @@ module.exports =
   APPLICATION_NAME: 'microgravity-staging'
   APP_URL: 'http://localhost:3003'
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
-  ARTSY_URL: 'https://www.artsy.net'
   CALENDAR_URL: 'http://localhost:3003' # For redirecting to .ics files
   CLIENT_ID: 'e750db60ac506978fc70'
   CLIENT_SECRET: '3a33d2085cbd1176153f99781bbce7c6'

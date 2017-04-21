@@ -56,8 +56,8 @@ if(location.pathname.match('/article/')){
     analytics.page({path: location.pathname});
     if(window.PARSELY){
       window.PARSELY.beacon.trackPageView({
-        url: sd.ARTSY_URL + location.pathname,
-        urlref: sd.ARTSY_URL + '/article/' + options.urlref,
+        url: sd.APP_URL + location.pathname,
+        urlref: sd.APP_URL + '/article/' + options.urlref,
         js: 1,
         action_name: 'infinite'
       });
@@ -67,7 +67,7 @@ if(location.pathname.match('/article/')){
         domain: 'horizon.artsy.net',
         spider: true,
         track_url: true,
-        url: sd.ARTSY_URL + '/' + location.pathname,
+        url: sd.APP_URL + '/' + location.pathname,
         use_stored_tags: true
      });
     }

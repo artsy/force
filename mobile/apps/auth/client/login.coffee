@@ -47,7 +47,6 @@ module.exports.LoginView = class LoginView extends Backbone.View
       type: 'POST'
       data: serialized
       success: =>
-        analyticsHooks.trigger 'auth:login'
         @undelegateEvents()
         @$form.submit()
       error: (xhr) =>

@@ -336,6 +336,25 @@ artsy-passport@^1.6.1:
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
+artsy-passport@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.2.tgz#d5ae66a1024b31f0b07a48cebe9cbad1e2aa3ed0"
+  dependencies:
+    analytics-node "^2.1.0"
+    async "^1.5.0"
+    coffee-script "^1.9.2"
+    csurf "^1.8.3"
+    dotenv "^4.0.0"
+    express "^4.12.3"
+    mailcheck "^1.1.1"
+    passport "^0.2.1"
+    passport-facebook "^2.0.0"
+    passport-linkedin "^1.0.0"
+    passport-local "^1.0.0"
+    passport-twitter "^1.0.3"
+    superagent "^1.2.0"
+    underscore.string "^3.2.2"
+
 artsy-xapp@^1.0.4, "artsy-xapp@git://github.com/artsy/artsy-xapp.git":
   version "1.0.4"
   resolved "git://github.com/artsy/artsy-xapp.git#cbc3db68469054ab13bfbffe68edda422a0972bb"
@@ -7277,7 +7296,7 @@ typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-ua-parser-js@^0.7.9:
+ua-parser-js@^0.7.12, ua-parser-js@^0.7.9:
   version "0.7.12"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
 
