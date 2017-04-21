@@ -29,7 +29,7 @@
 mixin index_item(section, i)
   .venice-body__index-item
     a(href='#{sd.APP_URL}/venice-biennale/#{section.slug}' class=section.published? 'published':undefined)
-      include ./icon_play.svg
+      include ../icons/icon_play.svg
       span.chapter= '0' + (i + 1) + '. '
       span.title=section.title
       if !section.published && section.release_date

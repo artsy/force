@@ -17,6 +17,7 @@ describe 'Venice Video', ->
           play: @play = sinon.stub()
           pause: @pause = sinon.stub()
           getDuration: sinon.stub().returns 10
+          iframe: src: ''
       Backbone.$ = $
       @options =
         asset: ->
@@ -37,7 +38,7 @@ describe 'Venice Video', ->
           on: @scrubberOn = sinon.stub()
         @view = new VeniceVideoView
           el: $('body')
-          videoIndex: 1
+          video: '/vanity/videos/scenic_mono_3.mp4'
         done()
 
   after ->
@@ -45,7 +46,7 @@ describe 'Venice Video', ->
 
   it 'sets up video', ->
     @player.args[0][0].should.equal '#vrvideo'
-    @player.args[0][1].video.should.equal 'localhost/vanity/videos/scenic_mono_3.mp4'
+    @player.args[0][1].video.should.equal '/vanity/videos/scenic_mono_3.mp4'
 
   it 'sets up scrubber #onVRViewReady', ->
     @view.onVRViewReady()
@@ -63,3 +64,11 @@ describe 'Venice Video', ->
     @view.vrView.isPaused = false
     @view.onTogglePlay()
     @pause.callCount.should.equal 1
+
+  it 'swaps the video', ->
+    @view.swapVideo video: 'videourl'
+    @view.vrView.iframe.src.should.eql 'localhost/vanity/vrview/index.html?video=videourl&is_stereo=false&is_vr_off=false&loop=false'
+
+  it 'contructs an iframe src', ->
+    src = @view.createIframeSrc 'http://video.com/url'
+    src.should.equal 'localhost/vanity/vrview/index.html?video=http://video.com/url&is_stereo=false&is_vr_off=false&loop=false'
