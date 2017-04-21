@@ -77,7 +77,15 @@ if (Cookies.get('analytics-signup')) {
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
       context: data.context
-    })
+    });
+    analytics.identify( sd.CURRENT_USER.id, {
+      email: sd.CURRENT_USER.email
+    }, {
+      integrations: {
+        'All': false,
+        'Marketo': true
+      }
+    });
   }
 }
 
