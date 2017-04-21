@@ -4,11 +4,14 @@ VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
+FlashMessage = require '../../../../../components/flash/index.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
   events:
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
+    'click .venice-overlay__cta-button': 'showCta'
+    'click .venice-overlay__subscribe-form button': 'onSubscribe'
 
   initialize: ->
     @parser = new UAParser()
@@ -50,3 +53,26 @@ module.exports = class VeniceView extends Backbone.View
       "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
     else
       sd.APP_URL + @section.video_url
+
+  showCta: (e) ->
+    @$(e.target).fadeOut()
+    @$(e.target).next('.venice-overlay__subscribe-form').fadeIn()
+
+  onSubscribe: (e) ->
+    @$(e.currentTarget).addClass 'is-loading'
+    @email = @$(e.currentTarget).prev('input').val()
+    $.ajax
+      type: 'POST'
+      url: '/editorial-signup/form'
+      data:
+        email: @email
+        name: sd.CURRENT_USER?.name or= ''
+      error: (res) =>
+        new FlashMessage message: 'Whoops, there was an error. Please try again.'
+        @$(e.currentTarget).removeClass 'is-loading'
+      success: (res) =>
+        new FlashMessage message: 'Thank you for signing up.'
+        @$(e.currentTarget).removeClass 'is-loading'
+        @$(e.currentTarget).prev('input').val('')
+        @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
+        @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()

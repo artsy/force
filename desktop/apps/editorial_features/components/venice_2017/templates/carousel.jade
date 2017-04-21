@@ -4,7 +4,7 @@
       for section in curation.get('sections')
         .mgr-cell.js-mgr-cell
           .venice-overlay(style="background-image:url(#{section.cover_image})")
-            .venice-overlay__text
+            .venice-overlay__text(class=!section.published? 'unpublished':undefined)
               .venice-overlay__title Inside the Biennale
               .venice-overlay__sub-title= section.title
               if section.published
@@ -12,4 +12,15 @@
                   .venice-overlay__play-button
                   .venice-overlay__play-text Play Video
                   .venice-overlay__play-length= section.video_length
+              else
+                .venice-overlay__subscribe
+                  .venice-overlay__launch-date='Launching ' + moment(section.release_date).format('MMM Do')
+                  .venice-overlay__cta-text
+                    | Sign up for the editorial newsletter to be
+                    br
+                    | notified when new films are released
+                  button.avant-garde-button.venice-overlay__cta-button Subscribe
+                  .venice-overlay__subscribe-form
+                    input(placeholder='Enter your email address', type='email', name='email', required)
+                    button.avant-garde-button-black.is-small Subscribe
     include ../../../../../components/merry_go_round/templates/horizontal_navigation
