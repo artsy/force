@@ -1,7 +1,10 @@
 # !/usr/bin/bash
 
-yarn mocha test/lib && \
-yarn mocha $(find desktop/test -name '*.coffee') && \
+set -e -x
+
+yarn acceptance
+yarn mocha test/lib/*
+yarn mocha $(find desktop/test -name '*.coffee')
 yarn mocha $(find desktop/components/*/test -name '*.coffee') && \
 yarn mocha $(find desktop/components/**/*/test -name '*.coffee') && \
 yarn mocha $(find desktop/apps/*/test -name '*.coffee' -or -name '*.js') && \

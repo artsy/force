@@ -1,5 +1,7 @@
 # !/usr/bin/bash
 
+set -e -x
+
 mocha \
   --retries 5 \
   --compilers coffee:coffee-script/register,js:babel-core/register \
