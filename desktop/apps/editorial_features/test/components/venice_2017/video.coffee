@@ -37,7 +37,7 @@ describe 'Venice Video', ->
           on: @scrubberOn = sinon.stub()
         @view = new VeniceVideoView
           el: $('body')
-          videoIndex: 1
+          video: '/vanity/videos/scenic_mono_3.mp4'
         done()
 
   after ->
@@ -45,7 +45,7 @@ describe 'Venice Video', ->
 
   it 'sets up video', ->
     @player.args[0][0].should.equal '#vrvideo'
-    @player.args[0][1].video.should.equal 'localhost/vanity/videos/scenic_mono_3.mp4'
+    @player.args[0][1].video.should.equal '/vanity/videos/scenic_mono_3.mp4'
 
   it 'sets up scrubber #onVRViewReady', ->
     @view.onVRViewReady()

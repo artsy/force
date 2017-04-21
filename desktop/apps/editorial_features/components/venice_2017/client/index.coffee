@@ -27,7 +27,7 @@ module.exports = class VeniceView extends Backbone.View
       initialIndex: sd.VIDEO_INDEX
     , (carousel) =>
       flickity = carousel.cells.flickity
-      flickity.on 'select', =>
+      flickity.on 'settle', =>
         @changeSection flickity.selectedIndex
 
   changeSection: (i) ->
