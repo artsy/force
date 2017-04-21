@@ -46,7 +46,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$playButton.toggleClass 'paused'
 
   swapVideo: (options) ->
-    $('.venice-video__scrubber')[0].noUiSlider.destroy()
+    $('.venice-video__scrubber')[0].noUiSlider?.destroy()
     @vrView.iframe.src = @createIframeSrc options.video
 
   createIframeSrc: (video) ->

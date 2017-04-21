@@ -17,6 +17,7 @@ describe 'Venice Video', ->
           play: @play = sinon.stub()
           pause: @pause = sinon.stub()
           getDuration: sinon.stub().returns 10
+          iframe: src: ''
       Backbone.$ = $
       @options =
         asset: ->
@@ -63,3 +64,11 @@ describe 'Venice Video', ->
     @view.vrView.isPaused = false
     @view.onTogglePlay()
     @pause.callCount.should.equal 1
+
+  it 'swaps the video', ->
+    @view.swapVideo video: 'videourl'
+    @view.vrView.iframe.src.should.eql 'localhost/vanity/vrview/index.html?video=videourl&is_stereo=false&is_vr_off=false&loop=false'
+
+  it 'contructs an iframe src', ->
+    src = @view.createIframeSrc 'http://video.com/url'
+    src.should.equal 'localhost/vanity/vrview/index.html?video=http://video.com/url&is_stereo=false&is_vr_off=false&loop=false'
