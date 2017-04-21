@@ -24,8 +24,17 @@ $(document).on(
         acquisition_initiative: acquisition_initiative,
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
-        context: options.context
-      })
+        context: options.context,
+        email: xhr.responseJSON.user.email
+      });
+      analytics.identify( xhr.responseJSON.user.id, {
+        email: xhr.responseJSON.user.email
+      }, {
+        integrations: {
+          'All': false,
+          'Marketo': true
+        }
+      });
     })
   }
 )
@@ -68,7 +77,15 @@ if (Cookies.get('analytics-signup')) {
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
       context: data.context
-    })
+    });
+    analytics.identify( sd.CURRENT_USER.id, {
+      email: sd.CURRENT_USER.email
+    }, {
+      integrations: {
+        'All': false,
+        'Marketo': true
+      }
+    });
   }
 }
 
