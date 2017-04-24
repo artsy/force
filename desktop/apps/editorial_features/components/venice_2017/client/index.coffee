@@ -4,12 +4,8 @@ VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
-<<<<<<< HEAD
 videoDescription = -> require('../templates/video_description.jade') arguments...
-=======
 FlashMessage = require '../../../../../components/flash/index.coffee'
-
->>>>>>> 78a3a991dedbf759abfa6e9c444019a895da9d0e
 module.exports = class VeniceView extends Backbone.View
 
   events:
