@@ -38,9 +38,4 @@ if (Cookies.get('analytics-signup')) {
       user_id: sd.CURRENT_USER.id
     })
   }
-}
-
-// Successfully logged in
-analyticsHooks.on('auth:login', function(options) {
-  analytics.track('Successfully logged in');
-});
+};

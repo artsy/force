@@ -20,7 +20,7 @@ $ -> analytics.ready ->
   if sd.CURRENT_USER?.id
     whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type'];
     traits = _.extend _.pick(sd.CURRENT_USER, whitelist), session_id: sd.SESSION_ID
-    analytics.identify sd.CURRENT_USER.id, traits
+    analytics.identify sd.CURRENT_USER.id, traits, integrations: { 'Marketo': false }
     # clear analytics cache when user logs out
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 
