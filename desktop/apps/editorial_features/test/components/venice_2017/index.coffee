@@ -13,6 +13,7 @@ describe 'Venice Main', ->
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
         window: history: replaceState: @replaceState = sinon.stub()
+        moment: require 'moment'
       Backbone.$ = $
       @curation =
         description: 'description'
@@ -77,3 +78,13 @@ describe 'Venice Main', ->
   it '#fadeOutCoverAndStartVideo', ->
     $('.venice-overlay__play').click()
     @play.callCount.should.equal 1
+
+  it '#showCta reveals a signup form', ->
+    $('.venice-overlay__cta-button').click()
+    $('.venice-overlay__subscribe-form').css('opacity').should.eql '1'
+
+  it '#onSubscribe', ->
+    $('.venice-overlay__cta-button').click()
+    $('.venice-overlay__subscribe-form input').val('email@email.com')
+    $('.venice-overlay__subscribe-form button').click()
+    $('.venice-overlay__cta-button').css('opacity').should.not.eql '0'

@@ -240,6 +240,16 @@ describe('Reducers', () => {
           const updatedEstimateRange = auctions(initialResponse, actions.updateEstimateRangeParams(100, 20000))
           updatedEstimateRange.auctionArtworks.filterParams.estimate_range.should.eql('10000-2000000')
         })
+
+        it('updates the estimate range params correctly if they are at the max', () => {
+          initialResponse.auctionArtworks.filterParams.estimate_range.should.eql('')
+          const updatedEstimateRange = auctions(initialResponse, actions.updateEstimateRangeParams(100, 20000))
+          updatedEstimateRange.auctionArtworks.filterParams.estimate_range.should.eql('10000-2000000')
+          const highestBucket = auctions(updatedEstimateRange, actions.updateEstimateRangeParams(400, 50000))
+          highestBucket.auctionArtworks.filterParams.estimate_range.should.eql('40000-*')
+          const lowerBucket = auctions(highestBucket, actions.updateEstimateRangeParams(400, 20000))
+          lowerBucket.auctionArtworks.filterParams.estimate_range.should.eql('40000-2000000')
+        })
       })
 
       describe('#updateInitialMediumMap', () => {
