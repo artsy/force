@@ -4,7 +4,9 @@ VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
+Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
+{ Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
@@ -18,6 +20,8 @@ module.exports = class VeniceView extends Backbone.View
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @setupCarousel()
+    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    @setupFollowButtons()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
@@ -76,3 +80,20 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).prev('input').val('')
         @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
         @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
+
+  setupFollowButtons: ->
+    @artists = []
+    @$('.artist-follow').each (i, artist) =>
+      @artists.push id: $(artist).data('id')
+    @followButtons = @artists.map (artist) =>
+      artist = new Artist id: artist.id
+      new FollowButton
+        el: @$(".artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: "Article page" # add venice specific tracking?
+        context_module: 'article_artist_follow'
+        href: sd.APP_URL + sd.CURRENT_PATH
+    @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
+    @$('.venice-body__follow-item').show()

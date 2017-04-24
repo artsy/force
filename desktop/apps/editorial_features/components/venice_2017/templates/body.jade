@@ -6,6 +6,7 @@
   .venice-body__right
     h2 About the Film
     +item_share(section)
+    +artist_follow(section)
 
 .venice-body--series
   .venice-body__left
@@ -76,3 +77,13 @@ mixin help
     p Having trouble viewing?
     p
       a(href='#') Read our 360 video guide
+
+mixin artist_follow(section)
+  if section.artist_ids.length
+    .venice-body__follow
+      p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+      each artist in section.artist_ids
+        .venice-body__follow-item
+          a(class='artist-follow' data-id=artist.id)
+            span.follow-text
+            span=artist.value
