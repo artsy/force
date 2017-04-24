@@ -7,10 +7,12 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   events:
     'click #toggleplay': 'onTogglePlay'
+    'click #togglemute': 'onToggleMute'
 
   initialize: (options) ->
     @video = options.video
     @$playButton = $('#toggleplay')
+    @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
 
@@ -44,6 +46,13 @@ module.exports = class VeniceVideoView extends Backbone.View
     else
       @vrView.pause()
     @$playButton.toggleClass 'paused'
+
+  onToggleMute: ->
+    if @$muteButton.hasClass 'muted'
+      @vrView.setVolume 1
+    else
+      @vrView.setVolume 0
+    @$muteButton.toggleClass 'muted'
 
   swapVideo: (options) ->
     $('.venice-video__scrubber')[0].noUiSlider?.destroy()

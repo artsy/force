@@ -6,7 +6,7 @@
   display flex
   align-items center
   justify-content space-between
-  svg
+  > svg
     min-width 50px
     min-height 50px
     z-index 12
@@ -57,13 +57,40 @@
   .noUi-handle
     top -7px
 
+#togglemute
+  display flex
+  justify-content center
+  align-items center
+  cursor pointer
+  border-radius 2px
+  background-color rgba(0,0,0,0.5)
+  border 1px solid white
+  height 50px
+  min-width 50px
+  margin-right 10px
+  svg
+    height 15px
+    fill white
+  &:hover
+    background-color rgba(0,0,0,1)
+  &.muted
+    background-color white
+    svg
+      fill black
+
 @media screen and (max-width: 550px)
   #controls
     padding 15px
 
-  #toggleplay__icon
-    ::after
+  #toggleplay
+    min-width 50px
+    &__icon
+      margin-right 0px
+    &::after
       content ''
+    &.paused
+      &::after
+        content ''
 
   .venice-video__scrubber
     margin 0px 15px
