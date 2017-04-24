@@ -10,6 +10,7 @@ Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { WHITELISTED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
+{ resize, crop } = require '../../../../../components/resizer/index.coffee'
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -38,18 +39,27 @@ Articles = require '../../collections/articles.coffee'
 
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
+  @veniceSubArticles = new Articles
   @curation.fetch
     success: (curation) ->
       res.locals.sd.CURATION = curation.toJSON()
       videoIndex = 0
-      if req.params.slug
-        videoIndex = setVideoIndex(curation, req.params.slug)
-        unless videoIndex or videoIndex is 0
-          return res.redirect 301, '/venice-biennale'
-      res.locals.sd.VIDEO_INDEX = videoIndex
-      res.render 'components/venice_2017/templates/index',
-        videoIndex: videoIndex
-        curation: curation
+      @veniceSubArticles.fetch
+        data: ids: @curation.get('sub_articles')
+        success: (sub_articles) ->
+          if !@curation.get('sub_articles').length
+            @veniceSubArticles = null
+          if req.params.slug
+            videoIndex = setVideoIndex(curation, req.params.slug)
+            unless videoIndex or videoIndex is 0
+              return res.redirect 301, '/venice-biennale'
+          res.locals.sd.VIDEO_INDEX = videoIndex
+          res.render 'components/venice_2017/templates/index',
+            videoIndex: videoIndex
+            curation: curation
+            sub_articles: @veniceSubArticles?.toJSON()
+            resize: resize
+            crop: crop
     error: next
 
 @vanity = (req, res, next) ->

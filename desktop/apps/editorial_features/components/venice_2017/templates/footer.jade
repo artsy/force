@@ -1,2 +1,13 @@
 .venice-footer__articles
-	h2.title The Venice Biennale
+  h2.title The Venice Biennale
+  .venice-footer__article-carousel
+    .mgr-horizontal-nav
+      .mgr-cells.js-mgr-cells
+        each article in sub_articles
+          .mgr-cell.js-mgr-cell
+            +test(article)
+            a(href="#{sd.APP_URL}/article/#{article.slug}")
+              img(src=article.thumbnail_image)
+              //- img(src=resize(article.thumbnail_image, { width: 300 }))
+              h2= article.thumbnail_title
+      include ../../../../../components/merry_go_round/templates/horizontal_navigation

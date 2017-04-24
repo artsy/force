@@ -7,6 +7,8 @@ nav-height = 54px
 .venice-feature
   background-color black
   color white
+  a
+    color white
 
 .venice-nav
   position absolute
@@ -21,7 +23,6 @@ nav-height = 54px
   align-items center
   height nav-height
   a
-    color white
     text-decoration none
   &__sticky-artsy-logo
     font-size 26px
@@ -171,13 +172,29 @@ nav-height = 54px
   min-height 160px
   padding 0 2em
   margin 0 auto
+  a
+    text-decoration none
   h2
     garamond-size('headline')
+    white-space initial
+    line-height 1.1em
     &.title
       margin-bottom 40px
   &__articles
     padding-top 20px
     border-top 2px solid gray-color
+  &__article-carousel
+    padding-bottom 180px
+    .mgr-cell
+      width 30%
+      margin-right 3%
+      transition opacity .25s
+      img, a
+        width 100%
+      &:hover
+        opacity .7
+    &.by-2
+      background-color red
 
 @media screen and (max-width: 800px)
   .venice-footer

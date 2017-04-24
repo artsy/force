@@ -17,13 +17,14 @@ module.exports = class VeniceView extends Backbone.View
     @parser = new UAParser()
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
-    @setupCarousel()
+    @setupVideoCarousel()
+    @setupAricleCarousel() if @curation.get('sub_articles').length
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
 
-  setupCarousel: ->
-    @carousel = initCarousel $('.venice-carousel'),
+  setupVideoCarousel: ->
+    @videoCarousel = initCarousel $('.venice-carousel'),
       imagesLoaded: true
       advanceBy: 1
       wrapAround: true
@@ -76,3 +77,15 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).prev('input').val('')
         @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
         @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
+
+  setupAricleCarousel: ->
+    advanceBy = 3
+    debugger
+    if @curation.get('sub_articles').length < 3
+      debugger
+      advanceBy = 2
+      $('.venice-footer__article-carousel').addClass('by-2')
+    @articleCarousel = initCarousel $('.venice-footer__article-carousel'),
+      imagesLoaded: true
+      advanceBy: advanceBy
+      wrapAround: true
