@@ -4,8 +4,8 @@ VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
+videoDescription = -> require('../templates/video_description.jade') arguments...
 FlashMessage = require '../../../../../components/flash/index.coffee'
-
 module.exports = class VeniceView extends Backbone.View
 
   events:
@@ -18,6 +18,7 @@ module.exports = class VeniceView extends Backbone.View
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @setupCarousel()
+    @swapDescription()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
@@ -39,6 +40,7 @@ module.exports = class VeniceView extends Backbone.View
     window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
+    @swapDescription()
 
   fadeOutCoverAndStartVideo: ->
     $('.venice-nav, .venice-carousel').fadeOut()
@@ -47,6 +49,12 @@ module.exports = class VeniceView extends Backbone.View
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
+
+  swapDescription: ->
+    $('.venice-body--article').remove()
+    $('.venice-body').prepend videoDescription
+      section: @section
+    $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->
     if @parser.getBrowser().name is 'Safari'
