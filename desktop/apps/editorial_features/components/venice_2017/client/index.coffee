@@ -36,7 +36,7 @@ module.exports = class VeniceView extends Backbone.View
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
     # Push route
-    window.history.replaceState {}, i, @section.slug
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
 
@@ -50,7 +50,9 @@ module.exports = class VeniceView extends Backbone.View
 
   chooseVideoFile: ->
     if @parser.getBrowser().name is 'Safari'
-      "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
+      sd.APP_URL + @section.video_url_hls
+    else if @parser.getDevice().type is 'mobile'
+      sd.APP_URL + @section.video_url_medium
     else
       sd.APP_URL + @section.video_url
 
