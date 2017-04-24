@@ -12,11 +12,6 @@ require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
 
 $ -> analytics.ready ->
-  $.ajax '//munchkin.marketo.net/munchkin.js',
-      dataType: 'script'
-      cache: true
-      error: (jqXHR, textStatus, errorThrown) -> $('body').append "AJAX Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) -> $('body').append "Successful AJAX call: #{data}"
 
   if sd.CURRENT_USER?.id
     whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type']
