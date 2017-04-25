@@ -25,6 +25,8 @@ describe 'Venice Main', ->
             video_url_medium: '/vanity/url-medium.mp4'
             video_url_hls: '/vanity/url.m3u8'
             slug: 'slug-one'
+            artist_ids: []
+            sub_articles: []
           },
           {
             description: 'description2'
@@ -34,6 +36,8 @@ describe 'Venice Main', ->
             video_url_hls: '/vanity/url2.m3u8'
             slug: 'slug-two'
             published: true
+            artist_ids: []
+            sub_articles: []
           }
         ]
       @options =
@@ -42,7 +46,7 @@ describe 'Venice Main', ->
         videoIndex: 0
         curation: new Curation @curation
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
-        VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), []
+        VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), ['videoDescription']
         VeniceView.__set__ 'sd',
           APP_URL: 'localhost'
           VIDEO_INDEX: 0
