@@ -4,7 +4,10 @@ VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
+Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
+{ Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
+videoDescription = -> require('../templates/video_description.jade') arguments...
 
 module.exports = class VeniceView extends Backbone.View
 
@@ -19,6 +22,9 @@ module.exports = class VeniceView extends Backbone.View
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @setupVideoCarousel()
     @setupAricleCarousel() if @curation.get('sub_articles').length
+    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    @swapDescription()
+    @setupFollowButtons()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
@@ -37,9 +43,11 @@ module.exports = class VeniceView extends Backbone.View
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
     # Push route
-    window.history.replaceState {}, i, @section.slug
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
+    @swapDescription()
+    @setupFollowButtons()
 
   fadeOutCoverAndStartVideo: ->
     $('.venice-nav, .venice-carousel').fadeOut()
@@ -49,9 +57,18 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
+  swapDescription: ->
+    $('.venice-body--article').remove()
+    $('.venice-body').prepend videoDescription
+      section: @section
+      sd: sd
+    $('.venice-body--article').addClass('active')
+
   chooseVideoFile: ->
     if @parser.getBrowser().name is 'Safari'
-      "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
+      sd.APP_URL + @section.video_url_hls
+    else if @parser.getDevice().type is 'mobile'
+      sd.APP_URL + @section.video_url_medium
     else
       sd.APP_URL + @section.video_url
 
@@ -79,13 +96,25 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
 
   setupAricleCarousel: ->
-    advanceBy = 3
-    debugger
-    if @curation.get('sub_articles').length < 3
-      debugger
-      advanceBy = 2
-      $('.venice-footer__article-carousel').addClass('by-2')
     @articleCarousel = initCarousel $('.venice-footer__article-carousel'),
       imagesLoaded: true
-      advanceBy: advanceBy
+      advanceBy: 1
       wrapAround: true
+      cellAlign: 'center'
+
+  setupFollowButtons: ->
+    @artists = []
+    @$('.artist-follow').each (i, artist) =>
+      @artists.push id: $(artist).data('id')
+    @followButtons = @artists.map (artist) =>
+      artist = new Artist id: artist.id
+      new FollowButton
+        el: @$(".artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: "Article page" # TODO: add venice specific tracking
+        context_module: 'article_artist_follow'
+        href: sd.APP_URL + sd.CURRENT_PATH
+    @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
+    @$('.venice-body__follow-item').show()

@@ -1,7 +1,12 @@
 .venice-video
   #vrvideo
-  #controls(class=!section.published? 'unpublished':undefined)
+  #controls
+    #togglemute(data-state='unmuted')
+      .muted
+        include ../icons/icon_muted.svg
+      .unmuted
+        include ../icons/icon_volume.svg
     #toggleplay
       #toggleplay__icon
     .venice-video__scrubber
-    include ../icons/vr-icon.svg
+    include ../icons/icon_vr.svg

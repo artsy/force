@@ -69,6 +69,8 @@ nav-height = 54px
     border 2px solid
     border-radius 50%
     margin 30px
+  .mgr-navigation
+    opacity 1
 
 .venice-overlay
   background-size cover
@@ -83,12 +85,11 @@ nav-height = 54px
     flex-direction column
     justify-content center
     align-items center
-    height calc(100vh \- nav-height)
     width 100%
+    height 100%
+    padding-top nav-height
     &.unpublished
-      height 100%
       background-color rgba(0,0,0,.5)
-      padding-top nav-height
   &__title
     garamond()
     font-size 80px
@@ -185,29 +186,30 @@ nav-height = 54px
     border-top 2px solid gray-color
   &__article-carousel
     padding-bottom 180px
+    width 103%
+    margin-left -1.5%
+    .mgr-arrow-left, .mgr-arrow-right
+      height 230px
     .mgr-cell
       width 30%
-      margin-right 3%
+      margin 0 1.5%
       transition opacity .25s
-      img, a
+      img
         width 100%
+        margin-bottom 15px
       &:hover
         opacity .7
-    &.by-2
-      background-color red
 
 @media screen and (max-width: 800px)
   .venice-footer
     padding 0
     &__articles
       padding 20px 1em 0 1em
-
-@media screen and (max-width: 650px)
-  .venice-overlay
-    &__title
-      garamond-size('xl-headline')
-    &__sub-title
-      garamond-size('headline')
+  .venice-carousel
+    .mgr-arrow-icon
+      font-size 15px
+      line-height 15px
+      margin 105px 10px 10px 10px
 
 @media screen and (max-width: 550px)
   .venice-nav
@@ -219,5 +221,10 @@ nav-height = 54px
   .venice-overlay
     &__title
       font-size 45px
+      margin-bottom 5px
     &__sub-title
       garamond-size('s-headline')
+    &__cta-text
+      garamond-size('l-body')
+    &__subscribe
+      margin 0 10px
