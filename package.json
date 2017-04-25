@@ -7,7 +7,7 @@
     "npm": "4.x.x"
   },
   "scripts": {
-    "mocha": "sh scripts/acceptance.sh",
+    "mocha": "mocha -r should --compilers coffee:coffee-script/register,js:babel-core/register -t 30000",
     "acceptance-record": "sh scripts/acceptance-record.sh",
     "acceptance": "sh scripts/acceptance.sh",
     "test": "sh scripts/test.sh",

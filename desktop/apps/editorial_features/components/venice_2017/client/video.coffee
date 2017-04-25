@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
 noUiSlider = require 'nouislider'
@@ -17,26 +18,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     @setupVideo()
     @on 'swapVideo', @swapVideo
     @setupAnalytics()
-
-  setupAnalytics: ->
-    window.onbeforeunload = (e) =>
-      e.preventDefault()
-      unless @vrView.isPaused
-        analyticsHooks.trigger 'video:dropoff', @vrView.getCurrentTime()
-
-    @quarterDuration = @vrView.getDuration() / 4
-    @halfDuration = @vrView.getDuration() / 2
-    @threeQuarterDuration = @vrView.getDuration() * .75
-    @fullDuration = @vrView.getDuration()
-
-    @trackQuarter = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '25%'})
-    @trackHalf = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '50%'})
-    @trackThreeQuarter = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '75%'})
-    @trackFull = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '100%'})
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -59,9 +40,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     if e.currentTime is @fullDuration
       @trackFull()
     @scrubber.set(e.currentTime)
-
-  # durationAnalytics: (duration) ->
-  #   analyticsHooks.trigger('video:duration',{duration: duration})
 
   onVRViewReady: =>
     @setupAnalytics()
@@ -97,6 +75,23 @@ module.exports = class VeniceVideoView extends Backbone.View
     "#{sd.APP_URL}/vanity/vrview/index.html?video=" +
     video +
     "&is_stereo=false&is_vr_off=false&loop=false"
+
+  setupAnalytics: ->
+    window.onbeforeunload = =>
+      analyticsHooks.trigger 'video:dropoff', @vrView.getCurrentTime()
+
+    @quarterDuration = @vrView.getDuration() * .25
+    @halfDuration = @vrView.getDuration() * .5
+    @threeQuarterDuration = @vrView.getDuration() * .75
+    @fullDuration = @vrView.getDuration()
+    @trackQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '25%'})
+    @trackHalf = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '50%'})
+    @trackThreeQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '75%'})
+    @trackFull = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '100%'})
 
   # Currently unused but will implement next
   formatTime: (time) ->
