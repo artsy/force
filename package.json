@@ -18,6 +18,7 @@
   "dependencies": {
     "@artsy/reaction-force": "^0.1.24",
     "accounting": "^0.4.1",
+    "analytics-node": "^2.4.0",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
     "artsy-error-handler": "^1.0.2",
@@ -109,6 +110,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",
     "redux-mock-store": "^1.2.2",
+    "redux-on-state-change": "^1.0.0",
     "redux-thunk": "^2.2.0",
     "referer-parser": "0.0.3",
     "sailthru-client": "^3.0.0",

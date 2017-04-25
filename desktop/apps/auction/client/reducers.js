@@ -1,4 +1,5 @@
 import * as actions from './actions'
+import analyticsHooks from '../../../lib/analytics_hooks.coffee'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { contains } from 'underscore'

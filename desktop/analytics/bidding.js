@@ -43,6 +43,7 @@ analyticsHooks.on('registration:submit-address', function () {
 
 // Registration submitted
 analyticsHooks.on('registration:success', function (data) {
+  debugger
   setTimeout(function () {
     analytics.track('Registration submitted', {
       auction_slug: sd.SALE.id,
