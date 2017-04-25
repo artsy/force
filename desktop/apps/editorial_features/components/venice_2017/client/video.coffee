@@ -17,7 +17,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
-    @setupAnalytics()
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
