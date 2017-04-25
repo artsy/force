@@ -58,11 +58,11 @@ module.exports = class VeniceView extends Backbone.View
 
   chooseVideoFile: ->
     if @parser.getBrowser().name is 'Safari'
-      @section.video_url_hls
+      sd.APP_URL + @section.video_url_hls
     else if @parser.getDevice().type is 'mobile'
-      @section.video_url_medium
+      sd.APP_URL + @section.video_url_medium
     else
-      @section.video_url
+      sd.APP_URL + @section.video_url
 
   showCta: (e) ->
     @$(e.target).fadeOut()
