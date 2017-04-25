@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
 noUiSlider = require 'nouislider'
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class VeniceVideoView extends Backbone.View
 
@@ -15,6 +16,27 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
+    @setupAnalytics()
+
+  setupAnalytics: ->
+    window.onbeforeunload = (e) =>
+      e.preventDefault()
+      unless @vrView.isPaused
+        analyticsHooks.trigger 'video:dropoff', @vrView.getCurrentTime()
+
+    @quarterDuration = @vrView.getDuration() / 4
+    @halfDuration = @vrView.getDuration() / 2
+    @threeQuarterDuration = @vrView.getDuration() * .75
+    @fullDuration = @vrView.getDuration()
+
+    @trackQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '25%'})
+    @trackHalf = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '50%'})
+    @trackThreeQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '75%'})
+    @trackFull = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '100%'})
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -28,9 +50,21 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'timeupdate', @updateTime
 
   updateTime: (e) =>
+    if e.currentTime > @quarterDuration
+      @trackQuarter()
+    if e.currentTime > @halfDuration
+      @trackHalf()
+    if e.currentTime > @threeQuarterDuration
+      @trackThreeQuarter()
+    if e.currentTime is @fullDuration
+      @trackFull()
     @scrubber.set(e.currentTime)
 
+  # durationAnalytics: (duration) ->
+  #   analyticsHooks.trigger('video:duration',{duration: duration})
+
   onVRViewReady: =>
+    @setupAnalytics()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'
