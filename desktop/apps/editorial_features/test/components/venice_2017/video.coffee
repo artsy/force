@@ -96,9 +96,9 @@ describe 'Venice Video', ->
 
   it 'tracks drop off time', ->
     @view.vrView.getCurrentTime = sinon.stub().returns 25
-    window.onbeforeunload()
+    window.onbeforeunload(preventDefault: sinon.stub())
     @analytics.args[0][0].should.equal 'video:dropoff'
-    @analytics.args[0][1].should.equal 25
+    @analytics.args[0][1].dropoff.should.equal 25
 
   it 'tracks duration as a percentage', ->
     @view.onVRViewReady()

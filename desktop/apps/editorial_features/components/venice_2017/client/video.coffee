@@ -42,13 +42,14 @@ module.exports = class VeniceVideoView extends Backbone.View
     @scrubber.set(e.currentTime)
 
   onVRViewReady: =>
+    @duration = @vrView.getDuration()
     @setupAnalytics()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'
       range:
         min: 0
-        max: @vrView.getDuration()
+        max: @duration
     @scrubber.on 'change', (value) =>
       @vrView.setCurrentTime parseFloat(value[0])
 
@@ -77,13 +78,14 @@ module.exports = class VeniceVideoView extends Backbone.View
     "&is_stereo=false&is_vr_off=false&loop=false"
 
   setupAnalytics: ->
-    window.onbeforeunload = =>
-      analyticsHooks.trigger 'video:dropoff', @vrView.getCurrentTime()
+    window.onbeforeunload = (e) =>
+      e.preventDefault()
+      analyticsHooks.trigger 'video:dropoff', dropoff: @vrView.getCurrentTime()
 
-    @quarterDuration = @vrView.getDuration() * .25
-    @halfDuration = @vrView.getDuration() * .5
-    @threeQuarterDuration = @vrView.getDuration() * .75
-    @fullDuration = @vrView.getDuration()
+    @quarterDuration = @duration * .25
+    @halfDuration = @duration * .5
+    @threeQuarterDuration = @duration * .75
+    @fullDuration = @duration
     @trackQuarter = _.once ->
       analyticsHooks.trigger('video:duration',{duration: '25%'})
     @trackHalf = _.once ->
