@@ -71,12 +71,19 @@
   svg
     height 15px
     fill white
+    vertical-align middle
   &:hover
     background-color rgba(0,0,0,1)
-  &.muted
-    background-color white
-    svg
-      fill black
+  &[data-state='muted']
+    .muted
+      display block
+    .unmuted
+      display none
+  &[data-state='unmuted']
+    .muted
+      display none
+    .unmuted
+      display block
 
 @media screen and (max-width: 550px)
   #controls
