@@ -11,7 +11,7 @@ block body
   .venice-feature
     include ./nav
 
-    .venice-header
+    .venice-header(class=!section.published? 'unpublished':undefined)
       include ./video
       include ./carousel
 

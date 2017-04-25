@@ -74,6 +74,7 @@
     align-items center
     border 1px solid
     height 50px
+    margin-bottom 30px
     .share-item
       width 33.33%
       height 100%
@@ -102,6 +103,40 @@
       &:hover
         background-color white
         color black
+  &__follow
+    p
+      garamond-size('l-body')
+      margin-bottom 10px
+  &__follow-item
+    clear both
+    display none
+  .artist-follow
+    display flex
+    align-items center
+    float left
+    margin-left -5px
+    .follow-text
+      display flex
+      align-items center
+      &:before
+        font-family artsy-icons
+        font-size 32px
+        line-height 32px
+      &:after
+        margin-right 4px
+    &[data-state=follow]
+      .follow-text:after
+        content 'Follow'
+      .follow-text:before
+        content '\e629'
+    &[data-state=following]
+      .follow-text:after
+        content 'Following'
+      .follow-text:before
+        content '\e628'
+    &[data-state=following]:hover
+      .follow-text:after
+        content 'Unfollow'
 
 @media screen and (max-width: 800px)
   .venice-body

@@ -53,7 +53,7 @@ if(location.pathname.match('/article/')){
 
   analyticsHooks.on('readmore', function(options) {
     analytics.track('Clicked Read More', {});
-    analytics.page({path: location.pathname});
+    analytics.page({path: location.pathname}, {integrations: {'Marketo': false}});
     if(window.PARSELY){
       window.PARSELY.beacon.trackPageView({
         url: sd.APP_URL + location.pathname,

@@ -7,7 +7,7 @@ Curation = require '../../../../../models/curation.coffee'
 
 describe 'Venice Video', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery')
@@ -19,6 +19,7 @@ describe 'Venice Video', ->
           pause: @pause = sinon.stub()
           getDuration: sinon.stub().returns 10
           iframe: src: ''
+          setVolume: @setVolume = sinon.stub()
       Backbone.$ = $
       @options =
         asset: ->
@@ -42,7 +43,7 @@ describe 'Venice Video', ->
           video: '/vanity/videos/scenic_mono_3.mp4'
         done()
 
-  after ->
+  afterEach ->
     benv.teardown()
 
   it 'sets up video', ->
@@ -65,6 +66,17 @@ describe 'Venice Video', ->
     @view.vrView.isPaused = false
     @view.onTogglePlay()
     @pause.callCount.should.equal 1
+
+  it 'toggles mute', ->
+    @view.onToggleMute()
+    @setVolume.callCount.should.equal 1
+    @setVolume.args[0][0].should.equal 0
+
+  it 'toggles unmute', ->
+    $('#togglemute').attr('data-state', 'muted').addClass 'muted'
+    @view.onToggleMute()
+    @setVolume.callCount.should.equal 1
+    @setVolume.args[0][0].should.equal 1
 
   it 'swaps the video', ->
     @view.swapVideo video: 'videourl'
