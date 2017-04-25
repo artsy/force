@@ -45,7 +45,15 @@
     &::after
       content "Play"
   &:hover
-    background-color rgba(0,0,0,1)
+    background-color white
+    color black
+    #toggleplay__icon
+      border-right 3px solid black
+      border-left 3px solid black
+    &.paused
+      #toggleplay__icon
+        border-left 9px solid black
+        border-right none
 
 .venice-video__scrubber.noUi-target
   width 100%
@@ -73,7 +81,9 @@
     fill white
     vertical-align middle
   &:hover
-    background-color rgba(0,0,0,1)
+    background-color white
+    svg
+      fill black
   &[data-state='muted']
     .muted
       display block
