@@ -22,8 +22,8 @@ module.exports = class VeniceView extends Backbone.View
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @setupCarousel()
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
-    @setupFollowButtons()
     @swapDescription()
+    @setupFollowButtons()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
@@ -46,6 +46,7 @@ module.exports = class VeniceView extends Backbone.View
     # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
+    @setupFollowButtons()
 
   fadeOutCoverAndStartVideo: ->
     $('.venice-nav, .venice-carousel').fadeOut()
@@ -59,6 +60,7 @@ module.exports = class VeniceView extends Backbone.View
     $('.venice-body--article').remove()
     $('.venice-body').prepend videoDescription
       section: @section
+      sd: sd
     $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->

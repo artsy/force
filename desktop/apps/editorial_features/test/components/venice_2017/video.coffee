@@ -73,7 +73,7 @@ describe 'Venice Video', ->
     @setVolume.args[0][0].should.equal 0
 
   it 'toggles unmute', ->
-    $('#togglemute').addClass 'muted'
+    $('#togglemute').attr('data-state', 'muted').addClass 'muted'
     @view.onToggleMute()
     @setVolume.callCount.should.equal 1
     @setVolume.args[0][0].should.equal 1

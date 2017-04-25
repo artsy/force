@@ -1,3 +1,5 @@
+include ./mixins
+
 .venice-body--series
   .venice-body__left
     .venice-body__about
@@ -15,28 +17,3 @@
       each section, i in curation.get('sections')
         +index_item(section, i)
     +help
-
-mixin index_item(section, i)
-  .venice-body__index-item
-    a(href='#{sd.APP_URL}/venice-biennale/#{section.slug}' class=section.published? 'published':undefined)
-      include ../icons/icon_play.svg
-      span.chapter= '0' + (i + 1) + '. '
-      span.title=section.title
-      if !section.published && section.release_date
-        span='(' + moment(section.release_date).format('MMMM Do') + ')'
-
-mixin help
-  .venice-body__help
-    p Having trouble viewing?
-    p
-      a(href='#') Read our 360 video guide
-
-mixin artist_follow(section)
-  if section.artist_ids.length
-    .venice-body__follow
-      p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-      each artist in section.artist_ids
-        .venice-body__follow-item
-          a(class='artist-follow' data-id=artist.id)
-            span.follow-text
-            span=artist.value
