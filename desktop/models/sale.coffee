@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL, HALP } = require('sharify').data
 moment = require 'moment'
 tz = require 'moment-timezone'
 Backbone = require 'backbone'
@@ -39,7 +39,7 @@ module.exports = class Sale extends Backbone.Model
 
   bidUrl: (artwork) ->
     "#{@href()}/bid/#{artwork.id}"
-  
+
   liveAuctionUrl: -> "#{PREDICTION_URL}/#{@get('id')}"
 
   redirectUrl: (artwork) ->

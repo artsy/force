@@ -1,3 +1,4 @@
+import { analyticsMiddleware } from './analytics'
 import { data as sd } from 'sharify'
 import JumpView from '../../../components/jump/view.coffee'
 import React from 'react';
@@ -16,7 +17,8 @@ export function setupCommercialFilter() {
     auctions,
     applyMiddleware(
       thunkMiddleware, // lets us dispatch() functions
-      loggerMiddleware // middleware that logs actions
+      loggerMiddleware, // middleware that logs actions
+      analyticsMiddleware // middleware to help us track previous and future states
     )
   )
 

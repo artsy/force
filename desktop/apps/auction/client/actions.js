@@ -28,19 +28,6 @@ export const UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS_TOTAL = 'UPDATE_SALE_ARTWO
 export const UPDATE_SORT = 'UPDATE_SORT'
 export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 
-// analytics
-function sendAnalyticsForParamsChange(fieldName, newItem, filterParams, state) {
-  console.log('i am hereeeeeeee', state)
-  analyticsHooks.trigger('auction:artworks:params:changed', {
-    event: 'Commercial filter params changed',
-    userId: sd.CURRENT_USER.id,
-    properties: {
-      current: [],
-      changed: {}
-    }
-  })
-}
-
 // Action creators
 export function decrementFollowedArtistsPage() {
   return {
