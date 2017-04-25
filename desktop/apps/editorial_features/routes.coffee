@@ -44,18 +44,14 @@ Articles = require '../../collections/articles.coffee'
       res.locals.sd.CURATION = curation.toJSON()
       videoIndex = 0
       if @curation.get('sub_articles').length
-        @sub_articles = curation.get('sub_articles')
-        # cbs = [ console.log 'in a callback' ]
-        console.log @sub_articles
         cbs = [
           @veniceSubArticles.fetch
-            data: ids: @sub_articles
+            data: 'ids[]': @curation.get('sub_articles')
         ]
       else
-        cbs = [ console.log 'in empty callback' ]
+        cbs = [ () -> ]
       Q.all(cbs)
-      .then =>
-        console.log @veniceSubArticles
+      .then (err, results) =>
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
           unless videoIndex or videoIndex is 0
@@ -64,8 +60,7 @@ Articles = require '../../collections/articles.coffee'
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
-          sub_articles: []
-          # sub_articles: @veniceSubArticles?.toJSON()
+          sub_articles: @veniceSubArticles?.toJSON()
     error: next
 
 @vanity = (req, res, next) ->
