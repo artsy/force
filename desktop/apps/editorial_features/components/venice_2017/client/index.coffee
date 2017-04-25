@@ -7,6 +7,7 @@ Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
+videoDescription = -> require('../templates/video_description.jade') arguments...
 
 module.exports = class VeniceView extends Backbone.View
 
@@ -22,6 +23,7 @@ module.exports = class VeniceView extends Backbone.View
     @setupCarousel()
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @setupFollowButtons()
+    @swapDescription()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
@@ -40,9 +42,10 @@ module.exports = class VeniceView extends Backbone.View
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
     # Push route
-    window.history.replaceState {}, i, @section.slug
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
+    @swapDescription()
 
   fadeOutCoverAndStartVideo: ->
     $('.venice-nav, .venice-carousel').fadeOut()
@@ -52,9 +55,17 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
+  swapDescription: ->
+    $('.venice-body--article').remove()
+    $('.venice-body').prepend videoDescription
+      section: @section
+    $('.venice-body--article').addClass('active')
+
   chooseVideoFile: ->
     if @parser.getBrowser().name is 'Safari'
-      "#{sd.APP_URL}/vanity/scenichls/hls400k.m3u8"
+      sd.APP_URL + @section.video_url_hls
+    else if @parser.getDevice().type is 'mobile'
+      sd.APP_URL + @section.video_url_medium
     else
       sd.APP_URL + @section.video_url
 
@@ -92,7 +103,7 @@ module.exports = class VeniceView extends Backbone.View
         following: @following
         modelName: 'artist'
         model: artist
-        context_page: "Article page" # add venice specific tracking?
+        context_page: "Article page" # TODO: add venice specific tracking
         context_module: 'article_artist_follow'
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
