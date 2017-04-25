@@ -23,6 +23,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('article', model: 'article'))
         model.href().should.containEql '/article/' + model.id
 
+      it 'has a location attribute when it is a page', ->
+        model = new SearchResult(fabricate('page', model: 'page'))
+        model.href().should.containEql '/' + model.id
+
       it 'has a location attribute when it is a fair', ->
         model = new SearchResult(fabricate('fair', model: 'fair', profile_id: 'foo-profile'))
         model.href().should.containEql '/foo-profile'
@@ -47,6 +51,10 @@ describe 'SearchResult', ->
       it 'has a display_model attribute when it is an article', ->
         model = new SearchResult(model: 'article')
         model.get('display_model').should.equal 'Article'
+
+      it 'has a display_model attribute when it is a page', ->
+        model = new SearchResult(model: 'page')
+        model.get('display_model').should.equal 'Page'
 
       it 'has a display_model attribute when it is a profile', ->
         model = new SearchResult(model: 'profile')
