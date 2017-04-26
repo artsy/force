@@ -44,14 +44,11 @@ Articles = require '../../collections/articles.coffee'
       res.locals.sd.CURATION = curation.toJSON()
       videoIndex = 0
       if @curation.get('sub_articles').length
-        cbs = [
-          @veniceSubArticles.fetch
-            data: 'ids[]': @curation.get('sub_articles')
-        ]
+        cbs = [ @veniceSubArticles.fetch data: 'ids[]': @curation.get('sub_articles') ]
       else
         cbs = [ () -> ]
       Q.all(cbs)
-      .then (err, results) =>
+      .then =>
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
           unless videoIndex or videoIndex is 0

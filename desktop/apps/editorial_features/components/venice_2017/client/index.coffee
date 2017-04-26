@@ -21,7 +21,6 @@ module.exports = class VeniceView extends Backbone.View
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @setupVideoCarousel()
-    @setupAricleCarousel() if @curation.get('sub_articles').length
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
     @setupFollowButtons()
@@ -94,13 +93,6 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).prev('input').val('')
         @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
         @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
-
-  setupAricleCarousel: ->
-    @articleCarousel = initCarousel $('.venice-footer__article-carousel'),
-      imagesLoaded: true
-      advanceBy: 1
-      wrapAround: true
-      cellAlign: 'center'
 
   setupFollowButtons: ->
     @artists = []
