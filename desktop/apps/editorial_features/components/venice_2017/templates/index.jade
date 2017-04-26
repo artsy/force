@@ -19,5 +19,5 @@ block body
       include ./body
 
     .venice-footer
-      if curation.get('sub_articles')
+      if curation.get('sub_articles').length > 1
         include ./footer
