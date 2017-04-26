@@ -23,7 +23,8 @@ describe 'Auctions template', ->
           pastAuctions: [@closedSale]
           currentAuctions: [@openSale]
           upcomingAuctions: [@previewSale]
-        done()
+        , ->
+          done()
 
     after ->
       benv.teardown()
