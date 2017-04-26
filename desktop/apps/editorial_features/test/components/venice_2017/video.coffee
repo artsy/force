@@ -27,6 +27,7 @@ describe 'Venice Video', ->
         sd: APP_URL: 'localhost'
         videoIndex: 0
         curation: new Curation
+          sub_articles: []
           description: 'description'
           sections: [
             {
