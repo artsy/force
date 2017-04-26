@@ -7,13 +7,13 @@
     "npm": "4.x.x"
   },
   "scripts": {
-    "mocha": "sh scripts/mocha.sh",
-    "acceptance-record": "sh scripts/acceptance-record.sh",
     "acceptance": "sh scripts/acceptance.sh",
-    "test": "sh scripts/test.sh",
+    "acceptance-record": "sh scripts/acceptance-record.sh",
+    "assets": "sh scripts/assets.sh",
     "deploy": "sh scripts/deploy.sh",
-    "deploy-assets": "sh scripts/deploy-assets.sh",
-    "start": "sh scripts/start.sh"
+    "mocha": "sh scripts/mocha.sh",
+    "start": "sh scripts/start.sh",
+    "test": "sh scripts/test.sh"
   },
   "dependencies": {
     "@artsy/reaction-force": "^0.1.28",
@@ -65,6 +65,7 @@
     "express": "^4.13.3",
     "express-ipfilter": "0.2.1",
     "express-limiter": "^1.6.0",
+    "factor-bundle": "^2.5.0",
     "foreman": "^2.0.0",
     "forever": "^0.15.3",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
@@ -147,7 +148,6 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^2.1.1",
-    "ezel-assets": "1.0.3",
     "fastclick": "^1.0.6",
     "flickity": "^2.0.5",
     "flickity-imagesloaded": "^2.0.0",
@@ -177,13 +177,12 @@
     "should": "^11.1.1",
     "sinon": "^1.17.1",
     "source-map-support": "^0.4.14",
-    "sqwish": "^0.2.2",
     "stickyfill": "^1.1.1",
     "stylus": "^0.54.5",
     "supertest": "^2.0.1",
     "typeahead.js": "^0.10.5",
-    "uglify-js": "^2.5.0",
-    "uglifyify": "^3.0.1",
+    "uglify-js": "^2.8.22",
+    "uglifyify": "^3.0.4",
     "validator": "^6.1.0",
     "waypoints": "^4.0.0"
   },

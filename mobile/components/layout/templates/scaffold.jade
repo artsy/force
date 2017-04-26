@@ -19,9 +19,6 @@ html( class=htmlClass )
         analytics.load("#{sd.SEGMENT_WRITE_KEY}");
         }}();
 
-      //-Quantcast
-
-
       //- Fonts + Mixpanel, Quantcast, Google analytics script
       if sd.NODE_ENV != 'test'
         include ./quantcast.html
@@ -34,6 +31,10 @@ html( class=htmlClass )
 
       //- Add Google's jQuery
       script( src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" )
+
+      //- Common bundle generated from factor-bundle
+      if sd.NODE_ENV !== 'development'
+        script( src=asset("/assets/common.js") )
 
       //- Include asset package's javascript
       script( src=asset('/assets/' + assetPackage + '.js') )

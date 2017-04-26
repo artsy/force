@@ -16,7 +16,8 @@ meta( property="al:ios:url" content="#{sd.APP_URL}#{sd.CURRENT_PATH}" )
 meta( property="fb:admins" content="7961740")
 meta( property="fb:app_id" content="308278682573501")
 meta( property="fb:pages" content="342443413406")
-script( src=asset('/assets/scroll_frame.js') )
+script( type="text/javascript" )
+  include ../../../../node_modules/scroll-frame/scroll-frame-head.js
 
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
