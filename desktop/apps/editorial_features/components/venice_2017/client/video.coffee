@@ -10,6 +10,7 @@ module.exports = class VeniceVideoView extends Backbone.View
   events:
     'click #toggleplay': 'onTogglePlay'
     'click #togglemute': 'onToggleMute'
+    'click .venice-video__close': 'onCloseVideo'
 
   initialize: (options) ->
     @video = options.video
@@ -93,6 +94,9 @@ module.exports = class VeniceVideoView extends Backbone.View
       analyticsHooks.trigger('video:duration',{duration: '75%'})
     @trackFull = _.once ->
       analyticsHooks.trigger('video:duration',{duration: '100%'})
+
+  onCloseVideo: ->
+    @trigger 'closeVideo'
 
   # Currently unused but will implement next
   formatTime: (time) ->

@@ -69,12 +69,16 @@ module.exports = class VeniceView extends Backbone.View
     $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->
-    if @parser.getBrowser().name is 'Safari'
-      sd.APP_URL + @section.video_url_hls
-    else if @parser.getDevice().type is 'mobile'
+    console.log @parser.getDevice()
+    if @parser.getOS().name is 'iOS'
+      console.log 'choosing medium quality mp4'
       sd.APP_URL + @section.video_url_medium
-    else
+    else if @parser.getDevice().model is 'console'
+      console.log 'choosing high quality mp4'
       sd.APP_URL + @section.video_url
+    else
+      console.log 'choosing adaptive'
+      sd.APP_URL + @section.video_url_adaptive
 
   showCta: (e) ->
     @$(e.target).fadeOut()
