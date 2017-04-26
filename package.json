@@ -7,7 +7,7 @@
     "npm": "4.x.x"
   },
   "scripts": {
-    "mocha": "sh scripts/acceptance.sh",
+    "mocha": "sh scripts/mocha.sh",
     "acceptance-record": "sh scripts/acceptance-record.sh",
     "acceptance": "sh scripts/acceptance.sh",
     "test": "sh scripts/test.sh",
@@ -175,6 +175,7 @@
     "scroll-frame": "1.0.0",
     "should": "^11.1.1",
     "sinon": "^1.17.1",
+    "source-map-support": "^0.4.14",
     "sqwish": "^0.2.2",
     "stickyfill": "^1.1.1",
     "stylus": "^0.54.5",
