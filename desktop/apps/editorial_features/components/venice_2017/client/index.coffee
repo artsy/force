@@ -27,6 +27,7 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+    @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
 
   setupCarousel: ->
     @carousel = initCarousel $('.venice-carousel'),
@@ -51,6 +52,10 @@ module.exports = class VeniceView extends Backbone.View
   fadeOutCoverAndStartVideo: ->
     $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
+
+  fadeInCoverAndPauseVideo: ->
+    $('.venice-nav, .venice-carousel').fadeIn()
+    @VeniceVideoView.vrView.pause()
 
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
