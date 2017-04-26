@@ -24,7 +24,7 @@ describe 'Venice Main', ->
             cover_image: ''
             video_url: '/vanity/url.mp4'
             video_url_medium: '/vanity/url-medium.mp4'
-            video_url_hls: '/vanity/url.m3u8'
+            video_url_adaptive: '/vanity/url.mpd'
             slug: 'slug-one'
             artist_ids: []
           },
@@ -33,7 +33,7 @@ describe 'Venice Main', ->
             cover_image: ''
             video_url: '/vanity/url2.mp4'
             video_url_medium: '/vanity/url2-medium.mp4'
-            video_url_hls: '/vanity/url2.m3u8'
+            video_url_adaptive: '/vanity/url2.mpd'
             slug: 'slug-two'
             published: true
             artist_ids: []
@@ -86,20 +86,20 @@ describe 'Venice Main', ->
     $('.venice-overlay__play').click()
     @play.callCount.should.equal 1
 
-  it 'chooses an hls video for Safari', ->
-    @view.parser = getBrowser: sinon.stub().returns name: 'Safari'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.m3u8'
-
-  it 'chooses a medium quality video for mobile', ->
-    @view.parser =
-      getBrowser: sinon.stub().returns name: 'Chrome'
-      getDevice: sinon.stub().returns type: 'mobile'
+  it 'chooses a medium quality mp4 video for iOS', ->
+    @view.parser = getOS: sinon.stub().returns name: 'iOS'
     @view.chooseVideoFile().should.equal 'localhost/vanity/url2-medium.mp4'
 
-  it 'chooses a high quality video as a default', ->
+  it 'chooses an adaptive video for mobile', ->
     @view.parser =
-      getBrowser: sinon.stub().returns name: 'Chrome'
-      getDevice: sinon.stub().returns type: 'desktop'
+      getOS: sinon.stub().returns name: 'Android'
+      getDevice: sinon.stub().returns type: 'mobile'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.mpd'
+
+  it 'chooses a high quality video for desktop', ->
+    @view.parser =
+      getOS: sinon.stub().returns name: 'Mac OS'
+      getDevice: sinon.stub().returns type: null
     @view.chooseVideoFile().should.equal 'localhost/vanity/url2.mp4'
 
   it '#showCta reveals a signup form', ->
