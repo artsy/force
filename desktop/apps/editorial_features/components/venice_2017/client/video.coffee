@@ -77,9 +77,9 @@ module.exports = class VeniceVideoView extends Backbone.View
     "&is_stereo=false&is_vr_off=false&loop=false"
 
   setupAnalytics: ->
-    window.onbeforeunload = (e) =>
-      e.preventDefault()
+    window.onbeforeunload = =>
       analyticsHooks.trigger 'video:dropoff', dropoff: @vrView.getCurrentTime()
+      return
 
     @quarterDuration = @duration * .25
     @halfDuration = @duration * .5

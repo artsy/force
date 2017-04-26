@@ -27,6 +27,7 @@ describe 'Venice Video', ->
         sd: APP_URL: 'localhost'
         videoIndex: 0
         curation: new Curation
+          sub_articles: []
           description: 'description'
           sections: [
             {
@@ -96,7 +97,8 @@ describe 'Venice Video', ->
 
   it 'tracks drop off time', ->
     @view.vrView.getCurrentTime = sinon.stub().returns 25
-    window.onbeforeunload(preventDefault: sinon.stub())
+    @view.onVRViewReady()
+    window.onbeforeunload()
     @analytics.args[0][0].should.equal 'video:dropoff'
     @analytics.args[0][1].dropoff.should.equal 25
 

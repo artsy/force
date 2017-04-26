@@ -17,6 +17,7 @@ describe 'Venice Main', ->
       Backbone.$ = $
       @curation =
         description: 'description'
+        sub_articles: []
         sections: [
           {
             description: 'description'
@@ -26,7 +27,6 @@ describe 'Venice Main', ->
             video_url_hls: '/vanity/url.m3u8'
             slug: 'slug-one'
             artist_ids: []
-            sub_articles: []
           },
           {
             description: 'description2'
@@ -37,7 +37,6 @@ describe 'Venice Main', ->
             slug: 'slug-two'
             published: true
             artist_ids: []
-            sub_articles: []
           }
         ]
       @options =

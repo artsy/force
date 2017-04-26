@@ -19,7 +19,8 @@ describe '/how-auctions-work', ->
           markdown: markdown
           bidIncrements: bidIncrements
           user: null
-        done()
+        , ->
+          done()
 
     after ->
       benv.teardown()
