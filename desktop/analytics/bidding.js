@@ -118,7 +118,7 @@ analyticsHooks.on('auction:artworks:params:change', function (data) {
     sale_id: AUCTION_ID,
     auction_slug: sd.AUCTION.slug,
     user_id: USER_ID,
-    type: ['price', 'medium', 'artists', 'sort'],
-    value: [data.estimate_range, data.gene_ids, data.artist_ids, data.sort]
+    current: data.current,
+    changed: data.changed
   })
 })
