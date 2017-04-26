@@ -87,8 +87,9 @@ nav-height = 54px
     width 100%
     height 100%
     padding-top nav-height
+    background-color: rgba(0,0,0,.2)
     &.unpublished
-      background-color rgba(0,0,0,.5)
+      background-color rgba(0,0,0,.75)
   &__title
     garamond()
     font-size 80px
@@ -97,6 +98,8 @@ nav-height = 54px
     garamond-size('xl-headline')
     margin-bottom 30px
     text-transform uppercase
+  &__title, &__sub-title
+    text-shadow 0 0 15px rgba(0,0,0,0.6)
   &__play
     width 180px
     height 50px
@@ -109,7 +112,10 @@ nav-height = 54px
     transition background-color 0.5
     cursor pointer
     &:hover
-      background-color rgba(0,0,0,1)
+      background-color white
+      color black
+      .venice-overlay__play-button
+        border-color transparent transparent transparent black
     &-text
       margin-right 20px
       avant-garde-size('s-headline')
