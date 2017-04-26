@@ -1,5 +1,5 @@
 import analyticsHooks from '../../../lib/analytics_hooks.coffee'
-import analyticsMiddleware from '../client/analytics'
+import analyticsMiddleware from '../client/analytics_middleware'
 import auctions from '../client/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import sinon from 'sinon'
@@ -12,9 +12,6 @@ describe('analytics middleware', () => {
     analyticsMiddleware.__Rewire__('analyticsHooks', {
       trigger: triggerStub
     })
-  })
-
-  afterEach(() => {
   })
 
   it ('tracks changes in mediums', () => {

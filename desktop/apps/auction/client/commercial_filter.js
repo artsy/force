@@ -1,4 +1,4 @@
-import analyticsMiddleware from './analytics'
+import analyticsMiddleware from './analytics_middleware'
 import { data as sd } from 'sharify'
 import JumpView from '../../../components/jump/view.coffee'
 import React from 'react';
