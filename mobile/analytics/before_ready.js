@@ -8,4 +8,4 @@ if (!location.pathname.match(/^\/article/)) {
 }
 
 // Track pageview
-analytics.page({path: location.pathname});
+analytics.page({path: location.pathname}, {integrations: {'Marketo': false}});
