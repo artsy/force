@@ -1,8 +1,8 @@
 import * as actions from './actions'
 import analyticsHooks from '../../../lib/analytics_hooks.coffee'
-import { contains } from 'underscore'
+import { contains, isEqual } from 'underscore'
 
-export const analyticsMiddleware = store => next => action => {
+const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
 
@@ -30,13 +30,21 @@ export const analyticsMiddleware = store => next => action => {
   }
 }
 
+function trackableArtistIds(changed, filterParams) {
+  if (isEqual(changed, { artist: 'artists-you-follow' })) {
+    return ['artists-you-follow']
+  } else {
+    return filterParams.artist_ids
+  }
+}
+
 function trackParamChange(changed, newState) {
   const { filterParams } = newState.auctionArtworks
   analyticsHooks.trigger(
     'auction:artworks:params:change',
     {
       current: [
-        { artists: filterParams.artist_ids },
+        { artists: trackableArtistIds(changed, filterParams) },
         { medium: filterParams.gene_ids },
         { sort: filterParams.sort },
         { price: filterParams.estimate_range }
@@ -45,3 +53,5 @@ function trackParamChange(changed, newState) {
     }
   )
 }
+
+export default analyticsMiddleware

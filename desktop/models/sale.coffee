@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL, HALP } = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
 moment = require 'moment'
 tz = require 'moment-timezone'
 Backbone = require 'backbone'
