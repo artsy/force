@@ -28,6 +28,7 @@ module.exports = class VeniceView extends Backbone.View
       el: $('.venice-video')
       video: @chooseVideoFile()
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
+    @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
   setupCarousel: ->
     @carousel = initCarousel $('.venice-carousel'),
@@ -49,13 +50,18 @@ module.exports = class VeniceView extends Backbone.View
     @swapDescription()
     @setupFollowButtons()
 
-  fadeOutCoverAndStartVideo: ->
+  fadeOutCoverAndStartVideo: (e) ->
+    return unless e.currentTarget.getAttribute('data-state') is 'ready'
     $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
 
   fadeInCoverAndPauseVideo: ->
     $('.venice-nav, .venice-carousel').fadeIn()
     @VeniceVideoView.vrView.pause()
+
+  onVideoReady: ->
+    console.log 'here'
+    $('.venice-overlay__play').attr 'data-state', 'ready'
 
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',

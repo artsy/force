@@ -50,8 +50,12 @@ module.exports = class VeniceVideoView extends Backbone.View
       range:
         min: 0
         max: @duration
-    @scrubber.on 'change', (value) =>
-      @vrView.setCurrentTime parseFloat(value[0])
+    throttledSetTime = _.throttle @setVideoTime, 200
+    @scrubber.on 'slide', (value) => throttledSetTime value[0]
+    @trigger 'videoReady'
+
+  setVideoTime: (value) =>
+    @vrView.setCurrentTime parseFloat(value)
 
   onTogglePlay: ->
     if @vrView.isPaused

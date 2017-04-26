@@ -8,9 +8,9 @@
               .venice-overlay__title Inside the Biennale
               .venice-overlay__sub-title= section.title
               if section.published
-                .venice-overlay__play
+                .venice-overlay__play(data-state="loading")
                   .venice-overlay__play-button
-                  .venice-overlay__play-text Play Video
+                  .venice-overlay__play-text
                   .venice-overlay__play-length= section.video_length
               else
                 .venice-overlay__subscribe
