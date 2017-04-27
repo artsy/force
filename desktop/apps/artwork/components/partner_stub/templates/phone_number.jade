@@ -1,0 +1,17 @@
+p.avant-garde-l-headline.auth-modal__title= title
+
+#auth-page.vam-outer
+  .vam-inner
+    header#auth-header
+      aside= partner.name
+
+    section#auth-body
+      for location in partner.locations
+        .artwork-partner-stub__phone__locations__location
+          p
+            = location.city
+            if location.state
+              | ,
+              = location.state
+          p= location.phone
+
