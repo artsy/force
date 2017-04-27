@@ -1,0 +1,15 @@
+include ./mixins
+- url = encodeURIComponent(sd.APP_URL + sd.CURRENT_PATH)
+- description = 'Inside the Biennale: ' + section.title
+
+.venice-overlay--completed
+  .venice-overlay--completed__body
+    .venice-overlay--completed__buttons
+      button.avant-garde-button.read-more Read More
+      button.avant-garde-button.next Next Video
+    .venice-overlay--completed__share
+      .share-title Share this video
+      +share(description, url)
+    .venice-overlay--completed__follow
+      if section.artist_ids && section.artist_ids.length
+        +follow(section)

@@ -161,6 +161,57 @@ nav-height = 54px
       font-size 17px
       padding-left 10px
 
+.venice-overlay--completed
+  position absolute
+  bottom 0
+  top 0
+  left 0
+  right 0
+  background-color black
+  color white
+  z-index -1
+  display flex
+  align-items center
+  justify-content center
+  opacity 0
+  &__body
+    width 420px
+    margin-top 25px
+  &__buttons
+    display flex
+    justify-content space-between
+    margin-bottom 40px
+    button
+      background none transparent
+      color white
+      border 1px solid
+      border-radius 2px
+      width calc(50% \- 15px)
+      height 50px
+      avant-garde-size('s-headline')
+      &:hover
+        color black
+  &__share
+    .share-title
+      text-align center
+      margin-bottom 10px
+      avant-garde-size('s-headline')
+    a
+      color white
+  &__follow
+    position absolute
+    bottom 60px
+    width 380px
+    margin-left 20px
+    .venice-body__follow
+      display flex
+      flex-direction column
+      align-items center
+    p
+      text-align center
+      white-space normal
+      margin-bottom 15px
+
 .venice-overlay__play[data-state="ready"]
   .venice-overlay__play
     &-text
@@ -186,6 +237,35 @@ nav-height = 54px
 
 .venice-overlay, .venice-nav
   transition display 0.5s ease
+
+.venice-feature .artist-follow
+  display flex
+  align-items center
+  float left
+  margin-left -5px
+  color white
+  .follow-text
+    display flex
+    align-items center
+    &:before
+      font-family artsy-icons
+      font-size 32px
+      line-height 32px
+    &:after
+      margin-right 4px
+  &[data-state=follow]
+    .follow-text:after
+      content 'Follow'
+    .follow-text:before
+      content '\e629'
+  &[data-state=following]
+    .follow-text:after
+      content 'Following'
+    .follow-text:before
+      content '\e628'
+  &[data-state=following]:hover
+    .follow-text:after
+      content 'Unfollow'
 
 .venice-footer
   max-width 1100px
