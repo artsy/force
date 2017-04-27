@@ -95,6 +95,11 @@ describe 'Venice Video', ->
     @setVolume.callCount.should.equal 1
     @setVolume.args[0][0].should.equal 1
 
+  it 'toggles completed cover on video completion', ->
+    @view.onVRViewReady()
+    @view.updateTime(currentTime: 100)
+    @view.trigger.args[1][0].should.eql 'videoCompleted'
+
   it 'swaps the video', ->
     @view.swapVideo video: 'videourl'
     @view.vrView.iframe.src.should.eql 'localhost/vanity/vrview/index.html?video=videourl&is_stereo=false&is_vr_off=false&loop=false'

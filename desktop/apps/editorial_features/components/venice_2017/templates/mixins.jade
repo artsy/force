@@ -1,6 +1,6 @@
 mixin index_item(section, i)
   .venice-body__index-item
-    a(href='#{sd.APP_URL}/venice-biennale/#{section.slug}' class=section.published? 'published':undefined)
+    a(href='#{sd.APP_URL}/venice-biennale/#{section.slug}' class=section.published? 'published':'')
       include ../icons/icon_play.svg
       span.chapter= '0' + (i + 1) + '. '
       span.title=section.title

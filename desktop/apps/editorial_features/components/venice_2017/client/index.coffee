@@ -15,11 +15,14 @@ module.exports = class VeniceView extends Backbone.View
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
     'click .venice-overlay__cta-button': 'showCta'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
+    'click .venice-overlay--completed__buttons .next': 'onNextVideo'
+    'click .venice-overlay--completed__buttons .read-more': 'onReadMore'
 
   initialize: ->
     @parser = new UAParser()
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
+    @sectionIndex = sd.VIDEO_INDEX
     @setupCarousel()
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
@@ -27,6 +30,7 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+    @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
@@ -37,18 +41,27 @@ module.exports = class VeniceView extends Backbone.View
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
     , (carousel) =>
-      flickity = carousel.cells.flickity
-      flickity.on 'settle', =>
-        @changeSection flickity.selectedIndex
+      @flickity = carousel.cells.flickity
+      @flickity.on 'settle', =>
+        @changeSection @flickity.selectedIndex
 
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
+    @sectionIndex = i
     # Push route
     window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
     @setupFollowButtons()
+
+  onNextVideo: ->
+    next = @sectionIndex + 1
+    if next is @curation.get('sections').length
+      next = 0
+    @flickity.select(next)
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
 
   fadeOutCoverAndStartVideo: (e) ->
     return unless e.currentTarget.getAttribute('data-state') is 'ready'
@@ -62,9 +75,19 @@ module.exports = class VeniceView extends Backbone.View
   onVideoReady: ->
     $('.venice-overlay__play').attr 'data-state', 'ready'
 
+  onVideoCompleted: ->
+    @fadeInCoverAndPauseVideo()
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).css({'opacity': 1, 'z-index': 100})
+
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
+
+  onReadMore: ->
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
+    window.scrollTo(0,window.innerHeight)
 
   swapDescription: ->
     $('.venice-body--article').remove()

@@ -40,6 +40,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     if e.currentTime > @threeQuarterDuration
       @trackThreeQuarter()
     if e.currentTime is @fullDuration
+      @trigger 'videoCompleted'
       @trackFull()
     @scrubber.set(e.currentTime)
 
