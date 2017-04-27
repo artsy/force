@@ -41,19 +41,19 @@ const initialState = {
   saleArtworksByFollowedArtists: [],
   saleArtworksByFollowedArtistsTotal: 0,
   sortMap: {
-    "bidder_positions_count": "Number of Bids (asc.)",
-    "-bidder_positions_count": "Number of Bids (desc.)",
-    "position": "Lot Number (asc.)",
-    "-position": "Lot Number (desc.)",
-    "-searchable_estimate": "Most Expensive",
-    "searchable_estimate": "Least Expensive"
+    'bidder_positions_count': 'Number of Bids (asc.)',
+    '-bidder_positions_count': 'Number of Bids (desc.)',
+    'position': 'Lot Number (asc.)',
+    '-position': 'Lot Number (desc.)',
+    '-searchable_estimate': 'Most Expensive',
+    'searchable_estimate': 'Least Expensive'
   },
   symbol: sd.AUCTION && sd.AUCTION.symbol,
   total: 0,
   user: sd.CURRENT_USER
 }
 
-function auctionArtworks(state = initialState, action) {
+function auctionArtworks (state = initialState, action) {
   switch (action.type) {
     case actions.DECREMENT_FOLLOWED_ARTISTS_PAGE: {
       const currentPage = state.followedArtistRailPage

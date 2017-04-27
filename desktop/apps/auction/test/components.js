@@ -11,7 +11,6 @@ import RangeSlider from '../components/range_slider'
 import Sidebar from '../components/sidebar'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
@@ -83,9 +82,9 @@ describe('React components', () => {
 
   describe('Sidebar', () => {
     beforeEach(() => {
-      Sidebar.__Rewire__('ArtistFilter', React.createClass({ render: () => <div className='artist-filter'></div> }))
-      Sidebar.__Rewire__('MediumFilter', React.createClass({ render: () => <div className='medium-filter'></div> }))
-      Sidebar.__Rewire__('RangeSlider', React.createClass({ render: () => <div className='range-slider'></div> }))
+      Sidebar.__Rewire__('ArtistFilter', () => <div className='artist-filter' />)
+      Sidebar.__Rewire__('MediumFilter', () => <div className='medium-filter' />)
+      Sidebar.__Rewire__('RangeSlider', () => <div className='range-slider' />)
     })
 
     afterEach(() => {

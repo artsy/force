@@ -1,14 +1,16 @@
-import { updateSort } from '../../client/actions'
+import _ from 'underscore'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import _ from 'underscore'
+import { updateSort } from '../../client/actions'
 
-function FilterSort(props) {
+function FilterSort (props) {
   const {
     filterParams,
     sortMap,
     updateSortAction
   } = props
+
   const selectedSort = filterParams.sort
   const itemHeight = 37
   const itemIndex = Object.keys(sortMap).indexOf(selectedSort)
@@ -21,16 +23,16 @@ function FilterSort(props) {
         <a className='bordered-pulldown-toggle' href='#'>
           <span className='bordered-pulldown-text'>{ sortMap[selectedSort] }</span>
           <div className='bordered-pulldown-toggle-caret'>
-            <span className='caret'></span>
+            <span className='caret' />
           </div>
         </a>
-        <div className='bordered-pulldown-options' style={ { top: -optionsOffset } }>
+        <div className='bordered-pulldown-options' style={{ top: -optionsOffset }}>
           {
             _.map(sortMap, (sortName, sort) => {
-              const selected = sort == selectedSort
+              const selected = sort === selectedSort
               return <a
                 href='#'
-                className={ selected ? 'borderd-pulldown-active' : '' }
+                className={selected ? 'borderd-pulldown-active' : ''}
                 key={sort}
                 onClick={() => updateSortAction(sort)}
               >{sortName}</a>
@@ -40,6 +42,12 @@ function FilterSort(props) {
       </div>
     </div>
   )
+}
+
+FilterSort.propTypes = {
+  filterParams: PropTypes.object.isRequired,
+  sortMap: PropTypes.object.isRequired,
+  updateSortAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

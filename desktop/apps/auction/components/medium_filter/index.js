@@ -1,19 +1,23 @@
-import { updateMediumParams } from '../../client/actions'
 import BasicCheckbox from '../basic_checkbox'
-import React from 'react';
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import React from 'react'
 import _, { contains } from 'underscore'
+import { connect } from 'react-redux'
+import { updateMediumParams } from '../../client/actions'
 
-function MediumFilter(props) {
+function MediumFilter (props) {
   const {
     aggregatedMediums,
     filterParams,
     initialMediumMap,
     updateMediumParamsAction
   } = props
+
   const mediumIds = filterParams.gene_ids
   const allMediums = { id: 'mediums-all', name: 'All' }
-  const allMediumsSelected = mediumIds.length == 0
+  const allMediumsSelected = mediumIds.length === 0
+
+  // FIXME: Is this needed somehow?
   const aggregatedMediumIds = aggregatedMediums.map((agg) => agg.id)
 
   return (
@@ -32,7 +36,11 @@ function MediumFilter(props) {
           return (
             <BasicCheckbox
               key={initialAgg.id}
-              item={{id: initialAgg.id, name: initialAgg.name, count: includedMedium && includedMedium.count}}
+              item={{
+                id: initialAgg.id,
+                name: initialAgg.name,
+                count: includedMedium && includedMedium.count
+              }}
               onClick={updateMediumParamsAction}
               checked={mediumSelected}
               disabled={includedMedium === undefined}
@@ -42,6 +50,13 @@ function MediumFilter(props) {
       }
     </div>
   )
+}
+
+MediumFilter.propTypes = {
+  aggregatedMediums: PropTypes.array.isRequired,
+  filterParams: PropTypes.object.isRequired,
+  initialMediumMap: PropTypes.array.isRequired,
+  updateMediumParamsAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

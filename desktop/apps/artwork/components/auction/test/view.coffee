@@ -286,3 +286,40 @@ describe 'auction', ->
 
         view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 1
+
+    describe  'is sold', ->
+      it 'renders correctly', ->
+        data =
+          accounting: accounting
+          artwork:
+            id: 'peter-alexander-wedge-with-puff'
+            is_in_auction: true
+            is_buy_nowable: true
+            is_sold: true
+            sale:
+              id: 'los-angeles-modern-auctions-march-2015'
+              name: 'Los Angeles Modern Auctions - March 2015'
+              is_open: true
+              is_preview: false
+              is_closed: false
+              is_auction: true
+              is_auction_promo: false
+              is_with_buyers_premium: true
+            sale_artwork:
+              id: 'peter-alexander-wedge-with-puff'
+              estimate: '$7,000–$9,000'
+              current_bid: amount: '$55,000'
+              counts: bidder_positions: 0
+              bid_increments: [100, 200]
+              minimum_next_bid:
+                amount: '$60,000'
+                cents: 6000000
+
+        view = new @ArtworkAuctionView data: data
+        view.render()
+
+        view.$('.artwork-auction__bid-form__button')
+          .should.have.lengthOf 0
+
+        view.$('.artwork-auction__bid-status__sold')
+          .should.have.lengthOf 1

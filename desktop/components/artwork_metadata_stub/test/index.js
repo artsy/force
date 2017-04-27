@@ -3,7 +3,7 @@ import fs from 'fs'
 import jade from 'jade'
 import path from 'path'
 
-function render(locals) {
+function render (locals) {
   const filename = path.resolve(__dirname, '../index.jade')
   return jade.compile(
     fs.readFileSync(filename),
@@ -63,6 +63,14 @@ describe('metadata template', () => {
       $.text().should.containEql('My Artwork, 2007')
       $('.artwork-metadata-stub__bid-now').text().should.containEql('$100')
       $('.artwork-metadata-stub__sale-message').length.should.eql(0)
+    })
+
+    it('renders SOLD if artwork is sold', () => {
+      auctionArtwork.is_sold = true
+      const $ = cheerio.load(render({ artwork: auctionArtwork }))
+      $.text().should.containEql('My Artwork, 2007')
+      $('.artwork-metadata-stub__contact.artwork-metadata-stub__line').text().should.containEql('SOLD')
+      $('.artwork-metadata-stub__bid-now').length.should.eql(0)
     })
 
     describe('auction is open', () => {

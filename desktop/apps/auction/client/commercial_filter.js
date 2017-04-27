@@ -1,24 +1,28 @@
-import analyticsMiddleware from './analytics_middleware'
-import { data as sd } from 'sharify'
-import JumpView from '../../../components/jump/view.coffee'
-import React from 'react';
-import { render } from 'react-dom';
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { combineReducers, createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import auctions from './reducers'
-import AuctionPage from '../components/auction_page'
+import $ from 'jquery'
 import * as actions from './actions'
+import _ from 'underscore'
+import AuctionPage from '../components/auction_page'
+import JumpView from '../../../components/jump/view.coffee'
+import React from 'react'
+import analyticsMiddleware from './analytics_middleware'
+import auctions from './reducers'
+import createLogger from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import { data as sd } from 'sharify'
+import { render } from 'react-dom'
 
-export function setupCommercialFilter() {
-  const loggerMiddleware = createLogger()
+export function setupCommercialFilter () {
   const middleware = []
+
   middleware.push(thunkMiddleware) // lets us dispatch() functions
   middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
 
   if (sd.NODE_ENV === 'development' || sd.NODE_ENV === 'staging') {
-    middleware.push(loggerMiddleware) // middleware that logs actions
+    middleware.push(createLogger({ // middleware that logs actions
+      collapsed: true
+    }))
   }
 
   const store = createStore(
@@ -38,8 +42,8 @@ export function setupCommercialFilter() {
   store.dispatch(actions.fetchArtworks())
 
   // scroll up if you select a checkbox or sort
-  function scrollToTop() {
-    $('html,body').animate( {
+  function scrollToTop () {
+    $('html,body').animate({
       scrollTop: $('.auction-artworks-header').offset().top - $('.mlh-navbar').height()
     }, 400)
   }
@@ -62,12 +66,14 @@ export function setupCommercialFilter() {
   jump.scrollToPosition(0)
 
   // infinite scroll
-  function infiniteScroll() {
+  function infiniteScroll () {
     const threshold = $(window).height() + $(window).scrollTop()
     const artworksEl = $('.auction-page-artworks')
-    const shouldFetch = artworksEl.height() > 0
-      && threshold > artworksEl.offset().top + artworksEl.height()
-    if (shouldFetch) { store.dispatch(actions.infiniteScroll()) }
+    const shouldFetch = artworksEl.height() > 0 &&
+                        threshold > artworksEl.offset().top + artworksEl.height()
+    if (shouldFetch) {
+      store.dispatch(actions.infiniteScroll())
+    }
   }
   $(window).on('scroll.auction-page-artworks', _.throttle(infiniteScroll, 200))
 }
