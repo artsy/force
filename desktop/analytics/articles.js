@@ -4,21 +4,21 @@
 //
 
 if (location.pathname.match('/article/') || location.pathname.match('/2016-year-in-art')) {
-  $(document.body).on('click', '.article-social a', function () {
+  $(document.body).on('click', '.article-social a', function() {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Article Share', {
       article_id: articleId,
       context_type: sd.ARTICLE ? 'article_fixed' : 'magazine_fixed',
       service: $(this).attr('data-service')
     })
-  }).on('click', '.article-share-fixed > a', function () {
+  }).on('click', '.article-share-fixed > a', function() {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Article Share', {
       article_id: articleId,
       context_type: 'article_sticky',
       service: $(this).attr('data-service')
     })
-  }).on('click', '.article-section-toc-link a', function () {
+  }).on('click', '.article-section-toc-link a', function() {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Clicked article impression', {
       article_id: articleId,
@@ -26,7 +26,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       impression_type: 'toc',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-section-image-set', function () {
+  }).on('click', '.article-section-image-set', function() {
     var articleId = $(this).closest('.article-container').data('id')
     analytics.track('Clicked article impression', {
       article_id: articleId,
@@ -34,7 +34,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       impression_type: 'image_set',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-section-callout', function () {
+  }).on('click', '.article-section-callout', function() {
     var articleId = $(this).closest('.article-container').data('id')
     // Only track callouts that are links
     if ($(this)[0].href) {
@@ -45,7 +45,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
         context_type: 'article_fixed'
       })
     }
-  }).on('click', '.article-related-widget a', function () {
+  }).on('click', '.article-related-widget a', function() {
     var articleId = $(this).closest('.article-related-widget').data('id')
     analytics.track('Clicked article impression', {
       article_id: articleId,
@@ -53,19 +53,19 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
       impression_type: 'related_article',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-primary-logo a', function(){
+  }).on('click', '.article-sa-primary-logo a', function() {
     analytics.track('Clicked primary partner logo', {
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
       impression_type: 'sa_primary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-secondary-logo a', function(){
+  }).on('click', '.article-sa-secondary-logo a', function() {
     analytics.track('Clicked secondary partner logo', {
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
       impression_type: 'sa_secondary_logo',
       context_type: 'article_fixed'
     })
-  }).on('click', '.article-sa-cta-container a', function(){
+  }).on('click', '.article-sa-cta-container a', function() {
     analytics.track('Clicked partner cta link', {
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
       impression_type: 'sa_partner_cta',
@@ -74,9 +74,15 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
   })
 
   // Hooks
-  analyticsHooks.on('readmore', function (options) {
+  analyticsHooks.on('readmore', function(options) {
     analytics.track('Clicked Read More', {})
-    analytics.page({path: location.pathname}, {integrations: {'Marketo': false}})
+    analytics.page({
+      path: location.pathname
+    }, {
+      integrations: {
+        'Marketo': false
+      }
+    })
     if (window.PARSELY) {
       window.PARSELY.beacon.trackPageView({
         url: location.href,
@@ -96,19 +102,52 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
     }
   })
 
-  analyticsHooks.on('view:editorial-signup', function (options) {
+  analyticsHooks.on('view:editorial-signup', function(options) {
     analytics.track('Article impression', {
       article_id: null,
       destination_path: null,
       impression_type: 'newsletter_signup',
       context_type: options.type
-    }, { integrations: { 'Mixpanel': false } })
+    }, {
+      integrations: {
+        'Mixpanel': false
+      }
+    })
   })
 }
 
 // Applies to both /article/* and /articles
 if (location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights')) {
-  analyticsHooks.on('submit:editorial-signup', function (options) {
+
+  $('.cta-bar .mktoButtonRow').click(function(e) {
+    analytics.track('Sign up for gallery insights email', {
+      session_id: sd.SESSION_ID,
+      email: $('.cta-bar-container input').val(),
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: 'article_fixed'
+    });
+    analytics.identify({
+      session_id: sd.SESSION_ID,
+      email: $('.cta-bar-container input').val()
+    });
+  })
+
+  $('#articles-body-container .mktoButtonRow').click(function(e) {
+    window.email = $("#Email").val();
+    analytics.track('Sign up for gallery insights email', {
+      session_id: sd.SESSION_ID,
+      email: email,
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: 'article_fixed'
+    });
+    analytics.identify({
+      session_id: sd.SESSION_ID,
+      email: email
+    });
+  })
+
+
+  analyticsHooks.on('submit:editorial-signup', function(options) {
     analytics.track('Sign up for editorial email', {
       article_id: $(this).closest('.article-container').data('id'),
       context_type: options.type,
@@ -116,15 +155,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
     })
   })
 
-  analyticsHooks.on('submit:gi-signup', function (options) {
-    analytics.track('Sign up for gallery insights email', {
-      article_id: $(this).closest('.article-container').data('id'),
-      context_type: 'article_fixed',
-      user_email: options.email
-    })
-  })
-
-  analyticsHooks.on('dismiss:editorial-signup', function (options) {
+  analyticsHooks.on('dismiss:editorial-signup', function(options) {
     analytics.track('Dismiss editorial signup', {
       context_type: options.type
     })
