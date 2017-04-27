@@ -84,6 +84,10 @@ describe 'Venice Main', ->
     @view.VeniceVideoView.trigger.args[0][0].should.equal 'swapVideo'
     @view.VeniceVideoView.trigger.args[0][1].video.should.equal 'localhost/vanity/url2.mp4'
 
+  it '#fadeOutCoverAndStartVideo does not play if it is not ready', ->
+    $('.venice-overlay__play').click()
+    @play.callCount.should.equal 0
+
   it '#fadeOutCoverAndStartVideo', ->
     $('.venice-overlay__play').attr 'data-state', 'ready'
     $('.venice-overlay__play').click()

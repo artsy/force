@@ -21,6 +21,7 @@ describe 'Venice Video', ->
           iframe: src: ''
           setVolume: @setVolume = sinon.stub()
           getCurrentTime: @getCurrentTime = sinon.stub()
+          setCurrentTime: @setCurrentTime = sinon.stub()
       Backbone.$ = $
       @options =
         asset: ->
@@ -39,7 +40,7 @@ describe 'Venice Video', ->
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []
         VeniceVideoView.__set__ 'sd', APP_URL: 'localhost'
         VeniceVideoView.__set__ 'noUiSlider', create: (@scrubberCreate = sinon.stub()).returns
-          on: sinon.stub()
+          on: @on = sinon.stub()
           set: sinon.stub()
         VeniceVideoView.__set__ 'analyticsHooks', trigger: @analytics = sinon.stub()
         @view = new VeniceVideoView
@@ -61,6 +62,17 @@ describe 'Venice Video', ->
     @scrubberCreate.args[0][1].start.should.equal 0
     @scrubberCreate.args[0][1].range.min.should.equal 0
     @scrubberCreate.args[0][1].range.max.should.equal 100
+
+  it 'does not try to update scrubber while dragging', ->
+    @view.onVRViewReady()
+    @on.args[0][1]()
+    @view.scrubbing.should.be.true()
+
+  it 'sets the time on scrubber change', ->
+    @view.onVRViewReady()
+    @on.args[1][1]([12])
+    @setCurrentTime.args[0][0].should.equal 12
+    @view.scrubbing.should.be.false()
 
   it 'toggles play', ->
     @view.vrView.isPaused = true

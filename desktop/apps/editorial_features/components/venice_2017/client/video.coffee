@@ -18,6 +18,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
+    @scrubbing = false
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -31,6 +32,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'timeupdate', @updateTime
 
   updateTime: (e) =>
+    return if @scrubbing
     if e.currentTime > @quarterDuration
       @trackQuarter()
     if e.currentTime > @halfDuration
@@ -50,12 +52,12 @@ module.exports = class VeniceVideoView extends Backbone.View
       range:
         min: 0
         max: @duration
-    throttledSetTime = _.throttle @setVideoTime, 200
-    @scrubber.on 'slide', (value) => throttledSetTime value[0]
+    @scrubber.on 'start', =>
+      @scrubbing = true
+    @scrubber.on 'change', (value) =>
+      @vrView.setCurrentTime parseFloat(value[0])
+      @scrubbing = false
     @trigger 'videoReady'
-
-  setVideoTime: (value) =>
-    @vrView.setCurrentTime parseFloat(value)
 
   onTogglePlay: ->
     if @vrView.isPaused
