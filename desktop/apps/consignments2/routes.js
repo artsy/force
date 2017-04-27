@@ -33,3 +33,7 @@ export const landingPage = async (req, res, next) => {
     next(e)
   }
 }
+
+export const submissionFlow = async (req, res, next) => {
+  res.render('submission_flow', { user: req.user })
+}
