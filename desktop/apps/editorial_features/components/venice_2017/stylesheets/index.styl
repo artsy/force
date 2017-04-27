@@ -1,5 +1,6 @@
 @require './video'
 @require './body'
+@require './carousel'
 @require '../../../../../components/slider'
 
 nav-height = 54px
@@ -52,189 +53,6 @@ nav-height = 54px
 #vrvideo
   height 100vh
 
-.venice-carousel
-  z-index 10
-  .mgr-cell
-    width 100vw
-    height 100vh
-  .mgr-arrow-right
-    right 0
-    left unset
-  .mgr-arrow-left
-    left 0
-    right unset
-  .mgr-arrow-icon
-    color white
-    border 2px solid
-    border-radius 50%
-    margin 30px
-  .mgr-navigation
-    opacity 1
-
-.venice-overlay
-  background-size cover
-  background-position center
-  z-index 10
-  width 100%
-  height 100%
-  &__text
-    position absolute
-    bottom 0
-    display flex
-    flex-direction column
-    justify-content center
-    align-items center
-    width 100%
-    height 100%
-    padding-top nav-height
-    background-color: rgba(0,0,0,.2)
-    &.unpublished
-      background-color rgba(0,0,0,.75)
-  &__title
-    garamond()
-    font-size 80px
-    margin-bottom 30px
-  &__sub-title
-    garamond-size('xl-headline')
-    margin-bottom 30px
-    text-transform uppercase
-  &__title, &__sub-title
-    text-shadow 0 0 15px rgba(0,0,0,0.6)
-  &__play
-    width 180px
-    height 50px
-    border 1px solid white
-    border-radius 2px
-    background-color rgba(0,0,0,0.5)
-    display flex
-    justify-content center
-    align-items center
-    transition background-color 0.5
-    cursor pointer
-    &-text
-      avant-garde-size('s-headline')
-      &:after
-        content 'Loading...'
-    &-length
-      display none
-    &-button
-      display none
-  &__subscribe
-    position absolute
-    bottom 50px
-    text-align center
-  &__launch-date
-    avant-garde-size('body')
-    margin-bottom 10px
-  &__cta-text
-    garamond-size('s-headline')
-    line-height 1.2em
-    margin-bottom 80px
-  &__cta-button
-    avant-garde-size('s-headline')
-    color white
-    background none transparent
-    border 2px solid
-    border-radius 2px
-    width 195px
-    height 50px
-    margin-left calc(50% \- 97.5px)
-    position absolute
-    bottom 0
-    left 0
-    &:hover
-      background-color white
-      border-color white
-      color black
-  &__subscribe-form
-    background white
-    padding 10px
-    display flex
-    justify-content space-between
-    display none
-    position absolute
-    bottom 0
-    width 100%
-    input
-      width calc(100% \- 105px)
-      border none
-      font-size 17px
-      padding-left 10px
-
-.venice-overlay--completed
-  position absolute
-  bottom 0
-  top 0
-  left 0
-  right 0
-  background-color black
-  color white
-  z-index -1
-  display flex
-  align-items center
-  justify-content center
-  opacity 0
-  &__body
-    width 420px
-    margin-top 25px
-  &__buttons
-    display flex
-    justify-content space-between
-    margin-bottom 40px
-    button
-      background none transparent
-      color white
-      border 1px solid
-      border-radius 2px
-      width calc(50% \- 15px)
-      height 50px
-      avant-garde-size('s-headline')
-      &:hover
-        color black
-  &__share
-    .share-title
-      text-align center
-      margin-bottom 10px
-      avant-garde-size('s-headline')
-    a
-      color white
-  &__follow
-    position absolute
-    bottom 60px
-    width 380px
-    margin-left 20px
-    .venice-body__follow
-      display flex
-      flex-direction column
-      align-items center
-    p
-      text-align center
-      white-space normal
-      margin-bottom 15px
-
-.venice-overlay__play[data-state="ready"]
-  .venice-overlay__play
-    &-text
-      margin-right 20px
-      &:after
-        content 'Play Video'
-    &-length
-      display block
-      garamond-size('l-caption')
-    &-button
-      display block
-      margin-right 10px
-      width 0
-      height 0
-      border-style solid
-      border-width 5px 0 5px 10px
-      border-color transparent transparent transparent white
-    &:hover
-      background-color white
-      color black
-      .venice-overlay__play-button
-        border-color transparent transparent transparent black
-
 .venice-overlay, .venice-nav
   transition display 0.5s ease
 
@@ -281,16 +99,12 @@ nav-height = 54px
     padding-top 20px
     border-top 2px solid gray-color
 
+// Mobile
 @media screen and (max-width: 800px)
   .venice-footer
     padding 0
     &__articles
       padding 20px 1em 0 1em
-  .venice-carousel
-    .mgr-arrow-icon
-      font-size 15px
-      line-height 15px
-      margin 105px 10px 10px 10px
 
 @media screen and (max-width: 550px)
   .venice-nav
@@ -298,14 +112,3 @@ nav-height = 54px
       display none
     &__sticky-left
       margin 0px 15px
-
-  .venice-overlay
-    &__title
-      font-size 45px
-      margin-bottom 5px
-    &__sub-title
-      garamond-size('s-headline')
-    &__cta-text
-      garamond-size('l-body')
-    &__subscribe
-      margin 0 10px

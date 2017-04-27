@@ -53,13 +53,10 @@ module.exports = class VeniceView extends Backbone.View
     # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
-    @setupFollowButtons()
+    # @setupFollowButtons()
 
   onNextVideo: ->
-    next = @sectionIndex + 1
-    if next is @curation.get('sections').length
-      next = 0
-    @flickity.select(next)
+    @flickity.next(true)
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
 
