@@ -45,6 +45,7 @@ describe 'Venice Video', ->
         @view = new VeniceVideoView
           el: $('body')
           video: '/vanity/videos/scenic_mono_3.mp4'
+        @view.trigger = sinon.stub()
         done()
 
   afterEach ->
@@ -116,3 +117,7 @@ describe 'Venice Video', ->
     @view.updateTime(currentTime: 100)
     @analytics.args[3][0].should.equal 'video:duration'
     @analytics.args[3][1].duration.should.equal '100%'
+
+  it 'triggers closeVideo', ->
+    $('.venice-video__close').click()
+    @view.trigger.args[0][0].should.equal 'closeVideo'

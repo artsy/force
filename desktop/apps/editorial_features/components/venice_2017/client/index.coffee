@@ -60,7 +60,6 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView.vrView.pause()
 
   onVideoReady: ->
-    console.log 'here'
     $('.venice-overlay__play').attr 'data-state', 'ready'
 
   swapVideo: ->

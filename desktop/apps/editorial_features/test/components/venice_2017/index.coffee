@@ -51,7 +51,9 @@ describe 'Venice Main', ->
           VIDEO_INDEX: 0
           CURATION: @curation
         VeniceView.__set__ 'VeniceVideoView', @VeniceVideoView = sinon.stub().returns
-          vrView: play: @play = sinon.stub()
+          vrView:
+            play: @play = sinon.stub()
+            pause: @pause = sinon.stub()
           trigger: sinon.stub()
         VeniceView.__set__ 'initCarousel', @initCarousel = sinon.stub().yields
           cells: flickity:
@@ -83,8 +85,17 @@ describe 'Venice Main', ->
     @view.VeniceVideoView.trigger.args[0][1].video.should.equal 'localhost/vanity/url2.mp4'
 
   it '#fadeOutCoverAndStartVideo', ->
+    $('.venice-overlay__play').attr 'data-state', 'ready'
     $('.venice-overlay__play').click()
     @play.callCount.should.equal 1
+
+  it '#fadeInCoverAndPauseVideo', ->
+    @view.fadeInCoverAndPauseVideo()
+    @pause.callCount.should.equal 1
+
+  it '#onVideoReady', ->
+    @view.onVideoReady()
+    $('.venice-overlay__play').attr('data-state').should.equal 'ready'
 
   it 'chooses a medium quality mp4 video for iOS', ->
     @view.parser = getOS: sinon.stub().returns name: 'iOS'
