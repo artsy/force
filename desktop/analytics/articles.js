@@ -108,18 +108,37 @@ if (location.pathname.match('/article/') || location.pathname.match('/2016-year-
 
 // Applies to both /article/* and /articles
 if (location.pathname.match('/article/') || location.pathname.match('/articles') || location.pathname.match('/gallery-insights')) {
+  $('.cta-bar .mktoButtonRow').click(function(e) {
+    analytics.track('Sign up for gallery insights email', {
+      session_id: sd.SESSION_ID,
+      email: $('.cta-bar-container input').val(),
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: 'article_fixed'
+    });
+    analytics.identify({
+      session_id: sd.SESSION_ID,
+      email: $('.cta-bar-container input').val()
+    });
+  })
+
+  $('#articles-body-container .mktoButtonRow').click(function(e) {
+    window.email = $("#Email").val();
+    analytics.track('Sign up for gallery insights email', {
+      session_id: sd.SESSION_ID,
+      email: email,
+      article_id: $(this).closest('.article-container').data('id'),
+      context_type: 'article_fixed'
+    });
+    analytics.identify({
+      session_id: sd.SESSION_ID,
+      email: email
+    });
+  })
+
   analyticsHooks.on('submit:editorial-signup', function (options) {
     analytics.track('Sign up for editorial email', {
       article_id: $(this).closest('.article-container').data('id'),
       context_type: options.type,
-      user_email: options.email
-    })
-  })
-
-  analyticsHooks.on('submit:gi-signup', function (options) {
-    analytics.track('Sign up for gallery insights email', {
-      article_id: $(this).closest('.article-container').data('id'),
-      context_type: 'article_fixed',
       user_email: options.email
     })
   })
