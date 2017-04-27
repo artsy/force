@@ -122,7 +122,7 @@ if (location.pathname.match('/article/') || location.pathname.match('/articles')
   })
 
   $('#articles-body-container .mktoButtonRow').click(function(e) {
-    window.email = $("#Email").val();
+    var email = $("#Email").val();
     analytics.track('Sign up for gallery insights email', {
       session_id: sd.SESSION_ID,
       email: email,
