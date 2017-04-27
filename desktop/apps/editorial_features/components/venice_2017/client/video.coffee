@@ -10,6 +10,7 @@ module.exports = class VeniceVideoView extends Backbone.View
   events:
     'click #toggleplay': 'onTogglePlay'
     'click #togglemute': 'onToggleMute'
+    'click .venice-video__close': 'onCloseVideo'
 
   initialize: (options) ->
     @video = options.video
@@ -17,6 +18,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
+    @scrubbing = false
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -30,6 +32,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'timeupdate', @updateTime
 
   updateTime: (e) =>
+    return if @scrubbing
     if e.currentTime > @quarterDuration
       @trackQuarter()
     if e.currentTime > @halfDuration
@@ -49,8 +52,12 @@ module.exports = class VeniceVideoView extends Backbone.View
       range:
         min: 0
         max: @duration
+    @scrubber.on 'start', =>
+      @scrubbing = true
     @scrubber.on 'change', (value) =>
       @vrView.setCurrentTime parseFloat(value[0])
+      @scrubbing = false
+    @trigger 'videoReady'
 
   onTogglePlay: ->
     if @vrView.isPaused
@@ -93,6 +100,9 @@ module.exports = class VeniceVideoView extends Backbone.View
       analyticsHooks.trigger('video:duration',{duration: '75%'})
     @trackFull = _.once ->
       analyticsHooks.trigger('video:duration',{duration: '100%'})
+
+  onCloseVideo: ->
+    @trigger 'closeVideo'
 
   # Currently unused but will implement next
   formatTime: (time) ->

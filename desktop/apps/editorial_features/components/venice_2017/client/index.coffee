@@ -27,6 +27,8 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+    @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
+    @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
   setupCarousel: ->
     @carousel = initCarousel $('.venice-carousel'),
@@ -48,9 +50,17 @@ module.exports = class VeniceView extends Backbone.View
     @swapDescription()
     @setupFollowButtons()
 
-  fadeOutCoverAndStartVideo: ->
+  fadeOutCoverAndStartVideo: (e) ->
+    return unless e.currentTarget.getAttribute('data-state') is 'ready'
     $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
+
+  fadeInCoverAndPauseVideo: ->
+    $('.venice-nav, .venice-carousel').fadeIn()
+    @VeniceVideoView.vrView.pause()
+
+  onVideoReady: ->
+    $('.venice-overlay__play').attr 'data-state', 'ready'
 
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
@@ -64,12 +74,13 @@ module.exports = class VeniceView extends Backbone.View
     $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->
-    if @parser.getBrowser().name is 'Safari'
-      sd.APP_URL + @section.video_url_hls
+    section = if @section.published then @section else @curation.get('sections')[0]
+    if @parser.getOS().name is 'iOS'
+      sd.APP_URL + section.video_url_medium
     else if @parser.getDevice().type is 'mobile'
-      sd.APP_URL + @section.video_url_medium
+      sd.APP_URL + section.video_url_adaptive
     else
-      sd.APP_URL + @section.video_url
+      sd.APP_URL + section.video_url
 
   showCta: (e) ->
     @$(e.target).fadeOut()

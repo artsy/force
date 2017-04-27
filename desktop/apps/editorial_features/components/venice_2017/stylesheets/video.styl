@@ -1,3 +1,12 @@
+i.icon-close.venice-video__close
+  position absolute
+  top 0
+  left 0
+  margin 30px
+  cursor pointer
+  &:hover
+    color gray-lighter-color
+
 #controls
   position absolute
   width 100vw
@@ -11,8 +20,6 @@
     min-height 50px
     z-index 12
     float right
-.unpublished #controls
-  display none
 
 #toggleplay
   avant-garde-size('s-headline')
@@ -61,7 +68,7 @@
   position relative
   display flex
   align-items center
-  height 1px
+  height 3px
   .noUi-handle
     top -7px
 
@@ -96,6 +103,9 @@
       display block
 
 @media screen and (max-width: 550px)
+  i.icon-close.venice-video__close
+    margin 15px
+
   #controls
     padding 15px
 
