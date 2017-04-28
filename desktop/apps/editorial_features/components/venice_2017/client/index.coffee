@@ -16,7 +16,7 @@ module.exports = class VeniceView extends Backbone.View
     'click .venice-overlay__cta-button': 'showCta'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
-    'click .venice-overlay--completed__buttons .read-more': 'onReadMore'
+    'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
 
   initialize: ->
     @parser = new UAParser()
@@ -35,8 +35,7 @@ module.exports = class VeniceView extends Backbone.View
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
   setupCarousel: ->
-    @carousel = initCarousel $('.venice-carousel'),
-      imagesLoaded: true
+    initCarousel $('.venice-carousel'),
       advanceBy: 1
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
@@ -56,10 +55,7 @@ module.exports = class VeniceView extends Backbone.View
     @setupFollowButtons()
 
   onNextVideo: ->
-    next = @sectionIndex + 1
-    if next is @curation.get('sections').length
-      next = 0
-    @flickity.select(next)
+    @flickity.next true
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
 
