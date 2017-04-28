@@ -20,7 +20,7 @@ module.exports = class FeaturedLink extends Backbone.Model
       href: @get('href')
       title: @mdToHtml('title')
       subtitle: @mdToHtml('subtitle').split('|')[0].trim()
-      imageUrl: if @hasImage('large_rectangle') then @imageUrl() else null
+      imageUrl: if @hasImage('large_rectangle') then @imageUrl('large_rectangle') else null
     }
 
   layoutStyle: (collectionLength) ->
