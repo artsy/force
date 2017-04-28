@@ -7,37 +7,49 @@ Curation = require '../../../../../models/curation.coffee'
 
 describe 'Venice Main', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
-        window: history: replaceState: @replaceState = sinon.stub()
+        window:
+          history: replaceState: @replaceState = sinon.stub()
+          scrollTo: @scrollTo = sinon.stub()
+          innerHeight: 900
         moment: require 'moment'
       Backbone.$ = $
       @curation =
         description: 'description'
+        sub_articles: []
         sections: [
           {
             description: 'description'
             cover_image: ''
             video_url: '/vanity/url.mp4'
             video_url_medium: '/vanity/url-medium.mp4'
-            video_url_hls: '/vanity/url.m3u8'
+            video_url_adaptive: '/vanity/url.mpd'
             slug: 'slug-one'
             artist_ids: []
-            sub_articles: []
           },
           {
             description: 'description2'
             cover_image: ''
             video_url: '/vanity/url2.mp4'
             video_url_medium: '/vanity/url2-medium.mp4'
-            video_url_hls: '/vanity/url2.m3u8'
+            video_url_adaptive: '/vanity/url2.mpd'
             slug: 'slug-two'
             published: true
             artist_ids: []
-            sub_articles: []
+          },
+          {
+            description: 'description2'
+            cover_image: ''
+            video_url: '/vanity/url3.mp4'
+            video_url_medium: '/vanity/url3-medium.mp4'
+            video_url_adaptive: '/vanity/url3.mpd'
+            slug: 'slug-three'
+            published: true
+            artist_ids: []
           }
         ]
       @options =
@@ -52,17 +64,21 @@ describe 'Venice Main', ->
           VIDEO_INDEX: 0
           CURATION: @curation
         VeniceView.__set__ 'VeniceVideoView', @VeniceVideoView = sinon.stub().returns
-          vrView: play: @play = sinon.stub()
+          vrView:
+            play: @play = sinon.stub()
+            pause: @pause = sinon.stub()
           trigger: sinon.stub()
         VeniceView.__set__ 'initCarousel', @initCarousel = sinon.stub().yields
           cells: flickity:
             on: @on = sinon.stub()
             selectedIndex: 1
+            select: sinon.stub()
+            next: sinon.stub()
         @view = new VeniceView
           el: $('body')
         done()
 
-  after ->
+  afterEach ->
     benv.teardown()
 
   it 'initializes VeniceVideoView', ->
@@ -71,7 +87,6 @@ describe 'Venice Main', ->
 
   it 'sets up the carousel', ->
     @initCarousel.args[0][0].selector.should.equal '.venice-carousel'
-    @initCarousel.args[0][1].imagesLoaded.should.be.true()
     @initCarousel.args[0][1].advanceBy.should.equal 1
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0
@@ -83,25 +98,59 @@ describe 'Venice Main', ->
     @view.VeniceVideoView.trigger.args[0][0].should.equal 'swapVideo'
     @view.VeniceVideoView.trigger.args[0][1].video.should.equal 'localhost/vanity/url2.mp4'
 
-  it '#fadeOutCoverAndStartVideo', ->
+  it '#fadeOutCoverAndStartVideo does not play if it is not ready', ->
     $('.venice-overlay__play').click()
+    @play.callCount.should.equal 0
+
+  it '#fadeOutCoverAndStartVideo', ->
+    $('.venice-overlay__play').first().attr 'data-state', 'ready'
+    $('.venice-overlay__play').first().click()
     @play.callCount.should.equal 1
 
-  it 'chooses an hls video for Safari', ->
-    @view.parser = getBrowser: sinon.stub().returns name: 'Safari'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.m3u8'
+  it '#fadeInCoverAndPauseVideo', ->
+    @view.fadeInCoverAndPauseVideo()
+    @pause.callCount.should.equal 1
 
-  it 'chooses a medium quality video for mobile', ->
+  it '#onVideoReady', ->
+    @view.onVideoReady()
+    $('.venice-overlay__play').attr('data-state').should.equal 'ready'
+
+  it 'chooses a medium quality mp4 video for iOS', ->
+    @view.parser = getOS: sinon.stub().returns name: 'iOS'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url-medium.mp4'
+
+  it 'chooses an adaptive video for mobile', ->
     @view.parser =
-      getBrowser: sinon.stub().returns name: 'Chrome'
+      getOS: sinon.stub().returns name: 'Android'
       getDevice: sinon.stub().returns type: 'mobile'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2-medium.mp4'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url.mpd'
 
-  it 'chooses a high quality video as a default', ->
+  it 'chooses a high quality video for desktop', ->
     @view.parser =
-      getBrowser: sinon.stub().returns name: 'Chrome'
-      getDevice: sinon.stub().returns type: 'desktop'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.mp4'
+      getOS: sinon.stub().returns name: 'Mac OS'
+      getDevice: sinon.stub().returns type: null
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url.mp4'
+
+  it '#onVideoCompleted fades out the video player and displays completed cover', ->
+    @view.fadeInCoverAndPauseVideo = sinon.stub()
+    @view.onVideoCompleted()
+    @view.fadeInCoverAndPauseVideo.callCount.should.eql 1
+
+  it '#onNextVideo advances the carousel to the next slide', ->
+    @view.onVideoCompleted()
+    $('.venice-overlay--completed .next')[0].click()
+    @view.flickity.next.args[0][0].should.be.true()
+    @view.flickity.next.callCount.should.equal 1
+
+  it '#onReadMore scrolls to the video description and hides completed cover (read-more)', ->
+    @view.onVideoCompleted()
+    $('.venice-overlay--completed .read-more').click()
+    @scrollTo.args[0][1].should.eql 900
+
+  it '#onReadMore scrolls to the video description and hides completed cover (info icon)', ->
+    @view.onVideoCompleted()
+    $('.venice-info-icon').click()
+    @scrollTo.args[0][1].should.eql 900
 
   it '#showCta reveals a signup form', ->
     $('.venice-overlay__cta-button').click()

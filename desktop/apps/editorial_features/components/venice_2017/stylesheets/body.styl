@@ -12,7 +12,7 @@
     garamond-size('headline')
     margin-bottom 20px
   p
-    garamond-size('s-headline')
+    garamond-size('l-body')
     font-size 23px
     line-height 28px
   &--article, &--series
@@ -35,13 +35,16 @@
   &__right
     width 35%
     min-width 365px
-  &__partner
+  a.venice-body__partner
     text-decoration none
     avant-garde-size('body')
     display flex
     margin 40px 0
+    float left
+    &:hover
+      opacity 1
     span
-      width 135px
+      width 170px
       margin-right 20px
     img
       height 40px
@@ -92,6 +95,7 @@
         i
           color black
   .open-youtube
+    border-radius 2px
     &:hover
       opacity 1
     button
@@ -110,39 +114,10 @@
   &__follow-item
     clear both
     display none
-  .artist-follow
-    display flex
-    align-items center
-    float left
-    margin-left -5px
-    .follow-text
-      display flex
-      align-items center
-      &:before
-        font-family artsy-icons
-        font-size 32px
-        line-height 32px
-      &:after
-        margin-right 4px
-    &[data-state=follow]
-      .follow-text:after
-        content 'Follow'
-      .follow-text:before
-        content '\e629'
-    &[data-state=following]
-      .follow-text:after
-        content 'Following'
-      .follow-text:before
-        content '\e628'
-    &[data-state=following]:hover
-      .follow-text:after
-        content 'Unfollow'
 
-@media screen and (max-width: 800px)
+@media screen and (max-width: 900px)
   .venice-body
     padding 0 1em
-    p
-      font-size 20px
     &__left, &__right
       width 100%
       min-width calc(100% \- 2em)
@@ -171,3 +146,5 @@
         height inherit
         &:first-child, &:nth-child(2)
           border-right none
+    &__follow
+      display none

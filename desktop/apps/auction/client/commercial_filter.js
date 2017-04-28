@@ -1,3 +1,4 @@
+import analyticsMiddleware from './analytics_middleware'
 import { data as sd } from 'sharify'
 import JumpView from '../../../components/jump/view.coffee'
 import React from 'react';
@@ -12,12 +13,17 @@ import * as actions from './actions'
 
 export function setupCommercialFilter() {
   const loggerMiddleware = createLogger()
+  const middleware = []
+  middleware.push(thunkMiddleware) // lets us dispatch() functions
+  middleware.push(analyticsMiddleware) // middleware to help us track previous and future states
+
+  if (sd.NODE_ENV === 'development' || sd.NODE_ENV === 'staging') {
+    middleware.push(loggerMiddleware) // middleware that logs actions
+  }
+
   const store = createStore(
     auctions,
-    applyMiddleware(
-      thunkMiddleware, // lets us dispatch() functions
-      loggerMiddleware // middleware that logs actions
-    )
+    applyMiddleware(...middleware)
   )
 
   render(

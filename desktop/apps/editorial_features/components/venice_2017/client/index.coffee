@@ -15,11 +15,14 @@ module.exports = class VeniceView extends Backbone.View
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
     'click .venice-overlay__cta-button': 'showCta'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
+    'click .venice-overlay--completed__buttons .next': 'onNextVideo'
+    'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
 
   initialize: ->
     @parser = new UAParser()
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
+    @sectionIndex = sd.VIDEO_INDEX
     @setupCarousel()
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
@@ -27,20 +30,23 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+    @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
+    @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
+    @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
   setupCarousel: ->
-    @carousel = initCarousel $('.venice-carousel'),
-      imagesLoaded: true
+    initCarousel $('.venice-carousel'),
       advanceBy: 1
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
     , (carousel) =>
-      flickity = carousel.cells.flickity
-      flickity.on 'settle', =>
-        @changeSection flickity.selectedIndex
+      @flickity = carousel.cells.flickity
+      @flickity.on 'settle', =>
+        @changeSection @flickity.selectedIndex
 
   changeSection: (i) ->
     @section = @curation.get('sections')[i]
+    @sectionIndex = i
     # Push route
     window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
     # Swap video if it is published
@@ -48,13 +54,36 @@ module.exports = class VeniceView extends Backbone.View
     @swapDescription()
     @setupFollowButtons()
 
-  fadeOutCoverAndStartVideo: ->
+  onNextVideo: ->
+    @flickity.next true
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
+
+  fadeOutCoverAndStartVideo: (e) ->
+    return unless e.currentTarget.getAttribute('data-state') is 'ready'
     $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
+
+  fadeInCoverAndPauseVideo: ->
+    $('.venice-nav, .venice-carousel').fadeIn()
+    @VeniceVideoView.vrView.pause()
+
+  onVideoReady: ->
+    $('.venice-overlay__play').attr 'data-state', 'ready'
+
+  onVideoCompleted: ->
+    @fadeInCoverAndPauseVideo()
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
+
+  onReadMore: ->
+    vid = $('.venice-overlay--completed').get(@sectionIndex)
+    $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
+    window.scrollTo(0,window.innerHeight)
 
   swapDescription: ->
     $('.venice-body--article').remove()
@@ -64,12 +93,13 @@ module.exports = class VeniceView extends Backbone.View
     $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->
-    if @parser.getBrowser().name is 'Safari'
-      sd.APP_URL + @section.video_url_hls
+    section = if @section.published then @section else @curation.get('sections')[0]
+    if @parser.getOS().name is 'iOS'
+      sd.APP_URL + section.video_url_medium
     else if @parser.getDevice().type is 'mobile'
-      sd.APP_URL + @section.video_url_medium
+      sd.APP_URL + section.video_url_adaptive
     else
-      sd.APP_URL + @section.video_url
+      sd.APP_URL + section.video_url
 
   showCta: (e) ->
     @$(e.target).fadeOut()

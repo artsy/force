@@ -1,18 +1,29 @@
+i.icon-close.venice-video__close
+  position absolute
+  top 0
+  left 0
+  margin 30px
+  cursor pointer
+  &:hover
+    color gray-lighter-color
+
+.venice-video__vr-icon
+  position absolute
+  margin 40px 30px
+  right 0
+  bottom 50px
+  svg
+    width 50px
+    height 50px
+
 #controls
   position absolute
-  width 100vw
+  width calc(100vw \- 50px)
   padding 30px
   bottom 0
   display flex
   align-items center
   justify-content space-between
-  > svg
-    min-width 50px
-    min-height 50px
-    z-index 12
-    float right
-.unpublished #controls
-  display none
 
 #toggleplay
   avant-garde-size('s-headline')
@@ -45,7 +56,15 @@
     &::after
       content "Play"
   &:hover
-    background-color rgba(0,0,0,1)
+    background-color white
+    color black
+    #toggleplay__icon
+      border-right 3px solid black
+      border-left 3px solid black
+    &.paused
+      #toggleplay__icon
+        border-left 9px solid black
+        border-right none
 
 .venice-video__scrubber.noUi-target
   width 100%
@@ -53,7 +72,7 @@
   position relative
   display flex
   align-items center
-  height 1px
+  height 3px
   .noUi-handle
     top -7px
 
@@ -73,7 +92,9 @@
     fill white
     vertical-align middle
   &:hover
-    background-color rgba(0,0,0,1)
+    background-color white
+    svg
+      fill black
   &[data-state='muted']
     .muted
       display block
@@ -85,7 +106,11 @@
     .unmuted
       display block
 
+// Mobile
 @media screen and (max-width: 550px)
+  i.icon-close.venice-video__close
+    margin 15px
+
   #controls
     padding 15px
 
@@ -101,3 +126,6 @@
 
   .venice-video__scrubber
     margin 0px 15px
+
+  .venice-video__vr-icon
+    margin 15px

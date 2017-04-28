@@ -1,13 +1,16 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
 noUiSlider = require 'nouislider'
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class VeniceVideoView extends Backbone.View
 
   events:
     'click #toggleplay': 'onTogglePlay'
     'click #togglemute': 'onToggleMute'
+    'click .venice-video__close': 'onCloseVideo'
 
   initialize: (options) ->
     @video = options.video
@@ -15,6 +18,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @$muteButton = $('#togglemute')
     @setupVideo()
     @on 'swapVideo', @swapVideo
+    @scrubbing = false
 
   setupVideo: ->
     @vrView = new VRView.Player '#vrvideo',
@@ -28,17 +32,33 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'timeupdate', @updateTime
 
   updateTime: (e) =>
+    return if @scrubbing
+    if e.currentTime > @quarterDuration
+      @trackQuarter()
+    if e.currentTime > @halfDuration
+      @trackHalf()
+    if e.currentTime > @threeQuarterDuration
+      @trackThreeQuarter()
+    if e.currentTime is @fullDuration
+      @trigger 'videoCompleted'
+      @trackFull()
     @scrubber.set(e.currentTime)
 
   onVRViewReady: =>
+    @duration = @vrView.getDuration()
+    @setupAnalytics()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'
       range:
         min: 0
-        max: @vrView.getDuration()
+        max: @duration
+    @scrubber.on 'start', =>
+      @scrubbing = true
     @scrubber.on 'change', (value) =>
       @vrView.setCurrentTime parseFloat(value[0])
+      @scrubbing = false
+    @trigger 'videoReady'
 
   onTogglePlay: ->
     if @vrView.isPaused
@@ -63,6 +83,27 @@ module.exports = class VeniceVideoView extends Backbone.View
     "#{sd.APP_URL}/vanity/vrview/index.html?video=" +
     video +
     "&is_stereo=false&is_vr_off=false&loop=false"
+
+  setupAnalytics: ->
+    window.onbeforeunload = =>
+      analyticsHooks.trigger 'video:dropoff', dropoff: @vrView.getCurrentTime()
+      return
+
+    @quarterDuration = @duration * .25
+    @halfDuration = @duration * .5
+    @threeQuarterDuration = @duration * .75
+    @fullDuration = @duration
+    @trackQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '25%'})
+    @trackHalf = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '50%'})
+    @trackThreeQuarter = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '75%'})
+    @trackFull = _.once ->
+      analyticsHooks.trigger('video:duration',{duration: '100%'})
+
+  onCloseVideo: ->
+    @trigger 'closeVideo'
 
   # Currently unused but will implement next
   formatTime: (time) ->
