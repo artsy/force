@@ -10,19 +10,19 @@ Profile = require '../../../models/profile'
 Following = require '../collection'
 
 describe 'Following collection', ->
-  before (done) ->
-    benv.setup ->
-      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
-      done()
-  after ->
-    benv.teardown()
 
-  beforeEach ->
-    @follow1 = new Follow id: '111', name: 'follow1', profile: id: 'profile-1'
-    @follow2 = new Follow id: '222', name: 'follow2', profile: id: 'profile-2'
-    @following = new Following null, kind: 'profile'
-    @following.reset()
-    @following.add @follow1
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
+      @follow1 = new Follow id: '111', name: 'follow1', profile: id: 'profile-1'
+      @follow2 = new Follow id: '222', name: 'follow2', profile: id: 'profile-2'
+      @following = new Following null, kind: 'profile'
+      @following.reset()
+      @following.add @follow1
+      done()
+
+  afterEach ->
+    benv.teardown()
 
   describe "#initialize", ->
     it 'binds to add / remove callbacks to proxy model specific event triggers', ->

@@ -11,40 +11,36 @@ CurrentUser = require '../../../../models/current_user'
 
 describe 'HeaderView', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
       Backbone.$ = $
       @Cookies = require '../../../cookies/index.coffee'
-      done()
-
-  after -> benv.teardown()
-
-  beforeEach (done) ->
-    sinon.stub Backbone, 'sync'
-    @sd = { HEADER_CLASS: 'stub' }
-    benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
-      @HeaderView = benv.requireWithJadeify(
-          resolve(__dirname, '../view')
-          ['bundleTemplate']
-        )
-      @HeaderView.__set__ 'SearchBarView', Backbone.View
-      @HeaderView.__set__ 'AuthModalView', sinon.stub()
-      @HeaderView.__set__ 'FlashMessage', sinon.stub()
-      @HeaderView.__set__ 'sd', @sd
-      @view = new @HeaderView
-        el: $('#main-layout-header')
-        $window: @$window =
-          on: sinon.stub()
-          off: sinon.stub()
-          scrollTop: -> 55
-        $body: $('body')
-      done()
+      sinon.stub Backbone, 'sync'
+      @sd = { HEADER_CLASS: 'stub' }
+      benv.render resolve(__dirname, '../templates/index.jade'), { sd: @sd }, =>
+        @HeaderView = benv.requireWithJadeify(
+            resolve(__dirname, '../view')
+            ['bundleTemplate']
+          )
+        @HeaderView.__set__ 'SearchBarView', Backbone.View
+        @HeaderView.__set__ 'AuthModalView', sinon.stub()
+        @HeaderView.__set__ 'FlashMessage', sinon.stub()
+        @HeaderView.__set__ 'sd', @sd
+        @view = new @HeaderView
+          el: $('#main-layout-header')
+          $window: @$window =
+            on: sinon.stub()
+            off: sinon.stub()
+            scrollTop: -> 55
+          $body: $('body')
+        done()
 
   afterEach ->
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#openAuth', ->
     it 'opens with custom copy', ->
@@ -69,7 +65,7 @@ describe 'HeaderView', ->
 
   describe '#checkForNotifications', ->
 
-    before (done) ->
+    beforeEach (done) ->
       @user = new CurrentUser fabricate('user')
       @user.type = 'Admin'
       sd = { CURRENT_USER: @user}
@@ -91,6 +87,9 @@ describe 'HeaderView', ->
             scrollTop: -> 55
           $body: $('body')
         done()
+
+    afterEach ->
+      benv.teardown()
 
     it 'sets the notification count and renders the hover pulldown', ->
       @view.checkForNotifications()
