@@ -7,7 +7,7 @@ Curation = require '../../../../../models/curation.coffee'
 
 describe 'Venice Main', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('jquery')
@@ -73,11 +73,12 @@ describe 'Venice Main', ->
             on: @on = sinon.stub()
             selectedIndex: 1
             select: sinon.stub()
+            next: sinon.stub()
         @view = new VeniceView
           el: $('body')
         done()
 
-  after ->
+  afterEach ->
     benv.teardown()
 
   it 'initializes VeniceVideoView', ->
@@ -86,7 +87,6 @@ describe 'Venice Main', ->
 
   it 'sets up the carousel', ->
     @initCarousel.args[0][0].selector.should.equal '.venice-carousel'
-    @initCarousel.args[0][1].imagesLoaded.should.be.true()
     @initCarousel.args[0][1].advanceBy.should.equal 1
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0
@@ -117,19 +117,19 @@ describe 'Venice Main', ->
 
   it 'chooses a medium quality mp4 video for iOS', ->
     @view.parser = getOS: sinon.stub().returns name: 'iOS'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2-medium.mp4'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url-medium.mp4'
 
   it 'chooses an adaptive video for mobile', ->
     @view.parser =
       getOS: sinon.stub().returns name: 'Android'
       getDevice: sinon.stub().returns type: 'mobile'
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.mpd'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url.mpd'
 
   it 'chooses a high quality video for desktop', ->
     @view.parser =
       getOS: sinon.stub().returns name: 'Mac OS'
       getDevice: sinon.stub().returns type: null
-    @view.chooseVideoFile().should.equal 'localhost/vanity/url2.mp4'
+    @view.chooseVideoFile().should.equal 'localhost/vanity/url.mp4'
 
   it '#onVideoCompleted fades out the video player and displays completed cover', ->
     @view.fadeInCoverAndPauseVideo = sinon.stub()
@@ -138,12 +138,18 @@ describe 'Venice Main', ->
 
   it '#onNextVideo advances the carousel to the next slide', ->
     @view.onVideoCompleted()
-    $('.venice-overlay--completed .next').click()
-    @view.flickity.select.args[0][0].should.eql 2
+    $('.venice-overlay--completed .next')[0].click()
+    @view.flickity.next.args[0][0].should.be.true()
+    @view.flickity.next.callCount.should.equal 1
 
-  it '#onReadMore scrolls to the video description and hides completed cover', ->
+  it '#onReadMore scrolls to the video description and hides completed cover (read-more)', ->
     @view.onVideoCompleted()
     $('.venice-overlay--completed .read-more').click()
+    @scrollTo.args[0][1].should.eql 900
+
+  it '#onReadMore scrolls to the video description and hides completed cover (info icon)', ->
+    @view.onVideoCompleted()
+    $('.venice-info-icon').click()
     @scrollTo.args[0][1].should.eql 900
 
   it '#showCta reveals a signup form', ->
