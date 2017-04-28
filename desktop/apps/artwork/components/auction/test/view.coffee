@@ -321,5 +321,5 @@ describe 'auction', ->
         view.$('.artwork-auction__bid-form__button')
           .should.have.lengthOf 0
 
-        view.$('.artwork-auction__bid-status__sold')
+        view.$('.artwork-auction__bid-status__closed')
           .should.have.lengthOf 1

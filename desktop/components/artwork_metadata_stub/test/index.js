@@ -65,11 +65,11 @@ describe('metadata template', () => {
       $('.artwork-metadata-stub__sale-message').length.should.eql(0)
     })
 
-    it('renders SOLD if artwork is sold', () => {
+    it('renders "Sold" if artwork is sold', () => {
       auctionArtwork.is_sold = true
       const $ = cheerio.load(render({ artwork: auctionArtwork }))
       $.text().should.containEql('My Artwork, 2007')
-      $('.artwork-metadata-stub__contact.artwork-metadata-stub__line').text().should.containEql('SOLD')
+      $('.artwork-metadata-stub__contact.artwork-metadata-stub__line').text().should.containEql('Sold')
       $('.artwork-metadata-stub__bid-now').length.should.eql(0)
     })
 
