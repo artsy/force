@@ -78,6 +78,7 @@ module.exports = class VeniceView extends Backbone.View
     $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
+    $('.venice-overlay__play').attr 'data-state', 'loading'
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
