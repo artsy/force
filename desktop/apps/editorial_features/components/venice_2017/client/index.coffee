@@ -35,7 +35,7 @@ module.exports = class VeniceView extends Backbone.View
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
 
   setupCarousel: ->
-    @carousel = initCarousel $('.venice-carousel'),
+    initCarousel $('.venice-carousel'),
       advanceBy: 1
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
@@ -52,10 +52,10 @@ module.exports = class VeniceView extends Backbone.View
     # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
-    # @setupFollowButtons()
+    @setupFollowButtons()
 
   onNextVideo: ->
-    @flickity.next(true)
+    @flickity.next true
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
 
