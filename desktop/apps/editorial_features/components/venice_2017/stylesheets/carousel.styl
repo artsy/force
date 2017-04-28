@@ -6,6 +6,7 @@ nav-height = 54px
   .mgr-cell
     width 100vw
     height 100vh
+    margin 0px
   .mgr-arrow-right
     right 0
     left unset
@@ -22,6 +23,7 @@ nav-height = 54px
 .venice-overlay
   background-size cover
   background-position center
+  background-color black
   z-index 10
   width 100%
   height 100%
@@ -67,7 +69,7 @@ nav-height = 54px
     avant-garde-size('s-headline')
     color white
     background none transparent
-    border 2px solid
+    border 1px solid
     border-radius 2px
     width 195px
     height 50px
@@ -195,7 +197,7 @@ nav-height = 54px
     .mgr-arrow-icon
       font-size 15px
       line-height 15px
-      margin 105px 10px 10px 10px
+      margin 10px
 
 @media screen and (max-width: 550px)
   .venice-overlay
@@ -208,3 +210,23 @@ nav-height = 54px
       garamond-size('l-body')
     &__subscribe
       margin 0 10px
+    &__text
+      justify-content flex-start
+      padding-top 200px
+
+  .venice-overlay__subscribe
+    bottom 100px
+
+  .venice-carousel
+    .mgr-arrow-left, .mgr-arrow-right
+      top 290px
+      bottom unset
+
+@media screen and (max-width: 400px)
+  .venice-overlay
+    &__title
+      garamond-size('l-headline')
+    &__sub-title
+      garamond-size('l-body')
+    &__cta-text
+      garamond-size('s-body')
