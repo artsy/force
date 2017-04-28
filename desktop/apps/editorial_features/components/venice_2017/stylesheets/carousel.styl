@@ -2,29 +2,38 @@ nav-height = 54px
 
 // Carousel
 .venice-carousel
-  z-index 10
   .mgr-cell
     width 100vw
     height 100vh
     margin 0px
+    padding 0px
   .mgr-arrow-right
     right 0
     left unset
   .mgr-arrow-left
     left 0
     right unset
-  .mgr-arrow-icon
-    color white
-    margin 30px
-  .mgr-navigation
+  .mgr-arrow-left, .mgr-arrow-right
+    position absolute
+    top 50%
     opacity 1
+    color white
+    border none
+    margin 30px
+  .mgr-dots
+    position absolute
+    top calc(nav-height \+ 20px)
+    width 100vw
+    .mgr-dot
+      color gray-darker-color
+      &.is-active, &:hover
+        color white
 
 // Main Overlay
 .venice-overlay
   background-size cover
   background-position center
   background-color black
-  z-index 10
   width 100%
   height 100%
   &__text
@@ -169,6 +178,11 @@ nav-height = 54px
   &-button
     display none
 .venice-overlay__play[data-state="ready"]
+  &:hover
+    background-color white
+    color black
+    .venice-overlay__play-button
+      border-color transparent transparent transparent black
   .venice-overlay__play
     &-text
       margin-right 20px
@@ -185,19 +199,24 @@ nav-height = 54px
       border-style solid
       border-width 5px 0 5px 10px
       border-color transparent transparent transparent white
-    &:hover
-      background-color white
-      color black
-      .venice-overlay__play-button
-        border-color transparent transparent transparent black
 
 // Mobile
 @media screen and (max-width: 800px)
+  .venice-overlay
+    &__title
+      garamond-size('xl-headline')
+      margin-bottom 5px
+    &__sub-title
+      garamond-size('l-headline')
+    &__cta-text
+      garamond-size('headline')
+
   .venice-carousel
-    .mgr-arrow-icon
-      font-size 15px
-      line-height 15px
+    .mgr-arrow-left, .mgr-arrow-right
       margin 10px
+      font-size 30px
+      width 30px
+      height 30px
 
 @media screen and (max-width: 550px)
   .venice-overlay
@@ -208,6 +227,7 @@ nav-height = 54px
       garamond-size('s-headline')
     &__cta-text
       garamond-size('l-body')
+
     &__subscribe
       margin 0 10px
     &__text
@@ -219,8 +239,9 @@ nav-height = 54px
 
   .venice-carousel
     .mgr-arrow-left, .mgr-arrow-right
-      top 290px
-      bottom unset
+      top 315px
+    .mgr-dots
+      display none
 
 @media screen and (max-width: 400px)
   .venice-overlay
@@ -230,3 +251,6 @@ nav-height = 54px
       garamond-size('l-body')
     &__cta-text
       garamond-size('s-body')
+  .venice-carousel
+    .mgr-arrow-left, .mgr-arrow-right
+      top 305px
