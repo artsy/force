@@ -17,21 +17,31 @@ if (location.pathname.indexOf('/venice-biennale') > -1) {
   $(document.body).on('click', '.venice-body__partner, .venice-nav__sticky-ubs-logo', function () {
     analytics.track('Clicked partner logo', {
       destination_path: $(this)[0].href.replace(/^.*\/\/[^\/]+/, ''),
-      impression_type: 'ubs_logo',
       context_type: 'venice_biennale_2017'
     })
   }).on('click', '.venice-overlay__play', function() {
     analytics.track('Video play', {
-      destination_path: null,
-      impression_type: 'video_play',
+      context_type: 'venice_biennale_2017'
+    })
+  }).on('click', '.share-to-twitter', function() {
+    analytics.track('Article share', {
+      service: 'twitter',
+      context_type: 'venice_biennale_2017'
+    })
+  }).on('click', '.share-to-facebook', function() {
+    analytics.track('Article share', {
+      service: 'facebook',
+      context_type: 'venice_biennale_2017'
+    })
+  }).on('click', '.share-by-email', function() {
+    analytics.track('Article share', {
+      service: 'email',
       context_type: 'venice_biennale_2017'
     })
   })
 
   analyticsHooks.on('video:duration', function (options) {
     analytics.track('Video duration', {
-      destination_path: null,
-      impression_type: 'video_duration',
       percent_complete: options.duration,
       context_type: 'venice_biennale_2017'
     })
@@ -39,9 +49,14 @@ if (location.pathname.indexOf('/venice-biennale') > -1) {
 
   analyticsHooks.on('video:dropoff', function (options) {
     analytics.track('Video dropoff', {
-      destination_path: null,
       time: options.dropoff,
-      impression_type: 'video_dropoff',
+      context_type: 'venice_biennale_2017'
+    })
+  })
+
+  analyticsHooks.on('email:signup', function (options) {
+    analytics.track('Sign up for editorial email', {
+      user_email: options.user_email,
       context_type: 'venice_biennale_2017'
     })
   })

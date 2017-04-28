@@ -18,7 +18,7 @@ mixin follow(section)
     p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
     each artist in section.artist_ids
       .venice-body__follow-item
-        a(class='artist-follow' data-id=artist.id)
+        a(class='artist-follow' data-id=artist.id artist-id=artist._id)
           span.follow-text
           span=artist.value
 
