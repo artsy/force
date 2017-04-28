@@ -3,7 +3,7 @@ import Header from '../header'
 import React from 'react'
 import Sidebar from '../sidebar'
 
-export default function CommercialFilter() {
+export default function CommercialFilter () {
   return (
     <div className='auction-commercial-filter'>
       <div className='auction-commercial-filter__left cf-sidebar'>

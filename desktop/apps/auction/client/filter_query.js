@@ -47,6 +47,7 @@ export const filterQuery = `
           href
           title
           date
+          is_sold
           images {
             id
             image_url: url(version: ["tall"])

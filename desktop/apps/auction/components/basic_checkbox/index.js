@@ -1,13 +1,13 @@
-import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 
-export default function BasicCheckbox(props) {
+export default function BasicCheckbox (props) {
   const {
     checked,
     disabled,
     item,
-    onClick,
-    onClickAction
+    onClick
   } = props
 
   const checkboxClasses = classNames(
@@ -30,9 +30,19 @@ export default function BasicCheckbox(props) {
         </div>
         <label className='artsy-checkbox--label' htmlFor={item.id}>
           { item.name }
-          { item.count !== undefined && <span className='artsy-checkbox--count'>({item.count})</span> }
+          { item.count !== undefined &&
+            <span className='artsy-checkbox--count'>
+              ({item.count})
+            </span> }
         </label>
       </div>
     </div>
   )
+}
+
+BasicCheckbox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+  item: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 }

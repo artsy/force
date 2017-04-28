@@ -1,15 +1,20 @@
 - var count = helpers.auction.count(sale_artwork);
+- var is_sold = artwork.is_sold;
 
 .artwork-auction__bid-status
-  .artwork-auction__bid-status__bid
-    if sale_artwork.counts.bidder_positions
-      | Current Bid
-    else
-      | Starting Bid
+  if is_sold 
+    .artwork-auction__bid-status__closed
+      | Sold
+  else 
+    .artwork-auction__bid-status__bid
+      if sale_artwork.counts.bidder_positions
+        | Current Bid
+      else
+        | Starting Bid
 
-  .artwork-auction__bid-status__amount
-    = sale_artwork.current_bid.display
+    .artwork-auction__bid-status__amount
+      = sale_artwork.current_bid.display
 
-  if count
-    .artwork-auction__bid-status__count
-      | (#{count})
+    if count
+      .artwork-auction__bid-status__count
+        | (#{count})

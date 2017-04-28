@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types'
+import React from 'react'
+import { Range } from 'rc-slider'
+import { connect } from 'react-redux'
 import { formatMoney } from 'accounting'
 import { updateEstimateRange, updateEstimateDisplay } from '../../client/actions'
-import Slider, { Range } from 'rc-slider'
-import React from 'react'
-import { connect } from 'react-redux'
 
-function RangeSlider(props) {
+function RangeSlider (props) {
   const {
     filterParams,
     minEstimateRangeDisplay,
@@ -15,7 +16,7 @@ function RangeSlider(props) {
   } = props
 
   const minEstimate = filterParams.ranges.estimate_range.min
-  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol: symbol, precision: 0 })
+  const formattedMinDisplay = formatMoney(minEstimateRangeDisplay, { symbol, precision: 0 })
 
   const maxEstimate = filterParams.ranges.estimate_range.max
   const isAbsoluteMax = maxEstimate === maxEstimateRangeDisplay
@@ -37,9 +38,20 @@ function RangeSlider(props) {
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />
-      <div className='auction-range-slider__info'>Based on the estimate for the lot</div>
+      <div className='auction-range-slider__info'>
+        Based on the estimate for the lot
+      </div>
     </div>
   )
+}
+
+RangeSlider.propTypes = {
+  filterParams: PropTypes.object.isRequired,
+  minEstimateRangeDisplay: PropTypes.number.isRequired,
+  maxEstimateRangeDisplay: PropTypes.number.isRequired,
+  symbol: PropTypes.string.isRequired,
+  updateEstimateRangeAction: PropTypes.func.isRequired,
+  updateEstimateDisplayAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

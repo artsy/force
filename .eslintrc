@@ -2,5 +2,14 @@
   "extends": [
     "standard",
     "standard-react"
-  ]
+  ],
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "camelcase": 0,
+    "no-new": 0
+  }
 }
