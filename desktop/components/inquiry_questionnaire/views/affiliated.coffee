@@ -1,10 +1,20 @@
 _ = require 'underscore'
 Form = require '../../form/index.coffee'
-Galaxy = require '../../../lib/galaxy.coffee'
+{ GALAXY_URL, GALAXY_PUBLISHABLE_TOKEN } = require('sharify').data
 TypeaheadView = require '../../typeahead/view.coffee'
 ResultsListView = require '../../results_list/view.coffee'
 StepView = require './step.coffee'
 template = -> require('../templates/affiliated.jade') arguments...
+
+Galaxy =
+  headers:
+    Accept: 'application/vnd.galaxy-public+json'
+
+  url: (kind) ->
+    url = "#{GALAXY_URL}/#{kind}?token=#{GALAXY_PUBLISHABLE_TOKEN}"
+    # Temporarily limit gallery results
+    url += '&artsy_only=true' if kind is 'galleries'
+    url
 
 module.exports = class Affiliated extends StepView
   template: (data) ->

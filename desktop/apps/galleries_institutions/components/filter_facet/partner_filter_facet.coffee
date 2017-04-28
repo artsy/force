@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 { clean, cleanDiacritics } = require 'underscore.string'
-normalizeSynonyms = require '../../../../lib/normalizeSynonyms.coffee'
+normalizeSynonyms = require './normalize_synonyms.coffee'
 FetchFilterPartners = require '../parameters/fetch_filter_partners.coffee'
 
 module.exports = class PartnerFilterFacet extends Backbone.Model

@@ -1,8 +1,14 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-getScript = require '../../lib/get_script.coffee'
 { SEADRAGON_URL }  = require('sharify').data
 template = -> require('./template.jade') arguments...
+
+getScript = (src, callback) ->
+  script = document.createElement 'script'
+  script.async = 'async'
+  script.src = src
+  script.onload = callback if callback
+  document.getElementsByTagName('head')[0].appendChild script
 
 module.exports = class DeepZoomView extends Backbone.View
   id: 'deep-zoom'
