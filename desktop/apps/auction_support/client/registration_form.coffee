@@ -17,6 +17,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   initialize: (options) ->
     @result = deferred.promise
     @success = options.success
+    @comboForm = options.comboForm
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
@@ -41,6 +42,10 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
+  disableForm: ->
+    @$('.auction-registration-form input, .auction-registration-form select').attr('disabled', true)
+    @undelegateEvents()
+
   cardData: ->
     name: @fields['name on card'].el.val()
     number: @fields['card number'].el.val()
@@ -57,7 +62,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     Q.Promise (resolve, reject) =>
       # Attempt to tokenize the credit card through Stripe
       Stripe.setPublishableKey STRIPE_PUBLISHABLE_KEY
-      Stripe.card.createToken @cardData(), (status, data) =>
+      Stripe.card.createToken @cardData(), (status, data) ->
         if status is 200
           resolve data
         else
@@ -77,20 +82,22 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               reject @errors.badSecurityCode
             else
               resolve(creditCard)
-          error: (m, xhr) => reject(xhr.responseJSON?.message)
+          error: (m, xhr) -> reject(xhr.responseJSON?.message)
     .then =>
       # Create the "bidder" model for the user in this sale
       Q.Promise (resolve, reject) =>
         @currentUser.createBidder
           saleId: @model.get('id')
           success: resolve
-          error: (model, xhr) =>
+          error: (model, xhr) ->
             if xhr.responseJSON?.message is 'Sale is already taken.'
               resolve()
             else
               reject "Registration submission error: #{xhr.responseJSON?.message}"
     .then (bidder) =>
+      # Executes if registration is successful
       analyticsHooks.trigger 'registration:success', bidder_id: bidder.id
+      @disableForm() if @comboForm
       @success()
 
   savePhoneNumber: ->
@@ -103,14 +110,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       else
         resolve()
 
+  # Lock the form- action.finally() callback executes when form submission is complete regardless of success
   loadingLock: ($element, action) ->
     return if $element.hasClass('is-loading')
     $element.addClass 'is-loading'
-    action().finally => $element.removeClass 'is-loading'
+    action().finally => $element.removeClass 'is-loading' unless @comboForm
 
   onSubmit: =>
     analyticsHooks.trigger 'registration:submit-address'
-
     @loadingLock @$submit, =>
       (if @validateForm() then Q() else Q.reject('Please review the error(s) above and try again.')).then =>
         Q.all [@savePhoneNumber(), @tokenizeCard()]
@@ -118,3 +125,4 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @showError error
       .then =>
         @trigger('submitted')
+

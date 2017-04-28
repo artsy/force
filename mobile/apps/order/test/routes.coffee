@@ -8,7 +8,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 describe 'Order routes', ->
   beforeEach ->
     @req = { params: {}, user: new CurrentUser fabricate 'user' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'https://artsy.net' } } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { APP_URL: 'https://artsy.net' } } }
     sinon.stub Backbone, 'sync'
 
   afterEach ->

@@ -1,16 +1,19 @@
 if artwork.sale && artwork.sale.is_auction
   .artwork-metadata-stub__contact.artwork-metadata-stub__line.artwork-metadata-stub__bid-now
+    - var sa = artwork.sale_artwork
     if artwork.sale.is_live_open
       a(href= artwork.href) Enter Live Auction
     else if artwork.sale.is_open
       a(href= artwork.href)
-        - var sa = artwork.sale_artwork
         - var bids = sa.counts.bidder_positions
         if bids > 0
           | #{sa.highest_bid.display}&nbsp;
           = '(' + bids + (bids > 1 ? ' bids' : ' bid') + ')'
         else
           | #{sa.opening_bid.display}
+    else if artwork.sale.is_preview
+      a(href= artwork.href)
+        | #{sa.opening_bid.display}
     else if artwork.sale.is_closed
       | Auction closed
 else if artwork.is_inquireable

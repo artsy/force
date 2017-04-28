@@ -1,0 +1,125 @@
+i.icon-close.venice-video__close
+  position absolute
+  top 0
+  left 0
+  margin 30px
+  cursor pointer
+  &:hover
+    color gray-lighter-color
+
+#controls
+  position absolute
+  width 100vw
+  padding 30px
+  bottom 0
+  display flex
+  align-items center
+  justify-content space-between
+  > svg
+    min-width 50px
+    min-height 50px
+    z-index 12
+    float right
+.unpublished #controls
+  display none
+
+#toggleplay
+  avant-garde-size('s-headline')
+  cursor pointer
+  display flex
+  justify-content center
+  align-items center
+  min-width 95px
+  height 50px
+  border 1px solid white
+  border-radius 2px
+  background-color rgba(0,0,0,0.5)
+  z-index 5
+  &__icon
+    width 9px
+    height 9px
+    border-right 3px solid white
+    border-left 3px solid white
+    border-top none
+    border-bottom none
+    margin-right 10px
+  &::after
+    content "Pause"
+  &.paused
+    #toggleplay__icon
+      border-top 5px solid transparent
+      border-left 9px solid white
+      border-bottom 5px solid transparent
+      border-right none
+    &::after
+      content "Play"
+  &:hover
+    background-color white
+    color black
+    #toggleplay__icon
+      border-right 3px solid black
+      border-left 3px solid black
+    &.paused
+      #toggleplay__icon
+        border-left 9px solid black
+        border-right none
+
+.venice-video__scrubber.noUi-target
+  width 100%
+  margin 0px 30px
+  position relative
+  display flex
+  align-items center
+  height 3px
+  .noUi-handle
+    top -7px
+
+#togglemute
+  display flex
+  justify-content center
+  align-items center
+  cursor pointer
+  border-radius 2px
+  background-color rgba(0,0,0,0.5)
+  border 1px solid white
+  height 50px
+  min-width 50px
+  margin-right 10px
+  svg
+    height 15px
+    fill white
+    vertical-align middle
+  &:hover
+    background-color white
+    svg
+      fill black
+  &[data-state='muted']
+    .muted
+      display block
+    .unmuted
+      display none
+  &[data-state='unmuted']
+    .muted
+      display none
+    .unmuted
+      display block
+
+@media screen and (max-width: 550px)
+  i.icon-close.venice-video__close
+    margin 15px
+
+  #controls
+    padding 15px
+
+  #toggleplay
+    min-width 50px
+    &__icon
+      margin-right 0px
+    &::after
+      content ''
+    &.paused
+      &::after
+        content ''
+
+  .venice-video__scrubber
+    margin 0px 15px

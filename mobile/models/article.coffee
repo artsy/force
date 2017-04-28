@@ -22,7 +22,7 @@ module.exports = class Article extends Backbone.Model
     "/article/#{@get('slug')}"
 
   fullHref: ->
-    "#{sd.ARTSY_URL}/article/#{@get('slug')}"
+    "#{sd.APP_URL}/article/#{@get('slug')}"
 
   date: (attr = 'published_at') ->
     moment @get(attr)
@@ -82,7 +82,7 @@ module.exports = class Article extends Backbone.Model
       "@context": "http://schema.org"
       "@type": "NewsArticle"
       "headline": @get('thumbnail_title')
-      "url": "#{sd.ARTSY_URL}" + @href()
+      "url": "#{sd.APP_URL}" + @href()
       "thumbnailUrl": @get('thumbnail_image')
       "dateCreated": @get('published_at')
       "articleSection": if @get('section') then @get('section').get('title') else "Editorial"

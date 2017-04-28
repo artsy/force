@@ -1,7 +1,6 @@
 require '../lib/analytics_hooks.coffee'
 mediator = require '../lib/mediator.coffee'
 setupSplitTests = require '../components/split_test/setup.coffee'
-route = require '../lib/route_helpers.coffee'
 window._ = require 'underscore'
 window.Cookies = require 'cookies-js'
 
@@ -12,10 +11,11 @@ require '../analytics/main_layout.js'
 require '../analytics/before_ready.js'
 
 $ -> analytics.ready ->
+
   if sd.CURRENT_USER?.id
-    whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type'];
+    whitelist = ['collector_level', 'default_profile_id', 'email', 'id', 'name', 'phone', 'type']
     traits = _.extend _.pick(sd.CURRENT_USER, whitelist), session_id: sd.SESSION_ID
-    analytics.identify sd.CURRENT_USER.id, traits
+    analytics.identify sd.CURRENT_USER.id, traits, integrations: { 'Marketo': false }
     # clear analytics cache when user logs out
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 
@@ -33,6 +33,7 @@ $ -> analytics.ready ->
   require '../analytics/show_page.js'
   require '../analytics/account_creation.js'
   require '../analytics/account_login.js'
+  require '../analytics/auction_reminder.js'
   require '../analytics/bidding.js'
   require '../analytics/collect.js'
   require '../analytics/criteo.js'

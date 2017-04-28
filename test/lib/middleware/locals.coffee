@@ -21,7 +21,7 @@ describe 'locals middleware', ->
     res.locals.sd.CURRENT_PATH.should.equal '/foo'
 
   it 'flags eigen', ->
-    middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Something something Artsy-Mobile' }, get: -> },
+    middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'Something something Artsy-Mobile' },
       res = { locals: { sd: {} } }, ->
     res.locals.sd.EIGEN.should.be.ok()
 
@@ -34,6 +34,10 @@ describe 'locals middleware', ->
     res.locals.sd.MEDIUM.should.equal 'search'
 
   it 'flags reflection', ->
-    middleware req = { url: 'localhost:3000/foo?bar=baz', headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari' }, get: -> },
+    middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari' },
       res = { locals: { sd: {} } }, ->
     res.locals.sd.REFLECTION.should.be.ok()
+
+  it 'works if there is no user agent', ->
+    middleware req = { url: '', get: -> null }, res = { locals: { sd: {} } }, ->
+    res.locals.sd.EIGEN.should.equal(false)

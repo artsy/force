@@ -13,19 +13,21 @@ describe 'Shows template', ->
       done()
 
   describe '#index with cities and featured show', ->
-    before ->
+    before (done) ->
       benv.render resolve(__dirname, '../templates/index.jade'),
         sd: {}
         cities: Cities
         featuredCities: FeaturedCities
         featuredShow: new Show fabricate 'show'
+      , ->
+        done()
 
-    xit 'renders correctly', ->
+    it 'renders correctly', ->
       $('.shows-header').length.should.equal 1
       $('.shows-page-featured-cities a').length.should.equal 11
 
   describe '#cities with single city and shows', ->
-    before ->
+    before (done) ->
       @currentShow = new Show fabricate 'show', status: 'running', id: 'running-show', name: 'running-show'
       @upcomingShow = new Show fabricate 'show', status: 'upcoming', id: 'upcoming-show', name: 'upcoming-show'
       @pastShow = new Show fabricate 'show', status: 'closed', id: 'closed-show', name: 'closed-show'
@@ -37,6 +39,8 @@ describe 'Shows template', ->
         upcoming: [@upcomingShow]
         current: [@currentShow]
         past: [@pastShow]
+      , ->
+        done()
 
     it 'renders correctly', ->
       $('.shows-city--current-shows').length.should.equal 1
@@ -44,10 +48,12 @@ describe 'Shows template', ->
       $('.shows-city--past-shows').length.should.equal 1
 
   describe '#all-cities with every city', ->
-    before ->
+    before (done) ->
       benv.render resolve(__dirname, '../templates/all_cities.jade'),
         sd: {}
         cities: Cities
+      , ->
+        done()
 
     after ->
       benv.teardown()

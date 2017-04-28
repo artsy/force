@@ -7,7 +7,6 @@ Artwork = require '../../models/artwork'
 
 describe 'Sale', ->
   beforeEach ->
-    @sd = API_URL: 'http://localhost:5000'
     @sale = new Sale fabricate 'sale'
 
     sinon.stub Backbone, 'sync'

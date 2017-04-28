@@ -1,0 +1,21 @@
+include ./mixins
+- url = encodeURIComponent(sd.APP_URL + sd.CURRENT_PATH)
+- description = 'Inside the Biennale: ' + section.title
+
+if section.published
+  .venice-body--article
+    .venice-body__left
+      h2 About the Film
+      .venice-body__item-description
+        p=section.description
+      .venice-body__headset-prompt
+        p For the most immersive experience, watch in Google Cardboard via the Youtube App.
+        a(href=section.video_url_external).open-youtube
+          button.avant-garde-button Open in Youtube App
+
+    .venice-body__right
+      h2 About the Film
+      +share(description, url)
+
+      if section.artist_ids && section.artist_ids.length
+        +follow(section)

@@ -21,7 +21,7 @@ imageUrl = require './components/image_url'
   return res.redirect("/") unless req.query.q
 
   term = removeDiacritics req.query.q
-  indexes = ['Artwork', 'Artist', 'Article', 'City', 'Fair', 'Tag', 'Gene', 'Feature', 'Profile', 'PartnerShow', 'Sale']
+  indexes = ['Artwork', 'Artist', 'Article', 'City', 'Fair', 'Tag', 'Gene', 'Feature', 'Page', 'Profile', 'PartnerShow', 'Sale']
   data = { term: term, size: 10 }
   data['indexes[]'] = indexes
 

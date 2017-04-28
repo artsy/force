@@ -11,9 +11,6 @@ mixin exhibitors-a-to-z
   if aToZGroup
     h1.large-garamond-header
       | All Exhibitors at #{fair.get('name')}
-    span.fair-booths-count-container
-      | Showing&nbsp;
-      span.fair-booths-count #{exhibitorsCount} Exhibitors
     a#fair-booths-as-grid.faux-underline(
       href="#{fair.href()}/browse/booths"
     ) Show as Grid View

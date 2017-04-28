@@ -1,0 +1,23 @@
+extends ../../../../../components/main_layout/templates/blank.jade
+
+append locals
+  - assetPackage = 'editorial_features'
+
+block head
+  include head
+
+block body
+  - section = curation.get('sections')[videoIndex]
+  .venice-feature
+    include ./nav
+
+    .venice-header(class=!section.published? 'unpublished': '')
+      include ./video
+      include ./carousel
+
+    .venice-body
+      include ./body
+
+    .venice-footer
+      if curation.get('sub_articles').length > 1
+        include ./footer

@@ -1,0 +1,95 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'misc'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .consignments2-page
+    header.consignments2-header(
+      style='background-image: url(#{header.image.src});'
+    )
+      h1.consignments2-header__headline
+        = header.headline
+      h2.consignments2-header__subheadline
+        = header.subheadline
+      .consignments2-header__cta
+        .avant-garde-button-white.consignments2-header__consign-button Start Consigning
+
+  .consignments2-sections
+    //- Estimate
+    section.consignments2-section.consignments2-section--estimate
+      .consignments2-section__about
+        h3.consignments2-section__about__headline
+          = sections.estimate.headline
+        p.consignments2-section__about__description
+          = sections.estimate.description
+      .consignments2-section__images
+        img( src= sections.estimate.image.src )
+
+    //- Placement
+    section.consignments2-section.consignments2-section--logos
+      .consignments2-section__images.consignments2-section__images--logos
+        for logo in sections.placement.logos
+          img.consignments2-section__images__logo( src= logo.src )
+      .consignments2-section__about
+        h3.consignments2-section__about__headline
+          = sections.placement.headline
+        p.consignments2-section__about__description
+          = sections.placement.description
+
+    //- Steps
+    section.consignments2-steps
+      .consignments2-steps__headline
+        = sections.steps.headline
+      .consignments2-steps__steps
+        for step, i in sections.steps.steps
+          .consignments2-steps__steps__step
+            img.consignments2-steps__steps__step__image( src= step.image.src )
+            .consignments2-steps__steps__step__description
+              span= i + 1
+              p= step.description
+
+    //- Privacy
+    section.consignments2-section.consignments2-section--privacy
+      .consignments2-section__about
+        h3.consignments2-section__about__headline
+          = sections.privacy.headline
+        p.consignments2-section__about__description
+          = sections.privacy.description
+      .consignments2-section__images
+        img( src= sections.privacy.image.src )
+
+    //- Recently Sold
+    section.consignments2-recently-sold
+      h3= sections.recently_sold.headline
+      .consignments2-recently-sold__artworks( class='js-recently-sold-rail' )
+        - var artworks = recentlySold.models
+        - var imageHeight = 220
+        include ../../../components/artwork_rail/templates/index
+
+    //- In Demand
+    section.consignments2-in-demand
+      h3= sections.in_demand.headline
+      .consignments2-in-demand__artists
+        for artist in inDemand.models
+          .consignments2-in-demand__artists__artist
+            .consignments2-in-demand__artists__artist__thumbnail( class='js-in-demand-submit' )
+              img(
+                src= artist.imageUrl('four_thirds')
+                alt= artist.get('name')
+              )
+
+            h4.consignments2-in-demand__artists__artist__name
+              = artist.get('name')
+
+    //- FAQ
+    section.faq-multi-page.consignments2-faq
+      .js-multi-page-embed
+      //- Credit
+      .consignments2-credit
+        = credit
+

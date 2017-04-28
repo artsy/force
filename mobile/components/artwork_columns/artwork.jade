@@ -1,5 +1,6 @@
 - size = size || tall
 - imageUrl = artwork.defaultImageUrl(size) ? artwork.defaultImageUrl(size) : artwork.get('image').url
+- hasAuctionPartner = (artwork.get('partner') && (artwork.get('partner').type === 'Auction' || artwork.get('partner').type === 'Auction House'))
 .artwork-columns-artwork
   a( href='/artwork/' + artwork.get('id') )
     img( src=imageUrl data-id=artwork.get('_id') )
@@ -23,12 +24,12 @@
     else if artwork.get('availability') !== 'not for sale'
       p= artwork.saleMessage()
 
-    if artwork.get('partner') && artwork.get('partner').type === 'Auction'
+    if hasAuctionPartner
       .artwork-columns-artwork-details__bid-now
         if artwork.get('forsale') || artwork.get('is_for_sale')
           p.bid-now-link Bid now
         else
           p.bid-now-link Auction closed
 
-    if artwork.get('inquireable')
+    if artwork.get('inquireable') && !hasAuctionPartner
       a( href='/artwork/' + artwork.get('id') ) Contact Gallery
