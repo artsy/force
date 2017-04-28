@@ -8,6 +8,7 @@ Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
 videoDescription = -> require('../templates/video_description.jade') arguments...
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
@@ -118,25 +119,25 @@ module.exports = class VeniceView extends Backbone.View
         new FlashMessage message: 'Whoops, there was an error. Please try again.'
         @$(e.currentTarget).removeClass 'is-loading'
       success: (res) =>
+        analyticsHooks.trigger 'email:signup', {user_email: @email}
         new FlashMessage message: 'Thank you for signing up.'
         @$(e.currentTarget).removeClass 'is-loading'
-        @$(e.currentTarget).prev('input').val('')
-        @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
-        @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
+        @$('.venice-overlay__cta').hide()
 
   setupFollowButtons: ->
     @artists = []
     @$('.artist-follow').each (i, artist) =>
-      @artists.push id: $(artist).data('id')
+      @artists.push {id: $(artist).data('id'), _id: $(artist).attr('artist-id')}
     @followButtons = @artists.map (artist) =>
-      artist = new Artist id: artist.id
+      artist = new Artist id: artist.id, _id: artist._id
       new FollowButton
         el: @$(".artist-follow[data-id='#{artist.id}']")
         following: @following
         modelName: 'artist'
         model: artist
-        context_page: "Article page" # TODO: add venice specific tracking
+        context_page: 'venice_biennale_2017'
         context_module: 'article_artist_follow'
+        entity_id: artist.id
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
     @$('.venice-body__follow-item').show()
