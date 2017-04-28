@@ -6,6 +6,7 @@ resizer = require '../../components/resizer'
 JSONPage = require '../../components/json_page'
 
 @index = (req, res, next) ->
+  return res.redirect '/collect-art' if res.locals.sd.IS_MOBILE
   page = new JSONPage name: 'about'
   page.get (err, data) ->
     return next err if err
