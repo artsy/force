@@ -20,7 +20,6 @@ if (location.pathname.indexOf('/venice-biennale') > -1) {
       context_type: 'venice_biennale_2017'
     })
   }).on('click', '.venice-overlay__play', function() {
-    console.log('i am here..')
     analytics.track('Video play', {
       context_type: 'venice_biennale_2017'
     })
