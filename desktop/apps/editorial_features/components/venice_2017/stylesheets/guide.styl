@@ -1,0 +1,49 @@
+.venice-guide
+  display none
+  position fixed
+  top 0
+  bottom 0
+  left 0
+  right 0
+  background rgba(0,0,0,.5)
+  z-index 100
+  overflow-x scroll
+  &__modal-bg
+    position fixed
+    top 0
+    bottom 0
+    left 0
+    right 0
+    z-index -1
+  &__body
+    width 800px
+    margin-left calc(50vw \- 400px)
+    margin-top 100px
+    margin-bottom 100px
+    background white
+    color black
+    position absolute
+    padding 60px 50px
+  img
+    width 100%
+    max-width 650px
+    margin 0 auto
+  .article-section-text
+    width 100%
+    max-width 650px
+    ul
+      margin-left 1.25em
+      margin-top .5em
+  h2
+    garamond-size('headline')
+    text-align center
+    margin-bottom 30px
+  a.icon-close
+    position absolute
+    top 30px
+    right 30px
+    font-size 30px
+    color gray-color
+    transition color .25s
+    &:hover
+      color black
