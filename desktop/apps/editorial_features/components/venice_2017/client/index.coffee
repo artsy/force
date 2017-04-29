@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
-initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
@@ -78,6 +78,7 @@ module.exports = class VeniceView extends Backbone.View
     $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
+    $('.venice-overlay__play').attr 'data-state', 'loading'
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
