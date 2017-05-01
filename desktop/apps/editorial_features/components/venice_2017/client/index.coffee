@@ -16,7 +16,7 @@ module.exports = class VeniceView extends Backbone.View
   events:
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
     'click .venice-overlay__cta-button': 'showCta'
-    'click .venice-body__help a, .venice-guide__modal-bg, a.icon-close': 'toggleVideoGuide'
+    'click .venice-body__help a, .venice-guide__modal-bg, .venice-guide__body a.icon-close': 'toggleVideoGuide'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'

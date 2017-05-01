@@ -107,6 +107,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       analyticsHooks.trigger('video:seconds',{seconds: '10'})
 
   onCloseVideo: ->
+    console.log 'triggered close video'
     @trigger 'closeVideo'
 
   # Currently unused but will implement next
