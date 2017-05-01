@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
+_ = require 'underscore'
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
@@ -127,12 +128,21 @@ module.exports = class VeniceView extends Backbone.View
 
   setupFollowButtons: ->
     @artists = []
-    @$('.artist-follow').each (i, artist) =>
+    @$('.venice-body .artist-follow').each (i, artist) =>
       @artists.push {id: $(artist).data('id'), _id: $(artist).attr('artist-id')}
-    @followButtons = @artists.map (artist) =>
+    @followButtons = _.uniq(@artists).map (artist) =>
       artist = new Artist id: artist.id, _id: artist._id
       new FollowButton
-        el: @$(".artist-follow[data-id='#{artist.id}']")
+        el: @$(".venice-body .artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: 'venice_biennale_2017'
+        context_module: 'article_artist_follow'
+        entity_id: artist.id
+        href: sd.APP_URL + sd.CURRENT_PATH
+      new FollowButton
+        el: @$(".venice-carousel .artist-follow[data-id='#{artist.id}']")
         following: @following
         modelName: 'artist'
         model: artist
