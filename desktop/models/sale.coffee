@@ -8,7 +8,7 @@ Clock = require './mixins/clock.coffee'
 Relations = require './mixins/relations/sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
 Eventable = require './mixins/eventable.coffee'
-{ liveAuctionUrl } = require '../utils/domain/auctions/urls'
+{ liveAuctionUrl } = require '../../utils/domain/auctions/urls'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock

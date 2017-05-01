@@ -1,5 +1,5 @@
 { compact } = require 'underscore'
-{ liveAuctionUrl } = require '../../../../utils/domain/auctions/urls'
+{ liveAuctionUrl } = require '../../../../../utils/domain/auctions/urls'
 
 pluralize = (word, count, irregular = null) ->
   if count is 1

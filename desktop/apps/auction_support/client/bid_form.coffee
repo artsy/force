@@ -7,7 +7,7 @@ BidderPosition = require '../../../models/bidder_position.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 { SESSION_ID } = require('sharify').data
-{ liveAuctionUrl } = require '../../../utils/domain/auctions/urls.js'
+{ liveAuctionUrl } = require '../../../../utils/domain/auctions/urls.js'
 
 module.exports = class BidForm extends ErrorHandlingForm
 

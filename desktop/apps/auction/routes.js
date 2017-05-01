@@ -5,7 +5,7 @@ import MeQuery from './queries/me'
 import SaleQuery from './queries/sale'
 import footerItems from './footer_items'
 import metaphysics from '../../../lib/metaphysics'
-import { liveAuctionUrl } from '../../utils/domain/auctions/urls'
+import { liveAuctionUrl } from '../../../utils/domain/auctions/urls'
 
 export const index = async (req, res) => {
   const { me } = await metaphysics({ query: MeQuery(req.params.id), req: req })

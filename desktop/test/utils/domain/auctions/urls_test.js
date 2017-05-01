@@ -1,5 +1,5 @@
 const rewire = require('rewire')
-const urls = rewire('../../../../utils/domain/auctions/urls')
+const urls = rewire('../../../../../utils/domain/auctions/urls')
 
 describe('Url Utilities', () => {
   let PREDICTION_URL = 'http://www.liveauctions.com'

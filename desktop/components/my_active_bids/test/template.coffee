@@ -1,7 +1,7 @@
 template = require('jade').compileFile(require.resolve '../template.jade')
 cheerio = require 'cheerio'
 moment = require 'moment'
-{liveAuctionUrl} = require('../../../utils/domain/auctions/urls')
+{liveAuctionUrl} = require('../../../../utils/domain/auctions/urls')
 
 fixture = -> [
   {

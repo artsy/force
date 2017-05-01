@@ -1,5 +1,5 @@
 const sd = require('sharify').data
-const config = require('../../../../config')
+
 /** Get the live auction url with /login appended when a user is present
  * @param {String} id - auction id/slug
  * @param {Object} [options]
@@ -7,7 +7,8 @@ const config = require('../../../../config')
  * @return {String} live auction url
  */
 export const liveAuctionUrl = (id, options = {}) => {
-  const liveAuctionRoot = sd.PREDICTION_URL || config.PREDICTION_URL
+  console.log(sd)
+  const liveAuctionRoot = sd.PREDICTION_URL
   const url = `${liveAuctionRoot}/${id}`
 
   if (options.isLoggedIn) {
