@@ -44,18 +44,25 @@ module.exports = class VeniceView extends Backbone.View
       initialIndex: sd.VIDEO_INDEX
     , (carousel) =>
       @flickity = carousel.cells.flickity
+      # Use 'settle' for changes that should have a delay ie: video swapping
       @flickity.on 'settle', =>
-        @changeSection @flickity.selectedIndex
+        @settleSection @flickity.selectedIndex
+      # Use 'select' for changes that should happen immediately ie: loading
+      @flickity.on 'select', =>
+        @selectSection @flickity.selectedIndex
 
-  changeSection: (i) ->
+  settleSection: (i) ->
     @section = @curation.get('sections')[i]
     @sectionIndex = i
-    # Push route
-    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
-    # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
     @setupFollowButtons()
+
+  selectSection: (i) ->
+    @section = @curation.get('sections')[i]
+    @sectionIndex = i
+    $('.venice-overlay__play').attr 'data-state', 'loading'
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
 
   onNextVideo: ->
     @flickity.next true
@@ -80,7 +87,6 @@ module.exports = class VeniceView extends Backbone.View
     $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
-    $('.venice-overlay__play').attr 'data-state', 'loading'
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
