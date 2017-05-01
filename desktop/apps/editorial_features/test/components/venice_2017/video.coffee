@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Curation = require '../../../../../models/curation.coffee'
+Article = require '../../../../../models/article'
 { resolve } = require 'path'
 
 describe 'Venice Video', ->
@@ -35,6 +36,7 @@ describe 'Venice Video', ->
               cover_image: ''
             }
           ]
+        videoGuide: new Article {id: '123', title: 'Video Guide'}
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []
         VeniceVideoView.__set__ 'sd', APP_URL: 'localhost'
