@@ -9,7 +9,8 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
+{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config.coffee'
+sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -40,16 +41,24 @@ Articles = require '../../collections/articles.coffee'
   @curation = new Curation(id: sd.EF_VENICE)
   @curation.fetch
     success: (curation) ->
-      res.locals.sd.CURATION = curation.toJSON()
-      videoIndex = 0
-      if req.params.slug
-        videoIndex = setVideoIndex(curation, req.params.slug)
-        unless videoIndex or videoIndex is 0
-          return res.redirect 301, '/venice-biennale'
-      res.locals.sd.VIDEO_INDEX = videoIndex
-      res.render 'components/venice_2017/templates/index',
-        videoIndex: videoIndex
-        curation: curation
+      user = res.locals.sd.CURRENT_USER
+      cbs = [
+        subscribedToEditorial user.email
+      ]
+      Q.all(cbs)
+      .then =>
+        res.locals.sd.CURATION = curation.toJSON()
+        videoIndex = 0
+        if req.params.slug
+          videoIndex = setVideoIndex(curation, req.params.slug)
+          unless videoIndex or videoIndex is 0
+            return res.redirect 301, '/venice-biennale'
+        res.locals.sd.VIDEO_INDEX = videoIndex
+        console.log @isSubscribed
+        res.render 'components/venice_2017/templates/index',
+          videoIndex: videoIndex
+          curation: curation
+          isSubscribed: @isSubscribed
     error: next
 
 @vanity = (req, res, next) ->
@@ -65,3 +74,9 @@ setVideoIndex = (curation, slug) ->
   for section, i in curation.get 'sections'
     if section.slug is slug
       return i
+
+subscribedToEditorial = (email) ->
+  sailthru.apiGet 'user', { id: email }, (err, response) ->
+    if response.vars?.receive_editorial_email
+      @isSubscribed = true
+      console.log @isSubscribed
