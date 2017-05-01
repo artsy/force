@@ -7,10 +7,8 @@ const sd = require('sharify').data
  * @return {String} live auction url
  */
 export const liveAuctionUrl = (id, options = {}) => {
-  console.log(sd)
   const liveAuctionRoot = sd.PREDICTION_URL
   const url = `${liveAuctionRoot}/${id}`
-
   if (options.isLoggedIn) {
     return `${url}/login`
   } else {
