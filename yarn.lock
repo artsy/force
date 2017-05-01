@@ -6300,7 +6300,7 @@ scmp@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/scmp/-/scmp-0.0.3.tgz#3648df2d7294641e7f78673ffc29681d9bad9073"
 
-scroll-frame@1.0.0:
+scroll-frame@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/scroll-frame/-/scroll-frame-1.0.0.tgz#f562eb69d7ece50a06466f0e3cb2ef7bc3713b27"
 
@@ -6921,7 +6921,7 @@ supertest@^2.0.1:
     methods "1.x"
     superagent "^2.0.0"
 
-supports-color@3.1.2:
+supports-color@3.1.2, supports-color@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -6935,7 +6935,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.2, supports-color@^3.2.3:
+supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
