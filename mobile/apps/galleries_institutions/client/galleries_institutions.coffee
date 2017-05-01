@@ -1,4 +1,4 @@
-require '../../../../node_modules/waypoints/lib/jquery.waypoints.js'
+require 'waypoints/lib/jquery.waypoints.js'
 { CITY, PARTNERS } = require('sharify').data
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 Partners = require '../../../collections/partners.coffee'

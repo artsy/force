@@ -33,6 +33,10 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   updateTime: (e) =>
     return if @scrubbing
+    if e.currentTime > 3
+      @trackThreeSeconds()
+    if e.currentTime > 10
+      @trackTenSeconds()
     if e.currentTime > @quarterDuration
       @trackQuarter()
     if e.currentTime > @halfDuration
@@ -85,10 +89,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     "&is_stereo=false&is_vr_off=false&loop=false"
 
   setupAnalytics: ->
-    window.onbeforeunload = =>
-      analyticsHooks.trigger 'video:dropoff', dropoff: @vrView.getCurrentTime()
-      return
-
     @quarterDuration = @duration * .25
     @halfDuration = @duration * .5
     @threeQuarterDuration = @duration * .75
@@ -101,6 +101,10 @@ module.exports = class VeniceVideoView extends Backbone.View
       analyticsHooks.trigger('video:duration',{duration: '75%'})
     @trackFull = _.once ->
       analyticsHooks.trigger('video:duration',{duration: '100%'})
+    @trackThreeSeconds = _.once ->
+      analyticsHooks.trigger('video:seconds',{seconds: '3'})
+    @trackTenSeconds = _.once ->
+      analyticsHooks.trigger('video:seconds',{seconds: '10'})
 
   onCloseVideo: ->
     @trigger 'closeVideo'

@@ -34,9 +34,12 @@ deployment:
       - DEPLOY_ENV=production yarn deploy
 dependencies:
   override:
+    - rm -rf node_modules/electron
+    - rm -rf node_modules/electron-download
+    - npm install electron
     - yarn install
 test:
   override:
     - "gem install danger --version '~> 4.0' && danger"
-    - case $CIRCLE_NODE_INDEX in 0) yarn mocha test/lib/* && yarn mocha $(find desktop/test -name '*.coffee') && yarn mocha $(find mobile/test -name '*.coffee') ;; 1) yarn mocha $(find desktop/components/*/test -name '*.coffee') && yarn mocha $(find desktop/components/**/*/test -name '*.coffee') ;; 2) yarn mocha $(find desktop/apps/*/test -name '*.coffee') && yarn mocha $(find desktop/apps/*/test -name '*.js') && yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee') ;; 3) yarn mocha $(find mobile/components/*/test -name '*.coffee') && yarn mocha $(find mobile/components/**/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/test -name '*.coffee') && yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee'); esac:
+    - yarn test:
         parallel: true

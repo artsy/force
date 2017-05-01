@@ -1,13 +1,13 @@
 import * as actions from './actions'
 import analyticsHooks from '../../../lib/analytics_hooks.coffee'
-import { contains, isEqual } from 'underscore'
+import { isEqual } from 'underscore'
 
 const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
 
   // track certain types of actions
-  switch(action.type) {
+  switch (action.type) {
     case actions.UPDATE_MEDIUM_ID: {
       trackParamChange({ medium: action.payload.mediumId }, nextState)
       return result
@@ -30,7 +30,7 @@ const analyticsMiddleware = store => next => action => {
   }
 }
 
-function trackableArtistIds(changed, filterParams) {
+function trackableArtistIds (changed, filterParams) {
   if (isEqual(changed, { artist: 'artists-you-follow' })) {
     return ['artists-you-follow']
   } else {
@@ -38,7 +38,7 @@ function trackableArtistIds(changed, filterParams) {
   }
 }
 
-function trackParamChange(changed, newState) {
+function trackParamChange (changed, newState) {
   const { filterParams } = newState.auctionArtworks
   analyticsHooks.trigger(
     'auction:artworks:params:change',

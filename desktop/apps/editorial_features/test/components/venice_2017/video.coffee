@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Curation = require '../../../../../models/curation.coffee'
+Article = require '../../../../../models/article'
 { resolve } = require 'path'
 
 describe 'Venice Video', ->
@@ -20,7 +21,6 @@ describe 'Venice Video', ->
           getDuration: sinon.stub().returns 100
           iframe: src: ''
           setVolume: @setVolume = sinon.stub()
-          getCurrentTime: @getCurrentTime = sinon.stub()
           setCurrentTime: @setCurrentTime = sinon.stub()
       Backbone.$ = $
       @options =
@@ -36,6 +36,7 @@ describe 'Venice Video', ->
               cover_image: ''
             }
           ]
+        videoGuide: new Article {id: '123', title: 'Video Guide'}
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []
         VeniceVideoView.__set__ 'sd', APP_URL: 'localhost'
@@ -113,27 +114,24 @@ describe 'Venice Video', ->
     @view.updateTime(currentTime: 25)
     @view.scrubber.set.args[0][0].should.equal 25
 
-  it 'tracks drop off time', ->
-    @view.vrView.getCurrentTime = sinon.stub().returns 25
-    @view.onVRViewReady()
-    window.onbeforeunload()
-    @analytics.args[0][0].should.equal 'video:dropoff'
-    @analytics.args[0][1].dropoff.should.equal 25
-
-  it 'tracks duration as a percentage', ->
+  it 'tracks duration in percentage and seconds', ->
     @view.onVRViewReady()
     @view.updateTime(currentTime: 26)
-    @analytics.args[0][0].should.equal 'video:duration'
-    @analytics.args[0][1].duration.should.equal '25%'
-    @view.updateTime(currentTime: 51)
-    @analytics.args[1][0].should.equal 'video:duration'
-    @analytics.args[1][1].duration.should.equal '50%'
-    @view.updateTime(currentTime: 76)
+    @analytics.args[0][0].should.equal 'video:seconds'
+    @analytics.args[0][1].seconds.should.equal '3'
+    @analytics.args[1][0].should.equal 'video:seconds'
+    @analytics.args[1][1].seconds.should.equal '10'
     @analytics.args[2][0].should.equal 'video:duration'
-    @analytics.args[2][1].duration.should.equal '75%'
-    @view.updateTime(currentTime: 100)
+    @analytics.args[2][1].duration.should.equal '25%'
+    @view.updateTime(currentTime: 51)
     @analytics.args[3][0].should.equal 'video:duration'
-    @analytics.args[3][1].duration.should.equal '100%'
+    @analytics.args[3][1].duration.should.equal '50%'
+    @view.updateTime(currentTime: 76)
+    @analytics.args[4][0].should.equal 'video:duration'
+    @analytics.args[4][1].duration.should.equal '75%'
+    @view.updateTime(currentTime: 100)
+    @analytics.args[5][0].should.equal 'video:duration'
+    @analytics.args[5][1].duration.should.equal '100%'
 
   it 'triggers closeVideo', ->
     $('.venice-video__close').click()

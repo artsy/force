@@ -128,9 +128,9 @@ module.exports = class AuthModalView extends ModalView
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 
-      @undelegateEvents()
-
-      @$('form').submit() unless @state.get('mode') is 'reset'
+      unless @state.get('mode') is 'reset'
+        @undelegateEvents()
+        @$('form').submit()
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'

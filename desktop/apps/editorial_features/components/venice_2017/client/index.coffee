@@ -1,19 +1,22 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
+_ = require 'underscore'
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
-initCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
+initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
 videoDescription = -> require('../templates/video_description.jade') arguments...
+analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
   events:
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
     'click .venice-overlay__cta-button': 'showCta'
+    'click .venice-body__help a, .venice-guide__modal-bg, a.icon-close': 'toggleVideoGuide'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
@@ -77,6 +80,7 @@ module.exports = class VeniceView extends Backbone.View
     $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
+    $('.venice-overlay__play').attr 'data-state', 'loading'
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
@@ -118,25 +122,37 @@ module.exports = class VeniceView extends Backbone.View
         new FlashMessage message: 'Whoops, there was an error. Please try again.'
         @$(e.currentTarget).removeClass 'is-loading'
       success: (res) =>
+        analyticsHooks.trigger 'email:signup', {user_email: @email}
         new FlashMessage message: 'Thank you for signing up.'
         @$(e.currentTarget).removeClass 'is-loading'
-        @$(e.currentTarget).prev('input').val('')
-        @$(e.currentTarget).closest('.venice-overlay__subscribe-form').fadeOut()
-        @$(e.currentTarget).closest('.venice-overlay__subscribe').find('.venice-overlay__cta-button').fadeIn()
+        @$('.venice-overlay__cta').hide()
+
+  toggleVideoGuide: ->
+    $('.venice-guide').fadeToggle('fast')
 
   setupFollowButtons: ->
     @artists = []
-    @$('.artist-follow').each (i, artist) =>
-      @artists.push id: $(artist).data('id')
-    @followButtons = @artists.map (artist) =>
-      artist = new Artist id: artist.id
+    @$('.venice-body .artist-follow').each (i, artist) =>
+      @artists.push {id: $(artist).data('id'), _id: $(artist).attr('artist-id')}
+    @followButtons = _.uniq(@artists).map (artist) =>
+      artist = new Artist id: artist.id, _id: artist._id
       new FollowButton
-        el: @$(".artist-follow[data-id='#{artist.id}']")
+        el: @$(".venice-body .artist-follow[data-id='#{artist.id}']")
         following: @following
         modelName: 'artist'
         model: artist
-        context_page: "Article page" # TODO: add venice specific tracking
+        context_page: 'venice_biennale_2017'
         context_module: 'article_artist_follow'
+        entity_id: artist.id
+        href: sd.APP_URL + sd.CURRENT_PATH
+      new FollowButton
+        el: @$(".venice-carousel .artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: 'venice_biennale_2017'
+        context_module: 'article_artist_follow'
+        entity_id: artist.id
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
     @$('.venice-body__follow-item').show()
