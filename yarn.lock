@@ -305,14 +305,6 @@ arrify@^1.0.0:
   dependencies:
     express "*"
 
-artsy-error-handler@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/artsy-error-handler/-/artsy-error-handler-1.0.2.tgz#87db9eabb06fa297ffb0d2d97da742c9ff8346d4"
-  dependencies:
-    debug "^2.2.0"
-    jade "^1.11.0"
-    underscore "^1.8.3"
-
 "artsy-ezel-components@git://github.com/artsy/artsy-ezel-components.git":
   version "0.0.6"
   resolved "git://github.com/artsy/artsy-ezel-components.git#61983f3758ecc4a0a057aa9c830e3552abcaa50e"

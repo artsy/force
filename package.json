@@ -21,7 +21,6 @@
     "analytics-node": "^2.4.0",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
-    "artsy-error-handler": "^1.0.2",
     "artsy-ezel-components": "git://github.com/artsy/artsy-ezel-components.git",
     "artsy-morgan": "git://github.com/artsy/artsy-morgan.git",
     "artsy-passport": "^1.7.2",
