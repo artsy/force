@@ -47,3 +47,22 @@
     transition color .25s
     &:hover
       color black
+
+@media screen and (max-width: 900px)
+  .venice-guide
+    &__body
+      width calc(100% \-40px)
+      margin-left 20px
+
+@media screen and (max-width: 550px)
+  .venice-guide
+    &__body
+      margin-top 20px
+      margin-bottom 20px
+      padding 45px 30px
+      h2
+        text-align left
+      a.icon-close
+        top 15px
+        right 15px
+        font-size 25px
