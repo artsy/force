@@ -39,15 +39,19 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
+  @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
-    success: (curation) ->
-      user = res.locals.sd.CURRENT_USER
+    success: (curation) =>
       cbs = [
         subscribedToEditorial user.email
+        @videoGuide.fetch(
+          headers: 'X-Access-Token': req.user?.get('accessToken') or ''
+        )
       ]
       Q.all(cbs)
       .then =>
         res.locals.sd.CURATION = curation.toJSON()
+        res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
         videoIndex = 0
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
@@ -59,6 +63,7 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
           videoIndex: videoIndex
           curation: curation
           isSubscribed: @isSubscribed
+          videoGuide: @videoGuide
     error: next
 
 @vanity = (req, res, next) ->

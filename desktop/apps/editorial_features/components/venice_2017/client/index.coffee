@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
+_ = require 'underscore'
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
@@ -15,6 +16,7 @@ module.exports = class VeniceView extends Backbone.View
   events:
     'click .venice-overlay__play': 'fadeOutCoverAndStartVideo'
     'click .venice-overlay__cta-button': 'showCta'
+    'click .venice-body__help a, .venice-guide__modal-bg, .venice-guide__body a.icon-close': 'toggleVideoGuide'
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
@@ -34,6 +36,7 @@ module.exports = class VeniceView extends Backbone.View
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
+    @listenTo @VeniceVideoView, 'videoError', @onVideoError
 
   setupCarousel: ->
     initCarousel $('.venice-carousel'),
@@ -42,18 +45,25 @@ module.exports = class VeniceView extends Backbone.View
       initialIndex: sd.VIDEO_INDEX
     , (carousel) =>
       @flickity = carousel.cells.flickity
+      # Use 'settle' for changes that should have a delay ie: video swapping
       @flickity.on 'settle', =>
-        @changeSection @flickity.selectedIndex
+        @settleSection @flickity.selectedIndex
+      # Use 'select' for changes that should happen immediately ie: loading
+      @flickity.on 'select', =>
+        @selectSection @flickity.selectedIndex
 
-  changeSection: (i) ->
+  settleSection: (i) ->
     @section = @curation.get('sections')[i]
     @sectionIndex = i
-    # Push route
-    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
-    # Swap video if it is published
     @swapVideo() if @section.published
     @swapDescription()
     @setupFollowButtons()
+
+  selectSection: (i) ->
+    @section = @curation.get('sections')[i]
+    @sectionIndex = i
+    $('.venice-overlay__play').attr 'data-state', 'loading'
+    window.history.replaceState {}, i, '/venice-biennale/' + @section.slug
 
   onNextVideo: ->
     @flickity.next true
@@ -72,13 +82,16 @@ module.exports = class VeniceView extends Backbone.View
   onVideoReady: ->
     $('.venice-overlay__play').attr 'data-state', 'ready'
 
+  onVideoError: (msg) ->
+    $('.venice-overlay__play').attr 'data-state', 'error'
+    $('.venice-overlay__error').text msg
+
   onVideoCompleted: ->
     @fadeInCoverAndPauseVideo()
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).css({'opacity': 1, 'z-index': 100})
 
   swapVideo: ->
-    $('.venice-overlay__play').attr 'data-state', 'loading'
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
 
@@ -125,14 +138,26 @@ module.exports = class VeniceView extends Backbone.View
         @$(e.currentTarget).removeClass 'is-loading'
         @$('.venice-overlay__cta').hide()
 
+  toggleVideoGuide: ->
+    $('.venice-guide').fadeToggle('fast')
+
   setupFollowButtons: ->
     @artists = []
-    @$('.artist-follow').each (i, artist) =>
+    @$('.venice-body .artist-follow').each (i, artist) =>
       @artists.push {id: $(artist).data('id'), _id: $(artist).attr('artist-id')}
-    @followButtons = @artists.map (artist) =>
+    @followButtons = _.uniq(@artists).map (artist) =>
       artist = new Artist id: artist.id, _id: artist._id
       new FollowButton
-        el: @$(".artist-follow[data-id='#{artist.id}']")
+        el: @$(".venice-body .artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        context_page: 'venice_biennale_2017'
+        context_module: 'article_artist_follow'
+        entity_id: artist.id
+        href: sd.APP_URL + sd.CURRENT_PATH
+      new FollowButton
+        el: @$(".venice-carousel .artist-follow[data-id='#{artist.id}']")
         following: @following
         modelName: 'artist'
         model: artist
