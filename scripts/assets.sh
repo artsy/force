@@ -10,7 +10,6 @@ NODE_ENV=production browserify \
   -t babelify \
   -t caching-coffeeify \
   -t jadeify \
-  -t uglifyify \
   -p [ factor-bundle -o 'uglifyjs > public/assets/`basename $FILE .coffee`.js' ] \
   | uglifyjs > public/assets/common.js
 stylus \

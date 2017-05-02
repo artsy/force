@@ -199,6 +199,15 @@ nav-height = 54px
       border-style solid
       border-width 5px 0 5px 10px
       border-color transparent transparent transparent white
+.venice-overlay__play[data-state="error"]
+  .venice-overlay__play
+    &-text
+      &:after
+        content 'Error'
+.venice-overlay__error
+  white-space normal
+  margin 30px
+  text-align center
 
 // Mobile
 @media screen and (max-width: 800px)
@@ -242,6 +251,31 @@ nav-height = 54px
       top 315px
     .mgr-dots
       display none
+
+  .venice-overlay--completed
+    &__buttons
+      flex-direction column
+      align-items center
+      button:first-child
+        margin-bottom 20px
+    .venice-body__item-share
+      justify-content center
+      a:hover
+        background-color black
+        opacity .7
+        i
+          color white
+    .share-item
+      width 50px
+    &__follow
+      width 100%
+      margin-left 0
+      left 0
+    .venice-body__follow
+      max-width 80%
+      margin 0 auto
+      p
+        font-size 18px
 
 @media screen and (max-width: 400px)
   .venice-overlay
