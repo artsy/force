@@ -33,7 +33,39 @@ describe 'Artwork bid templates', ->
   afterEach ->
     delete global.window
 
-  describe 'artwork in open auction', ->
+  describe 'sold artwork in open auction', ->
+
+    beforeEach ->
+      @artwork.auction.is_open = true
+      @artwork.is_sold = true
+
+      @html = render('index')(
+        artwork: @artwork
+        sd: {}
+        asset: (->)
+      )
+
+      @$ = cheerio.load(@html)
+
+    it 'displays sold', ->
+      @$('.artwork-auction-bid-module__sold').text().should.equal 'Sold'
+
+    it 'does not display a bid button', ->
+      @$('.auction-avant-garde-black-button').should.not.exist
+
+    it 'does not show bidding info', ->
+      @artwork.auction.sale_artwork.counts.bidder_positions = 1
+      @html = render('index')(
+        artwork: @artwork
+        me: @me
+        sd: {}
+        asset: (->)
+        _: _
+      )
+      @$ = cheerio.load(@html)
+      @$('.artwork-auction-bid-module__bid-status-count').should.not.exist
+
+  describe 'artwork in open auction that is not sold', ->
 
     beforeEach ->
       @artwork.auction.is_open = true
@@ -232,6 +264,22 @@ describe 'Artwork bid templates', ->
 
     it 'displays auction closed', ->
       @$('.artwork-auction-bid-module__closed').text().should.equal 'Auction Closed'
+
+    describe 'sold artwork in open auction', ->
+      beforeEach ->
+        @artwork.is_sold = true
+
+        @html = render('index')(
+          artwork: @artwork
+          sd: {}
+          asset: (->)
+        )
+
+        @$ = cheerio.load(@html)
+
+      it 'displays sold', ->
+        @$('.artwork-auction-bid-module__sold').text().should.equal 'Sold'
+        
 
   describe 'artwork in auction with zero bids', ->
     beforeEach ->
