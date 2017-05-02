@@ -23,12 +23,10 @@ export function SubmissionFlow ({ currentStep, steps }) {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentStep: state.submissionFlow.currentStep,
-    steps: state.submissionFlow.steps
-  }
-}
+const mapStateToProps = (state) => ({
+  currentStep: state.submissionFlow.currentStep,
+  steps: state.submissionFlow.steps
+})
 
 export default connect(
   mapStateToProps,

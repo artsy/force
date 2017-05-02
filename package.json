@@ -135,7 +135,6 @@
     "browserify": "^13.1.1",
     "browserify-dev-middleware": "^1.5.0",
     "caching-coffeeify": "^0.5.1",
-    "cheerio": "^0.22.0",
     "cookies-js": "^1.2.3",
     "create-react-class": "^15.5.2",
     "electron": "^1.6.6",

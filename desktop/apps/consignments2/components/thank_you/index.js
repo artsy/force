@@ -58,11 +58,9 @@ function ThankYou ({ submission }) {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    submission: state.submissionFlow.submission
-  }
-}
+const mapStateToProps = (state) => ({
+  submission: state.submissionFlow.submission
+})
 
 export default connect(
   mapStateToProps,
