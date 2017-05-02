@@ -64,6 +64,11 @@ describe 'Venice Video', ->
     @scrubberCreate.args[0][1].range.min.should.equal 0
     @scrubberCreate.args[0][1].range.max.should.equal 100
 
+  it 'emits an error if the browser is not supported', ->
+    @view.onVRViewError message: 'Sorry, browser not supported'
+    @view.trigger.args[0][0].should.equal 'videoError'
+    @view.trigger.args[0][1].should.equal 'Sorry, browser not supported'
+
   it 'does not try to update scrubber while dragging', ->
     @view.onVRViewReady()
     @on.args[0][1]()

@@ -169,3 +169,8 @@ describe 'Venice Main', ->
     $('.venice-overlay__subscribe-form input').val('email@email.com')
     $('.venice-overlay__subscribe-form button').click()
     $('.venice-overlay__cta-button').css('opacity').should.not.eql '0'
+
+  it 'displays an error if there is one', ->
+    @view.onVideoError 'Sorry, your browser is not supported.'
+    $('.venice-overlay__play').attr('data-state').should.equal 'error'
+    $('.venice-overlay__error').html().should.equal 'Sorry, your browser is not supported.'

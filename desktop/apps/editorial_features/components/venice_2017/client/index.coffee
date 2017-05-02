@@ -36,6 +36,7 @@ module.exports = class VeniceView extends Backbone.View
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
+    @listenTo @VeniceVideoView, 'videoError', @onVideoError
 
   setupCarousel: ->
     initCarousel $('.venice-carousel'),
@@ -80,6 +81,10 @@ module.exports = class VeniceView extends Backbone.View
 
   onVideoReady: ->
     $('.venice-overlay__play').attr 'data-state', 'ready'
+
+  onVideoError: (msg) ->
+    $('.venice-overlay__play').attr 'data-state', 'error'
+    $('.venice-overlay__error').text msg
 
   onVideoCompleted: ->
     @fadeInCoverAndPauseVideo()
