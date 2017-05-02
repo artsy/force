@@ -14,3 +14,11 @@ module.exports = ($el) ->
           register: 'Create an Artsy account to call gallery'
         userData:
           partner: JSON.parse(e.toElement.dataset.partner)
+  $el
+    .find '.js-artwork-partner-stub-phone-toggle'
+    .click (e) ->
+      e.preventDefault()
+      $(this).hide()
+      $el
+        .find '.js-artwork-partner-stub-phone-toggleable'
+        .show()
