@@ -12,7 +12,6 @@ _ = require 'underscore'
 FastClick = require 'fastclick'
 RavenClient = require 'raven-js'
 sd = require('sharify').data
-analytics = require '../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
 { parse } = require 'url'
 HeaderView = require './client/header_view.coffee'
@@ -69,13 +68,3 @@ setupErrorReporting = ->
 setupHeaderView = ->
   new HeaderView
     el: $('#main-header')
-
-# Initialize analytics & track page view if we included mixpanel
-# (not included in test environment).
-setupAnalytics = ->
-  return if not mixpanel? or mixpanel is 'undefined'
-  analytics(mixpanel: mixpanel, ga: ga)
-  analytics.trackPageview()
-  analytics.registerCurrentUser()
-
-setupAnalytics()

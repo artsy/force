@@ -1,5 +1,5 @@
 _ = require 'underscore'
-require '../../../node_modules/waypoints/lib/jquery.waypoints.js'
+require 'waypoints/lib/jquery.waypoints.js'
 
 module.exports = ($el, options = {}) ->
   return unless $el.length

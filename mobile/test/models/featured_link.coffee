@@ -30,11 +30,11 @@ describe 'FeaturedLink', ->
         href: 'foo'
         title: 'bar'
         subtitle: 'baz'
-        image_url: 'qux'
+        image_url: 'qux/:version.jpg'
       @link.toFeaturedItem().href.should.equal 'foo'
       @link.toFeaturedItem().title.should.equal '<p>bar</p>\n'
       @link.toFeaturedItem().subtitle.should.equal '<p>baz</p>'
-      @link.toFeaturedItem().imageUrl.should.equal 'qux'
+      @link.toFeaturedItem().imageUrl.should.equal 'qux/large_rectangle.jpg'
 
     it 'splits up verbose names by pipe', ->
       @link.set

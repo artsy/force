@@ -46,6 +46,12 @@ yarn start
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
 
+**NOTE:** If you would like to test Force in various `NODE_ENV`s, run:
+```sh
+yarn assets && NODE_ENV=<env> yarn start
+```
+
+
 ## Create a Topic Branch
 
 Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.

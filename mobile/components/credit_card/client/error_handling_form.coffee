@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 isCreditCard = require('validator').isCreditCard
 isEmail = require('validator').isEmail
-analytics = require('../../../lib/analytics.coffee')
 
 module.exports = class ErrorHandlingForm extends Backbone.View
 

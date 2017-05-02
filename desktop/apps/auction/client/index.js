@@ -1,15 +1,14 @@
+import $ from 'jquery'
 import AddToCalendar from '../../../components/add_to_calendar/index.coffee'
 import Auction from '../../../models/auction.coffee'
-import Backbone from 'backbone'
 import ClockView from '../../../components/clock/view.coffee'
 import ConfirmRegistrationModal from '../../../components/credit_card/client/confirm_registration.coffee'
 import CurrentUser from '../../../models/current_user.coffee'
+import MyActiveBids from '../../../components/my_active_bids/view.coffee'
 import mediator from '../../../lib/mediator.coffee'
 import mountAuctionBlock from '../../../components/auction_block/index.jsx'
-import MyActiveBids from '../../../components/my_active_bids/view.coffee'
-import { setupCommercialFilter } from './commercial_filter'
 import { data as sd } from 'sharify'
-import _ from 'underscore'
+import { setupCommercialFilter } from './commercial_filter'
 
 export default () => {
   const auction = new Auction(sd.AUCTION)
@@ -28,7 +27,7 @@ export default () => {
   })
   clock.start()
 
-  const calendar = new AddToCalendar({
+  new AddToCalendar({
     el: $('.auction-callout')
   })
 

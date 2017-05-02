@@ -39,16 +39,21 @@ Articles = require '../../collections/articles.coffee'
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
   @veniceSubArticles = new Articles
+  @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
-    success: (curation) ->
-      res.locals.sd.CURATION = curation.toJSON()
-      videoIndex = 0
+    success: (curation) =>
+      cbs = [
+        @videoGuide.fetch(
+          headers: 'X-Access-Token': req.user?.get('accessToken') or ''
+        )
+      ]
       if @curation.get('sub_articles').length
-        cbs = [ @veniceSubArticles.fetch data: 'ids[]': @curation.get('sub_articles') ]
-      else
-        cbs = [ () -> ]
+        cbs.push( @veniceSubArticles.fetch data: 'ids[]': @curation.get('sub_articles') )
       Q.all(cbs)
       .then =>
+        res.locals.sd.CURATION = curation.toJSON()
+        res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
+        videoIndex = 0
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
           unless videoIndex or videoIndex is 0
@@ -58,6 +63,7 @@ Articles = require '../../collections/articles.coffee'
           videoIndex: videoIndex
           curation: curation
           sub_articles: @veniceSubArticles?.toJSON()
+          videoGuide: @videoGuide
     error: next
 
 @vanity = (req, res, next) ->

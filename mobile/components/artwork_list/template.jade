@@ -14,7 +14,7 @@ ul.artwork-list
           if artwork.get('price')
             p= artwork.get('price')
           if artwork.get('sold')
-            p SOLD
+            p Sold
       if artwork.has('sale_artwork')
         p!= artwork.related().saleArtwork.mdToHtml('user_notes')
       else

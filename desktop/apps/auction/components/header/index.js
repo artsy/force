@@ -1,28 +1,31 @@
-import { toggleListView, updateSort } from '../../client/actions'
-import classNames from 'classnames'
+import FilterSort from '../filter_sort'
 import Grid from '../../../../components/main_layout/public/icons/grid.svg'
 import List from '../../../../components/main_layout/public/icons/list.svg'
-import FilterSort from '../filter_sort'
+import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
+import { toggleListView } from '../../client/actions'
 
-function displayButtonClass(buttonType, displayType) {
+function displayButtonClass (buttonType, displayType) {
   return classNames(
     `auction-artworks-header__${buttonType}`,
     { active: displayType === buttonType }
   )
 }
 
-function Header(props) {
+function Header (props) {
   const {
+    isFetchingArtworks,
     isListView,
     toggleListViewAction,
     total
   } = props
+
   const displayType = isListView ? 'list' : 'grid'
-  const totalLabel = (total && total > 0)
-    ? `${total} Artworks`
-    : 'Loading results.'
+  const totalLabel = isFetchingArtworks
+    ? 'Loading results.'
+    : `${total} Artworks`
 
   return (
     <div className='auction-artworks-header'>
@@ -48,10 +51,18 @@ function Header(props) {
   )
 }
 
+Header.propTypes = {
+  isFetchingArtworks: PropTypes.bool.isRequired,
+  isListView: PropTypes.bool.isRequired,
+  toggleListViewAction: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
+    isFetchingArtworks: state.auctionArtworks.isFetchingArtworks,
     isListView: state.auctionArtworks.isListView,
-    total: state.auctionArtworks.total,
+    total: state.auctionArtworks.total
   }
 }
 

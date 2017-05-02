@@ -1,18 +1,19 @@
-import { updateArtistParams } from '../../client/actions'
 import BasicCheckbox from '../basic_checkbox'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { map, contains } from 'underscore'
+import { contains } from 'underscore'
+import { updateArtistParams } from '../../client/actions'
 
-function ArtistFilter(props) {
+function ArtistFilter (props) {
   const {
     aggregatedArtists,
     filterParams,
     numArtistsYouFollow,
     updateArtistParamsAction,
-    updateArtistsYouFollowParamAction,
     user
   } = props
+
   const artistIds = filterParams.artist_ids
   const allArtists = { id: 'artists-all', name: 'All' }
   const allArtistsSelected = artistIds.length === 0 && !filterParams.include_artworks_by_followed_artists
@@ -52,6 +53,14 @@ function ArtistFilter(props) {
       }
     </div>
   )
+}
+
+ArtistFilter.propTypes = {
+  aggregatedArtists: PropTypes.array.isRequired,
+  filterParams: PropTypes.object.isRequired,
+  numArtistsYouFollow: PropTypes.number.isRequired,
+  updateArtistParamsAction: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {

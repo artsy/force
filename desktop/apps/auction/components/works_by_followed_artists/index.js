@@ -1,12 +1,17 @@
-import { nextPageOfFollowedArtistArtworks, previousPageOfFollowedArtistArtworks } from '../../client/actions'
-import classNames from 'classnames'
 import AuctionGridArtwork from '../auction_grid_artwork'
 import ChevronLeft from '../../../../components/main_layout/public/icons/chevron-left.svg'
 import ChevronRight from '../../../../components/main_layout/public/icons/chevron-right.svg'
+import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 
-function WorksByFollowedArtists(props) {
+import {
+  nextPageOfFollowedArtistArtworks,
+  previousPageOfFollowedArtistArtworks
+} from '../../client/actions'
+
+function WorksByFollowedArtists (props) {
   const {
     followedArtistRailPage,
     followedArtistRailSize,
@@ -40,7 +45,7 @@ function WorksByFollowedArtists(props) {
       </div>
       <div className='auction-works-by-followed-artists__content'>
         <div
-          className={ leftPageClasses }
+          className={leftPageClasses}
           onClick={() => { previousPageOfFollowedArtistArtworksAction() }}
         >
           <ChevronLeft />
@@ -53,7 +58,7 @@ function WorksByFollowedArtists(props) {
           }
         </div>
         <div
-          className={ rightPageClasses }
+          className={rightPageClasses}
           onClick={() => { nextPageOfFollowedArtistArtworksAction() }}
         >
           <ChevronRight />
@@ -61,6 +66,15 @@ function WorksByFollowedArtists(props) {
       </div>
     </div>
   )
+}
+
+WorksByFollowedArtists.propTypes = {
+  followedArtistRailPage: PropTypes.string.isRequired,
+  followedArtistRailSize: PropTypes.number.isRequired,
+  nextPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired,
+  numArtistsYouFollow: PropTypes.number.isRequired,
+  previousPageOfFollowedArtistArtworksAction: PropTypes.func.isRequired,
+  saleArtworksByFollowedArtists: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
