@@ -141,3 +141,9 @@ describe 'Venice Video', ->
   it 'triggers closeVideo', ->
     $('.venice-video__close').click()
     @view.trigger.args[0][0].should.equal 'closeVideo'
+
+  it 'adds time to the scrubber', ->
+    $('body').append '<div class="noUi-handle"></div>'
+    @view.onVRViewReady()
+    @view.updateTime(currentTime: 26)
+    @view.$time.text().should.equal '00:26'
