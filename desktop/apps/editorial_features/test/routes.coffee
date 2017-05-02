@@ -70,7 +70,7 @@ describe 'Venice route', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
-      @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
+      @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
 
   it 'sets a curation', ->
     @req = { params: { slug: 'venice' } }
@@ -90,9 +90,8 @@ describe 'Vanity route', ->
   beforeEach ->
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
-    routes.__set__ 'httpProxy',
-      createProxyServer: sinon.stub().returns
-        web: @web = sinon.stub()
+    routes.__set__ 'proxy',
+      web: @web = sinon.stub()
 
   it 'checks that the asset is whitelisted and sets up proxy', ->
     routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'

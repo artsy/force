@@ -55,7 +55,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
           unless videoIndex or videoIndex is 0
-            return res.redirect 301, '/venice-biennale'
+            return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.VIDEO_INDEX = videoIndex
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
