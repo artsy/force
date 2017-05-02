@@ -42,14 +42,14 @@ Articles = require '../../collections/articles.coffee'
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
     success: (curation) =>
-      cbs = [
+      promises = [
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
       ]
       if @curation.get('sub_articles').length
-        cbs.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
-      Q.all(cbs)
+        promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
+      Q.all(promises)
       .then =>
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
