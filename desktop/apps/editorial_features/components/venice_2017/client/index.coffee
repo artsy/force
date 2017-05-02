@@ -44,6 +44,8 @@ module.exports = class VeniceView extends Backbone.View
       advanceBy: 1
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
+      friction: 0.8
+      selectedAttraction: 0.2
     , (carousel) =>
       @flickity = carousel.cells.flickity
       # Use 'settle' for changes that should have a delay ie: video swapping
