@@ -1,9 +1,10 @@
-p.avant-garde-l-headline.auth-modal__title= title
+p.avant-garde-body.auth-modal__title Call Gallery
 
 #auth-page.vam-outer
-  .vam-inner
+  .vam-inner.garamond-l-body.artwork-partner-stub__inquire-via-phone__modal
     header#auth-header
-      aside= partner.name
+      aside
+        b= partner.name
 
     section#auth-body
       for location in partner.locations
@@ -11,7 +12,5 @@ p.avant-garde-l-headline.auth-modal__title= title
           p
             = location.city
             if location.state
-              | ,
-              = location.state
+              = ", " + location.state
           p= location.phone
-
