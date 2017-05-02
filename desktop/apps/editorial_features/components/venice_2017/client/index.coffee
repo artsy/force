@@ -33,6 +33,7 @@ module.exports = class VeniceView extends Backbone.View
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+      slug: @section.slug
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
@@ -60,6 +61,7 @@ module.exports = class VeniceView extends Backbone.View
     @setupFollowButtons()
 
   selectSection: (i) ->
+    return if i is @sectionIndex # window resize triggers a 'select'
     @section = @curation.get('sections')[i]
     @sectionIndex = i
     $('.venice-overlay__play').attr 'data-state', 'loading'
@@ -94,6 +96,7 @@ module.exports = class VeniceView extends Backbone.View
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
+      slug: @section.slug
 
   onReadMore: ->
     vid = $('.venice-overlay--completed').get(@sectionIndex)

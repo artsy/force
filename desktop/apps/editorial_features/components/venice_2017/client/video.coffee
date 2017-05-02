@@ -14,6 +14,7 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   initialize: (options) ->
     @video = options.video
+    @slug = options.slug
     @$playButton = $('#toggleplay')
     @$muteButton = $('#togglemute')
     @$time = $('.venice-video__time')
@@ -90,6 +91,7 @@ module.exports = class VeniceVideoView extends Backbone.View
   swapVideo: (options) =>
     $('.venice-video__scrubber')[0].noUiSlider?.destroy()
     @vrView.iframe.src = @createIframeSrc options.video
+    @slug = options.slug
 
   createIframeSrc: (video) ->
     "#{sd.APP_URL}/vanity/vrview/index.html?video=" +
@@ -102,22 +104,33 @@ module.exports = class VeniceVideoView extends Backbone.View
     @threeQuarterDuration = @duration * .75
     @fullDuration = @duration
     @trackQuarter = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '25%'})
+      analyticsHooks.trigger 'video:duration',
+        duration: '25%'
+        slug: @slug
     @trackHalf = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '50%'})
+      analyticsHooks.trigger 'video:duration',
+        duration: '50%'
+        slug: @slug
     @trackThreeQuarter = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '75%'})
+      analyticsHooks.trigger 'video:duration',
+        duration: '75%'
+        slug: @slug
     @trackFull = _.once ->
-      analyticsHooks.trigger('video:duration',{duration: '100%'})
+      analyticsHooks.trigger 'video:duration',
+        duration: '100%'
+        slug: @slug
     @trackThreeSeconds = _.once ->
-      analyticsHooks.trigger('video:seconds',{seconds: '3'})
+      analyticsHooks.trigger 'video:seconds',
+        seconds: '3'
+        slug: @slug
     @trackTenSeconds = _.once ->
-      analyticsHooks.trigger('video:seconds',{seconds: '10'})
+      analyticsHooks.trigger 'video:seconds',
+        seconds: '10'
+        slug: @slug
 
   onCloseVideo: ->
     @trigger 'closeVideo'
 
-  # Currently unused but will implement next
   formatTime: (time) ->
     minutes = Math.floor(time / 60) % 60
     seconds = Math.floor(time % 60)
