@@ -1,0 +1,27 @@
+.consignments2-step-marker
+  margin-top 80px
+
+  &__steps
+    margin 0 auto
+    max-width 800px
+    display flex
+    justify-content space-between
+
+  &__dot
+    margin 0 auto
+    background gray-lighter-color
+    width 10px
+    height 10px
+    border-radius 50%
+    margin-bottom 8px
+
+  &__label
+    avant-garde-size('s-headline')
+    color gray-lighter-color
+
+  &__step
+    &_active
+      .consignments2-step-marker__label
+        color purple-color
+      .consignments2-step-marker__dot
+        background purple-color
