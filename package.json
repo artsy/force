@@ -167,7 +167,6 @@
     "stickyfill": "^1.1.1",
     "supertest": "^2.0.1",
     "typeahead.js": "^0.10.5",
-    "uglifyify": "^3.0.4",
     "waypoints": "^4.0.0"
   },
   "license": "MIT",
