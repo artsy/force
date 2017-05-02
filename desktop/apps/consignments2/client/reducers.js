@@ -29,7 +29,7 @@ const stepsMapping = [
 ]
 
 const initialState = {
-  currentStep: 0,
+  currentStep: 1,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
   user: sd.CURRENT_USER
