@@ -99,7 +99,7 @@ describe 'Venice Main', ->
   it 'Sets up the footer carousel', ->
     $(@view.el).find('.venice-footer').html().should.containEql '<h2 class="title">The Venice Biennale</h2>'
     $(@view.el).find('.venice-footer .mgr-cell').length.should.eql 2
-    $(@view.el).find('.venice-footer .mgr-cells').should.containEql '<img src="http://artsy.net/image.jpg">'
+    $(@view.el).find('.venice-footer .mgr-cells').html().should.containEql '<img src="http://artsy.net/image.jpg">'
 
   it 'changes the section when flickity has settled #settleSection', ->
     @on.args[0][1]()
