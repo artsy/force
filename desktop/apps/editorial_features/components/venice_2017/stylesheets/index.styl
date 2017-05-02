@@ -138,11 +138,14 @@ nav-height = 54px
         margin-bottom 15px
       &:hover
         opacity .7
+    &[data-length='2'] .mgr-cell
+      width 48%
+      margin-right 3%
     &[data-length='3'] nav a,
     &[data-length='2'] nav a
       display none
-    &[data-legnth='over'] nav a
-      opacity 1
+    &[data-length='over'] .mgr-horizontal-nav .mgr-navigation
+        opacity 1
     .mgr-arrow-left,
     .mgr-arrow-right
       height 220px
@@ -151,16 +154,33 @@ nav-height = 54px
     .mgr-arrow-right
       left 102%
 
+@media screen and (max-width: 1150px)
+  .venice-footer__article-carousel
+    .mgr-arrow-left, .mgr-arrow-right
+      top -80px
+      height 50px
+      .mgr-arrow-icon
+        font-size 25px
+        padding 0
+    .mgr-arrow-left
+      right 4%
+    .mgr-arrow-right
+      left 98%
+
 // Mobile
 @media screen and (max-width: 900px)
   .venice-footer
     padding 0
     &__articles
-      padding 20px 1em 0 1em
+      padding 20px 1em 180px 1em
     &__article-carousel
       .mgr-cell
         width 48%
         margin-right 3%
+      .mgr-arrow-left
+        right 8%
+      .mgr-arrow-right
+        left 95%
 
 @media screen and (max-width: 550px)
   .venice-nav
@@ -174,7 +194,7 @@ nav-height = 54px
 
   .venice-footer
     &__articles
-      padding 20px 0 0 1em
+      padding 20px 0 180px 1em
     &__article-carousel
       .mgr-navigation
         display none
