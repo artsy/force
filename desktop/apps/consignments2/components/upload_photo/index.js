@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { submitPhoto } from '../../client/actions'
 
-function UploadPhoto({ submitPhotoAction }) {
+function UploadPhoto ({ submitPhotoAction }) {
   return (
     <div className='consignments2-submission-upload-photo'>
       <div
@@ -24,3 +25,6 @@ export default connect(
   mapDispatchToProps
 )(UploadPhoto)
 
+UploadPhoto.propTypes = {
+  submitPhotoAction: PropTypes.func.isRequired
+}

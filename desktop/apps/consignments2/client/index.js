@@ -1,6 +1,6 @@
-import { data as sd } from 'sharify'
-import Artworks from '../../../collections/artworks.coffee'
 import ArtworkRailView from '../../../components/artwork_rail/client/view.coffee'
+import Artworks from '../../../collections/artworks.coffee'
+import { data as sd } from 'sharify'
 
 export default () => {
   // 'Recently Sold' rail
@@ -11,4 +11,3 @@ export default () => {
   })
   rail.render()
 }
-

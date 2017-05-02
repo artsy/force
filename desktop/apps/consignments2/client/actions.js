@@ -5,13 +5,13 @@ export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 
 // Action creators
-export function incrementStep() {
+export function incrementStep () {
   return {
     type: INCREMENT_STEP
   }
 }
 
-export function submitPhoto() {
+export function submitPhoto () {
   return (dispatch) => {
     // this will come from the response of the PUT request to convection
     const dummySubmission = {
@@ -23,7 +23,7 @@ export function submitPhoto() {
   }
 }
 
-export function updateSubmission(submission) {
+export function updateSubmission (submission) {
   return {
     type: UPDATE_SUBMISSION,
     payload: {

@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { incrementStep } from '../../client/actions'
 
-function ChooseArtist({ incrementStepAction }) {
+function ChooseArtist ({ incrementStepAction }) {
   return (
     <div className='consignments2-submission-choose-artist'>
       <div
@@ -23,3 +24,7 @@ export default connect(
   null,
   mapDispatchToProps
 )(ChooseArtist)
+
+ChooseArtist.propTypes = {
+  incrementStepAction: PropTypes.func.isRequired
+}

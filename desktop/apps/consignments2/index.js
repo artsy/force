@@ -1,7 +1,7 @@
-import express from 'express'
 import * as routes from './routes'
-import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page'
+import adminOnly from '../../lib/admin_only'
+import express from 'express'
 
 const app = module.exports = express()
 app.set('views', `${__dirname}/templates`)

@@ -1,8 +1,8 @@
-import { extend } from 'underscore'
-import JSONPage from '../../components/json_page'
-import resizer from '../../components/resizer'
-import markdown from '../../components/util/markdown'
 import Items from '../../collections/items'
+import JSONPage from '../../components/json_page'
+import markdown from '../../components/util/markdown'
+import resizer from '../../components/resizer'
+import { extend } from 'underscore'
 
 const landing = new JSONPage({ name: 'consignments2/landing' })
 

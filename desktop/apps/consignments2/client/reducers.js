@@ -1,13 +1,13 @@
 import * as actions from './actions'
-import { combineReducers } from 'redux'
-import { data as sd } from 'sharify'
-import { contains, last } from 'underscore'
-import { routerReducer } from 'react-router-redux'
-import u from 'updeep'
 import ChooseArtist from '../components/choose_artist'
 import CreateAccount from '../components/create_account'
 import DescribeWork from '../components/describe_work'
 import UploadPhoto from '../components/upload_photo'
+import u from 'updeep'
+import { combineReducers } from 'redux'
+import { data as sd } from 'sharify'
+import { last } from 'underscore'
+import { routerReducer } from 'react-router-redux'
 
 const stepsMapping = [
   {
@@ -39,13 +39,17 @@ const initialState = {
   user: sd.CURRENT_USER
 }
 
-function submissionFlow(state = initialState, action) {
+function submissionFlow (state = initialState, action) {
   switch (action.type) {
     case actions.INCREMENT_STEP: {
       const step = state.currentStep
-      return u({
-        currentStep: step + 1
-      }, state)
+      if (step < state.steps.length) {
+        return u({
+          currentStep: step + 1
+        }, state)
+      } else {
+        return state
+      }
     }
     case actions.UPDATE_SUBMISSION: {
       return u({
@@ -58,5 +62,5 @@ function submissionFlow(state = initialState, action) {
 
 export default combineReducers({
   submissionFlow,
-  routing: routerReducer
+  router: routerReducer
 })

@@ -1,19 +1,19 @@
+import Document from '../../../../components/main_layout/public/icons/consignments-doc.svg'
+import GreenCheck from '../../../../components/main_layout/public/icons/green-check.svg'
+import OpposingArrows from '../../../../components/main_layout/public/icons/consignments-opposing-arrows.svg'
+import PropTypes from 'prop-types'
 import React from 'react'
 import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
-import GreenCheck from '../../../../components/main_layout/public/icons/green-check.svg'
-import Document from '../../../../components/main_layout/public/icons/consignments-document.svg'
-import OpposingArrows from '../../../../components/main_layout/public/icons/consignments-opposing-arrows.svg'
 import { connect } from 'react-redux'
 
-function ThankYou({ submission }) {
+function ThankYou ({ submission }) {
   const submissionImage = submission.image_url ? submission.image_url : '/images/missing_image.png'
-  console.log('meep', submissionImage)
 
   return (
     <div className='consignments2-submission-thank-you'>
       <div className='consignments2-submission-thank-you__submitted-work'>
         <div className='consignments2-submission-thank-you__submitted-image'>
-          <img src={submissionImage}></img>
+          <img src={submissionImage} />
         </div>
         <div className='consignments2-submission-thank-you__submitted-message'>
           Your work has been submitted
@@ -51,9 +51,9 @@ function ThankYou({ submission }) {
           </div>
         </div>
       </div>
-      <div className='consignments2-submission-thank-you__personalize-button avant-garde-button-black'>
+      <a className='consignments2-submission-thank-you__personalize-button avant-garde-button-black' href='/personalize'>
         Personalize My Artsy Account
-      </div>
+      </a>
     </div>
   )
 }
@@ -67,3 +67,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
 )(ThankYou)
+
+ThankYou.propTypes = {
+  submission: PropTypes.object.isRequired
+}

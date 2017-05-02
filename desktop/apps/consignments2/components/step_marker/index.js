@@ -1,16 +1,16 @@
-import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { map, contains } from 'underscore'
 
-function stepClass(stepIndex, currentStep, element) {
+function stepClass (stepIndex, currentStep, element) {
   return classNames(
     `consignments2-step-marker__${element}`,
-    { active: stepIndex <= currentStep  }
+    { active: stepIndex <= currentStep }
   )
 }
 
-function StepMarker({ currentStep, steps }) {
+function StepMarker ({ currentStep, steps }) {
   return (
     <div className='consignments2-step-marker'>
       <div className='consignments2-step-marker__steps'>
@@ -18,7 +18,7 @@ function StepMarker({ currentStep, steps }) {
           steps.map((step, index) => {
             return (
               <div className={stepClass(index, currentStep, 'step')} key={step.label}>
-                <div className='consignments2-step-marker__dot'></div>
+                <div className='consignments2-step-marker__dot' />
                 <div className='consignments2-step-marker__label'>
                   {step.label}
                 </div>
@@ -41,3 +41,8 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
 )(StepMarker)
+
+StepMarker.propTypes = {
+  currentStep: PropTypes.number.isRequired,
+  steps: PropTypes.array.isRequired
+}

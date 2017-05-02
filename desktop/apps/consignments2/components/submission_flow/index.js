@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
 import StepMarker from '../step_marker'
+import { connect } from 'react-redux'
 
-function SubmissionFlow({ currentStep, steps }) {
+export function SubmissionFlow ({ currentStep, steps }) {
   const CurrentStepComponent = steps[currentStep].component
   const currentStepTitle = steps[currentStep].title
 
@@ -32,3 +33,8 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
 )(SubmissionFlow)
+
+SubmissionFlow.propTypes = {
+  currentStep: PropTypes.number.isRequired,
+  steps: PropTypes.array.isRequired
+}
