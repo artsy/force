@@ -1,6 +1,10 @@
 CurrentUser = require '../../models/current_user.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
-analytics = require '../../lib/analytics.coffee'
+_s = require 'underscore.string'
+
+modelNameAndIdToLabel = (modelName, id) ->
+  throw new Error('Requires modelName and id') unless modelName? and id?
+  "#{_s.capitalize(modelName)}:#{id}"
 
 module.exports =
 
@@ -9,7 +13,7 @@ module.exports =
     @acquiring = true
     currentUser = new CurrentUser()
 
-    analyticsHooks.trigger 'track', 'Order - item added', analytics.modelNameAndIdToLabel('artwork', artwork.get('id'))
+    analyticsHooks.trigger 'track', 'Order - item added', modelNameAndIdToLabel('artwork', artwork.get('id'))
 
     currentUser.addToPendingOrder
       artworkId: artwork.get('id')

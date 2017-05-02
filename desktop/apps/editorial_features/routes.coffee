@@ -38,18 +38,28 @@ Articles = require '../../collections/articles.coffee'
 
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
+  @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
-    success: (curation) ->
-      res.locals.sd.CURATION = curation.toJSON()
-      videoIndex = 0
-      if req.params.slug
-        videoIndex = setVideoIndex(curation, req.params.slug)
-        unless videoIndex or videoIndex is 0
-          return res.redirect 301, '/venice-biennale'
-      res.locals.sd.VIDEO_INDEX = videoIndex
-      res.render 'components/venice_2017/templates/index',
-        videoIndex: videoIndex
-        curation: curation
+    success: (curation) =>
+      cbs = [
+        @videoGuide.fetch(
+          headers: 'X-Access-Token': req.user?.get('accessToken') or ''
+        )
+      ]
+      Q.all(cbs)
+      .then =>
+        res.locals.sd.CURATION = curation.toJSON()
+        res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
+        videoIndex = 0
+        if req.params.slug
+          videoIndex = setVideoIndex(curation, req.params.slug)
+          unless videoIndex or videoIndex is 0
+            return res.redirect 301, '/venice-biennale'
+        res.locals.sd.VIDEO_INDEX = videoIndex
+        res.render 'components/venice_2017/templates/index',
+          videoIndex: videoIndex
+          curation: curation
+          videoGuide: @videoGuide
     error: next
 
 @vanity = (req, res, next) ->

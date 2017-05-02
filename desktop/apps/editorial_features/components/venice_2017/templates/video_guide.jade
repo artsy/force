@@ -1,0 +1,10 @@
+.venice-guide__body
+  a.icon-close(href='#')
+  h2=videoGuide.get('title')
+  each section, i in videoGuide.get('sections')
+    if section.type == 'text'
+      .article-section-text!= section.body
+    if section.type == 'image_collection'
+      for image, i in section.images
+        img(src=image.url)
+.venice-guide__modal-bg

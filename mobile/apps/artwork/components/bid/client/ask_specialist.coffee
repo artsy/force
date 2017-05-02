@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 Inquiry = require '../../../../../models/inquiry.coffee'
 formTemplate = -> require('../templates/inquiry_form.jade') arguments...
 confirmationTemplate = -> require('../templates/inquiry_confirmation.jade') arguments...
-analytics = require '../../../../../lib/analytics.coffee'
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 Cookies = require 'cookies-js'
 

@@ -29,31 +29,31 @@ export const UPDATE_SORT = 'UPDATE_SORT'
 export const UPDATE_TOTAL = 'UPDATE_TOTAL'
 
 // Action creators
-export function decrementFollowedArtistsPage() {
+export function decrementFollowedArtistsPage () {
   return {
     type: DECREMENT_FOLLOWED_ARTISTS_PAGE
   }
 }
 
-export function getArtworksFailure() {
+export function getArtworksFailure () {
   return {
     type: GET_ARTWORKS_FAILURE
   }
 }
 
-export function getArtworksRequest() {
+export function getArtworksRequest () {
   return {
     type: GET_ARTWORKS_REQUEST
   }
 }
 
-export function getArtworksSuccess() {
+export function getArtworksSuccess () {
   return {
     type: GET_ARTWORKS_SUCCESS
   }
 }
 
-export function fetchArtworks() {
+export function fetchArtworks () {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
@@ -64,10 +64,6 @@ export function fetchArtworks() {
 
     try {
       dispatch(getArtworksRequest())
-      analyticsHooks.trigger(
-        'auction:artworks:params:change',
-        filterParams
-      )
 
       const { filter_sale_artworks } = await metaphysics({
         query: filterQuery,
@@ -85,8 +81,8 @@ export function fetchArtworks() {
       }
 
       const aggregations = filter_sale_artworks.aggregations
-      const artistAggregation = aggregations.filter((agg) => agg.slice == 'ARTIST')
-      const mediumAggregation = aggregations.filter((agg) => agg.slice == 'MEDIUM')
+      const artistAggregation = aggregations.filter((agg) => agg.slice === 'ARTIST')
+      const mediumAggregation = aggregations.filter((agg) => agg.slice === 'MEDIUM')
 
       dispatch(updateAggregatedArtists(artistAggregation[0].counts))
       dispatch(updateAggregatedMediums(mediumAggregation[0].counts))
@@ -96,14 +92,14 @@ export function fetchArtworks() {
       dispatch(updateSaleArtworks(filter_sale_artworks.hits))
       dispatch(updateAllFetched())
       dispatch(getArtworksSuccess())
-    } catch(error) {
+    } catch (error) {
       dispatch(getArtworksFailure())
       console.error('error!', error)
     }
   }
 }
 
-export function fetchArtworksByFollowedArtists() {
+export function fetchArtworksByFollowedArtists () {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
@@ -134,13 +130,13 @@ export function fetchArtworksByFollowedArtists() {
         dispatch(updateIsLastFollowedArtistsPage())
         dispatch(showFollowedArtistsRail())
       }
-    } catch(error) {
+    } catch (error) {
       console.error('error!', error)
     }
   }
 }
 
-export function fetchMoreArtworks() {
+export function fetchMoreArtworks () {
   return async (dispatch, getState) => {
     const {
       auctionArtworks: {
@@ -161,14 +157,14 @@ export function fetchMoreArtworks() {
       dispatch(updateSaleArtworks(filter_sale_artworks.hits))
       dispatch(updateAllFetched())
       dispatch(getArtworksSuccess())
-    } catch(error) {
+    } catch (error) {
       dispatch(getArtworksFailure())
       console.error('error!', error)
     }
   }
 }
 
-export function infiniteScroll() {
+export function infiniteScroll () {
   return (dispatch, getState) => {
     const {
       auctionArtworks: {
@@ -183,27 +179,27 @@ export function infiniteScroll() {
   }
 }
 
-export function incrementFollowedArtistsPage() {
+export function incrementFollowedArtistsPage () {
   return {
     type: INCREMENT_FOLLOWED_ARTISTS_PAGE
   }
 }
 
-export function nextPageOfFollowedArtistArtworks() {
+export function nextPageOfFollowedArtistArtworks () {
   return (dispatch, getState) => {
     dispatch(incrementFollowedArtistsPage())
     dispatch(updateIsLastFollowedArtistsPage())
   }
 }
 
-export function previousPageOfFollowedArtistArtworks() {
+export function previousPageOfFollowedArtistArtworks () {
   return (dispatch, getState) => {
     dispatch(decrementFollowedArtistsPage())
     dispatch(updateIsLastFollowedArtistsPage())
   }
 }
 
-export function resetArtworks() {
+export function resetArtworks () {
   return (dispatch, getState) => {
     const {
       auctionArtworks: {
@@ -217,7 +213,7 @@ export function resetArtworks() {
   }
 }
 
-export function toggleListView(isListView) {
+export function toggleListView (isListView) {
   return {
     type: TOGGLE_LIST_VIEW,
     payload: {
@@ -226,7 +222,7 @@ export function toggleListView(isListView) {
   }
 }
 
-export function updateAggregatedArtists(aggregatedArtists) {
+export function updateAggregatedArtists (aggregatedArtists) {
   return {
     type: UPDATE_AGGREGATED_ARTISTS,
     payload: {
@@ -235,7 +231,7 @@ export function updateAggregatedArtists(aggregatedArtists) {
   }
 }
 
-export function updateAggregatedMediums(aggregatedMediums) {
+export function updateAggregatedMediums (aggregatedMediums) {
   return {
     type: UPDATE_AGGREGATED_MEDIUMS,
     payload: {
@@ -244,13 +240,13 @@ export function updateAggregatedMediums(aggregatedMediums) {
   }
 }
 
-export function updateAllFetched() {
+export function updateAllFetched () {
   return {
     type: UPDATE_ALL_FETCHED
   }
 }
 
-export function updateArtistId(artistId) {
+export function updateArtistId (artistId) {
   return {
     type: UPDATE_ARTIST_ID,
     payload: {
@@ -259,20 +255,20 @@ export function updateArtistId(artistId) {
   }
 }
 
-export function updateArtistParams(artistId) {
+export function updateArtistParams (artistId) {
   return (dispatch) => {
     dispatch(updateArtistId(artistId))
     dispatch(resetArtworks())
   }
 }
 
-export function showFollowedArtistsRail() {
+export function showFollowedArtistsRail () {
   return {
     type: SHOW_FOLLOWED_ARTISTS_RAIL
   }
 }
 
-export function updateEstimateDisplay(min, max) {
+export function updateEstimateDisplay (min, max) {
   return {
     type: UPDATE_ESTIMATE_DISPLAY,
     payload: {
@@ -282,14 +278,14 @@ export function updateEstimateDisplay(min, max) {
   }
 }
 
-export function updateEstimateRange(min, max) {
+export function updateEstimateRange (min, max) {
   return (dispatch) => {
     dispatch(updateEstimateRangeParams(min, max))
     dispatch(resetArtworks())
   }
 }
 
-export function updateEstimateRangeParams(min, max) {
+export function updateEstimateRangeParams (min, max) {
   return {
     type: UPDATE_ESTIMATE_RANGE,
     payload: {
@@ -299,7 +295,7 @@ export function updateEstimateRangeParams(min, max) {
   }
 }
 
-export function updateInitialMediumMap(initialMediumMap) {
+export function updateInitialMediumMap (initialMediumMap) {
   return {
     type: UPDATE_INITIAL_MEDIUM_MAP,
     payload: {
@@ -308,13 +304,13 @@ export function updateInitialMediumMap(initialMediumMap) {
   }
 }
 
-export function updateIsLastFollowedArtistsPage() {
+export function updateIsLastFollowedArtistsPage () {
   return {
     type: UPDATE_IS_LAST_FOLLOWED_ARTISTS_PAGE
   }
 }
 
-export function updateMediumId(mediumId) {
+export function updateMediumId (mediumId) {
   return {
     type: UPDATE_MEDIUM_ID,
     payload: {
@@ -323,14 +319,14 @@ export function updateMediumId(mediumId) {
   }
 }
 
-export function updateMediumParams(mediumId) {
+export function updateMediumParams (mediumId) {
   return (dispatch) => {
     dispatch(updateMediumId(mediumId))
     dispatch(resetArtworks())
   }
 }
 
-export function updateNumArtistsYouFollow(numArtistsYouFollow) {
+export function updateNumArtistsYouFollow (numArtistsYouFollow) {
   return {
     type: UPDATE_NUM_ARTISTS_YOU_FOLLOW,
     payload: {
@@ -339,7 +335,7 @@ export function updateNumArtistsYouFollow(numArtistsYouFollow) {
   }
 }
 
-export function updatePage(reset) {
+export function updatePage (reset) {
   return {
     type: UPDATE_PAGE,
     payload: {
@@ -348,7 +344,7 @@ export function updatePage(reset) {
   }
 }
 
-export function updateSaleArtworks(saleArtworks) {
+export function updateSaleArtworks (saleArtworks) {
   return {
     type: UPDATE_SALE_ARTWORKS,
     payload: {
@@ -357,7 +353,7 @@ export function updateSaleArtworks(saleArtworks) {
   }
 }
 
-export function updateSaleArtworksByFollowedArtists(saleArtworks) {
+export function updateSaleArtworksByFollowedArtists (saleArtworks) {
   return {
     type: UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS,
     payload: {
@@ -366,7 +362,7 @@ export function updateSaleArtworksByFollowedArtists(saleArtworks) {
   }
 }
 
-export function updateSaleArtworksByFollowedArtistsTotal(total) {
+export function updateSaleArtworksByFollowedArtistsTotal (total) {
   return {
     type: UPDATE_SALE_ARTWORKS_BY_FOLLOWED_ARTISTS_TOTAL,
     payload: {
@@ -375,14 +371,14 @@ export function updateSaleArtworksByFollowedArtistsTotal(total) {
   }
 }
 
-export function updateSort(sort) {
+export function updateSort (sort) {
   return (dispatch) => {
     dispatch(updateSortParam(sort))
     dispatch(resetArtworks())
   }
 }
 
-export function updateSortParam(sort) {
+export function updateSortParam (sort) {
   return {
     type: UPDATE_SORT,
     payload: {
@@ -391,7 +387,7 @@ export function updateSortParam(sort) {
   }
 }
 
-export function updateTotal(total) {
+export function updateTotal (total) {
   return {
     type: UPDATE_TOTAL,
     payload: {

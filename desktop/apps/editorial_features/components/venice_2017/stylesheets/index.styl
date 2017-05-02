@@ -1,6 +1,7 @@
 @require './video'
 @require './body'
-@require '../../../../../components/slider'
+@require './carousel'
+@require './guide'
 
 nav-height = 54px
 
@@ -44,6 +45,28 @@ nav-height = 54px
 .venice-header
   min-height 100vh
 
+.venice-info-icon
+  position absolute
+  bottom 0
+  right 0
+  margin 30px
+  z-index 15
+  border 1px solid white
+  border-radius 50%
+  width 50px
+  height 50px
+  display flex
+  background-color rgba(0,0,0,0.5)
+  cursor pointer
+  svg
+    width 8px
+    margin auto
+    fill white
+  &:hover
+    background-color white
+    svg
+      fill black
+
 .venice-overlay, #vrvideo
   min-height 100vh
   width 100%
@@ -52,119 +75,37 @@ nav-height = 54px
 #vrvideo
   height 100vh
 
-.venice-carousel
-  z-index 10
-  .mgr-cell
-    width 100vw
-    height 100vh
-  .mgr-arrow-right
-    right 0
-    left unset
-  .mgr-arrow-left
-    left 0
-    right unset
-  .mgr-arrow-icon
-    color white
-    border 2px solid
-    border-radius 50%
-    margin 30px
-  .mgr-navigation
-    opacity 1
-
-.venice-overlay
-  background-size cover
-  background-position center
-  z-index 10
-  width 100%
-  height 100%
-  &__text
-    position absolute
-    bottom 0
-    display flex
-    flex-direction column
-    justify-content center
-    align-items center
-    width 100%
-    height 100%
-    padding-top nav-height
-    &.unpublished
-      background-color rgba(0,0,0,.5)
-  &__title
-    garamond()
-    font-size 80px
-    margin-bottom 30px
-  &__sub-title
-    garamond-size('xl-headline')
-    margin-bottom 30px
-    text-transform uppercase
-  &__play
-    width 180px
-    height 50px
-    border 1px solid white
-    border-radius 2px
-    background-color rgba(0,0,0,0.5)
-    display flex
-    justify-content center
-    align-items center
-    transition background-color 0.5
-    cursor pointer
-    &:hover
-      background-color rgba(0,0,0,1)
-    &-text
-      margin-right 20px
-      avant-garde-size('s-headline')
-    &-length
-      garamond-size('l-caption')
-    &-button
-      margin-right 10px
-      width 0
-      height 0
-      border-style solid
-      border-width 5px 0 5px 10px
-      border-color transparent transparent transparent white
-  &__subscribe
-    position absolute
-    bottom 50px
-    text-align center
-  &__launch-date
-    avant-garde-size('body')
-    margin-bottom 10px
-  &__cta-text
-    garamond-size('s-headline')
-    line-height 1.2em
-    margin-bottom 80px
-  &__cta-button
-    avant-garde-size('s-headline')
-    color white
-    background none transparent
-    border 2px solid
-    width 195px
-    height 50px
-    margin-left calc(50% \- 97.5px)
-    position absolute
-    bottom 0
-    left 0
-    &:hover
-      background-color white
-      border-color white
-      color black
-  &__subscribe-form
-    background white
-    padding 10px
-    display flex
-    justify-content space-between
-    display none
-    position absolute
-    bottom 0
-    width 100%
-    input
-      width calc(100% \- 105px)
-      border none
-      font-size 17px
-      padding-left 10px
-
 .venice-overlay, .venice-nav
   transition display 0.5s ease
+
+.venice-feature .artist-follow
+  display flex
+  align-items center
+  float left
+  margin-left -5px
+  color white
+  .follow-text
+    display flex
+    align-items center
+    &:before
+      font-family artsy-icons
+      font-size 32px
+      line-height 32px
+    &:after
+      margin-right 4px
+  &[data-state=follow]
+    .follow-text:after
+      content 'Follow'
+    .follow-text:before
+      content '\e629'
+  &[data-state=following]
+    .follow-text:after
+      content 'Following'
+    .follow-text:before
+      content '\e628'
+  &[data-state=following]:hover
+    .follow-text:after
+      content 'Unfollow'
 
 .venice-footer
   max-width 1100px
@@ -178,18 +119,14 @@ nav-height = 54px
       margin-bottom 40px
   &__articles
     padding-top 20px
-    border-top 2px solid gray-color
+    border-top 1px solid gray-color
 
+// Mobile
 @media screen and (max-width: 800px)
   .venice-footer
     padding 0
     &__articles
       padding 20px 1em 0 1em
-  .venice-carousel
-    .mgr-arrow-icon
-      font-size 15px
-      line-height 15px
-      margin 105px 10px 10px 10px
 
 @media screen and (max-width: 550px)
   .venice-nav
@@ -198,13 +135,5 @@ nav-height = 54px
     &__sticky-left
       margin 0px 15px
 
-  .venice-overlay
-    &__title
-      font-size 45px
-      margin-bottom 5px
-    &__sub-title
-      garamond-size('s-headline')
-    &__cta-text
-      garamond-size('l-body')
-    &__subscribe
-      margin 0 10px
+  .venice-info-icon
+    margin 15px

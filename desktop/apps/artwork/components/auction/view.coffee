@@ -132,13 +132,12 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     .then (data) =>
       old_data = @data
       @data = extend data, user: CURRENT_USER?
-      
+
       @render() unless isEqual(old_data, data)
-      
+
       @delayedUpdateBidLabel(remaining - 1) if remaining > 0
 
     .catch console.error.bind console
 
   delayedUpdateBidLabel: (remaining) ->
     setTimeout (=> @updateBidLabel remaining), LOT_STANDING_POLL_INTERVAL
-

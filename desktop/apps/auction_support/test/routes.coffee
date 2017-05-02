@@ -18,10 +18,19 @@ routes.__set__ 'metaphysics', sinon.stub().returns(
   Q.resolve(artwork: sale_artwork: bid_increments: [100])
 )
 
+analyticsConstructorArgs = null
+analyticsTrackArgs = null
+
 describe '#auctionRegistration', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+
+    analytics = class AnalyticsStub
+      constructor: -> analyticsConstructorArgs = arguments
+      track: -> analyticsTrackArgs = arguments
+    routes.__set__('Analytics', analytics)
+
     @req = { params: { id: 'awesome-sale' } }
     @res =
       status: sinon.stub()
@@ -29,7 +38,8 @@ describe '#auctionRegistration', ->
       redirect: sinon.stub()
       locals:
         sd:
-          API_URL: 'http://localhost:5000'
+          API_URL: 'http://localhost:5000',
+          SEGMENT_WRITE_KEY: 'foo'
         asset: ->
     @next = sinon.stub()
 
@@ -70,6 +80,11 @@ describe '#auctionRegistration', ->
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[2][2].success [{foo: 'bar'}]
       Backbone.sync.args[3][2].success [{}]
+
+      # it sends analytics
+      sentAnalytics = analyticsTrackArgs[0]
+      sentAnalytics['event'].should.equal 'Registration submitted'
+      sentAnalytics['properties']['auction_slug'].should.equal 'whtney-art-party'
 
       @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
 

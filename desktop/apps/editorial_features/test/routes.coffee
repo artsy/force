@@ -47,10 +47,14 @@ describe 'Venice route', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    Backbone.sync.yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}] }
+    Backbone.sync
+      .onCall 0
+      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}] }
+      .onCall 1
+      .yieldsTo 'success', {title: 'Video Guide'}
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
-    routes.__set__ 'sd', {EF_VENICE: '123'}
+    routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
 
   afterEach ->
     Backbone.sync.restore()
@@ -58,20 +62,28 @@ describe 'Venice route', ->
   it 'sets a video index', ->
     @req = { params: { slug: 'venice-2' } }
     routes.venice(@req, @res, @next)
-    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
-    @res.render.args[0][1].videoIndex.should.equal 1
+    _.defer => _.defer =>
+      @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+      @res.render.args[0][1].videoIndex.should.equal 1
 
   it 'defaults to the first video', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
-    @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
+    _.defer => _.defer =>
+      @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
 
   it 'sets a curation', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
-    @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
-    @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
+    _.defer => _.defer =>
+      @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
+      @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
 
+  it 'sets the 360 video guide', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
 
 describe 'Vanity route', ->
 
