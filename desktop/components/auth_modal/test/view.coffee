@@ -90,10 +90,6 @@ describe 'AuthModalView', ->
       @view.preInitialize userData: email: 'foo@bar.com'
       @view.templateData.email.should.containEql 'foo@bar.com'
 
-    it 'can render custom title for the default individual mode', ->
-      @view.preInitialize title: 'Call gallery'
-      @view.templateData.title.should.equal 'Call gallery'
-
   describe '#submit', ->
     beforeEach ->
       sinon.stub location, 'assign'
