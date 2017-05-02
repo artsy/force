@@ -36,6 +36,7 @@ describe 'Venice Video', ->
               cover_image: ''
             }
           ]
+        sub_articles: []
         videoGuide: new Article {id: '123', title: 'Video Guide'}
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceVideoView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/video'), []

@@ -18,10 +18,11 @@ describe 'Venice Main', ->
           scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
+        crop: crop = sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
       @curation =
         description: 'description'
-        sub_articles: []
+        sub_articles: [{thumbnail_title:{'Sub 1'}, thumbnail_image: 'http://artsy.net/image.jpg'}, {thumbnail_title:{'Sub 2'}, thumbnail_image: 'http://artsy.net/image2.jpg'}]
         sections: [
           {
             description: 'description'
@@ -59,6 +60,7 @@ describe 'Venice Main', ->
         videoIndex: 0
         curation: new Curation @curation
         videoGuide: new Article {id: '123', title: 'Video Guide'}
+        sub_articles: [{title:{'Sub 1'}, thumbnail_image: 'http://artsy.net/image.jpg'}, {title:{'Sub 2'}, thumbnail_image: 'http://artsy.net/image2.jpg'}]
       benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
         VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), ['videoDescription']
         VeniceView.__set__ 'sd',
@@ -76,6 +78,7 @@ describe 'Venice Main', ->
             selectedIndex: 1
             select: sinon.stub()
             next: sinon.stub()
+        VeniceView.__set__ 'initFooterCarousel', @initFooterCarousel = sinon.stub()
         @view = new VeniceView
           el: $('body')
         done()
@@ -92,6 +95,11 @@ describe 'Venice Main', ->
     @initCarousel.args[0][1].advanceBy.should.equal 1
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0
+
+  it 'Sets up the footer carousel', ->
+    $(@view.el).find('.venice-footer').html().should.containEql '<h2 class="title">The Venice Biennale</h2>'
+    $(@view.el).find('.venice-footer .mgr-cell').length.should.eql 2
+    $(@view.el).find('.venice-footer .mgr-cells').html().should.containEql '<img src="http://artsy.net/image.jpg">'
 
   it 'changes the section when flickity has settled #settleSection', ->
     @on.args[0][1]()

@@ -38,15 +38,18 @@ Articles = require '../../collections/articles.coffee'
 
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
+  @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
     success: (curation) =>
-      cbs = [
+      promises = [
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
       ]
-      Q.all(cbs)
+      if @curation.get('sub_articles').length
+        promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
+      Q.all(promises)
       .then =>
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
@@ -59,6 +62,7 @@ Articles = require '../../collections/articles.coffee'
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
+          sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
     error: next
 

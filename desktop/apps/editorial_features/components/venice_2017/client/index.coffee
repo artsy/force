@@ -4,6 +4,7 @@ _ = require 'underscore'
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+initFooterCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
@@ -27,6 +28,7 @@ module.exports = class VeniceView extends Backbone.View
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @sectionIndex = sd.VIDEO_INDEX
     @setupCarousel()
+    @setupFooterCarousel() if @curation.get('sub_articles').length
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
     @setupFollowButtons()
@@ -51,6 +53,11 @@ module.exports = class VeniceView extends Backbone.View
       # Use 'select' for changes that should happen immediately ie: loading
       @flickity.on 'select', =>
         @selectSection @flickity.selectedIndex
+
+  setupFooterCarousel: ->
+    initFooterCarousel $('.venice-footer__article-carousel'),
+      advanceBy: 1
+      wrapAround: true
 
   settleSection: (i) ->
     @section = @curation.get('sections')[i]
