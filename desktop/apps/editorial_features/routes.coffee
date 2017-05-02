@@ -40,10 +40,11 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
+  user = res.locals.sd.CURRENT_USER
+  subscribedToEditorial user.email
   @curation.fetch
     success: (curation) =>
       cbs = [
-        subscribedToEditorial user.email
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
@@ -58,7 +59,6 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
           unless videoIndex or videoIndex is 0
             return res.redirect 301, '/venice-biennale'
         res.locals.sd.VIDEO_INDEX = videoIndex
-        console.log @isSubscribed
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
@@ -84,4 +84,3 @@ subscribedToEditorial = (email) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
     if response.vars?.receive_editorial_email
       @isSubscribed = true
-      console.log @isSubscribed
