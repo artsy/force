@@ -131,7 +131,7 @@
     "antigravity": "git://github.com/artsy/antigravity.git",
     "artsy-gemini-upload": "0.0.6",
     "background-check": "git://github.com/kennethcachia/background-check",
-    "benv": "^3.2.0",
+    "benv": "^3.3.0",
     "blueimp-file-upload": "9.9.0",
     "browserify": "^13.1.1",
     "browserify-dev-middleware": "^1.5.0",
