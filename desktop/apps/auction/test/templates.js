@@ -17,7 +17,8 @@ describe('auction templates', () => {
       asset: () => {},
       auction: new Auction(),
       footerItems: footerItems,
-      me: null
+      me: null,
+      helpers: { auction: {liveAuctionUrl: () => 'placeholderauctionurl.com'}}
     }
   })
 
@@ -97,7 +98,10 @@ describe('auction templates', () => {
         benv.setup(() => {
           benv.expose({$: benv.require('jquery')})
           const data = _.extend({}, baseData,
-            { auction: new Auction(fabricate('sale', { name: 'An Auction', auction_state: 'open', live_start_at: moment().subtract(3, 'days') })) })
+            {
+              auction: new Auction(fabricate('sale', { name: 'An Auction', auction_state: 'open', live_start_at: moment().subtract(3, 'days') }))
+            }
+          )
           benv.render(resolve(__dirname, '../templates/index.jade'), data, () => done())
         })
       })

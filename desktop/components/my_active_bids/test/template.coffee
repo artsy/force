@@ -1,7 +1,7 @@
 template = require('jade').compileFile(require.resolve '../template.jade')
 cheerio = require 'cheerio'
 moment = require 'moment'
-ViewHelpers = require('../helpers.coffee')
+{liveAuctionUrl} = require('../../../../utils/domain/auctions/urls')
 
 fixture = -> [
   {
@@ -37,7 +37,7 @@ describe 'My Active Bids template', ->
   beforeEach ->
     @locals =
       myActiveBids: fixture()
-      ViewHelpers: ViewHelpers
+      helpers: auction: { liveAuctionUrl }
       accounting: formatMoney: (s) -> s
 
   it 'renders highest bid if user is leading bidder and reserve met\
@@ -79,4 +79,4 @@ describe 'My Active Bids template', ->
     $('.my-active-bids-bid-live-button').length.should.eql 1
     $('.my-active-bids-bid-live-button').text().should.containEql 'Bid Live'
     $('.my-active-bids-bid-live-button').attr('href')
-      .should.containEql('mauction-evening-sale')
+      .should.containEql('mauction-evening-sale/login')
