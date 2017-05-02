@@ -1,6 +1,6 @@
 express = require 'express'
 routes = require './routes'
-{ crop, resize } = require '../../components/resizer/index'
+{ crop } = require '../../components/resizer/index'
 adminOnly = require '../../lib/admin_only'
 
 app = module.exports = express()
