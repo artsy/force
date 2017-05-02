@@ -21,5 +21,4 @@ routes =
 
 for paths, init of routes
   for path in paths.split('\n')
-    console.log('init', init) if location.pathname.match path
     $(init) if location.pathname.match path
