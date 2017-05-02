@@ -1,14 +1,14 @@
 _ = require 'underscore'
-{ API_URL, SECURE_IMAGES_URL, PREDICTION_URL } = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL } = require('sharify').data
 moment = require 'moment'
 tz = require 'moment-timezone'
 Backbone = require 'backbone'
 { Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
-
 Clock = require './mixins/clock.coffee'
 Relations = require './mixins/relations/sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
 Eventable = require './mixins/eventable.coffee'
+{ liveAuctionUrl } = require '../../utils/domain/auctions/urls'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock
@@ -40,8 +40,6 @@ module.exports = class Sale extends Backbone.Model
   bidUrl: (artwork) ->
     "#{@href()}/bid/#{artwork.id}"
 
-  liveAuctionUrl: -> "#{PREDICTION_URL}/#{@get('id')}"
-
   redirectUrl: (artwork) ->
     if @isBidable() and artwork?
       @bidUrl artwork
@@ -63,7 +61,7 @@ module.exports = class Sale extends Backbone.Model
     if @isClosed()
       label: 'Auction Closed', enabled: false, classes: 'is-disabled', href: ''
     else if @isLiveOpen()
-      label: 'Enter Live Auction', enabled: true, href: "#{PREDICTION_URL}/#{@get 'id'}"
+      label: 'Enter Live Auction', enabled: true, href: liveAuctionUrl(@get('id'), { isLoggedIn: Boolean(user) })
     else if artwork.get('sold') and not artwork.get('acquireable')
       label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
     else

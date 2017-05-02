@@ -2,8 +2,8 @@ moment = require 'moment'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Sale = require '../../models/sale'
 Artwork = require '../../models/artwork'
+Sale = require '../../models/sale'
 
 describe 'Sale', ->
   beforeEach ->
@@ -211,7 +211,6 @@ describe 'Sale', ->
       Backbone.sync.args[0][1].url().should.match /// /api/v1/sale/.*/sale_artworks ///
 
   describe '#registerUrl', ->
-
     it 'points to the secure auction registration page'
     it 'points to the signup page when not logged in'
 

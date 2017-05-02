@@ -8,7 +8,7 @@ if auction.isLiveOpen()
     .auction-banner-live-details
       h1 Live Bidding Now Open
       a.avant-garde-button-white(
-        href="#{sd.PREDICTION_URL}/#{auction.get('id')}#{user ? '/login' : ''}"
+        href=helpers.auction.liveAuctionUrl(auction.get('id'), {isLoggedIn: Boolean(me)})
         target='_blank'
       ) Enter live auction
 else

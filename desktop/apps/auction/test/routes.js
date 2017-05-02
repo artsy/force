@@ -102,7 +102,7 @@ describe('#redirectLive', () => {
     RoutesRewireApi.__Rewire__('metaphysics', sinon.stub().returns(Promise.resolve(auctionQueries)))
     res = {
       redirect: (url) => {
-        url.should.equal('https://live.artsy.net/foo/login')
+        url.should.containEql('/foo/login')
       }
     }
     routes.redirectLive(req, res, next).then(() => {

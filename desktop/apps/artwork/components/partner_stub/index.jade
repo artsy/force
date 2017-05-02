@@ -27,10 +27,29 @@ unless artwork.is_in_auction
 
       if artwork.is_inquireable && contacts && contacts.length
         .artwork-partner-stub__phone
-          a(
-            class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number'
-            data-partner_id= partner._id
-            data-artwork_id= artwork._id
-            data-partner= partner
-          )
-            | Inguire via phone
+          if user && user.isAdmin()
+            a(
+              class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number'
+              data-partner_id= partner._id
+              data-artwork_id= artwork._id
+              data-partner= partner
+            )
+              | Inquire via phone
+          else
+            a(
+              class='js-artwork-partner-stub-phone-toggle analytics-artwork-show-phone-number'
+              data-partner_id= partner._id
+              data-artwork_id= artwork._id
+            )
+              | Show phone number#{contacts.length === 1 ? '' : 's'}
+
+            .artwork-partner-stub__phone__locations(
+              class='js-artwork-partner-stub-phone-toggleable'
+              data-length= contacts.length
+            )
+              for location in contacts
+                .artwork-partner-stub__phone__locations__location
+                  if contacts.length > 1
+                    | #{location.city}:
+                    | &nbsp;
+                  = location.phone

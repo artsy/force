@@ -1,7 +1,7 @@
-import express from 'express'
 import * as routes from './routes'
-import adminOnly from '../../lib/admin_only'
 import JSONPage from '../../components/json_page'
+import adminOnly from '../../lib/admin_only'
+import express from 'express'
 
 const app = module.exports = express()
 app.set('views', `${__dirname}/templates`)
@@ -21,3 +21,4 @@ app.get(landing.paths.show, adminOnly, routes.landingPage)
 app.get(landing.paths.show + '/data', adminOnly, data)
 app.get(landing.paths.edit, adminOnly, edit)
 app.post(landing.paths.edit, adminOnly, upload)
+app.get('/consign2/submission', adminOnly, routes.submissionFlow)

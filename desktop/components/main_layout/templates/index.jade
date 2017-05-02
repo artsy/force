@@ -1,6 +1,6 @@
 //- Override any locals with `append locals`
 block locals
-  - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
+  - bodyClass = helpers && helpers.buildBodyClass ? helpers.buildBodyClass(sd, 'body-header-fixed') : '';
 
 doctype html
 html(
