@@ -174,3 +174,64 @@ describe 'Venice Main', ->
     @view.onVideoError 'Sorry, your browser is not supported.'
     $('.venice-overlay__play').attr('data-state').should.equal 'error'
     $('.venice-overlay__error').html().should.equal 'Sorry, your browser is not supported.'
+
+describe 'VeniceView isSubscribed', ->
+
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose
+        $: benv.require('jquery')
+        jQuery: benv.require('jquery')
+        window:
+          history: replaceState: @replaceState = sinon.stub()
+          scrollTo: @scrollTo = sinon.stub()
+          innerHeight: 900
+        moment: require 'moment'
+      Backbone.$ = $
+      @curation =
+        description: 'description'
+        sub_articles: []
+        sections: [
+          {
+            description: 'description'
+            cover_image: ''
+            video_url: '/vanity/url.mp4'
+            video_url_medium: '/vanity/url-medium.mp4'
+            video_url_adaptive: '/vanity/url.mpd'
+            slug: 'slug-one'
+            artist_ids: []
+          }
+        ]
+      @options =
+        asset: ->
+        sd: APP_URL: 'localhost'
+        videoIndex: 0
+        curation: new Curation @curation
+        videoGuide: new Article {id: '123', title: 'Video Guide'}
+        isSubscribed: true
+      benv.render resolve(__dirname, '../../../components/venice_2017/templates/index.jade'), @options, =>
+        VeniceView = benv.requireWithJadeify resolve(__dirname, '../../../components/venice_2017/client/index'), ['videoDescription']
+        VeniceView.__set__ 'sd',
+          APP_URL: 'localhost'
+          VIDEO_INDEX: 0
+          CURATION: @curation
+        VeniceView.__set__ 'VeniceVideoView', @VeniceVideoView = sinon.stub().returns
+          vrView:
+            play: @play = sinon.stub()
+            pause: @pause = sinon.stub()
+          trigger: sinon.stub()
+        VeniceView.__set__ 'initCarousel', @initCarousel = sinon.stub().yields
+          cells: flickity:
+            on: @on = sinon.stub()
+            selectedIndex: 1
+            select: sinon.stub()
+            next: sinon.stub()
+        @view = new VeniceView
+          el: $('body')
+        done()
+
+  afterEach ->
+    benv.teardown()
+
+  it 'Hides the subscribe to editorial form if user is subscribed', ->
+    $('.venice-overlay__subscribe-form').length.should.eql 0

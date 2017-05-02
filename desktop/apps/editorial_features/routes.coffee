@@ -82,5 +82,6 @@ setVideoIndex = (curation, slug) ->
 
 subscribedToEditorial = (email) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->
+    console.log response
     if response.vars?.receive_editorial_email
       @isSubscribed = true

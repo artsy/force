@@ -52,7 +52,7 @@ describe 'Venice route', ->
       .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}] }
       .onCall 1
       .yieldsTo 'success', {title: 'Video Guide'}
-    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @res = { render: sinon.stub(), locals: { sd: {CURRENT_USER: {email: 'mail@mail.com'}} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
 
