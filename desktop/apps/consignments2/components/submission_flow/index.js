@@ -1,19 +1,22 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import StepMarker from '../step_marker'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 
 export function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
+  const b = block('consignments2-submission')
+
   return (
-    <div className='consignments2-submission'>
-      <div className='consignments2-submission__title'>
+    <div className={b()}>
+      <div className={b('title')}>
         Consign your work to Artsy in just a few steps
       </div>
       <StepMarker />
-      <div className='consignments2-submission__step-title'>
+      <div className={b('step-title')}>
         { currentStepTitle }
       </div>
-      <div className='consignments2-submission__step-form'>
+      <div className={b('step-form')}>
         <CurrentStepComponent />
       </div>
     </div>

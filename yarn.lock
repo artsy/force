@@ -339,13 +339,7 @@ artsy-passport@^1.6.1, artsy-passport@^1.7.2:
     superagent "^1.2.0"
     underscore.string "^3.2.2"
 
-artsy-xapp@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/artsy-xapp/-/artsy-xapp-1.0.4.tgz#13cc772122d1f8b8aeef6ad6555a792dffa9c3aa"
-  dependencies:
-    superagent "^1.2.0"
-
-"artsy-xapp@git://github.com/artsy/artsy-xapp.git":
+artsy-xapp@^1.0.4, "artsy-xapp@git://github.com/artsy/artsy-xapp.git":
   version "1.0.4"
   resolved "git://github.com/artsy/artsy-xapp.git#cbc3db68469054ab13bfbffe68edda422a0972bb"
   dependencies:
@@ -1116,6 +1110,10 @@ beepbeep@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/beepbeep/-/beepbeep-1.2.0.tgz#4ce0a48d1492ca24e7cc4421168147b120a672ad"
 
+bem-cn@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/bem-cn/-/bem-cn-2.1.3.tgz#1e2145bc0f1106085de5563b6611c79644e71c2c"
+
 benv@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/benv/-/benv-3.2.0.tgz#87e8b4d277ef47db4ea6453739c92526cfb0527d"
@@ -1810,7 +1808,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@1.6.0, concat-stream@^1.4.7:
+concat-stream@1.6.0, concat-stream@^1.4.6, concat-stream@^1.4.7:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -1818,7 +1816,7 @@ concat-stream@1.6.0, concat-stream@^1.4.7:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-concat-stream@^1.4.6, concat-stream@^1.5.2, concat-stream@~1.5.0, concat-stream@~1.5.1:
+concat-stream@^1.5.2, concat-stream@~1.5.0, concat-stream@~1.5.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.5.2.tgz#708978624d856af41a5a741defdd261da752c266"
   dependencies:

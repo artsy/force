@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { incrementStep } from '../../client/actions'
 
 function CreateAccount ({ incrementStepAction }) {
+  const b = block('consignments2-submission-create-account')
+
   return (
-    <div className='consignments2-submission-create-account'>
+    <div className={b()}>
       <div
-        className='consignments2-submission-create-account__next-button avant-garde-button-black'
+        className={b('next-button').mix('avant-garde-button-black')}
         onClick={incrementStepAction}
       >
         Next

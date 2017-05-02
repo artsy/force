@@ -2,7 +2,6 @@ import * as actions from '../client/actions'
 import StepMarker from '../components/step_marker'
 import SubmissionFlow from '../components/submission_flow'
 import React from 'react'
-import createReactClass from 'create-react-class'
 import reducers from '../client/reducers'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -24,7 +23,7 @@ describe('React components', () => {
         const rendered = wrapper.render()
         rendered.find('.consignments2-step-marker__dot').length.should.eql(4)
       })
-      
+
       it('updates the color of step labels', () => {
         const wrapper = shallow(
           <Provider><StepMarker store={initialStore} /></Provider>
@@ -42,25 +41,25 @@ describe('React components', () => {
     let seededStore
 
     beforeEach(() => {
-      SubmissionFlow.__Rewire__('StepMarker', createReactClass({ render: () => <div className='step-marker'></div> }))
+      SubmissionFlow.__Rewire__('StepMarker', () => <div className='step-marker' />)
       steps = [
         {
-          component: createReactClass({ render: () => <div className='create-account'></div> }),
+          component: () => <div className='create-account' />,
           label: 'Create Account',
           title: 'Create an Account'
         },
         {
-          component: createReactClass({ render: () => <div className='choose-artist'></div> }),
+          component: () => <div className='choose-artist' />,
           label: 'Verify Artist/Designer',
           title: 'Enter the name of the artist/designer who created the work'
         },
         {
-          component: createReactClass({ render: () => <div className='describe-work'></div> }),
+          component: () => <div className='describe-work' />,
           label: 'Describe the Work',
           title: 'Enter details about the work'
         },
         {
-          component: createReactClass({ render: () => <div className='upload-photos'></div> }),
+          component: () => <div className='upload-photos' />,
           label: 'Upload Photo',
           title: 'Upload photos'
         }
@@ -71,7 +70,7 @@ describe('React components', () => {
     afterEach(() => {
       SubmissionFlow.__ResetDependency__('StepMarker')
     })
-    
+
     describe('non-logged-in user', () => {
       it('shows the create account step first', () => {
         const wrapper = shallow(
@@ -106,7 +105,7 @@ describe('React components', () => {
         const renderedText = rendered.text()
         renderedText.should.containEql('Enter details about the work')
         rendered.find('.describe-work').length.should.eql(1)
-      })  
+      })
 
       it('shows the upload photo step last', () => {
         seededStore.dispatch(actions.incrementStep())

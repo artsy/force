@@ -1,25 +1,21 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames'
+import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-function stepClass (stepIndex, currentStep, element) {
-  return classNames(
-    `consignments2-step-marker__${element}`,
-    { active: stepIndex <= currentStep }
-  )
-}
-
 function StepMarker ({ currentStep, steps }) {
+  const b = block('consignments2-step-marker')
+
   return (
-    <div className='consignments2-step-marker'>
-      <div className='consignments2-step-marker__steps'>
+    <div className={b()}>
+      <div className={b('steps')}>
         {
           steps.map((step, index) => {
+            const active = (index <= currentStep)
             return (
-              <div className={stepClass(index, currentStep, 'step')} key={step.label}>
-                <div className='consignments2-step-marker__dot' />
-                <div className='consignments2-step-marker__label'>
+              <div className={b('step').state({ active })} key={step.label}>
+                <div className={b('dot')} />
+                <div className={b('label')}>
                   {step.label}
                 </div>
               </div>
