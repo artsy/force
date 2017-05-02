@@ -1,8 +1,4 @@
 import * as actions from './actions'
-import ChooseArtist from '../components/choose_artist'
-import CreateAccount from '../components/create_account'
-import DescribeWork from '../components/describe_work'
-import UploadPhoto from '../components/upload_photo'
 import u from 'updeep'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
@@ -11,22 +7,22 @@ import { routerReducer } from 'react-router-redux'
 
 const stepsMapping = [
   {
-    component: CreateAccount,
+    id: 'create_account',
     label: 'Create Account',
     title: 'Create an Account'
   },
   {
-    component: ChooseArtist,
+    id: 'choose_artist',
     label: 'Verify Artist/Designer',
     title: 'Enter the name of the artist/designer who created the work'
   },
   {
-    component: DescribeWork,
+    id: 'describe_work',
     label: 'Describe the Work',
     title: 'Enter details about the work'
   },
   {
-    component: UploadPhoto,
+    id: 'upload_photos',
     label: 'Upload Photo',
     title: 'Upload photos'
   }

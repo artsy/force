@@ -27,7 +27,7 @@ function setupSubmissionFlow () {
     <Provider store={store}>
       <Router history={history}>
         <div>
-          <Route exact path='/consign2/submission/' component={SubmissionFlow} />
+          <Route exact path='/consign2/submission' component={SubmissionFlow} />
           <Route path='/consign2/submission/thank_you' component={ThankYou} />
         </div>
       </Router>

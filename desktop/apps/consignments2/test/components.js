@@ -29,7 +29,7 @@ describe('React components', () => {
           <Provider><StepMarker store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
-        rendered.find('.consignments2-step-marker__step.active').length.should.eql(1)
+        rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
         activeText.should.containEql('Create Account')
       })
@@ -37,44 +37,26 @@ describe('React components', () => {
   })
 
   describe('SubmissionFlow', () => {
-    let steps
-    let seededStore
-
     beforeEach(() => {
+      SubmissionFlow.__Rewire__('ChooseArtist', () => <div className='choose-artist' />)
+      SubmissionFlow.__Rewire__('CreateAccount', () => <div className='create-account' />)
+      SubmissionFlow.__Rewire__('DescribeWork', () => <div className='describe-work' />)
       SubmissionFlow.__Rewire__('StepMarker', () => <div className='step-marker' />)
-      steps = [
-        {
-          component: () => <div className='create-account' />,
-          label: 'Create Account',
-          title: 'Create an Account'
-        },
-        {
-          component: () => <div className='choose-artist' />,
-          label: 'Verify Artist/Designer',
-          title: 'Enter the name of the artist/designer who created the work'
-        },
-        {
-          component: () => <div className='describe-work' />,
-          label: 'Describe the Work',
-          title: 'Enter details about the work'
-        },
-        {
-          component: () => <div className='upload-photos' />,
-          label: 'Upload Photo',
-          title: 'Upload photos'
-        }
-      ]
-      seededStore = createStore(reducers, { submissionFlow: { steps, currentStep: 0 } })
+      SubmissionFlow.__Rewire__('UploadPhoto', () => <div className='upload-photos' />)
     })
 
     afterEach(() => {
+      SubmissionFlow.__ResetDependency__('ChooseArtist')
+      SubmissionFlow.__ResetDependency__('CreateAccount')
+      SubmissionFlow.__ResetDependency__('DescribeWork')
       SubmissionFlow.__ResetDependency__('StepMarker')
+      SubmissionFlow.__ResetDependency__('UploadPhoto')
     })
 
     describe('non-logged-in user', () => {
       it('shows the create account step first', () => {
         const wrapper = shallow(
-          <Provider><SubmissionFlow store={seededStore} steps={steps} /></Provider>
+          <Provider><SubmissionFlow store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
         rendered.find('.consignments2-submission__step-title').length.should.eql(1)
@@ -83,9 +65,9 @@ describe('React components', () => {
         rendered.find('.create-account').length.should.eql(1)
       })
       it('shows the choose artist step second', () => {
-        seededStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
         const wrapper = shallow(
-          <Provider><SubmissionFlow store={seededStore} /></Provider>
+          <Provider><SubmissionFlow store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
         rendered.find('.consignments2-submission__step-title').length.should.eql(1)
@@ -95,10 +77,10 @@ describe('React components', () => {
       })
 
       it('shows the describe work step third', () => {
-        seededStore.dispatch(actions.incrementStep())
-        seededStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
         const wrapper = shallow(
-          <Provider><SubmissionFlow store={seededStore} /></Provider>
+          <Provider><SubmissionFlow store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
         rendered.find('.consignments2-submission__step-title').length.should.eql(1)
@@ -108,11 +90,11 @@ describe('React components', () => {
       })
 
       it('shows the upload photo step last', () => {
-        seededStore.dispatch(actions.incrementStep())
-        seededStore.dispatch(actions.incrementStep())
-        seededStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
+        initialStore.dispatch(actions.incrementStep())
         const wrapper = shallow(
-          <Provider><SubmissionFlow store={seededStore} /></Provider>
+          <Provider><SubmissionFlow store={initialStore} /></Provider>
         )
         const rendered = wrapper.render()
         rendered.find('.consignments2-submission__step-title').length.should.eql(1)

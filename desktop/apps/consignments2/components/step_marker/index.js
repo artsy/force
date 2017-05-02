@@ -11,9 +11,8 @@ function StepMarker ({ currentStep, steps }) {
       <div className={b('steps')}>
         {
           steps.map((step, index) => {
-            const active = (index <= currentStep)
             return (
-              <div className={b('step').state({ active })} key={step.label}>
+              <div className={b('step', { active: index <= currentStep })} key={step.label}>
                 <div className={b('dot')} />
                 <div className={b('label')}>
                   {step.label}

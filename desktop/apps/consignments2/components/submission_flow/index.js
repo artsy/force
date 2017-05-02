@@ -1,5 +1,9 @@
+import ChooseArtist from '../choose_artist'
+import CreateAccount from '../create_account'
+import DescribeWork from '../describe_work'
 import PropTypes from 'prop-types'
 import React from 'react'
+import UploadPhoto from '../upload_photo'
 import StepMarker from '../step_marker'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
@@ -31,10 +35,17 @@ const mapStateToProps = (state) => {
     }
   } = state
 
-  const { component, title } = steps[currentStep]
+  const stepsToComponents = {
+    create_account: CreateAccount,
+    choose_artist: ChooseArtist,
+    describe_work: DescribeWork,
+    upload_photos: UploadPhoto
+  }
+
+  const { id, title } = steps[currentStep]
 
   return {
-    CurrentStepComponent: component,
+    CurrentStepComponent: stepsToComponents[id],
     currentStepTitle: title
   }
 }
