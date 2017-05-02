@@ -16,7 +16,7 @@
     "start": "sh scripts/start.sh"
   },
   "dependencies": {
-    "@artsy/reaction-force": "^0.1.24",
+    "@artsy/reaction-force": "^0.1.31",
     "accounting": "^0.4.1",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
