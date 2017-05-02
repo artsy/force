@@ -1,6 +1,11 @@
+if title
+  p.avant-garde-l-headline.auth-modal__title= title
+
 #auth-page.vam-outer
   .vam-inner
-    include ./_header
+    header#auth-header
+      unless title
+        #auth-header-logo.icon-logotype
       aside
         if copy.has('signup')
           = copy.get('signup')

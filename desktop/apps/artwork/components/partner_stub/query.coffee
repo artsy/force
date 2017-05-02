@@ -13,6 +13,7 @@ module.exports = """
       name
       locations {
         city
+        state
         phone
       }
     }
