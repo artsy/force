@@ -26,7 +26,7 @@ describe 'galleries_institutions routes', ->
           profile: { id: 'arndt', href: '/arndt', image: null }
         }
 
-      it 'ignores categories without partners in primary or secondary bucket', (done) ->
+      it 'ignores categories without partners in primary or secondary bucket', ->
         partner_categories = [
           {
             name: '20th Century Design', id: '20th-century-design',
@@ -46,11 +46,9 @@ describe 'galleries_institutions routes', ->
 
         filterPartnerCategories = routes.__get__ 'filterPartnerCategories'
 
-        fetchPartnerCategories.returns Q.promise (resolve, reject) ->
+        fetchPartnerCategories.returns new Promise (resolve, reject) ->
           resolve filterPartnerCategories(partner_categories: partner_categories)
 
-        routes.index @req, @res, @next
-        _.defer =>
+        routes.index(@req, @res, @next).then =>
           @res.render.calledOnce.should.be.ok()
           @res.render.args[0][1].categories.should.have.lengthOf 2
-          done()

@@ -1,6 +1,5 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-Q = require 'bluebird-q'
 qs = require 'qs'
 cache = require '../../lib/cache'
 metaphysics = require '../../../lib/metaphysics'
@@ -34,7 +33,7 @@ filterPartnerCategories = (data) ->
       facet: 'category'
 
 fetchPartnerCategories = (type) ->
-  Q.promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
     cache.get "partner_categories:#{type}", (err, cachedData) ->
       return reject(err) if err
       return resolve(JSON.parse(cachedData)) if cachedData
@@ -54,28 +53,28 @@ fetchPartnerCategories = (type) ->
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()
 
-  Q.all([
+  Promise.all([
     fetchPrimaryCarousel(params)
     partnerCities.fetch(cache: true)
     partnerFeaturedCities.fetch(cache: true)
     fetchPartnerCategories(type)
-  ]).spread (profiles, partnerCities, partnerFeaturedCities, categories) ->
-    res.locals.sd.MAIN_PROFILES = profiles.toJSON()
-    res.locals.sd.PARTNER_CITIES = partnerCities
-    res.locals.sd.PARTNER_FEATURED_CITIES = partnerFeaturedCities
-    res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
+  ])
+    .then ([profiles, partnerCities, partnerFeaturedCities, categories]) ->
+      res.locals.sd.MAIN_PROFILES = profiles.toJSON()
+      res.locals.sd.PARTNER_CITIES = partnerCities
+      res.locals.sd.PARTNER_FEATURED_CITIES = partnerFeaturedCities
+      res.locals.sd.CATEGORIES = _.map(categories, (c) -> _.pick c, 'id', 'name')
 
-    res.render 'index',
-      ViewHelpers: ViewHelpers
-      showAZLink: true
-      type: type
-      profiles: profiles.models
-      categories: _.shuffle categories
-      facets: facetDefaults(type)
-      state: if _.isEmpty(searchParams) then 'landing' else 'search'
+      res.render 'index',
+        ViewHelpers: ViewHelpers
+        showAZLink: true
+        type: type
+        profiles: profiles.models
+        categories: _.shuffle categories
+        facets: facetDefaults(type)
+        state: if _.isEmpty(searchParams) then 'landing' else 'search'
 
-  .catch -> next()
-  .done()
+    .catch -> next()
 
 # A to Z page
 
