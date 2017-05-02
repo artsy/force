@@ -16,6 +16,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @video = options.video
     @$playButton = $('#toggleplay')
     @$muteButton = $('#togglemute')
+    @$time = $('.venice-video__time')
     @setupVideo()
     @on 'swapVideo', @swapVideo
     @scrubbing = false
@@ -30,6 +31,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       loop: false
     @vrView.on 'ready', @onVRViewReady
     @vrView.on 'timeupdate', @updateTime
+    @vrView.on 'error', @onVRViewError
 
   updateTime: (e) =>
     return if @scrubbing
@@ -47,6 +49,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       @trigger 'videoCompleted'
       @trackFull()
     @scrubber.set(e.currentTime)
+    @$time.text @formatTime e.currentTime
 
   onVRViewReady: =>
     @duration = @vrView.getDuration()
@@ -62,7 +65,12 @@ module.exports = class VeniceVideoView extends Backbone.View
     @scrubber.on 'change', (value) =>
       @vrView.setCurrentTime parseFloat(value[0])
       @scrubbing = false
+    $('.noUi-handle').append '<div class="venice-video__time">00:00</div>'
+    @$time = $('.venice-video__time')
     @trigger 'videoReady'
+
+  onVRViewError: (options) =>
+    @trigger 'videoError', options.message
 
   onTogglePlay: ->
     if @vrView.isPaused
@@ -79,7 +87,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       @vrView.setVolume 0
       @$muteButton.attr 'data-state', 'muted'
 
-  swapVideo: (options) ->
+  swapVideo: (options) =>
     $('.venice-video__scrubber')[0].noUiSlider?.destroy()
     @vrView.iframe.src = @createIframeSrc options.video
 

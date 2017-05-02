@@ -11,6 +11,7 @@
                 .venice-overlay__play-button
                 .venice-overlay__play-text
                 .venice-overlay__play-length= section.video_length
+              .venice-overlay__error
             else
               .venice-overlay__subscribe
                 .venice-overlay__launch-date='Launching ' + moment(section.release_date, moment.ISO_8601).format('MMM Do')

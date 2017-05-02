@@ -93,12 +93,18 @@ describe 'Venice Main', ->
     @initCarousel.args[0][1].wrapAround.should.be.true()
     @initCarousel.args[0][1].initialIndex.should.equal 0
 
-  it 'changes the section when a new carousel item is selected', ->
+  it 'changes the section when flickity has settled #settleSection', ->
     @on.args[0][1]()
-    @replaceState.args[0][1].should.equal 1
-    @replaceState.args[0][2].should.equal '/venice-biennale/slug-two'
+    @on.args[0][0].should.equal 'settle'
     @view.VeniceVideoView.trigger.args[0][0].should.equal 'swapVideo'
     @view.VeniceVideoView.trigger.args[0][1].video.should.equal 'localhost/vanity/url2.mp4'
+
+  it 'changes the section when flickity item has been selected #selectSection', ->
+    @on.args[1][1]()
+    @on.args[1][0].should.equal 'select'
+    @replaceState.args[0][1].should.equal 1
+    @replaceState.args[0][2].should.equal '/venice-biennale/slug-two'
+    $('.venice-overlay__play').attr('data-state').should.equal 'loading'
 
   it '#fadeOutCoverAndStartVideo does not play if it is not ready', ->
     $('.venice-overlay__play').click()
@@ -163,3 +169,8 @@ describe 'Venice Main', ->
     $('.venice-overlay__subscribe-form input').val('email@email.com')
     $('.venice-overlay__subscribe-form button').click()
     $('.venice-overlay__cta-button').css('opacity').should.not.eql '0'
+
+  it 'displays an error if there is one', ->
+    @view.onVideoError 'Sorry, your browser is not supported.'
+    $('.venice-overlay__play').attr('data-state').should.equal 'error'
+    $('.venice-overlay__error').html().should.equal 'Sorry, your browser is not supported.'

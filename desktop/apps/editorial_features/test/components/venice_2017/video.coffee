@@ -64,6 +64,11 @@ describe 'Venice Video', ->
     @scrubberCreate.args[0][1].range.min.should.equal 0
     @scrubberCreate.args[0][1].range.max.should.equal 100
 
+  it 'emits an error if the browser is not supported', ->
+    @view.onVRViewError message: 'Sorry, browser not supported'
+    @view.trigger.args[0][0].should.equal 'videoError'
+    @view.trigger.args[0][1].should.equal 'Sorry, browser not supported'
+
   it 'does not try to update scrubber while dragging', ->
     @view.onVRViewReady()
     @on.args[0][1]()
@@ -136,3 +141,9 @@ describe 'Venice Video', ->
   it 'triggers closeVideo', ->
     $('.venice-video__close').click()
     @view.trigger.args[0][0].should.equal 'closeVideo'
+
+  it 'adds time to the scrubber', ->
+    $('body').append '<div class="noUi-handle"></div>'
+    @view.onVRViewReady()
+    @view.updateTime(currentTime: 26)
+    @view.$time.text().should.equal '00:26'
