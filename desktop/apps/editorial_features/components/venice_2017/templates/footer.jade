@@ -1,6 +1,11 @@
+if sub_articles.length > 3
+  - length = 'over'
+else
+  -length = sub_articles.length
+
 .venice-footer__articles
   h2.title The Venice Biennale
-  .venice-footer__article-carousel
+  .venice-footer__article-carousel(data-length=length)
     .mgr-horizontal-nav
       .mgr-cells.js-mgr-cells
         each article in sub_articles

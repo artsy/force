@@ -48,7 +48,7 @@ Articles = require '../../collections/articles.coffee'
         )
       ]
       if @curation.get('sub_articles').length
-        cbs.push( @veniceSubArticles.fetch data: 'ids[]': @curation.get('sub_articles') )
+        cbs.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
       Q.all(cbs)
       .then =>
         res.locals.sd.CURATION = curation.toJSON()

@@ -27,6 +27,7 @@ module.exports = class VeniceView extends Backbone.View
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @sectionIndex = sd.VIDEO_INDEX
     @setupCarousel()
+    @setupFooterCarousel()
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
     @setupFollowButtons()
@@ -51,6 +52,11 @@ module.exports = class VeniceView extends Backbone.View
       # Use 'select' for changes that should happen immediately ie: loading
       @flickity.on 'select', =>
         @selectSection @flickity.selectedIndex
+
+  setupFooterCarousel: ->
+    initCarousel $('.venice-footer__article-carousel'),
+      advanceBy: 1
+      wrapAround: true
 
   settleSection: (i) ->
     @section = @curation.get('sections')[i]
