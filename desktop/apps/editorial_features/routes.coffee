@@ -60,6 +60,18 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
         res.locals.sd.VIDEO_INDEX = videoIndex
+        section = curation.get('sections')[videoIndex]
+        jsonLD = {
+          "@context": "http://schema.org"
+          "@type": "NewsArticle"
+          "headline": "Inside the Biennale " + section.title
+          "url": sd.APP_URL + '/venice-biennale/' + section.slug
+          "thumbnailUrl": section.cover_image
+          "dateCreated": section.release_date
+          "articleSection": 'Editorial'
+          "creator": 'Artsy Editorial'
+        }
+        res.locals.jsonLD = stringifyJSONForWeb jsonLD
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
