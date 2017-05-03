@@ -42,11 +42,10 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @curation = new Curation(id: sd.EF_VENICE)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
-  user = res.locals.sd.CURRENT_USER
   @curation.fetch
     success: (curation) =>
       promises = [
-        subscribedToEditorial user.email
+        if req.user then subscribedToEditorial(req.user.get('email')) else Promise.resolve()
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
@@ -64,7 +63,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
-          isSubscribed: @isSubscribed
+          isSubscribed: @isSubscribed or false
           sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
     error: next
