@@ -2,12 +2,12 @@ extends ../../../../../components/main_layout/templates/blank.jade
 
 append locals
   - assetPackage = 'editorial_features'
+  - section = curation.get('sections')[videoIndex]
 
 block head
   include head
 
 block body
-  - section = curation.get('sections')[videoIndex]
   .venice-feature
     include ./nav
 
