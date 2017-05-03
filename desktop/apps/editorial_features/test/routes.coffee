@@ -57,6 +57,7 @@ describe 'Venice route', ->
     @res = { render: sinon.stub(), locals: { sd: {CURRENT_USER: {email: 'mail@mail.com'}} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
+    routes.__set__ 'sailthru', sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
