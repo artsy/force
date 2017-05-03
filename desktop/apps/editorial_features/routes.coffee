@@ -52,13 +52,11 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
       Q.all(promises)
       .then =>
+        videoIndex = setVideoIndex(curation, req.params.slug)
+        if isNaN videoIndex
+          return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
-        videoIndex = 0
-        if req.params.slug
-          videoIndex = setVideoIndex(curation, req.params.slug)
-          unless videoIndex or videoIndex is 0
-            return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.VIDEO_INDEX = videoIndex
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
