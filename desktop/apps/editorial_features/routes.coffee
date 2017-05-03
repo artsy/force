@@ -43,10 +43,10 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   user = res.locals.sd.CURRENT_USER
-  subscribedToEditorial user.email
   @curation.fetch
     success: (curation) =>
       promises = [
+        subscribedToEditorial user.email
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
@@ -83,6 +83,8 @@ setVideoIndex = (curation, slug) ->
       return i
 
 subscribedToEditorial = (email) ->
-  sailthru.apiGet 'user', { id: email }, (err, response) ->
-    if response.vars?.receive_editorial_email
-      @isSubscribed = true
+  Q.Promise (resolve, reject) =>
+    sailthru.apiGet 'user', { id: email }, (err, response) ->
+      if response.vars?.receive_editorial_email
+        @isSubscribed = true
+      resolve()
