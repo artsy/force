@@ -9,7 +9,8 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
+{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config.coffee'
+sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 
 @eoy = (req, res, next) ->
@@ -41,9 +42,11 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @curation = new Curation(id: sd.EF_VENICE)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
+  user = res.locals.sd.CURRENT_USER
   @curation.fetch
     success: (curation) =>
       promises = [
+        subscribedToEditorial user.email
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
@@ -61,6 +64,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
+          isSubscribed: @isSubscribed
           sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
     error: next
@@ -77,3 +81,10 @@ setVideoIndex = (curation, slug) ->
   for section, i in curation.get 'sections'
     if section.slug is slug
       return i
+
+subscribedToEditorial = (email) ->
+  Q.Promise (resolve, reject) =>
+    sailthru.apiGet 'user', { id: email }, (err, response) ->
+      if response.vars?.receive_editorial_email
+        @isSubscribed = true
+      resolve()

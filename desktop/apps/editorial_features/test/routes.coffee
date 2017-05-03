@@ -54,9 +54,10 @@ describe 'Venice route', ->
       .yieldsTo 'success', {title: 'Video Guide'}
       .onCall 2
       .yieldsTo 'success', [{title: 'Sub Article'}]
-    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @res = { render: sinon.stub(), locals: { sd: {CURRENT_USER: {email: 'mail@mail.com'}} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
+    routes.__set__ 'sailthru', sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()

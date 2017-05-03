@@ -24,6 +24,7 @@ nav-height = 54px
     position absolute
     top calc(nav-height \+ 20px)
     width 100vw
+    left 0
     .mgr-dot
       color gray-dark-color
       &.is-active, &:hover
@@ -67,6 +68,7 @@ nav-height = 54px
     position absolute
     bottom 50px
     text-align center
+    width 100%
   &__launch-date
     avant-garde-size('body')
     margin-bottom 10px
@@ -98,7 +100,8 @@ nav-height = 54px
     display none
     position absolute
     bottom 0
-    width 100%
+    width 400px
+    margin-left calc(50% \- 200px)
     input
       width calc(100% \- 105px)
       border none
@@ -240,9 +243,14 @@ nav-height = 54px
     &__text
       justify-content flex-start
       padding-top 200px
+    &__subscribe-form
+      width 80%
+      margin-left 10%
+      input
+        font-size 15px
 
   .venice-overlay__subscribe
-    bottom 100px
+    bottom 140px
 
   .venice-carousel
     .mgr-arrow-left, .mgr-arrow-right
