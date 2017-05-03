@@ -43,6 +43,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
+    error: next
     success: (curation) =>
       promises = [
         if req.user then subscribedToEditorial(req.user.get('email')) else Promise.resolve()
@@ -78,7 +79,6 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
           isSubscribed: @isSubscribed or false
           sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
-    error: next
 
 @vanity = (req, res, next) ->
   whitelistedAssets = WHITELISTED_VANITY_ASSETS

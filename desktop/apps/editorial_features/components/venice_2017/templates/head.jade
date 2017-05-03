@@ -1,16 +1,19 @@
+- url = sd.APP_URL + '/venice-biennale/' + section.slug
 title Venice Biennale 2017 - Artsy
-link( rel="canonical", href=(sd.APP_URL + '/venice-biennale/' + section.slug) )
+link( rel="canonical", href=url )
 meta(name="description" content="Explore the 2017 Venice Biennale with a series of immersive 360° films featuring artists Christian Marclay, Carol Bove, Erwin Wurm, and more.")
 meta(name="keywords" content="Venice Biennale, 2017 Venice Biennale")
 
 meta( property="og:site_name" content='Artsy' )
-meta( property="og:url", content=(sd.APP_URL + '/venice-biennale/' + section.slug) )
+meta( property="og:url", content=url )
 meta( property="og:type", content="article" )
-meta( property="og:image", content=crop(section.cover_image, { width: 900, height: 530 } ) )
+meta( property="og:image", content='https://artsy-vanity-files-production.s3.amazonaws.com/images/hero_facebook.jpg' )
+meta( property="og:title", content="[Video] Explore the Venice Biennale in 360°")
 meta( property='article:publisher', content='https://www.facebook.com/artsy/')
 meta( name='twitter:site', content='@artsy' )
-meta( property='twitter:url', content=(sd.APP_URL + '/venice-biennale/' + section.slug) )
+meta( property='twitter:url', content=url )
 meta( property="twitter:card", content="summary_large_image" )
+meta( property="twitter:description", content="[Video] Explore the Venice Biennale in 360°: " + url)
 meta( property='fb:app_id', content=sd.FACEBOOK_ID )
 
 meta( name="sailthru.title", content="Inside the Biennale " + section.title)
