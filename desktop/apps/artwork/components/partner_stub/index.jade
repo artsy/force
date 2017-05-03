@@ -27,7 +27,7 @@ unless artwork.is_in_auction
 
       if artwork.is_inquireable && contacts && contacts.length
         .artwork-partner-stub__phone
-          if user && user.isAdmin()
+          if sd.QUERY.inquire_via_phone
             a(
               class='js-artwork-partner-stub-inquire-via-phone analytics-artwork-show-phone-number'
               data-partner_id= partner._id
