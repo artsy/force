@@ -4,6 +4,7 @@ _ = require 'underscore'
 VeniceVideoView = require './video.coffee'
 UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+initFooterCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
 Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
@@ -27,12 +28,14 @@ module.exports = class VeniceView extends Backbone.View
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @sectionIndex = sd.VIDEO_INDEX
     @setupCarousel()
+    @setupFooterCarousel() if @curation.get('sub_articles').length
     @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
     @swapDescription()
     @setupFollowButtons()
     @VeniceVideoView = new VeniceVideoView
       el: $('.venice-video')
       video: @chooseVideoFile()
+      slug: @section.slug
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
@@ -43,6 +46,8 @@ module.exports = class VeniceView extends Backbone.View
       advanceBy: 1
       wrapAround: true
       initialIndex: sd.VIDEO_INDEX
+      friction: 0.8
+      selectedAttraction: 0.2
     , (carousel) =>
       @flickity = carousel.cells.flickity
       # Use 'settle' for changes that should have a delay ie: video swapping
@@ -52,6 +57,11 @@ module.exports = class VeniceView extends Backbone.View
       @flickity.on 'select', =>
         @selectSection @flickity.selectedIndex
 
+  setupFooterCarousel: ->
+    initFooterCarousel $('.venice-footer__article-carousel'),
+      advanceBy: 1
+      wrapAround: true
+
   settleSection: (i) ->
     @section = @curation.get('sections')[i]
     @sectionIndex = i
@@ -60,6 +70,7 @@ module.exports = class VeniceView extends Backbone.View
     @setupFollowButtons()
 
   selectSection: (i) ->
+    return if i is @sectionIndex # window resize triggers a 'select'
     @section = @curation.get('sections')[i]
     @sectionIndex = i
     $('.venice-overlay__play').attr 'data-state', 'loading'
@@ -94,6 +105,7 @@ module.exports = class VeniceView extends Backbone.View
   swapVideo: ->
     @VeniceVideoView.trigger 'swapVideo',
       video: @chooseVideoFile()
+      slug: @section.slug
 
   onReadMore: ->
     vid = $('.venice-overlay--completed').get(@sectionIndex)

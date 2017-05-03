@@ -42,19 +42,31 @@ if (location.pathname.indexOf('/venice-biennale') > -1) {
     analytics.track('VR Mode', {
       context_type: 'venice_biennale_2017'
     })
+  }).on('click', '.venice-carousel .mgr-arrow-left', function() {
+    analytics.track('Carousel click', {
+      context_type: 'venice_biennale_2017',
+      context_label: 'previous_page_in_carousel'
+    })
+  }).on('click', '.venice-carousel .mgr-arrow-right', function() {
+    analytics.track('Carousel click', {
+      context_type: 'venice_biennale_2017',
+      context_label: 'next_page_in_carousel'
+    })
   })
 
   analyticsHooks.on('video:duration', function (options) {
     analytics.track('Video duration', {
       percent_complete: options.duration,
-      context_type: 'venice_biennale_2017'
+      context_type: 'venice_biennale_2017',
+      context_label: options.slug
     })
   })
 
   analyticsHooks.on('video:seconds', function (options) {
     analytics.track('Video seconds', {
       seconds_complete: options.seconds,
-      context_type: 'venice_biennale_2017'
+      context_type: 'venice_biennale_2017',
+      context_label: options.slug
     })
   })
 

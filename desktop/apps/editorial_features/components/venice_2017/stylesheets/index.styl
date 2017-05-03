@@ -8,6 +8,8 @@ nav-height = 54px
 .venice-feature
   background-color black
   color white
+  a
+    color white
 
 .venice-nav
   position absolute
@@ -22,7 +24,6 @@ nav-height = 54px
   align-items center
   height nav-height
   a
-    color white
     text-decoration none
   &__sticky-artsy-logo
     font-size 26px
@@ -110,23 +111,76 @@ nav-height = 54px
 .venice-footer
   max-width 1100px
   width 100%
-  min-height 160px
   padding 0 2em
+  padding-bottom 180px
   margin 0 auto
+  a
+    text-decoration none
+    width 100%
   h2
     garamond-size('headline')
+    white-space initial
+    line-height 1.1em
     &.title
       margin-bottom 40px
   &__articles
     padding-top 20px
-    border-top 1px solid gray-color
+    border-top 2px solid gray-color
+  &__article-carousel
+    .mgr-dots
+      display none
+    .mgr-cell
+      transition opacity .25s
+      width 31%
+      margin-right 3.5%
+      img
+        width 100%
+        margin-bottom 15px
+      &:hover
+        opacity .7
+    &[data-length='2'] .mgr-cell
+      width 48%
+      margin-right 3%
+    &[data-length='3'] nav a,
+    &[data-length='2'] nav a
+      display none
+    &[data-length='over'] .mgr-horizontal-nav .mgr-navigation
+        opacity 1
+    .mgr-arrow-left,
+    .mgr-arrow-right
+      height 220px
+    .mgr-arrow-left
+      right 102%
+    .mgr-arrow-right
+      left 102%
+
+@media screen and (max-width: 1150px)
+  .venice-footer__article-carousel
+    .mgr-arrow-left, .mgr-arrow-right
+      top -80px
+      height 50px
+      .mgr-arrow-icon
+        font-size 25px
+        padding 0
+    .mgr-arrow-left
+      right 4%
+    .mgr-arrow-right
+      left 98%
 
 // Mobile
-@media screen and (max-width: 800px)
+@media screen and (max-width: 900px)
   .venice-footer
     padding 0
     &__articles
-      padding 20px 1em 0 1em
+      padding 20px 1em 180px 1em
+    &__article-carousel
+      .mgr-cell
+        width 48%
+        margin-right 3%
+      .mgr-arrow-left
+        right 8%
+      .mgr-arrow-right
+        left 95%
 
 @media screen and (max-width: 550px)
   .venice-nav
@@ -137,3 +191,13 @@ nav-height = 54px
 
   .venice-info-icon
     margin 15px
+
+  .venice-footer
+    &__articles
+      padding 20px 0 180px 1em
+    &__article-carousel
+      .mgr-navigation
+        display none
+      .mgr-cell
+        width 85%
+        margin-right 5%

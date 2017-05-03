@@ -49,9 +49,11 @@ describe 'Venice route', ->
     sinon.stub Backbone, 'sync'
     Backbone.sync
       .onCall 0
-      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}] }
+      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}], sub_articles: ['123'] }
       .onCall 1
       .yieldsTo 'success', {title: 'Video Guide'}
+      .onCall 2
+      .yieldsTo 'success', [{title: 'Sub Article'}]
     @res = { render: sinon.stub(), locals: { sd: {CURRENT_USER: {email: 'mail@mail.com'}} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
@@ -70,7 +72,7 @@ describe 'Venice route', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
-      @res.redirect.args[0].should.eql [ 301, '/venice-biennale' ]
+      @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
 
   it 'sets a curation', ->
     @req = { params: { slug: 'venice' } }
@@ -85,14 +87,19 @@ describe 'Venice route', ->
     _.defer => _.defer =>
       @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
 
+  it 'Fetches sub articles', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer => _.defer =>
+      @res.render.args[0][1].sub_articles.length.should.eql 1
+
 describe 'Vanity route', ->
 
   beforeEach ->
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
-    routes.__set__ 'httpProxy',
-      createProxyServer: sinon.stub().returns
-        web: @web = sinon.stub()
+    routes.__set__ 'proxy',
+      web: @web = sinon.stub()
 
   it 'checks that the asset is whitelisted and sets up proxy', ->
     routes.__set__ 'WHITELISTED_VANITY_ASSETS', 'videos/final-video.mp4'

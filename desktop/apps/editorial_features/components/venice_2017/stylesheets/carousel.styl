@@ -57,7 +57,7 @@ nav-height = 54px
     margin-bottom 30px
     text-transform uppercase
   &__title, &__sub-title
-    text-shadow 0 0 15px rgba(0,0,0,0.6)
+    text-shadow 0 0 40px rgba(0,0,0,0.4)
 
 // Unpublished Preview
 .venice-overlay[data-published='false']
@@ -145,8 +145,6 @@ nav-height = 54px
     a
       color white
   &__follow
-    position absolute
-    bottom 60px
     width 380px
     margin-left 20px
     .venice-body__follow
@@ -239,7 +237,7 @@ nav-height = 54px
       garamond-size('l-body')
 
     &__subscribe
-      margin 0 10px
+      margin 0 auto
     &__text
       justify-content flex-start
       padding-top 200px
@@ -252,6 +250,31 @@ nav-height = 54px
       top 315px
     .mgr-dots
       display none
+
+  .venice-overlay--completed
+    &__buttons
+      flex-direction column
+      align-items center
+      button:first-child
+        margin-bottom 20px
+    .venice-body__item-share
+      justify-content center
+      a:hover
+        background-color black
+        opacity .7
+        i
+          color white
+    .share-item
+      width 50px
+    &__follow
+      width 100%
+      margin-left 0
+      left 0
+    .venice-body__follow
+      max-width 80%
+      margin 0 auto
+      p
+        font-size 18px
 
 @media screen and (max-width: 400px)
   .venice-overlay

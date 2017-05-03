@@ -11,6 +11,7 @@ Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
+proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -39,35 +40,36 @@ sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU
 
 @venice = (req, res, next) ->
   @curation = new Curation(id: sd.EF_VENICE)
+  @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   user = res.locals.sd.CURRENT_USER
   subscribedToEditorial user.email
   @curation.fetch
     success: (curation) =>
-      cbs = [
+      promises = [
         @videoGuide.fetch(
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
       ]
-      Q.all(cbs)
+      if @curation.get('sub_articles').length
+        promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
+      Q.all(promises)
       .then =>
+        videoIndex = setVideoIndex(curation, req.params.slug)
+        if isNaN videoIndex
+          return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
-        videoIndex = 0
-        if req.params.slug
-          videoIndex = setVideoIndex(curation, req.params.slug)
-          unless videoIndex or videoIndex is 0
-            return res.redirect 301, '/venice-biennale'
         res.locals.sd.VIDEO_INDEX = videoIndex
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
           isSubscribed: @isSubscribed
+          sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
     error: next
 
 @vanity = (req, res, next) ->
-  proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   whitelistedAssets = WHITELISTED_VANITY_ASSETS
   return next() unless req.params[0].match whitelistedAssets
   req.headers['host'] = VANITY_BUCKET

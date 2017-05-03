@@ -14,7 +14,7 @@ mixin help
 
 mixin follow(section)
   .venice-body__follow
-    p Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+    p Follow the artists behind the Venice Biennale to discover more incredible art.
     each artist in section.artist_ids
       .venice-body__follow-item
         a(class='artist-follow' data-id=artist.id artist-id=artist._id)

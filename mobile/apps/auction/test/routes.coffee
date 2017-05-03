@@ -56,7 +56,7 @@ describe '/auction routes', ->
         Backbone.sync.args[1][2].success {}
         _.defer => _.defer =>
           @res.redirect.args[0][0].should
-            .equal 'https://live.artsy.net/foobar-auction'
+            .containEql "/foobar-auction"
           done()
 
     describe '#subscribe', ->

@@ -153,21 +153,3 @@ mpv-padding = 20px
 // narrow mpv height based on 1024 x 768 viewport
 // to catch some differing FAQ lengths
 mpv-height-narrow = 710px
-
-.consignments2-page
-  .faq-multi-page
-    min-height mpv-height
-    border-top 1px solid gray-lighter-color
-    @media screen and (max-width: smallBreakpoint)
-      min-height mpv-height-narrow
-    .js-multi-page-embed
-      margin auto
-      width 80%
-      padding mpv-padding 0
-      min-height mpv-height - (mpv-padding * 2)
-      @media screen and (max-width: smallBreakpoint)
-        width 90%
-        min-height mpv-height-narrow - mpv-padding
-      .mpv-page
-        height: mpv-height - (mpv-padding * 2)
-

@@ -17,7 +17,8 @@ block body
       h2.consignments2-header__subheadline
         = header.subheadline
       .consignments2-header__cta
-        .avant-garde-button-white.consignments2-header__consign-button Start Consigning
+        a.avant-garde-button-white.consignments2-header__consign-button( href='/consign2/submission' )
+          | Start Consigning
 
   .consignments2-sections
     //- Estimate
@@ -85,11 +86,3 @@ block body
 
             h4.consignments2-in-demand__artists__artist__name
               = artist.get('name')
-
-    //- FAQ
-    section.faq-multi-page.consignments2-faq
-      .js-multi-page-embed
-      //- Credit
-      .consignments2-credit
-        = credit
-

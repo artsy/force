@@ -1,8 +1,12 @@
+if title
+  p.avant-garde-l-headline.auth-modal__title= title
+
 #auth-page.vam-outer
   .vam-inner
-    include ./_header
-      aside
-        = copy.get('login') || 'Log in to Artsy'
+    header#auth-header
+      unless title
+        #auth-header-logo.icon-logotype
+      aside= copy.get('login') || 'Log in to Artsy'
 
     section#auth-body
       .auth-login-social

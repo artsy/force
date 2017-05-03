@@ -5,10 +5,10 @@ SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
 State = require '../../components/auction_artwork_list/state'
 request = require 'superagent'
+{ liveAuctionUrl } = require '../../../utils/domain/auctions/urls'
 {
   MAILCHIMP_KEY
   MAILCHIMP_AUCTION_LIST_ID
-  PREDICTION_URL
 } = require '../../config'
 
 nav = ->
@@ -40,10 +40,7 @@ module.exports.index = (req, res, next) ->
   ]).catch(next)
   promise.done ->
     if auction.isLiveOpen()
-      return res.redirect(
-        "#{PREDICTION_URL}/#{auction.get 'id'}" +
-        if req.user then '/login' else ''
-      )
+      return res.redirect(liveAuctionUrl(id, { isLoggedIn: Boolean(req.user) }))
     artworks.reset Artworks.__fromSale__(saleArtworks)
     res.locals.sd.AUCTION = auction.toJSON()
     res.locals.sd.ARTWORKS = artworks.toJSON()
