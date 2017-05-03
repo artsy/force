@@ -15,7 +15,7 @@
             else
               .venice-overlay__subscribe
                 .venice-overlay__launch-date='Launching ' + moment(section.release_date, moment.ISO_8601).format('MMM Do')
-                if isSubscribed
+                unless isSubscribed
                   .venice-overlay__cta
                     .venice-overlay__cta-text
                       | Sign up for the editorial newsletter to be
