@@ -195,6 +195,7 @@ describe 'VeniceView isSubscribed', ->
           scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
+        crop: sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
       @curation =
         description: 'description'
