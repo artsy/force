@@ -10,6 +10,7 @@ Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { WHITELISTED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
+proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
@@ -57,7 +58,7 @@ Articles = require '../../collections/articles.coffee'
         if req.params.slug
           videoIndex = setVideoIndex(curation, req.params.slug)
           unless videoIndex or videoIndex is 0
-            return res.redirect 301, '/venice-biennale'
+            return res.redirect 301, '/venice-biennale/toward-venice'
         res.locals.sd.VIDEO_INDEX = videoIndex
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
@@ -67,7 +68,6 @@ Articles = require '../../collections/articles.coffee'
     error: next
 
 @vanity = (req, res, next) ->
-  proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   whitelistedAssets = WHITELISTED_VANITY_ASSETS
   return next() unless req.params[0].match whitelistedAssets
   req.headers['host'] = VANITY_BUCKET
