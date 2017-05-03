@@ -34,12 +34,12 @@ mixin share(description, url)
       a.share-by-email(
         data-message='Share via email',
         data-service='email',
-        href="mailto:?subject=#{description}&body=Check out #{description} on Artsy: #{url}"
+        href="mailto:?subject=#{description}&body=#{description}: #{url}"
       ): i.icon-mail.icon-in-table
     .share-item
       a.share-to-twitter(
         data-message='Share on Twitter',
         data-service='twitter',
-        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}&url=#{url}&via=artsy",
+        href="https://twitter.com/intent/tweet?original_referer=#{url}&text=#{description}: #{url}&url=#{url}&via=artsy",
         target='_blank'
       ): i.icon-twitter.icon-in-table

@@ -43,6 +43,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
+    error: next
     success: (curation) =>
       promises = [
         if req.user then subscribedToEditorial(req.user.get('email')) else Promise.resolve()
@@ -60,13 +61,24 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
         res.locals.sd.VIDEO_INDEX = videoIndex
+        section = curation.get('sections')[videoIndex]
+        jsonLD = {
+          "@context": "http://schema.org"
+          "@type": "NewsArticle"
+          "headline": "Inside the Biennale " + section.title
+          "url": sd.APP_URL + '/venice-biennale/' + section.slug
+          "thumbnailUrl": section.cover_image
+          "dateCreated": section.release_date
+          "articleSection": 'Editorial'
+          "creator": 'Artsy Editorial'
+        }
+        res.locals.jsonLD = stringifyJSONForWeb jsonLD
         res.render 'components/venice_2017/templates/index',
           videoIndex: videoIndex
           curation: curation
           isSubscribed: @isSubscribed or false
           sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
-    error: next
 
 @vanity = (req, res, next) ->
   whitelistedAssets = WHITELISTED_VANITY_ASSETS
