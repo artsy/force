@@ -14,6 +14,7 @@ describe 'Venice Video', ->
         $: benv.require('jquery')
         jQuery: benv.require('jquery')
         moment: require 'moment'
+        crop: sinon.stub()
         VRView: Player: (@player = sinon.stub()).returns
           on: sinon.stub()
           play: @play = sinon.stub()
