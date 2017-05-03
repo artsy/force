@@ -94,6 +94,8 @@ xdescribe 'Venice route', ->
     _.defer => _.defer => _.defer =>
       @res.render.args[0][1].sub_articles.length.should.eql 1
 
+  xit 'without a user will still render'
+
 describe 'Vanity route', ->
 
   beforeEach ->
