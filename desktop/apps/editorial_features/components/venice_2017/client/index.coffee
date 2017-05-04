@@ -11,6 +11,7 @@ FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index.coffee'
 videoDescription = -> require('../templates/video_description.jade') arguments...
 analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
+markdown = require '../../../../../components/util/markdown.coffee'
 
 module.exports = class VeniceView extends Backbone.View
 
@@ -117,6 +118,7 @@ module.exports = class VeniceView extends Backbone.View
     $('.venice-body').prepend videoDescription
       section: @section
       sd: sd
+      markdown: markdown
     $('.venice-body--article').addClass('active')
 
   chooseVideoFile: ->
