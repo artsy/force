@@ -74,6 +74,7 @@ module.exports = ->
       if module.key is 'active_bids'
         $el.find('.abrv-header h1').html(module.title)
         return setupActiveBidsView(module, $el.find('.abrv-content'), user)
+      
       return setupFollowedArtistsView(module, $el, user) if module.key is 'followed_artists'
 
       options =

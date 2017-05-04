@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-{ map, take } = require 'underscore'
+{ map, take, defaults } = require 'underscore'
 { API_URL } = require('sharify').data
 Q = require 'bluebird-q'
 Artist = require '../../../../models/artist.coffee'
@@ -20,7 +20,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
     includeContext: true
 
   initialize: (options = {}) ->
-    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext, @analyticsMessage } = _.defaults options, @defaults
+    { @module, @$el, @user, @useInitialArtists, @showHeader, @includeContext, @analyticsMessage } = defaults options, @defaults
 
   render: ->
     artists = new Backbone.Collection @module.context.artists
@@ -78,6 +78,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
   _renderEmptyView: ->
     # pre-populate search with featured artists or use initial artists
     if @useInitialArtists
+      console.log('useInitialArtists')
       initialArtists = new Artists []
       @subViews.push sav = new SearchArtistsView
         el: @$('.arbv-follow-search-container')
@@ -94,13 +95,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
       Q.all [
         featuredArtists.fetch()
       ]
-      .then ->
-        # get the artist from the ids of the featured links :|
-        ids = featuredArtists.pluck('href').map (href) ->
-          href.replace('https://www.artsy.net/artist/','')
-        artists = map ids, (id) -> new Artist id: id
-        # return a promise for all the individual artist fetches
-        Q.all(map(artists, (artist) -> artist.fetch()))
+      .then -> @_parseAndFetchArtists featuredArtists
       .then (artists) =>
         @subViews.push sav = new SearchArtistsView
           el: @$('.arbv-follow-search-container')
@@ -112,6 +107,24 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
         @subViews.push fav = new FollowedArtistsView
           el: @$('.arbv-context--followed-artists')
           collection: followedArtists
+      .catch (err) ->
+        console.warn('Error rendering Followed Artist Rail', err.stack)
+
+  _parseAndFetchArtists: (featuredArtists) =>
+    # get the artist from the ids of the featured links :|
+
+    ids = featuredArtists.pluck('href')
+      .filter (href) ->
+        # filter out links that aren't specifically to artists
+        href.indexOf('https://www.artsy.net/artist/') > -1
+      .map (href) ->
+        # remove any query params
+        href.split("?")[0].replace('https://www.artsy.net/artist/','')
+    
+    artists = map ids, (id) -> new Artist id: id
+    
+    # return a promise for all the individual artist fetches
+    Q.all(map(artists, (artist) -> artist.fetch()))
 
   remove: ->
     invoke @subViews, 'remove'
