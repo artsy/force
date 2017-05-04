@@ -78,7 +78,6 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
   _renderEmptyView: ->
     # pre-populate search with featured artists or use initial artists
     if @useInitialArtists
-      console.log('useInitialArtists')
       initialArtists = new Artists []
       @subViews.push sav = new SearchArtistsView
         el: @$('.arbv-follow-search-container')
@@ -107,8 +106,6 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
         @subViews.push fav = new FollowedArtistsView
           el: @$('.arbv-context--followed-artists')
           collection: followedArtists
-      .catch (err) ->
-        console.warn('Error rendering Followed Artist Rail', err.stack)
 
   _parseAndFetchArtists: (featuredArtists) =>
     # get the artist from the ids of the featured links :|
