@@ -37,7 +37,7 @@ describe 'My Active Bids template', ->
   beforeEach ->
     @locals =
       myActiveBids: fixture()
-      helpers: auction: { liveAuctionUrl }
+      viewHelpers: { liveAuctionUrl }
       accounting: formatMoney: (s) -> s
 
   it 'renders highest bid if user is leading bidder and reserve met\

@@ -23,7 +23,7 @@ if myActiveBids && myActiveBids.length
         .auction-my-active-bids__bids-num (#{bidCount} Bid#{bidCount > 1 ? 's' : ''})
         if bid.sale_artwork.sale.is_live_open
           a.avant-garde-button-white.auction-my-active-bids__bid-live-button(
-              href=helpers.auction.liveAuctionUrl(bid.sale_artwork.sale_id, {isLoggedIn: Boolean(me)})
+              href=viewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id, {isLoggedIn: Boolean(me)})
             ) Bid Live
         else
           .bid-status-cell
