@@ -4,7 +4,7 @@ include ./mixins
   .venice-body__left
     .venice-body__about
       h2 About the Series
-      p=curation.get('description')
+      p!=markdown(curation.get('description'))
 
       a(href="https://www.ubs.com/global/en/about_ubs/contemporary-art.html" target="_blank").venice-body__partner
         span Presented In Collaboration With
