@@ -14,22 +14,39 @@ const stepsMapping = [
   {
     id: 'choose_artist',
     label: 'Verify Artist/Designer',
+    nextDisabled: true,
     title: 'Enter the name of the artist/designer who created the work'
   },
   {
     id: 'describe_work',
     label: 'Describe the Work',
+    nextDisabled: true,
     title: 'Enter details about the work'
   },
   {
     id: 'upload_photos',
     label: 'Upload Photo',
+    nextDisabled: true,
     title: 'Upload photos'
   }
 ]
 
 const initialState = {
   currentStep: 1,
+  inputs: {
+    authenticity_certificate: true,
+    depth: null,
+    dimensions_metric: 'in',
+    edition: false,
+    height: null,
+    location: null,
+    medium: null,
+    provenance: null,
+    signature: true,
+    title: null,
+    width: null,
+    year: null
+  },
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
   user: sd.CURRENT_USER
