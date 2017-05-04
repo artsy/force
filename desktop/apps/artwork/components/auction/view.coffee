@@ -7,7 +7,7 @@ openBuyersPremiumModal = require './components/buyers_premium/index.coffee'
 AuthModalView = require '../../../../components/auth_modal/view.coffee'
 inquire = require '../../lib/inquire.coffee'
 acquire = require '../../lib/acquire.coffee'
-helpers = require './helpers.coffee'
+viewHelpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 template = -> require('./templates/index.jade') arguments...
 
@@ -99,8 +99,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       defer -> form.error message
 
   render: ->
-    @$el.html template extend {}, @data,
-      helpers: auction: helpers
+    @$el.html template extend {}, @data, { viewHelpers: viewHelpers }
     this
 
   setMaxBid: (e) ->

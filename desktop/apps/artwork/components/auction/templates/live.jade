@@ -1,6 +1,6 @@
 if auction.is_live_open
   .artwork-auction__live-button
     a.avant-garde-button-black.is-block(
-      href=helpers.auction.liveAuctionUrl(auction.id, {isLoggedIn: Boolean(me)})
+      href=viewHelpers.liveAuctionUrl(auction.id, {isLoggedIn: Boolean(me)})
       target='_blank'
     ) Enter Live Auction

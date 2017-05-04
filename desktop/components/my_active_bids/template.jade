@@ -16,7 +16,7 @@ if myActiveBids && myActiveBids.length
               p #{bid.sale_artwork.highest_bid.display} (#{bid.sale_artwork.counts.bidder_positions} Bids)
           if bid.sale_artwork.sale.is_live_open
             a.avant-garde-button-black.my-active-bids-bid-live-button(
-              href=helpers.auction.liveAuctionUrl(bid.sale_artwork.sale_id, {isLoggedIn: true})
+              href=viewHelpers.liveAuctionUrl(bid.sale_artwork.sale_id, {isLoggedIn: true})
             ) Bid Live
           else
             +bidStatus(bid, bid.sale_artwork)

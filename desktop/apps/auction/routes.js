@@ -19,7 +19,7 @@ export const index = async (req, res) => {
     articles: auctionArticles,
     auction: newAuction,
     footerItems: footerItems,
-    helpers: { auction: { liveAuctionUrl } },
+    viewHelpers: { liveAuctionUrl },
     me: me
   })
 }
