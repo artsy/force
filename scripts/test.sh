@@ -6,24 +6,31 @@ run () {
   case $CIRCLE_NODE_INDEX in
   0)
     yarn acceptance
-    yarn mocha test/lib/*
-    yarn mocha $(find desktop/test -name '*.coffee')
-    yarn mocha $(find mobile/test -name '*.coffee')
+    yarn mocha \
+      test/lib/* \
+      $(find desktop/test -name '*.coffee') \
+      $(find mobile/test -name '*.coffee')
     ;;
   1)
-    yarn mocha $(find desktop/components/*/test -name '*.coffee')
-    yarn mocha $(find desktop/components/**/*/test -name '*.coffee')
+    yarn mocha \
+      $(find desktop/components/*/test -name '*.coffee')
+    yarn mocha \
+      $(find desktop/components/**/*/test -name '*.coffee')
     ;;
   2)
-    yarn mocha $(find desktop/apps/*/test -name '*.coffee')
-    yarn mocha $(find desktop/apps/*/test -name '*.js')
-    yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')
+    yarn mocha \
+      $(find desktop/apps/*/test -name '*.coffee')
+    yarn mocha \
+      $(find desktop/apps/*/test -name '*.js')
+    yarn mocha \
+      $(find desktop/apps/*/**/*/test -name '*.coffee')
     ;;
   3)
-    yarn mocha $(find mobile/components/*/test -name '*.coffee')
-    yarn mocha $(find mobile/components/**/*/test -name '*.coffee')
-    yarn mocha $(find mobile/apps/*/test -name '*.coffee')
-    yarn mocha $(find mobile/apps/*/**/*/test -name '*.coffee')
+    yarn mocha \
+      $(find mobile/components/*/test -name '*.coffee') \
+      $(find mobile/components/**/*/test -name '*.coffee') \
+      $(find mobile/apps/*/test -name '*.coffee') \
+      $(find mobile/apps/*/**/*/test -name '*.coffee')
     ;;
   esac
 }
