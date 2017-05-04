@@ -4,6 +4,8 @@ import moment from 'moment'
 import cheerio from 'cheerio'
 import url from 'url'
 import chalk from 'chalk'
+import bodyParser from 'body-parser'
+import cors from 'cors'
 
 const {
   ACCEPTANCE_TIMEOUT,
@@ -32,17 +34,13 @@ export const setup = async () => {
   positron = await startApp(POSITRON_PORT)
   metaphysics = await startApp(METAPHYSICS_PORT)
   force = await startForce(FORCE_PORT)
-  browser = Nightmare({
+  browser = mixinBrowserHelpers(Nightmare({
     waitTimeout: TIMEOUT,
     gotoTimeout: TIMEOUT,
     loadTimeout: TIMEOUT,
-    executionTimeout: TIMEOUT
-  })
-  browser.page = (path) =>
-    browser
-      .goto(`${APP_URL}${path}`)
-      .evaluate(() => document.documentElement.innerHTML)
-      .then(cheerio.load)
+    executionTimeout: TIMEOUT,
+    typeInterval: 10
+  }))
 
   // Make sure cancelling the process cleans up the servers/Electron
   process.on('exit', teardown)
@@ -74,6 +72,36 @@ export const sleep = (ms) =>
     setTimeout(resolve, ms)
   })
 
+const mixinBrowserHelpers = (browser) => {
+  // Steps to log in through the auth modal
+  browser.login = async () => {
+    await browser.el('.mlh-login')
+    await browser
+      .click('.mlh-login')
+      .type('#auth-body [name=email]', 'craig@craig.com')
+      .type('#auth-body [name=password]', 'foobar')
+      .click('#auth-submit')
+    await browser.el('.mlh-user-name')
+  }
+
+  // Visits a page and returns a jQuery-like `$` API
+  browser.page = (path) =>
+    browser
+      .goto(`${APP_URL}${path}`)
+      .evaluate(() => document.documentElement.innerHTML)
+      .then(cheerio.load)
+
+  // Wait for an element to appear and return the inner html
+  browser.el = async (selector) => {
+    await browser.wait(selector)
+    const html = await browser.evaluate((selector) => {
+      return document.querySelector(selector).innerHTML
+    }, selector)
+    return html
+  }
+  return browser
+}
+
 const warn = (e) => console.log(chalk.red(e))
 
 const startForce = (port) =>
@@ -85,9 +113,25 @@ const startForce = (port) =>
     }))
   })
 
+const newApp = () => {
+  const app = express()
+  app.use(bodyParser.json())
+  app.use(cors())
+  return app
+}
+
 const startGravity = (port) =>
   new Promise((resolve, reject) => {
-    const app = express()
+    const app = newApp()
+    app.post('/oauth2/access_token', (req, res) => {
+      res.send(require('../fixtures/gravity/access_token.json'))
+    })
+    app.get('/api/v1/me/authentications', (req, res) => {
+      res.send(require('../fixtures/gravity/authentications.json'))
+    })
+    app.get('/api/v1/me', (req, res) => {
+      res.send(require('../fixtures/gravity/me.json'))
+    })
     app.get('/api/v1/xapp_token', (req, res) => {
       res.send({
         xapp_token: 'xapp-token',
@@ -102,7 +146,7 @@ const startGravity = (port) =>
 
 const startApp = (port) =>
   new Promise((resolve, reject) => {
-    const app = express()
+    const app = newApp()
     servers.push(app.listen(port, (err) => {
       if (err) reject(err)
       else resolve(app)

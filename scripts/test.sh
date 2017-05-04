@@ -5,12 +5,12 @@ set -e -x
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
-    yarn acceptance
-    yarn mocha test/lib/*
-    yarn mocha $(find desktop/test -name '*.coffee')
-    yarn mocha $(find mobile/test -name '*.coffee')
+    yarn assets
+    yarn acceptance test/acceptance/*.js
     ;;
   1)
+    yarn mocha test/lib/*
+    yarn mocha $(find desktop/test -name '*.coffee')
     yarn mocha $(find desktop/components/*/test -name '*.coffee')
     yarn mocha $(find desktop/components/**/*/test -name '*.coffee')
     ;;
@@ -20,6 +20,7 @@ run () {
     yarn mocha $(find desktop/apps/*/**/*/test -name '*.coffee')
     ;;
   3)
+    yarn mocha $(find mobile/test -name '*.coffee')
     yarn mocha $(find mobile/components/*/test -name '*.coffee')
     yarn mocha $(find mobile/components/**/*/test -name '*.coffee')
     yarn mocha $(find mobile/apps/*/test -name '*.coffee')
