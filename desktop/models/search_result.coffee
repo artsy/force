@@ -57,7 +57,6 @@ module.exports = class SearchResult extends Backbone.Model
     _s.capitalize model
 
   imageUrl: ->
-    return null if @get('display_model') is 'Artist'
     return "/images/icon-70.png" if @get('display_model') in ['Page', 'City'] # internal pages
     @get('image_url')
 
