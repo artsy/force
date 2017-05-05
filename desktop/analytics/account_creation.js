@@ -89,6 +89,10 @@ if (Cookies.get('analytics-signup')) {
   }
 }
 
+analyticsHooks.on('auth:login', function (options) {
+  analytics.track('Successfully logged in')
+})
+
 // Triggered sign up form via save button
 if (!sd.CURRENT_USER) {
   $('.artwork-item-image-container .overlay-button-save').click(function () {
