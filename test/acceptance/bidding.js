@@ -25,7 +25,7 @@ describe('Bidding flow', () => {
 
   after(teardown)
 
-  it('can see the bid dropdown from auction to artwork page', async () => {
+  xit('can see the bid dropdown from auction to artwork page', async () => {
     await browser.page('/auction/rago-auctions-19th-slash-20th-c-american-slash-european-art')
     await browser.login()
     await browser.el('[href*="/artwork/jean-dupas-untitled"]')
