@@ -18,5 +18,4 @@ query = require './query.coffee'
       upcomingFairs: upcomingFairs
       pastFairs: pastFairs
       ViewHelpers: ViewHelpers
-  .catch (err) ->
-    next(err if NODE_ENV is 'development')
+  .catch next

@@ -20,9 +20,9 @@ html
             | Internal Error
 
         .error-handler-inner
-          if detail && code !== 404
+          if (detail || message) && code !== 404
             pre.error-handler-trace
-              = detail
+              = detail || message
           p
             | Please contact
             = ' '

@@ -53,7 +53,7 @@ sd = require('sharify').data
       else
         res.redirect artist.href
 
-    .catch (err) -> next(err if NODE_ENV is 'development')
+    .catch next
 
 @tab = (req, res, next) =>
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
@@ -90,6 +90,6 @@ sd = require('sharify').data
                   name: user.name
                   href: "/artist/#{req.params.id}?#{qs.stringify req.query}"
                   artist: artist
-              .catch (err) -> next(err if NODE_ENV is 'development')
+              .catch (err) -> next
   else
     res.redirect "/artist/#{req.params.id}"

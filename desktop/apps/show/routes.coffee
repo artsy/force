@@ -146,5 +146,4 @@ query = """
       res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show
       data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
       res.render 'index', data
-    .catch (err) ->
-      next(err if NODE_ENV is 'development')
+    .catch next
