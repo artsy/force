@@ -35,7 +35,7 @@ query = require './queries/editorial_articles.coffee'
           articles: articles
           crop: crop
 
-    .catch (err) -> next(err if NODE_ENV is 'development')
+    .catch next
 
 setupEmailSubscriptions = (user, cb) ->
   return cb({ editorial: false }) unless user?.email
