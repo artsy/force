@@ -5,11 +5,21 @@ mediator = require '../../../../lib/mediator.coffee'
 templateMap['phone_number'] = -> require('./templates/phone_number.jade') arguments...
 
 module.exports = class InquireViaPhoneModalView extends AuthModalView
+  initialize: (options) ->
+    super
+    mediator.on 'modal:closed', @refreshPageIfLoggedIn
+
   template: ->
     templateToRender = if sd.CURRENT_USER then 'phone_number' else @state.get('mode')
     templateMap[templateToRender] arguments...
 
+  refreshPageIfLoggedIn: =>
+    if @loggedIn
+      location.reload()
+
   onSubmitSuccess: (model, response, options) =>
+    @loggedIn = true
+
     analyticsHooks.trigger "auth:#{@state.get 'mode'}"
     @reenableForm null, reset: false
 
