@@ -1,4 +1,4 @@
-InquireViaPhoneModalView = require './components/inquire_via_phone_modal.coffee'
+InquireViaPhoneModalView = require '../inquire_via_phone/index.coffee'
 
 module.exports = ($el) ->
   $el

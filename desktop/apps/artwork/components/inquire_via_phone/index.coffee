@@ -1,8 +1,8 @@
-AuthModalView = require '../../../../../components/auth_modal/view.coffee'
-{ templateMap } = require '../../../../../components/auth_modal/maps.coffee'
-mediator = require '../../../../../lib/mediator.coffee'
+AuthModalView = require '../../../../components/auth_modal/view.coffee'
+{ templateMap } = require '../../../../components/auth_modal/maps.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 
-templateMap['phone_number'] = -> require('../templates/phone_number.jade') arguments...
+templateMap['phone_number'] = -> require('./templates/phone_number.jade') arguments...
 
 module.exports = class InquireViaPhoneModalView extends AuthModalView
   template: ->
