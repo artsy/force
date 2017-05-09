@@ -7,6 +7,7 @@ mkdir public
 mkdir public/assets
 NODE_ENV=production browserify \
   $(find desktop/assets mobile/assets -name '*.coffee') \
+  -p prundupify \
   -t babelify \
   -t caching-coffeeify \
   -t jadeify \
