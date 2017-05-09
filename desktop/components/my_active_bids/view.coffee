@@ -29,7 +29,7 @@ module.exports = class MyActiveBids extends Backbone.View
       @bidderPositions = data.me?.lot_standings
 
   render: =>
-    @$el.html @template myActiveBids: @bidderPositions, helpers: { auction: { liveAuctionUrl } }
+    @$el.html @template myActiveBids: @bidderPositions, viewHelpers: { liveAuctionUrl }
     this
 
   remove: ->

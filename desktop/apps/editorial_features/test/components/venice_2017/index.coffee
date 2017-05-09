@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 Article = require '../../../../../models/article'
 Curation = require '../../../../../models/curation.coffee'
 { resolve } = require 'path'
+markdown = require '../../../../../components/util/markdown.coffee'
 
 describe 'Venice Main', ->
 
@@ -18,6 +19,7 @@ describe 'Venice Main', ->
           scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
+        markdown: markdown
         crop: crop = sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
       @curation =
@@ -195,6 +197,7 @@ describe 'VeniceView isSubscribed', ->
           scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
+        markdown: markdown
         crop: sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
       @curation =

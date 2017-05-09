@@ -7,7 +7,7 @@ if section.published
     .venice-body__left
       h2 About the Film
       .venice-body__item-description
-        p=section.description
+        p!=markdown(section.description)
       .venice-body__headset-prompt
         p For the most immersive 3D experience, watch in Google Cardboard via the YouTube app.
         a(href=section.video_url_external).open-youtube

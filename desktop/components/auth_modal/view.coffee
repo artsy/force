@@ -45,7 +45,6 @@ module.exports = class AuthModalView extends ModalView
     @state = new State mode
 
     @templateData = _.extend {
-      title: options.title
       copy: @renderCopy(options.copy)
       redirectTo: switch @state.get 'mode'
         when 'login' then @redirectTo or location.pathname

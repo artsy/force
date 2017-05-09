@@ -8,6 +8,8 @@ Curation = require '../../../models/curation'
 rewire = require 'rewire'
 routes = rewire '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+markdown = require '../../../components/util/markdown.coffee'
+
 
 describe 'EOY route', ->
 

@@ -4,6 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Curation = require '../../../../../models/curation.coffee'
 Article = require '../../../../../models/article'
+markdown = require '../../../../../components/util/markdown.coffee'
 { resolve } = require 'path'
 
 describe 'Venice Video', ->
@@ -15,6 +16,7 @@ describe 'Venice Video', ->
         jQuery: benv.require('jquery')
         moment: require 'moment'
         crop: sinon.stub()
+        markdown: markdown
         VRView: Player: (@player = sinon.stub()).returns
           on: sinon.stub()
           play: @play = sinon.stub()

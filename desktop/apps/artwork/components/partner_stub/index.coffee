@@ -7,7 +7,6 @@ module.exports = ($el) ->
       e.preventDefault()
       @modal = new InquireViaPhoneModalView
         width: '500px'
-        title: 'Call gallery'
         copy:
           login: 'Log in to Artsy to call gallery'
           signup: 'Create an Artsy account to call gallery'
