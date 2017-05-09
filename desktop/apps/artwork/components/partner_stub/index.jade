@@ -1,6 +1,7 @@
 - var partner = artwork.partner
 - var contacts = helpers.partner_stub.contacts(partner.locations)
 - var location = helpers.partner_stub.location(partner.locations)
+- var artistIds = helpers.partner_stub.artistIds(artwork.artists)
 
 unless artwork.is_in_auction
   .artwork-partner-stub( class='js-artwork-partner-stub' )
@@ -33,6 +34,7 @@ unless artwork.is_in_auction
               data-partner_id= partner._id
               data-artwork_id= artwork._id
               data-partner= partner
+              data-artist_ids= artistIds
             )
               | Inquire via phone
           else

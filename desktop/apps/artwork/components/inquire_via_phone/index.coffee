@@ -1,4 +1,5 @@
 AuthModalView = require '../../../../components/auth_modal/view.coffee'
+{ Following } = require '../../../../components/follow_button/index.coffee'
 { templateMap } = require '../../../../components/auth_modal/maps.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 
@@ -7,7 +8,9 @@ templateMap['phone_number'] = -> require('./templates/phone_number.jade') argume
 module.exports = class InquireViaPhoneModalView extends AuthModalView
   initialize: (options) ->
     super
+    { @artistIds } = options
     mediator.on 'modal:closed', @refreshPageIfLoggedIn
+    mediator.on 'auth:sign_up:success', @followArtists
 
   template: ->
     templateToRender = if sd.CURRENT_USER then 'phone_number' else @state.get('mode')
@@ -16,6 +19,12 @@ module.exports = class InquireViaPhoneModalView extends AuthModalView
   refreshPageIfLoggedIn: =>
     if @loggedIn
       location.reload()
+
+  followArtists: =>
+    following = new Following(null, kind: 'artist')
+
+    for artistId in @artistIds
+      following.follow artistId
 
   onSubmitSuccess: (model, response, options) =>
     @loggedIn = true
