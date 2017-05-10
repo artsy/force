@@ -22,3 +22,5 @@ module.exports =
     uniq locations
       .filter ({ phone }) ->
         phone?
+  artistIds: (artists) ->
+    _.map(artists, (artist) -> artist.id)

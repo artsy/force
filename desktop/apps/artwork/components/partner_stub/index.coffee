@@ -1,4 +1,4 @@
-InquireViaPhoneModalView = require './components/inquire_via_phone_modal.coffee'
+InquireViaPhoneModalView = require '../inquire_via_phone/index.coffee'
 
 module.exports = ($el) ->
   $el
@@ -11,6 +11,7 @@ module.exports = ($el) ->
           login: 'Log in to Artsy to call gallery'
           signup: 'Create an Artsy account to call gallery'
           register: 'Create an Artsy account to call gallery'
+        artistIds: JSON.parse(e.toElement.dataset.artist_ids)
         userData:
           partner: JSON.parse(e.toElement.dataset.partner)
   $el
