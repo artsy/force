@@ -96,18 +96,6 @@ describe 'article template', ->
       asset: ->
     html.should.containEql '<meta name="robots" content="noindex">'
 
-  it 'renders Venice 2017 banner if in Venice Section', ->
-    html = render('article')
-      article: new Article
-        title: 'Title page'
-        sections: []
-        section_ids: ['123']
-        contributing_authors: []
-      moment: moment
-      sd: VENICE_2015_SECTION: '123'
-      asset: ->
-    html.should.containEql '<h2>Explore our 360° coverage of the 2017 Venice Biennale</h2>'
-
 describe 'amp template', ->
 
   it 'renders headers and footers', ->

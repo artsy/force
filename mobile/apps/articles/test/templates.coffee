@@ -2,7 +2,6 @@ _ = require 'underscore'
 fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
-benv = require 'benv'
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { resolve } = require 'path'
@@ -69,4 +68,4 @@ describe 'section template', ->
       asset: ->
       veniceBanner: true
       featuredSection: new Section
-    html.should.containEql '<h2>Explore our 360° coverage of the 2017 Venice Biennale</h2>'
+    html.should.containEql 'venice-redirect-banner--articles'

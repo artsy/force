@@ -57,4 +57,4 @@ describe 'section template', ->
       asset: ->
       section: new Section
       veniceBanner: true
-    html.should.containEql '<h2>Explore our 360° coverage of the 2017 Venice Biennale</h2>'
+    html.should.containEql 'venice-redirect-banner--articles'

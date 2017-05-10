@@ -48,12 +48,12 @@ describe 'ArticleIndexView', ->
       }
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
-      $.fn.fadeOut = sinon.stub()
       sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       @ArticleIndexView.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
+      @ArticleIndexView.__set__ 'VeniceBanner', @VeniceBanner = sinon.stub()
       done()
 
   after ->
@@ -82,6 +82,10 @@ describe 'ArticleIndexView', ->
       @view.setupTeamChannel()
       @TeamChannelNavView.args[0][0].$content.selector.should.containEql '.article-content'
       @TeamChannelNavView.args[0][0].offset.should.equal 0
+
+    it 'sets up the VeniceBanner', ->
+      @view.setupVeniceBanner()
+      @VeniceBanner.args[0][0].el.selector.should.eql 'body .venice-redirect-banner--article'
 
   describe '#initialize infinite scroll articles', ->
 
@@ -152,8 +156,3 @@ describe 'ArticleIndexView', ->
       $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
       $('.articles-promoted__explore-button').text().should.equal 'Explore Auction'
       $('.articles-promoted__explore').attr('href').should.equal '/sale/whtney-art-party'
-
-  describe 'Venice section articles', ->
-    it '#closeVeniceBanner closes the banner', ->
-      $('.venice-redirect-banner a.icon-close').click()
-      console.log $.fn.fadeOut.called.should.eql true

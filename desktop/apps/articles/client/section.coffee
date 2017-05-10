@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Articles = require '../../../collections/articles.coffee'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
+VeniceBanner = require '../../../components/venice_banner/index.coffee'
 GalleryInsightsView = require '../../../components/email/client/gallery_insights.coffee'
 sd = require('sharify').data
 
@@ -21,13 +22,7 @@ module.exports = class SectionView extends Backbone.View
         sort: '-published_at'
     feedView.render()
 
-  events:
-    'click .venice-redirect-banner a.icon-close' : 'closeVeniceBanner'
-
-  closeVeniceBanner: (e) ->
-    e.preventDefault()
-    $('.venice-redirect-banner').fadeOut()
-
 module.exports.init = ->
   new SectionView el: $('body')
   new GalleryInsightsView el: $('body')
+  new VeniceBanner el: $('.venice-redirect-banner--articles')

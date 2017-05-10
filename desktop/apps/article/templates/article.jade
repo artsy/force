@@ -26,7 +26,6 @@ block body
       //- Render banner for venice 2017 if article is in venice section
       if article.get('section_ids') && article.get('section_ids').includes(sd.VENICE_2015_SECTION)
         .venice-redirect-banner--article
-          include ../../articles/templates/venice_banner
 
     if sd.SCROLL_ARTICLE === "infinite"
       #article-loading: .loading-spinner
