@@ -94,7 +94,7 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
       Q.all [
         featuredArtists.fetch()
       ]
-      .then -> @_parseAndFetchArtists featuredArtists
+      .then => @_parseAndFetchArtists featuredArtists
       .then (artists) =>
         @subViews.push sav = new SearchArtistsView
           el: @$('.arbv-follow-search-container')
