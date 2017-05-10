@@ -71,7 +71,6 @@ module.exports =
   PORT: 3004
   POSITRON_URL: 'http://localhost:3005'
   PREDICTION_URL: 'https://live.artsy.net'
-  RAYGUN_KEY: null
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   REQUEST_EXPIRE_MS: 60000 # 1 minute
   REQUEST_LIMIT: 120
