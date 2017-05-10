@@ -10,7 +10,7 @@ import FilterArtworksQueryConfig from '../../../node_modules/@artsy/reaction-for
 
 function artsyNetworkLayer (user) {
   return new Relay.DefaultNetworkLayer(sd.METAPHYSICS_ENDPOINT, {
-    headers: !sd.CURRENT_USER ? {
+    headers: sd.CURRENT_USER ? {
       'X-USER-ID': sd.CURRENT_USER.id,
       'X-ACCESS-TOKEN': sd.CURRENT_USER.accessToken
     } : {}
@@ -18,7 +18,7 @@ function artsyNetworkLayer (user) {
 }
 
 function init () {
-  Relay.injectNetworkLayer(artsyNetworkLayer())
+  Relay.injectNetworkLayer(artsyNetworkLayer(sd.CURRENT_USER))
   ReactDOM.render(
     <Artsy.ContextProvider currentUser={sd.CURRENT_USER}>
       <Relay.RootContainer
