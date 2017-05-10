@@ -19,6 +19,7 @@ describe 'ArticleIndexView', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @model = new Article _.extend {}, fixtures.article,
+        section_ids: ['123']
         sections: [
           { type: 'text', body: 'Foo' }
           {
@@ -37,6 +38,7 @@ describe 'ArticleIndexView', ->
           ARTICLE: @model.attributes
           SUPER_SUB_ARTICLES: []
           ARTICLE_CHANNEL: @channel
+          VENICE_2015_SECTION: '123'
         }
         resize: resize
         crop: crop
@@ -46,6 +48,7 @@ describe 'ArticleIndexView', ->
       }
       $.onInfiniteScroll = sinon.stub()
       $.fn.waypoint = sinon.stub()
+      $.fn.fadeOut = sinon.stub()
       sinon.stub Backbone, 'sync'
       @ArticleIndexView = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['articleTemplate', 'promotedTemplate']
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
@@ -149,3 +152,8 @@ describe 'ArticleIndexView', ->
       $('.articles-promoted__name').text().should.equal 'Whitney Art Party'
       $('.articles-promoted__explore-button').text().should.equal 'Explore Auction'
       $('.articles-promoted__explore').attr('href').should.equal '/sale/whtney-art-party'
+
+  describe 'Venice section articles', ->
+    it '#closeVeniceBanner closes the banner', ->
+      $('.venice-redirect-banner a.icon-close').click()
+      console.log $.fn.fadeOut.called.should.eql true

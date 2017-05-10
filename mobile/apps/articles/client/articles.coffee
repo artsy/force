@@ -11,6 +11,9 @@ request = require 'superagent'
 
 module.exports.MagazineView = class MagazineView extends Backbone.View
 
+  events:
+    'click .venice-redirect-banner a.icon-close' : 'closeVeniceBanner'
+
   initialize: ({@offset})->
     @$spinner = @$('#articles-page .loading-spinner')
     @$('.is-show-more-button').click => @startInfiniteScroll()
@@ -70,6 +73,10 @@ module.exports.MagazineView = class MagazineView extends Backbone.View
       @$('#articles-feed-empty-message').hide()
     else
       @$('#articles-feed-empty-message').show()
+
+  closeVeniceBanner: (e) ->
+    e.preventDefault()
+    $('.venice-redirect-banner').fadeOut()
 
 module.exports.init = ->
   bootstrap()

@@ -21,6 +21,9 @@ promotedTemplate = -> require('../templates/promoted_content.jade') arguments...
 
 module.exports = class ArticleIndexView extends Backbone.View
 
+  events:
+    'click .venice-redirect-banner a.icon-close' : 'closeVeniceBanner'
+
   initialize: (options) ->
     @params = new Backbone.Model
       channel_id: sd.ARTSY_EDITORIAL_CHANNEL
@@ -104,6 +107,10 @@ module.exports = class ArticleIndexView extends Backbone.View
 
   nextPage: =>
     @params.set offset: (@params.get('offset') + 5) or 0
+
+  closeVeniceBanner: (e) ->
+    e.preventDefault()
+    $('.venice-redirect-banner').fadeOut()
 
   setupPromotedContent: =>
     if @article.get('channel_id') is sd.PC_ARTSY_CHANNEL
