@@ -51,15 +51,15 @@ module.exports =
   SAILTHRU_SECRET: ''
   SECURE_IMAGES_URL: 'https://d1ycxz9plii3tb.cloudfront.net'
   SEGMENT_WRITE_KEY: null
-  SENTRY_PRIVATE_DSN: null,
-  SENTRY_PUBLIC_DSN: null,
+  SENTRY_PRIVATE_DSN: null
+  SENTRY_PUBLIC_DSN: null
   SESSION_COOKIE_KEY: 'microgravity-sess'
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_SECRET: 'artsyoss'
   STRIPE_PUBLISHABLE_KEY: null
   TWITTER_CONSUMER_KEY: null
   TWITTER_CONSUMER_SECRET: null
-
+  VENICE_2015_SECTION: null
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
 # "['foo']" and config will attempt to JSON.parse them into non-string types.

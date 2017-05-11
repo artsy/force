@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@artsy/reaction-force@^0.1.36":
-  version "0.1.36"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.36.tgz#ee5bfc46ec91d002f9f8a826b9070cff2ce607d8"
+"@artsy/reaction-force@^0.1.38":
+  version "0.1.38"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction-force/-/reaction-force-0.1.38.tgz#7b8ab79b454101b19c04f3bcca138c339cef7afe"
   dependencies:
     artsy-passport "^1.6.1"
     artsy-xapp "^1.0.4"
@@ -93,7 +93,7 @@ acorn-jsx@^3.0.0:
   dependencies:
     acorn "^3.0.4"
 
-acorn@^1.0.1:
+acorn@^1.0.1, acorn@^1.0.3:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-1.2.2.tgz#c8ce27de0acc76d896d2b1fad3df588d9e82f014"
 
@@ -322,9 +322,28 @@ artsy-gemini-upload@0.0.6:
     chalk "^1.1.3"
     morgan "^1.8.1"
 
-artsy-passport@^1.6.1, artsy-passport@^1.7.2:
+artsy-passport@^1.6.1:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.2.tgz#d5ae66a1024b31f0b07a48cebe9cbad1e2aa3ed0"
+  dependencies:
+    analytics-node "^2.1.0"
+    async "^1.5.0"
+    coffee-script "^1.9.2"
+    csurf "^1.8.3"
+    dotenv "^4.0.0"
+    express "^4.12.3"
+    mailcheck "^1.1.1"
+    passport "^0.2.1"
+    passport-facebook "^2.0.0"
+    passport-linkedin "^1.0.0"
+    passport-local "^1.0.0"
+    passport-twitter "^1.0.3"
+    superagent "^1.2.0"
+    underscore.string "^3.2.2"
+
+artsy-passport@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.4.tgz#6e7e32c38e41f223e21f4a70a480022278782d3c"
   dependencies:
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -1263,6 +1282,15 @@ browser-stdout@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.0.tgz#f351d32969d32fa5d7a5567154263d928ae3bd1f"
 
+browser-unpack@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/browser-unpack/-/browser-unpack-1.2.0.tgz#357aee31fc467831684d063e4355e070a782970d"
+  dependencies:
+    acorn "^4.0.3"
+    browser-pack "^5.0.1"
+    concat-stream "^1.5.0"
+    minimist "^1.1.1"
+
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/browserify-aes/-/browserify-aes-1.0.6.tgz#5e7725dbdef1fd5930d4ebab48567ce451c48a0a"
@@ -1479,6 +1507,17 @@ builtin-modules@^1.0.0:
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
+
+bundle-collapser@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/bundle-collapser/-/bundle-collapser-1.2.1.tgz#e119afc92638e440b9085f47ae081fa756cba33d"
+  dependencies:
+    browser-pack "^5.0.1"
+    browser-unpack "^1.1.0"
+    concat-stream "^1.5.0"
+    falafel "^1.2.0"
+    minimist "^1.1.1"
+    through2 "^2.0.0"
 
 bytes@2.4.0:
   version "2.4.0"
@@ -1818,7 +1857,7 @@ concat-stream@1.6.0, concat-stream@^1.4.6, concat-stream@^1.4.7:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-concat-stream@^1.5.2, concat-stream@~1.5.0, concat-stream@~1.5.1:
+concat-stream@^1.5.0, concat-stream@^1.5.2, concat-stream@~1.5.0, concat-stream@~1.5.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.5.2.tgz#708978624d856af41a5a741defdd261da752c266"
   dependencies:
@@ -2566,6 +2605,13 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
+envify@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/envify/-/envify-4.0.0.tgz#f791343e3d11cc29cce41150300a8af61c66cab0"
+  dependencies:
+    esprima "~3.1.0"
+    through "~2.3.4"
+
 enzyme@^2.7.1:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-2.8.2.tgz#6c8bcb05012abc4aa4bc3213fb23780b9b5b1714"
@@ -3034,6 +3080,10 @@ extend@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.0.tgz#5a474353b9f3353ddd8176dfd37b91c83a46f1d4"
 
+extend@^1.2.1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-1.3.0.tgz#d1516fb0ff5624d2ebf9123ea1dac5a1994004f8"
+
 external-editor@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/external-editor/-/external-editor-1.1.1.tgz#12d7b0db850f7ff7e7081baf4005700060c4600b"
@@ -3083,6 +3133,15 @@ factor-bundle@^2.5.0:
     stream-combiner "~0.2.1"
     through2 "^0.5.1"
     xtend "^4.0.0"
+
+falafel@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/falafel/-/falafel-1.2.0.tgz#c18d24ef5091174a497f318cd24b026a25cddab4"
+  dependencies:
+    acorn "^1.0.3"
+    foreach "^2.0.5"
+    isarray "0.0.1"
+    object-keys "^1.0.6"
 
 fast-levenshtein@~2.0.4:
   version "2.0.6"
@@ -4760,7 +4819,7 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
-minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0, minimist@~1.2.0:
+minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
@@ -5100,7 +5159,7 @@ object-is@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.0.1.tgz#0aa60ec9989a0b3ed795cf4d06f62cf1ad6539b6"
 
-object-keys@^1.0.10, object-keys@^1.0.8:
+object-keys@^1.0.10, object-keys@^1.0.6, object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
@@ -5608,6 +5667,12 @@ proxy-agent@2:
     pac-proxy-agent "1"
     socks-proxy-agent "2"
 
+prundupify@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/prundupify/-/prundupify-1.0.0.tgz#772874e2a6b355e8f7179313e71f9f0545ec98ee"
+  dependencies:
+    through2 "^2.0.1"
+
 ps-tree@0.0.x:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/ps-tree/-/ps-tree-0.0.3.tgz#dbf8d752a7fe22fa7d58635689499610e9276ddc"
@@ -5726,10 +5791,6 @@ raw-body@~2.2.0:
     bytes "2.4.0"
     iconv-lite "0.4.15"
     unpipe "1.0.0"
-
-raygun4js@^2.5.1:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/raygun4js/-/raygun4js-2.5.3.tgz#0a49b64b2b23361c899bd1edd97778375bc40fb1"
 
 rc-align@2.x:
   version "2.3.4"
@@ -7110,7 +7171,7 @@ through2@^1.0.0:
     readable-stream ">=1.1.13-1 <1.2.0-0"
     xtend ">=4.0.0 <4.1.0-0"
 
-through2@^2.0.0, through2@^2.0.2:
+through2@^2.0.0, through2@^2.0.1, through2@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
   dependencies:
@@ -7267,7 +7328,7 @@ ua-parser@^0.3.5:
   dependencies:
     yamlparser ">=0.0.2"
 
-uglify-js@^2.8.22:
+uglify-js@2.x.x, uglify-js@^2.8.22:
   version "2.8.22"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.22.tgz#d54934778a8da14903fa29a326fb24c0ab51a1a0"
   dependencies:
@@ -7286,6 +7347,16 @@ uglify-js@~2.2.5:
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+
+uglifyify@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/uglifyify/-/uglifyify-3.0.4.tgz#487e080a5a7798880e68e90def9b06681fb13bd2"
+  dependencies:
+    convert-source-map "~1.1.0"
+    extend "^1.2.1"
+    minimatch "^3.0.2"
+    through "~2.3.4"
+    uglify-js "2.x.x"
 
 uid-number@^0.0.6:
   version "0.0.6"

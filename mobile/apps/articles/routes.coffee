@@ -45,7 +45,7 @@ module.exports.section = (req, res, next) ->
         success: (articles) ->
           res.locals.sd.SECTION = section
           email = res.locals.sd.CURRENT_USER?.email
-          res.render 'section', featuredSection: section, articles: articles
+          res.render 'section', featuredSection: section, articles: articles, veniceBanner: true
 
 module.exports.articles = (req, res, next) ->
   query = """

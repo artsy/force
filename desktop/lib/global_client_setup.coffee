@@ -9,8 +9,7 @@ Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
-RavenClient = require 'raven-js'
-rg4js = require 'raygun4js'
+Raven = require 'raven-js'
 sd = require('sharify').data
 mediator = require './mediator.coffee'
 templateModules = require './template_modules.coffee'
@@ -29,7 +28,6 @@ module.exports = ->
   listenForInvert()
   listenForBounce()
   confirmation.check()
-  setupRaygun()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -59,11 +57,6 @@ setupReferrerTracking = ->
     Cookies.set 'force-referrer', document.referrer
     Cookies.set 'force-session-start', window.location.href
 
-setupRaygun = ->
-  if sd.RAYGUN_KEY
-    rg4js 'enableCrashReporting', true
-    rg4js 'apiKey', sd.RAYGUN_KEY
-
 setupJquery = ->
   require 'typeahead.js/dist/typeahead.bundle.min.js'
   require 'jquery.transition'
@@ -89,4 +82,5 @@ setupJquery = ->
   window[key] = helper for key, helper of templateModules
 
 setupErrorReporting = ->
-  RavenClient.config(sd.SENTRY_PUBLIC_DSN).install()
+  Raven.config(sd.SENTRY_PUBLIC_DSN).install()
+  Raven.setUserContext _.pick(user, 'id', 'email') if user = sd.CURRENT_USER
