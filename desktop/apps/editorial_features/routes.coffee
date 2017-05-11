@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
 Q = require 'bluebird-q'
+twilio = require 'twilio'
 markdown = require '../../components/util/markdown.coffee'
 httpProxy = require 'http-proxy'
 Curation = require '../../models/curation.coffee'
@@ -9,7 +10,7 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config.coffee'
+{ WHITELISTED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = require '../../config.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 
@@ -79,6 +80,18 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
           isSubscribed: @isSubscribed or false
           sub_articles: @veniceSubArticles?.toJSON()
           videoGuide: @videoGuide
+
+@sendSMS = (req, res, next) ->
+  twilioClient = new twilio.RestClient TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
+  to = req.body.to.replace /[^\d\+]/g, ''
+  message = req.body.message
+  twilioClient.sendSms
+    to: to
+    from: TWILIO_NUMBER
+    body: message
+  , (err, data) ->
+    return res.json err.status or 400, { msg: err.message } if err
+    res.send 201, { msg: "success", data: data }
 
 @vanity = (req, res, next) ->
   whitelistedAssets = WHITELISTED_VANITY_ASSETS
