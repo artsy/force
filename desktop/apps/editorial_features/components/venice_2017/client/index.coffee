@@ -194,7 +194,6 @@ module.exports = class VeniceView extends Backbone.View
         to: $('.venice-body__text-link input').val()
         message: 'Explore Venice in 360°: ' + url
       error: (xhr) ->
-        console.log xhr.responseJSON.msg
         new FlashMessage message: xhr.responseJSON.msg
       success: ->
         new FlashMessage message: 'Message sent, please check your phone.'
