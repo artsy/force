@@ -44,16 +44,18 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
   @veniceSubArticles = new Articles
   @videoGuide = new Article(id: sd.EF_VIDEO_GUIDE)
   @curation.fetch
+    cache: true
     error: next
     success: (curation) =>
       promises = [
         if req.user then subscribedToEditorial(req.user.get('email')) else Promise.resolve()
         @videoGuide.fetch(
+          cache: true
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
       ]
       if @curation.get('sub_articles').length
-        promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles')) )
+        promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles'), cache: true) )
       Q.all(promises)
       .then =>
         videoIndex = setVideoIndex(curation, req.params.slug)
@@ -90,7 +92,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
     from: TWILIO_NUMBER
     body: message
   , (err, data) ->
-    return res.json err.status or 400, { msg: err.message } if err
+    return res.send err.status or 400, { msg: err.message } if err
     res.send 201, { msg: "success", data: data }
 
 @vanity = (req, res, next) ->

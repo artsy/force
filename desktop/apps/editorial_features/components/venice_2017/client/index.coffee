@@ -183,7 +183,7 @@ module.exports = class VeniceView extends Backbone.View
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
     @$('.venice-body__follow-item').show()
 
-  submitPhoneLink:(e) ->
+  submitPhoneLink: (e) ->
     e.preventDefault()
     @$('.venice-body__text-link button').addClass 'is-loading'
     url = @curation.get('sections')[@sectionIndex].video_url_external
@@ -194,6 +194,7 @@ module.exports = class VeniceView extends Backbone.View
         to: $('.venice-body__text-link input').val()
         message: 'Explore Venice in 360°: ' + url
       error: (xhr) ->
+        console.log xhr.responseJSON.msg
         new FlashMessage message: xhr.responseJSON.msg
       success: ->
         new FlashMessage message: 'Message sent, please check your phone.'
