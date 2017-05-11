@@ -111,7 +111,7 @@ module.exports = class VeniceView extends Backbone.View
   onReadMore: ->
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
-    window.scrollTo(0,window.innerHeight)
+    $('html,body').animate({ scrollTop: window.innerHeight }, 400)
 
   swapDescription: ->
     $('.venice-body--article').remove()
