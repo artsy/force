@@ -10,8 +10,13 @@ if section.published
         p!=markdown(section.description)
       .venice-body__headset-prompt
         p For the most immersive 3D experience, watch in Google Cardboard via the YouTube app.
-        a(href=section.video_url_external).open-youtube
-          button.avant-garde-button Open in YouTube app
+        if sd.IS_MOBILE
+          a(href=section.video_url_external).open-youtube
+            button.avant-garde-button Open in YouTube app
+        else
+          form.venice-body__text-link
+            input.bordered-input( placeholder='Enter phone number...', type='tel', required )
+            button.avant-garde-button Text Me A Link To App
 
     .venice-body__right
       h2 About the Film

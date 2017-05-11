@@ -118,6 +118,30 @@
     clear both
     display none
 
+  &__text-link
+    display flex
+    margin-top 30px
+    max-width 600px
+    input
+      background-color white
+      color black
+      border none
+      flex 1
+      padding-left 20px
+    .avant-garde-button
+      border 2px solid gray-color
+      padding 12px 20px
+      font-size 11px
+      margin-left 10px
+      color white
+      background-color black
+      &:hover, &:active, &.is-loading
+        color black
+        background-color white
+        border-color white
+      &.is-loading:before
+        background black
+
 @media screen and (max-width: 900px)
   .venice-body
     padding 0 1em

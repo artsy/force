@@ -45,7 +45,7 @@ describe 'EOY route', ->
       @res.render.args[0][1].superSubArticles.length.should.equal 2
       done()
 
-xdescribe 'Venice route', ->
+describe 'Venice route', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -67,30 +67,30 @@ xdescribe 'Venice route', ->
   it 'sets a video index', ->
     @req = { params: { slug: 'venice-2' } }
     routes.venice(@req, @res, @next)
-    _.defer => _.defer =>
+    _.defer => _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].videoIndex.should.equal 1
 
-  it 'defaults to the first video', ->
+  xit 'defaults to the first video', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
 
-  it 'sets a curation', ->
+  xit 'sets a curation', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
 
-  it 'sets the 360 video guide', ->
+  xit 'sets the 360 video guide', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
 
-  it 'Fetches sub articles', ->
+  xit 'Fetches sub articles', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer => _.defer =>
@@ -126,3 +126,30 @@ describe 'Vanity route', ->
     @web.args[0][3]('Error')
     @res.redirect.args[0][0].should.equal 301
     @res.redirect.args[0][1].should.equal '/articles'
+
+describe 'SMS route', ->
+  twilioConstructorArgs = null
+  twilioSendSmsArgs = null
+  send = null
+  status = null
+  json = null
+
+  beforeEach ->
+    @req = body: to: '+1 555 111 2222', message: 'Explore Venice in 360°: link'
+    @res = send: send = sinon.stub(), json: json = sinon.stub(), status: status = sinon.stub()
+    twilio = routes.__get__ 'twilio'
+    twilio.RestClient = class TwilioClientStub
+      constructor: -> twilioConstructorArgs = arguments
+      sendSms: -> twilioSendSmsArgs = arguments
+    routes.sendSMS @req, @res
+
+  it 'sends a link with a valid phone number', ->
+    twilioSendSmsArgs[0].to.should.equal '+15551112222'
+    twilioSendSmsArgs[0].body.should.match 'Explore Venice in 360°: link'
+    twilioSendSmsArgs[1] null, 'SUCCESS!'
+    send.args[0][0].should.equal 201
+    send.args[0][1].msg.should.containEql 'success'
+
+  it 'throws an error if twilio doesnt like it', ->
+    twilioSendSmsArgs[1] message: 'Error!'
+    send.args[0][1].msg.should.equal 'Error!'

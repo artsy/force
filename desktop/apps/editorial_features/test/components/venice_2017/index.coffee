@@ -16,12 +16,12 @@ describe 'Venice Main', ->
         jQuery: benv.require('jquery')
         window:
           history: replaceState: @replaceState = sinon.stub()
-          scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
         markdown: markdown
         crop: crop = sinon.stub().returns 'http://artsy.net/image.jpg'
       Backbone.$ = $
+      @animateSpy = sinon.spy $.fn, 'animate'
       @curation =
         description: 'description'
         sub_articles: [{thumbnail_title:{'Sub 1'}, thumbnail_image: 'http://artsy.net/image.jpg'}, {thumbnail_title:{'Sub 2'}, thumbnail_image: 'http://artsy.net/image2.jpg'}]
@@ -86,6 +86,7 @@ describe 'Venice Main', ->
         done()
 
   afterEach ->
+    @animateSpy.restore()
     benv.teardown()
 
   it 'initializes VeniceVideoView', ->
@@ -163,12 +164,16 @@ describe 'Venice Main', ->
   it '#onReadMore scrolls to the video description and hides completed cover (read-more)', ->
     @view.onVideoCompleted()
     $('.venice-overlay--completed .read-more').click()
-    @scrollTo.args[0][1].should.eql 900
+    @animateSpy.args[1][0].opacity.should.eql 0
+    @animateSpy.args[1][0]['z-index'].should.eql -1
+    @animateSpy.args[2][0].scrollTop.should.eql 900
 
   it '#onReadMore scrolls to the video description and hides completed cover (info icon)', ->
     @view.onVideoCompleted()
     $('.venice-info-icon').click()
-    @scrollTo.args[0][1].should.eql 900
+    @animateSpy.args[1][0].opacity.should.eql 0
+    @animateSpy.args[1][0]['z-index'].should.eql -1
+    @animateSpy.args[2][0].scrollTop.should.eql 900
 
   it '#showCta reveals a signup form', ->
     $('.venice-overlay__cta-button').click()
@@ -194,7 +199,6 @@ describe 'VeniceView isSubscribed', ->
         jQuery: benv.require('jquery')
         window:
           history: replaceState: @replaceState = sinon.stub()
-          scrollTo: @scrollTo = sinon.stub()
           innerHeight: 900
         moment: require 'moment'
         markdown: markdown

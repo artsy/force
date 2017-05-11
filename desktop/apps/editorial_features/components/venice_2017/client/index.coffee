@@ -22,6 +22,7 @@ module.exports = class VeniceView extends Backbone.View
     'click .venice-overlay__subscribe-form button': 'onSubscribe'
     'click .venice-overlay--completed__buttons .next': 'onNextVideo'
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
+    'submit .venice-body__text-link': 'submitPhoneLink'
 
   initialize: ->
     @parser = new UAParser()
@@ -111,7 +112,7 @@ module.exports = class VeniceView extends Backbone.View
   onReadMore: ->
     vid = $('.venice-overlay--completed').get(@sectionIndex)
     $(vid).animate({'opacity': 0, 'z-index': -1}, 500)
-    window.scrollTo(0,window.innerHeight)
+    $('html,body').animate({ scrollTop: window.innerHeight }, 400)
 
   swapDescription: ->
     $('.venice-body--article').remove()
@@ -181,3 +182,20 @@ module.exports = class VeniceView extends Backbone.View
         href: sd.APP_URL + sd.CURRENT_PATH
     @following.syncFollows(_.pluck @artists, 'id') if sd.CURRENT_USER?
     @$('.venice-body__follow-item').show()
+
+  submitPhoneLink: (e) ->
+    e.preventDefault()
+    @$('.venice-body__text-link button').addClass 'is-loading'
+    url = @curation.get('sections')[@sectionIndex].video_url_external
+    $.ajax
+      type: 'POST'
+      url: '/venice-biennale/sms'
+      data:
+        to: $('.venice-body__text-link input').val()
+        message: 'Explore Venice in 360°: ' + url
+      error: (xhr) ->
+        new FlashMessage message: xhr.responseJSON.msg
+      success: ->
+        new FlashMessage message: 'Message sent, please check your phone.'
+      complete: ->
+        $('.venice-body__text-link button').removeClass 'is-loading'
