@@ -47,3 +47,14 @@ describe 'section template', ->
       section: new Section _.extend _.clone(fixtures.section),
         title: 'Moo Bar'
     html.should.containEql '<li class="grid-item"><a href="/article/foobar">'
+
+  it 'renders the Venice 2017 banner', ->
+    html = render('section')
+      articles: new Articles([_.extend(fixtures.article, tier: 1)])
+      crop: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+      section: new Section
+      veniceBanner: true
+    html.should.containEql 'venice-redirect-banner--articles'

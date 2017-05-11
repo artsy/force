@@ -19,6 +19,7 @@ describe 'ArticleIndexView', ->
       benv.expose $: benv.require('jquery'), jQuery: benv.require('jquery')
       Backbone.$ = $
       @model = new Article _.extend {}, fixtures.article,
+        section_ids: ['123']
         sections: [
           { type: 'text', body: 'Foo' }
           {
@@ -37,6 +38,7 @@ describe 'ArticleIndexView', ->
           ARTICLE: @model.attributes
           SUPER_SUB_ARTICLES: []
           ARTICLE_CHANNEL: @channel
+          VENICE_2015_SECTION: '123'
         }
         resize: resize
         crop: crop
@@ -51,6 +53,7 @@ describe 'ArticleIndexView', ->
       @ArticleIndexView.__set__ 'ArticleView', sinon.stub()
       @ArticleIndexView.__set__ 'ArticlesGridView', @ArticlesGridView = sinon.stub()
       @ArticleIndexView.__set__ 'TeamChannelNavView', @TeamChannelNavView = sinon.stub()
+      @ArticleIndexView.__set__ 'VeniceBanner', @VeniceBanner = sinon.stub()
       done()
 
   after ->
@@ -79,6 +82,10 @@ describe 'ArticleIndexView', ->
       @view.setupTeamChannel()
       @TeamChannelNavView.args[0][0].$content.selector.should.containEql '.article-content'
       @TeamChannelNavView.args[0][0].offset.should.equal 0
+
+    it 'sets up the VeniceBanner', ->
+      @view.setupVeniceBanner()
+      @VeniceBanner.args[0][0].el.selector.should.eql 'body .venice-redirect-banner--article'
 
   describe '#initialize infinite scroll articles', ->
 

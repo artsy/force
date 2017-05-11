@@ -1,0 +1,45 @@
+.venice-redirect-banner
+  position fixed
+  bottom 0
+  left 0
+  right 0
+  background-color white
+  border-top 2px solid purple-color
+  text-align center
+  padding 30px
+  z-index 100
+  a
+    text-decoration none
+    transition all .35s
+  &__title
+    margin-bottom 15px
+    display block
+  h2
+    garamond-size('headline')
+  &__sub-title
+    avant-garde-size('body')
+    padding-bottom 2px
+    border-bottom 1px solid
+    &:hover
+      opacity .7
+  .icon-close
+    width 12px
+    height 12px
+    font-size 12px
+    position absolute
+    top 2px
+    right 10px
+    color gray-dark-color
+    &:hover
+      color black
+
+@media screen and (max-width 600px)
+  .venice-redirect-banner
+    padding 30px 22px
+    &__sub-title
+      avant-garde()
+    .icon-close
+      top 8px
+      right 15px
+    &--article .venice-redirect-banner
+      padding-bottom 80px
