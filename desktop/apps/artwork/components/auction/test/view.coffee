@@ -119,7 +119,8 @@ describe 'auction', ->
           .should.have.lengthOf 0
 
       describe 'bid qualification', ->
-        it 'renders a disabled REGISTRATION PENDING button', ->
+        it 'renders a disabled "Registration Pending" button', ->
+          @data.accounting = accounting
           @data.me = {
             bidders: [{
               qualified_for_bidding: false
@@ -128,7 +129,16 @@ describe 'auction', ->
           view = new @ArtworkAuctionView data: @data
           view.render()
           view.$('.artwork-auction__bid-form__button').text()
-            .should.containEql 'REGISTRATION PENDING'
+            .should.containEql 'Registration Pending'
+
+        it 'renders a auction registration button', ->
+          @data.accounting = accounting
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('a.artwork-auction__bid-form__button').length.should.equal 1
+          view.$('a.artwork-auction__bid-form__button').attr('href')
+            .should.equal "/auction-registration/#{@data.artwork.sale.id}"
 
       describe 'post-bid messages', ->
         beforeEach ->
