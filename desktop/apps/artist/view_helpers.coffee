@@ -70,7 +70,7 @@ module.exports =
       "@context": "http://schema.org"
       "@type": "Person"
       additionalType: 'Artist'
-      image: artist.image.url
+      image: artist.image?.url || ''
       name: artist.name
       url: "#{APP_URL}#{artist.href}"
       gender: artist.gender
