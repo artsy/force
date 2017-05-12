@@ -1,14 +1,14 @@
 p.avant-garde-body.inquire-via-phone-modal__title Call Gallery
 
 #auth-page.vam-outer
-  .vam-inner.garamond-l-body.inquire-via-phone-modal__body
+  .vam-inner.inquire-via-phone-modal__body
     header#auth-header
       aside
-        b= partner.name
+        b.garamond-l-body= partner.name
 
     section#auth-body
       for location in partner.locations
-        .artwork-partner-stub__phone__locations__location
+        .artwork-partner-stub__phone__locations__location.garamond-l-body
           p
             = location.city
             if location.state
