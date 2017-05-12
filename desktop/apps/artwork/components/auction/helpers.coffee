@@ -16,7 +16,7 @@ module.exports = {
     # qualified_for_bidding key and then check its value. This handles conditions
     # where we want to display the "Bid Now" button, but only to trigger a
     # login modal for the user.
-    foundKey = get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')
+    foundKey = me && get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')
 
     if foundKey
       isQualified = get(me, 'bidders.0.qualified_for_bidding')
