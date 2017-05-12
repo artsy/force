@@ -322,26 +322,7 @@ artsy-gemini-upload@0.0.6:
     chalk "^1.1.3"
     morgan "^1.8.1"
 
-artsy-passport@^1.6.1:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.2.tgz#d5ae66a1024b31f0b07a48cebe9cbad1e2aa3ed0"
-  dependencies:
-    analytics-node "^2.1.0"
-    async "^1.5.0"
-    coffee-script "^1.9.2"
-    csurf "^1.8.3"
-    dotenv "^4.0.0"
-    express "^4.12.3"
-    mailcheck "^1.1.1"
-    passport "^0.2.1"
-    passport-facebook "^2.0.0"
-    passport-linkedin "^1.0.0"
-    passport-local "^1.0.0"
-    passport-twitter "^1.0.3"
-    superagent "^1.2.0"
-    underscore.string "^3.2.2"
-
-artsy-passport@^1.7.4:
+artsy-passport@^1.6.1, artsy-passport@^1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/artsy-passport/-/artsy-passport-1.7.4.tgz#6e7e32c38e41f223e21f4a70a480022278782d3c"
   dependencies:
@@ -7036,7 +7017,7 @@ supertest@^2.0.1:
     methods "1.x"
     superagent "^2.0.0"
 
-supports-color@3.1.2:
+supports-color@3.1.2, supports-color@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -7050,7 +7031,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.2, supports-color@^3.2.3:
+supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
