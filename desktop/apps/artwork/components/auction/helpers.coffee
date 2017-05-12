@@ -10,7 +10,7 @@ pluralize = (word, count, irregular = null) ->
 
 module.exports = {
   liveAuctionUrl,
-  getBidderStatus: (me) ->
+  getBidderStatus: (me, auction) ->
 
     # Due to falsy behavior we need to check for the existence of a
     # qualified_for_bidding key and then check its value. This handles conditions
@@ -24,8 +24,10 @@ module.exports = {
         'qualified'
       else
         'registration-pending'
+    else if me && auction.require_bidder_approval
+      'register-for-bid-approval'
     else if me
-      'register-to-bid'
+      'bidding-enabled'
     else
       'logged-out'
 

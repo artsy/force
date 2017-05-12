@@ -133,12 +133,23 @@ describe 'auction', ->
 
         it 'renders a auction registration button', ->
           @data.accounting = accounting
+          @data.artwork.sale.require_bidder_approval = true
           @data.me = {}
           view = new @ArtworkAuctionView data: @data
           view.render()
           view.$('a.artwork-auction__bid-form__button').length.should.equal 1
           view.$('a.artwork-auction__bid-form__button').attr('href')
             .should.equal "/auction-registration/#{@data.artwork.sale.id}"
+
+        it 'renders an open registration bid button', ->
+          @data.accounting = accounting
+          @data.artwork.sale.require_bidder_approval = false
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('a.artwork-auction__bid-form__button').length.should.equal 1
+          view.$('a.artwork-auction__bid-form__button').attr('href')
+            .should.equal "/auction/#{@data.artwork.sale.id}/bid/#{@data.artwork.id}"
 
       describe 'post-bid messages', ->
         beforeEach ->

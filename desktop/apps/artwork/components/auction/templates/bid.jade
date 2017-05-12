@@ -1,5 +1,5 @@
 include ../../../../../components/bid_status/index
-- bidderStatus = helpers.auction.getBidderStatus(me)
+- bidderStatus = helpers.auction.getBidderStatus(me, auction)
 - actionUrl = helpers.auction.getRedirectActionUrl(bidderStatus, artwork, auction)
 - myLastMaxBid = me && me.lot_standing && me.lot_standing.most_recent_bid.max_bid.cents
 - increments = sale_artwork.bid_increments.filter(function(i) { return i > (myLastMaxBid || 0) })
@@ -34,20 +34,24 @@ if showAuctionForm
             - display = accounting.formatMoney(val, sale_artwork.symbol, 0)
             option( value=val data-display=display )= display
 
-    - bidAmount = 'Bid' + accounting.formatMoney(firstIncr / 100, sale_artwork.symbol, 0)
+    - bidAmount = 'Bid ' + accounting.formatMoney(firstIncr / 100, sale_artwork.symbol, 0)
     
     case bidderStatus
       when 'registration-pending'
         .artwork-auction__bid-form__button.avant-garde-button-black.is-block.is-disabled
           | Registration Pending
-      when 'register-to-bid'
+      when 'register-for-bid-approval'
         a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
           href='/auction-registration/#{auction.id}'
-        ) #{bidAmount}
+        )= bidAmount
+      when 'bidding-enabled'
+        a.artwork-auction__bid-form__button.avant-garde-button-black.is-block.js-register-button(
+          href='/auction/#{auction.id}/bid/#{artwork.id}'
+        )= bidAmount
       default
         button.artwork-auction__bid-form__button.avant-garde-button-black.is-block(
           class='js-artwork-auction-bid-button'
-        ) #{bidAmount}
+        )= bidAmount
 
     small.artwork-auction__bid-form__conditions
       | By placing your bid you agree to Artsy's&nbsp;

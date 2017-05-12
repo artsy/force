@@ -90,6 +90,16 @@ $(document).on('click', 'button.artwork-auction__bid-form__button', function () 
   })
 })
 
+// Clicked "Bid" but needs to register (context_type: artwork page)
+$(document).on('click', 'a.artwork-auction__bid-form__button', function () {
+  analytics.track('Clicked "Bid"', {
+    auction_slug: AUCTION_ID,
+    user_id: USER_ID,
+    context_type: 'artwork page',
+    artwork_slug: sd.PARAMS.id
+  })
+})
+
 // Confirm bid failed
 analyticsHooks.on('error', function (message) {
   if (message.match('bid must be higher')) {
