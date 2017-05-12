@@ -21,6 +21,11 @@ describe 'auction', ->
       ['template']
     )
     @data =
+      user: true
+      me:
+        bidders: [{
+          qualified_for_bidding: true
+        }]
       artwork:
         id: 'peter-alexander-wedge-with-puff'
         is_in_auction: true
@@ -112,16 +117,30 @@ describe 'auction', ->
 
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
+
+      describe 'bid qualification', ->
+        it 'renders a disabled REGISTRATION PENDING button', ->
+          @data.me = {
+            bidders: [{
+              qualified_for_bidding: false
+            }]
+          }
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('.artwork-auction__bid-form__button').text()
+            .should.containEql 'REGISTRATION PENDING'
+
       describe 'post-bid messages', ->
         beforeEach ->
           @data = Object.assign(@data, {
             user: 'existy',
             accounting: accounting
           })
+
         describe 'leading bidder & reserve met', ->
           it 'gives a winning message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: true
                 most_recent_bid:
@@ -137,7 +156,7 @@ describe 'auction', ->
         describe 'leading bidder & reserve not met', ->
           it 'gives a reserve not met message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: true
                 most_recent_bid:
@@ -154,7 +173,7 @@ describe 'auction', ->
         describe 'not leading bidder & reserve not met', ->
           it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: false
                 most_recent_bid:
@@ -171,7 +190,7 @@ describe 'auction', ->
         describe 'not leading bidder & reserve met', ->
           it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: false
                 most_recent_bid:
