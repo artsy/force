@@ -94,3 +94,8 @@ describe 'ArtistViewHelpers', ->
       auction = fabricate 'sale', is_auction: true, end_at: null, live_start_at: moment().subtract(2, 'days')
       helpers.formatAuctionDetail(auction).should.eql 'Live Bidding Now Open'
 
+  describe 'artworkJsonLD', ->
+    it 'works when an artwork has image', ->
+      artwork = fabricate 'artwork', image: null
+      (-> helpers.artworkJsonLD(artwork)).should.not.throw()
+

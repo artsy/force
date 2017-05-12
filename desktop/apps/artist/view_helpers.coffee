@@ -100,7 +100,7 @@ module.exports =
         url: "#{APP_URL}#{artwork.href}"
         image:
           "@type": 'ImageObject'
-          thumbnailUrl: artwork.image.url
+          thumbnailUrl: artwork.image?.url || ''
     }
 
   formatAuctionDetail: (auction) ->
