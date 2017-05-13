@@ -34,7 +34,7 @@ function RangeSlider (props) {
         min={minEstimate}
         max={maxEstimate}
         step={50}
-        defaultValue={[minEstimateRangeDisplay, maxEstimateRangeDisplay]}
+        value={[minEstimateRangeDisplay, maxEstimateRangeDisplay]}
         onChange={([min, max]) => updateEstimateDisplayAction(min, max)}
         onAfterChange={([min, max]) => updateEstimateRangeAction(min, max)}
       />

@@ -3,6 +3,7 @@ import MediumFilter from '../medium_filter'
 import PropTypes from 'prop-types'
 import RangeSlider from '../range_slider'
 import React from 'react'
+import ResetFiltersButton from '../reset_filters_button'
 import { connect } from 'react-redux'
 
 function Sidebar ({ isClosed }) {
@@ -10,6 +11,7 @@ function Sidebar ({ isClosed }) {
     <div className='auction-artworks-sidebar'>
       <div className='auction-artworks-sidebar__artist-filter'>
         { !isClosed && <RangeSlider /> }
+        <ResetFiltersButton />
         <MediumFilter />
         <ArtistFilter />
       </div>
@@ -28,5 +30,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
 )(Sidebar)

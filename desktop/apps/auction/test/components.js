@@ -85,12 +85,14 @@ describe('React components', () => {
       Sidebar.__Rewire__('ArtistFilter', () => <div className='artist-filter' />)
       Sidebar.__Rewire__('MediumFilter', () => <div className='medium-filter' />)
       Sidebar.__Rewire__('RangeSlider', () => <div className='range-slider' />)
+      Sidebar.__Rewire__('ResetFiltersButton', () => <div className='reset-filters-button' />)
     })
 
     afterEach(() => {
       Sidebar.__ResetDependency__('ArtistFilter')
       Sidebar.__ResetDependency__('MediumFilter')
       Sidebar.__ResetDependency__('RangeSlider')
+      Sidebar.__ResetDependency__('ResetFiltersButton')
     })
 
     it('renders the range filter if the auction is open', () => {
