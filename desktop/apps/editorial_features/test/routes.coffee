@@ -51,12 +51,12 @@ describe 'Venice route', ->
     sinon.stub Backbone, 'sync'
     Backbone.sync
       .onCall 0
-      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice'}, {slug: 'venice-2'}], sub_articles: ['123'] }
+      .yieldsTo 'success', { name: 'Inside the Biennale', sections: [{slug: 'venice', title: 'venice'}, {slug: 'venice-2'}], sub_articles: ['123'] }
       .onCall 1
       .yieldsTo 'success', {title: 'Video Guide'}
       .onCall 2
       .yieldsTo 'success', [{title: 'Sub Article'}]
-    @res = { render: sinon.stub(), locals: { sd: {CURRENT_USER: {email: 'mail@mail.com'}} }, redirect: sinon.stub() }
+    @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
     @next = sinon.stub()
     routes.__set__ 'sd', {EF_VENICE: '123', EF_VIDEO_GUIDE: '456'}
     routes.__set__ 'sailthru', sinon.stub()
@@ -67,37 +67,40 @@ describe 'Venice route', ->
   it 'sets a video index', ->
     @req = { params: { slug: 'venice-2' } }
     routes.venice(@req, @res, @next)
-    _.defer => _.defer => _.defer =>
+    _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].videoIndex.should.equal 1
 
-  xit 'defaults to the first video', ->
+  it 'defaults to the first video', ->
     @req = { params: { slug: 'blah' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.redirect.args[0].should.eql [ 301, '/venice-biennale/toward-venice' ]
 
-  xit 'sets a curation', ->
+  it 'sets a curation', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][0].should.equal 'components/venice_2017/templates/index'
       @res.render.args[0][1].curation.get('name').should.eql 'Inside the Biennale'
 
-  xit 'sets the 360 video guide', ->
+  it 'sets the 360 video guide', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
     _.defer => _.defer =>
       @res.render.args[0][1].videoGuide.get('title').should.eql 'Video Guide'
 
-  xit 'Fetches sub articles', ->
+  it 'Fetches sub articles', ->
     @req = { params: { slug: 'venice' } }
     routes.venice(@req, @res, @next)
-    _.defer => _.defer => _.defer =>
+    _.defer => _.defer =>
       @res.render.args[0][1].sub_articles.length.should.eql 1
 
-  xit 'without a user will still render'
-  xit 'renders json ld'
+  it 'renders json ld', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.locals.jsonLD.should.containEql '"headline":"Inside the Biennale venice"'
 
 describe 'Vanity route', ->
 
