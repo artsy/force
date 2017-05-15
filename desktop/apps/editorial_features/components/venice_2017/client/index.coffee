@@ -38,6 +38,7 @@ module.exports = class VeniceView extends Backbone.View
       el: $('.venice-video')
       video: @chooseVideoFile()
       slug: @section.slug
+      isMobile: @parser.getDevice().type is 'mobile'
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
@@ -87,6 +88,7 @@ module.exports = class VeniceView extends Backbone.View
     return unless e.currentTarget.getAttribute('data-state') is 'ready'
     $('.venice-nav, .venice-carousel').fadeOut()
     @VeniceVideoView.vrView.play()
+    @VeniceVideoView.fadeOutControls()
 
   fadeInCoverAndPauseVideo: ->
     $('.venice-nav, .venice-carousel').fadeIn()

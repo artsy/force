@@ -74,6 +74,7 @@ describe 'Venice Main', ->
             play: @play = sinon.stub()
             pause: @pause = sinon.stub()
           trigger: sinon.stub()
+          fadeOutControls: sinon.stub()
         VeniceView.__set__ 'initCarousel', @initCarousel = sinon.stub().yields
           cells: flickity:
             on: @on = sinon.stub()
@@ -125,6 +126,14 @@ describe 'Venice Main', ->
     $('.venice-overlay__play').first().attr 'data-state', 'ready'
     $('.venice-overlay__play').first().click()
     @play.callCount.should.equal 1
+    @view.VeniceVideoView.fadeOutControls.callCount.should.equal 1
+
+  it 'fades out controls after pressing play on mobile', ->
+    $('.venice-overlay__play').first().attr 'data-state', 'ready'
+    @view.parser =
+      getDevice: sinon.stub().returns type: 'mobile'
+    $('.venice-overlay__play').first().click()
+    @view.VeniceVideoView.fadeOutControls.callCount.should.equal 1
 
   it '#fadeInCoverAndPauseVideo', ->
     @view.fadeInCoverAndPauseVideo()
