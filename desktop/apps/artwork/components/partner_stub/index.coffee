@@ -11,9 +11,9 @@ module.exports = ($el) ->
           login: 'Log in to Artsy to call gallery'
           signup: 'Create an Artsy account to call gallery'
           register: 'Create an Artsy account to call gallery'
-        artistIds: JSON.parse(e.target.dataset.artist_ids)
+        artistIds: JSON.parse(e.currentTarget.getAttribute('data-artist_ids'))
         userData:
-          partner: JSON.parse(e.target.dataset.partner)
+          partner: JSON.parse(e.currentTarget.getAttribute('data-partner'))
   $el
     .find '.js-artwork-partner-stub-phone-toggle'
     .click (e) ->
