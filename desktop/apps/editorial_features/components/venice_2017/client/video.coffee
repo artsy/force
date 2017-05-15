@@ -16,7 +16,7 @@ module.exports = class VeniceVideoView extends Backbone.View
   initialize: (options) ->
     @video = options.video
     @slug = options.slug
-    @parser = options.parser
+    @isMobile = options.is_mobile
     @$playButton = $('#toggleplay')
     @$muteButton = $('#togglemute')
     @$time = $('.venice-video__time')
@@ -37,7 +37,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'ready', @onVRViewReady
     @vrView.on 'timeupdate', @updateTime
     @vrView.on 'error', @onVRViewError
-    @vrView.on 'play', @onVRViewPlay
 
   updateTime: (e) =>
     return if @scrubbing
@@ -55,7 +54,7 @@ module.exports = class VeniceVideoView extends Backbone.View
       @trigger 'videoCompleted'
       @trackFull()
     @scrubber.set(e.currentTime)
-    @$time.text @formatTime e.currentTime
+    @$time.text @formatTime e.currentTime if e.currentTime
 
   onVRViewReady: =>
     @duration = @vrView.getDuration()
@@ -85,10 +84,8 @@ module.exports = class VeniceVideoView extends Backbone.View
       @vrView.pause()
     @$playButton.toggleClass 'paused'
 
-  onVRViewPlay: =>
-    @fadeOutControls() if @parser.getDevice().type is 'mobile'
-
   fadeOutControls: =>
+    return unless @isMobile
     setTimeout =>
       @$controls.fadeOut()
       @$controlsOverlay.fadeIn()

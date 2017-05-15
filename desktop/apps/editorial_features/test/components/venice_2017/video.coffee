@@ -157,10 +157,12 @@ describe 'Venice Video', ->
     @view.$time.text().should.equal '00:26'
 
   it '#fadeInControls', ->
+    @view.isMobile = true
     @view.fadeInControls()
     $.fn.fadeIn.callCount.should.equal 1
 
   it '#fadeOutControls', ->
+    @view.isMobile = true
     @view.fadeOutControls()
     @clock.tick(3000)
     $.fn.fadeOut.callCount.should.equal 1
