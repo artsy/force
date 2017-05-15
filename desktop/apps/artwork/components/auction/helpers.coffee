@@ -16,18 +16,19 @@ module.exports = {
     # qualified_for_bidding key and then check its value. This handles conditions
     # where we want to display the "Bid Now" button, but only to trigger a
     # login modal or redirect to register transition for the user.
-    foundKey = get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')
+    foundQualifiedForBiddingKey = get(me, 'bidders.0', {}).hasOwnProperty('qualified_for_bidding')
 
-    if foundKey
+    if foundQualifiedForBiddingKey
       isQualified = get(me, 'bidders.0.qualified_for_bidding')
+
       if isQualified
-        'qualified'
+        'qualified-to-bid'
       else
         'registration-pending'
     else if me && auction.require_bidder_approval
-      'register-for-bid-approval'
+      'registration-required'
     else if me
-      'bidding-enabled'
+      'logged-in'
     else
       'logged-out'
 

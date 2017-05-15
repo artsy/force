@@ -80,18 +80,8 @@ $(document).on('click', '.my-active-bids-bid-button', function (e) {
   })
 })
 
-// Clicked "Bid" (context_type: artwork page)
-$(document).on('click', 'button.artwork-auction__bid-form__button', function () {
-  analytics.track('Clicked "Bid"', {
-    auction_slug: AUCTION_ID,
-    user_id: USER_ID,
-    context_type: 'artwork page',
-    artwork_slug: sd.PARAMS.id
-  })
-})
-
-// Clicked "Bid" but needs to register (context_type: artwork page)
-$(document).on('click', 'a.artwork-auction__bid-form__button', function () {
+// Clicked "Bid" (context_type: artwork page: pre-register before bidding, approval required before bidding)
+$(document).on('click', 'button.artwork-auction__bid-form__button, a.artwork-auction__bid-form__button', function () {
   analytics.track('Clicked "Bid"', {
     auction_slug: AUCTION_ID,
     user_id: USER_ID,
