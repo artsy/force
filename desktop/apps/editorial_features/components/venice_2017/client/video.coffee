@@ -16,7 +16,7 @@ module.exports = class VeniceVideoView extends Backbone.View
   initialize: (options) ->
     @video = options.video
     @slug = options.slug
-    @isMobile = options.is_mobile
+    @isMobile = options.isMobile
     @$playButton = $('#toggleplay')
     @$muteButton = $('#togglemute')
     @$time = $('.venice-video__time')
