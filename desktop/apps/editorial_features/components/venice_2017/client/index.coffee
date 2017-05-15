@@ -38,6 +38,7 @@ module.exports = class VeniceView extends Backbone.View
       el: $('.venice-video')
       video: @chooseVideoFile()
       slug: @section.slug
+      parser: @parser
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady

@@ -11,13 +11,17 @@ module.exports = class VeniceVideoView extends Backbone.View
     'click #toggleplay': 'onTogglePlay'
     'click #togglemute': 'onToggleMute'
     'click .venice-video__close': 'onCloseVideo'
+    'click .venice-video__controls-overlay': 'fadeInControls'
 
   initialize: (options) ->
     @video = options.video
     @slug = options.slug
+    @parser = options.parser
     @$playButton = $('#toggleplay')
     @$muteButton = $('#togglemute')
     @$time = $('.venice-video__time')
+    @$controls = $('#controls, .venice-video__close, .venice-video__vr-icon, .venice-info-icon')
+    @$controlsOverlay = $('.venice-video__controls-overlay')
     @setupVideo()
     @on 'swapVideo', @swapVideo
     @scrubbing = false
@@ -33,6 +37,7 @@ module.exports = class VeniceVideoView extends Backbone.View
     @vrView.on 'ready', @onVRViewReady
     @vrView.on 'timeupdate', @updateTime
     @vrView.on 'error', @onVRViewError
+    @vrView.on 'play', @onVRViewPlay
 
   updateTime: (e) =>
     return if @scrubbing
@@ -79,6 +84,20 @@ module.exports = class VeniceVideoView extends Backbone.View
     else
       @vrView.pause()
     @$playButton.toggleClass 'paused'
+
+  onVRViewPlay: =>
+    @fadeOutControls() if @parser.getDevice().type is 'mobile'
+
+  fadeOutControls: =>
+    setTimeout =>
+      @$controls.fadeOut()
+      @$controlsOverlay.fadeIn()
+    , 3000
+
+  fadeInControls: =>
+    @$controls.fadeIn()
+    @$controlsOverlay.fadeOut()
+    @fadeOutControls()
 
   onToggleMute: ->
     if @$muteButton.attr('data-state') is 'muted'
