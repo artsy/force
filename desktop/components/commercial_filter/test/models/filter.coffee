@@ -28,7 +28,7 @@ describe 'Filter', ->
       query.should.not.containEql 'fragment artist on Artist'
 
     it 'includes the artist fragment and merchandisable artists fragment if that aggregation is specified', ->
-      params = new @Params({}, {})
+      params = new @Params(aggregations: ['MERCHANDISABLE_ARTISTS'], {})
       filter = new @Filter params: params
       query = filter.query()
       query.should.containEql 'fragment artist on Artist'
