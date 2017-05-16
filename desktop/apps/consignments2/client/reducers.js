@@ -14,19 +14,16 @@ const stepsMapping = [
   {
     id: 'choose_artist',
     label: 'Verify Artist/Designer',
-    nextDisabled: true,
     title: 'Enter the name of the artist/designer who created the work'
   },
   {
     id: 'describe_work',
     label: 'Describe the Work',
-    nextDisabled: true,
     title: 'Enter details about the work'
   },
   {
     id: 'upload_photos',
     label: 'Upload Photo',
-    nextDisabled: true,
     title: 'Upload photos'
   }
 ]
@@ -35,17 +32,17 @@ const initialState = {
   currentStep: 1,
   inputs: {
     authenticity_certificate: true,
-    depth: null,
+    depth: '',
     dimensions_metric: 'in',
     edition: false,
-    height: null,
-    location: null,
-    medium: null,
-    provenance: null,
+    height: '',
+    location: '',
+    medium: '',
+    provenance: '',
     signature: true,
-    title: null,
-    width: null,
-    year: null
+    title: '',
+    width: '',
+    year: ''
   },
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
@@ -64,9 +61,93 @@ function submissionFlow (state = initialState, action) {
         return state
       }
     }
+    case actions.UPDATE_AUTHENTICITY_CERTIFICATE: {
+      return u({
+        inputs: {
+          authenticity_certificate: action.payload.authenticity_certificate
+        }
+      }, state)
+    }
+    case actions.UPDATE_DEPTH: {
+      return u({
+        inputs: {
+          depth: action.payload.depth
+        }
+      }, state)
+    }
+    case actions.UPDATE_DIMENSIONS_METRIC: {
+      return u({
+        inputs: {
+          dimensions_metric: action.payload.dimensions_metric
+        }
+      }, state)
+    }
+    case actions.UPDATE_EDITION: {
+      return u({
+        inputs: {
+          edition: !state.inputs.edition
+        }
+      }, state)
+    }
+    case actions.UPDATE_HEIGHT: {
+      return u({
+        inputs: {
+          height: action.payload.height
+        }
+      }, state)
+    }
+    case actions.UPDATE_LOCATION: {
+      return u({
+        inputs: {
+          location: action.payload.location
+        }
+      }, state)
+    }
+    case actions.UPDATE_MEDIUM: {
+      return u({
+        inputs: {
+          medium: action.payload.medium
+        }
+      }, state)
+    }
+    case actions.UPDATE_PROVENANCE: {
+      return u({
+        inputs: {
+          provenance: action.payload.provenance
+        }
+      }, state)
+    }
+    case actions.UPDATE_SIGNATURE: {
+      return u({
+        inputs: {
+          signature: action.payload.signature
+        }
+      }, state)
+    }
     case actions.UPDATE_SUBMISSION: {
       return u({
         submission: action.payload.submission
+      }, state)
+    }
+    case actions.UPDATE_TITLE: {
+      return u({
+        inputs: {
+          title: action.payload.title
+        }
+      }, state)
+    }
+    case actions.UPDATE_WIDTH: {
+      return u({
+        inputs: {
+          width: action.payload.width
+        }
+      }, state)
+    }
+    case actions.UPDATE_YEAR: {
+      return u({
+        inputs: {
+          year: action.payload.year
+        }
       }, state)
     }
     default: return state

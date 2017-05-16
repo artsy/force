@@ -6,7 +6,21 @@ import SelectInput from '../select_input'
 import TextInput from '../text_input'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { incrementStep } from '../../client/actions'
+import {
+  incrementStep,
+  updateAuthenticityCertificate,
+  updateDepth,
+  updateDimensionsMetric,
+  updateEdition,
+  updateHeight,
+  updateLocation,
+  updateMedium,
+  updateProvenance,
+  updateSignature,
+  updateTitle,
+  updateWidth,
+  updateYear
+} from '../../client/actions'
 
 function DescribeWork (props) {
   const {
@@ -18,15 +32,33 @@ function DescribeWork (props) {
     incrementStepAction,
     location,
     medium,
-    nextDisabled,
     provenance,
     signature,
     title,
     width,
+    updateAuthenticityCertificateAction,
+    updateDepthAction,
+    updateDimensionsMetricAction,
+    updateEditionAction,
+    updateHeightAction,
+    updateLocationAction,
+    updateMediumAction,
+    updateProvenanceAction,
+    updateSignatureAction,
+    updateTitleAction,
+    updateWidthAction,
+    updateYearAction,
     year
   } = props
 
   const b = block('consignments2-submission-describe-work')
+
+  const nextEnabled =
+    (title && title.length > 0) &&
+    (year && year.length > 0) &&
+    (height && height.length > 0) &&
+    (width && width.length > 0) &&
+    (location && location.length > 0)
 
   return (
     <div className={b()}>
@@ -36,6 +68,7 @@ function DescribeWork (props) {
             item={'title'}
             instructions={'If the title is unknown, please enter your best guess.'}
             label={'Title'}
+            onKeyUp={updateTitleAction}
             value={title}
           />
         </div>
@@ -45,28 +78,30 @@ function DescribeWork (props) {
           <SelectInput
             item={'medium'}
             label={'Medium'}
+            onClick={updateMediumAction}
             options={['painting', 'sculpture', 'print']}
             value={medium}
           />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'year'} label={'Year'} value={year} />
+          <TextInput item={'year'} label={'Year'} onKeyUp={updateYearAction} value={year} />
         </div>
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <TextInput item={'height'} label={'Height'} value={height} />
+          <TextInput item={'height'} label={'Height'} onKeyUp={updateHeightAction} value={height} />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'width'} label={'Width'} value={width} />
+          <TextInput item={'width'} label={'Width'} onKeyUp={updateWidthAction} value={width} />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'depth'} label={'Depth'} value={depth} />
+          <TextInput item={'depth'} label={'Depth'} onKeyUp={updateDepthAction} value={depth} />
         </div>
         <div className={b('row-item')}>
           <SelectInput
             item={'dimension_metric'}
             label={'Units'}
+            onClick={updateDimensionsMetricAction}
             options={['in', 'cm']}
             value={dimensions_metric}
           />
@@ -77,7 +112,8 @@ function DescribeWork (props) {
           <CheckboxInput
             item={'edition'}
             label={'This is an edition'}
-            value={edition}
+            onClick={updateEditionAction}
+            selected={edition}
           />
         </div>
       </div>
@@ -86,7 +122,9 @@ function DescribeWork (props) {
           <RadioInput
             item={'signature'}
             label={'Is this work signed?'}
-            options={['yes', 'no']}
+            onClick={updateSignatureAction}
+            options={{yes: true, no: false}}
+            selected={signature}
             value={signature}
           />
         </div>
@@ -96,7 +134,9 @@ function DescribeWork (props) {
           <RadioInput
             item={'authenticity_certificate'}
             label={'Does this work come with a certificate of authenticity?'}
-            options={['yes', 'no']}
+            onClick={updateAuthenticityCertificateAction}
+            options={{yes: true, no: false}}
+            selected={authenticity_certificate}
             value={authenticity_certificate}
           />
         </div>
@@ -107,6 +147,7 @@ function DescribeWork (props) {
             item={'provenance'}
             label={'Provenance'}
             instructions={'Where did you acquire this work?'}
+            onKeyUp={updateProvenanceAction}
             value={provenance}
           />
         </div>
@@ -116,13 +157,14 @@ function DescribeWork (props) {
           <TextInput
             item={'location'}
             instructions={'What city is the work located in?'}
+            onKeyUp={updateLocationAction}
             value={location}
           />
         </div>
       </div>
       <div
         className={b('next-button').mix('avant-garde-button-black')}
-        disabled={nextDisabled}
+        disabled={!nextEnabled}
         onClick={incrementStepAction}
       >
         Next
@@ -134,13 +176,10 @@ function DescribeWork (props) {
 const mapStateToProps = (state) => {
   const {
     submissionFlow: {
-      currentStep,
-      inputs,
-      steps
+      inputs
     }
   } = state
 
-  const { nextDisabled } = steps[currentStep]
   const {
     authenticity_certificate,
     depth,
@@ -164,7 +203,6 @@ const mapStateToProps = (state) => {
     height,
     location,
     medium,
-    nextDisabled,
     provenance,
     signature,
     title,
@@ -174,7 +212,19 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  incrementStepAction: incrementStep
+  incrementStepAction: incrementStep,
+  updateAuthenticityCertificateAction: updateAuthenticityCertificate,
+  updateDepthAction: updateDepth,
+  updateDimensionsMetricAction: updateDimensionsMetric,
+  updateEditionAction: updateEdition,
+  updateHeightAction: updateHeight,
+  updateLocationAction: updateLocation,
+  updateMediumAction: updateMedium,
+  updateProvenanceAction: updateProvenance,
+  updateSignatureAction: updateSignature,
+  updateTitleAction: updateTitle,
+  updateWidthAction: updateWidth,
+  updateYearAction: updateYear
 }
 
 export default connect(
@@ -184,17 +234,28 @@ export default connect(
 
 DescribeWork.propTypes = {
   authenticity_certificate: PropTypes.bool.isRequired,
-  depth: PropTypes.number,
+  depth: PropTypes.string,
   dimensions_metric: PropTypes.string,
   edition: PropTypes.bool.isRequired,
-  height: PropTypes.number,
+  height: PropTypes.string,
   incrementStepAction: PropTypes.func.isRequired,
   location: PropTypes.string,
   medium: PropTypes.string,
-  nextDisabled: PropTypes.bool.isRequired,
   provenance: PropTypes.string,
   signature: PropTypes.bool.isRequired,
   title: PropTypes.string,
-  width: PropTypes.number,
+  updateAuthenticityCertificateAction: PropTypes.func.isRequired,
+  updateDepthAction: PropTypes.func.isRequired,
+  updateDimensionsMetricAction: PropTypes.func.isRequired,
+  updateEditionAction: PropTypes.func.isRequired,
+  updateHeightAction: PropTypes.func.isRequired,
+  updateLocationAction: PropTypes.func.isRequired,
+  updateMediumAction: PropTypes.func.isRequired,
+  updateProvenanceAction: PropTypes.func.isRequired,
+  updateSignatureAction: PropTypes.func.isRequired,
+  updateTitleAction: PropTypes.func.isRequired,
+  updateWidthAction: PropTypes.func.isRequired,
+  updateYearAction: PropTypes.func.isRequired,
+  width: PropTypes.string,
   year: PropTypes.string
 }

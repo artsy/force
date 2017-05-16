@@ -2,12 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 
-export default function CheckboxInput ({ item, label, selected }) {
+export default function CheckboxInput (props) {
+  const { item, label, onClick, selected } = props
   const b = block('consignments2-submission-checkbox-input')
 
   return (
-    <div className='artsy-checkbox'>
-      <div className='artsy-checkbox--checkbox'>
+    <div className={b('wrapper').mix('artsy-checkbox')} onClick={() => onClick()}>
+      <div className={b('input').mix('artsy-checkbox--checkbox')}>
         <input
           type='checkbox'
           name={item}
@@ -27,5 +28,6 @@ export default function CheckboxInput ({ item, label, selected }) {
 CheckboxInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool
 }
