@@ -12,8 +12,11 @@ html( data-useragent= userAgent )
       link( type='text/css', rel='stylesheet', href= asset('/assets/#{assetPackage}.css') )
 
   body( class= bodyClass )
-    include ../../modal/template
-    include ../../flash/template
+    unless options && options.modal == false
+      include ../../modal/template
+
+    unless options && options.flash == false
+      include ../../flash/template
 
     #blank-layout-container: block body
 
