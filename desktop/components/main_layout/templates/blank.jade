@@ -1,5 +1,8 @@
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd) : ''
+  - defaultOptions = {modal: true, flash: true, stripe: true, marketo: true}
+  - obj = Object.assign({}, defaultOptions, options)
+  - console.log(obj)
 
 doctype html
 html( data-useragent= userAgent )
@@ -12,10 +15,10 @@ html( data-useragent= userAgent )
       link( type='text/css', rel='stylesheet', href= asset('/assets/#{assetPackage}.css') )
 
   body( class= bodyClass )
-    unless options && options.modal == false
+    if options && options.modal
       include ../../modal/template
 
-    unless options && options.flash == false
+    if options && options.flash
       include ../../flash/template
 
     #blank-layout-container: block body
