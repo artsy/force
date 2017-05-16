@@ -3,11 +3,19 @@ import React from 'react'
 import block from 'bem-cn'
 import { map } from 'underscore'
 
-export default function SelectInput (props) {
+export const renderSelectInput = ({ input, ...custom }) => (
+  <SelectInput
+    value={input.value}
+    onChange={input.onChange}
+    {...custom}
+  />
+)
+
+function SelectInput (props) {
   const {
     item,
     label,
-    onClick,
+    onChange,
     options,
     value
   } = props
@@ -31,7 +39,7 @@ export default function SelectInput (props) {
                   href='#'
                   className='bordered-pulldown-active'
                   key={option}
-                  onClick={() => onClick(option)}
+                  onClick={() => onChange(option)}
                 >{ option }</a>
               )
             })
@@ -45,7 +53,7 @@ export default function SelectInput (props) {
 SelectInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.array,
   value: PropTypes.string
 }

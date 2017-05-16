@@ -1,8 +1,10 @@
 import * as actions from './actions'
 import u from 'updeep'
+import { clone, merge } from 'lodash'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { last } from 'underscore'
+import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 
 const stepsMapping = [
@@ -29,17 +31,17 @@ const stepsMapping = [
 ]
 
 const initialState = {
-  currentStep: 1,
+  currentStep: 0,
   inputs: {
-    authenticity_certificate: true,
+    authenticity_certificate: 'yes',
     depth: '',
     dimensions_metric: 'in',
     edition: false,
     height: '',
     location: '',
-    medium: '',
+    medium: 'painting',
     provenance: '',
-    signature: true,
+    signature: 'yes',
     title: '',
     width: '',
     year: ''
@@ -61,93 +63,17 @@ function submissionFlow (state = initialState, action) {
         return state
       }
     }
-    case actions.UPDATE_AUTHENTICITY_CERTIFICATE: {
+    case actions.UPDATE_INPUTS: {
+      const existingInputs = clone(state.inputs)
+      const newInputs = merge(existingInputs, action.payload.inputs)
+
       return u({
-        inputs: {
-          authenticity_certificate: action.payload.authenticity_certificate
-        }
-      }, state)
-    }
-    case actions.UPDATE_DEPTH: {
-      return u({
-        inputs: {
-          depth: action.payload.depth
-        }
-      }, state)
-    }
-    case actions.UPDATE_DIMENSIONS_METRIC: {
-      return u({
-        inputs: {
-          dimensions_metric: action.payload.dimensions_metric
-        }
-      }, state)
-    }
-    case actions.UPDATE_EDITION: {
-      return u({
-        inputs: {
-          edition: !state.inputs.edition
-        }
-      }, state)
-    }
-    case actions.UPDATE_HEIGHT: {
-      return u({
-        inputs: {
-          height: action.payload.height
-        }
-      }, state)
-    }
-    case actions.UPDATE_LOCATION: {
-      return u({
-        inputs: {
-          location: action.payload.location
-        }
-      }, state)
-    }
-    case actions.UPDATE_MEDIUM: {
-      return u({
-        inputs: {
-          medium: action.payload.medium
-        }
-      }, state)
-    }
-    case actions.UPDATE_PROVENANCE: {
-      return u({
-        inputs: {
-          provenance: action.payload.provenance
-        }
-      }, state)
-    }
-    case actions.UPDATE_SIGNATURE: {
-      return u({
-        inputs: {
-          signature: action.payload.signature
-        }
+        inputs: newInputs
       }, state)
     }
     case actions.UPDATE_SUBMISSION: {
       return u({
         submission: action.payload.submission
-      }, state)
-    }
-    case actions.UPDATE_TITLE: {
-      return u({
-        inputs: {
-          title: action.payload.title
-        }
-      }, state)
-    }
-    case actions.UPDATE_WIDTH: {
-      return u({
-        inputs: {
-          width: action.payload.width
-        }
-      }, state)
-    }
-    case actions.UPDATE_YEAR: {
-      return u({
-        inputs: {
-          year: action.payload.year
-        }
       }, state)
     }
     default: return state
@@ -156,5 +82,6 @@ function submissionFlow (state = initialState, action) {
 
 export default combineReducers({
   submissionFlow,
-  router: routerReducer
+  router: routerReducer,
+  form: formReducer
 })

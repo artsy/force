@@ -3,8 +3,16 @@ import React from 'react'
 import block from 'bem-cn'
 import { map } from 'underscore'
 
-export default function RadioInput (props) {
-  const { item, label, onClick, options, selected } = props
+export const renderRadioInput = ({ input, ...custom }) => (
+  <RadioInput
+    value={input.value}
+    onChange={input.onChange}
+    {...custom}
+  />
+)
+
+function RadioInput (props) {
+  const { item, label, onChange, options, value } = props
   const b = block('consignments2-submission-radio-input')
 
   return (
@@ -14,17 +22,17 @@ export default function RadioInput (props) {
       </div>
       <div className={b('radio-buttons')}>
         {
-          map(options, (option, optionLabel) => {
+          map(options, (option) => {
             return (
-              <div className={b('radio-button')} key={`${item}_${option}`} onClick={() => onClick(option)}>
+              <div className={b('radio-button')} key={`${item}_${option}`} onClick={() => onChange(option)}>
                 <input
                   className={b('button')}
                   type='radio'
                   name={item}
                   value={option}
                 />
-                <div className={b('button-control', { checked: option === selected })} />
-                <label className={b('button-label')}>{optionLabel}</label>
+                <div className={b('button-control', { checked: option === value })} />
+                <label className={b('button-label')}>{option}</label>
               </div>
             )
           })
@@ -37,7 +45,6 @@ export default function RadioInput (props) {
 RadioInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired,
-  selected: PropTypes.bool
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired
 }

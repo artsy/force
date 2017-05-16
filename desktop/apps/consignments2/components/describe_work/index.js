@@ -1,261 +1,176 @@
-import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
 import React from 'react'
-import RadioInput from '../radio_input'
-import SelectInput from '../select_input'
-import TextInput from '../text_input'
 import block from 'bem-cn'
+import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { renderCheckboxInput } from '../checkbox_input'
+import { renderRadioInput } from '../radio_input'
+import { renderSelectInput } from '../select_input'
+import { renderTextInput } from '../text_input'
 import {
-  incrementStep,
-  updateAuthenticityCertificate,
-  updateDepth,
-  updateDimensionsMetric,
-  updateEdition,
-  updateHeight,
-  updateLocation,
-  updateMedium,
-  updateProvenance,
-  updateSignature,
-  updateTitle,
-  updateWidth,
-  updateYear
+  submitDescribeWork
 } from '../../client/actions'
 
-function DescribeWork (props) {
+function validate (values) {
   const {
     authenticity_certificate,
-    depth,
-    dimensions_metric,
-    edition,
     height,
-    incrementStepAction,
     location,
-    medium,
-    provenance,
     signature,
     title,
     width,
-    updateAuthenticityCertificateAction,
-    updateDepthAction,
-    updateDimensionsMetricAction,
-    updateEditionAction,
-    updateHeightAction,
-    updateLocationAction,
-    updateMediumAction,
-    updateProvenanceAction,
-    updateSignatureAction,
-    updateTitleAction,
-    updateWidthAction,
-    updateYearAction,
     year
+  } = values
+  const errors = {}
+
+  if (!authenticity_certificate) errors.authenticity_certificate = 'Required'
+  if (!height) errors.height = 'Required'
+  if (!location) errors.location = 'Required'
+  if (!signature) errors.signature = 'Required'
+  if (!title) errors.title = 'Required'
+  if (!width) errors.width = 'Required'
+  if (!year) errors.year = 'Required'
+
+  return errors
+}
+
+let DescribeWork = props => {
+  const {
+    handleSubmit,
+    submitDescribeWorkAction,
+    invalid,
+    pristine
   } = props
 
   const b = block('consignments2-submission-describe-work')
 
-  const nextEnabled =
-    (title && title.length > 0) &&
-    (year && year.length > 0) &&
-    (height && height.length > 0) &&
-    (width && width.length > 0) &&
-    (location && location.length > 0)
-
   return (
-    <div className={b()}>
+    <form className={b()} onSubmit={handleSubmit(submitDescribeWorkAction)}>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <TextInput
+          <Field name='title' component={renderTextInput}
             item={'title'}
             instructions={'If the title is unknown, please enter your best guess.'}
             label={'Title'}
-            onKeyUp={updateTitleAction}
-            value={title}
           />
         </div>
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <SelectInput
+          <Field name='medium' component={renderSelectInput}
             item={'medium'}
             label={'Medium'}
-            onClick={updateMediumAction}
             options={['painting', 'sculpture', 'print']}
-            value={medium}
           />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'year'} label={'Year'} onKeyUp={updateYearAction} value={year} />
+          <Field name='year' component={renderTextInput}
+            item={'year'}
+            label={'Year'}
+          />
         </div>
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <TextInput item={'height'} label={'Height'} onKeyUp={updateHeightAction} value={height} />
+          <Field name='height' component={renderTextInput}
+            item={'height'}
+            label={'Height'}
+          />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'width'} label={'Width'} onKeyUp={updateWidthAction} value={width} />
+          <Field name='width' component={renderTextInput}
+            item={'width'}
+            label={'Width'}
+          />
         </div>
         <div className={b('row-item')}>
-          <TextInput item={'depth'} label={'Depth'} onKeyUp={updateDepthAction} value={depth} />
+          <Field name='depth' component={renderTextInput}
+            item={'depth'}
+            label={'Depth'}
+          />
         </div>
         <div className={b('row-item')}>
-          <SelectInput
-            item={'dimension_metric'}
+          <Field name='dimensions_metric' component={renderSelectInput}
+            item={'dimensions_metric'}
             label={'Units'}
-            onClick={updateDimensionsMetricAction}
             options={['in', 'cm']}
-            value={dimensions_metric}
           />
         </div>
       </div>
       <div className={b('row', {'border-bottom': true})}>
         <div className={b('row-item')}>
-          <CheckboxInput
+          <Field name='edition' component={renderCheckboxInput}
             item={'edition'}
             label={'This is an edition'}
-            onClick={updateEditionAction}
-            selected={edition}
           />
         </div>
       </div>
       <div className={b('small-row', {'border-bottom': true})}>
         <div className={b('row-item')}>
-          <RadioInput
+          <Field name='signature' component={renderRadioInput}
             item={'signature'}
             label={'Is this work signed?'}
-            onClick={updateSignatureAction}
-            options={{yes: true, no: false}}
-            selected={signature}
-            value={signature}
+            options={['yes', 'no']}
           />
         </div>
       </div>
       <div className={b('small-row', {'border-bottom': true})}>
         <div className={b('row-item')}>
-          <RadioInput
+          <Field name='authenticity_certificate' component={renderRadioInput}
             item={'authenticity_certificate'}
             label={'Does this work come with a certificate of authenticity?'}
-            onClick={updateAuthenticityCertificateAction}
-            options={{yes: true, no: false}}
-            selected={authenticity_certificate}
-            value={authenticity_certificate}
+            options={['yes', 'no']}
           />
         </div>
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <TextInput
+          <Field name='provenance' component={renderTextInput}
             item={'provenance'}
-            label={'Provenance'}
             instructions={'Where did you acquire this work?'}
-            onKeyUp={updateProvenanceAction}
-            value={provenance}
+            label={'Provenance'}
           />
         </div>
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <TextInput
+          <Field name='location' component={renderTextInput}
             item={'location'}
             instructions={'What city is the work located in?'}
-            onKeyUp={updateLocationAction}
-            value={location}
+            label={'Location'}
           />
         </div>
       </div>
-      <div
+      <button
         className={b('next-button').mix('avant-garde-button-black')}
-        disabled={!nextEnabled}
-        onClick={incrementStepAction}
+        disabled={pristine || invalid}
+        type='submit'
       >
         Next
-      </div>
-    </div>
+      </button>
+    </form>
   )
 }
 
-const mapStateToProps = (state) => {
-  const {
-    submissionFlow: {
-      inputs
-    }
-  } = state
-
-  const {
-    authenticity_certificate,
-    depth,
-    dimensions_metric,
-    edition,
-    height,
-    location,
-    medium,
-    provenance,
-    signature,
-    title,
-    width,
-    year
-  } = inputs
-
-  return {
-    authenticity_certificate,
-    depth,
-    dimensions_metric,
-    edition,
-    height,
-    location,
-    medium,
-    provenance,
-    signature,
-    title,
-    width,
-    year
-  }
-}
-
 const mapDispatchToProps = {
-  incrementStepAction: incrementStep,
-  updateAuthenticityCertificateAction: updateAuthenticityCertificate,
-  updateDepthAction: updateDepth,
-  updateDimensionsMetricAction: updateDimensionsMetric,
-  updateEditionAction: updateEdition,
-  updateHeightAction: updateHeight,
-  updateLocationAction: updateLocation,
-  updateMediumAction: updateMedium,
-  updateProvenanceAction: updateProvenance,
-  updateSignatureAction: updateSignature,
-  updateTitleAction: updateTitle,
-  updateWidthAction: updateWidth,
-  updateYearAction: updateYear
+  submitDescribeWorkAction: submitDescribeWork
 }
 
-export default connect(
-  mapStateToProps,
+DescribeWork.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  invalid: PropTypes.bool,
+  pristine: PropTypes.bool,
+  submitDescribeWorkAction: PropTypes.func.isRequired
+}
+
+DescribeWork = connect(
+  null,
   mapDispatchToProps
 )(DescribeWork)
 
-DescribeWork.propTypes = {
-  authenticity_certificate: PropTypes.bool.isRequired,
-  depth: PropTypes.string,
-  dimensions_metric: PropTypes.string,
-  edition: PropTypes.bool.isRequired,
-  height: PropTypes.string,
-  incrementStepAction: PropTypes.func.isRequired,
-  location: PropTypes.string,
-  medium: PropTypes.string,
-  provenance: PropTypes.string,
-  signature: PropTypes.bool.isRequired,
-  title: PropTypes.string,
-  updateAuthenticityCertificateAction: PropTypes.func.isRequired,
-  updateDepthAction: PropTypes.func.isRequired,
-  updateDimensionsMetricAction: PropTypes.func.isRequired,
-  updateEditionAction: PropTypes.func.isRequired,
-  updateHeightAction: PropTypes.func.isRequired,
-  updateLocationAction: PropTypes.func.isRequired,
-  updateMediumAction: PropTypes.func.isRequired,
-  updateProvenanceAction: PropTypes.func.isRequired,
-  updateSignatureAction: PropTypes.func.isRequired,
-  updateTitleAction: PropTypes.func.isRequired,
-  updateWidthAction: PropTypes.func.isRequired,
-  updateYearAction: PropTypes.func.isRequired,
-  width: PropTypes.string,
-  year: PropTypes.string
-}
+DescribeWork = reduxForm({
+  form: 'describeWork', // a unique identifier for this form
+  validate
+})(DescribeWork)
+
+export default DescribeWork

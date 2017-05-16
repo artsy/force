@@ -53,7 +53,7 @@ describe('React components', () => {
       SubmissionFlow.__ResetDependency__('UploadPhoto')
     })
 
-    describe('non-logged-in user', () => {
+    describe('non-logged-in user, stepping through', () => {
       it('shows the create account step first', () => {
         const wrapper = shallow(
           <Provider><SubmissionFlow store={initialStore} /></Provider>
