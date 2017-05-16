@@ -54,7 +54,7 @@ proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
         )
       ]
-      if @curation.get('sub_articles').length
+      if @curation.get('sub_articles')?.length
         promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles'), cache: true) )
       Q.all(promises)
       .then =>
