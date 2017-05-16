@@ -87,10 +87,10 @@ bootstrap = ->
       res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.locals.sd.QUERY = req.query
 
+      # If a saleId is found, then check to see if user has been qualified for
+      # bidding so that bid button UI is correct from the server down.
       saleId = get(data, 'artwork.sale.id', false)
 
-      # If a saleId is found, then check to see if user has been qualified for
-      # bidding so that bidder registration UI is correct from the server down.
       if saleId
         fetchMeData(meQuery, req.user, saleId)
           .then (meData) ->

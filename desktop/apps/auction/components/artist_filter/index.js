@@ -60,7 +60,7 @@ ArtistFilter.propTypes = {
   filterParams: PropTypes.object.isRequired,
   numArtistsYouFollow: PropTypes.number.isRequired,
   updateArtistParamsAction: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
