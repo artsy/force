@@ -5,9 +5,9 @@ import { map } from 'underscore'
 
 export const renderRadioInput = ({ input, ...custom }) => (
   <RadioInput
+    {...custom}
     value={input.value}
     onChange={input.onChange}
-    {...custom}
   />
 )
 

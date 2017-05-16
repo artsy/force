@@ -4,9 +4,9 @@ import block from 'bem-cn'
 
 export const renderTextInput = ({ input, ...custom }) => (
   <TextInput
+    {...custom}
     value={input.value}
     onChange={input.onChange}
-    {...custom}
   />
 )
 

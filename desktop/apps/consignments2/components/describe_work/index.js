@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
 import { Field, reduxForm } from 'redux-form'
+import { compose } from 'underscore'
 import { connect } from 'react-redux'
 import { renderCheckboxInput } from '../checkbox_input'
 import { renderRadioInput } from '../radio_input'
@@ -163,14 +164,13 @@ DescribeWork.propTypes = {
   submitDescribeWorkAction: PropTypes.func.isRequired
 }
 
-DescribeWork = connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  reduxForm({
+    form: 'describeWork', // a unique identifier for this form
+    validate
+  }),
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(DescribeWork)
-
-DescribeWork = reduxForm({
-  form: 'describeWork', // a unique identifier for this form
-  validate
-})(DescribeWork)
-
-export default DescribeWork

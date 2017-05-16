@@ -1,6 +1,5 @@
 import * as actions from './actions'
 import u from 'updeep'
-import { clone, merge } from 'lodash'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { last } from 'underscore'
@@ -64,11 +63,11 @@ function submissionFlow (state = initialState, action) {
       }
     }
     case actions.UPDATE_INPUTS: {
-      const existingInputs = clone(state.inputs)
-      const newInputs = merge(existingInputs, action.payload.inputs)
-
       return u({
-        inputs: newInputs
+        inputs: {
+          ...state.inputs,
+          ...action.payload.inputs
+        }
       }, state)
     }
     case actions.UPDATE_SUBMISSION: {

@@ -4,9 +4,9 @@ import block from 'bem-cn'
 
 export const renderCheckboxInput = ({ input, ...custom }) => (
   <CheckboxInput
+    {...custom}
     value={input.value}
     onChange={input.onChange}
-    {...custom}
   />
 )
 

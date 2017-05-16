@@ -5,9 +5,9 @@ import { map } from 'underscore'
 
 export const renderSelectInput = ({ input, ...custom }) => (
   <SelectInput
+    {...custom}
     value={input.value}
     onChange={input.onChange}
-    {...custom}
   />
 )
 
