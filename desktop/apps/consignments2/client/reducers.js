@@ -3,6 +3,7 @@ import u from 'updeep'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
 import { last } from 'underscore'
+import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 
 const stepsMapping = [
@@ -30,6 +31,20 @@ const stepsMapping = [
 
 const initialState = {
   currentStep: 0,
+  inputs: {
+    authenticity_certificate: 'yes',
+    depth: '',
+    dimensions_metric: 'in',
+    edition: false,
+    height: '',
+    location: '',
+    medium: 'painting',
+    provenance: '',
+    signature: 'yes',
+    title: '',
+    width: '',
+    year: ''
+  },
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
   user: sd.CURRENT_USER
@@ -47,6 +62,14 @@ function submissionFlow (state = initialState, action) {
         return state
       }
     }
+    case actions.UPDATE_INPUTS: {
+      return u({
+        inputs: {
+          ...state.inputs,
+          ...action.payload.inputs
+        }
+      }, state)
+    }
     case actions.UPDATE_SUBMISSION: {
       return u({
         submission: action.payload.submission
@@ -58,5 +81,6 @@ function submissionFlow (state = initialState, action) {
 
 export default combineReducers({
   submissionFlow,
-  router: routerReducer
+  router: routerReducer,
+  form: formReducer
 })

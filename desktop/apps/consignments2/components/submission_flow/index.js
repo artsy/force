@@ -8,7 +8,7 @@ import StepMarker from '../step_marker'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
 
-export function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
+function SubmissionFlow ({ CurrentStepComponent, currentStepTitle }) {
   const b = block('consignments2-submission')
 
   return (

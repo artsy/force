@@ -1,7 +1,6 @@
 import Items from '../../collections/items'
 import JSONPage from '../../components/json_page'
 import markdown from '../../components/util/markdown'
-import resizer from '../../components/resizer'
 import { extend } from 'underscore'
 
 const landing = new JSONPage({ name: 'consignments2/landing' })
@@ -27,9 +26,7 @@ export const landingPage = async (req, res, next) => {
       markdown: markdown
     })
     res.render('landing', pageData)
-  }
-
-  catch(e) {
+  } catch (e) {
     next(e)
   }
 }
