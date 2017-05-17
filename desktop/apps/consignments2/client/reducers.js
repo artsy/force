@@ -30,8 +30,11 @@ const stepsMapping = [
 ]
 
 const initialState = {
+  artistAutocompleteSuggestions: [],
+  artistAutocompleteValue: '',
   currentStep: 0,
   inputs: {
+    artist_id: '',
     authenticity_certificate: 'yes',
     depth: '',
     dimensions_metric: 'in',
@@ -45,6 +48,7 @@ const initialState = {
     width: '',
     year: ''
   },
+  notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
   user: sd.CURRENT_USER
@@ -52,6 +56,16 @@ const initialState = {
 
 function submissionFlow (state = initialState, action) {
   switch (action.type) {
+    case actions.CLEAR_ARTIST_SUGGESTIONS: {
+      return u({
+        artistAutocompleteSuggestions: []
+      }, state)
+    }
+    case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
+      return u({
+        notConsigningArtist: false
+      }, state)
+    }
     case actions.INCREMENT_STEP: {
       const step = state.currentStep
       if (step < state.steps.length) {
@@ -61,6 +75,28 @@ function submissionFlow (state = initialState, action) {
       } else {
         return state
       }
+    }
+    case actions.SHOW_NOT_CONSIGNING_MESSAGE: {
+      return u({
+        notConsigningArtist: true
+      }, state)
+    }
+    case actions.UPDATE_ARTIST_AUTOCOMPLETE_VALUE: {
+      return u({
+        artistAutocompleteValue: action.payload.value
+      }, state)
+    }
+    case actions.UPDATE_ARTIST_ID: {
+      return u({
+        inputs: {
+          artist_id: action.payload.artistId
+        }
+      }, state)
+    }
+    case actions.UPDATE_ARTIST_SUGGESTIONS: {
+      return u({
+        artistAutocompleteSuggestions: action.payload.suggestions
+      }, state)
     }
     case actions.UPDATE_INPUTS: {
       return u({
