@@ -33,7 +33,7 @@ module.exports = {
       'logged-out'
 
   getRedirectActionUrl: (bidderStatus, artwork, auction) ->
-    if bidderStatus == 'qualified'
+    if bidderStatus == 'qualified-to-bid'
       "/auction/#{auction.id}/bid/#{artwork.id}"
     else
       "/artwork/#{artwork.id}"
