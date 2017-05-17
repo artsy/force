@@ -48,6 +48,8 @@ const initialState = {
     width: '',
     year: ''
   },
+  locationAutocompleteSuggestions: [],
+  locationAutocompleteValue: '',
   notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
@@ -59,6 +61,11 @@ function submissionFlow (state = initialState, action) {
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
       return u({
         artistAutocompleteSuggestions: []
+      }, state)
+    }
+    case actions.CLEAR_LOCATION_SUGGESTIONS: {
+      return u({
+        locationAutocompleteSuggestions: []
       }, state)
     }
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
@@ -103,6 +110,24 @@ function submissionFlow (state = initialState, action) {
         inputs: {
           ...state.inputs,
           ...action.payload.inputs
+        }
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_AUTOCOMPLETE_VALUE: {
+      console.log("ehllo?")
+      return u({
+        locationAutocompleteValue: action.payload.value
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_SUGGESTIONS: {
+      return u({
+        locationAutocompleteSuggestions: action.payload.suggestions
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_VALUES: {
+      return u({
+        inputs: {
+          location: action.payload.location
         }
       }, state)
     }
