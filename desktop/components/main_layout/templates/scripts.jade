@@ -85,7 +85,7 @@ if sharify
 script( src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" )
 
 //- Stripe
-unless options && options.stripe == false
+if options.stripe
   script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
 //- Common bundle generated from factor-bundle
@@ -97,7 +97,7 @@ if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   script( src=asset('/assets/analytics.js') )
 
 //- Quantcast
-unless options && options.quantcast == false
+if options.quantcast
   script( type="text/javascript" ).
     var ezt = ezt ||[];
     (function(){
@@ -114,7 +114,7 @@ unless options && options.quantcast == false
     img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
 
 //- Sailthru Horizon JS - user interest data, personalization
-unless options && options.sailthru == false
+if options.sailthru
   if sd.INCLUDE_SAILTHRU
     script( type="text/javascript" ).
       (function() {

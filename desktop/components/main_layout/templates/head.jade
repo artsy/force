@@ -27,7 +27,7 @@ if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
 script(type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true')
 
 //- Marketo munchkin
-unless options && options.marketo == false
+if options.marketo
   script(type='text/javascript').
     (function() {
     var didInit = false;
