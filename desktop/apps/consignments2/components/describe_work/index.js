@@ -41,13 +41,13 @@ function validate (values) {
 }
 
 function getSuggestionValue (suggestion) {
-  return suggestion.name
+  return suggestion.description
 }
 
 function renderSuggestion (suggestion) {
   return (
     <div className='autosuggest-suggestion'>
-      <div>{suggestion.name}</div>
+      <div>{suggestion.description}</div>
     </div>
   )
 }
@@ -169,6 +169,7 @@ let DescribeWork = props => {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
+          <div className={b('instructions')}>What city is the work located in?</div>
           <Autosuggest
             suggestions={locationAutocompleteSuggestions}
             onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
@@ -179,11 +180,6 @@ let DescribeWork = props => {
             renderSuggestion={renderSuggestion}
             inputProps={locationAutosuggestInputProps}
           />
-          {/*<Field name='location' component={renderTextInput}
-            item={'location'}
-            instructions={'What city is the work located in?'}
-            label={'Location'}
-          />*/}
         </div>
       </div>
       <button

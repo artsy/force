@@ -1,5 +1,6 @@
 import request from 'superagent'
 import { data as sd } from 'sharify'
+import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
 // Action types
@@ -26,11 +27,26 @@ export function chooseArtistAndAdvance (value) {
 }
 
 export function chooseLocation (location) {
-  return {
-    type: UPDATE_LOCATION_VALUES,
-    payload: {
-      location
+  return async (dispatch, getState) => {
+    const parseDetails = (place, status) => {
+      if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
+        console.error('Unable to reach maps API', status)
+      } else {
+        const { address_components } = place
+        const city = find(address_components, (comp) => { return comp.types[0] === 'locality' })
+        const state = find(address_components, (comp) => { return comp.types[0] === 'administrative_area_level_1' })
+        const country = find(address_components, (comp) => { return comp.types[0] === 'country' })
+
+        const cityDisplay = city && city.long_name
+        const countryDisplay = country && country.long_name
+        const stateDisplay = state && state.long_name
+
+        dispatch(updateLocationInputValues(cityDisplay, stateDisplay, countryDisplay))
+      }
     }
+
+    const placesService = new window.google.maps.places.PlacesService(document.createElement('div'))
+    await placesService.getDetails({ placeId: location.place_id }, parseDetails)
   }
 }
 
@@ -71,15 +87,15 @@ export function fetchArtistSuggestions (value) {
 
 export function fetchLocationSuggestions (value) {
   return async (dispatch, getState) => {
-    try {
-      const url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
-      const res = await request
-                          .get(url)
-                          .query({ input: value, key: sd.GOOGLE_MAPS_API_KEY })
-      dispatch(updateLocationSuggestions(res.body))
-    } catch (err) {
-      console.error('error!', err)
+    const displaySuggestions = (predictions, status) => {
+      if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
+        console.error('Unable to reach maps API', status)
+      } else {
+        dispatch(updateLocationSuggestions(predictions))
+      }
     }
+    const autocompleteService = new window.google.maps.places.AutocompleteService()
+    await autocompleteService.getPlacePredictions({ input: value, types: ['(cities)'] }, displaySuggestions)
   }
 }
 
@@ -161,6 +177,17 @@ export function updateLocationAutocompleteValue (value) {
     type: UPDATE_LOCATION_AUTOCOMPLETE_VALUE,
     payload: {
       value
+    }
+  }
+}
+
+export function updateLocationInputValues (city, state, country) {
+  return {
+    type: UPDATE_LOCATION_VALUES,
+    payload: {
+      city,
+      state,
+      country
     }
   }
 }

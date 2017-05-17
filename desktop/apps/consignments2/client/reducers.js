@@ -2,7 +2,7 @@ import * as actions from './actions'
 import u from 'updeep'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
-import { last } from 'underscore'
+import { find, last } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 
@@ -40,7 +40,9 @@ const initialState = {
     dimensions_metric: 'in',
     edition: false,
     height: '',
-    location: '',
+    location_city: '',
+    location_state: '',
+    location_country: '',
     medium: 'painting',
     provenance: '',
     signature: 'yes',
@@ -114,7 +116,6 @@ function submissionFlow (state = initialState, action) {
       }, state)
     }
     case actions.UPDATE_LOCATION_AUTOCOMPLETE_VALUE: {
-      console.log("ehllo?")
       return u({
         locationAutocompleteValue: action.payload.value
       }, state)
@@ -127,7 +128,9 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_LOCATION_VALUES: {
       return u({
         inputs: {
-          location: action.payload.location
+          location_city: action.payload.city,
+          location_country: action.payload.country,
+          location_state: action.payload.state
         }
       }, state)
     }
