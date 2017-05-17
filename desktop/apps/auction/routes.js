@@ -13,6 +13,24 @@ export const index = async (req, res) => {
   const { articles } = await metaphysics({ query: ArticlesQuery(sale._id) })
 
   res.locals.sd.AUCTION = sale
+
+  /**
+   * Ensure user model is in sync as updates to it during bidder registration
+   * route transitions will incidentally trigger a client-side reload.
+   * See: https://github.com/artsy/force/blob/master/desktop/lib/global_client_setup.coffee#L37
+   */
+  if (req.user) {
+    try {
+      const user = await req.user.fetch()
+      res.locals.sd.CURRENT_USER = {
+        ...res.locals.sd.CURRENT_USER,
+        ...user
+      }
+    } catch (error) {
+      console.log('(auction/routes.js) Error fetching user: ', error)
+    }
+  }
+
   const newAuction = new Auction(sale)
   const auctionArticles = new Articles(articles)
   res.render('index', {
