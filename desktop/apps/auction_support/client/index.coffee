@@ -11,7 +11,6 @@ BidForm = require './bid_form.coffee'
 setupClocks = require './clocks.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
-
 module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
 
   routes:

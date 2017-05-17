@@ -1,10 +1,12 @@
-{ extend } = require 'underscore'
-metaphysics = require '../../../lib/metaphysics'
 Artwork = require '../../models/artwork'
 Fair = require '../../models/fair'
-request = require 'superagent'
 PendingOrder = require '../../models/pending_order'
+get = require 'lodash.get'
+metaphysics = require '../../../lib/metaphysics'
+request = require 'superagent'
+sd = require('sharify').data
 splitTest = require '../../components/split_test/index.coffee'
+{ extend } = require 'underscore'
 
 query = """
   query artwork($id: String!) {
@@ -35,6 +37,16 @@ query = """
   #{require './components/meta/query'}
   #{require './components/metadata/query'}
   #{require './components/partner_stub/query'}
+"""
+
+meQuery = """
+  query artwork($sale_id: String!) {
+    me {
+      bidders(sale_id: $sale_id) {
+        qualified_for_bidding
+      }
+    }
+  }
 """
 
 helpers = extend [
@@ -74,8 +86,18 @@ bootstrap = ->
       res.locals.sd.PARAMS = req.params
       res.locals.sd.INCLUDE_SAILTHRU = data.artwork?.fair?
       res.locals.sd.QUERY = req.query
-      res.render 'index', data
 
+      # If a saleId is found, then check to see if user has been qualified for
+      # bidding so that bid button UI is correct from the server down.
+      saleId = get(data, 'artwork.sale.id', false)
+
+      if saleId
+        fetchMeData(meQuery, req.user, saleId)
+          .then (meData) ->
+            res.render 'index', extend data, meData
+          .catch next
+      else
+        res.render 'index', data
     .catch next
 
 @acquire = (req, res, next) ->
@@ -107,3 +129,16 @@ bootstrap = ->
     else
       res.status 403
       next new Error 'Not authorized to download this image'
+
+# Helpers
+fetchMeData = (query, user, saleId) ->
+  new Promise (resolve, reject) ->
+    metaphysics
+      method: 'post'
+      query: query,
+      req:
+        user: user
+      variables:
+        sale_id: saleId
+    .then resolve
+    .catch reject

@@ -125,4 +125,3 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @showError error
       .then =>
         @trigger('submitted')
-
