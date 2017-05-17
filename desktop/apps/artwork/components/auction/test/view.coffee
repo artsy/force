@@ -118,6 +118,9 @@ describe 'auction', ->
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
 
+        @view.$('.js-artwork-auction-bid').attr('action')
+          .should.equal "/auction/#{@view.data.artwork.sale.id}/bid/#{@view.data.artwork.id}"
+
       describe 'bid qualification', ->
         it 'renders a disabled "Registration Pending" button', ->
           @data.accounting = accounting
@@ -130,6 +133,8 @@ describe 'auction', ->
           view.render()
           view.$('.artwork-auction__bid-form__button').text()
             .should.containEql 'Registration Pending'
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
 
         it 'renders a auction registration button', ->
           @data.accounting = accounting
@@ -140,6 +145,9 @@ describe 'auction', ->
           view.$('a.artwork-auction__bid-form__button').length.should.equal 1
           view.$('a.artwork-auction__bid-form__button').attr('href')
             .should.equal "/auction-registration/#{@data.artwork.sale.id}"
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
+
 
         it 'renders an open registration bid button', ->
           @data.accounting = accounting
@@ -150,6 +158,8 @@ describe 'auction', ->
           view.$('a.artwork-auction__bid-form__button').length.should.equal 1
           view.$('a.artwork-auction__bid-form__button').attr('href')
             .should.equal "/auction/#{@data.artwork.sale.id}/bid/#{@data.artwork.id}"
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
 
       describe 'post-bid messages', ->
         beforeEach ->
