@@ -113,6 +113,9 @@ module.exports = class ArtworkAuctionView extends Backbone.View
       query: """
         query artwork($id: String!, $sale_id: String!) {
           me {
+            bidders(sale_id: $sale_id) {
+              qualified_for_bidding
+            }
             lot_standing(artwork_id: $id, sale_id: $sale_id) {
               is_leading_bidder
               most_recent_bid {

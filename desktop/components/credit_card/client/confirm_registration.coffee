@@ -11,6 +11,9 @@ module.exports = class ConfirmRegistrationModal extends ModalView
 
   template: template
 
+  events: -> _.extend super,
+    'click .bid-close-button': 'close'
+
   initialize: ({ @auction }) ->
     @user = CurrentUser.orNull()
     _.extend @templateData, paddleNumber: @user.get('paddle_number')
@@ -21,11 +24,19 @@ module.exports = class ConfirmRegistrationModal extends ModalView
     @user.fetchBidderForAuction @auction,
       error: @isLoaded
       success: (bidder) =>
-        if bidder and not bidder.get 'qualified_for_bidding'
+        qualifiedForBidding = bidder && bidder.get 'qualified_for_bidding'
+
+        if !qualifiedForBidding
           @$('.credit-card-unqualified-msg').show()
           analyticsHooks.trigger 'creditcard:unqualified',
             auction_slug: @auction.get('id')
             bidder_id: bidder.get('id')
             user_id: @user.get('id')
+
         @updatePosition()
         @isLoaded()
+
+  close: (event) ->
+    replaceModalTriggerPath = location.pathname.replace('/confirm-registration', '')
+    history.replaceState({}, document.title, replaceModalTriggerPath)
+    super

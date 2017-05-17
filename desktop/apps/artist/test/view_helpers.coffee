@@ -94,3 +94,12 @@ describe 'ArtistViewHelpers', ->
       auction = fabricate 'sale', is_auction: true, end_at: null, live_start_at: moment().subtract(2, 'days')
       helpers.formatAuctionDetail(auction).should.eql 'Live Bidding Now Open'
 
+  describe 'JSONLD', ->
+    it 'works when an artist has no image', ->
+      artist = fabricate 'artist', image: null, meta: { description: "imageless artist" }
+      (-> helpers.toJSONLD(artist)).should.not.throw()
+
+    it 'works when an artwork has no image', ->
+      artwork = fabricate 'artwork', image: null
+      (-> helpers.artworkJsonLD(artwork)).should.not.throw()
+

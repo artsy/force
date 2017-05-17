@@ -26,6 +26,9 @@ describe 'Venice Video', ->
           setVolume: @setVolume = sinon.stub()
           setCurrentTime: @setCurrentTime = sinon.stub()
       Backbone.$ = $
+      $.fn.fadeOut = sinon.stub()
+      $.fn.fadeIn = sinon.stub()
+      @clock = sinon.useFakeTimers()
       @options =
         asset: ->
         sd: APP_URL: 'localhost'
@@ -55,6 +58,7 @@ describe 'Venice Video', ->
         done()
 
   afterEach ->
+    @clock.restore()
     benv.teardown()
 
   it 'sets up video', ->
@@ -151,3 +155,14 @@ describe 'Venice Video', ->
     @view.onVRViewReady()
     @view.updateTime(currentTime: 26)
     @view.$time.text().should.equal '00:26'
+
+  it '#fadeInControls', ->
+    @view.isMobile = true
+    @view.fadeInControls()
+    $.fn.fadeIn.callCount.should.equal 1
+
+  it '#fadeOutControls', ->
+    @view.isMobile = true
+    @view.fadeOutControls()
+    @clock.tick(3000)
+    $.fn.fadeOut.callCount.should.equal 1

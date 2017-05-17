@@ -1,4 +1,3 @@
-import analyticsHooks from '../../../lib/analytics_hooks.coffee'
 import analyticsMiddleware from '../client/analytics_middleware'
 import auctions from '../client/reducers'
 import { applyMiddleware, createStore } from 'redux'
@@ -14,8 +13,7 @@ describe('analytics middleware', () => {
     })
   })
 
-  it ('tracks changes in mediums', () => {
-    const fakeNext = sinon.spy()
+  it('tracks changes in mediums', () => {
     const action = { type: 'UPDATE_MEDIUM_ID', payload: { mediumId: 'painting' } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
@@ -34,8 +32,7 @@ describe('analytics middleware', () => {
     })
   })
 
-  it ('tracks changes in artists', () => {
-    const fakeNext = sinon.spy()
+  it('tracks changes in artists', () => {
     const action = { type: 'UPDATE_ARTIST_ID', payload: { artistId: 'andy-warhol' } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
@@ -55,7 +52,6 @@ describe('analytics middleware', () => {
   })
 
   it('correctly tracks artists when Artists You Follow is clicked', () => {
-    const fakeNext = sinon.spy()
     const action = { type: 'UPDATE_ARTIST_ID', payload: { artistId: 'artists-you-follow' } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
@@ -74,8 +70,7 @@ describe('analytics middleware', () => {
     })
   })
 
-  it ('tracks changes in price', () => {
-    const fakeNext = sinon.spy()
+  it('tracks changes in price', () => {
     const action = { type: 'UPDATE_ESTIMATE_RANGE', payload: { min: 100, max: 50000 } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
@@ -94,8 +89,7 @@ describe('analytics middleware', () => {
     })
   })
 
-  it ('tracks changes in sort', () => {
-    const fakeNext = sinon.spy()
+  it('tracks changes in sort', () => {
     const action = { type: 'UPDATE_SORT', payload: { sort: 'lot_number' } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 
@@ -114,8 +108,7 @@ describe('analytics middleware', () => {
     })
   })
 
-  it ('does not track other actions', () => {
-    const fakeNext = sinon.spy()
+  it('does not track other actions', () => {
     const action = { type: 'TOGGLE_LIST_VIEW', payload: { isListView: true } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
 

@@ -21,6 +21,11 @@ describe 'auction', ->
       ['template']
     )
     @data =
+      user: true
+      me:
+        bidders: [{
+          qualified_for_bidding: true
+        }]
       artwork:
         id: 'peter-alexander-wedge-with-puff'
         is_in_auction: true
@@ -112,16 +117,61 @@ describe 'auction', ->
 
         @view.$('.artwork-auction__buy-now')
           .should.have.lengthOf 0
+
+        @view.$('.js-artwork-auction-bid').attr('action')
+          .should.equal "/auction/#{@view.data.artwork.sale.id}/bid/#{@view.data.artwork.id}"
+
+      describe 'bid qualification', ->
+        it 'renders a disabled "Registration Pending" button', ->
+          @data.accounting = accounting
+          @data.me = {
+            bidders: [{
+              qualified_for_bidding: false
+            }]
+          }
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('.artwork-auction__bid-form__button').text()
+            .should.containEql 'Registration Pending'
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
+
+        it 'renders a auction registration button', ->
+          @data.accounting = accounting
+          @data.artwork.sale.require_bidder_approval = true
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('a.artwork-auction__bid-form__button').length.should.equal 1
+          view.$('a.artwork-auction__bid-form__button').attr('href')
+            .should.equal "/auction-registration/#{@data.artwork.sale.id}"
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
+
+
+        it 'renders an open registration bid button', ->
+          @data.accounting = accounting
+          @data.artwork.sale.require_bidder_approval = false
+          @data.me = {}
+          view = new @ArtworkAuctionView data: @data
+          view.render()
+          view.$('a.artwork-auction__bid-form__button').length.should.equal 1
+          view.$('a.artwork-auction__bid-form__button').attr('href')
+            .should.equal "/auction/#{@data.artwork.sale.id}/bid/#{@data.artwork.id}"
+          view.$('.js-artwork-auction-bid').attr('action')
+            .should.equal "/artwork/#{@data.artwork.id}"
+
       describe 'post-bid messages', ->
         beforeEach ->
           @data = Object.assign(@data, {
             user: 'existy',
             accounting: accounting
           })
+
         describe 'leading bidder & reserve met', ->
           it 'gives a winning message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: true
                 most_recent_bid:
@@ -137,7 +187,7 @@ describe 'auction', ->
         describe 'leading bidder & reserve not met', ->
           it 'gives a reserve not met message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: true
                 most_recent_bid:
@@ -154,7 +204,7 @@ describe 'auction', ->
         describe 'not leading bidder & reserve not met', ->
           it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_not_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: false
                 most_recent_bid:
@@ -171,7 +221,7 @@ describe 'auction', ->
         describe 'not leading bidder & reserve met', ->
           it 'gives an outbid message', ->
             @data.artwork.sale_artwork.reserve_status = 'reserve_met'
-            @data.me = {
+            @data.me = Object.assign @data.me, {
               lot_standing:
                 is_leading_bidder: false
                 most_recent_bid:

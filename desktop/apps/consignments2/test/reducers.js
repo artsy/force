@@ -1,10 +1,5 @@
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import { renderToString } from 'react-dom/server'
 import reducers from '../client/reducers'
 import * as actions from '../client/actions'
-import { __RewireAPI__ as ActionsRewireApi } from '../client/actions'
-import sinon from 'sinon'
 
 describe('Reducers', () => {
   describe('auctions', () => {
@@ -43,6 +38,25 @@ describe('Reducers', () => {
           fourthStep.submissionFlow.currentStep.should.eql(3)
           const fifthStep = reducers(thirdStep, actions.incrementStep())
           fifthStep.submissionFlow.currentStep.should.eql(3)
+        })
+      })
+
+      describe('#updateInputs', () => {
+        it('merges the initial input data with user-inputted data', () => {
+          initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql('yes')
+          initialResponse.submissionFlow.inputs.medium.should.eql('painting')
+          initialResponse.submissionFlow.inputs.signature.should.eql('yes')
+          initialResponse.submissionFlow.inputs.title.should.eql('')
+          const newInputs = {
+            authenticity_certificate: 'no',
+            title: 'My Artwork!',
+            medium: 'sculpture'
+          }
+          const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
+          newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql('no')
+          newInputsStep.submissionFlow.inputs.medium.should.eql('sculpture')
+          newInputsStep.submissionFlow.inputs.signature.should.eql('yes')
+          newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
         })
       })
     })

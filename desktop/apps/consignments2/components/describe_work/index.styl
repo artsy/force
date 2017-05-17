@@ -1,3 +1,33 @@
 .consignments2-submission-describe-work
-  &__next-button
+  &__next-button.avant-garde-button-black
+    margin-top 0px
     width 100%
+    margin-bottom 20px
+
+  &__next-button[disabled]
+    pointer-events none
+    background-color white
+    color gray-color
+    border 1px solid gray-color
+
+  &__row
+    display flex
+    padding-bottom 27px
+
+    &_border-bottom
+      margin-bottom 27px
+      border-bottom 1px solid gray-lighter-color
+
+  &__small-row
+    display flex
+    padding-bottom 21px
+
+    &_border-bottom
+      margin-bottom 21px
+      border-bottom 1px solid gray-lighter-color
+
+  &__row-item
+    margin-right 30px
+    width 100%
+    &:last-child
+      margin-right 0px
