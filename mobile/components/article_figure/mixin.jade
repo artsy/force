@@ -6,5 +6,8 @@ mixin article-figure(article, width, showDate)
         if showDate
           time.article-figure-date= article.formatDate()
         .article-figure-title= article.get('thumbnail_title')
-        //- TODO: Hack for now, we need to save author data on the article.
-        .article-figure-author Artsy Editorial
+
+        if article.get('contributing_authors') && article.get('contributing_authors').length === 0 || article.get('channel_id') !== sd.ARTSY_EDITORIAL_CHANNEL || sd.CURRENT_PATH !== '/articles'
+          .article-figure-author(class = article.get('contributing_authors') && article.get('contributing_authors').length > 0 ? 'has-contributing-author' : '')
+            = article.get('author') ? article.get('author').name : ''
+
