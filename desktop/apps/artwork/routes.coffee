@@ -140,7 +140,5 @@ fetchMeData = (query, user, saleId) ->
         user: user
       variables:
         sale_id: saleId
-    .then (response) ->
-      resolve(response)
-    .catch (error) ->
-      reject(error)
+    .then resolve
+    .catch reject
