@@ -5,6 +5,7 @@ import { push } from 'react-router-redux'
 
 // Action types
 export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
@@ -12,8 +13,11 @@ export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
+export const UPDATE_ERROR = 'UPDATE_ERROR'
 export const UPDATE_INPUTS = 'UPDATE_INPUTS'
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE = 'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
+export const UPDATE_LOCATION_CITY_VALUE = 'UPDATE_LOCATION_CITY_VALUE'
+export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const UPDATE_LOCATION_SUGGESTIONS = 'UPDATE_LOCATION_SUGGESTIONS'
 export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
@@ -62,6 +66,18 @@ export function clearArtistSuggestions () {
   }
 }
 
+export function clearError () {
+  return {
+    type: CLEAR_ERROR
+  }
+}
+
+export function clearLocationData () {
+  return {
+    type: CLEAR_LOCATION_DATA
+  }
+}
+
 export function clearLocationSuggestions () {
   return {
     type: CLEAR_LOCATION_SUGGESTIONS
@@ -71,6 +87,7 @@ export function clearLocationSuggestions () {
 export function createSubmission () {
   return async (dispatch, getState) => {
     try {
+      dispatch(clearError())
       const {
         body: {
           token
@@ -92,6 +109,7 @@ export function createSubmission () {
       dispatch(updateSubmission(body)) // update state to reflect current submission
       dispatch(incrementStep()) // move to next step
     } catch (err) {
+      dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
     }
   }
@@ -145,6 +163,20 @@ export function incrementStep () {
   }
 }
 
+export function scrubLocation () {
+  return (dispatch, getState) => {
+    const { submissionFlow: { inputs, locationAutocompleteValue } } = getState()
+    // if user has selected from the autocomplete, one of these should be filled
+    // in the off-chance it's not, stick the outlier data in the city field
+    if (!(inputs.location_city ||
+          inputs.location_country ||
+          inputs.location_state) &&
+          locationAutocompleteValue) {
+      dispatch(updateLocationCityValue(locationAutocompleteValue))
+    }
+  }
+}
+
 export function showNotConsigningMessage () {
   return {
     type: SHOW_NOT_CONSIGNING_MESSAGE
@@ -153,7 +185,8 @@ export function showNotConsigningMessage () {
 
 export function submitDescribeWork (values) {
   return (dispatch) => {
-    dispatch(updateInputs(values)) // update the inputs in case we have to return
+    dispatch(updateInputs(values)) // update the inputs
+    dispatch(scrubLocation())
     dispatch(createSubmission()) // create the submission in convection
   }
 }
@@ -161,23 +194,27 @@ export function submitDescribeWork (values) {
 export function submitPhoto () {
   return async (dispatch, getState) => {
     try {
+      dispatch(clearError())
       const { body: { token } } = await request
                             .post(`${sd.API_URL}/api/v1/me/token`)
                             .send({ client_application_id: sd.CONVECTION_APP_ID })
                             .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
       const {
         submissionFlow: {
-          submission
+          submission,
+          submissionIdFromServer
         }
       } = getState()
 
+      const submissionQueryParam = submission ? submission.id : submissionIdFromServer
       const { body } = await request
-                          .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submission.id}`)
+                          .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
                           .set('Authorization', `Bearer ${token}`)
                           .send({ state: 'submitted' })
       dispatch(updateSubmission(body))
       dispatch(push('/consign2/submission/thank_you'))
     } catch (err) {
+      dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
     }
   }
@@ -210,7 +247,26 @@ export function updateArtistSuggestions (suggestions) {
   }
 }
 
+export function updateError (error) {
+  return {
+    type: UPDATE_ERROR,
+    payload: {
+      error
+    }
+  }
+}
+
 export function updateInputs (inputs) {
+  if (inputs.signature) {
+    const boolSignature = (inputs.signature === 'yes')
+    inputs.signature = boolSignature
+  }
+
+  if (inputs.authenticity_certificate) {
+    const boolCertificate = (inputs.authenticity_certificate === 'yes')
+    inputs.authenticity_certificate = boolCertificate
+  }
+
   return {
     type: UPDATE_INPUTS,
     payload: {
@@ -219,11 +275,27 @@ export function updateInputs (inputs) {
   }
 }
 
+export function updateLocationAutocomplete (value) {
+  return (dispatch) => {
+    dispatch(clearLocationData())
+    dispatch(updateLocationAutocompleteValue(value))
+  }
+}
+
 export function updateLocationAutocompleteValue (value) {
   return {
     type: UPDATE_LOCATION_AUTOCOMPLETE_VALUE,
     payload: {
       value
+    }
+  }
+}
+
+export function updateLocationCityValue (city) {
+  return {
+    type: UPDATE_LOCATION_CITY_VALUE,
+    payload: {
+      city
     }
   }
 }

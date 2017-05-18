@@ -33,9 +33,10 @@ const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
   currentStep: 0,
+  error: null,
   inputs: {
     artist_id: '',
-    authenticity_certificate: 'yes',
+    authenticity_certificate: true,
     depth: '',
     dimensions_metric: 'in',
     edition: false,
@@ -45,9 +46,8 @@ const initialState = {
     location_country: '',
     medium: 'painting',
     provenance: '',
-    signature: 'yes',
+    signature: true,
     title: '',
-    user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
     width: '',
     year: ''
   },
@@ -55,7 +55,8 @@ const initialState = {
   locationAutocompleteValue: '',
   notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: null
+  submission: null,
+  submissionIdFromServer: sd.SUBMISSION_ID
 }
 
 function submissionFlow (state = initialState, action) {
@@ -63,6 +64,20 @@ function submissionFlow (state = initialState, action) {
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
       return u({
         artistAutocompleteSuggestions: []
+      }, state)
+    }
+    case actions.CLEAR_ERROR: {
+      return u({
+        error: null
+      }, state)
+    }
+    case actions.CLEAR_LOCATION_DATA: {
+      return u({
+        inputs: {
+          location_city: '',
+          location_country: '',
+          location_state: ''
+        }
       }, state)
     }
     case actions.CLEAR_LOCATION_SUGGESTIONS: {
@@ -107,6 +122,11 @@ function submissionFlow (state = initialState, action) {
         artistAutocompleteSuggestions: action.payload.suggestions
       }, state)
     }
+    case actions.UPDATE_ERROR: {
+      return u({
+        error: action.payload.error
+      }, state)
+    }
     case actions.UPDATE_INPUTS: {
       return u({
         inputs: {
@@ -118,6 +138,13 @@ function submissionFlow (state = initialState, action) {
     case actions.UPDATE_LOCATION_AUTOCOMPLETE_VALUE: {
       return u({
         locationAutocompleteValue: action.payload.value
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_CITY_VALUE: {
+      return u({
+        inputs: {
+          location_city: action.payload.city
+        }
       }, state)
     }
     case actions.UPDATE_LOCATION_SUGGESTIONS: {

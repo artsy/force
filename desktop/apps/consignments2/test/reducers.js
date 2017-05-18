@@ -86,11 +86,61 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#scrubLocation', () => {
+        it('does nothing if the country field is already populated', () => {
+          initialResponse.submissionFlow.inputs.location_city.should.eql('')
+          initialResponse.submissionFlow.inputs.location_state.should.eql('')
+          initialResponse.submissionFlow.inputs.location_country.should.eql('')
+          const updatedState = reducers(initialResponse, actions.updateLocationInputValues('', '', 'USA'))
+          updatedState.submissionFlow.inputs.location_city.should.eql('')
+          updatedState.submissionFlow.inputs.location_state.should.eql('')
+          updatedState.submissionFlow.inputs.location_country.should.eql('USA')
+          const updatedAutocomplete = reducers(updatedState, actions.updateLocationAutocompleteValue('My City'))
+          updatedAutocomplete.submissionFlow.locationAutocompleteValue.should.eql('My City')
+          const scrubbedLocation = reducers(updatedAutocomplete, actions.scrubLocation())
+          scrubbedLocation.submissionFlow.inputs.location_city.should.eql('')
+          scrubbedLocation.submissionFlow.inputs.location_state.should.eql('')
+          scrubbedLocation.submissionFlow.inputs.location_country.should.eql('USA')
+        })
+
+        it('does nothing if multiple fields are already populated', () => {
+          initialResponse.submissionFlow.inputs.location_city.should.eql('')
+          initialResponse.submissionFlow.inputs.location_state.should.eql('')
+          initialResponse.submissionFlow.inputs.location_country.should.eql('')
+          const updatedState = reducers(initialResponse, actions.updateLocationInputValues('', 'New York', 'USA'))
+          updatedState.submissionFlow.inputs.location_city.should.eql('')
+          updatedState.submissionFlow.inputs.location_state.should.eql('New York')
+          updatedState.submissionFlow.inputs.location_country.should.eql('USA')
+          const updatedAutocomplete = reducers(updatedState, actions.updateLocationAutocompleteValue('My City'))
+          updatedAutocomplete.submissionFlow.locationAutocompleteValue.should.eql('My City')
+          const scrubbedLocation = reducers(updatedAutocomplete, actions.scrubLocation())
+          scrubbedLocation.submissionFlow.inputs.location_city.should.eql('')
+          scrubbedLocation.submissionFlow.inputs.location_state.should.eql('New York')
+          scrubbedLocation.submissionFlow.inputs.location_country.should.eql('USA')
+        })
+
+        it('updates the city field based on the autocomplete value', () => {
+          initialResponse.submissionFlow.inputs.location_city.should.eql('')
+          initialResponse.submissionFlow.inputs.location_state.should.eql('')
+          initialResponse.submissionFlow.inputs.location_country.should.eql('')
+          const updatedAutocomplete = reducers(initialResponse, actions.updateLocationAutocompleteValue('My City'))
+          updatedAutocomplete.submissionFlow.locationAutocompleteValue.should.eql('My City')
+          const getState = () => (updatedAutocomplete)
+          const dispatch = sinon.spy()
+          actions.scrubLocation()(dispatch, getState)
+          dispatch.callCount.should.eql(1)
+          dispatch.calledWithExactly({
+            type: 'UPDATE_LOCATION_CITY_VALUE',
+            payload: { city: 'My City' }
+          }).should.be.ok()
+        })
+      })
+
       describe('#updateInputs', () => {
         it('merges the initial input data with user-inputted data', () => {
-          initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql('yes')
+          initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql(true)
           initialResponse.submissionFlow.inputs.medium.should.eql('painting')
-          initialResponse.submissionFlow.inputs.signature.should.eql('yes')
+          initialResponse.submissionFlow.inputs.signature.should.eql(true)
           initialResponse.submissionFlow.inputs.title.should.eql('')
           const newInputs = {
             authenticity_certificate: 'no',
@@ -98,9 +148,9 @@ describe('Reducers', () => {
             medium: 'sculpture'
           }
           const newInputsStep = reducers(initialResponse, actions.updateInputs(newInputs))
-          newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql('no')
+          newInputsStep.submissionFlow.inputs.authenticity_certificate.should.eql(false)
           newInputsStep.submissionFlow.inputs.medium.should.eql('sculpture')
-          newInputsStep.submissionFlow.inputs.signature.should.eql('yes')
+          newInputsStep.submissionFlow.inputs.signature.should.eql(true)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
         })
       })
