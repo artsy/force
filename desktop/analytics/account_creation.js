@@ -2,19 +2,19 @@
 // Generic events for tracking events around account creation.
 //
 
+const getUrlParameter = name => {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  let results = regex.exec(location.search);
+  return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
 // Created account (via email)
 $(document).on(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
   function() {
     $(document).one('ajaxComplete', function(e, xhr, options) {
-      var getUrlParameter = function(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-      };
-
       var acquisition_initiative = getUrlParameter('m-id');
       if (_.isEmpty(acquisition_initiative)) {
         acquisition_initiative = getUrlParameter('acquisition_initiative');
@@ -46,13 +46,6 @@ $(document).on(
   'click',
   '.auth-signup-facebook, .marketing-signup-modal-fb',
   function(e) {
-    var getUrlParameter = function(name) {
-      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-      var results = regex.exec(location.search);
-      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-
     var acquisition_initiative = getUrlParameter('m-id');
     if (_.isEmpty(acquisition_initiative)) {
       acquisition_initiative = getUrlParameter('acquisition_initiative');
