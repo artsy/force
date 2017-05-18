@@ -2,7 +2,7 @@ import * as actions from './actions'
 import u from 'updeep'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
-import { last } from 'underscore'
+import { find, last } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 
@@ -40,18 +40,22 @@ const initialState = {
     dimensions_metric: 'in',
     edition: false,
     height: '',
-    location: '',
+    location_city: '',
+    location_state: '',
+    location_country: '',
     medium: 'painting',
     provenance: '',
     signature: 'yes',
     title: '',
+    user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
     width: '',
     year: ''
   },
+  locationAutocompleteSuggestions: [],
+  locationAutocompleteValue: '',
   notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: null,
-  user: sd.CURRENT_USER
+  submission: null
 }
 
 function submissionFlow (state = initialState, action) {
@@ -59,6 +63,11 @@ function submissionFlow (state = initialState, action) {
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
       return u({
         artistAutocompleteSuggestions: []
+      }, state)
+    }
+    case actions.CLEAR_LOCATION_SUGGESTIONS: {
+      return u({
+        locationAutocompleteSuggestions: []
       }, state)
     }
     case actions.HIDE_NOT_CONSIGNING_MESSAGE: {
@@ -103,6 +112,25 @@ function submissionFlow (state = initialState, action) {
         inputs: {
           ...state.inputs,
           ...action.payload.inputs
+        }
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_AUTOCOMPLETE_VALUE: {
+      return u({
+        locationAutocompleteValue: action.payload.value
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_SUGGESTIONS: {
+      return u({
+        locationAutocompleteSuggestions: action.payload.suggestions
+      }, state)
+    }
+    case actions.UPDATE_LOCATION_VALUES: {
+      return u({
+        inputs: {
+          location_city: action.payload.city,
+          location_country: action.payload.country,
+          location_state: action.payload.state
         }
       }, state)
     }

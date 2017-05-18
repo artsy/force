@@ -35,7 +35,6 @@ function ChooseArtist (props) {
     fetchArtistSuggestionsAction,
     notConsigningArtist,
     showNotConsigningMessageAction,
-    onSuggestionsClearRequested,
     updateArtistAutocompleteValueAction
   } = props
   const b = block('consignments2-submission-choose-artist')
@@ -119,4 +118,12 @@ export default connect(
 )(ChooseArtist)
 
 ChooseArtist.propTypes = {
+  artistAutocompleteSuggestions: PropTypes.array,
+  artistAutocompleteValue: PropTypes.string,
+  clearArtistSuggestionsAction: PropTypes.func.isRequired,
+  chooseArtistAndAdvanceAction: PropTypes.func.isRequired,
+  fetchArtistSuggestionsAction: PropTypes.func.isRequired,
+  notConsigningArtist: PropTypes.bool,
+  showNotConsigningMessageAction: PropTypes.func.isRequired,
+  updateArtistAutocompleteValueAction: PropTypes.func.isRequired
 }

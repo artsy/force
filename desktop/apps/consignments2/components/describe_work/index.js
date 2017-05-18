@@ -1,3 +1,4 @@
+import Autosuggest from 'react-autosuggest'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
@@ -9,7 +10,11 @@ import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
 import {
-  submitDescribeWork
+  chooseLocation,
+  clearLocationSuggestions,
+  fetchLocationSuggestions,
+  submitDescribeWork,
+  updateLocationAutocompleteValue
 } from '../../client/actions'
 
 function validate (values) {
@@ -35,15 +40,44 @@ function validate (values) {
   return errors
 }
 
-let DescribeWork = props => {
+function getSuggestionValue (suggestion) {
+  return suggestion.description
+}
+
+function renderSuggestion (suggestion) {
+  return (
+    <div className='autosuggest-suggestion'>
+      <div>{suggestion.description}</div>
+    </div>
+  )
+}
+
+function DescribeWork (props) {
   const {
+    chooseLocationAction,
+    clearLocationSuggestionsAction,
+    fetchLocationSuggestionsAction,
     handleSubmit,
+    locationAutocompleteSuggestions,
+    locationAutocompleteValue,
     submitDescribeWorkAction,
+    updateLocationAutocompleteValueAction,
     invalid,
     pristine
   } = props
 
   const b = block('consignments2-submission-describe-work')
+
+  const locationAutosuggestInputProps = {
+    value: locationAutocompleteValue,
+    onChange: updateLocationAutocompleteValueAction
+  }
+
+  const renderInputComponent = inputProps => (
+    <div>
+      <input {...inputProps} className={b('input').mix('bordered-input')} />
+    </div>
+  )
 
   return (
     <form className={b()} onSubmit={handleSubmit(submitDescribeWorkAction)}>
@@ -135,10 +169,16 @@ let DescribeWork = props => {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <Field name='location' component={renderTextInput}
-            item={'location'}
-            instructions={'What city is the work located in?'}
-            label={'Location'}
+          <div className={b('instructions')}>What city is the work located in?</div>
+          <Autosuggest
+            suggestions={locationAutocompleteSuggestions}
+            onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
+            onSuggestionsClearRequested={clearLocationSuggestionsAction}
+            onSuggestionSelected={chooseLocationAction}
+            getSuggestionValue={getSuggestionValue}
+            renderInputComponent={renderInputComponent}
+            renderSuggestion={renderSuggestion}
+            inputProps={locationAutosuggestInputProps}
           />
         </div>
       </div>
@@ -153,15 +193,44 @@ let DescribeWork = props => {
   )
 }
 
-const mapDispatchToProps = {
-  submitDescribeWorkAction: submitDescribeWork
+const mapStateToProps = (state) => {
+  return {
+    locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
+    locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    chooseLocationAction (event, { suggestion, suggestionValue }) {
+      dispatch(chooseLocation(suggestion))
+    },
+    clearLocationSuggestionsAction () {
+      dispatch(clearLocationSuggestions())
+    },
+    fetchLocationSuggestionsAction ({ value }) {
+      dispatch(fetchLocationSuggestions(value))
+    },
+    submitDescribeWorkAction (values) {
+      dispatch(submitDescribeWork(values))
+    },
+    updateLocationAutocompleteValueAction (event, { newValue }) {
+      dispatch(updateLocationAutocompleteValue(newValue))
+    }
+  }
 }
 
 DescribeWork.propTypes = {
+  chooseLocationAction: PropTypes.func.isRequired,
+  clearLocationSuggestionsAction: PropTypes.func.isRequired,
+  fetchLocationSuggestionsAction: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   invalid: PropTypes.bool,
+  locationAutocompleteSuggestions: PropTypes.array,
+  locationAutocompleteValue: PropTypes.string,
   pristine: PropTypes.bool,
-  submitDescribeWorkAction: PropTypes.func.isRequired
+  submitDescribeWorkAction: PropTypes.func.isRequired,
+  updateLocationAutocompleteValueAction: PropTypes.func.isRequired
 }
 
 export default compose(
@@ -170,7 +239,7 @@ export default compose(
     validate
   }),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(DescribeWork)

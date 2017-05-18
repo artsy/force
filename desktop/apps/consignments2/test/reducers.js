@@ -1,5 +1,9 @@
+import configureMockStore from 'redux-mock-store'
 import reducers from '../client/reducers'
+import thunk from 'redux-thunk'
+import sinon from 'sinon'
 import * as actions from '../client/actions'
+import { __RewireAPI__ as ActionsRewireApi } from '../client/actions'
 
 describe('Reducers', () => {
   describe('auctions', () => {
@@ -23,6 +27,47 @@ describe('Reducers', () => {
           }
           const updatedSubmission = reducers(initialResponse, actions.updateSubmission(submission))
           updatedSubmission.submissionFlow.submission.should.eql(submission)
+        })
+      })
+
+      describe('#fetchArtistSuggestions', () => {
+        let store
+
+        beforeEach(() => {
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore(initialResponse)
+          const request = sinon.stub()
+          request.get = sinon.stub().returns(request)
+          request.query = sinon.stub().returns(request)
+          request.set = sinon.stub().returns({
+            body: [
+              { name: 'andy-warhol' },
+              { name: 'kara-walker' }
+            ]
+          })
+
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('sd', { CURRENT_USER: { accessToken: 'foo' } })
+        })
+
+        it('calls the correct actions', () => {
+          const expectedActions = [
+            {
+              type: 'UPDATE_ARTIST_SUGGESTIONS',
+              payload: {
+                suggestions: [
+                  { name: 'andy-warhol' },
+                  { name: 'kara-walker' }
+                ]
+              }
+            },
+            { type: 'HIDE_NOT_CONSIGNING_MESSAGE' }
+          ]
+          store.dispatch(actions.fetchArtistSuggestions()).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
         })
       })
 
