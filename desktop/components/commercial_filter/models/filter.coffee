@@ -14,7 +14,6 @@ module.exports = class Filter extends Backbone.Model
   initialize: ({ @params } = {}) ->
     throw new Error 'Requires a params model' unless @params?
     @artworks = new Artworks()
-    @popular_artists = new Artists()
     @aggregations = new Aggregations()
 
     @params.on 'change', @fetch, @
@@ -116,7 +115,6 @@ module.exports = class Filter extends Backbone.Model
           @set loading: false
           @set total: filter_artworks.total
           @set followed_artists_total: filter_artworks.followed_artists_total
-          @popular_artists.reset filter_artworks.merchandisable_artists
           @aggregations.reset filter_artworks.aggregations if filter_artworks.aggregations
           resolve @
         .catch (error) ->
