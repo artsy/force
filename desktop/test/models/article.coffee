@@ -231,6 +231,13 @@ describe "Article", ->
       @article.set 'contributing_authors', [{name: 'Molly'}, {name: 'Kana'}, {name: 'Christina'}]
       @article.contributingByline().should.equal 'Molly, Kana and Christina'
 
+  describe 'toJSONLD', ->
+    it 'Appends the vertical and tracking tags', ->
+      @article.set 'tags', ['Venice', 'Technology']
+      @article.set 'tracking_tags', ['Evergreen', 'Interviews']
+      @article.set 'vertical', { name: 'Culture', id: '123' }
+      @article.toJSONLD().keywords.should.eql [ 'Venice', 'Technology', 'Culture', 'Evergreen', 'Interviews' ]
+
   describe 'getParselySection', ->
 
     it 'returns Editorial', ->
