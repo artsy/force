@@ -46,7 +46,7 @@ module.exports =
   GALLERY_INSIGHTS_SLUG: 'gallery-insights'
   GALLERY_PARTNER_UPDATES_CHANNEL: '5762d454b5989e6f98f7799a'
   GEMINI_ACCOUNT_KEY: 'force-staging'
-  GEMINI_APP: 'http://localhost:3004'
+  GEMINI_APP: 'https://media.artsy.net'
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GEMINI_S3_ACCESS_KEY: null
   GENOME_URL: 'https://helix.artsy.net'

@@ -32,7 +32,7 @@ const stepsMapping = [
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
-  currentStep: 0,
+  currentStep: 2,
   error: null,
   inputs: {
     artist_id: '',
@@ -56,11 +56,17 @@ const initialState = {
   notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
   submission: null,
-  submissionIdFromServer: sd.SUBMISSION_ID
+  submissionIdFromServer: sd.SUBMISSION_ID,
+  uploadedImages: []
 }
 
 function submissionFlow (state = initialState, action) {
   switch (action.type) {
+    case actions.ADD_IMAGE_TO_UPLOADED_IMAGES: {
+      return u({
+        uploadedImages: state.uploadedImages.concat(action.payload.file)
+      }, state)
+    }
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
       return u({
         artistAutocompleteSuggestions: []

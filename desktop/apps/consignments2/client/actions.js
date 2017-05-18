@@ -3,7 +3,10 @@ import { data as sd } from 'sharify'
 import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
+import gemup from 'gemup'
+
 // Action types
+export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
 export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
@@ -23,6 +26,15 @@ export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 
 // Action creators
+export function addImageToUploadedImages (file) {
+  return {
+    type: ADD_IMAGE_TO_UPLOADED_IMAGES,
+    payload: {
+      file
+    }
+  }
+}
+
 export function chooseArtistAndAdvance (value) {
   return (dispatch) => {
     dispatch(updateArtistId(value._id))
@@ -130,6 +142,23 @@ export function fetchArtistSuggestions (value) {
   }
 }
 
+export function uploadImageToGemini () {
+  return async (dispatch, getState) => {
+    try {
+      // const res = await request
+      //                     .get(`${sd.GEMINI_APP}/uploads/new.json`)
+      //                     .query({ acl: 'private' })
+      //                     .set('Authorization', `Basic ${sd.GEMINI_ACCOUNT_KEY}`)
+
+      console.log('here!!!')
+      // dispatch(updateArtistSuggestions(res.body))
+      // dispatch(hideNotConsigningMessage())
+    } catch (err) {
+      console.error('error!', err)
+    }
+  }
+}
+
 export function fetchLocationSuggestions (value) {
   return async (dispatch, getState) => {
     const displaySuggestions = (predictions, status) => {
@@ -188,6 +217,16 @@ export function submitDescribeWork (values) {
     dispatch(updateInputs(values)) // update the inputs
     dispatch(scrubLocation())
     dispatch(createSubmission()) // create the submission in convection
+  }
+}
+
+export function selectPhoto (file) {
+  return (dispatch) => {
+    console.log('hey', file)
+    dispatch(uploadImageToGemini(file)) // update the inputs
+    dispatch(addImageToUploadedImages(file))
+    // dispatch(scrubLocation())
+    // dispatch(createSubmission()) // create the submission in convection
   }
 }
 
