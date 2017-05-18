@@ -33,9 +33,9 @@ export function chooseLocation (location) {
         console.error('Unable to reach maps API', status)
       } else {
         const { address_components } = place
-        const city = find(address_components, (comp) => { return comp.types[0] === 'locality' })
-        const state = find(address_components, (comp) => { return comp.types[0] === 'administrative_area_level_1' })
-        const country = find(address_components, (comp) => { return comp.types[0] === 'country' })
+        const city = find(address_components, (comp) => comp.types[0] === 'locality')
+        const state = find(address_components, (comp) => comp.types[0] === 'administrative_area_level_1')
+        const country = find(address_components, (comp) => comp.types[0] === 'country')
 
         const cityDisplay = city && city.long_name
         const countryDisplay = country && country.long_name
@@ -45,8 +45,14 @@ export function chooseLocation (location) {
       }
     }
 
-    const placesService = new window.google.maps.places.PlacesService(document.createElement('div'))
-    await placesService.getDetails({ placeId: location.place_id }, parseDetails)
+    try {
+      if (window.google) {
+        const placesService = new window.google.maps.places.PlacesService(document.createElement('div'))
+        await placesService.getDetails({ placeId: location.place_id }, parseDetails)
+      }
+    } catch (err) {
+      console.error('error!', err)
+    }
   }
 }
 
@@ -63,10 +69,31 @@ export function clearLocationSuggestions () {
 }
 
 export function createSubmission () {
-  return (dispatch) => {
-    // TODO: async request to convection to create submission
-    dispatch(updateSubmission()) // update state
-    dispatch(incrementStep()) // move to next step
+  return async (dispatch, getState) => {
+    try {
+      const {
+        body: {
+          token
+        }
+      } = await request
+                  .post(`${sd.API_URL}/api/v1/me/token`)
+                  .send({ client_application_id: sd.CONVECTION_APP_ID })
+                  .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+
+      const {
+        submissionFlow: {
+          inputs
+        }
+      } = getState()
+      const { body } = await request
+                          .post(`${sd.CONVECTION_APP_URL}/api/submissions`)
+                          .set('Authorization', `Bearer ${token}`)
+                          .send(inputs)
+      dispatch(updateSubmission(body)) // update state to reflect current submission
+      dispatch(incrementStep()) // move to next step
+    } catch (err) {
+      console.error('error!', err)
+    }
   }
 }
 
@@ -94,8 +121,15 @@ export function fetchLocationSuggestions (value) {
         dispatch(updateLocationSuggestions(predictions))
       }
     }
-    const autocompleteService = new window.google.maps.places.AutocompleteService()
-    await autocompleteService.getPlacePredictions({ input: value, types: ['(cities)'] }, displaySuggestions)
+
+    try {
+      if (window.google) {
+        const autocompleteService = new window.google.maps.places.AutocompleteService()
+        await autocompleteService.getPlacePredictions({ input: value, types: ['(cities)'] }, displaySuggestions)
+      }
+    } catch (error) {
+      console.error('error!', error)
+    }
   }
 }
 
@@ -125,14 +159,27 @@ export function submitDescribeWork (values) {
 }
 
 export function submitPhoto () {
-  return (dispatch) => {
-    // this will come from the response of the PUT request to convection
-    const dummySubmission = {
-      id: 'subbymission',
-      image_url: null
+  return async (dispatch, getState) => {
+    try {
+      const { body: { token } } = await request
+                            .post(`${sd.API_URL}/api/v1/me/token`)
+                            .send({ client_application_id: sd.CONVECTION_APP_ID })
+                            .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+      const {
+        submissionFlow: {
+          submission
+        }
+      } = getState()
+
+      const { body } = await request
+                          .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submission.id}`)
+                          .set('Authorization', `Bearer ${token}`)
+                          .send({ state: 'submitted' })
+      dispatch(updateSubmission(body))
+      dispatch(push('/consign2/submission/thank_you'))
+    } catch (err) {
+      console.error('error!', err)
     }
-    dispatch(updateSubmission(dummySubmission))
-    dispatch(push('/consign2/submission/thank_you'))
   }
 }
 

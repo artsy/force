@@ -52,7 +52,7 @@ function renderSuggestion (suggestion) {
   )
 }
 
-let DescribeWork = props => {
+function DescribeWork (props) {
   const {
     chooseLocationAction,
     clearLocationSuggestionsAction,
@@ -211,8 +211,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchLocationSuggestionsAction ({ value }) {
       dispatch(fetchLocationSuggestions(value))
     },
-    submitDescribeWorkAction () {
-      dispatch(submitDescribeWork())
+    submitDescribeWorkAction (values) {
+      dispatch(submitDescribeWork(values))
     },
     updateLocationAutocompleteValueAction (event, { newValue }) {
       dispatch(updateLocationAutocompleteValue(newValue))

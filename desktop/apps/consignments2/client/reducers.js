@@ -47,6 +47,7 @@ const initialState = {
     provenance: '',
     signature: 'yes',
     title: '',
+    user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
     width: '',
     year: ''
   },
@@ -54,8 +55,7 @@ const initialState = {
   locationAutocompleteValue: '',
   notConsigningArtist: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: null,
-  user: sd.CURRENT_USER
+  submission: null
 }
 
 function submissionFlow (state = initialState, action) {

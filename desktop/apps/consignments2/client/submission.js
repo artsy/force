@@ -14,7 +14,7 @@ import { routerMiddleware } from 'react-router-redux'
 
 function setupSubmissionFlow () {
   // load google maps for autocomplete
-  geo.loadGoogleMaps(() => console.log('hi'))
+  geo.loadGoogleMaps()
 
   const loggerMiddleware = createLogger()
   const history = createHistory()
