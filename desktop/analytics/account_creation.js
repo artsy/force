@@ -9,33 +9,31 @@ const getUrlParameter = name => {
   return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
+const getAcquisitionInitiative = () => getUrlParameter('m-id') || getUrlParameter('acquisition_initiative')
+
+const trackAccountCreation = options => {
+  analytics.track('Created account', _.pick(options, 'acquisition_initiative', 'signup_service', 'user_id', 'context'))
+  analytics.identify(options.user_id, _.pick(options, 'email'), {
+    integrations: {
+      'All': false,
+      'Marketo': true
+    }
+  })
+}
+
 // Created account (via email)
 $(document).on(
   'submit',
   '.auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form',
   function() {
-    $(document).one('ajaxComplete', function(e, xhr, options) {
-      var acquisition_initiative = getUrlParameter('m-id');
-      if (_.isEmpty(acquisition_initiative)) {
-        acquisition_initiative = getUrlParameter('acquisition_initiative');
-      }
-
-      analytics.track('Created account', {
-        acquisition_initiative: acquisition_initiative,
+    $(document).one('ajaxComplete', (e, xhr, options) =>
+      trackAccountCreation({
+        acquisition_initiative: getAcquisitionInitiative(),
         signup_service: 'email',
         user_id: xhr.responseJSON.user.id,
         context: options.context,
         email: xhr.responseJSON.user.email
-      });
-      analytics.identify( xhr.responseJSON.user.id, {
-        email: xhr.responseJSON.user.email
-      }, {
-        integrations: {
-          'All': false,
-          'Marketo': true
-        }
-      });
-    })
+      }))
   }
 )
 
@@ -46,15 +44,10 @@ $(document).on(
   'click',
   '.auth-signup-facebook, .marketing-signup-modal-fb',
   function(e) {
-    var acquisition_initiative = getUrlParameter('m-id');
-    if (_.isEmpty(acquisition_initiative)) {
-      acquisition_initiative = getUrlParameter('acquisition_initiative');
-    }
-
     // 2. Store some data in cookies before being redirected everywhere
     Cookies.set('analytics-signup', JSON.stringify({
       service: 'facebook',
-      acquisition_initiative: acquisition_initiative,
+      acquisition_initiative: getAcquisitionInitiative(),
       context: $(e.currentTarget).data('context')
     }))
   }
@@ -64,20 +57,14 @@ $(document).on(
 if (Cookies.get('analytics-signup')) {
   var data = JSON.parse(Cookies.get('analytics-signup'))
   Cookies.expire('analytics-signup')
+
   if (sd.CURRENT_USER) {
-    analytics.track('Created account', {
+    trackAccountCreation({
       acquisition_initiative: data.acquisition_initiative,
       signup_service: data.service,
       user_id: sd.CURRENT_USER.id,
-      context: data.context
-    });
-    analytics.identify( sd.CURRENT_USER.id, {
+      context: data.context,
       email: sd.CURRENT_USER.email
-    }, {
-      integrations: {
-        'All': false,
-        'Marketo': true
-      }
     });
   }
 }
