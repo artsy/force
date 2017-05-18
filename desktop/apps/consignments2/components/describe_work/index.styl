@@ -1,14 +1,31 @@
 .consignments2-submission-describe-work
+  padding-bottom 100px
+
   &__next-button.avant-garde-button-black
     margin-top 0px
     width 100%
-    margin-bottom 20px
+    margin-bottom 10px
 
   &__next-button[disabled]
     pointer-events none
     background-color white
     color gray-color
     border 1px solid gray-color
+
+  &__input
+    height 40px
+    width 100%
+
+  &__label
+    avant-garde-size('s-headline')
+    margin-bottom 4px
+
+  &__instructions
+    margin-bottom 4px
+
+  &__error
+    color red-color
+    text-align center
 
   &__row
     display flex
@@ -31,3 +48,13 @@
     width 100%
     &:last-child
       margin-right 0px
+
+  .react-autosuggest__suggestion
+    height 40px
+    padding 10px
+    border 1px solid gray-lighter-color
+    border-top none
+
+    &:hover
+      cursor pointer
+      background-color gray-lightest-color
