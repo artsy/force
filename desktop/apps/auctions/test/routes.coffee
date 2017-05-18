@@ -42,7 +42,7 @@ describe 'Auctions routes', ->
         routes.index {}, @res
 
         Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
-        Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-created_at'
+        Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-timely_at,name'
         Backbone.sync.args[0][2].success @sales
 
         Backbone.sync.callCount.should.equal 1
