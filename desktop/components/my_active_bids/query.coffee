@@ -21,6 +21,7 @@ module.exports = """
             live_start_at
             end_at
             is_live_open
+            is_closed
           }
           artwork {
             href
