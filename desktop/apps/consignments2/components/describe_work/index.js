@@ -14,7 +14,7 @@ import {
   clearLocationSuggestions,
   fetchLocationSuggestions,
   submitDescribeWork,
-  updateLocationAutocompleteValue
+  updateLocationAutocomplete
 } from '../../client/actions'
 
 function validate (values) {
@@ -56,12 +56,13 @@ function DescribeWork (props) {
   const {
     chooseLocationAction,
     clearLocationSuggestionsAction,
+    error,
     fetchLocationSuggestionsAction,
     handleSubmit,
     locationAutocompleteSuggestions,
     locationAutocompleteValue,
     submitDescribeWorkAction,
-    updateLocationAutocompleteValueAction,
+    updateLocationAutocompleteAction,
     invalid,
     pristine
   } = props
@@ -70,7 +71,7 @@ function DescribeWork (props) {
 
   const locationAutosuggestInputProps = {
     value: locationAutocompleteValue,
-    onChange: updateLocationAutocompleteValueAction
+    onChange: updateLocationAutocompleteAction
   }
 
   const renderInputComponent = inputProps => (
@@ -86,7 +87,7 @@ function DescribeWork (props) {
           <Field name='title' component={renderTextInput}
             item={'title'}
             instructions={'If the title is unknown, please enter your best guess.'}
-            label={'Title'}
+            label={'Title*'}
           />
         </div>
       </div>
@@ -94,14 +95,14 @@ function DescribeWork (props) {
         <div className={b('row-item')}>
           <Field name='medium' component={renderSelectInput}
             item={'medium'}
-            label={'Medium'}
+            label={'Medium*'}
             options={['painting', 'sculpture', 'print']}
           />
         </div>
         <div className={b('row-item')}>
           <Field name='year' component={renderTextInput}
             item={'year'}
-            label={'Year'}
+            label={'Year*'}
           />
         </div>
       </div>
@@ -109,13 +110,13 @@ function DescribeWork (props) {
         <div className={b('row-item')}>
           <Field name='height' component={renderTextInput}
             item={'height'}
-            label={'Height'}
+            label={'Height*'}
           />
         </div>
         <div className={b('row-item')}>
           <Field name='width' component={renderTextInput}
             item={'width'}
-            label={'Width'}
+            label={'Width*'}
           />
         </div>
         <div className={b('row-item')}>
@@ -127,7 +128,7 @@ function DescribeWork (props) {
         <div className={b('row-item')}>
           <Field name='dimensions_metric' component={renderSelectInput}
             item={'dimensions_metric'}
-            label={'Units'}
+            label={'Units*'}
             options={['in', 'cm']}
           />
         </div>
@@ -144,7 +145,7 @@ function DescribeWork (props) {
         <div className={b('row-item')}>
           <Field name='signature' component={renderRadioInput}
             item={'signature'}
-            label={'Is this work signed?'}
+            label={'Is this work signed?*'}
             options={['yes', 'no']}
           />
         </div>
@@ -153,7 +154,7 @@ function DescribeWork (props) {
         <div className={b('row-item')}>
           <Field name='authenticity_certificate' component={renderRadioInput}
             item={'authenticity_certificate'}
-            label={'Does this work come with a certificate of authenticity?'}
+            label={'Does this work come with a certificate of authenticity?*'}
             options={['yes', 'no']}
           />
         </div>
@@ -169,7 +170,7 @@ function DescribeWork (props) {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <div className={b('instructions')}>What city is the work located in?</div>
+          <div className={b('instructions')}>What city is the work located in?*</div>
           <Autosuggest
             suggestions={locationAutocompleteSuggestions}
             onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
@@ -184,17 +185,21 @@ function DescribeWork (props) {
       </div>
       <button
         className={b('next-button').mix('avant-garde-button-black')}
-        disabled={pristine || invalid}
+        disabled={pristine || invalid || locationAutocompleteValue.length === 0}
         type='submit'
       >
         Next
       </button>
+      {
+        error && <div className={b('error')}>{error}</div>
+      }
     </form>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
+    error: state.submissionFlow.error,
     locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
     locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
   }
@@ -214,8 +219,8 @@ const mapDispatchToProps = (dispatch) => {
     submitDescribeWorkAction (values) {
       dispatch(submitDescribeWork(values))
     },
-    updateLocationAutocompleteValueAction (event, { newValue }) {
-      dispatch(updateLocationAutocompleteValue(newValue))
+    updateLocationAutocompleteAction (event, { newValue }) {
+      dispatch(updateLocationAutocomplete(newValue))
     }
   }
 }
@@ -223,6 +228,7 @@ const mapDispatchToProps = (dispatch) => {
 DescribeWork.propTypes = {
   chooseLocationAction: PropTypes.func.isRequired,
   clearLocationSuggestionsAction: PropTypes.func.isRequired,
+  error: PropTypes.string,
   fetchLocationSuggestionsAction: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   invalid: PropTypes.bool,
@@ -230,7 +236,7 @@ DescribeWork.propTypes = {
   locationAutocompleteValue: PropTypes.string,
   pristine: PropTypes.bool,
   submitDescribeWorkAction: PropTypes.func.isRequired,
-  updateLocationAutocompleteValueAction: PropTypes.func.isRequired
+  updateLocationAutocompleteAction: PropTypes.func.isRequired
 }
 
 export default compose(

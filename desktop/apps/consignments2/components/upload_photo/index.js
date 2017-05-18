@@ -4,7 +4,7 @@ import block from 'bem-cn'
 import { connect } from 'react-redux'
 import { submitPhoto } from '../../client/actions'
 
-function UploadPhoto ({ submitPhotoAction }) {
+function UploadPhoto ({ error, submitPhotoAction }) {
   const b = block('consignments2-submission-upload-photo')
 
   return (
@@ -15,19 +15,28 @@ function UploadPhoto ({ submitPhotoAction }) {
       >
         Submit
       </div>
+      {
+        error && <div className={b('error')}>{error}</div>
+      }
     </div>
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    error: state.submissionFlow.error
+  }
+}
 const mapDispatchToProps = {
   submitPhotoAction: submitPhoto
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(UploadPhoto)
 
 UploadPhoto.propTypes = {
+  error: PropTypes.string,
   submitPhotoAction: PropTypes.func.isRequired
 }
