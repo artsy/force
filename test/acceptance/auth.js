@@ -13,7 +13,7 @@ describe('Authentication', () => {
 
   after(teardown)
 
-  it('logs in', async () => {
+  xit('logs in', async () => {
     await browser.page('/terms')
     await browser.login()
     const html = await browser.el('.main-layout-header-user')

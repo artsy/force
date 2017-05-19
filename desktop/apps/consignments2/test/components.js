@@ -2,6 +2,8 @@ import * as actions from '../client/actions'
 import ChooseArtist from '../components/choose_artist'
 import StepMarker from '../components/step_marker'
 import SubmissionFlow from '../components/submission_flow'
+import UploadPhoto from '../components/upload_photo'
+import UploadedImage from '../components/uploaded_image'
 import React from 'react'
 import reducers from '../client/reducers'
 import { createStore } from 'redux'
@@ -32,6 +34,98 @@ describe('React components', () => {
         rendered.find('.consignments2-step-marker__step_active').length.should.eql(1)
         const activeText = rendered.text()
         activeText.should.containEql('Create Account')
+      })
+    })
+  })
+
+  describe('UploadedImage', () => {
+    it('correctly displays the processing state when there are no processing images', () => {
+      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+    })
+
+    it('correctly displays the processing state when the image is processing', () => {
+      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
+      initialStore.dispatch(actions.startProcessingImage('astronaut.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(1)
+    })
+
+    it('correctly displays the processing state when a different image is processing', () => {
+      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
+      initialStore.dispatch(actions.startProcessingImage('another-image.jpg'))
+      const file = {
+        fileName: 'astronaut.jpg',
+        src: 'blahblabhalh'
+      }
+      const wrapper = shallow(
+        <UploadedImage store={initialStore} file={file} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-uploaded-image__processing').length.should.eql(0)
+    })
+  })
+
+  describe('UploadPhoto', () => {
+    it('disables the submit button when there are no photos and the skip checkbox is not clicked', () => {
+      const wrapper = shallow(
+        <UploadPhoto store={initialStore} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-upload-photo__submit-button[disabled]').length.should.eql(1)
+    })
+
+    it('enables the button when the skip upload button is checked', () => {
+      initialStore.dispatch(actions.updateSkipPhotoSubmission(true))
+      const wrapper = shallow(
+        <UploadPhoto store={initialStore} />
+      )
+      const rendered = wrapper.render()
+      rendered.find('.consignments2-submission-upload-photo__submit-button[disabled]').length.should.eql(0)
+    })
+
+    describe('with photos', () => {
+      beforeEach(() => {
+        UploadPhoto.__Rewire__('UploadedImage', () => <div className='uploaded-image' />)
+      })
+
+      afterEach(() => {
+        UploadPhoto.__ResetDependency__('UploadedImage')
+      })
+
+      it('enables the button when there is an uploaded photo and there are no processing images', () => {
+        initialStore.dispatch(actions.addImageToUploadedImages('astronaut.jpg', 'blahblabhalbhablah'))
+        const wrapper = shallow(
+          <UploadPhoto store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-submission-upload-photo__submit-button[disabled]').length.should.eql(0)
+        rendered.find('.uploaded-image').length.should.eql(1)
+      })
+
+      it('disables the button when there is an uploaded photo and there are some processing images', () => {
+        initialStore.dispatch(actions.addImageToUploadedImages('astronaut.jpg', 'blahblabhalbhablah'))
+        initialStore.dispatch(actions.startProcessingImage('astronaut.jpg'))
+        const wrapper = shallow(
+          <UploadPhoto store={initialStore} />
+        )
+        const rendered = wrapper.render()
+        rendered.find('.consignments2-submission-upload-photo__submit-button[disabled]').length.should.eql(1)
       })
     })
   })
