@@ -1,6 +1,6 @@
 import request from 'superagent'
 import { data as sd } from 'sharify'
-import { find, last } from 'underscore'
+import { find } from 'underscore'
 import { push } from 'react-router-redux'
 
 import gemup from 'gemup'
@@ -201,8 +201,9 @@ export function handleImageUpload (file) {
         progress: (percent) => {
           // console.log("<3 progress bars, file is this % uploaded: ", percent)
         },
-        done: (src) => {
-          dispatch(uploadImageToConvection(src, file.name))
+        done: (src, geminiKey, bucket) => {
+          const key = `${geminiKey}/${file.name}`
+          dispatch(uploadImageToGemini(key, bucket, file.name))
         }
       }
       await gemup(file, options)
@@ -405,12 +406,11 @@ export function updateSubmission (submission) {
   }
 }
 
-export function uploadImageToConvection (filePath, fileName) {
+export function uploadImageToConvection (geminiToken, fileName) {
   return async (dispatch, getState) => {
     try {
       const token = await fetchToken()
       const { submissionFlow: { submission } } = getState()
-      const geminiToken = last(filePath.split('/')).split('%2F')[0] // FIXME get the gemini token another way
       const inputs = {
         submission_id: submission.id,
         gemini_token: geminiToken
@@ -420,7 +420,7 @@ export function uploadImageToConvection (filePath, fileName) {
         .set('Authorization', `Bearer ${token}`)
         .send(inputs)
 
-      dispatch(uploadImageToGemini(submission.id, filePath, fileName))
+      dispatch(stopProcessingImage(fileName))
     } catch (err) {
       dispatch(updateError('Unable to upload image.'))
       dispatch(stopProcessingImage(fileName))
@@ -429,24 +429,29 @@ export function uploadImageToConvection (filePath, fileName) {
   }
 }
 
-export function uploadImageToGemini (submissionId, sourceUrl, fileName) {
+export function uploadImageToGemini (key, bucket, fileName) {
   return async (dispatch, getState) => {
     try {
+      const { submissionFlow: { submission } } = getState()
       const inputs = {
         entry: {
           template_key: sd.CONVECTION_GEMINI_APP,
-          source_url: sourceUrl,
+          source_key: key,
+          source_bucket: bucket,
           metadata: {
-            id: submissionId,
+            id: submission.id,
             _type: 'Consignment'
           }
         }
       }
-      await request
+      const response = await request
         .post(`${sd.GEMINI_APP}/entries.json`)
         .set('Authorization', `Basic ${encode(sd.CONVECTION_GEMINI_APP, '')}`)
         .send(inputs)
-      dispatch(stopProcessingImage(fileName))
+
+      const token = response.body.token
+
+      dispatch(uploadImageToConvection(token, fileName))
     } catch (err) {
       dispatch(updateError('Unable to process image.'))
       dispatch(stopProcessingImage(fileName))

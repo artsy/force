@@ -194,9 +194,7 @@ describe('Reducers', () => {
           request = sinon.stub()
           request.post = sinon.stub().returns(request)
           request.set = sinon.stub().returns(request)
-          request.send = sinon.stub()
-                            .returns(stubbedToken)
-                            .onSecondCall().returns('foo')
+          request.send = sinon.stub().returns(stubbedToken)
 
           global.window = { btoa: sinon.stub() }
           ActionsRewireApi.__Rewire__('request', request)
@@ -215,8 +213,7 @@ describe('Reducers', () => {
               payload: { fileName: 'astronaut.jpg' }
             }
           ]
-          const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
-          store.dispatch(actions.uploadImageToConvection(filePath, 'astronaut.jpg')).then(() => {
+          store.dispatch(actions.uploadImageToConvection('gemini-token', 'astronaut.jpg')).then(() => {
             store.getActions().should.eql(expectedActions)
           })
         })
