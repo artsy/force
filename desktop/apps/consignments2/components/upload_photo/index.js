@@ -1,14 +1,25 @@
 import Camera from '../../../../components/main_layout/public/icons/camera.svg'
+import CheckboxInput from '../checkbox_input'
 import PropTypes from 'prop-types'
 import React from 'react'
 import UploadedImage from '../uploaded_image'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
-import { map } from 'underscore'
-import { selectPhoto, submitPhoto } from '../../client/actions'
+import { selectPhoto, submitPhoto, updateSkipPhotoSubmission } from '../../client/actions'
 
-function UploadPhoto ({ error, selectPhotoAction, submitPhotoAction, uploadedImages }) {
+function UploadPhoto (props) {
+  const {
+    error,
+    processingImages,
+    selectPhotoAction,
+    skipPhotoSubmission,
+    updateSkipPhotoSubmissionAction,
+    submitPhotoAction,
+    uploadedImages
+  } = props
   const b = block('consignments2-submission-upload-photo')
+
+  const nextEnabled = skipPhotoSubmission || processingImages.length === 0
 
   return (
     <div className={b()}>
@@ -25,26 +36,33 @@ function UploadPhoto ({ error, selectPhotoAction, submitPhotoAction, uploadedIma
             <Camera />
           </div>
           <div className={b('cta')}>
-            Drag or Click to upload photos
+            Click to upload photos
           </div>
         </div>
       </label>
       <div className={b('upload-instructions')}>
         Please upload JPG or PNG image files 1000x1000 pixels or more. Image files should have a file size less than 30mb.
       </div>
+      <CheckboxInput
+        item={'skip'}
+        label={'No photo currently available'}
+        onChange={updateSkipPhotoSubmissionAction}
+        value={skipPhotoSubmission}
+      />
+      {
+        uploadedImages.map((file) =>
+          <UploadedImage file={file} processing={file.processing} key={file.fileName} />
+        )
+      }
       <div
         className={b('submit-button').mix('avant-garde-button-black')}
         onClick={submitPhotoAction}
+        disabled={!nextEnabled}
       >
         Submit
       </div>
       {
         error && <div className={b('error')}>{error}</div>
-      }
-      {
-        uploadedImages.map((file) =>
-          <UploadedImage fileName={file.name} key={file.name} />
-        )
       }
     </div>
   )
@@ -53,12 +71,15 @@ function UploadPhoto ({ error, selectPhotoAction, submitPhotoAction, uploadedIma
 const mapStateToProps = (state) => {
   return {
     error: state.submissionFlow.error,
+    processingImages: state.submissionFlow.processingImages,
+    skipPhotoSubmission: state.submissionFlow.skipPhotoSubmission,
     uploadedImages: state.submissionFlow.uploadedImages
   }
 }
 const mapDispatchToProps = {
   selectPhotoAction: selectPhoto,
-  submitPhotoAction: submitPhoto
+  submitPhotoAction: submitPhoto,
+  updateSkipPhotoSubmissionAction: updateSkipPhotoSubmission
 }
 
 export default connect(
@@ -68,7 +89,10 @@ export default connect(
 
 UploadPhoto.propTypes = {
   error: PropTypes.string,
+  processingImages: PropTypes.array.isRequired,
   selectPhotoAction: PropTypes.func.isRequired,
+  skipPhotoSubmission: PropTypes.bool.isRequired,
   submitPhotoAction: PropTypes.func.isRequired,
+  updateSkipPhotoSubmissionAction: PropTypes.func.isRequired,
   uploadedImages: PropTypes.array
 }

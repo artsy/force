@@ -2,7 +2,7 @@ import * as actions from './actions'
 import u from 'updeep'
 import { combineReducers } from 'redux'
 import { data as sd } from 'sharify'
-import { find, last } from 'underscore'
+import { contains, last } from 'underscore'
 import { reducer as formReducer } from 'redux-form'
 import { routerReducer } from 'react-router-redux'
 
@@ -54,8 +54,12 @@ const initialState = {
   locationAutocompleteSuggestions: [],
   locationAutocompleteValue: '',
   notConsigningArtist: false,
+  processingImages: [],
+  skipPhotoSubmission: false,
   steps: sd && sd.CURRENT_USER ? last(stepsMapping, 3) : stepsMapping,
-  submission: null,
+  submission: {
+    id: 46
+  },
   submissionIdFromServer: sd.SUBMISSION_ID,
   uploadedImages: []
 }
@@ -63,8 +67,13 @@ const initialState = {
 function submissionFlow (state = initialState, action) {
   switch (action.type) {
     case actions.ADD_IMAGE_TO_UPLOADED_IMAGES: {
+      const newImage = {
+        fileName: action.payload.fileName,
+        processing: true,
+        src: action.payload.src
+      }
       return u({
-        uploadedImages: state.uploadedImages.concat(action.payload.file)
+        uploadedImages: state.uploadedImages.concat(newImage)
       }, state)
     }
     case actions.CLEAR_ARTIST_SUGGESTIONS: {
@@ -110,6 +119,24 @@ function submissionFlow (state = initialState, action) {
       return u({
         notConsigningArtist: true
       }, state)
+    }
+    case actions.START_PROCESSING_PHOTO: {
+      const fileName = action.payload.fileName
+      if (!contains(state.processingImages, fileName)) {
+        return u({
+          processingImages: state.processingImages.concat(fileName)
+        }, state)
+      }
+      return state
+    }
+    case actions.STOP_PROCESSING_PHOTO: {
+      const fileName = action.payload.fileName
+      if (contains(state.processingImages, fileName)) {
+        return u({
+          processingImages: u.reject((ff) => ff === fileName)
+        }, state)
+      }
+      return state
     }
     case actions.UPDATE_ARTIST_AUTOCOMPLETE_VALUE: {
       return u({
@@ -165,6 +192,11 @@ function submissionFlow (state = initialState, action) {
           location_country: action.payload.country,
           location_state: action.payload.state
         }
+      }, state)
+    }
+    case actions.UPDATE_SKIP_PHOTO_SUBMISSION: {
+      return u({
+        skipPhotoSubmission: action.payload.skip
       }, state)
     }
     case actions.UPDATE_SUBMISSION: {

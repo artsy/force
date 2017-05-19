@@ -10,7 +10,7 @@ export const renderCheckboxInput = ({ input, ...custom }) => (
   />
 )
 
-function CheckboxInput (props) {
+export default function CheckboxInput (props) {
   const { item, label, onChange, value } = props
   const b = block('consignments2-submission-checkbox-input')
 
@@ -36,5 +36,5 @@ CheckboxInput.propTypes = {
   item: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string
+  value: PropTypes.bool
 }

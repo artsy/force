@@ -1,6 +1,6 @@
 import request from 'superagent'
 import { data as sd } from 'sharify'
-import { find } from 'underscore'
+import { find, last } from 'underscore'
 import { push } from 'react-router-redux'
 
 import gemup from 'gemup'
@@ -9,10 +9,13 @@ import gemup from 'gemup'
 export const ADD_IMAGE_TO_UPLOADED_IMAGES = 'ADD_IMAGE_TO_UPLOADED_IMAGES'
 export const CLEAR_ARTIST_SUGGESTIONS = 'CLEAR_ARTIST_SUGGESTIONS'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
+export const START_PROCESSING_PHOTO = 'START_PROCESSING_PHOTO'
+export const STOP_PROCESSING_PHOTO = 'STOP_PROCESSING_PHOTO'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
@@ -20,17 +23,18 @@ export const UPDATE_ERROR = 'UPDATE_ERROR'
 export const UPDATE_INPUTS = 'UPDATE_INPUTS'
 export const UPDATE_LOCATION_AUTOCOMPLETE_VALUE = 'UPDATE_LOCATION_AUTOCOMPLETE_VALUE'
 export const UPDATE_LOCATION_CITY_VALUE = 'UPDATE_LOCATION_CITY_VALUE'
-export const CLEAR_LOCATION_DATA = 'CLEAR_LOCATION_DATA'
 export const UPDATE_LOCATION_SUGGESTIONS = 'UPDATE_LOCATION_SUGGESTIONS'
 export const UPDATE_LOCATION_VALUES = 'UPDATE_LOCATION_VALUES'
+export const UPDATE_SKIP_PHOTO_SUBMISSION = 'UPDATE_SKIP_PHOTO_SUBMISSION'
 export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION'
 
 // Action creators
-export function addImageToUploadedImages (file) {
+export function addImageToUploadedImages (fileName, src) {
   return {
     type: ADD_IMAGE_TO_UPLOADED_IMAGES,
     payload: {
-      file
+      fileName,
+      src
     }
   }
 }
@@ -96,19 +100,36 @@ export function clearLocationSuggestions () {
   }
 }
 
-export function createSubmission () {
+export function completeSubmission () {
   return async (dispatch, getState) => {
     try {
       dispatch(clearError())
+      const token = await fetchToken()
       const {
-        body: {
-          token
+        submissionFlow: {
+          submission,
+          submissionIdFromServer
         }
-      } = await request
-                  .post(`${sd.API_URL}/api/v1/me/token`)
-                  .send({ client_application_id: sd.CONVECTION_APP_ID })
-                  .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+      } = getState()
 
+      const submissionQueryParam = submission ? submission.id : submissionIdFromServer
+      const { body } = await request
+                          .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
+                          .set('Authorization', `Bearer ${token}`)
+                          .send({ state: 'submitted' })
+      dispatch(updateSubmission(body))
+      dispatch(push('/consign2/submission/thank_you'))
+    } catch (err) {
+      dispatch(updateError('Unable to submit at this time.'))
+      console.error('error!', err)
+    }
+  }
+}
+
+export function createSubmission () {
+  return async (dispatch, getState) => {
+    try {
+      const token = await fetchToken()
       const {
         submissionFlow: {
           inputs
@@ -142,23 +163,6 @@ export function fetchArtistSuggestions (value) {
   }
 }
 
-export function uploadImageToGemini () {
-  return async (dispatch, getState) => {
-    try {
-      // const res = await request
-      //                     .get(`${sd.GEMINI_APP}/uploads/new.json`)
-      //                     .query({ acl: 'private' })
-      //                     .set('Authorization', `Basic ${sd.GEMINI_ACCOUNT_KEY}`)
-
-      console.log('here!!!')
-      // dispatch(updateArtistSuggestions(res.body))
-      // dispatch(hideNotConsigningMessage())
-    } catch (err) {
-      console.error('error!', err)
-    }
-  }
-}
-
 export function fetchLocationSuggestions (value) {
   return async (dispatch, getState) => {
     const displaySuggestions = (predictions, status) => {
@@ -176,6 +180,33 @@ export function fetchLocationSuggestions (value) {
       }
     } catch (error) {
       console.error('error!', error)
+    }
+  }
+}
+
+export function handleImageUpload (file) {
+  return async (dispatch, getState) => {
+    try {
+      const options = {
+        app: 'convection-staging',
+        key: sd.GEMINI_S3_ACCESS_KEY,
+        fail: (_err) => {
+          dispatch(updateError('Unable to upload at this time.'))
+        },
+        add: (src) => {
+          dispatch(addImageToUploadedImages(file.name, src))
+          dispatch(startProcessingPhoto(file.name))
+        },
+        progress: (percent) => {
+          // console.log("<3 progress bars, file is this % uploaded: ", percent)
+        },
+        done: (src) => {
+          dispatch(uploadImageToConvection(src, file.name))
+        }
+      }
+      await gemup(file, options)
+    } catch (err) {
+      console.error('error!', err)
     }
   }
 }
@@ -212,6 +243,24 @@ export function showNotConsigningMessage () {
   }
 }
 
+export function startProcessingPhoto (fileName) {
+  return {
+    type: START_PROCESSING_PHOTO,
+    payload: {
+      fileName
+    }
+  }
+}
+
+export function stopProcessingPhoto (fileName) {
+  return {
+    type: STOP_PROCESSING_PHOTO,
+    payload: {
+      fileName
+    }
+  }
+}
+
 export function submitDescribeWork (values) {
   return (dispatch) => {
     dispatch(updateInputs(values)) // update the inputs
@@ -222,36 +271,15 @@ export function submitDescribeWork (values) {
 
 export function selectPhoto (file) {
   return (dispatch) => {
-    console.log('hey', file)
-    dispatch(uploadImageToGemini(file)) // update the inputs
-    dispatch(addImageToUploadedImages(file))
-    // dispatch(scrubLocation())
-    // dispatch(createSubmission()) // create the submission in convection
+    dispatch(handleImageUpload(file)) // update the inputs
   }
 }
 
 export function submitPhoto () {
   return async (dispatch, getState) => {
     try {
-      dispatch(clearError())
-      const { body: { token } } = await request
-                            .post(`${sd.API_URL}/api/v1/me/token`)
-                            .send({ client_application_id: sd.CONVECTION_APP_ID })
-                            .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
-      const {
-        submissionFlow: {
-          submission,
-          submissionIdFromServer
-        }
-      } = getState()
-
-      const submissionQueryParam = submission ? submission.id : submissionIdFromServer
-      const { body } = await request
-                          .put(`${sd.CONVECTION_APP_URL}/api/submissions/${submissionQueryParam}`)
-                          .set('Authorization', `Bearer ${token}`)
-                          .send({ state: 'submitted' })
-      dispatch(updateSubmission(body))
-      dispatch(push('/consign2/submission/thank_you'))
+      // first, iterate through all of the existing photos on the page and upload them.
+      dispatch(completeSubmission())
     } catch (err) {
       dispatch(updateError('Unable to submit at this time.'))
       console.error('error!', err)
@@ -359,6 +387,15 @@ export function updateLocationSuggestions (suggestions) {
   }
 }
 
+export function updateSkipPhotoSubmission (skip) {
+  return {
+    type: UPDATE_SKIP_PHOTO_SUBMISSION,
+    payload: {
+      skip
+    }
+  }
+}
+
 export function updateSubmission (submission) {
   return {
     type: UPDATE_SUBMISSION,
@@ -366,4 +403,71 @@ export function updateSubmission (submission) {
       submission
     }
   }
+}
+
+export function uploadImageToConvection (filePath, fileName) {
+  return async (dispatch, getState) => {
+    try {
+      const token = await fetchToken()
+      const { submissionFlow: { submission } } = getState()
+      const geminiToken = last(filePath.split('/')).split('%2F')[0] // FIXME get the gemini token another way
+      const inputs = {
+        submission_id: submission.id,
+        gemini_token: geminiToken
+      }
+      await request
+        .post(`${sd.CONVECTION_APP_URL}/api/assets`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(inputs)
+
+      dispatch(uploadImageToGemini(submission.id, filePath, fileName))
+    } catch (err) {
+      dispatch(updateError('Unable to upload image.'))
+      dispatch(stopProcessingPhoto(fileName))
+      console.error('error!', err)
+    }
+  }
+}
+
+export function uploadImageToGemini (submissionId, sourceUrl, fileName) {
+  return async (dispatch, getState) => {
+    try {
+      const inputs = {
+        entry: {
+          template_key: 'convection-staging',
+          source_url: sourceUrl,
+          metadata: {
+            id: submissionId,
+            _type: 'Consignment'
+          }
+        }
+      }
+      await request
+        .post(`${sd.GEMINI_APP}/entries.json`)
+        .set('Authorization', `Basic ${encode('convection-staging', '')}`)
+        .send(inputs)
+      dispatch(stopProcessingPhoto(fileName))
+    } catch (err) {
+      dispatch(updateError('Unable to process image.'))
+      dispatch(stopProcessingPhoto(fileName))
+      console.error('error!', err)
+    }
+  }
+}
+
+// helpers
+async function fetchToken () {
+  const {
+    body: {
+      token
+    }
+  } = await request
+              .post(`${sd.API_URL}/api/v1/me/token`)
+              .send({ client_application_id: sd.CONVECTION_APP_ID })
+              .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+  return token
+}
+
+function encode (key, secret) {
+  return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
 }
