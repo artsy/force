@@ -1,5 +1,5 @@
 currentItem = require "../../../components/current_venice_feature"
-{ isNull } = require "underscore"
+{ isUndefined } = require "underscore"
 Q = require "bluebird-q"
 
 describe "current venice feature", ->
@@ -10,7 +10,7 @@ describe "current venice feature", ->
 
   it "renders nothing if the given artist is not in the list of artists", ->
     currentItem({ id: "not-featured" }, fetch).then (result) ->
-      (result == undefined).should.equal true
+      isUndefined(result).should.be.ok()
 
   it "renders an artist featured in editorial content", ->
     currentItem({ id: "featured", name: "Banksy" }, fetch).then (result) ->

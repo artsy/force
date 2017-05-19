@@ -39,7 +39,6 @@ sd = require('sharify').data
         currentVeniceFeature(artist)
           .then (veniceFeature) ->
             currentItem = veniceFeature or currentShowAuction(artist)
-            console.log(currentItem)
 
             res.locals.sd.ARTIST = artist
             res.locals.sd.TAB = tab

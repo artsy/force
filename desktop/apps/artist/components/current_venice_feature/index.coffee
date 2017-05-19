@@ -1,7 +1,7 @@
-_ = require 'underscore'
-Q = require 'bluebird-q'
-request = require 'superagent'
-cache = require '../../../../lib/cache.coffee'
+_ = require "underscore"
+Q = require "bluebird-q"
+request = require "superagent"
+cache = require "../../../../lib/cache.coffee"
 
 cacheKey = "venice-2017"
 
@@ -12,7 +12,7 @@ fetchVeniceArtists = ->
       return resolve(JSON.parse(cachedData)) if cachedData
 
       request
-        .get "http://files.artsy.net/force/venice_2017_artists.json"
+        .get "https://artsy-vanity-files-production.s3.amazonaws.com/force/venice_2017_artists.json"
         .end (err, res) =>
           if res?.ok
             try
@@ -30,10 +30,10 @@ module.exports = (artist, fetch = fetchVeniceArtists) ->
       for veniceArtist in veniceArtists
         if veniceArtist.slug == artist.id
           return {
-            type: 'eoy',
-            href: '/venice-biennale',
-            imageUrl: 'http://files.artsy.net/images/venice_2017.jpg',
-            heading: if veniceArtist.featured then 'INSIDE THE BIENNALE' else '57TH VENICE BIENNALE PARTICIPANT',
+            type: "eoy",
+            href: "/venice-biennale",
+            imageUrl: "https://artsy-vanity-files-production.s3.amazonaws.com/images/venice_2017.jpg",
+            heading: if veniceArtist.featured then "INSIDE THE BIENNALE" else "57TH VENICE BIENNALE PARTICIPANT",
             name: if veniceArtist.featured
                     name = artist.name + (if artist.name.slice(-1) == "s" then "’" else "’s")
                     "See #{name} work in 360 degrees at the 57th Venice Biennale"
