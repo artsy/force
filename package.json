@@ -173,7 +173,7 @@
     "react-test-renderer": "^15.5.4",
     "rewire": "2.2.0",
     "should": "^11.1.1",
-    "sinon": "^2.2.0",
+    "sinon": "^1.17.1",
     "source-map-support": "^0.4.14",
     "stickyfill": "^1.1.1",
     "supertest": "^2.0.1",

@@ -188,7 +188,8 @@ export function handleImageUpload (file) {
   return async (dispatch, getState) => {
     try {
       const options = {
-        app: 'convection-staging',
+        acl: 'private',
+        app: sd.CONVECTION_GEMINI_APP,
         key: sd.GEMINI_S3_ACCESS_KEY,
         fail: (_err) => {
           dispatch(updateError('Unable to upload at this time.'))
@@ -278,7 +279,6 @@ export function selectPhoto (file) {
 export function submitPhoto () {
   return async (dispatch, getState) => {
     try {
-      // first, iterate through all of the existing photos on the page and upload them.
       dispatch(completeSubmission())
     } catch (err) {
       dispatch(updateError('Unable to submit at this time.'))
@@ -434,7 +434,7 @@ export function uploadImageToGemini (submissionId, sourceUrl, fileName) {
     try {
       const inputs = {
         entry: {
-          template_key: 'convection-staging',
+          template_key: sd.CONVECTION_GEMINI_APP,
           source_url: sourceUrl,
           metadata: {
             id: submissionId,
@@ -444,7 +444,7 @@ export function uploadImageToGemini (submissionId, sourceUrl, fileName) {
       }
       await request
         .post(`${sd.GEMINI_APP}/entries.json`)
-        .set('Authorization', `Basic ${encode('convection-staging', '')}`)
+        .set('Authorization', `Basic ${encode(sd.CONVECTION_GEMINI_APP, '')}`)
         .send(inputs)
       dispatch(stopProcessingImage(fileName))
     } catch (err) {

@@ -10,7 +10,6 @@ import { get } from 'lodash'
 
 function ThankYou ({ submission, uploadedImages }) {
   const b = block('consignments2-submission-thank-you')
-  console.log(get('uploadedImages.0.src'))
   const submissionImage = get(uploadedImages, '0.src') ? get(uploadedImages, '0.src') : '/images/missing_image.png'
 
   return (
