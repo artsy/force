@@ -4,7 +4,7 @@
   text-align center
   background-color black
   color white
-  height 530px
+  height 440px
   display flex
   justify-content center
   align-items center
@@ -21,6 +21,8 @@
       background-color white
 
   &__headline
+    max-width 750px
+    margin-bottom 15px
     garamond-size('xl-headline')
   &__subheadline
     garamond-size('s-headline')
@@ -34,50 +36,45 @@
       background-color white
 
 .consignments2-sections
+  text-align center
   // `.responsive-layout-container`-ish
   margin 0 auto
+
+  h4
+    garamond-size('headline')
+
+.consignments2-section
   padding 0 55px
   @media screen and (min-width: 1440px)
     padding 0 150px
   @media screen and (min-width: 1660px)
     padding 0 200px
 
-.consignments2-section
-  display flex
-  align-items center
-  padding gutter
-  border-bottom 1px solid gray-lighter-color
-
   &__about
-    width 50%
-    padding gutter 0
-    &:first-child
-      padding-right (gutter * 4)
-    &:last-child
-      padding-left (gutter * 4)
-
     &__headline
+      margin-bottom 38px
       garamond-size('l-headline')
     &__description
       block-margins(gutter)
       garamond-size('l-body')
 
   &__images
-    width 50%
-    &:last-child
-      text-align right
     > img
       display inline-block
       max-width 100%
       vertical-align bottom
 
     &.consignments2-section__images--logos
-      padding gutter
-    &__logo
-      width calc('50% - %s' % gutter)
-      display inline-block
-      margin (gutter / 2)
-      vertical-align middle !important
+      display flex
+      justify-content center
+      img
+        display block
+        max-width 180px
+        height auto
+        width auto
+      // display inline-block
+      // margin (gutter / 2)
+      // vertical-align middle !important
 
 .consignments2-steps
   padding gutter
@@ -88,10 +85,9 @@
 
   &__steps
     display flex
-    justify-content space-between
-    margin gutter 0
+    justify-content center
     &__step
-      width 32%
+      text-align center
       &__image
         max-width 100%
       &__description
@@ -104,16 +100,23 @@
           padding 0 (gutter * 2)
           garamond-size('l-body')
 
-.consignments2-recently-sold
-.consignments2-in-demand
-  padding gutter
-  border-bottom 1px solid gray-lighter-color
+.consignments2-how-consignments-work
+  height 495px
+  padding-top 60px
+  padding-bottom 60px
 
-.consignments2-recently-sold
-.consignments2-in-demand
-.consignments2-footer
-  h3
-    garamond-size('l-headline')
+.consignments2-logos
+  background-color gray-lightest-color
+  height 350px
+  padding-top 60px
+  padding-bottom 60px
+  padding-left 0px
+  padding-right 0px
+
+.consignments2-top-sales
+  height 318px
+  padding-top 60px
+  padding-bottom 40px
 
 .consignments2-in-demand
   &__artists

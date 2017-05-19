@@ -11,7 +11,10 @@ export const landingPage = async (req, res, next) => {
 
   try {
     const data = await landing.get()
-    const { recently_sold, in_demand } = data.sections
+    const {
+      recently_sold,
+      in_demand
+    } = data.sections
     recentlySold.id = recently_sold.set.id
     inDemand.id = in_demand.set.id
 
@@ -19,6 +22,7 @@ export const landingPage = async (req, res, next) => {
     await inDemand.fetch({ cache: true })
 
     res.locals.sd.RECENTLY_SOLD = recentlySold.toJSON()
+    res.locals.sd.IN_DEMAND = inDemand.toJSON()
 
     const pageData = extend(data, {
       recentlySold: recentlySold,
