@@ -2,6 +2,8 @@
 
 set -e -x
 
+trap "exit" INT
+
 run () {
   case $CIRCLE_NODE_INDEX in
   0)
