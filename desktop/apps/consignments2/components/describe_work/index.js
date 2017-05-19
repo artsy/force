@@ -1,3 +1,4 @@
+import Autosuggest from 'react-autosuggest'
 import PropTypes from 'prop-types'
 import React from 'react'
 import block from 'bem-cn'
@@ -9,7 +10,11 @@ import { renderRadioInput } from '../radio_input'
 import { renderSelectInput } from '../select_input'
 import { renderTextInput } from '../text_input'
 import {
-  submitDescribeWork
+  chooseLocation,
+  clearLocationSuggestions,
+  fetchLocationSuggestions,
+  submitDescribeWork,
+  updateLocationAutocomplete
 } from '../../client/actions'
 
 function validate (values) {
@@ -35,15 +40,45 @@ function validate (values) {
   return errors
 }
 
-let DescribeWork = props => {
+function getSuggestionValue (suggestion) {
+  return suggestion.description
+}
+
+function renderSuggestion (suggestion) {
+  return (
+    <div className='autosuggest-suggestion'>
+      <div>{suggestion.description}</div>
+    </div>
+  )
+}
+
+function DescribeWork (props) {
   const {
+    chooseLocationAction,
+    clearLocationSuggestionsAction,
+    error,
+    fetchLocationSuggestionsAction,
     handleSubmit,
+    locationAutocompleteSuggestions,
+    locationAutocompleteValue,
     submitDescribeWorkAction,
+    updateLocationAutocompleteAction,
     invalid,
     pristine
   } = props
 
   const b = block('consignments2-submission-describe-work')
+
+  const locationAutosuggestInputProps = {
+    value: locationAutocompleteValue,
+    onChange: updateLocationAutocompleteAction
+  }
+
+  const renderInputComponent = inputProps => (
+    <div>
+      <input {...inputProps} className={b('input').mix('bordered-input')} />
+    </div>
+  )
 
   return (
     <form className={b()} onSubmit={handleSubmit(submitDescribeWorkAction)}>
@@ -52,7 +87,7 @@ let DescribeWork = props => {
           <Field name='title' component={renderTextInput}
             item={'title'}
             instructions={'If the title is unknown, please enter your best guess.'}
-            label={'Title'}
+            label={'Title*'}
           />
         </div>
       </div>
@@ -60,14 +95,14 @@ let DescribeWork = props => {
         <div className={b('row-item')}>
           <Field name='medium' component={renderSelectInput}
             item={'medium'}
-            label={'Medium'}
+            label={'Medium*'}
             options={['painting', 'sculpture', 'print']}
           />
         </div>
         <div className={b('row-item')}>
           <Field name='year' component={renderTextInput}
             item={'year'}
-            label={'Year'}
+            label={'Year*'}
           />
         </div>
       </div>
@@ -75,13 +110,13 @@ let DescribeWork = props => {
         <div className={b('row-item')}>
           <Field name='height' component={renderTextInput}
             item={'height'}
-            label={'Height'}
+            label={'Height*'}
           />
         </div>
         <div className={b('row-item')}>
           <Field name='width' component={renderTextInput}
             item={'width'}
-            label={'Width'}
+            label={'Width*'}
           />
         </div>
         <div className={b('row-item')}>
@@ -93,7 +128,7 @@ let DescribeWork = props => {
         <div className={b('row-item')}>
           <Field name='dimensions_metric' component={renderSelectInput}
             item={'dimensions_metric'}
-            label={'Units'}
+            label={'Units*'}
             options={['in', 'cm']}
           />
         </div>
@@ -110,7 +145,7 @@ let DescribeWork = props => {
         <div className={b('row-item')}>
           <Field name='signature' component={renderRadioInput}
             item={'signature'}
-            label={'Is this work signed?'}
+            label={'Is this work signed?*'}
             options={['yes', 'no']}
           />
         </div>
@@ -119,7 +154,7 @@ let DescribeWork = props => {
         <div className={b('row-item')}>
           <Field name='authenticity_certificate' component={renderRadioInput}
             item={'authenticity_certificate'}
-            label={'Does this work come with a certificate of authenticity?'}
+            label={'Does this work come with a certificate of authenticity?*'}
             options={['yes', 'no']}
           />
         </div>
@@ -135,33 +170,73 @@ let DescribeWork = props => {
       </div>
       <div className={b('row')}>
         <div className={b('row-item')}>
-          <Field name='location' component={renderTextInput}
-            item={'location'}
-            instructions={'What city is the work located in?'}
-            label={'Location'}
+          <div className={b('instructions')}>What city is the work located in?*</div>
+          <Autosuggest
+            suggestions={locationAutocompleteSuggestions}
+            onSuggestionsFetchRequested={fetchLocationSuggestionsAction}
+            onSuggestionsClearRequested={clearLocationSuggestionsAction}
+            onSuggestionSelected={chooseLocationAction}
+            getSuggestionValue={getSuggestionValue}
+            renderInputComponent={renderInputComponent}
+            renderSuggestion={renderSuggestion}
+            inputProps={locationAutosuggestInputProps}
           />
         </div>
       </div>
       <button
         className={b('next-button').mix('avant-garde-button-black')}
-        disabled={pristine || invalid}
+        disabled={pristine || invalid || locationAutocompleteValue.length === 0}
         type='submit'
       >
         Next
       </button>
+      {
+        error && <div className={b('error')}>{error}</div>
+      }
     </form>
   )
 }
 
-const mapDispatchToProps = {
-  submitDescribeWorkAction: submitDescribeWork
+const mapStateToProps = (state) => {
+  return {
+    error: state.submissionFlow.error,
+    locationAutocompleteSuggestions: state.submissionFlow.locationAutocompleteSuggestions,
+    locationAutocompleteValue: state.submissionFlow.locationAutocompleteValue
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    chooseLocationAction (event, { suggestion, suggestionValue }) {
+      dispatch(chooseLocation(suggestion))
+    },
+    clearLocationSuggestionsAction () {
+      dispatch(clearLocationSuggestions())
+    },
+    fetchLocationSuggestionsAction ({ value }) {
+      dispatch(fetchLocationSuggestions(value))
+    },
+    submitDescribeWorkAction (values) {
+      dispatch(submitDescribeWork(values))
+    },
+    updateLocationAutocompleteAction (event, { newValue }) {
+      dispatch(updateLocationAutocomplete(newValue))
+    }
+  }
 }
 
 DescribeWork.propTypes = {
+  chooseLocationAction: PropTypes.func.isRequired,
+  clearLocationSuggestionsAction: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  fetchLocationSuggestionsAction: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   invalid: PropTypes.bool,
+  locationAutocompleteSuggestions: PropTypes.array,
+  locationAutocompleteValue: PropTypes.string,
   pristine: PropTypes.bool,
-  submitDescribeWorkAction: PropTypes.func.isRequired
+  submitDescribeWorkAction: PropTypes.func.isRequired,
+  updateLocationAutocompleteAction: PropTypes.func.isRequired
 }
 
 export default compose(
@@ -170,7 +245,7 @@ export default compose(
     validate
   }),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(DescribeWork)

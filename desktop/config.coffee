@@ -20,6 +20,8 @@ module.exports =
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
   CMS_URL: 'https://cms.artsy.net'
   CONSIGNMENTS_APP_URL: null
+  CONVECTION_APP_URL: null
+  CONVECTION_APP_ID: null
   COOKIE_DOMAIN: null
   CRITEO_ARTWORKS_ACCOUNT_NUMBER: '35250'
   CRITEO_AUCTIONS_ACCOUNT_NUMBER: '28539'
