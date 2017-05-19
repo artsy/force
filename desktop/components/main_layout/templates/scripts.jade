@@ -1,5 +1,80 @@
-- defaultOptions = {stripe: true, sailthru: true, quantcast: true}
+- defaultOptions = {stripe: true, sailthru: true, marketo: true, quantcast: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
+
+if options.marketo
+  //- Marketo Tracking
+  script(type='text/javascript', src='//du4pg90j806ok.cloudfront.net/js/touch-history/dist/conversionpath-0.3.8.min.js').
+    {
+    "stageMappings": {
+    "initial": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Source_Detail__c"
+    }
+    ],
+    "rolling": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Source_Detail__c"
+    }
+    ],
+    "recent": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Source_Detail__c"
+    }
+    ]
+    },
+    "nameMappings": {},
+    "cookies": {
+    "useCompatibleNames" : false
+    },
+    "session": {
+    "duration" : {
+    "recent" : 30
+    },
+    "internalDomains" : {
+    "alternates" : ["artsy.space", "artsy.info"]
+    },
+    "prioritizeNonDirect" :  {
+    "recent" : true
+    }
+    }
+    }
+
 
 //- Segment.io
 script( type="text/javascript" ).
