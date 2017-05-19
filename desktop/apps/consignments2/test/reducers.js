@@ -1,3 +1,4 @@
+import benv from 'benv'
 import configureMockStore from 'redux-mock-store'
 import reducers from '../client/reducers'
 import thunk from 'redux-thunk'
@@ -136,6 +137,28 @@ describe('Reducers', () => {
         })
       })
 
+      describe('#startProcessingImage', () => {
+        it('adds a filename to an empty list, but does not add it twice', () => {
+          initialResponse.submissionFlow.processingImages.should.eql([])
+          const newProcessedImage = reducers(initialResponse, actions.startProcessingImage('astronaut.jpg'))
+          newProcessedImage.submissionFlow.processingImages.should.eql(['astronaut.jpg'])
+          const addedImageAgain = reducers(newProcessedImage, actions.startProcessingImage('astronaut.jpg'))
+          addedImageAgain.submissionFlow.processingImages.should.eql(['astronaut.jpg'])
+        })
+      })
+
+      describe('#stopProcessingImage', () => {
+        it('removes a filename if it exists', () => {
+          initialResponse.submissionFlow.processingImages.should.eql([])
+          const stopProcessingImage = reducers(initialResponse, actions.stopProcessingImage('astronaut.jpg'))
+          stopProcessingImage.submissionFlow.processingImages.should.eql([])
+          const newProcessedImage = reducers(stopProcessingImage, actions.startProcessingImage('astronaut.jpg'))
+          newProcessedImage.submissionFlow.processingImages.should.eql(['astronaut.jpg'])
+          const stopNewImage = reducers(newProcessedImage, actions.stopProcessingImage('astronaut.jpg'))
+          stopNewImage.submissionFlow.processingImages.should.eql([])
+        })
+      })
+
       describe('#updateInputs', () => {
         it('merges the initial input data with user-inputted data', () => {
           initialResponse.submissionFlow.inputs.authenticity_certificate.should.eql(true)
@@ -152,6 +175,68 @@ describe('Reducers', () => {
           newInputsStep.submissionFlow.inputs.medium.should.eql('sculpture')
           newInputsStep.submissionFlow.inputs.signature.should.eql(true)
           newInputsStep.submissionFlow.inputs.title.should.eql('My Artwork!')
+        })
+      })
+
+      describe('#uploadImageToConvection', () => {
+        let store
+        let request
+        let stubbedToken = { body: { token: 'i-have-access' } }
+
+        beforeEach(() => {
+          benv.setup(() => {
+            sinon.stub(global, 'btoa')
+          })
+          const middlewares = [ thunk ]
+          const mockStore = configureMockStore(middlewares)
+
+          store = mockStore(initialResponse)
+          request = sinon.stub()
+          request.post = sinon.stub().returns(request)
+          request.set = sinon.stub().returns(request)
+          request.send = sinon.stub()
+                            .returns(stubbedToken)
+                            .onSecondCall().returns('foo')
+
+          global.window = { btoa: sinon.stub() }
+          ActionsRewireApi.__Rewire__('request', request)
+          ActionsRewireApi.__Rewire__('sd', { CURRENT_USER: { accessToken: 'foo' }, CONVECTION_APP_ID: 'myapp' })
+        })
+
+        afterEach(() => {
+          benv.teardown()
+          global.btoa.restore()
+        })
+
+        it('stops processing the image if it succeeds', () => {
+          const expectedActions = [
+            {
+              type: 'STOP_PROCESSING_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
+            }
+          ]
+          const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
+          store.dispatch(actions.uploadImageToConvection(filePath, 'astronaut.jpg')).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
+        })
+
+        it('stops processing the image and updates the error if it does not succeed', () => {
+          request.send = sinon.stub().returns('TypeError')
+          const expectedActions = [
+            {
+              type: 'UPDATE_ERROR',
+              payload: { error: 'Unable to upload image.' }
+            },
+            {
+              type: 'STOP_PROCESSING_IMAGE',
+              payload: { fileName: 'astronaut.jpg' }
+            }
+          ]
+          const filePath = 'http://s3.com/abcdefg%2Fastronaut.jpg'
+          store.dispatch(actions.uploadImageToConvection(filePath, 'astronaut.jpg')).then(() => {
+            store.getActions().should.eql(expectedActions)
+          })
         })
       })
     })

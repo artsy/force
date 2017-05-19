@@ -19,7 +19,7 @@ function UploadPhoto (props) {
   } = props
   const b = block('consignments2-submission-upload-photo')
 
-  const nextEnabled = skipPhotoSubmission || processingImages.length === 0
+  const nextEnabled = skipPhotoSubmission || (!skipPhotoSubmission && uploadedImages.length > 0 && processingImages.length === 0)
 
   return (
     <div className={b()}>
@@ -51,7 +51,7 @@ function UploadPhoto (props) {
       />
       {
         uploadedImages.map((file) =>
-          <UploadedImage file={file} processing={file.processing} key={file.fileName} />
+          <UploadedImage file={file} key={file.fileName} />
         )
       }
       <div

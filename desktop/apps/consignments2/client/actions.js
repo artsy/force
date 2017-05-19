@@ -14,8 +14,8 @@ export const CLEAR_LOCATION_SUGGESTIONS = 'CLEAR_LOCATION_SUGGESTIONS'
 export const HIDE_NOT_CONSIGNING_MESSAGE = 'HIDE_NOT_CONSIGNING_MESSAGE'
 export const INCREMENT_STEP = 'INCREMENT_STEP'
 export const SHOW_NOT_CONSIGNING_MESSAGE = 'SHOW_NOT_CONSIGNING_MESSAGE'
-export const START_PROCESSING_PHOTO = 'START_PROCESSING_PHOTO'
-export const STOP_PROCESSING_PHOTO = 'STOP_PROCESSING_PHOTO'
+export const START_PROCESSING_IMAGE = 'START_PROCESSING_IMAGE'
+export const STOP_PROCESSING_IMAGE = 'STOP_PROCESSING_IMAGE'
 export const UPDATE_ARTIST_AUTOCOMPLETE_VALUE = 'UPDATE_ARTIST_AUTOCOMPLETE_VALUE'
 export const UPDATE_ARTIST_ID = 'UPDATE_ARTIST_ID'
 export const UPDATE_ARTIST_SUGGESTIONS = 'UPDATE_ARTIST_SUGGESTIONS'
@@ -195,7 +195,7 @@ export function handleImageUpload (file) {
         },
         add: (src) => {
           dispatch(addImageToUploadedImages(file.name, src))
-          dispatch(startProcessingPhoto(file.name))
+          dispatch(startProcessingImage(file.name))
         },
         progress: (percent) => {
           // console.log("<3 progress bars, file is this % uploaded: ", percent)
@@ -243,18 +243,18 @@ export function showNotConsigningMessage () {
   }
 }
 
-export function startProcessingPhoto (fileName) {
+export function startProcessingImage (fileName) {
   return {
-    type: START_PROCESSING_PHOTO,
+    type: START_PROCESSING_IMAGE,
     payload: {
       fileName
     }
   }
 }
 
-export function stopProcessingPhoto (fileName) {
+export function stopProcessingImage (fileName) {
   return {
-    type: STOP_PROCESSING_PHOTO,
+    type: STOP_PROCESSING_IMAGE,
     payload: {
       fileName
     }
@@ -423,7 +423,7 @@ export function uploadImageToConvection (filePath, fileName) {
       dispatch(uploadImageToGemini(submission.id, filePath, fileName))
     } catch (err) {
       dispatch(updateError('Unable to upload image.'))
-      dispatch(stopProcessingPhoto(fileName))
+      dispatch(stopProcessingImage(fileName))
       console.error('error!', err)
     }
   }
@@ -446,10 +446,10 @@ export function uploadImageToGemini (submissionId, sourceUrl, fileName) {
         .post(`${sd.GEMINI_APP}/entries.json`)
         .set('Authorization', `Basic ${encode('convection-staging', '')}`)
         .send(inputs)
-      dispatch(stopProcessingPhoto(fileName))
+      dispatch(stopProcessingImage(fileName))
     } catch (err) {
       dispatch(updateError('Unable to process image.'))
-      dispatch(stopProcessingPhoto(fileName))
+      dispatch(stopProcessingImage(fileName))
       console.error('error!', err)
     }
   }
@@ -463,11 +463,13 @@ async function fetchToken () {
     }
   } = await request
               .post(`${sd.API_URL}/api/v1/me/token`)
-              .send({ client_application_id: sd.CONVECTION_APP_ID })
               .set('X-ACCESS-TOKEN', sd.CURRENT_USER.accessToken)
+              .send({ client_application_id: sd.CONVECTION_APP_ID })
   return token
 }
 
 function encode (key, secret) {
-  return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
+  if (window.btoa) {
+    return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
+  }
 }

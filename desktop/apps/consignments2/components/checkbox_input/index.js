@@ -22,6 +22,7 @@ export default function CheckboxInput (props) {
           name={item}
           value={item}
           checked={value || false}
+          onChange={() => {}}
         />
         <label htmlFor={item} />
       </div>

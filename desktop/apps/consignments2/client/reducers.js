@@ -32,7 +32,7 @@ const stepsMapping = [
 const initialState = {
   artistAutocompleteSuggestions: [],
   artistAutocompleteValue: '',
-  currentStep: 2,
+  currentStep: 0,
   error: null,
   inputs: {
     artist_id: '',
@@ -120,7 +120,7 @@ function submissionFlow (state = initialState, action) {
         notConsigningArtist: true
       }, state)
     }
-    case actions.START_PROCESSING_PHOTO: {
+    case actions.START_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (!contains(state.processingImages, fileName)) {
         return u({
@@ -129,7 +129,7 @@ function submissionFlow (state = initialState, action) {
       }
       return state
     }
-    case actions.STOP_PROCESSING_PHOTO: {
+    case actions.STOP_PROCESSING_IMAGE: {
       const fileName = action.payload.fileName
       if (contains(state.processingImages, fileName)) {
         return u({
