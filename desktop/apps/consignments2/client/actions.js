@@ -469,7 +469,5 @@ async function fetchToken () {
 }
 
 function encode (key, secret) {
-  if (window.btoa) {
-    return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
-  }
+  return btoa(unescape(encodeURIComponent([key, secret].join(':'))))
 }
