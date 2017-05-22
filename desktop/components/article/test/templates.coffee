@@ -62,7 +62,7 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'article-fullscreen-image'
 
-  it 'superSubArticles can render a fullscreen header and SA menu with correct classes', ->
+  it 'superSubArticles can render fullscreen header and SA menu with correct classes', ->
     html = render('index')
       article: new Article
         title: 'hi'
@@ -73,7 +73,10 @@ describe 'article show template', ->
           background_image_url: 'http://image.jpg'
       footerArticles: new Articles
       superArticle: new Article
-        super_article: {}
+        super_article:
+          partner_logo: 'http://logo.jpg'
+          partner_logo_link: 'http://logo.com'
+          partner_fullscreen_header_logo: 'http://fullscreen-logo.jpg'
       superSubArticles: {models: []}
       crop: (url) -> url
       resize: (u) -> u
@@ -82,6 +85,7 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'article-fullscreen-image'
     html.should.containEql 'article-sa-sticky-header'
+    html.should.containEql '<a href="http://logo.com"><img src="http://fullscreen-logo.jpg"/></a>'
     html.should.not.containEql 'visible no-transition'
 
   it 'renders a TOC', ->
