@@ -6,10 +6,11 @@ import React from 'react'
 import SpeechBubble from '../../../../components/main_layout/public/icons/consignments-speech-bubble.svg'
 import block from 'bem-cn'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 
-function ThankYou ({ submission }) {
+function ThankYou ({ submission, uploadedImages }) {
   const b = block('consignments2-submission-thank-you')
-  const submissionImage = submission.image_url ? submission.image_url : '/images/missing_image.png'
+  const submissionImage = get(uploadedImages, '0.src') ? get(uploadedImages, '0.src') : '/images/missing_image.png'
 
   return (
     <div className={b()}>
@@ -61,7 +62,8 @@ function ThankYou ({ submission }) {
 }
 
 const mapStateToProps = (state) => ({
-  submission: state.submissionFlow.submission
+  submission: state.submissionFlow.submission,
+  uploadedImages: state.submissionFlow.uploadedImages
 })
 
 export default connect(
@@ -69,5 +71,6 @@ export default connect(
 )(ThankYou)
 
 ThankYou.propTypes = {
-  submission: PropTypes.object.isRequired
+  submission: PropTypes.object.isRequired,
+  uploadedImages: PropTypes.array
 }

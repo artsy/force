@@ -1,3 +1,81 @@
+- defaultOptions = {stripe: true, sailthru: true, marketo: true, quantcast: true}
+- options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
+
+if options.marketo
+  //- Marketo Tracking
+  script(type='text/javascript', src='//du4pg90j806ok.cloudfront.net/js/touch-history/dist/conversionpath-0.3.8.min.js').
+    {
+    "nolog": true,
+    "stageMappings": {
+    "initial": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_First_Source_Detail__c"
+    }
+    ],
+    "rolling": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Acquisition_Source_Detail__c"
+    }
+    ],
+    "recent": [
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Channel__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Medium__c"
+    },
+    {
+    "when": "{referrer.domain}",
+    "matches": "{internal.domain}",
+    "skip": "RC_Recent_Source_Detail__c"
+    }
+    ]
+    },
+    "nameMappings": {},
+    "cookies": {
+    "useCompatibleNames" : false
+    },
+    "session": {
+    "duration" : {
+    "recent" : 30
+    },
+    "internalDomains" : {
+    "alternates" : ["artsy.space", "artsy.info"]
+    },
+    "prioritizeNonDirect" :  {
+    "recent" : true
+    }
+    }
+    }
+
 //- Segment.io
 script( type="text/javascript" ).
   !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
@@ -12,7 +90,8 @@ if sharify
 script( src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" )
 
 //- Stripe
-script( type="text/javascript", src="https://js.stripe.com/v2/" )
+if options.stripe
+  script( type="text/javascript", src="https://js.stripe.com/v2/" )
 
 //- Common bundle generated from factor-bundle
 if sd.NODE_ENV !== 'development'
@@ -23,42 +102,44 @@ if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   script( src=asset('/assets/analytics.js') )
 
 //- Quantcast
-script( type="text/javascript" ).
-  var ezt = ezt ||[];
-  (function(){
-    var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-cMwS3F29bthyC";
-    elem.async = true;
-    elem.type = "text/javascript";
-    var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem,scpt);
-  }());
-  ezt.push({qacct: 'p-cMwS3F29bthyC', orderid: '', revenue: ''});
+if options.quantcast
+  script( type="text/javascript" ).
+    var ezt = ezt ||[];
+    (function(){
+      var elem = document.createElement('script');
+      elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-cMwS3F29bthyC";
+      elem.async = true;
+      elem.type = "text/javascript";
+      var scpt = document.getElementsByTagName('script')[0];
+      scpt.parentNode.insertBefore(elem,scpt);
+    }());
+    ezt.push({qacct: 'p-cMwS3F29bthyC', orderid: '', revenue: ''});
 
-noscript
-  img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
+  noscript
+    img( src="//pixel.quantserve.com/pixel/p-cMwS3F29bthyC.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast" )
 
 //- Sailthru Horizon JS - user interest data, personalization
-if sd.INCLUDE_SAILTHRU
-  script( type="text/javascript" ).
-    (function() {
-      function loadHorizon() {
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = location.protocol + '//ak.sail-horizon.com/horizon/v1.js';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
-      }
-      loadHorizon();
-      var oldOnLoad = window.onload;
-      window.onload = function() {
-        if (typeof oldOnLoad === 'function') {
-          oldOnLoad();
+if options.sailthru
+  if sd.INCLUDE_SAILTHRU
+    script( type="text/javascript" ).
+      (function() {
+        function loadHorizon() {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = location.protocol + '//ak.sail-horizon.com/horizon/v1.js';
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
         }
-        Sailthru.setup({
-          domain: 'horizon.artsy.net',
-          useStoredTags: false
-        });
-      };
-    })();
+        loadHorizon();
+        var oldOnLoad = window.onload;
+        window.onload = function() {
+          if (typeof oldOnLoad === 'function') {
+            oldOnLoad();
+          }
+          Sailthru.setup({
+            domain: 'horizon.artsy.net',
+            useStoredTags: false
+          });
+        };
+      })();

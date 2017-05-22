@@ -46,4 +46,4 @@ describe 'Main layout template', ->
 describe 'Head template', ->
   describe 'IS_RESPONSIVE', ->
     it 'renders whether or not there is a user agent', ->
-      render('../templates/head.jade')(sd: { IS_RESPONSIVE: true }, asset: (->))
+      render('../templates/head.jade')(sd: { IS_RESPONSIVE: true }, options: { marketo: true }, asset: (->))

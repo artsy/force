@@ -24,8 +24,6 @@ moment = require 'moment'
   author:
     id: "506999f123c3980002000342"
     name: "Elena Soboleva"
-    profile_id: "5086df0a8523e60002000015"
-    profile_handle: "elena"
   thumbnail_title: 'Top Ten Booths at miart 2014',
   thumbnail_teaser: 'Look here! Before the lines start forming...',
   thumbnail_image: 'http://kitten.com',

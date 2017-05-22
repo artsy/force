@@ -19,6 +19,8 @@ fixture = -> [
       "sale": {
         "end_at": "2016-10-31T04:28:00+00:00",
         "live_start_at": null
+        "is_live_open": false,
+        "is_closed": false
       },
       "artwork": {
         "image": {
@@ -70,13 +72,27 @@ describe 'My Active Bids template', ->
     $('.bid-status').text().should.containEql 'Outbid'
     $('.bid-status__is-losing').length.should.equal 1
 
-  it 'does not render bid status for open live sale', ->
-    @locals.myActiveBids[0].sale_artwork.sale.live_start_at = moment().subtract(1, 'day').format()
-    @locals.myActiveBids[0].sale_artwork.sale.is_live_open = true
-    @locals.myActiveBids[0].sale_artwork.sale.end_at = null
-    $ = cheerio.load(template(@locals))
-    $('.bid-status').length.should.eql 0
-    $('.my-active-bids-bid-live-button').length.should.eql 1
-    $('.my-active-bids-bid-live-button').text().should.containEql 'Bid Live'
-    $('.my-active-bids-bid-live-button').attr('href')
-      .should.containEql('mauction-evening-sale/login')
+  describe 'live sale', ->
+    it 'does not render bid status for open live sale', ->
+      @locals.myActiveBids[0].sale_artwork.sale.live_start_at = moment().subtract(1, 'day').format()
+      @locals.myActiveBids[0].sale_artwork.sale.is_live_open = true
+      @locals.myActiveBids[0].sale_artwork.sale.end_at = null
+      $ = cheerio.load(template(@locals))
+      $('.bid-status').length.should.eql 0
+      $('.my-active-bids-item-details--hide-bid').length.should.eql 1
+      $('.my-active-bids-bid-live-button').length.should.eql 1
+      $('.my-active-bids-bid-live-button').text().should.containEql 'Bid Live'
+      $('.my-active-bids-bid-live-button').attr('href')
+        .should.containEql('mauction-evening-sale/login')
+
+  describe 'closed', ->
+    it 'does not render bid status when closed', ->
+      @locals.myActiveBids[0].sale_artwork.sale.live_start_at = moment().subtract(1, 'day').format()
+      @locals.myActiveBids[0].sale_artwork.sale.is_live_open = false
+      @locals.myActiveBids[0].sale_artwork.sale.is_closed = true
+      $ = cheerio.load(template(@locals))
+      $('.bid-status').length.should.eql 0
+      $('.my-active-bids-bid-live-button').length.should.eql 1
+      $('.my-active-bids-bid-live-button').text().should.containEql 'View Lot'
+      $('.my-active-bids-bid-live-button').attr('href')
+        .should.containEql('/artwork/ed-ruscha-cockroaches-from-insects-portfolio')

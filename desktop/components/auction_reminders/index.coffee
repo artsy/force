@@ -27,7 +27,7 @@ attach = (view) ->
 isRegistered = (registrations) ->
   (auction) ->
     return true unless auction.isRegistrationEnded()
-    registrations.filter (r) -> r.get('sale').id == auction.get('id')
+    registrations.filter (r) -> r.get('sale')?.id == auction.get('id')
       .length > 0
 
 
