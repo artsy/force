@@ -1,6 +1,8 @@
 //- Override any locals with `append locals`
 block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed minimal-header') : ''
+  - defaultOptions = {modal: true, flash: true, stripe: true, sailthru: true, marketo: true, quantcast: true}
+- options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 doctype html
 html( data-useragent= userAgent )
