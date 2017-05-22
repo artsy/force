@@ -27,25 +27,26 @@ if sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
 script(type='text/javascript', src='//static.criteo.net/js/ld/ld.js', async='true')
 
 //- Marketo munchkin
-script(type='text/javascript').
-  (function() {
-  var didInit = false;
-  function initMunchkin() {
-  if(didInit === false) {
-  didInit = true;
-  Munchkin.init('609-FDY-207');
-  }
-  }
-  var s = document.createElement('script');
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = '//munchkin.marketo.net/munchkin.js';
-  s.cookieAnon = false;
-  s.onreadystatechange = function() {
-  if (this.readyState == 'complete' || this.readyState == 'loaded') {
-  initMunchkin();
-  }
-  };
-  s.onload = initMunchkin;
-  document.getElementsByTagName('head')[0].appendChild(s);
-  })();
+if options.marketo
+  script(type='text/javascript').
+    (function() {
+    var didInit = false;
+    function initMunchkin() {
+    if(didInit === false) {
+    didInit = true;
+    Munchkin.init('609-FDY-207', { asyncOnly: true } );
+    }
+    }
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = '//munchkin.marketo.net/munchkin.js';
+    s.cookieAnon = false;
+    s.onreadystatechange = function() {
+    if (this.readyState == 'complete' || this.readyState == 'loaded') {
+    initMunchkin();
+    }
+    };
+    s.onload = initMunchkin;
+    document.getElementsByTagName('head')[0].appendChild(s);
+    })();

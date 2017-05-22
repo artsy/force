@@ -42,6 +42,7 @@ module.exports = class InquireViaPhoneModalView extends AuthModalView
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
         when 'register'
           mediator.trigger 'auth:sign_up:success'
+          analyticsHooks.trigger "signUpFromPhoneModal", user: options.xhr.responseJSON.user
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 
