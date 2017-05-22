@@ -102,6 +102,12 @@ describe 'Venice route', ->
     _.defer => _.defer =>
       @res.locals.jsonLD.should.containEql '"headline":"Inside the Biennale venice"'
 
+  it 'includes sailthru', ->
+    @req = { params: { slug: 'venice' } }
+    routes.venice(@req, @res, @next)
+    _.defer => _.defer =>
+      @res.locals.sd.INCLUDE_SAILTHRU.should.be.true()
+
 describe 'Vanity route', ->
 
   beforeEach ->
