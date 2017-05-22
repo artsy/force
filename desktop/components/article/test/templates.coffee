@@ -62,6 +62,28 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'article-fullscreen-image'
 
+  it 'superSubArticles can render a fullscreen header and SA menu with correct classes', ->
+    html = render('index')
+      article: new Article
+        title: 'hi'
+        sections: []
+        contributing_authors: []
+        hero_section:
+          type: 'fullscreen'
+          background_image_url: 'http://image.jpg'
+      footerArticles: new Articles
+      superArticle: new Article
+        super_article: {}
+      superSubArticles: {models: []}
+      crop: (url) -> url
+      resize: (u) -> u
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'article-fullscreen-image'
+    html.should.containEql 'article-sa-sticky-header'
+    html.should.not.containEql 'visible no-transition'
+
   it 'renders a TOC', ->
     html = render('index')
       article: new Article
